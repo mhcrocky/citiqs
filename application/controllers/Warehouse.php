@@ -18,6 +18,11 @@
             $this->load->helper('utility_helper');
 
             $this->load->model('user_subscription_model');
+            $this->load->model('shopcategories_model');
+            $this->load->model('shopproducts_model');
+            $this->load->model('shopproductex_model');
+            $this->load->model('shoporders_model');
+            $this->load->model('shopordersex_model');
 
             $this->load->library('language', array('controller' => $this->router->class));
             $this->load->library('form_validation');
