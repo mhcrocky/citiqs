@@ -9,9 +9,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta charset="UTF-8" />
 
-	<script src="<?php echo $this->baseUrl; ?>assets/home/js/jquery.min.js"></script>
-	<script src="<?php echo $this->baseUrl; ?>assets/home/js/jspdf.min.js"></script>
-
 	<link rel="shortcut icon" href="<?php echo $this->baseUrl; ?>assets/home/images/tiqsiconlogonew.png" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/bower_components/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/bower_components/font-awesome/css/font-awesome.min.css" />
@@ -31,6 +28,7 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
     <?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
 
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/jspdf.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js'></script>

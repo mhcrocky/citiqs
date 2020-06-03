@@ -1,117 +1,7 @@
-<html>
-<head>
-		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/hotel-page.css">
-		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/timeline-page.css">
-
-		<style>
-
-			.width-650{
-				margin: 0 auto;
-			}
-
-			.manual-content .heading{
-				text-align: center;
-				color: #fff;
-			}
-
-			.faq-page{
-				display: flex;
-				flex-direction: column;
-			}
-
-			.faq-page{
-				margin: 0 auto;
-			}
-
-			.faq-login{
-				flex-grow:1;
-			}
-
-			.panel {
-				padding: 0 18px;
-				background-color: transparent !important;
-				color: #fff !important;
-				border:   1px solid transparent !important;
-				box-shadow: none !Important;
-			}
-			.panel p{
-				margin: 18px 0;
-				font-family: 'caption-light', sans-serif;
-			}
-
-			.svg-overflow svg{
-				overflow: visible;
-			}
-
-			.background-yankee .active, .background-yankee .accordion:hover {
-				background-color: #18386663;
-			}
-
-			.background-green .active, .background-green .accordion:hover {
-				background-color: #66a694;
-			}
-
-
-		</style>
-
-	</head>
-
-	<script>
-
-		function capenable() {
-			document.getElementById("capsubmit").style.display = "block";
-		}
-
-		function capdisable() {
-			document.getElementById("capsubmit").style.display = "none";
-		}
-
-
-	</script>
-	<script src='https://www.google.com/recaptcha/api.js' async defer ></script>
-
-</head>
-
-<style type="text/css">
-	input[type="checkbox"] {
-	zoom: 3;
-}
-
-@media screen and (max-width: 680px) {
-.columns .column {
-		flex-basis: 100%;
-		margin: 0 0 5px 0;
-	}
-}
-.selectWrapper {
-	border-radius: 50px;
-	overflow: hidden;
-	background: #eec5a7;
-	border: 0px solid #ffffff;
-	padding: 5px;
-	margin: 0px;
-}
-
-.selectBox {
-	background: #eec5a7;
-	width: 100%;
-	height: 25px;
-	border: 0px;
-	outline: none;
-	padding: 0px;
-	margin: 0px;
-}
-</style>
-
-<body>
-<!-- end header -->
-
-<script src='https://www.google.com/recaptcha/api.js' async defer ></script>
-
 <div class="main-wrapper">
 	<div class="col-half background-yellow height-100">
 		<div class="flex-column align-start">
-			<div align="left">
+			<div style="text-align:left">
 				<h2 class="heading mb-35">
 					<?=$this->language->line('NOLABLES-A10001','GET YOUR FIRST LOST AND FOUND ITEMS PROCESSED</a>');?>
 				</h2>
@@ -122,18 +12,16 @@
 
 			</div>
 			<div class="text-Left mt-50 mobile-hide" style="margin-top: 0px; margin-left: 0px">
-				<img border="0" src="<?php echo base_url(); ?>assets/home/images/lostandfounditemswhite.png" alt="tiqs" width="500" height="auto" />
+				<img src="<?php echo base_url(); ?>assets/home/images/lostandfounditemswhite.png" alt="tiqs" width="500" height="auto" />
 			</div>
-			<div class="mt-50" align="center" >
-				<img border="0" src="<?php echo base_url(); ?>assets/home/images/tiqsiconlogonew.png" alt="tiqs" width="75" height="auto" />
+			<div class="mt-50" style="text-align:center">
+				<img src="<?php echo base_url(); ?>assets/home/images/tiqsiconlogonew.png" alt="tiqs" width="75" height="auto" />
 			</div>
-			<div class="mt-50" align="center" >
-				<img border="0" src="<?php echo base_url(); ?>assets/home/images/DHL_express.png" alt="tiqs" width="250" height="auto" />
+			<div class="mt-50" style="text-align:center">
+				<img src="<?php echo base_url(); ?>assets/home/images/DHL_express.png" alt="tiqs" width="250" height="auto" />
 			</div>
-
 		</div>
 	</div><!-- end col half -->
-
 	<div class="col-half background-apricot timeline-content">
 		<div class="timeline-block background-yellow">
 			<span class='timeline-number text-orange hide-mobile'>1</span>
@@ -149,18 +37,17 @@
 						<li><?=$this->language->line('NOLABELS-B1000131',"ACTIVATE ACCOUNT");?></>
 				<p></p>
 				<div class="flex-column align-space">
-<!--					<p class="text-content-light" style="font-weight: bold">LOST BY YOUR CUSTOMER, <br>RETURNED BY US.							</p>-->
-<!--					<div id="timeline-video-3">-->
-<!--						<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/357256299" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen=""></iframe></div>-->
-<!--					</div>-->
-					<div align="center" style="margin-left: -20px">
-						<!--                                href="https://tiqs.com/lostandfound/menuapp target="_blank"" -->
+					<p class="text-content-light" style="font-weight: bold">LOST BY YOUR CUSTOMER, <br>RETURNED BY US.							</p>
+					<!-- <div id="timeline-video-3">
+						<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/357256299" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen=""></iframe></div>
+					</div> -->
+					<div style="margin-left: -20px; text-align:center">
+						<!-- href="https://tiqs.com/lostandfound/menuapp target="_blank"" -->
 						<a href="profile" target="_self" class="button button-orange mb-25"><?=$this->language->line('NOLABELS-B1000131A',"GOTO PROFILE");?></a>
 					</div>
 				</div>
 			</div>
 		</div><!-- end timeline block -->
-
 		<div class="timeline-block background-orange-light">
 			<span class='timeline-number text-orange hide-mobile'>2</span>
 			<div class="timeline-text">
@@ -168,27 +55,26 @@
 					<span class='timeline-number text-blue show-mobile'>2</span>
 					<h2 style="font-weight:bold; font-family: caption-bold"><?=$this->language->line('NOLABELS-B1000101UA','UPDATE YOUR SETTINGS');?></h2>
 				</div>
-
 				<p style="font-family:caption-light; font-size: medium; font-weight: bold">
 					<ul style="list-style-type: disc ; font-family:caption-light; font-size: larger; margin-left: -20px ">
 						<li><?=$this->language->line('NOLABELS-B10001111A',"SET THE PICK-UP DATE AND TIME FOR YOUR CUSTOMERS AND / OR DHL");?></>
 						<li><?=$this->language->line('NOLABELS-B10001121A',"PERSONALIZE YOUR LOST & FOUND PAGE IN YOUR CORPORATE IDENTITY");?></>
 						<li><?=$this->language->line('NOLABELS-B10001131A',"MAKE YOUR LOST & FOUND PAGE PUBLIC OR NOT PUBLIC");?></>
 						<li><?=$this->language->line('NOLABELS-B10001131A',"PERSONALIZE THE OUTGOING MAIL TO YOUR CUSTOMERS (USE OR MAKE A TEMPLATE)");?></>
-				<p></p>
-			<div class="flex-column align-space">
-<!--					<p class="text-content-light" style="font-weight: bold">LOST BY YOUR CUSTOMER, <br>RETURNED BY US.</p>-->
-<!--					<div id="timeline-video-4">-->
-<!--						<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/357256299" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen=""></iframe></div>-->
-<!--					</div>-->
-					<div align="center" style="margin-left: -20px">
-<!--						<a class="button button-orange mb-25" id="show-timeline-video-4">LEARN MORE VIDEO</a>-->
+					</ul>
+				</p>
+				<div class="flex-column align-space">
+					<!-- <p class="text-content-light" style="font-weight: bold">LOST BY YOUR CUSTOMER, <br>RETURNED BY US.</p>
+					<div id="timeline-video-4">
+						<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/357256299" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen=""></iframe></div>
+					</div> -->
+					<div style="margin-left: -20px; text-align:center">
+						<!-- <a class="button button-orange mb-25" id="show-timeline-video-4">LEARN MORE VIDEO</a> -->
 						<a href="appointmentSetup" target="_self" class="button button-orange mb-25"><?=$this->language->line('NOLABELS-B100011131A',"GOTO SETTINGS");?></a>
 					</div>
 				</div>
 			</div>
 		</div><!-- end timeline block -->
-
 		<div class="timeline-block background-green-environment">
 			<span class='timeline-number text-orange hide-mobile'>3</span>
 			<div class="timeline-text">
@@ -204,13 +90,12 @@
 						<li><?=$this->language->line('NOLABELS-B100011131',"");?></>
 				<p></p>
 				<div class="flex-column align-space">
-					<div align="center" style="margin-left: -20px">
+					<div style="margin-left: -20px; text-align:center">
 						<a href="employee" target="_self" class="button button-orange mb-25"><?=$this->language->line('NOLABELS-B100011131UAE',"GOTO USER ACCESS");?></a>
 					</div>
 				</div>
 			</div>
 		</div><!-- end timeline block -->
-
 		<div class="timeline-block background-apricot timeblock-last">
 			<span class='timeline-number text-orange hide-mobile'>4</span>
 			<div class="timeline-text">
@@ -229,7 +114,7 @@
 					<div id="timeline-video-4">
 						<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/357256299" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen=""></iframe></div>
 					</div><!-- time line video for fourth block -->
-					<div align="center">
+					<div style="text-align:center">
 						<!--                                href="https://tiqs.com/lostandfound/menuapp target="_blank"" -->
 						<a class="button button-orange mb-25" id="show-timeline-video-4"><?=$this->language->line('NOLABELS-V100011','LEARN MORE VIDEO');?></a>
 					</div>
@@ -241,12 +126,7 @@
 <!-- end col half -->
 </div>
 <!-- end main wrapper -->
-<script src="<?php echo base_url(); ?>assets/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
-</body>
-
-<script type="text/javascript">
+<script>
 	// modal script
 	// Get the modal
 	var modal = document.getElementById("myModal");
@@ -257,15 +137,22 @@
 	// Get the <span> element that closes the modal
 	var span = document.getElementsByClassName("close")[0];
 
-	// When the user clicks on the button, open the modal
-	btn.onclick = function() {
-		modal.style.display = "block";
+	if (btn) {
+		// When the user clicks on the button, open the modal
+		btn.onclick = function() {
+			if (modal) {
+				modal.style.display = "block";
+			}
+		}
 	}
 
-	// When the user clicks on <span> (x), close the modal
-	span.onclick = function() {
-		modal.style.display = "none";
+	if (span) {
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+			modal.style.display = "none";
+		}
 	}
+	
 
 	// When the user clicks anywhere outside of the modal, close it
 	window.onclick = function(event) {
@@ -273,10 +160,6 @@
 			modal.style.display = "none";
 		}
 	}
-
-</script>
-
-<script>
 
 	var acc = document.getElementsByClassName("accordion");
 	var i;
@@ -298,10 +181,6 @@
 		});
 	}
 
-</script>
-
-<script>
-
 	$('#show-timeline-video-2').click(function(){
 		console.log('da');
 		$('#timeline-video-2').toggleClass('show');
@@ -318,16 +197,14 @@
 	})
 
 </script>
-
-</html>
 <?php
-if(isset($_SESSION['error'])){
-	unset($_SESSION['error']);
-}
-if(isset($_SESSION['success'])){
-	unset($_SESSION['success']);
-}
-if(isset($_SESSION['message'])){
-	unset($_SESSION['message']);
-}
+	if(isset($_SESSION['error'])){
+		unset($_SESSION['error']);
+	}
+	if(isset($_SESSION['success'])){
+		unset($_SESSION['success']);
+	}
+	if(isset($_SESSION['message'])){
+		unset($_SESSION['message']);
+	}
 ?>

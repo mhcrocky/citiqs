@@ -49,18 +49,7 @@
 <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 <?php } elseif ($this->view === 'pay') { ?>
 <script src="<?php echo $this->baseUrl; ?>assets/home/js/pay.js"></script>
-<?php } elseif ($this->view === 'show_floorplan') { ?>
-<script src="<?php echo base_url(); ?>assets/floorplan/assets/js/jquery-3.5.1.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/floorplan/assets/js/popper.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/floorplan/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/floorplan/assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-<script src="<?php echo base_url(); ?>assets/floorplan/assets/js/fabric_v4.0.0-beta.8.js"></script>
-<script src="<?php echo base_url(); ?>assets/floorplan/assets/js/floorplan.js"></script>
-<script src="<?php echo base_url(); ?>assets/floorplan/assets/js/floorplanShow.js"></script>
-<script src="<?php echo base_url(); ?>assets/floorplan/assets/js/manageFloorPlan.js"></script>
-<?php } elseif ($this->view === 'objectFloorPlans') { ?>
-	<script src="<?php echo $this->baseUrl ?>assets/home/js/edit-grid-item.js" ></script>
-	<script src="<?php echo $this->baseUrl ?>assets/home/js/objectFloorPlans.js" ></script>
-<?php } elseif ($this->view === 'spotObjects') { ?>
-	<script src="<?php echo $this->baseUrl ?>assets/home/js/edit-grid-item.js" ></script>
+<?php } elseif ($this->view === 'nolabels') { ?>
+	<script src='https://www.google.com/recaptcha/api.js' async defer ></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/nolabels.js"></script>
 <?php } ?>

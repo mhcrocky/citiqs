@@ -294,25 +294,25 @@
 						</ul>
 					</div>
 				</div><!-- end pricing block -->
-				<div class="background-orange-light height-65">
+				<!-- <div class="background-orange-light height-65">
 					<div class="width-650" style="text-align:left">
-						<h2 class="heading mb-35"><?=$this->language->line("PROF-A060",'PRICING FEE.');?></h2>
+						<h2 class="heading mb-35"><? #echo $this->language->line("PROF-A060",'PRICING FEE.');?></h2>
 						<form action="<?php echo $this->baseUrl; ?>profileDropOffPointSettings" method="post">
 							<div >
 								<p>COLLECT ITEM FEE / HANDLING LOST AND FOUND</p>
 								<br/>State your fee...</p>
 								<div class="form-group has-feedback">
-									<input type="text" class="form-control" id="itemfee" name="itemfee" style="border-radius: 50px; border:none" value="<?php echo $user->itemfee; ?>" maxlength="128" />
+									<input type="text" class="form-control" id="itemfee" name="itemfee" style="border-radius: 50px; border:none" value="<?php #echo $user->itemfee; ?>" maxlength="128" />
 								</div>
 							</div>
 							<div class="clearfix"></div>
 							<div style="text-align:center">
 								<p style="font-family:'caption-light'; font-size:100%; color: #fff9df; text-align: left">
-									<?=$this->language->line("PROFILE-61000",'CHECK FOR PUBLIC LISTING');?>
+									<? # echo $this->language->line("PROFILE-61000",'CHECK FOR PUBLIC LISTING');?>
 								</p>
 								<div class="form-group has-feedback">
 									<div class="onoffswitch">
-										<input type="checkbox" name="publiclisting" class="onoffswitch-checkbox" id="publicoffswitch" <?php if($user->publiclisting == 0) {echo "checked";}?> />
+										<input type="checkbox" name="publiclisting" class="onoffswitch-checkbox" id="publicoffswitch" <?php #if($user->publiclisting == 0) {echo "checked";}?> />
 										<label class="onoffswitch-label" for="publicoffswitch">
 											<span class="onoffswitch-inner"></span>
 											<span class="onoffswitch-switch"></span>
@@ -325,7 +325,7 @@
 							</div>
 						</form>
 					</div>
-				</div>
+				</div> -->
 			<?php } ?>
 		</div>
 	<?php } ?>
@@ -503,9 +503,6 @@
 		</div>
 	</div>
 </div>
-
-</body>
-</html>
 
 <script>
 	function getUserAjax() {

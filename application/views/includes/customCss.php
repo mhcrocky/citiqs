@@ -21,7 +21,6 @@
 <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/hotel-page.css">
 <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/timeline-page.css">
 <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/registerbusiness.css">
-
 <?php } elseif ($this->view === 'check') { ?>
 <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/check.css">
 <?php } elseif ($this->view === 'profile') { ?>
@@ -46,12 +45,8 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 <?php } elseif ($this->view === 'sendbags') { ?>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
-<?php } elseif ($this->view === 'show_floorplan') { ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/floorplan/assets/plugins/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/floorplan/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/floorplan/assets/css/main.css">
-<?php } elseif ($this->view === 'edit_floorplan') { ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/floorplan/assets/plugins/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/floorplan/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/floorplan/assets/css/main.css">
+<?php } elseif ($this->view === 'nolabels') { ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/hotel-page.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/timeline-page.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/nolabaels.css">
 <?php } ?>

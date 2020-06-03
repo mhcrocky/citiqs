@@ -55,7 +55,7 @@
 					<a href="<?php echo $this->baseUrl; ?>#"></a>
 					<a href="<?php echo $this->baseUrl; ?>profilemenu"></a>
 					<a href="#" id='modal-button'></a>
-					<a href="<?php echo $this->baseUrl; ?>lostandfoundlist">BACK</a>
+					<a href="<?php echo $_SERVER['HTTP_REFERER']; ?>">BACK</a>
                 <?php } ?>
             </div>
             <div class="hamburger-menu" id="hamburger-menu">

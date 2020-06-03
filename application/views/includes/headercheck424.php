@@ -5,7 +5,6 @@
 	<title><?php echo $pageTitle ? $pageTitle : 'TIQS | LOST AND FOUND'; ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	<meta charset="UTF-8" />
-<!--	<script src="--><?php //echo $this->baseUrl; ?><!--assets/home/js/jquery.min.js"></script>-->
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/jspdf.min.js"></script>
 
 	<link rel="shortcut icon" href="<?php echo $this->baseUrl; ?>assets/home/images/tiqsiconlogonew.png" />

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="<?php echo $_SESSION['site_lang']; ?>">
 <head>
-	<title><?php echo $pageTitle ? $pageTitle : 'TIQS | LOST AND FOUND'; ?></title>
+	<title><?php echo $pageTitle ? $pageTitle : 'TIQS | SHOP'; ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	<meta charset="UTF-8" />
 
@@ -36,6 +36,42 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/cookies.js"></script>
 	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>
+	<script>
+		$("#dhl-button").click(function() {
+			$('html,body').animate(
+				{scrollTop: $("#dhl-section").offset().top},
+				'slow'
+			);
+		});
+
+		$("#who-button").click(function() {
+			$('html,body').animate(
+				{scrollTop: $("#who-section").offset().top},
+				'slow'
+			);
+		});
+
+		$("#how-button").click(function() {
+			$('html,body').animate(
+				{scrollTop: $("#how-section").offset().top},
+				'slow'
+			);
+		});
+
+		$("#packages-button").click(function() {
+			$('html,body').animate(
+				{scrollTop: $("#packages-section").offset().top},
+				'slow'
+			);
+		});
+
+		$("#hit-button").click(function() {
+			$('html,body').animate(
+				{scrollTop: $("#hit-section").offset().top},
+				'slow'
+			);
+		});
+	</script>
 </head>
 <?php if ($this->view === 'map') {?>
 <body onload="getLocation()">
@@ -47,15 +83,20 @@
 		<a href="<?php echo base_url(); ?>start" class="nav-logo">
 			<img src="<?php echo base_url(); ?>assets/home/images/tiqslogonew.png" alt="">
 		</a>
-		<div class="header-menu" id="header-menu" align="right">
+		<div class="header-menu" id="header-menu" style="text-align:right">
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>info_spot#why-section" id='why-button'>WHY TIQS</a>
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>info_spot#how-section" id='how-button'>HOW?</a>
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>info_spot#who-section" id='who-button'>WHO?</a>
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>info_spot#package-section" id='packages-button'>PRICING</a>
+			<?php if (!isset($_SESSION['userId'])) { ?>
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>registerbusiness">REGISTER</a>
+			<?php } ?>
 			<a style="color: #E25F2A" href="#" id='modal-button'>choose your language</a>
+			<?php if (!isset($_SESSION['userId'])) { ?>
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>login">LOGIN</a>
-
+			<?php } else { ?>
+			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>logout">LOGOUT</a>
+			<?php } ?>
 		</div>
 		<div class="hamburger-menu" id="hamburger-menu">
 			<div></div>
@@ -64,40 +105,3 @@
 		</div>
 	</nav>
 </header>
-
-<script>
-	$("#dhl-button").click(function() {
-		$('html,body').animate(
-			{scrollTop: $("#dhl-section").offset().top},
-			'slow'
-		);
-	});
-
-	$("#who-button").click(function() {
-		$('html,body').animate(
-			{scrollTop: $("#who-section").offset().top},
-			'slow'
-		);
-	});
-
-	$("#how-button").click(function() {
-		$('html,body').animate(
-			{scrollTop: $("#how-section").offset().top},
-			'slow'
-		);
-	});
-
-	$("#packages-button").click(function() {
-		$('html,body').animate(
-			{scrollTop: $("#packages-section").offset().top},
-			'slow'
-		);
-	});
-
-	$("#hit-button").click(function() {
-		$('html,body').animate(
-			{scrollTop: $("#hit-section").offset().top},
-			'slow'
-		);
-	});
-</script>
