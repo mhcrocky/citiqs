@@ -121,30 +121,52 @@
             return $date;      
         }
 
-    // public static function resetArrayByKey(array $array = [], string $resetKey): array
-    // {
-    //     if (empty($arrays)) return [];
-    //     $reset = [];
-    //     foreach($arrays as $key => $value) {
-    //         if (!isset($reset[$value[$resetKey]])) {
-    //             $reset[$value[$resetKey]] = [];                    
-    //         }                
-    //         $reset[$value[$resetKey]] = $value;
-    //     }
-    //     return $reset;
-    // }
+        // public static function resetArrayByKey(array $array = [], string $resetKey): array
+        // {
+        //     if (empty($arrays)) return [];
+        //     $reset = [];
+        //     foreach($arrays as $key => $value) {
+        //         if (!isset($reset[$value[$resetKey]])) {
+        //             $reset[$value[$resetKey]] = [];                    
+        //         }                
+        //         $reset[$value[$resetKey]] = $value;
+        //     }
+        //     return $reset;
+        // }
 
-    public static function resetArrayByKeyMultiple(array $arrays, string $key): array
-    {
-        if (empty($arrays)) return [];
-        $reset = [];
-        foreach($arrays as $array) {
-            if (!isset($reset[$array[$key]])) {
-                $reset[$array[$key]] = [];
+        public static function resetArrayByKeyMultiple(array $arrays, string $key): array
+        {
+            if (empty($arrays)) return [];
+            $reset = [];
+            foreach($arrays as $array) {
+                if (!isset($reset[$array[$key]])) {
+                    $reset[$array[$key]] = [];
+                }
+                array_push($reset[$array[$key]], $array);
             }
-            array_push($reset[$array[$key]], $array);
+            return $reset;
         }
-        return $reset;
-    }
+
+        /**
+         * compareTwoDates
+         * 
+         * Checks is first date less or equal to second date. Returns true if it is, else false.
+         *
+         * @param string $firtsDate
+         * @param string $secondDate
+         * @param boolean $equal
+         * @return boolean
+         */
+        public static function compareTwoDates(string $firtsDate, string $secondDate, bool $equal = true): bool
+        {
+            $firtsDate = strtotime($firtsDate);
+            $secondDate = strtotime($secondDate);
+
+            if ($equal) {
+                return ($firtsDate <= $secondDate);
+            }
+            return ($firtsDate < $secondDate);
+            
+        }
 
     }
