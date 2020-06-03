@@ -1,0 +1,467 @@
+/* SECTION VIDEO */
+
+.section-video{
+
+	position: relative;
+
+	background-color: #2c2c2c;
+
+/*	padding-bottom: 80px;*/
+
+	overflow-y: hidden;
+
+}
+
+
+
+.video-content{
+
+	display: flex;
+
+	justify-content: center;
+
+	align-items: flex-start;
+
+}
+
+
+
+#frame{
+
+	width: calc(100vw - 250px);
+
+
+
+}
+
+
+
+.thumbnail-video{
+
+	list-style-type: none;
+
+	padding:0;
+
+	margin: 0;
+
+	height: auto;
+
+	overflow-y: scroll;	
+
+	align-self: stretch;
+
+	position: absolute;
+
+    top: 0;
+
+    right: 0;
+
+    width: 50%;
+
+	background-color: #2c2c2c;
+
+}
+
+
+
+.video-link{
+
+	display: flex;
+
+    align-items: center;
+
+/*	margin-bottom: 15px;*/
+
+	padding: 15px 15px 15px;
+
+	border-bottom: 1px solid #ffffff2b;
+
+	cursor: pointer;
+
+	transition: all 0.3s;
+
+}
+
+
+
+.video-link:hover{
+
+	background-color: #4d4d4d;
+
+}
+
+
+
+.video-link:hover img{
+
+	transform:scale(1.05);transition: all 0.3s;
+
+}
+
+
+
+/*.video-link:first-child{
+
+	padding-top: 0;
+
+}*/
+
+
+
+.video-link p{
+
+	color: #fff;
+
+	font-weight: bold;
+
+	font-family: 'caption-bold', sans-serif;
+
+	margin-left: 15px;
+
+}
+
+
+
+.video-link img{
+
+	max-width: 150px;
+
+}
+
+
+
+/*::-webkit-scrollbar {*/
+
+/*  width: 0px;*/
+
+/*}*/
+
+
+
+.thumbnail-video::-webkit-scrollbar {
+
+  width: 8px;
+
+}
+
+
+
+/* Track */
+
+::-webkit-scrollbar-track {
+
+  background: #ffffff00;
+
+}
+
+
+
+.thumbnail-video::-webkit-scrollbar-track {
+
+  background: #ffffff38;
+
+}
+
+
+
+/* Handle */
+
+.thumbnail-video::-webkit-scrollbar-thumb {
+
+  background: #ffffff;
+
+}
+
+
+
+/* Handle on hover */
+
+.thumbnail-video::-webkit-scrollbar-thumb:hover {
+
+  background: #555;
+
+}
+
+
+
+@media only screen and (max-width: 1288px){
+
+	
+
+	#frame{
+
+		width: 65% !important;
+
+	}
+
+	
+
+	.thumbnail-video{
+
+		width: 35%;
+
+	}
+
+	
+
+	.video-link img{
+
+		max-width: 140px;
+
+	}
+
+}
+
+
+
+@media only screen and (max-width: 1024px){
+
+	
+
+	.section-video{
+
+		max-height: calc(100% + 400px) !important;
+
+	}
+
+	
+
+	#frame{
+
+		width: 100% !important;
+
+		height: 100% !important;
+
+	}
+
+	
+
+	.thumbnail-video{
+
+		width: 100%;
+
+		max-height: 250px !important;
+
+		position: relative;
+
+	}
+
+}
+
+
+
+@media only screen and (max-width: 460px){
+
+	
+
+	.video-link img{
+
+		max-width: 100px;
+
+	}
+
+}
+
+
+
+
+
+
+
+/*.modal {*/
+
+/*  display: none; !* Hidden by default *!*/
+
+/*  position: fixed; !* Stay in place *!*/
+
+/*  z-index: 1; !* Sit on top *!*/
+
+/*  left: 0;*/
+
+/*  top: 0;*/
+
+/*  width: 100%; !* Full width *!*/
+
+/*  height: 100%; !* Full height *!*/
+
+/*  overflow: auto; !* Enable scroll if needed *!*/
+
+/*  background-color: rgb(0,0,0); !* Fallback color *!*/
+
+/*  background-color: rgba(0,0,0,0.4); !* Black w/ opacity *!*/
+
+/*	font-family: 'camption-bold', sans-serif;*/
+
+/*}*/
+
+
+
+
+
+/* SECTION FAQ */
+
+
+
+.section-4{
+
+	padding: 50px 40px;
+
+	margin-top: 71px;
+
+}
+
+
+
+
+
+@media only screen and (max-width: 770px){
+
+.section-4 {
+
+    margin-top: 54px;
+
+}
+
+}
+
+.faq-content{
+
+	max-width: 700px;
+
+	margin: auto;
+
+	font-family: 'camption-bold', sans-serif;
+
+}
+
+
+
+.faq-content .heading{
+
+	color: #fff;
+
+	text-align: center;
+
+}
+
+
+
+.accordion {
+
+  background-color: transparent;
+
+  color: #fff;
+
+  cursor: pointer;
+
+  padding: 18px;
+
+  width: 100%;
+
+  text-align: left;
+
+  border: none;
+
+  outline: none;
+
+  transition: 0.4s;
+
+  border: 1px solid #ff4a00;
+
+  border-radius: 4px;
+
+  font-weight: bold;
+
+  font-size: 20px;
+
+
+
+}
+
+
+
+.accordion.active{
+
+	border-bottom-right-radius: 0;
+
+	border-bottom-left-radius: 0;
+	background: #d40511;
+
+}
+
+
+
+button.accordion:after {
+
+    content: '\002B';
+
+    color: #fff;
+
+    font-weight: bold;
+
+    float: right;
+
+	margin-left: 5px;
+
+}
+
+
+
+button.accordion.active:after {
+
+    content: "\2212";
+
+}
+
+
+
+.active, .background-orange button:hover {
+
+   background-color: #ec703e;
+
+}
+
+
+
+.active, .background-yankee button:hover {
+
+    background-color: #18386663;
+
+}
+
+
+
+.panel {
+
+  padding: 0 18px;
+
+  background-color: transparent;
+
+  max-height: 0;
+
+  overflow: hidden;
+
+  transition: max-height 0.2s ease-out;
+
+  margin-bottom: 20px;
+
+  color: #fff;
+
+}
+
+
+
+@media only screen and (max-width: 460px){
+
+	
+
+	.section-4 {
+
+   		padding: 50px 15px;
+
+	}
+
+	
+
+}
+

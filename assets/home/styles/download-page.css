@@ -1,0 +1,133 @@
+/* CONTACT PAGE */
+.main-wrapper-contact{
+	margin-top: 0px;
+	min-height: auto;
+}
+
+.contact-form-section-2{
+	margin-top: 71px;
+}
+
+.contact-form-section-3{
+	padding: 0px;
+}
+
+
+#contactForm p{
+	font-family: 'caption-light', sans-serif; 
+	padding: 10px;
+}
+
+#contactForm .flex-column{
+	width: 100%; 
+}
+
+#contactForm .form-control{
+	border-radius: 50px; 
+	border:none
+}
+
+#contactForm select{
+	border-radius: 50px; 
+	border:none;
+	width: 100%;
+	padding: 7px 12px;
+	background-color: white;
+	color:#555;
+}
+
+#contactForm .submit-form{
+	margin-top: 10px;
+	margin-bottom: 50px;
+}
+
+.image-contact-0{
+	clip-path: polygon(51% 12%, 85% 1%, 100% 0, 100% 59%, 75% 88%, 0 100%, 0 100%, 16% 41%, 0 12%);
+    -webkit-clip-path: polygon(51% 12%, 85% 1%, 100% 0, 100% 59%, 75% 88%, 0 100%, 0 100%, 16% 41%, 0 12%);
+	max-height: 700px;
+	background-image: url('https://tiqs.com/lostandfound/assets/home/images/nl-brochure.jpg');
+	background-size: cover;
+    background-position: center;
+	height: 100%;
+	padding: 50px 0 !important;
+}
+
+.image-contact-1{
+	clip-path: polygon(51% 12%, 85% 1%, 100% 0, 100% 59%, 75% 88%, 0 100%, 0 100%, 16% 41%, 0 12%);
+	-webkit-clip-path: polygon(51% 12%, 85% 1%, 100% 0, 100% 59%, 75% 88%, 0 100%, 0 100%, 16% 41%, 0 12%);
+	max-height: 700px;
+	background-image: url('https://tiqs.com/lostandfound/assets/home/images/sticker2.jpg');
+	background-size: cover;
+	background-position: center;
+	height: 100%;
+	padding: 50px 0 !important;
+}
+
+.image-contact-2{
+	clip-path: polygon(51% 12%, 85% 1%, 100% 0, 100% 59%, 75% 88%, 0 100%, 0 100%, 16% 41%, 0 12%);
+	-webkit-clip-path: polygon(51% 12%, 85% 1%, 100% 0, 100% 59%, 75% 88%, 0 100%, 0 100%, 16% 41%, 0 12%);
+	max-height: 700px;
+	background-image: url('https://tiqs.com/lostandfound/assets/home/images/emailresponse3.jpg');
+	background-size: cover;
+	background-position: center;
+	height: 100%;
+	padding: 50px 0 !important;
+}
+
+
+.image-contact-green{
+	clip-path: polygon(51% 12%, 85% 1%, 100% 0, 100% 59%, 75% 88%, 0 100%, 0 100%, 16% 41%, 0 12%);
+	-webkit-clip-path: polygon(51% 12%, 85% 1%, 100% 0, 100% 59%, 75% 88%, 0 100%, 0 100%, 16% 41%, 0 12%);
+	max-height: 700px;
+	background-image: url('https://tiqs.com/lostandfound/assets/home/images/green2.jpg');
+	background-size: cover;
+	background-position: center;
+	height: 100%;
+	padding: 50px 0 !important;
+}
+
+/* section 2 */
+
+.section-2 .image-contact{
+	min-height: 500px;
+}
+
+.contact-text{
+	display: flex;
+	justify-content: center;
+}
+
+.contact-text p{
+	font-size: 27px;
+	font-family: 'caption-bold', sans-serif;
+	text-align: left;
+}
+
+@media only screen and (max-width: 1024px){
+	.contact-text-box{
+		padding: 50px;
+	}
+}
+
+@media only screen and (max-width: 770px){
+	.hide-mobile{
+		display: none;
+	}
+	
+	.main-wrapper-contact .width-650{
+		padding-bottom:0;
+	}
+	
+	.contact-text-box{
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+}
+
+@media only screen and (max-width: 460px){
+	.contact-text-box{
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+}
+

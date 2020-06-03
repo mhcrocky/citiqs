@@ -1,0 +1,76 @@
+.panel-border.panel-success .panel-heading {
+    border-color: #F15A25 !important;
+    color: #F15A25 !important;
+}
+.panel-border.panel-warning .panel-heading {
+    border-color: #F15A25 !important;
+    color: #F15A25 !important;
+}
+.navbar-default {
+    /*background-color: #000000;
+     border-bottom: solid 5px #fd5723;*/
+         background-color: #fd5723;
+    border-bottom: solid 0px #ff5722;
+}
+.side-menu {
+    background: #222D32;
+}
+#sidebar-menu > ul > li > a {
+    color: #ffffff;
+    display: block;
+    padding: 8px 20px;
+    margin: 0px 0px;
+    border-bottom: 1px solid #30343C;
+    border-left: 0px solid transparent;
+}
+#sidebar-menu > ul > li > a.active {
+    background: #f4f8fb !important;
+        border-left: 3px solid #42424c;
+        color: #fd5723 !important;
+}
+.text-success {
+    color: #fd5723;
+}
+.btn-success, .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .btn-success.focus, .btn-success:active, .btn-success:focus, .btn-success:hover, .open > .dropdown-toggle.btn-success {
+    background-color: #00c0ef !important;
+    border: 1px solid #00acd6 !important;
+}
+.btn-default, .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .btn-default.focus, .btn-default:active, .btn-default:focus, .btn-default:hover, .open > .dropdown-toggle.btn-default {
+    background-color: #42424c  !important;
+    border: 1px solid #1c1c1d  !important;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover, .tabs-vertical > li.active > a, .tabs-vertical > li.active > a:focus, .tabs-vertical > li.active > a:hover {
+    color: #fd5723 !important;
+}
+.panel-success > .panel-heading {
+    background-color: #f9dfd7 !important;
+}
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: #42424c;
+    border-color: #1c1c1d;
+}
+a {
+    color: #fd5723;
+    text-decoration: none;
+}
+.text-success {
+    color: #fd5723;
+}
+.widget-bg-color-icon .bg-icon-success {
+    background-color: rgba(109, 109, 113, 0.09);
+    border: 1px solid #fd5723;
+}
+.button-menu-mobile {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 60px;
+    padding: 0px 15px;
+}
+.button-menu-mobile:hover {
+  color: #b3340c;
+}
+.uname-error{
+    color:red;
+}

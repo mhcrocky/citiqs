@@ -1,0 +1,192 @@
+/* pricing section */
+:root {
+  --light: #fc8a29;
+  --darker: #cb742b;
+  --dark: #9a3b0e;
+}
+
+
+
+.pricing-section{
+	padding: 40px 15px;
+/*	background:orange;*/
+	font-family: 'caption', campton-light;
+}
+
+.pricing-row{
+	display: flex;
+	justify-content: space-between;
+	max-width: 1000px;
+    width: 100%;
+	margin: auto;
+	align-items: center;
+}
+
+/* pricing component */
+
+.pricing-component{
+	max-width: 320px;
+	width: 32%;
+	font-family: 'caption-light', campton-light;
+    border-radius: 8px;
+    overflow: hidden;
+	height: 100%;
+}
+
+.pricing-component-bigger{
+	
+}
+
+/* pricing component header */
+
+.pricing-component-header{
+	background: black;
+	color: white;
+	padding: 20px;
+}
+
+.pricing-component-header p{
+	margin: 0;
+	font-size: 30px;
+
+}
+
+.pricing-component-header i{
+	font-style: normal;
+	font-family: FontAwesome;
+	font-size: 30px;
+	margin-right: 10px;
+}
+/* pricing component body */
+
+.pricing-component-body{
+	background: #f2f2f2;
+}
+
+/* pricing component top content */
+
+.pricing-body-top-content{
+	background: #262626;
+    box-shadow: 0px 3px 5px 0px #000000a6;
+	text-align: center;
+    color: white;
+	padding: 25px 15px;
+}
+
+.pricing-body-top-content h6{
+	margin-top: 0;
+}
+
+.pricing-body-top-content h1{
+	margin-top: 0;
+	font-size: 48px;
+	font-weight: 300;
+}
+
+.pricing-body-top-content small{
+	color:#a0a0a091;
+}
+
+
+.font-light{
+	color: var(--light);
+}
+
+.font-dark{
+	color: var(--dark);
+}
+
+.font-darker{
+	color: var(--darker);
+}
+
+/* pricing component body main */
+
+.pricing-body-main{
+	padding-top: 20px;
+	padding-bottom: 15px;
+}
+
+.pricing-details-list{
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+	padding: 0 20px;
+}
+
+.pricing-details-list a{
+	margin: 0;
+	color: black;
+	display: block;
+	text-align: center;
+	padding: 10px 0;
+	border-bottom: 1px solid #e2e2e2;
+	text-decoration: none;
+}
+
+.unavailable{
+	color: #c7c7c7 !important;
+}
+
+.pricing-list-bold{
+	font-weight: bold;
+}
+
+/* pricing compoentn footer */
+
+.pricing-component-footer{
+	background: yellow;
+	text-align: center;
+}
+
+.pricing-footer-light{
+	background: var(--light);
+}
+
+.pricing-footer-darker{
+	background: var(--darker);
+}
+
+.pricing-footer-dark{
+	background: var(--dark);
+}
+
+.pricing-component-footer a{
+	color: white;
+	text-decoration: none;
+	padding: 20px 10px;
+	display: block;
+	font-size: 20px;
+}
+
+.pricing-footer-bigger a{
+	padding: 35px 10px;
+	font-size: 24px;
+}
+
+@media only screen and (max-width: 768px) {
+	
+	.pricing-row{
+		flex-direction: column;
+		align-items: center;
+	}
+	
+	.pricing-component{
+		max-width: 560px;
+		width: 100%;
+	}
+	
+	.pricing-component:not(:last-child){
+		margin-bottom: 20px;
+	}
+	
+	.pricing-body-main{
+		padding:0;
+	}
+	
+	.pricing-details-list{
+		padding-top: 15px;
+		padding-bottom: 10px;
+	}
+}
+

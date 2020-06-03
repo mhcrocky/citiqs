@@ -1,0 +1,20 @@
+/* change style balloon */
+
+.tooltip-inner {
+    background-color:#515251; !important;
+    color: #FFFFFF;
+    border: 3px solid #ff4f00;
+    padding: 10px;
+    font-size: 12px;
+}
+
+/* change style arrow */
+.bs-tooltip-auto[x-placement^=bottom] .arrow::before, .bs-tooltip-bottom .arrow::before {
+    border-bottom-color: #515251;
+}
+.tooltip.tooltip.bottom .tooltip-arrow,
+.tooltip.tooltip.bottom-left .tooltip-arrow,
+.tooltip.tooltip.bottom-right .tooltip-arrow{border-bottom-color: #ff4f00;}
+.tooltip.top .tooltip-arrow {border-top-color: #ff4f00;}
+.tooltip.left .tooltip-arrow {border-left-color: #ff4f00;}
+.tooltip.right .tooltip-arrow {border-right-color:#ff4f00;}

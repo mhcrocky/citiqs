@@ -1,0 +1,12 @@
+.flatpickr-calendar{
+    font-family: 'caption-light', sans-serif !important;
+	z-index: 10 !important;
+}
+.flatpickr-input{
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    border-radius: var(--button-radius);
+    width: 100%;
+    font-family: 'caption-light', sans-serif;
+    outline: none;
+}

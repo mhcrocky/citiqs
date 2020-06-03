@@ -1,0 +1,132 @@
+.chous {
+	width: 180px;
+	height: 50px;
+	border-radius: 4px;
+	text-align: center;
+	margin: 25px;
+	cursor: pointer;
+	display: block;
+	font: 14px/50px Tahoma;
+	transition: all 0.18s ease-in-out;
+	border: 1px solid #4FD666;
+	background: linear-gradient(to top right, #3EC97A, #69EA49 20%, rgba(255, 255, 255, 0) 80%, rgba(255, 255, 255, 0)) top right/500% 500%;
+	color: #4FD666;
+}
+
+.chous:hover {
+	color: white;
+	background-position: bottom left;
+}
+
+.my {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+#floor_image img {
+	max-width: 100%;
+}
+
+.canvas_row {
+	height: calc(100vh - 196px);
+	max-height: 700px !important;
+}
+
+
+.create_floor .btn{
+	width: 180px;
+	height: 50px;
+	border-radius: 4px;
+	text-align: center;
+	margin: 25px;
+	cursor: pointer;
+}
+
+.colorpicker-input-addon i {
+	width: 36px;
+	height: 36px;
+	border-radius: .25rem;
+}
+
+span.input-group-text.colorpicker-input-addon {
+	padding: 0px;
+}
+
+.floorplan_row {
+	cursor: pointer;
+}
+
+
+/*Scroll bar nav*/
+/*.canvas-container::-webkit-scrollbar {*/
+/*	width: auto !important;*/
+/*	height: auto !important;*/
+
+/*}*/
+
+/*.canvas-container {*/
+/*	scrollbar-width: auto !important;*/
+/*	scrollbar-height: auto !important;*/
+/*}*/
+
+/*::-webkit-scrollbar {*/
+/*	-webkit-appearance: none;*/
+/*	-webkit-overflow-scrolling: auto;*/
+
+/*}*/
+
+/*!* Track *!*/
+/*.canvas-container::-webkit-scrollbar-track {*/
+/*	-webkit-box-shadow: none;*/
+/*	-webkit-border-radius: 0;*/
+/*	border-radius: 0px;*/
+/*	background: #cccccc;*/
+/*}*/
+
+/*!* Handle *!*/
+/*.canvas-container::-webkit-scrollbar-thumb {*/
+/*	-webkit-border-radius: 0;*/
+/*	border-radius:0;*/
+/*	background: #505050;*/
+/*	-webkit-box-shadow:none;*/
+/*}*/
+/*.canvas-container::-webkit-scrollbar-thumb:window-inactive {*/
+/*	background: #acacac;*/
+/*}*/
+
+/*.canvas-container::-webkit-scrollbar {*/
+/*	all:unset;*/
+/*}*/
+
+::-webkit-scrollbar {
+	-webkit-appearance: none;
+	-webkit-overflow-scrolling: auto
+}
+::-webkit-scrollbar:vertical {
+	width: 12px;
+}
+::-webkit-scrollbar:horizontal {
+	height: 12px;
+}
+::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, .5);
+	border-radius: 10px;
+	border: 2px solid #ffffff;
+}
+::-webkit-scrollbar-track {
+	border-radius: 10px;
+	background-color: #ffffff;
+}
+
+.canvas-container {
+	max-width: calc(100vw - 30px);
+	overflow: scroll !important;
+	max-height: 700px;
+	-webkit-overflow-scrolling: auto;
+}
+
+

@@ -1,0 +1,26 @@
+input[type="checkbox"] {
+    zoom: 3;
+}
+.selectWrapper {
+    border-radius: 50px;
+    overflow: hidden;
+    background: #eec5a7;
+    border: 0px solid #ffffff;
+    padding: 5px;
+    margin: 0px;
+}
+.selectBox {
+    background: #eec5a7;
+    width: 100%;
+    height: 25px;
+    border: 0px;
+    outline: none;
+    padding: 0px;
+    margin: 0px;
+}
+@media screen and (max-width: 680px) {
+    .columns .column {
+        flex-basis: 100%;
+        margin: 0 0 5px 0;
+    }
+}

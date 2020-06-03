@@ -1,0 +1,60 @@
+/* translation table */
+
+#translation-table{
+	border: 1px solid #dfdfdf;
+	border-collapse: collapse;
+}
+
+#translation-table th, #translation-table td{
+	text-align: left;
+	padding: 5px;
+	font-family: 'campiton-light', sans-serif;
+	border: 1px solid #dfdfdf;
+	border-collapse: collapse;
+	width: 50%
+}
+
+#translation-table th{
+	padding: 8px 5px;
+}
+
+.translation-edit-field{
+	padding: 0 5px 0 5px; !important;
+
+}
+
+.translation-edit-field input{
+	font-size: 16px;
+	padding: 3px 2px;
+	color: #000;
+	margin-right: 10px;
+	width: 90%;
+}
+
+.active-translate input{
+	background-color: #f0efef !important;
+    border: 1px solid #00000038 !important;
+}
+
+.translation-edit-field .submit-translate{
+	visibility: hidden;
+}
+
+.active-translate .submit-translate{
+	visibility: visible;
+}
+
+.submit-translate{
+    border: none;
+    background-color: #29bd29;
+    color: #fff;
+    padding: 5px 10px;
+	border-radius: 50px;
+    cursor: pointer;
+    vertical-align: top;
+}
+
+.translation-edit-field input.disabled{
+	background: transparent;
+	border:1px solid transparent;
+}

@@ -1,0 +1,361 @@
+@charset "utf-8";
+.fpdf-designer-body {
+    background: #f3f3f3;
+}
+
+#fpdf_designer_header {
+    background: #fff;
+    box-shadow: 0 0 5px #333;
+    max-height: 40px;
+    min-height: 40px;
+    z-index: 2;
+    justify-content: left;
+    align-items: center;
+    display: flex;
+    font-size: 18px;
+}
+
+#fpdf_designer_content {
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+#fpdf_designer_paper_template {
+    box-shadow: 0 0 5px #333;
+    position: relative;
+    background: repeating-linear-gradient( 45deg, rgba(0, 0, 0, 0.01), rgba(0, 0, 0, 0.01) 10px, rgba(0, 0, 0, 0.03) 10px, rgba(0, 0, 0, 0.03) 20px);
+    background: #fff;
+}
+
+#fpdf_designer_paper_template #fpdf_designer_area {
+    background: #fff!important;
+    width: 100%;
+    height: 100%;
+    border: 1px dashed #d7d7d7;
+}
+
+#fpdf_designer_paper_template .disbale-link {
+    pointer-events: none;
+}
+
+#fpdf_designer_output {
+    background-color: #fff;
+    max-width: 550px;
+}
+
+#fpdf_designer_quickhelp {
+    max-width: 550px;
+}
+
+#fpdf_designer_output .output-header,
+#fpdf_designer_quickhelp .output-header {
+    font-size: 16px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+    height: 38px;
+    line-height: 38px;
+}
+
+#vertical_helper_line {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 1px;
+    background-color: #333;
+}
+
+#horizontal_helper_line {
+    position: fixed;
+    left: 0;
+    width: 100vw;
+    height: 1px;
+    background-color: #333;
+}
+
+#show_output_button {
+    left: -20px;
+    top: 0;
+}
+
+
+/* ------------------------------ */
+
+
+/* HELPERS */
+
+
+/* ------------------------------ */
+
+.align-flex {
+    justify-content: center;
+    align-self: center;
+}
+
+.centered-abs-axis-xy {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+hr {
+    width: 100%;
+    height: 100%;
+}
+
+pre code {
+    word-break: break-all!important;
+    white-space: pre-wrap!important;
+}
+
+.element-hide {
+    display: none!important;
+}
+
+.show-fpdf-editor-display-note {
+    display: none;
+}
+
+.hidden-color-box {
+    background: transparent;
+    border: none;
+}
+
+@media(max-width:1015px) {
+    .show-fpdf-editor {
+        display: none;
+    }
+    .show-fpdf-editor-display-note {
+        display: block;
+    }
+}
+
+
+/* ------------------------------ */
+
+
+/* ELEMENTS */
+
+
+/* ------------------------------ */
+
+#fpdf_designer_elements {
+    background: #ccc;
+    z-index: 10;
+}
+
+.fdpf-element {
+    padding: 0 5px 2px;
+    border-radius: 2px;
+    border: 1px solid #333;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 5px;
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+.fpdf_in_element {
+    position: absolute;
+    font-size: 15.6px;
+    background-color: transparent;
+    z-index: 3;
+    top: 0;
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently supported by Chrome and Opera */
+    padding: 0 4px 0 4px;
+    margin: 0px;
+    line-height: 1;
+}
+
+.fpdf_in_element .element-helper {
+    border-radius: 2px;
+    height: 18px;
+    width: 20px;
+    background: #666;
+    color: #fff;
+    border: 1px solid #eee;
+    position: absolute;
+    left: -15px;
+    top: -15px;
+    font-size: 10px;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.fpdf_in_element:active:hover {
+    cursor: grabbing;
+}
+
+.fpdf_in_element:hover {
+    cursor: move;
+}
+
+.fpdf_cell,
+.fpdf_multicell,
+.fpdf_text,
+.fpdf_line,
+.fpdf_rect,
+.fpdf_link,
+.fpdf_image,
+.fpdf_setfillcolor,
+.fpdf_setdrawcolor,
+.fpdf_settextcolor {
+    right: 0;
+    left: 0;
+}
+
+.fpdf_line {
+    width: 193px;
+}
+
+.fpdf_line hr {
+    margin: 1px 0 1px 0;
+    background-color: #333;
+}
+
+.fpdf_link {
+    color: #1C6AE1;
+}
+
+.fpdf_multicell span {
+    white-space: pre-line;
+    overflow-wrap: break-word;
+    -webkit-hyphens: manual;
+    -moz-hyphens: manual;
+    -ms-hyphens: manual;
+    hyphens: manual;
+}
+
+.fpdf_write {
+    position: relative;
+}
+
+.fpdf_image {
+    background: url('../images/placeholder-image.jpg');
+    background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 189px;
+    height: 150px;
+    font-size: 9px;
+}
+
+.fpdf_image span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 100%;
+    display: inline-block;
+}
+
+.fpdf_setfillcolor,
+.fpdf_setdrawcolor,
+.fpdf_settextcolor {
+    color: #ccc;
+    z-index: 2;
+}
+
+.fpdf_ln {
+    color: #ccc;
+    z-index: 2;
+    position: relative;
+}
+
+.fpdf_rect {
+    border: 1px solid #333;
+    width: 113px;
+    height: 75px;
+    z-index: 1;
+}
+
+.fpdf_text {
+    line-height: 1.35;
+    padding: 0;
+    white-space: nowrap;
+    letter-spacing: 0.2px;
+    clip-path: inset(-15px 0 0 -15px);
+}
+
+.fpdf_line {
+    padding: 0;
+    margin-left: -1px;
+}
+
+
+/* ------------------------------ */
+
+
+/* RESIZER */
+
+
+/* ------------------------------ */
+
+.fpdf_resizable .resizers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid #333;
+    box-sizing: border-box;
+}
+
+.fpdf_resizable .resizers .resizer {
+    width: 10px;
+    height: 10px;
+    border-radius: 0;
+    /*magic to turn square into circle*/
+    background: #333;
+    position: absolute;
+}
+
+.fpdf_resizable .resizers .resizer.top-left {
+    left: -5px;
+    top: -5px;
+    cursor: nwse-resize;
+    /*resizer cursor*/
+}
+
+.fpdf_resizable .resizers .resizer.top-right {
+    right: -5px;
+    top: -5px;
+    cursor: nesw-resize;
+}
+
+.fpdf_resizable .resizers .resizer.bottom-left {
+    left: -5px;
+    bottom: -5px;
+    cursor: nesw-resize;
+}
+
+.fpdf_resizable .resizers .resizer.bottom-right {
+    right: -5px;
+    bottom: -5px;
+    cursor: nwse-resize;
+}
+
+#fpdf_designer_fields_masks {
+    background-color: #fafafa;
+}
