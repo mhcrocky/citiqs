@@ -43,3 +43,6 @@ application/logs/
 
 ##Constants
 application/config/constants.php
+
+##
+db
