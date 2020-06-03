@@ -238,5 +238,12 @@ $route['switchlang/(:any)'] = "languageswitcher/switchLang/$1";
 $route['ticket/(:any)'] = "appointment/print/$1";
 $route['userCalimedlisting'] = 'user/userCalimedlisting';
 $route['send'] = "send/index/";
+
+// WAREHOUSE
+$route['warehouse'] = "warehouse/index";
+$route['product_categories'] = "warehouse/productCategories";
+$route['products'] = "warehouse/products";
+$route['orders'] = "warehouse/orders";
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

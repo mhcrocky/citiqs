@@ -20,7 +20,7 @@ class Loggedin extends BaseControllerWeb
 
 	public function index()
 	{
-		$this->global['pageTitle'] = 'TIQS : SPOT';
+		$this->global['pageTitle'] = 'TIQS : SHOP';
 		$subscriptionWhat = ['id', 'short_description', 'description', 'ROUND(amount, 2) AS amount', 'active', 'tiqssendcom', 'backOfficeItemId', 'type'];
 		$data = [
 			'subscriptions' => Utility_helper::resetArrayByKeyMultiple($this->subscription_model->select($subscriptionWhat), 'type')

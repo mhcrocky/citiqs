@@ -70,7 +70,7 @@
 					</div> -->
 					<div style="margin-left: -20px; text-align:center">
 						<!-- <a class="button button-orange mb-25" id="show-timeline-video-4">LEARN MORE VIDEO</a> -->
-						<a href="appointmentSetup" target="_self" class="button button-orange mb-25"><?=$this->language->line('NOLABELS-B100011131A',"GOTO SETTINGS");?></a>
+						<a href="warehouse" target="_self" class="button button-orange mb-25"><?=$this->language->line('NOLABELS-B100011131B',"GOTO WAREHOUSE");?></a>
 					</div>
 				</div>
 			</div>
