@@ -52,9 +52,14 @@
         {
             $this->global['pageTitle'] = 'TIQS : CATEGOIRES';
 
+            $where['userId'] = intval($_SESSION['userId']);
+            if (isset($_GET['active']) && ($_GET['active'] === '0' || $_GET['active'] === '1')) {
+                $where['active'] = $_GET['active'];
+            }
+
             $data = [
                 'userId' => intval($_SESSION['userId']),
-                'categories' => $this->shopcategories_model->fetch(intval($_SESSION['userId'])),
+                'categories' => $this->shopcategories_model->fetch($where),
             ];
 
             $this->loadViews('warehouse/productCategories', $this->global, $data, null, 'headerWarehouse');
@@ -82,7 +87,7 @@
             if ($this->shopcategories_model->checkIsInserted($data)) {
                 $this->session->set_flashdata('error', 'Insert failed! Role with this name already inserted');
             } elseif ($this->shopcategories_model->setObjectFromArray($data)->create()) {
-                $this->session->set_flashdata('success', 'Role created!');
+                $this->session->set_flashdata('success', 'Category "' . $data['category'] . '" created!');
             } else {
                 $this->session->set_flashdata('error', 'Insert failed! Please try again.');
             }
@@ -108,7 +113,7 @@
                 $this->session->set_flashdata('error', 'Update failed! Please try again.');
             }
 
-            redirect('product_categories');
+            redirect($_SERVER['HTTP_REFERER']);
             return;
         }
     }

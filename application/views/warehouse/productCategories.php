@@ -26,28 +26,42 @@
 			</div>
 			<div class="grid-list-header row">
 				<div class="col-lg-4 col-md-4 col-sm-12 grid-header-heading">
-					<h2>Filter Options</h2>
-				</div><!-- end col 4 -->
-				<div class="col-lg-4 col-md-4 col-sm-12 date-picker-column">
-					<div>
-						<!-- From:-->
-						<div class='date-picker-content'>
-							<input type="text" placeholder="Select from.." data-input class="flatpickr" /> <!-- input is mandatory -->
-						</div>
+					<h2>Categories</h2>
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12">
+					<div class="form-group">
+						<label for="filterCategories">Filter categories:</label>
+						<label class="radio-inline">
+							<input
+								type="radio"
+								name="locationHref"
+								value="<?php echo $this->baseUrl . 'product_categories'; ?>"
+								<?php if (!isset($_GET['active'])) echo 'checked'; ?>
+								onclick="redirect(this)"
+								/>
+							All categories
+					    </label>
+						<label class="radio-inline">
+							<input
+								type="radio"
+								name="locationHref"
+								value="<?php echo $this->baseUrl . 'product_categories?active=1'; ?>"
+								<?php if (isset($_GET['active']) && $_GET['active'] === '1') echo 'checked'; ?>
+								onclick="redirect(this)"
+								/>
+								Active categories
+					    </label>
+						<label class="radio-inline">
+							<input
+								type="radio"
+								name="locationHref"
+								value="<?php echo $this->baseUrl . 'product_categories?active=0'; ?>"
+								<?php if (isset($_GET['active']) && $_GET['active'] === '0') echo 'checked'; ?>
+								onclick="redirect(this)"
+								/>
+								Archived categories
+					    </label>
 					</div>
-					<div>
-						<!-- To:-->
-						<div class='date-picker-content'>
-							<input type="text" placeholder="Select to.." data-input class="flatpickr-to" /> <!-- input is mandatory -->
-						</div>
-					</div>
-				</div><!-- end date picker -->
-
-				<div class="col-lg-4 col-md-4 col-sm-12 search-container">
-					<form class="form-inline">
-						<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success my-2 my-sm-0 button grid-button" type="submit">Search</button>
-					</form>
 				</div>
 
 				<div class="col-lg-4 col-md-4 col-sm-12 search-container">
@@ -56,7 +70,7 @@
 			</div><!-- end grid header -->
 			<!-- SINGLE GIRD ITEM -->
             <?php if (is_null($categories)) { ?> 
-				<p>No categories added.</p>
+				<p>No categories.</p>
             <?php } else { ?>
 				<?php foreach ($categories as $category) { ?>
 					<div class="grid-item">
@@ -127,3 +141,11 @@
 		<!-- end grid list -->
 	</div>
 </div>
+<script>
+	'use strict';
+	function redirect(element) {
+		if (element.value !== window.location.href) {
+			window.location.href = element.value;
+		}
+	}
+</script>

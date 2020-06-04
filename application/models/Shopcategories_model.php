@@ -46,7 +46,7 @@
             return true;
         }
 
-        public function fetch(int $userId): ?array
+        public function fetch(array $where): ?array
         {
             return $this->read(
                 [
@@ -54,9 +54,7 @@
                     $this->table . '.category',
                     $this->table . '.active'
                 ],
-                [
-                    $this->table . '.userId=' => $userId
-                ],
+                $where,
                 [],
                 'order_by',
                 [$this->table . '.category', 'ASC']
