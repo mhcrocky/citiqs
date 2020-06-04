@@ -4,7 +4,6 @@
                 <p class='footer-heading'>Business</p>
                 <a href="APIrequest"><?=$this->language->line('FOOTERSPOT-API1A',"API developers integration tools");?></a>
 				<a href="info_download"><?=$this->language->line('FOOTERSPOT-brochure1A',"More info in this brochure about tiqs SPOT");?></a>
-
             </div>
             <div class="footer-box background-orange">
                 <p class='footer-heading'>Consumer</p>
@@ -38,6 +37,7 @@
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/languageModal.js"></script>
     <?php include_once FCPATH . 'application/views/includes/jsGlobalVariables.php'; ?>
     <?php include_once FCPATH . 'application/views/includes/customJs.php'; ?>
+    <?php include_once FCPATH . 'application/views/includes/alertifySessionMessage.php'; ?>
 </body>
 </html>
 <?php

@@ -45,4 +45,27 @@
             if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
             return true;
         }
+
+        public function fetch(int $userId): ?array
+        {
+            return $this->read(
+                [
+                    'tbl_shop_categories.id AS categoryId',
+                    'tbl_shop_categories.category',
+                    'tbl_shop_categories.active',
+                ],
+                [
+                    'tbl_shop_categories.userId=' => $userId
+                ],
+                [],
+                'order_by',
+                ['tbl_shop_categories.category', 'ASC']
+            );
+        }
+
+        public function checkIsInserted(array $data): bool
+        {
+            $count = $this->read(['id'], ['userId=' => $data['userId'],'category=' => $data['category']]);
+            return $count ? true : false;
+        }
     }

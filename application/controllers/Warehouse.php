@@ -52,7 +52,13 @@
         {
             $this->global['pageTitle'] = 'TIQS : CATEGOIRES';
 
-            $this->loadViews('warehouse/productCategories', $this->global, null, null, 'headerWarehouse');
+            $data = [
+                'userId' => intval($_SESSION['userId']),
+                'categories' => $this->shopcategories_model->fetch(intval($_SESSION['userId'])),
+            ];
+
+            $this->loadViews('warehouse/productCategories', $this->global, $data, null, 'headerWarehouse');
+            return;
         }
 
         public function products(): void
@@ -67,5 +73,21 @@
             $this->global['pageTitle'] = 'TIQS : ORDERS';
 
             $this->loadViews('warehouse/orders', $this->global, null, null, 'headerWarehouse');
+        }
+
+        public function addCategory(): void
+        {
+            $data = $this->input->post(null, true);
+
+            if ($this->shopcategories_model->checkIsInserted($data)) {
+                $this->session->set_flashdata('error', 'Insert failed! Role with this name already inserted');
+            } elseif ($this->shopcategories_model->setObjectFromArray($data)->create()) {
+                $this->session->set_flashdata('success', 'Role created!');
+            } else {
+                $this->session->set_flashdata('error', 'Insert failed! Please try again.');
+            }
+
+            redirect('product_categories');
+            return;
         }
     }

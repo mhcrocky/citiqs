@@ -52,4 +52,7 @@
 <?php } elseif ($this->view === 'nolabels') { ?>
 	<script src='https://www.google.com/recaptcha/api.js' async defer ></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/nolabels.js"></script>
+<?php } elseif ($this->view === 'warehouse/productCategories') { ?>
+	<script src='https://www.google.com/recaptcha/api.js' async defer ></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js"></script>
 <?php } ?>
