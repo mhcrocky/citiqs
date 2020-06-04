@@ -90,4 +90,25 @@
             redirect('product_categories');
             return;
         }
+
+        public function editCategory(): void
+        {
+            $data = Validate_data_helper::validateInteger($this->uri->segment(4)) ?
+                            ['active' => $this->uri->segment(4)] : $this->input->post(null, true);
+
+            $update =   $this
+                        ->shopcategories_model
+                        ->setObjectId(intval($this->uri->segment(3)))
+                        ->setObjectFromArray($data)
+                        ->update();
+
+            if ($update) {
+                $this->session->set_flashdata('success', 'Category "' . $data['category'] . '" updated');
+            } else {
+                $this->session->set_flashdata('error', 'Update failed! Please try again.');
+            }
+
+            redirect('product_categories');
+            return;
+        }
     }

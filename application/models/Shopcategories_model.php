@@ -41,7 +41,7 @@
         {
             if (!count($data)) return false;
             if (isset($data['userId']) && !Validate_data_helper::validateInteger($data['userId'])) return false;
-            if (isset($data['category']) && !Validate_data_helper::validateInteger($data['category'])) return false;
+            if (isset($data['category']) && !Validate_data_helper::validateString($data['category'])) return false;
             if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
             return true;
         }
@@ -50,16 +50,16 @@
         {
             return $this->read(
                 [
-                    'tbl_shop_categories.id AS categoryId',
-                    'tbl_shop_categories.category',
-                    'tbl_shop_categories.active',
+                    $this->table . '.id AS categoryId',
+                    $this->table . '.category',
+                    $this->table . '.active'
                 ],
                 [
-                    'tbl_shop_categories.userId=' => $userId
+                    $this->table . '.userId=' => $userId
                 ],
                 [],
                 'order_by',
-                ['tbl_shop_categories.category', 'ASC']
+                [$this->table . '.category', 'ASC']
             );
         }
 
