@@ -114,21 +114,22 @@
 							</div>
 							<div class="edit-single-user-container">
 								<form class="form-inline" id="editCategory<?php echo $category['categoryId']; ?>" method="post" action="<?php echo $this->baseUrl . 'warehouse/editCategory/' . $category['categoryId']; ?>" >
+									<input type="text" name="userId" value="<?php echo $userId; ?>" readonly required hidden />
 									<h3>Category details</h3>
 									<div>
 										<label for="category<?php echo$category['categoryId']; ?>">Name</label>
 										<input type="text" class="form-control" id="category<?php echo $category['categoryId']; ?>" name="category" required value="<?php echo $category['category']; ?>" />
 									</div>
-									<div>
-										<label for="active<?php echo $category['categoryId']; ?>">
-											<input type="radio" id="active<?php echo $category['categoryId']; ?>" name="active" required value="1" <?php if ($category['active'] === '1') echo 'checked'; ?> />
+									<!-- <div>
+										<label for="active<?php #echo $category['categoryId']; ?>">
+											<input type="radio" id="active<?php #echo $category['categoryId']; ?>" name="active" required value="1" <?php #if ($category['active'] === '1') echo 'checked'; ?> />
 											Active
 										</label>
-										<label for="inActive<?php echo $category['categoryId']; ?>">
-											<input type="radio" id="inActive<?php echo $category['categoryId']; ?>" name="active" required value="0" <?php if ($category['active'] === '0') echo 'checked'; ?> />
+										<label for="inActive<?php #echo $category['categoryId']; ?>">
+											<input type="radio" id="inActive<?php #echo $category['categoryId']; ?>" name="active" required value="0" <?php #if ($category['active'] === '0') echo 'checked'; ?> />
 											Arhive
 										</label>
-									</div>
+									</div> -->
 								</form>
 							</div>
 						</div>

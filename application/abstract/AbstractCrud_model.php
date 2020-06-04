@@ -31,8 +31,6 @@
             if (!$data || !$this->insertValidate($data)) return false;
             $this->db->insert($this->getThisTable(), $data);
             $this->id  = $this->db->insert_id();
-            // echo $this->db->last_query();
-            // die();
             return $this->id ? true : false;
         }
 

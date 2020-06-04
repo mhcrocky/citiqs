@@ -15,6 +15,7 @@
         public $shortDescription;
         public $longDescription;
         public $price;
+        public $image;
 
         private $table = 'tbl_shop_products_extended';
 
@@ -50,6 +51,59 @@
             if (isset($data['shortDescription']) && !Validate_data_helper::validateString($data['shortDescription'])) return false;
             if (isset($data['longDescription']) && !Validate_data_helper::validateString($data['longDescription'])) return false;
             if (isset($data['price']) && !Validate_data_helper::validateFloat($data['price'])) return false;
+            if (isset($data['image']) && !Validate_data_helper::validateString($data['image'])) return false;
+
             return true;
+        }
+
+        public function getUserProductsDetails(int $userId): ?array
+        {
+            
+            return  $this->read(
+                        [
+                            $this->table. '.id as productExtendedId',
+                            $this->table. '.name',
+                            $this->table. '.shortDescription',
+                            $this->table. '.longDescription',
+                            'FORMAT(' . $this->table . '.price,2) AS price',
+                            $this->table. '.image',
+
+                            'tbl_shop_products.id AS productId',
+                            'tbl_shop_products.id AS categoryId',
+                            'tbl_shop_products.stock',
+                            'tbl_shop_products.recommendedQuantity',
+                            'tbl_shop_products.active AS productActive',
+                            'tbl_shop_products.showImage',
+
+                            'tbl_shop_categories.category',
+                            'tbl_shop_categories.active AS categoryActive',
+
+                        ],
+                        ['tbl_shop_categories.userId=' => $userId],
+                        [
+                            ['tbl_shop_products', $this->table.'.productId = tbl_shop_products.id', 'INNER'],
+                            ['tbl_shop_categories', 'tbl_shop_products.categoryId = tbl_shop_categories.id', 'INNER'],
+                        ],
+                        'order_by',
+                        [$this->table. '.id', 'DESC']
+                    );
+        }
+
+        public function getUserLastProductsDetails(int $userId): ?array
+        {
+            $products = $this->getUserProductsDetails($userId);
+
+            if (is_null($products)) return null;
+
+            $productIds = [];
+            $return = [];
+            foreach ($products as $prodcut) {
+                if (!in_array($prodcut['productId'], $productIds)) {
+                    array_push($return, $prodcut);
+                    array_push($productIds, $prodcut['productId']);
+                }
+            }
+
+            return $return;
         }
     }

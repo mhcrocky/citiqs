@@ -18,11 +18,11 @@
             $this->load->helper('utility_helper');
 
             $this->load->model('user_subscription_model');
-            $this->load->model('shopcategories_model');
-            $this->load->model('shopproducts_model');
+            $this->load->model('shopcategory_model');
+            $this->load->model('shopproduct_model');
             $this->load->model('shopproductex_model');
-            $this->load->model('shoporders_model');
-            $this->load->model('shopordersex_model');
+            $this->load->model('shoporder_model');
+            $this->load->model('shoporderex_model');
 
             $this->load->library('language', array('controller' => $this->router->class));
             $this->load->library('form_validation');
@@ -48,6 +48,12 @@
             $this->loadViews('warehouse/warehouse', $this->global, null, null, 'headerWarehouse');
         }
 
+        // CATEGORIES
+        /**
+         * Read and filter categoires
+         *
+         * @return void
+         */
         public function productCategories(): void
         {
             $this->global['pageTitle'] = 'TIQS : CATEGOIRES';
@@ -59,34 +65,25 @@
 
             $data = [
                 'userId' => intval($_SESSION['userId']),
-                'categories' => $this->shopcategories_model->fetch($where),
+                'categories' => $this->shopcategory_model->fetch($where),
             ];
 
             $this->loadViews('warehouse/productCategories', $this->global, $data, null, 'headerWarehouse');
             return;
         }
 
-        public function products(): void
-        {
-            $this->global['pageTitle'] = 'TIQS : PRODUCTS';
-
-            $this->loadViews('warehouse/products', $this->global, null, null, 'headerWarehouse');
-        }
-
-        public function orders(): void
-        {
-            $this->global['pageTitle'] = 'TIQS : ORDERS';
-
-            $this->loadViews('warehouse/orders', $this->global, null, null, 'headerWarehouse');
-        }
-
+        /**
+         * Insert category
+         *
+         * @return void
+         */
         public function addCategory(): void
         {
             $data = $this->input->post(null, true);
 
-            if ($this->shopcategories_model->checkIsInserted($data)) {
+            if ($this->shopcategory_model->checkIsInserted($data)) {
                 $this->session->set_flashdata('error', 'Insert failed! Role with this name already inserted');
-            } elseif ($this->shopcategories_model->setObjectFromArray($data)->create()) {
+            } elseif ($this->shopcategory_model->setObjectFromArray($data)->create()) {
                 $this->session->set_flashdata('success', 'Category "' . $data['category'] . '" created!');
             } else {
                 $this->session->set_flashdata('error', 'Insert failed! Please try again.');
@@ -96,19 +93,29 @@
             return;
         }
 
+        /**
+         * Update category
+         *
+         * @return void
+         */
         public function editCategory(): void
         {
             $data = Validate_data_helper::validateInteger($this->uri->segment(4)) ?
                             ['active' => $this->uri->segment(4)] : $this->input->post(null, true);
 
+            if(isset($data['category']) && $this->shopcategory_model->checkIsInserted($data)) {
+                $this->session->set_flashdata('error', 'Update failed! Role with name "' . $data['category'] . '" already inserted');
+                redirect($_SERVER['HTTP_REFERER']);
+            }
+
             $update =   $this
-                        ->shopcategories_model
+                        ->shopcategory_model
                         ->setObjectId(intval($this->uri->segment(3)))
                         ->setObjectFromArray($data)
                         ->update();
 
             if ($update) {
-                $this->session->set_flashdata('success', 'Category "' . $data['category'] . '" updated');
+                $this->session->set_flashdata('success', 'Category updated');
             } else {
                 $this->session->set_flashdata('error', 'Update failed! Please try again.');
             }
@@ -116,4 +123,61 @@
             redirect($_SERVER['HTTP_REFERER']);
             return;
         }
+
+        // PRODUCTS
+        /**
+         * Read products
+         *
+         * @return void
+         */
+        public function products(): void
+        {
+            $this->global['pageTitle'] = 'TIQS : PRODUCTS';
+            $userId = intval($_SESSION['userId']);
+
+            $data = [
+                'categories' => $this->shopcategory_model->fetch(['userId' => $userId]),
+                'products' => $this->shopproductex_model->getUserLastProductsDetails($userId)
+            ];
+
+            $this->loadViews('warehouse/products', $this->global, $data, null, 'headerWarehouse');
+            return;
+        }
+
+        /**
+         * Insert product
+         *
+         * @return void
+         */
+        public function addProdcut(): void
+        {
+            $data = $this->input->post(null, true);
+
+            // insert product
+            if (!$this->shopproduct_model->setObjectFromArray($data['product'])->create()) {
+                $this->session->set_flashdata('error', 'Product insert failed! Please try again.');
+                redirect($_SERVER['HTTP_REFERER']);
+            };
+
+            // insert product extended
+            $data['productExtended']['productId'] = $this->shopproduct_model->id;
+
+            if(!$this->shopproductex_model->setObjectFromArray($data['productExtended'])->create()) {
+                $this->shopproduct_model->delete();
+                $this->session->set_flashdata('error', 'Product insert failed! Please try again.');
+                redirect($_SERVER['HTTP_REFERER']);
+            };
+
+            $this->session->set_flashdata('success', 'Product inserted.');
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
+        }
+
+        public function orders(): void
+        {
+            $this->global['pageTitle'] = 'TIQS : ORDERS';
+
+            $this->loadViews('warehouse/orders', $this->global, null, null, 'headerWarehouse');
+        }
+
     }

@@ -7,7 +7,7 @@
 
     if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-    Class Shopcategories_model extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
+    Class Shopcategory_model extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
     {
         public $id;
         public $userId;

@@ -7,13 +7,14 @@
 
     if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-    Class Shopproducts_model extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
+    Class Shopproduct_model extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
     {
         public $id;
         public $categoryId;
         public $stock;
         public $recommendedQuantity;
         public $active;
+        public $showImage;
 
         private $table = 'tbl_shop_products';
 
@@ -32,11 +33,18 @@
 
         public function insertValidate(array $data): bool
         {
-            if (isset($data['categoryId']) && isset($data['stock']) && isset($data['recommendedQuantity']) && isset($data['active'])) {
+            if (
+                isset($data['categoryId']) 
+                && isset($data['stock']) 
+                && isset($data['recommendedQuantity']) 
+                && isset($data['active'])
+                && isset($data['showImage'])
+            ) {
                 return $this->updateValidate($data);
             }
             return false;
         }
+
         public function updateValidate(array $data): bool
         {
             if (!count($data)) return false;
@@ -44,6 +52,9 @@
             if (isset($data['stock']) && !Validate_data_helper::validateInteger($data['stock'])) return false;
             if (isset($data['recommendedQuantity']) && !Validate_data_helper::validateInteger($data['recommendedQuantity'])) return false;
             if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
+            if (isset($data['showImage']) && !($data['showImage'] === '1' || $data['showImage'] === '0')) return false;
+
             return true;
         }
+
     }
