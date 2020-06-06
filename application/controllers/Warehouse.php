@@ -134,10 +134,10 @@
         {
             $this->global['pageTitle'] = 'TIQS : PRODUCTS';
             $userId = intval($_SESSION['userId']);
-
+            $where = ['userId' => $userId];
             $data = [
-                'categories' => $this->shopcategory_model->fetch(['userId' => $userId]),
-                'products' => $this->shopproductex_model->getUserLastProductsDetails($userId)
+                'categories' => $this->shopcategory_model->fetch($where),
+                'products' => $this->shopproductex_model->getUserLastProductsDetails($where)
             ];
 
             $this->loadViews('warehouse/products', $this->global, $data, null, 'headerWarehouse');
@@ -173,6 +173,50 @@
             return;
         }
 
+        /**
+         * Update product
+         *
+         * @return void
+         */
+        public function editProduct(): void
+        {
+            if (Validate_data_helper::validateInteger($this->uri->segment(4))) {
+                $update = $this
+                        ->shopproduct_model
+                        ->setObjectId(intval($this->uri->segment(3)))
+                        ->setObjectFromArray(['active' => $this->uri->segment(4)])
+                        ->update();
+
+                if ($update) {
+                    $this->session->set_flashdata('success', 'Product updated');
+                } else {
+                    $this->session->set_flashdata('error', 'Update failed! Please try again.');
+                }
+
+            } else {
+                $data = $this->input->post(null, true);
+                // update
+                $update = $this
+                        ->shopproduct_model
+                        ->setObjectId(intval($this->uri->segment(3)))
+                        ->setObjectFromArray($data['product'])
+                        ->update();
+
+                // insert new product deatils
+                $insert = $this->shopproductex_model->setObjectFromArray($data['productExtended'])->create();
+                
+                if ($insert && $update) {
+                    $this->session->set_flashdata('success', 'Product updated');
+                } else {
+                    $this->session->set_flashdata('error', 'Update failed! Please try again.');
+                }
+            }
+
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
+        }
+
+        // ORDERS
         public function orders(): void
         {
             $this->global['pageTitle'] = 'TIQS : ORDERS';

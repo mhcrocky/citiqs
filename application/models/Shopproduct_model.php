@@ -35,10 +35,10 @@
         {
             if (
                 isset($data['categoryId']) 
-                && isset($data['stock']) 
-                && isset($data['recommendedQuantity']) 
+                // && isset($data['stock']) 
+                // && isset($data['recommendedQuantity']) 
                 && isset($data['active'])
-                && isset($data['showImage'])
+                // && isset($data['showImage'])
             ) {
                 return $this->updateValidate($data);
             }
