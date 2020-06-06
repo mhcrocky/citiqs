@@ -13,7 +13,7 @@
         public $userId;
         public $category;
         public $active;
-
+        
         private $table = 'tbl_shop_categories';
 
         protected function setValueType(string $property,  &$value): void
