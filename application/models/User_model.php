@@ -865,5 +865,25 @@ class User_model extends CI_Model
             $user['gmtOffSet'] = Google_helper::getGmtOffset($geoCoordinates);
         }
     }
-    
+
+    public function manageAndSetBuyer(array $buyer): object
+    {
+        if (!$this->isDuplicate($buyer['email'])) {
+            $password = Utility_helper::shuffleString(12);
+            $buyer['password'] = getHashedPassword($password);
+            $buyer['code'] = Utility_helper::shuffleString(5);
+            $buyer['createdDtm'] = date('Y-m-d H:i:s');
+            $this->insertUser($buyer);
+            $this->setUniqueValue($buyer['email'])->setWhereCondtition()->setUser();
+            // must return non hashed password for activation link
+            $this->password = $password;
+
+        } else {
+            // update user - maybe it was register as finder and now is claimer or user insert new mobile
+            $this->setUniqueValue($buyer['email'])->setWhereCondtition()->updateUser($buyer)->setUser();
+        }
+        return $this;
+    }
+
+
 }

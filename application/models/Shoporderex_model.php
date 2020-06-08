@@ -12,6 +12,7 @@
         public $id;
         public $orderId;
         public $productsExtendedId;
+        public $quantity;
 
         private $table = 'tbl_shop_order_extended';
 
@@ -30,7 +31,7 @@
 
         public function insertValidate(array $data): bool
         {
-            if (isset($data['orderId']) && isset($data['productsExtendedId'])) {
+            if (isset($data['orderId']) && isset($data['productsExtendedId']) && isset($data['quantity'])) {
                 return $this->updateValidate($data);
             }
             return false;
@@ -41,6 +42,14 @@
             if (!count($data)) return false;
             if (isset($data['orderId']) && !Validate_data_helper::validateInteger($data['orderId'])) return false;
             if (isset($data['productsExtendedId']) && !Validate_data_helper::validateInteger($data['productsExtendedId'])) return false;
+            if (isset($data['quantity']) && !Validate_data_helper::validateInteger($data['quantity'])) return false;
+            
             return true;
+        }
+
+        public function deleteOrderDetails(): bool
+        {
+            $where = ['orderId=' => $this->orderId];
+            return $this->db->delete($this->getThisTable(), $where);
         }
     }

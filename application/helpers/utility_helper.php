@@ -169,4 +169,15 @@
             
         }
 
+        public static function returnSessionValue(string $key)
+        {
+            if (isset($_SESSION[$key])) {
+                $return = $_SESSION[$key];
+                unset($_SESSION[$key]);
+                return $return;
+            }
+            return null;
+            
+        }
+
     }

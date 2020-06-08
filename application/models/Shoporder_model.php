@@ -52,4 +52,46 @@
             if (isset($data['updated']) && !Validate_data_helper::validateDate($data['updated'])) return false;
             return true;
         }
+
+        public function fetchOne(): ?array
+        {
+            return $this->read(
+                [
+                    $this->table . '.id AS orderId',
+                    $this->table . '.amount AS orderAmount',
+                    $this->table . '.paid AS orderPaidStatus',
+                    'buyer.id AS buyerId',
+                    'buyer.email AS buyerEmail',
+                    'buyer.username AS buyerUserName',
+                    'vendor.id AS vendorId',
+                    'vendor.email AS vendorEmail',
+                    'vendor.username AS vendorUserName',
+                    
+
+                ],
+                [
+                    $this->table . '.id=' => $this->id
+                ],
+                [
+                    ['tbl_shop_order_extended', $this->table . '.id = tbl_shop_order_extended.orderId', 'INNER'],
+                    ['tbl_shop_products_extended', 'tbl_shop_order_extended.productsExtendedId  = tbl_shop_products_extended.id', 'INNER'],
+                    ['tbl_shop_products', 'tbl_shop_products_extended.productId  = tbl_shop_products.id', 'INNER'],
+                    ['tbl_shop_categories', 'tbl_shop_products.categoryId  = tbl_shop_categories.id', 'INNER'],
+                    [
+                        '(SELECT * FROM tbl_user WHERE roleid =2) vendor',
+                        'vendor.id  = tbl_shop_categories.userId',
+                        'INNER'
+                    ],
+                    [
+                        '(SELECT * FROM tbl_user WHERE roleid = 4) buyer',
+                        'buyer.id  = ' .  $this->table  . '.buyerId',
+                        'INNER'
+                    ],
+                ],
+                'limit',
+                ['1']
+            );
+
+
+        }
     }

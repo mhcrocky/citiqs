@@ -4,6 +4,9 @@
         <form method="post" action="<?php echo base_url() . 'publicorders/submitOrder'; ?>">
             <filedset>
                 <legend>Fill up the form. All fields are mandatory</legend>
+                <input type="text" name="user[roleid]" value="<?php echo $buyerRole; ?>" required readonly hidden />
+                <input type="text" name="user[usershorturl]" value="<?php echo $usershorturl; ?>" required readonly hidden />
+                <input type="text" name="user[salesagent]" value="<?php echo $buyerRole; ?>" required readonly hidden />
                 <div class="form-group col-sm-6">
                     <label for="first_name">First name:</label>
                     <input type="text" class="form-control" id="first_name" name="user[first_name]" placeholder="First name" required autofocus />
