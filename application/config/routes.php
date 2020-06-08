@@ -246,7 +246,7 @@ $route['products'] = "warehouse/products";
 $route['orders'] = "warehouse/orders";
 
 $route['make_order'] = "publicorders/index";
-$route['confirm_order'] = "publicorders/confirm_order";
+$route['checkout_order'] = "publicorders/checkout_order";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

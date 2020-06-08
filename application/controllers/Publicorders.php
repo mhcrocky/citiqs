@@ -50,12 +50,22 @@
             $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
 
-        public function confirm_order(): void
+        public function checkout_order(): void
         {
+            $this->global['pageTitle'] = 'TIQS : CHECKOUT';
+
             if (empty($_POST)) {
                 redirect('make_order');
             }
-            var_dump($_POST);
+            $data = [
+                'orderDetails' => $this->input->post(null, true),
+            ];
+
+            
+            echo '<pre>';
+            print_r($data['orderDetails']);
+            echo '</pre>';
+            $this->loadViews('publicorders/checkoutOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
     }
     

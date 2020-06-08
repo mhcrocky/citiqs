@@ -49,4 +49,6 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/hotel-page.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/timeline-page.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/nolabaels.css">
+<?php } elseif ($this->view === 'publicorders/makeOrder') { ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
 <?php } ?>

@@ -1,0 +1,16 @@
+main {
+    margin-bottom:30px;
+}
+.makeOrder:hover {
+    cursor: pointer;
+}
+.hideElement, .hideInput {
+    visibility: hidden;
+    height: 0px;
+}
+.showOrders {
+    visibility: show;
+    height: 20px;
+    padding: 10px;
+    margin-bottom: 5px;
+}
