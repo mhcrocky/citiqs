@@ -49,4 +49,13 @@
 
             $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
+
+        public function confirm_order(): void
+        {
+            if (empty($_POST)) {
+                redirect('make_order');
+            }
+            var_dump($_POST);
+        }
     }
+    
