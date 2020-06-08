@@ -61,11 +61,15 @@
                 'orderDetails' => $this->input->post(null, true),
             ];
 
-            
-            echo '<pre>';
-            print_r($data['orderDetails']);
-            echo '</pre>';
             $this->loadViews('publicorders/checkoutOrder', $this->global, $data, null, 'headerWarehousePublic');
+        }
+
+        public function submitOrder(): void
+        {
+            var_dump($_POST);
+            die();
         }
     }
     
+
+    // INSERT INTO  `tbl_user` (first_name, email, password, usershorturl, salesagent) VALUE ('alo','email', 'kkkkk', 'kkk',1)
