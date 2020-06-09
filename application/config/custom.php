@@ -90,4 +90,4 @@ $config['labelSubscription'] = 3;
 
 //ROLES
 $config['owner'] = '2';
-$config['buyer'] = '5';
+$config['buyer'] = '6';

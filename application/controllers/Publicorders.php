@@ -74,8 +74,6 @@
             // get buyer id
             $data['user']['username'] = $data['user']['first_name'] . ' ' . $data['user']['second_name'];
             $this->user_model->manageAndSetBuyer($data['user']);
-//			var_dump($data['user']);
-//			die();
 
             if (!$this->user_model->id) {
                 $this->session->set_flashdata('error', 'Order not made! Please try again');
