@@ -207,7 +207,15 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="price">Price: </label>
-                                                <input type="number" requried value="<?php echo $product['price']; ?>" step="0.01" name="productExtended[price]" id="price" class="form-control" />
+                                                <input
+                                                    type="number"
+                                                    requried
+                                                    value="<?php echo filter_var($product['price'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); ?>"
+                                                    step="0.01"
+                                                    name="productExtended[price]"
+                                                    id="price"
+                                                    class="form-control"
+                                                    />
                                             </div>
                                             <div class="form-group">
                                                 <label for="shortDescription">Short description: </label>
