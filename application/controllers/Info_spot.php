@@ -22,9 +22,11 @@ class Info_spot extends BaseControllerWeb
     {
         $this->global['pageTitle'] = 'TIQS : SPOT';
 		$subscriptionWhat = ['id', 'short_description', 'description', 'ROUND(amount, 2) AS amount', 'active', 'tiqssendcom', 'backOfficeItemId', 'type'];
-		$data = [
-			'subscriptions' => Utility_helper::resetArrayByKeyMultiple($this->subscription_model->select($subscriptionWhat), 'type')
-		];
+//		$data = [
+//			'subscriptions' => Utility_helper::resetArrayByKeyMultiple($this->subscription_model->select($subscriptionWhat), 'type')
+//		];
+
+		$data=array();
 
 //		print("<pre>".print_r($data,true)."</pre>");
 ////		var_dump($data);

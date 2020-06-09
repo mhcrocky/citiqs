@@ -23,7 +23,7 @@ class Loggedin extends BaseControllerWeb
 		$this->global['pageTitle'] = 'TIQS : SHOP';
 		$subscriptionWhat = ['id', 'short_description', 'description', 'ROUND(amount, 2) AS amount', 'active', 'tiqssendcom', 'backOfficeItemId', 'type'];
 		$data = [
-			'subscriptions' => Utility_helper::resetArrayByKeyMultiple($this->subscription_model->select($subscriptionWhat), 'type')
+//			'subscriptions' => Utility_helper::resetArrayByKeyMultiple($this->subscription_model->select($subscriptionWhat), 'type')
 		];
 
 		$this->loadViews("nolabels", $this->global, $data, NULL, "header_info_spot");

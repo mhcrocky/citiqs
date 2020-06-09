@@ -13,7 +13,7 @@
             parent::__construct();
 
             $this->load->helper('utility_helper');
-            $this->load->helper('paynl_helper');
+//            $this->load->helper('paynl_helper');
             $this->load->model('shoporder_model');
             $this->load->config('custom');
 
@@ -30,8 +30,10 @@
             // get and unset $_SESSION['orderId']
             $this->shoporder_model->id = Utility_helper::getSessionValue('orderId');
 
-            // TIQS TO DO  REMOVE THIS LINE
-            $this->shoporder_model->id = 7;
+//            var_dump($this->shoporder_model->id);
+//            die();
+//            // TIQS TO DO  REMOVE THIS LINE
+//            $this->shoporder_model->id = 5;
 
             if (is_null($this->shoporder_model->id)) {
                 $this->session->set_flashdata('error', 'Order not made! Please try again');
@@ -41,6 +43,8 @@
 
             // fetch and check order
             $order = $this->shoporder_model->fetchOne();
+            var_dump($order);
+            die();
             if (!$order) {
                 $this->session->set_flashdata('error', 'Order not made! Please try again');
                 redirect('make_order');
@@ -54,7 +58,7 @@
                 redirect('make_order');
                 exit();
             }
-
+			var_dump($order);
         }
     }
     

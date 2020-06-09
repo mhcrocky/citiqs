@@ -74,6 +74,8 @@
             // get buyer id
             $data['user']['username'] = $data['user']['first_name'] . ' ' . $data['user']['second_name'];
             $this->user_model->manageAndSetBuyer($data['user']);
+//			var_dump($data['user']);
+//			die();
 
             if (!$this->user_model->id) {
                 $this->session->set_flashdata('error', 'Order not made! Please try again');
@@ -89,7 +91,7 @@
             
             if (!$this->shoporder_model->id) {
                 $this->session->set_flashdata('error', 'Order not made! Please try again');
-                redirect('make_order');
+                              redirect('make_order');
                 exit();
             }
 
@@ -109,6 +111,8 @@
 
             // go to paying if everything OK
             $_SESSION['orderId'] = $this->shoporder_model->id;
+//			var_dump($_SESSION);
+//			die();
             redirect('payshop/payOrder');
             exit();
         }

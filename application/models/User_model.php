@@ -874,14 +874,16 @@ class User_model extends CI_Model
             $buyer['code'] = Utility_helper::shuffleString(5);
             $buyer['createdDtm'] = date('Y-m-d H:i:s');
             $this->insertUser($buyer);
-            $this->setUniqueValue($buyer['email'])->setWhereCondtition()->setUser();
+//			echo $this->db->last_query();
+//			die();
+//
             // must return non hashed password for activation link
             $this->password = $password;
 
-        } else {
-            // update user - maybe it was register as finder and now is claimer or user insert new mobile
-            $this->setUniqueValue($buyer['email'])->setWhereCondtition()->updateUser($buyer)->setUser();
+
+
         }
+		$this->setUniqueValue($buyer['email'])->setWhereCondtition()->setUser();
         return $this;
     }
 
