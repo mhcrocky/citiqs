@@ -84,7 +84,7 @@
                     $form .= 'id="shortDescription' . $product['productExtendedId'] . '" ';
                     $form .= 'value="' . $product['shortDescription'] . '" class="hideInput" disabled />';
 
-                    $productsHtml .= '<div class="col-lg-6 hideElement class'. $product['productExtendedId'] . '""><p>Product: ' . $product['name'] . '</p></div>';
+                    $productsHtml .= '<div class="col-lg-6 hideElement class'. $product['productExtendedId'] . '"><p>Product: ' . $product['name'] . '</p></div>';
                     // $productsHtml .= '<div class="col-lg-3"><p>Description: ' . $product['shortDescription'] . '</p></div>';
                     // $productsHtml .= '<div class="col-lg-3"><p>Category: ' . $product['category'] . '</p></div>';
                     $productsHtml .= '<div class="col-lg-2 hideElement class'. $product['productExtendedId'] . '">';

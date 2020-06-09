@@ -221,7 +221,12 @@
         {
             $this->global['pageTitle'] = 'TIQS : ORDERS';
 
-            $this->loadViews('warehouse/orders', $this->global, null, null, 'headerWarehouse');
+            $data = [
+                'orderStatuses' => $this->config->item('orderStatuses'),
+                'orderFinished' => $this->config->item('orderFinished'),
+            ];
+
+            $this->loadViews('warehouse/orders', $this->global, $data, null, 'headerWarehouse');
         }
 
     }

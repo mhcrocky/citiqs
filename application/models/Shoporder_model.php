@@ -92,4 +92,94 @@
 
 
         }
+
+        public function fetchOrderDetails(int $userId, string $paidStatus): ?array
+        {
+            return $this->read(
+                [
+                    $this->table . '.id AS orderId',
+                    $this->table . '.amount AS orderAmount',
+                    $this->table . '.paid AS orderPaidStatus',
+                    $this->table . '.orderStatus AS orderStatus',
+
+                    'tbl_shop_categories.category AS category',
+                    'buyer.id AS buyerId',
+                    'buyer.email AS buyerEmail',
+                    'buyer.username AS buyerUserName',
+                    'vendor.id AS vendorId',
+                    'vendor.email AS vendorEmail',
+                    'vendor.username AS vendorUserName',
+                    'CONCAT("0031", TRIM(LEADING "0" FROM vendor.mobile)) AS buyerMobile',
+                    'tbl_shop_order_extended.quantity AS productQuantity',
+                    'tbl_shop_products_extended.name AS productName'
+                ],
+                [
+                    'vendor.id' => $userId,
+                    $this->table . '.paid=' => $paidStatus
+                ],
+                [
+                    ['tbl_shop_order_extended', $this->table . '.id = tbl_shop_order_extended.orderId', 'INNER'],
+                    ['tbl_shop_products_extended', 'tbl_shop_order_extended.productsExtendedId  = tbl_shop_products_extended.id', 'INNER'],
+                    ['tbl_shop_products', 'tbl_shop_products_extended.productId  = tbl_shop_products.id', 'INNER'],
+                    ['tbl_shop_categories', 'tbl_shop_products.categoryId  = tbl_shop_categories.id', 'INNER'],
+                    [
+                        '(SELECT * FROM tbl_user WHERE roleid = '. $this->config->item('owner') .') vendor',
+                        'vendor.id  = tbl_shop_categories.userId',
+                        'INNER'
+                    ],
+                    [
+                        '(SELECT * FROM tbl_user WHERE roleid = ' . $this->config->item('buyer') . ' OR roleid = ' . $this->config->item('owner') . ') buyer',
+                        'buyer.id  = ' .  $this->table  . '.buyerId',
+                        'INNER'
+                    ],
+                ]
+            );
+//             $query =
+//                 "SELECT
+//                     tbl_shop_orders.id AS orderId,
+//                     tbl_shop_orders.amount AS orderAmount,
+//                     tbl_shop_orders.paid AS orderPaidStatus,
+//                     tbl_shop_orders.orderStatus AS orderStatus,
+//                     tbl_shop_categories.category AS category,
+//                     buyer.id AS buyerId,
+//                     buyer.email AS buyerEmail,
+//                     buyer.username AS buyerUserName,
+//                     vendor.id AS vendorId,
+//                     vendor.email AS vendorEmail,
+//                     vendor.username AS vendorUserName,
+//                     CONCAT('0031', TRIM(LEADING '0' FROM vendor.mobile)) AS buyerMobile,
+//                     tbl_shop_order_extended.quantity AS productQuantity,
+//                     tbl_shop_products_extended.name AS productName
+//                 FROM
+//                     tbl_shop_orders
+//                 INNER JOIN
+//                     tbl_shop_order_extended ON tbl_shop_orders.id = tbl_shop_order_extended.orderId
+//                 INNER JOIN
+//                     tbl_shop_products_extended ON tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
+//                 INNER JOIN
+//                     tbl_shop_products ON tbl_shop_products_extended.productId = tbl_shop_products.id
+//                 INNER JOIN
+//                     tbl_shop_categories ON tbl_shop_products.categoryId = tbl_shop_categories.id
+//                 INNER JOIN 
+//                     (
+//                         SELECT * FROM tbl_user WHERE roleid = {$this->config->item('owner')}) vendor
+//                     )
+//                         ON vendor.id = tbl_shop_categories.userId
+//                 INNER JOIN 
+//                     (
+//                         SELECT * FROM tbl_user WHERE roleid = {$this->config->item('buyer')} OR roleid = {$this->config->item('owner')}) buyer
+//                     )
+//                         ON buyer.id = tbl_shop_orders.buyerId
+//                 WHERE
+//                     vendor.id = {$userId}
+//                         AND 
+//                     tbl_shop_orders.paid = '{$paidStatus}'
+//                         AND
+//                     tbl_shop_orders.orderStatus NOT LIKE '{$orderStatus}'
+//                 ORDER BY tbl_shop_orders.updated DESC;";
+// echo $query;
+// die();
+//                 $reuslt = $this->db->query($query);
+//                 return $reuslt->result_array();
+        }
     }

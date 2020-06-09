@@ -126,6 +126,11 @@ var callThis = (function() {
                 alertify.error('Update failed');
             }
         },
+        fetchOrders: function() {
+            if (this) {
+                console.dir(this);
+            }
+        }
     };
     return methods;
 })();

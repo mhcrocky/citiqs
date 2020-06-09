@@ -88,6 +88,21 @@ $config['labelLost'] = 1;
 $config['labelSend'] = 2;
 $config['labelSubscription'] = 3;
 
-//ROLES
+// ROLES
 $config['owner'] = '2';
 $config['buyer'] = '6';
+
+// ORDER STATUS
+$config['orderNotSeen'] = 'not seen';
+$config['orderSeen'] = 'seen';
+$config['orderInProcess'] = 'in process';
+$config['orderDone'] = 'done';
+$config['orderFinished'] = 'finished';
+
+$config['orderStatuses'] = [
+    $config['orderNotSeen'],
+    $config['orderSeen'],
+    $config['orderInProcess'],
+    $config['orderDone'],
+    $config['orderFinished']
+];

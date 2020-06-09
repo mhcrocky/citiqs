@@ -19,6 +19,7 @@ class Ajax extends CI_Controller
         $this->load->model('dhl_model');
         $this->load->model('floorplanareas_model');
         $this->load->model('floorplandetails_model');
+        $this->load->model('shoporder_model');
 
         $this->load->helper('cookie');
         $this->load->helper('my_file_helper');
@@ -423,5 +424,23 @@ class Ajax extends CI_Controller
                     ->setObjectFromArray($data['spot'])
                     ->update();
         echo intval($result);
+    }
+
+    public function fetchOrders(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $data = $this->input->post(null, true);
+        $userId = intval($_SESSION['userId']);
+        $result = $this->shoporder_model->fetchOrderDetails($userId, $data['paid']);
+
+        if ($result) {
+            $result = Utility_helper::resetArrayByKeyMultiple($result, 'orderId');
+            echo json_encode($result);
+        } else {
+            echo 0;
+        }
+
+        return;
     }
 }
