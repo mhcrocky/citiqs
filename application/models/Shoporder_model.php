@@ -76,12 +76,12 @@
                     ['tbl_shop_products', 'tbl_shop_products_extended.productId  = tbl_shop_products.id', 'INNER'],
                     ['tbl_shop_categories', 'tbl_shop_products.categoryId  = tbl_shop_categories.id', 'INNER'],
                     [
-                        '(SELECT * FROM tbl_user WHERE roleid =2) vendor',
+                        '(SELECT * FROM tbl_user WHERE roleid = '. $this->config->item('owner') .') vendor',
                         'vendor.id  = tbl_shop_categories.userId',
                         'INNER'
                     ],
                     [
-                        '(SELECT * FROM tbl_user WHERE roleid = 4) buyer',
+                        '(SELECT * FROM tbl_user WHERE roleid = ' . $this->config->item('buyer') . ' OR roleid = ' . $this->config->item('owner') . ') buyer',
                         'buyer.id  = ' .  $this->table  . '.buyerId',
                         'INNER'
                     ],
