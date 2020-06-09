@@ -35,10 +35,10 @@
 
         private function checkSubscription(): void
         {
-            $subscription = $this->user_subscription_model->getLastSubscriptionId($this->userId);
-            if (is_null($subscription) || !Utility_helper::compareTwoDates(date('Y-m-d'), date($subscription['expireDtm']))) {
-                redirect('profile');
-            }
+            // $subscription = $this->user_subscription_model->getLastSubscriptionId($this->userId);
+            // if (is_null($subscription) || !Utility_helper::compareTwoDates(date('Y-m-d'), date($subscription['expireDtm']))) {
+            //     redirect('profile');
+            // }
         }
 
         public function index(): void

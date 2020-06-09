@@ -65,9 +65,7 @@
                     'buyer.username AS buyerUserName',
                     'vendor.id AS vendorId',
                     'vendor.email AS vendorEmail',
-                    'vendor.username AS vendorUserName',
-                    
-
+                    'vendor.username AS vendorUserName'
                 ],
                 [
                     $this->table . '.id=' => $this->id

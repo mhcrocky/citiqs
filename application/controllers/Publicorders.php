@@ -26,8 +26,6 @@
             $this->load->model('user_model');
 
             $this->load->library('language', array('controller' => $this->router->class));
-            $this->load->library('form_validation');
-
             $this->load->config('custom');
         }
 
@@ -58,6 +56,7 @@
             if (empty($_POST)) {
                 redirect('make_order');
             }
+
             $data = [
                 'orderDetails' => $this->input->post(null, true),
                 'buyerRole' => $this->config->item('buyer'),
@@ -108,18 +107,9 @@
                 }
             }
 
-            // if everything OK, redirect to controller to manage paynl
+            // go to paying if everything OK
             $_SESSION['orderId'] = $this->shoporder_model->id;
-            redirect('publicorders/paynl');
-        }
-
-        public function paynl(): void
-        {
-            
-            $this->shoporder_model->id = Utility_helper::returnSessionValue('orderId');
-            var_dump($this->shoporder_model->fetchOne());
-            die("TO DO PAYNL payment");
-
+            redirect('payshop/payOrder');
+            exit();
         }
     }
-    
