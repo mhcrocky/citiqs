@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
-<main class="container" style="text-align:left; margin-bottom:20px">
-    <h1>Order list</h1>
+<main class="container" style="margin:50px 0px 20px 0px">
     <div class="row">
+        <h1>Order list</h1>
         <div class="table-responsive col-sm-12" style="margin-top:15px">
             <table class="table table-hover table-striped">
                 <thead>
@@ -11,6 +11,7 @@
                         <th>Amount</th>
                         <th>Change status</th>
                         <th>Current status</th>
+                        <th>Buyer</th>
                         <th>Action</th>
                     </tr>
                 </thead>
