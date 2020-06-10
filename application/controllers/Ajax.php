@@ -443,4 +443,18 @@ class Ajax extends CI_Controller
 
         return;
     }
+
+    public function updateOrder(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $data = $this->input->post(null, true);
+        $orderId = intval($this->uri->segment(3));
+        $update =    $this
+                        ->shoporder_model
+                        ->setObjectId($orderId)
+                        ->setObjectFromArray($data)
+                        ->update();
+        echo $update ? 1 : 0;
+    }
 }

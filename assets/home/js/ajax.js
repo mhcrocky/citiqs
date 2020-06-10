@@ -131,6 +131,15 @@ var callThis = (function() {
                 functionArg.push(this);
                 callFunction(...functionArg);
             }
+        },
+        changeStatus: function(callFunction) {
+            if (this) {
+                alertify.success('Order status updated');
+                callFunction();
+            } else {
+                alertify.success('Order status update failed');
+            }
+
         }
     };
     return methods;

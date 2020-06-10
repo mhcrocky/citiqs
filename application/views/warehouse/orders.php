@@ -1,8 +1,8 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
-<main class="container" style="margin:50px 0px 20px 0px">
-    <div class="row">
+<main class="row" style="margin:50px 0px 20px 0px">
+    <div class="container">
         <h1>Order list</h1>
-        <div class="table-responsive col-sm-12" style="margin-top:15px">
+        <div class="table-responsive col-sm-12">
             <table class="table table-hover table-striped">
                 <thead>
                     <tr>
