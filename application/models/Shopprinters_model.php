@@ -14,7 +14,6 @@
         public $printer;
         public $macNumber;
         public $active;
-
         private $table = 'tbl_shop_printers';
 
         protected function setValueType(string $property,  &$value): void

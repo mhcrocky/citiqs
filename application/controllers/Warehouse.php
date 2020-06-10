@@ -25,6 +25,7 @@
             $this->load->model('shoporderex_model');
             $this->load->model('shopprinters_model');
             $this->load->model('shopproductprinters_model');
+            $this->load->model('shopspot_model');
 
             $this->load->library('language', array('controller' => $this->router->class));
             $this->load->library('form_validation');
@@ -264,11 +265,11 @@
          */
         public function printers(): void
         {
-            $this->global['pageTitle'] = 'TIQS : ORDERS';
-
+            $this->global['pageTitle'] = 'TIQS : PRINTERS';
+            $userId = intval($_SESSION['userId']);
             $data = [
-                'userId' => $_SESSION['userId'],
-                'printers' => $this->shopprinters_model->read(['*'], ['id>' => 0])
+                'userId' => $userId,
+                'printers' => $this->shopprinters_model->read(['*'], ['userId=' => $userId])
             ];
 
             $this->loadViews('warehouse/printers', $this->global, $data, null, 'headerWarehouse');
@@ -321,4 +322,74 @@
             return;
         }
 
+
+        //SPOTS
+        /**
+         * Read spots
+         *
+         * @return void
+         */
+        public function spots(): void
+        {
+            $this->global['pageTitle'] = 'TIQS : SPOTS';
+            $userId = intval($_SESSION['userId']);
+
+            $data = [
+                'printers' => $this->shopprinters_model->read(['*'], ['userId=' => $userId]),
+                'spots' => $this->shopspot_model->fetchUserSpots($userId)
+            ];
+            // var_dump($data);
+            // die();
+
+            $this->loadViews('warehouse/spots', $this->global, $data, null, 'headerWarehouse');
+        }
+
+        /**
+         * Add spot
+         *
+         * @return void
+         */
+        public function addSpot(): void
+        {
+            $data = $this->input->post(null, true);
+
+            if ($this->shopspot_model->setObjectFromArray($data)->create()) {
+                $this->session->set_flashdata('success', 'Spot added');
+            } else {
+                $this->session->set_flashdata('error', 'Spot add failed. Try again.');
+            }
+
+            redirect('spots');
+        }
+
+        /**
+         * Update spot
+         *
+         * @return void
+         */
+        public function editSpot(): void
+        {
+            if (Validate_data_helper::validateInteger($this->uri->segment(4))) {
+                // change active status
+                $data = ['active' => $this->uri->segment(4)];
+            } else {
+                // update data
+                $data = $this->input->post(null, true);
+            }
+
+            $update = $this
+                    ->shopspot_model
+                    ->setObjectId(intval($this->uri->segment(3)))
+                    ->setObjectFromArray($data)
+                    ->update();
+
+            if ($update) {
+                $this->session->set_flashdata('success', 'Spot updated');
+            } else {
+                $this->session->set_flashdata('error', 'Update failed! Please try again.');
+            }
+
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
+        }        
     }

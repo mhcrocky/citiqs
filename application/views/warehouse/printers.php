@@ -120,11 +120,3 @@
 		<!-- end grid list -->
 	</div>
 </div>
-<script>
-	'use strict';
-	function redirect(element) {
-		if (element.value !== window.location.href) {
-			window.location.href = element.value;
-		}
-	}
-</script>

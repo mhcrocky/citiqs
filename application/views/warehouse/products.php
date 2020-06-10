@@ -55,8 +55,8 @@
                             </div>
                             <!-- PRODUCT DATA -->
                             <div class="form-group">
-                                <label for="category">Product category: </label>
-                                <select type="text" class="form-control" id="category" name="product[categoryId]" required>
+                                <label for="addCategoryId">Product category: </label>
+                                <select type="text" class="form-control" id="addCategoryId" name="product[categoryId]" required>
                                     <option value="">Select</option>
                                     <?php foreach ($categories as $category) { ?>
                                         <option value="<?php echo $category['categoryId']; ?>">
@@ -207,8 +207,8 @@
                                                 <input type="text" name="productExtended[name]" id="name" class="form-control" requried value="<?php echo $product['name']; ?>" />
                                             </div>
                                             <div class="form-group">
-                                                <label for="category">Product category: </label>
-                                                <select type="text" class="form-control" id="category" name="product[categoryId]" required>
+                                                <label for="editCategoryId">Product category: </label>
+                                                <select type="text" class="form-control" id="editCategoryId" name="product[categoryId]" required>
                                                     <option value="">Select</option>
                                                     <?php foreach ($categories as $category) { ?>
                                                         <option

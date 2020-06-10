@@ -54,6 +54,7 @@
                 <a href="<?php echo $this->baseUrl; ?>products">PRODUCTS</a>
                 <a href="<?php echo $this->baseUrl; ?>orders">ORDERS</a>
                 <a href="<?php echo $this->baseUrl; ?>printers">PRINTERS</a>
+                <a href="<?php echo $this->baseUrl; ?>spots">SPOTS</a>
                 <a href="<?php echo $this->baseUrl; ?>loggedin">BACK</a>
             </div>
             <div class="hamburger-menu" id="hamburger-menu">

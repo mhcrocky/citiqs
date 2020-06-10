@@ -247,6 +247,7 @@ $route['orders'] = "warehouse/orders";
 
 $route['make_order'] = "publicorders/index";
 $route['checkout_order'] = "publicorders/checkout_order";
+$route['spots'] = "warehouse/spots";
 
 $route['printers'] = "warehouse/printers";
 /* End of file routes.php */
