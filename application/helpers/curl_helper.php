@@ -5,7 +5,7 @@
     
     class Curl_helper
     {
-        public static function sendCurlPostRequest(string $url, array $post, array $headers = []): ?object
+        public static function sendCurlPostRequest(string $url, array $post, array $headers = [])
         {
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
@@ -32,5 +32,11 @@
             $response = curl_exec($ch);
             curl_close($ch);
             return $response ? json_decode($response) : null;
+        }
+
+        public static function sendSms(string $url, array $post, array $headers = [])
+        {
+            $response = self::sendCurlPostRequest($url, $post, $headers = []);
+            return $response === 'send' ? true : false;
         }
     }

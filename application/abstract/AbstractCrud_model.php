@@ -53,8 +53,6 @@
                 $result = $this->db->$condition(...$conditionArguments);
             }
             $result = $this->db->get($this->getThisTable())->result_array();
-//			echo $this->db->last_query();
-//			die();
             return $result ? $result : null;
         }
 

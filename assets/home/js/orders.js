@@ -5,7 +5,6 @@ function populateTable(elementId, skiptStatus, orders) {
     let orderId;
     let order;
     let orderDetails;
-    
     for (orderId in orders) {
         orderDetails = orders[orderId];
         order = orderDetails[0];
@@ -17,9 +16,18 @@ function populateTable(elementId, skiptStatus, orders) {
             tableBody +=        '<th>' + showOrderStatuses(orderGlobals.orderStatuses, order['orderId'], order['orderStatus']) + '</th>';
             tableBody +=        '<th>' + order['orderStatus'] + '</th>';
             tableBody +=        '<th>' + order['buyerUserName'] + '</th>';
-            tableBody +=        '<th ';
-            tableBody +=            'data="order-id=' + order['orderId'] + '" ';
-            tableBody +=            'data="buyer-mobile=' + order['buyerMobile'] + '">' + order['buyerMobile'];
+            tableBody +=        '<th>';
+            if (order['sendSms'] === '0') {
+                let disabled = order['orderStatus'] === 'done' ? '' : 'disabled';
+                tableBody += '<button class="btn btn-primary" ' + disabled + ' ';
+                tableBody +=    'data-order-id=' + order['orderId'] + '" ';
+                tableBody +=    'data-buyer-mobile=' + order['buyerMobile'] + '" ';
+                tableBody +=    'data-message="Je kan je eten afhalen bij de keuken" ';
+                tableBody +=    'onclick="sendSms(this)"';
+                tableBody += '>Send sms</button>';
+            } else {
+                tableBody += 'Sms send'
+            }
             tableBody +=        '</th>';
             tableBody +=    '</tr>';
         }        
@@ -66,6 +74,7 @@ function changeStatus(element) {
 }
 
 function fetchOrders() {
+    
     let url = globalVariables.ajax + 'fetchOrders'
     let post = {
         paid: '1',
@@ -74,4 +83,16 @@ function fetchOrders() {
     sendAjaxPostRequest(post, url, 'fetchOrders', populateTable, [orderGlobals.tableId, orderGlobals.orderFinished]);
 }
 
+function sendSms(element) {
+    let url = globalVariables.ajax + 'sendSms/' + element.dataset.orderId;
+    let post = {        
+        mobilenumber: element.dataset.buyerMobile,
+        messagetext: element.dataset.message
+    }
+    sendAjaxPostRequest(post, url, 'sendSms', fetchOrders);
+}
+
 fetchOrders();
+
+// fetch new data every 300 seconds
+setInterval(function(){return fetchOrders()}, 10000);

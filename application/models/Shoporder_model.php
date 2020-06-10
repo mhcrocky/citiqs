@@ -16,6 +16,7 @@
         public $created;
         public $updated;
         public $orderStatus;
+        public $sendSms;
 
         private $table = 'tbl_shop_orders';
 
@@ -52,7 +53,8 @@
             if (isset($data['created']) && !Validate_data_helper::validateDate($data['created'])) return false;
             if (isset($data['updated']) && !Validate_data_helper::validateDate($data['updated'])) return false;
             if (isset($data['orderStatus']) && !Validate_data_helper::validateString($data['orderStatus'])) return false;
-            
+            if (isset($data['sendSms']) && !($data['sendSms'] === '1' || $data['sendSms'] === '0')) return false;
+
             return true;
         }
 
@@ -104,15 +106,16 @@
                     $this->table . '.amount AS orderAmount',
                     $this->table . '.paid AS orderPaidStatus',
                     $this->table . '.orderStatus AS orderStatus',
+                    $this->table . '.sendSms AS sendSms',
 
                     'tbl_shop_categories.category AS category',
                     'buyer.id AS buyerId',
                     'buyer.email AS buyerEmail',
                     'buyer.username AS buyerUserName',
+                    'CONCAT("0031", TRIM(LEADING "0" FROM buyer.mobile)) AS buyerMobile',
                     'vendor.id AS vendorId',
                     'vendor.email AS vendorEmail',
                     'vendor.username AS vendorUserName',
-                    'CONCAT("0031", TRIM(LEADING "0" FROM vendor.mobile)) AS buyerMobile',
                     'tbl_shop_order_extended.quantity AS productQuantity',
                     'tbl_shop_products_extended.name AS productName'
                 ],
@@ -135,7 +138,9 @@
                         'buyer.id  = ' .  $this->table  . '.buyerId',
                         'INNER'
                     ],
-                ]
+                ],
+                'order_by',
+                [$this->table . '.updated ASC']
             );
         }
     }

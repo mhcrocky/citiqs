@@ -456,5 +456,26 @@ class Ajax extends CI_Controller
                         ->setObjectFromArray($data)
                         ->update();
         echo $update ? 1 : 0;
+        return;
+    }
+
+    public function sendSms(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $smsData = $this->input->post(null, true);
+        $orderId = intval($this->uri->segment(3));
+        $url = 'https://tiqs.com/lostandfound/Api/Missing/sendsms';
+        if (Curl_helper::sendSms($url, $smsData)) {
+            $update =    $this
+                            ->shoporder_model
+                            ->setObjectId($orderId)
+                            ->setObjectFromArray(['sendSms' => '1'])
+                            ->update();
+            echo $update ? 1 : 0;
+        } else {
+            echo 0;
+        }
+        return;
     }
 }
