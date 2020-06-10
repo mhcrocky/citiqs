@@ -60,5 +60,7 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/makeOrder.js"></script>
 <?php }  elseif ($this->view === 'warehouse/orders') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/orders.js"></script>
+<?php } elseif ($this->view === 'warehouse/printers') { ?>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js"></script>
 <?php } ?>
 

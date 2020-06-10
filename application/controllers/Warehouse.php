@@ -23,6 +23,7 @@
             $this->load->model('shopproductex_model');
             $this->load->model('shoporder_model');
             $this->load->model('shoporderex_model');
+            $this->load->model('shopprinters_model');
 
             $this->load->library('language', array('controller' => $this->router->class));
             $this->load->library('form_validation');
@@ -30,7 +31,7 @@
             $this->load->config('custom');
 
             $this->isLoggedIn();
-            $this->checkSubscription();
+            // $this->checkSubscription();
         }
 
         private function checkSubscription(): void
@@ -227,6 +228,71 @@
             ];
 
             $this->loadViews('warehouse/orders', $this->global, $data, null, 'headerWarehouse');
+        }
+
+        //PRINTERS
+        /**
+         * Read prnters
+         *
+         * @return void
+         */
+        public function printers(): void
+        {
+            $this->global['pageTitle'] = 'TIQS : ORDERS';
+
+            $data = [
+                'userId' => $_SESSION['userId'],
+                'printers' => $this->shopprinters_model->read(['*'], ['id>' => 0])
+            ];
+
+            $this->loadViews('warehouse/printers', $this->global, $data, null, 'headerWarehouse');
+        }
+
+        /**
+         * Add printer
+         */
+        public function addPrinter(): void
+        {
+            $data = $this->input->post(null, true);
+
+            if ($this->shopprinters_model->setObjectFromArray($data)->create()) {
+                $this->session->set_flashdata('success', 'Printer added');
+            } else {
+                $this->session->set_flashdata('error', 'Printer add failed. Try again.');
+            }
+
+            redirect('printers');
+        }
+
+        /**
+         * Update printer
+         *
+         * @return void
+         */
+        public function editPrinter(): void
+        {
+            if (Validate_data_helper::validateInteger($this->uri->segment(4))) {
+                // change active status
+                $data = ['active' => $this->uri->segment(4)];
+            } else {
+                // update mac and/or printer name
+                $data = $this->input->post(null, true);
+            }
+
+            $update = $this
+                    ->shopprinters_model
+                    ->setObjectId(intval($this->uri->segment(3)))
+                    ->setObjectFromArray($data)
+                    ->update();
+
+            if ($update) {
+                $this->session->set_flashdata('success', 'Printer updated');
+            } else {
+                $this->session->set_flashdata('error', 'Update failed! Please try again.');
+            }
+
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
         }
 
     }

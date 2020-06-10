@@ -117,7 +117,7 @@
 									<input type="text" name="userId" value="<?php echo $userId; ?>" readonly required hidden />
 									<h3>Category details</h3>
 									<div>
-										<label for="category<?php echo$category['categoryId']; ?>">Name</label>
+										<label for="category<?php echo $category['categoryId']; ?>">Name</label>
 										<input type="text" class="form-control" id="category<?php echo $category['categoryId']; ?>" name="category" required value="<?php echo $category['category']; ?>" />
 									</div>
 									<!-- <div>
