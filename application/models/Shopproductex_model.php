@@ -120,4 +120,70 @@
             ksort($return);
             return $return;
         }
+
+
+
+        public function getUserProductsDetailsPublic(array $where): ?array
+        {
+            
+            return  $this->read(
+                        [
+                            $this->table. '.id as productExtendedId',
+                            $this->table. '.name',
+                            $this->table. '.shortDescription',
+                            $this->table. '.longDescription',
+                            'FORMAT(' . $this->table . '.price,2) AS price',
+                            $this->table. '.image',
+                            $this->table. '.options',
+                            $this->table. '.addons',
+
+                            'tbl_shop_products.id AS productId',                            
+                            'tbl_shop_products.stock',
+                            'tbl_shop_products.recommendedQuantity',
+                            'tbl_shop_products.active AS productActive',
+                            'tbl_shop_products.showImage',
+
+                            'tbl_shop_categories.category',
+                            'tbl_shop_categories.id AS categoryId',
+                            'tbl_shop_categories.active AS categoryActive',
+
+                        ],
+                        $where,
+                        [
+                            ['tbl_shop_products', $this->table.'.productId = tbl_shop_products.id', 'INNER'],
+                            ['tbl_shop_categories', 'tbl_shop_products.categoryId = tbl_shop_categories.id', 'INNER'],
+                            ['tbl_shop_product_printers', 'tbl_shop_product_printers.productId = tbl_shop_products.id', 'INNER'],
+                            ['tbl_shop_spots', 'tbl_shop_product_printers.printerId = tbl_shop_spots.printerId', 'INNER'],
+                            ['tbl_shop_printers', 'tbl_shop_printers.id = tbl_shop_spots.printerId', 'INNER']
+                        ],
+                        'order_by',
+                        [$this->table. '.id', 'DESC']
+                    );
+        }
+
+        public function getUserLastProductsDetailsPublic(array $where): ?array
+        {
+            $products = $this->getUserProductsDetailsPublic($where);
+            if (is_null($products)) return null;
+
+            $this->load->model('shopprinters_model');
+            $this->load->helper('utility_helper');
+
+            $productIds = [];
+            $return = [];
+            foreach ($products as $prodcut) {
+                if (!in_array($prodcut['productId'], $productIds)) {
+                    $prodcut['printers'] = $this->shopprinters_model->fetchtProductPrinters(intval($prodcut['productId']));
+                    if ($prodcut['printers']) {
+                        $prodcut['printers'] = Utility_helper::resetArrayByKeyMultiple($prodcut['printers'], 'printerId');
+                    }
+
+                    array_push($return, $prodcut);
+                    array_push($productIds, $prodcut['productId']);
+                }
+            }
+            $return = Utility_helper::resetArrayByKeyMultiple($return, 'name');
+            ksort($return);
+            return $return;
+        }
     }

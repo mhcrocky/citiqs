@@ -39,11 +39,14 @@
             $whereProducts = [
                 'tbl_shop_categories.active' => '1',
                 'tbl_shop_products.active' => '1',
+                'tbl_shop_spots.active' => '1',
+                'tbl_shop_printers.active' => '1',
+                'tbl_shop_spots.id' => $_GET['spotid'],
             ];
 
             $data = [
                 'categories' => $this->shopcategory_model->fetch($whereCategories),
-                'products' => $this->shopproductex_model->getUserLastProductsDetails($whereProducts)
+                'products' => $this->shopproductex_model->getUserLastProductsDetailsPublic($whereProducts)
             ];
 
             $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
