@@ -180,4 +180,42 @@
             
         }
 
+        public static function sanitize_parameter($str, $keep_newlines = false)
+        {
+            $filtered = self::check_invalid_utf8($str);
+            if ( strpos($filtered, '<') !== false ) {
+                $filtered = preg_replace_callback('%<[^>]*?((?=<)|>|$)%', 'wp_pre_kses_less_than_callback', $filtered);
+                $filtered = self::strip_all_tags($filtered);
+                $filtered = str_replace("<\n", "&lt;\n", $filtered);
+            }
+
+            if (!$keep_newlines) $filtered = preg_replace('/[\r\n\t ]+/', ' ', $filtered);
+            $filtered = trim($filtered);
+            $found = false;
+            while (preg_match('/%[a-f0-9]{2}/i', $filtered, $match))
+            {
+                $filtered = str_replace($match[0], '', $filtered);
+                $found = true;
+            }
+            // Strip out the whitespace that may now exist after removing the octets.
+            if ($found) $filtered = trim( preg_replace('/ +/', ' ', $filtered) );
+            return $filtered;
+        }
+
+
+    // Return empty string if invalid UTF8 string
+    public static function check_invalid_utf8($string)
+    {
+        $string = (string) $string;
+        if (0 === strlen( $string )) return '';
+        // Check for support for utf8 in the installed PCRE library once and store the result in a static
+        static $utf8_pcre = null;
+        if (!isset( $utf8_pcre )) $utf8_pcre = @preg_match('/^./u', 'a');
+        // We can't demand utf8 in the PCRE installation, so just return the string in those cases
+        if (!$utf8_pcre) return $string;
+        // preg_match fails when it encounters invalid UTF8 in $string
+        if (1 === @preg_match('/^./us', $string)) return $string;
+        return '';
+    }
+
     }

@@ -51,5 +51,18 @@
 
             return true;
         }
-
+        public function fetchtProductPrinters(int $productId): ?array
+        {
+            return $this->read(
+                [
+                    $this->table . '.id AS printerId',
+                    $this->table . '.printer AS printer',
+                    $this->table . '.active AS printerActive',
+                ],
+                ['tbl_shop_product_printers.productId=' => $productId],
+                [
+                    ['tbl_shop_product_printers', $this->table .'.id = tbl_shop_product_printers.printerId' ,'INNER']
+                ]
+            );
+        }
     }

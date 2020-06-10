@@ -98,13 +98,20 @@
         public function getUserLastProductsDetails(array $where): ?array
         {
             $products = $this->getUserProductsDetails($where);
-
             if (is_null($products)) return null;
+
+            $this->load->model('shopprinters_model');
+            $this->load->helper('utility_helper');
 
             $productIds = [];
             $return = [];
             foreach ($products as $prodcut) {
                 if (!in_array($prodcut['productId'], $productIds)) {
+                    $prodcut['printers'] = $this->shopprinters_model->fetchtProductPrinters(intval($prodcut['productId']));
+                    if ($prodcut['printers']) {
+                        $prodcut['printers'] = Utility_helper::resetArrayByKeyMultiple($prodcut['printers'], 'printerId');
+                    }
+
                     array_push($return, $prodcut);
                     array_push($productIds, $prodcut['productId']);
                 }

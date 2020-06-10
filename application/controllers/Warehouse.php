@@ -24,6 +24,7 @@
             $this->load->model('shoporder_model');
             $this->load->model('shoporderex_model');
             $this->load->model('shopprinters_model');
+            $this->load->model('shopproductprinters_model');
 
             $this->load->library('language', array('controller' => $this->router->class));
             $this->load->library('form_validation');
@@ -138,7 +139,8 @@
             $where = ['userId' => $userId];
             $data = [
                 'categories' => $this->shopcategory_model->fetch($where),
-                'products' => $this->shopproductex_model->getUserLastProductsDetails($where)
+                'products' => $this->shopproductex_model->getUserLastProductsDetails($where),
+                'printers' => $this->shopprinters_model->read(['*'], ['id>' => 0]),
             ];
 
             $this->loadViews('warehouse/products', $this->global, $data, null, 'headerWarehouse');
@@ -169,6 +171,19 @@
                 redirect($_SERVER['HTTP_REFERER']);
             };
 
+            // INSERT PRINTERS
+            foreach($data['productPrinters'] as $printerId) {
+                $printerInsert = [
+                    'printerId' => $printerId,
+                    'productId' => $this->shopproduct_model->id
+                ];
+
+                if (!$this->shopproductprinters_model->setObjectFromArray($printerInsert)->create()) {
+                    $this->session->set_flashdata('error', 'Pinter inserted failed. Please check');
+                }
+
+            }
+
             $this->session->set_flashdata('success', 'Product inserted.');
             redirect($_SERVER['HTTP_REFERER']);
             return;
@@ -193,7 +208,6 @@
                 } else {
                     $this->session->set_flashdata('error', 'Update failed! Please try again.');
                 }
-
             } else {
                 $data = $this->input->post(null, true);
                 // update
@@ -210,6 +224,18 @@
                     $this->session->set_flashdata('success', 'Product updated');
                 } else {
                     $this->session->set_flashdata('error', 'Update failed! Please try again.');
+                }
+                $this->shopproductprinters_model->productId = $this->shopproduct_model->id;
+                $this->shopproductprinters_model->deleteProductPrinters();
+                if (isset($data['productPrinters'])) {                    
+
+                    foreach($data['productPrinters'] as $printerId) {
+                        $printerInsert = [
+                            'printerId' => $printerId,
+                            'productId' => $this->shopproduct_model->id
+                        ];
+                        $this->shopproductprinters_model->setObjectFromArray($printerInsert)->create();
+                    }
                 }
             }
 

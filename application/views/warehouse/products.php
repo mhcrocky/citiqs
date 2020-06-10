@@ -2,10 +2,13 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 <div class="main-wrapper theme-editor-wrapper">
 	<div class="grid-wrapper">
-        <?php if (is_null($categories)) { ?>
-            <p style="margin-left:15px;"> No categories.
+        <?php if (is_null($categories) || is_null($printers)) { ?>
+            <p style="margin-left:15px;"> No categories and / or printers.
                 <a href="<?php echo $this->baseUrl . 'product_categories'; ?>">
-                    Add
+                    Add category
+                </a>
+                <a href="<?php echo $this->baseUrl . 'printers'; ?>">
+                    Add printer
                 </a>
             </p>
         <?php } else { ?>
@@ -62,26 +65,22 @@
                                     <?php } ?>
                                 </select>
                             </div>
-                            <!-- <div class="form-group">
-                                <label for="stock">Stock: </label>
-                                <input type="number" step="1" name="product[stock]" id="stock" class="form-control" requried />
-                            </div> -->
-                            <!-- <div class="form-group">
-                                <label for="recommendedQuantity">Recommended quantity: </label>
-                                <input type="number" step="1" name="product[recommendedQuantity]" id="recommendedQuantity" class="form-control" requried />
-                            </div> -->
-                            <!-- <div class="form-group">
-                                <label for="showImage">Show product image: </label>
-                                <br/>
-                                <label for="hideProducteImage" class="radio-inline">
-                                    <input type="radio" name="product[showImage]" id="hideProducteImage" value="0" checked />
-                                    Hide
-                                </label>
-                                <label for="showProducteImage" class="radio-inline">
-                                    <input type="radio" name="product[showImage]" id="showProducteImage" value="1" />
-                                    Show
-                                </label>
-                            </div> -->
+                            <!-- PRINTERS -->
+                            <div class="form-group">
+                                <label for="printer">Printers: </label>
+                                <?php foreach ($printers as $printer) { ?>
+                                    <label class="checkbox-inline" for="printerId<?php echo $printer['id']; ?>">
+                                        <input
+                                            type="checkbox"
+                                            id="printerId<?php echo $printer['id']; ?>"
+                                            name="productPrinters[]"
+                                            value="<?php echo $printer['id']; ?>"
+                                            />
+                                        <?php echo $printer['printer']; ?> (<?php echo $printer['active'] === '1' ? 'active' : 'archived'; ?>)
+                                    </label>
+                                <?php } ?>
+                                
+                            </div>                
                         </form>
                     </div>
                 </div>
@@ -150,6 +149,22 @@
                                     <p class="item-category">Status:
                                         <?php echo $product['productActive'] === '1' ? '<span style="color:#009933">Active</span>' : '<span style="color:#ff3333">Archived</span>'; ?>
                                     </p>
+                                    <?php
+                                        if ($product['printers']) {
+                                            $printerIds = array_keys($product['printers']);
+                                            echo '<dl>';
+                                            echo    '<dt>Printers:</dt>';
+                                            foreach($product['printers'] as $printer) {
+                                                $printer = reset($printer);
+                                                $string = $printer['printer'];
+                                                $string .= $printer['printerActive'] === '1' ? ' (<span style="color:#009933">active</span>)' : ' (<span style="color:#ff3333">archived</span>)';
+                                                echo '<dd>' . $string . '</dd>';
+                                            }
+
+                                            #echo '<p class="item-description">Printers: ' . implode('<br/>', $printerNames). '</p>';
+                                            echo '</dl>';
+                                        }
+                                    ?>
                                 </div><!-- end item header -->
                                 <div class="grid-footer">
                                     <div class="iconWrapper">
@@ -232,6 +247,23 @@
                                             <div class="form-group">
                                                 <label for="options">Options: </label>
                                                 <input type="text" name="productExtended[options]" id="options" class="form-control" requried value="<?php echo $product['options']; ?>" />
+                                            </div>
+                                            <div class="form-group">
+                                            
+                                            <?php foreach ($printers as $printer) { ?>
+                                                    <label class="checkbox-inline" for="printerId<?php echo $product['productId']; ?><?php echo $printer['id']; ?>">
+                                                        <input
+                                                            type="checkbox"
+                                                            id="printerId<?php echo $product['productId']; ?><?php echo $printer['id']; ?>"
+                                                            name="productPrinters[]"
+                                                            value="<?php echo $printer['id']; ?>"
+                                                            <?php
+                                                                if ($product['printers'] && isset($printerIds) && in_array($printer['id'], $printerIds)) echo 'checked';
+                                                            ?>
+                                                            />
+                                                        <?php echo $printer['printer']; ?> (<?php echo $printer['active'] === '1' ? 'active' : 'archived'; ?>)
+                                                    </label>
+                                            <?php } ?>
                                             </div>
                                         </form>
                                     </div>
