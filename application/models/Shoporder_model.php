@@ -17,6 +17,7 @@
         public $updated;
         public $orderStatus;
         public $sendSms;
+        public $printStatus;
 
         private $table = 'tbl_shop_orders';
 
@@ -54,7 +55,7 @@
             if (isset($data['updated']) && !Validate_data_helper::validateDate($data['updated'])) return false;
             if (isset($data['orderStatus']) && !Validate_data_helper::validateString($data['orderStatus'])) return false;
             if (isset($data['sendSms']) && !($data['sendSms'] === '1' || $data['sendSms'] === '0')) return false;
-
+            if (isset($data['printStatus']) && !($data['printStatus'] === '1' || $data['printStatus'] === '0')) return false;
             return true;
         }
 
