@@ -95,4 +95,4 @@ function sendSms(element) {
 fetchOrders();
 
 // fetch new data every 300 seconds
-setInterval(function(){return fetchOrders()}, 10000);
+setInterval(function(){return fetchOrders()}, 300000);
