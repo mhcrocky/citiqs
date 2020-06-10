@@ -16,6 +16,8 @@ function populateTable(elementId, skiptStatus, orders) {
             tableBody +=        '<th>' + showOrderStatuses(orderGlobals.orderStatuses, order['orderId'], order['orderStatus']) + '</th>';
             tableBody +=        '<th>' + order['orderStatus'] + '</th>';
             tableBody +=        '<th>' + order['buyerUserName'] + '</th>';
+            tableBody +=        '<th>' + order['buyerMobile'] + '</th>';
+            tableBody +=        '<th>' + order['buyerEmail'] + '</th>';
             tableBody +=        '<th>';
             if (order['sendSms'] === '0') {
                 let disabled = order['orderStatus'] === 'done' ? '' : 'disabled';

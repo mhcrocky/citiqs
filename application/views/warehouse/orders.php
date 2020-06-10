@@ -12,6 +12,8 @@
                         <th>Change status</th>
                         <th>Current status</th>
                         <th>Buyer</th>
+                        <th>Buyer mobile</th>
+                        <th>Buyer email</th>
                         <th>Action</th>
                     </tr>
                 </thead>
