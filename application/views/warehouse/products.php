@@ -65,6 +65,10 @@
                                     <?php } ?>
                                 </select>
                             </div>
+                            <div class="form-group"><!--5) ADD PROPERTY IN INSERT FORM -->
+                                <label for="vatInsert">VAT: </label>
+                                <input type="number" requried value="0" step="0.01" min="0" name="product[vatpercentage]" id="vatInsert" class="form-control" />
+                            </div>
                             <!-- PRINTERS -->
                             <div class="form-group">
                                 <label for="printer">Printers: </label>
@@ -146,6 +150,7 @@
                                     <p class="item-description">Name: <?php echo $product['name']; ?></p>
                                     <p class="item-description">Description: <?php echo $product['shortDescription']; ?></p>
                                     <p class="item-description">Price: <?php echo $product['price']; ?></p>
+                                    <p class="item-description">VAT: <?php echo floatval($product['productVat']); ?></p><!-- 6) SHOW VAT IN DETAILS -->
                                     <p class="item-category">Status:
                                         <?php echo $product['productActive'] === '1' ? '<span style="color:#009933">Active</span>' : '<span style="color:#ff3333">Archived</span>'; ?>
                                     </p>
@@ -160,8 +165,6 @@
                                                 $string .= $printer['printerActive'] === '1' ? ' (<span style="color:#009933">active</span>)' : ' (<span style="color:#ff3333">archived</span>)';
                                                 echo '<dd>' . $string . '</dd>';
                                             }
-
-                                            #echo '<p class="item-description">Printers: ' . implode('<br/>', $printerNames). '</p>';
                                             echo '</dl>';
                                         }
                                     ?>
@@ -203,12 +206,12 @@
                                             <input type="text" name="productExtended[productId]" value="<?php echo $product['productId']; ?>" readonly required hidden />
                                             <legend>Product details</legend>
                                             <div class="form-group">
-                                                <label for="name">Name: </label>
-                                                <input type="text" name="productExtended[name]" id="name" class="form-control" requried value="<?php echo $product['name']; ?>" />
+                                                <label for="name<?php echo $product['productId'] ?>">Name: </label>
+                                                <input type="text" name="productExtended[name]" id="name<?php echo $product['productId'] ?>" class="form-control" requried value="<?php echo $product['name']; ?>" />
                                             </div>
                                             <div class="form-group">
-                                                <label for="editCategoryId">Product category: </label>
-                                                <select type="text" class="form-control" id="editCategoryId" name="product[categoryId]" required>
+                                                <label for="editCategoryId<?php echo $product['productId'] ?>">Product category: </label>
+                                                <select type="text" class="form-control" id="editCategoryId<?php echo $product['productId'] ?>" name="product[categoryId]" required>
                                                     <option value="">Select</option>
                                                     <?php foreach ($categories as $category) { ?>
                                                         <option
@@ -220,33 +223,46 @@
                                                     <?php } ?>
                                                 </select>
                                             </div>
+                                            <div class="form-group"><!--5) ADD PROPERTY IN INSERT FORM -->
+                                                <label for="vatEdit<?php echo $product['productId'] ?>">VAT: </label><!-- 7) SHOW IN UPDATE -->
+                                                <input
+                                                    type="number"
+                                                    requried
+                                                    value="<?php echo floatval($product['productVat']); ?>"
+                                                    step="0.01"
+                                                    min="0"
+                                                    name="product[vatpercentage]"
+                                                    id="vatEdit<?php echo $product['productId'] ?>"
+                                                    class="form-control"
+                                                    />
+                                            </div>
                                             <div class="form-group">
-                                                <label for="price">Price: </label>
+                                                <label for="price<?php echo $product['productId'] ?>">Price: </label>
                                                 <input
                                                     type="number"
                                                     requried
                                                     value="<?php echo filter_var($product['price'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); ?>"
                                                     step="0.01"
                                                     name="productExtended[price]"
-                                                    id="price"
+                                                    id="price<?php echo $product['productId'] ?>"
                                                     class="form-control"
                                                     />
                                             </div>
                                             <div class="form-group">
-                                                <label for="shortDescription">Short description: </label>
-                                                <input type="text" name="productExtended[shortDescription]" id="shortDescription" class="form-control" value="<?php echo $product['shortDescription']; ?>" />
+                                                <label for="shortDescription<?php echo $product['productId'] ?>">Short description: </label>
+                                                <input type="text" name="productExtended[shortDescription]" id="shortDescription<?php echo $product['productId'] ?>" class="form-control" value="<?php echo $product['shortDescription']; ?>" />
                                             </div>
                                             <div class="form-group">
-                                                <label for="longDescription">Long description: </label>
-                                                <textarea name="productExtended[longDescription]" id="longDescription" class="form-control"><?php echo $product['longDescription']; ?></textarea>
+                                                <label for="longDescription<?php echo $product['productId'] ?>">Long description: </label>
+                                                <textarea name="productExtended[longDescription]" id="longDescription<?php echo $product['productId'] ?>" class="form-control"><?php echo $product['longDescription']; ?></textarea>
                                             </div>
                                             <div class="form-group">
-                                                <label for="addons">Addons: </label>
-                                                <input type="text" name="productExtended[addons]" id="addons" class="form-control" requried value="<?php echo $product['addons']; ?>" />
+                                                <label for="addons<?php echo $product['productId'] ?>">Addons: </label>
+                                                <input type="text" name="productExtended[addons]" id="addons<?php echo $product['productId'] ?>" class="form-control" requried value="<?php echo $product['addons']; ?>" />
                                             </div>
                                             <div class="form-group">
-                                                <label for="options">Options: </label>
-                                                <input type="text" name="productExtended[options]" id="options" class="form-control" requried value="<?php echo $product['options']; ?>" />
+                                                <label for="options<?php echo $product['productId'] ?>">Options: </label>
+                                                <input type="text" name="productExtended[options]" id="options<?php echo $product['productId'] ?>" class="form-control" requried value="<?php echo $product['options']; ?>" />
                                             </div>
                                             <div class="form-group">
                                             

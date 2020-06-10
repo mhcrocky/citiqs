@@ -79,7 +79,8 @@
                             'tbl_shop_products.recommendedQuantity',
                             'tbl_shop_products.active AS productActive',
                             'tbl_shop_products.showImage',
-
+                            'tbl_shop_products.vatpercentage AS productVat', // 4) FETCH PROPERTY
+                            
                             'tbl_shop_categories.category',
                             'tbl_shop_categories.id AS categoryId',
                             'tbl_shop_categories.active AS categoryActive',

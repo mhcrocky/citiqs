@@ -15,7 +15,7 @@
         public $recommendedQuantity;
         public $active;
         public $showImage;
-
+        public $vatpercentage; // 1) WE ADD PROPERTY NAME, NAME IS THE SAME LIKE COLUM NAME IN TABLE
         private $table = 'tbl_shop_products';
 
         protected function setValueType(string $property,  &$value): void
@@ -38,7 +38,7 @@
                 // && isset($data['stock']) 
                 // && isset($data['recommendedQuantity']) 
                 && isset($data['active'])
-                // && isset($data['showImage'])
+                && isset($data['vatpercentage']) // 2) IF THIS FILED IS MANDATORY CHECK IS IT SEND
             ) {
                 return $this->updateValidate($data);
             }
@@ -53,6 +53,7 @@
             if (isset($data['recommendedQuantity']) && !Validate_data_helper::validateInteger($data['recommendedQuantity'])) return false;
             if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
             if (isset($data['showImage']) && !($data['showImage'] === '1' || $data['showImage'] === '0')) return false;
+            if (isset($data['vatpercentage']) && !Validate_data_helper::validateFloat($data['vatpercentage'])) return false; // 3) VALIDATE PROPERTY TYPE
 
             return true;
         }
