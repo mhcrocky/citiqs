@@ -116,18 +116,18 @@
                                         >
                                         <h3>Spot details</h3>
                                         <div>
-                                            <label for="spot<?php echo $spot['spotName']; ?>">Name:</label>
+                                            <label for="spotName<?php echo $spot['spotId']; ?>">Name:</label>
                                             <input
                                                 type="text"
                                                 class="form-control"
-                                                id="spot<?php echo $spot['spotName']; ?>"
+                                                id="spotName<?php echo $spot['spotId']; ?>"
                                                 name="spotName"
                                                 required
                                                 value="<?php echo $spot['spotName']; ?>" />
                                         </div>
                                         <div>
-                                            <label for="editPrinterId">Spot printer: </label>
-                                            <select class="form-control" id="editPrinterId" name="printerId">
+                                            <label for="editPrinterId<?php echo $spot['spotId']; ?>">Spot printer: </label>
+                                            <select class="form-control" id="editPrinterId<?php echo $spot['spotId']; ?>" name="printerId">
                                                 <option value="0">Select</option>
                                                 <?php foreach ($printers as $printer) { ?>
                                                     <option

@@ -101,12 +101,12 @@
 									<input type="text" name="userId" value="<?php echo $userId; ?>" readonly required hidden />
 									<h3>Printer details</h3>
 									<div>
-										<label for="printer<?php echo $printer['printer']; ?>">Name:</label>
-										<input type="text" class="form-control" id="printer<?php echo $printer['printer']; ?>" name="printer" required value="<?php echo $printer['printer']; ?>" />
+										<label for="printer<?php echo $printer['id']; ?>">Name:</label>
+										<input type="text" class="form-control" id="printer<?php echo $printer['id']; ?>" name="printer" required value="<?php echo $printer['printer']; ?>" />
 									</div>
                                     <div>
-										<label for="printer<?php echo $printer['macNumber']; ?>">MAC number:</label>
-										<input type="text" class="form-control" id="printer<?php echo $printer['macNumber']; ?>" name="macNumber" required value="<?php echo $printer['macNumber']; ?>" />
+										<label for="printerMac<?php echo $printer['macNumber']; ?>">MAC number:</label>
+										<input type="text" class="form-control" id="printerMac<?php echo $printer['macNumber']; ?>" name="macNumber" required value="<?php echo $printer['macNumber']; ?>" />
 									</div>
 								</form>
 							</div>
