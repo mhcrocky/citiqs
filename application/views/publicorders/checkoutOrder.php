@@ -36,6 +36,7 @@
                         </thead>
                         <tbody>
                         <?php
+                            $orderTotal = 0;
                             $total = 0;
                             $quantity = 0;
                             foreach ($orderDetails as $id => $details) {
@@ -53,16 +54,27 @@
                                     value="<?php echo $details['quantity'][0]; ?>"
                                     readonly required hidden />
                             <?php
-                                $total += filter_var($details['amount'][0], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                                $orderTotal += filter_var($details['amount'][0], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                                 $quantity += intval($details['quantity'][0]);
                             }
+
+                            $serviceFee = $orderTotal * 0.055;
+                            if ($serviceFee > 3.50) $serviceFee = 3.50;
+                            $total = $orderTotal + $serviceFee;
                         ?>
                             <tr>
                                 <td></td>
                                 <td></td>
-                                <td>Total:</td>
-                                <td><?php echo $quantity; ?></td>
-                                <td><?php echo number_format($total, 2, ",", "."); ?> &euro;</td>
+                                <td style="font-weight:900">Service fee:</td>
+                                <td style="font-weight:900">1</td>
+                                <td style="font-weight:900"><?php echo number_format($serviceFee, 2, ",", "."); ?> &euro;</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td style="font-weight:900">Total:</td>
+                                <td style="font-weight:900"><?php echo $quantity; ?></td>
+                                <td style="font-weight:900"><?php echo number_format($total, 2, ",", "."); ?> &euro;</td>
                             </tr>
                             <input type="number" value="<?php echo $total; ?>" readonly required hidden name="order[amount]" />
                         </tbody>

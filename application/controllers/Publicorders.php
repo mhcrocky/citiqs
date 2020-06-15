@@ -56,7 +56,7 @@
             $this->global['pageTitle'] = 'TIQS : CHECKOUT';
 
             if (empty($_POST)) {
-                redirect('make_order');
+                redirect($_SERVER['HTTP_REFERER']);
             }
 
             $data = [
