@@ -45,8 +45,7 @@
             ];
 
             $data = [
-                'categories' => $this->shopcategory_model->fetch($whereCategories),
-                'products' => $this->shopproductex_model->getUserLastProductsDetailsPublic($whereProducts)
+                'categoryProducts' => $this->shopproductex_model->getUserLastProductsDetailsPublic($whereProducts, 'category')
             ];
 
             $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
@@ -118,3 +117,4 @@
             exit();
         }
     }
+

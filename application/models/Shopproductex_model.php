@@ -162,7 +162,7 @@
                     );
         }
 
-        public function getUserLastProductsDetailsPublic(array $where): ?array
+        public function getUserLastProductsDetailsPublic(array $where, string $sortBy = 'name'): ?array
         {
             $products = $this->getUserProductsDetailsPublic($where);
             if (is_null($products)) return null;
@@ -183,7 +183,7 @@
                     array_push($productIds, $prodcut['productId']);
                 }
             }
-            $return = Utility_helper::resetArrayByKeyMultiple($return, 'name');
+            $return = Utility_helper::resetArrayByKeyMultiple($return, $sortBy);
             ksort($return);
             return $return;
         }

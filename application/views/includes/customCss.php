@@ -51,4 +51,8 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/nolabaels.css">
 <?php } elseif ($this->view === 'publicorders/makeOrder') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
+<!-- swipe slider -->
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/slick.css">    
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/slick-theme.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
 <?php } ?>
