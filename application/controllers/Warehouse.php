@@ -141,7 +141,7 @@
             $data = [
                 'categories' => $this->shopcategory_model->fetch($where),
                 'products' => $this->shopproductex_model->getUserLastProductsDetails($where),
-                'printers' => $this->shopprinters_model->read(['*'], ['id>' => 0]),
+                'printers' => $this->shopprinters_model->read(['*'], $where),
             ];
 
             $this->loadViews('warehouse/products', $this->global, $data, null, 'headerWarehouse');
