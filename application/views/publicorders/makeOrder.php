@@ -122,17 +122,8 @@
         <?php echo $productsHtml; ?>
     </div>
     <form method="post" action="<?php echo base_url() . 'checkout_order' ?>"> 
+        <input type="text" name="spotId" value="<?php echo $spotId; ?>" readonly required hidden />
         <?php echo $form; ?>
         <input type="submit" value="Make order" class="btn btn-primary"/>
     </form>
 </main>
-<?php if (!empty($categories) && !empty($products) ) { ?>
-<script>
-    var orderGlobals = (function(){
-        return {
-            'categories' : JSON.parse('<?php echo json_encode($categories);?>'),
-            'products' : JSON.parse('<?php echo json_encode($products);?>'),
-        }
-    }())
-</script>
-<?php } ?>

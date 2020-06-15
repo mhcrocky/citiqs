@@ -76,7 +76,9 @@
                                 <td style="font-weight:900"><?php echo $quantity; ?></td>
                                 <td style="font-weight:900"><?php echo number_format($total, 2, ",", "."); ?> &euro;</td>
                             </tr>
-                            <input type="number" value="<?php echo $total; ?>" readonly required hidden name="order[amount]" />
+                            <input type="number" value="<?php echo $spotId; ?>" readonly required hidden name="order[spotId]" />
+                            <input type="number" value="<?php echo $serviceFee; ?>" readonly required hidden name="order[serviceFee]" />
+                            <input type="number" value="<?php echo $orderTotal; ?>" readonly required hidden name="order[amount]" />
                         </tbody>
                     </table>
                 </div>

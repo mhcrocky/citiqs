@@ -12,6 +12,7 @@
         public $id;
         public $buyerId;
         public $amount;
+        public $serviceFee;
         public $paid;
         public $created;
         public $updated;
@@ -39,7 +40,7 @@
 
         public function insertValidate(array $data): bool
         {
-            if (isset($data['buyerId']) && isset($data['amount']) && isset($data['paid'])) {
+            if (isset($data['buyerId']) && isset($data['amount']) && isset($data['serviceFee']) && isset($data['paid'])) {
                 return $this->updateValidate($data);
             }
             return false;
@@ -50,6 +51,7 @@
             if (!count($data)) return false;
             if (isset($data['buyerId']) && !Validate_data_helper::validateInteger($data['buyerId'])) return false;
             if (isset($data['amount']) && !Validate_data_helper::validateFloat($data['amount'])) return false;
+            if (isset($data['serviceFee']) && !Validate_data_helper::validateFloat($data['serviceFee'])) return false;            
             if (isset($data['paid']) && !($data['paid'] === '1' || $data['paid'] === '0')) return false;
             if (isset($data['created']) && !Validate_data_helper::validateDate($data['created'])) return false;
             if (isset($data['updated']) && !Validate_data_helper::validateDate($data['updated'])) return false;
@@ -66,6 +68,7 @@
                     $this->table . '.id AS orderId',
                     $this->table . '.amount AS orderAmount',
                     $this->table . '.paid AS orderPaidStatus',
+                    $this->table . '.serviceFee AS serviceFee',
                     'buyer.id AS buyerId',
                     'buyer.email AS buyerEmail',
                     'buyer.username AS buyerUserName',
@@ -124,6 +127,69 @@
                     'vendor.id' => $userId,
                     $this->table . '.paid=' => $paidStatus
                 ],
+                [
+                    ['tbl_shop_order_extended', $this->table . '.id = tbl_shop_order_extended.orderId', 'INNER'],
+                    ['tbl_shop_products_extended', 'tbl_shop_order_extended.productsExtendedId  = tbl_shop_products_extended.id', 'INNER'],
+                    ['tbl_shop_products', 'tbl_shop_products_extended.productId  = tbl_shop_products.id', 'INNER'],
+                    ['tbl_shop_categories', 'tbl_shop_products.categoryId  = tbl_shop_categories.id', 'INNER'],
+                    [
+                        '(SELECT * FROM tbl_user WHERE roleid = '. $this->config->item('owner') .') vendor',
+                        'vendor.id  = tbl_shop_categories.userId',
+                        'INNER'
+                    ],
+                    [
+                        '(SELECT * FROM tbl_user WHERE roleid = ' . $this->config->item('buyer') . ' OR roleid = ' . $this->config->item('owner') . ') buyer',
+                        'buyer.id  = ' .  $this->table  . '.buyerId',
+                        'INNER'
+                    ],
+                ],
+                'order_by',
+                [$this->table . '.updated ASC']
+            );
+        }
+
+        public function fetchReportDetails(int $userId, string $from = '', string $to = ''): ?array
+        {
+            $where = [
+                'vendor.id' => $userId
+            ];
+            if ($from && $to) {
+                $where[$this->table .'.created>='] = $from;
+                $where[$this->table .'.created<'] = $to;
+            }
+
+            return $this->read(
+                [
+                    // ORDER BASIC INFORMATION
+                    $this->table . '.id AS orderId',
+                    $this->table . '.amount AS orderAmount',
+                    $this->table . '.paid AS orderPaidStatus',
+                    $this->table . '.orderStatus AS orderStatus',
+                    $this->table . '.sendSms AS sendSms',
+                    $this->table . '.created AS createdAt',
+
+                    //ORDER EXTENDED - QUANTITY
+                    'tbl_shop_order_extended.quantity AS productQuantity',
+
+                    // CATEGORIES
+                    'tbl_shop_categories.category AS category',
+
+                    // BUYER
+                    'buyer.id AS buyerId',
+                    'buyer.email AS buyerEmail',
+                    'buyer.username AS buyerUserName',
+                    'CONCAT("0031", TRIM(LEADING "0" FROM buyer.mobile)) AS buyerMobile',
+
+                    // VENDOR
+                    'vendor.id AS vendorId',
+                    'vendor.email AS vendorEmail',
+                    'vendor.username AS vendorUserName',
+
+                    // PRODUCT DETAILS
+                    'tbl_shop_products_extended.name AS productName',
+                    'tbl_shop_products_extended.price AS productPrice'
+                ],
+                $where,
                 [
                     ['tbl_shop_order_extended', $this->table . '.id = tbl_shop_order_extended.orderId', 'INNER'],
                     ['tbl_shop_products_extended', 'tbl_shop_order_extended.productsExtendedId  = tbl_shop_products_extended.id', 'INNER'],

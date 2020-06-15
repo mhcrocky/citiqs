@@ -28,20 +28,23 @@
         {
             // get and unset $_SESSION['orderId']
             $this->shoporder_model->id = Utility_helper::getSessionValue('orderId');
+            // get and unset $_SESSION['spotId']
+            $spotId = Utility_helper::getSessionValue('spotId');
+            // redirect
+            $makeOrderRedirect = 'make_order?spotid=' . $spotId;
 
             if (is_null($this->shoporder_model->id)) {
                 $this->session->set_flashdata('error', 'Order not made! Please try again');
-                redirect('make_order');
+                redirect($makeOrderRedirect);
                 exit();
             }
 
             // fetch and check order
             $order = $this->shoporder_model->fetchOne();
-            var_dump($order);
-            die();
+
             if (!$order) {
                 $this->session->set_flashdata('error', 'Order not made! Please try again');
-                redirect('make_order');
+                redirect($makeOrderRedirect);
                 exit();
             }
             $order = reset($order);
@@ -49,10 +52,10 @@
             // check is order paid
             if (intval($order['orderPaidStatus'])) {
                 $this->session->set_flashdata('success', 'Order is paid');
-                redirect('make_order');
+                redirect($makeOrderRedirect);
                 exit();
             }
-			var_dump($order);
+            var_dump($order);
         }
     }
     

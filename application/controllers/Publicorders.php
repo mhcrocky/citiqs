@@ -32,6 +32,9 @@
         public function index(): void
         {
             $this->global['pageTitle'] = 'TIQS : ORDERING';
+            if(!isset($_GET['spotid'])) {
+                redirect(base_url());
+            }
 
             $whereCategories = [
                 'tbl_shop_categories.active' => '1'
@@ -45,7 +48,8 @@
             ];
 
             $data = [
-                'categoryProducts' => $this->shopproductex_model->getUserLastProductsDetailsPublic($whereProducts, 'category')
+                'categoryProducts' => $this->shopproductex_model->getUserLastProductsDetailsPublic($whereProducts, 'category'),
+                'spotId' => $_GET['spotid']
             ];
 
             $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
@@ -59,8 +63,13 @@
                 redirect($_SERVER['HTTP_REFERER']);
             }
 
+            $post = $this->input->post(null, true);
+            $spotId = $post['spotId'];
+            unset($post['spotId']);
+
             $data = [
-                'orderDetails' => $this->input->post(null, true),
+                'spotId' => $spotId,
+                'orderDetails' => $post,
                 'buyerRole' => $this->config->item('buyer'),
                 'usershorturl' => 'tiqs_shop_service',
                 'salesagent' => $this->config->item('tiqsId'),
@@ -72,6 +81,9 @@
         public function submitOrder(): void
         {
             $data = $this->input->post(null, true);
+            $spotId = $data['order']['spotId'];
+            $makeOrderRedirect = 'make_order?spotid=' . $spotId;
+            unset($data['order']['spotId']);
 
             // get buyer id
             $data['user']['username'] = $data['user']['first_name'] . ' ' . $data['user']['second_name'];
@@ -79,7 +91,7 @@
 
             if (!$this->user_model->id) {
                 $this->session->set_flashdata('error', 'Order not made! Please try again');
-                redirect('make_order');
+                redirect($makeOrderRedirect);
                 exit();
             }
 
@@ -91,7 +103,7 @@
             
             if (!$this->shoporder_model->id) {
                 $this->session->set_flashdata('error', 'Order not made! Please try again');
-                              redirect('make_order');
+                redirect($makeOrderRedirect);
                 exit();
             }
 
@@ -104,15 +116,14 @@
                     $this->shoporderex_model->deleteOrderDetails();
                     $this->shoporder_model->delete();
                     $this->session->set_flashdata('error', 'Order not made! Please try again');
-                    redirect('make_order');
+                    redirect($makeOrderRedirect);
                     exit();
                 }
             }
 
             // go to paying if everything OK
             $_SESSION['orderId'] = $this->shoporder_model->id;
-//			var_dump($_SESSION);
-//			die();
+            $_SESSION['spotId'] = $spotId;
             redirect('payshop/payOrder');
             exit();
         }

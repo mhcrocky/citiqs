@@ -48,6 +48,10 @@
         {
             $this->global['pageTitle'] = 'TIQS : WAREHOSUE';
 
+            $userId = intval($_SESSION['userId']);
+            $from = '2020-06-09';
+            $to = '2020-06-10';
+            var_dump($this->shoporder_model->fetchReportDetails($userId, $from, $to));
             $this->loadViews('warehouse/warehouse', $this->global, null, null, 'headerWarehouse');
         }
 
