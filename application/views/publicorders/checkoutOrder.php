@@ -58,7 +58,7 @@
                                 $quantity += intval($details['quantity'][0]);
                             }
 
-                            $serviceFee = $orderTotal * 0.055;
+                            $serviceFee = $orderTotal * 0.045;
                             if ($serviceFee > 3.50) $serviceFee = 3.50;
                             $total = $orderTotal + $serviceFee;
                         ?>
