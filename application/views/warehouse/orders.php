@@ -2,30 +2,34 @@
 <main class="row" style="margin:50px 0px 20px 0px">
     <div class="container">
         <h1>Order list</h1>
-        <div>
-            <label class="radio-inline">
-                <input
-                    type="radio"
-                    name="toogleShow"
-                    checked
-                    value="notFinished"
-                    data-hide="finished"
-                    onclick="toggleFinished(this, 'hideRow')"
-                    />
-                    Hide finished
-            </label>
-            <label class="radio-inline">
-                <input
-                    type="radio"
-                    name="toogleShow"
-                    value="finished"
-                    data-hide="notFinished"
-                    onclick="toggleFinished(this, 'hideRow')"
-                    />
-                    Show finished
-            </label>
+            <div class="col-lg-4 col-sm-12">
+                <input class="form-control" id="filter" type="text" placeholder="Search..">
+            </div>
+            <div class="col-lg-8 col-sm-12">
+                <label class="radio-inline">
+                    <input
+                        type="radio"
+                        name="toogleShow"
+                        checked
+                        value="notFinished"
+                        data-hide="finished"
+                        onclick="toggleFinished(this, 'hideRow')"
+                        />
+                        Hide finished
+                </label>
+                <label class="radio-inline">
+                    <input
+                        type="radio"
+                        name="toogleShow"
+                        value="finished"
+                        data-hide="notFinished"
+                        onclick="toggleFinished(this, 'hideRow')"
+                        />
+                        Show finished
+                </label>
+            </div>
         </div>
-        <div class="table-responsive col-sm-12">
+        <div class="table-responsive col-sm-12" style="margin-top:20px">
             <table class="table table-hover table-striped">
                 <thead>
                     <tr>

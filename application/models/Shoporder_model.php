@@ -181,18 +181,32 @@
                     $this->table . '.paid AS orderPaidStatus',
                     $this->table . '.orderStatus AS orderStatus',
                     $this->table . '.sendSms AS sendSms',
-
+                    // category
                     'tbl_shop_categories.category AS category',
+
+                    //buyer
                     'buyer.id AS buyerId',
                     'buyer.email AS buyerEmail',
                     'buyer.username AS buyerUserName',
                     'CONCAT("0031", TRIM(LEADING "0" FROM buyer.mobile)) AS buyerMobile',
                     'buyer.mobile AS buyerRawMobile',
+
+                    //vendor
                     'vendor.id AS vendorId',
                     'vendor.email AS vendorEmail',
                     'vendor.username AS vendorUserName',
+
+                    // order extende
                     'tbl_shop_order_extended.quantity AS productQuantity',
+
+                    // product
+                    'tbl_shop_products.id AS productId',
+
+                    // product extened
                     'tbl_shop_products_extended.name AS productName',
+                    'tbl_shop_products_extended.id AS productEtendedId',
+
+                    // spots
                     'tbl_shop_spots.id AS spotId',
                     'tbl_shop_spots.spotName AS spotName'
                 ],

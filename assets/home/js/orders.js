@@ -119,7 +119,18 @@ function toggleFinished(element, toggleClas) {
     $('.' + element.dataset.hide).addClass(toggleClas);
 }
 
-fetchOrders();
 
-// fetch new data every 300 seconds
-setInterval(function(){return fetchOrders()}, 300000);
+document.addEventListener("DOMContentLoaded", function() {
+    fetchOrders();
+    // fetch new data every 300 seconds
+    setInterval(function(){return fetchOrders()}, 300000);
+    //filter orders
+    if ($("#filter").length && $("#orders").length) {
+        $("#filter").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#orders tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    }
+});

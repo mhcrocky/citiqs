@@ -49,9 +49,27 @@
             $this->global['pageTitle'] = 'TIQS : WAREHOSUE';
 
             $userId = intval($_SESSION['userId']);
-            var_dump($this->shoporder_model->fetchReportDetails($userId));
-            die();
-            $this->loadViews('warehouse/warehouse', $this->global, null, null, 'headerWarehouse');
+            $data = [];
+            if (!empty($_POST)) {
+                $data = $this->input->post(null, true);
+                $reportsData = $this->shoporder_model->fetchReportDetails($userId, $data['from'], $data['to']);
+            } else {
+                $reportsData = $this->shoporder_model->fetchReportDetails($userId);
+            }
+
+            if ($reportsData) {
+                $data = [
+                    'reports' => [
+                        'orders' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'orderId'),
+                        'categories' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'category'),
+                        'spots' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'spotId'),
+                        'buyers' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'buyerId'),
+                        'products' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'productId')
+                    ]
+                ];
+            }
+
+            $this->loadViews('warehouse/warehouse', $this->global, $data, null, 'headerWarehouse');
         }
 
         // CATEGORIES
