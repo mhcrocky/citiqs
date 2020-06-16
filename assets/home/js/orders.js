@@ -5,34 +5,34 @@ function populateTable(elementId, skiptStatus, orders) {
     let orderId;
     let order;
     let orderDetails;
+    let finishedClass;
     for (orderId in orders) {
         orderDetails = orders[orderId];
         order = orderDetails[0];
-        if (order['orderStatus'] !== skiptStatus) {
-            tableBody +=    '<tr>';
-            tableBody +=        '<th>' + order['orderId'] + '</th>';
-            tableBody +=        '<th>' + showOrderProducts(orderDetails) + '</th>';
-            tableBody +=        '<th>' + order['orderAmount'] + '</th>';
-            tableBody +=        '<th>' + showOrderStatuses(orderGlobals.orderStatuses, order['orderId'], order['orderStatus']) + '</th>';
-            tableBody +=        '<th>' + order['orderStatus'] + '</th>';
-            tableBody +=        '<th>' + order['buyerUserName'] + '</th>';
-            tableBody +=        '<th>' + showPhoneNumber(order) + '</th>';
-            tableBody +=        '<th>' + order['buyerEmail'] + '</th>';
-            tableBody +=        '<th>';
-            if (order['sendSms'] === '0') {
-                let disabled = order['orderStatus'] === 'done' ? '' : 'disabled';
-                tableBody += '<button class="btn btn-primary" ' + disabled + ' ';
-                tableBody +=    'data-order-id=' + order['orderId'] + '" ';
-                tableBody +=    'data-buyer-mobile=' + order['buyerMobile'] + '" ';
-                tableBody +=    'data-message="Je kan je eten afhalen bij de keuken" ';
-                tableBody +=    'onclick="sendSms(this)"';
-                tableBody += '>Send sms</button>';
-            } else {
-                tableBody += 'Sms send'
-            }
-            tableBody +=        '</th>';
-            tableBody +=    '</tr>';
-        }        
+        finishedClass = order['orderStatus'] === skiptStatus ? 'finished hideRow' : 'notFinished';
+        tableBody +=    '<tr class="' + finishedClass + '">';
+        tableBody +=        '<th>' + order['orderId'] + '</th>';
+        tableBody +=        '<th>' + showOrderProducts(orderDetails) + '</th>';
+        tableBody +=        '<th>' + order['orderAmount'] + '</th>';
+        tableBody +=        '<th>' + showOrderStatuses(orderGlobals.orderStatuses, order['orderId'], order['orderStatus']) + '</th>';
+        tableBody +=        '<th>' + order['orderStatus'] + '</th>';
+        tableBody +=        '<th>' + order['buyerUserName'] + '</th>';
+        tableBody +=        '<th>' + showPhoneNumber(order) + '</th>';
+        tableBody +=        '<th>' + order['buyerEmail'] + '</th>';
+        tableBody +=        '<th>';
+        if (order['sendSms'] === '0') {
+            let disabled = order['orderStatus'] === 'done' ? '' : 'disabled';
+            tableBody += '<button class="btn btn-primary" ' + disabled + ' ';
+            tableBody +=    'data-order-id=' + order['orderId'] + '" ';
+            tableBody +=    'data-buyer-mobile=' + order['buyerMobile'] + '" ';
+            tableBody +=    'data-message="Je kan je eten afhalen bij de keuken" ';
+            tableBody +=    'onclick="sendSms(this)"';
+            tableBody += '>Send sms</button>';
+        } else {
+            tableBody += 'Sms send'
+        }
+        tableBody +=        '</th>';
+        tableBody +=    '</tr>';
     }
     $('#' + elementId).html(tableBody);
 }
@@ -113,6 +113,10 @@ function updatePhoneNumber(element) {
     sendAjaxPostRequest(post, url, 'updatePhoneNumber', fetchOrders);
 }
 
+function toggleFinished(element, toggleClas) {
+    $('.' + element.value).removeClass(toggleClas);
+    $('.' + element.dataset.hide).addClass(toggleClas);
+}
 
 fetchOrders();
 

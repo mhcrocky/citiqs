@@ -2,6 +2,29 @@
 <main class="row" style="margin:50px 0px 20px 0px">
     <div class="container">
         <h1>Order list</h1>
+        <div>
+            <label class="radio-inline">
+                <input
+                    type="radio"
+                    name="toogleShow"
+                    checked
+                    value="notFinished"
+                    data-hide="finished"
+                    onclick="toggleFinished(this, 'hideRow')"
+                    />
+                    Hide finished
+            </label>
+            <label class="radio-inline">
+                <input
+                    type="radio"
+                    name="toogleShow"
+                    value="finished"
+                    data-hide="notFinished"
+                    onclick="toggleFinished(this, 'hideRow')"
+                    />
+                    Show finished
+            </label>
+        </div>
         <div class="table-responsive col-sm-12">
             <table class="table table-hover table-striped">
                 <thead>

@@ -55,4 +55,6 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/slick.css">    
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/slick-theme.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
+<?php }  elseif ($this->view === 'warehouse/orders') { ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/orderList.css">
 <?php } ?>
