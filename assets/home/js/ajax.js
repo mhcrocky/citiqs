@@ -147,6 +147,14 @@ var callThis = (function() {
             } else {
                 alertify.error('SMS not send');
             }
+        },
+        updatePhoneNumber: function(callFunction) {
+            if (this) {
+                alertify.success('Mobile number updated');
+                callFunction();
+            } else {
+                alertify.error('Mobile number not updated');
+            }
         }
     };
     return methods;

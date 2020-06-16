@@ -478,4 +478,14 @@ class Ajax extends CI_Controller
         }
         return;
     }
+
+    public function updateUser(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $userId = intval($this->uri->segment(3));
+        $userInfo = $this->input->post(null, true);
+
+        echo $this->user_model->editUser($userInfo, $userId) ? 1 : 0;
+    }
 }

@@ -117,6 +117,7 @@
                     'buyer.email AS buyerEmail',
                     'buyer.username AS buyerUserName',
                     'CONCAT("0031", TRIM(LEADING "0" FROM buyer.mobile)) AS buyerMobile',
+                    'buyer.mobile AS buyerRawMobile',
                     'vendor.id AS vendorId',
                     'vendor.email AS vendorEmail',
                     'vendor.username AS vendorUserName',

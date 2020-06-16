@@ -16,7 +16,7 @@ function populateTable(elementId, skiptStatus, orders) {
             tableBody +=        '<th>' + showOrderStatuses(orderGlobals.orderStatuses, order['orderId'], order['orderStatus']) + '</th>';
             tableBody +=        '<th>' + order['orderStatus'] + '</th>';
             tableBody +=        '<th>' + order['buyerUserName'] + '</th>';
-            tableBody +=        '<th>' + order['buyerMobile'] + '</th>';
+            tableBody +=        '<th>' + showPhoneNumber(order) + '</th>';
             tableBody +=        '<th>' + order['buyerEmail'] + '</th>';
             tableBody +=        '<th>';
             if (order['sendSms'] === '0') {
@@ -87,12 +87,32 @@ function fetchOrders() {
 
 function sendSms(element) {
     let url = globalVariables.ajax + 'sendSms/' + element.dataset.orderId;
-    let post = {        
+    let post = {
         mobilenumber: element.dataset.buyerMobile,
         messagetext: element.dataset.message
     }
     sendAjaxPostRequest(post, url, 'sendSms', fetchOrders);
 }
+
+function showPhoneNumber(order) {
+    let phoneNumber = ''
+    phoneNumber += '<input type="text" ';
+    phoneNumber += 'value="' + order['buyerRawMobile'] + '" ';
+    phoneNumber += 'data-user-id="' + order['buyerId'] + '" ';
+    phoneNumber += 'onchange="updatePhoneNumber(this)" ';
+    phoneNumber += 'required />';
+
+    return phoneNumber;
+}
+
+function updatePhoneNumber(element) {
+    let url = globalVariables.ajax + 'updateUser/' + element.dataset.userId;
+    let post = {
+        mobile: element.value
+    }
+    sendAjaxPostRequest(post, url, 'updatePhoneNumber', fetchOrders);
+}
+
 
 fetchOrders();
 
