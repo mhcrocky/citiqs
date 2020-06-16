@@ -14,6 +14,7 @@ function populateTable(elementId, skiptStatus, orders) {
         tableBody +=        '<th>' + order['orderId'] + '</th>';
         tableBody +=        '<th>' + showOrderProducts(orderDetails) + '</th>';
         tableBody +=        '<th>' + order['orderAmount'] + '</th>';
+        tableBody +=        '<th>' + order['spotName'] + '</th>';
         tableBody +=        '<th>' + showOrderStatuses(orderGlobals.orderStatuses, order['orderId'], order['orderStatus']) + '</th>';
         tableBody +=        '<th>' + order['orderStatus'] + '</th>';
         tableBody +=        '<th>' + order['buyerUserName'] + '</th>';

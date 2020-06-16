@@ -19,6 +19,7 @@
         public $orderStatus;
         public $sendSms;
         public $printStatus;
+        public $spotId;
 
         private $table = 'tbl_shop_orders';
 
@@ -40,7 +41,13 @@
 
         public function insertValidate(array $data): bool
         {
-            if (isset($data['buyerId']) && isset($data['amount']) && isset($data['serviceFee']) && isset($data['paid'])) {
+            if (
+                isset($data['buyerId'])
+                && isset($data['amount'])
+                && isset($data['serviceFee'])
+                && isset($data['paid'])
+                && isset($data['spotId'])
+            ) {
                 return $this->updateValidate($data);
             }
             return false;
@@ -58,6 +65,7 @@
             if (isset($data['orderStatus']) && !Validate_data_helper::validateString($data['orderStatus'])) return false;
             if (isset($data['sendSms']) && !($data['sendSms'] === '1' || $data['sendSms'] === '0')) return false;
             if (isset($data['printStatus']) && !($data['printStatus'] === '1' || $data['printStatus'] === '0')) return false;
+            if (isset($data['spotId']) && !Validate_data_helper::validateInteger($data['spotId'])) return false;
             return true;
         }
 
@@ -74,7 +82,9 @@
                     'buyer.username AS buyerUserName',
                     'vendor.id AS vendorId',
                     'vendor.email AS vendorEmail',
-                    'vendor.username AS vendorUserName'
+                    'vendor.username AS vendorUserName',
+                    'tbl_shop_spots.id AS spotId',
+                    'tbl_shop_spots.spotName AS spotName'
                 ],
                 [
                     $this->table . '.id=' => $this->id
@@ -94,6 +104,7 @@
                         'buyer.id  = ' .  $this->table  . '.buyerId',
                         'INNER'
                     ],
+                    ['tbl_shop_spots', $this->table . '.spotId = tbl_shop_spots.id', 'INNER']
                 ],
                 'limit',
                 ['1']
@@ -122,7 +133,9 @@
                     'vendor.email AS vendorEmail',
                     'vendor.username AS vendorUserName',
                     'tbl_shop_order_extended.quantity AS productQuantity',
-                    'tbl_shop_products_extended.name AS productName'
+                    'tbl_shop_products_extended.name AS productName',
+                    'tbl_shop_spots.id AS spotId',
+                    'tbl_shop_spots.spotName AS spotName'
                 ],
                 [
                     'vendor.id' => $userId,
@@ -143,6 +156,7 @@
                         'buyer.id  = ' .  $this->table  . '.buyerId',
                         'INNER'
                     ],
+                    ['tbl_shop_spots', $this->table . '.spotId = tbl_shop_spots.id', 'INNER']
                 ],
                 'order_by',
                 [$this->table . '.updated ASC']
@@ -154,6 +168,7 @@
             $where = [
                 'vendor.id' => $userId
             ];
+
             if ($from && $to) {
                 $where[$this->table .'.created>='] = $from;
                 $where[$this->table .'.created<'] = $to;
@@ -161,34 +176,25 @@
 
             return $this->read(
                 [
-                    // ORDER BASIC INFORMATION
                     $this->table . '.id AS orderId',
                     $this->table . '.amount AS orderAmount',
                     $this->table . '.paid AS orderPaidStatus',
                     $this->table . '.orderStatus AS orderStatus',
                     $this->table . '.sendSms AS sendSms',
-                    $this->table . '.created AS createdAt',
 
-                    //ORDER EXTENDED - QUANTITY
-                    'tbl_shop_order_extended.quantity AS productQuantity',
-
-                    // CATEGORIES
                     'tbl_shop_categories.category AS category',
-
-                    // BUYER
                     'buyer.id AS buyerId',
                     'buyer.email AS buyerEmail',
                     'buyer.username AS buyerUserName',
                     'CONCAT("0031", TRIM(LEADING "0" FROM buyer.mobile)) AS buyerMobile',
-
-                    // VENDOR
+                    'buyer.mobile AS buyerRawMobile',
                     'vendor.id AS vendorId',
                     'vendor.email AS vendorEmail',
                     'vendor.username AS vendorUserName',
-
-                    // PRODUCT DETAILS
+                    'tbl_shop_order_extended.quantity AS productQuantity',
                     'tbl_shop_products_extended.name AS productName',
-                    'tbl_shop_products_extended.price AS productPrice'
+                    'tbl_shop_spots.id AS spotId',
+                    'tbl_shop_spots.spotName AS spotName'
                 ],
                 $where,
                 [
@@ -206,6 +212,7 @@
                         'buyer.id  = ' .  $this->table  . '.buyerId',
                         'INNER'
                     ],
+                    ['tbl_shop_spots', $this->table . '.spotId = tbl_shop_spots.id', 'INNER']
                 ],
                 'order_by',
                 [$this->table . '.updated ASC']

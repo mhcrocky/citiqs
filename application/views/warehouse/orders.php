@@ -32,6 +32,7 @@
                         <th>Order id</th>
                         <th>Products</th>
                         <th>Amount</th>
+                        <th>Spot</th>
                         <th>Change status</th>
                         <th>Current status</th>
                         <th>Buyer</th>

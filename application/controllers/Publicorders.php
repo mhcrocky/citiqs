@@ -81,9 +81,7 @@
         public function submitOrder(): void
         {
             $data = $this->input->post(null, true);
-            $spotId = $data['order']['spotId'];
-            $makeOrderRedirect = 'make_order?spotid=' . $spotId;
-            unset($data['order']['spotId']);
+            $makeOrderRedirect = 'make_order?spotid=' . $data['order']['spotId'];
 
             // get buyer id
             $data['user']['username'] = $data['user']['first_name'] . ' ' . $data['user']['second_name'];
@@ -123,7 +121,7 @@
 
             // go to paying if everything OK
             $_SESSION['orderId'] = $this->shoporder_model->id;
-            $_SESSION['spotId'] = $spotId;
+            $_SESSION['spotId'] = $data['order']['spotId'];
             redirect('payshop/payOrder');
             exit();
         }
