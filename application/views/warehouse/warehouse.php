@@ -20,6 +20,12 @@
                                 include_once FCPATH . 'application/views/warehouse/includes/ordersReportes.php';
                             } elseif ($key === 'categories') {
                                 include_once FCPATH . 'application/views/warehouse/includes/categoriesReportes.php';
+                            } elseif ($key === 'spots') {
+                                include_once FCPATH . 'application/views/warehouse/includes/spotsReportes.php';
+                            } elseif ($key === 'buyers') {
+                                include_once FCPATH . 'application/views/warehouse/includes/buyersReportes.php';
+                            } elseif ($key === 'products') {
+                                include_once FCPATH . 'application/views/warehouse/includes/productsReportes.php';
                             }
                         ?>
                         
