@@ -181,6 +181,8 @@
                     $this->table . '.paid AS orderPaidStatus',
                     $this->table . '.orderStatus AS orderStatus',
                     $this->table . '.sendSms AS sendSms',
+                    $this->table . '.created AS createdAt',
+
                     // category
                     'tbl_shop_categories.category AS category',
 
