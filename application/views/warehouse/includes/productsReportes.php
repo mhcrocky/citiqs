@@ -18,6 +18,7 @@
             <tr>
                 <th style="text-align:center">Product</th>
                 <th style="text-align:center">Number of orders</th>
+                <th style="text-align:center">Quantity</th>
                 <th style="text-align:center">Paid</th>
                 <th style="text-align:center">Unpaid</th>
                 <th style="text-align:center">Total</th>
@@ -33,6 +34,7 @@
                     $unpaidProducts = 0;
                     $totalProducts = 0;
                     $orders = [];
+                    $quantity = 0;
                     foreach($details as $data) {
                             if (!in_array($data['orderId'], $orders)) {
                                 array_push($orders, $data['orderId']);
@@ -40,6 +42,7 @@
                             $money = floatval($data['productPrice']) * floatval($data['productQuantity']) ;
                             $totalProducts += $money;
                             $total += $money;
+                            $quantity += $data['productQuantity'];
                             if ($data['orderPaidStatus'] === '1') {
                                 $paidProducts += $money;
                             } else {
@@ -52,12 +55,12 @@
                 <tr>
                     <td style="text-align:center"><?php echo $productMin['productName']; ?></td>
                     <td style="text-align:center"><?php echo count($orders); ?></td>
+                    <td style="text-align:center"><?php echo $quantity ?></td>
                     <td style="text-align:center"><?php echo $paidProducts; ?> (<?php echo round(($paidProducts / $totalProducts * 100), 2); ?> %)</td>
                     <td style="text-align:center; color:#ff3333;"><?php echo $unpaidProducts; ?> (<?php echo round(($unpaidProducts / $totalProducts * 100), 2); ?> %)</td>
                     <td style="text-align:center"><?php echo $totalProducts; ?></td>
                 </tr>
                 <?php
-                
                 }
             ?>
         </tbody>
@@ -65,6 +68,7 @@
             <tr>
                 <th style="text-align:center">Product</th>
                 <th style="text-align:center">Number of orders</th>
+                <th style="text-align:center">Quantity</th>
                 <th style="text-align:center">Paid</th>
                 <th style="text-align:center">Unpaid</th>
                 <th style="text-align:center">Total</th>
