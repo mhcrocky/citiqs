@@ -184,6 +184,7 @@
                     $this->table . '.created AS createdAt',
 
                     // category
+                    'tbl_shop_categories.id AS categoryId',
                     'tbl_shop_categories.category AS category',
 
                     //buyer
@@ -201,12 +202,14 @@
                     // order extende
                     'tbl_shop_order_extended.quantity AS productQuantity',
 
+
                     // product
                     'tbl_shop_products.id AS productId',
 
                     // product extened
                     'tbl_shop_products_extended.name AS productName',
                     'tbl_shop_products_extended.id AS productEtendedId',
+                    'tbl_shop_products_extended.price AS productPrice',
 
                     // spots
                     'tbl_shop_spots.id AS spotId',

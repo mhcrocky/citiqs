@@ -8,7 +8,7 @@
                 <ul class="nav nav-tabs">
                     <?php foreach ($keys as $key) { ?>
                         <li <?php if ($key === 'orders') echo 'class="active"'?> >
-                            <a data-toggle="tab" href="#<?php echo $key ?>"><?php echo $key ?></a>
+                            <a data-toggle="tab" href="#<?php echo $key ?>"><?php echo ucfirst($key); ?></a>
                         </li>
                     <?php } ?>
                 </ul>
@@ -17,7 +17,9 @@
                     <div id="<?php echo $key; ?>" class="tab-pane <?php if ($key === 'orders') echo 'active'?>" style="background-color: #FFF; text-align:left">
                         <?php
                             if ($key === 'orders') {
-                                include_once FCPATH . 'application/views/warehouse/includes/orderReportes.php';
+                                include_once FCPATH . 'application/views/warehouse/includes/ordersReportes.php';
+                            } elseif ($key === 'categories') {
+                                include_once FCPATH . 'application/views/warehouse/includes/categoriesReportes.php';
                             }
                         ?>
                         

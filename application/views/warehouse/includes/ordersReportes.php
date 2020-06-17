@@ -1,20 +1,15 @@
-<!-- <style>
-    #reportesOrders_next{
-        display:none
-    }
-</style> -->
 <div style="margin:10px 0px 0px 30px; font-size:16px">
     <div class="row">
         <p class="col-sm-2">Total orders:</p>
-        <p class="col-sm-2" id="total" style="text-align:right;"></p>
+        <p class="col-sm-2" id="totalOrders" style="text-align:right;"></p>
     </div>
     <div class="row">
         <p class="col-sm-2">Unpaid:</p>
-        <p class="col-sm-2" id="unpaid" style="border-bottom: solid 2px #000; color:#ff3333; text-align:right;"></p>
+        <p class="col-sm-2" id="unpaidOrders" style="border-bottom: solid 2px #000; color:#ff3333; text-align:right;"></p>
     </div>
     <div class="row">
         <p class="col-sm-2">Income:</p>
-        <p class="col-sm-2" id="paid" style="text-align:right;"></p>
+        <p class="col-sm-2" id="paidOrders" style="text-align:right;"></p>
     </div>
 </div>
 <div class="table-responsive col-sm-12" style="margin-top:20px">
@@ -87,9 +82,9 @@
     </table>
 </div>
 <script>
-    document.getElementById('total').innerHTML = '<?php echo number_format($totalOrders, 2, ',', '.'); ?>';
-    document.getElementById('unpaid').innerHTML = '<?php echo number_format($unpaidOrders, 2, ',', '.');?>';
-    document.getElementById('paid').innerHTML = '<?php echo number_format((floatval($totalOrders) - floatval($unpaidOrders)), 2, ',', '.');?>';
+    document.getElementById('totalOrders').innerHTML = '<?php echo number_format($totalOrders, 2, ',', '.'); ?>';
+    document.getElementById('unpaidOrders').innerHTML = '<?php echo number_format($unpaidOrders, 2, ',', '.');?>';
+    document.getElementById('paidOrders').innerHTML = '<?php echo number_format((floatval($totalOrders) - floatval($unpaidOrders)), 2, ',', '.');?>';
 
     $(document).ready(function() {
         $('[data-toggle="popover"]').popover({
