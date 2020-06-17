@@ -69,8 +69,6 @@
                 ];
             }
 
-            // var_dump($data['reports']['products']);
-            // die();
             $this->loadViews('warehouse/warehouse', $this->global, $data, null, 'headerWarehouse');
         }
 

@@ -76,31 +76,4 @@
     document.getElementById('totalSpots').innerHTML = '<?php echo number_format($total, 2, ',', '.'); ?>';
     document.getElementById('unpaidSpots').innerHTML = '<?php echo number_format($unpaid, 2, ',', '.');?>';
     document.getElementById('paidSpots').innerHTML = '<?php echo number_format((floatval($total) - floatval($unpaid)), 2, ',', '.');?>';
-
-    $(document).ready(function() {
-        $('#reportesSpots').DataTable({
-            order: [[0, 'asc' ]],
-            pagingType: "first_last_numbers",
-            pageLength: 10,
-            initComplete: function () {
-                // Apply the search
-                this.api().columns().every( function () {
-                    var that = this;
-    
-                    $( 'input', this.footer() ).on( 'keyup change clear', function () {
-                        if ( that.search() !== this.value ) {
-                            that
-                                .search( this.value )
-                                .draw();
-                        }
-                    });
-                });
-            }
-        });
-
-        $('#reportesSpots tfoot th').each( function () {
-            var title = $(this).text();
-            $(this).html( '<input type="text" placeholder="Search: '+title+'" />' );
-        });
-    });
 </script>
