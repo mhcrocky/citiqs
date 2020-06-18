@@ -210,6 +210,7 @@
                     'tbl_shop_products_extended.name AS productName',
                     'tbl_shop_products_extended.id AS productEtendedId',
                     'tbl_shop_products_extended.price AS productPrice',
+                    'tbl_shop_products_extended.vatpercentage AS productVat',
 
                     // spots
                     'tbl_shop_spots.id AS spotId',

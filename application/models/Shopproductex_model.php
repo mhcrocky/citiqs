@@ -18,7 +18,7 @@
         public $image;
         public $options;
         public $addons;
-
+        public $vatpercentage;
         private $table = 'tbl_shop_products_extended';
 
         protected function setValueType(string $property,  &$value): void
@@ -26,7 +26,7 @@
             if ($property === 'id' || $property === 'productId') {
                 $value = intval($value);
             }
-            if ($property === 'price') {
+            if ($property === 'price' || $property === 'vatpercentage') {
                 $value = floatval($value);
             }
             return;
@@ -56,6 +56,7 @@
             if (isset($data['image']) && !Validate_data_helper::validateString($data['image'])) return false;
             if (isset($data['options']) && !Validate_data_helper::validateString($data['options'])) return false;
             if (isset($data['addons']) && !Validate_data_helper::validateString($data['addons'])) return false;
+            if (isset($data['vatpercentage']) && !Validate_data_helper::validateFloat($data['vatpercentage'])) return false;
 
             return true;
         }
@@ -73,13 +74,13 @@
                             $this->table. '.image',
                             $this->table. '.options',
                             $this->table. '.addons',
+                            $this->table. '.vatpercentage AS productVat',
 
                             'tbl_shop_products.id AS productId',                            
                             'tbl_shop_products.stock',
                             'tbl_shop_products.recommendedQuantity',
                             'tbl_shop_products.active AS productActive',
                             'tbl_shop_products.showImage',
-                            'tbl_shop_products.vatpercentage AS productVat', // 4) FETCH PROPERTY
                             'tbl_shop_products.dateTimeFrom AS dateTimeFrom',
                             'tbl_shop_products.dateTimeTo AS dateTimeTo',
                             

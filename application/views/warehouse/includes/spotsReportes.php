@@ -1,4 +1,4 @@
-<div style="margin:10px 0px 0px 30px; font-size:16px">
+<!-- <div style="margin:10px 0px 0px 30px; font-size:16px">
     <div class="row">
         <p class="col-sm-2">Total:</p>
         <p class="col-sm-2" id="totalSpots" style="text-align:right;"></p>
@@ -11,7 +11,7 @@
         <p class="col-sm-2">Income:</p>
         <p class="col-sm-2" id="paidSpots" style="text-align:right;"></p>
     </div>
-</div>
+</div> -->
 <div class="table-responsive col-sm-12" style="margin-top:20px">
     <table id="reportesSpots" class="table table-hover table-striped display" style="width:100%">
         <thead>
@@ -73,7 +73,7 @@
     </table>
 </div>
 <script>
-    document.getElementById('totalSpots').innerHTML = '<?php echo number_format($total, 2, ',', '.'); ?>';
-    document.getElementById('unpaidSpots').innerHTML = '<?php echo number_format($unpaid, 2, ',', '.');?>';
-    document.getElementById('paidSpots').innerHTML = '<?php echo number_format((floatval($total) - floatval($unpaid)), 2, ',', '.');?>';
+    // document.getElementById('totalSpots').innerHTML = '<?php #echo number_format($total, 2, ',', '.'); ?>';
+    // document.getElementById('unpaidSpots').innerHTML = '<?php #echo number_format($unpaid, 2, ',', '.');?>';
+    // document.getElementById('paidSpots').innerHTML = '<?php #echo number_format((floatval($total) - floatval($unpaid)), 2, ',', '.');?>';
 </script>

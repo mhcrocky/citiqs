@@ -58,6 +58,10 @@
                                     <label for="options">Options: </label>
                                     <input type="text" name="productExtended[options]" id="options" class="form-control" requried />
                                 </div>
+                                <div class="col-lg-4 col-sm-12">
+                                    <label for="vatInsert">VAT: </label>
+                                    <input type="number" requried value="0" step="0.01" min="0" name="productExtended[vatpercentage]" id="vatInsert" class="form-control" />
+                                </div>
                                 <!-- PRODUCT DATA -->
                                 <div class="col-lg-4 col-sm-12">
                                     <label for="dateTimeFrom">Availabe from: </label>
@@ -77,10 +81,6 @@
                                             </option>
                                         <?php } ?>
                                     </select>
-                                </div>
-                                <div class="col-lg-4 col-sm-12"><!--5) ADD PROPERTY IN INSERT FORM -->
-                                    <label for="vatInsert">VAT: </label>
-                                    <input type="number" requried value="0" step="0.01" min="0" name="product[vatpercentage]" id="vatInsert" class="form-control" />
                                 </div>
                                 <!-- PRINTERS -->
                                 <div class="form-group">
@@ -243,15 +243,15 @@
                                                         <?php } ?>
                                                     </select>
                                                 </div>
-                                                <div class="col-lg-4 col-sm-12"><!--5) ADD PROPERTY IN INSERT FORM -->
-                                                    <label for="vatEdit<?php echo $product['productId'] ?>">VAT: </label><!-- 7) SHOW IN UPDATE -->
+                                                <div class="col-lg-4 col-sm-12">
+                                                    <label for="vatEdit<?php echo $product['productId'] ?>">VAT: </label>
                                                     <input
                                                         type="number"
                                                         requried
                                                         value="<?php echo floatval($product['productVat']); ?>"
                                                         step="0.01"
                                                         min="0"
-                                                        name="product[vatpercentage]"
+                                                        name="productExtended[vatpercentage]"
                                                         id="vatEdit<?php echo $product['productId'] ?>"
                                                         class="form-control"
                                                         />
