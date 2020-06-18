@@ -179,6 +179,10 @@
             $data = $this->input->post(null, true);
 
             // insert product
+            if ($data['product']['dateTimeFrom'] && $data['product']['dateTimeTo']) {
+                $data['product']['dateTimeFrom'] = date('Y-m-d H:i:s', strtotime($data['product']['dateTimeFrom']));
+                $data['product']['dateTimeTo'] = date('Y-m-d H:i:s', strtotime($data['product']['dateTimeTo']));
+            }
             if (!$this->shopproduct_model->setObjectFromArray($data['product'])->create()) {
                 $this->session->set_flashdata('error', 'Product insert failed! Please try again.');
                 redirect($_SERVER['HTTP_REFERER']);
@@ -186,9 +190,6 @@
 
             // insert product extended
             $data['productExtended']['productId'] = $this->shopproduct_model->id;
-            $data['productExtended']['dateTimeFrom'] = date('Y-m-d H:i:s', strtotime($data['productExtended']['dateTimeFrom']));
-            $data['productExtended']['dateTimeTo'] = date('Y-m-d H:i:s', strtotime($data['productExtended']['dateTimeTo']));
-
             if(!$this->shopproductex_model->setObjectFromArray($data['productExtended'])->create()) {
                 $this->shopproduct_model->delete();
                 $this->session->set_flashdata('error', 'Product insert failed! Please try again.');
@@ -234,7 +235,11 @@
                 }
             } else {
                 $data = $this->input->post(null, true);
-                // update
+                // update                
+                if ($data['product']['dateTimeFrom'] && $data['product']['dateTimeTo']) {
+                    $data['product']['dateTimeFrom'] = date('Y-m-d H:i:s', strtotime($data['product']['dateTimeFrom']));
+                    $data['product']['dateTimeTo'] = date('Y-m-d H:i:s', strtotime($data['product']['dateTimeTo']));
+                }
                 $update = $this
                         ->shopproduct_model
                         ->setObjectId(intval($this->uri->segment(3)))
@@ -242,10 +247,6 @@
                         ->update();
 
                 // insert new product deatils
-                if ($data['productExtended']['dateTimeFrom'] && $data['productExtended']['dateTimeTo']) {
-                    $data['productExtended']['dateTimeFrom'] = date('Y-m-d H:i:s', strtotime($data['productExtended']['dateTimeFrom']));
-                    $data['productExtended']['dateTimeTo'] = date('Y-m-d H:i:s', strtotime($data['productExtended']['dateTimeTo']));
-                }                
                 $insert = $this->shopproductex_model->setObjectFromArray($data['productExtended'])->create();
 
                 if ($insert && $update) {

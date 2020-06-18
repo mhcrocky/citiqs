@@ -36,19 +36,9 @@
                 redirect(base_url());
             }
 
-            $whereCategories = [
-                'tbl_shop_categories.active' => '1'
-            ];
-            $whereProducts = [
-                'tbl_shop_categories.active' => '1',
-                'tbl_shop_products.active' => '1',
-                'tbl_shop_spots.active' => '1',
-                'tbl_shop_printers.active' => '1',
-                'tbl_shop_spots.id' => $_GET['spotid'],
-            ];
-
+            $spotId = intval($_GET['spotid']);
             $data = [
-                'categoryProducts' => $this->shopproductex_model->getUserLastProductsDetailsPublic($whereProducts, 'category'),
+                'categoryProducts' => $this->shopproductex_model->getUserLastProductsDetailsPublic($spotId, 'category'),
                 'spotId' => $_GET['spotid']
             ];
 

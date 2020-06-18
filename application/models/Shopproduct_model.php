@@ -16,6 +16,8 @@
         public $active;
         public $showImage;
         public $vatpercentage; // 1) WE ADD PROPERTY NAME, NAME IS THE SAME LIKE COLUM NAME IN TABLE
+        public $dateTimeFrom;
+        public $dateTimeTo;
         private $table = 'tbl_shop_products';
 
         protected function setValueType(string $property,  &$value): void
@@ -54,7 +56,8 @@
             if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
             if (isset($data['showImage']) && !($data['showImage'] === '1' || $data['showImage'] === '0')) return false;
             if (isset($data['vatpercentage']) && !Validate_data_helper::validateFloat($data['vatpercentage'])) return false; // 3) VALIDATE PROPERTY TYPE
-
+            if (isset($data['dateTimeFrom']) && !Validate_data_helper::validateDate($data['dateTimeFrom'])) return false;
+            if (isset($data['dateTimeTo']) && !Validate_data_helper::validateDate($data['dateTimeTo'])) return false;
             return true;
         }
 

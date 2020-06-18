@@ -117,8 +117,9 @@
             ?>
 	    </div>
     <?php } ?>
+    <?php if (isset($productsHtml) && isset($form)) { ?>
     <div class="row">
-        <h3>Ordered</h3>
+        <h3>Ordered</h3>    
         <?php echo $productsHtml; ?>
     </div>
     <form method="post" action="<?php echo base_url() . 'checkout_order' ?>"> 
@@ -126,4 +127,5 @@
         <?php echo $form; ?>
         <input type="submit" value="Make order" class="btn btn-primary"/>
     </form>
+    <?php } ?>
 </main>

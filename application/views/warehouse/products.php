@@ -39,14 +39,6 @@
                                     <input type="number" requried value="0" step="0.01" name="productExtended[price]" id="price" min="0" class="form-control" />
                                 </div>
                                 <div class="col-lg-4 col-sm-12">
-                                    <label for="dateTimeFrom">Availabe from: </label>
-                                    <input type="text" id="dateTimeFrom" name="productExtended[dateTimeFrom]" class="form-control productTimePickers" requried />
-                                </div>
-                                <div class="col-lg-4 col-sm-12">
-                                    <label for="dateTimeTo">Availabe to: </label>
-                                    <input type="text" id="dateTimeTo" name="productExtended[dateTimeTo]" class="form-control productTimePickers" requried />
-                                </div>
-                                <div class="col-lg-4 col-sm-12">
                                     <label for="shortDescription">Short description: </label>
                                     <input type="text" name="productExtended[shortDescription]" id="shortDescription" class="form-control" />                         
                                 </div>
@@ -67,6 +59,14 @@
                                     <input type="text" name="productExtended[options]" id="options" class="form-control" requried />
                                 </div>
                                 <!-- PRODUCT DATA -->
+                                <div class="col-lg-4 col-sm-12">
+                                    <label for="dateTimeFrom">Availabe from: </label>
+                                    <input type="text" id="dateTimeFrom" name="product[dateTimeFrom]" class="form-control productTimePickers" requried />
+                                </div>
+                                <div class="col-lg-4 col-sm-12">
+                                    <label for="dateTimeTo">Availabe to: </label>
+                                    <input type="text" id="dateTimeTo" name="product[dateTimeTo]" class="form-control productTimePickers" requried />
+                                </div>
                                 <div class="col-lg-4 col-sm-12">
                                     <label for="addCategoryId">Product category: </label>
                                     <select type="text" class="form-control" id="addCategoryId" name="product[categoryId]" required>
@@ -167,6 +167,12 @@
                                     <p class="item-category">Status:
                                         <?php echo $product['productActive'] === '1' ? '<span style="color:#009933">Active</span>' : '<span style="color:#ff3333">Archived</span>'; ?>
                                     </p>
+                                    <p class="item-description">From: 
+                                        <?php echo ($product['dateTimeFrom']) ? $product['dateTimeFrom'] : 'All time'; ?>
+                                    </p>
+                                    <p class="item-description">To: 
+                                        <?php echo ($product['dateTimeTo']) ? $product['dateTimeTo'] : 'All time'; ?>
+                                    </p>
                                     <?php
                                         if ($product['printers']) {
                                             $printerIds = array_keys($product['printers']);
@@ -255,7 +261,7 @@
                                                     <input
                                                         type="text"
                                                         id="dateTimeFrom<?php echo $product['productId'] ?>"
-                                                        name="productExtended[dateTimeFrom]"
+                                                        name="product[dateTimeFrom]"
                                                         class="form-control productTimePickers"
                                                         <?php if ($product['dateTimeFrom']) { ?>
                                                             value="<?php echo date('Y/m/d H:i:s', strtotime($product['dateTimeFrom'])); ?>"
@@ -268,7 +274,7 @@
                                                     <input
                                                         type="text"
                                                         id="dateTimeTo<?php echo $product['productId'] ?>"
-                                                        name="productExtended[dateTimeTo]"
+                                                        name="product[dateTimeTo]"
                                                         class="form-control productTimePickers"
                                                         <?php if ($product['dateTimeTo']) { ?>
                                                             value="<?php echo date('Y/m/d H:i:s', strtotime($product['dateTimeTo'])); ?>"

@@ -18,8 +18,6 @@
         public $image;
         public $options;
         public $addons;
-        public $dateTimeFrom;
-        public $dateTimeTo;
 
         private $table = 'tbl_shop_products_extended';
 
@@ -58,8 +56,7 @@
             if (isset($data['image']) && !Validate_data_helper::validateString($data['image'])) return false;
             if (isset($data['options']) && !Validate_data_helper::validateString($data['options'])) return false;
             if (isset($data['addons']) && !Validate_data_helper::validateString($data['addons'])) return false;
-            if (isset($data['dateTimeFrom']) && !Validate_data_helper::validateDate($data['dateTimeFrom'])) return false;
-            if (isset($data['dateTimeTo']) && !Validate_data_helper::validateDate($data['dateTimeTo'])) return false;
+
             return true;
         }
 
@@ -76,8 +73,6 @@
                             $this->table. '.image',
                             $this->table. '.options',
                             $this->table. '.addons',
-                            $this->table. '.dateTimeFrom',
-                            $this->table. '.dateTimeTo',
 
                             'tbl_shop_products.id AS productId',                            
                             'tbl_shop_products.stock',
@@ -85,6 +80,8 @@
                             'tbl_shop_products.active AS productActive',
                             'tbl_shop_products.showImage',
                             'tbl_shop_products.vatpercentage AS productVat', // 4) FETCH PROPERTY
+                            'tbl_shop_products.dateTimeFrom AS dateTimeFrom',
+                            'tbl_shop_products.dateTimeTo AS dateTimeTo',
                             
                             'tbl_shop_categories.category',
                             'tbl_shop_categories.id AS categoryId',
@@ -129,47 +126,91 @@
 
 
 
-        public function getUserProductsDetailsPublic(array $where): ?array
+        public function getUserProductsDetailsPublic(int $spotId): ?array
         {
-            
-            return  $this->read(
-                        [
-                            $this->table. '.id as productExtendedId',
-                            $this->table. '.name',
-                            $this->table. '.shortDescription',
-                            $this->table. '.longDescription',
-                            'FORMAT(' . $this->table . '.price,2) AS price',
-                            $this->table. '.image',
-                            $this->table. '.options',
-                            $this->table. '.addons',
+            $date = date('Y-m-d H:i:s');
+            $query =
+                "SELECT
+                    `tbl_shop_products_extended`.`id` as `productExtendedId`,
+                    `tbl_shop_products_extended`.`name`,
+                    `tbl_shop_products_extended`.`shortDescription`,
+                    `tbl_shop_products_extended`.`longDescription`,
+                    FORMAT(tbl_shop_products_extended.price, 2) AS price,
+                    `tbl_shop_products_extended`.`image`,
+                    `tbl_shop_products_extended`.`options`,
+                    `tbl_shop_products_extended`.`addons`,
+                    `tbl_shop_products`.`id` AS `productId`,
+                    `tbl_shop_products`.`stock`,
+                    `tbl_shop_products`.`recommendedQuantity`,
+                    `tbl_shop_products`.`active` AS `productActive`,
+                    `tbl_shop_products`.`showImage`,
+                    `tbl_shop_products`.`dateTimeFrom`,
+                    `tbl_shop_products`.`dateTimeTo`,
+                    `tbl_shop_categories`.`category`,
+                    `tbl_shop_categories`.`id` AS `categoryId`,
+                    `tbl_shop_categories`.`active` AS `categoryActive`
+                FROM
+                    `tbl_shop_products_extended`
+                    INNER JOIN `tbl_shop_products` ON `tbl_shop_products_extended`.`productId` = `tbl_shop_products`.`id`
+                    INNER JOIN `tbl_shop_categories` ON `tbl_shop_products`.`categoryId` = `tbl_shop_categories`.`id`
+                    INNER JOIN `tbl_shop_product_printers` ON `tbl_shop_product_printers`.`productId` = `tbl_shop_products`.`id`
+                    INNER JOIN `tbl_shop_spots` ON `tbl_shop_product_printers`.`printerId` = `tbl_shop_spots`.`printerId`
+                    INNER JOIN `tbl_shop_printers` ON `tbl_shop_printers`.`id` = `tbl_shop_spots`.`printerId`
+                WHERE
+                    `tbl_shop_categories`.`active` = '1'
+                    AND `tbl_shop_products`.`active` = '1'
+                    AND `tbl_shop_spots`.`active` = '1'
+                    AND `tbl_shop_printers`.`active` = '1'
+                    AND `tbl_shop_spots`.`id` = '{$spotId}'
+                    AND
+                    (
+                        (`tbl_shop_products`.`dateTimeFrom` < '{$date}' AND `tbl_shop_products`.`dateTimeTo` > '{$date}' )
+                        OR
+                        (`tbl_shop_products`.`dateTimeFrom` IS NULL AND `tbl_shop_products`.`dateTimeTO` IS NULL)
+                    )
 
-                            'tbl_shop_products.id AS productId',                            
-                            'tbl_shop_products.stock',
-                            'tbl_shop_products.recommendedQuantity',
-                            'tbl_shop_products.active AS productActive',
-                            'tbl_shop_products.showImage',
+                ORDER BY `tbl_shop_products_extended`.`id` DESC";
+                $result = $this->db->query($query);
+                $result = $result->result_array();
+                return $result ? $result : null;
+            // return  $this->read(
+            //             [
+            //                 $this->table. '.id as productExtendedId',
+            //                 $this->table. '.name',
+            //                 $this->table. '.shortDescription',
+            //                 $this->table. '.longDescription',
+            //                 'FORMAT(' . $this->table . '.price,2) AS price',
+            //                 $this->table. '.image',
+            //                 $this->table. '.options',
+            //                 $this->table. '.addons',
 
-                            'tbl_shop_categories.category',
-                            'tbl_shop_categories.id AS categoryId',
-                            'tbl_shop_categories.active AS categoryActive',
+            //                 'tbl_shop_products.id AS productId',                            
+            //                 'tbl_shop_products.stock',
+            //                 'tbl_shop_products.recommendedQuantity',
+            //                 'tbl_shop_products.active AS productActive',
+            //                 'tbl_shop_products.showImage',
 
-                        ],
-                        $where,
-                        [
-                            ['tbl_shop_products', $this->table.'.productId = tbl_shop_products.id', 'INNER'],
-                            ['tbl_shop_categories', 'tbl_shop_products.categoryId = tbl_shop_categories.id', 'INNER'],
-                            ['tbl_shop_product_printers', 'tbl_shop_product_printers.productId = tbl_shop_products.id', 'INNER'],
-                            ['tbl_shop_spots', 'tbl_shop_product_printers.printerId = tbl_shop_spots.printerId', 'INNER'],
-                            ['tbl_shop_printers', 'tbl_shop_printers.id = tbl_shop_spots.printerId', 'INNER']
-                        ],
-                        'order_by',
-                        [$this->table. '.id', 'DESC']
-                    );
+            //                 'tbl_shop_categories.category',
+            //                 'tbl_shop_categories.id AS categoryId',
+            //                 'tbl_shop_categories.active AS categoryActive',
+
+            //             ],
+            //             $where,
+            //             [
+            //                 ['tbl_shop_products', $this->table.'.productId = tbl_shop_products.id', 'INNER'],
+            //                 ['tbl_shop_categories', 'tbl_shop_products.categoryId = tbl_shop_categories.id', 'INNER'],
+            //                 ['tbl_shop_product_printers', 'tbl_shop_product_printers.productId = tbl_shop_products.id', 'INNER'],
+            //                 ['tbl_shop_spots', 'tbl_shop_product_printers.printerId = tbl_shop_spots.printerId', 'INNER'],
+            //                 ['tbl_shop_printers', 'tbl_shop_printers.id = tbl_shop_spots.printerId', 'INNER']
+            //             ],
+            //             'order_by',
+            //             [$this->table. '.id', 'DESC']
+            //         );
         }
 
-        public function getUserLastProductsDetailsPublic(array $where, string $sortBy = 'name'): ?array
+        public function getUserLastProductsDetailsPublic(int $spotId, string $sortBy = 'name'): ?array
         {
-            $products = $this->getUserProductsDetailsPublic($where);
+            $products = $this->getUserProductsDetailsPublic($spotId);
             if (is_null($products)) return null;
 
             $this->load->model('shopprinters_model');
