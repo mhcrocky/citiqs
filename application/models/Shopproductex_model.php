@@ -76,6 +76,8 @@
                             $this->table. '.image',
                             $this->table. '.options',
                             $this->table. '.addons',
+                            $this->table. '.dateTimeFrom',
+                            $this->table. '.dateTimeTo',
 
                             'tbl_shop_products.id AS productId',                            
                             'tbl_shop_products.stock',

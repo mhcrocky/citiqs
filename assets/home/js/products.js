@@ -1,9 +1,6 @@
 'use strict';
 $('document').ready(function(){
-    $('#dateTimeFrom').datetimepicker({
-        dayOfWeekStart : 1,
-    });
-    $('#dateTimeTo').datetimepicker({
+    $('.productTimePickers').datetimepicker({
         dayOfWeekStart : 1,
     });
 });

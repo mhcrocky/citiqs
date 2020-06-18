@@ -242,8 +242,10 @@
                         ->update();
 
                 // insert new product deatils
+                $data['productExtended']['dateTimeFrom'] = date('Y-m-d H:i:s', strtotime($data['productExtended']['dateTimeFrom']));
+                $data['productExtended']['dateTimeTo'] = date('Y-m-d H:i:s', strtotime($data['productExtended']['dateTimeTo']));
                 $insert = $this->shopproductex_model->setObjectFromArray($data['productExtended'])->create();
-                
+
                 if ($insert && $update) {
                     $this->session->set_flashdata('success', 'Product updated');
                 } else {
