@@ -1,6 +1,22 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 <main class="row" style="margin:70px 0px 20px 0px">
-    <div>
+        <div class="col-sm-12" style="margin:20px 0px;">
+                <form method="post" action="<?php echo base_url() ?>warehouse">
+                    <div class="col-lg-2 col-sm-12">
+                        <label for="from">From: </label>
+                        <input type="text" id="from" name="from" class="form-control timePickers" requried />
+                    </div>
+                    <div class="col-lg-2 col-sm-12">
+                        <label for="to">To: </label>
+                        <input type="text" id="to" name="to" class="form-control timePickers" requried />
+                    </div>
+                    <div class="col-lg-1 col-sm-12">
+                        <br/>
+                        <input type="submit" value="Filter" class="btn btn-primary" />
+                    </div>
+                </form>             
+            </div>
+        <div>
         <?php
             if (isset($reports)) {
                 $keys = array_keys($reports);

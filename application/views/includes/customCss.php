@@ -59,6 +59,7 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/orderList.css">
 <?php } elseif ($this->view === 'warehouse/warehouse') { ?>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/jquery.datetimepicker.min.css">
 <?php } elseif ($this->view === 'warehouse/products') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/jquery.datetimepicker.min.css">
 <?php } ?>

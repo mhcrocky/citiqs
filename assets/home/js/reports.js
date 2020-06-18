@@ -142,4 +142,9 @@ $(document).ready(function() {
             });
         }
     });
+
+    // date time picker
+    $('.timePickers').datetimepicker({
+        dayOfWeekStart : 1,
+    });
 });
