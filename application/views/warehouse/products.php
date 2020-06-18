@@ -25,66 +25,79 @@
                         </div>
                     </div>
                     <div class="edit-single-user-container">
-                        <form class="form-inline" id="addProdcut" method="post" action="<?php echo $this->baseUrl . 'warehouse/addProdcut'; ?>">
+                        <form id="addProdcut" method="post" action="<?php echo $this->baseUrl . 'warehouse/addProdcut'; ?>">
                             <input type="text" name="product[active]" value="1" required readonly hidden />
-                            <legend>Add product</legend>
-                            <!-- PRODUCT EXTENDED DATA -->
-                            <div class="form-group">
-                                <label for="name">Name: </label>
-                                <input type="text" name="productExtended[name]" id="name" class="form-control" requried />
-                            </div>
-                            <div class="form-group">
-                                <label for="price">Price: </label>
-                                <input type="number" requried value="0" step="0.01" name="productExtended[price]" id="price" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label for="shortDescription">Short description: </label>
-                                <input type="text" name="productExtended[shortDescription]" id="shortDescription" class="form-control" />                         
-                            </div>
-                            <div class="form-group">
-                                <label for="longDescription">Long description: </label>
-                                <textarea name="productExtended[longDescription]" id="longDescription" class="form-control"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="addons">Addons: </label>
-                                <input type="text" name="productExtended[addons]" id="addons" class="form-control" requried />
-                            </div>
-                            <div class="form-group">
-                                <label for="options">Options: </label>
-                                <input type="text" name="productExtended[options]" id="options" class="form-control" requried />
-                            </div>
-                            <!-- PRODUCT DATA -->
-                            <div class="form-group">
-                                <label for="addCategoryId">Product category: </label>
-                                <select type="text" class="form-control" id="addCategoryId" name="product[categoryId]" required>
-                                    <option value="">Select</option>
-                                    <?php foreach ($categories as $category) { ?>
-                                        <option value="<?php echo $category['categoryId']; ?>">
-                                            <?php echo $category['category']; ?> (<?php echo $category['active'] === '1' ? 'active' : 'archived'; ?>)
-                                        </option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                            <div class="form-group"><!--5) ADD PROPERTY IN INSERT FORM -->
-                                <label for="vatInsert">VAT: </label>
-                                <input type="number" requried value="0" step="0.01" min="0" name="product[vatpercentage]" id="vatInsert" class="form-control" />
-                            </div>
-                            <!-- PRINTERS -->
-                            <div class="form-group">
-                                <label for="printer">Printers: </label>
-                                <?php foreach ($printers as $printer) { ?>
-                                    <label class="checkbox-inline" for="printerId<?php echo $printer['id']; ?>">
-                                        <input
-                                            type="checkbox"
-                                            id="printerId<?php echo $printer['id']; ?>"
-                                            name="productPrinters[]"
-                                            value="<?php echo $printer['id']; ?>"
-                                            />
-                                        <?php echo $printer['printer']; ?> (<?php echo $printer['active'] === '1' ? 'active' : 'archived'; ?>)
-                                    </label>
-                                <?php } ?>
-                                
-                            </div>                
+                            <fieldset class="row">
+                                <legend>Add product</legend>
+                                <!-- PRODUCT EXTENDED DATA -->
+                                <div class="col-lg-4 col-sm-12">
+                                    <label for="name">Name: </label>
+                                    <input type="text" name="productExtended[name]" id="name" class="form-control" requried />
+                                </div>
+                                <div class="col-lg-4 col-sm-12">
+                                    <label for="price">Price: </label>
+                                    <input type="number" requried value="0" step="0.01" name="productExtended[price]" id="price" min="0" class="form-control" />
+                                </div>
+                                <div class="col-lg-4 col-sm-12">
+                                    <label for="dateTimeFrom">Availabe from: </label>
+                                    <input type="text" id="dateTimeFrom" name="productExtended[dateTimeFrom]" class="form-control" requried />
+                                </div>
+                                <div class="col-lg-4 col-sm-12">
+                                    <label for="dateTimeTo">Availabe to: </label>
+                                    <input type="text" id="dateTimeTo" name="productExtended[dateTimeTo]" class="form-control" requried />
+                                </div>
+                                <div class="col-lg-4 col-sm-12">
+                                    <label for="shortDescription">Short description: </label>
+                                    <input type="text" name="productExtended[shortDescription]" id="shortDescription" class="form-control" />                         
+                                </div>
+                                <div class="col-lg-4 col-sm-12">
+                                    <label for="longDescription">Long description: </label>
+                                    <textarea
+                                        name="productExtended[longDescription]"
+                                        id="longDescription"
+                                        class="form-control"
+                                        rows="1"></textarea>
+                                </div>
+                                <div class="col-lg-4 col-sm-12">
+                                    <label for="addons">Addons: </label>
+                                    <input type="text" name="productExtended[addons]" id="addons" class="form-control" requried />
+                                </div>
+                                <div class="col-lg-4 col-sm-12">
+                                    <label for="options">Options: </label>
+                                    <input type="text" name="productExtended[options]" id="options" class="form-control" requried />
+                                </div>
+                                <!-- PRODUCT DATA -->
+                                <div class="col-lg-4 col-sm-12">
+                                    <label for="addCategoryId">Product category: </label>
+                                    <select type="text" class="form-control" id="addCategoryId" name="product[categoryId]" required>
+                                        <option value="">Select</option>
+                                        <?php foreach ($categories as $category) { ?>
+                                            <option value="<?php echo $category['categoryId']; ?>">
+                                                <?php echo $category['category']; ?> (<?php echo $category['active'] === '1' ? 'active' : 'archived'; ?>)
+                                            </option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                                <div class="col-lg-4 col-sm-12"><!--5) ADD PROPERTY IN INSERT FORM -->
+                                    <label for="vatInsert">VAT: </label>
+                                    <input type="number" requried value="0" step="0.01" min="0" name="product[vatpercentage]" id="vatInsert" class="form-control" />
+                                </div>
+                                <!-- PRINTERS -->
+                                <div class="form-group">
+                                    <label for="printer">Printers: </label>
+                                    <?php foreach ($printers as $printer) { ?>
+                                        <label class="checkbox-inline" for="printerId<?php echo $printer['id']; ?>">
+                                            <input
+                                                type="checkbox"
+                                                id="printerId<?php echo $printer['id']; ?>"
+                                                name="productPrinters[]"
+                                                value="<?php echo $printer['id']; ?>"
+                                                />
+                                            <?php echo $printer['printer']; ?> (<?php echo $printer['active'] === '1' ? 'active' : 'archived'; ?>)
+                                        </label>
+                                    <?php } ?>                                
+                                </div>
+                            </fieldset>
                         </form>
                     </div>
                 </div>

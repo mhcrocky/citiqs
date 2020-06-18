@@ -186,6 +186,8 @@
 
             // insert product extended
             $data['productExtended']['productId'] = $this->shopproduct_model->id;
+            $data['productExtended']['dateTimeFrom'] = date('Y-m-d H:i:s', strtotime($data['productExtended']['dateTimeFrom']));
+            $data['productExtended']['dateTimeTo'] = date('Y-m-d H:i:s', strtotime($data['productExtended']['dateTimeTo']));
 
             if(!$this->shopproductex_model->setObjectFromArray($data['productExtended'])->create()) {
                 $this->shopproduct_model->delete();

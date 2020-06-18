@@ -18,6 +18,8 @@
         public $image;
         public $options;
         public $addons;
+        public $dateTimeFrom;
+        public $dateTimeTo;
 
         private $table = 'tbl_shop_products_extended';
 
@@ -56,7 +58,8 @@
             if (isset($data['image']) && !Validate_data_helper::validateString($data['image'])) return false;
             if (isset($data['options']) && !Validate_data_helper::validateString($data['options'])) return false;
             if (isset($data['addons']) && !Validate_data_helper::validateString($data['addons'])) return false;
-
+            if (isset($data['dateTimeFrom']) && !Validate_data_helper::validateDate($data['dateTimeFrom'])) return false;
+            if (isset($data['dateTimeTo']) && !Validate_data_helper::validateDate($data['dateTimeTo'])) return false;
             return true;
         }
 

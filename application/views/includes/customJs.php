@@ -55,7 +55,9 @@
 <?php } elseif ($this->view === 'warehouse/productCategories') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js"></script>
 <?php } elseif ($this->view === 'warehouse/products') { ?>
+	<script src="<?php echo $this->baseUrl; ?>assets/js/jquery.datetimepicker.full.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/products.js"></script>
 <?php } elseif ($this->view === 'publicorders/makeOrder') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/makeOrder.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/slick.js"></script>
@@ -69,4 +71,3 @@
 	<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/reports.js"></script>
 <?php } ?>
-
