@@ -168,11 +168,9 @@
                 'categories' => $this->shopcategory_model->fetch($where),
                 'products' => $this->shopproductex_model->getUserProducts($userId),
                 'printers' => $this->shopprinters_model->read(['*'], $where),
-                'spots' => $this->shopspot_model->fetchUserSpots($userId),
+                'userSpots' => $this->shopspot_model->fetchUserSpots($userId),
             ];
 
-            // var_dump($data['products']);
-            // die();
             $this->loadViews('warehouse/products', $this->global, $data, null, 'headerWarehouse');
             return;
         }
@@ -210,11 +208,25 @@
                     'printerId' => $printerId,
                     'productId' => $this->shopproduct_model->id
                 ];
-
                 if (!$this->shopproductprinters_model->setObjectFromArray($printerInsert)->create()) {
-                    $this->session->set_flashdata('error', 'Pinter inserted failed. Please check');
+                    $this->session->set_flashdata('error', 'Pinter insert failed. Please check');
                 }
+                break;
+            }
 
+            // INSERT PRODUCT SPOTS
+            $userId = intval($_SESSION['userId']);
+            $userSpots = $this->shopspot_model->fetchUserSpots($userId);
+
+            foreach($userSpots as $spot) {
+                $insert = [];
+                $insert['spotId'] = $spot['spotId'];
+                $insert['productId'] = $this->shopproduct_model->id;
+                $insert['active'] = in_array($spot['spotId'], $data['userSpots']) ? '1' : '0';
+                if (!$this->shopspotproducts_model->setObjectFromArray($insert)->create()) {
+                    $this->session->set_flashdata('error', 'Product sport insert failed. Please check');
+                    break;
+                }
             }
 
             $this->session->set_flashdata('success', 'Product inserted.');
@@ -243,6 +255,7 @@
                 }
             } else {
                 $data = $this->input->post(null, true);
+
                 // update                
                 if ($data['product']['dateTimeFrom'] && $data['product']['dateTimeTo']) {
                     $data['product']['dateTimeFrom'] = date('Y-m-d H:i:s', strtotime($data['product']['dateTimeFrom']));
@@ -257,7 +270,10 @@
                 // insert new product deatils
                 $insert = $this->shopproductex_model->setObjectFromArray($data['productExtended'])->create();
 
-                if ($insert && $update) {
+                // update product spots
+                $updateProductspots = $this->shopspotproducts_model->updateUproductSpots($data['productSpots'], $data['productExtended']['productId']);
+
+                if ($insert && $update && $updateProductspots) {
                     $this->session->set_flashdata('success', 'Product updated');
                 } else {
                     $this->session->set_flashdata('error', 'Update failed! Please try again.');

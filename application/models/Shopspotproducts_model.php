@@ -65,6 +65,7 @@
                     }
                 }
             }
+
             if ($insertData) {
                 return $this->multipleCreate($insertData);
             }
@@ -88,4 +89,19 @@
 
         }
 
+
+        public function updateUproductSpots($productSpots, $productId): bool
+        {
+            $allProductSpots = $this->read(['*'], ['productId=' => $productId]);
+            foreach($allProductSpots as $data) {
+                $update = [];
+                $update['active'] = in_array($data['id'], $productSpots) ? '1' : '0';
+                $update = $this
+                            ->setObjectId(intval($data['id']))
+                            ->setObjectFromArray($update)
+                            ->update();
+                if (!$update) return false;
+            }
+            return true;
+        }
     }

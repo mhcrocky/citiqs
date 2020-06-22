@@ -83,7 +83,7 @@
                                     </select>
                                 </div>
                                 <!-- PRINTERS -->
-                                <div class="form-group">
+                                <div class="col-lg-4 col-sm-12">
                                     <label for="printer">Printers: </label>
                                     <?php foreach ($printers as $printer) { ?>
                                         <label class="checkbox-inline" for="printerId<?php echo $printer['id']; ?>">
@@ -94,6 +94,21 @@
                                                 value="<?php echo $printer['id']; ?>"
                                                 />
                                             <?php echo $printer['printer']; ?> (<?php echo $printer['active'] === '1' ? 'active' : 'archived'; ?>)
+                                        </label>
+                                    <?php } ?>                                
+                                </div>
+
+                                <div class="col-lg-4 col-sm-12">
+                                    <label for="printer">Product spot(s): </label>
+                                    <?php foreach ($userSpots as $spot) { ?>
+                                        <label class="checkbox-inline" for="spotId<?php echo $spot['spotId']; ?>">
+                                            <input
+                                                type="checkbox"
+                                                id="spotId<?php echo $spot['spotId']; ?>"
+                                                name="userSpots[]"
+                                                value="<?php echo $spot['spotId']; ?>"
+                                                />
+                                            <?php echo $spot['spotName']; ?> (<?php echo $spot['spotActive'] === '1' ? 'active' : 'archived'; ?>)
                                         </label>
                                     <?php } ?>                                
                                 </div>
@@ -193,13 +208,28 @@
                                         if ($product['spotProductData']) {
                                             $productSpots = explode(',', $product['spotProductData']);
                                             echo '<dl>';
-                                            echo    '<dt>Available spot(s):</dt>';
+                                            echo    '<dt>Available on spot(s):</dt>';
+                                            $formSpotData = '';
                                             foreach($productSpots as $spot) {
-
+                                                // porduct data
                                                 $spot = explode('|', $spot);
                                                 $string = $spot[3];
                                                 $string .= $spot[2] === '1' ? ' (<span style="color:#009933">active</span>)' : ' (<span style="color:#ff3333">archived</span>)';
                                                 echo '<dd>' . $string . '</dd>';
+
+                                                $formSpotData .= '<label class="checkbox-inline" for="tbl_shop_spot_products' . $spot[0] . '">';
+                                                $formSpotData .= '<input ';
+                                                $formSpotData .= 'type="checkbox" ';
+                                                $formSpotData .= 'id=tbl_shop_spot_products' . $spot[0] . ' ';
+                                                $formSpotData .= 'name="productSpots[]" ';
+                                                $formSpotData .= 'value="' . $spot[0] . '" ';
+                                                if ($spot[2] === '1') {
+                                                    $formSpotData .= 'checked';
+                                                }
+                                                $formSpotData .= '/>';
+                                                $formSpotData .=  $spot[3] . ' ';
+                                                $formSpotData .=  $spot[2] === '1' ? ' (<span style="color:#009933">active</span>)' : ' (<span style="color:#ff3333">archived</span>)';
+                                                $formSpotData .= '</label>';
                                             }
                                             echo '</dl>';
                                         }
@@ -238,9 +268,9 @@
                                         </div>
                                     </div>
                                     <div class="edit-single-user-container">
-                                        <form class="form-inline" id="editProduct<?php echo $product['productId']; ?>" method="post" action="<?php echo $this->baseUrl . 'warehouse/editProduct/' . $product['productId']; ?>" >
+                                        <form id="editProduct<?php echo $product['productId']; ?>" method="post" action="<?php echo $this->baseUrl . 'warehouse/editProduct/' . $product['productId']; ?>" >
                                             <input type="text" name="productExtended[productId]" value="<?php echo $product['productId']; ?>" readonly required hidden />
-                                            <fieldset>
+                                            <fieldset  class="row">
                                                 <legend>Product details</legend>
                                                 <div class="col-lg-4 col-sm-12">
                                                     <label for="name<?php echo $product['productId'] ?>">Name: </label>
@@ -317,7 +347,7 @@
                                                 </div>
                                                 <div class="col-lg-4 col-sm-12">
                                                     <label for="longDescription<?php echo $product['productId'] ?>">Long description: </label>
-                                                    <textarea name="productExtended[longDescription]" id="longDescription<?php echo $product['productId'] ?>" class="form-control"><?php echo $product['longDescription']; ?></textarea>
+                                                    <textarea name="productExtended[longDescription]" id="longDescription<?php echo $product['productId'] ?>" rows="1" class="form-control"><?php echo $product['longDescription']; ?></textarea>
                                                 </div>
                                                 <div class="col-lg-4 col-sm-12">
                                                     <label for="addons<?php echo $product['productId'] ?>">Addons: </label>
@@ -327,7 +357,8 @@
                                                     <label for="options<?php echo $product['productId'] ?>">Options: </label>
                                                     <input type="text" name="productExtended[options]" id="options<?php echo $product['productId'] ?>" class="form-control" requried value="<?php echo $product['options']; ?>" />
                                                 </div>
-                                                <div class="col-lg-4 col-sm-12">                                                
+                                                <div class="col-lg-4 col-sm-12"> 
+                                                    <label>Printers</label>
                                                     <?php foreach ($printers as $printer) {?>
                                                             <label class="checkbox-inline" for="printerId<?php echo $product['productId']; ?><?php echo $printer['id']; ?>">
                                                                 <input
@@ -342,6 +373,11 @@
                                                                 <?php echo $printer['printer']; ?> (<?php echo $printer['active'] === '1' ? 'active' : 'archived'; ?>)
                                                             </label>
                                                     <?php } ?>
+                                                </div>
+
+                                                <div class="col-md-6 col-sm-12"> 
+                                                    <label>Available on spot(s)</label>
+                                                    <?php echo $formSpotData; ?>
                                                 </div>
                                             </fieldset>
                                         </form>
