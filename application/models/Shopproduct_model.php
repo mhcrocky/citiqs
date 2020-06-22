@@ -58,4 +58,17 @@
             return true;
         }
 
+        public function getUserProducts(int $userId): ?array
+        {
+            return
+                $this->read(
+                    [
+                        $this->table. '.id AS productId',
+                    ],
+                    ['tbl_shop_categories.userId=' => $userId],
+                    [
+                        ['tbl_shop_categories', $this->table.'.categoryId = tbl_shop_categories.id', 'LEFT'],
+                    ]
+                );
+        }
     }

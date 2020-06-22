@@ -52,6 +52,31 @@
             if ($condition) {                
                 $result = $this->db->$condition(...$conditionArguments);
             }
+            // $result = $this->db->get($this->getThisTable());
+            // echo $this->db->last_query();die();
+            $result = $this->db->get($this->getThisTable())->result_array();
+            return $result ? $result : null;
+        }
+
+        public function readImproved(array $filter): ?array
+        {
+            $result = $this->db->select(implode(',', $filter['what']));
+            if (count($filter['joins']) ) {
+                $joins = $filter['joins'];
+                foreach ($joins as $join) {
+                    $this->db->join(...$join);
+                }
+            }
+            $result = $this->db->where($filter['where']);
+
+            if (isset($filter['conditions'])) {
+                $conditions = $filter['conditions'];
+                foreach ($conditions as $order => $arguments) {
+                    $result = $this->db->$order(...$arguments);
+                }
+            }
+            // $result = $this->db->get($this->getThisTable());
+            // echo $this->db->last_query();die();
             $result = $this->db->get($this->getThisTable())->result_array();
             return $result ? $result : null;
         }

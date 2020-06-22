@@ -26,6 +26,7 @@
             $this->load->model('shopprinters_model');
             $this->load->model('shopproductprinters_model');
             $this->load->model('shopspot_model');
+            $this->load->model('shopspotproducts_model');
 
             $this->load->library('language', array('controller' => $this->router->class));
             $this->load->library('form_validation');
@@ -158,13 +159,19 @@
         {
             $this->global['pageTitle'] = 'TIQS : PRODUCTS';
             $userId = intval($_SESSION['userId']);
+
+            //insert spots products
+            $this->shopspotproducts_model->insertSpotAndProducts($this->shopspot_model, $this->shopproduct_model, $userId);
+
             $where = ['userId' => $userId];
             $data = [
                 'categories' => $this->shopcategory_model->fetch($where),
-                'products' => $this->shopproductex_model->getUserLastProductsDetails($where),
+                'products' => $this->shopproductex_model->getUserProducts($userId),
                 'printers' => $this->shopprinters_model->read(['*'], $where),
+                'spots' => $this->shopspot_model->fetchUserSpots($userId),
             ];
 
+            #var_dump($data['products']); die();
             $this->loadViews('warehouse/products', $this->global, $data, null, 'headerWarehouse');
             return;
         }
@@ -362,12 +369,14 @@
             $this->global['pageTitle'] = 'TIQS : SPOTS';
             $userId = intval($_SESSION['userId']);
 
+            //insert spots products
+            $this->shopspotproducts_model->insertSpotAndProducts($this->shopspot_model,$this->shopproduct_model, $userId);
+
             $data = [
                 'printers' => $this->shopprinters_model->read(['*'], ['userId=' => $userId]),
                 'spots' => $this->shopspot_model->fetchUserSpots($userId)
             ];
-            // var_dump($data);
-            // die();
+
 
             $this->loadViews('warehouse/spots', $this->global, $data, null, 'headerWarehouse');
         }
@@ -419,5 +428,6 @@
 
             redirect($_SERVER['HTTP_REFERER']);
             return;
-        }        
+        }
+
     }

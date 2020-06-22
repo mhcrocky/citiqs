@@ -175,13 +175,15 @@
                                     </p>
                                     <?php
                                         if ($product['printers']) {
-                                            $printerIds = array_keys($product['printers']);
+                                            $printerIds = [];
+                                            $productPrinters = explode(',', $product['printers']);
                                             echo '<dl>';
                                             echo    '<dt>Printers:</dt>';
-                                            foreach($product['printers'] as $printer) {
-                                                $printer = reset($printer);
-                                                $string = $printer['printer'];
-                                                $string .= $printer['printerActive'] === '1' ? ' (<span style="color:#009933">active</span>)' : ' (<span style="color:#ff3333">archived</span>)';
+                                            foreach($productPrinters as $printer) {
+                                                array_push($printerIds, $printer[0]);
+                                                $printer = explode('|', $printer);
+                                                $string = $printer[1];
+                                                $string .= $printer[2] === '1' ? ' (<span style="color:#009933">active</span>)' : ' (<span style="color:#ff3333">archived</span>)';
                                                 echo '<dd>' . $string . '</dd>';
                                             }
                                             echo '</dl>';
@@ -311,7 +313,7 @@
                                                     <input type="text" name="productExtended[options]" id="options<?php echo $product['productId'] ?>" class="form-control" requried value="<?php echo $product['options']; ?>" />
                                                 </div>
                                                 <div class="col-lg-4 col-sm-12">                                                
-                                                    <?php foreach ($printers as $printer) { ?>
+                                                    <?php foreach ($printers as $printer) {?>
                                                             <label class="checkbox-inline" for="printerId<?php echo $product['productId']; ?><?php echo $printer['id']; ?>">
                                                                 <input
                                                                     type="checkbox"
@@ -319,7 +321,7 @@
                                                                     name="productPrinters[]"
                                                                     value="<?php echo $printer['id']; ?>"
                                                                     <?php
-                                                                        if ($product['printers'] && isset($printerIds) && in_array($printer['id'], $printerIds)) echo 'checked';
+                                                                        if (isset($printerIds) && in_array($printer['id'], $printerIds)) echo 'checked';
                                                                     ?>
                                                                     />
                                                                 <?php echo $printer['printer']; ?> (<?php echo $printer['active'] === '1' ? 'active' : 'archived'; ?>)

@@ -61,6 +61,14 @@
             return true;
         }
 
+        /**
+         * getUserProductsDetails
+         * 
+         * DO NOT USE deprecated
+         *
+         * @param array $where
+         * @return array|null
+         */
         public function getUserProductsDetails(array $where): ?array
         {
             
@@ -99,6 +107,14 @@
                     );
         }
 
+        /**
+         * getUserProductsDetails
+         * 
+         * DO NOT USE deprecated
+         *
+         * @param array $where
+         * @return array|null
+         */
         public function getUserLastProductsDetails(array $where): ?array
         {
             $products = $this->getUserProductsDetails($where);
@@ -174,39 +190,6 @@
                 $result = $this->db->query($query);
                 $result = $result->result_array();
                 return $result ? $result : null;
-            // return  $this->read(
-            //             [
-            //                 $this->table. '.id as productExtendedId',
-            //                 $this->table. '.name',
-            //                 $this->table. '.shortDescription',
-            //                 $this->table. '.longDescription',
-            //                 'FORMAT(' . $this->table . '.price,2) AS price',
-            //                 $this->table. '.image',
-            //                 $this->table. '.options',
-            //                 $this->table. '.addons',
-
-            //                 'tbl_shop_products.id AS productId',                            
-            //                 'tbl_shop_products.stock',
-            //                 'tbl_shop_products.recommendedQuantity',
-            //                 'tbl_shop_products.active AS productActive',
-            //                 'tbl_shop_products.showImage',
-
-            //                 'tbl_shop_categories.category',
-            //                 'tbl_shop_categories.id AS categoryId',
-            //                 'tbl_shop_categories.active AS categoryActive',
-
-            //             ],
-            //             $where,
-            //             [
-            //                 ['tbl_shop_products', $this->table.'.productId = tbl_shop_products.id', 'INNER'],
-            //                 ['tbl_shop_categories', 'tbl_shop_products.categoryId = tbl_shop_categories.id', 'INNER'],
-            //                 ['tbl_shop_product_printers', 'tbl_shop_product_printers.productId = tbl_shop_products.id', 'INNER'],
-            //                 ['tbl_shop_spots', 'tbl_shop_product_printers.printerId = tbl_shop_spots.printerId', 'INNER'],
-            //                 ['tbl_shop_printers', 'tbl_shop_printers.id = tbl_shop_spots.printerId', 'INNER']
-            //             ],
-            //             'order_by',
-            //             [$this->table. '.id', 'DESC']
-            //         );
         }
 
         public function getUserLastProductsDetailsPublic(int $spotId, string $sortBy = 'name'): ?array
@@ -230,7 +213,70 @@
                     array_push($productIds, $prodcut['productId']);
                 }
             }
-            $return = Utility_helper::resetArrayByKeyMultiple($return, $sortBy);
+            $return = Utility_helper::resetArrayByKeyMultiple($return, $sortBy);            
+            ksort($return);
+            return $return;
+        }
+
+
+        public function getUserProducts(int $userId, bool $all = false): ?array
+        {
+            $filter = [
+                'what' => [
+                    $this->table. '.id as productExtendedId',
+                    $this->table. '.name',
+                    $this->table. '.shortDescription',
+                    $this->table. '.longDescription',
+                    'FORMAT(' . $this->table . '.price,2) AS price',
+                    $this->table. '.image',
+                    $this->table. '.options',
+                    $this->table. '.addons',
+                    $this->table. '.vatpercentage AS productVat',
+
+                    'tbl_shop_products.id AS productId',                            
+                    'tbl_shop_products.stock',
+                    'tbl_shop_products.recommendedQuantity',
+                    'tbl_shop_products.active AS productActive',
+                    'tbl_shop_products.showImage',
+                    'tbl_shop_products.dateTimeFrom AS dateTimeFrom',
+                    'tbl_shop_products.dateTimeTo AS dateTimeTo',
+                    
+                    'tbl_shop_categories.category',
+                    'tbl_shop_categories.id AS categoryId',
+                    'tbl_shop_categories.active AS categoryActive',
+                    'GROUP_CONCAT(CONCAT(tbl_shop_printers.id, \'|\', tbl_shop_printers.printer, \'|\', tbl_shop_printers.active) ORDER BY tbl_shop_printers.id) AS printers'
+                ],
+                'where' => ['tbl_shop_categories.userId=' => $userId],
+                'joins' =>  [
+                    ['tbl_shop_products', $this->table.'.productId = tbl_shop_products.id', 'INNER'],
+                    ['tbl_shop_categories', 'tbl_shop_products.categoryId = tbl_shop_categories.id', 'INNER'],
+                    ['tbl_shop_product_printers', 'tbl_shop_products.id = tbl_shop_product_printers.productId', 'LEFT'],
+                    ['tbl_shop_printers', 'tbl_shop_product_printers.printerId = tbl_shop_printers.id', 'LEFT']
+                ],
+                'conditions' => [
+                    'GROUP_BY' => ['tbl_shop_products_extended.id'],
+                    'ORDER_BY' => ['tbl_shop_products_extended.id DESC'],
+                ]
+            ];
+
+            $products = $this->readImproved($filter);
+
+            if (is_null($products)) return null;
+            if ($all) return $products;
+
+            $this->load->helper('utility_helper');
+
+            $productIds = [];
+            $return = [];
+
+            foreach ($products as $prodcut) {
+                if (!in_array($prodcut['productId'], $productIds)) {
+                    array_push($return, $prodcut);
+                    array_push($productIds, $prodcut['productId']);
+                }
+            }
+
+            $return = Utility_helper::resetArrayByKeyMultiple($return, 'name');
             ksort($return);
             return $return;
         }
