@@ -171,7 +171,8 @@
                 'spots' => $this->shopspot_model->fetchUserSpots($userId),
             ];
 
-            #var_dump($data['products']); die();
+            // var_dump($data['products']);
+            // die();
             $this->loadViews('warehouse/products', $this->global, $data, null, 'headerWarehouse');
             return;
         }

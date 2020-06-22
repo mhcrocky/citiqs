@@ -180,10 +180,25 @@
                                             echo '<dl>';
                                             echo    '<dt>Printers:</dt>';
                                             foreach($productPrinters as $printer) {
-                                                array_push($printerIds, $printer[0]);
                                                 $printer = explode('|', $printer);
+                                                array_push($printerIds, $printer[0]);
                                                 $string = $printer[1];
                                                 $string .= $printer[2] === '1' ? ' (<span style="color:#009933">active</span>)' : ' (<span style="color:#ff3333">archived</span>)';
+                                                echo '<dd>' . $string . '</dd>';
+                                            }
+                                            echo '</dl>';
+                                        }
+                                    ?>
+                                    <?php
+                                        if ($product['spotProductData']) {
+                                            $productSpots = explode(',', $product['spotProductData']);
+                                            echo '<dl>';
+                                            echo    '<dt>Available spot(s):</dt>';
+                                            foreach($productSpots as $spot) {
+
+                                                $spot = explode('|', $spot);
+                                                $string = $spot[3];
+                                                $string .= $spot[2] === '1' ? ' (<span style="color:#009933">active</span>)' : ' (<span style="color:#ff3333">archived</span>)';
                                                 echo '<dd>' . $string . '</dd>';
                                             }
                                             echo '</dl>';
