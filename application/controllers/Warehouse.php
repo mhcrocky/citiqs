@@ -27,6 +27,7 @@
             $this->load->model('shopproductprinters_model');
             $this->load->model('shopspot_model');
             $this->load->model('shopspotproducts_model');
+            $this->load->model('shopproducttime_model');
 
             $this->load->library('language', array('controller' => $this->router->class));
             $this->load->library('form_validation');
@@ -320,6 +321,35 @@
                 }
             }
 
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
+        }
+
+        public function addProductTimes(): void
+        {
+            $data = $this->input->post(null, true);
+            $days = $data['productTime'];
+
+            $this->shopproducttime_model->productId = intval($this->uri->segment(3));
+            $this->shopproducttime_model->deleteProductTimes();
+
+            foreach ($days as $day => $value) {
+                if (isset($value['day']) && $value['from'][0] && $value['to'][0]) {
+                    $count = count($value['from']);
+                    for ($i = 0; $i < $count; $i++) {
+                        $insert = [
+                            'day' => $day,
+                            'timeFrom' => $value['from'][$i],
+                            'timeTo' => $value['to'][$i],
+                        ];
+                        if (!$this->shopproducttime_model->setObjectFromArray($insert)->create()) {
+                            $this->session->set_flashdata('error', 'Availability time(s) for product "' . $data['productName'] . '" not inserted! Please try again');
+                            redirect($_SERVER['HTTP_REFERER']);
+                        };
+                    }
+                }
+            }
+            $this->session->set_flashdata('success', 'Availability time(s) for product "' . $data['productName'] . '" inserted.');
             redirect($_SERVER['HTTP_REFERER']);
             return;
         }

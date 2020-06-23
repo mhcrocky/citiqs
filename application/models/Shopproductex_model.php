@@ -251,6 +251,7 @@
                             \'|\', tbl_shop_printers.active
                         )
                     ) AS printers',
+                    'tblShopProductTimes.productTimes',
                     'tblShopSpotProducts.spotProductData'
                 ],
                 'where' => ['tbl_shop_categories.userId=' => $userId],
@@ -271,7 +272,7 @@
                                     \'|\', tbl_shop_spots.id
                                 ) AS spotProductData                                
                             FROM
-                                tbl_shop_spots
+                                tbl_shop_spots                               
                             LEFT JOIN
                                 tbl_shop_spot_products ON tbl_shop_spot_products.spotId = tbl_shop_spots.id
 
@@ -281,7 +282,26 @@
                         ) tblShopSpotProducts',
                         'tblShopSpotProducts.productId = tbl_shop_products.id',
                         'LEFT'
+                    ],
+                    [
+                        '(
+                            SELECT
+                                tbl_shop_product_times.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_product_times.productId,
+                                    \'|\', tbl_shop_product_times.day,
+                                    \'|\', tbl_shop_product_times.timeFrom,
+                                    \'|\', tbl_shop_product_times.timeTo
+                                ) AS productTimes                                
+                            FROM
+                                tbl_shop_product_times
+                            GROUP BY tbl_shop_product_times.productId
+                            ORDER BY tbl_shop_product_times.timeFrom ASC
+                        ) tblShopProductTimes',                    
+                        'tblShopProductTimes.productId = ' . $this->table.'.productId',
+                        'LEFT'
                     ]
+
                 ],
                 'conditions' => [
                     'GROUP_BY' => ['tbl_shop_products_extended.id'],
@@ -298,11 +318,11 @@
 
             $productIds = [];
             $return = [];
-
-            foreach ($products as $prodcut) {
-                if (!in_array($prodcut['productId'], $productIds)) {
-                    array_push($return, $prodcut);
-                    array_push($productIds, $prodcut['productId']);
+            foreach ($products as $product) {
+                if (!in_array($product['productId'], $productIds)) {
+                    $this->prepareProductTime($product);
+                    array_push($return, $product);
+                    array_push($productIds, $product['productId']);
                 }
             }
 
@@ -329,5 +349,18 @@
             );
 
             return $count ? true : false;
+        }
+
+        private function prepareProductTime(array &$product): void
+        {
+            if ($product['productTimes']) {
+                $product['productTimes'] =  explode(',', $product['productTimes']);
+
+                $product['productTimes'] = array_map(function($data) {
+                    return explode('|', $data);
+                }, $product['productTimes']);
+
+                $product['productTimes'] = Utility_helper::resetArrayByKeyMultiple($product['productTimes'], '1');
+            }
         }
     }

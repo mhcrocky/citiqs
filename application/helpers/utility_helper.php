@@ -147,24 +147,24 @@
             return $reset;
         }
 
-        public static function resetArrayByKeys(array $arrays, array $keys): array
-        {
-            if (empty($arrays)) return [];
-            $reset = [];
+        // public static function resetArrayByKeys(array $arrays, array $keys): array
+        // {
+        //     if (empty($arrays)) return [];
+        //     $reset = [];
 
-            foreach($arrays as $array) {
-                foreach($keys as $key) {
-                    if (!isset($reset[$key])) {
-                        $reset[$key] = [];
-                    }
-                    if (!isset($reset[$array[$key]])) {
-                        $reset[$key][$array[$key]] = [];
-                    }
-                    array_push($reset[$key][$array[$key]], $array);
-                }
-            }
-            return $reset;
-        }
+        //     foreach($arrays as $array) {
+        //         foreach($keys as $key) {
+        //             if (!isset($reset[$key])) {
+        //                 $reset[$key] = [];
+        //             }
+        //             if (!isset($reset[$array[$key]])) {
+        //                 $reset[$key][$array[$key]] = [];
+        //             }
+        //             array_push($reset[$key][$array[$key]], $array);
+        //         }
+        //     }
+        //     return $reset;
+        // }
 
         /**
          * compareTwoDates
