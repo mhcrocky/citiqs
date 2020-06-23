@@ -183,6 +183,18 @@
         public function addProdcut(): void
         {
             $data = $this->input->post(null, true);
+            $userId = intval($_SESSION['userId']);
+
+            //CHECK PRODUCT NAME
+            $where = [
+                'tbl_shop_categories.userId' => $userId,
+                'tbl_shop_products_extended.name=' => $data['productExtended']['name']
+            ];
+
+            if ($this->shopproductex_model->checkProductName($where)) {
+                $this->session->set_flashdata('error', 'Product with this name already exists! Insert failed');
+                redirect($_SERVER['HTTP_REFERER']);
+            };
 
             // insert product
             if ($data['product']['dateTimeFrom'] && $data['product']['dateTimeTo']) {
@@ -255,6 +267,20 @@
                 }
             } else {
                 $data = $this->input->post(null, true);
+                $productId = intval($this->uri->segment(3));
+                $userId = intval($_SESSION['userId']);
+
+                //CHECK PRODUCT NAME
+                $where = [
+                    'tbl_shop_categories.userId' => $userId,
+                    'tbl_shop_products_extended.productId !=' => $productId,
+                    'tbl_shop_products_extended.name=' => $data['productExtended']['name']
+                ];
+
+                if ($this->shopproductex_model->checkProductName($where)) {
+                    $this->session->set_flashdata('error', 'Product with this name already exists! Update failed');
+                    redirect($_SERVER['HTTP_REFERER']);
+                };
 
                 // update                
                 if ($data['product']['dateTimeFrom'] && $data['product']['dateTimeTo']) {
@@ -263,7 +289,7 @@
                 }
                 $update = $this
                         ->shopproduct_model
-                        ->setObjectId(intval($this->uri->segment(3)))
+                        ->setObjectId($productId)
                         ->setObjectFromArray($data['product'])
                         ->update();
 
@@ -278,6 +304,8 @@
                 } else {
                     $this->session->set_flashdata('error', 'Update failed! Please try again.');
                 }
+
+                // PRINTERS
                 $this->shopproductprinters_model->productId = $this->shopproduct_model->id;
                 $this->shopproductprinters_model->deleteProductPrinters();
                 if (isset($data['productPrinters'])) {                    

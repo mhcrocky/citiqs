@@ -310,4 +310,24 @@
             ksort($return);
             return $return;
         }
+
+        public function checkProductName(array $where): bool
+        {
+            $count = $this->readImproved(
+                [
+                    'what'  => [$this->table . '.id'],
+                    'where' => $where,
+                    'joins' => [
+                        ['tbl_shop_products', $this->table.'.productId = tbl_shop_products.id', 'LEFT'],
+                        ['tbl_shop_categories', 'tbl_shop_products.categoryId = tbl_shop_categories.id', 'LEFT'],
+                    ],
+                    'conditions' => [
+                        'LIMIT' => ['1'],
+                    ]
+
+                ]
+            );
+
+            return $count ? true : false;
+        }
     }
