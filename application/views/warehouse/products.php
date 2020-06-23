@@ -98,20 +98,20 @@
                                     <?php } ?>                                
                                 </div>
 
-                                <div class="col-lg-4 col-sm-12">
+                                <!-- <div class="col-lg-4 col-sm-12">
                                     <label for="printer">Product spot(s): </label>
-                                    <?php foreach ($userSpots as $spot) { ?>
-                                        <label class="checkbox-inline" for="spotId<?php echo $spot['spotId']; ?>">
+                                    <?php #foreach ($userSpots as $spot) { ?>
+                                        <label class="checkbox-inline" for="spotId<?php #echo $spot['spotId']; ?>">
                                             <input
                                                 type="checkbox"
-                                                id="spotId<?php echo $spot['spotId']; ?>"
+                                                id="spotId<?php #echo $spot['spotId']; ?>"
                                                 name="userSpots[]"
-                                                value="<?php echo $spot['spotId']; ?>"
+                                                value="<?php #echo $spot['spotId']; ?>"
                                                 />
-                                            <?php echo $spot['spotName']; ?> (<?php echo $spot['spotActive'] === '1' ? 'active' : 'archived'; ?>)
+                                            <?php #echo $spot['spotName']; ?> (<?php #echo $spot['spotActive'] === '1' ? 'active' : 'archived'; ?>)
                                         </label>
-                                    <?php } ?>                                
-                                </div>
+                                    <?php #} ?>                                
+                                </div> -->
                             </fieldset>
                         </form>
                     </div>
@@ -205,40 +205,45 @@
                                         }
                                     ?>
                                     <?php
-                                        if ($product['spotProductData']) {
-                                            $productSpots = explode(',', $product['spotProductData']);
-                                            echo '<dl>';
-                                            echo    '<dt>Available on spot(s):</dt>';
-                                            $formSpotData = '';
-                                            foreach($productSpots as $spot) {
-                                                // porduct data
-                                                $spot = explode('|', $spot);
-                                                $string = $spot[3];
-                                                $string .= $spot[2] === '1' ? ' (<span style="color:#009933">active</span>)' : ' (<span style="color:#ff3333">archived</span>)';
-                                                echo '<dd>' . $string . '</dd>';
+                                        // if ($product['spotProductData']) {
+                                        //     $productSpots = explode(',', $product['spotProductData']);
+                                        //     echo '<dl>';
+                                        //     echo    '<dt>Available on spot(s):</dt>';
+                                        //     // $formSpotData = '';
+                                        //     foreach($productSpots as $spot) {
+                                        //         // porduct data
+                                        //         $spot = explode('|', $spot);
+                                        //         $string = $spot[3];
+                                        //         $string .= $spot[2] === '1' ? ' (<span style="color:#009933">active</span>)' : ' (<span style="color:#ff3333">archived</span>)';
+                                        //         echo '<dd>' . $string . '</dd>';
 
-                                                $formSpotData .= '<label class="checkbox-inline" for="tbl_shop_spot_products' . $spot[0] . '">';
-                                                $formSpotData .= '<input ';
-                                                $formSpotData .= 'type="checkbox" ';
-                                                $formSpotData .= 'id=tbl_shop_spot_products' . $spot[0] . ' ';
-                                                $formSpotData .= 'name="productSpots[]" ';
-                                                $formSpotData .= 'value="' . $spot[0] . '" ';
-                                                if ($spot[2] === '1') {
-                                                    $formSpotData .= 'checked';
-                                                }
-                                                $formSpotData .= '/>';
-                                                $formSpotData .=  $spot[3] . ' ';
-                                                $formSpotData .=  $spot[2] === '1' ? ' (<span style="color:#009933">active</span>)' : ' (<span style="color:#ff3333">archived</span>)';
-                                                $formSpotData .= '</label>';
-                                            }
-                                            echo '</dl>';
-                                        }
+                                        //         $formSpotData .= '<label class="checkbox-inline" for="tbl_shop_spot_products' . $spot[0] . '">';
+                                        //         $formSpotData .= '<input ';
+                                        //         $formSpotData .= 'type="checkbox" ';
+                                        //         $formSpotData .= 'id=tbl_shop_spot_products' . $spot[0] . ' ';
+                                        //         $formSpotData .= 'name="productSpots[]" ';
+                                        //         $formSpotData .= 'value="' . $spot[0] . '" ';
+                                        //         if ($spot[2] === '1') {
+                                        //             $formSpotData .= 'checked';
+                                        //         }
+                                        //         $formSpotData .= '/>';
+                                        //         $formSpotData .=  $spot[3] . ' ';
+                                        //         $formSpotData .=  $spot[2] === '1' ? ' (<span style="color:#009933">active</span>)' : ' (<span style="color:#ff3333">archived</span>)';
+                                        //         $formSpotData .= '</label>';
+                                        //     }
+                                        //     echo '</dl>';
+                                        // }
                                     ?>
                                 </div><!-- end item header -->
                                 <div class="grid-footer">
                                     <div class="iconWrapper">
-                                        <span class="fa-stack fa-2x edit-icon btn-edit-item" onclick="toogleAllElementClasses('editProductProductId<?php echo $product['productId']; ?>', 'display')">
+                                        <span class="fa-stack fa-2x edit-icon btn-edit-item" onclick="toogleAllElementClasses('editProductProductId<?php echo $product['productId']; ?>', 'display')" title="Click to edit" >
                                             <i class="far fa-edit"></i>
+                                        </span>
+                                    </div>
+                                    <div class="iconWrapper">
+                                        <span class="fa-stack fa-2x edit-icon btn-edit-item" data-toggle="modal" data-target="#timeModal<?php echo $product['productId']; ?>"  title="Click to add time">
+                                            <i class="far fa-clock-o"></i>
                                         </span>
                                     </div>
                                     <?php if ($product['productActive'] === '1') { ?>
@@ -258,6 +263,66 @@
                                             </a>
                                         </div>
                                     <?php } ?>
+                                </div>
+                                <!--TIME MODAL -->
+                                <div class="modal" id="timeModal<?php echo $product['productId']; ?>" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <form method="post">
+                                            <input type="text" name="productTime[id]" value="<?php echo $product['productId']; ?>" hidden readonly />
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">
+                                                        Set availability days and time for product "<?php echo $product['name']; ?>"
+                                                    </h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <?php
+                                                        $dayOfWeeks = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+                                                        foreach($dayOfWeeks as $day) {
+                                                    ?>
+                                                    <div class="from-group">
+                                                        <label class="checkbox-inline" for="<?php echo $day . $product['productId']; ?>">
+                                                            <input
+                                                                type="checkbox"
+                                                                id="<?php echo $day . $product['productId']; ?>"
+                                                                name="productTime[day]"
+                                                                value="<?php echo $day; ?>"
+                                                                onchange="showDay(this,'<?php echo $day . '_'.  $product['productId']; ?>')"
+                                                                />
+                                                                <?php echo ucfirst($day); ?>
+                                                        </label>
+                                                        <br/>
+                                                        <div id="<?php echo $day . '_'.  $product['productId']; ?>" style="display:none">
+                                                            <label for="from<?php echo $day . $product['productId']; ?>">From:
+                                                                <input
+                                                                    type="time"
+                                                                    id="from<?php echo $day . $product['productId']; ?>"
+                                                                    name="productTime[<?php echo $day; ?>][from]"
+                                                                    />
+                                                            </label>
+                                                            <Label for="to<?php echo $day . $product['productId']; ?>">To:
+                                                                <input
+                                                                    type="time"
+                                                                    id="to<?php echo $day . $product['productId']; ?>"
+                                                                    name="productTime[<?php echo $day; ?>][to]"
+                                                                    />
+                                                            </label>
+                                                            <button type="button" class="btn btn-default" onclick="addTimePeriod('<?php echo $day . $product['productId']; ?>Times','<?php echo $day; ?>')">Add new time</button>
+                                                            <div id="<?php echo $day . $product['productId']; ?>Times"></div>
+                                                        </div>
+                                                    </div>
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                                 <!-- ITEM EDITOR -->
                                 <div class="item-editor theme-editor" id="editProductProductId<?php echo  $product['productId']; ?>">
@@ -375,10 +440,10 @@
                                                     <?php } ?>
                                                 </div>
 
-                                                <div class="col-md-6 col-sm-12"> 
+                                                <!-- <div class="col-md-6 col-sm-12"> 
                                                     <label>Available on spot(s)</label>
-                                                    <?php echo $formSpotData; ?>
-                                                </div>
+                                                    <?php #echo $formSpotData; ?>
+                                                </div> -->
                                             </fieldset>
                                         </form>
                                     </div>
@@ -400,5 +465,28 @@
 		if (element.value !== window.location.href) {
 			window.location.href = element.value;
 		}
-	}
+    }
+    function showDay(element, day) {
+        if (element.checked) {
+            document.getElementById(day).style.display = "initial";
+        } else {
+            document.getElementById(day).style.display = "none";
+        }
+    }
+
+    function addTimePeriod(timeDiv, day) {
+        let element = '';
+        element +=  '<div>';
+        element +=      '<label>From: ';
+        element +=          '<input type="time" name="productTime[' + day + '][from]" />';
+        element +=      '</label>';
+        element +=      '<label>To: ';
+        element +=          '<input type="time" name="productTime[' + day + '][to]" />';
+        element +=      '</label>';
+        element +=      '<span class="fa-stack fa-2x" onclick="removeParent(this)">';
+        element +=          '<i class="fa fa-times"></i>';
+        element +=      '</span>';
+        element +=  '</div>';
+        $( "#" + timeDiv).append(element);
+    }
 </script>

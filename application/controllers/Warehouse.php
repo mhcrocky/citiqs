@@ -161,7 +161,7 @@
             $userId = intval($_SESSION['userId']);
 
             //insert spots products
-            $this->shopspotproducts_model->insertSpotAndProducts($this->shopspot_model, $this->shopproduct_model, $userId);
+            // $this->shopspotproducts_model->insertSpotAndProducts($this->shopspot_model, $this->shopproduct_model, $userId);
 
             $where = ['userId' => $userId];
             $data = [
@@ -227,19 +227,19 @@
             }
 
             // INSERT PRODUCT SPOTS
-            $userId = intval($_SESSION['userId']);
-            $userSpots = $this->shopspot_model->fetchUserSpots($userId);
+            // $userId = intval($_SESSION['userId']);
+            // $userSpots = $this->shopspot_model->fetchUserSpots($userId);
 
-            foreach($userSpots as $spot) {
-                $insert = [];
-                $insert['spotId'] = $spot['spotId'];
-                $insert['productId'] = $this->shopproduct_model->id;
-                $insert['active'] = in_array($spot['spotId'], $data['userSpots']) ? '1' : '0';
-                if (!$this->shopspotproducts_model->setObjectFromArray($insert)->create()) {
-                    $this->session->set_flashdata('error', 'Product sport insert failed. Please check');
-                    break;
-                }
-            }
+            // foreach($userSpots as $spot) {
+            //     $insert = [];
+            //     $insert['spotId'] = $spot['spotId'];
+            //     $insert['productId'] = $this->shopproduct_model->id;
+            //     $insert['active'] = in_array($spot['spotId'], $data['userSpots']) ? '1' : '0';
+            //     if (!$this->shopspotproducts_model->setObjectFromArray($insert)->create()) {
+            //         $this->session->set_flashdata('error', 'Product sport insert failed. Please check');
+            //         break;
+            //     }
+            // }
 
             $this->session->set_flashdata('success', 'Product inserted.');
             redirect($_SERVER['HTTP_REFERER']);
@@ -297,13 +297,13 @@
                 $insert = $this->shopproductex_model->setObjectFromArray($data['productExtended'])->create();
 
                 // update product spots
-                $updateProductspots = $this->shopspotproducts_model->updateUproductSpots($data['productSpots'], $data['productExtended']['productId']);
+                // $updateProductspots = $this->shopspotproducts_model->updateUproductSpots($data['productSpots'], $data['productExtended']['productId']);
 
-                if ($insert && $update && $updateProductspots) {
-                    $this->session->set_flashdata('success', 'Product updated');
-                } else {
-                    $this->session->set_flashdata('error', 'Update failed! Please try again.');
-                }
+                // if ($insert && $update && $updateProductspots) {
+                //     $this->session->set_flashdata('success', 'Product updated');
+                // } else {
+                //     $this->session->set_flashdata('error', 'Update failed! Please try again.');
+                // }
 
                 // PRINTERS
                 $this->shopproductprinters_model->productId = $this->shopproduct_model->id;
@@ -415,7 +415,7 @@
             $userId = intval($_SESSION['userId']);
 
             //insert spots products
-            $this->shopspotproducts_model->insertSpotAndProducts($this->shopspot_model,$this->shopproduct_model, $userId);
+            // $this->shopspotproducts_model->insertSpotAndProducts($this->shopspot_model,$this->shopproduct_model, $userId);
 
             $data = [
                 'printers' => $this->shopprinters_model->read(['*'], ['userId=' => $userId]),
