@@ -106,3 +106,6 @@ $config['orderStatuses'] = [
     $config['orderDone'],
     $config['orderFinished']
 ];
+
+
+$config['contactGroupSeparator'] = '!#$%=';

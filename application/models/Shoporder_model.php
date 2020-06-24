@@ -28,7 +28,7 @@
             if ($property === 'id' || $property === 'buyerId') {
                 $value = intval($value);
             }
-            if ($property === 'amount') {
+            if ($property === 'amount' || $property === 'serviceFee') {
                 $value = floatval($value);
             }
             return;
@@ -237,5 +237,65 @@
                 'order_by',
                 [$this->table . '.updated ASC']
             );
+        }
+
+
+        public function fetchOrdersForPrint(string $macNumber): ?array
+        {
+            $this->load->config('custom');
+
+            $filter = [
+                'what' => [
+                    $this->table . '.id AS orderId',
+                    $this->table . '.amount AS orderAmount',
+                    'tbl_shop_spots.id AS spotId',
+                    'tbl_shop_spots.spotName AS spotName',
+                    'tbl_user.username AS buyerUserName',
+                    'tbl_user.email AS buyerEmail',
+                    'CONCAT("0031", TRIM(LEADING "0" FROM tbl_user.mobile)) AS buyerMobile',
+                    'productData.products'
+                ],
+                'where' => [
+                    $this->table . '.printStatus =' => '0',
+                    $this->table . '.paid =' => '1',
+                    'tbl_shop_printers.macNumber' => $macNumber,                    
+                ],
+                'joins' => [
+                    ['tbl_shop_spots', $this->table . '.spotId = tbl_shop_spots.id', 'INNER'],
+                    ['tbl_shop_printers', 'tbl_shop_spots.printerId = tbl_shop_printers.id', 'INNER'],
+                    ['tbl_user', 'tbl_shop_orders.buyerId = tbl_user.id' ,'INNER'],
+                    [
+                        '(
+                            SELECT
+                                tbl_shop_order_extended.orderId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_extended.name,    
+                                    \'|\', tbl_shop_products_extended.price,
+                                    \'|\', tbl_shop_order_extended.quantity,
+                                    \'|\', tbl_shop_categories.category,
+                                    \'|\', tbl_shop_categories.id
+                                    SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"
+                                ) AS products
+                            FROM
+                                tbl_shop_products_extended
+                            INNER JOIN
+                                tbl_shop_order_extended ON tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
+                            LEFT JOIN
+                                tbl_shop_products ON tbl_shop_products_extended.productId = tbl_shop_products.id
+                            LEFT JOIN
+                                tbl_shop_categories ON tbl_shop_products.categoryId = tbl_shop_categories.id
+                            GROUP BY tbl_shop_order_extended.orderId
+                        ) productData',
+                        $this->table . '.id = productData.orderId',
+                        'INNER'
+                    ]
+                ],
+                'conditions' => [
+                    'group_by' => [$this->table . '.id'],
+                    'limit' => ['1']
+                ]
+            ];
+
+            return $this->readImproved($filter);
         }
     }

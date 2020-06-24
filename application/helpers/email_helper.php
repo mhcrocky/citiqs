@@ -121,4 +121,31 @@
                 self::sendEmail($email, 'Dhl error', $message);
             }
         }
+
+        public static function sendOrderEmail(string $email, string $subject, string $message)
+        {
+            $configemail = array(
+                'protocol' => PROTOCOL,
+                'smtp_host' => SMTP_HOST,
+                'smtp_port' => SMTP_PORT,
+                'smtp_user' => SMTP_USER, // change it to yours
+                'smtp_pass' => SMTP_PASS,
+                'mailtype' => 'html',
+                'charset' => 'iso-8859-1',
+                'smtp_crypto' => 'tls',
+                'wordwrap' => TRUE,
+                'newline' => "\r\n"
+            );
+
+            $config = $configemail;
+            $CI =& get_instance();
+            $CI->load->library('email', $config);
+            $CI->email->set_header('X-SES-CONFIGURATION-SET', 'ConfigSet');
+            $CI->email->set_newline("\r\n");
+            $CI->email->from('support@tiqs.com');
+            $CI->email->to($email);
+            $CI->email->subject($subject);
+            $CI->email->message($message);
+            return $CI->email->send();
+        }
     }
