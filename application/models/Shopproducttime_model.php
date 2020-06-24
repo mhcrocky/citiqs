@@ -43,13 +43,13 @@
             if (!count($data)) return false;
             if (isset($data['productId']) && !Validate_data_helper::validateInteger($data['productId'])) return false;
             if (isset($data['day']) && !(
-                    $data['day'] === 'monday'
-                    || $data['day'] === 'tuesday'
-                    || $data['day'] === 'wednesday'
-                    || $data['day'] === 'thursday'
-                    || $data['day'] === 'friday'
-                    || $data['day'] === 'saturday'
-                    || $data['day'] === 'sunday'
+                    $data['day'] === 'Mon'
+                    || $data['day'] === 'Tue'
+                    || $data['day'] === 'Wed'
+                    || $data['day'] === 'Thu'
+                    || $data['day'] === 'Fri'
+                    || $data['day'] === 'Sat'
+                    || $data['day'] === 'Sun'
                 )) return false;
             return true;
         }

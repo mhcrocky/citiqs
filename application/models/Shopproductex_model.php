@@ -145,7 +145,11 @@
 
         public function getUserProductsDetailsPublic(int $spotId): ?array
         {
-            $date = date('Y-m-d H:i:s');
+            $time = time();
+            $date = date('Y-m-d H:i:s', $time);
+            $day = date('D', time());
+            $hours = date('H:i:s', $time);
+
             $query =
                 "SELECT
                     `tbl_shop_products_extended`.`id` as `productExtendedId`,
@@ -173,6 +177,19 @@
                     INNER JOIN `tbl_shop_product_printers` ON `tbl_shop_product_printers`.`productId` = `tbl_shop_products`.`id`
                     INNER JOIN `tbl_shop_spots` ON `tbl_shop_product_printers`.`printerId` = `tbl_shop_spots`.`printerId`
                     INNER JOIN `tbl_shop_printers` ON `tbl_shop_printers`.`id` = `tbl_shop_spots`.`printerId`
+                    INNER JOIN
+                        (
+                            SELECT
+                                tbl_shop_product_times.productId
+                            FROM
+                                tbl_shop_product_times
+                            WHERE
+                                tbl_shop_product_times.day = '{$day}'
+                                AND
+                                tbl_shop_product_times.timeFrom <= '{$hours}'
+                                AND
+                                tbl_shop_product_times.timeTo > '{$hours}'
+                        ) productTimes ON productTimes.productId = tbl_shop_products.id
                 WHERE
                     `tbl_shop_categories`.`active` = '1'
                     AND `tbl_shop_products`.`active` = '1'
@@ -204,11 +221,10 @@
             $return = [];
             foreach ($products as $prodcut) {
                 if (!in_array($prodcut['productId'], $productIds)) {
-                    $prodcut['printers'] = $this->shopprinters_model->fetchtProductPrinters(intval($prodcut['productId']));
-                    if ($prodcut['printers']) {
-                        $prodcut['printers'] = Utility_helper::resetArrayByKeyMultiple($prodcut['printers'], 'printerId');
-                    }
-
+                    // $prodcut['printers'] = $this->shopprinters_model->fetchtProductPrinters(intval($prodcut['productId']));
+                    // if ($prodcut['printers']) {
+                    //     $prodcut['printers'] = Utility_helper::resetArrayByKeyMultiple($prodcut['printers'], 'printerId');
+                    // }
                     array_push($return, $prodcut);
                     array_push($productIds, $prodcut['productId']);
                 }

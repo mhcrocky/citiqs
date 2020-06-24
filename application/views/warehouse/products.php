@@ -279,7 +279,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <?php
-                                                        $dayOfWeeks = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+                                                        $dayOfWeeks = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
                                                         foreach($dayOfWeeks as $day) {
                                                             
                                                     ?>

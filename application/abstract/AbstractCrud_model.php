@@ -73,6 +73,8 @@
                     $result = $this->db->$order(...$arguments);
                 }
             }
+            // $result = $this->db->get($this->getThisTable());
+            // echo $this->db->last_query(); die();
             $result = $this->db->get($this->getThisTable())->result_array();
             return $result ? $result : null;
         }

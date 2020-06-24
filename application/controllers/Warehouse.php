@@ -17,7 +17,7 @@
             $this->load->helper('validate_data_helper');
             $this->load->helper('utility_helper');
 
-            $this->load->model('user_subscription_model');
+            // $this->load->model('user_subscription_model');
             $this->load->model('shopcategory_model');
             $this->load->model('shopproduct_model');
             $this->load->model('shopproductex_model');
@@ -46,6 +46,11 @@
             // }
         }
 
+        /**
+         * Reports
+         *
+         * @return void
+         */
         public function index(): void
         {
             $this->global['pageTitle'] = 'TIQS : WAREHOSUE';
@@ -271,17 +276,17 @@
                 $productId = intval($this->uri->segment(3));
                 $userId = intval($_SESSION['userId']);
 
-                //CHECK PRODUCT NAME
-                $where = [
-                    'tbl_shop_categories.userId' => $userId,
-                    'tbl_shop_products_extended.productId !=' => $productId,
-                    'tbl_shop_products_extended.name=' => $data['productExtended']['name']
-                ];
+                //CHECK PRODUCT NAME TO DO
+                // $where = [
+                //     'tbl_shop_categories.userId' => $userId,
+                //     'tbl_shop_products_extended.productId !=' => $productId,
+                //     'tbl_shop_products_extended.name=' => $data['productExtended']['name']
+                // ];
 
-                if ($this->shopproductex_model->checkProductName($where)) {
-                    $this->session->set_flashdata('error', 'Product with this name already exists! Update failed');
-                    redirect($_SERVER['HTTP_REFERER']);
-                };
+                // if ($this->shopproductex_model->checkProductName($where)) {
+                //     $this->session->set_flashdata('error', 'Product with this name already exists! Update failed');
+                //     redirect($_SERVER['HTTP_REFERER']);
+                // };
 
                 // update                
                 if ($data['product']['dateTimeFrom'] && $data['product']['dateTimeTo']) {
@@ -300,11 +305,11 @@
                 // update product spots
                 // $updateProductspots = $this->shopspotproducts_model->updateUproductSpots($data['productSpots'], $data['productExtended']['productId']);
 
-                // if ($insert && $update && $updateProductspots) {
-                //     $this->session->set_flashdata('success', 'Product updated');
-                // } else {
-                //     $this->session->set_flashdata('error', 'Update failed! Please try again.');
-                // }
+                if ($insert && $update) {
+                    $this->session->set_flashdata('success', 'Product updated');
+                } else {
+                    $this->session->set_flashdata('error', 'Update failed! Please try again.');
+                }
 
                 // PRINTERS
                 $this->shopproductprinters_model->productId = $this->shopproduct_model->id;
@@ -325,6 +330,11 @@
             return;
         }
 
+        /**
+         * Add times to product
+         *
+         * @return void
+         */
         public function addProductTimes(): void
         {
             $data = $this->input->post(null, true);
@@ -335,6 +345,8 @@
 
             foreach ($days as $day => $value) {
                 if (isset($value['day']) && $value['from'][0] && $value['to'][0]) {
+
+                    
                     $count = count($value['from']);
                     for ($i = 0; $i < $count; $i++) {
                         $insert = [
@@ -343,18 +355,23 @@
                             'timeTo' => $value['to'][$i],
                         ];
                         if (!$this->shopproducttime_model->setObjectFromArray($insert)->create()) {
-                            $this->session->set_flashdata('error', 'Availability time(s) for product "' . $data['productName'] . '" not inserted! Please try again');
+                            $this->session->set_flashdata('error', 'Availability time(s) for product "' . $data['productName'] . '" not updated! Please try again');
                             redirect($_SERVER['HTTP_REFERER']);
                         };
                     }
                 }
             }
-            $this->session->set_flashdata('success', 'Availability time(s) for product "' . $data['productName'] . '" inserted.');
+            $this->session->set_flashdata('success', 'Availability time(s) for product "' . $data['productName'] . '" updated.');
             redirect($_SERVER['HTTP_REFERER']);
             return;
         }
 
         // ORDERS
+        /**
+         * read orders
+         *
+         * @return void
+         */
         public function orders(): void
         {
             $this->global['pageTitle'] = 'TIQS : ORDERS';
