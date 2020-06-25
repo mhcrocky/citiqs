@@ -69,4 +69,23 @@
                 [$this->table . '.spotName', 'ASC']
             );
         }
+
+        public function checkSpottName(array $where): bool
+        {
+            $count = $this->readImproved(
+                [
+                    'what'  => [$this->table . '.id'],
+                    'where' => $where,
+                    'joins' => [
+                        ['tbl_shop_printers', $this->table.'.printerId = tbl_shop_printers.id', 'LEFT']
+                    ],
+                    'conditions' => [
+                        'LIMIT' => ['1'],
+                    ]
+
+                ]
+            );
+
+            return $count ? true : false;
+        }
     }

@@ -63,5 +63,15 @@
                     ['tbl_shop_product_printers', $this->table .'.id = tbl_shop_product_printers.printerId' ,'INNER']
                 ]
             );
-        }        
+        }
+
+        public function checkPrinterName(array $where): bool
+        {
+            $filter = [
+                'what'  => ['id'],
+                'where' => $where,
+            ];
+            return $this->readImproved($filter) ? true : false;
+        }
+
     }

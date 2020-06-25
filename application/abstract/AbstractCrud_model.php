@@ -59,7 +59,7 @@
         public function readImproved(array $filter): ?array
         {
             $result = $this->db->select(implode(',', $filter['what']));
-            if (count($filter['joins']) ) {
+            if (isset($filter['joins']) && count($filter['joins']) ) {
                 $joins = $filter['joins'];
                 foreach ($joins as $join) {
                     $this->db->join(...$join);

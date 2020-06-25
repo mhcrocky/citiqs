@@ -237,6 +237,8 @@
 
         public function getUserProducts(int $userId, bool $all = false): ?array
         {
+            $this->load->config('custom');
+
             $filter = [
                 'what' => [
                     $this->table. '.id as productExtendedId',
@@ -286,6 +288,7 @@
                                     \'|\', tbl_shop_spot_products.active,
                                     \'|\', tbl_shop_spots.spotName,
                                     \'|\', tbl_shop_spots.id
+                                    SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"
                                 ) AS spotProductData                                
                             FROM
                                 tbl_shop_spots                               
@@ -308,6 +311,7 @@
                                     \'|\', tbl_shop_product_times.day,
                                     \'|\', tbl_shop_product_times.timeFrom,
                                     \'|\', tbl_shop_product_times.timeTo
+                                    SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"
                                 ) AS productTimes                                
                             FROM
                                 tbl_shop_product_times
@@ -336,7 +340,7 @@
             $return = [];
             foreach ($products as $product) {
                 if (!in_array($product['productId'], $productIds)) {
-                    $this->prepareProductTime($product);
+                    $this->prepareProductTime($product, $this->config->item('contactGroupSeparator'));
                     array_push($return, $product);
                     array_push($productIds, $product['productId']);
                 }
@@ -367,11 +371,10 @@
             return $count ? true : false;
         }
 
-        private function prepareProductTime(array &$product): void
+        private function prepareProductTime(array &$product, $separator): void
         {
             if ($product['productTimes']) {
-                $product['productTimes'] =  explode(',', $product['productTimes']);
-
+                $product['productTimes'] =  explode($separator, $product['productTimes']);                
                 $product['productTimes'] = array_map(function($data) {
                     return explode('|', $data);
                 }, $product['productTimes']);

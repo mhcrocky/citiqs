@@ -175,6 +175,7 @@
                 'products' => $this->shopproductex_model->getUserProducts($userId),
                 'printers' => $this->shopprinters_model->read(['*'], $where),
                 'userSpots' => $this->shopspot_model->fetchUserSpots($userId),
+                'separator' => $this->config->item('contactGroupSeparator'),
             ];
 
             $this->loadViews('warehouse/products', $this->global, $data, null, 'headerWarehouse');
@@ -276,17 +277,17 @@
                 $productId = intval($this->uri->segment(3));
                 $userId = intval($_SESSION['userId']);
 
-                //CHECK PRODUCT NAME TO DO
-                // $where = [
-                //     'tbl_shop_categories.userId' => $userId,
-                //     'tbl_shop_products_extended.productId !=' => $productId,
-                //     'tbl_shop_products_extended.name=' => $data['productExtended']['name']
-                // ];
+                // CHECK PRODUCT NAME
+                $where = [
+                    'tbl_shop_categories.userId' => $userId,
+                    'tbl_shop_products_extended.productId !=' => $productId,
+                    'tbl_shop_products_extended.name=' => $data['productExtended']['name']
+                ];
 
-                // if ($this->shopproductex_model->checkProductName($where)) {
-                //     $this->session->set_flashdata('error', 'Product with this name already exists! Update failed');
-                //     redirect($_SERVER['HTTP_REFERER']);
-                // };
+                if ($this->shopproductex_model->checkProductName($where)) {
+                    $this->session->set_flashdata('error', 'Product with this name already exists! Update failed');
+                    redirect($_SERVER['HTTP_REFERER']);
+                };
 
                 // update                
                 if ($data['product']['dateTimeFrom'] && $data['product']['dateTimeTo']) {
@@ -409,6 +410,16 @@
         {
             $data = $this->input->post(null, true);
 
+            $where = [
+                'userId'    => $data['userId'],
+                'printer'   => $data['printer'],
+            ];
+
+            if ($this->shopprinters_model->checkPrinterName($where)) {
+                $this->session->set_flashdata('error', 'Printer with this name already exists! Insert failed');
+                redirect('printers');
+            }
+
             if ($this->shopprinters_model->setObjectFromArray($data)->create()) {
                 $this->session->set_flashdata('success', 'Printer added');
             } else {
@@ -425,17 +436,31 @@
          */
         public function editPrinter(): void
         {
+            $printerId = intval($this->uri->segment(3));
+
             if (Validate_data_helper::validateInteger($this->uri->segment(4))) {
                 // change active status
                 $data = ['active' => $this->uri->segment(4)];
             } else {
                 // update mac and/or printer name
                 $data = $this->input->post(null, true);
+                // CHECK PRINTER NAME
+                if (isset($data['printer'])) {
+                    $where = [
+                        'userId'    => $_SESSION['userId'],
+                        'printer'   => $data['printer'],
+                        'id !=' => $printerId,
+                    ];
+                    if ($this->shopprinters_model->checkPrinterName($where)) {
+                        $this->session->set_flashdata('error', 'Printer with this name already exists! Update failed');
+                        redirect('printers');
+                    }
+                }
             }
 
             $update = $this
                     ->shopprinters_model
-                    ->setObjectId(intval($this->uri->segment(3)))
+                    ->setObjectId(intval($printerId))
                     ->setObjectFromArray($data)
                     ->update();
 
@@ -482,6 +507,16 @@
         {
             $data = $this->input->post(null, true);
 
+            $where = [
+                'tbl_shop_printers.userId=' => $_SESSION['userId'],
+                'tbl_shop_spots.spotName=' => $data['spotName'],
+            ];
+
+            if ($this->shopspot_model->checkSpottName($where)) {
+                $this->session->set_flashdata('error', 'Spot with this name already exists! Insert failed');
+                redirect('spots');
+            }
+
             if ($this->shopspot_model->setObjectFromArray($data)->create()) {
                 $this->session->set_flashdata('success', 'Spot added');
             } else {
@@ -498,17 +533,32 @@
          */
         public function editSpot(): void
         {
+            $spotId = intval($this->uri->segment(3));
+
             if (Validate_data_helper::validateInteger($this->uri->segment(4))) {
                 // change active status
                 $data = ['active' => $this->uri->segment(4)];
             } else {
                 // update data
                 $data = $this->input->post(null, true);
+
+                if (isset($data['spotName'])) {
+                    $where = [
+                        'tbl_shop_printers.userId=' => $_SESSION['userId'],
+                        'tbl_shop_spots.spotName=' => $data['spotName'],
+                        'tbl_shop_spots.id!=' => $spotId
+                    ];
+        
+                    if ($this->shopspot_model->checkSpottName($where)) {
+                        $this->session->set_flashdata('error', 'Spot with this name already exists! Insert failed');
+                        redirect('spots');
+                    }
+                }                
             }
 
             $update = $this
                     ->shopspot_model
-                    ->setObjectId(intval($this->uri->segment(3)))
+                    ->setObjectId($spotId)
                     ->setObjectFromArray($data)
                     ->update();
 
@@ -518,7 +568,7 @@
                 $this->session->set_flashdata('error', 'Update failed! Please try again.');
             }
 
-            redirect($_SERVER['HTTP_REFERER']);
+            redirect('spots');
             return;
         }
 
