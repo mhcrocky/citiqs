@@ -63,7 +63,7 @@
                         <div class="grid-item">
                             <div class="item-header">
                                 <p class="item-description">Name: <?php echo $spot['spotName']; ?></p>
-                                <p class="item-description">Spot ID: <?php echo $spot['spotId']; ?></p>
+                                <!-- <p class="item-description">Spot ID: <?php #echo $spot['spotId']; ?></p> -->
                                 <p class="item-category">Spot status:
                                     <?php echo $spot['spotActive'] === '1' ? '<span style="color:#009933">Active</span>' : '<span style="color:#ff3333">Archived</span>'; ?>
                                 </p>

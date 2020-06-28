@@ -269,8 +269,7 @@
                             \'|\', tbl_shop_printers.active
                         )
                     ) AS printers',
-                    'tblShopProductTimes.productTimes',
-                    'tblShopSpotProducts.spotProductData'
+                    'tblShopProductTimes.productTimes'
                 ],
                 'where' => ['tbl_shop_categories.userId=' => $userId],
                 'joins' =>  [
@@ -278,30 +277,6 @@
                     ['tbl_shop_categories', 'tbl_shop_products.categoryId = tbl_shop_categories.id', 'LEFT'],
                     ['tbl_shop_product_printers', 'tbl_shop_products.id = tbl_shop_product_printers.productId', 'LEFT'],
                     ['tbl_shop_printers', 'tbl_shop_product_printers.printerId = tbl_shop_printers.id', 'LEFT'],
-                    [
-                        '(
-                            SELECT
-                                tbl_shop_spot_products.productId as productId,
-                                GROUP_CONCAT(
-                                    tbl_shop_spot_products.id,
-                                    \'|\', tbl_shop_spot_products.productId,
-                                    \'|\', tbl_shop_spot_products.active,
-                                    \'|\', tbl_shop_spots.spotName,
-                                    \'|\', tbl_shop_spots.id
-                                    SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"
-                                ) AS spotProductData                                
-                            FROM
-                                tbl_shop_spots                               
-                            LEFT JOIN
-                                tbl_shop_spot_products ON tbl_shop_spot_products.spotId = tbl_shop_spots.id
-
-                            GROUP BY tbl_shop_spot_products.productId
-                            ORDER BY tbl_shop_spot_products.productId
-
-                        ) tblShopSpotProducts',
-                        'tblShopSpotProducts.productId = tbl_shop_products.id',
-                        'LEFT'
-                    ],
                     [
                         '(
                             SELECT
