@@ -24,6 +24,9 @@
 
         public function data_get()
         {
+            $file = FCPATH . 'application/tiqs_logs/messages.txt';
+            Utility_helper::logMessage($file, 'lol');
+            die();
             $get = $this->input->get(null, true);
 
             if(!$get['mac']) return;
