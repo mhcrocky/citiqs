@@ -46,6 +46,7 @@
                                                             'category<?php echo  $product['productExtendedId']; ?>',
                                                             'name<?php echo  $product['productExtendedId']; ?>',
                                                             'shortDescription<?php echo  $product['productExtendedId']; ?>',
+                                                            'productPrice<?php echo  $product['productExtendedId']; ?>',
                                                             false
                                                         )"
                                                         >
@@ -65,6 +66,7 @@
                                                             'category<?php echo  $product['productExtendedId']; ?>',
                                                             'name<?php echo  $product['productExtendedId']; ?>',
                                                             'shortDescription<?php echo  $product['productExtendedId']; ?>',
+                                                            'productPrice<?php echo  $product['productExtendedId']; ?>',
                                                             true
                                                         )"
                                                         >
@@ -83,18 +85,22 @@
                                     $form .= '<input type="number" value="0" min="0" step="1" ';
                                     $form .= 'name="' . $product['productExtendedId'] . '[quantity][]" ';
                                     $form .= 'id="quantity' . $product['productExtendedId'] . '" class="hideInput" disabled />';
-                                    $form .= '<input type="text" min="0" step="0.01" ';
+                                    $form .= '<input type="text" readonly ';
                                     $form .= 'name="' . $product['productExtendedId'] . '[category][]" ';
                                     $form .= 'id="category' . $product['productExtendedId'] . '" ';
                                     $form .= 'value="' . $product['category'] . '" class="hideInput" disabled />';
-                                    $form .= '<input type="text" min="0" step="0.01" ';
+                                    $form .= '<input type="text"  readonly ';
                                     $form .= 'name="' . $product['productExtendedId'] . '[name][]" ';
                                     $form .= 'id="name' . $product['productExtendedId'] . '" ';
                                     $form .= 'value="' . $product['name'] . '" class="hideInput" disabled />';
-                                    $form .= '<input type="text" min="0" step="0.01" ';
+                                    $form .= '<input type="text"  readonly ';
                                     $form .= 'name="' . $product['productExtendedId'] . '[shortDescription][]" ';
                                     $form .= 'id="shortDescription' . $product['productExtendedId'] . '" ';
                                     $form .= 'value="' . $product['shortDescription'] . '" class="hideInput" disabled />';
+                                    $form .= '<input type="text"  readonly ';
+                                    $form .= 'name="' . $product['productExtendedId'] . '[price][]" ';
+                                    $form .= 'id="productPrice' . $product['productExtendedId'] . '" ';
+                                    $form .= 'value="' . filter_var($product['price'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) . '" class="hideInput" disabled />';
                                 ?>
                             <?php } ?>
                         </div>

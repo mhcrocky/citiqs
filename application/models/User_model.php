@@ -868,6 +868,13 @@ class User_model extends CI_Model
 
     public function manageAndSetBuyer(array $buyer): object
     {
+        if (
+            !isset($buyer['username']) || !$buyer['username']
+            || !isset($buyer['email']) || !$buyer['email'] 
+            || !isset($buyer['mobile']) || !$buyer['mobile']) {
+            return $this;
+        }
+
         if (!$this->isDuplicate($buyer['email'])) {
             $password = Utility_helper::shuffleString(12);
             $buyer['password'] = getHashedPassword($password);

@@ -16,6 +16,8 @@
             $this->load->helper('form');
             $this->load->helper('validate_data_helper');
             $this->load->helper('utility_helper');
+            $this->load->helper('country_helper');
+            
 
             $this->load->model('user_subscription_model');
             $this->load->model('shopcategory_model');
@@ -63,6 +65,7 @@
                 'buyerRole' => $this->config->item('buyer'),
                 'usershorturl' => 'tiqs_shop_service',
                 'salesagent' => $this->config->item('tiqsId'),
+                'countries' => Country_helper::getCountries()
             ];
 
             $this->loadViews('publicorders/checkoutOrder', $this->global, $data, null, 'headerWarehousePublic');
@@ -70,12 +73,12 @@
 
         public function submitOrder(): void
         {
-            $data = $this->input->post(null, true);
-            $makeOrderRedirect = 'make_order?spotid=' . $data['order']['spotId'];
+            $this->global['pageTitle'] = 'TIQS : PAY';
 
-            // get buyer id
-            $data['user']['username'] = $data['user']['first_name'] . ' ' . $data['user']['second_name'];
-            $this->user_model->manageAndSetBuyer($data['user']);
+            $post = $this->input->post(null, true);
+            $makeOrderRedirect = 'make_order?spotid=' . $post['order']['spotId'];
+
+            $this->user_model->manageAndSetBuyer($post['user']);
 
             if (!$this->user_model->id) {
                 $this->session->set_flashdata('error', 'Order not made! Please try again');
@@ -84,10 +87,10 @@
             }
 
             // insert order
-            $data['order']['buyerId'] = $this->user_model->id;
-            $data['order']['paid'] = '0';
+            $post['order']['buyerId'] = $this->user_model->id;
+            $post['order']['paid'] = '0';
 
-            $this->shoporder_model->setObjectFromArray($data['order'])->create();            
+            $this->shoporder_model->setObjectFromArray($post['order'])->create();            
             
             if (!$this->shoporder_model->id) {
                 $this->session->set_flashdata('error', 'Order not made! Please try again');
@@ -96,7 +99,7 @@
             }
 
             // insert order details
-            foreach ($data['orderExtended'] as $id => $details) {
+            foreach ($post['orderExtended'] as $id => $details) {
                 $details['productsExtendedId'] = intval($id);
                 $details['orderId'] = $this->shoporder_model->id;
                 if (!$this->shoporderex_model->setObjectFromArray($details)->create()) {
@@ -111,9 +114,15 @@
 
             // go to paying if everything OK
             $_SESSION['orderId'] = $this->shoporder_model->id;
-            $_SESSION['spotId'] = $data['order']['spotId'];
-            redirect('payshop/payOrder');
-            exit();
+            $_SESSION['spotId'] = $post['order']['spotId'];
+
+            $data = [
+                'data' => $post,
+                'order' => $this->shoporder_model->fetchOne(),
+            ];
+
+
+            $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
     }
 

@@ -1,6 +1,6 @@
 'use strict';
 
-function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, categoryId, nameId, decsriptionId, plus) {
+function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, categoryId, nameId, decsriptionId, priceId, plus) {
     let amountElement = document.getElementById(amountId);
     let amountValue = parseFloat(amountElement.value);
 
@@ -14,6 +14,7 @@ function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, 
     let categoryElement = document.getElementById(categoryId);
     let nameElement = document.getElementById(nameId);
     let descriptionElement = document.getElementById(decsriptionId);
+    let priceElement = document.getElementById(priceId);
 
     let amountTrigger = false;
     let orderTrigger = false;
@@ -82,12 +83,14 @@ function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, 
         categoryElement.disabled = false;
         nameElement.disabled = false;
         descriptionElement.disabled = false;
+        priceElement.disabled = false;
     } else {
         amountElement.disabled = true;
         quantityElement.disabled = true;
         categoryElement.disabled = true;
         nameElement.disabled = true;
         descriptionElement.disabled = true;
+        priceElement.disabled = true;
     }
 
     return;
@@ -97,8 +100,6 @@ function submitMakeOrderForm(formId, orderAmount, orderQuantity) {
     let amount = parseFloat(document.getElementById(orderAmount).innerHTML);
     let quantity = parseInt(document.getElementById(orderQuantity).innerHTML);
     if (amount && quantity) {
-        console.dir(amount);
-        console.dir(quantity);
         let form = document.getElementById(formId);
         form.submit();
     }
