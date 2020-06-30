@@ -1,28 +1,6 @@
 'use strict';
-function toogleCategories(element) {
-    let categories = orderGlobals.categories;
-    let i;
-    let categorieslength = categories.length;
-    if (element.value === '0') {
-        for (i = 0; i < categorieslength; i++) {            
-        let elementClass = 'category_' + categories[i]['categoryId'];
-            $('.' + elementClass).show();
-        }
-        return;
-    }
 
-    for (i = 0; i < categorieslength; i++) {            
-        let elementClass = 'category_' + categories[i]['categoryId'];
-        if (elementClass === element.value) {
-            $('.' + elementClass).show();
-        } else {
-            $('.' + elementClass).hide();
-        }
-    }
-    return;
-}
-
-function addToOrder(amountId, quantiyId, price, className, orderAmountId, orderQuantityId, categoryId, nameId, decsriptionId, plus) {
+function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, categoryId, nameId, decsriptionId, plus) {
     let amountElement = document.getElementById(amountId);
     let amountValue = parseFloat(amountElement.value);
 
@@ -31,31 +9,80 @@ function addToOrder(amountId, quantiyId, price, className, orderAmountId, orderQ
 
     let orderAmountElement = document.getElementById(orderAmountId);
     let orderQuantityElement = document.getElementById(orderQuantityId);
-
+    
 
     let categoryElement = document.getElementById(categoryId);
     let nameElement = document.getElementById(nameId);
     let descriptionElement = document.getElementById(decsriptionId);
 
+    let amountTrigger = false;
+    let orderTrigger = false;
+
     if (amountValue >= 0) {
-        amountValue = (plus) ? (amountValue + parseFloat(price)) : amountValue > 0 ? (amountValue - parseFloat(price)) : 0;
+        
+        if (plus) {
+
+            amountValue = amountValue + parseFloat(price);
+            orderAmountElement.innerHTML = (parseFloat(orderAmountElement.innerHTML) + parseFloat(price)).toFixed(2);
+        } else {
+            if (amountValue > 0) {
+                amountValue = amountValue - parseFloat(price);
+                amountTrigger = true;
+            } else {
+                amountValue = 0;
+            }
+            
+            let orderAmountValue = parseInt(orderAmountElement.innerHTML);
+
+            if (orderAmountValue > 0 && amountValue > 0) {
+                orderAmountElement.innerHTML = (orderAmountValue - parseFloat(price)).toFixed(2);
+            }
+
+            if (orderAmountValue > 0 && amountValue === 0) {
+                orderAmountElement.innerHTML = amountTrigger ? (orderAmountValue - parseFloat(price)).toFixed(2) : orderAmountValue.toFixed(2);
+                amountTrigger = false;
+            }
+
+
+        }
         amountElement.value = amountValue;
     }
 
     if (quantityValue >= 0) {
-        quantityValue = (plus) ? (quantityValue + 1) : quantityValue > 0 ? (quantityValue - 1) : 0;
+
+        if (plus) {
+            quantityValue = quantityValue + 1;
+            orderQuantityElement.innerHTML = parseInt(orderQuantityElement.innerHTML) + 1;            
+        } else {
+            if (quantityValue > 0) {
+                quantityValue = quantityValue > 0 ? (quantityValue - 1) : 0;
+                orderTrigger = true;
+            } else {
+                quantityValue = 0;
+            }
+
+            let orderQuantityValue = parseInt(orderQuantityElement.innerHTML);
+
+            if (orderQuantityValue > 0 && quantityValue > 0) {
+                orderQuantityElement.innerHTML = orderQuantityValue - 1;
+            }
+
+            if (orderQuantityValue > 0 && quantityValue === 0) {
+                orderQuantityElement.innerHTML = orderTrigger ? (orderQuantityValue - 1) : orderQuantityValue;
+                orderTrigger = false;
+            }
+        }
+        
         quantityElement.value = quantityValue;
     }
 
     if (amountValue > 0 && quantityValue > 0) {
-        $('.' + className).removeClass('hideElement').addClass('showOrders');
         amountElement.disabled = false;
         quantityElement.disabled = false;
         categoryElement.disabled = false;
         nameElement.disabled = false;
         descriptionElement.disabled = false;
     } else {
-        $('.' + className).removeClass('showOrders').addClass('hideElement');
         amountElement.disabled = true;
         quantityElement.disabled = true;
         categoryElement.disabled = true;
@@ -63,12 +90,20 @@ function addToOrder(amountId, quantiyId, price, className, orderAmountId, orderQ
         descriptionElement.disabled = true;
     }
 
-    orderAmountElement.innerHTML = amountValue;
-    orderQuantityElement.innerHTML = quantityValue;
-
     return;
 }
 
+function submitMakeOrderForm(formId, orderAmount, orderQuantity) {
+    let amount = parseFloat(document.getElementById(orderAmount).innerHTML);
+    let quantity = parseInt(document.getElementById(orderQuantity).innerHTML);
+    if (amount && quantity) {
+        console.dir(amount);
+        console.dir(quantity);
+        let form = document.getElementById(formId);
+        form.submit();
+    }
+    
+}
 jQuery(document).ready(function($) {
     $('.main-slider').slick({
         dots: true,
@@ -78,30 +113,5 @@ jQuery(document).ready(function($) {
         slidesToScroll: 1,
         rows: 1,
         slidesPerRow: 1,
-        responsive: [
-            {
-            breakpoint: 1024,
-            settings: {
-                slidesToShow: 3,
-                slidesToScroll: 3,
-                infinite: true,
-                dots: true
-            }
-            },
-            {
-            breakpoint: 600,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2
-            }
-            },
-            {
-            breakpoint: 480,
-            settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1
-            }
-            }
-        ]
     });
 });
