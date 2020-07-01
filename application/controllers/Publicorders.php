@@ -91,9 +91,8 @@
         public function checkout_order(): void
         {
             $this->global['pageTitle'] = 'TIQS : CHECKOUT';
-
-            if (empty($_POST) && !isset($_SESSION['order'])) {
-                redirect('make_order');
+            if (empty($_POST) && (!isset($_SESSION['order']) || !$_SESSION['vendor'])) {
+                redirect(base_url());
             }
 
             $post = $this->input->post(null, true);
@@ -106,6 +105,7 @@
 
             $data = [
                 'spotId' => $_SESSION['spotId'],
+                'userId' => intval($_SESSION['vendor']->userId),
                 'orderDetails' => $_SESSION['order'],
                 'buyerRole' => $this->config->item('buyer'),
                 'usershorturl' => 'tiqs_shop_service',
@@ -118,20 +118,43 @@
 
         public function submitOrder(): void
         {
-            if (empty($_POST) && !isset($_SESSION['order'])) {
-                redirect('make_order');
+            if (empty($_POST) || !isset($_SESSION['order']) || !$_SESSION['vendor']) {
+                redirect(base_url());
+            }
+            $_SESSION['postOrder'] = $this->input->post(null, true);
+            
+
+            redirect('pay_order');
+        }
+
+        public function pay_order(): void
+        {
+            if (!isset($_SESSION['order']) || !$_SESSION['vendor'] || !$_SESSION['postOrder']) {
+                redirect(base_url());
             }
 
-            $post = $this->input->post(null, true);
-            $makeOrderRedirect = 'make_order?spotid=' . $post['order']['spotId'];
+            $this->global['pageTitle'] = 'TIQS : PAY';
 
+            $data = [
+                'ordered' => $_SESSION['order'],
+                'vendor' => $_SESSION['vendor']
+            ];
+
+            $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
+        }
+
+        public function paymentEngine(): void
+        {
+            $post =  Utility_helper::getSessionValue('postOrder');
             $this->user_model->manageAndSetBuyer($post['user']);
 
             if (!$this->user_model->id) {
-                $this->session->set_flashdata('error', 'Order not made! Please try again');
-                redirect($makeOrderRedirect);
+                $this->session->set_flashdata('error', 'Order not made! Email, name and mobile are mandatory fields. Please try again');
+                redirect('checkout_order');
                 exit();
             }
+
+            $failedRedirect = 'make_order?vendorid=' . $_SESSION['vendor']->userId . '&spotid=' . $_SESSION['spotId'];
 
             // insert order
             $post['order']['buyerId'] = $this->user_model->id;
@@ -141,7 +164,7 @@
             
             if (!$this->shoporder_model->id) {
                 $this->session->set_flashdata('error', 'Order not made! Please try again');
-                redirect($makeOrderRedirect);
+                redirect($failedRedirect);
                 exit();
             }
 
@@ -154,41 +177,19 @@
                     $this->shoporderex_model->deleteOrderDetails();
                     $this->shoporder_model->delete();
                     $this->session->set_flashdata('error', 'Order not made! Please try again');
-                    redirect($makeOrderRedirect);
+                    redirect($failedRedirect);
                     exit();
                 }
             }
 
             // go to paying if everything OK
-            $_SESSION['orderId'] = $this->shoporder_model->id;
-
-            redirect('pay_order');
-        }
-
-        public function pay_order(): void
-        {
-            if (!isset($_SESSION['order'])) {
-                redirect('make_order');
-            }
-
-            $this->global['pageTitle'] = 'TIQS : PAY';
-
-            $data = [
-                'ordered' => $_SESSION['order'],
-            ];
-
-            $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
-        }
-
-        public function paymentEngine(): void
-        {
-            if (!isset($_SESSION['order'])) {
-                redirect('make_order');
-            }
-
-            var_dump($_SESSION['order']);
-
+            echo '<pre>';
+            print_r($_SESSION);
+            echo '</pre>';
             var_dump($this->shoporder_model->setObjectId($_SESSION['orderId'])->fetchOne());
+
+            // TIQS TO DO !!!!!!!!! UNSET SESSION !!!!!!!!!!!!!!!!!!!!!
+            die();
         }
     }
 

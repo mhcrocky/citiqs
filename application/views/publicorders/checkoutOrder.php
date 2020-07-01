@@ -174,7 +174,7 @@
                     </div>
                 </div>
                 <div class="checkout-btns">
-                    <a href="<?php echo base_url() . 'make_order?spotid=' . $spotId; ?>" class="button">
+                    <a href="<?php echo base_url() . 'make_order?vendorid=' . $userId . '&spotid=' . $spotId; ?>" class="button">
                         <i class="fa fa-arrow-left"></i>
                         Back to list                    </a>
                     <a href="javascript:void(0);" class="button" onclick="submitForm('goOrder', 'serviceFeeInput', 'orderAmountInput');">

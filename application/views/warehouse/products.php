@@ -471,7 +471,7 @@
                                                                     name="productPrinters[]"
                                                                     value="<?php echo $printer['id']; ?>"
                                                                     <?php
-                                                                        if (isset($printerIds) && in_array($printer['id'], $printerIds)) echo 'checked';
+                                                                        if (isset($printerIds) && in_array($printer['id'], $printerIds)  && !is_null($product['printers'])) echo 'checked';
                                                                     ?>
                                                                     />
                                                                 <?php echo $printer['printer']; ?> (<?php echo $printer['active'] === '1' ? 'active' : 'archived'; ?>)

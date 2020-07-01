@@ -8,8 +8,8 @@
         $totalOrder = $totalOrder + floatval($data['amount'][0]);
 
         $tableRows .= '<tr style="text-align:left">';
-        $tableRows .=   '<td>' .  $data['quantity'][0] . ' x ' .  $data['name'][0] . '</td>';
-        $tableRows .=   '<td>' .  $data['amount'][0] . '</td>';
+        $tableRows .=   '<td>' . $data['quantity'][0] . ' x ' .  $data['name'][0] . '</td>';
+        $tableRows .=   '<td>' . number_format($data['amount'][0], 2, '.', ',') . '</td>';
         $tableRows .= '</tr>';
     }
     $serviceFee = $totalOrder * 0.045;
@@ -34,7 +34,7 @@
                         <div class="heading pay-header">
                             <div class="amount centered"><?php echo number_format($total, '2', '.', ','); ?>&nbsp;&euro;</div>
                             <div class="info">
-                                <b>THUISHAVEN</b>
+                                <b><?php echo $vendor->name; ?></b>
                                 <span>bestelling</span>
                             </div>
                         </div>
