@@ -93,7 +93,7 @@
                                 <div class="checkout-table__price">
                                     <p>
                                         <span id="amount<?php echo $productExtendedId; ?>">
-                                            <?php echo number_format($prodcut['amount'][0], 2, ",", "."); ?>
+                                            <?php echo number_format($prodcut['amount'][0], 2, ".", ","); ?>
                                         </span>&nbsp;&euro;
                                         <?php $orderTotal += filter_var($prodcut['amount'][0], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); ?>
                                     </p>
@@ -114,7 +114,7 @@
                                 <?php
                                     $serviceFee = $orderTotal * 0.045;
                                     if ($serviceFee > 3.50) $serviceFee = 3.50;
-                                    echo number_format($serviceFee, 2, ",", "."); ?> &euro;
+                                    echo number_format($serviceFee, 2, ".", ","); ?> &euro;
                             </span>
                         </div>
                     </div>
@@ -124,7 +124,7 @@
                             <span id="totalAmount">
                                 <?php
                                     $total = $orderTotal + $serviceFee;
-                                    echo number_format($total, 2, ",", ".");
+                                    echo number_format($total, 2, ".", ",");
                                 ?> &euro;
                             </span>
                         </div>

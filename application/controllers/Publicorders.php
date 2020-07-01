@@ -4,10 +4,9 @@
     if (!defined('BASEPATH')) exit('No direct script access allowed');
 
     require APPPATH . '/libraries/BaseControllerWeb.php';
-
+    
     class Publicorders extends BaseControllerWeb
     {
-
         public function __construct()
         {
             parent::__construct();
@@ -56,7 +55,7 @@
             $this->global['pageTitle'] = 'TIQS : CHECKOUT';
 
             if (empty($_POST) && !isset($_SESSION['order'])) {
-                redirect($_SERVER['HTTP_REFERER']);
+                redirect('make_order');
             }
 
             $post = $this->input->post(null, true);
@@ -81,7 +80,9 @@
 
         public function submitOrder(): void
         {
-            $this->global['pageTitle'] = 'TIQS : PAY';
+            if (empty($_POST) && !isset($_SESSION['order'])) {
+                redirect('make_order');
+            }
 
             $post = $this->input->post(null, true);
             $makeOrderRedirect = 'make_order?spotid=' . $post['order']['spotId'];
@@ -122,15 +123,34 @@
 
             // go to paying if everything OK
             $_SESSION['orderId'] = $this->shoporder_model->id;
-            $_SESSION['spotId'] = $post['order']['spotId'];
+
+            redirect('pay_order');
+        }
+
+        public function pay_order(): void
+        {
+            if (!isset($_SESSION['order'])) {
+                redirect('make_order');
+            }
+
+            $this->global['pageTitle'] = 'TIQS : PAY';
 
             $data = [
-                'data' => $post,
-                'order' => $this->shoporder_model->fetchOne(),
+                'ordered' => $_SESSION['order'],
             ];
 
-
             $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
+        }
+
+        public function paymentEngine(): void
+        {
+            if (!isset($_SESSION['order'])) {
+                redirect('make_order');
+            }
+
+            var_dump($_SESSION['order']);
+
+            var_dump($this->shoporder_model->setObjectId($_SESSION['orderId'])->fetchOne());
         }
     }
 

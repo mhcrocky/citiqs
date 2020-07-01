@@ -240,15 +240,17 @@ $route['userCalimedlisting'] = 'user/userCalimedlisting';
 $route['send'] = "send/index/";
 
 // WAREHOUSE
-$route['warehouse'] = "warehouse/index";
-$route['product_categories'] = "warehouse/productCategories";
-$route['products'] = "warehouse/products";
-$route['orders'] = "warehouse/orders";
+$route['warehouse']             = "warehouse/index";
+$route['product_categories']    = "warehouse/productCategories";
+$route['products']              = "warehouse/products";
+$route['orders']                = "warehouse/orders";
+$route['spots']                 = "warehouse/spots";
+$route['printers']              = "warehouse/printers";
 
-$route['make_order'] = "publicorders/index";
-$route['checkout_order'] = "publicorders/checkout_order";
-$route['spots'] = "warehouse/spots";
 
-$route['printers'] = "warehouse/printers";
+$route['make_order']        = "publicorders/index";
+$route['checkout_order']    = "publicorders/checkout_order";
+$route['pay_order']         = "publicorders/pay_order";
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
