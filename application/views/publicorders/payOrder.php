@@ -3,6 +3,9 @@
     $totalOrder = 0;
     $total = 0;
     $quantiy = 0;
+//    var_dump($ordered);
+//    die();
+
     foreach($ordered as $productExtendedId => $data) {
         $quantiy = $quantiy + intval($data['quantity'][0]);
         $totalOrder = $totalOrder + floatval($data['amount'][0]);

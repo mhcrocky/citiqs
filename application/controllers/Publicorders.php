@@ -186,7 +186,7 @@
             echo '<pre>';
             print_r($_SESSION);
             echo '</pre>';
-            var_dump($this->shoporder_model->setObjectId($_SESSION['orderId'])->fetchOne());
+            var_dump($this->shoporder_model->setObjectId( $this->shoporder_model->id)->fetchOne());
 
             // TIQS TO DO !!!!!!!!! UNSET SESSION !!!!!!!!!!!!!!!!!!!!!
             die();

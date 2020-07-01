@@ -229,6 +229,9 @@ switch (ENVIRONMENT)
 	// Path to the system directory
 	define('BASEPATH', $system_path);
 
+//	var_dump(BASEPATH);
+//	die();
+
 	// Path to the front controller (this file) directory
 	define('FCPATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
 

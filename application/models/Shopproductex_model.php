@@ -175,8 +175,6 @@
                     INNER JOIN `tbl_shop_products` ON `tbl_shop_products_extended`.`productId` = `tbl_shop_products`.`id`
                     INNER JOIN `tbl_shop_categories` ON `tbl_shop_products`.`categoryId` = `tbl_shop_categories`.`id`
                     INNER JOIN `tbl_shop_product_printers` ON `tbl_shop_product_printers`.`productId` = `tbl_shop_products`.`id`
-                    INNER JOIN `tbl_shop_spots` ON `tbl_shop_product_printers`.`printerId` = `tbl_shop_spots`.`printerId`
-                    INNER JOIN `tbl_shop_printers` ON `tbl_shop_printers`.`id` = `tbl_shop_spots`.`printerId`
                     INNER JOIN
                         (
                             SELECT
@@ -194,9 +192,7 @@
                     `tbl_shop_categories`.`active` = '1'
                     AND `tbl_shop_categories`.`userId` = '{$userId}'
                     AND `tbl_shop_products`.`active` = '1'
-                    AND `tbl_shop_spots`.`active` = '1'
-                    AND `tbl_shop_printers`.`active` = '1'
-                    AND `tbl_shop_spots`.`id` = '{$spotId}'
+
 
                     AND
                     (
