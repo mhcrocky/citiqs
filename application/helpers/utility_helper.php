@@ -121,19 +121,6 @@
             return $date;      
         }
 
-        // public static function resetArrayByKey(array $array = [], string $resetKey): array
-        // {
-        //     if (empty($arrays)) return [];
-        //     $reset = [];
-        //     foreach($arrays as $key => $value) {
-        //         if (!isset($reset[$value[$resetKey]])) {
-        //             $reset[$value[$resetKey]] = [];                    
-        //         }                
-        //         $reset[$value[$resetKey]] = $value;
-        //     }
-        //     return $reset;
-        // }
-
         public static function resetArrayByKeyMultiple(array $arrays, string $key): array
         {
             if (empty($arrays)) return [];
@@ -146,25 +133,6 @@
             }
             return $reset;
         }
-
-        // public static function resetArrayByKeys(array $arrays, array $keys): array
-        // {
-        //     if (empty($arrays)) return [];
-        //     $reset = [];
-
-        //     foreach($arrays as $array) {
-        //         foreach($keys as $key) {
-        //             if (!isset($reset[$key])) {
-        //                 $reset[$key] = [];
-        //             }
-        //             if (!isset($reset[$array[$key]])) {
-        //                 $reset[$key][$array[$key]] = [];
-        //             }
-        //             array_push($reset[$key][$array[$key]], $array);
-        //         }
-        //     }
-        //     return $reset;
-        // }
 
         /**
          * compareTwoDates
@@ -199,29 +167,6 @@
             
         }
 
-        public static function sanitize_parameter($str, $keep_newlines = false)
-        {
-            $filtered = self::check_invalid_utf8($str);
-            if ( strpos($filtered, '<') !== false ) {
-                $filtered = preg_replace_callback('%<[^>]*?((?=<)|>|$)%', 'wp_pre_kses_less_than_callback', $filtered);
-                $filtered = self::strip_all_tags($filtered);
-                $filtered = str_replace("<\n", "&lt;\n", $filtered);
-            }
-
-            if (!$keep_newlines) $filtered = preg_replace('/[\r\n\t ]+/', ' ', $filtered);
-            $filtered = trim($filtered);
-            $found = false;
-            while (preg_match('/%[a-f0-9]{2}/i', $filtered, $match))
-            {
-                $filtered = str_replace($match[0], '', $filtered);
-                $found = true;
-            }
-            // Strip out the whitespace that may now exist after removing the octets.
-            if ($found) $filtered = trim( preg_replace('/ +/', ' ', $filtered) );
-            return $filtered;
-        }
-
-
         // Return empty string if invalid UTF8 string
         public static function check_invalid_utf8($string)
         {
@@ -242,5 +187,4 @@
             $message = date('Y-m-d H:i:s') . ' => ' . $message . PHP_EOL;
             return file_put_contents($file, $message, FILE_APPEND);
         }
-
     }

@@ -16,6 +16,7 @@
 
             $this->load->helper('utility_helper');
             $this->load->helper('validate_data_helper');
+            $this->load->helper('sanitize_helper');            
             $this->load->helper('email_helper');
 
             $this->load->config('custom');
@@ -25,8 +26,8 @@
         public function data_get()
         {
             $file = FCPATH . 'application/tiqs_logs/messages.txt';
-            Utility_helper::logMessage($file, 'lol');
-            die();
+            Utility_helper::logMessage($file, 'printer conected');
+
             $get = $this->input->get(null, true);
 
             if(!$get['mac']) return;
@@ -78,18 +79,18 @@
                 /* Black text */
                 $draw->setFillColor('black');
 
-                // switch (strtolower($_SERVER['HTTP_HOST'])) {
-                //     case 'tiqs.com':
-                //         $draw->setFont('Helvetica');
-                //         break;
-                //     case 'loki-vm':
-                //     case '10.0.0.48':
-                //         $draw->setFont('Helvetica');
-                //         break;
-                //     default:
-                //         $draw->setFont('Arial');
-                //         break;
-                // }
+                switch (strtolower($_SERVER['HTTP_HOST'])) {
+                    case 'tiqs.com':
+                        $draw->setFont('Helvetica');
+                        break;
+                    case 'loki-vm':
+                    case '10.0.0.48':
+                        $draw->setFont('Helvetica');
+                        break;
+                    default:
+                        $draw->setFont('Arial');
+                        break;
+                }
 
                 // $draw->setFontWeight(551);
                 $draw->setStrokeWidth(5);
@@ -217,4 +218,55 @@
 
             }
         }
+
+        public function data_post()
+        {
+            Utility_helper::logMessage($file, 'printer send post request');
+            // Check is valid POST request type
+            if (strtolower($_SERVER['CONTENT_TYPE']) !== 'application/json')
+                return;
+    
+            // Get JSON payload recieved from the request and parse it
+            $parsedJson = Sanitize_helper::sanitizePhpInput();
+
+            // Validate JSON params
+            if (!isset($parsedJson['printerMAC']) || !isset($parsedJson['statusCode']) || !isset($parsedJson['status']))
+                return;
+    
+            if (!Sanitize_helper::isValidMac($parsedJson['printerMAC']))
+                return;
+
+            Utility_helper::logMessage($file, 'Printer MAC:' .  $parsedJson['printerMAC']);
+            // If the JSON request contains a request object in the clientAction then the printer is responding to a additional information
+            // request (i.e. to get variables like the poll interval from the printer), so in this case the $path variable is set to
+            // additional_communication.json to save this additional data
+            if (isset($parsedJson["clientAction"][0]["request"])) {
+                $arr = array("jobReady" => false);
+                Utility_helper::logMessage($file, 'JOB NOT READY => 1');
+            } else {
+    
+                // er is een bon betaald
+                // nu gaan we de bon opbouwen in printqueue.tbl
+                // daarvoor hebben we nodig
+                // ordernr
+                // vullen onderdelen
+                // printed op 1 zetten.
+    
+                if ($this->shoporder_model->fetchOrdersForPrint($parsedJson['printerMAC'])) {
+                    $arr = [
+                        "jobReady" => true,
+                        // "mediaTypes" => array('text/plain','image/png', 'image/jpeg'));
+                        "mediaTypes" => array('image/png')
+                        // "deleteMethod" => "GET");
+                    ];
+                    Utility_helper::logMessage($file, 'JOB READY => ');
+                } else {
+                    $arr = array("jobReady" => false);
+                    Utility_helper::logMessage($file, 'JOB NOT READY => 2');
+                }
+            }
+    
+            $this->set_response($arr, 200); // CREATED (201) being the HTTP response code
+        }
+
     }
