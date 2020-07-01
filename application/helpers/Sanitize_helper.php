@@ -1,11 +1,6 @@
 <?php
     declare(strict_types=1);
-
-    namespace App\Helpers;
-
-    use App\Helpers\Validate_helper;
-
-     /**
+    /**
      * Sanitize_helper
      *
      * Sanitize_helper class contains public static methods that are used in whole application.
