@@ -221,6 +221,7 @@
 
         public function data_post()
         {
+            $file = FCPATH . 'application/tiqs_logs/messages.txt';
             Utility_helper::logMessage($file, 'printer send post request');
             // Check is valid POST request type
             if (strtolower($_SERVER['CONTENT_TYPE']) !== 'application/json')
