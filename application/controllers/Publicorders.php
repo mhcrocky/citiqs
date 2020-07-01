@@ -25,6 +25,7 @@
             $this->load->model('shoporder_model');
             $this->load->model('shoporderex_model');
             $this->load->model('user_model');
+            $this->load->model('shopspot_model');
 
             $this->load->library('language', array('controller' => $this->router->class));
             $this->load->config('custom');
@@ -32,15 +33,37 @@
 
         public function index(): void
         {
-            $this->global['pageTitle'] = 'TIQS : ORDERING';
-            if(!isset($_GET['spotid'])) {
+            if(!isset($_GET['vendorid'])) {
                 redirect(base_url());
             }
 
+            // SAVE VENODR DATA IN SESSION
+            $_SESSION['vendor'] = $this->user_model->getUserInfo($_GET['vendorid']);
+            if (!$_SESSION['vendor']) {
+                redirect(base_url());
+            }
+
+            if (isset($_GET['spotid']) && is_numeric($_GET['spotid'])) {
+
+                $this->loadSpotView();
+                return;
+            }
+
+            if (isset($_GET['vendorid']) && is_numeric($_GET['vendorid'])) {
+                $this->loadVendorView();
+                return;
+            }            
+        }
+
+        private function loadSpotView(): void
+        {
+            $this->global['pageTitle'] = 'TIQS : ORDERING';
             $spotId = intval($_GET['spotid']);
+            $userId = intval($_SESSION['vendor']->userId);
+
             $data = [
-                'categoryProducts' => $this->shopproductex_model->getUserLastProductsDetailsPublic($spotId, 'category'),
-                'spotId' => $_GET['spotid']
+                'categoryProducts' => $this->shopproductex_model->getUserLastProductsDetailsPublic($spotId, $userId, 'category'),
+                'spotId' => $spotId,
             ];
 
             if (isset($_SESSION['order'])) {
@@ -48,6 +71,21 @@
             }
 
             $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
+            return;
+        }
+
+        private function loadVendorView(): void
+        {
+            $this->global['pageTitle'] = 'TIQS : SELECT SPOT';
+            $userId = intval($_SESSION['vendor']->userId);
+
+            $data = [
+                'vendor' => $_SESSION['vendor'],
+                'spots' => $this->shopspot_model->fetchUserSpots($userId)
+            ];
+
+            $this->loadViews('publicorders/selectSpot', $this->global, $data, null, 'headerWarehousePublic');
+            return;
         }
 
         public function checkout_order(): void

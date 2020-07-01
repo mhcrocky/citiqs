@@ -143,7 +143,7 @@
 
 
 
-        public function getUserProductsDetailsPublic(int $spotId): ?array
+        public function getUserProductsDetailsPublic(int $spotId, int $userId): ?array
         {
             $time = time();
             $date = date('Y-m-d H:i:s', $time);
@@ -192,13 +192,15 @@
                         ) productTimes ON productTimes.productId = tbl_shop_products.id
                 WHERE
                     `tbl_shop_categories`.`active` = '1'
+                    AND `tbl_shop_categories`.`userId` = '{$userId}'
                     AND `tbl_shop_products`.`active` = '1'
                     AND `tbl_shop_spots`.`active` = '1'
                     AND `tbl_shop_printers`.`active` = '1'
                     AND `tbl_shop_spots`.`id` = '{$spotId}'
+
                     AND
                     (
-                        (`tbl_shop_products`.`dateTimeFrom` < '{$date}' AND `tbl_shop_products`.`dateTimeTo` > '{$date}' )
+                        (`tbl_shop_products`.`dateTimeFrom` <= '{$date}' AND `tbl_shop_products`.`dateTimeTo` > '{$date}' )
                         OR
                         (`tbl_shop_products`.`dateTimeFrom` IS NULL AND `tbl_shop_products`.`dateTimeTO` IS NULL)
                     )
@@ -209,9 +211,9 @@
                 return $result ? $result : null;
         }
 
-        public function getUserLastProductsDetailsPublic(int $spotId, string $sortBy = 'name'): ?array
+        public function getUserLastProductsDetailsPublic(int $spotId, int $userId, string $sortBy = 'name'): ?array
         {
-            $products = $this->getUserProductsDetailsPublic($spotId);
+            $products = $this->getUserProductsDetailsPublic($spotId, $userId);
             if (is_null($products)) return null;
 
             $this->load->model('shopprinters_model');

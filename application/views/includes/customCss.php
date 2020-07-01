@@ -68,4 +68,6 @@
 <?php } elseif ($this->view === 'publicorders/payOrder') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
+<?php } elseif ($this->view === 'publicorders/selectSpot') { ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/selectSpot.css">
 <?php } ?>

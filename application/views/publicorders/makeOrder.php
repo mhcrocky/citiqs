@@ -133,46 +133,51 @@
                     <?php
                 }
             ?>
-	    </div>
-    <?php } ?>
-    <?php if (isset($form)) { ?>
-        <!-- footer basket -->
-        <div class="footer-basket">
-            <div class="footer-top">
-                <div class="fb-left">
-                    <h4>Your Basket</h4>
-                    <h5>Your order 
-                        <?php
-                            $orderedQuantity = 0;
-                            $orderedAmount = 0;
-                            if (isset($ordered)) {
-                                foreach ($ordered as $id => $data) {
-                                    $orderedQuantity = $orderedQuantity + intval($data['quantity'][0]);
-                                    $orderedAmount = $orderedAmount + floatval($data['amount'][0]);
+        </div>
+        <?php if (isset($form)) { ?>
+            <!-- footer basket -->
+            <div class="footer-basket">
+                <div class="footer-top">
+                    <div class="fb-left">
+                        <h4>Your Basket</h4>
+                        <h5>Your order 
+                            <?php
+                                $orderedQuantity = 0;
+                                $orderedAmount = 0;
+                                if (isset($ordered)) {
+                                    foreach ($ordered as $id => $data) {
+                                        $orderedQuantity = $orderedQuantity + intval($data['quantity'][0]);
+                                        $orderedAmount = $orderedAmount + floatval($data['amount'][0]);
+                                    }
                                 }
-                            }
-                        ?>
-                        <span id="orderQuantity"><?php echo $orderedQuantity; ?></span>
-                    </h5>
-                </div>
-                <div class="fb-mid">
-                    <span class="fb-price">€  <span id="orderAmount"><?php echo number_format($orderedAmount, 2, '.', ',') ; ?></span></span>
-                </div>
+                            ?>
+                            <span id="orderQuantity"><?php echo $orderedQuantity; ?></span>
+                        </h5>
+                    </div>
+                    <div class="fb-mid">
+                        <span class="fb-price">€  <span id="orderAmount"><?php echo number_format($orderedAmount, 2, '.', ',') ; ?></span></span>
+                    </div>
 
-                <div class="fb-right" id="submitForm" onclick="submitMakeOrderForm('makeOrder', 'orderAmount', 'orderQuantity')">
-                    <i class="fa fa-shopping-cart"></i>
+                    <div class="fb-right" id="submitForm" onclick="submitMakeOrderForm('makeOrder', 'orderAmount', 'orderQuantity')">
+                        <i class="fa fa-shopping-cart"></i>
+                    </div>
+                </div>
+                <div class="footer-order">
+                    <div class="cart">
+                    </div>
+                </div>
+                <div class="footer-bot">
+                    <form method="post" id="makeOrder" action="<?php echo base_url() . 'checkout_order' ?>"> 
+                        <input type="text" name="spotId" value="<?php echo $spotId; ?>" readonly required hidden />
+                        <?php echo $form; ?>
+                    </form>
                 </div>
             </div>
-            <div class="footer-order">
-                <div class="cart">
-                </div>
-            </div>
-            <div class="footer-bot">
-                <form method="post" id="makeOrder" action="<?php echo base_url() . 'checkout_order' ?>"> 
-                    <input type="text" name="spotId" value="<?php echo $spotId; ?>" readonly required hidden />
-                    <?php echo $form; ?>
-                </form>
-            </div>
+        <?php } ?>
+    <?php } else { ?>
+        <div class="container" style='overflow-x:hidden; overflow-y: hidden; margin-top: 20px; margin-bottom: 20px'>
+            <h1>Sorry!</h1>
+            <p>No available products</p>
         </div>
     <?php } ?>
 </main>
