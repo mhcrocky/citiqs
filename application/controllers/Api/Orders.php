@@ -221,22 +221,40 @@
 
         public function data_post()
         {
+
+
             $file = FCPATH . 'application/tiqs_logs/messages.txt';
             Utility_helper::logMessage($file, 'printer send post request');
             // Check is valid POST request type
             if (strtolower($_SERVER['CONTENT_TYPE']) !== 'application/json')
-                return;
-    
+			{
+				Utility_helper::logMessage($file, 'printer send post request CONTENT TYPE');
+				return;
+			}
+
+
             // Get JSON payload recieved from the request and parse it
-            // $parsedJson = Sanitize_helper::sanitizePhpInput();
-            $parsedJson = file_get_contents("php://input");
-            $parsedJson = json_decode($data, true);
-            // Validate JSON params
-            if (!isset($parsedJson['printerMAC']) || !isset($parsedJson['statusCode']) || !isset($parsedJson['status']))
-                return;
+//            $parsedJson = Sanitize_helper::sanitizePhpInput();
+			Utility_helper::logMessage($file, 'printer send post request passed JSON');
+
+//			$parsedJson = Sanitize_helper::sanitizePhpInput();
+			$parsedJson = file_get_contents("php://input");
+			$parsedJson = json_decode($parsedJson, true);
+
+			// Validate JSON params
+            if (!isset($parsedJson['printerMAC']) || !isset($parsedJson['statusCode']) || !isset($parsedJson['status'])){
+				Utility_helper::logMessage($file, 'printer send post request passed JSON MAC ERROR'.$parsedJson['printerMAC']);
+				Utility_helper::logMessage($file, 'printer send post request passed JSON STATUS CODEERROR'.$parsedJson['statusCode']);
+				Utility_helper::logMessage($file, 'printer send post request passed JSON STATUS ERROR'.$parsedJson['status']);
+				return;
+			}
+
     
-            if (!Sanitize_helper::isValidMac($parsedJson['printerMAC']))
-                return;
+            if (!Sanitize_helper::isValidMac($parsedJson['printerMAC'])){
+				Utility_helper::logMessage($file, 'printer send post request passed MAC ERROR');
+				return;
+			}
+
 
             Utility_helper::logMessage($file, 'Printer MAC:' .  $parsedJson['printerMAC']);
             // If the JSON request contains a request object in the clientAction then the printer is responding to a additional information
