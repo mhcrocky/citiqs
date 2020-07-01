@@ -1,6 +1,6 @@
 'use strict';
 
-function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, categoryId, nameId, decsriptionId, priceId, plus) {
+function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, categoryId, nameId, decsriptionId, priceId, showOrderedQuantity, plus) {
     let amountElement = document.getElementById(amountId);
     let amountValue = parseFloat(amountElement.value);
 
@@ -8,8 +8,8 @@ function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, 
     let quantityValue = parseFloat(quantityElement.value);
 
     let orderAmountElement = document.getElementById(orderAmountId);
-    let orderQuantityElement = document.getElementById(orderQuantityId);
-    
+    let orderQuantityElement = document.getElementById(orderQuantityId);    
+    let showProductOrderedQuantity = document.getElementById(showOrderedQuantity);
 
     let categoryElement = document.getElementById(categoryId);
     let nameElement = document.getElementById(nameId);
@@ -46,14 +46,15 @@ function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, 
 
 
         }
-        amountElement.value = amountValue;
+        amountElement.value = amountValue.toFixed(2);
     }
 
     if (quantityValue >= 0) {
+        let orderQuantityValue = parseInt(orderQuantityElement.innerHTML);
 
         if (plus) {
             quantityValue = quantityValue + 1;
-            orderQuantityElement.innerHTML = parseInt(orderQuantityElement.innerHTML) + 1;            
+            orderQuantityElement.innerHTML = orderQuantityValue + 1;
         } else {
             if (quantityValue > 0) {
                 quantityValue = quantityValue > 0 ? (quantityValue - 1) : 0;
@@ -61,8 +62,6 @@ function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, 
             } else {
                 quantityValue = 0;
             }
-
-            let orderQuantityValue = parseInt(orderQuantityElement.innerHTML);
 
             if (orderQuantityValue > 0 && quantityValue > 0) {
                 orderQuantityElement.innerHTML = orderQuantityValue - 1;
@@ -74,6 +73,7 @@ function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, 
             }
         }
         
+        showProductOrderedQuantity.innerHTML = quantityValue
         quantityElement.value = quantityValue;
     }
 

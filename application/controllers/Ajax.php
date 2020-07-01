@@ -488,4 +488,23 @@ class Ajax extends CI_Controller
 
         echo $this->user_model->editUser($userInfo, $userId) ? 1 : 0;
     }
+
+    public function ajaxUpdateSession(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+        $post = $this->input->post(null, true);
+        if (isset($_SESSION['order']) && $post) {
+            $id = $post['productExId'];
+            if (isset($post['newPrice']) && isset($post['newQuantityValue'])) {
+                
+                $_SESSION['order'][$id]['amount'][0] = $post['newPrice'];
+                $_SESSION['order'][$id]['quantity'][0] = $post['newQuantityValue'];
+            } else {
+                unset($_SESSION['order'][$id]);
+                if (!count($_SESSION['order'])) {
+                    unset($_SESSION['order']);
+                }
+            }
+        }
+    }
 }

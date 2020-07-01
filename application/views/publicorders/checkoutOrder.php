@@ -57,7 +57,8 @@
                                             'amount<?php echo $productExtendedId; ?>',                                            
                                             'serviceFee',
                                             'totalAmount',
-                                            'orderExtended<?php echo $productExtendedId; ?>'
+                                            'orderExtended<?php echo $productExtendedId; ?>',
+                                            '<?php echo $productExtendedId; ?>'
                                         )"
                                         >
                                         <i class="fa fa-plus"></i>
@@ -74,7 +75,8 @@
                                             'amount<?php echo $productExtendedId; ?>',                                            
                                             'serviceFee',
                                             'totalAmount',
-                                            'orderExtended<?php echo $productExtendedId; ?>'
+                                            'orderExtended<?php echo $productExtendedId; ?>',
+                                            '<?php echo $productExtendedId; ?>'
                                         )"
                                         >
                                         <i class="fa fa-minus"></i>
@@ -95,7 +97,7 @@
                                         </span>&nbsp;&euro;
                                         <?php $orderTotal += filter_var($prodcut['amount'][0], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); ?>
                                     </p>
-                                    <i class="fa fa-trash" onclick="removeElement('element<?php echo $productExtendedId; ?>', 'counterClass', 'amount<?php echo $productExtendedId; ?>', 'serviceFee', 'totalAmount')"></i>
+                                    <i class="fa fa-trash" onclick="removeElement('element<?php echo $productExtendedId; ?>', 'counterClass', 'amount<?php echo $productExtendedId; ?>', 'serviceFee', 'totalAmount', '<?php echo $productExtendedId; ?>')"></i>
                                 </div>
                             </div>
                         </div>
@@ -189,114 +191,5 @@
         <input type="number"    name="order[spotId]"        value="<?php echo $spotId; ?>" readonly required hidden />
         <input type="number"    name="order[serviceFee]"    value="<?php echo $serviceFee; ?>" id="serviceFeeInput" min="0" step="0.01"  readonly required hidden />
         <input type="number"    name="order[amount]"        value="<?php echo $orderTotal; ?>" id="orderAmountInput" min="0" step="0.01"  readonly required hidden />
-
     </form>
 </main>
-<script>
-    'use strict';
-    function changeQuantity(plus, price, quantityId, amountId, serviceFeeId, totalAmountId, orderExtendedId) {
-        let quantityElement = document.getElementById(quantityId);
-        let quantityElementValue = parseInt(quantityElement.innerHTML);
-
-        let amountElement = document.getElementById(amountId);
-        let amountElementValue = parseFloat(amountElement.innerHTML.replace(',','.'));
-
-        let orderExtendedInput = document.getElementById(orderExtendedId);
-        let orderExtendedInputValue = parseInt(orderExtendedInput.value);
-        
-        let newQuantity;
-        let newPrice;
-        let newQuantityValue;
-
-        if (plus) {
-            newQuantity = quantityElementValue + 1;
-            newPrice = (amountElementValue + price);
-            newQuantityValue = orderExtendedInputValue + 1;
-
-            quantityElement.innerHTML = newQuantity;
-            amountElement.innerHTML = newPrice.toFixed(2);
-            orderExtendedInput.setAttribute('value', newQuantityValue);
-            orderExtendedInput.disabled = (newQuantityValue === 0) ? true : false;
-
-            changeServiceFeeAndTotal(plus, price, serviceFeeId, totalAmountId)
-        }
-
-        if (!plus && quantityElementValue > 0 && amountElementValue > 0) {
-            newQuantity = quantityElementValue - 1;
-            newPrice = (amountElementValue - price);
-            newQuantityValue = orderExtendedInputValue - 1;
-
-            quantityElement.innerHTML = newQuantity;
-            amountElement.innerHTML = newPrice.toFixed(2);
-            orderExtendedInput.setAttribute('value', newQuantityValue);
-            orderExtendedInput.disabled = (newQuantityValue === 0) ? true : false;
-
-            changeServiceFeeAndTotal(plus, price, serviceFeeId, totalAmountId)
-        }
-
-        
-    }
-
-    function changeServiceFeeAndTotal(plus, price, serviceFeeId, totalAmountId) {
-        let serviceFee = document.getElementById(serviceFeeId);
-        let serviceFeeValue = parseFloat(serviceFee.innerHTML);
-
-        let totalAmount = document.getElementById(totalAmountId);
-        let totalAmountValue = parseFloat(totalAmount.innerHTML);
-
-        let amount = totalAmountValue - serviceFeeValue;
-        if (plus) {
-            amount = amount + price;
-        } else {
-            amount = amount - price;
-        }
-
-        serviceFeeValue = calcualteServiceFee(amount);
-        serviceFee.innerHTML = serviceFeeValue;
-
-        totalAmountValue = amount + parseFloat(serviceFeeValue);
-        totalAmount.innerHTML = totalAmountValue.toFixed(2);
-
-        if (amount >= 0 && serviceFeeValue >= 0 ) {
-            document.getElementById('serviceFeeInput').setAttribute('value', serviceFeeValue);
-            document.getElementById('orderAmountInput').setAttribute('value', amount);
-        }
-    }
-
-    function calcualteServiceFee(amount) {
-        let serviceFee = amount * 0.045;
-        if (serviceFee > 3.50) {
-            serviceFee = 3.50;
-        }
-        return serviceFee.toFixed(2);
-    }
-
-    function removeElement(elementId, counterClass, amountId, serviceFee, totalAmount) {
-        let amountToRemove = parseFloat(document.getElementById(amountId).innerHTML)
-        let element = document.getElementById(elementId);
-        element.remove();
-
-        let counterElement;
-        let counterElements = document.getElementsByClassName(counterClass);
-        let counterElementsLength = counterElements.length;
-        let i;
-        let count;
-
-        for (i = 0; i < counterElementsLength; i++) {
-            counterElement = counterElements[i];
-            count = i + 1;
-            counterElement.innerHTML = count + '.';
-        }
-
-        changeServiceFeeAndTotal(false, amountToRemove, serviceFee, totalAmount)
-    }
-
-    function submitForm(formId, serviceFeeInputId, orderAmountInputId) {
-        let serviceFee = parseFloat(document.getElementById(serviceFeeInputId).value);
-        let orderTotal = parseFloat(document.getElementById(orderAmountInputId).value);
-
-        if (serviceFee > 0 && orderTotal > 0 ) {
-            document.getElementById(formId).submit();
-        }
-    }
-</script>

@@ -44,6 +44,10 @@
                 'spotId' => $_GET['spotid']
             ];
 
+            if (isset($_SESSION['order'])) {
+                $data['ordered'] = $_SESSION['order'];
+            }
+
             $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
 
@@ -51,17 +55,21 @@
         {
             $this->global['pageTitle'] = 'TIQS : CHECKOUT';
 
-            if (empty($_POST)) {
+            if (empty($_POST) && !isset($_SESSION['order'])) {
                 redirect($_SERVER['HTTP_REFERER']);
             }
 
             $post = $this->input->post(null, true);
-            $spotId = $post['spotId'];
-            unset($post['spotId']);
+
+            if (!empty($post)) {
+                $_SESSION['spotId'] = $post['spotId'];
+                unset($post['spotId']);
+                $_SESSION['order'] = $post;
+            }
 
             $data = [
-                'spotId' => $spotId,
-                'orderDetails' => $post,
+                'spotId' => $_SESSION['spotId'],
+                'orderDetails' => $_SESSION['order'],
                 'buyerRole' => $this->config->item('buyer'),
                 'usershorturl' => 'tiqs_shop_service',
                 'salesagent' => $this->config->item('tiqsId'),

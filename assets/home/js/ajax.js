@@ -155,6 +155,9 @@ var callThis = (function() {
             } else {
                 alertify.error('Mobile number not updated');
             }
+        },
+        ajaxUpdateSession: function(callFunction) {
+            // no action
         }
     };
     return methods;
