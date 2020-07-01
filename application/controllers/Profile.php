@@ -40,8 +40,6 @@ class  Profile extends BaseControllerWeb
 			'countries' => Country_helper::getCountries(),
 			'action' => 'profileUpdate',
 			'businessTypes' => $this->businesstype_model->getAll(),
-			'subscriptions' => 	Utility_helper::resetArrayByKeyMultiple($this->subscription_model->select($subscriptionWhat), 'type'),
-			'userSubscription' => $this->user_subscription_model->getLastSubscriptionId($this->userId),	
 		];
 
 		$this->loadViews("profile", $this->global, $data, NULL, 'headerwebloginhotelProfile'); // Menu profilepage
