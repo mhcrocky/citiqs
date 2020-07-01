@@ -252,5 +252,9 @@ $route['make_order']        = "publicorders/index";
 $route['checkout_order']    = "publicorders/checkout_order";
 $route['pay_order']         = "publicorders/pay_order";
 
+
+
+$route['api/orders/print/get'] = 'Api/Orders/print';
+$route['api/orders/print'] = 'Api/Orders/print';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
