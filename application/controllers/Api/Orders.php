@@ -228,8 +228,9 @@
                 return;
     
             // Get JSON payload recieved from the request and parse it
-            $parsedJson = Sanitize_helper::sanitizePhpInput();
-
+            // $parsedJson = Sanitize_helper::sanitizePhpInput();
+            $parsedJson = file_get_contents("php://input");
+            $parsedJson = json_decode($data, true);
             // Validate JSON params
             if (!isset($parsedJson['printerMAC']) || !isset($parsedJson['statusCode']) || !isset($parsedJson['status']))
                 return;
