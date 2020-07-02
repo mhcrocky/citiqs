@@ -244,28 +244,97 @@
         {
             $this->load->config('custom');
 
-            $filter = [
-                'what' => [
-                    $this->table . '.id AS orderId',
-                    $this->table . '.amount AS orderAmount',
-                    'tbl_shop_spots.id AS spotId',
-                    'tbl_shop_spots.spotName AS spotName',
-                    'tbl_user.username AS buyerUserName',
-                    'tbl_user.email AS buyerEmail',
-                    'CONCAT("0031", TRIM(LEADING "0" FROM tbl_user.mobile)) AS buyerMobile',
-                    'productData.products'
-                ],
-                'where' => [
-                    $this->table . '.printStatus =' => '0',
-                    $this->table . '.paid =' => '1',
-                    'tbl_shop_printers.macNumber' => $macNumber,                    
-                ],
-                'joins' => [
-                    ['tbl_shop_spots', $this->table . '.spotId = tbl_shop_spots.id', 'INNER'],
-                    ['tbl_shop_printers', 'tbl_shop_spots.printerId = tbl_shop_printers.id', 'INNER'],
-                    ['tbl_user', 'tbl_shop_orders.buyerId = tbl_user.id' ,'INNER'],
-                    [
-                        '(
+            $query =
+            '
+                (
+                    SELECT
+                        tbl_shop_orders.id AS orderId,
+                        tbl_shop_orders.spotId,
+                        tbl_shop_spots.spotName,
+                        GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
+                        tbl_shop_printers.id AS printerId,
+                        tbl_shop_printers.printer AS printer,
+                        tbl_user.username AS buyerUserName,
+                        tbl_user.email AS buyerEmail,
+                        CONCAT("0031", TRIM(LEADING "0" FROM tbl_user.mobile)) AS buyerMobile,
+                        productData.products
+                    FROM
+                        tbl_shop_orders
+                    INNER JOIN
+                        tbl_shop_spots ON tbl_shop_spots.id = tbl_shop_orders.spotId
+                    INNER JOIN
+                        tbl_user ON tbl_user.id = tbl_shop_orders.buyerId
+                    INNER JOIN
+                        (
+                            SELECT
+                                tbl_shop_order_extended.orderId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_extended.name,    
+                                    \'|\', tbl_shop_products_extended.price,
+                                    \'|\', tbl_shop_order_extended.quantity,
+                                    \'|\', tbl_shop_categories.category,
+                                    \'|\', tbl_shop_categories.id
+                                    SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"
+                                ) AS products
+                            FROM
+                                tbl_shop_products_extended
+                            INNER JOIN
+                            tbl_shop_order_extended ON tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
+                        LEFT JOIN
+                            tbl_shop_products ON tbl_shop_products_extended.productId = tbl_shop_products.id
+                        LEFT JOIN
+                            tbl_shop_categories ON tbl_shop_products.categoryId = tbl_shop_categories.id
+                        LEFT JOIN
+                            tbl_shop_product_printers ON tbl_shop_product_printers.productId = tbl_shop_products.id
+                        LEFT JOIN
+                            tbl_shop_printers ON tbl_shop_printers.id = tbl_shop_product_printers.printerId
+                        WHERE
+                            tbl_shop_product_printers.printerId = (SELECT tbl_shop_printers.id WHERE tbl_shop_printers.macNumber = "' . $macNumber . '")
+                        GROUP BY
+                            tbl_shop_order_extended.orderId
+                    ) productData ON productData.orderId = tbl_shop_orders.id
+                    INNER JOIN
+                        tbl_shop_order_extended ON tbl_shop_order_extended.orderId = tbl_shop_orders.id
+                    INNER JOIN
+                        tbl_shop_products_extended ON tbl_shop_products_extended.id = tbl_shop_order_extended.productsExtendedId
+                    INNER JOIN
+                        tbl_shop_product_printers ON tbl_shop_product_printers.productId = tbl_shop_products_extended.productId
+                    INNER JOIN
+                        tbl_shop_printers ON tbl_shop_printers.id = tbl_shop_product_printers.printerId
+                    WHERE
+                        tbl_shop_order_extended.printed = "0"
+                        AND tbl_shop_order_extended.printed = "0"
+                        AND tbl_shop_printers.macNumber = "' . $macNumber . '"
+                    GROUP BY
+                        orderId
+                )
+
+                UNION ALL
+
+                (
+                    SELECT
+                        tbl_shop_orders.id AS orderId,
+                        tbl_shop_orders.spotId,
+                        tbl_shop_spots.spotName,
+                        GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
+                        tbl_shop_printers.id AS printerId,
+                        tbl_shop_printers.printer AS printer,
+                        tbl_user.username AS buyerUserName,
+                        tbl_user.email AS buyerEmail,
+                        CONCAT("0031", TRIM(LEADING "0" FROM tbl_user.mobile)) AS buyerMobile,
+                        productData.products
+                    FROM 
+                        tbl_shop_orders
+                    INNER JOIN
+                        tbl_shop_spots ON tbl_shop_spots.id = tbl_shop_orders.spotId
+                    INNER JOIN
+                        tbl_user ON tbl_user.id = tbl_shop_orders.buyerId
+                    INNER JOIN
+                        tbl_shop_order_extended ON tbl_shop_order_extended.orderId = tbl_shop_orders.id
+                    INNER JOIN
+                        tbl_shop_printers  ON tbl_shop_printers.id  = tbl_shop_spots.printerId  
+                    INNER JOIN
+                        (
                             SELECT
                                 tbl_shop_order_extended.orderId,
                                 GROUP_CONCAT(
@@ -284,18 +353,59 @@
                                 tbl_shop_products ON tbl_shop_products_extended.productId = tbl_shop_products.id
                             LEFT JOIN
                                 tbl_shop_categories ON tbl_shop_products.categoryId = tbl_shop_categories.id
-                            GROUP BY tbl_shop_order_extended.orderId
-                        ) productData',
-                        $this->table . '.id = productData.orderId',
-                        'INNER'
-                    ]
-                ],
-                'conditions' => [
-                    'group_by' => [$this->table . '.id'],
-                    'limit' => ['1']
-                ]
-            ];
+                            LEFT JOIN
+                                tbl_shop_orders ON tbl_shop_orders.id = tbl_shop_order_extended.orderId
+                            LEFT JOIN
+                                tbl_shop_spots ON tbl_shop_spots.id = tbl_shop_orders.spotId
+                            WHERE
+                                tbl_shop_order_extended.id not in 
+                                    (
+                                        SELECT
+                                            tbl_shop_order_extended.id
+                                        FROM
+                                            tbl_shop_order_extended
+                                        INNER JOIN
+                                            tbl_shop_products_extended ON tbl_shop_products_extended.id = tbl_shop_order_extended.productsExtendedId
+                                        INNER JOIN	
+                                            tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
+                                        INNER JOIN
+                                            tbl_shop_product_printers ON tbl_shop_product_printers.productId = tbl_shop_products.id
+                                        INNER JOIN
+                                            tbl_shop_printers ON tbl_shop_printers.id = tbl_shop_product_printers.printerId
+                                        WHERE 
+                                            tbl_shop_printers.macNumber != "' . $macNumber . '"
+                                    )
+                                GROUP BY  tbl_shop_order_extended.orderId
+                        ) productData ON productData.orderId = tbl_shop_orders.id 
+                    WHERE
+                        tbl_shop_order_extended.printed = "0"
+                        AND tbl_shop_printers.macNumber = "' . $macNumber . '"
+                        AND tbl_shop_order_extended.id not in
+                            (
+                                SELECT
+                                    tbl_shop_order_extended.id
+                                FROM
+                                    `tbl_shop_order_extended`
+                                INNER JOIN
+                                    tbl_shop_products_extended ON tbl_shop_products_extended.id = tbl_shop_order_extended.productsExtendedId
+                                INNER JOIN	
+                                    tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
+                                INNER JOIN
+                                    tbl_shop_product_printers ON tbl_shop_product_printers.productId = tbl_shop_products.id
+                                INNER JOIN
+                                    tbl_shop_printers ON tbl_shop_printers.id = tbl_shop_product_printers.printerId
+                                WHERE 
+                                    tbl_shop_printers.macNumber != "' . $macNumber . '"
+                            )
+                    GROUP BY
+                        orderId
+                )
 
-            return $this->readImproved($filter);
+                LIMIT 1;
+            ';
+            $result = $this->db->query($query);
+            $result = $result->result_array();
+
+            return $result ? $result : null;
         }
     }
