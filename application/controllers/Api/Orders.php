@@ -208,11 +208,13 @@
                     ->update();
             }
 
-            // // SEND EMAIL
-            // $subject= "Order : ". $orderId;
-            // $emailMessage .= '<p><tr><td>TOTAAL BETAALD EURO '. number_format($totalamount, 2, '.', ',') . '</p></tr></td>';
-            // $email = $order['buyerEmail'];
-            // Email_helper::sendOrderEmail($email, $subject, $emailMessage);
+            $this->shoporder_model->updatePrintedStatus();
+
+            // SEND EMAIL
+            $subject= "Order : ". $orderId;
+            $emailMessage .= '<p><tr><td>TOTAAL BETAALD EURO '. number_format($totalamount, 2, '.', ',') . '</p></tr></td>';
+            $email = $order['buyerEmail'];
+            Email_helper::sendOrderEmail($email, $subject, $emailMessage);
         }
 
         public function data_post()

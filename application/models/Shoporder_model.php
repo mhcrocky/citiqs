@@ -408,4 +408,21 @@
 
             return $result ? $result : null;
         }
+
+        /**
+         * updatePrintedStatus
+         * 
+         * Update printe status to 1 for all printed orders for all users
+         *
+         * @return void
+         */
+        public function updatePrintedStatus(): void
+        {
+            $query  = 'UPDATE ' . $this->table . ' ';
+            $query .= 'set ' . $this->table . '.printStatus = "1" ';
+            $query .= 'WHERE ' . $this->table . '.id NOT IN ';
+            $query .= '(SELECT tbl_shop_order_extended.orderId FROM tbl_shop_order_extended WHERE tbl_shop_order_extended.printed = "0" GROUP BY tbl_shop_order_extended.orderId)';
+
+            $this->db->query($query);
+        }
     }
