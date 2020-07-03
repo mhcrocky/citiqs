@@ -145,7 +145,8 @@
 
         public function paymentEngine(): void
         {
-            $post =  Utility_helper::getSessionValue('postOrder');
+			$post =  $_SESSION['postOrder'];
+//            $post =  Utility_helper::getSessionValue('postOrder');
             $this->user_model->manageAndSetBuyer($post['user']);
 
             if (!$this->user_model->id) {
@@ -184,12 +185,281 @@
 
             // go to paying if everything OK
             echo '<pre>';
-            print_r($_SESSION);
-            echo '</pre>';
-            var_dump($this->shoporder_model->setObjectId( $this->shoporder_model->id)->fetchOne());
 
-            // TIQS TO DO !!!!!!!!! UNSET SESSION !!!!!!!!!!!!!!!!!!!!!
-            die();
-        }
+            print_r($_SESSION);
+
+            echo '</pre>';
+
+            echo 'shoporder_model';
+
+			echo '<pre>';
+
+			print_r($this->shoporder_model->setObjectId( $this->shoporder_model->id)->fetchOne());
+
+			echo '</pre>';
+//
+//            // TIQS TO DO !!!!!!!!! UNSET SESSION !!!!!!!!!!!!!!!!!!!!!
+//            die();
+
+			die();
+			$payData['format'] = 'json';
+			$payData['tokenid'] = 'AT-0051-0895';
+			$payData['token'] = '35c1bce89516c74ce7f8475d66c31dd59937d72a';
+			$payData['gateway'] = 'rest-api.pay.nl';
+			$payData['namespace'] = 'Transaction';
+			$payData['function'] = 'start';
+			$payData['version'] = 'v13';
+
+			$strUrl = 'http://' . $payData['tokenid'] . ':' . $payData['token'] . '@' . $payData['gateway'] . '/' . $payData['version'] . '/' . $payData['namespace'] . '/' .
+				$payData['function'] . '/' . $payData['format'] . '?';
+
+			$arrArguments = array();
+			$_SESSION['order_id'] = $this->orderId;
+			$_SESSION['final_amountc'] = $_POST['final_amount'];
+			$_SESSION['final_amountfee'] = round($_SESSION['final_amountc'] * 4.5);
+			if ($_SESSION['final_amountfee'] >= 350) {
+				$_SESSION['final_amountfee'] = 350;
+			}
+			$_SESSION['final_amountt'] = $_SESSION['final_amountc'] * 100 + $_SESSION['final_amountfee'];
+			$_SESSION['final_amountex'] = $_SESSION['final_amountc'] * 100;
+			$amountrounded = round($_SESSION['final_amountt'], 0);
+
+			$arrArguments['finishUrl'] = 'https://tiqs.com/shop/checkout/successpay';
+			$orderExchangeUrl = 'https://tiqs.com/shop/checkout/ExchangePay';
+			$arrArguments['statsData']['promotorId'] = $_SESSION['vendor'];
+			$arrArguments['statsData']['extra1'] = $this->orderId;;
+			$arrArguments['statsData']['extra2'] = $_SESSION['spot_id'];
+			$arrArguments['enduser']['emailAddress'] = $_POST['email'];
+//			$arrArguments['enduser']['company']['name'] = 'TIQS';
+			$arrArguments['saleData']['invoiceDate'] = date('d-m-Y');
+			$arrArguments['saleData']['deliveryDate'] = date('d-m-Y');
+			$arrArguments['saleData']['orderData'][0]['productId'] = $this->orderId;
+			$arrArguments['saleData']['orderData'][0]['description'] = 'Order from : ' . $_SESSION['vendor_id'] . ' Spot : ' . $_SESSION['spot_id'];
+			$arrArguments['transaction']['description'] = "tiqs - ".$this->orderId;
+			$arrArguments['saleData']['orderData'][0]['productType'] = 'HANDLING';
+			$arrArguments['saleData']['orderData'][0]['price'] = $amountrounded;
+			$arrArguments['saleData']['orderData'][0]['quantity'] = 1;
+			$arrArguments['saleData']['orderData'][0]['vatCode'] = 'N';
+			$arrArguments['saleData']['orderData'][0]['vatPercentage'] = '0,00';
+			$arrArguments['enduser']['language'] = 'NL';
+			$arrArguments['transaction']['orderExchangeUrl'] = $orderExchangeUrl;
+
+			$data['finalbedrag'] = $_SESSION['final_amountt'];
+			$_SESSION['strUrl'] = $strUrl;
+
+			$_SESSION['arrArguments'] = $arrArguments;
+
+			redirect('/publicorders/selectpaymenttype');
+
+			}
+
+
+		public function selectPaymenttype()
+		{
+			$data = array();
+			$head = array();
+			$head['title'] = 'BETALEN';
+			//$data['paypal_email'] = $this->Home_admin_model->getValueStore('paypal_email');
+			//$data['bestSellers'] = $this->Public_model->getbestSellers();
+			$data['finalbedrag']= $_SESSION['final_amount']  ;
+			$data['finalbedragfee']= $_SESSION['final_amountfee']  ;
+			$data['finalbedragexfee']= $_SESSION['final_amountex']  ;
+			$this->loadViews("selectpaymenttype", $this->global, $data, 'nofooter', "noheader");
+		}
+
+		public function selectediDealPaymenttype($num)
+		{
+			$strUrl = $this->session->userdata('strUrl');
+			$arrArguments = $this->session->userdata('arrArguments');
+
+			$arrArguments['paymentOptionId'] = '10';
+			$arrArguments['paymentOptionSubId'] = $num;
+
+			# Prepare complete API URL
+			$strUrl = $strUrl.http_build_query($arrArguments);
+			$this->processPaymenttype($strUrl);
+
+			# Get API result
+			/*
+			$strResult = @file_get_contents($strUrl);
+			$result= json_decode($strResult);
+			if ($result->request->result == '1') {
+				$this->db->where('order_id', $this->orderId);
+				if (!$this->db->update('orders', array(
+					'transactionid' => $result->transaction->transactionId,
+					'processed' => 0
+				))) {
+					log_message('error', print_r($this->db->error(), true));
+				}
+				redirect($result->transaction->paymentURL);
+			}
+			else
+			{
+				redirect(LANG_URL . '/checkout');
+			}
+			*/
+		}
+
+		private function processPaymenttype($strUrl)
+		{
+			# Get API result
+			$strResult = @file_get_contents($strUrl);
+			$result = json_decode($strResult);
+			if ($result->request->result == '1') {
+//			$this->db->where('order_id',  $_SESSION['order_id']);
+//			if (!$this->db->update('orders', array(
+//				'transactionid' => $result->transaction->transactionId,
+//				'processed' => 0
+//			))) {
+//				log_message('error', print_r($this->db->error(), true));
+//			}
+				redirect($result->transaction->paymentURL);
+			}
+			else
+			{
+				$this->session->set_flashdata('error', 'Payment engine error. Please, contact staff');
+				$data = array();
+				$this->global['pageTitle'] = 'TIQS : PAYMENT ERROR';
+				$this->loadViews("thuishavenerror", $this->global, $data,  NULL, "noheader");
+
+			}
+
+		}
+
+		public function selectedCCPaymenttype()
+		{
+			$strUrl = $this->session->userdata('strUrl');
+			$arrArguments = $this->session->userdata('arrArguments');
+
+			$arrArguments['paymentOptionId'] = '706';
+//		$arrArguments['paymentOptionSubId'] = $num;
+
+			# Prepare complete API URL
+			$strUrl = $strUrl.http_build_query($arrArguments);
+			$this->processPaymenttype($strUrl);
+
+//		$cardholder = $_POST['cardholder'];
+			// cardholder
+			//cardnumber
+			//cc-exp
+			//cardcvc
+		}
+
+		public function successPaymentPay($reservationId) {
+
+			$statuscode = intval($this->input->get('orderStatusId'));
+			$orderId = $this->input->get('orderId');
+//		$data['paid'] = '9';
+//		$data['TransactionID'] = $orderId;
+//		// je kan hier niets doen, want je hebt de laatste status niet, al hoewel.....
+//		$result = $this->bookandpay_model->editbookandpay($data, $reservationId);
+//		$result = $this->bookandpay_model->getReservationId($reservationId);
+
+			if ($statuscode == 100) {
+
+//			$result = $this->bookandpay_model->getReservationId($reservationId);
+//			if(empty($result)){
+//				// we are fucked.
+//				redirect('thuishaven');
+//			}
+//
+//			$data['paid'] = '1';
+//			$data['TransactionID'] = $orderId;
+//
+//			$result = $this->bookandpay_model->editbookandpay($data, $reservationId);
+//			$result = $this->bookandpay_model->getReservationId($reservationId);
+//			if($result->SpotId!=3) {
+//				$this->bookandpay_model->newvoucher($reservationId);
+//			}
+//			$result = $this->bookandpay_model->getReservationId($reservationId);
+//			$qrtext = $result->reservationId;
+//
+//			switch (strtolower($_SERVER['HTTP_HOST'])) {
+//				case 'tiqs.com':
+//					$file = '/home/tiqs/domains/tiqs.com/public_html/spot/uploads/thuishaven/qrcodes/' ;
+//					break;
+//				case '127.0.0.1':
+//					$file = '/Users/peterroos/www/spot/uploads/thuishaven/qrcodes/';
+//					break;
+//				default:
+//					break;
+//			}
+//
+//			$SERVERFILEPATH = $file;
+//			$text = $qrtext;
+//			$folder = $SERVERFILEPATH;
+//			$file_name1 = $qrtext . ".png";
+//			$file_name = $folder.$file_name1;
+//
+//			QRcode::png($text,$file_name);
+//			switch (strtolower($_SERVER['HTTP_HOST'])) {
+//				case 'tiqs.com':
+//					$SERVERFILEPATH = 'https://tiqs.com/spot/uploads/thuishaven/qrcodes/';
+//					break;
+//				case '127.0.0.1':
+//					$SERVERFILEPATH = 'http://127.0.0.1/spot/uploads/thuishaven/qrcodes/';
+//					break;
+//				default:
+//					break;
+//			}
+//
+//			$qrlink = $SERVERFILEPATH.$file_name1;
+//			$email = $result->email;
+//			$name= $result->name;
+//			$qrcode= $result->reservationId;
+//			$voucher = $result->voucher;
+//			$mobile = $result->mobilephone;
+//			$fromtime = $result->timefrom;
+//			$totime = $result->timeto;
+//			$spotlabel = $result->Spotlabel;
+//			$numberofperons = $result->numberofpersons;
+//			$eventdate = $result->eventdate;
+//
+//			$config = [
+//				'installation_url' => 'https://tiqs.com/newsletters', // Your Sendy installation URL (without trailing slash).
+//				'api_key'   => 'TtlB6UhkbYarYr4PwlR1' // Your API key. Available in Sendy Settings.
+//			];
+//
+//			$config['list_id'] ='EdH9trleYtp0JHdiS763X892AQ';
+//
+//			$this->sendyunsubscribe($email);
+//
+//			$sendy = new \SendyPHP\SendyPHP($config);
+//			$responseArray = $sendy->subscribe(
+//				array(
+//					'name' => $name,
+//					'email' => $email,
+//					'Qrcodeurl' => $qrlink,
+//					'Voucher' => $voucher,
+//					'Mobile' => $mobile,
+//					'Fromtime' => $fromtime,
+//					'Totime' => $totime,
+//					'Spotlabel'	=> $spotlabel,
+//					'Maxpersons' => $numberofperons,
+//					'Eventdate' => $eventdate
+//				));
+
+				$data = array();
+				$this->global['pageTitle'] = 'TIQS : THANKS';
+				$this->loadViews("successpayment", $this->global, $data, 'nofooter', "noheader");
+
+			} elseif ($statuscode <0) {
+				$data = array();
+				$this->global['pageTitle'] = 'TIQS : THANKS';
+				$this->loadViews("errorpayment", $this->global, $data, 'nofooter', "noheader");
+			} elseif ($statuscode >= 0) {
+				$data = array();
+				$this->global['pageTitle'] = 'TIQS : THANKS';
+				$this->loadViews("errorpayment", $this->global, $data, 'nofooter', "noheader");
+			} else {
+				$data = array();
+				$this->global['pageTitle'] = 'TIQS : THANKS';
+				$this->loadViews("thuishavenerror", $this->global, $data, 'nofooter', "noheader");
+			}
+
+		}
+
+
+
     }
 
