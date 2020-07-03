@@ -144,12 +144,12 @@
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label for="firstNameInput">Name (<sup>*</sup>)</label>
-                        <input id="firstNameInput" class="form-control" name="user[username]" value="" type="text" placeholder="Name" required />
+                        <input id="firstNameInput" class="form-control" name="user[username]" value="<?php echo $username; ?>" type="text" placeholder="Name" required />
                     </div>
 
                     <div class="form-group col-sm-6">
                         <label for="emailAddressInput">Email address <sup>*</sup></label>
-                        <input id="emailAddressInput" class="form-control" name="user[email]" value="" type="text" placeholder="Email address" required />
+                        <input id="emailAddressInput" class="form-control" name="user[email]" value="<?php echo $email; ?>" type="text" placeholder="Email address" required />
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="country-code">Country Code <sup>*</sup></label>
@@ -157,7 +157,11 @@
                             <?php foreach ($countries as $countryCode => $country) { ?>
                                 <option
                                     value="<?php echo $countryCode; ?>"
-                                    <?php if ( $countryCode === 'NL')  echo 'selected'; ?> 
+                                    <?php
+                                        if ( (!$userCountry && $countryCode === 'NL') || ($userCountry && $countryCode === $userCountry) ) {
+                                            echo 'selected';
+                                        }
+                                   ?>
                                     >
                                     <?php echo $country; ?>
                                 </option>
@@ -166,7 +170,7 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="phoneInput">Phone <sup>*</sup></label>
-                        <input id="phoneInput" class="form-control" name="user[mobile]" value="" type="text" placeholder="Phone" required />
+                        <input id="phoneInput" class="form-control" name="user[mobile]" value="<?php echo $mobile; ?>" type="text" placeholder="Phone" required />
                     </div>
                     <div class="form-group col-sm-12">
                         <label for="notesInput">Remarks</label>

@@ -113,6 +113,11 @@
                 'countries' => Country_helper::getCountries()
             ];
 
+            $data['username'] = isset($_SESSION['postOrder']['user']['username']) ? $_SESSION['postOrder']['user']['username'] : '';
+            $data['email'] = isset($_SESSION['postOrder']['user']['email']) ? $_SESSION['postOrder']['user']['email'] : '';
+            $data['userCountry'] = isset($_SESSION['postOrder']['user']['country']) ? $_SESSION['postOrder']['user']['country'] : '';
+            $data['mobile'] = isset($_SESSION['postOrder']['user']['mobile']) ? $_SESSION['postOrder']['user']['mobile'] : '';        
+
             $this->loadViews('publicorders/checkoutOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
 
