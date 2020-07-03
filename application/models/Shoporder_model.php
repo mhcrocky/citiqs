@@ -20,6 +20,7 @@
         public $sendSms;
         public $printStatus;
         public $spotId;
+        public $transactionId;
 
         private $table = 'tbl_shop_orders';
 
@@ -66,6 +67,8 @@
             if (isset($data['sendSms']) && !($data['sendSms'] === '1' || $data['sendSms'] === '0')) return false;
             if (isset($data['printStatus']) && !($data['printStatus'] === '1' || $data['printStatus'] === '0')) return false;
             if (isset($data['spotId']) && !Validate_data_helper::validateInteger($data['spotId'])) return false;
+            if (isset($data['transactionId']) && !Validate_data_helper::validateString($data['transactionId'])) return false;
+
             return true;
         }
 

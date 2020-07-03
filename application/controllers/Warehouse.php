@@ -13,7 +13,6 @@
             parent::__construct();
 
             $this->load->helper('url');
-            $this->load->helper('form');
             $this->load->helper('validate_data_helper');
             $this->load->helper('utility_helper');
 
@@ -30,7 +29,7 @@
             $this->load->model('shopproducttime_model');
 
             $this->load->library('language', array('controller' => $this->router->class));
-            $this->load->library('form_validation');
+            $this->load->library('session');
 
             $this->load->config('custom');
 

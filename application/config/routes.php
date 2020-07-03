@@ -248,13 +248,19 @@ $route['spots']                 = "warehouse/spots";
 $route['printers']              = "warehouse/printers";
 
 
-$route['make_order']        = "publicorders/index";
-$route['checkout_order']    = "publicorders/checkout_order";
-$route['pay_order']         = "publicorders/pay_order";
-
-
+$route['make_order']        = 'publicorders/index';
+$route['checkout_order']    = 'publicorders/checkout_order';
+$route['pay_order']         = 'publicorders/pay_order';
+$route['insertorder/(:num)'] = 'publicorders/insertOrder/$1';
 
 $route['api/orders/print/get'] = 'Api/Orders/data';
 $route['api/orders/print'] = 'Api/Orders/data';
+
+// ALFRED PAYMENT ENGINE
+$route['paymentengine/(:num)'] = 'Alfredpayment/paymentEngine/$1';
+$route['successPayment/(:num)'] = 'Alfredpayment/successPayment/$1';
+$route['exchangePay'] = 'Alfredpayment/ExchangePay';
+
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

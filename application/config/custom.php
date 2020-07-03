@@ -109,3 +109,5 @@ $config['orderStatuses'] = [
 
 
 $config['contactGroupSeparator'] = '!#$%=';
+
+$config['idealPaymentType'] = '1';

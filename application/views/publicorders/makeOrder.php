@@ -1,4 +1,7 @@
 <main class="container" style="text-align:left">
+    <?php 
+        // include_once FCPATH . 'application/views/includes/sessionMessages.php';
+    ?>
     <?php if (!empty($categoryProducts) ) { ?>
         <h1>Make an order</h1>
         <div class="main-slider container" style='overflow-x:hidden; overflow-y: hidden; margin-top: 20px; margin-bottom: 20px'>

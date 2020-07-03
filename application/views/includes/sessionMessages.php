@@ -4,7 +4,9 @@
 ?>
     <div>
         <div class="alert alert-danger alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <span onclick="removeParent(this)">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            </span>
             <?php echo $fail; ?>
         </div>
     </div>
@@ -15,7 +17,9 @@
 ?>
     <div>
         <div class="alert alert-danger alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <span onclick="removeParent(this)">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            </span>
             <?php echo $error; ?>
         </div>
     </div>
@@ -24,9 +28,28 @@
     $success = $this->session->flashdata('success');
     if($success){
 ?>
-    <div class="alert alert-success alert-dismissable" >
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <?php echo $success; ?>
+    <div>
+        <div class="alert alert-success alert-dismissable" >
+            <span onclick="removeParent(this)">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            </span>
+            <?php echo $success; ?>
+        </div>
+    </div>
+<?php 
+    }
+?>
+<?php
+    $warning =  $this->session->flashdata('warning');
+    if($warning) {
+?>
+    <div>
+        <div class="alert alert-warning alert-dismissable">
+            <span onclick="removeParent(this)">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            </span>
+            <?php echo $warning; ?>
+        </div>
     </div>
 <?php 
     }

@@ -1,3 +1,4 @@
+<script src="<?php echo base_url(); ?>assets/home/js/utility.js"></script>
 <script src="<?php echo base_url(); ?>assets/home/js/ajax.js"></script>
 <?php if ($this->view === 'labels') { ?>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCst0EJ-LFVj3q0a6NHGFDU6HQ10H84HTI"></script>

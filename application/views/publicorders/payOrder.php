@@ -88,7 +88,7 @@
                         </div>
                         <div class="content-container clearfix">
                             <div class="payment-container methods">
-                                <a href="<?php echo base_url(); ?>publicorders/paymentEngine" class="paymentMethod method-ideal" data-payment-type="ideal">
+                                <a href="<?php echo base_url(); ?>insertorder/<?php echo $paymentMethod; ?>" class="paymentMethod method-ideal" data-payment-type="ideal">
                                     <img src="https://tiqs.com/shop/assets/imgs/extra/ideal.png" alt="iDEAL">
                                     <span>iDEAL</span>
                                 </a>
