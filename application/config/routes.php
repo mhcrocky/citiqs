@@ -254,7 +254,7 @@ $route['pay_order']         = "publicorders/pay_order";
 
 
 
-$route['api/orders/print/get'] = 'Api/Orders/print';
-$route['api/orders/print'] = 'Api/Orders/print';
+$route['api/orders/print/get'] = 'Api/Orders/data';
+$route['api/orders/print'] = 'Api/Orders/data';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
