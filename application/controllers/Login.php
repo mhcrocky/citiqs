@@ -842,7 +842,7 @@ class Login extends BaseControllerWeb
 		$this->form_validation->set_rules('zipcode', 'Zipcode', 'trim|required|max_length[128]');
 		$this->form_validation->set_rules('city', 'City', 'trim|required|max_length[128]');
 		$this->form_validation->set_rules('country', 'Country', 'trim|required|max_length[128]');
-		
+
 		// $this->form_validation->set_rules('vat_number', 'Vat number', 'required|max_length[20]');
 		if ($this->form_validation->run()) {
 			$hotel = $this->input->post(null, true);
@@ -864,9 +864,6 @@ class Login extends BaseControllerWeb
 		$hotel['objectTypeId'] = $hotel['business_type_id'];
 		$hotel['objectName'] = $hotel['username'];
 		$hotel['zipCode'] = $hotel['zipcode'];
-
-		Perfex_helper::apiCustomer($this->user_model);
-		$this->objectspot_model->setObjectFromArray($hotel)->create();
 
 		Perfex_helper::apiCustomer($this->user_model);
 		$this->session->set_flashdata('success', $this->language->Line("registerbusiness-F1002A","Account created Successfully. In your given email we have send your activation link/code and credentials"));
