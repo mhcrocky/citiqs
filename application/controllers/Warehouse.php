@@ -220,7 +220,7 @@
                 redirect($_SERVER['HTTP_REFERER']);
             };
 
-            // INSERT PRINTERS
+            // insert product printers
             foreach($data['productPrinters'] as $printerId) {
                 $printerInsert = [
                     'printerId' => $printerId,
@@ -232,20 +232,8 @@
                 break;
             }
 
-            // INSERT PRODUCT SPOTS
-            // $userId = intval($_SESSION['userId']);
-            // $userSpots = $this->shopspot_model->fetchUserSpots($userId);
-
-            // foreach($userSpots as $spot) {
-            //     $insert = [];
-            //     $insert['spotId'] = $spot['spotId'];
-            //     $insert['productId'] = $this->shopproduct_model->id;
-            //     $insert['active'] = in_array($spot['spotId'], $data['userSpots']) ? '1' : '0';
-            //     if (!$this->shopspotproducts_model->setObjectFromArray($insert)->create()) {
-            //         $this->session->set_flashdata('error', 'Product sport insert failed. Please check');
-            //         break;
-            //     }
-            // }
+            //insert product available times
+            $this->shopproducttime_model->insertProductTimes($this->shopproduct_model->id);
 
             $this->session->set_flashdata('success', 'Product inserted.');
             redirect($_SERVER['HTTP_REFERER']);

@@ -58,4 +58,23 @@
         {
             $this->db->delete($this->table, array('productId' => $this->productId));
         }
+
+        public function insertProductTimes(int $productId): bool
+        {
+
+            $this->load->config('custom');
+            $days = $this->config->item('workingDays');
+            $timeFrom = $this->config->item('timeFrom');
+            $timeTo = $this->config->item('timeTo');
+            foreach ($days as $day) {
+                $insert = [
+                    'productId' => $productId,
+                    'day' => $day,
+                    'timeFrom' => $timeFrom,
+                    'timeTo' => $timeTo,
+                ];
+                if (!$this->setObjectFromArray($insert)->create()) return false;
+            }
+            return true;
+        }
     }
