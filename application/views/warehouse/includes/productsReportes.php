@@ -46,9 +46,9 @@
                             $money = floatval($data['productPrice']) * floatval($data['productQuantity']) ;
                             $totalProducts += $money;
                             // $total += $money;
-
-                            $vat += $money * floatval($data['productVat']) / 100;
-                            $netAmount += ($money - $money * floatval($data['productVat']) / 100);
+                            $singleVat = $money - $money * 100 / (100 + floatval($data['productVat']));
+                            $vat += $singleVat;
+                            $netAmount += ($money - $singleVat);
                             $quantity += $data['productQuantity'];
                             if ($data['orderPaidStatus'] === '1') {
                                 $paidProducts += $money;
