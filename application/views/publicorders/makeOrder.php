@@ -15,7 +15,10 @@
                             <div class="filter-sidebar">
                             <a href="javascript:void(0);" class="go-category left-side selected"><?php echo $category;?></a>
                             </div>
-                            <?php foreach ($products as $product) { ?>
+                            <?php
+                                foreach ($products as $product) {
+                                    if ($product['productTypeId'] === '1') {
+                                ?>
                                 <div class="product__list">
                                     <div class="product">
                                         <div class="product__img">
@@ -131,7 +134,10 @@
                                     $form .= 'value="' . filter_var($product['price'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) . '" class="hideInput" ';
                                     $form .= (isset($ordered[$product['productExtendedId']])) ? '/>' : 'disabled />';
                                 ?>
-                            <?php } ?>
+                            <?php
+                                    }
+                                }
+                                ?>
                         </div>
                     <?php
                 }

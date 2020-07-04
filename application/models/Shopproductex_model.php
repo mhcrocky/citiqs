@@ -161,7 +161,9 @@
                     `tbl_shop_products`.`dateTimeTo`,
                     `tbl_shop_categories`.`category`,
                     `tbl_shop_categories`.`id` AS `categoryId`,
-                    `tbl_shop_categories`.`active` AS `categoryActive`
+                    `tbl_shop_categories`.`active` AS `categoryActive`,
+                    `tbl_shop_products_types`.`id` AS `productTypeId`,
+                    `tbl_shop_products_types`.`type` AS `productType`
                 FROM
                     `tbl_shop_products_extended`
                     INNER JOIN `tbl_shop_products` ON `tbl_shop_products_extended`.`productId` = `tbl_shop_products`.`id`
@@ -179,6 +181,7 @@
                                 AND
                                 tbl_shop_product_times.timeTo > '{$hours}'
                         ) productTimes ON productTimes.productId = tbl_shop_products.id
+                    INNER JOIN `tbl_shop_products_types` ON `tbl_shop_products_types`.`id` = `tbl_shop_products`.`productTypeId`
                 WHERE
                     `tbl_shop_categories`.`active` = '1'
                     AND `tbl_shop_categories`.`userId` = '{$userId}'
