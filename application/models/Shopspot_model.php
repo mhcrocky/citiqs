@@ -88,4 +88,30 @@
 
             return $count ? true : false;
         }
+
+        public function fetchUserSpotsImporved($where): ?array
+        {
+            return $this->read(
+                [
+                    $this->table . '.id AS spotId',
+                    $this->table . '.printerId AS spotPrinterId',
+                    $this->table . '.spotName AS spotName',
+                    $this->table . '.active AS spotActive',
+                    'tbl_shop_printers.printer AS printer',
+                    'tbl_shop_printers.active AS printerActive',
+                ],
+                $where,
+                [
+                    ['tbl_shop_printers', $this->table . '.printerId = tbl_shop_printers.id', 'INNER']
+                ],
+                'order_by',
+                [$this->table . '.spotName', 'ASC']
+            );
+        }
+
+        public function isActive(): bool
+        {
+            $this->setObject();
+            return ($this->active === '1') ? true : false;
+        }
     }

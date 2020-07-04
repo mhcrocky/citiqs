@@ -45,10 +45,12 @@
                 redirect(base_url());
             }
 
-            if (isset($_GET['spotid']) && is_numeric($_GET['spotid'])) {
-
-                $this->loadSpotView();
-                return;
+            if (isset($_GET['spotid'])) {
+                $this->shopspot_model->setObjectId(intval($_GET['spotid']));
+                if ($this->shopspot_model->isActive()) {
+                    $this->loadSpotView();
+                    return;
+                }
             }
 
             if (isset($_GET['vendorid']) && is_numeric($_GET['vendorid'])) {
@@ -81,9 +83,14 @@
             $this->global['pageTitle'] = 'TIQS : SELECT SPOT';
             $userId = intval($_SESSION['vendor']->userId);
 
+            $where = [
+                'tbl_shop_printers.userId=' => $userId,
+                'tbl_shop_spots.active' => '1'
+            ];
+
             $data = [
                 'vendor' => $_SESSION['vendor'],
-                'spots' => $this->shopspot_model->fetchUserSpots($userId)
+                'spots' => $this->shopspot_model->fetchUserSpotsImporved($where)
             ];
 
             $this->loadViews('publicorders/selectSpot', $this->global, $data, null, 'headerWarehousePublic');
