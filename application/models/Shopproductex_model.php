@@ -16,8 +16,6 @@
         public $longDescription;
         public $price;
         public $image;
-        public $options;
-        public $addons;
         public $vatpercentage;
         private $table = 'tbl_shop_products_extended';
 
@@ -54,8 +52,6 @@
             if (isset($data['longDescription']) && !Validate_data_helper::validateString($data['longDescription'])) return false;
             if (isset($data['price']) && !Validate_data_helper::validateFloat($data['price'])) return false;
             if (isset($data['image']) && !Validate_data_helper::validateString($data['image'])) return false;
-            if (isset($data['options']) && !Validate_data_helper::validateString($data['options'])) return false;
-            if (isset($data['addons']) && !Validate_data_helper::validateString($data['addons'])) return false;
             if (isset($data['vatpercentage']) && !Validate_data_helper::validateFloat($data['vatpercentage'])) return false;
 
             return true;
@@ -80,8 +76,6 @@
                             $this->table. '.longDescription',
                             'FORMAT(' . $this->table . '.price,2) AS price',
                             $this->table. '.image',
-                            $this->table. '.options',
-                            $this->table. '.addons',
                             $this->table. '.vatpercentage AS productVat',
 
                             'tbl_shop_products.id AS productId',                            
@@ -158,8 +152,6 @@
                     `tbl_shop_products_extended`.`longDescription`,
                     FORMAT(tbl_shop_products_extended.price, 2) AS price,
                     `tbl_shop_products_extended`.`image`,
-                    `tbl_shop_products_extended`.`options`,
-                    `tbl_shop_products_extended`.`addons`,
                     `tbl_shop_products`.`id` AS `productId`,
                     `tbl_shop_products`.`stock`,
                     `tbl_shop_products`.`recommendedQuantity`,
@@ -226,7 +218,7 @@
                     array_push($productIds, $prodcut['productId']);
                 }
             }
-            $return = Utility_helper::resetArrayByKeyMultiple($return, $sortBy);            
+            $return = Utility_helper::resetArrayByKeyMultiple($return, $sortBy);
             ksort($return);
             return $return;
         }
@@ -244,8 +236,6 @@
                     $this->table. '.longDescription',
                     'FORMAT(' . $this->table . '.price,2) AS price',
                     $this->table. '.image',
-                    $this->table. '.options',
-                    $this->table. '.addons',
                     $this->table. '.vatpercentage AS productVat',
 
                     'tbl_shop_products.id AS productId',                            
@@ -266,7 +256,9 @@
                             \'|\', tbl_shop_printers.active
                         )
                     ) AS printers',
-                    'tblShopProductTimes.productTimes'
+                    'tblShopProductTimes.productTimes',
+                    'tbl_shop_products_types.id AS productTypeId',
+                    'tbl_shop_products_types.type AS productType',
                 ],
                 'where' => ['tbl_shop_categories.userId=' => $userId],
                 'joins' =>  [
@@ -292,7 +284,8 @@
                         ) tblShopProductTimes',                    
                         'tblShopProductTimes.productId = ' . $this->table.'.productId',
                         'LEFT'
-                    ]
+                    ],
+                    ['tbl_shop_products_types', 'tbl_shop_products_types.id = tbl_shop_products.productTypeId', 'INNER']
 
                 ],
                 'conditions' => [

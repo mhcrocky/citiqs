@@ -40,7 +40,7 @@
             return $insert ? $insert : null;
         }
 
-        public function read(array $what, array $where, array $join = [], string $condition = '', array $conditionArguments = []): ?array
+        public function read(array $what, array $where = null, array $join = [], string $condition = '', array $conditionArguments = []): ?array
         {
             $result = $this->db->select(implode(',', $what));
             if (count($join) ) {
@@ -48,7 +48,11 @@
                     $this->db->join(...$data);
                 }
             }
-            $result = $this->db->where($where);
+
+            if ($where) {
+                $result = $this->db->where($where);
+            }
+
             if ($condition) {                
                 $result = $this->db->$condition(...$conditionArguments);
             }

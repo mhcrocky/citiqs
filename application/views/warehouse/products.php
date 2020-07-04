@@ -51,14 +51,6 @@
                                         rows="1"></textarea>
                                 </div>
                                 <div class="col-lg-4 col-sm-12">
-                                    <label for="addons">Addons: </label>
-                                    <input type="text" name="productExtended[addons]" id="addons" class="form-control" requried />
-                                </div>
-                                <div class="col-lg-4 col-sm-12">
-                                    <label for="options">Options: </label>
-                                    <input type="text" name="productExtended[options]" id="options" class="form-control" requried />
-                                </div>
-                                <div class="col-lg-4 col-sm-12">
                                     <label for="vatInsert">VAT: </label>
                                     <input type="number" requried value="0" step="0.01" min="0" name="productExtended[vatpercentage]" id="vatInsert" class="form-control" />
                                 </div>
@@ -82,6 +74,17 @@
                                         <?php } ?>
                                     </select>
                                 </div>
+                                <div class="col-lg-4 col-sm-12">
+                                    <label for="productTypeId">Select product type: </label>
+                                    <select type="text" class="form-control" id="productTypeId" name="product[productTypeId]" required>
+                                        <option value="">Select</option>
+                                        <?php foreach ($productTypes as $type) { ?>
+                                            <option value="<?php echo $type['id']; ?>">
+                                                <?php echo $type['type']; ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
                                 <!-- PRINTERS -->
                                 <div class="col-lg-4 col-sm-12">
                                     <label for="printer">Printers: </label>
@@ -97,21 +100,6 @@
                                         </label>
                                     <?php } ?>                                
                                 </div>
-
-                                <!-- <div class="col-lg-4 col-sm-12">
-                                    <label for="printer">Product spot(s): </label>
-                                    <?php #foreach ($userSpots as $spot) { ?>
-                                        <label class="checkbox-inline" for="spotId<?php #echo $spot['spotId']; ?>">
-                                            <input
-                                                type="checkbox"
-                                                id="spotId<?php #echo $spot['spotId']; ?>"
-                                                name="userSpots[]"
-                                                value="<?php #echo $spot['spotId']; ?>"
-                                                />
-                                            <?php #echo $spot['spotName']; ?> (<?php #echo $spot['spotActive'] === '1' ? 'active' : 'archived'; ?>)
-                                        </label>
-                                    <?php #} ?>                                
-                                </div> -->
                             </fieldset>
                         </form>
                     </div>
@@ -178,7 +166,8 @@
                                     <p class="item-description">Name: <?php echo $product['name']; ?></p>
                                     <p class="item-description">Description: <?php echo $product['shortDescription']; ?></p>
                                     <p class="item-description">Price: <?php echo $product['price']; ?></p>
-                                    <p class="item-description">VAT: <?php echo floatval($product['productVat']); ?></p><!-- 6) SHOW VAT IN DETAILS -->
+                                    <p class="item-description">VAT: <?php echo floatval($product['productVat']); ?></p>
+                                    <p class="item-description">Product type: <?php echo $product['productType']; ?></p>
                                     <p class="item-category">Status:
                                         <?php echo $product['productActive'] === '1' ? '<span style="color:#009933">Active</span>' : '<span style="color:#ff3333">Archived</span>'; ?>
                                     </p>
@@ -395,6 +384,20 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-4 col-sm-12">
+                                                    <label for="productTypeId<?php echo $product['productId'] ?>">Product type: </label>
+                                                    <select type="text" class="form-control" id="productTypeId<?php echo $product['productId'] ?>" name="product[productTypeId]" required>
+                                                        <option value="">Select</option>
+                                                        <?php foreach ($productTypes as $type) { ?>
+                                                            <option
+                                                                <?php if ($type['id'] === $product['productTypeId']) echo 'selected'; ?>
+                                                                value="<?php echo $type['id']; ?>"
+                                                                >
+                                                                <?php echo $type['type']; ?>
+                                                            </option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-4 col-sm-12">
                                                     <label for="vatEdit<?php echo $product['productId'] ?>">VAT: </label>
                                                     <input
                                                         type="number"
@@ -452,14 +455,6 @@
                                                 <div class="col-lg-4 col-sm-12">
                                                     <label for="longDescription<?php echo $product['productId'] ?>">Long description: </label>
                                                     <textarea name="productExtended[longDescription]" id="longDescription<?php echo $product['productId'] ?>" rows="1" class="form-control"><?php echo $product['longDescription']; ?></textarea>
-                                                </div>
-                                                <div class="col-lg-4 col-sm-12">
-                                                    <label for="addons<?php echo $product['productId'] ?>">Addons: </label>
-                                                    <input type="text" name="productExtended[addons]" id="addons<?php echo $product['productId'] ?>" class="form-control" requried value="<?php echo $product['addons']; ?>" />
-                                                </div>
-                                                <div class="col-lg-4 col-sm-12">
-                                                    <label for="options<?php echo $product['productId'] ?>">Options: </label>
-                                                    <input type="text" name="productExtended[options]" id="options<?php echo $product['productId'] ?>" class="form-control" requried value="<?php echo $product['options']; ?>" />
                                                 </div>
                                                 <div class="col-lg-4 col-sm-12"> 
                                                     <label>Printers</label>

@@ -17,11 +17,18 @@
         public $showImage;
         public $dateTimeFrom;
         public $dateTimeTo;
+        public $productTypeId;
         private $table = 'tbl_shop_products';
 
         protected function setValueType(string $property,  &$value): void
         {
-            if ($property === 'id' || $property === 'categoryId' || $property === 'stock' || $property === 'recommendedQuantity') {
+            if (
+                $property === 'id'
+                || $property === 'categoryId'
+                || $property === 'stock'
+                || $property === 'recommendedQuantity'
+                || $property === 'productTypeId'
+            ) {
                 $value = intval($value);
             }
             return;
@@ -36,7 +43,7 @@
         {
             if (
                 isset($data['categoryId']) 
-                // && isset($data['stock']) 
+                && isset($data['productTypeId']) 
                 // && isset($data['recommendedQuantity']) 
                 && isset($data['active'])
             ) {
@@ -55,6 +62,7 @@
             if (isset($data['showImage']) && !($data['showImage'] === '1' || $data['showImage'] === '0')) return false;
             if (isset($data['dateTimeFrom']) && !Validate_data_helper::validateDate($data['dateTimeFrom'])) return false;
             if (isset($data['dateTimeTo']) && !Validate_data_helper::validateDate($data['dateTimeTo'])) return false;
+            if (isset($data['productTypeId']) && !Validate_data_helper::validateInteger($data['productTypeId'])) return false;
             return true;
         }
 

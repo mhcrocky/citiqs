@@ -27,6 +27,7 @@
             $this->load->model('shopspot_model');
             $this->load->model('shopspotproducts_model');
             $this->load->model('shopproducttime_model');
+            $this->load->model('shopprodutctype_model');
 
             $this->load->library('language', array('controller' => $this->router->class));
             $this->load->library('session');
@@ -34,15 +35,6 @@
             $this->load->config('custom');
 
             $this->isLoggedIn();
-            // $this->checkSubscription();
-        }
-
-        private function checkSubscription(): void
-        {
-            // $subscription = $this->user_subscription_model->getLastSubscriptionId($this->userId);
-            // if (is_null($subscription) || !Utility_helper::compareTwoDates(date('Y-m-d'), date($subscription['expireDtm']))) {
-            //     redirect('profile');
-            // }
         }
 
         /**
@@ -165,9 +157,6 @@
             $this->global['pageTitle'] = 'TIQS : PRODUCTS';
             $userId = intval($_SESSION['userId']);
 
-            //insert spots products
-            // $this->shopspotproducts_model->insertSpotAndProducts($this->shopspot_model, $this->shopproduct_model, $userId);
-
             $where = ['userId' => $userId];
             $data = [
                 'categories' => $this->shopcategory_model->fetch($where),
@@ -175,6 +164,7 @@
                 'printers' => $this->shopprinters_model->read(['*'], $where),
                 'userSpots' => $this->shopspot_model->fetchUserSpots($userId),
                 'separator' => $this->config->item('contactGroupSeparator'),
+                'productTypes' => $this->shopprodutctype_model->read(['*']),
             ];
 
             $this->loadViews('warehouse/products', $this->global, $data, null, 'headerWarehouse');
