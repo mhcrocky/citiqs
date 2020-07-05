@@ -37,7 +37,7 @@
                         <div class="heading pay-header">
                             <div class="amount centered"><?php echo number_format($total, '2', '.', ','); ?>&nbsp;&euro;</div>
                             <div class="info">
-                                <b><?php echo $vendor->name; ?></b>
+                                <b><?php echo $vendor['vendorName']; ?></b>
                                 <span>bestelling</span>
                             </div>
                         </div>

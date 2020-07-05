@@ -58,7 +58,9 @@
                                             'serviceFee',
                                             'totalAmount',
                                             'orderExtended<?php echo $productExtendedId; ?>',
-                                            '<?php echo $productExtendedId; ?>'
+                                            '<?php echo $productExtendedId; ?>',
+                                            '<?php echo $vendor['serviceFeePercent']; ?>',
+                                            '<?php echo $vendor['serviceFeeAmount']; ?>',
                                         )"
                                         >
                                         <i class="fa fa-plus"></i>
@@ -76,7 +78,9 @@
                                             'serviceFee',
                                             'totalAmount',
                                             'orderExtended<?php echo $productExtendedId; ?>',
-                                            '<?php echo $productExtendedId; ?>'
+                                            '<?php echo $productExtendedId; ?>',
+                                            '<?php echo $vendor['serviceFeePercent']; ?>',
+                                            '<?php echo $vendor['serviceFeeAmount']; ?>',
                                         )"
                                         >
                                         <i class="fa fa-minus"></i>
@@ -97,7 +101,15 @@
                                         </span>&nbsp;&euro;
                                         <?php $orderTotal += filter_var($prodcut['amount'][0], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); ?>
                                     </p>
-                                    <i class="fa fa-trash" onclick="removeElement('element<?php echo $productExtendedId; ?>', 'counterClass', 'amount<?php echo $productExtendedId; ?>', 'serviceFee', 'totalAmount', '<?php echo $productExtendedId; ?>')"></i>
+                                    <i class="fa fa-trash" onclick="removeElement(
+                                            'element<?php echo $productExtendedId; ?>',
+                                            'counterClass',
+                                            'amount<?php echo $productExtendedId; ?>',
+                                            'serviceFee',
+                                            'totalAmount', '<?php echo $productExtendedId; ?>',
+                                            '<?php echo $vendor['serviceFeePercent']; ?>',
+                                            '<?php echo $vendor['serviceFeeAmount']; ?>',
+                                        )"></i>
                                 </div>
                             </div>
                         </div>
@@ -112,8 +124,8 @@
                             <b>SERVICE FEE:</b>
                             <span id="serviceFee">
                                 <?php
-                                    $serviceFee = $orderTotal * 0.045;
-                                    if ($serviceFee > 3.50) $serviceFee = 3.50;
+                                    $serviceFee = $orderTotal * $vendor['serviceFeePercent'] / 100;
+                                    if ($serviceFee > $vendor['serviceFeeAmount']) $serviceFee = $vendor['serviceFeeAmount'];
                                     echo number_format($serviceFee, 2, ".", ","); ?> &euro;
                             </span>
                         </div>
@@ -178,7 +190,7 @@
                     </div>
                 </div>
                 <div class="checkout-btns">
-                    <a href="<?php echo base_url() . 'make_order?vendorid=' . $userId . '&spotid=' . $spotId; ?>" class="button">
+                    <a href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spotId; ?>" class="button">
                         <i class="fa fa-arrow-left"></i>
                         Back to list                    </a>
                     <a href="javascript:void(0);" class="button" onclick="submitForm('goOrder', 'serviceFeeInput', 'orderAmountInput');">

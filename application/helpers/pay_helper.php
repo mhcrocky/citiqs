@@ -24,12 +24,12 @@
             return $strUrl;
         }
 
-        public static function getArgumentsArray(array $order, string $paymentType): array
+        public static function getArgumentsArray(array $order, string $paymentType, string $serviceId): array
         {
             $amount = round((floatval($order['orderAmount']) + floatval($order['serviceFee'])) * 100, 0);
             $arrArguments = [];
 
-            $arrArguments['serviceId'] = "SL-3157-0531";
+            $arrArguments['serviceId'] = $serviceId;
             $arrArguments['amount'] = strval($amount);
             $arrArguments['ipAddress'] = $_SERVER['REMOTE_ADDR'];
             $arrArguments['paymentOptionId'] = '10';

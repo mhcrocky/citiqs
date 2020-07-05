@@ -26,6 +26,7 @@
             $this->load->model('shoporderex_model');
             $this->load->model('user_model');
             $this->load->model('shopspot_model');
+            $this->load->model('shopvendor_model');
 
             $this->load->config('custom');
 
@@ -35,35 +36,35 @@
 
         public function index(): void
         {
-            if(!isset($_GET['vendorid'])) {
+            $get = $this->input->get(null, true);
+
+            // FETCH AND SAVE VENDOR DATA IN SESSION
+            $vendor = $this->shopvendor_model->setProperty('vendorId', $get['vendorid'])->getVendorData();
+            if (is_null($vendor['payNlServiceId'])) {
                 redirect(base_url());
             }
+            $_SESSION['vendor'] = $vendor;
 
-            // SAVE VENODR DATA IN SESSION
-            $_SESSION['vendor'] = $this->user_model->getUserInfo($_GET['vendorid']);
-            if (!$_SESSION['vendor']) {
-                redirect(base_url());
-            }
-
-            if (isset($_GET['spotid'])) {
-                $this->shopspot_model->setObjectId(intval($_GET['spotid']));
-                if ($this->shopspot_model->isActive()) {
-                    $this->loadSpotView();
+            // VENDOR SELECTED SPOT VIEW
+            if (isset($get['spotid'])) {
+                $spotId = intval($_GET['spotid']);
+                if ($this->shopspot_model->setObjectId($spotId)->isActive()) {
+                    $this->loadSpotView($spotId);
                     return;
                 }
             }
-
-            if (isset($_GET['vendorid']) && is_numeric($_GET['vendorid'])) {
-                $this->loadVendorView();
-                return;
-            }            
+            
+            // SELECT VENDOR SPOT VIEW
+            $this->loadVendorView();
+            return;
+      
         }
 
-        private function loadSpotView(): void
+        private function loadSpotView(int $spotId): void
         {
             $this->global['pageTitle'] = 'TIQS : ORDERING';
-            $spotId = intval($_GET['spotid']);
-            $userId = intval($_SESSION['vendor']->userId);
+
+            $userId = $_SESSION['vendor']['vendorId'];
 
             $data = [
                 'categoryProducts' => $this->shopproductex_model->getUserLastProductsDetailsPublic($spotId, $userId, 'category'),
@@ -81,10 +82,9 @@
         private function loadVendorView(): void
         {
             $this->global['pageTitle'] = 'TIQS : SELECT SPOT';
-            $userId = intval($_SESSION['vendor']->userId);
 
             $where = [
-                'tbl_shop_printers.userId=' => $userId,
+                'tbl_shop_printers.userId=' => $_SESSION['vendor']['vendorId'],
                 'tbl_shop_spots.active' => '1'
             ];
 
@@ -100,7 +100,7 @@
         public function checkout_order(): void
         {
             $this->global['pageTitle'] = 'TIQS : CHECKOUT';
-            if (empty($_POST) && (!isset($_SESSION['order']) || !$_SESSION['vendor'])) {
+            if ( (empty($_POST) && !isset($_SESSION['order'])) || (!isset($_SESSION['vendor']) || !$_SESSION['vendor']) ) {
                 redirect(base_url());
             }
 
@@ -114,7 +114,7 @@
 
             $data = [
                 'spotId' => $_SESSION['spotId'],
-                'userId' => intval($_SESSION['vendor']->userId),
+                'vendor' =>  $_SESSION['vendor'],
                 'orderDetails' => $_SESSION['order'],
                 'buyerRole' => $this->config->item('buyer'),
                 'usershorturl' => 'tiqs_shop_service',
@@ -176,10 +176,9 @@
             }
 
             // prepare failed redirect
-            $failedRedirect = 'make_order?vendorid=' . $_SESSION['vendor']->userId . '&spotid=' . $_SESSION['spotId'];
+            $failedRedirect = 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'] . '&spotid=' . $_SESSION['spotId'];
 
             // unset session data
-            unset($_SESSION['vendor']);
             unset($_SESSION['order']);
             unset($_SESSION['spotId']);
 

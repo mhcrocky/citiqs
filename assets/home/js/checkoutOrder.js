@@ -1,5 +1,5 @@
 'use strict';
-function changeQuantity(plus, price, quantityId, amountId, serviceFeeId, totalAmountId, orderExtendedId, productExId) {
+function changeQuantity(plus, price, quantityId, amountId, serviceFeeId, totalAmountId, orderExtendedId, productExId, serviceFeePercent, serviceFeeAmount) {
     let quantityElement = document.getElementById(quantityId);
     let quantityElementValue = parseInt(quantityElement.innerHTML);
 
@@ -23,7 +23,7 @@ function changeQuantity(plus, price, quantityId, amountId, serviceFeeId, totalAm
         orderExtendedInput.setAttribute('value', newQuantityValue);
         orderExtendedInput.disabled = (newQuantityValue === 0) ? true : false;
 
-        changeServiceFeeAndTotal(plus, price, serviceFeeId, totalAmountId);
+        changeServiceFeeAndTotal(plus, price, serviceFeeId, totalAmountId, serviceFeePercent, serviceFeeAmount);
         ajaxUpdateSession(productExId, newPrice, newQuantityValue);
     }
 
@@ -37,7 +37,7 @@ function changeQuantity(plus, price, quantityId, amountId, serviceFeeId, totalAm
         orderExtendedInput.setAttribute('value', newQuantityValue);
         orderExtendedInput.disabled = (newQuantityValue === 0) ? true : false;
 
-        changeServiceFeeAndTotal(plus, price, serviceFeeId, totalAmountId);
+        changeServiceFeeAndTotal(plus, price, serviceFeeId, totalAmountId, serviceFeePercent, serviceFeeAmount);
         ajaxUpdateSession(productExId, newPrice, newQuantityValue);
     }
 
@@ -59,7 +59,7 @@ function ajaxUpdateSession(productExId, newPrice = null, newQuantityValue = null
 }
 
 
-function changeServiceFeeAndTotal(plus, price, serviceFeeId, totalAmountId) {
+function changeServiceFeeAndTotal(plus, price, serviceFeeId, totalAmountId, serviceFeePercent, serviceFeeAmount) {
     let serviceFee = document.getElementById(serviceFeeId);
     let serviceFeeValue = parseFloat(serviceFee.innerHTML);
 
@@ -73,7 +73,8 @@ function changeServiceFeeAndTotal(plus, price, serviceFeeId, totalAmountId) {
         amount = amount - price;
     }
 
-    serviceFeeValue = calcualteServiceFee(amount);
+    serviceFeeValue = calcualteServiceFee(amount, serviceFeePercent, serviceFeeAmount);
+    console.dir(serviceFeeValue);
     serviceFee.innerHTML = serviceFeeValue;
 
     totalAmountValue = amount + parseFloat(serviceFeeValue);
@@ -85,15 +86,17 @@ function changeServiceFeeAndTotal(plus, price, serviceFeeId, totalAmountId) {
     }
 }
 
-function calcualteServiceFee(amount) {
-    let serviceFee = amount * 0.045;
-    if (serviceFee > 3.50) {
-        serviceFee = 3.50;
+function calcualteServiceFee(amount, serviceFeePercent, serviceFeeAmount) {
+    let userAmount = parseFloat(serviceFeeAmount);
+    let serviceFee = amount * parseFloat(serviceFeePercent) / 100;
+    if (serviceFee > userAmount) {
+        serviceFee = userAmount;
     }
+
     return serviceFee.toFixed(2);
 }
 
-function removeElement(elementId, counterClass, amountId, serviceFee, totalAmount, productExId) {
+function removeElement(elementId, counterClass, amountId, serviceFee, totalAmount, productExId, serviceFeePercent, serviceFeeAmount) {
     let amountToRemove = parseFloat(document.getElementById(amountId).innerHTML)
     let element = document.getElementById(elementId);
     element.remove();
@@ -110,7 +113,7 @@ function removeElement(elementId, counterClass, amountId, serviceFee, totalAmoun
         counterElement.innerHTML = count + '.';
     }
 
-    changeServiceFeeAndTotal(false, amountToRemove, serviceFee, totalAmount);
+    changeServiceFeeAndTotal(false, amountToRemove, serviceFee, totalAmount, serviceFeePercent, serviceFeeAmount);
     ajaxUpdateSession(productExId);
 }
 

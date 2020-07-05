@@ -32,11 +32,15 @@ class Alfredpayment extends BaseControllerWeb
 
     public function paymentEngine($paymentType): void
     {
+        $vendor = Utility_helper::getSessionValue('vendor');
+        $serviceId = $vendor['payNlServiceId'];
         $orderId = Utility_helper::getSessionValue('orderId');
+
+
         $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
         $order = reset($order);
 
-        $arguments = Pay_helper::getArgumentsArray($order, $paymentType);
+        $arguments = Pay_helper::getArgumentsArray($order, $paymentType, $serviceId);
         $url = Pay_helper::getIdealUrl($arguments);
 
         $result = @file_get_contents($url);        

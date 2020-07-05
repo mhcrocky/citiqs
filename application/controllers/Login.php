@@ -15,7 +15,7 @@ class Login extends BaseControllerWeb
 		$this->load->model('user_model');
 		$this->load->model('businesstype_model');
 		$this->load->model('objectspot_model');
-		$this->load->model('shopclient_model');
+		$this->load->model('shopvendor_model');
 		$this->load->helper('google_helper');
 		$this->load->helper('utility_helper');
 		$this->load->helper('email_helper');
@@ -872,7 +872,7 @@ class Login extends BaseControllerWeb
 		$shopClient = [
 			'clientId' => $this->user_model->id
 		];
-		$this->shopclient_model->setObjectFromArray($shopClient)->create();
+		$this->shopvendor_model->setObjectFromArray($shopClient)->create();
 
 		$this->session->set_flashdata('success', $this->language->Line("registerbusiness-F1002A","Account created Successfully. In your given email we have send your activation link/code and credentials"));
 		redirect('/login');

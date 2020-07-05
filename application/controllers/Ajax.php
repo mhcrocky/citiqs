@@ -496,7 +496,6 @@ class Ajax extends CI_Controller
         if (isset($_SESSION['order']) && $post) {
             $id = $post['productExId'];
             if (isset($post['newPrice']) && isset($post['newQuantityValue'])) {
-                
                 $_SESSION['order'][$id]['amount'][0] = $post['newPrice'];
                 $_SESSION['order'][$id]['quantity'][0] = $post['newQuantityValue'];
             } else {
