@@ -463,9 +463,6 @@
             $this->global['pageTitle'] = 'TIQS : SPOTS';
             $userId = intval($_SESSION['userId']);
 
-            //insert spots products
-            // $this->shopspotproducts_model->insertSpotAndProducts($this->shopspot_model,$this->shopproduct_model, $userId);
-
             $data = [
                 'printers' => $this->shopprinters_model->read(['*'], ['userId=' => $userId]),
                 'spots' => $this->shopspot_model->fetchUserSpots($userId)

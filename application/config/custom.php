@@ -89,6 +89,7 @@ $config['labelSend'] = 2;
 $config['labelSubscription'] = 3;
 
 // ROLES
+$config['administrator'] = '1';
 $config['owner'] = '2';
 $config['buyer'] = '6';
 
