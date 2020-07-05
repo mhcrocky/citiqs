@@ -49,12 +49,12 @@
 				<p>No printers.</p>
             <?php } else { ?>
                 <?php foreach ($printers as $printer) { ?>
-					<div class="grid-item">
+					<div class="grid-item" style="background-color:<?php echo $printer['active'] === '1' ? '#99ff66' : '#ff4d4d'; ?>">
 						<div class="item-header">
 							<p class="item-description">Name: <?php echo $printer['printer']; ?></p>
                             <p class="item-description">MAC number: <?php echo $printer['macNumber']; ?></p>
 							<p class="item-category">Status:
-								<?php echo $printer['active'] === '1' ? '<span style="color:#009933">Active</span>' : '<span style="color:#ff3333">Archived</span>'; ?>
+								<?php echo $printer['active'] === '1' ? '<span>ACTIVE</span>' : '<span>BLOCKED</span>'; ?>
 							</p>
 						</div><!-- end item header -->
 						<div class="grid-footer">
@@ -64,7 +64,7 @@
 								</span>
 							</div>
 							<?php if ($printer['active'] === '1') { ?>
-								<div title="Click to archive printer" class="iconWrapper delete-icon-wrapper">
+								<div title="Click to block printer" class="iconWrapper delete-icon-wrapper">
 									<a href="<?php echo $this->baseUrl . 'warehouse/editPrinter/' . $printer['id'] .'/0'; ?>" >
 										<span class="fa-stack fa-2x delete-icon">
 											<i class="fas fa-times"></i>

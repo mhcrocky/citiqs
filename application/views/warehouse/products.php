@@ -69,7 +69,7 @@
                                         <option value="">Select</option>
                                         <?php foreach ($categories as $category) { ?>
                                             <option value="<?php echo $category['categoryId']; ?>">
-                                                <?php echo $category['category']; ?> (<?php echo $category['active'] === '1' ? 'active' : 'archived'; ?>)
+                                                <?php echo $category['category']; ?> (<?php echo $category['active'] === '1' ? 'active' : 'blocked'; ?>)
                                             </option>
                                         <?php } ?>
                                     </select>
@@ -96,7 +96,7 @@
                                                 name="productPrinters[]"
                                                 value="<?php echo $printer['id']; ?>"
                                                 />
-                                            <?php echo $printer['printer']; ?> (<?php echo $printer['active'] === '1' ? 'active' : 'archived'; ?>)
+                                            <?php echo $printer['printer']; ?> (<?php echo $printer['active'] === '1' ? 'active' : 'blocked'; ?>)
                                         </label>
                                     <?php } ?>                                
                                 </div>
@@ -147,30 +147,32 @@
                         <button class="btn button-security my-2 my-sm-0 button grid-button" onclick="toogleElementClass('add-product', 'display')">Add product</button>
                     </div>
                 </div>
+                
                 <!-- LIST -->
                 <?php if (is_null($products)) { ?>
                     <p>No products in list.
                 <?php } else { ?>
                     <?php
                         foreach ($products as $product ) {
+
                             $product = reset($product);
                         ?>
-                            <div class="grid-item">
+                            <div class="grid-item" style="background-color:<?php echo $product['productActive'] === '1' ? '#99ff66' : '#ff4d4d'; ?>">
                                 <div class="item-header">
+                                    <p class="item-description">Name: <?php echo $product['name']; ?></p>
+                                    <p class="item-category">Status:
+                                        <?php echo $product['productActive'] === '1' ? '<span>ACTIVE</span>' : '<span>BLOCKED</span>'; ?>
+                                    </p>
+                                    <p class="item-description">Description: <?php echo $product['shortDescription']; ?></p>
                                     <p class="item-description">Category: 
                                         <?php
                                             echo $product['category'];
-                                            echo $product['categoryActive'] === '1' ? ' (<span style="color:#009933">active</span>)' : ' (<span style="color:#ff3333">archived</span>)'
+                                            echo $product['categoryActive'] === '1' ? ' (<span>ACTIVE</span>)' : ' (<span">BLOCKED</span>)'
                                         ?>
                                     </p>
-                                    <p class="item-description">Name: <?php echo $product['name']; ?></p>
-                                    <p class="item-description">Description: <?php echo $product['shortDescription']; ?></p>
                                     <p class="item-description">Price: <?php echo $product['price']; ?></p>
                                     <p class="item-description">VAT: <?php echo floatval($product['productVat']); ?></p>
                                     <p class="item-description">Product type: <?php echo $product['productType']; ?></p>
-                                    <p class="item-category">Status:
-                                        <?php echo $product['productActive'] === '1' ? '<span style="color:#009933">Active</span>' : '<span style="color:#ff3333">Archived</span>'; ?>
-                                    </p>
                                     <p class="item-description">From: 
                                         <?php echo ($product['dateTimeFrom']) ? $product['dateTimeFrom'] : 'All time'; ?>
                                     </p>
@@ -187,7 +189,7 @@
                                                 $printer = explode('|', $printer);
                                                 array_push($printerIds, $printer[0]);
                                                 $string = $printer[1];
-                                                $string .= $printer[2] === '1' ? ' (<span style="color:#009933">active</span>)' : ' (<span style="color:#ff3333">archived</span>)';
+                                                $string .= $printer[2] === '1' ? ' (<span>ACTIVE</span>)' : ' (<span>BLOCKED</span>)';
                                                 echo '<dd>' . $string . '</dd>';
                                             }
                                             echo '</dl>';
@@ -236,7 +238,7 @@
                                         </span>
                                     </div>
                                     <?php if ($product['productActive'] === '1') { ?>
-                                        <div title="Click to archive category" class="iconWrapper delete-icon-wrapper">
+                                        <div title="Click to block product" class="iconWrapper delete-icon-wrapper">
                                             <a href="<?php echo $this->baseUrl . 'warehouse/editProduct/' . $product['productId'] .'/0'; ?>" >
                                                 <span class="fa-stack fa-2x delete-icon">
                                                     <i class="fas fa-times"></i>
@@ -244,7 +246,7 @@
                                             </a>
                                         </div>
                                     <?php } else { ?>
-                                        <div title="Click to activate category" class="iconWrapper delete-icon-wrapper">
+                                        <div title="Click to activate product" class="iconWrapper delete-icon-wrapper">
                                             <a href="<?php echo $this->baseUrl . 'warehouse/editProduct/' . $product['productId'] .'/1'; ?>" >
                                                 <span class="fa-stack fa-2x" style="background-color:#0f0">
                                                     <i class="fas fa-check"></i>
@@ -378,7 +380,7 @@
                                                                 <?php if ($category['categoryId'] === $product['categoryId']) echo 'selected'; ?>
                                                                 value="<?php echo $category['categoryId']; ?>"
                                                                 >
-                                                                <?php echo $category['category']; ?> (<?php echo $category['active'] === '1' ? 'active' : 'archived'; ?>)
+                                                                <?php echo $category['category']; ?> (<?php echo $category['active'] === '1' ? 'active' : 'blocked'; ?>)
                                                             </option>
                                                         <?php } ?>
                                                     </select>
@@ -469,7 +471,7 @@
                                                                         if (isset($printerIds) && in_array($printer['id'], $printerIds)  && !is_null($product['printers'])) echo 'checked';
                                                                     ?>
                                                                     />
-                                                                <?php echo $printer['printer']; ?> (<?php echo $printer['active'] === '1' ? 'active' : 'archived'; ?>)
+                                                                <?php echo $printer['printer']; ?> (<?php echo $printer['active'] === '1' ? 'active' : 'blocked'; ?>)
                                                             </label>
                                                     <?php } ?>
                                                 </div>

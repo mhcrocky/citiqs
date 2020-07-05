@@ -26,7 +26,7 @@
                                     <?php foreach ($printers as $printer) { ?>
                                         <option value="<?php echo $printer['id']; ?>">
                                             <?php echo $printer['printer']; ?>
-                                            (<?php echo $printer['active'] === '1' ? '<span style="color:#009933">Active</span>' : '<span style="color:#ff3333">Archived</span>'; ?>)
+                                            (<?php echo $printer['active'] === '1' ? '<span style="color:#009933">ACTIVE</span>' : '<span style="color:#ff3333">BLOCKED</span>'; ?>)
                                         </option>
                                     <?php } ?>
                                 </select>
@@ -60,16 +60,16 @@
                 <?php } else { ?>
                     <?php foreach ($spots as $spot) { ?>
 
-                        <div class="grid-item">
+                        <div class="grid-item" style="background-color:<?php echo $spot['spotActive'] === '1' ? '#99ff66' : '#ff4d4d'; ?>">
                             <div class="item-header">
                                 <p class="item-description">Name: <?php echo $spot['spotName']; ?></p>
                                 <!-- <p class="item-description">Spot ID: <?php #echo $spot['spotId']; ?></p> -->
                                 <p class="item-category">Spot status:
-                                    <?php echo $spot['spotActive'] === '1' ? '<span style="color:#009933">Active</span>' : '<span style="color:#ff3333">Archived</span>'; ?>
+                                    <?php echo $spot['spotActive'] === '1' ? '<span>ACTIVE</span>' : '<span>BLOCKED</span>'; ?>
                                 </p>
                                 <p class="item-description">Printer: <?php echo $spot['printer']; ?></p>
                                 <p class="item-category">Printer status:
-                                    <?php echo $spot['printerActive'] === '1' ? '<span style="color:#009933">Active</span>' : '<span style="color:#ff3333">Archived</span>'; ?>
+                                    <?php echo $spot['printerActive'] === '1' ? '<span>ACTIVE</span>' : '<span>BLOCKED</span>'; ?>
                                 </p>
                             </div><!-- end item header -->
                             <!-- END EDIT FOR NEW USER -->
@@ -80,7 +80,7 @@
                                     </span>
                                 </div>
                                 <?php if ($spot['spotActive'] === '1') { ?>
-                                    <div title="Click to archive spot" class="iconWrapper delete-icon-wrapper">
+                                    <div title="Click to block spot" class="iconWrapper delete-icon-wrapper">
                                         <a href="<?php echo $this->baseUrl . 'warehouse/editSpot/' . $spot['spotId'] .'/0'; ?>" >
                                             <span class="fa-stack fa-2x delete-icon">
                                                 <i class="fas fa-times"></i>
@@ -135,7 +135,7 @@
                                                         <?php if ($spot['spotPrinterId'] === $printer['id']) echo 'selected'; ?>
                                                         >
                                                         <?php echo $printer['printer']; ?>
-                                                        (<?php echo $printer['active'] === '1' ? '<span style="color:#009933">Active</span>' : '<span style="color:#ff3333">Archived</span>'; ?>)
+                                                        (<?php echo $printer['active'] === '1' ? '<span>ACTIVE</span>' : '<span>BLOCKED</span>'; ?>)
                                                     </option>
                                                 <?php } ?>
                                             </select>

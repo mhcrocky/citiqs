@@ -73,11 +73,11 @@
 				<p>No categories.</p>
             <?php } else { ?>
 				<?php foreach ($categories as $category) { ?>
-					<div class="grid-item">
+					<div class="grid-item"  style="background-color:<?php echo $category['active'] === '1' ? '#99ff66' : '#ff4d4d'; ?>">
 						<div class="item-header">
 							<p class="item-description"><?php echo $category['category']; ?></p>
 							<p class="item-category">Status:
-								<?php echo $category['active'] === '1' ? '<span style="color:#009933">Active</span>' : '<span style="color:#ff3333">Archived</span>'; ?>
+								<?php echo $category['active'] === '1' ? '<span>ACTIVE</span>' : '<span>BLOCKED</span>'; ?>
 							</p>
 						</div><!-- end item header -->
 						<div class="grid-footer">
