@@ -122,7 +122,7 @@
             }
         }
 
-        public static function sendOrderEmail(string $email, string $subject, string $message)
+        public static function sendOrderEmail(string $email, string $subject, string $message, string $attachment = '')
         {
             $configemail = array(
                 'protocol' => PROTOCOL,
@@ -146,6 +146,9 @@
             $CI->email->to($email);
             $CI->email->subject($subject);
             $CI->email->message($message);
+            if ($attachment) {
+                $CI->email->attach($attachment);
+            }
             return $CI->email->send();
         }
     }

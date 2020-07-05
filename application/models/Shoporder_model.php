@@ -305,7 +305,8 @@
                     INNER JOIN
                         tbl_shop_printers ON tbl_shop_printers.id = tbl_shop_product_printers.printerId
                     WHERE
-                        tbl_shop_order_extended.printed = "0"
+                        tbl_shop_orders.paid = "1"
+                        AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_printers.macNumber = "' . $macNumber . '"
                     GROUP BY
@@ -381,7 +382,8 @@
                                 GROUP BY  tbl_shop_order_extended.orderId
                         ) productData ON productData.orderId = tbl_shop_orders.id 
                     WHERE
-                        tbl_shop_order_extended.printed = "0"
+                        tbl_shop_orders.paid = "1"
+                        AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_printers.macNumber = "' . $macNumber . '"
                         AND tbl_shop_order_extended.id not in
                             (

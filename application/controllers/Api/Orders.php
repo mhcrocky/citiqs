@@ -186,6 +186,11 @@
             /* Output the image with headers */
             /* Give image a format */
             $resultpng->setImageFormat('png');
+            $receipt = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '.png';
+            if (!file_put_contents($receipt, $resultpng)) {
+                $receipt = '';
+            }
+                
             header('Content-type: image/png');
             // $image ->writeImage("peter.png");
 
@@ -214,7 +219,7 @@
             $subject= "Order : ". $orderId;
             $emailMessage .= '<p><tr><td>TOTAAL BETAALD EURO '. number_format($totalamount, 2, '.', ',') . '</p></tr></td>';
             $email = $order['buyerEmail'];
-            Email_helper::sendOrderEmail($email, $subject, $emailMessage);
+            Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receipt);
         }
 
         public function data_post()
