@@ -52,6 +52,7 @@
             <div class="header-menu text-orange" id="header-menu">
                 <a href="<?php echo $this->baseUrl; ?>warehouse">WAREHOUSE</a>
                 <a href="<?php echo $this->baseUrl; ?>product_categories">PRODUCT CATEGORIES</a>
+                <a href="<?php echo $this->baseUrl; ?>product_types">PRODUCT TYPES</a>
                 <a href="<?php echo $this->baseUrl; ?>products">PRODUCTS</a>
                 <a href="<?php echo $this->baseUrl; ?>orders">ORDERS</a>
                 <a href="<?php echo $this->baseUrl; ?>printers">PRINTERS</a>

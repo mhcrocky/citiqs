@@ -127,7 +127,7 @@
 
             if(isset($data['category']) && $this->shopcategory_model->checkIsInserted($data)) {
                 $this->session->set_flashdata('error', 'Update failed! Role with name "' . $data['category'] . '" already inserted');
-                redirect($_SERVER['HTTP_REFERER']);
+                redirect('product_categories');
             }
 
             $update =   $this
@@ -142,7 +142,7 @@
                 $this->session->set_flashdata('error', 'Update failed! Please try again.');
             }
 
-            redirect($_SERVER['HTTP_REFERER']);
+            redirect('product_categories');
             return;
         }
 
@@ -164,7 +164,7 @@
                 'printers' => $this->shopprinters_model->read(['*'], $where),
                 'userSpots' => $this->shopspot_model->fetchUserSpots($userId),
                 'separator' => $this->config->item('contactGroupSeparator'),
-                'productTypes' => $this->shopprodutctype_model->read(['*']),
+                'productTypes' => $this->shopprodutctype_model->fetchProductTypes($userId),
             ];
 
             $this->loadViews('warehouse/products', $this->global, $data, null, 'headerWarehouse');
@@ -447,7 +447,7 @@
                 $this->session->set_flashdata('error', 'Update failed! Please try again.');
             }
 
-            redirect($_SERVER['HTTP_REFERER']);
+            redirect('printers');
             return;
         }
 
@@ -543,6 +543,103 @@
             }
 
             redirect('spots');
+            return;
+        }
+
+        //PRODUCT TYPES
+        /**
+         * Read product types
+         *
+         * @return void
+         */
+        public function productTypes(): void
+        {
+            $this->global['pageTitle'] = 'TIQS : PRODUCT TYPES';
+            $vendorId = intval($_SESSION['userId']);
+            $data = [
+                'vendorId' => $vendorId,
+                'productTypes' => $this->shopprodutctype_model->fetchProductTypes($vendorId),
+                'main' => $this->shopprodutctype_model->checkMain($vendorId),
+            ];
+            $this->loadViews('warehouse/productTypes', $this->global, $data, null, 'headerWarehouse');
+        }
+
+        /**
+         * Add product type
+         *
+         * @return void
+         */
+        public function addProductType(): void
+        {
+            $data = $this->input->post(null, true);
+            $vendorId = intval($_SESSION['userId']);
+            $where = [
+                'vendorId=' => $vendorId,
+                'type=' => $data['type'],
+            ];
+
+            if (isset($data['isMain']) && $this->shopprodutctype_model->checkMain($vendorId)) {
+                $this->session->set_flashdata('error', 'Only one type can have flag main');
+                redirect('product_types');
+            }
+
+            if ($this->shopprodutctype_model->checkTypeName($where)) {
+                $this->session->set_flashdata('error', 'Type with this name already exists! Insert failed');
+                redirect('product_types');
+            }
+
+            if ($this->shopprodutctype_model->setObjectFromArray($data)->create()) {
+                $this->session->set_flashdata('success', 'Type added');
+            } else {
+                $this->session->set_flashdata('error', 'Type add failed. Try again.');
+            }
+
+            redirect('product_types');
+        }
+
+        /**
+         * Edit product type
+         *
+         * @return void
+         */
+        public function editType(): void
+        {
+            $typeId = intval($this->uri->segment(3));
+            $vendorId = intval($_SESSION['userId']);
+
+            // update data
+            $data = $this->input->post(null, true);
+
+            if (isset($data['isMain']) && $this->shopprodutctype_model->checkMain($vendorId, $typeId)) {
+                $this->session->set_flashdata('error', 'Only one type can have flag main');
+                redirect('product_types');
+            }
+
+            if (isset($data['type'])) {
+                $where = [
+                    'vendorId=' => $vendorId,
+                    'type=' => $data['type'],
+                    'id!=' => $typeId
+                ];
+                if ($this->shopprodutctype_model->checkTypeName($where)) {
+                    $this->session->set_flashdata('error', 'Type with this name already exists! Update failed');
+                    redirect('product_types');
+                }
+            }
+
+            $data['isMain'] = isset($data['isMain']) ? $data['isMain'] : '0';
+            $update = $this
+                    ->shopprodutctype_model
+                    ->setObjectId($typeId)
+                    ->setObjectFromArray($data)
+                    ->update();
+
+            if ($update) {
+                $this->session->set_flashdata('success', 'Type updated');
+            } else {
+                $this->session->set_flashdata('error', 'Update failed! Please try again.');
+            }
+            redirect('product_types');
             return;
         }
 
