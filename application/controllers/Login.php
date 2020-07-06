@@ -85,16 +85,13 @@ class Login extends BaseControllerWeb
 			$email = strtolower($this->security->xss_clean($this->input->post('email')));
 			$password = $this->security->xss_clean($this->input->post('password'));
 			$result = $this->login_model->loginMe($email, $password);
-			var_dump($result);
 			if (!empty($result)) {
 				if (
 					// insert object for lostAndFound and other moudles users
 					$result->roleId === $this->config->item('owner') 
 					&& intval($result->IsDropOffPoint) === $this->config->item('dropOfPointTrue')
-					&& empty($this->objectspot_model->getUsersObjects(intval($result->userId)))
 				) {
 					$this->user_model->setUniqueValue(intval($result->userId))->setWhereCondtition()->setUser();
-//					$this->objectspot_model->insertUserObject($this->user_model);
 				}
 				$this->session->set_userdata('dropoffpoint', $result->IsDropOffPoint);
 				if ($result->active == 0) {
