@@ -11,6 +11,7 @@
     {
         public $id;
         public $productId;
+        public $productTypeId;
         public $name;
         public $shortDescription;
         public $longDescription;
@@ -37,7 +38,7 @@
 
         public function insertValidate(array $data): bool
         {
-            if (isset($data['productId']) && isset($data['name']) && isset($data['price'])) {
+            if (isset($data['productId']) && isset($data['name']) && isset($data['price']) && isset($data['productTypeId'])) {
                 return $this->updateValidate($data);
             }
             return false;
@@ -53,6 +54,7 @@
             if (isset($data['price']) && !Validate_data_helper::validateFloat($data['price'])) return false;
             if (isset($data['image']) && !Validate_data_helper::validateString($data['image'])) return false;
             if (isset($data['vatpercentage']) && !Validate_data_helper::validateFloat($data['vatpercentage'])) return false;
+            if (isset($data['productTypeId']) && !Validate_data_helper::validateInteger($data['productTypeId'])) return false;
 
             return true;
         }
@@ -181,7 +183,7 @@
                                 AND
                                 tbl_shop_product_times.timeTo > '{$hours}'
                         ) productTimes ON productTimes.productId = tbl_shop_products.id
-                    INNER JOIN `tbl_shop_products_types` ON `tbl_shop_products_types`.`id` = `tbl_shop_products`.`productTypeId`
+                    -- INNER JOIN `tbl_shop_products_types` ON `tbl_shop_products_types`.`id` = `tbl_shop_products`.`productTypeId`
                 WHERE
                     `tbl_shop_categories`.`active` = '1'
                     AND `tbl_shop_categories`.`userId` = '{$userId}'
@@ -262,6 +264,7 @@
                     'tblShopProductTimes.productTimes',
                     'tbl_shop_products_types.id AS productTypeId',
                     'tbl_shop_products_types.type AS productType',
+                    'tbl_shop_products_types.isMain AS isMain',
                 ],
                 'where' => ['tbl_shop_categories.userId=' => $userId],
                 'joins' =>  [
@@ -288,7 +291,7 @@
                         'tblShopProductTimes.productId = ' . $this->table.'.productId',
                         'LEFT'
                     ],
-                    ['tbl_shop_products_types', 'tbl_shop_products_types.id = tbl_shop_products.productTypeId', 'INNER']
+                    ['tbl_shop_products_types', 'tbl_shop_products_types.id = ' . $this->table . '.productTypeId', 'INNER']
 
                 ],
                 'conditions' => [

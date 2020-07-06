@@ -31,7 +31,7 @@
             if (!$data || !$this->insertValidate($data)) return false;
             $this->db->insert($this->getThisTable(), $data);
             $this->id  = $this->db->insert_id();
-            return $this->id ? true : false;
+            return $this->id > 0 ? true : false;
         }
 
         public function multipleCreate(array $data) : ?int

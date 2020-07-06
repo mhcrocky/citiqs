@@ -178,6 +178,7 @@
          */
         public function addProdcut(): void
         {
+
             $data = $this->input->post(null, true);
             $userId = intval($_SESSION['userId']);
 
@@ -189,7 +190,7 @@
 
             if ($this->shopproductex_model->checkProductName($where)) {
                 $this->session->set_flashdata('error', 'Product with this name already exists! Insert failed');
-                redirect($_SERVER['HTTP_REFERER']);
+                redirect('products');
             };
 
             // insert product
@@ -199,16 +200,24 @@
             }
             if (!$this->shopproduct_model->setObjectFromArray($data['product'])->create()) {
                 $this->session->set_flashdata('error', 'Product insert failed! Please try again.');
-                redirect($_SERVER['HTTP_REFERER']);
+                redirect('products');
             };
 
             // insert product extended
-            $data['productExtended']['productId'] = $this->shopproduct_model->id;
-            if(!$this->shopproductex_model->setObjectFromArray($data['productExtended'])->create()) {
-                $this->shopproduct_model->delete();
-                $this->session->set_flashdata('error', 'Product insert failed! Please try again.');
-                redirect($_SERVER['HTTP_REFERER']);
-            };
+            foreach($data['productTypes'] as $typeId => $typeValues) {
+                if (isset($typeValues['check'])) {                    
+                    $data['productExtended']['productId'] = $this->shopproduct_model->id;
+                    $data['productExtended']['productTypeId'] = intval($typeId);
+                    $data['productExtended']['price'] = floatval($typeValues['price']);
+
+                    if(!$this->shopproductex_model->setObjectFromArray($data['productExtended'])->create()) {
+                        $this->shopproduct_model->delete();
+                        $this->session->set_flashdata('error', 'Product insert failed! Please try again.');
+                        redirect('products');
+                    };
+                }
+            }
+            
 
             // insert product printers
             foreach($data['productPrinters'] as $printerId) {
@@ -226,7 +235,7 @@
             $this->shopproducttime_model->insertProductTimes($this->shopproduct_model->id);
 
             $this->session->set_flashdata('success', 'Product inserted.');
-            redirect($_SERVER['HTTP_REFERER']);
+            redirect('products');
             return;
         }
 
@@ -279,9 +288,6 @@
 
                 // insert new product deatils
                 $insert = $this->shopproductex_model->setObjectFromArray($data['productExtended'])->create();
-
-                // update product spots
-                // $updateProductspots = $this->shopspotproducts_model->updateUproductSpots($data['productSpots'], $data['productExtended']['productId']);
 
                 if ($insert && $update) {
                     $this->session->set_flashdata('success', 'Product updated');
