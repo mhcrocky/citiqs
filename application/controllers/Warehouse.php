@@ -212,6 +212,8 @@
                     $data['productExtended']['productTypeId'] = intval($typeId);
                     $data['productExtended']['price'] = floatval($typeValues['price']);
                     $data['productExtended']['updateCycle'] = 1;
+                    $data['productExtended']['showInPublic'] = 1;
+                    
 
                     if(!$this->shopproductex_model->setObjectFromArray($data['productExtended'])->create()) {
                         $this->shopproduct_model->delete();
@@ -284,15 +286,21 @@
                     ->setObjectFromArray($data['product'])
                     ->update();
 
-            
             // insert new product extended deatils
             $countTypes = 0;
             foreach($data['productTypes'] as $typeId => $typeValues) {
+                var_dump($typeValues);
                 if (isset($typeValues['check'])) {                    
                     $countTypes++;
                     $data['productExtended']['productId'] = $this->shopproduct_model->id;
                     $data['productExtended']['productTypeId'] = intval($typeId);
                     $data['productExtended']['price'] = floatval($typeValues['price']);
+                    if (isset($typeValues['showInPublic'])) {
+                        $data['productExtended']['showInPublic'] = '1';
+                    } else {
+                        $data['productExtended']['showInPublic'] = '0';
+                    }
+
                     if(!$this->shopproductex_model->setObjectFromArray($data['productExtended'])->create()) {
                         $insert = false;
                         break;

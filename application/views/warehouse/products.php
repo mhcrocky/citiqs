@@ -181,10 +181,17 @@
                                 array_push($productDetailsIds, $details['productTypeId']);                                                
                                 $string = 'Name: ' . $details['productType'] . ', price: ' . $details['price'] . ' &euro;';
                                 if ($details['productTypeIsMain'] === '1') {
-                                    $string .= ' (<span style="background-color: #99ff66">MAIN</span>) ';
+                                    $string .= ' <span style="background-color: #99ff66">(MAIN)</span> ';
                                 } else {
-                                    $string .= ' (<span>NOT MAIN</span>) ';
+                                    $string .= ' <span>(NOT MAIN</span>) ';
                                 }
+
+                                if ($details['showInPublic'] === '1') {
+                                    $string .= ' <span style="background-color: #99ff66">(ACTIVE)</span> ';
+                                } else {
+                                    $string .= ' <span style="background-color: #ff4d4d">(BLOCKED)</span> ';
+                                }
+
                                 $productDetailsString .= '<dd>' . $string . '</dd>';
                             }
 
@@ -472,15 +479,19 @@
                                                 <legend style="text-align:left;">Select product types</legend>
                                                 <?php
                                                     foreach ($productTypes as $type) {
-
+                                                        #var_dump($type); die();
                                                         $value = 0;
                                                         $checked = '';
                                                         
 
                                                         if (in_array($type['id'], $productDetailsIds)) {
                                                             $checked = 'checked';
+                                                            $showInPublic = 'checked';
                                                             foreach($product['productDetails'] as $details) {
                                                                 if ($details['productTypeId'] === $type['id']) {
+                                                                    if ($details['showInPublic'] === '0') {
+                                                                        $showInPublic = '';
+                                                                    }
                                                                     $value = $details['price'];
                                                                 }
                                                             }
@@ -497,6 +508,16 @@
                                                                 <?php echo $checked; ?>
                                                                 />
                                                             Select <?php echo '"' . $type['productType'] . '"'; if ($type['isMain'] === '1') echo ' (main)'; ?>
+                                                        </label>
+                                                        <label class="checkbox-inline" for="productActive<?php echo $type['id'] . $product['productId']; ?>">
+                                                            <input
+                                                                type="checkbox"
+                                                                id="productActive<?php echo $type['id'] . $product['productId']; ?>"
+                                                                name="productTypes[<?php echo $type['id']; ?>][showInPublic]"
+                                                                value="<?php echo $type['id']; ?>"
+                                                                <?php echo $showInPublic; ?>
+                                                                />
+                                                            Active status <?php echo ($showInPublic) ? '<span style="background-color: #99ff66">(ACTIVE)</span>' : '<span style="background-color: #ff4d4d">(BLOCKED)</span> '; ?>
                                                         </label>
                                                         <label for="price<?php echo $type['id'] . $product['productId']; ?>">Price: </label>
                                                         <input

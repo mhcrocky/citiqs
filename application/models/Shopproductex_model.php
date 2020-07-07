@@ -19,6 +19,7 @@
         public $image;
         public $vatpercentage;
         public $updateCycle;
+        public $showInPublic;
         private $table = 'tbl_shop_products_extended';
 
         protected function setValueType(string $property,  &$value): void
@@ -63,6 +64,7 @@
             if (isset($data['vatpercentage']) && !Validate_data_helper::validateFloat($data['vatpercentage'])) return false;
             if (isset($data['productTypeId']) && !Validate_data_helper::validateInteger($data['productTypeId'])) return false;
             if (isset($data['updateCycle']) && !Validate_data_helper::validateInteger($data['updateCycle'])) return false;
+            if (isset($data['showInPublic']) && !($data['showInPublic'] === '1' || $data['showInPublic'] === '0')) return false;
 
             return true;
         }
@@ -250,7 +252,8 @@
                                     \'|\',' . $this->table. '.productTypeId,
                                     \'|\', tbl_shop_products_types.type,
                                     \'|\', tbl_shop_products_types.isMain,
-                                    \'|\',' . $this->table. '.updateCycle
+                                    \'|\',' . $this->table. '.updateCycle,
+                                    \'|\',' . $this->table. '.showInPublic
                                     
                                     SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"
                                 ) AS productDetails
@@ -329,11 +332,10 @@
             $productExtendedIds = []; //TIQS TO DO CHECK WHY WE GET DOUBLE DATA
 
             foreach($productDetails as $index => $details) {
-                if (isset($details[8])) {
-                    $detailsCycle = intval($details[8]);
-                    if ($cycle < $detailsCycle) {
-                        $cycle = $detailsCycle;
-                    }
+
+                $detailsCycle = intval($details[8]);
+                if ($cycle < $detailsCycle) {
+                    $cycle = $detailsCycle;
                 }
 
                 if (!in_array($details[0], $productExtendedIds)) {
@@ -346,13 +348,14 @@
                         'productTypeId'         => $details[5],
                         'productType'           => $details[6],
                         'productTypeIsMain'     => $details[7],
-                        'productUpdateCycle'    => $details[8]
+                        'productUpdateCycle'    => $details[8],
+                        'showInPublic'          => $details[9]
                     ];
                     array_push($return, $collect);
                     array_push($productExtendedIds, $details[0]);
-
                 }
             }
+
             $return = Utility_helper::resetArrayByKeyMultiple($return, 'productUpdateCycle')[$cycle];
             return $return;
         }
