@@ -209,6 +209,7 @@
                     $data['productExtended']['productId'] = $this->shopproduct_model->id;
                     $data['productExtended']['productTypeId'] = intval($typeId);
                     $data['productExtended']['price'] = floatval($typeValues['price']);
+                    $data['productExtended']['updateCycle'] = 1;
 
                     if(!$this->shopproductex_model->setObjectFromArray($data['productExtended'])->create()) {
                         $this->shopproduct_model->delete();
@@ -246,71 +247,72 @@
          */
         public function editProduct(): void
         {
-            if (Validate_data_helper::validateInteger($this->uri->segment(4))) {
-                $update = $this
-                        ->shopproduct_model
-                        ->setObjectId(intval($this->uri->segment(3)))
-                        ->setObjectFromArray(['active' => $this->uri->segment(4)])
-                        ->update();
 
-                if ($update) {
-                    $this->session->set_flashdata('success', 'Product updated');
-                } else {
-                    $this->session->set_flashdata('error', 'Update failed! Please try again.');
+            $data = $this->input->post(null, true);
+            $productId = intval($this->uri->segment(3));
+            $userId = intval($_SESSION['userId']);
+
+            // CHECK PRODUCT NAME
+            $where = [
+                'tbl_shop_categories.userId' => $userId,
+                'tbl_shop_products_extended.productId !=' => $productId,
+                'tbl_shop_products_extended.name=' => $data['productExtended']['name']
+            ];
+
+            if ($this->shopproductex_model->checkProductName($where)) {
+                $this->session->set_flashdata('error', 'Product with this name already exists! Update failed');
+                redirect('products');
+            };
+
+            // update
+            if ($data['product']['dateTimeFrom'] && $data['product']['dateTimeTo']) {
+                $data['product']['dateTimeFrom'] = date('Y-m-d H:i:s', strtotime($data['product']['dateTimeFrom']));
+                $data['product']['dateTimeTo'] = date('Y-m-d H:i:s', strtotime($data['product']['dateTimeTo']));
+            }
+
+            $update = $this
+                    ->shopproduct_model
+                    ->setObjectId($productId)
+                    ->setObjectFromArray($data['product'])
+                    ->update();
+
+            
+            // insert new product extended deatils
+            foreach($data['productTypes'] as $typeId => $typeValues) {
+                if (isset($typeValues['check'])) {                    
+                    $data['productExtended']['productId'] = $this->shopproduct_model->id;
+                    $data['productExtended']['productTypeId'] = intval($typeId);
+                    $data['productExtended']['price'] = floatval($typeValues['price']);
+                    if(!$this->shopproductex_model->setObjectFromArray($data['productExtended'])->create()) {
+                        $insert = false;
+                        break;
+                    };
                 }
+                $insert = true;
+            }
+
+
+            if ($insert && $update) {
+                $this->session->set_flashdata('success', 'Product updated');
             } else {
-                $data = $this->input->post(null, true);
-                $productId = intval($this->uri->segment(3));
-                $userId = intval($_SESSION['userId']);
+                $this->session->set_flashdata('error', 'Update failed! Please try again.');
+            }
 
-                // CHECK PRODUCT NAME
-                $where = [
-                    'tbl_shop_categories.userId' => $userId,
-                    'tbl_shop_products_extended.productId !=' => $productId,
-                    'tbl_shop_products_extended.name=' => $data['productExtended']['name']
-                ];
+            // PRINTERS
+            $this->shopproductprinters_model->productId = $this->shopproduct_model->id;
+            $this->shopproductprinters_model->deleteProductPrinters();
+            if (isset($data['productPrinters'])) {                    
 
-                if ($this->shopproductex_model->checkProductName($where)) {
-                    $this->session->set_flashdata('error', 'Product with this name already exists! Update failed');
-                    redirect($_SERVER['HTTP_REFERER']);
-                };
-
-                // update                
-                if ($data['product']['dateTimeFrom'] && $data['product']['dateTimeTo']) {
-                    $data['product']['dateTimeFrom'] = date('Y-m-d H:i:s', strtotime($data['product']['dateTimeFrom']));
-                    $data['product']['dateTimeTo'] = date('Y-m-d H:i:s', strtotime($data['product']['dateTimeTo']));
-                }
-                $update = $this
-                        ->shopproduct_model
-                        ->setObjectId($productId)
-                        ->setObjectFromArray($data['product'])
-                        ->update();
-
-                // insert new product deatils
-                $insert = $this->shopproductex_model->setObjectFromArray($data['productExtended'])->create();
-
-                if ($insert && $update) {
-                    $this->session->set_flashdata('success', 'Product updated');
-                } else {
-                    $this->session->set_flashdata('error', 'Update failed! Please try again.');
-                }
-
-                // PRINTERS
-                $this->shopproductprinters_model->productId = $this->shopproduct_model->id;
-                $this->shopproductprinters_model->deleteProductPrinters();
-                if (isset($data['productPrinters'])) {                    
-
-                    foreach($data['productPrinters'] as $printerId) {
-                        $printerInsert = [
-                            'printerId' => $printerId,
-                            'productId' => $this->shopproduct_model->id
-                        ];
-                        $this->shopproductprinters_model->setObjectFromArray($printerInsert)->create();
-                    }
+                foreach($data['productPrinters'] as $printerId) {
+                    $printerInsert = [
+                        'printerId' => $printerId,
+                        'productId' => $this->shopproduct_model->id
+                    ];
+                    $this->shopproductprinters_model->setObjectFromArray($printerInsert)->create();
                 }
             }
 
-            redirect($_SERVER['HTTP_REFERER']);
+            redirect('products');
             return;
         }
 
@@ -340,13 +342,13 @@
                         ];
                         if (!$this->shopproducttime_model->setObjectFromArray($insert)->create()) {
                             $this->session->set_flashdata('error', 'Availability time(s) for product "' . $data['productName'] . '" not updated! Please try again');
-                            redirect($_SERVER['HTTP_REFERER']);
+                            redirect('products');
                         };
                     }
                 }
             }
             $this->session->set_flashdata('success', 'Availability time(s) for product "' . $data['productName'] . '" updated.');
-            redirect($_SERVER['HTTP_REFERER']);
+            redirect('products');
             return;
         }
 

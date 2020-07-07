@@ -18,11 +18,12 @@
         public $price;
         public $image;
         public $vatpercentage;
+        public $updateCycle;
         private $table = 'tbl_shop_products_extended';
 
         protected function setValueType(string $property,  &$value): void
         {
-            if ($property === 'id' || $property === 'productId') {
+            if ($property === 'id' || $property === 'productId' || $property === 'updateCycle') {
                 $value = intval($value);
             }
             if ($property === 'price' || $property === 'vatpercentage') {
@@ -38,7 +39,13 @@
 
         public function insertValidate(array $data): bool
         {
-            if (isset($data['productId']) && isset($data['name']) && isset($data['price']) && isset($data['productTypeId'])) {
+            if (
+                isset($data['productId'])
+                && isset($data['name'])
+                && isset($data['price'])
+                && isset($data['productTypeId'])
+                && isset($data['updateCycle'])
+            ) {
                 return $this->updateValidate($data);
             }
             return false;
@@ -55,89 +62,10 @@
             if (isset($data['image']) && !Validate_data_helper::validateString($data['image'])) return false;
             if (isset($data['vatpercentage']) && !Validate_data_helper::validateFloat($data['vatpercentage'])) return false;
             if (isset($data['productTypeId']) && !Validate_data_helper::validateInteger($data['productTypeId'])) return false;
+            if (isset($data['updateCycle']) && !Validate_data_helper::validateInteger($data['updateCycle'])) return false;
 
             return true;
         }
-
-        /**
-         * getUserProductsDetails
-         * 
-         * DO NOT USE deprecated
-         *
-         * @param array $where
-         * @return array|null
-         */
-        public function getUserProductsDetails(array $where): ?array
-        {
-            
-            return  $this->read(
-                        [
-                            $this->table. '.id as productExtendedId',
-                            $this->table. '.name',
-                            $this->table. '.shortDescription',
-                            $this->table. '.longDescription',
-                            'FORMAT(' . $this->table . '.price,2) AS price',
-                            $this->table. '.image',
-                            $this->table. '.vatpercentage AS productVat',
-
-                            'tbl_shop_products.id AS productId',                            
-                            'tbl_shop_products.stock',
-                            'tbl_shop_products.recommendedQuantity',
-                            'tbl_shop_products.active AS productActive',
-                            'tbl_shop_products.showImage',
-                            'tbl_shop_products.dateTimeFrom AS dateTimeFrom',
-                            'tbl_shop_products.dateTimeTo AS dateTimeTo',
-                            
-                            'tbl_shop_categories.category',
-                            'tbl_shop_categories.id AS categoryId',
-                            'tbl_shop_categories.active AS categoryActive',
-
-                        ],
-                        $where,
-                        [
-                            ['tbl_shop_products', $this->table.'.productId = tbl_shop_products.id', 'INNER'],
-                            ['tbl_shop_categories', 'tbl_shop_products.categoryId = tbl_shop_categories.id', 'INNER'],
-                        ],
-                        'order_by',
-                        [$this->table. '.id', 'DESC']
-                    );
-        }
-
-        /**
-         * getUserProductsDetails
-         * 
-         * DO NOT USE deprecated
-         *
-         * @param array $where
-         * @return array|null
-         */
-        public function getUserLastProductsDetails(array $where): ?array
-        {
-            $products = $this->getUserProductsDetails($where);
-            if (is_null($products)) return null;
-
-            $this->load->model('shopprinters_model');
-            $this->load->helper('utility_helper');
-
-            $productIds = [];
-            $return = [];
-            foreach ($products as $prodcut) {
-                if (!in_array($prodcut['productId'], $productIds)) {
-                    $prodcut['printers'] = $this->shopprinters_model->fetchtProductPrinters(intval($prodcut['productId']));
-                    if ($prodcut['printers']) {
-                        $prodcut['printers'] = Utility_helper::resetArrayByKeyMultiple($prodcut['printers'], 'printerId');
-                    }
-
-                    array_push($return, $prodcut);
-                    array_push($productIds, $prodcut['productId']);
-                }
-            }
-            $return = Utility_helper::resetArrayByKeyMultiple($return, 'name');
-            ksort($return);
-            return $return;
-        }
-
-
 
         public function getUserProductsDetailsPublic(int $spotId, int $userId): ?array
         {
@@ -229,28 +157,22 @@
         }
 
 
-        public function getUserProducts(int $userId, bool $all = false): ?array
+        public function getUserProducts(int $userId): ?array
         {
             $this->load->config('custom');
 
             $filter = [
                 'what' => [
-                    $this->table. '.id as productExtendedId',
-                    $this->table. '.name',
-                    $this->table. '.shortDescription',
-                    $this->table. '.longDescription',
-                    'FORMAT(' . $this->table . '.price,2) AS price',
-                    $this->table. '.image',
-                    $this->table. '.vatpercentage AS productVat',
-
-                    'tbl_shop_products.id AS productId',                            
+                    $this->table . '.productId',
+                    'GROUP_CONCAT(
+                            tblShopProductDetails.productDetails
+                            SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"
+                    ) AS productDetails',
                     'tbl_shop_products.stock',
                     'tbl_shop_products.recommendedQuantity',
-                    'tbl_shop_products.active AS productActive',
                     'tbl_shop_products.showImage',
                     'tbl_shop_products.dateTimeFrom AS dateTimeFrom',
                     'tbl_shop_products.dateTimeTo AS dateTimeTo',
-                    
                     'tbl_shop_categories.category',
                     'tbl_shop_categories.id AS categoryId',
                     'tbl_shop_categories.active AS categoryActive',
@@ -262,11 +184,10 @@
                         )
                     ) AS printers',
                     'tblShopProductTimes.productTimes',
-                    'tbl_shop_products_types.id AS productTypeId',
-                    'tbl_shop_products_types.type AS productType',
-                    'tbl_shop_products_types.isMain AS isMain',
                 ],
-                'where' => ['tbl_shop_categories.userId=' => $userId],
+                'where' => [
+                    'tbl_shop_categories.userId=' => $userId
+                ],
                 'joins' =>  [
                     ['tbl_shop_products', $this->table.'.productId = tbl_shop_products.id', 'LEFT'],
                     ['tbl_shop_categories', 'tbl_shop_products.categoryId = tbl_shop_categories.id', 'LEFT'],
@@ -291,35 +212,57 @@
                         'tblShopProductTimes.productId = ' . $this->table.'.productId',
                         'LEFT'
                     ],
-                    ['tbl_shop_products_types', 'tbl_shop_products_types.id = ' . $this->table . '.productTypeId', 'INNER']
+                    ['tbl_shop_products_types', 'tbl_shop_products_types.id = ' . $this->table . '.productTypeId','INNER'],
+                    [
+                        '(
+                            SELECT '
+                                // . $this->table . '.id,'
+                                . $this->table . '.productTypeId,'
+                                . $this->table . '.name,
+                                GROUP_CONCAT('
+                                    . $this->table. '.id,
+                                    \'|\',' . $this->table. '.name,
+                                    \'|\',' . $this->table. '.shortDescription,
+                                    \'|\',' . 'FORMAT(' . $this->table . '.price,2),
+                                    \'|\',' . $this->table. '.vatpercentage,
+                                    \'|\',' . $this->table. '.productTypeId,
+                                    \'|\', tbl_shop_products_types.type,
+                                    \'|\', tbl_shop_products_types.isMain,
+                                    \'|\',' . $this->table. '.updateCycle
+                                    
+                                    SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"
+                                ) AS productDetails
+                            FROM
+                                ' . $this->table . '
+                            INNER JOIN
+                                tbl_shop_products_types ON ' . $this->table . '.productTypeId = tbl_shop_products_types.id
 
+                            GROUP BY ' . $this->table. '.productId
+                            
+                        ) tblShopProductDetails',                    
+                        'tblShopProductDetails.productTypeId = tbl_shop_products_types.id AND tblShopProductDetails.name = ' . $this->table . '.name',
+                        'INNER'
+                    ]
                 ],
                 'conditions' => [
-                    'GROUP_BY' => ['tbl_shop_products_extended.id'],
-                    'ORDER_BY' => ['tbl_shop_products_extended.id DESC'],
+                    'GROUP_BY' => [$this->table. '.productId'],
+                    'ORDER_BY' => [$this->table. '.id DESC'],
                 ]
             ];
 
             $products = $this->readImproved($filter);
 
             if (is_null($products)) return null;
-            if ($all) return $products;
 
             $this->load->helper('utility_helper');
 
-            $productIds = [];
-            $return = [];
-            foreach ($products as $product) {
-                if (!in_array($product['productId'], $productIds)) {
-                    $this->prepareProductTime($product, $this->config->item('contactGroupSeparator'));
-                    array_push($return, $product);
-                    array_push($productIds, $product['productId']);
-                }
+            foreach ($products as $key => $product) {
+                $products[$key]['productTimes'] = $this->prepareProductTimes($product['productTimes'], $this->config->item('contactGroupSeparator'));
+                $products[$key]['productDetails'] = $this->prepareProductDetails($product['productDetails'], $this->config->item('contactGroupSeparator'));
             }
-
-            $return = Utility_helper::resetArrayByKeyMultiple($return, 'name');
-            ksort($return);
-            return $return;
+            
+            $products = Utility_helper::resetArrayByKeyMultiple($products, 'productId');
+            return $products;
         }
 
         public function checkProductName(array $where): bool
@@ -342,15 +285,51 @@
             return $count ? true : false;
         }
 
-        private function prepareProductTime(array &$product, $separator): void
+        private function prepareProductTimes(string $productTimes, string $separator): array
         {
-            if ($product['productTimes']) {
-                $product['productTimes'] =  explode($separator, $product['productTimes']);                
-                $product['productTimes'] = array_map(function($data) {
-                    return explode('|', $data);
-                }, $product['productTimes']);
+            $productTimes =  explode($separator, $productTimes);
+            $productTimes = array_map(function($data) {
+                return explode('|', $data);
+            }, $productTimes);
+            $productTimes = Utility_helper::resetArrayByKeyMultiple($productTimes, '1');
 
-                $product['productTimes'] = Utility_helper::resetArrayByKeyMultiple($product['productTimes'], '1');
+            return $productTimes;
+        }
+
+        private function prepareProductDetails(string $productDetails, string $separator): array
+        {
+            $productDetails =  explode($separator, $productDetails);
+            $productDetails = array_map(function($data) {
+                return explode('|', $data);
+            }, $productDetails);
+
+            $cycle = 0;
+            $return = [];
+            $productExtendedIds = []; //TIQS TO DO CHECK WHY WE GET DOUBLE DATA
+
+            foreach($productDetails as $index => $details) {
+                $detailsCycle = intval($details[8]);
+                if ($cycle < $detailsCycle) {
+                    $cycle = $detailsCycle;
+                }
+                if (!in_array($details[0], $productExtendedIds)) {
+                    $collect = [
+                        'prodcutExtendedId'     => $details[0],
+                        'productName'           => $details[1],
+                        'shortDescription'      => $details[2],
+                        'price'                 => $details[3],
+                        'vatpercentage'         => $details[4],
+                        'productTypeId'         => $details[5],
+                        'productType'           => $details[6],
+                        'productTypeIsMain'     => $details[7],
+                        'productUpdateCycle'    => $details[8]
+                    ];
+                    array_push($return, $collect);
+                    array_push($productExtendedIds, $details[0]);
+
+                }
             }
+            $return = Utility_helper::resetArrayByKeyMultiple($return, 'productUpdateCycle')[$cycle];
+            return $return;
         }
     }
