@@ -204,8 +204,10 @@
             };
 
             // insert product extended
+            $countTypes = 0;
             foreach($data['productTypes'] as $typeId => $typeValues) {
-                if (isset($typeValues['check'])) {                    
+                if (isset($typeValues['check'])) {
+                    $countTypes++;
                     $data['productExtended']['productId'] = $this->shopproduct_model->id;
                     $data['productExtended']['productTypeId'] = intval($typeId);
                     $data['productExtended']['price'] = floatval($typeValues['price']);
@@ -217,6 +219,12 @@
                         redirect('products');
                     };
                 }
+            }
+
+            if ($countTypes === 0) {
+                $this->shopproduct_model->delete();
+                $this->session->set_flashdata('error', 'Please select product type(s).');
+                redirect('products');
             }
             
 
@@ -278,8 +286,10 @@
 
             
             // insert new product extended deatils
+            $countTypes = 0;
             foreach($data['productTypes'] as $typeId => $typeValues) {
                 if (isset($typeValues['check'])) {                    
+                    $countTypes++;
                     $data['productExtended']['productId'] = $this->shopproduct_model->id;
                     $data['productExtended']['productTypeId'] = intval($typeId);
                     $data['productExtended']['price'] = floatval($typeValues['price']);
@@ -292,10 +302,14 @@
             }
 
 
-            if ($insert && $update) {
+            if ($insert && $update && $countTypes > 0 ) {
                 $this->session->set_flashdata('success', 'Product updated');
             } else {
-                $this->session->set_flashdata('error', 'Update failed! Please try again.');
+                if ($countTypes === 0) {
+                    $this->session->set_flashdata('error', 'Update failed! Please select product type(s)');
+                } else {
+                    $this->session->set_flashdata('error', 'Update failed! Please try again.');
+                }                
             }
 
             // PRINTERS
@@ -330,9 +344,7 @@
             $this->shopproducttime_model->deleteProductTimes();
 
             foreach ($days as $day => $value) {
-                if (isset($value['day']) && $value['from'][0] && $value['to'][0]) {
-
-                    
+                if (isset($value['day']) && $value['from'][0] && $value['to'][0]) {                    
                     $count = count($value['from']);
                     for ($i = 0; $i < $count; $i++) {
                         $insert = [

@@ -210,14 +210,18 @@
                                         if ($product['printers']) {
                                             $printerIds = [];
                                             $productPrinters = explode(',', $product['printers']);
+                                            
                                             echo '<dl>';
                                             echo    '<dt>Printers:</dt>';
                                             foreach($productPrinters as $printer) {
                                                 $printer = explode('|', $printer);
-                                                array_push($printerIds, $printer[0]);
-                                                $string = $printer[1];
-                                                $string .= $printer[2] === '1' ? ' (<span>ACTIVE</span>)' : ' (<span>BLOCKED</span>)';
-                                                echo '<dd>' . $string . '</dd>';
+                                                if (!in_array($printer[0], $printerIds)) {
+                                                    array_push($printerIds, $printer[0]);
+                                                    $string = $printer[1];
+                                                    $string .= $printer[2] === '1' ? ' (<span>ACTIVE</span>)' : ' (<span>BLOCKED</span>)';
+                                                    echo '<dd>' . $string . '</dd>';
+                                                }
+                                                
                                             }
                                             echo '</dl>';
                                         }
@@ -476,7 +480,6 @@
                                                         if (in_array($type['id'], $productDetailsIds)) {
                                                             $checked = 'checked';
                                                             foreach($product['productDetails'] as $details) {
-                                                                
                                                                 if ($details['productTypeId'] === $type['id']) {
                                                                     $value = $details['price'];
                                                                 }

@@ -161,6 +161,30 @@
         {
             $this->load->config('custom');
 
+            $where = [
+                'tbl_shop_categories.userId=' => $userId
+            ];
+            $resetBy = 'productId';
+
+            return $this->filterProducts($userId, $where, $resetBy);
+          
+        }
+        public function getUserProductsPublic(int $userId): ?array
+        {
+            $this->load->config('custom');
+
+            $where = [
+                'tbl_shop_categories.userId=' => $userId
+            ];
+            $resetBy = 'category';
+
+            return $this->filterProducts($userId, $where, $resetBy);
+          
+        }
+        private function filterProducts(int $userId, array $where, string $resetBy): ?array
+        {
+            $this->load->config('custom');
+
             $filter = [
                 'what' => [
                     $this->table . '.productId',
@@ -185,9 +209,7 @@
                     ) AS printers',
                     'tblShopProductTimes.productTimes',
                 ],
-                'where' => [
-                    'tbl_shop_categories.userId=' => $userId
-                ],
+                'where' => $where,
                 'joins' =>  [
                     ['tbl_shop_products', $this->table.'.productId = tbl_shop_products.id', 'LEFT'],
                     ['tbl_shop_categories', 'tbl_shop_products.categoryId = tbl_shop_categories.id', 'LEFT'],
@@ -260,8 +282,7 @@
                 $products[$key]['productTimes'] = $this->prepareProductTimes($product['productTimes'], $this->config->item('contactGroupSeparator'));
                 $products[$key]['productDetails'] = $this->prepareProductDetails($product['productDetails'], $this->config->item('contactGroupSeparator'));
             }
-            
-            $products = Utility_helper::resetArrayByKeyMultiple($products, 'productId');
+            $products = Utility_helper::resetArrayByKeyMultiple($products, $resetBy);
             return $products;
         }
 
@@ -308,10 +329,13 @@
             $productExtendedIds = []; //TIQS TO DO CHECK WHY WE GET DOUBLE DATA
 
             foreach($productDetails as $index => $details) {
-                $detailsCycle = intval($details[8]);
-                if ($cycle < $detailsCycle) {
-                    $cycle = $detailsCycle;
+                if (isset($details[8])) {
+                    $detailsCycle = intval($details[8]);
+                    if ($cycle < $detailsCycle) {
+                        $cycle = $detailsCycle;
+                    }
                 }
+
                 if (!in_array($details[0], $productExtendedIds)) {
                     $collect = [
                         'prodcutExtendedId'     => $details[0],

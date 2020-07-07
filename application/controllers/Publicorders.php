@@ -67,9 +67,12 @@
             $userId = $_SESSION['vendor']['vendorId'];
 
             $data = [
-                'categoryProducts' => $this->shopproductex_model->getUserLastProductsDetailsPublic($spotId, $userId, 'category'),
+                'categoryProducts' => $this->shopproductex_model->getUserProductsPublic($userId),
                 'spotId' => $spotId,
             ];
+
+            var_dump($data['categoryProducts']);
+            die();
 
             if (isset($_SESSION['order'])) {
                 $data['ordered'] = $_SESSION['order'];
