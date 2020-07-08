@@ -125,10 +125,6 @@
                 'countries' => Country_helper::getCountries()
             ];
 
-            echo '<pre>';
-            print_r($data['orderDetails']);
-            echo '</pre>';
-            die();
             $data['username'] = isset($_SESSION['postOrder']['user']['username']) ? $_SESSION['postOrder']['user']['username'] : '';
             $data['email'] = isset($_SESSION['postOrder']['user']['email']) ? $_SESSION['postOrder']['user']['email'] : '';
             $data['userCountry'] = isset($_SESSION['postOrder']['user']['country']) ? $_SESSION['postOrder']['user']['country'] : '';

@@ -90,7 +90,7 @@
                                                     \"category{$product['productExtendedId']}_{$mainProductExtendedId}\",
                                                     \"name{$product['productExtendedId']}_{$mainProductExtendedId}\",
                                                     \"shortDescription{$product['productExtendedId']}_{$mainProductExtendedId}\",
-                                                    \"productPrice{$product['productExtendedId']}\",
+                                                    \"productPrice{$product['productExtendedId']}_{$mainProductExtendedId}\",
                                                     \"showOrderedQuantity{$product['productExtendedId']}_{$mainProductExtendedId}\",
                                                     false
                                                 )'
@@ -110,7 +110,7 @@
                                                     \"category{$product['productExtendedId']}_{$mainProductExtendedId}\",
                                                     \"name{$product['productExtendedId']}_{$mainProductExtendedId}\",
                                                     \"shortDescription{$product['productExtendedId']}\",
-                                                    \"productPrice{$product['productExtendedId']}\",
+                                                    \"productPrice{$product['productExtendedId']}_{$mainProductExtendedId}\",
                                                     \"showOrderedQuantity{$product['productExtendedId']}_{$mainProductExtendedId}\",
                                                     true
                                                 )'
@@ -187,6 +187,7 @@
                                     // foreach($products as $product) {
                                         $products = Utility_helper::resetArrayByKeyMultiple($products, 'productTypeIsMain');
                                         #var_dump($products);
+                                        if (!isset($products[1])) continue;
                                         $product = $products[1][0];
                                         $mainProductExtendedId = $product['productExtendedId'];                                    
                                         ?>

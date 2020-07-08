@@ -33,88 +33,176 @@
                             $count = 0;
                             $orderTotal = 0;
                             $total = 0;
-                            foreach ($orderDetails as $productExtendedId => $prodcut) {
-                                
-                                $count++;
-                        ?>
-                        <!-- start checkout single element -->
-                        <div class="checkout-table__single-element" id="element<?php echo $productExtendedId; ?>">
-                            <div class='checkout-table__num-order'>
-                                <b class="counterClass"><?php echo $count; ?>.</b>
-                            </div>
-                            <div class='checkout-table__product-details'>
-                                <p><?php echo $prodcut['name'][0]; ?></p>
-                                <small><?php echo $prodcut['category'][0]; ?></small>
-                            </div>
-                            <div class='checkout-table__numbers'>
-                                <div class="checkout-table__quantity">
-                                    <span
-                                        class="fa-stack makeOrder"
-                                        onclick="changeQuantity(
-                                            true,
-                                            <?php echo $prodcut['price'][0]; ?>,
-                                            'quantity<?php echo $productExtendedId; ?>',
-                                            'amount<?php echo $productExtendedId; ?>',                                            
-                                            'serviceFee',
-                                            'totalAmount',
-                                            'orderExtended<?php echo $productExtendedId; ?>',
-                                            '<?php echo $productExtendedId; ?>',
-                                            '<?php echo $vendor['serviceFeePercent']; ?>',
-                                            '<?php echo $vendor['serviceFeeAmount']; ?>',
-                                        )"
-                                        >
-                                        <i class="fa fa-plus"></i>
-                                    </span>
-                                    <span class='checkout-table__number-of-products' id="quantity<?php echo $productExtendedId; ?>">
-                                        <?php echo $prodcut['quantity'][0]; ?>
-                                    </span>
-                                    <span
-                                        class="fa-stack makeOrder"
-                                        onclick="changeQuantity(
-                                            false,
-                                            <?php echo $prodcut['price'][0]; ?>,
-                                            'quantity<?php echo $productExtendedId; ?>',
-                                            'amount<?php echo $productExtendedId; ?>',                                            
-                                            'serviceFee',
-                                            'totalAmount',
-                                            'orderExtended<?php echo $productExtendedId; ?>',
-                                            '<?php echo $productExtendedId; ?>',
-                                            '<?php echo $vendor['serviceFeePercent']; ?>',
-                                            '<?php echo $vendor['serviceFeeAmount']; ?>',
-                                        )"
-                                        >
-                                        <i class="fa fa-minus"></i>
-                                    </span>
-                                    <input
-                                        type="number"
-                                        min="0"
-                                        step="1"
-                                        name="orderExtended[<?php echo $productExtendedId; ?>][quantity]"
-                                        id = "orderExtended<?php echo $productExtendedId; ?>"
-                                        value="<?php echo $prodcut['quantity'][0]; ?>"
-                                        required hidden />
-                                </div>
-                                <div class="checkout-table__price">
-                                    <p>
-                                        <span id="amount<?php echo $productExtendedId; ?>">
-                                            <?php echo number_format($prodcut['amount'][0], 2, ".", ","); ?>
-                                        </span>&nbsp;&euro;
-                                        <?php $orderTotal += filter_var($prodcut['amount'][0], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); ?>
-                                    </p>
-                                    <i class="fa fa-trash" onclick="removeElement(
-                                            'element<?php echo $productExtendedId; ?>',
-                                            'counterClass',
-                                            'amount<?php echo $productExtendedId; ?>',
-                                            'serviceFee',
-                                            'totalAmount', '<?php echo $productExtendedId; ?>',
-                                            '<?php echo $vendor['serviceFeePercent']; ?>',
-                                            '<?php echo $vendor['serviceFeeAmount']; ?>',
-                                        )"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end checkout single element -->
-                        <?php
+                            foreach ($orderDetails as $productExtendedId => $product) {
+                                if (!isset($product['mainProduct'])) {
+                                    $count++;
+                                    $mainExtendedId = $productExtendedId;
+                                    $mainName = $product['name'][0];;
+                                ?>                                    
+                                    <!-- start checkout single element -->
+                                    <div class="checkout-table__single-element" id="element<?php echo $productExtendedId; ?>">
+                                        <div class='checkout-table__num-order'>
+                                            <b class="counterClass"><?php echo $count; ?>.</b>
+                                        </div>
+                                        <div class='checkout-table__product-details'>
+                                            <p><?php echo $product['name'][0]; ?></p>
+                                            <small><?php echo $product['category'][0]; ?></small>
+                                        </div>
+                                        <div class='checkout-table__numbers'>
+                                            <div class="checkout-table__quantity">
+                                                <span
+                                                    class="fa-stack makeOrder"
+                                                    onclick="changeQuantity(
+                                                        true,
+                                                        <?php echo $product['price'][0]; ?>,
+                                                        'quantity<?php echo $productExtendedId; ?>',
+                                                        'amount<?php echo $productExtendedId; ?>',                                            
+                                                        'serviceFee',
+                                                        'totalAmount',
+                                                        'orderExtended<?php echo $productExtendedId; ?>',
+                                                        '<?php echo $productExtendedId; ?>',
+                                                        '<?php echo $vendor['serviceFeePercent']; ?>',
+                                                        '<?php echo $vendor['serviceFeeAmount']; ?>',
+                                                    )"
+                                                    >
+                                                    <i class="fa fa-plus"></i>
+                                                </span>
+                                                <span class='checkout-table__number-of-products' id="quantity<?php echo $productExtendedId; ?>">
+                                                    <?php echo $product['quantity'][0]; ?>
+                                                </span>
+                                                <span
+                                                    class="fa-stack makeOrder"
+                                                    onclick="changeQuantity(
+                                                        false,
+                                                        <?php echo $product['price'][0]; ?>,
+                                                        'quantity<?php echo $productExtendedId; ?>',
+                                                        'amount<?php echo $productExtendedId; ?>',                                            
+                                                        'serviceFee',
+                                                        'totalAmount',
+                                                        'orderExtended<?php echo $productExtendedId; ?>',
+                                                        '<?php echo $productExtendedId; ?>',
+                                                        '<?php echo $vendor['serviceFeePercent']; ?>',
+                                                        '<?php echo $vendor['serviceFeeAmount']; ?>',
+                                                    )"
+                                                    >
+                                                    <i class="fa fa-minus"></i>
+                                                </span>
+                                                <input
+                                                    type="number"
+                                                    min="0"
+                                                    step="1"
+                                                    name="orderExtended[<?php echo $productExtendedId; ?>][quantity]"
+                                                    id = "orderExtended<?php echo $productExtendedId; ?>"
+                                                    value="<?php echo $product['quantity'][0]; ?>"
+                                                    required hidden />
+                                            </div>
+                                            <div class="checkout-table__price">
+                                                <p>
+                                                    <span id="amount<?php echo $productExtendedId; ?>">
+                                                        <?php echo number_format($product['amount'][0], 2, ".", ","); ?>
+                                                    </span>&nbsp;&euro;
+                                                    <?php $orderTotal += filter_var($product['amount'][0], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); ?>
+                                                </p>
+                                                <i class="fa fa-trash" onclick="removeElement(
+                                                        'element<?php echo $productExtendedId; ?>',
+                                                        'counterClass',
+                                                        'amount<?php echo $productExtendedId; ?>',
+                                                        'serviceFee',
+                                                        'totalAmount', '<?php echo $productExtendedId; ?>',
+                                                        '<?php echo $vendor['serviceFeePercent']; ?>',
+                                                        '<?php echo $vendor['serviceFeeAmount']; ?>',
+                                                    )"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end checkout single element -->
+                                <?php
+                                } elseif (isset($product['mainProduct'])) {
+                                    if (!isset($product['mainProduct'][$mainExtendedId])) {
+                                        $redirect = 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spotId;
+                                        redirect($redirect);
+                                    }
+                                    $product = $product['mainProduct'][$mainExtendedId];
+                                ?>
+                                    <!-- start checkout single element -->
+                                    <div  class="checkout-table__single-element" id="element<?php echo $productExtendedId; ?>">
+                                        <!-- <div class='checkout-table__num-order'>
+                                            <b class="counterClass"></b>
+                                        </div> -->
+                                        <div class='checkout-table__product-details'>
+                                            <p><?php echo $product['name'][0] . ' (' . $mainName . ')'; ?> </p>
+                                            <small><?php echo $product['category'][0]; ?></small>
+                                        </div>
+                                        <div class='checkout-table__numbers'>
+                                            <div class="checkout-table__quantity">
+                                                <span
+                                                    class="fa-stack makeOrder"
+                                                    onclick="changeQuantity(
+                                                        true,
+                                                        <?php echo $product['price'][0]; ?>,
+                                                        'quantity<?php echo $productExtendedId; ?>',
+                                                        'amount<?php echo $productExtendedId; ?>',                                            
+                                                        'serviceFee',
+                                                        'totalAmount',
+                                                        'orderExtended<?php echo $productExtendedId; ?>',
+                                                        '<?php echo $productExtendedId; ?>',
+                                                        '<?php echo $vendor['serviceFeePercent']; ?>',
+                                                        '<?php echo $vendor['serviceFeeAmount']; ?>',
+                                                    )"
+                                                    >
+                                                    <i class="fa fa-plus"></i>
+                                                </span>
+                                                <span class='checkout-table__number-of-products' id="quantity<?php echo $productExtendedId; ?>">
+                                                    <?php echo $product['quantity'][0]; ?>
+                                                </span>
+                                                <span
+                                                    class="fa-stack makeOrder"
+                                                    onclick="changeQuantity(
+                                                        false,
+                                                        <?php echo $product['price'][0]; ?>,
+                                                        'quantity<?php echo $productExtendedId; ?>',
+                                                        'amount<?php echo $productExtendedId; ?>',                                            
+                                                        'serviceFee',
+                                                        'totalAmount',
+                                                        'orderExtended<?php echo $productExtendedId; ?>',
+                                                        '<?php echo $productExtendedId; ?>',
+                                                        '<?php echo $vendor['serviceFeePercent']; ?>',
+                                                        '<?php echo $vendor['serviceFeeAmount']; ?>',
+                                                    )"
+                                                    >
+                                                    <i class="fa fa-minus"></i>
+                                                </span>
+                                                <input
+                                                    type="number"
+                                                    min="0"
+                                                    step="1"
+                                                    name="orderExtended[<?php echo $productExtendedId; ?>][quantity]"
+                                                    id = "orderExtended<?php echo $productExtendedId; ?>"
+                                                    value="<?php echo $product['quantity'][0]; ?>"
+                                                    required hidden />
+                                            </div>
+                                            <div class="checkout-table__price">
+                                                <p>
+                                                    <span id="amount<?php echo $productExtendedId; ?>">
+                                                        <?php echo number_format($product['amount'][0], 2, ".", ","); ?>
+                                                    </span>&nbsp;&euro;
+                                                    <?php $orderTotal += filter_var($product['amount'][0], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); ?>
+                                                </p>
+                                                <i class="fa fa-trash" onclick="removeElement(
+                                                        'element<?php echo $productExtendedId; ?>',
+                                                        'counterClass',
+                                                        'amount<?php echo $productExtendedId; ?>',
+                                                        'serviceFee',
+                                                        'totalAmount', '<?php echo $productExtendedId; ?>',
+                                                        '<?php echo $vendor['serviceFeePercent']; ?>',
+                                                        '<?php echo $vendor['serviceFeeAmount']; ?>',
+                                                    )"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end checkout single element -->
+                                <?php
+                                }
                             }
                         ?>
                     </div>

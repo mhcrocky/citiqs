@@ -83,14 +83,14 @@ function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, 
         quantityElement.disabled = false;
         categoryElement.disabled = false;
         nameElement.disabled = false;
-        descriptionElement.disabled = false;
+        // descriptionElement.disabled = false;
         priceElement.disabled = false;
     } else {
         amountElement.disabled = true;
         quantityElement.disabled = true;
         categoryElement.disabled = true;
         nameElement.disabled = true;
-        descriptionElement.disabled = true;
+        // descriptionElement.disabled = true;
         priceElement.disabled = true;
     }
 

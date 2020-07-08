@@ -3,10 +3,13 @@
     $totalOrder = 0;
     $total = 0;
     $quantiy = 0;
-//    var_dump($ordered);
-//    die();
 
     foreach($ordered as $productExtendedId => $data) {
+        if (!isset($data['mainProduct'])) {
+            $mainExtendedId = $productExtendedId;
+        } else {
+            $data = $data['mainProduct'][$mainExtendedId ];
+        }
         $quantiy = $quantiy + intval($data['quantity'][0]);
         $totalOrder = $totalOrder + floatval($data['amount'][0]);
 
@@ -15,8 +18,9 @@
         $tableRows .=   '<td>' . number_format($data['amount'][0], 2, '.', ',') . '</td>';
         $tableRows .= '</tr>';
     }
-    $serviceFee = $totalOrder * 0.045;
-    if ($serviceFee > 3.50) $serviceFee = 3.50;
+
+    $serviceFee = $totalOrder * $vendor['serviceFeePercent'] / 100;
+    if ($serviceFee > $vendor['serviceFeeAmount']) $serviceFee = $vendor['serviceFeeAmount'];
     $total = $totalOrder + $serviceFee;
 ?>
 <div class="container" id="shopping-cart">

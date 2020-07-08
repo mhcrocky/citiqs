@@ -198,6 +198,7 @@
                 $data['product']['dateTimeFrom'] = date('Y-m-d H:i:s', strtotime($data['product']['dateTimeFrom']));
                 $data['product']['dateTimeTo'] = date('Y-m-d H:i:s', strtotime($data['product']['dateTimeTo']));
             }
+
             if (!$this->shopproduct_model->setObjectFromArray($data['product'])->create()) {
                 $this->session->set_flashdata('error', 'Product insert failed! Please try again.');
                 redirect('products');
@@ -212,9 +213,7 @@
                     $data['productExtended']['productTypeId'] = intval($typeId);
                     $data['productExtended']['price'] = floatval($typeValues['price']);
                     $data['productExtended']['updateCycle'] = 1;
-                    $data['productExtended']['showInPublic'] = 1;
-                    
-
+                    $data['productExtended']['showInPublic'] = '1';                    
                     if(!$this->shopproductex_model->setObjectFromArray($data['productExtended'])->create()) {
                         $this->shopproduct_model->delete();
                         $this->session->set_flashdata('error', 'Product insert failed! Please try again.');
@@ -289,7 +288,6 @@
             // insert new product extended deatils
             $countTypes = 0;
             foreach($data['productTypes'] as $typeId => $typeValues) {
-                var_dump($typeValues);
                 if (isset($typeValues['check'])) {                    
                     $countTypes++;
                     $data['productExtended']['productId'] = $this->shopproduct_model->id;
