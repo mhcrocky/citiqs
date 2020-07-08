@@ -65,14 +65,14 @@
             $this->global['pageTitle'] = 'TIQS : ORDERING';
 
             $userId = $_SESSION['vendor']['vendorId'];
+            $time = time();
 
             $data = [
                 'categoryProducts' => $this->shopproductex_model->getUserProductsPublic($userId),
                 'spotId' => $spotId,
+                'day' => date('D', $time),
+                'hours' => strtotime(date('H:i:s', $time))
             ];
-
-            var_dump($data['categoryProducts']);
-            die();
 
             if (isset($_SESSION['order'])) {
                 $data['ordered'] = $_SESSION['order'];
