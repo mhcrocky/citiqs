@@ -1,7 +1,7 @@
 'use strict';
 
 function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, categoryId, nameId, decsriptionId, priceId, showOrderedQuantity, plus) {
-    console.dir(amountId);
+
     let amountElement = document.getElementById(amountId);
     let amountValue = parseFloat(amountElement.value);
 

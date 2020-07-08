@@ -74,9 +74,9 @@
                 'hours' => strtotime(date('H:i:s', $time))
             ];
 
-            if (isset($_SESSION['order'])) {
-                $data['ordered'] = $_SESSION['order'];
-            }
+            // if (isset($_SESSION['order'])) {
+            //     $data['ordered'] = $_SESSION['order'];
+            // }
 
             $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
             return;
@@ -109,11 +109,6 @@
 
             $post = $this->input->post(null, true);
 
-            echo '<pre>';
-            print_r($post);
-            echo '<pre>';
-            die();
-
             if (!empty($post)) {
                 $_SESSION['spotId'] = $post['spotId'];
                 unset($post['spotId']);
@@ -130,6 +125,10 @@
                 'countries' => Country_helper::getCountries()
             ];
 
+            echo '<pre>';
+            print_r($data['orderDetails']);
+            echo '</pre>';
+            die();
             $data['username'] = isset($_SESSION['postOrder']['user']['username']) ? $_SESSION['postOrder']['user']['username'] : '';
             $data['email'] = isset($_SESSION['postOrder']['user']['email']) ? $_SESSION['postOrder']['user']['email'] : '';
             $data['userCountry'] = isset($_SESSION['postOrder']['user']['country']) ? $_SESSION['postOrder']['user']['country'] : '';

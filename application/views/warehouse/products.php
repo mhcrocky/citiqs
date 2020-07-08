@@ -482,7 +482,7 @@
                                                         #var_dump($type); die();
                                                         $value = 0;
                                                         $checked = '';
-                                                        
+                                                        $showInPublic = '';
 
                                                         if (in_array($type['id'], $productDetailsIds)) {
                                                             $checked = 'checked';
