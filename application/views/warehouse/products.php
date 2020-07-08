@@ -199,7 +199,7 @@
                         ?>
                             <div class="grid-item">
                                 <div class="item-header">
-                                    <p class="item-description">Name: <?php echo $details['productName']; ?></p>                                  
+                                    <p class="item-description">Name: <?php echo $details['name']; ?></p>                                  
                                     <p class="item-description">Category: 
                                         <?php
                                             echo $product['category'];
@@ -276,7 +276,7 @@
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                     <h4 class="modal-title">
-                                                        Set availability days and time for product "<?php echo $details['productName']; ?>"
+                                                        Set availability days and time for product "<?php echo $details['name']; ?>"
                                                     </h4>
                                                 </div>
                                                 <div class="modal-body">
@@ -388,7 +388,7 @@
                                                 <legend style="text-align:left;">Product basic data</legend>
                                                 <div class="col-lg-4 col-sm-12">
                                                     <label for="name<?php echo $product['productId'] ?>">Name: </label>
-                                                    <input type="text" name="productExtended[name]" id="name<?php echo $product['productId'] ?>" class="form-control" requried value="<?php echo $details['productName']; ?>" />
+                                                    <input type="text" name="productExtended[name]" id="name<?php echo $product['productId'] ?>" class="form-control" requried value="<?php echo $details['name']; ?>" />
                                                 </div>
                                                 <div class="col-lg-4 col-sm-12">
                                                     <label for="editCategoryId<?php echo $product['productId'] ?>">Product category: </label>
@@ -515,9 +515,13 @@
                                                                 id="productActive<?php echo $type['id'] . $product['productId']; ?>"
                                                                 name="productTypes[<?php echo $type['id']; ?>][showInPublic]"
                                                                 value="<?php echo $type['id']; ?>"
-                                                                <?php echo $showInPublic; ?>
+                                                                <?php echo ($showInPublic && $checked) ? $showInPublic : ''; ?>
                                                                 />
-                                                            Active status <?php echo ($showInPublic) ? '<span style="background-color: #99ff66">(ACTIVE)</span>' : '<span style="background-color: #ff4d4d">(BLOCKED)</span> '; ?>
+                                                                <?php if ($checked) { ?>
+                                                                    Active status <?php echo ($showInPublic) ? '<span style="background-color: #99ff66">(ACTIVE)</span>' : '<span style="background-color: #ff4d4d">(BLOCKED)</span> '; ?>
+                                                                <?php } else { ?>
+                                                                    Active status
+                                                                <?php } ?>
                                                         </label>
                                                         <label for="price<?php echo $type['id'] . $product['productId']; ?>">Price: </label>
                                                         <input

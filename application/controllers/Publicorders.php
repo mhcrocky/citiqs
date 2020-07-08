@@ -109,6 +109,11 @@
 
             $post = $this->input->post(null, true);
 
+            echo '<pre>';
+            print_r($post);
+            echo '<pre>';
+            die();
+
             if (!empty($post)) {
                 $_SESSION['spotId'] = $post['spotId'];
                 unset($post['spotId']);
