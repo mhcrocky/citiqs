@@ -28,6 +28,7 @@
             $this->load->model('shopspotproducts_model');
             $this->load->model('shopproducttime_model');
             $this->load->model('shopprodutctype_model');
+            $this->load->model('shopproductaddons_model');
 
             $this->load->library('language', array('controller' => $this->router->class));
             $this->load->library('session');
@@ -167,6 +168,10 @@
                 'productTypes' => $this->shopprodutctype_model->fetchProductTypes($userId),
             ];
 
+            // echo '<pre>';
+            // print_r($data['products']);
+            // echo '</pre>';
+            // die();
             $this->loadViews('warehouse/products', $this->global, $data, null, 'headerWarehouse');
             return;
         }
@@ -669,4 +674,32 @@
             return;
         }
 
+        /**
+         * Add addons to a product
+         */
+        public function addProductAddons(): void
+        {
+            $productId = intval($this->uri->segment(3));
+            $data = $this->input->post(null, true);
+            $productAddons = $data['productAddons'];
+            $product =  $this->shopproductex_model->setProperty('productId', $productId)->getProductName();
+            $success = true;
+
+            if (!$this->shopproductaddons_model->setProperty('productId', $productId)->deleteProductAddons()) {
+                $this->session->set_flashdata('error', 'Addons insert failed for product "' . $product . '"!');
+            } else {
+                foreach($productAddons as $productExtendedId) {
+                    if (!$this->shopproductaddons_model->setObjectFromArray(['productExtendedId' => $productExtendedId])->create()) {
+                        $this->shopproductaddons_model->setProperty('productId', $productId)->deleteProductAddons();
+                        $this->session->set_flashdata('error', 'Addons insert failed for product "' . $product . '"!');
+                        $success = false;
+                        break;
+                    };
+                }
+
+                if ($success) $this->session->set_flashdata('success', 'Addons inserted for product "' . $product . '"!');
+            }
+
+            redirect('products');
+        }
     }

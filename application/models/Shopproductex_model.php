@@ -170,7 +170,8 @@
                                     \'|\', tbl_shop_products_types.type,
                                     \'|\', tbl_shop_products_types.isMain,
                                     \'|\',' . $this->table. '.updateCycle,
-                                    \'|\',' . $this->table. '.showInPublic
+                                    \'|\',' . $this->table. '.showInPublic,
+                                    \'|\',' . $this->table . '.productId
                                     ORDER BY ' . $this->table. '.id DESC
                                     SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"                                    
                                 ) AS productDetails
@@ -261,11 +262,19 @@
                     'productType'           => $details[6],
                     'productTypeIsMain'     => $details[7],
                     'productUpdateCycle'    => $details[8],
-                    'showInPublic'          => $details[9]
+                    'showInPublic'          => $details[9],
+                    'productId'             => $details[10],
                 ];
                 array_push($return, $collect);
             }
 
             return $return;
+        }
+
+        public function getProductName(): string
+        {
+            $query = 'SELECT name FROM ' . $this->table . '  WHERE productId = ' . $this->productId . ' ORDER BY id DESC LIMIT 1;';
+            $result = $this->db->query($query);
+            return $result->result_array()[0]['name'];
         }
     }
