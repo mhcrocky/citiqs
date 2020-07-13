@@ -34,7 +34,7 @@ function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, 
                 amountValue = 0;
             }
             
-            let orderAmountValue = parseInt(orderAmountElement.innerHTML);
+            let orderAmountValue = parseFloat(orderAmountElement.innerHTML);
 
             if (orderAmountValue > 0 && amountValue > 0) {
                 orderAmountElement.innerHTML = (orderAmountValue - parseFloat(price)).toFixed(2);

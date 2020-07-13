@@ -182,13 +182,17 @@
                             <?php
 
                                 foreach($productsRawData as $productRaw) {
+                                    
                                     if (!checkTime($day, $hours, $productRaw['productTimes'])) continue;
                                     $products = $productRaw['productDetails'];
                                     // foreach($products as $product) {
                                         $products = Utility_helper::resetArrayByKeyMultiple($products, 'productTypeIsMain');
                                         #var_dump($products);
+                                        
                                         if (!isset($products[1])) continue;
                                         $product = $products[1][0];
+                                        if ($product['showInPublic'] === '0') continue;
+
                                         $mainProductExtendedId = $product['productExtendedId'];                                    
                                         ?>
                                             <?php 
