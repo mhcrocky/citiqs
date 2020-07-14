@@ -172,7 +172,7 @@
                     <?php
                         $addOnsList = '';
                         foreach ($products as $productId => $product) {
-                            
+
                             $isMain = false;
                             $product = reset($product);
                             $productDetailsIds = [];
@@ -525,7 +525,6 @@
                                                 <legend style="text-align:left;">Select product types</legend>
                                                 <?php
                                                     foreach ($productTypes as $type) {
-                                                        #var_dump($type); die();
                                                         $value = 0;
                                                         $checked = '';
                                                         $showInPublic = '';
@@ -533,17 +532,26 @@
                                                         if (in_array($type['id'], $productDetailsIds)) {
                                                             $checked = 'checked';
                                                             $showInPublic = 'checked';
-                                                            foreach($product['productDetails'] as $details) {
+                                                            foreach($product['productDetails'] as $details) {                                                                
                                                                 if ($details['productTypeId'] === $type['id']) {
                                                                     if ($details['showInPublic'] === '0') {
                                                                         $showInPublic = '';
                                                                     }
                                                                     $value = $details['price'];
+                                                                    $productExtendedId = $details['productExtendedId'];
                                                                 }
                                                             }
                                                         }
                                                     ?>
                                                     <div class="col-lg-4 col-sm-12">
+                                                        <?php
+                                                            if (isset($productExtendedId)) {
+                                                            ?>
+                                                                <input type="number" value="<?php echo $productExtendedId; ?>" name="productTypes[<?php echo $type['id']; ?>][oldExtendedId]" readonly required hidden />
+                                                            <?php
+                                                                unset($productExtendedId);
+                                                            }
+                                                        ?>
                                                         <h3><?php echo $type['productType']; ?></h3>
                                                         <label class="checkbox-inline" for="productType<?php echo $type['id'] . $product['productId']; ?>">
                                                             <input
@@ -645,6 +653,4 @@
     }
 
     populateClassElements('addOns', '<?php echo $addOnsList; ?>');
-
-
 </script>

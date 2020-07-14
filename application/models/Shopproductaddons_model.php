@@ -62,4 +62,10 @@
             $query = 'DELETE FROM ' . $this->table . ' WHERE productId = ' . $this->productId . ';';
             return $this->db->query($query);
         }
+
+        public function updateProductExtendedId(int $oldExtendedId, int $newExtendedId): void
+        {
+            $query = 'UPDATE ' . $this->table . ' SET productExtendedId = ' . $newExtendedId . ' WHERE productExtendedId = ' . $oldExtendedId . ';';
+            $this->db->query($query);
+        }
     }

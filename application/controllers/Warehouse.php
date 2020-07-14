@@ -293,7 +293,7 @@
             // insert new product extended deatils
             $countTypes = 0;
             foreach($data['productTypes'] as $typeId => $typeValues) {
-                if (isset($typeValues['check'])) {                    
+                if (isset($typeValues['check'])) {
                     $countTypes++;
                     $data['productExtended']['productId'] = $this->shopproduct_model->id;
                     $data['productExtended']['productTypeId'] = intval($typeId);
@@ -307,11 +307,15 @@
                     if(!$this->shopproductex_model->setObjectFromArray($data['productExtended'])->create()) {
                         $insert = false;
                         break;
+                    } else {
+                        if ($typeValues['oldExtendedId']) {
+                            $oldExtendedId = intval($typeValues['oldExtendedId']);
+                            $this->shopproductaddons_model->updateProductExtendedId($oldExtendedId, $this->shopproductex_model->id);
+                        }
                     };
                 }
                 $insert = true;
             }
-
 
             if ($insert && $update && $countTypes > 0 ) {
                 $this->session->set_flashdata('success', 'Product updated');
@@ -674,6 +678,7 @@
             return;
         }
 
+        // ADDONS
         /**
          * Add addons to a product
          */
