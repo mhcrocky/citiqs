@@ -683,13 +683,17 @@
             $data = $this->input->post(null, true);
             $productAddons = $data['productAddons'];
             $product =  $this->shopproductex_model->setProperty('productId', $productId)->getProductName();
-            $success = true;
+            $success = true;            
 
             if (!$this->shopproductaddons_model->setProperty('productId', $productId)->deleteProductAddons()) {
                 $this->session->set_flashdata('error', 'Addons insert failed for product "' . $product . '"!');
             } else {
-                foreach($productAddons as $productExtendedId) {
-                    if (!$this->shopproductaddons_model->setObjectFromArray(['productExtendedId' => $productExtendedId])->create()) {
+                foreach($productAddons as $productExtendedId => $addonProductId) {
+                    $insert = [
+                        'addonProductId' => $addonProductId,
+                        'productExtendedId' => $productExtendedId
+                    ];
+                    if (!$this->shopproductaddons_model->setObjectFromArray($insert)->create()) {
                         $this->shopproductaddons_model->setProperty('productId', $productId)->deleteProductAddons();
                         $this->session->set_flashdata('error', 'Addons insert failed for product "' . $product . '"!');
                         $success = false;

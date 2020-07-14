@@ -203,8 +203,8 @@
                                 $addOnsList .= '<label class="checkbox-inline">';
                                 $addOnsList .= '<input ';
                                 $addOnsList .=     'type="checkbox" ';
-                                $addOnsList .=     'value="' . $details['productExtendedId'] . '" ';
-                                $addOnsList .=     'name="productAddons[]" ';
+                                $addOnsList .=     'value="' . $productId . '" ';
+                                $addOnsList .=     'name="productAddons[' . $details['productExtendedId'] . ']" ';
                                 $addOnsList .= '/>';
                                 $addOnsList .= $details['name'] . ' (' . $details['productType']. ')';
                                 $addOnsList .= '</label>';

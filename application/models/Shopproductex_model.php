@@ -125,8 +125,10 @@
                             \'|\', tbl_shop_printers.printer,
                             \'|\', tbl_shop_printers.active
                         )
-                    ) AS printers',
+                    ) AS printers',                    
                     'tblShopProductTimes.productTimes',
+                    'tblShopAddons.addons AS addons'
+                   
                 ],
                 'where' => $where,
                 'joins' =>  [
@@ -171,7 +173,8 @@
                                     \'|\', tbl_shop_products_types.isMain,
                                     \'|\',' . $this->table. '.updateCycle,
                                     \'|\',' . $this->table. '.showInPublic,
-                                    \'|\',' . $this->table . '.productId
+                                    \'|\',' . $this->table . '.productId,
+                                    \'|\', tbl_shop_categories.category
                                     ORDER BY ' . $this->table. '.id DESC
                                     SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"                                    
                                 ) AS productDetails
@@ -179,6 +182,10 @@
                                 ' . $this->table . '
                             INNER JOIN
                                 tbl_shop_products_types ON ' . $this->table . '.productTypeId = tbl_shop_products_types.id
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products.id = ' . $this->table . '.productId
+                            INNER JOIN
+                                tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
 
                             GROUP BY ' . $this->table. '.productId
                             ORDER BY ' . $this->table. '.productTypeId DESC
@@ -186,6 +193,28 @@
                         ) tblShopProductDetails',
                         'tblShopProductDetails.productTypeId = tbl_shop_products_types.id AND tblShopProductDetails.name = ' . $this->table . '.name',
                         'INNER'
+                    ],
+                    [
+                        '(
+                            SELECT 
+                                tbl_shop_products_addons.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_addons.productId,
+                                    \'|\', tbl_shop_products_addons.addonProductId,
+                                    \'|\', tbl_shop_products_addons.productExtendedId
+
+                                    SEPARATOR "' . $this->config->item('contactGroupSeparator') . '"                                    
+                                ) AS addons
+                            FROM
+                                tbl_shop_products_addons
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products_addons.productId = tbl_shop_products.id
+
+                            GROUP BY tbl_shop_products_addons.productId
+                            
+                        ) tblShopAddons',
+                        'tblShopAddons.productId = tbl_shop_products.id',
+                        'LEFT'
                     ]
                 ],
                 'conditions' => [
@@ -264,6 +293,7 @@
                     'productUpdateCycle'    => $details[8],
                     'showInPublic'          => $details[9],
                     'productId'             => $details[10],
+                    'category'              => $details[11],
                 ];
                 array_push($return, $collect);
             }
