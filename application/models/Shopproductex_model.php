@@ -232,6 +232,9 @@
             foreach ($products as $key => $product) {
                 $products[$key]['productTimes'] = $this->prepareProductTimes($product['productTimes'], $this->config->item('contactGroupSeparator'));
                 $products[$key]['productDetails'] = $this->prepareProductDetails($product['productDetails'], $this->config->item('contactGroupSeparator'));
+                if ($products[$key]['addons']) {
+                    $products[$key]['addons'] =  $this->prepareAddons($product['addons'], $this->config->item('contactGroupSeparator'));
+                }
             }
 
             $products = Utility_helper::resetArrayByKeyMultiple($products, $resetBy);
@@ -306,5 +309,14 @@
             $query = 'SELECT name FROM ' . $this->table . '  WHERE productId = ' . $this->productId . ' ORDER BY id DESC LIMIT 1;';
             $result = $this->db->query($query);
             return $result->result_array()[0]['name'];
+        }
+
+        private function prepareAddons(string $addons, string $separator): array
+        {
+            $addons = explode($separator, $addons);
+            $addons = array_map(function($data) {
+                return explode('|', $data);
+            }, $addons);
+            return $addons;
         }
     }

@@ -299,11 +299,7 @@
                                 <div class="addOns<?php echo $product['productExtendedId']; ?> addOnsFill" style="display:none; margin: 0px 7%">
                                     <?php
                                         if (!is_null($productRaw['addons'])) {
-                                            $addons = explode($this->config->item('contactGroupSeparator'), $productRaw['addons']);
-                                            $addons = array_map(function($data) {
-                                                return explode('|', $data);
-                                            }, $addons);
-                                            
+                                            $addons = $productRaw['addons'];
                                             foreach($addons as $addon) {
                                                 $addonDetails = $productsRawData[$addon[1]][0]['productDetails'];
                                                 foreach($addonDetails as $addonSingle) {

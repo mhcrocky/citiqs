@@ -203,6 +203,7 @@
                                 $addOnsList .= '<label class="checkbox-inline">';
                                 $addOnsList .= '<input ';
                                 $addOnsList .=     'type="checkbox" ';
+                                $addOnsList .=     'data-extended-id="' . $details['productExtendedId'] . '" ';
                                 $addOnsList .=     'value="' . $productId . '" ';
                                 $addOnsList .=     'name="productAddons[' . $details['productExtendedId'] . ']" ';
                                 $addOnsList .= '/>';
@@ -290,6 +291,7 @@
                                     <?php #} ?>
                                 </div>
                                 <!--TIME MODAL -->
+                                
                                 <div class="modal" id="timeModal<?php echo $product['productId']; ?>" role="dialog">
                                     <div class="modal-dialog">
                                         <!-- Modal content-->
@@ -390,6 +392,7 @@
                                 <!--ADDONS MODAL -->
                                 <?php if ($isMain) { ?>
                                     <div class="modal" id="addOnsModal<?php echo $product['productId']; ?>" role="dialog">
+                                    
                                         <div class="modal-dialog">
                                             <!-- Modal content-->
                                             <form method="post" action="warehouse/addProductAddons/<?php echo $product['productId']; ?>">
@@ -398,10 +401,18 @@
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                         <h4 class="modal-title">
                                                             Select addon(s) for product "<?php echo $details['name']; ?>"
+                                                            <?php
+                                                                $addonsHtmlData = [];
+                                                                if (!is_null($product['addons'])) {
+                                                                    $addonsHtmlData = array_map(function($data){
+                                                                        return $data[2];
+                                                                    }, $product['addons']);
+                                                                }
+                                                            ?>
                                                         </h4>
                                                     </div>
-                                                    <div class="modal-body addOns">
-                                                    
+                                                    <div class="modal-body addOns" data-addons=<?php echo implode(",", $addonsHtmlData); ?>>
+                                                        
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -643,12 +654,35 @@
     function populateClassElements(className, string) {
         let elements = document.getElementsByClassName(className);
         let elementsLenght = elements.length;
-        let element;
+        let element;        
         let i;
+        let addons;
         for (i = 0; i < elementsLenght; i++ ) {
             element = elements[i];
+            element.innerHTML = string;
+            if (element.dataset.addons) {
+                addons = element.dataset.addons.split(',');
+                console.dir(addons);
+                let elementChildren = element.children;
+                let childrenLength = elementChildren.length;
+                let j;
+                for (j = 0; j < childrenLength; j++) {
+                    let child;
+                    let input;
+                    child = elementChildren[j];
+                    input = child.children[0];
+                    if (addons.includes(input.dataset.extendedId)) {
+                        console.dir(input);
+                        input.checked = true;
+                    }
+                }
+                
+            }
+            
             // $(element).html(string);
-            element.innerHTML = string
+            
+
+            
         }
     }
 
