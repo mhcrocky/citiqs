@@ -4,11 +4,24 @@
                 <form method="post" action="<?php echo base_url() ?>warehouse">
                     <div class="col-lg-2 col-sm-12">
                         <label for="from">From: </label>
-                        <input type="text" id="from" name="from" class="form-control timePickers" requried />
+                        <input
+                            type="text"
+                            id="from"
+                            name="from"
+                            class="form-control timePickers"
+                            requried
+                            value="<?php if (isset($from)) {echo $from;} ?>"/>
+                            />
                     </div>
                     <div class="col-lg-2 col-sm-12">
                         <label for="to">To: </label>
-                        <input type="text" id="to" name="to" class="form-control timePickers" requried />
+                        <input
+                            type="text"
+                            id="to"
+                            name="to"
+                            class="form-control timePickers"
+                            requried
+                            value="<?php if (isset($to)) {echo $to;} ?>"/>
                     </div>
                     <div class="col-lg-1 col-sm-12">
                         <br/>

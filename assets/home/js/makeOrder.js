@@ -78,7 +78,7 @@ function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, 
         quantityElement.value = quantityValue;
     }
 
-    if (amountValue > 0 && quantityValue > 0) {
+    if (amountValue > 0 || quantityValue > 0) {
         amountElement.disabled = false;
         quantityElement.disabled = false;
         categoryElement.disabled = false;

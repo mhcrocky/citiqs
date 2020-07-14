@@ -88,7 +88,7 @@ class Alfredpayment extends BaseControllerWeb
 
         if (!$this->shoporder_model->setObjectFromArray($updateOrder)->update()) {
             $file = FCPATH . 'application/tiqs_logs/messages.txt';
-            $message = 'Order with order id "' . $orderId . ' in tbl_shop_orders" and transaction_id ' . $get['orderId'] . 'not updated';
+            $message = 'Order with order id "' . $orderId . ' in tbl_shop_orders" and transaction_id ' . $get['orderId'] . ' not updated';
             Utility_helper::logMessage($file, $message);
         }
 

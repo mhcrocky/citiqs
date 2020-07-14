@@ -50,8 +50,8 @@
             $userId = intval($_SESSION['userId']);
             $data = [];
             if (!empty($_POST)) {
-                $data = $this->input->post(null, true);
-                $reportsData = $this->shoporder_model->fetchReportDetails($userId, $data['from'], $data['to']);
+                $post = $this->input->post(null, true);
+                $reportsData = $this->shoporder_model->fetchReportDetails($userId, $post['from'], $post['to']);
             } else {
                 $reportsData = $this->shoporder_model->fetchReportDetails($userId);
             }
@@ -66,6 +66,10 @@
                         'products' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'productId')
                     ]
                 ];
+                if (isset($post['from']) && isset($post['to'])) {
+                    $data['from'] = $post['from'];
+                    $data['to'] = $post['to'];
+                }
             }
 
             $this->loadViews('warehouse/warehouse', $this->global, $data, null, 'headerWarehouse');
