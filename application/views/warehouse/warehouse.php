@@ -10,7 +10,7 @@
                             name="from"
                             class="form-control timePickers"
                             requried
-                            value="<?php if (isset($from)) {echo $from;} ?>"/>
+                            value="<?php if (isset($from)) {echo $from;} ?>"
                             />
                     </div>
                     <div class="col-lg-2 col-sm-12">
