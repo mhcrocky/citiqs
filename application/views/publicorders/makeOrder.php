@@ -19,8 +19,10 @@
     }
 
     function createAddonString($product, $mainProductExtendedId, $ordered) {
+        $return = [];
         if (isset($ordered[$product['productExtendedId']]['mainProduct'][$mainProductExtendedId])) {
             $orderedProduct = $ordered[$product['productExtendedId']]['mainProduct'][$mainProductExtendedId];
+            $return['mainProductExtendedId'] = $mainProductExtendedId;
         }
 
         $addons = '';
@@ -138,10 +140,10 @@
         $formElement .= 'value="' . filter_var($product['price'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) . '" class="hideInput" ';
         $formElement .= (isset($orderedProduct)) ? '/>' : 'disabled />';
 
-        return [
-            'addons' => $addons,
-            'form' => $formElement,
-        ];
+
+        $return['addons'] = $addons;
+        $return['form'] = $formElement;
+        return $return;
     }
 
 ?>
@@ -300,7 +302,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="addOns<?php echo $product['productExtendedId']; ?> addOnsFill" style="display:none; margin: 0px 7%">
+                                <div class="addOns<?php echo $product['productExtendedId']; ?>" id="addons<?php echo $mainProductExtendedId;?>" addOnsFill" style="display:none; margin: 0px 7%">
                                     <?php
                                         if (!is_null($productRaw['addons'])) {
                                             $addons = $productRaw['addons'];
@@ -309,6 +311,13 @@
                                                 foreach($addonDetails as $addonSingle) {
                                                     if ($addonSingle['showInPublic'] === '1' && $addonSingle['productExtendedId'] === $addon[2]) {
                                                         $strings = createAddonString($addonSingle, $mainProductExtendedId, $ordered);
+                                                        if (isset($strings['mainProductExtendedId'])) {
+                                                            ?>
+                                                                <script>
+                                                                    document.getElementById('addons<?php echo $strings['mainProductExtendedId']; ?>').style.display = 'initial';
+                                                                </script>
+                                                            <?php
+                                                        }
                                                         echo $strings['addons'];
                                                         $form .= $strings['form'];
                                                     }

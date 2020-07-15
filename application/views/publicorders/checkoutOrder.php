@@ -148,6 +148,7 @@
                                                         '<?php echo $productExtendedId; ?>',
                                                         '<?php echo $vendor['serviceFeePercent']; ?>',
                                                         '<?php echo $vendor['serviceFeeAmount']; ?>',
+                                                        '<?php echo $mainExtendedId; ?>'
                                                     )"
                                                     >
                                                     <i class="fa fa-plus"></i>
@@ -168,6 +169,7 @@
                                                         '<?php echo $productExtendedId; ?>',
                                                         '<?php echo $vendor['serviceFeePercent']; ?>',
                                                         '<?php echo $vendor['serviceFeeAmount']; ?>',
+                                                        '<?php echo $mainExtendedId; ?>'
                                                     )"
                                                     >
                                                     <i class="fa fa-minus"></i>

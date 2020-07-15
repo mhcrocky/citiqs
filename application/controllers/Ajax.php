@@ -493,11 +493,19 @@ class Ajax extends CI_Controller
     {
         if (!$this->input->is_ajax_request()) return;
         $post = $this->input->post(null, true);
+
         if (isset($_SESSION['order']) && $post) {
             $id = $post['productExId'];
             if (isset($post['newPrice']) && isset($post['newQuantityValue'])) {
-                $_SESSION['order'][$id]['amount'][0] = $post['newPrice'];
-                $_SESSION['order'][$id]['quantity'][0] = $post['newQuantityValue'];
+
+                if(isset($post['mainExtendedId'])) {
+                    $_SESSION['order'][$id]['mainProduct'][$post['mainExtendedId']]['amount'][0] = $post['newPrice'];
+                    $_SESSION['order'][$id]['mainProduct'][$post['mainExtendedId']]['quantity'][0] = $post['newQuantityValue']; 
+                } else {
+                    $_SESSION['order'][$id]['amount'][0] = $post['newPrice'];
+                    $_SESSION['order'][$id]['quantity'][0] = $post['newQuantityValue'];    
+                }
+                
             } else {
                 unset($_SESSION['order'][$id]);
                 if (!count($_SESSION['order'])) {

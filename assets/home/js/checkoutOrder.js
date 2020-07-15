@@ -1,5 +1,5 @@
 'use strict';
-function changeQuantity(plus, price, quantityId, amountId, serviceFeeId, totalAmountId, orderExtendedId, productExId, serviceFeePercent, serviceFeeAmount) {
+function changeQuantity(plus, price, quantityId, amountId, serviceFeeId, totalAmountId, orderExtendedId, productExId, serviceFeePercent, serviceFeeAmount, mainExtendedId = null) {
     let quantityElement = document.getElementById(quantityId);
     let quantityElementValue = parseInt(quantityElement.innerHTML);
 
@@ -24,7 +24,7 @@ function changeQuantity(plus, price, quantityId, amountId, serviceFeeId, totalAm
         orderExtendedInput.disabled = (newQuantityValue === 0) ? true : false;
 
         changeServiceFeeAndTotal(plus, price, serviceFeeId, totalAmountId, serviceFeePercent, serviceFeeAmount);
-        ajaxUpdateSession(productExId, newPrice, newQuantityValue);
+        ajaxUpdateSession(productExId, newPrice, newQuantityValue, mainExtendedId);
     }
 
     if (!plus && quantityElementValue > 0 && amountElementValue > 0) {
@@ -38,15 +38,19 @@ function changeQuantity(plus, price, quantityId, amountId, serviceFeeId, totalAm
         orderExtendedInput.disabled = (newQuantityValue === 0) ? true : false;
 
         changeServiceFeeAndTotal(plus, price, serviceFeeId, totalAmountId, serviceFeePercent, serviceFeeAmount);
-        ajaxUpdateSession(productExId, newPrice, newQuantityValue);
+        
+        ajaxUpdateSession(productExId, newPrice, newQuantityValue, mainExtendedId);
     }
 
     
 }
 
-function ajaxUpdateSession(productExId, newPrice = null, newQuantityValue = null) {
+function ajaxUpdateSession(productExId, newPrice = null, newQuantityValue = null, mainExtendedId) {
     let post = {
         'productExId' : productExId,
+    }
+    if (mainExtendedId) {
+        post['mainExtendedId'] = mainExtendedId;
     }
 
     if (newPrice && newQuantityValue)  {
@@ -74,7 +78,6 @@ function changeServiceFeeAndTotal(plus, price, serviceFeeId, totalAmountId, serv
     }
 
     serviceFeeValue = calcualteServiceFee(amount, serviceFeePercent, serviceFeeAmount);
-    console.dir(serviceFeeValue);
     serviceFee.innerHTML = serviceFeeValue;
 
     totalAmountValue = amount + parseFloat(serviceFeeValue);
