@@ -302,7 +302,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="addOns<?php echo $product['productExtendedId']; ?>" id="addons<?php echo $mainProductExtendedId;?>" addOnsFill" style="display:none; margin: 0px 7%">
+                                <div class="addOns<?php echo $product['productExtendedId']; ?> addOnsFill" id="addons<?php echo $mainProductExtendedId;?>" style="display:none; margin: 0px 7%">
                                     <?php
                                         if (!is_null($productRaw['addons'])) {
                                             $addons = $productRaw['addons'];
@@ -314,7 +314,7 @@
                                                         if (isset($strings['mainProductExtendedId'])) {
                                                             ?>
                                                                 <script>
-                                                                    document.getElementById('addons<?php echo $strings['mainProductExtendedId']; ?>').style.display = 'initial';
+                                                                    document.getElementById('addons<?php echo $strings['mainProductExtendedId']; ?>').style.display = 'block';
                                                                 </script>
                                                             <?php
                                                         }
