@@ -73,10 +73,8 @@
                 'day' => date('D', $time),
                 'hours' => strtotime(date('H:i:s', $time))
             ];
-
-            // if (isset($_SESSION['order'])) {
-            //     $data['ordered'] = $_SESSION['order'];
-            // }
+            
+            $data['ordered'] = isset($_SESSION['order']) ? $_SESSION['order'] : null;
 
             $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
             return;

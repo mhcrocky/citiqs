@@ -18,7 +18,11 @@
         return false;
     }
 
-    function createAddonString($product, $mainProductExtendedId) {
+    function createAddonString($product, $mainProductExtendedId, $ordered) {
+        if (isset($ordered[$product['productExtendedId']]['mainProduct'][$mainProductExtendedId])) {
+            $orderedProduct = $ordered[$product['productExtendedId']]['mainProduct'][$mainProductExtendedId];
+        }
+
         $addons = '';
         $type = strtoupper($product['productType']);
         $formElement = '';
@@ -44,7 +48,7 @@
                                             width: 30px;
                                             border-radius: 100px;\"
                                         >";
-                                        $addons .= (isset($ordered[$product['productExtendedId']])) ? $ordered[$product['productExtendedId']]['quantity'][0] : '0';
+                                        $addons .= (isset($orderedProduct)) ? $orderedProduct['quantity'][0] : '0';
                                         $addons .= 
                                     "</span>
                                 </div>
@@ -102,37 +106,37 @@
             ";
 
         $formElement .= '<input type="number" ';
-        $formElement .= (isset($ordered[$product['productExtendedId']])) ? 'value="' .  $ordered[$product['productExtendedId']]['amount'][0] . '" ' : 'value="0" '; 
+        $formElement .= (isset($orderedProduct)) ? 'value="' .  $orderedProduct['amount'][0] . '" ' : 'value="0" '; 
         $formElement .= 'min="0" step="0.01" ';
         $formElement .= 'name="' . $product['productExtendedId'] . '[mainProduct][' . $mainProductExtendedId . '][amount][]" ';
         $formElement .= 'id="amount' . $product['productExtendedId'] . '_' . $mainProductExtendedId . '" class="hideInput" ';
-        $formElement .= (isset($ordered[$product['productExtendedId']])) ? '/>' : 'disabled />';
+        $formElement .= (isset($orderedProduct)) ? '/>' : 'disabled />';
         $formElement .= '<input type="number" ';
-        $formElement .= (isset($ordered[$product['productExtendedId']])) ? 'value="' .  $ordered[$product['productExtendedId']]['quantity'][0] . '" ' : 'value="0" '; 
+        $formElement .= (isset($orderedProduct)) ? 'value="' .  $orderedProduct['quantity'][0] . '" ' : 'value="0" '; 
         $formElement .= 'min="0" step="1" ';
         $formElement .= 'name="' . $product['productExtendedId'] . '[mainProduct][' . $mainProductExtendedId . '][quantity][]" ';
         $formElement .= 'id="quantity' . $product['productExtendedId'] . '_' . $mainProductExtendedId . '" class="hideInput" ';
-        $formElement .= (isset($ordered[$product['productExtendedId']])) ? '/>' : 'disabled />';
+        $formElement .= (isset($orderedProduct)) ? '/>' : 'disabled />';
         $formElement .= '<input type="text" readonly ';
         $formElement .= 'name="' . $product['productExtendedId'] . '[mainProduct][' . $mainProductExtendedId . '][category][]" ';
         $formElement .= 'id="category' . $product['productExtendedId'] . '_' . $mainProductExtendedId . '" ';
         $formElement .= 'value="' . $product['category'] . '" class="hideInput" ';
-        $formElement .= (isset($ordered[$product['productExtendedId']])) ? '/>' : 'disabled />';
+        $formElement .= (isset($orderedProduct)) ? '/>' : 'disabled />';
         $formElement .= '<input type="text"  readonly ';
         $formElement .= 'name="' . $product['productExtendedId'] . '[mainProduct][' . $mainProductExtendedId . '][name][]" ';
         $formElement .= 'id="name' . $product['productExtendedId'] . '_' . $mainProductExtendedId . '" ';
         $formElement .= 'value="' . $product['name'] . '" class="hideInput" ';
-        $formElement .= (isset($ordered[$product['productExtendedId']])) ? '/>' : 'disabled />';
+        $formElement .= (isset($orderedProduct)) ? '/>' : 'disabled />';
         $formElement .= '<input type="text"  readonly ';
         $formElement .= 'name="' . $product['productExtendedId'] . '[mainProduct][' . $mainProductExtendedId . '][shortDescription][]" ';
         $formElement .= 'id="shortDescription' . $product['productExtendedId'] . '_' . $mainProductExtendedId . '" ';
         $formElement .= 'value="' . $product['shortDescription'] . '" class="hideInput" ';
-        $formElement .= (isset($ordered[$product['productExtendedId']])) ? '/>' : 'disabled />';
+        $formElement .= (isset($orderedProduct)) ? '/>' : 'disabled />';
         $formElement .= '<input type="text"  readonly ';
         $formElement .= 'name="' . $product['productExtendedId'] . '[mainProduct][' . $mainProductExtendedId . '][price][]" ';
         $formElement .= 'id="productPrice' . $product['productExtendedId'] . '_' . $mainProductExtendedId . '" ';
         $formElement .= 'value="' . filter_var($product['price'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) . '" class="hideInput" ';
-        $formElement .= (isset($ordered[$product['productExtendedId']])) ? '/>' : 'disabled />';
+        $formElement .= (isset($orderedProduct)) ? '/>' : 'disabled />';
 
         return [
             'addons' => $addons,
@@ -304,7 +308,7 @@
                                                 $addonDetails = $productsRawData[$addon[1]][0]['productDetails'];
                                                 foreach($addonDetails as $addonSingle) {
                                                     if ($addonSingle['showInPublic'] === '1' && $addonSingle['productExtendedId'] === $addon[2]) {
-                                                        $strings = createAddonString($addonSingle, $mainProductExtendedId);
+                                                        $strings = createAddonString($addonSingle, $mainProductExtendedId, $ordered);
                                                         echo $strings['addons'];
                                                         $form .= $strings['form'];
                                                     }
@@ -333,6 +337,9 @@
                                 $orderedAmount = 0;
                                 if (isset($ordered)) {
                                     foreach ($ordered as $id => $data) {
+                                        if (isset($data['mainProduct']))  {
+                                            $data = reset($data['mainProduct']);
+                                        }
                                         $orderedQuantity = $orderedQuantity + intval($data['quantity'][0]);
                                         $orderedAmount = $orderedAmount + floatval($data['amount'][0]);
                                     }
