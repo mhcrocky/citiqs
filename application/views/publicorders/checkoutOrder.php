@@ -261,8 +261,7 @@
                                     value="<?php echo $countryCode; ?>"
                                     <?php
                                         if ( 
-                                            (!$userCountry && !$userCountryCode && $countryCode === 'NL') 
-                                            || (!$userCountry && $userCountryCode && $countryCode === $userCountryCode)
+                                            (!$userCountry && $countryCode === 'NL') 
                                             || ($userCountry && $countryCode === $userCountry)
                                         ) {
                                             echo 'selected';

@@ -1,0 +1,6 @@
+.gradient-color { background: #ff4f00; background: linear-gradient(top, #ff4f00, #ff4f00); background: -moz-linear-gradient(top, #ff4f00, #ff4f00); background : -ms-linear-gradient(top, #ff4f00, #ff4f00); background : -webkit-gradient(linear, left top, left bottom, from(#ff4f00), to(#ff4f00)); border : solid 1px #ff4f00;}
+.mine-color, .btn-inner-search { background-color: #ff4f00; }
+.button-more::before { border-color: transparent #ff4f00;}
+.btn-go-search:active,.btn-go-search:focus, .btn-go-search:hover, .button-more:hover, .button-more:focus, .button-more:hover { background-color: #ff4f00; }
+div.filter-sidebar .title, .title.alone {border-bottom: 3px solid #ff4f00;}
+div.filter-sidebar .title span, .title.alone span {border-bottom : 3px solid #ff4f00; }

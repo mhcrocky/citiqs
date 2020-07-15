@@ -493,14 +493,15 @@
             );
         }
 
-        public static function getCountryCodeFromIp(): ?string
+        public static function getCountryCodeFromIp(): string
         {
             $ipAddress = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_SANITIZE_STRIPPED);
+            $ipAddress = '95.168.120.52';
             if (filter_var($ipAddress, FILTER_VALIDATE_IP)) {
                 $data = file_get_contents('http://www.geoplugin.net/json.gp?ip=' .$ipAddress);
                 $data = json_decode($data);
-                return ($data->geoplugin_countryCode) ? $data->geoplugin_countryCode : null;
+                return ($data->geoplugin_countryCode) ? $data->geoplugin_countryCode : '';
             }
-            return null;
+            return '';
         }
     }

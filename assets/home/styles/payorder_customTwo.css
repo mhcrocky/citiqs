@@ -1,0 +1,78 @@
+@import url("https://fast.fonts.net/lt/1.css?apiType=css&c=f98384f2-47d2-4642-aecf-2e7d78ccc4f4&fontids=692088");
+footer {
+    display:none;
+}
+#shopping-cart .pay-header {
+    background-color: #ff4f00;
+    color:white;
+}
+#shopping-cart {
+    z-index:1;
+    position: relative;
+}
+
+body #shopping-cart .mobile-menu .button {
+    background-color: rgba(255, 0, 0, 0.05);
+}
+.payment-title {
+    font-size:2.8rem;
+    font-weight:bold;
+    color:black;
+}
+
+#shopping-cart form .btn {
+    background-color: #ff4f00;
+    border-color: #ff4f00;
+    color:white;
+}
+
+#shopping-cart form .btn:hover,
+#shopping-cart form .btn:active {
+    background-color: rgba(255, 0, 0, 0.75) !important;
+    border-color: rgba(255, 0, 0, 0.75) !important;
+}
+
+#shopping-cart form .btn {
+    color: #fff;
+    width: 100%;
+}
+
+#shopping-cart form .btn:hover,
+#shopping-cart form .btn:active {
+    color: #000000 !important
+}
+#shopping-cart .order-details {
+    float:unset;
+    display:block;
+    border-bottom:1px solid #dadada;
+    padding-top:0;
+}
+form {
+    padding: 20px 25px 25px;
+}
+
+@media only screen and (max-width: 768px) {
+    #page-wrapper #area-container .page-container .heading {
+        position: relative;
+    }
+
+    #page-wrapper #area-container .footer,
+    .mobile-menu {
+        position: relative;
+    }
+
+    #page-wrapper #area-container .payment-container.methods {
+        margin-bottom: 0;
+    }
+}
+
+#area-container .payment-container .table-in3 td.calendar {
+    background-image: url('https://tiqs.com/qrzvafood/assets/imgs/extra/in3-calendar.png') !important;
+}
+.bar2 {
+    padding-top:2px !important;
+    padding-bottom:2px !important;
+    border:none !important;
+    display: flex;
+    justify-content: flex-end;
+}
