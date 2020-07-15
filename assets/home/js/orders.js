@@ -96,9 +96,10 @@ function sendSms(element) {
 }
 
 function showPhoneNumber(order) {
+    console.dir(order);
     let phoneNumber = ''
     phoneNumber += '<input type="text" ';
-    phoneNumber += 'value="' + order['buyerRawMobile'] + '" ';
+    phoneNumber += 'value="' + order['buyerMobile'] + '" ';
     phoneNumber += 'data-user-id="' + order['buyerId'] + '" ';
     phoneNumber += 'onchange="updatePhoneNumber(this)" ';
     phoneNumber += 'required />';

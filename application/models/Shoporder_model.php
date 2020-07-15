@@ -130,8 +130,7 @@
                     'buyer.id AS buyerId',
                     'buyer.email AS buyerEmail',
                     'buyer.username AS buyerUserName',
-                    'CONCAT("0031", TRIM(LEADING "0" FROM buyer.mobile)) AS buyerMobile',
-                    'buyer.mobile AS buyerRawMobile',
+                    'buyer.mobile AS buyerMobile',
                     'vendor.id AS vendorId',
                     'vendor.email AS vendorEmail',
                     'vendor.username AS vendorUserName',
@@ -194,8 +193,7 @@
                     'buyer.id AS buyerId',
                     'buyer.email AS buyerEmail',
                     'buyer.username AS buyerUserName',
-                    'CONCAT("0031", TRIM(LEADING "0" FROM buyer.mobile)) AS buyerMobile',
-                    'buyer.mobile AS buyerRawMobile',
+                    'buyer.mobile AS buyerMobile',
 
                     //vendor
                     'vendor.id AS vendorId',
@@ -259,7 +257,7 @@
                         tbl_shop_printers.printer AS printer,
                         tbl_user.username AS buyerUserName,
                         tbl_user.email AS buyerEmail,
-                        CONCAT("0031", TRIM(LEADING "0" FROM tbl_user.mobile)) AS buyerMobile,
+                        tbl_user.mobile AS buyerMobile,
                         productData.products
                     FROM
                         tbl_shop_orders
@@ -325,7 +323,7 @@
                         tbl_shop_printers.printer AS printer,
                         tbl_user.username AS buyerUserName,
                         tbl_user.email AS buyerEmail,
-                        CONCAT("0031", TRIM(LEADING "0" FROM tbl_user.mobile)) AS buyerMobile,
+                        tbl_user.mobile AS buyerMobile,
                         productData.products
                     FROM 
                         tbl_shop_orders

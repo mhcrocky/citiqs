@@ -120,13 +120,15 @@
                 'buyerRole' => $this->config->item('buyer'),
                 'usershorturl' => 'tiqs_shop_service',
                 'salesagent' => $this->config->item('tiqsId'),
-                'countries' => Country_helper::getCountries()
+                'countries' => Country_helper::getCountries(),
+                'countryCodes' => Country_helper::getCountryPhoneCodes(),
             ];
 
             $data['username'] = isset($_SESSION['postOrder']['user']['username']) ? $_SESSION['postOrder']['user']['username'] : '';
             $data['email'] = isset($_SESSION['postOrder']['user']['email']) ? $_SESSION['postOrder']['user']['email'] : '';
             $data['userCountry'] = isset($_SESSION['postOrder']['user']['country']) ? $_SESSION['postOrder']['user']['country'] : '';
-            $data['mobile'] = isset($_SESSION['postOrder']['user']['mobile']) ? $_SESSION['postOrder']['user']['mobile'] : '';        
+            $data['mobile'] = isset($_SESSION['postOrder']['user']['mobile']) ? $_SESSION['postOrder']['user']['mobile'] : '';
+            $data['phoneCountryCode'] = isset($_SESSION['postOrder']['phoneCountryCode']) ? $_SESSION['postOrder']['phoneCountryCode'] : Country_helper::getCountryCodeFromIp();
 
             $this->loadViews('publicorders/checkoutOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
@@ -165,10 +167,10 @@
                 redirect(base_url());
             }
 
+            
             // fetch order data from session and unset $_SESSION['postOrder']
-            $post =  Utility_helper::getSessionValue('postOrder');
-
-            // insert or update buyer
+            $post = Utility_helper::getSessionValue('postOrder');
+            $post['user']['mobile'] = $post['phoneCountryCode'] . $post['user']['mobile'];
             $this->user_model->manageAndSetBuyer($post['user']);
             if (!$this->user_model->id) {
                 $this->session->set_flashdata('error', 'Order not made! Email, name and mobile are mandatory fields. Please try again');

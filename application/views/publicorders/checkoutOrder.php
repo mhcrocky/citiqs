@@ -260,7 +260,11 @@
                                 <option
                                     value="<?php echo $countryCode; ?>"
                                     <?php
-                                        if ( (!$userCountry && $countryCode === 'NL') || ($userCountry && $countryCode === $userCountry) ) {
+                                        if ( 
+                                            (!$userCountry && !$userCountryCode && $countryCode === 'NL') 
+                                            || (!$userCountry && $userCountryCode && $countryCode === $userCountryCode)
+                                            || ($userCountry && $countryCode === $userCountry)
+                                        ) {
                                             echo 'selected';
                                         }
                                    ?>
@@ -272,7 +276,25 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="phoneInput">Phone <sup>*</sup></label>
-                        <input id="phoneInput" class="form-control" name="user[mobile]" value="<?php echo $mobile; ?>" type="text" placeholder="Phone" required />
+                        <div>
+                            <select class="form-control" style="width:22% !important; display:inline-block !important" name="phoneCountryCode" style="text-align:center">
+                                <?php foreach ($countryCodes as $code => $data) { ?>                                
+                                    <option
+                                        value="<?php $value = '00' . $data['code']; echo $value ?>"
+                                        <?php
+                                            if (
+                                                ($phoneCountryCode && $code === $phoneCountryCode)
+                                                || ($phoneCountryCode && $value === $phoneCountryCode)
+                                                || (!$phoneCountryCode && $code === 'NL')
+                                            ) echo 'selected';
+                                        ?>
+                                        >
+                                        <?php echo $code; ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                            <input id="phoneInput" class="form-control" style="width:76% !important; display:inline-block !important" name="user[mobile]" value="<?php echo $mobile; ?>" type="text" placeholder="Phone" required />
+                        </div>
                     </div>
                     <div class="form-group col-sm-12">
                         <label for="notesInput">Remarks</label>
