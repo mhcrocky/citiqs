@@ -869,7 +869,7 @@ class Login extends BaseControllerWeb
 		$shopClient = [
 			'vendorId' => $this->user_model->id
 		];
-
+		$this->shopvendor_model->setObjectFromArray($shopClient)->create();
 		$this->session->set_flashdata('success', $this->language->Line("registerbusiness-F1002A","Account created Successfully. In your given email we have send your activation link/code and credentials"));
 		redirect('/login');
 	}
