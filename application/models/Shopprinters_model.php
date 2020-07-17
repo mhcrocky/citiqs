@@ -14,11 +14,12 @@
         public $printer;
         public $macNumber;
         public $active;
+        public $numberOfCopies;
         private $table = 'tbl_shop_printers';
 
         protected function setValueType(string $property,  &$value): void
         {
-            if ($property === 'id' || $property === 'userId') {
+            if ($property === 'id' || $property === 'userId' || $property === 'numberOfCopies') {
                 $value = intval($value);
             }
             if ($property === 'price') {
@@ -47,6 +48,9 @@
             if (isset($data['printer']) && !Validate_data_helper::validateString($data['printer'])) return false;
             if (isset($data['macNumber']) && !Validate_data_helper::validateString($data['macNumber'])) return false;
             if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
+            if (isset($data['numberOfCopies']) 
+                && (!Validate_data_helper::validateInteger($data['numberOfCopies']) || intval($data['numberOfCopies']) < 1)
+            ) return false;
 
             return true;
         }

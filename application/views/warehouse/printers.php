@@ -25,6 +25,10 @@
 							<label for="macNumber">MAC number: </label>
 							<input type="text" class="form-control" id="macNumber" name="macNumber" required />
 						</div>
+						<div>
+							<label for="numberOfCopies">Number of copies: </label>
+							<input type="integer" min="1" value="1" step="1" class="form-control" id="numberOfCopies" name="numberOfCopies" required />
+						</div>
 					</form>
 				</div>
 			</div>
@@ -56,6 +60,7 @@
 							<p class="item-category">Status:
 								<?php echo $printer['active'] === '1' ? '<span>ACTIVE</span>' : '<span>BLOCKED</span>'; ?>
 							</p>
+							<p class="item-description">Number of copies: <?php echo $printer['numberOfCopies']; ?></p>							
 						</div><!-- end item header -->
 						<div class="grid-footer">
 							<div class="iconWrapper">
@@ -107,6 +112,10 @@
                                     <div>
 										<label for="printerMac<?php echo $printer['macNumber']; ?>">MAC number:</label>
 										<input type="text" class="form-control" id="printerMac<?php echo $printer['macNumber']; ?>" name="macNumber" required value="<?php echo $printer['macNumber']; ?>" />
+									</div>
+									<div>
+										<label for="numberOfCopies<?php echo $printer['numberOfCopies']; ?>">Number of copies:</label>
+										<input type="number" min="1" step="1" class="form-control" id="numberOfCopies<?php echo $printer['numberOfCopies']; ?>" name="numberOfCopies" required value="<?php echo $printer['numberOfCopies']; ?>" />
 									</div>
 								</form>
 							</div>
