@@ -3,7 +3,7 @@
 
     class Pay_helper
     {
-        public static function getIdealUrl(array $argumentsArray): string
+        public static function getPayUrl(array $argumentsArray): string
         {
             $payData = [
                 'format'    => 'json',

@@ -35,16 +35,14 @@ class Alfredpayment extends BaseControllerWeb
         $vendor = Utility_helper::getSessionValue('vendor');
         $serviceId = $vendor['payNlServiceId'];
         $orderId = Utility_helper::getSessionValue('orderId');
-
-
         $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
         $order = reset($order);
         $arguments = Pay_helper::getArgumentsArray($order, $paymentType, $serviceId);
-        $url = Pay_helper::getIdealUrl($arguments);
+        $url = Pay_helper::getPayUrl($arguments);
 
-        $result = @file_get_contents($url);        
+        $result = @file_get_contents($url);
         $result = json_decode($result);
-        
+
         if ($result->request->result == '1') {
             // update order transactionId
             $this
@@ -63,7 +61,7 @@ class Alfredpayment extends BaseControllerWeb
 
 	public function ExchangePay(): void
 	{
-        $transactionid = $this->input->get('order_id');        
+        $transactionid = $this->input->get('order_id'); 
         $statuscode = intval($this->input->get('orderStatusId'));
 
         if ($statuscode === 100) {

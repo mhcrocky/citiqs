@@ -155,7 +155,9 @@
             $data = [
                 'ordered' => $_SESSION['order'],
                 'vendor' => $_SESSION['vendor'],
-                'paymentMethod' => $this->config->item('idealPaymentType'),
+                'idealPaymentType' => $this->config->item('idealPaymentType'),
+                'creditCardPaymentType' => $this->config->item('creditCardPaymentType'),
+                'bancontactPaymentType' => $this->config->item('bancontactPaymentType'),
             ];
 
             $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');

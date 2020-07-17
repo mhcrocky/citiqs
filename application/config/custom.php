@@ -112,6 +112,8 @@ $config['orderStatuses'] = [
 $config['contactGroupSeparator'] = '!#$%=';
 
 $config['idealPaymentType'] = '1';
+$config['creditCardPaymentType'] = '706';
+$config['bancontactPaymentType'] = '436';
 
 $config['workingDays'] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 $config['weekDays'] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
