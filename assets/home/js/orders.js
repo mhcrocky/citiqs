@@ -25,7 +25,7 @@ function populateTable(elementId, skiptStatus, orders) {
             let disabled = order['orderStatus'] === 'done' ? '' : 'disabled';
             tableBody += '<button class="btn btn-primary" ' + disabled + ' ';
             tableBody +=    'data-order-id=' + order['orderId'] + '" ';
-            tableBody +=    'data-buyer-mobile=' + order['buyerMobile'] + '" ';
+            tableBody +=    'data-buyer-mobile="' + order['buyerMobile'] + '" ';
             tableBody +=    'data-message="Je kan je eten afhalen bij de keuken" ';
             tableBody +=    'onclick="sendSms(this)"';
             tableBody += '>Send sms</button>';
@@ -96,7 +96,6 @@ function sendSms(element) {
 }
 
 function showPhoneNumber(order) {
-    console.dir(order);
     let phoneNumber = ''
     phoneNumber += '<input type="text" ';
     phoneNumber += 'value="' + order['buyerMobile'] + '" ';
