@@ -27,21 +27,24 @@
         public function data_get()
         {
             $file = FCPATH . 'application/tiqs_logs/messages.txt';
-            Utility_helper::logMessage($file, 'printer conected');
+            Utility_helper::logMessage($file, 'printer conected get');
 
             $get = $this->input->get(null, true);
+			Utility_helper::logMessage($file, 'printer MAC '. $get['mac'] );
             if(!$get['mac']) return;
+
 
             $order = $this->shoporder_model->fetchOrdersForPrint($get['mac']);
             if (!$order) return;
             $order = reset($order);
+			Utility_helper::logMessage($file, 'printer order ');
 
             $productsarray = explode($this->config->item('contactGroupSeparator'), $order['products']);
             $imageprint = new Imagick();
 
             //-------------- LOGO -------------------------
             // TO DO THIS MUST BE VENDOR LOGO
-            $file = FCPATH . "../tiqsimg/thuishavenprint.png";
+            $file = FCPATH . "/assets/home/images/tiqslogonew.png";
             $imagelogo = new Imagick($file);
             $geometry = $imagelogo->getImageGeometry(); 
 
@@ -88,11 +91,21 @@
             }
 
             // $draw->setFontWeight(551);
-            $draw->setStrokeWidth(5);
-            $draw->setFontSize(40);
-            $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-            $draw->annotation(0, 30, "ORDER: " . $order['orderId']);
-            $draw->annotation(0, 70, "NAAM: " . $order['buyerUserName']);
+//            $draw->setStrokeWidth(5);
+//            $draw->setFontSize(40);
+//            $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+//            $draw->annotation(0, 30, "ORDER: " . $order['orderId']);
+//            $draw->annotation(0, 70, "NAAM: " . $order['buyerUserName']);
+//
+
+			$draw->setStrokeWidth(2);
+			$draw->setFontSize(28);
+			$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+
+//        $draw->annotation(0, 30, "SPOT: ". $result->spot_id . " EMAIL: " . $email . ' PHONE: ' . $phone);
+//			$draw->annotation(0, 30, "SPOT: ". $result->spot_id );
+			$draw->annotation(0, 30, "ORDER: " . $order['orderId'] . "-NAAM: " . $order['buyerUserName']);;
+			$draw->annotation(0, 70, "DATE:". date("m-d h:i:sa"). " -SPOT: ". $order['spotId'] );
 
             /* Font properties */
             // $draw->setFontWeight(1);
@@ -157,7 +170,7 @@
             // $imageqr ->readImage('petersqr.png');
             // $imageprint ->addImage($imageqr);
 
-            $file = FCPATH . "../tiqsimg/thuishavenprint2.png";
+			$file = FCPATH . "/assets/home/images/tiqslogonew.png";
 
             $imagelogo = new Imagick($file);
             $geometry = $imagelogo->getImageGeometry();
@@ -200,6 +213,7 @@
             $imageprint->destroy();
             $draw->destroy();
 
+			Utility_helper::logMessage($file, 'printer echo');
             echo $resultpng;
 
 

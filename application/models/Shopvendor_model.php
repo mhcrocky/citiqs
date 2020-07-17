@@ -55,6 +55,7 @@
 
         public function getVendorData(): array
         {
+
             $filter = [
                 'what' => [
                     $this->table . '.serviceFeePercent',
@@ -71,7 +72,11 @@
                     ['tbl_user', 'tbl_user.id = ' . $this->table .'.vendorId' , 'INNER']
                 ]  
             ];
+//            var_dump($filter);
+//            die();
+
             $result = $this->readImproved($filter);
+
             if (is_null($result)) return null;
             $result = reset($result);
 
