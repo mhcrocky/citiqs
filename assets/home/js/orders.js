@@ -25,12 +25,26 @@ function populateTable(elementId, skiptStatus, orders) {
             let disabled = order['orderStatus'] === 'done' ? '' : 'disabled';
             tableBody += '<button class="btn btn-primary" ' + disabled + ' ';
             tableBody +=    'data-order-id=' + order['orderId'] + '" ';
-            tableBody +=    'data-buyer-mobile="' + order['buyerMobile'] + '" ';
+            tableBody +=    'data-mobile="' + order['buyerMobile'] + '" ';
             tableBody +=    'data-message="Je kan je eten afhalen bij de keuken" ';
+            tableBody +=    'data-recipent="buyer" ';
             tableBody +=    'onclick="sendSms(this)"';
             tableBody += '>Send sms</button>';
         } else {
-            tableBody += 'Sms send'
+            tableBody += 'Sms send (buyer)'
+        }
+        tableBody +=        '<th>';
+        if (order['sendSmsDriver'] === '0') {
+            let disabled = order['orderStatus'] === 'done' ? '' : 'disabled';
+            tableBody += '<button class="btn btn-primary" ' + disabled + ' ';
+            tableBody +=    'data-order-id=' + order['orderId'] + '" ';
+            tableBody +=    'data-mobile="0032499221307" ';
+            tableBody +=    'data-message="Order staat klaar bij ' + orderGlobals.vendorName + '" ';
+            tableBody +=    'data-recipent="driver" ';
+            tableBody +=    'onclick="sendSms(this)"';
+            tableBody += '>Send sms</button>';
+        } else {
+            tableBody += 'Sms send (driver)'
         }
         tableBody +=        '</th>';
         tableBody +=    '</tr>';
@@ -89,8 +103,9 @@ function fetchOrders() {
 function sendSms(element) {
     let url = globalVariables.ajax + 'sendSms/' + element.dataset.orderId;
     let post = {
-        mobilenumber: element.dataset.buyerMobile,
-        messagetext: element.dataset.message
+        mobilenumber: element.dataset.mobile,
+        messagetext: element.dataset.message,
+        recipent: element.dataset.recipent
     }
     sendAjaxPostRequest(post, url, 'sendSms', fetchOrders);
 }

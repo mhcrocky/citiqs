@@ -248,12 +248,11 @@
                         <label for="firstNameInput">Name (<sup>*</sup>)</label>
                         <input id="firstNameInput" class="form-control" name="user[username]" value="<?php echo $username; ?>" type="text" placeholder="Name" required />
                     </div>
-
-                    <div class="form-group col-sm-6">
+                    <div class="form-group col-sm-6" style="display:none">
                         <label for="emailAddressInput">Email address <sup>*</sup></label>
                         <input id="emailAddressInput" class="form-control" name="user[email]" value="<?php echo $email; ?>" type="text" placeholder="Email address" required />
                     </div>
-                    <div class="form-group col-sm-6">
+                    <div class="form-group col-sm-6" style="display:none">
                         <label for="country-code">Country Code <sup>*</sup></label>
                         <select name="user[country]" class='form-control'>
                             <?php foreach ($countries as $countryCode => $country) { ?>
@@ -273,7 +272,7 @@
                             <?php } ?>
                         </select>
                     </div>
-                    <div class="form-group col-sm-6">
+                    <div class="form-group col-sm-6" style="display:none">
                         <label for="phoneInput">Phone <sup>*</sup></label>
                         <div>
                             <select class="form-control" style="width:22% !important; display:inline-block !important" name="phoneCountryCode" style="text-align:center">
@@ -295,7 +294,7 @@
                             <input id="phoneInput" class="form-control" style="width:76% !important; display:inline-block !important" name="user[mobile]" value="<?php echo $mobile; ?>" type="text" placeholder="Phone" required />
                         </div>
                     </div>
-                    <div class="form-group col-sm-12">
+                    <div class="form-group col-sm-12" style="display:none">
                         <label for="notesInput">Remarks</label>
                         <textarea id="notesInput" class="form-control" name="order[notes]" rows="3"></textarea>
                     </div>

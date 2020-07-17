@@ -417,6 +417,7 @@
             $data = [
                 'orderStatuses' => $this->config->item('orderStatuses'),
                 'orderFinished' => $this->config->item('orderFinished'),
+                'vendor' => $_SESSION['name'],
             ];
 
             $this->loadViews('warehouse/orders', $this->global, $data, null, 'headerWarehouse');

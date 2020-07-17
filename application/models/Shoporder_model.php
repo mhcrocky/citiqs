@@ -21,6 +21,7 @@
         public $printStatus;
         public $spotId;
         public $transactionId;
+        public $sendSmsDriver;
 
         private $table = 'tbl_shop_orders';
 
@@ -68,6 +69,7 @@
             if (isset($data['printStatus']) && !($data['printStatus'] === '1' || $data['printStatus'] === '0')) return false;
             if (isset($data['spotId']) && !Validate_data_helper::validateInteger($data['spotId'])) return false;
             if (isset($data['transactionId']) && !Validate_data_helper::validateString($data['transactionId'])) return false;
+            if (isset($data['sendSmsDriver']) && !($data['sendSmsDriver'] === '1' || $data['sendSmsDriver'] === '0')) return false;
 
             return true;
         }
@@ -125,6 +127,7 @@
                     $this->table . '.paid AS orderPaidStatus',
                     $this->table . '.orderStatus AS orderStatus',
                     $this->table . '.sendSms AS sendSms',
+                    $this->table . '.sendSmsDriver AS sendSmsDriver',
 
                     'tbl_shop_categories.category AS category',
                     'buyer.id AS buyerId',

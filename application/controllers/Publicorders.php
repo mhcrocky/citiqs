@@ -172,10 +172,12 @@
             
             // fetch order data from session and unset $_SESSION['postOrder']
             $post = Utility_helper::getSessionValue('postOrder');
-            $post['user']['mobile'] = $post['phoneCountryCode'] . ltrim($post['user']['mobile'], '0');
+            $post['user']['mobile'] = (!isset($post['user']['mobile']) || !$post['user']['mobile']) ? '0031123456789' : $post['phoneCountryCode'] . ltrim($post['user']['mobile'], '0');
+            $post['user']['email'] = (!isset($post['user']['email']) || !$post['user']['email']) ? 'alfred@tiqs.com' : $post['user']['email'];
             $this->user_model->manageAndSetBuyer($post['user']);
+
             if (!$this->user_model->id) {
-                $this->session->set_flashdata('error', 'Order not made! Email, name and mobile are mandatory fields. Please try again');
+                $this->session->set_flashdata('error', 'Order not made! Please try again'); #Email, name and mobile are mandatory fields. 
                 redirect('checkout_order');
                 exit();
             }

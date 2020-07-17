@@ -464,13 +464,15 @@ class Ajax extends CI_Controller
         if (!$this->input->is_ajax_request()) return;
 
         $smsData = $this->input->post(null, true);
+        $update = ($smsData['recipent'] === 'driver') ? ['sendSmsDriver' => '1'] : ['sendSms' => '1'];
+        unset($smsData['recipent']);
         $orderId = intval($this->uri->segment(3));
         $url = 'https://tiqs.com/lostandfound/Api/Missing/sendsms';
         if (Curl_helper::sendSms($url, $smsData)) {
             $update =    $this
                             ->shoporder_model
                             ->setObjectId($orderId)
-                            ->setObjectFromArray(['sendSms' => '1'])
+                            ->setObjectFromArray($update)
                             ->update();
             echo $update ? 1 : 0;
         } else {

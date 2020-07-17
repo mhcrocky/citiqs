@@ -42,7 +42,8 @@
                         <th>Buyer</th>
                         <th>Buyer mobile</th>
                         <th>Buyer email</th>
-                        <th>Action</th>
+                        <th>SMS to buyer</th>
+                        <th>SMS to driver</th>
                     </tr>
                 </thead>
                 <tbody id='orders'>
@@ -57,7 +58,8 @@
         let globals = {
             'orderStatuses' : JSON.parse('<?php echo json_encode($orderStatuses) ?>'),
             'orderFinished' : '<?php echo $orderFinished ?>',
-            'tableId' : 'orders'
+            'tableId' : 'orders',
+            'vendorName' : '<?php echo $vendor; ?>'
         }
         Object.freeze(globals);
         return globals;
