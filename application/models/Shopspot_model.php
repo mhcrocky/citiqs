@@ -105,7 +105,7 @@
                     ['tbl_shop_printers', $this->table . '.printerId = tbl_shop_printers.id', 'INNER']
                 ],
                 'order_by',
-                [$this->table . '.spotName', 'ASC']
+                [$this->table . '.id', 'ASC']
             );
         }
 
