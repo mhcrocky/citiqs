@@ -39,14 +39,18 @@ class Alfredpayment extends BaseControllerWeb
 
         $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
         $order = reset($order);
-
         $arguments = Pay_helper::getArgumentsArray($order, $paymentType, $serviceId);
         $url = Pay_helper::getIdealUrl($arguments);
 
         $result = @file_get_contents($url);        
         $result = json_decode($result);
-
+        
         if ($result->request->result == '1') {
+            // update order transactionId
+            $this
+                ->shoporder_model
+                    ->setObjectFromArray(['transactionId'=> $result->transaction->transactionId])
+                    ->update();
             redirect($result->transaction->paymentURL);
             exit();
         }
@@ -59,25 +63,35 @@ class Alfredpayment extends BaseControllerWeb
 
 	public function ExchangePay(): void
 	{
-		$transactionid = $this->input->get('order_id');
+        $transactionid = $this->input->get('order_id');        
+        $statuscode = intval($this->input->get('orderStatusId'));
+
+        if ($statuscode === 100) {
+            $update = $this
+                        ->shoporder_model
+                            ->setProperty('transactionId', $transactionid)
+                            ->updatePaidStatus(['paid' => '1']);
+            echo('TRUE| '. $transactionid);
+        } else {
+            echo('TRUE| NO INFO ');
+        }
     }
 
-    public function successPayment($orderId): void
+    public function successPayment(): void
     {
-        $orderId = intval($orderId);
-        $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
-        $order = reset($order);
         $get = $this->input->get(null, true);
-
         $statuscode = intval($get['orderStatusId']);
+        $order = $this
+                    ->shoporder_model
+                        ->setProperty('transactionId', $get['orderId'])
+                        ->setOrderIdFromTransactionId()
+                        ->fetchOne();
+        $order = reset($order);
         $redirect = 'make_order?vendorid=' . $order['vendorId'] . '&spotid=' . $order['spotId'];
-        $updateOrder = [
-            'transactionId' => $get['orderId']
-        ];
 
         if ($statuscode == 100) {
+            $this->shoporder_model->updatePaidStatus(['paid' => '1']);
             $this->session->set_flashdata('success', 'Your order is paid');
-            $updateOrder['paid'] = '1';
         } elseif ($statuscode < 0 ) {
             $this->session->set_flashdata('error', 'Order not paid');
         } elseif ($statuscode >= 0) {
@@ -86,14 +100,7 @@ class Alfredpayment extends BaseControllerWeb
             $this->session->set_flashdata('error', 'Payment error. Please, contact staff');
         }
 
-        if (!$this->shoporder_model->setObjectFromArray($updateOrder)->update()) {
-            $file = FCPATH . 'application/tiqs_logs/messages.txt';
-            $message = 'Order with order id "' . $orderId . ' in tbl_shop_orders" and transaction_id ' . $get['orderId'] . ' not updated';
-            Utility_helper::logMessage($file, $message);
-        }
-
         redirect($redirect);
         exit();
     }
-   
 }

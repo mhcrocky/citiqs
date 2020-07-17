@@ -258,7 +258,7 @@ $route['api/orders/print'] = 'Api/Orders/data';
 
 // ALFRED PAYMENT ENGINE
 $route['paymentengine/(:num)'] = 'Alfredpayment/paymentEngine/$1';
-$route['successPayment/(:num)'] = 'Alfredpayment/successPayment/$1';
+$route['successPayment'] = 'Alfredpayment/successPayment';
 $route['exchangePay'] = 'Alfredpayment/ExchangePay';
 
 

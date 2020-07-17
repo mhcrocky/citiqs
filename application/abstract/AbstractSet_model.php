@@ -49,7 +49,7 @@
         }
 
         public function setProperty(string $property, $value): object
-        {
+        {   
             $this->{$property} = $value;
             return $this;
         }

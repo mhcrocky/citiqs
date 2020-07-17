@@ -415,7 +415,7 @@
         /**
          * updatePrintedStatus
          * 
-         * Update printe status to 1 for all printed orders for all users
+         * Update printer status to 1 for all printed orders for all users
          *
          * @return void
          */
@@ -427,5 +427,33 @@
             $query .= '(SELECT tbl_shop_order_extended.orderId FROM tbl_shop_order_extended WHERE tbl_shop_order_extended.printed = "0" GROUP BY tbl_shop_order_extended.orderId)';
 
             $this->db->query($query);
+        }
+
+        public function updatePaidStatus(array $what): void
+        {
+            $update = $this
+                        ->db
+                            ->where('transactionId', $this->transactionId)
+                            ->update($this->table, $what);
+            if (!$update) {
+                $this->load->helper('utility_helper');
+                $file = FCPATH . 'application/tiqs_logs/messages.txt';
+                $message = 'Order with transactionId "tbl_shop_orders.' . $$this->transactionId . '" not updated';
+                Utility_helper::logMessage($file, $message);
+            }
+        }
+
+        public function setOrderIdFromTransactionId(): Shoporder_model
+        {
+            $result =
+                $this->
+                    readImproved([
+                        'what' => ['id'],
+                        'where' => ['transactionId=' => $this->transactionId]
+                    ]);
+
+            $this->id = reset($result)['id'];
+            $this->id = intval($this->id);
+            return $this;
         }
     }

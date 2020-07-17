@@ -34,7 +34,7 @@
             $arrArguments['ipAddress'] = $_SERVER['REMOTE_ADDR'];
             $arrArguments['paymentOptionId'] = '10';
             $arrArguments['paymentOptionSubId'] = $paymentType;
-            $arrArguments['finishUrl'] = base_url() . 'successPayment' . DIRECTORY_SEPARATOR . $order['orderId'];
+            $arrArguments['finishUrl'] = base_url() . 'successPayment';
 
             $arrArguments['transaction']['orderExchangeUrl'] = base_url() . 'exchangePay';
             $arrArguments['transaction']['description'] = 'tiqs - ' . $order['orderId'];
