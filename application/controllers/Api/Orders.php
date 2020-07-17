@@ -105,7 +105,7 @@
 //        $draw->annotation(0, 30, "SPOT: ". $result->spot_id . " EMAIL: " . $email . ' PHONE: ' . $phone);
 //			$draw->annotation(0, 30, "SPOT: ". $result->spot_id );
 			$draw->annotation(0, 30, "ORDER: " . $order['orderId'] . "-NAAM: " . $order['buyerUserName']);;
-			$draw->annotation(0, 70, "DATE:". date("m-d h:i:sa"). " -SPOT: ". $order['spotId'] );
+			$draw->annotation(0, 70, "DATE:". date("m-d h:i:sa"). " -SPOT: ". $order['spotName'] );
 
             /* Font properties */
             // $draw->setFontWeight(1);

@@ -273,7 +273,7 @@
                             <?php } ?>
                         </select>
                     </div>
-                    <div class="form-group col-sm-6">
+                    <div class="form-group col-sm-6" >
                         <label for="phoneInput">Phone <sup>*</sup></label>
                         <div>
                             <select class="form-control" style="width:22% !important; display:inline-block !important" name="phoneCountryCode" style="text-align:center">

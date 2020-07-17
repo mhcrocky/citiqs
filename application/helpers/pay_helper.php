@@ -32,8 +32,8 @@
             $arrArguments['serviceId'] = $serviceId;
             $arrArguments['amount'] = strval($amount);
             $arrArguments['ipAddress'] = $_SERVER['REMOTE_ADDR'];
-            $arrArguments['paymentOptionId'] = '10';
-            $arrArguments['paymentOptionSubId'] = $paymentType;
+            $arrArguments['paymentOptionId'] = $paymentType;
+//            $arrArguments['paymentOptionSubId'] = $paymentType;
             $arrArguments['finishUrl'] = base_url() . 'successPayment';
 
             $arrArguments['transaction']['orderExchangeUrl'] = base_url() . 'exchangePay';
