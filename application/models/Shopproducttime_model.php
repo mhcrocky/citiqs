@@ -63,7 +63,8 @@
         {
 
             $this->load->config('custom');
-            $days = $this->config->item('workingDays');
+            $days = $this->config->item('weekDays');
+
             $timeFrom = $this->config->item('timeFrom');
             $timeTo = $this->config->item('timeTo');
             foreach ($days as $day) {

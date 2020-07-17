@@ -213,7 +213,7 @@
 
                             $productDetailsString .=  '</dl>';
                         ?>
-                            <div class="grid-item">
+                            <div class="grid-item" style="background-color:<?php echo $product['productActive'] === '1' ? '#99ff66' : '#ff4d4d'; ?>">
                                 <div class="item-header">
                                     <p class="item-description">Name: <?php echo $details['name']; ?></p>                                  
                                     <p class="item-description">Category: 
@@ -272,23 +272,23 @@
                                             </span>
                                         </div>
                                     <?php } ?>
-                                    <?php #if ($product['productActive'] === '1') { ?>
-                                        <!-- <div title="Click to block product" class="iconWrapper delete-icon-wrapper">
-                                            <a href="<?php #echo $this->baseUrl . 'warehouse/editProduct/' . $product['productId'] .'/0'; ?>" >
+                                    <?php if ($product['productActive'] === '1') { ?>
+                                        <div title="Click to block product" class="iconWrapper delete-icon-wrapper">
+                                            <a href="<?php echo $this->baseUrl . 'warehouse/editProduct/' . $product['productId'] .'/0'; ?>" >
                                                 <span class="fa-stack fa-2x delete-icon">
                                                     <i class="fas fa-times"></i>
                                                 </span>
                                             </a>
-                                        </div> -->
-                                    <?php #} else { ?>
-                                        <!-- <div title="Click to activate product" class="iconWrapper delete-icon-wrapper">
-                                            <a href="<?php #echo $this->baseUrl . 'warehouse/editProduct/' . $product['productId'] .'/1'; ?>" >
+                                        </div>
+                                    <?php } else { ?>
+                                        <div title="Click to activate product" class="iconWrapper delete-icon-wrapper">
+                                            <a href="<?php echo $this->baseUrl . 'warehouse/editProduct/' . $product['productId'] .'/1'; ?>" >
                                                 <span class="fa-stack fa-2x" style="background-color:#0f0">
                                                     <i class="fas fa-check"></i>
                                                 </span>
                                             </a>
-                                        </div> -->
-                                    <?php #} ?>
+                                        </div>
+                                    <?php } ?>
                                 </div>
                                 <!--TIME MODAL -->
                                 
@@ -440,7 +440,7 @@
                                                 value="<?php echo (intval($details['productUpdateCycle']) + 1); ?>"
                                                 readonly required hidden />
 
-                                            <h3 style="text-align:left;">Edit product</h3>
+                                            <h3 style="text-align:left;">Edit product "<?php echo $details['name']; ?>"</h3>
                                             <fieldset class="row">
                                                 <legend style="text-align:left;">Product basic data</legend>
                                                 <div class="col-lg-4 col-sm-12">

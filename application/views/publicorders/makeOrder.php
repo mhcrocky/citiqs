@@ -166,6 +166,8 @@
                         <?php
                             foreach($productsRawData as $productId => $productRaw) {
                                 $productRaw = reset($productRaw);
+                                // ONLY ACTIVE
+                                if ($productRaw['productActive'] === '0') continue;
 
                                 if (!checkTime($day, $hours, $productRaw['productTimes'])) continue;
 
@@ -252,7 +254,7 @@
                                                             class="pab-minus"
                                                             href="javascript:void(0);"
                                                             onclick="showAddOns('addOns<?php echo $product['productExtendedId']; ?>')"
-                                                            
+                                                            id="toogleAddons<?php echo $product['productExtendedId']; ?>"
                                                             >
                                                             <i class="fa fa-chevron-down"></i>
                                                         </a>
@@ -305,11 +307,13 @@
                                 <div class="addOns<?php echo $product['productExtendedId']; ?> addOnsFill" id="addons<?php echo $mainProductExtendedId;?>" style="display:none; margin: 0px 7%">
                                     <?php
                                         if (!is_null($productRaw['addons'])) {
+                                            $toogle = false;
                                             $addons = $productRaw['addons'];
                                             foreach($addons as $addon) {
                                                 $addonDetails = $productsRawData[$addon[1]][0]['productDetails'];
                                                 foreach($addonDetails as $addonSingle) {
-                                                    if ($addonSingle['showInPublic'] === '1' && $addonSingle['productExtendedId'] === $addon[2]) {
+                                                    if ($addonSingle['showInPublic'] === '1' && $addonSingle['productExtendedId'] === $addon[2] && $addonSingle['activeStatus'] === '1') {
+                                                        if (!$toogle) $toogle = true;
                                                         $strings = createAddonString($addonSingle, $mainProductExtendedId, $ordered);
                                                         if (isset($strings['mainProductExtendedId'])) {
                                                             ?>
@@ -322,6 +326,13 @@
                                                         $form .= $strings['form'];
                                                     }
                                                 }
+                                            }
+                                            if (!$toogle) {
+                                                ?>
+                                                    <script>
+                                                        document.getElementById("toogleAddons<?php echo $product['productExtendedId']; ?>").style.display = 'none';
+                                                    </script>
+                                                <?php
                                             }
                                         }
                                     ?>

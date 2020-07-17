@@ -114,5 +114,6 @@ $config['contactGroupSeparator'] = '!#$%=';
 $config['idealPaymentType'] = '1';
 
 $config['workingDays'] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+$config['weekDays'] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 $config['timeFrom'] = '00:00:00';
 $config['timeTo'] = '23:59:59';

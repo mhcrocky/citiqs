@@ -206,6 +206,9 @@
             if ($data['product']['dateTimeFrom'] && $data['product']['dateTimeTo']) {
                 $data['product']['dateTimeFrom'] = date('Y-m-d H:i:s', strtotime($data['product']['dateTimeFrom']));
                 $data['product']['dateTimeTo'] = date('Y-m-d H:i:s', strtotime($data['product']['dateTimeTo']));
+            } else {
+                $data['product']['dateTimeFrom'] = date('Y-m-d H:i:s');
+                $data['product']['dateTimeTo'] = date('Y-m-d H:i:s', strtotime('+10 years', time()));
             }
 
             if (!$this->shopproduct_model->setObjectFromArray($data['product'])->create()) {
@@ -239,15 +242,17 @@
             
 
             // insert product printers
-            foreach($data['productPrinters'] as $printerId) {
-                $printerInsert = [
-                    'printerId' => $printerId,
-                    'productId' => $this->shopproduct_model->id
-                ];
-                if (!$this->shopproductprinters_model->setObjectFromArray($printerInsert)->create()) {
-                    $this->session->set_flashdata('error', 'Pinter insert failed. Please check');
+            if (isset($data['productPrinters'])) {
+                foreach($data['productPrinters'] as $printerId) {
+                    $printerInsert = [
+                        'printerId' => $printerId,
+                        'productId' => $this->shopproduct_model->id
+                    ];
+                    if (!$this->shopproductprinters_model->setObjectFromArray($printerInsert)->create()) {
+                        $this->session->set_flashdata('error', 'Pinter insert failed. Please check');
+                    }
+                    break;
                 }
-                break;
             }
 
             //insert product available times
@@ -269,6 +274,22 @@
             $data = $this->input->post(null, true);
             $productId = intval($this->uri->segment(3));
             $userId = intval($_SESSION['userId']);
+
+            if ($this->uri->segment(4) === '1' || $this->uri->segment(4) === '0' ) {
+                $update = $this
+                            ->shopproduct_model
+                            ->setObjectId($productId)
+                            ->setObjectFromArray(['active' => $this->uri->segment(4)])
+                            ->update();
+                if ($update) {
+                    $newStatus = ($this->uri->segment(4) === '1') ? 'activated' : 'blocked';
+                    $this->session->set_flashdata('success', 'Procuct ' . $newStatus);
+                } else {
+                    $this->session->set_flashdata('error', 'Update failed');
+                }
+                redirect('products');
+                return;
+            }
 
             // CHECK PRODUCT NAME
             $where = [

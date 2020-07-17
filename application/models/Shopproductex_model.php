@@ -91,7 +91,7 @@
                 'tbl_shop_categories.userId=' => $userId,
                 'tbl_shop_categories.active=' => '1',
                 'tbl_shop_products.dateTimeFrom<=' => $date,
-                'tbl_shop_products.dateTimeTo>' => $date,    
+                'tbl_shop_products.dateTimeTo>' => $date,
             ];
 
             
@@ -113,6 +113,7 @@
                     ) AS productDetails',
                     'tbl_shop_products.stock',
                     'tbl_shop_products.recommendedQuantity',
+                    'tbl_shop_products.active AS productActive',
                     'tbl_shop_products.showImage',
                     'tbl_shop_products.dateTimeFrom AS dateTimeFrom',
                     'tbl_shop_products.dateTimeTo AS dateTimeTo',
@@ -174,7 +175,8 @@
                                     \'|\',' . $this->table. '.updateCycle,
                                     \'|\',' . $this->table. '.showInPublic,
                                     \'|\',' . $this->table . '.productId,
-                                    \'|\', tbl_shop_categories.category
+                                    \'|\', tbl_shop_categories.category,
+                                    \'|\', tbl_shop_products.active
                                     ORDER BY ' . $this->table. '.id DESC
                                     SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"                                    
                                 ) AS productDetails
@@ -297,6 +299,7 @@
                     'showInPublic'          => $details[9],
                     'productId'             => $details[10],
                     'category'              => $details[11],
+                    'activeStatus'          => $details[12],
                 ];
                 array_push($return, $collect);
             }
