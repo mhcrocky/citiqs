@@ -261,6 +261,9 @@ $route['paymentengine/(:num)'] = 'Alfredpayment/paymentEngine/$1';
 $route['successPayment'] = 'Alfredpayment/successPayment';
 $route['exchangePay'] = 'Alfredpayment/ExchangePay';
 
+$route['success'] = 'Paysuccesslink';
+
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

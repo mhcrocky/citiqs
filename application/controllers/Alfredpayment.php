@@ -91,6 +91,7 @@ class Alfredpayment extends BaseControllerWeb
         if ($statuscode == 100) {
             $this->shoporder_model->updatePaidStatus(['paid' => '1']);
             $this->session->set_flashdata('success', 'Your order is paid');
+			redirect('success');
         } elseif ($statuscode < 0 ) {
             $this->session->set_flashdata('error', 'Order not paid');
         } elseif ($statuscode >= 0) {

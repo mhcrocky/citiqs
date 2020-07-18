@@ -350,7 +350,7 @@
             <div class="footer-basket">
                 <div class="footer-top">
                     <div class="fb-left">
-                        <h4>Your Basket</h4>
+<!--                        <h4>Your Basket</h4>-->
                         <h5>Your order 
                             <?php
                                 $orderedQuantity = 0;
@@ -368,12 +368,12 @@
                             <span id="orderQuantity"><?php echo $orderedQuantity; ?></span>
                         </h5>
                     </div>
-                    <div class="fb-mid">
+                    <div class="fb-mid" id="submitForm" onclick="submitMakeOrderForm('makeOrder', 'orderAmount', 'orderQuantity')">
                         <span class="fb-price">€  <span id="orderAmount"><?php echo number_format($orderedAmount, 2, '.', ',') ; ?></span></span>
                     </div>
 
                     <div class="fb-right" id="submitForm" onclick="submitMakeOrderForm('makeOrder', 'orderAmount', 'orderQuantity')">
-                        <i class="fa fa-shopping-cart"></i>
+                        <i style="font-size: 40px" class="fa fa-credit-card-alt"></i>
                     </div>
                 </div>
                 <div class="footer-order">
