@@ -168,8 +168,7 @@
                                 $productRaw = reset($productRaw);
                                 // ONLY ACTIVE
                                 if ($productRaw['productActive'] === '0') continue;
-
-                                if (!checkTime($day, $hours, $productRaw['productTimes'])) continue;
+                                if (is_null($productRaw['productTimes']) || !checkTime($day, $hours, $productRaw['productTimes'])) continue;
 
                                 $products = $productRaw['productDetails'];
                                 $products = Utility_helper::resetArrayByKeyMultiple($products, 'productTypeIsMain');
