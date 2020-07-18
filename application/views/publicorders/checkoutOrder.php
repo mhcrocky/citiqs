@@ -248,7 +248,7 @@
                         <label for="firstNameInput">Name (<sup>*</sup>)</label>
                         <input id="firstNameInput" class="form-control" name="user[username]" value="<?php echo $username; ?>" type="text" placeholder="Name" required />
                     </div>
-                    <div class="form-group col-sm-6" style="display:none">
+                    <div class="form-group col-sm-6">
                         <label for="emailAddressInput">Email address <sup>*</sup></label>
                         <input id="emailAddressInput" class="form-control" name="user[email]" value="<?php echo $email; ?>" type="text" placeholder="Email address" required />
                     </div>
