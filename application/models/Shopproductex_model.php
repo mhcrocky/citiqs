@@ -233,7 +233,10 @@
             $this->load->helper('utility_helper');
 
             foreach ($products as $key => $product) {
-                $products[$key]['productTimes'] = $this->prepareProductTimes($product['productTimes'], $this->config->item('contactGroupSeparator'));
+                if ($products[$key]['productTimes']) {
+                    $products[$key]['productTimes'] = $this->prepareProductTimes($product['productTimes'], $this->config->item('contactGroupSeparator'));
+                }
+                
                 $products[$key]['productDetails'] = $this->prepareProductDetails($product['productDetails'], $this->config->item('contactGroupSeparator'));
                 if ($products[$key]['addons']) {
                     $products[$key]['addons'] =  $this->prepareAddons($product['addons'], $this->config->item('contactGroupSeparator'));
