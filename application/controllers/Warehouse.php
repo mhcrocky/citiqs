@@ -202,6 +202,7 @@
                 redirect('products');
             };
 
+            
             // insert product
             if ($data['product']['dateTimeFrom'] && $data['product']['dateTimeTo']) {
                 $data['product']['dateTimeFrom'] = date('Y-m-d H:i:s', strtotime($data['product']['dateTimeFrom']));
@@ -209,6 +210,10 @@
             } else {
                 $data['product']['dateTimeFrom'] = date('Y-m-d H:i:s');
                 $data['product']['dateTimeTo'] = date('Y-m-d H:i:s', strtotime('+10 years', time()));
+            }
+
+            if (!$data['productExtended']['shortDescription']) {
+                $data['productExtended']['shortDescription'] = $data['productExtended']['name'];
             }
 
             if (!$this->shopproduct_model->setObjectFromArray($data['product'])->create()) {
