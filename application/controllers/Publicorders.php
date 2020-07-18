@@ -170,14 +170,13 @@
             }
 
             
-            // fetch order data from session and unset $_SESSION['postOrder']
-            $post = Utility_helper::getSessionValue('postOrder');
+            // fetch order data from session
+            $post = $_SESSION['postOrder'];
             $post['user']['mobile'] = (!isset($post['user']['mobile']) || !$post['user']['mobile']) ? '0031123456789' : $post['phoneCountryCode'] . ltrim($post['user']['mobile'], '0');
-            $post['user']['email'] = (!isset($post['user']['email']) || !$post['user']['email']) ? 'alfred@tiqs.com' : $post['user']['email'];
             $this->user_model->manageAndSetBuyer($post['user']);
 
-            if (!$this->user_model->id) {
-                $this->session->set_flashdata('error', 'Order not made! Please try again'); #Email, name and mobile are mandatory fields. 
+            if (!$this->user_model->id || !$post['user']['username']) {
+                $this->session->set_flashdata('error', 'Order not made! Name and email are mandatory fields. Please try again'); #Email, name and mobile are mandatory fields. 
                 redirect('checkout_order');
                 exit();
             }
@@ -185,9 +184,6 @@
             // prepare failed redirect
             $failedRedirect = 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'] . '&spotid=' . $_SESSION['spotId'];
 
-            // unset session data
-            unset($_SESSION['order']);
-            unset($_SESSION['spotId']);
 
             // insert order
             $post['order']['buyerId'] = $this->user_model->id;
@@ -220,6 +216,12 @@
 
             // go to Alfredpament controller to finish paying
             $successRedirect = 'paymentengine' . DIRECTORY_SEPARATOR . $paymentType;
+
+            // unset session data
+            unset($_SESSION['order']);
+            unset($_SESSION['spotId']);
+            unset($_SESSION['postOrder']);
+
             redirect($successRedirect);
         }
     }
