@@ -174,7 +174,32 @@
 			<p>
 				<?php echo base_url() . 'make_order?vendorid=' . $user->id; ?>
 			</p>
+			<div class="background-orange-light timeline-content">
+				<p>Add driver mobile number (starting with country code with zero) for sending sms.</p>
+				<p>Set the number of minutes when the message will be sent to driver after the order status is changed in status "DONE"</p>
+				<p>Add terms and conditions</p>
+			
+				<form method="post" action="<?php echo base_url() ?>profile/updateVenodrData">					
+					<input type="number" name="vendorId" value="<?php echo $user->id ?>" readonly requried hidden />
+					<div class="form group">
+						<label for="driverNumber">Driver number (must include country code starting with zero): </label>
+						<input type="text" value="<?php echo strval($vendor['driverNumber']); ?>" class="form-control" id="driverNumber" name="driverNumber" pattern="[0-9].{8,}" />
+					</div>
+					<div class="form group">
+						<label for="smsDelay">Number of minutes: </label>
+						<input type="number" value="<?php echo strval($vendor['smsDelay']); ?>" min="0" step="1" class="form-control" id="smsDelay" name="smsDelay"  />
+					</div>
+					<div class="form group">
+						<label for="termsAndConditions">Terms and conditions: </label>
+						<textarea class="form-control" value="<?php echo strval($vendor['termsAndConditions']); ?>" id="termsAndConditions" name="termsAndConditions"></textarea>
+					</div>
+					<br/>
+					<br/>
+					<input class="btn btn-primary" type="submit" value="Submit" />
+				</form>
+			</div>
 		</div>
+		
 	<?php } ?>
 </div>
 <?php if($this->session->userdata('dropoffpoint')==0) { ?>
