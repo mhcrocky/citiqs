@@ -1,13 +1,14 @@
 <div class="main-wrapper-nh" style="text-align:center">
-	<div class="col-half  background-orange-light timeline-content height">
-		<div class="form-group has-feedback">
-			<img border="0" src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="350" height="" />
-		</div><!-- /.login-logo -->
+	<div class="col-half background-apricot-blue height">
+		<div class="width-650"></div>
+				<div class="form-group has-feedback">
+					<img border="0" src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="350" height="" />
+				</div><!-- /.login-logo -->
 		<h1 align="center"><?php echo $vendor['vendorName'] ?></h1>
 		<div class="selectWrapper mb-35">
 			<?php if (!empty($spots)) { ?>
 				<label for="spot">Service Point Or Table:</label>
-				<select class="selectBox" id="spot" onchange="redirectToMakeOrder(this)" class="form-control">
+				<select class="selectBox" id="spot" onchange="redirectToMakeOrder(this)" class="form-control" style="color :black">
 					<option value="">Select spot</option>
 					<?php foreach ($spots as $spot) { ?>
 					<option value="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spot['spotId'] ?>">
@@ -20,7 +21,8 @@
 			<?php } ?>
 			</div>
 		</div>
-	<div class="col-half background-bluegreen height-100">
+</div>
+	<div class="col-half background-blue height-100">
 		<div class="flex-column align-start">
 			</div>
 				<div style="text-align:center;">

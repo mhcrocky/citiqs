@@ -499,7 +499,7 @@ footer .footer-icon li { display : block; height : 40px; width : 100%; }
     display: flex;
     width:40px;
     height:40px;
-    background:black;
+    background: #009300;
     color:white;
     justify-content: center;
     align-items:center;
@@ -511,12 +511,24 @@ footer .footer-icon li { display : block; height : 40px; width : 100%; }
     display: flex;
     width: 40px;
     height: 40px;
-    background: grey;
+    background: #ba7800;
     color: white;
     justify-content: center;
     align-items: center;
     border-radius: 3px;
     font-size: 18px;
+}
+
+.pab-options {
+	display: flex;
+	width: 40px;
+	height: 40px;
+	background: #ff7162;
+	color: white;
+	justify-content: center;
+	align-items: center;
+	border-radius: 3px;
+	font-size: 18px;
 }
 
 #show-xs-nav {
@@ -774,6 +786,12 @@ div.filter-sidebar ul li a {
 	height: 30px;
 }
 
+.pab-options, .pab-minus{
+	width: 30px;
+	height: 30px;
+}
+
+
 .product__name{
 	text-align: left;
 }
@@ -817,7 +835,7 @@ div.filter-sidebar ul li a {
 }
 
 .slick-prev:before, .slick-next:before{
-	color:red !important;
+	color: #349171 !important;
 	font-size: 40px;
 }
 
@@ -826,6 +844,7 @@ div.filter-sidebar ul li a {
 }
 
 .slick-next{
+	color: #729a7d;
 	right: 10px;
 }
 
