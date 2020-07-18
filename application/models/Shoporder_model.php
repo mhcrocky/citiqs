@@ -140,7 +140,8 @@
                     'tbl_shop_order_extended.quantity AS productQuantity',
                     'tbl_shop_products_extended.name AS productName',
                     'tbl_shop_spots.id AS spotId',
-                    'tbl_shop_spots.spotName AS spotName'
+                    'tbl_shop_spots.spotName AS spotName',
+                    'IF (tbl_shop_vendors.driverNumber, tbl_shop_vendors.driverNumber, "") AS driverNumber'
                 ],
                 [
                     'vendor.id' => $userId,
@@ -161,7 +162,8 @@
                         'buyer.id  = ' .  $this->table  . '.buyerId',
                         'INNER'
                     ],
-                    ['tbl_shop_spots', $this->table . '.spotId = tbl_shop_spots.id', 'INNER']
+                    ['tbl_shop_spots', $this->table . '.spotId = tbl_shop_spots.id', 'INNER'],
+                    ['tbl_shop_vendors', 'tbl_shop_vendors.vendorId = vendor.id', 'LEFT']
                 ],
                 'order_by',
                 [$this->table . '.updated ASC']
