@@ -554,7 +554,7 @@ div.filter-sidebar ul li a {
 }
 
 .footer-basket {
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
     position:fixed;
     bottom: 0px;
     left:0;
@@ -562,11 +562,11 @@ div.filter-sidebar ul li a {
     width:calc(100%);
     display: flex;
     flex-direction:column;
-    background:#ff4f00;
+    background: #948b6f;
     padding:0 20px;
     color:white;
     font-size:16px;
-    height:74px;
+    height: 100px;
     transition:0.3s ease;
 }
 
@@ -599,6 +599,7 @@ div.filter-sidebar ul li a {
 }
 
 .footer-top {
+	margin-top: 30px;
     display:flex;
     align-items:center;
     justify-content: space-between;
@@ -613,7 +614,7 @@ div.filter-sidebar ul li a {
     margin-bottom:0;
 }
 .fb-left h5 {
-    margin-top:1px;
+    margin-top:20px;
     font-weight:300;
     font-size:20px;
     letter-spacing: 0.05em;
@@ -629,7 +630,8 @@ div.filter-sidebar ul li a {
     border-radius: 100px;
 }
 .fb-price {
-    font-size:20px;
+	/*margin-top:40px;*/
+	font-size:30px;
     font-weight:bold;
 }
 .fb-right a {
@@ -638,12 +640,12 @@ div.filter-sidebar ul li a {
 }
 
 .footer-bot a {
-    display:flex;
+    /*display:flex;*/
     justify-content:space-between;
     padding:0 15px;
     border-radius:3px;
     align-items:center;
-    background:#003DB7;
+    background: #948b6f;
     color:white;
     height:44px;
     margin-top:10px;

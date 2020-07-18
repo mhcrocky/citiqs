@@ -38,7 +38,7 @@ function populateTable(elementId, skiptStatus, orders) {
             let disabled = order['orderStatus'] === 'done' ? '' : 'disabled';
             tableBody += '<button class="btn btn-primary" ' + disabled + ' ';
             tableBody +=    'data-order-id=' + order['orderId'] + '" ';
-            tableBody +=    'data-mobile="0032499221307" ';
+            tableBody +=    'data-mobile="0031652848048" ';
             tableBody +=    'data-message="Order staat klaar bij ' + orderGlobals.vendorName + '" ';
             tableBody +=    'data-recipent="driver" ';
             tableBody +=    'onclick="sendSms(this)"';

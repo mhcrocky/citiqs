@@ -567,7 +567,7 @@ div.filter-sidebar ul li a {
     padding:30px 20px;
     color:white;
     font-size:12px;
-    height:100px;
+    height: 78px;
     transition:0.3s ease;
 	overflow-y:scroll;
 }

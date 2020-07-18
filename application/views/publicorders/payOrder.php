@@ -91,14 +91,14 @@
                                 </div>
                                 <div class="content-container clearfix">
                                     <div class="payment-container methods">
-                                        <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>" class="paymentMethod method-ideal" >
-                                            <img src="https://tiqs.com/shop/assets/imgs/extra/ideal.png" alt="iDEAL">
-                                            <span>iDEAL</span>
-                                        </a>
-                                        <a href="<?php echo base_url(); ?>insertorder/<?php echo $creditCardPaymentType; ?>" class="paymentMethod method-card" >
-											<img src="https://tiqs.com/qrzvafood/assets/imgs/extra/creditcard.png" alt="Creditcard">
-											<span data-trans="" data-trn-key="Creditcard">Creditcard</span>
-										</a>
+<!--                                        <a href="--><?php //echo base_url(); ?><!--insertorder/--><?php //echo $idealPaymentType; ?><!--" class="paymentMethod method-ideal" >-->
+<!--                                            <img src="https://tiqs.com/shop/assets/imgs/extra/ideal.png" alt="iDEAL">-->
+<!--                                            <span>iDEAL</span>-->
+<!--                                        </a>-->
+<!--                                        <a href="--><?php //echo base_url(); ?><!--insertorder/--><?php //echo $creditCardPaymentType; ?><!--" class="paymentMethod method-card" >-->
+<!--											<img src="https://tiqs.com/qrzvafood/assets/imgs/extra/creditcard.png" alt="Creditcard">-->
+<!--											<span data-trans="" data-trn-key="Creditcard">Creditcard</span>-->
+<!--										</a>-->
                                         <a href="<?php echo base_url(); ?>insertorder/<?php echo $bancontactPaymentType; ?>" class="paymentMethod method-card" >
 											<img src="https://tiqs.com/qrzvafood/assets/imgs/extra/bancontact.png" alt="bancontact">
 											<span data-trans="" data-trn-key="Bancontact">Bancontact</span>
