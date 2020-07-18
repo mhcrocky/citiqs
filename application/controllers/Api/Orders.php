@@ -19,6 +19,7 @@
             $this->load->helper('validate_data_helper');
             $this->load->helper('sanitize_helper');            
             $this->load->helper('email_helper');
+            $this->load->helper('curl_helper');
 
             $this->load->config('custom');
             $this->load->library('language', array('controller' => $this->router->class));
@@ -91,19 +92,19 @@
             }
 
             // $draw->setFontWeight(551);
-//            $draw->setStrokeWidth(5);
-//            $draw->setFontSize(40);
-//            $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-//            $draw->annotation(0, 30, "ORDER: " . $order['orderId']);
-//            $draw->annotation(0, 70, "NAAM: " . $order['buyerUserName']);
-//
+            // $draw->setStrokeWidth(5);
+            // $draw->setFontSize(40);
+            // $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+            // $draw->annotation(0, 30, "ORDER: " . $order['orderId']);
+            // $draw->annotation(0, 70, "NAAM: " . $order['buyerUserName']);
+
 
 			$draw->setStrokeWidth(2);
 			$draw->setFontSize(28);
 			$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
 
-//        $draw->annotation(0, 30, "SPOT: ". $result->spot_id . " EMAIL: " . $email . ' PHONE: ' . $phone);
-//			$draw->annotation(0, 30, "SPOT: ". $result->spot_id );
+            // $draw->annotation(0, 30, "SPOT: ". $result->spot_id . " EMAIL: " . $email . ' PHONE: ' . $phone);
+            // $draw->annotation(0, 30, "SPOT: ". $result->spot_id );
 			$draw->annotation(0, 30, "ORDER: " . $order['orderId'] . "-NAAM: " . $order['buyerUserName']);;
 			$draw->annotation(0, 70, "DATE:". date("m-d h:i:sa"). " -SPOT: ". $order['spotName'] );
 
@@ -306,4 +307,31 @@
             $this->set_response($arr, 200); // CREATED (201) being the HTTP response code
         }
 
+        public function sms_get(): vodi
+        {
+            $orders = $this->shoporder_model->ordersToSendSmsToDriver();
+            if (!is_null($orders)) {
+                foreach ($orders as $order) {
+                    if (
+                        $order['smsDelay']
+                        && $order['driverNumber']
+                        && (strtotime($order['orderUpdate']) < strtotime(date('Y-m-d H:i:s', strtotime('-' . $order['smsDelay'] . ' minutes'))))
+                    ) {
+                        $message = 'Order staat klaar bij "' . $order['vendorName']. '".';
+                        if (Curl_helper::sendSmsNew($order['driverNumber'], $message)) {
+                            $this
+                                ->shoporder_model
+                                    ->setObjectId(intval($order['orderId']))
+                                    ->setObjectFromArray(['sendSmsDriver' => '1'])
+                                    ->update();
+                        } else {
+                            $file = FCPATH . 'application/tiqs_logs/messages.txt';
+                            $errorMessage = 'SMS NOT SENT TO DRIVER FOR ORDER ID: ' . $order['orderId'];
+                            Utility_helper::logMessage($file, $errorMessage);
+                        }
+                    }
+                }
+            }
+            exit();
+        }
     }

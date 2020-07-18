@@ -58,6 +58,6 @@
 
             $response = curl_exec($curl);
             curl_close($curl);
-            return ($response === 'send') ? true : false;
+            return ($response === '"send"') ? true : false;
         }
     }

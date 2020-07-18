@@ -459,4 +459,43 @@
             $this->id = intval($this->id);
             return $this;
         }
+
+        public function ordersToSendSmsToDriver(): ?array
+        {
+            $this->load->config('custom');
+            return $this->readImproved([
+                'what'  => [
+                    'tbl_shop_orders.id as orderId',
+                    'tbl_shop_orders.updated AS orderUpdate',
+                    'tbl_shop_vendors.driverNumber AS driverNumber',
+                    'tbl_shop_vendors.smsDelay AS smsDelay',
+                    'tbl_user.username AS vendorName',
+                ],
+                'where' => [
+                    'tbl_shop_orders.orderStatus=' => $this->config->item('orderDone'),
+                    'printStatus' => '1',
+                    'sendSmsDriver' => '0'
+                ],
+                'joins' => [
+                    ['tbl_shop_order_extended', 'tbl_shop_order_extended.orderId = tbl_shop_orders.id', 'LEFT'],
+                    ['tbl_shop_products_extended', 'tbl_shop_products_extended.id = tbl_shop_order_extended.productsExtendedId', 'LEFT'],
+                    ['tbl_shop_products', 'tbl_shop_products_extended.productId  = tbl_shop_products.id', 'LEFT'],
+                    ['tbl_shop_categories', 'tbl_shop_categories.id = tbl_shop_products.categoryId', 'LEFT'],
+                    ['tbl_user', 'tbl_user.id = tbl_shop_categories.userId', 'LEFT'],
+                    ['tbl_shop_vendors', 'tbl_shop_vendors.vendorId = tbl_user.id', 'LEFT']
+                ],
+                'conditions' => [
+                    'GROUP_BY' => ['tbl_shop_orders.id']
+                ]
+            ]);
+        }
     }
+
+// FROM
+// 	`tbl_shop_orders`
+
+// WHERE 
+// 	(tbl_shop_orders.orderStatus = 'done' OR tbl_shop_orders.orderStatus = 'finished')
+//     AND tbl_shop_orders.printStatus = '1'
+//     AND tbl_shop_orders.sendSmsDriver = '0'
+// 

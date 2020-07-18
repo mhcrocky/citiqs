@@ -44,6 +44,7 @@
                 isset($data['productId'])
                 && isset($data['name'])
                 && isset($data['price'])
+                && isset($data['shortDescription'])
                 && isset($data['productTypeId'])
                 && isset($data['updateCycle'])
             ) {

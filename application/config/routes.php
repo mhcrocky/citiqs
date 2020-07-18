@@ -255,6 +255,7 @@ $route['insertorder/(:num)'] = 'publicorders/insertOrder/$1';
 
 $route['api/orders/print/get'] = 'Api/Orders/data';
 $route['api/orders/print'] = 'Api/Orders/data';
+$route['sendDriverSms'] = 'Api/Orders/sms';
 
 // ALFRED PAYMENT ENGINE
 $route['paymentengine/(:num)'] = 'Alfredpayment/paymentEngine/$1';
