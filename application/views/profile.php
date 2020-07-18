@@ -191,7 +191,7 @@
 					</div>
 					<div class="form group">
 						<label for="termsAndConditions">Terms and conditions: </label>
-						<textarea class="form-control" value="<?php echo strval($vendor['termsAndConditions']); ?>" id="termsAndConditions" name="termsAndConditions"></textarea>
+						<textarea class="form-control" id="termsAndConditions" name="termsAndConditions"><?php echo strval($vendor['termsAndConditions']); ?></textarea>
 					</div>
 					<br/>
 					<br/>

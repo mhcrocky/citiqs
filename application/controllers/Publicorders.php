@@ -73,6 +73,17 @@
                 'day' => date('D', $time),
                 'hours' => strtotime(date('H:i:s', $time))
             ];
+
+            $termsAndConditions = $this->shopvendor_model->readImproved([
+                'what' => ['termsAndConditions'],
+                'where' => [
+                    'vendorId=' => $userId
+                ]
+            ])[0]['termsAndConditions'];
+
+            if (trim($termsAndConditions)) {
+                $data['termsAndConditions'] = $termsAndConditions;
+            }
             
             $data['ordered'] = isset($_SESSION['order']) ? $_SESSION['order'] : null;
 
