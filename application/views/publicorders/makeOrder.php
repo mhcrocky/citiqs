@@ -78,7 +78,7 @@
                                         false
                                     )'
                                     >
-                                    <i class='fa fa-minus'></i>
+                                    <i class='fa fa-minus' style></i>
                                 </a>
                                 <a
                                     class='pab-plus refresh-me add-to-cart'
@@ -230,10 +230,11 @@
                                                             id="showOrderedQuantity<?php echo $product['productExtendedId']; ?>"
                                                             style=
                                                             "display: inline-flex;
+                                                            color: green;
                                                             justify-content: center;
                                                             align-items: center;
                                                             font-size: 18px;
-                                                            border: 2px solid #ff4f00;
+                                                            border: 2px solid #800b00;
                                                             height: 30px;
                                                             width: 30px;
                                                             border-radius: 100px;"
@@ -250,16 +251,17 @@
                                                 <div class="pab pab-2">
                                                     <?php if (!is_null($productRaw['addons'])) { ?>
                                                         <a
-                                                            class="pab-minus"
+                                                            class="pab-options"
                                                             href="javascript:void(0);"
                                                             onclick="showAddOns('addOns<?php echo $product['productExtendedId']; ?>')"
                                                             id="toogleAddons<?php echo $product['productExtendedId']; ?>"
                                                             >
-                                                            <i class="fa fa-chevron-down"></i>
+                                                            <i class="fa fa-chevron-down" > </i>
                                                         </a>
                                                     <?php } ?>
                                                     <a
                                                         class="pab-minus"
+														style="margin-left: 4px"
                                                         href="javascript:void(0);"
                                                         onclick="addToOrder(
                                                             'amount<?php echo  $product['productExtendedId']; ?>',
@@ -296,7 +298,7 @@
                                                             true
                                                         )"
                                                         >
-                                                        <i class="fa fa-plus"></i>
+                                                        <i class="fa fa-plus" style="background-color: #1e7e34"></i>
                                                     </a>
                                                 </div>
                                             </div>
