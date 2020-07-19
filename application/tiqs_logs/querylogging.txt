@@ -1,0 +1,3 @@
+2020-07-19 10:14:35 => SELECT `driverNumber`, `smsDelay`, `termsAndConditions`
+FROM `tbl_shop_vendors`
+WHERE `vendorId` = '423'
