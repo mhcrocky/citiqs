@@ -80,7 +80,15 @@
             // $result = $this->db->get($this->getThisTable());
             // echo $this->db->last_query(); die();
             $result = $this->db->get($this->getThisTable())->result_array();
-            return $result ? $result : null;
+
+            $querylogging = 1;
+            if($querylogging==1) {
+				$file = FCPATH . 'application/tiqs_logs/querylogging.txt';
+				Utility_helper::logMessage($file,
+					$this->db->last_query());
+			}
+
+			return $result ? $result : null;
         }
 
         public function update(): bool

@@ -27,7 +27,7 @@ function populateTable(elementId, skiptStatus, orders) {
             tableBody += '<button class="btn btn-primary" ' + disabled + ' ';
             tableBody +=    'data-order-id=' + order['orderId'] + '" ';
             tableBody +=    'data-mobile="' + order['buyerMobile'] + '" ';
-            tableBody +=    'data-message="Je kan je eten afhalen bij de keuken" ';
+            tableBody +=    'data-message="Order staat klaar bij ' + showOrderProducts(orderDetails) + '" ';
             tableBody +=    'data-recipent="buyer" ';
             tableBody +=    'onclick="sendSms(this)"';
             tableBody += '>Send sms</button>';

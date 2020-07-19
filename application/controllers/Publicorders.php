@@ -62,6 +62,9 @@
 
         private function loadSpotView(int $spotId): void
         {
+//
+//        	var_dumP('here');
+//        	die();
             $this->global['pageTitle'] = 'TIQS : ORDERING';
 
             $userId = $_SESSION['vendor']['vendorId'];
@@ -81,10 +84,12 @@
                 ]
             ])[0]['termsAndConditions'];
 
-            if (trim($termsAndConditions)) {
-                $data['termsAndConditions'] = $termsAndConditions;
-            }
-            
+            if(!empty($termsAndConditions)){
+				if (trim($termsAndConditions)) {
+					$data['termsAndConditions'] = $termsAndConditions;
+				}
+			}
+
             $data['ordered'] = isset($_SESSION['order']) ? $_SESSION['order'] : null;
 
             $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');

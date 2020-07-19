@@ -108,13 +108,12 @@ function submitMakeOrderForm(formId, orderAmount, orderQuantity) {
 }
 jQuery(document).ready(function($) {
     $('.main-slider').slick({
-        dots: true,
+        dots: false,
         arrows: true,
-        infinite: false,
+        infinite: true,
         speed: 300,
-        slidesToScroll: 1,
-        rows: 1,
-        slidesPerRow: 1,
+		slidesToShow: 1,
+		adaptiveHeight: true
     });
 });
 

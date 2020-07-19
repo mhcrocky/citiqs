@@ -147,13 +147,15 @@
     }
 
 ?>
-<main class="container" style="text-align:left">
+<main class="container" style="text-align:left; background-color: navajowhite">
     <?php 
         // include_once FCPATH . 'application/views/includes/sessionMessages.php';
     ?>
     <?php if (!empty($categoryProducts) ) { ?>
-        <h1>Make an order</h1>
-        <div class="main-slider container" style='overflow-x:hidden; overflow-y: hidden; margin-top: 20px; margin-bottom: 20px'>
+<!--        <h1>BESTEL</h1>-->
+		<h5 align="center">SWIPE < LINKS EN RECHTS > VOOR ANDERE CATEGORIE</h5>
+
+		<div class="main-slider container" style='overflow-x:hidden; overflow-y: hidden; margin-top: 20px; margin-bottom: 20px; background-color: navajowhite'>
             <?php
                 $form = '';
                 foreach($categoryProducts as $category => $productsRawData) {
@@ -161,7 +163,7 @@
                 ?>
                     <div class="item-category">
                         <div class="filter-sidebar">
-                            <a href="javascript:void(0);" class="go-category left-side selected"><?php echo $category;?></a>
+                            <a href="javascript:void(0);"  style="color: black; background-color: navajowhite" class="go-category left-side selected"><?php echo $category;?></a>
                         </div>
                         <?php
                             foreach($productsRawData as $productId => $productRaw) {
@@ -216,7 +218,7 @@
 
                                 
                                 ?>
-                                <div class="product__list">
+                                <div class="product__list" style="background-color: navajowhite">
                                     <div class="product">
                                         <div class="product__img">
                                             <!-- <img src="https://tiqs.com/shop/attachments/shop_images/Heinikentap.jpg" alt="Heineken tap (25cl)"> -->
@@ -298,7 +300,7 @@
                                                             true
                                                         )"
                                                         >
-                                                        <i class="fa fa-plus" style="background-color: #1e7e34"></i>
+                                                        <i class="fa fa-plus"></i>
                                                     </a>
                                                 </div>
                                             </div>
@@ -365,7 +367,7 @@
                 <div class="footer-top">
                     <div class="fb-left">
 <!--                        <h4>Your Basket</h4>-->
-                        <h5>Your order 
+                        <h5 onclick="submitMakeOrderForm('makeOrder', 'orderAmount', 'orderQuantity')" >Betaal
                             <?php
                                 $orderedQuantity = 0;
                                 $orderedAmount = 0;
