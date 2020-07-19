@@ -20,6 +20,7 @@ class  Profile extends BaseControllerWeb
 		$this->load->model('subscription_model');		
 		$this->load->model('user_subscription_model');
 		$this->load->model('label_model');
+		$this->load->model('shopvendor_model');
 		
 		$this->load->config('custom');
 		$this->load->library('language', array('controller' => $this->router->class));
@@ -42,7 +43,26 @@ class  Profile extends BaseControllerWeb
 			'businessTypes' => $this->businesstype_model->getAll(),
 		];
 
+		$vendor = $this->shopvendor_model->readImproved([
+			'what' => ['driverNumber', 'smsDelay', 'termsAndConditions'],
+			'where' => [
+				'vendorId=' => $this->userId
+			]
+		]);
+		$data['vendor'] = reset($vendor);
+
 		$this->loadViews("profile", $this->global, $data, NULL, 'headerwebloginhotelProfile'); // Menu profilepage
+	}
+
+	public function updateVenodrData(): void
+	{
+		if ($this->shopvendor_model->updateVendorData($_POST)) {
+			$this->session->set_flashdata('success', 'Data updated');
+		} else {
+			$this->session->set_flashdata('error', 'Update data failed');
+		}
+		redirect('profile');
+		exit();
 	}
 
 }

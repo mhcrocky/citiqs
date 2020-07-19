@@ -310,24 +310,27 @@
                                         if (!is_null($productRaw['addons'])) {
                                             $toogle = false;
                                             $addons = $productRaw['addons'];
-                                            foreach($addons as $addon) {
-                                                $addonDetails = $productsRawData[$addon[1]][0]['productDetails'];
-                                                foreach($addonDetails as $addonSingle) {
-                                                    if ($addonSingle['showInPublic'] === '1' && $addonSingle['productExtendedId'] === $addon[2] && $addonSingle['activeStatus'] === '1') {
-                                                        if (!$toogle) $toogle = true;
-                                                        $strings = createAddonString($addonSingle, $mainProductExtendedId, $ordered);
-                                                        if (isset($strings['mainProductExtendedId'])) {
-                                                            ?>
-                                                                <script>
-                                                                    document.getElementById('addons<?php echo $strings['mainProductExtendedId']; ?>').style.display = 'block';
-                                                                </script>
-                                                            <?php
+                                            if ($addons) {
+                                                foreach($addons as $addon) {
+                                                    $addonDetails = $productsRawData[$addon[1]][0]['productDetails'];
+                                                    foreach($addonDetails as $addonSingle) {
+                                                        if ($addonSingle['showInPublic'] === '1' && $addonSingle['productExtendedId'] === $addon[2] && $addonSingle['activeStatus'] === '1') {
+                                                            if (!$toogle) $toogle = true;
+                                                            $strings = createAddonString($addonSingle, $mainProductExtendedId, $ordered);
+                                                            if (isset($strings['mainProductExtendedId'])) {
+                                                                ?>
+                                                                    <script>
+                                                                        document.getElementById('addons<?php echo $strings['mainProductExtendedId']; ?>').style.display = 'block';
+                                                                    </script>
+                                                                <?php
+                                                            }
+                                                            echo $strings['addons'];
+                                                            $form .= $strings['form'];
                                                         }
-                                                        echo $strings['addons'];
-                                                        $form .= $strings['form'];
                                                     }
                                                 }
                                             }
+
                                             if (!$toogle) {
                                                 ?>
                                                     <script>
@@ -338,13 +341,23 @@
                                         }
                                     ?>
                                 </div>
-                        <?php
+                                <?php
                             }
                         ?>
                     </div>
                 <?php
                 }
             ?>
+            <?php if (isset($termsAndConditions) && $termsAndConditions) { ?>
+                <div class="item-category">
+                    <div class="filter-sidebar">
+                        <a href="javascript:void(0);" class="go-category left-side selected">TERMS AND CONDITIONS</a>
+                    </div>
+                    <div class="product__list">
+                        <?php echo $termsAndConditions; ?>
+                    </div>
+                </div>
+            <?php } ?>
         </div>
         <?php if ($form) { ?>
             <!-- footer basket -->

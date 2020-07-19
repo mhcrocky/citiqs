@@ -14,12 +14,15 @@
         public $serviceFeePercent;
         public $serviceFeeAmount;
         public $paynlServiceId;
+        public $driverNumber;
+        public $smsDelay;
+        public $termsAndConditions;
 
         private $table = 'tbl_shop_vendors';
 
         protected function setValueType(string $property,  &$value): void
         {
-            if ($property === 'id' || $property === 'vendorId') {
+            if ($property === 'id' || $property === 'vendorId' || $property === 'smsDelay') {
                 $value = intval($value);
             }
             if ($property === 'serviceFeePercent' || $property === 'serviceFeeAmount') {
@@ -48,7 +51,9 @@
             if (isset($data['serviceFeePercent']) && !Validate_data_helper::validateFloat($data['serviceFeePercent'])) return false;
             if (isset($data['serviceFeeAmount']) && !Validate_data_helper::validateFloat($data['serviceFeeAmount'])) return false;
             if (isset($data['paynlServiceId']) && !Validate_data_helper::validateString($data['paynlServiceId'])) return false;
-
+            // if (isset($data['driverNumber']) && !Validate_data_helper::validateString($data['driverNumber'])) return false;
+            // if (isset($data['smsDelay']) && !Validate_data_helper::validateInteger($data['smsDelay'])) return false;
+            // if (isset($data['termsAndConditions']) && !Validate_data_helper::validateString($data['termsAndConditions'])) return false;
             
             return true;
         }
@@ -84,6 +89,17 @@
             $result['serviceFeeAmount'] = floatval($result['serviceFeeAmount']);
             $result['vendorId'] = intval($result['vendorId']);
             return $result;
+        }
+
+        public function updateVendorData(array $data): bool
+        {
+            $where = ' vendorId = ' . $data['vendorId'];
+            $update = [
+                'driverNumber' => $data['driverNumber'],
+                'smsDelay' => $data['smsDelay'],
+                'termsAndConditions' => $data['termsAndConditions'],
+            ];
+            return $this->db->update($this->getThisTable(), $update, $where);
         }
 
     }
