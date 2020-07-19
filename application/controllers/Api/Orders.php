@@ -139,7 +139,7 @@
                 $totalamount +=  floatval($quantity) * floatval($price);
 
                 $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                $draw->annotation(0, 165 + ($i * 30), $plu);
+//                $draw->annotation(0, 165 + ($i * 30), $plu);
         
                 $draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
                 $draw->annotation(150, 165 + ($i * 30), $quantity);
