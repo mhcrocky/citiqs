@@ -353,7 +353,7 @@
             <?php if (isset($termsAndConditions) && $termsAndConditions) { ?>
                 <div class="item-category">
                     <div class="filter-sidebar">
-                        <a href="javascript:void(0);" class="go-category left-side selected">TERMS AND CONDITIONS</a>
+                        <a href="javascript:void(0);" class="go-category left-side selected">INFO</a>
                     </div>
                     <div class="product__list">
                         <?php echo $termsAndConditions; ?>

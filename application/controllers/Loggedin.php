@@ -26,7 +26,7 @@ class Loggedin extends BaseControllerWeb
 //			'subscriptions' => Utility_helper::resetArrayByKeyMultiple($this->subscription_model->select($subscriptionWhat), 'type')
 		];
 
-		$this->loadViews("nolabels", $this->global, $data, NULL, "header_info_spot");
+		$this->loadViews("nolabels", $this->global, $data, NULL, "headerpubliclogout");
 	}
 
 }

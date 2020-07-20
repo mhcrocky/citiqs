@@ -48,7 +48,7 @@ class Login extends BaseControllerWeb
 
 		if (!isset($isLoggedIn) || $isLoggedIn != TRUE) {
 			$this->global['pageTitle'] = 'TIQS : LOGIN';
-			$this->loadViews("login", $this->global, NULL, NULL);
+			$this->loadViews("login", $this->global, NULL, 'headerpublic');
 		} else {
 			redirect('/loggedin');
 		}
