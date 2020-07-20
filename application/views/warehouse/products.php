@@ -448,18 +448,12 @@
                                                     <input type="text" name="productExtended[name]" id="name<?php echo $product['productId'] ?>" class="form-control" required value="<?php echo $details['name']; ?>" />
                                                 </div>
                                                 <div class="col-lg-4 col-sm-12">
-                                                    <label for="editCategoryId<?php echo $product['productId'] ?>">Product category: </label>
-                                                    <select class="form-control" id="editCategoryId<?php echo $product['productId'] ?>" name="product[categoryId]" required>
-                                                        <option value="">Select</option>
-                                                        <?php foreach ($categories as $category) { ?>
-                                                            <option
-                                                                <?php if ($category['categoryId'] === $product['categoryId']) echo 'selected'; ?>
-                                                                value="<?php echo $category['categoryId']; ?>"
-                                                                >
-                                                                <?php echo $category['category']; ?> (<?php echo $category['active'] === '1' ? 'active' : 'blocked'; ?>)
-                                                            </option>
-                                                        <?php } ?>
-                                                    </select>
+                                                    <label for="shortDescription<?php echo $product['productId'] ?>">Short description: </label>
+                                                    <input type="text" name="productExtended[shortDescription]" id="shortDescription<?php echo $product['productId'] ?>" class="form-control" value="<?php echo  $details['shortDescription']; ?>" />
+                                                </div>
+                                                <div class="col-lg-4 col-sm-12">
+                                                    <label for="longDescription<?php echo $product['productId'] ?>">Long description: </label>
+                                                    <textarea name="productExtended[longDescription]" id="longDescription<?php echo $product['productId'] ?>" rows="1" class="form-control"><?php if($details['longDescription']) echo  $details['longDescription']; ?></textarea>
                                                 </div>
                                                 <div class="col-lg-4 col-sm-12">
                                                     <label for="vatEdit<?php echo $product['productId'] ?>">VAT: </label>
@@ -500,14 +494,19 @@
                                                         required
                                                         />
                                                 </div>
-                                                
                                                 <div class="col-lg-4 col-sm-12">
-                                                    <label for="shortDescription<?php echo $product['productId'] ?>">Short description: </label>
-                                                    <input type="text" name="productExtended[shortDescription]" id="shortDescription<?php echo $product['productId'] ?>" class="form-control" value="<?php echo  $details['shortDescription']; ?>" />
-                                                </div>
-                                                <div class="col-lg-4 col-sm-12">
-                                                    <label for="longDescription<?php echo $product['productId'] ?>">Long description: </label>
-                                                    <textarea name="productExtended[longDescription]" id="longDescription<?php echo $product['productId'] ?>" rows="1" class="form-control"></textarea>
+                                                    <label for="editCategoryId<?php echo $product['productId'] ?>">Product category: </label>
+                                                    <select class="form-control" id="editCategoryId<?php echo $product['productId'] ?>" name="product[categoryId]" required>
+                                                        <option value="">Select</option>
+                                                        <?php foreach ($categories as $category) { ?>
+                                                            <option
+                                                                <?php if ($category['categoryId'] === $product['categoryId']) echo 'selected'; ?>
+                                                                value="<?php echo $category['categoryId']; ?>"
+                                                                >
+                                                                <?php echo $category['category']; ?> (<?php echo $category['active'] === '1' ? 'active' : 'blocked'; ?>)
+                                                            </option>
+                                                        <?php } ?>
+                                                    </select>
                                                 </div>
                                                 <div class="col-lg-4 col-sm-12"> 
                                                     <label>Printers</label>

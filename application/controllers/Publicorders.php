@@ -80,7 +80,8 @@
                 'categoryProducts' => $this->shopproductex_model->getUserProductsPublic($userId),
                 'spotId' => $spotId,
                 'day' => date('D', $time),
-                'hours' => strtotime(date('H:i:s', $time))
+                'hours' => strtotime(date('H:i:s', $time)),
+                'vendor' => $_SESSION['vendor'],
             ];
 
             $termsAndConditions = $this->shopvendor_model->readImproved([

@@ -179,7 +179,8 @@
                                     \'' .  $concatSeparator . '\',' . $this->table. '.showInPublic,
                                     \'' .  $concatSeparator . '\',' . $this->table . '.productId,
                                     \'' .  $concatSeparator . '\', tbl_shop_categories.category,
-                                    \'' .  $concatSeparator . '\', tbl_shop_products.active
+                                    \'' .  $concatSeparator . '\', tbl_shop_products.active,
+                                    \'' .  $concatSeparator . '\', IF(CHAR_LENGTH(' . $this->table . '.longDescription) > 0, ' . $this->table . '.longDescription, "")
                                     ORDER BY ' . $this->table. '.id DESC
                                     SEPARATOR "'. $concatGroupSeparator . '"                                    
                                 ) AS productDetails
@@ -306,6 +307,7 @@
                     'productId'             => $details[10],
                     'category'              => $details[11],
                     'activeStatus'          => $details[12],
+                    'longDescription'       => $details[13],
                 ];
                 array_push($return, $collect);
             }

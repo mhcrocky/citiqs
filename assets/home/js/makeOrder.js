@@ -115,6 +115,11 @@ jQuery(document).ready(function($) {
 		slidesToShow: 1,
 		adaptiveHeight: true
     });
+    
+    $('[data-toggle="popover"]').popover({
+        'animation' : false,
+        'placement' : "right"
+    });
 });
 
 function showAddOns(className) {

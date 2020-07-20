@@ -152,9 +152,8 @@
         // include_once FCPATH . 'application/views/includes/sessionMessages.php';
     ?>
     <?php if (!empty($categoryProducts) ) { ?>
-<!--        <h1>BESTEL</h1>-->
+        <h1><?php echo $vendor['vendorName']; ?></h1>
 		<h5 style="text-align:center">SWIPE < LINKS EN RECHTS > VOOR ANDERE CATEGORIE</h5>
-
 		<div class="main-slider container" style='overflow-x:hidden; overflow-y: hidden; margin-top: 20px; margin-bottom: 20px; background-color: navajowhite'>
             <?php
                 $form = '';
@@ -228,6 +227,9 @@
                                                 <div class="pab pab-1">
                                                     <div class="product__name">
                                                         <?php echo $product['name']; ?>
+                                                        <?php if ($product['longDescription']) { ?>
+                                                            <i class="fa fa-info-circle" aria-hidden="true" data-toggle="popover" data-trigger="hover"  data-placement="bottom" title="Product description" data-content="<?php echo $product['longDescription']; ?>!"></i>
+                                                        </span>
                                                         <span
                                                             id="showOrderedQuantity<?php echo $product['productExtendedId']; ?>"
                                                             style=
@@ -242,7 +244,8 @@
                                                             border-radius: 100px;"
                                                             >
                                                             <?php echo (isset($ordered[$product['productExtendedId']])) ? $ordered[$product['productExtendedId']]['quantity'][0] : '0'; ?>
-                                                        </span>
+                                                        </span>                                                        
+                                                        <?php } ?>
                                                     </div>
                                                     <div>
                                                         <span class="solo_price">
@@ -361,12 +364,18 @@
                 </div>
             <?php } ?>
         </div>
+        <div style="text-align:right; padding-top:5px;">
+            <a href="<?php echo base_url() ?>make_order?vendorid=<?php echo $vendor['vendorId']; ?>">
+                <i class="fa fa-arrow-left" aria-hidden="true">&nbsp;SELECT SPOT</i>
+            </a>
+        </div>
         <?php if ($form) { ?>
             <!-- footer basket -->
             <div class="footer-basket">
+        
                 <div class="footer-top">
                     <div class="fb-left">
-<!--                        <h4>Your Basket</h4>-->
+                        <!--                        <h4>Your Basket</h4>-->
                         <h5 onclick="submitMakeOrderForm('makeOrder', 'orderAmount', 'orderQuantity')" >Betaal
                             <?php
                                 $orderedQuantity = 0;
