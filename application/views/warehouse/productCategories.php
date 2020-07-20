@@ -94,6 +94,12 @@
 							<p class="item-category">Send SMS to driver:
 								<?php echo $category['sendSms'] === '1' ? '<span>YES</span>' : '<span>NO</span>'; ?>
 							</p>
+							<p class="item-category">Driver number:
+								<?php echo $category['driverNumber']; ?>
+							</p>
+							<p class="item-category">Minutes to delay:
+								<?php echo $category['delayTime']; ?>
+							</p>
 						</div><!-- end item header -->
 						<div class="grid-footer">
 							<div class="iconWrapper">

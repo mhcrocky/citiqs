@@ -181,14 +181,14 @@
 			
 				<form method="post" action="<?php echo base_url() ?>profile/updateVenodrData">					
 					<input type="number" name="vendorId" value="<?php echo $user->id ?>" readonly requried hidden />
-					<div class="form group">
+					<!-- <div class="form group">
 						<label for="driverNumber">Driver number (must include country code starting with zero): </label>
-						<input type="text" value="<?php echo strval($vendor['driverNumber']); ?>" class="form-control" id="driverNumber" name="driverNumber" pattern="[0-9].{8,}" />
-					</div>
-					<div class="form group">
+						<input type="text" value="<?php #echo strval($vendor['driverNumber']); ?>" class="form-control" id="driverNumber" name="driverNumber" pattern="[0-9].{8,}" />
+					</div> -->
+					<!-- <div class="form group">
 						<label for="smsDelay">Number of minutes: </label>
-						<input type="number" value="<?php echo strval($vendor['smsDelay']); ?>" min="0" step="1" class="form-control" id="smsDelay" name="smsDelay"  />
-					</div>
+						<input type="number" value="<?php #echo strval($vendor['smsDelay']); ?>" min="0" step="1" class="form-control" id="smsDelay" name="smsDelay"  />
+					</div> -->
 					<div class="form group">
 						<label for="termsAndConditions">Terms and conditions: </label>
 						<textarea class="form-control" id="termsAndConditions" name="termsAndConditions"><?php echo strval($vendor['termsAndConditions']); ?></textarea>

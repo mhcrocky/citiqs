@@ -43,7 +43,7 @@
                         <th>Buyer mobile</th>
                         <th>Buyer email</th>
                         <th>SMS to buyer</th>
-                        <th>SMS to driver</th>
+                        <!-- <th>SMS to driver</th> -->
                     </tr>
                 </thead>
                 <tbody id='orders'>

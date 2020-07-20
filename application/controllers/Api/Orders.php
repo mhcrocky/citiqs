@@ -327,8 +327,8 @@
                                     ->setObjectId(intval($order['orderId']))
                                     ->setObjectFromArray(['sendSmsDriver' => '1'])
                                     ->update();
-
-                            var_dump($message);
+                            // var_dump($order);
+                            // var_dump($message);
                         } else {
                             $file = FCPATH . 'application/tiqs_logs/messages.txt';
                             $errorMessage = 'SMS NOT SENT TO DRIVER FOR ORDER ID: ' . $order['orderId'];

@@ -35,24 +35,24 @@ function populateTable(elementId, skiptStatus, orders) {
             tableBody += 'Sms send (buyer)'
         }
         tableBody +=        '<th>';
-        if (order['sendSmsDriver'] === '0') {
-            console.dir(order['driverNumber']);
-            if (order['driverNumber']) {
-                let disabled = order['orderStatus'] === 'done' ? '' : 'disabled';
-                tableBody += '<button class="btn btn-primary" ' + disabled + ' ';
-                tableBody +=    'data-order-id=' + order['orderId'] + '" ';
-                tableBody +=    'data-mobile="' + order['driverNumber'] + '" ';
-                tableBody +=    'data-message="Order staat klaar bij ' + orderGlobals.vendorName + '" ';
-                tableBody +=    'data-recipent="driver" ';
-                tableBody +=    'onclick="sendSms(this)"';
-                tableBody += '>Send sms</button>';
-            } else {
-                tableBody += '<a href="' + globalVariables.baseUrl + 'profile">SET DRIVER NUMBER</a>';
-            }
+        // if (order['sendSmsDriver'] === '0') {
+        //     console.dir(order['driverNumber']);
+        //     if (order['driverNumber']) {
+        //         let disabled = order['orderStatus'] === 'done' ? '' : 'disabled';
+        //         tableBody += '<button class="btn btn-primary" ' + disabled + ' ';
+        //         tableBody +=    'data-order-id=' + order['orderId'] + '" ';
+        //         tableBody +=    'data-mobile="' + order['driverNumber'] + '" ';
+        //         tableBody +=    'data-message="Order staat klaar bij ' + orderGlobals.vendorName + '" ';
+        //         tableBody +=    'data-recipent="driver" ';
+        //         tableBody +=    'onclick="sendSms(this)"';
+        //         tableBody += '>Send sms</button>';
+        //     } else {
+        //         tableBody += '<a href="' + globalVariables.baseUrl + 'profile">SET DRIVER NUMBER</a>';
+        //     }
             
-        } else {
-            tableBody += 'Sms send (driver)'
-        }
+        // } else {
+        //     tableBody += 'Sms send (driver)'
+        // }
         tableBody +=        '</th>';
         tableBody +=    '</tr>';
     }
