@@ -363,11 +363,11 @@
                 </div>
             <?php } ?>
         </div>
-        <!-- <div style="text-align:right; padding-top:5px;">
-            <a href="<?php #echo base_url() ?>make_order?vendorid=<?php #echo $vendor['vendorId']; ?>">
+        <div style="text-align:right; padding-top:5px;">
+            <a href="<?php echo base_url() ?>make_order?vendorid=<?php echo $vendor['vendorId']; ?>">
                 <i class="fa fa-arrow-left" aria-hidden="true">&nbsp;SELECT SPOT</i>
             </a>
-        </div> -->
+        </div>
         <?php if ($form) { ?>
             <!-- footer basket -->
             <div class="footer-basket">
