@@ -22,6 +22,14 @@
 							<input type="text" class="form-control" id="category" name="category" required />
 						</div>
 						<div>
+							<label for="driverNumber">Driver SMS number: </label>
+							<input type="text" class="form-control" id="driverNumber" name="driverNumber" />
+						</div>
+						<div>
+							<label for="delayTime">Delay time in minutes: </label>
+							<input type="number" min="0" step="1" class="form-control" id="delayTime" name="delayTime" />
+						</div>
+						<div>
 							<label for="sendSms">Send SMS to driver: </label>
 							<input type="radio" id="sendSms" name="sendSms" value="1">
 						</div>
@@ -122,7 +130,7 @@
 							<div class="edit-single-user-container">
 								<form class="form-inline" id="editCategory<?php echo $category['categoryId']; ?>" method="post" action="<?php echo $this->baseUrl . 'warehouse/editCategory/' . $category['categoryId']; ?>" >
 									<input type="text" name="userId" value="<?php echo $userId; ?>" readonly required hidden />
-									<h3>Category details</h3>
+									<h3>Category "<?php echo $category['category']; ?>" details</h3>
 									<div>
 										<label for="category<?php echo $category['categoryId']; ?>">Name</label>
 										<input type="text" class="form-control" id="category<?php echo $category['categoryId']; ?>" name="category" required value="<?php echo $category['category']; ?>" />
@@ -131,6 +139,28 @@
 										<label>Send SMS to driver: </label>
 										<label>Yes:&nbsp;&nbsp;<input type="radio" name="sendSms" value="1" <?php if ($category['sendSms'] === '1') echo 'checked'; ?>></label>
 										<label>No:&nbsp;&nbsp;<input type="radio" name="sendSms" value="0" <?php if ($category['sendSms'] === '0') echo 'checked'; ?>></label>
+									</div>
+									<div>
+										<label for="driverNumber<?php echo $category['categoryId']; ?>">Driver SMS number: </label>
+										<input
+											type="text"
+											class="form-control"
+											id="driverNumber<?php echo $category['categoryId']; ?>"
+											name="driverNumber"
+											value="<?php echo strval($category['driverNumber']); ?>"
+											/>
+									</div>
+									<div>
+										<label for="delayTime<?php echo $category['categoryId']; ?>">Delay time in minutes: </label>
+										<input
+											type="number"
+											min="0"
+											step="1"
+											class="form-control"
+											id="delayTime<?php echo $category['categoryId']; ?>"
+											name="delayTime"
+											value="<?php echo ($category['delayTime']) ? strval($category['delayTime']) : '0'; ?>"
+											/>
 									</div>
 								</form>
 							</div>
