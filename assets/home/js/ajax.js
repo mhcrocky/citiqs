@@ -158,6 +158,14 @@ var callThis = (function() {
         },
         ajaxUpdateSession: function(callFunction) {
             // no action
+        },
+        checkSpotId: function(callFunction, functionArg) {
+            if (this) {
+                functionArg.push(this.url);
+                callFunction(...functionArg);
+            } else {
+                alertify.error('Unknown spot name! Please check');
+            }
         }
     };
     return methods;

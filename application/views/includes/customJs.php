@@ -76,4 +76,6 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/checkoutOrder.js"></script>
 <?php } elseif ($this->view === 'warehouse/productTypes') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js"></script>
+<?php } elseif ($this->view === 'publicorders/selectSpot') { ?>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/selectSpot.js"></script>
 <?php } ?>

@@ -54,7 +54,7 @@
                     'tbl_shop_spots.id' => $spotId,
                 ];
 
-                if ($this->shopspot_model->setObjectId($spotId)->isActive() && $this->shopspot_model->fetchUserSpotsImporved($where)) {
+                if ($this->shopspot_model->fetchUserSpotsImporved($where)) {
                     $this->loadSpotView($spotId);
                     return;
                 } else {

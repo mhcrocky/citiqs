@@ -20,6 +20,7 @@ class Ajax extends CI_Controller
         $this->load->model('floorplanareas_model');
         $this->load->model('floorplandetails_model');
         $this->load->model('shoporder_model');
+        $this->load->model('shopspot_model');
 
         $this->load->helper('cookie');
         $this->load->helper('my_file_helper');
@@ -514,6 +515,29 @@ class Ajax extends CI_Controller
                     unset($_SESSION['order']);
                 }
             }
+        }
+    }
+
+    public function checkSpotId(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = $this->input->post(null, true);
+        $where = [
+            'tbl_shop_printers.userId=' => $post['vendorId'],
+            'tbl_shop_spots.active' => '1',
+            'tbl_shop_spots.spotName' =>  $post['spotName'],
+        ];
+
+        $spot = $this->shopspot_model->fetchUserSpotsImporved($where);
+        if ($spot) {
+            $id = $spot[0]['spotId'];
+            $result = [
+                'url' => 'make_order?vendorid=' . $post['vendorId'] . '&spotid=' . $id
+            ];
+            echo json_encode($result);
+        } else {
+            echo 0;
         }
     }
 }
