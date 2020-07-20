@@ -115,18 +115,6 @@
 				<div>
 					<a href="forgotPassword" ><?=$this->language->Line("registerbusiness-F4100A","I FORGOT MY PASSWORD");?></a>
 				</div>
-				<div class="mobile-hide" style="text-align:center; margin-top: 70px; margin-bottom: 30px; margin-left: 100px">
-					<img src="<?php echo base_url(); ?>assets/home/images/TIQSLaptop.png" alt="tiqs" width="300" height="300" />
-				</div>
-				<div class="text-Left mt-50 mobile-hide" style="margin-top: -20px; margin-left: 100px">
-					<img src="<?php echo base_url(); ?>assets/home/images/TIQSWallet.png" alt="tiqs" width="150" height="125" />
-					<div class="text-center mt-50 mobile-hide" style="margin-top: 150px; margin-left: -50px">
-						<img src="<?php echo base_url(); ?>tiqsimg/tiqslogonew.png" alt="tiqs" width="125" height="45" />
-					</div>
-				</div>
-				<div style="text-align:center; margin-top: 30px">
-					<img src="<?php echo base_url(); ?>assets/home/images/DHL_expresswhite.png" alt="tiqs" width="250" height="40" />
-				</div>
 			</div>
 		</div>
 	</div><!-- end col half -->
@@ -190,22 +178,9 @@
 
 			</div>
 			<div class="mobile-hide" style="text-align:center; margin-top: 0px; margin-bottom: 50px; margin-left: 100px">
-				<img src="<?php echo base_url(); ?>assets/home/images/Mobilephone.png" alt="tiqs" width="125" height="250" />
-				<div class="mobile-hide" style="margin-left: 150px; margin-top: -30px; margin-bottom: 0px">
-					<img src="<?php echo base_url(); ?>assets/home/images/StickerNew.png" alt="tiqs" width="125" height="50" />
-				</div>
+
 			</div>
 			<div class="text-left mt-50 mobile-hide" style="margin-left: 100px; margin-bottom: 100px;  margin-top: -30px">
-				<div class="text-left mobile-hide" style="margin-left: 100px; margin-bottom: -40px; ">
-					<img src="<?php echo base_url(); ?>assets/home/images/Keychain.png" alt="tiqs" width="110" height="50" />
-				</div>
-				<img src="<?php echo base_url(); ?>assets/home/images/TIQSKeys.png" alt="tiqs" width="250" height="200" />
-				<div class="text-center mt-50 mobile-hide" style="margin-top: 110px; margin-left: -150px">
-					<img src="<?php echo base_url(); ?>tiqsimg/tiqslogonew.png" alt="tiqs" width="125" height="45" />
-				</div>
-				<div style="text-align:center; margin-top: 30px; margin-left: -150px">
-					<img src="<?php echo base_url(); ?>assets/home/images/DHL_expresswhite.png" alt="tiqs" width="250" height="40" />
-				</div>
 			</div>
 		</div>
 	</div><!-- end col half -->
