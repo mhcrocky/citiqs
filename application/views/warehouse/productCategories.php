@@ -21,6 +21,10 @@
 							<label for="category">Category: </label>
 							<input type="text" class="form-control" id="category" name="category" required />
 						</div>
+						<div>
+							<label for="sendSms">Send SMS to driver: </label>
+							<input type="radio" id="sendSms" name="sendSms" value="1">
+						</div>
 					</form>
 				</div>
 			</div>
@@ -79,6 +83,9 @@
 							<p class="item-category">Status:
 								<?php echo $category['active'] === '1' ? '<span>ACTIVE</span>' : '<span>BLOCKED</span>'; ?>
 							</p>
+							<p class="item-category">Send SMS to driver:
+								<?php echo $category['sendSms'] === '1' ? '<span>YES</span>' : '<span>NO</span>'; ?>
+							</p>
 						</div><!-- end item header -->
 						<div class="grid-footer">
 							<div class="iconWrapper">
@@ -120,16 +127,11 @@
 										<label for="category<?php echo $category['categoryId']; ?>">Name</label>
 										<input type="text" class="form-control" id="category<?php echo $category['categoryId']; ?>" name="category" required value="<?php echo $category['category']; ?>" />
 									</div>
-									<!-- <div>
-										<label for="active<?php #echo $category['categoryId']; ?>">
-											<input type="radio" id="active<?php #echo $category['categoryId']; ?>" name="active" required value="1" <?php #if ($category['active'] === '1') echo 'checked'; ?> />
-											Active
-										</label>
-										<label for="inActive<?php #echo $category['categoryId']; ?>">
-											<input type="radio" id="inActive<?php #echo $category['categoryId']; ?>" name="active" required value="0" <?php #if ($category['active'] === '0') echo 'checked'; ?> />
-											Arhive
-										</label>
-									</div> -->
+									<div>
+										<label>Send SMS to driver: </label>
+										<label>Yes:&nbsp;&nbsp;<input type="radio" name="sendSms" value="1" <?php if ($category['sendSms'] === '1') echo 'checked'; ?>></label>
+										<label>No:&nbsp;&nbsp;<input type="radio" name="sendSms" value="0" <?php if ($category['sendSms'] === '0') echo 'checked'; ?>></label>
+									</div>
 								</form>
 							</div>
 						</div>

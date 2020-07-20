@@ -13,6 +13,7 @@
         public $userId;
         public $category;
         public $active;
+        public $sendSms;
         
         private $table = 'tbl_shop_categories';
 
@@ -43,6 +44,8 @@
             if (isset($data['userId']) && !Validate_data_helper::validateInteger($data['userId'])) return false;
             if (isset($data['category']) && !Validate_data_helper::validateString($data['category'])) return false;
             if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
+            if (isset($data['sendSms']) && !($data['sendSms'] === '1' || $data['sendSms'] === '0')) return false;
+
             return true;
         }
 
@@ -52,7 +55,8 @@
                 [
                     $this->table . '.id AS categoryId',
                     $this->table . '.category',
-                    $this->table . '.active'
+                    $this->table . '.active',
+                    $this->table . '.sendSms',
                 ],
                 $where,
                 [],
@@ -63,7 +67,12 @@
 
         public function checkIsInserted(array $data): bool
         {
-            $count = $this->read(['id'], ['userId=' => $data['userId'],'category=' => $data['category']]);
+            $where = ['userId=' => $data['userId'],'category=' => $data['category']];
+            if ($this->id) {
+                $where['id!='] = $this->id;
+            }
+            $count = $this->read(['id'], $where);
+
             return $count ? true : false;
         }
     }

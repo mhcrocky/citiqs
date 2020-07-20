@@ -129,6 +129,8 @@
         {
             $data = Validate_data_helper::validateInteger($this->uri->segment(4)) ?
                             ['active' => $this->uri->segment(4)] : $this->input->post(null, true);
+            
+            $this->shopcategory_model->setObjectId(intval($this->uri->segment(3)));
 
             if(isset($data['category']) && $this->shopcategory_model->checkIsInserted($data)) {
                 $this->session->set_flashdata('error', 'Update failed! Role with name "' . $data['category'] . '" already inserted');
@@ -137,7 +139,6 @@
 
             $update =   $this
                         ->shopcategory_model
-                        ->setObjectId(intval($this->uri->segment(3)))
                         ->setObjectFromArray($data)
                         ->update();
 
