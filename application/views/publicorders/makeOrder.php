@@ -229,7 +229,7 @@
                                                         <?php echo $product['name']; ?>
                                                         <?php if ($product['longDescription']) { ?>
                                                             <i class="fa fa-info-circle" aria-hidden="true" data-toggle="popover" data-trigger="hover"  data-placement="bottom" title="Product description" data-content="<?php echo $product['longDescription']; ?>!"></i>
-                                                        </span>
+                                                        <?php } ?>
                                                         <span
                                                             id="showOrderedQuantity<?php echo $product['productExtendedId']; ?>"
                                                             style=
@@ -244,8 +244,7 @@
                                                             border-radius: 100px;"
                                                             >
                                                             <?php echo (isset($ordered[$product['productExtendedId']])) ? $ordered[$product['productExtendedId']]['quantity'][0] : '0'; ?>
-                                                        </span>                                                        
-                                                        <?php } ?>
+                                                        </span>
                                                     </div>
                                                     <div>
                                                         <span class="solo_price">
@@ -310,7 +309,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="addOns<?php echo $product['productExtendedId']; ?> addOnsFill" id="addons<?php echo $mainProductExtendedId;?>" style="display:none; margin: 0px 7%">
+                                <div class="addOns<?php echo $product['productExtendedId']; ?> addOnsFill" id="addons<?php echo $mainProductExtendedId;?>" style="display:none; margin: 0px 7%; height: auto">
                                     <?php
                                         if (!is_null($productRaw['addons'])) {
                                             $toogle = false;
@@ -364,11 +363,11 @@
                 </div>
             <?php } ?>
         </div>
-        <div style="text-align:right; padding-top:5px;">
-            <a href="<?php echo base_url() ?>make_order?vendorid=<?php echo $vendor['vendorId']; ?>">
+        <!-- <div style="text-align:right; padding-top:5px;">
+            <a href="<?php #echo base_url() ?>make_order?vendorid=<?php #echo $vendor['vendorId']; ?>">
                 <i class="fa fa-arrow-left" aria-hidden="true">&nbsp;SELECT SPOT</i>
             </a>
-        </div>
+        </div> -->
         <?php if ($form) { ?>
             <!-- footer basket -->
             <div class="footer-basket">
