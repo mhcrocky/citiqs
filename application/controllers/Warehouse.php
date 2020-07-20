@@ -245,8 +245,6 @@
                 redirect('products');
             }
             
-
-            // insert product printers
             if (isset($data['productPrinters'])) {
                 foreach($data['productPrinters'] as $printerId) {
                     $printerInsert = [
@@ -255,8 +253,8 @@
                     ];
                     if (!$this->shopproductprinters_model->setObjectFromArray($printerInsert)->create()) {
                         $this->session->set_flashdata('error', 'Pinter insert failed. Please check');
+                        break;
                     }
-                    break;
                 }
             }
 
