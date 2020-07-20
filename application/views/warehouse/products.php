@@ -237,7 +237,7 @@
                                             echo '<dl>';
                                             echo    '<dt>Printers:</dt>';
                                             foreach($productPrinters as $printer) {
-                                                $printer = explode('|', $printer);
+                                                $printer = explode($concatSeparator, $printer);
                                                 if (!in_array($printer[0], $printerIds)) {
                                                     array_push($printerIds, $printer[0]);
                                                     $string = $printer[1];

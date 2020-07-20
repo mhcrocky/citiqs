@@ -108,8 +108,9 @@ $config['orderStatuses'] = [
     $config['orderFinished']
 ];
 
-
+// SEPARATORS
 $config['contactGroupSeparator'] = '!#$%=';
+$config['concatSeparator'] = '#%!$%=?';
 
 $config['idealPaymentType'] = '1';
 $config['creditCardPaymentType'] = '706';

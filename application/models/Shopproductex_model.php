@@ -104,13 +104,15 @@
         private function filterProducts(int $userId, array $where, string $resetBy): ?array
         {
             $this->load->config('custom');
+            $concatSeparator = $this->config->item('concatSeparator');
+            $concatGroupSeparator = $this->config->item('contactGroupSeparator');
 
             $filter = [
                 'what' => [
                     $this->table . '.productId',
                     'GROUP_CONCAT(
                             tblShopProductDetails.productDetails
-                            SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"
+                            SEPARATOR "'. $concatGroupSeparator . '"
                     ) AS productDetails',
                     'tbl_shop_products.stock',
                     'tbl_shop_products.recommendedQuantity',
@@ -124,8 +126,8 @@
                     'GROUP_CONCAT(
                         CONCAT(
                             tbl_shop_printers.id,
-                            \'|\', tbl_shop_printers.printer,
-                            \'|\', tbl_shop_printers.active
+                            \'' .  $concatSeparator . '\', tbl_shop_printers.printer,
+                            \'' .  $concatSeparator . '\', tbl_shop_printers.active
                         )
                     ) AS printers',                    
                     'tblShopProductTimes.productTimes',
@@ -144,10 +146,10 @@
                                 tbl_shop_product_times.productId,
                                 GROUP_CONCAT(
                                     tbl_shop_product_times.productId,
-                                    \'|\', tbl_shop_product_times.day,
-                                    \'|\', tbl_shop_product_times.timeFrom,
-                                    \'|\', tbl_shop_product_times.timeTo
-                                    SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"
+                                    \'' .  $concatSeparator . '\', tbl_shop_product_times.day,
+                                    \'' .  $concatSeparator . '\', tbl_shop_product_times.timeFrom,
+                                    \'' .  $concatSeparator . '\', tbl_shop_product_times.timeTo
+                                    SEPARATOR "'. $concatGroupSeparator . '"
                                 ) AS productTimes                                
                             FROM
                                 tbl_shop_product_times
@@ -166,20 +168,20 @@
                                 . $this->table . '.name,
                                 GROUP_CONCAT('
                                     . $this->table. '.id,
-                                    \'|\',' . $this->table. '.name,
-                                    \'|\',' . $this->table. '.shortDescription,
-                                    \'|\',' . 'FORMAT(' . $this->table . '.price,2),
-                                    \'|\',' . $this->table. '.vatpercentage,
-                                    \'|\',' . $this->table. '.productTypeId,
-                                    \'|\', tbl_shop_products_types.type,
-                                    \'|\', tbl_shop_products_types.isMain,
-                                    \'|\',' . $this->table. '.updateCycle,
-                                    \'|\',' . $this->table. '.showInPublic,
-                                    \'|\',' . $this->table . '.productId,
-                                    \'|\', tbl_shop_categories.category,
-                                    \'|\', tbl_shop_products.active
+                                    \'' .  $concatSeparator . '\',' . $this->table. '.name,
+                                    \'' .  $concatSeparator . '\',' . $this->table. '.shortDescription,
+                                    \'' .  $concatSeparator . '\',' . 'FORMAT(' . $this->table . '.price,2),
+                                    \'' .  $concatSeparator . '\',' . $this->table. '.vatpercentage,
+                                    \'' .  $concatSeparator . '\',' . $this->table. '.productTypeId,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_types.type,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_types.isMain,
+                                    \'' .  $concatSeparator . '\',' . $this->table. '.updateCycle,
+                                    \'' .  $concatSeparator . '\',' . $this->table. '.showInPublic,
+                                    \'' .  $concatSeparator . '\',' . $this->table . '.productId,
+                                    \'' .  $concatSeparator . '\', tbl_shop_categories.category,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products.active
                                     ORDER BY ' . $this->table. '.id DESC
-                                    SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"                                    
+                                    SEPARATOR "'. $concatGroupSeparator . '"                                    
                                 ) AS productDetails
                             FROM
                                 ' . $this->table . '
@@ -203,10 +205,10 @@
                                 tbl_shop_products_addons.productId,
                                 GROUP_CONCAT(
                                     tbl_shop_products_addons.productId,
-                                    \'|\', tbl_shop_products_addons.addonProductId,
-                                    \'|\', tbl_shop_products_addons.productExtendedId
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_addons.addonProductId,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_addons.productExtendedId
 
-                                    SEPARATOR "' . $this->config->item('contactGroupSeparator') . '"                                    
+                                    SEPARATOR "' . $concatGroupSeparator . '"                                    
                                 ) AS addons
                             FROM
                                 tbl_shop_products_addons
@@ -234,12 +236,12 @@
 
             foreach ($products as $key => $product) {
                 if ($products[$key]['productTimes']) {
-                    $products[$key]['productTimes'] = $this->prepareProductTimes($product['productTimes'], $this->config->item('contactGroupSeparator'));
+                    $products[$key]['productTimes'] = $this->prepareProductTimes($product['productTimes'], $concatGroupSeparator,  $concatSeparator);
                 }
                 
-                $products[$key]['productDetails'] = $this->prepareProductDetails($product['productDetails'], $this->config->item('contactGroupSeparator'));
+                $products[$key]['productDetails'] = $this->prepareProductDetails($product['productDetails'], $concatGroupSeparator,  $concatSeparator);
                 if ($products[$key]['addons']) {
-                    $products[$key]['addons'] =  $this->prepareAddons($product['addons'], $this->config->item('contactGroupSeparator'));
+                    $products[$key]['addons'] =  $this->prepareAddons($product['addons'], $concatGroupSeparator, $concatSeparator);
                 }
             }
 
@@ -267,22 +269,22 @@
             return $count ? true : false;
         }
 
-        private function prepareProductTimes(string $productTimes, string $separator): array
+        private function prepareProductTimes(string $productTimes, string $separator, string $concatSeparator): array
         {
             $productTimes =  explode($separator, $productTimes);
-            $productTimes = array_map(function($data) {
-                return explode('|', $data);
+            $productTimes = array_map(function($data) use($concatSeparator) {
+                return explode($concatSeparator, $data);
             }, $productTimes);
             $productTimes = Utility_helper::resetArrayByKeyMultiple($productTimes, '1');
 
             return $productTimes;
         }
 
-        private function prepareProductDetails(string $productDetails, string $separator): array
+        private function prepareProductDetails(string $productDetails, string $separator, string $concatSeparator): array
         {
             $productDetails =  explode($separator, $productDetails);
-            $productDetails = array_map(function($data) {
-                return explode('|', $data);
+            $productDetails = array_map(function($data) use($concatSeparator) {
+                return explode($concatSeparator, $data);
             }, $productDetails);
 
             $return = [];
@@ -318,11 +320,11 @@
             return $result->result_array()[0]['name'];
         }
 
-        private function prepareAddons(string $addons, string $separator): array
+        private function prepareAddons(string $addons, string $separator, string $concatSeparator): array
         {
             $addons = explode($separator, $addons);
-            $addons = array_map(function($data) {
-                return explode('|', $data);
+            $addons = array_map(function($data) use($concatSeparator) {
+                return explode($concatSeparator, $data);
             }, $addons);
             return $addons;
         }

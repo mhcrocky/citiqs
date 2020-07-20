@@ -153,7 +153,7 @@
     ?>
     <?php if (!empty($categoryProducts) ) { ?>
 <!--        <h1>BESTEL</h1>-->
-		<h5 align="center">SWIPE < LINKS EN RECHTS > VOOR ANDERE CATEGORIE</h5>
+		<h5 style="text-align:center">SWIPE < LINKS EN RECHTS > VOOR ANDERE CATEGORIE</h5>
 
 		<div class="main-slider container" style='overflow-x:hidden; overflow-y: hidden; margin-top: 20px; margin-bottom: 20px; background-color: navajowhite'>
             <?php

@@ -168,8 +168,8 @@
                 'products' => $this->shopproductex_model->getUserProducts($userId),
                 'printers' => $this->shopprinters_model->read(['*'], $where),
                 'userSpots' => $this->shopspot_model->fetchUserSpots($userId),
-                'separator' => $this->config->item('contactGroupSeparator'),
                 'productTypes' => $this->shopprodutctype_model->fetchProductTypes($userId),
+                'concatSeparator' => $this->config->item('concatSeparator'),
             ];
 
             // echo '<pre>';
