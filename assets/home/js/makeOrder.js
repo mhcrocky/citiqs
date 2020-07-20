@@ -117,8 +117,9 @@ jQuery(document).ready(function($) {
     });
     
     $('[data-toggle="popover"]').popover({
-        'animation' : false,
-        'placement' : "right"
+        animation : false,
+        placement : "right",
+        container: 'body'
     });
 });
 
