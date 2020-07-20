@@ -48,9 +48,18 @@
             // VENDOR SELECTED SPOT VIEW
             if (isset($get['spotid'])) {
                 $spotId = intval($_GET['spotid']);
-                if ($this->shopspot_model->setObjectId($spotId)->isActive()) {
+                $where = [
+                    'tbl_shop_printers.userId=' => $_SESSION['vendor']['vendorId'],
+                    'tbl_shop_spots.active' => '1',
+                    'tbl_shop_spots.id' => $spotId,
+                ];
+
+                if ($this->shopspot_model->setObjectId($spotId)->isActive() && $this->shopspot_model->fetchUserSpotsImporved($where)) {
                     $this->loadSpotView($spotId);
                     return;
+                } else {
+                    $redirect = 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'];
+                    redirect($redirect);
                 }
             }
             
@@ -62,9 +71,6 @@
 
         private function loadSpotView(int $spotId): void
         {
-//
-//        	var_dumP('here');
-//        	die();
             $this->global['pageTitle'] = 'TIQS : ORDERING';
 
             $userId = $_SESSION['vendor']['vendorId'];
