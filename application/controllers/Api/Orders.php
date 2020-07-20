@@ -313,17 +313,22 @@
             if (!is_null($orders)) {
                 foreach ($orders as $order) {
                     if (
-                        $order['smsDelay']
+                        $order['delayTime']
                         && $order['driverNumber']
-                        && (strtotime($order['orderUpdate']) < strtotime(date('Y-m-d H:i:s', strtotime('-' . $order['smsDelay'] . ' minutes'))))
+                        && (strtotime($order['orderUpdate']) < strtotime(date('Y-m-d H:i:s', strtotime('-' . $order['delayTime'] . ' minutes'))))
                     ) {
-                        $message = 'Order staat klaar bij "' . $order['vendorName']. '".';
+                        $message  = 'Go to "'. $order['categoryName'] .'". ';
+                        $message .= 'Order from "' . $order['vendorName']. '"';
+                        $message .= ', order id is "' . $order['orderId'] . '" ';
+                        $message .= 'and spot name is "' . $order['spotName'] . '" ';
                         if (Curl_helper::sendSmsNew($order['driverNumber'], $message)) {
                             $this
                                 ->shoporder_model
                                     ->setObjectId(intval($order['orderId']))
                                     ->setObjectFromArray(['sendSmsDriver' => '1'])
                                     ->update();
+
+                            var_dump($message);
                         } else {
                             $file = FCPATH . 'application/tiqs_logs/messages.txt';
                             $errorMessage = 'SMS NOT SENT TO DRIVER FOR ORDER ID: ' . $order['orderId'];
@@ -335,3 +340,4 @@
             exit();
         }
     }
+

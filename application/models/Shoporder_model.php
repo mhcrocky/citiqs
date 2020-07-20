@@ -469,10 +469,14 @@
                 'what'  => [
                     'tbl_shop_orders.id as orderId',
                     'tbl_shop_orders.updated AS orderUpdate',
+                    'tbl_shop_orders.spotId AS spotId',
                     'tbl_shop_vendors.driverNumber AS driverNumber',
                     'tbl_shop_vendors.smsDelay AS smsDelay',
                     'tbl_user.username AS vendorName',
-                    
+                    'tbl_shop_categories.driverNumber AS driverNumber',
+                    'tbl_shop_categories.delayTime as delayTime',
+                    'tbl_shop_categories.category AS categoryName',
+                    'tbl_shop_spots.spotName AS spotName'
                 ],
                 'where' => [
                     'tbl_shop_orders.orderStatus=' => $this->config->item('orderDone'),
@@ -486,7 +490,8 @@
                     ['tbl_shop_products', 'tbl_shop_products_extended.productId  = tbl_shop_products.id', 'LEFT'],
                     ['tbl_shop_categories', 'tbl_shop_categories.id = tbl_shop_products.categoryId', 'LEFT'],
                     ['tbl_user', 'tbl_user.id = tbl_shop_categories.userId', 'LEFT'],
-                    ['tbl_shop_vendors', 'tbl_shop_vendors.vendorId = tbl_user.id', 'LEFT']
+                    ['tbl_shop_vendors', 'tbl_shop_vendors.vendorId = tbl_user.id', 'LEFT'],
+                    ['tbl_shop_spots', 'tbl_shop_spots.id = tbl_shop_orders.spotId', 'LEFT']
                 ],
                 'conditions' => [
                     'GROUP_BY' => ['tbl_shop_orders.id']
