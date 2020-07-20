@@ -310,6 +310,8 @@
         public function sms_get(): vodi
         {
             $orders = $this->shoporder_model->ordersToSendSmsToDriver();
+            var_dump($orders);
+            die();
             if (!is_null($orders)) {
                 foreach ($orders as $order) {
                     if (

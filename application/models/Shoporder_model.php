@@ -472,11 +472,13 @@
                     'tbl_shop_vendors.driverNumber AS driverNumber',
                     'tbl_shop_vendors.smsDelay AS smsDelay',
                     'tbl_user.username AS vendorName',
+                    
                 ],
                 'where' => [
                     'tbl_shop_orders.orderStatus=' => $this->config->item('orderDone'),
-                    'printStatus' => '1',
-                    'sendSmsDriver' => '0'
+                    $this->table . '.printStatus' => '1',
+                    $this->table . '.sendSmsDriver' => '0',
+                    'tbl_shop_categories.sendSms' => '1'
                 ],
                 'joins' => [
                     ['tbl_shop_order_extended', 'tbl_shop_order_extended.orderId = tbl_shop_orders.id', 'LEFT'],
