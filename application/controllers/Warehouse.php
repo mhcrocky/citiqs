@@ -166,7 +166,7 @@
             $where = ['userId' => $userId];
             $data = [
                 'categories' => $this->shopcategory_model->fetch($where),
-                'productsList' => $this->shopproductex_model->getUserProducts($userId),
+                'products' => $this->shopproductex_model->getUserProducts($userId),
                 'printers' => $this->shopprinters_model->read(['*'], $where),
                 'userSpots' => $this->shopspot_model->fetchUserSpots($userId),
                 'productTypes' => $this->shopprodutctype_model->fetchProductTypes($userId),

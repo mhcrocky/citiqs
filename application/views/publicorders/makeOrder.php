@@ -27,6 +27,13 @@
 
         $addons = '';
         $type = strtoupper($product['productType']);
+
+        if ($product['longDescription']) {
+            $longDescription = '<i class="fa fa-info-circle" aria-hidden="true" data-toggle="popover" data-trigger="hover"  data-placement="bottom" title="Product description" data-content="' . $product['longDescription'] . '"></i>';
+        } else {
+            $longDescription = '';
+        }
+            
         $formElement = '';
         $addons .= 
             "
@@ -38,6 +45,7 @@
                             <div class='pab pab-1'>
                                 <div class='product__name'>
                                     {$product['name']} <span style='font-size:12px;'>({$type})</span>
+                                    {$longDescription}
                                     <span
                                         id='showOrderedQuantity{$product['productExtendedId']}_{$mainProductExtendedId}'
                                         style=\"
@@ -228,7 +236,7 @@
                                                     <div class="product__name">
                                                         <?php echo $product['name']; ?>
                                                         <?php if ($product['longDescription']) { ?>
-                                                            <i class="fa fa-info-circle" aria-hidden="true" data-toggle="popover" data-trigger="hover"  data-placement="bottom" title="Product description" data-content="<?php echo $product['longDescription']; ?>!"></i>
+                                                            <i class="fa fa-info-circle" aria-hidden="true" data-toggle="popover" data-trigger="hover"  data-placement="bottom" title="Product description" data-content="<?php echo $product['longDescription']; ?>"></i>
                                                         <?php } ?>
                                                         <span
                                                             id="showOrderedQuantity<?php echo $product['productExtendedId']; ?>"

@@ -9,3 +9,7 @@ function checkSpotId(form) {
     sendFormAjaxRequest(form, url, 'checkSpotId', redirectToMakeOrder);
     return false;
 }
+
+$(document).ready(function() {
+    $('.selectSpot').select2();
+});

@@ -78,5 +78,6 @@
 <?php } elseif ($this->view === 'warehouse/productTypes') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js"></script>
 <?php } elseif ($this->view === 'publicorders/selectSpot') { ?>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/selectSpot.js"></script>
 <?php } ?>

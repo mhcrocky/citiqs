@@ -175,9 +175,9 @@
 				<?php echo base_url() . 'make_order?vendorid=' . $user->id; ?>
 			</p>
 			<div class="background-orange-light timeline-content">
-				<p>Add driver mobile number (starting with country code with zero) for sending sms.</p>
-				<p>Set the number of minutes when the message will be sent to driver after the order status is changed in status "DONE"</p>
-				<p>Add terms and conditions</p>
+				<!-- <p>Add driver mobile number (starting with country code with zero) for sending sms.</p>
+				<p>Set the number of minutes when the message will be sent to driver after the order status is changed in status "DONE"</p> -->
+				<!-- <p>Add terms and conditions</p> -->
 			
 				<form method="post" action="<?php echo base_url() ?>profile/updateVenodrData">					
 					<input type="number" name="vendorId" value="<?php echo $user->id ?>" readonly requried hidden />

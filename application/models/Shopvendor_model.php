@@ -58,7 +58,7 @@
             return true;
         }
 
-        public function getVendorData(): array
+        public function getVendorData(): ?array
         {
 
             $filter = [
@@ -77,8 +77,8 @@
                     ['tbl_user', 'tbl_user.id = ' . $this->table .'.vendorId' , 'INNER']
                 ]  
             ];
-//            var_dump($filter);
-//            die();
+            // var_dump($filter);
+            // die();
 
             $result = $this->readImproved($filter);
 
