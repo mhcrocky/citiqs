@@ -307,9 +307,12 @@
             $this->set_response($arr, 200); // CREATED (201) being the HTTP response code
         }
 
-        public function sms_get(): vodi
+        public function sms_get(): void
         {
             $orders = $this->shoporder_model->ordersToSendSmsToDriver();
+//            var_dump($orders);
+//            die();
+
             if (!is_null($orders)) {
                 foreach ($orders as $order) {
                     if (

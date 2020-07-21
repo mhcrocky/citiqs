@@ -479,7 +479,10 @@
                     'tbl_shop_spots.spotName AS spotName'
                 ],
                 'where' => [
-                    'tbl_shop_orders.orderStatus=' => $this->config->item('orderDone'),
+//                    'tbl_shop_orders.orderStatus=' => $this->config->item('orderDone'),
+//				 automatically sending means that the order should also be set to done automatically.
+				// because 8 minutes is the preparation time and otherwise it is cold.
+
                     $this->table . '.printStatus' => '1',
                     $this->table . '.sendSmsDriver' => '0',
                     'tbl_shop_categories.sendSms' => '1'
