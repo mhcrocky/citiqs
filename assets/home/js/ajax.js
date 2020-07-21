@@ -166,7 +166,14 @@ var callThis = (function() {
             } else {
                 alertify.error('Unknown spot name! Please check');
             }
-        }
+        },
+        updateCategoriesOrder: function() {
+            if (this) {
+                alertify.success('Categories sorted');
+            } else {
+                alertify.error('Categories sorting failed!');
+            }
+        },
     };
     return methods;
 })();

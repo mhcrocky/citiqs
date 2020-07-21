@@ -21,6 +21,7 @@ class Ajax extends CI_Controller
         $this->load->model('floorplandetails_model');
         $this->load->model('shoporder_model');
         $this->load->model('shopspot_model');
+        $this->load->model('shopcategory_model');
 
         $this->load->helper('cookie');
         // $this->load->helper('my_file_helper');
@@ -490,6 +491,7 @@ class Ajax extends CI_Controller
         $userInfo = $this->input->post(null, true);
 
         echo $this->user_model->editUser($userInfo, $userId) ? 1 : 0;
+        return;
     }
 
     public function ajaxUpdateSession(): void
@@ -516,6 +518,7 @@ class Ajax extends CI_Controller
                 }
             }
         }
+        return;
     }
 
     public function checkSpotId(): void
@@ -539,5 +542,24 @@ class Ajax extends CI_Controller
         } else {
             echo 0;
         }
+    }
+
+    public function updateCategoriesOrder(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = $this->input->post(null, true);
+        foreach ($post as $categoryId => $sortNumber) {
+            $sort = $this
+                    ->shopcategory_model
+                        ->setObjectId($categoryId)
+                        ->setObjectFromArray(['sortNumber' => $sortNumber])
+                        ->update();
+            if (!$sort) {
+                return;
+            }
+        }
+        echo 1;
+        return;
     }
 }

@@ -1,4 +1,10 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
+<style>
+	.listCategories:hover {
+		cursor: -webkit-grab;
+		cursor: grab;
+	}
+</style>
 <div class="main-wrapper theme-editor-wrapper">
 	<div class="grid-wrapper">
 		<div class="grid-list">
@@ -84,8 +90,9 @@
             <?php if (is_null($categories)) { ?> 
 				<p>No categories.</p>
             <?php } else { ?>
+				<div class="row" id="sortableCategories" class="list-categories">
 				<?php foreach ($categories as $category) { ?>
-					<div class="grid-item"  style="background-color:<?php echo $category['active'] === '1' ? '#99ff66' : '#ff4d4d'; ?>">
+					<div class="grid-item col-lg-3 list-categories listCategories" data-category-id="<?php echo $category['categoryId']; ?>" style="background-color:<?php echo $category['active'] === '1' ? '#99ff66' : '#ff4d4d'; ?>">
 						<div class="item-header">
 							<p class="item-description"><?php echo $category['category']; ?></p>
 							<p class="item-category">Status:
@@ -174,17 +181,10 @@
 						<!-- END EDIT FOR NEW USER -->
 					</div>
 				<?php } ?>
+				</div>
             <?php } ?>
 			
 		</div>
 		<!-- end grid list -->
 	</div>
 </div>
-<script>
-	'use strict';
-	function redirect(element) {
-		if (element.value !== window.location.href) {
-			window.location.href = element.value;
-		}
-	}
-</script>

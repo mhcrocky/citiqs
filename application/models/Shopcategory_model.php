@@ -16,6 +16,7 @@
         public $sendSms;
         public $driverNumber;
         public $delayTime;
+        public $sortNumber;
 
 
         private $table = 'tbl_shop_categories';
@@ -50,6 +51,7 @@
             if (isset($data['sendSms']) && !($data['sendSms'] === '1' || $data['sendSms'] === '0')) return false;
             if (isset($data['driverNumber']) && !Validate_data_helper::validateString($data['driverNumber'])) return false;
             if (isset($data['delayTime']) && !Validate_data_helper::validateInteger($data['delayTime'])) return false;
+            if (isset($data['userId']) && !Validate_data_helper::validateInteger($data['sortNumber'])) return false;
 
             return true;
         }
@@ -68,7 +70,7 @@
                 $where,
                 [],
                 'order_by',
-                [$this->table . '.category', 'ASC']
+                [$this->table . '.sortNumber', 'ASC']
             );
         }
 

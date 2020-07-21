@@ -75,4 +75,6 @@
 <?php } elseif ($this->view === 'publicorders/selectSpot') { ?>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/selectSpot.css">
+<?php } elseif ($this->view === 'warehouse/productCategories') { ?>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
 <?php } ?>
