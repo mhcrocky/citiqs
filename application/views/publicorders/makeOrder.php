@@ -161,7 +161,13 @@
     ?>
     <?php if (!empty($categoryProducts) ) { ?>
         <h1><?php echo $vendor['vendorName']; ?></h1>
+		<div style="text-align:right; padding-top:5px;">
+			<a href="<?php echo base_url() ?>make_order?vendorid=<?php echo $vendor['vendorId']; ?>">
+				<i aria-hidden="true">CHANGE SPOT</i>
+			</a>
+		</div>
 		<h5 style="text-align:center">SWIPE < LINKS EN RECHTS > VOOR ANDERE CATEGORIE</h5>
+
 		<div class="main-slider container" style='overflow-x:hidden; overflow-y: hidden; margin-top: 20px; margin-bottom: 20px; background-color: navajowhite'>
             <?php
                 $form = '';
@@ -370,11 +376,6 @@
                     </div>
                 </div>
             <?php } ?>
-        </div>
-        <div style="text-align:right; padding-top:5px;">
-            <a href="<?php echo base_url() ?>make_order?vendorid=<?php echo $vendor['vendorId']; ?>">
-                <i class="fa fa-arrow-left" aria-hidden="true">&nbsp;SELECT SPOT</i>
-            </a>
         </div>
         <?php if ($form) { ?>
             <!-- footer basket -->

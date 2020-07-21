@@ -1,3 +1,1419 @@
 2020-07-19 10:14:35 => SELECT `driverNumber`, `smsDelay`, `termsAndConditions`
 FROM `tbl_shop_vendors`
 WHERE `vendorId` = '423'
+2020-07-20 16:09:57 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 16:11:27 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 16:11:27 => SELECT `tbl_shop_products_extended`.`productId`, GROUP_CONCAT(
+                            tblShopProductDetails.productDetails
+                            SEPARATOR "!#$%="
+                    ) AS productDetails, `tbl_shop_products`.`stock`, `tbl_shop_products`.`recommendedQuantity`, `tbl_shop_products`.`active` AS `productActive`, `tbl_shop_products`.`showImage`, `tbl_shop_products`.`dateTimeFrom` AS `dateTimeFrom`, `tbl_shop_products`.`dateTimeTo` AS `dateTimeTo`, `tbl_shop_categories`.`category`, `tbl_shop_categories`.`id` AS `categoryId`, `tbl_shop_categories`.`active` AS `categoryActive`, GROUP_CONCAT(
+                        CONCAT(
+                            tbl_shop_printers.id, '#%!$%=?', `tbl_shop_printers`.`printer`, '#%!$%=?', tbl_shop_printers.active
+                        )
+                    ) AS printers, `tblShopProductTimes`.`productTimes`, `tblShopAddons`.`addons` AS `addons`
+FROM `tbl_shop_products_extended`
+LEFT JOIN `tbl_shop_products` ON `tbl_shop_products_extended`.`productId` = `tbl_shop_products`.`id`
+LEFT JOIN `tbl_shop_categories` ON `tbl_shop_products`.`categoryId` = `tbl_shop_categories`.`id`
+LEFT JOIN `tbl_shop_product_printers` ON `tbl_shop_products`.`id` = `tbl_shop_product_printers`.`productId`
+LEFT JOIN `tbl_shop_printers` ON `tbl_shop_product_printers`.`printerId` = `tbl_shop_printers`.`id`
+LEFT JOIN (
+                            SELECT
+                                tbl_shop_product_times.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_product_times.productId,
+                                    '#%!$%=?', tbl_shop_product_times.day,
+                                    '#%!$%=?', tbl_shop_product_times.timeFrom,
+                                    '#%!$%=?', tbl_shop_product_times.timeTo
+                                    SEPARATOR "!#$%="
+                                ) AS productTimes                                
+                            FROM
+                                tbl_shop_product_times
+                            GROUP BY tbl_shop_product_times.productId
+                            ORDER BY tbl_shop_product_times.timeFrom ASC
+                        ) tblShopProductTimes ON `tblShopProductTimes`.`productId` = `tbl_shop_products_extended`.`productId`
+INNER JOIN `tbl_shop_products_types` ON `tbl_shop_products_types`.`id` = `tbl_shop_products_extended`.`productTypeId`
+INNER JOIN (
+                            SELECT tbl_shop_products_extended.productTypeId,tbl_shop_products_extended.name,
+                                GROUP_CONCAT(tbl_shop_products_extended.id,
+                                    '#%!$%=?',tbl_shop_products_extended.name,
+                                    '#%!$%=?',tbl_shop_products_extended.shortDescription,
+                                    '#%!$%=?',FORMAT(tbl_shop_products_extended.price,2),
+                                    '#%!$%=?',tbl_shop_products_extended.vatpercentage,
+                                    '#%!$%=?',tbl_shop_products_extended.productTypeId,
+                                    '#%!$%=?', tbl_shop_products_types.type,
+                                    '#%!$%=?', tbl_shop_products_types.isMain,
+                                    '#%!$%=?',tbl_shop_products_extended.updateCycle,
+                                    '#%!$%=?',tbl_shop_products_extended.showInPublic,
+                                    '#%!$%=?',tbl_shop_products_extended.productId,
+                                    '#%!$%=?', tbl_shop_categories.category,
+                                    '#%!$%=?', tbl_shop_products.active,
+                                    '#%!$%=?', IF(CHAR_LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, "")
+                                    ORDER BY tbl_shop_products_extended.id DESC
+                                    SEPARATOR "!#$%="                                    
+                                ) AS productDetails
+                            FROM
+                                tbl_shop_products_extended
+                            INNER JOIN
+                                tbl_shop_products_types ON tbl_shop_products_extended.productTypeId = tbl_shop_products_types.id
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
+                            INNER JOIN
+                                tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+
+                            GROUP BY tbl_shop_products_extended.productId
+                            ORDER BY tbl_shop_products_extended.productTypeId DESC
+                            
+                        ) tblShopProductDetails ON `tblShopProductDetails`.`productTypeId` = `tbl_shop_products_types`.`id` AND `tblShopProductDetails`.`name` = `tbl_shop_products_extended`.`name`
+LEFT JOIN (
+                            SELECT 
+                                tbl_shop_products_addons.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_addons.productId,
+                                    '#%!$%=?', tbl_shop_products_addons.addonProductId,
+                                    '#%!$%=?', tbl_shop_products_addons.productExtendedId
+
+                                    SEPARATOR "!#$%="                                    
+                                ) AS addons
+                            FROM
+                                tbl_shop_products_addons
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products_addons.productId = tbl_shop_products.id
+
+                            GROUP BY tbl_shop_products_addons.productId
+                            
+                        ) tblShopAddons ON `tblShopAddons`.`productId` = `tbl_shop_products`.`id`
+WHERE `tbl_shop_categories`.`userId` = 418
+AND `tbl_shop_categories`.`active` = '1'
+AND `tbl_shop_products`.`dateTimeFrom` <= '2020-07-20 16:11:27'
+AND `tbl_shop_products`.`dateTimeTo` > '2020-07-20 16:11:27'
+GROUP BY `tbl_shop_products_extended`.`productId`
+ORDER BY `tbl_shop_products_extended`.`id` DESC
+2020-07-20 16:11:27 => SELECT `termsAndConditions`
+FROM `tbl_shop_vendors`
+WHERE `vendorId` = 418
+2020-07-20 16:11:32 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 16:13:04 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 16:16:40 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 16:17:50 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 16:20:52 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 16:20:57 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 16:20:57 => SELECT `tbl_shop_products_extended`.`productId`, GROUP_CONCAT(
+                            tblShopProductDetails.productDetails
+                            SEPARATOR "!#$%="
+                    ) AS productDetails, `tbl_shop_products`.`stock`, `tbl_shop_products`.`recommendedQuantity`, `tbl_shop_products`.`active` AS `productActive`, `tbl_shop_products`.`showImage`, `tbl_shop_products`.`dateTimeFrom` AS `dateTimeFrom`, `tbl_shop_products`.`dateTimeTo` AS `dateTimeTo`, `tbl_shop_categories`.`category`, `tbl_shop_categories`.`id` AS `categoryId`, `tbl_shop_categories`.`active` AS `categoryActive`, GROUP_CONCAT(
+                        CONCAT(
+                            tbl_shop_printers.id, '#%!$%=?', `tbl_shop_printers`.`printer`, '#%!$%=?', tbl_shop_printers.active
+                        )
+                    ) AS printers, `tblShopProductTimes`.`productTimes`, `tblShopAddons`.`addons` AS `addons`
+FROM `tbl_shop_products_extended`
+LEFT JOIN `tbl_shop_products` ON `tbl_shop_products_extended`.`productId` = `tbl_shop_products`.`id`
+LEFT JOIN `tbl_shop_categories` ON `tbl_shop_products`.`categoryId` = `tbl_shop_categories`.`id`
+LEFT JOIN `tbl_shop_product_printers` ON `tbl_shop_products`.`id` = `tbl_shop_product_printers`.`productId`
+LEFT JOIN `tbl_shop_printers` ON `tbl_shop_product_printers`.`printerId` = `tbl_shop_printers`.`id`
+LEFT JOIN (
+                            SELECT
+                                tbl_shop_product_times.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_product_times.productId,
+                                    '#%!$%=?', tbl_shop_product_times.day,
+                                    '#%!$%=?', tbl_shop_product_times.timeFrom,
+                                    '#%!$%=?', tbl_shop_product_times.timeTo
+                                    SEPARATOR "!#$%="
+                                ) AS productTimes                                
+                            FROM
+                                tbl_shop_product_times
+                            GROUP BY tbl_shop_product_times.productId
+                            ORDER BY tbl_shop_product_times.timeFrom ASC
+                        ) tblShopProductTimes ON `tblShopProductTimes`.`productId` = `tbl_shop_products_extended`.`productId`
+INNER JOIN `tbl_shop_products_types` ON `tbl_shop_products_types`.`id` = `tbl_shop_products_extended`.`productTypeId`
+INNER JOIN (
+                            SELECT tbl_shop_products_extended.productTypeId,tbl_shop_products_extended.name,
+                                GROUP_CONCAT(tbl_shop_products_extended.id,
+                                    '#%!$%=?',tbl_shop_products_extended.name,
+                                    '#%!$%=?',tbl_shop_products_extended.shortDescription,
+                                    '#%!$%=?',FORMAT(tbl_shop_products_extended.price,2),
+                                    '#%!$%=?',tbl_shop_products_extended.vatpercentage,
+                                    '#%!$%=?',tbl_shop_products_extended.productTypeId,
+                                    '#%!$%=?', tbl_shop_products_types.type,
+                                    '#%!$%=?', tbl_shop_products_types.isMain,
+                                    '#%!$%=?',tbl_shop_products_extended.updateCycle,
+                                    '#%!$%=?',tbl_shop_products_extended.showInPublic,
+                                    '#%!$%=?',tbl_shop_products_extended.productId,
+                                    '#%!$%=?', tbl_shop_categories.category,
+                                    '#%!$%=?', tbl_shop_products.active,
+                                    '#%!$%=?', IF(CHAR_LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, "")
+                                    ORDER BY tbl_shop_products_extended.id DESC
+                                    SEPARATOR "!#$%="                                    
+                                ) AS productDetails
+                            FROM
+                                tbl_shop_products_extended
+                            INNER JOIN
+                                tbl_shop_products_types ON tbl_shop_products_extended.productTypeId = tbl_shop_products_types.id
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
+                            INNER JOIN
+                                tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+
+                            GROUP BY tbl_shop_products_extended.productId
+                            ORDER BY tbl_shop_products_extended.productTypeId DESC
+                            
+                        ) tblShopProductDetails ON `tblShopProductDetails`.`productTypeId` = `tbl_shop_products_types`.`id` AND `tblShopProductDetails`.`name` = `tbl_shop_products_extended`.`name`
+LEFT JOIN (
+                            SELECT 
+                                tbl_shop_products_addons.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_addons.productId,
+                                    '#%!$%=?', tbl_shop_products_addons.addonProductId,
+                                    '#%!$%=?', tbl_shop_products_addons.productExtendedId
+
+                                    SEPARATOR "!#$%="                                    
+                                ) AS addons
+                            FROM
+                                tbl_shop_products_addons
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products_addons.productId = tbl_shop_products.id
+
+                            GROUP BY tbl_shop_products_addons.productId
+                            
+                        ) tblShopAddons ON `tblShopAddons`.`productId` = `tbl_shop_products`.`id`
+WHERE `tbl_shop_categories`.`userId` = 418
+AND `tbl_shop_categories`.`active` = '1'
+AND `tbl_shop_products`.`dateTimeFrom` <= '2020-07-20 16:20:57'
+AND `tbl_shop_products`.`dateTimeTo` > '2020-07-20 16:20:57'
+GROUP BY `tbl_shop_products_extended`.`productId`
+ORDER BY `tbl_shop_products_extended`.`id` DESC
+2020-07-20 16:20:57 => SELECT `termsAndConditions`
+FROM `tbl_shop_vendors`
+WHERE `vendorId` = 418
+2020-07-20 16:25:41 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 16:25:41 => SELECT `tbl_shop_products_extended`.`productId`, GROUP_CONCAT(
+                            tblShopProductDetails.productDetails
+                            SEPARATOR "!#$%="
+                    ) AS productDetails, `tbl_shop_products`.`stock`, `tbl_shop_products`.`recommendedQuantity`, `tbl_shop_products`.`active` AS `productActive`, `tbl_shop_products`.`showImage`, `tbl_shop_products`.`dateTimeFrom` AS `dateTimeFrom`, `tbl_shop_products`.`dateTimeTo` AS `dateTimeTo`, `tbl_shop_categories`.`category`, `tbl_shop_categories`.`id` AS `categoryId`, `tbl_shop_categories`.`active` AS `categoryActive`, GROUP_CONCAT(
+                        CONCAT(
+                            tbl_shop_printers.id, '#%!$%=?', `tbl_shop_printers`.`printer`, '#%!$%=?', tbl_shop_printers.active
+                        )
+                    ) AS printers, `tblShopProductTimes`.`productTimes`, `tblShopAddons`.`addons` AS `addons`
+FROM `tbl_shop_products_extended`
+LEFT JOIN `tbl_shop_products` ON `tbl_shop_products_extended`.`productId` = `tbl_shop_products`.`id`
+LEFT JOIN `tbl_shop_categories` ON `tbl_shop_products`.`categoryId` = `tbl_shop_categories`.`id`
+LEFT JOIN `tbl_shop_product_printers` ON `tbl_shop_products`.`id` = `tbl_shop_product_printers`.`productId`
+LEFT JOIN `tbl_shop_printers` ON `tbl_shop_product_printers`.`printerId` = `tbl_shop_printers`.`id`
+LEFT JOIN (
+                            SELECT
+                                tbl_shop_product_times.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_product_times.productId,
+                                    '#%!$%=?', tbl_shop_product_times.day,
+                                    '#%!$%=?', tbl_shop_product_times.timeFrom,
+                                    '#%!$%=?', tbl_shop_product_times.timeTo
+                                    SEPARATOR "!#$%="
+                                ) AS productTimes                                
+                            FROM
+                                tbl_shop_product_times
+                            GROUP BY tbl_shop_product_times.productId
+                            ORDER BY tbl_shop_product_times.timeFrom ASC
+                        ) tblShopProductTimes ON `tblShopProductTimes`.`productId` = `tbl_shop_products_extended`.`productId`
+INNER JOIN `tbl_shop_products_types` ON `tbl_shop_products_types`.`id` = `tbl_shop_products_extended`.`productTypeId`
+INNER JOIN (
+                            SELECT tbl_shop_products_extended.productTypeId,tbl_shop_products_extended.name,
+                                GROUP_CONCAT(tbl_shop_products_extended.id,
+                                    '#%!$%=?',tbl_shop_products_extended.name,
+                                    '#%!$%=?',tbl_shop_products_extended.shortDescription,
+                                    '#%!$%=?',FORMAT(tbl_shop_products_extended.price,2),
+                                    '#%!$%=?',tbl_shop_products_extended.vatpercentage,
+                                    '#%!$%=?',tbl_shop_products_extended.productTypeId,
+                                    '#%!$%=?', tbl_shop_products_types.type,
+                                    '#%!$%=?', tbl_shop_products_types.isMain,
+                                    '#%!$%=?',tbl_shop_products_extended.updateCycle,
+                                    '#%!$%=?',tbl_shop_products_extended.showInPublic,
+                                    '#%!$%=?',tbl_shop_products_extended.productId,
+                                    '#%!$%=?', tbl_shop_categories.category,
+                                    '#%!$%=?', tbl_shop_products.active,
+                                    '#%!$%=?', IF(CHAR_LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, "")
+                                    ORDER BY tbl_shop_products_extended.id DESC
+                                    SEPARATOR "!#$%="                                    
+                                ) AS productDetails
+                            FROM
+                                tbl_shop_products_extended
+                            INNER JOIN
+                                tbl_shop_products_types ON tbl_shop_products_extended.productTypeId = tbl_shop_products_types.id
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
+                            INNER JOIN
+                                tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+
+                            GROUP BY tbl_shop_products_extended.productId
+                            ORDER BY tbl_shop_products_extended.productTypeId DESC
+                            
+                        ) tblShopProductDetails ON `tblShopProductDetails`.`productTypeId` = `tbl_shop_products_types`.`id` AND `tblShopProductDetails`.`name` = `tbl_shop_products_extended`.`name`
+LEFT JOIN (
+                            SELECT 
+                                tbl_shop_products_addons.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_addons.productId,
+                                    '#%!$%=?', tbl_shop_products_addons.addonProductId,
+                                    '#%!$%=?', tbl_shop_products_addons.productExtendedId
+
+                                    SEPARATOR "!#$%="                                    
+                                ) AS addons
+                            FROM
+                                tbl_shop_products_addons
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products_addons.productId = tbl_shop_products.id
+
+                            GROUP BY tbl_shop_products_addons.productId
+                            
+                        ) tblShopAddons ON `tblShopAddons`.`productId` = `tbl_shop_products`.`id`
+WHERE `tbl_shop_categories`.`userId` = 418
+AND `tbl_shop_categories`.`active` = '1'
+AND `tbl_shop_products`.`dateTimeFrom` <= '2020-07-20 16:25:41'
+AND `tbl_shop_products`.`dateTimeTo` > '2020-07-20 16:25:41'
+GROUP BY `tbl_shop_products_extended`.`productId`
+ORDER BY `tbl_shop_products_extended`.`id` DESC
+2020-07-20 16:25:41 => SELECT `termsAndConditions`
+FROM `tbl_shop_vendors`
+WHERE `vendorId` = 418
+2020-07-20 16:30:26 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 16:30:26 => SELECT `tbl_shop_products_extended`.`productId`, GROUP_CONCAT(
+                            tblShopProductDetails.productDetails
+                            SEPARATOR "!#$%="
+                    ) AS productDetails, `tbl_shop_products`.`stock`, `tbl_shop_products`.`recommendedQuantity`, `tbl_shop_products`.`active` AS `productActive`, `tbl_shop_products`.`showImage`, `tbl_shop_products`.`dateTimeFrom` AS `dateTimeFrom`, `tbl_shop_products`.`dateTimeTo` AS `dateTimeTo`, `tbl_shop_categories`.`category`, `tbl_shop_categories`.`id` AS `categoryId`, `tbl_shop_categories`.`active` AS `categoryActive`, GROUP_CONCAT(
+                        CONCAT(
+                            tbl_shop_printers.id, '#%!$%=?', `tbl_shop_printers`.`printer`, '#%!$%=?', tbl_shop_printers.active
+                        )
+                    ) AS printers, `tblShopProductTimes`.`productTimes`, `tblShopAddons`.`addons` AS `addons`
+FROM `tbl_shop_products_extended`
+LEFT JOIN `tbl_shop_products` ON `tbl_shop_products_extended`.`productId` = `tbl_shop_products`.`id`
+LEFT JOIN `tbl_shop_categories` ON `tbl_shop_products`.`categoryId` = `tbl_shop_categories`.`id`
+LEFT JOIN `tbl_shop_product_printers` ON `tbl_shop_products`.`id` = `tbl_shop_product_printers`.`productId`
+LEFT JOIN `tbl_shop_printers` ON `tbl_shop_product_printers`.`printerId` = `tbl_shop_printers`.`id`
+LEFT JOIN (
+                            SELECT
+                                tbl_shop_product_times.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_product_times.productId,
+                                    '#%!$%=?', tbl_shop_product_times.day,
+                                    '#%!$%=?', tbl_shop_product_times.timeFrom,
+                                    '#%!$%=?', tbl_shop_product_times.timeTo
+                                    SEPARATOR "!#$%="
+                                ) AS productTimes                                
+                            FROM
+                                tbl_shop_product_times
+                            GROUP BY tbl_shop_product_times.productId
+                            ORDER BY tbl_shop_product_times.timeFrom ASC
+                        ) tblShopProductTimes ON `tblShopProductTimes`.`productId` = `tbl_shop_products_extended`.`productId`
+INNER JOIN `tbl_shop_products_types` ON `tbl_shop_products_types`.`id` = `tbl_shop_products_extended`.`productTypeId`
+INNER JOIN (
+                            SELECT tbl_shop_products_extended.productTypeId,tbl_shop_products_extended.name,
+                                GROUP_CONCAT(tbl_shop_products_extended.id,
+                                    '#%!$%=?',tbl_shop_products_extended.name,
+                                    '#%!$%=?',tbl_shop_products_extended.shortDescription,
+                                    '#%!$%=?',FORMAT(tbl_shop_products_extended.price,2),
+                                    '#%!$%=?',tbl_shop_products_extended.vatpercentage,
+                                    '#%!$%=?',tbl_shop_products_extended.productTypeId,
+                                    '#%!$%=?', tbl_shop_products_types.type,
+                                    '#%!$%=?', tbl_shop_products_types.isMain,
+                                    '#%!$%=?',tbl_shop_products_extended.updateCycle,
+                                    '#%!$%=?',tbl_shop_products_extended.showInPublic,
+                                    '#%!$%=?',tbl_shop_products_extended.productId,
+                                    '#%!$%=?', tbl_shop_categories.category,
+                                    '#%!$%=?', tbl_shop_products.active,
+                                    '#%!$%=?', IF(CHAR_LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, "")
+                                    ORDER BY tbl_shop_products_extended.id DESC
+                                    SEPARATOR "!#$%="                                    
+                                ) AS productDetails
+                            FROM
+                                tbl_shop_products_extended
+                            INNER JOIN
+                                tbl_shop_products_types ON tbl_shop_products_extended.productTypeId = tbl_shop_products_types.id
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
+                            INNER JOIN
+                                tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+
+                            GROUP BY tbl_shop_products_extended.productId
+                            ORDER BY tbl_shop_products_extended.productTypeId DESC
+                            
+                        ) tblShopProductDetails ON `tblShopProductDetails`.`productTypeId` = `tbl_shop_products_types`.`id` AND `tblShopProductDetails`.`name` = `tbl_shop_products_extended`.`name`
+LEFT JOIN (
+                            SELECT 
+                                tbl_shop_products_addons.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_addons.productId,
+                                    '#%!$%=?', tbl_shop_products_addons.addonProductId,
+                                    '#%!$%=?', tbl_shop_products_addons.productExtendedId
+
+                                    SEPARATOR "!#$%="                                    
+                                ) AS addons
+                            FROM
+                                tbl_shop_products_addons
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products_addons.productId = tbl_shop_products.id
+
+                            GROUP BY tbl_shop_products_addons.productId
+                            
+                        ) tblShopAddons ON `tblShopAddons`.`productId` = `tbl_shop_products`.`id`
+WHERE `tbl_shop_categories`.`userId` = 418
+AND `tbl_shop_categories`.`active` = '1'
+AND `tbl_shop_products`.`dateTimeFrom` <= '2020-07-20 16:30:26'
+AND `tbl_shop_products`.`dateTimeTo` > '2020-07-20 16:30:26'
+GROUP BY `tbl_shop_products_extended`.`productId`
+ORDER BY `tbl_shop_products_extended`.`id` DESC
+2020-07-20 16:30:26 => SELECT `termsAndConditions`
+FROM `tbl_shop_vendors`
+WHERE `vendorId` = 418
+2020-07-20 16:34:31 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 16:34:31 => SELECT `tbl_shop_products_extended`.`productId`, GROUP_CONCAT(
+                            tblShopProductDetails.productDetails
+                            SEPARATOR "!#$%="
+                    ) AS productDetails, `tbl_shop_products`.`stock`, `tbl_shop_products`.`recommendedQuantity`, `tbl_shop_products`.`active` AS `productActive`, `tbl_shop_products`.`showImage`, `tbl_shop_products`.`dateTimeFrom` AS `dateTimeFrom`, `tbl_shop_products`.`dateTimeTo` AS `dateTimeTo`, `tbl_shop_categories`.`category`, `tbl_shop_categories`.`id` AS `categoryId`, `tbl_shop_categories`.`active` AS `categoryActive`, GROUP_CONCAT(
+                        CONCAT(
+                            tbl_shop_printers.id, '#%!$%=?', `tbl_shop_printers`.`printer`, '#%!$%=?', tbl_shop_printers.active
+                        )
+                    ) AS printers, `tblShopProductTimes`.`productTimes`, `tblShopAddons`.`addons` AS `addons`
+FROM `tbl_shop_products_extended`
+LEFT JOIN `tbl_shop_products` ON `tbl_shop_products_extended`.`productId` = `tbl_shop_products`.`id`
+LEFT JOIN `tbl_shop_categories` ON `tbl_shop_products`.`categoryId` = `tbl_shop_categories`.`id`
+LEFT JOIN `tbl_shop_product_printers` ON `tbl_shop_products`.`id` = `tbl_shop_product_printers`.`productId`
+LEFT JOIN `tbl_shop_printers` ON `tbl_shop_product_printers`.`printerId` = `tbl_shop_printers`.`id`
+LEFT JOIN (
+                            SELECT
+                                tbl_shop_product_times.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_product_times.productId,
+                                    '#%!$%=?', tbl_shop_product_times.day,
+                                    '#%!$%=?', tbl_shop_product_times.timeFrom,
+                                    '#%!$%=?', tbl_shop_product_times.timeTo
+                                    SEPARATOR "!#$%="
+                                ) AS productTimes                                
+                            FROM
+                                tbl_shop_product_times
+                            GROUP BY tbl_shop_product_times.productId
+                            ORDER BY tbl_shop_product_times.timeFrom ASC
+                        ) tblShopProductTimes ON `tblShopProductTimes`.`productId` = `tbl_shop_products_extended`.`productId`
+INNER JOIN `tbl_shop_products_types` ON `tbl_shop_products_types`.`id` = `tbl_shop_products_extended`.`productTypeId`
+INNER JOIN (
+                            SELECT tbl_shop_products_extended.productTypeId,tbl_shop_products_extended.name,
+                                GROUP_CONCAT(tbl_shop_products_extended.id,
+                                    '#%!$%=?',tbl_shop_products_extended.name,
+                                    '#%!$%=?',tbl_shop_products_extended.shortDescription,
+                                    '#%!$%=?',FORMAT(tbl_shop_products_extended.price,2),
+                                    '#%!$%=?',tbl_shop_products_extended.vatpercentage,
+                                    '#%!$%=?',tbl_shop_products_extended.productTypeId,
+                                    '#%!$%=?', tbl_shop_products_types.type,
+                                    '#%!$%=?', tbl_shop_products_types.isMain,
+                                    '#%!$%=?',tbl_shop_products_extended.updateCycle,
+                                    '#%!$%=?',tbl_shop_products_extended.showInPublic,
+                                    '#%!$%=?',tbl_shop_products_extended.productId,
+                                    '#%!$%=?', tbl_shop_categories.category,
+                                    '#%!$%=?', tbl_shop_products.active,
+                                    '#%!$%=?', IF(CHAR_LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, "")
+                                    ORDER BY tbl_shop_products_extended.id DESC
+                                    SEPARATOR "!#$%="                                    
+                                ) AS productDetails
+                            FROM
+                                tbl_shop_products_extended
+                            INNER JOIN
+                                tbl_shop_products_types ON tbl_shop_products_extended.productTypeId = tbl_shop_products_types.id
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
+                            INNER JOIN
+                                tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+
+                            GROUP BY tbl_shop_products_extended.productId
+                            ORDER BY tbl_shop_products_extended.productTypeId DESC
+                            
+                        ) tblShopProductDetails ON `tblShopProductDetails`.`productTypeId` = `tbl_shop_products_types`.`id` AND `tblShopProductDetails`.`name` = `tbl_shop_products_extended`.`name`
+LEFT JOIN (
+                            SELECT 
+                                tbl_shop_products_addons.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_addons.productId,
+                                    '#%!$%=?', tbl_shop_products_addons.addonProductId,
+                                    '#%!$%=?', tbl_shop_products_addons.productExtendedId
+
+                                    SEPARATOR "!#$%="                                    
+                                ) AS addons
+                            FROM
+                                tbl_shop_products_addons
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products_addons.productId = tbl_shop_products.id
+
+                            GROUP BY tbl_shop_products_addons.productId
+                            
+                        ) tblShopAddons ON `tblShopAddons`.`productId` = `tbl_shop_products`.`id`
+WHERE `tbl_shop_categories`.`userId` = 418
+AND `tbl_shop_categories`.`active` = '1'
+AND `tbl_shop_products`.`dateTimeFrom` <= '2020-07-20 16:34:31'
+AND `tbl_shop_products`.`dateTimeTo` > '2020-07-20 16:34:31'
+GROUP BY `tbl_shop_products_extended`.`productId`
+ORDER BY `tbl_shop_products_extended`.`id` DESC
+2020-07-20 16:34:31 => SELECT `termsAndConditions`
+FROM `tbl_shop_vendors`
+WHERE `vendorId` = 418
+2020-07-20 16:42:53 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 16:42:53 => SELECT `tbl_shop_products_extended`.`productId`, GROUP_CONCAT(
+                            tblShopProductDetails.productDetails
+                            SEPARATOR "!#$%="
+                    ) AS productDetails, `tbl_shop_products`.`stock`, `tbl_shop_products`.`recommendedQuantity`, `tbl_shop_products`.`active` AS `productActive`, `tbl_shop_products`.`showImage`, `tbl_shop_products`.`dateTimeFrom` AS `dateTimeFrom`, `tbl_shop_products`.`dateTimeTo` AS `dateTimeTo`, `tbl_shop_categories`.`category`, `tbl_shop_categories`.`id` AS `categoryId`, `tbl_shop_categories`.`active` AS `categoryActive`, GROUP_CONCAT(
+                        CONCAT(
+                            tbl_shop_printers.id, '#%!$%=?', `tbl_shop_printers`.`printer`, '#%!$%=?', tbl_shop_printers.active
+                        )
+                    ) AS printers, `tblShopProductTimes`.`productTimes`, `tblShopAddons`.`addons` AS `addons`
+FROM `tbl_shop_products_extended`
+LEFT JOIN `tbl_shop_products` ON `tbl_shop_products_extended`.`productId` = `tbl_shop_products`.`id`
+LEFT JOIN `tbl_shop_categories` ON `tbl_shop_products`.`categoryId` = `tbl_shop_categories`.`id`
+LEFT JOIN `tbl_shop_product_printers` ON `tbl_shop_products`.`id` = `tbl_shop_product_printers`.`productId`
+LEFT JOIN `tbl_shop_printers` ON `tbl_shop_product_printers`.`printerId` = `tbl_shop_printers`.`id`
+LEFT JOIN (
+                            SELECT
+                                tbl_shop_product_times.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_product_times.productId,
+                                    '#%!$%=?', tbl_shop_product_times.day,
+                                    '#%!$%=?', tbl_shop_product_times.timeFrom,
+                                    '#%!$%=?', tbl_shop_product_times.timeTo
+                                    SEPARATOR "!#$%="
+                                ) AS productTimes                                
+                            FROM
+                                tbl_shop_product_times
+                            GROUP BY tbl_shop_product_times.productId
+                            ORDER BY tbl_shop_product_times.timeFrom ASC
+                        ) tblShopProductTimes ON `tblShopProductTimes`.`productId` = `tbl_shop_products_extended`.`productId`
+INNER JOIN `tbl_shop_products_types` ON `tbl_shop_products_types`.`id` = `tbl_shop_products_extended`.`productTypeId`
+INNER JOIN (
+                            SELECT tbl_shop_products_extended.productTypeId,tbl_shop_products_extended.name,
+                                GROUP_CONCAT(tbl_shop_products_extended.id,
+                                    '#%!$%=?',tbl_shop_products_extended.name,
+                                    '#%!$%=?',tbl_shop_products_extended.shortDescription,
+                                    '#%!$%=?',FORMAT(tbl_shop_products_extended.price,2),
+                                    '#%!$%=?',tbl_shop_products_extended.vatpercentage,
+                                    '#%!$%=?',tbl_shop_products_extended.productTypeId,
+                                    '#%!$%=?', tbl_shop_products_types.type,
+                                    '#%!$%=?', tbl_shop_products_types.isMain,
+                                    '#%!$%=?',tbl_shop_products_extended.updateCycle,
+                                    '#%!$%=?',tbl_shop_products_extended.showInPublic,
+                                    '#%!$%=?',tbl_shop_products_extended.productId,
+                                    '#%!$%=?', tbl_shop_categories.category,
+                                    '#%!$%=?', tbl_shop_products.active,
+                                    '#%!$%=?', IF(CHAR_LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, "")
+                                    ORDER BY tbl_shop_products_extended.id DESC
+                                    SEPARATOR "!#$%="                                    
+                                ) AS productDetails
+                            FROM
+                                tbl_shop_products_extended
+                            INNER JOIN
+                                tbl_shop_products_types ON tbl_shop_products_extended.productTypeId = tbl_shop_products_types.id
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
+                            INNER JOIN
+                                tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+
+                            GROUP BY tbl_shop_products_extended.productId
+                            ORDER BY tbl_shop_products_extended.productTypeId DESC
+                            
+                        ) tblShopProductDetails ON `tblShopProductDetails`.`productTypeId` = `tbl_shop_products_types`.`id` AND `tblShopProductDetails`.`name` = `tbl_shop_products_extended`.`name`
+LEFT JOIN (
+                            SELECT 
+                                tbl_shop_products_addons.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_addons.productId,
+                                    '#%!$%=?', tbl_shop_products_addons.addonProductId,
+                                    '#%!$%=?', tbl_shop_products_addons.productExtendedId
+
+                                    SEPARATOR "!#$%="                                    
+                                ) AS addons
+                            FROM
+                                tbl_shop_products_addons
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products_addons.productId = tbl_shop_products.id
+
+                            GROUP BY tbl_shop_products_addons.productId
+                            
+                        ) tblShopAddons ON `tblShopAddons`.`productId` = `tbl_shop_products`.`id`
+WHERE `tbl_shop_categories`.`userId` = 418
+AND `tbl_shop_categories`.`active` = '1'
+AND `tbl_shop_products`.`dateTimeFrom` <= '2020-07-20 16:42:53'
+AND `tbl_shop_products`.`dateTimeTo` > '2020-07-20 16:42:53'
+GROUP BY `tbl_shop_products_extended`.`productId`
+ORDER BY `tbl_shop_products_extended`.`id` DESC
+2020-07-20 16:42:53 => SELECT `termsAndConditions`
+FROM `tbl_shop_vendors`
+WHERE `vendorId` = 418
+2020-07-20 16:44:42 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 16:44:42 => SELECT `tbl_shop_products_extended`.`productId`, GROUP_CONCAT(
+                            tblShopProductDetails.productDetails
+                            SEPARATOR "!#$%="
+                    ) AS productDetails, `tbl_shop_products`.`stock`, `tbl_shop_products`.`recommendedQuantity`, `tbl_shop_products`.`active` AS `productActive`, `tbl_shop_products`.`showImage`, `tbl_shop_products`.`dateTimeFrom` AS `dateTimeFrom`, `tbl_shop_products`.`dateTimeTo` AS `dateTimeTo`, `tbl_shop_categories`.`category`, `tbl_shop_categories`.`id` AS `categoryId`, `tbl_shop_categories`.`active` AS `categoryActive`, GROUP_CONCAT(
+                        CONCAT(
+                            tbl_shop_printers.id, '#%!$%=?', `tbl_shop_printers`.`printer`, '#%!$%=?', tbl_shop_printers.active
+                        )
+                    ) AS printers, `tblShopProductTimes`.`productTimes`, `tblShopAddons`.`addons` AS `addons`
+FROM `tbl_shop_products_extended`
+LEFT JOIN `tbl_shop_products` ON `tbl_shop_products_extended`.`productId` = `tbl_shop_products`.`id`
+LEFT JOIN `tbl_shop_categories` ON `tbl_shop_products`.`categoryId` = `tbl_shop_categories`.`id`
+LEFT JOIN `tbl_shop_product_printers` ON `tbl_shop_products`.`id` = `tbl_shop_product_printers`.`productId`
+LEFT JOIN `tbl_shop_printers` ON `tbl_shop_product_printers`.`printerId` = `tbl_shop_printers`.`id`
+LEFT JOIN (
+                            SELECT
+                                tbl_shop_product_times.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_product_times.productId,
+                                    '#%!$%=?', tbl_shop_product_times.day,
+                                    '#%!$%=?', tbl_shop_product_times.timeFrom,
+                                    '#%!$%=?', tbl_shop_product_times.timeTo
+                                    SEPARATOR "!#$%="
+                                ) AS productTimes                                
+                            FROM
+                                tbl_shop_product_times
+                            GROUP BY tbl_shop_product_times.productId
+                            ORDER BY tbl_shop_product_times.timeFrom ASC
+                        ) tblShopProductTimes ON `tblShopProductTimes`.`productId` = `tbl_shop_products_extended`.`productId`
+INNER JOIN `tbl_shop_products_types` ON `tbl_shop_products_types`.`id` = `tbl_shop_products_extended`.`productTypeId`
+INNER JOIN (
+                            SELECT tbl_shop_products_extended.productTypeId,tbl_shop_products_extended.name,
+                                GROUP_CONCAT(tbl_shop_products_extended.id,
+                                    '#%!$%=?',tbl_shop_products_extended.name,
+                                    '#%!$%=?',tbl_shop_products_extended.shortDescription,
+                                    '#%!$%=?',FORMAT(tbl_shop_products_extended.price,2),
+                                    '#%!$%=?',tbl_shop_products_extended.vatpercentage,
+                                    '#%!$%=?',tbl_shop_products_extended.productTypeId,
+                                    '#%!$%=?', tbl_shop_products_types.type,
+                                    '#%!$%=?', tbl_shop_products_types.isMain,
+                                    '#%!$%=?',tbl_shop_products_extended.updateCycle,
+                                    '#%!$%=?',tbl_shop_products_extended.showInPublic,
+                                    '#%!$%=?',tbl_shop_products_extended.productId,
+                                    '#%!$%=?', tbl_shop_categories.category,
+                                    '#%!$%=?', tbl_shop_products.active,
+                                    '#%!$%=?', IF(CHAR_LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, "")
+                                    ORDER BY tbl_shop_products_extended.id DESC
+                                    SEPARATOR "!#$%="                                    
+                                ) AS productDetails
+                            FROM
+                                tbl_shop_products_extended
+                            INNER JOIN
+                                tbl_shop_products_types ON tbl_shop_products_extended.productTypeId = tbl_shop_products_types.id
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
+                            INNER JOIN
+                                tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+
+                            GROUP BY tbl_shop_products_extended.productId
+                            ORDER BY tbl_shop_products_extended.productTypeId DESC
+                            
+                        ) tblShopProductDetails ON `tblShopProductDetails`.`productTypeId` = `tbl_shop_products_types`.`id` AND `tblShopProductDetails`.`name` = `tbl_shop_products_extended`.`name`
+LEFT JOIN (
+                            SELECT 
+                                tbl_shop_products_addons.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_addons.productId,
+                                    '#%!$%=?', tbl_shop_products_addons.addonProductId,
+                                    '#%!$%=?', tbl_shop_products_addons.productExtendedId
+
+                                    SEPARATOR "!#$%="                                    
+                                ) AS addons
+                            FROM
+                                tbl_shop_products_addons
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products_addons.productId = tbl_shop_products.id
+
+                            GROUP BY tbl_shop_products_addons.productId
+                            
+                        ) tblShopAddons ON `tblShopAddons`.`productId` = `tbl_shop_products`.`id`
+WHERE `tbl_shop_categories`.`userId` = 418
+AND `tbl_shop_categories`.`active` = '1'
+AND `tbl_shop_products`.`dateTimeFrom` <= '2020-07-20 16:44:42'
+AND `tbl_shop_products`.`dateTimeTo` > '2020-07-20 16:44:42'
+GROUP BY `tbl_shop_products_extended`.`productId`
+ORDER BY `tbl_shop_products_extended`.`id` DESC
+2020-07-20 16:44:42 => SELECT `termsAndConditions`
+FROM `tbl_shop_vendors`
+WHERE `vendorId` = 418
+2020-07-20 16:48:03 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 16:48:03 => SELECT `tbl_shop_products_extended`.`productId`, GROUP_CONCAT(
+                            tblShopProductDetails.productDetails
+                            SEPARATOR "!#$%="
+                    ) AS productDetails, `tbl_shop_products`.`stock`, `tbl_shop_products`.`recommendedQuantity`, `tbl_shop_products`.`active` AS `productActive`, `tbl_shop_products`.`showImage`, `tbl_shop_products`.`dateTimeFrom` AS `dateTimeFrom`, `tbl_shop_products`.`dateTimeTo` AS `dateTimeTo`, `tbl_shop_categories`.`category`, `tbl_shop_categories`.`id` AS `categoryId`, `tbl_shop_categories`.`active` AS `categoryActive`, GROUP_CONCAT(
+                        CONCAT(
+                            tbl_shop_printers.id, '#%!$%=?', `tbl_shop_printers`.`printer`, '#%!$%=?', tbl_shop_printers.active
+                        )
+                    ) AS printers, `tblShopProductTimes`.`productTimes`, `tblShopAddons`.`addons` AS `addons`
+FROM `tbl_shop_products_extended`
+LEFT JOIN `tbl_shop_products` ON `tbl_shop_products_extended`.`productId` = `tbl_shop_products`.`id`
+LEFT JOIN `tbl_shop_categories` ON `tbl_shop_products`.`categoryId` = `tbl_shop_categories`.`id`
+LEFT JOIN `tbl_shop_product_printers` ON `tbl_shop_products`.`id` = `tbl_shop_product_printers`.`productId`
+LEFT JOIN `tbl_shop_printers` ON `tbl_shop_product_printers`.`printerId` = `tbl_shop_printers`.`id`
+LEFT JOIN (
+                            SELECT
+                                tbl_shop_product_times.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_product_times.productId,
+                                    '#%!$%=?', tbl_shop_product_times.day,
+                                    '#%!$%=?', tbl_shop_product_times.timeFrom,
+                                    '#%!$%=?', tbl_shop_product_times.timeTo
+                                    SEPARATOR "!#$%="
+                                ) AS productTimes                                
+                            FROM
+                                tbl_shop_product_times
+                            GROUP BY tbl_shop_product_times.productId
+                            ORDER BY tbl_shop_product_times.timeFrom ASC
+                        ) tblShopProductTimes ON `tblShopProductTimes`.`productId` = `tbl_shop_products_extended`.`productId`
+INNER JOIN `tbl_shop_products_types` ON `tbl_shop_products_types`.`id` = `tbl_shop_products_extended`.`productTypeId`
+INNER JOIN (
+                            SELECT tbl_shop_products_extended.productTypeId,tbl_shop_products_extended.name,
+                                GROUP_CONCAT(tbl_shop_products_extended.id,
+                                    '#%!$%=?',tbl_shop_products_extended.name,
+                                    '#%!$%=?',tbl_shop_products_extended.shortDescription,
+                                    '#%!$%=?',FORMAT(tbl_shop_products_extended.price,2),
+                                    '#%!$%=?',tbl_shop_products_extended.vatpercentage,
+                                    '#%!$%=?',tbl_shop_products_extended.productTypeId,
+                                    '#%!$%=?', tbl_shop_products_types.type,
+                                    '#%!$%=?', tbl_shop_products_types.isMain,
+                                    '#%!$%=?',tbl_shop_products_extended.updateCycle,
+                                    '#%!$%=?',tbl_shop_products_extended.showInPublic,
+                                    '#%!$%=?',tbl_shop_products_extended.productId,
+                                    '#%!$%=?', tbl_shop_categories.category,
+                                    '#%!$%=?', tbl_shop_products.active,
+                                    '#%!$%=?', IF(CHAR_LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, "")
+                                    ORDER BY tbl_shop_products_extended.id DESC
+                                    SEPARATOR "!#$%="                                    
+                                ) AS productDetails
+                            FROM
+                                tbl_shop_products_extended
+                            INNER JOIN
+                                tbl_shop_products_types ON tbl_shop_products_extended.productTypeId = tbl_shop_products_types.id
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
+                            INNER JOIN
+                                tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+
+                            GROUP BY tbl_shop_products_extended.productId
+                            ORDER BY tbl_shop_products_extended.productTypeId DESC
+                            
+                        ) tblShopProductDetails ON `tblShopProductDetails`.`productTypeId` = `tbl_shop_products_types`.`id` AND `tblShopProductDetails`.`name` = `tbl_shop_products_extended`.`name`
+LEFT JOIN (
+                            SELECT 
+                                tbl_shop_products_addons.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_addons.productId,
+                                    '#%!$%=?', tbl_shop_products_addons.addonProductId,
+                                    '#%!$%=?', tbl_shop_products_addons.productExtendedId
+
+                                    SEPARATOR "!#$%="                                    
+                                ) AS addons
+                            FROM
+                                tbl_shop_products_addons
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products_addons.productId = tbl_shop_products.id
+
+                            GROUP BY tbl_shop_products_addons.productId
+                            
+                        ) tblShopAddons ON `tblShopAddons`.`productId` = `tbl_shop_products`.`id`
+WHERE `tbl_shop_categories`.`userId` = 418
+AND `tbl_shop_categories`.`active` = '1'
+AND `tbl_shop_products`.`dateTimeFrom` <= '2020-07-20 16:48:03'
+AND `tbl_shop_products`.`dateTimeTo` > '2020-07-20 16:48:03'
+GROUP BY `tbl_shop_products_extended`.`productId`
+ORDER BY `tbl_shop_products_extended`.`id` DESC
+2020-07-20 16:48:03 => SELECT `termsAndConditions`
+FROM `tbl_shop_vendors`
+WHERE `vendorId` = 418
+2020-07-20 16:50:21 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 16:50:21 => SELECT `tbl_shop_products_extended`.`productId`, GROUP_CONCAT(
+                            tblShopProductDetails.productDetails
+                            SEPARATOR "!#$%="
+                    ) AS productDetails, `tbl_shop_products`.`stock`, `tbl_shop_products`.`recommendedQuantity`, `tbl_shop_products`.`active` AS `productActive`, `tbl_shop_products`.`showImage`, `tbl_shop_products`.`dateTimeFrom` AS `dateTimeFrom`, `tbl_shop_products`.`dateTimeTo` AS `dateTimeTo`, `tbl_shop_categories`.`category`, `tbl_shop_categories`.`id` AS `categoryId`, `tbl_shop_categories`.`active` AS `categoryActive`, GROUP_CONCAT(
+                        CONCAT(
+                            tbl_shop_printers.id, '#%!$%=?', `tbl_shop_printers`.`printer`, '#%!$%=?', tbl_shop_printers.active
+                        )
+                    ) AS printers, `tblShopProductTimes`.`productTimes`, `tblShopAddons`.`addons` AS `addons`
+FROM `tbl_shop_products_extended`
+LEFT JOIN `tbl_shop_products` ON `tbl_shop_products_extended`.`productId` = `tbl_shop_products`.`id`
+LEFT JOIN `tbl_shop_categories` ON `tbl_shop_products`.`categoryId` = `tbl_shop_categories`.`id`
+LEFT JOIN `tbl_shop_product_printers` ON `tbl_shop_products`.`id` = `tbl_shop_product_printers`.`productId`
+LEFT JOIN `tbl_shop_printers` ON `tbl_shop_product_printers`.`printerId` = `tbl_shop_printers`.`id`
+LEFT JOIN (
+                            SELECT
+                                tbl_shop_product_times.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_product_times.productId,
+                                    '#%!$%=?', tbl_shop_product_times.day,
+                                    '#%!$%=?', tbl_shop_product_times.timeFrom,
+                                    '#%!$%=?', tbl_shop_product_times.timeTo
+                                    SEPARATOR "!#$%="
+                                ) AS productTimes                                
+                            FROM
+                                tbl_shop_product_times
+                            GROUP BY tbl_shop_product_times.productId
+                            ORDER BY tbl_shop_product_times.timeFrom ASC
+                        ) tblShopProductTimes ON `tblShopProductTimes`.`productId` = `tbl_shop_products_extended`.`productId`
+INNER JOIN `tbl_shop_products_types` ON `tbl_shop_products_types`.`id` = `tbl_shop_products_extended`.`productTypeId`
+INNER JOIN (
+                            SELECT tbl_shop_products_extended.productTypeId,tbl_shop_products_extended.name,
+                                GROUP_CONCAT(tbl_shop_products_extended.id,
+                                    '#%!$%=?',tbl_shop_products_extended.name,
+                                    '#%!$%=?',tbl_shop_products_extended.shortDescription,
+                                    '#%!$%=?',FORMAT(tbl_shop_products_extended.price,2),
+                                    '#%!$%=?',tbl_shop_products_extended.vatpercentage,
+                                    '#%!$%=?',tbl_shop_products_extended.productTypeId,
+                                    '#%!$%=?', tbl_shop_products_types.type,
+                                    '#%!$%=?', tbl_shop_products_types.isMain,
+                                    '#%!$%=?',tbl_shop_products_extended.updateCycle,
+                                    '#%!$%=?',tbl_shop_products_extended.showInPublic,
+                                    '#%!$%=?',tbl_shop_products_extended.productId,
+                                    '#%!$%=?', tbl_shop_categories.category,
+                                    '#%!$%=?', tbl_shop_products.active,
+                                    '#%!$%=?', IF(CHAR_LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, "")
+                                    ORDER BY tbl_shop_products_extended.id DESC
+                                    SEPARATOR "!#$%="                                    
+                                ) AS productDetails
+                            FROM
+                                tbl_shop_products_extended
+                            INNER JOIN
+                                tbl_shop_products_types ON tbl_shop_products_extended.productTypeId = tbl_shop_products_types.id
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
+                            INNER JOIN
+                                tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+
+                            GROUP BY tbl_shop_products_extended.productId
+                            ORDER BY tbl_shop_products_extended.productTypeId DESC
+                            
+                        ) tblShopProductDetails ON `tblShopProductDetails`.`productTypeId` = `tbl_shop_products_types`.`id` AND `tblShopProductDetails`.`name` = `tbl_shop_products_extended`.`name`
+LEFT JOIN (
+                            SELECT 
+                                tbl_shop_products_addons.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_addons.productId,
+                                    '#%!$%=?', tbl_shop_products_addons.addonProductId,
+                                    '#%!$%=?', tbl_shop_products_addons.productExtendedId
+
+                                    SEPARATOR "!#$%="                                    
+                                ) AS addons
+                            FROM
+                                tbl_shop_products_addons
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products_addons.productId = tbl_shop_products.id
+
+                            GROUP BY tbl_shop_products_addons.productId
+                            
+                        ) tblShopAddons ON `tblShopAddons`.`productId` = `tbl_shop_products`.`id`
+WHERE `tbl_shop_categories`.`userId` = 418
+AND `tbl_shop_categories`.`active` = '1'
+AND `tbl_shop_products`.`dateTimeFrom` <= '2020-07-20 16:50:21'
+AND `tbl_shop_products`.`dateTimeTo` > '2020-07-20 16:50:21'
+GROUP BY `tbl_shop_products_extended`.`productId`
+ORDER BY `tbl_shop_products_extended`.`id` DESC
+2020-07-20 16:50:21 => SELECT `termsAndConditions`
+FROM `tbl_shop_vendors`
+WHERE `vendorId` = 418
+2020-07-20 22:08:52 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 22:08:57 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 22:08:57 => SELECT `tbl_shop_products_extended`.`productId`, GROUP_CONCAT(
+                            tblShopProductDetails.productDetails
+                            SEPARATOR "!#$%="
+                    ) AS productDetails, `tbl_shop_products`.`stock`, `tbl_shop_products`.`recommendedQuantity`, `tbl_shop_products`.`active` AS `productActive`, `tbl_shop_products`.`showImage`, `tbl_shop_products`.`dateTimeFrom` AS `dateTimeFrom`, `tbl_shop_products`.`dateTimeTo` AS `dateTimeTo`, `tbl_shop_categories`.`category`, `tbl_shop_categories`.`id` AS `categoryId`, `tbl_shop_categories`.`active` AS `categoryActive`, GROUP_CONCAT(
+                        CONCAT(
+                            tbl_shop_printers.id, '#%!$%=?', `tbl_shop_printers`.`printer`, '#%!$%=?', tbl_shop_printers.active
+                        )
+                    ) AS printers, `tblShopProductTimes`.`productTimes`, `tblShopAddons`.`addons` AS `addons`
+FROM `tbl_shop_products_extended`
+LEFT JOIN `tbl_shop_products` ON `tbl_shop_products_extended`.`productId` = `tbl_shop_products`.`id`
+LEFT JOIN `tbl_shop_categories` ON `tbl_shop_products`.`categoryId` = `tbl_shop_categories`.`id`
+LEFT JOIN `tbl_shop_product_printers` ON `tbl_shop_products`.`id` = `tbl_shop_product_printers`.`productId`
+LEFT JOIN `tbl_shop_printers` ON `tbl_shop_product_printers`.`printerId` = `tbl_shop_printers`.`id`
+LEFT JOIN (
+                            SELECT
+                                tbl_shop_product_times.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_product_times.productId,
+                                    '#%!$%=?', tbl_shop_product_times.day,
+                                    '#%!$%=?', tbl_shop_product_times.timeFrom,
+                                    '#%!$%=?', tbl_shop_product_times.timeTo
+                                    SEPARATOR "!#$%="
+                                ) AS productTimes                                
+                            FROM
+                                tbl_shop_product_times
+                            GROUP BY tbl_shop_product_times.productId
+                            ORDER BY tbl_shop_product_times.timeFrom ASC
+                        ) tblShopProductTimes ON `tblShopProductTimes`.`productId` = `tbl_shop_products_extended`.`productId`
+INNER JOIN `tbl_shop_products_types` ON `tbl_shop_products_types`.`id` = `tbl_shop_products_extended`.`productTypeId`
+INNER JOIN (
+                            SELECT tbl_shop_products_extended.productTypeId,tbl_shop_products_extended.name,
+                                GROUP_CONCAT(tbl_shop_products_extended.id,
+                                    '#%!$%=?',tbl_shop_products_extended.name,
+                                    '#%!$%=?',tbl_shop_products_extended.shortDescription,
+                                    '#%!$%=?',FORMAT(tbl_shop_products_extended.price,2),
+                                    '#%!$%=?',tbl_shop_products_extended.vatpercentage,
+                                    '#%!$%=?',tbl_shop_products_extended.productTypeId,
+                                    '#%!$%=?', tbl_shop_products_types.type,
+                                    '#%!$%=?', tbl_shop_products_types.isMain,
+                                    '#%!$%=?',tbl_shop_products_extended.updateCycle,
+                                    '#%!$%=?',tbl_shop_products_extended.showInPublic,
+                                    '#%!$%=?',tbl_shop_products_extended.productId,
+                                    '#%!$%=?', tbl_shop_categories.category,
+                                    '#%!$%=?', tbl_shop_products.active,
+                                    '#%!$%=?', IF(CHAR_LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, "")
+                                    ORDER BY tbl_shop_products_extended.id DESC
+                                    SEPARATOR "!#$%="                                    
+                                ) AS productDetails
+                            FROM
+                                tbl_shop_products_extended
+                            INNER JOIN
+                                tbl_shop_products_types ON tbl_shop_products_extended.productTypeId = tbl_shop_products_types.id
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
+                            INNER JOIN
+                                tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+
+                            GROUP BY tbl_shop_products_extended.productId
+                            ORDER BY tbl_shop_products_extended.productTypeId DESC
+                            
+                        ) tblShopProductDetails ON `tblShopProductDetails`.`productTypeId` = `tbl_shop_products_types`.`id` AND `tblShopProductDetails`.`name` = `tbl_shop_products_extended`.`name`
+LEFT JOIN (
+                            SELECT 
+                                tbl_shop_products_addons.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_addons.productId,
+                                    '#%!$%=?', tbl_shop_products_addons.addonProductId,
+                                    '#%!$%=?', tbl_shop_products_addons.productExtendedId
+
+                                    SEPARATOR "!#$%="                                    
+                                ) AS addons
+                            FROM
+                                tbl_shop_products_addons
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products_addons.productId = tbl_shop_products.id
+
+                            GROUP BY tbl_shop_products_addons.productId
+                            
+                        ) tblShopAddons ON `tblShopAddons`.`productId` = `tbl_shop_products`.`id`
+WHERE `tbl_shop_categories`.`userId` = 418
+AND `tbl_shop_categories`.`active` = '1'
+AND `tbl_shop_products`.`dateTimeFrom` <= '2020-07-20 22:08:57'
+AND `tbl_shop_products`.`dateTimeTo` > '2020-07-20 22:08:57'
+GROUP BY `tbl_shop_products_extended`.`productId`
+ORDER BY `tbl_shop_products_extended`.`id` DESC
+2020-07-20 22:08:57 => SELECT `termsAndConditions`
+FROM `tbl_shop_vendors`
+WHERE `vendorId` = 418
+2020-07-20 22:10:10 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 22:10:10 => SELECT `tbl_shop_products_extended`.`productId`, GROUP_CONCAT(
+                            tblShopProductDetails.productDetails
+                            SEPARATOR "!#$%="
+                    ) AS productDetails, `tbl_shop_products`.`stock`, `tbl_shop_products`.`recommendedQuantity`, `tbl_shop_products`.`active` AS `productActive`, `tbl_shop_products`.`showImage`, `tbl_shop_products`.`dateTimeFrom` AS `dateTimeFrom`, `tbl_shop_products`.`dateTimeTo` AS `dateTimeTo`, `tbl_shop_categories`.`category`, `tbl_shop_categories`.`id` AS `categoryId`, `tbl_shop_categories`.`active` AS `categoryActive`, GROUP_CONCAT(
+                        CONCAT(
+                            tbl_shop_printers.id, '#%!$%=?', `tbl_shop_printers`.`printer`, '#%!$%=?', tbl_shop_printers.active
+                        )
+                    ) AS printers, `tblShopProductTimes`.`productTimes`, `tblShopAddons`.`addons` AS `addons`
+FROM `tbl_shop_products_extended`
+LEFT JOIN `tbl_shop_products` ON `tbl_shop_products_extended`.`productId` = `tbl_shop_products`.`id`
+LEFT JOIN `tbl_shop_categories` ON `tbl_shop_products`.`categoryId` = `tbl_shop_categories`.`id`
+LEFT JOIN `tbl_shop_product_printers` ON `tbl_shop_products`.`id` = `tbl_shop_product_printers`.`productId`
+LEFT JOIN `tbl_shop_printers` ON `tbl_shop_product_printers`.`printerId` = `tbl_shop_printers`.`id`
+LEFT JOIN (
+                            SELECT
+                                tbl_shop_product_times.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_product_times.productId,
+                                    '#%!$%=?', tbl_shop_product_times.day,
+                                    '#%!$%=?', tbl_shop_product_times.timeFrom,
+                                    '#%!$%=?', tbl_shop_product_times.timeTo
+                                    SEPARATOR "!#$%="
+                                ) AS productTimes                                
+                            FROM
+                                tbl_shop_product_times
+                            GROUP BY tbl_shop_product_times.productId
+                            ORDER BY tbl_shop_product_times.timeFrom ASC
+                        ) tblShopProductTimes ON `tblShopProductTimes`.`productId` = `tbl_shop_products_extended`.`productId`
+INNER JOIN `tbl_shop_products_types` ON `tbl_shop_products_types`.`id` = `tbl_shop_products_extended`.`productTypeId`
+INNER JOIN (
+                            SELECT tbl_shop_products_extended.productTypeId,tbl_shop_products_extended.name,
+                                GROUP_CONCAT(tbl_shop_products_extended.id,
+                                    '#%!$%=?',tbl_shop_products_extended.name,
+                                    '#%!$%=?',tbl_shop_products_extended.shortDescription,
+                                    '#%!$%=?',FORMAT(tbl_shop_products_extended.price,2),
+                                    '#%!$%=?',tbl_shop_products_extended.vatpercentage,
+                                    '#%!$%=?',tbl_shop_products_extended.productTypeId,
+                                    '#%!$%=?', tbl_shop_products_types.type,
+                                    '#%!$%=?', tbl_shop_products_types.isMain,
+                                    '#%!$%=?',tbl_shop_products_extended.updateCycle,
+                                    '#%!$%=?',tbl_shop_products_extended.showInPublic,
+                                    '#%!$%=?',tbl_shop_products_extended.productId,
+                                    '#%!$%=?', tbl_shop_categories.category,
+                                    '#%!$%=?', tbl_shop_products.active,
+                                    '#%!$%=?', IF(CHAR_LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, "")
+                                    ORDER BY tbl_shop_products_extended.id DESC
+                                    SEPARATOR "!#$%="                                    
+                                ) AS productDetails
+                            FROM
+                                tbl_shop_products_extended
+                            INNER JOIN
+                                tbl_shop_products_types ON tbl_shop_products_extended.productTypeId = tbl_shop_products_types.id
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
+                            INNER JOIN
+                                tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+
+                            GROUP BY tbl_shop_products_extended.productId
+                            ORDER BY tbl_shop_products_extended.productTypeId DESC
+                            
+                        ) tblShopProductDetails ON `tblShopProductDetails`.`productTypeId` = `tbl_shop_products_types`.`id` AND `tblShopProductDetails`.`name` = `tbl_shop_products_extended`.`name`
+LEFT JOIN (
+                            SELECT 
+                                tbl_shop_products_addons.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_addons.productId,
+                                    '#%!$%=?', tbl_shop_products_addons.addonProductId,
+                                    '#%!$%=?', tbl_shop_products_addons.productExtendedId
+
+                                    SEPARATOR "!#$%="                                    
+                                ) AS addons
+                            FROM
+                                tbl_shop_products_addons
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products_addons.productId = tbl_shop_products.id
+
+                            GROUP BY tbl_shop_products_addons.productId
+                            
+                        ) tblShopAddons ON `tblShopAddons`.`productId` = `tbl_shop_products`.`id`
+WHERE `tbl_shop_categories`.`userId` = 418
+AND `tbl_shop_categories`.`active` = '1'
+AND `tbl_shop_products`.`dateTimeFrom` <= '2020-07-20 22:10:10'
+AND `tbl_shop_products`.`dateTimeTo` > '2020-07-20 22:10:10'
+GROUP BY `tbl_shop_products_extended`.`productId`
+ORDER BY `tbl_shop_products_extended`.`id` DESC
+2020-07-20 22:10:10 => SELECT `termsAndConditions`
+FROM `tbl_shop_vendors`
+WHERE `vendorId` = 418
+2020-07-20 22:10:13 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 22:10:15 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 22:10:15 => SELECT `tbl_shop_products_extended`.`productId`, GROUP_CONCAT(
+                            tblShopProductDetails.productDetails
+                            SEPARATOR "!#$%="
+                    ) AS productDetails, `tbl_shop_products`.`stock`, `tbl_shop_products`.`recommendedQuantity`, `tbl_shop_products`.`active` AS `productActive`, `tbl_shop_products`.`showImage`, `tbl_shop_products`.`dateTimeFrom` AS `dateTimeFrom`, `tbl_shop_products`.`dateTimeTo` AS `dateTimeTo`, `tbl_shop_categories`.`category`, `tbl_shop_categories`.`id` AS `categoryId`, `tbl_shop_categories`.`active` AS `categoryActive`, GROUP_CONCAT(
+                        CONCAT(
+                            tbl_shop_printers.id, '#%!$%=?', `tbl_shop_printers`.`printer`, '#%!$%=?', tbl_shop_printers.active
+                        )
+                    ) AS printers, `tblShopProductTimes`.`productTimes`, `tblShopAddons`.`addons` AS `addons`
+FROM `tbl_shop_products_extended`
+LEFT JOIN `tbl_shop_products` ON `tbl_shop_products_extended`.`productId` = `tbl_shop_products`.`id`
+LEFT JOIN `tbl_shop_categories` ON `tbl_shop_products`.`categoryId` = `tbl_shop_categories`.`id`
+LEFT JOIN `tbl_shop_product_printers` ON `tbl_shop_products`.`id` = `tbl_shop_product_printers`.`productId`
+LEFT JOIN `tbl_shop_printers` ON `tbl_shop_product_printers`.`printerId` = `tbl_shop_printers`.`id`
+LEFT JOIN (
+                            SELECT
+                                tbl_shop_product_times.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_product_times.productId,
+                                    '#%!$%=?', tbl_shop_product_times.day,
+                                    '#%!$%=?', tbl_shop_product_times.timeFrom,
+                                    '#%!$%=?', tbl_shop_product_times.timeTo
+                                    SEPARATOR "!#$%="
+                                ) AS productTimes                                
+                            FROM
+                                tbl_shop_product_times
+                            GROUP BY tbl_shop_product_times.productId
+                            ORDER BY tbl_shop_product_times.timeFrom ASC
+                        ) tblShopProductTimes ON `tblShopProductTimes`.`productId` = `tbl_shop_products_extended`.`productId`
+INNER JOIN `tbl_shop_products_types` ON `tbl_shop_products_types`.`id` = `tbl_shop_products_extended`.`productTypeId`
+INNER JOIN (
+                            SELECT tbl_shop_products_extended.productTypeId,tbl_shop_products_extended.name,
+                                GROUP_CONCAT(tbl_shop_products_extended.id,
+                                    '#%!$%=?',tbl_shop_products_extended.name,
+                                    '#%!$%=?',tbl_shop_products_extended.shortDescription,
+                                    '#%!$%=?',FORMAT(tbl_shop_products_extended.price,2),
+                                    '#%!$%=?',tbl_shop_products_extended.vatpercentage,
+                                    '#%!$%=?',tbl_shop_products_extended.productTypeId,
+                                    '#%!$%=?', tbl_shop_products_types.type,
+                                    '#%!$%=?', tbl_shop_products_types.isMain,
+                                    '#%!$%=?',tbl_shop_products_extended.updateCycle,
+                                    '#%!$%=?',tbl_shop_products_extended.showInPublic,
+                                    '#%!$%=?',tbl_shop_products_extended.productId,
+                                    '#%!$%=?', tbl_shop_categories.category,
+                                    '#%!$%=?', tbl_shop_products.active,
+                                    '#%!$%=?', IF(CHAR_LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, "")
+                                    ORDER BY tbl_shop_products_extended.id DESC
+                                    SEPARATOR "!#$%="                                    
+                                ) AS productDetails
+                            FROM
+                                tbl_shop_products_extended
+                            INNER JOIN
+                                tbl_shop_products_types ON tbl_shop_products_extended.productTypeId = tbl_shop_products_types.id
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
+                            INNER JOIN
+                                tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+
+                            GROUP BY tbl_shop_products_extended.productId
+                            ORDER BY tbl_shop_products_extended.productTypeId DESC
+                            
+                        ) tblShopProductDetails ON `tblShopProductDetails`.`productTypeId` = `tbl_shop_products_types`.`id` AND `tblShopProductDetails`.`name` = `tbl_shop_products_extended`.`name`
+LEFT JOIN (
+                            SELECT 
+                                tbl_shop_products_addons.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_addons.productId,
+                                    '#%!$%=?', tbl_shop_products_addons.addonProductId,
+                                    '#%!$%=?', tbl_shop_products_addons.productExtendedId
+
+                                    SEPARATOR "!#$%="                                    
+                                ) AS addons
+                            FROM
+                                tbl_shop_products_addons
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products_addons.productId = tbl_shop_products.id
+
+                            GROUP BY tbl_shop_products_addons.productId
+                            
+                        ) tblShopAddons ON `tblShopAddons`.`productId` = `tbl_shop_products`.`id`
+WHERE `tbl_shop_categories`.`userId` = 418
+AND `tbl_shop_categories`.`active` = '1'
+AND `tbl_shop_products`.`dateTimeFrom` <= '2020-07-20 22:10:15'
+AND `tbl_shop_products`.`dateTimeTo` > '2020-07-20 22:10:15'
+GROUP BY `tbl_shop_products_extended`.`productId`
+ORDER BY `tbl_shop_products_extended`.`id` DESC
+2020-07-20 22:10:15 => SELECT `termsAndConditions`
+FROM `tbl_shop_vendors`
+WHERE `vendorId` = 418
+2020-07-20 22:10:46 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 22:10:46 => SELECT `tbl_shop_products_extended`.`productId`, GROUP_CONCAT(
+                            tblShopProductDetails.productDetails
+                            SEPARATOR "!#$%="
+                    ) AS productDetails, `tbl_shop_products`.`stock`, `tbl_shop_products`.`recommendedQuantity`, `tbl_shop_products`.`active` AS `productActive`, `tbl_shop_products`.`showImage`, `tbl_shop_products`.`dateTimeFrom` AS `dateTimeFrom`, `tbl_shop_products`.`dateTimeTo` AS `dateTimeTo`, `tbl_shop_categories`.`category`, `tbl_shop_categories`.`id` AS `categoryId`, `tbl_shop_categories`.`active` AS `categoryActive`, GROUP_CONCAT(
+                        CONCAT(
+                            tbl_shop_printers.id, '#%!$%=?', `tbl_shop_printers`.`printer`, '#%!$%=?', tbl_shop_printers.active
+                        )
+                    ) AS printers, `tblShopProductTimes`.`productTimes`, `tblShopAddons`.`addons` AS `addons`
+FROM `tbl_shop_products_extended`
+LEFT JOIN `tbl_shop_products` ON `tbl_shop_products_extended`.`productId` = `tbl_shop_products`.`id`
+LEFT JOIN `tbl_shop_categories` ON `tbl_shop_products`.`categoryId` = `tbl_shop_categories`.`id`
+LEFT JOIN `tbl_shop_product_printers` ON `tbl_shop_products`.`id` = `tbl_shop_product_printers`.`productId`
+LEFT JOIN `tbl_shop_printers` ON `tbl_shop_product_printers`.`printerId` = `tbl_shop_printers`.`id`
+LEFT JOIN (
+                            SELECT
+                                tbl_shop_product_times.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_product_times.productId,
+                                    '#%!$%=?', tbl_shop_product_times.day,
+                                    '#%!$%=?', tbl_shop_product_times.timeFrom,
+                                    '#%!$%=?', tbl_shop_product_times.timeTo
+                                    SEPARATOR "!#$%="
+                                ) AS productTimes                                
+                            FROM
+                                tbl_shop_product_times
+                            GROUP BY tbl_shop_product_times.productId
+                            ORDER BY tbl_shop_product_times.timeFrom ASC
+                        ) tblShopProductTimes ON `tblShopProductTimes`.`productId` = `tbl_shop_products_extended`.`productId`
+INNER JOIN `tbl_shop_products_types` ON `tbl_shop_products_types`.`id` = `tbl_shop_products_extended`.`productTypeId`
+INNER JOIN (
+                            SELECT tbl_shop_products_extended.productTypeId,tbl_shop_products_extended.name,
+                                GROUP_CONCAT(tbl_shop_products_extended.id,
+                                    '#%!$%=?',tbl_shop_products_extended.name,
+                                    '#%!$%=?',tbl_shop_products_extended.shortDescription,
+                                    '#%!$%=?',FORMAT(tbl_shop_products_extended.price,2),
+                                    '#%!$%=?',tbl_shop_products_extended.vatpercentage,
+                                    '#%!$%=?',tbl_shop_products_extended.productTypeId,
+                                    '#%!$%=?', tbl_shop_products_types.type,
+                                    '#%!$%=?', tbl_shop_products_types.isMain,
+                                    '#%!$%=?',tbl_shop_products_extended.updateCycle,
+                                    '#%!$%=?',tbl_shop_products_extended.showInPublic,
+                                    '#%!$%=?',tbl_shop_products_extended.productId,
+                                    '#%!$%=?', tbl_shop_categories.category,
+                                    '#%!$%=?', tbl_shop_products.active,
+                                    '#%!$%=?', IF(CHAR_LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, "")
+                                    ORDER BY tbl_shop_products_extended.id DESC
+                                    SEPARATOR "!#$%="                                    
+                                ) AS productDetails
+                            FROM
+                                tbl_shop_products_extended
+                            INNER JOIN
+                                tbl_shop_products_types ON tbl_shop_products_extended.productTypeId = tbl_shop_products_types.id
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
+                            INNER JOIN
+                                tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+
+                            GROUP BY tbl_shop_products_extended.productId
+                            ORDER BY tbl_shop_products_extended.productTypeId DESC
+                            
+                        ) tblShopProductDetails ON `tblShopProductDetails`.`productTypeId` = `tbl_shop_products_types`.`id` AND `tblShopProductDetails`.`name` = `tbl_shop_products_extended`.`name`
+LEFT JOIN (
+                            SELECT 
+                                tbl_shop_products_addons.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_addons.productId,
+                                    '#%!$%=?', tbl_shop_products_addons.addonProductId,
+                                    '#%!$%=?', tbl_shop_products_addons.productExtendedId
+
+                                    SEPARATOR "!#$%="                                    
+                                ) AS addons
+                            FROM
+                                tbl_shop_products_addons
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products_addons.productId = tbl_shop_products.id
+
+                            GROUP BY tbl_shop_products_addons.productId
+                            
+                        ) tblShopAddons ON `tblShopAddons`.`productId` = `tbl_shop_products`.`id`
+WHERE `tbl_shop_categories`.`userId` = 418
+AND `tbl_shop_categories`.`active` = '1'
+AND `tbl_shop_products`.`dateTimeFrom` <= '2020-07-20 22:10:46'
+AND `tbl_shop_products`.`dateTimeTo` > '2020-07-20 22:10:46'
+GROUP BY `tbl_shop_products_extended`.`productId`
+ORDER BY `tbl_shop_products_extended`.`id` DESC
+2020-07-20 22:10:46 => SELECT `termsAndConditions`
+FROM `tbl_shop_vendors`
+WHERE `vendorId` = 418
+2020-07-20 22:11:14 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 22:11:14 => SELECT `tbl_shop_products_extended`.`productId`, GROUP_CONCAT(
+                            tblShopProductDetails.productDetails
+                            SEPARATOR "!#$%="
+                    ) AS productDetails, `tbl_shop_products`.`stock`, `tbl_shop_products`.`recommendedQuantity`, `tbl_shop_products`.`active` AS `productActive`, `tbl_shop_products`.`showImage`, `tbl_shop_products`.`dateTimeFrom` AS `dateTimeFrom`, `tbl_shop_products`.`dateTimeTo` AS `dateTimeTo`, `tbl_shop_categories`.`category`, `tbl_shop_categories`.`id` AS `categoryId`, `tbl_shop_categories`.`active` AS `categoryActive`, GROUP_CONCAT(
+                        CONCAT(
+                            tbl_shop_printers.id, '#%!$%=?', `tbl_shop_printers`.`printer`, '#%!$%=?', tbl_shop_printers.active
+                        )
+                    ) AS printers, `tblShopProductTimes`.`productTimes`, `tblShopAddons`.`addons` AS `addons`
+FROM `tbl_shop_products_extended`
+LEFT JOIN `tbl_shop_products` ON `tbl_shop_products_extended`.`productId` = `tbl_shop_products`.`id`
+LEFT JOIN `tbl_shop_categories` ON `tbl_shop_products`.`categoryId` = `tbl_shop_categories`.`id`
+LEFT JOIN `tbl_shop_product_printers` ON `tbl_shop_products`.`id` = `tbl_shop_product_printers`.`productId`
+LEFT JOIN `tbl_shop_printers` ON `tbl_shop_product_printers`.`printerId` = `tbl_shop_printers`.`id`
+LEFT JOIN (
+                            SELECT
+                                tbl_shop_product_times.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_product_times.productId,
+                                    '#%!$%=?', tbl_shop_product_times.day,
+                                    '#%!$%=?', tbl_shop_product_times.timeFrom,
+                                    '#%!$%=?', tbl_shop_product_times.timeTo
+                                    SEPARATOR "!#$%="
+                                ) AS productTimes                                
+                            FROM
+                                tbl_shop_product_times
+                            GROUP BY tbl_shop_product_times.productId
+                            ORDER BY tbl_shop_product_times.timeFrom ASC
+                        ) tblShopProductTimes ON `tblShopProductTimes`.`productId` = `tbl_shop_products_extended`.`productId`
+INNER JOIN `tbl_shop_products_types` ON `tbl_shop_products_types`.`id` = `tbl_shop_products_extended`.`productTypeId`
+INNER JOIN (
+                            SELECT tbl_shop_products_extended.productTypeId,tbl_shop_products_extended.name,
+                                GROUP_CONCAT(tbl_shop_products_extended.id,
+                                    '#%!$%=?',tbl_shop_products_extended.name,
+                                    '#%!$%=?',tbl_shop_products_extended.shortDescription,
+                                    '#%!$%=?',FORMAT(tbl_shop_products_extended.price,2),
+                                    '#%!$%=?',tbl_shop_products_extended.vatpercentage,
+                                    '#%!$%=?',tbl_shop_products_extended.productTypeId,
+                                    '#%!$%=?', tbl_shop_products_types.type,
+                                    '#%!$%=?', tbl_shop_products_types.isMain,
+                                    '#%!$%=?',tbl_shop_products_extended.updateCycle,
+                                    '#%!$%=?',tbl_shop_products_extended.showInPublic,
+                                    '#%!$%=?',tbl_shop_products_extended.productId,
+                                    '#%!$%=?', tbl_shop_categories.category,
+                                    '#%!$%=?', tbl_shop_products.active,
+                                    '#%!$%=?', IF(CHAR_LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, "")
+                                    ORDER BY tbl_shop_products_extended.id DESC
+                                    SEPARATOR "!#$%="                                    
+                                ) AS productDetails
+                            FROM
+                                tbl_shop_products_extended
+                            INNER JOIN
+                                tbl_shop_products_types ON tbl_shop_products_extended.productTypeId = tbl_shop_products_types.id
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
+                            INNER JOIN
+                                tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+
+                            GROUP BY tbl_shop_products_extended.productId
+                            ORDER BY tbl_shop_products_extended.productTypeId DESC
+                            
+                        ) tblShopProductDetails ON `tblShopProductDetails`.`productTypeId` = `tbl_shop_products_types`.`id` AND `tblShopProductDetails`.`name` = `tbl_shop_products_extended`.`name`
+LEFT JOIN (
+                            SELECT 
+                                tbl_shop_products_addons.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_addons.productId,
+                                    '#%!$%=?', tbl_shop_products_addons.addonProductId,
+                                    '#%!$%=?', tbl_shop_products_addons.productExtendedId
+
+                                    SEPARATOR "!#$%="                                    
+                                ) AS addons
+                            FROM
+                                tbl_shop_products_addons
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products_addons.productId = tbl_shop_products.id
+
+                            GROUP BY tbl_shop_products_addons.productId
+                            
+                        ) tblShopAddons ON `tblShopAddons`.`productId` = `tbl_shop_products`.`id`
+WHERE `tbl_shop_categories`.`userId` = 418
+AND `tbl_shop_categories`.`active` = '1'
+AND `tbl_shop_products`.`dateTimeFrom` <= '2020-07-20 22:11:14'
+AND `tbl_shop_products`.`dateTimeTo` > '2020-07-20 22:11:14'
+GROUP BY `tbl_shop_products_extended`.`productId`
+ORDER BY `tbl_shop_products_extended`.`id` DESC
+2020-07-20 22:11:14 => SELECT `termsAndConditions`
+FROM `tbl_shop_vendors`
+WHERE `vendorId` = 418
+2020-07-20 22:11:29 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 22:11:31 => SELECT `tbl_shop_vendors`.`serviceFeePercent`, `tbl_shop_vendors`.`serviceFeeAmount`, `tbl_shop_vendors`.`payNlServiceId`, `tbl_user`.`id` AS `vendorId`, `tbl_user`.`username` AS `vendorName`, `tbl_user`.`email` AS `vendorEmail`
+FROM `tbl_shop_vendors`
+INNER JOIN `tbl_user` ON `tbl_user`.`id` = `tbl_shop_vendors`.`vendorId`
+WHERE `tbl_shop_vendors`.`vendorId` = '418'
+2020-07-20 22:11:31 => SELECT `tbl_shop_products_extended`.`productId`, GROUP_CONCAT(
+                            tblShopProductDetails.productDetails
+                            SEPARATOR "!#$%="
+                    ) AS productDetails, `tbl_shop_products`.`stock`, `tbl_shop_products`.`recommendedQuantity`, `tbl_shop_products`.`active` AS `productActive`, `tbl_shop_products`.`showImage`, `tbl_shop_products`.`dateTimeFrom` AS `dateTimeFrom`, `tbl_shop_products`.`dateTimeTo` AS `dateTimeTo`, `tbl_shop_categories`.`category`, `tbl_shop_categories`.`id` AS `categoryId`, `tbl_shop_categories`.`active` AS `categoryActive`, GROUP_CONCAT(
+                        CONCAT(
+                            tbl_shop_printers.id, '#%!$%=?', `tbl_shop_printers`.`printer`, '#%!$%=?', tbl_shop_printers.active
+                        )
+                    ) AS printers, `tblShopProductTimes`.`productTimes`, `tblShopAddons`.`addons` AS `addons`
+FROM `tbl_shop_products_extended`
+LEFT JOIN `tbl_shop_products` ON `tbl_shop_products_extended`.`productId` = `tbl_shop_products`.`id`
+LEFT JOIN `tbl_shop_categories` ON `tbl_shop_products`.`categoryId` = `tbl_shop_categories`.`id`
+LEFT JOIN `tbl_shop_product_printers` ON `tbl_shop_products`.`id` = `tbl_shop_product_printers`.`productId`
+LEFT JOIN `tbl_shop_printers` ON `tbl_shop_product_printers`.`printerId` = `tbl_shop_printers`.`id`
+LEFT JOIN (
+                            SELECT
+                                tbl_shop_product_times.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_product_times.productId,
+                                    '#%!$%=?', tbl_shop_product_times.day,
+                                    '#%!$%=?', tbl_shop_product_times.timeFrom,
+                                    '#%!$%=?', tbl_shop_product_times.timeTo
+                                    SEPARATOR "!#$%="
+                                ) AS productTimes                                
+                            FROM
+                                tbl_shop_product_times
+                            GROUP BY tbl_shop_product_times.productId
+                            ORDER BY tbl_shop_product_times.timeFrom ASC
+                        ) tblShopProductTimes ON `tblShopProductTimes`.`productId` = `tbl_shop_products_extended`.`productId`
+INNER JOIN `tbl_shop_products_types` ON `tbl_shop_products_types`.`id` = `tbl_shop_products_extended`.`productTypeId`
+INNER JOIN (
+                            SELECT tbl_shop_products_extended.productTypeId,tbl_shop_products_extended.name,
+                                GROUP_CONCAT(tbl_shop_products_extended.id,
+                                    '#%!$%=?',tbl_shop_products_extended.name,
+                                    '#%!$%=?',tbl_shop_products_extended.shortDescription,
+                                    '#%!$%=?',FORMAT(tbl_shop_products_extended.price,2),
+                                    '#%!$%=?',tbl_shop_products_extended.vatpercentage,
+                                    '#%!$%=?',tbl_shop_products_extended.productTypeId,
+                                    '#%!$%=?', tbl_shop_products_types.type,
+                                    '#%!$%=?', tbl_shop_products_types.isMain,
+                                    '#%!$%=?',tbl_shop_products_extended.updateCycle,
+                                    '#%!$%=?',tbl_shop_products_extended.showInPublic,
+                                    '#%!$%=?',tbl_shop_products_extended.productId,
+                                    '#%!$%=?', tbl_shop_categories.category,
+                                    '#%!$%=?', tbl_shop_products.active,
+                                    '#%!$%=?', IF(CHAR_LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, "")
+                                    ORDER BY tbl_shop_products_extended.id DESC
+                                    SEPARATOR "!#$%="                                    
+                                ) AS productDetails
+                            FROM
+                                tbl_shop_products_extended
+                            INNER JOIN
+                                tbl_shop_products_types ON tbl_shop_products_extended.productTypeId = tbl_shop_products_types.id
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
+                            INNER JOIN
+                                tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+
+                            GROUP BY tbl_shop_products_extended.productId
+                            ORDER BY tbl_shop_products_extended.productTypeId DESC
+                            
+                        ) tblShopProductDetails ON `tblShopProductDetails`.`productTypeId` = `tbl_shop_products_types`.`id` AND `tblShopProductDetails`.`name` = `tbl_shop_products_extended`.`name`
+LEFT JOIN (
+                            SELECT 
+                                tbl_shop_products_addons.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_addons.productId,
+                                    '#%!$%=?', tbl_shop_products_addons.addonProductId,
+                                    '#%!$%=?', tbl_shop_products_addons.productExtendedId
+
+                                    SEPARATOR "!#$%="                                    
+                                ) AS addons
+                            FROM
+                                tbl_shop_products_addons
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products_addons.productId = tbl_shop_products.id
+
+                            GROUP BY tbl_shop_products_addons.productId
+                            
+                        ) tblShopAddons ON `tblShopAddons`.`productId` = `tbl_shop_products`.`id`
+WHERE `tbl_shop_categories`.`userId` = 418
+AND `tbl_shop_categories`.`active` = '1'
+AND `tbl_shop_products`.`dateTimeFrom` <= '2020-07-20 22:11:31'
+AND `tbl_shop_products`.`dateTimeTo` > '2020-07-20 22:11:31'
+GROUP BY `tbl_shop_products_extended`.`productId`
+ORDER BY `tbl_shop_products_extended`.`id` DESC
+2020-07-20 22:11:31 => SELECT `termsAndConditions`
+FROM `tbl_shop_vendors`
+WHERE `vendorId` = 418
