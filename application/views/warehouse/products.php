@@ -189,7 +189,7 @@
                             <div
                                 class="grid-item allProductClass"
                                 style="background-color:<?php echo $product['productActive'] === '1' ? '#99ff66' : '#ff4d4d'; ?>"
-                                id="<?php echo 'product_' . $details['name'] . '_' . $details['productExtendedId']; ?>"
+                                id="<?php echo 'product_' . str_replace('\'', ' ', $details['name']) . '_' . $details['productExtendedId']; ?>"
                                 >
                                 <div class="item-header">
                                     <p class="item-description">Name: <?php echo $details['name']; ?></p>
@@ -682,9 +682,9 @@
         }
     }
 
-    populateClassElements('addOns', '<?php echo $addOnsList; ?>');
+    populateClassElements('addOns', '<?php echo str_replace('\'', ' ', $addOnsList); ?>');
     $(document).ready(function() {
         $('.selectProducts').select2();
-        $('#filterProducts').html('<?php echo $productList; ?>');
+        $('#filterProducts').html('<?php echo str_replace('\'', ' ', $productList); ?>');
     });
 </script>
