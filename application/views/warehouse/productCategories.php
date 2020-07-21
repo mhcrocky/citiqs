@@ -18,26 +18,30 @@
 						<button class="grid-button-cancel button theme-editor-header-button" onclick="toogleElementClass('add-category', 'display')">Cancel</button>
 					</div>
 				</div>
-				<div class="edit-single-user-container">
+				<div style="width:100%;">
 					<form class="form-inline" id="addCategory" method="post" action="<?php echo $this->baseUrl . 'warehouse/addCategory'; ?>">
                         <legend>Add category</legend>
 						<input type="text" readonly name="userId" required value="<?php echo $userId ?>" hidden />
+						<input type="number" readonly name="sortNumber" required value="<?php echo (count($categories) + 1); ?>" hidden />						
                         <input type="text" readonly name="active" required value="1" hidden />
-						<div>
-							<label for="category">Category: </label>
+						<div class="col-lg-4 col-sm-12 form-group">
+							<label style="background-color:#fff" for="category">Category: </label>
 							<input type="text" class="form-control" id="category" name="category" required />
 						</div>
-						<div>
-							<label for="driverNumber">Driver SMS number: </label>
+						<div class="col-lg-4 col-sm-12 form-group">
+							<label style="background-color:#fff" for="driverNumber">Driver SMS number: </label>
 							<input type="text" class="form-control" id="driverNumber" name="driverNumber" />
 						</div>
-						<div>
-							<label for="delayTime">Delay time in minutes: </label>
+						<div class="col-lg-4 col-sm-12 form-group">
+							<label style="background-color:#fff" for="delayTime">Delay time in minutes: </label>
 							<input type="number" min="0" step="1" class="form-control" id="delayTime" name="delayTime" />
 						</div>
-						<div>
-							<label for="sendSms">Send SMS to driver: </label>
-							<input type="radio" id="sendSms" name="sendSms" value="1">
+						<div class="col-lg-4 col-sm-12 form-group">
+							<label style="background-color:#fff" for="sendSms">Send SMS to driver:&nbsp;&nbsp;&nbsp;</label>
+							<label style="background-color:#fff" class="radio-inline" style="background-color:#fff" for="sendSmsYes">Yes</label>
+							<input type="radio" id="sendSmsYes" name="sendSms" value="1" >
+							<label style="background-color:#fff" class="radio-inline" style="background-color:#fff" for="sendSmsNo">&nbsp;&nbsp;&nbsp;No</label>
+							<input type="radio" id="sendSmsNo" name="sendSms" value="0" checked />
 						</div>
 					</form>
 				</div>
@@ -140,21 +144,16 @@
 									<button class="grid-button-cancel button theme-editor-header-button" onclick="toogleElementClass('editCategoryCategoryId<?php echo  $category['categoryId']; ?>', 'display')">Cancel</button>
 								</div>
 							</div>
-							<div class="edit-single-user-container">
-								<form class="form-inline" id="editCategory<?php echo $category['categoryId']; ?>" method="post" action="<?php echo $this->baseUrl . 'warehouse/editCategory/' . $category['categoryId']; ?>" >
+							<div style="width:100%">
+								<form class="form-inline" id="editCategory<?php echo $category['categoryId']; ?>" method="post" action="<?php echo $this->baseUrl . 'warehouse/editCategory/' . $category['categoryId']; ?>">
 									<input type="text" name="userId" value="<?php echo $userId; ?>" readonly required hidden />
-									<h3>Category "<?php echo $category['category']; ?>" details</h3>
-									<div>
-										<label for="category<?php echo $category['categoryId']; ?>">Name</label>
+									<legend style="text-align:left">Category "<?php echo $category['category']; ?>" details</legend>
+									<div class="col-lg-4 col-sm-12 form-group">
+										<label style="background-color:#fff" for="category<?php echo $category['categoryId']; ?>">Name</label>
 										<input type="text" class="form-control" id="category<?php echo $category['categoryId']; ?>" name="category" required value="<?php echo $category['category']; ?>" />
 									</div>
-									<div>
-										<label>Send SMS to driver: </label>
-										<label>Yes:&nbsp;&nbsp;<input type="radio" name="sendSms" value="1" <?php if ($category['sendSms'] === '1') echo 'checked'; ?>></label>
-										<label>No:&nbsp;&nbsp;<input type="radio" name="sendSms" value="0" <?php if ($category['sendSms'] === '0') echo 'checked'; ?>></label>
-									</div>
-									<div>
-										<label for="driverNumber<?php echo $category['categoryId']; ?>">Driver SMS number: </label>
+									<div class="col-lg-4 col-sm-12 form-group">
+										<label style="background-color:#fff" for="driverNumber<?php echo $category['categoryId']; ?>">Driver SMS number: </label>
 										<input
 											type="text"
 											class="form-control"
@@ -163,8 +162,8 @@
 											value="<?php echo strval($category['driverNumber']); ?>"
 											/>
 									</div>
-									<div>
-										<label for="delayTime<?php echo $category['categoryId']; ?>">Delay time in minutes: </label>
+									<div class="col-lg-4 col-sm-12 form-group">
+										<label style="background-color:#fff" for="delayTime<?php echo $category['categoryId']; ?>">Delay time in minutes: </label>
 										<input
 											type="number"
 											min="0"
@@ -174,6 +173,13 @@
 											name="delayTime"
 											value="<?php echo ($category['delayTime']) ? strval($category['delayTime']) : '0'; ?>"
 											/>
+									</div>
+									<div class="col-lg-4 col-sm-12 form-group">
+										<span style="background-color:#fff" >Send SMS to a driver:&nbsp;&nbsp;&nbsp;</span>
+										<label class="radio-inline" style="background-color:#fff" for="sendSmsYes<?php echo $category['categoryId']; ?>">Yes</label>
+										<input type="radio" id="sendSmsYes<?php echo $category['categoryId']; ?>" name="sendSms" value="1" <?php if ($category['sendSms'] === '1') echo 'checked'; ?>>
+										<label class="radio-inline" style="background-color:#fff" for="sendSmsNo<?php echo $category['categoryId']; ?>">&nbsp;&nbsp;&nbsp;No</label>
+										<input type="radio" id="sendSmsNo<?php echo $category['categoryId']; ?>" name="sendSms" value="0" <?php if ($category['sendSms'] === '0') echo 'checked'; ?>>
 									</div>
 								</form>
 							</div>

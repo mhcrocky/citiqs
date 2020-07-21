@@ -78,8 +78,9 @@
                 'tbl_shop_categories.userId=' => $userId
             ];
             $resetBy = 'productId';
+            $orderBy = $this->table. '.id DESC';
 
-            return $this->filterProducts($userId, $where, $resetBy);
+            return $this->filterProducts($userId, $where, $resetBy, $orderBy);
           
         }
         public function getUserProductsPublic(int $userId): ?array
@@ -97,11 +98,12 @@
 
             
             $resetBy = 'category';
-
-            return $this->filterProducts($userId, $where, $resetBy);
+            $orderBy = 'tbl_shop_categories.sortNumber';
+            
+            return $this->filterProducts($userId, $where, $resetBy, $orderBy);
           
         }
-        private function filterProducts(int $userId, array $where, string $resetBy): ?array
+        private function filterProducts(int $userId, array $where, string $resetBy, string $orderBy): ?array
         {
             $this->load->config('custom');
             $concatSeparator = $this->config->item('concatSeparator');
@@ -123,6 +125,7 @@
                     'tbl_shop_categories.category',
                     'tbl_shop_categories.id AS categoryId',
                     'tbl_shop_categories.active AS categoryActive',
+                    'tbl_shop_categories.sortNumber AS sortNumber',
                     'GROUP_CONCAT(
                         CONCAT(
                             tbl_shop_printers.id,
@@ -225,7 +228,7 @@
                 ],
                 'conditions' => [
                     'GROUP_BY' => [$this->table. '.productId'],
-                    'ORDER_BY' => [$this->table. '.id DESC'],
+                    'ORDER_BY' => [$orderBy],
                 ]
             ];
 

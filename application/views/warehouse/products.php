@@ -33,90 +33,86 @@
                             <button class="grid-button-cancel button theme-editor-header-button" onclick="toogleElementClass('add-product', 'display')">Cancel</button>
                         </div>
                     </div>
-                    <div class="edit-single-user-container">
-                        <form id="addProdcut" method="post" action="<?php echo $this->baseUrl . 'warehouse/addProdcut'; ?>">
-                            <h3>Add product</h3><input type="text" name="product[active]" value="1" required readonly hidden />
-                            <fieldset class="row">
-                                <legend>Product basic data</legend>
-                                <!-- PRODUCT EXTENDED DATA -->
-                                <div class="col-lg-4 col-sm-12">
-                                    <label for="name">Name: </label>
-                                    <input type="text" name="productExtended[name]" id="name" class="form-control" required />
-                                </div>
-                                <div class="col-lg-4 col-sm-12">
-                                    <label for="shortDescription">Short description: </label>
-                                    <input type="text" name="productExtended[shortDescription]" id="shortDescription" class="form-control" />                         
-                                </div>
-                                <div class="col-lg-4 col-sm-12">
-                                    <label for="longDescription">Long description: </label>
-                                    <textarea
-                                        name="productExtended[longDescription]"
-                                        id="longDescription"
-                                        class="form-control"
-                                        rows="1"></textarea>
-                                </div>
-                                <div class="col-lg-4 col-sm-12">
-                                    <label for="vatInsert">VAT: </label>
-                                    <input type="number" required value="0" step="0.01" min="0" name="productExtended[vatpercentage]" id="vatInsert" class="form-control" />
-                                </div>
-                                <!-- PRODUCT DATA -->
-                                <div class="col-lg-4 col-sm-12">
-                                    <label for="dateTimeFrom">Availabe from: </label>
-                                    <input type="text" id="dateTimeFrom" name="product[dateTimeFrom]" class="form-control productTimePickers" required />
-                                </div>
-                                <div class="col-lg-4 col-sm-12">
-                                    <label for="dateTimeTo">Availabe to: </label>
-                                    <input type="text" id="dateTimeTo" name="product[dateTimeTo]" class="form-control productTimePickers" required />
-                                </div>
-                                <div class="col-lg-4 col-sm-12">
-                                    <label for="addCategoryId">Product category: </label>
-                                    <select class="form-control" id="addCategoryId" name="product[categoryId]" required>
-                                        <option value="">Select</option>
-                                        <?php foreach ($categories as $category) { ?>
-                                            <option value="<?php echo $category['categoryId']; ?>">
-                                                <?php echo $category['category']; ?> (<?php echo $category['active'] === '1' ? 'active' : 'blocked'; ?>)
-                                            </option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                                <div class="col-lg-4 col-sm-12">
-                                <!-- PRINTERS -->
-                                    <label>Printers: </label>
-                                    <?php foreach ($printers as $printer) { ?>
-                                        <div class="col-lg-4 col-sm-12">
-                                            <label class="checkbox-inline" for="printerId<?php echo $printer['id']; ?>">
-                                                <input
-                                                    type="checkbox"
-                                                    id="printerId<?php echo $printer['id']; ?>"
-                                                    name="productPrinters[]"
-                                                    value="<?php echo $printer['id']; ?>"
-                                                    />
-                                                <?php echo $printer['printer']; ?> (<?php echo $printer['active'] === '1' ? 'active' : 'blocked'; ?>)
-                                            </label>
-                                        </div>
-                                    <?php } ?>                             
-                                </div>
-                            </fieldset>
-                            <fieldset class="row">
-                                <legend>Select product types</legend>
-                                <?php foreach ($productTypes as $type) { ?>
-                    
+                    <div style="width:100%;">
+                        <form id="addProdcut" method="post" action="<?php echo $this->baseUrl . 'warehouse/addProdcut'; ?>" class="form-inline">
+                            <input type="text" name="product[active]" value="1" required readonly hidden />
+                            <legend>Product basic data</legend>
+                            <!-- PRODUCT EXTENDED DATA -->
+                            <div class="col-lg-4 col-sm-12 form-group">
+                                <label for="name">Name: </label>
+                                <input type="text" name="productExtended[name]" id="name" class="form-control" required />
+                            </div>
+                            <div class="col-lg-4 col-sm-12  form-group">
+                                <label for="shortDescription">Short description: </label>
+                                <input type="text" name="productExtended[shortDescription]" id="shortDescription" class="form-control" />                         
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <label for="longDescription">Long description: </label>
+                                <textarea
+                                    name="productExtended[longDescription]"
+                                    id="longDescription"
+                                    class="form-control"
+                                    rows="1"></textarea>
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <label for="vatInsert">VAT: </label>
+                                <input type="number" required value="0" step="0.01" min="0" name="productExtended[vatpercentage]" id="vatInsert" class="form-control" />
+                            </div>
+                            <!-- PRODUCT DATA -->
+                            <div class="col-lg-4 col-sm-12">
+                                <label for="dateTimeFrom">Availabe from: </label>
+                                <input type="text" id="dateTimeFrom" name="product[dateTimeFrom]" class="form-control productTimePickers" required />
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <label for="dateTimeTo">Availabe to: </label>
+                                <input type="text" id="dateTimeTo" name="product[dateTimeTo]" class="form-control productTimePickers" required />
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <label for="addCategoryId">Product category: </label>
+                                <select class="form-control" id="addCategoryId" name="product[categoryId]" required>
+                                    <option value="">Select</option>
+                                    <?php foreach ($categories as $category) { ?>
+                                        <option value="<?php echo $category['categoryId']; ?>">
+                                            <?php echo $category['category']; ?> (<?php echo $category['active'] === '1' ? 'active' : 'blocked'; ?>)
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                            <!-- PRINTERS -->
+                                <label>Printers: </label>
+                                <?php foreach ($printers as $printer) { ?>
                                     <div class="col-lg-4 col-sm-12">
-                                        <h3><?php echo $type['productType']; ?></h3>
-                                        <label class="checkbox-inline" for="productType<?php echo $type['id']; ?>">
+                                        <label class="checkbox-inline" for="printerId<?php echo $printer['id']; ?>">
                                             <input
                                                 type="checkbox"
-                                                id="productType<?php echo $type['id'];; ?>"
-                                                name="productTypes[<?php echo $type['id']; ?>][check]"
-                                                value="<?php echo $type['id']; ?>"
+                                                id="printerId<?php echo $printer['id']; ?>"
+                                                name="productPrinters[]"
+                                                value="<?php echo $printer['id']; ?>"
                                                 />
-                                            Select <?php echo '"' . $type['productType'] . '"'; if ($type['isMain'] === '1') echo ' (main)'; ?>
+                                            <?php echo $printer['printer']; ?> (<?php echo $printer['active'] === '1' ? 'active' : 'blocked'; ?>)
                                         </label>
-                                        <label for="price<?php echo $type['id']; ?>">Price: </label>
-                                        <input type="number" required value="0" step="0.01" name="productTypes[<?php echo $type['id']; ?>][price]" id="price<?php echo $type['id']; ?>" min="0" class="form-control" />
                                     </div>
+                                <?php } ?>                             
+                            </div>
+                            <legend>Select product types</legend>
+                            <?php foreach ($productTypes as $type) { ?>
+                
+                                <div class="col-lg-4 col-sm-12">
+                                    <h3><?php echo $type['productType']; ?></h3>
+                                    <label class="checkbox-inline" for="productType<?php echo $type['id']; ?>">
+                                        <input
+                                            type="checkbox"
+                                            id="productType<?php echo $type['id'];; ?>"
+                                            name="productTypes[<?php echo $type['id']; ?>][check]"
+                                            value="<?php echo $type['id']; ?>"
+                                            />
+                                        Select <?php echo '"' . $type['productType'] . '"'; if ($type['isMain'] === '1') echo ' (main)'; ?>
+                                    </label>
+                                    <label for="price<?php echo $type['id']; ?>">Price: </label>
+                                    <input type="number" required value="0" step="0.01" name="productTypes[<?php echo $type['id']; ?>][price]" id="price<?php echo $type['id']; ?>" min="0" class="form-control" />
+                                </div>
                                 <?php } ?>
-                            </fieldset>
                         </form>
                     </div>
                 </div>
@@ -125,7 +121,7 @@
                         <h2>Products</h2>
                     </div>
                     <?php if ($products) { ?>
-                        <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="col-lg-6 col-md-6 col-12">
                             <div class="form-group col-lg-6">
                                 <label for="filterProducts">Filter by product name:</label>
                                 <select class="form-control selectProducts" multiple="multiple" id="filterProducts" onchange="toogleProducts(this, 'all')">
@@ -413,8 +409,8 @@
                                             <button class="grid-button-cancel button theme-editor-header-button" onclick="toogleElementClass('editProductProductId<?php echo  $product['productId']; ?>', 'display')">Cancel</button>
                                         </div>
                                     </div>
-                                    <div class="edit-single-user-container">
-                                        <form id="editProduct<?php echo $product['productId']; ?>" method="post" action="<?php echo $this->baseUrl . 'warehouse/editProduct/' . $product['productId']; ?>" >
+                                    <div style="width:100%">
+                                        <form id="editProduct<?php echo $product['productId']; ?>" method="post" action="<?php echo $this->baseUrl . 'warehouse/editProduct/' . $product['productId']; ?>"  class="form-inline">
                                             <input type="text" name="productExtended[productId]" value="<?php echo $product['productId']; ?>" readonly required hidden />
                                             <input
                                                 type="text"
@@ -423,169 +419,166 @@
                                                 readonly required hidden />
 
                                             <h3 style="text-align:left;">Edit product "<?php echo $details['name']; ?>"</h3>
-                                            <fieldset class="row">
-                                                <legend style="text-align:left;">Product basic data</legend>
+                                            
+                                            <legend style="text-align:left;">Product basic data</legend>
+                                            <div class="col-lg-4 col-sm-12">
+                                                <label for="name<?php echo $product['productId'] ?>">Name: </label>
+                                                <input type="text" name="productExtended[name]" id="name<?php echo $product['productId'] ?>" class="form-control" required value="<?php echo $details['name']; ?>" />
+                                            </div>
+                                            <div class="col-lg-4 col-sm-12">
+                                                <label for="shortDescription<?php echo $product['productId'] ?>">Short description: </label>
+                                                <input type="text" name="productExtended[shortDescription]" id="shortDescription<?php echo $product['productId'] ?>" class="form-control" value="<?php echo  $details['shortDescription']; ?>" />
+                                            </div>
+                                            <div class="col-lg-4 col-sm-12">
+                                                <label for="longDescription<?php echo $product['productId'] ?>">Long description: </label>
+                                                <textarea name="productExtended[longDescription]" id="longDescription<?php echo $product['productId'] ?>" rows="1" class="form-control"><?php if($details['longDescription']) echo  $details['longDescription']; ?></textarea>
+                                            </div>
+                                            <div class="col-lg-4 col-sm-12">
+                                                <label for="vatEdit<?php echo $product['productId'] ?>">VAT: </label>
+                                                <input
+                                                    type="number"
+                                                    required
+                                                    value="<?php echo floatval($details['vatpercentage']); ?>"
+                                                    step="0.01"
+                                                    min="0"
+                                                    name="productExtended[vatpercentage]"
+                                                    id="vatEdit<?php echo $product['productId'] ?>"
+                                                    class="form-control"
+                                                    />
+                                            </div>
+                                            <div class="col-lg-4 col-sm-12">
+                                                <label for="dateTimeFrom<?php echo $product['productId'] ?>">Availabe from: </label>
+                                                <input
+                                                    type="text"
+                                                    id="dateTimeFrom<?php echo $product['productId'] ?>"
+                                                    name="product[dateTimeFrom]"
+                                                    class="form-control productTimePickers"
+                                                    <?php if ($product['dateTimeFrom']) { ?>
+                                                        value="<?php echo date('Y/m/d H:i:s', strtotime($product['dateTimeFrom'])); ?>"
+                                                    <?php } ?>
+                                                    required
+                                                    />
+                                            </div>
+                                            <div class="col-lg-4 col-sm-12">
+                                                <label for="dateTimeTo<?php echo $product['productId'] ?>">Availabe to: </label>
+                                                <input
+                                                    type="text"
+                                                    id="dateTimeTo<?php echo $product['productId'] ?>"
+                                                    name="product[dateTimeTo]"
+                                                    class="form-control productTimePickers"
+                                                    <?php if ($product['dateTimeTo']) { ?>
+                                                        value="<?php echo date('Y/m/d H:i:s', strtotime($product['dateTimeTo'])); ?>"
+                                                    <?php } ?>
+                                                    required
+                                                    />
+                                            </div>
+                                            <div class="col-lg-4 col-sm-12">
+                                                <label for="editCategoryId<?php echo $product['productId'] ?>">Product category: </label>
+                                                <select class="form-control" id="editCategoryId<?php echo $product['productId'] ?>" name="product[categoryId]" required>
+                                                    <option value="">Select</option>
+                                                    <?php foreach ($categories as $category) { ?>
+                                                        <option
+                                                            <?php if ($category['categoryId'] === $product['categoryId']) echo 'selected'; ?>
+                                                            value="<?php echo $category['categoryId']; ?>"
+                                                            >
+                                                            <?php echo $category['category']; ?> (<?php echo $category['active'] === '1' ? 'active' : 'blocked'; ?>)
+                                                        </option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-4 col-sm-12"> 
+                                                <label>Printers</label>
+                                                <?php foreach ($printers as $printer) {?>
+                                                        <label class="checkbox-inline" for="printerId<?php echo $product['productId']; ?><?php echo $printer['id']; ?>">
+                                                            <input
+                                                                type="checkbox"
+                                                                id="printerId<?php echo $product['productId']; ?><?php echo $printer['id']; ?>"
+                                                                name="productPrinters[]"
+                                                                value="<?php echo $printer['id']; ?>"
+                                                                <?php
+                                                                    if (isset($printerIds) && in_array($printer['id'], $printerIds)  && !is_null($product['printers'])) echo 'checked';
+                                                                ?>
+                                                                />
+                                                            <?php echo $printer['printer']; ?> (<?php echo $printer['active'] === '1' ? 'active' : 'blocked'; ?>)
+                                                        </label>
+                                                <?php } ?>
+                                            </div>
+
+                                            <!-- <div class="col-md-6 col-sm-12"> 
+                                                <label>Available on spot(s)</label>
+                                                <?php #echo $formSpotData; ?>
+                                            </div> -->
+                                            <legend style="text-align:left;">Select product types</legend>
+                                            <?php
+                                                foreach ($productTypes as $type) {
+                                                    $value = 0;
+                                                    $checked = '';
+                                                    $showInPublic = '';
+
+                                                    if (in_array($type['id'], $productDetailsIds)) {
+                                                        $checked = 'checked';
+                                                        $showInPublic = 'checked';
+                                                        foreach($product['productDetails'] as $details) {                                                                
+                                                            if ($details['productTypeId'] === $type['id']) {
+                                                                if ($details['showInPublic'] === '0') {
+                                                                    $showInPublic = '';
+                                                                }
+                                                                $value = $details['price'];
+                                                                $productExtendedId = $details['productExtendedId'];
+                                                            }
+                                                        }
+                                                    }
+                                                ?>
                                                 <div class="col-lg-4 col-sm-12">
-                                                    <label for="name<?php echo $product['productId'] ?>">Name: </label>
-                                                    <input type="text" name="productExtended[name]" id="name<?php echo $product['productId'] ?>" class="form-control" required value="<?php echo $details['name']; ?>" />
-                                                </div>
-                                                <div class="col-lg-4 col-sm-12">
-                                                    <label for="shortDescription<?php echo $product['productId'] ?>">Short description: </label>
-                                                    <input type="text" name="productExtended[shortDescription]" id="shortDescription<?php echo $product['productId'] ?>" class="form-control" value="<?php echo  $details['shortDescription']; ?>" />
-                                                </div>
-                                                <div class="col-lg-4 col-sm-12">
-                                                    <label for="longDescription<?php echo $product['productId'] ?>">Long description: </label>
-                                                    <textarea name="productExtended[longDescription]" id="longDescription<?php echo $product['productId'] ?>" rows="1" class="form-control"><?php if($details['longDescription']) echo  $details['longDescription']; ?></textarea>
-                                                </div>
-                                                <div class="col-lg-4 col-sm-12">
-                                                    <label for="vatEdit<?php echo $product['productId'] ?>">VAT: </label>
+                                                    <?php
+                                                        if (isset($productExtendedId)) {
+                                                        ?>
+                                                            <input type="number" value="<?php echo $productExtendedId; ?>" name="productTypes[<?php echo $type['id']; ?>][oldExtendedId]" readonly required hidden />
+                                                        <?php
+                                                            unset($productExtendedId);
+                                                        }
+                                                    ?>
+                                                    <h3><?php echo $type['productType']; ?></h3>
+                                                    <label class="checkbox-inline" for="productType<?php echo $type['id'] . $product['productId']; ?>">
+                                                        <input
+                                                            type="checkbox"
+                                                            id="productType<?php echo $type['id'] . $product['productId']; ?>"
+                                                            name="productTypes[<?php echo $type['id']; ?>][check]"
+                                                            value="<?php echo $type['id']; ?>"
+                                                            <?php echo $checked; ?>
+                                                            />
+                                                        Select <?php echo '"' . $type['productType'] . '"'; if ($type['isMain'] === '1') echo ' (main)'; ?>
+                                                    </label>
+                                                    <label class="checkbox-inline" for="productActive<?php echo $type['id'] . $product['productId']; ?>">
+                                                        <input
+                                                            type="checkbox"
+                                                            id="productActive<?php echo $type['id'] . $product['productId']; ?>"
+                                                            name="productTypes[<?php echo $type['id']; ?>][showInPublic]"
+                                                            value="<?php echo $type['id']; ?>"
+                                                            <?php echo ($showInPublic && $checked) ? $showInPublic : ''; ?>
+                                                            />
+                                                            <?php if ($checked) { ?>
+                                                                Active status <?php echo ($showInPublic) ? '<span style="background-color: #99ff66">(ACTIVE)</span>' : '<span style="background-color: #ff4d4d">(BLOCKED)</span> '; ?>
+                                                            <?php } else { ?>
+                                                                Active status
+                                                            <?php } ?>
+                                                    </label>
+                                                    <label for="price<?php echo $type['id'] . $product['productId']; ?>">Price: </label>
                                                     <input
                                                         type="number"
                                                         required
-                                                        value="<?php echo floatval($details['vatpercentage']); ?>"
                                                         step="0.01"
-                                                        min="0"
-                                                        name="productExtended[vatpercentage]"
-                                                        id="vatEdit<?php echo $product['productId'] ?>"
-                                                        class="form-control"
+                                                        name="productTypes[<?php echo $type['id']; ?>][price]"
+                                                        id="price<?php echo $type['id'] . $product['productId']; ?>"
+                                                        min="0" class="form-control" 
+                                                        
+                                                        value = "<?php echo $value; ?>"
                                                         />
                                                 </div>
-                                                <div class="col-lg-4 col-sm-12">
-                                                    <label for="dateTimeFrom<?php echo $product['productId'] ?>">Availabe from: </label>
-                                                    <input
-                                                        type="text"
-                                                        id="dateTimeFrom<?php echo $product['productId'] ?>"
-                                                        name="product[dateTimeFrom]"
-                                                        class="form-control productTimePickers"
-                                                        <?php if ($product['dateTimeFrom']) { ?>
-                                                            value="<?php echo date('Y/m/d H:i:s', strtotime($product['dateTimeFrom'])); ?>"
-                                                        <?php } ?>
-                                                        required
-                                                        />
-                                                </div>
-                                                <div class="col-lg-4 col-sm-12">
-                                                    <label for="dateTimeTo<?php echo $product['productId'] ?>">Availabe to: </label>
-                                                    <input
-                                                        type="text"
-                                                        id="dateTimeTo<?php echo $product['productId'] ?>"
-                                                        name="product[dateTimeTo]"
-                                                        class="form-control productTimePickers"
-                                                        <?php if ($product['dateTimeTo']) { ?>
-                                                            value="<?php echo date('Y/m/d H:i:s', strtotime($product['dateTimeTo'])); ?>"
-                                                        <?php } ?>
-                                                        required
-                                                        />
-                                                </div>
-                                                <div class="col-lg-4 col-sm-12">
-                                                    <label for="editCategoryId<?php echo $product['productId'] ?>">Product category: </label>
-                                                    <select class="form-control" id="editCategoryId<?php echo $product['productId'] ?>" name="product[categoryId]" required>
-                                                        <option value="">Select</option>
-                                                        <?php foreach ($categories as $category) { ?>
-                                                            <option
-                                                                <?php if ($category['categoryId'] === $product['categoryId']) echo 'selected'; ?>
-                                                                value="<?php echo $category['categoryId']; ?>"
-                                                                >
-                                                                <?php echo $category['category']; ?> (<?php echo $category['active'] === '1' ? 'active' : 'blocked'; ?>)
-                                                            </option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </div>
-                                                <div class="col-lg-4 col-sm-12"> 
-                                                    <label>Printers</label>
-                                                    <?php foreach ($printers as $printer) {?>
-                                                            <label class="checkbox-inline" for="printerId<?php echo $product['productId']; ?><?php echo $printer['id']; ?>">
-                                                                <input
-                                                                    type="checkbox"
-                                                                    id="printerId<?php echo $product['productId']; ?><?php echo $printer['id']; ?>"
-                                                                    name="productPrinters[]"
-                                                                    value="<?php echo $printer['id']; ?>"
-                                                                    <?php
-                                                                        if (isset($printerIds) && in_array($printer['id'], $printerIds)  && !is_null($product['printers'])) echo 'checked';
-                                                                    ?>
-                                                                    />
-                                                                <?php echo $printer['printer']; ?> (<?php echo $printer['active'] === '1' ? 'active' : 'blocked'; ?>)
-                                                            </label>
-                                                    <?php } ?>
-                                                </div>
-
-                                                <!-- <div class="col-md-6 col-sm-12"> 
-                                                    <label>Available on spot(s)</label>
-                                                    <?php #echo $formSpotData; ?>
-                                                </div> -->
-                                            </fieldset>
-                                            <fieldset class="row">
-                                                <legend style="text-align:left;">Select product types</legend>
+                                                
                                                 <?php
-                                                    foreach ($productTypes as $type) {
-                                                        $value = 0;
-                                                        $checked = '';
-                                                        $showInPublic = '';
-
-                                                        if (in_array($type['id'], $productDetailsIds)) {
-                                                            $checked = 'checked';
-                                                            $showInPublic = 'checked';
-                                                            foreach($product['productDetails'] as $details) {                                                                
-                                                                if ($details['productTypeId'] === $type['id']) {
-                                                                    if ($details['showInPublic'] === '0') {
-                                                                        $showInPublic = '';
-                                                                    }
-                                                                    $value = $details['price'];
-                                                                    $productExtendedId = $details['productExtendedId'];
-                                                                }
-                                                            }
-                                                        }
-                                                    ?>
-                                                    <div class="col-lg-4 col-sm-12">
-                                                        <?php
-                                                            if (isset($productExtendedId)) {
-                                                            ?>
-                                                                <input type="number" value="<?php echo $productExtendedId; ?>" name="productTypes[<?php echo $type['id']; ?>][oldExtendedId]" readonly required hidden />
-                                                            <?php
-                                                                unset($productExtendedId);
-                                                            }
-                                                        ?>
-                                                        <h3><?php echo $type['productType']; ?></h3>
-                                                        <label class="checkbox-inline" for="productType<?php echo $type['id'] . $product['productId']; ?>">
-                                                            <input
-                                                                type="checkbox"
-                                                                id="productType<?php echo $type['id'] . $product['productId']; ?>"
-                                                                name="productTypes[<?php echo $type['id']; ?>][check]"
-                                                                value="<?php echo $type['id']; ?>"
-                                                                <?php echo $checked; ?>
-                                                                />
-                                                            Select <?php echo '"' . $type['productType'] . '"'; if ($type['isMain'] === '1') echo ' (main)'; ?>
-                                                        </label>
-                                                        <label class="checkbox-inline" for="productActive<?php echo $type['id'] . $product['productId']; ?>">
-                                                            <input
-                                                                type="checkbox"
-                                                                id="productActive<?php echo $type['id'] . $product['productId']; ?>"
-                                                                name="productTypes[<?php echo $type['id']; ?>][showInPublic]"
-                                                                value="<?php echo $type['id']; ?>"
-                                                                <?php echo ($showInPublic && $checked) ? $showInPublic : ''; ?>
-                                                                />
-                                                                <?php if ($checked) { ?>
-                                                                    Active status <?php echo ($showInPublic) ? '<span style="background-color: #99ff66">(ACTIVE)</span>' : '<span style="background-color: #ff4d4d">(BLOCKED)</span> '; ?>
-                                                                <?php } else { ?>
-                                                                    Active status
-                                                                <?php } ?>
-                                                        </label>
-                                                        <label for="price<?php echo $type['id'] . $product['productId']; ?>">Price: </label>
-                                                        <input
-                                                            type="number"
-                                                            required
-                                                            step="0.01"
-                                                            name="productTypes[<?php echo $type['id']; ?>][price]"
-                                                            id="price<?php echo $type['id'] . $product['productId']; ?>"
-                                                            min="0" class="form-control" 
-                                                            
-                                                            value = "<?php echo $value; ?>"
-                                                            />
-                                                    </div>
-                                                    
-                                                    <?php
-                                                    }
-                                                ?>
-                                            </fieldset>
+                                                }
+                                            ?>
                                         </form>
                                     </div>
                                 </div>

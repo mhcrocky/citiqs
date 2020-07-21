@@ -51,7 +51,7 @@
             if (isset($data['sendSms']) && !($data['sendSms'] === '1' || $data['sendSms'] === '0')) return false;
             if (isset($data['driverNumber']) && !Validate_data_helper::validateString($data['driverNumber'])) return false;
             if (isset($data['delayTime']) && !Validate_data_helper::validateInteger($data['delayTime'])) return false;
-            if (isset($data['userId']) && !Validate_data_helper::validateInteger($data['sortNumber'])) return false;
+            if (isset($data['sortNumber']) && !Validate_data_helper::validateInteger($data['sortNumber'])) return false;
 
             return true;
         }
