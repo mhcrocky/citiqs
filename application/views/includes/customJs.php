@@ -55,7 +55,8 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/nolabels.js"></script>
 <?php } elseif ($this->view === 'warehouse/productCategories') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js"></script>
-<?php } elseif ($this->view === 'warehouse/products') { ?>
+<?php } elseif ($this->view === 'warehouse/products') { ?>	
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/js/jquery.datetimepicker.full.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/products.js"></script>

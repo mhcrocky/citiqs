@@ -77,7 +77,7 @@
             $where = [
                 'tbl_shop_categories.userId=' => $userId
             ];
-            $resetBy = 'productId';
+            $resetBy = 'category';
 
             return $this->filterProducts($userId, $where, $resetBy);
           
