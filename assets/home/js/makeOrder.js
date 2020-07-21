@@ -104,7 +104,6 @@ function submitMakeOrderForm(formId, orderAmount, orderQuantity) {
         let form = document.getElementById(formId);
         form.submit();
     }
-    
 }
 jQuery(document).ready(function($) {
     $('.main-slider').slick({
