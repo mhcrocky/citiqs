@@ -1,3 +1,8 @@
+<style>
+    .submitOrder:hover {
+        cursor: pointer;
+    }
+</style>
 <?php
     function checkTime(string $day, string $hours, array $productTimes): bool
     {
@@ -58,7 +63,7 @@
                                             width: 30px;
                                             border-radius: 100px;\"
                                         >";
-                                        $addons .= (isset($orderedProduct)) ? $orderedProduct['quantity'][0] : '0';
+                                        $addons .= (isset( $orderedProduct['quantity'][0])) ? $orderedProduct['quantity'][0] : '0';
                                         $addons .= 
                                     "</span>
                                 </div>
@@ -116,13 +121,14 @@
             ";
 
         $formElement .= '<input type="number" ';
-        $formElement .= (isset($orderedProduct)) ? 'value="' .  $orderedProduct['amount'][0] . '" ' : 'value="0" '; 
+        $formElement .= (isset($orderedProduct['amount'][0])) ? 'value="' .  $orderedProduct['amount'][0] . '" ' : 'value="0" '; 
         $formElement .= 'min="0" step="0.01" ';
         $formElement .= 'name="' . $product['productExtendedId'] . '[mainProduct][' . $mainProductExtendedId . '][amount][]" ';
         $formElement .= 'id="amount' . $product['productExtendedId'] . '_' . $mainProductExtendedId . '" class="hideInput" ';
         $formElement .= (isset($orderedProduct)) ? '/>' : 'disabled />';
+
         $formElement .= '<input type="number" ';
-        $formElement .= (isset($orderedProduct)) ? 'value="' .  $orderedProduct['quantity'][0] . '" ' : 'value="0" '; 
+        $formElement .= (isset($orderedProduct['quantity'][0])) ? 'value="' .  $orderedProduct['quantity'][0] . '" ' : 'value="0" '; 
         $formElement .= 'min="0" step="1" ';
         $formElement .= 'name="' . $product['productExtendedId'] . '[mainProduct][' . $mainProductExtendedId . '][quantity][]" ';
         $formElement .= 'id="quantity' . $product['productExtendedId'] . '_' . $mainProductExtendedId . '" class="hideInput" ';
@@ -137,11 +143,11 @@
         $formElement .= 'id="name' . $product['productExtendedId'] . '_' . $mainProductExtendedId . '" ';
         $formElement .= 'value="' . $product['name'] . '" class="hideInput" ';
         $formElement .= (isset($orderedProduct)) ? '/>' : 'disabled />';
-        $formElement .= '<input type="text"  readonly ';
-        $formElement .= 'name="' . $product['productExtendedId'] . '[mainProduct][' . $mainProductExtendedId . '][shortDescription][]" ';
-        $formElement .= 'id="shortDescription' . $product['productExtendedId'] . '_' . $mainProductExtendedId . '" ';
-        $formElement .= 'value="' . $product['shortDescription'] . '" class="hideInput" ';
-        $formElement .= (isset($orderedProduct)) ? '/>' : 'disabled />';
+        // $formElement .= '<input type="text"  readonly ';
+        // $formElement .= 'name="' . $product['productExtendedId'] . '[mainProduct][' . $mainProductExtendedId . '][shortDescription][]" ';
+        // $formElement .= 'id="shortDescription' . $product['productExtendedId'] . '_' . $mainProductExtendedId . '" ';
+        // $formElement .= 'value="' . $product['shortDescription'] . '" class="hideInput" ';
+        // $formElement .= (isset($orderedProduct)) ? '/>' : 'disabled />';
         $formElement .= '<input type="text"  readonly ';
         $formElement .= 'name="' . $product['productExtendedId'] . '[mainProduct][' . $mainProductExtendedId . '][price][]" ';
         $formElement .= 'id="productPrice' . $product['productExtendedId'] . '_' . $mainProductExtendedId . '" ';
@@ -166,7 +172,7 @@
 				<i aria-hidden="true">CHANGE SPOT</i>
 			</a>
 		</div>
-		<h5 style="text-align:center">SWIPE < LINKS EN RECHTS > VOOR ANDERE CATEGORIE</h5>
+		<h5 style="text-align:center">SWIPE &lt; LINKS EN RECHTS &gt; VOOR ANDERE CATEGORIE</h5>
 
 		<div class="main-slider container" style='overflow-x:hidden; overflow-y: hidden; margin-top: 20px; margin-bottom: 20px; background-color: navajowhite'>
             <?php
@@ -195,13 +201,13 @@
                                 if ($product['showInPublic'] === '0') continue;
 
                                 $form .= '<input type="number" ';
-                                $form .= (isset($ordered[$product['productExtendedId']])) ? 'value="' .  $ordered[$product['productExtendedId']]['amount'][0] . '" ' : 'value="0" '; 
+                                $form .= (isset( $ordered[$product['productExtendedId']]['amount'][0])) ? 'value="' .  $ordered[$product['productExtendedId']]['amount'][0] . '" ' : 'value="0" '; 
                                 $form .= 'min="0" step="0.01" ';
                                 $form .= 'name="' . $product['productExtendedId'] . '[amount][]" ';
                                 $form .= 'id="amount' . $product['productExtendedId'] . '" class="hideInput" ';
                                 $form .= (isset($ordered[$product['productExtendedId']])) ? '/>' : 'disabled />';
                                 $form .= '<input type="number" ';
-                                $form .= (isset($ordered[$product['productExtendedId']])) ? 'value="' .  $ordered[$product['productExtendedId']]['quantity'][0] . '" ' : 'value="0" '; 
+                                $form .= (isset($ordered[$product['productExtendedId']]['quantity'][0])) ? 'value="' .  $ordered[$product['productExtendedId']]['quantity'][0] . '" ' : 'value="0" '; 
                                 $form .= 'min="0" step="1" ';
                                 $form .= 'name="' . $product['productExtendedId'] . '[quantity][]" ';
                                 $form .= 'id="quantity' . $product['productExtendedId'] . '" class="hideInput" ';
@@ -216,11 +222,11 @@
                                 $form .= 'id="name' . $product['productExtendedId'] . '" ';
                                 $form .= 'value="' . $product['name'] . '" class="hideInput" ';
                                 $form .= (isset($ordered[$product['productExtendedId']])) ? '/>' : 'disabled />';
-                                $form .= '<input type="text"  readonly ';
-                                $form .= 'name="' . $product['productExtendedId'] . '[shortDescription][]" ';
-                                $form .= 'id="shortDescription' . $product['productExtendedId'] . '" ';
-                                $form .= 'value="' . $product['shortDescription'] . '" class="hideInput" ';
-                                $form .= (isset($ordered[$product['productExtendedId']])) ? '/>' : 'disabled />';
+                                // $form .= '<input type="text"  readonly ';
+                                // $form .= 'name="' . $product['productExtendedId'] . '[shortDescription][]" ';
+                                // $form .= 'id="shortDescription' . $product['productExtendedId'] . '" ';
+                                // $form .= 'value="' . $product['shortDescription'] . '" class="hideInput" ';
+                                // $form .= (isset($ordered[$product['productExtendedId']])) ? '/>' : 'disabled />';
                                 $form .= '<input type="text"  readonly ';
                                 $form .= 'name="' . $product['productExtendedId'] . '[price][]" ';
                                 $form .= 'id="productPrice' . $product['productExtendedId'] . '" ';
@@ -257,7 +263,7 @@
                                                             width: 30px;
                                                             border-radius: 100px;"
                                                             >
-                                                            <?php echo (isset($ordered[$product['productExtendedId']])) ? $ordered[$product['productExtendedId']]['quantity'][0] : '0'; ?>
+                                                            <?php echo (isset($ordered[$product['productExtendedId']]['quantity'][0])) ? $ordered[$product['productExtendedId']]['quantity'][0] : '0'; ?>
                                                         </span>
                                                     </div>
                                                     <div>
@@ -393,19 +399,19 @@
                                         if (isset($data['mainProduct']))  {
                                             $data = reset($data['mainProduct']);
                                         }
-                                        $orderedQuantity = $orderedQuantity + intval($data['quantity'][0]);
-                                        $orderedAmount = $orderedAmount + floatval($data['amount'][0]);
+                                        $orderedQuantity = (isset($data['quantity'][0])) ? $orderedQuantity + intval($data['quantity'][0]) : $orderedQuantity;
+                                        $orderedAmount = (isset($data['amount'][0])) ? $orderedAmount + floatval($data['amount'][0]) : $orderedAmount;
                                     }
                                 }
                             ?>
                             <span id="orderQuantity"><?php echo $orderedQuantity; ?></span>
                         </h5>
                     </div>
-                    <div class="fb-mid" id="submitForm" onclick="submitMakeOrderForm('makeOrder', 'orderAmount', 'orderQuantity')">
+                    <div class="fb-mid submitOrder" onclick="submitMakeOrderForm('makeOrder', 'orderAmount', 'orderQuantity')">
                         <span class="fb-price">€  <span id="orderAmount"><?php echo number_format($orderedAmount, 2, '.', ',') ; ?></span></span>
                     </div>
 
-                    <div class="fb-right" id="submitForm" onclick="submitMakeOrderForm('makeOrder', 'orderAmount', 'orderQuantity')">
+                    <div class="fb-right submitOrder" onclick="submitMakeOrderForm('makeOrder', 'orderAmount', 'orderQuantity')">
                         <i style="font-size: 40px" class="fa fa-credit-card-alt"></i>
                     </div>
                 </div>

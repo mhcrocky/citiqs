@@ -14,7 +14,7 @@ function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, 
 
     let categoryElement = document.getElementById(categoryId);
     let nameElement = document.getElementById(nameId);
-    let descriptionElement = document.getElementById(decsriptionId);
+    // let descriptionElement = document.getElementById(decsriptionId);
     let priceElement = document.getElementById(priceId);
 
     let amountTrigger = false;
@@ -74,7 +74,7 @@ function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, 
             }
         }
         
-        showProductOrderedQuantity.innerHTML = quantityValue
+        showProductOrderedQuantity.innerHTML = quantityValue;
         quantityElement.value = quantityValue;
     }
 

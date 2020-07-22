@@ -37,7 +37,7 @@ class Alfredpayment extends BaseControllerWeb
         $orderId = Utility_helper::getSessionValue('orderId');
         $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
         $order = reset($order);
-//        $arguments = Pay_helper::getArgumentsArray($order, $paymentType, $serviceId);
+        //$arguments = Pay_helper::getArgumentsArray($order, $paymentType, $serviceId);
 		$arguments = Pay_helper::getArgumentsArray($order, $paymentType, $serviceId);
         $url = Pay_helper::getPayUrl($arguments);
 

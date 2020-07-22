@@ -214,12 +214,6 @@
                 exit();
             }
 
-            if (!$this->user_model->id) {
-                $this->session->set_flashdata('error', 'Order not made! Name and email are mandatory fields. Please try again'); #Email, name and mobile are mandatory fields. 
-                redirect('checkout_order');
-                exit();
-            }
-
             // prepare failed redirect
             $failedRedirect = 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'] . '&spotid=' . $_SESSION['spotId'];
 

@@ -518,6 +518,7 @@ class Ajax extends CI_Controller
                 }
             }
         }
+        echo 1;
         return;
     }
 

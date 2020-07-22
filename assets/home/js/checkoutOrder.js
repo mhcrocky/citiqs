@@ -99,13 +99,23 @@ function calcualteServiceFee(amount, serviceFeePercent, serviceFeeAmount) {
     return serviceFee.toFixed(2);
 }
 
-function removeElement(elementId, counterClass, amountId, serviceFee, totalAmount, productExId, serviceFeePercent, serviceFeeAmount) {
-    let amountToRemove = parseFloat(document.getElementById(amountId).innerHTML)
-    let element = document.getElementById(elementId);
+function removeElement(thisElement) {
+    let amountToRemove = parseFloat(document.getElementById(thisElement.dataset.amountId).innerHTML);
+    let element = document.getElementById(thisElement.dataset.elementId);
+    let chidrenClass = 'children_' + thisElement.dataset.elementId;
+    let children = document.getElementsByClassName(chidrenClass);
+    let childrenLength = children.length;
+    let j;
+    if (childrenLength > 0) {
+        for (j = (childrenLength - 1); j >= 0; j--) {
+            let child = children[j];
+            child.click(child);
+        }
+    }
     element.remove();
 
     let counterElement;
-    let counterElements = document.getElementsByClassName(counterClass);
+    let counterElements = document.getElementsByClassName(thisElement.dataset.counterClass);
     let counterElementsLength = counterElements.length;
     let i;
     let count;
@@ -116,8 +126,8 @@ function removeElement(elementId, counterClass, amountId, serviceFee, totalAmoun
         counterElement.innerHTML = count + '.';
     }
 
-    changeServiceFeeAndTotal(false, amountToRemove, serviceFee, totalAmount, serviceFeePercent, serviceFeeAmount);
-    ajaxUpdateSession(productExId);
+    changeServiceFeeAndTotal(false, amountToRemove, thisElement.dataset.serviceFee, thisElement.dataset.totalAmount, thisElement.dataset.serviceFeePercent, thisElement.dataset.serviceFeeAmount);
+    ajaxUpdateSession(thisElement.dataset.productExId);
 }
 
 function submitForm(formId, serviceFeeInputId, orderAmountInputId) {
