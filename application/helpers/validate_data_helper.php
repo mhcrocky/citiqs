@@ -13,7 +13,7 @@
      */
     Class Validate_data_helper
     {
-
+        
         /**
          * validateString
          * 
@@ -147,5 +147,10 @@
         {
             $date = trim($date);
             return strtotime($date) ? true : false;
+        }
+
+        public static function validateMobileNumber(string $mobile): bool
+        {
+            return strlen(trim($mobile)) > 8 && is_numeric($mobile) ? true : false;
         }
     }

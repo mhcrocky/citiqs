@@ -870,8 +870,8 @@ class User_model extends CI_Model
     {
         if (
             !isset($buyer['username']) || !$buyer['username']
-            || !isset($buyer['email']) || !$buyer['email'] 
-            || !isset($buyer['mobile']) || !$buyer['mobile']) {
+            || !isset($buyer['email']) || !$buyer['email'] || !filter_var($buyer['email'], FILTER_VALIDATE_EMAIL)
+        ) {
             return $this;
         }
 
@@ -881,9 +881,9 @@ class User_model extends CI_Model
             $buyer['code'] = Utility_helper::shuffleString(5);
             $buyer['createdDtm'] = date('Y-m-d H:i:s');
             $this->insertUser($buyer);
-//			echo $this->db->last_query();
-//			die();
-//
+			// echo $this->db->last_query();
+			// die();
+
             // must return non hashed password for activation link
             $this->password = $password;
         } else {

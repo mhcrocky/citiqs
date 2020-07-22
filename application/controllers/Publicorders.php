@@ -143,7 +143,7 @@
                 'buyerRole' => $this->config->item('buyer'),
                 'usershorturl' => 'tiqs_shop_service',
                 'salesagent' => $this->config->item('tiqsId'),
-                'countries' => Country_helper::getCountries(),
+                // 'countries' => Country_helper::getCountries(),
                 'countryCodes' => Country_helper::getCountryPhoneCodes(),
             ];
 
@@ -192,13 +192,29 @@
                 redirect(base_url());
             }
 
-            
-            // fetch order data from session
+            //fetch data from $_SESSION
             $post = $_SESSION['postOrder'];
-            $post['user']['mobile'] = (!isset($post['user']['mobile']) || !$post['user']['mobile']) ? '0031123456789' : $post['phoneCountryCode'] . ltrim($post['user']['mobile'], '0');
+
+            // check mobile phone
+            if ($_SESSION['vendor']['requireMobile'] === '1') {
+                if (Validate_data_helper::validateMobileNumber($post['user']['mobile'])) {
+                    $post['user']['mobile'] = $post['phoneCountryCode'] . ltrim($post['user']['mobile'], '0');
+                } else {
+                    $this->session->set_flashdata('error', 'Order not made! Mobile phone is required. Please try again');
+                    redirect('checkout_order');
+                    exit();
+                }
+            }
+
             $this->user_model->manageAndSetBuyer($post['user']);
 
-            if (!$this->user_model->id || !$post['user']['username']) {
+            if (!$this->user_model->id) {
+                $this->session->set_flashdata('error', 'Order not made! Name and email are mandatory fields. Please try again'); #Email, name and mobile are mandatory fields. 
+                redirect('checkout_order');
+                exit();
+            }
+
+            if (!$this->user_model->id) {
                 $this->session->set_flashdata('error', 'Order not made! Name and email are mandatory fields. Please try again'); #Email, name and mobile are mandatory fields. 
                 redirect('checkout_order');
                 exit();

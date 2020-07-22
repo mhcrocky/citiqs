@@ -56,7 +56,7 @@
                                                         true,
                                                         <?php echo $product['price'][0]; ?>,
                                                         'quantity<?php echo $productExtendedId; ?>',
-                                                        'amount<?php echo $productExtendedId; ?>',                                            
+                                                        'amount<?php echo $productExtendedId; ?>',
                                                         'serviceFee',
                                                         'totalAmount',
                                                         'orderExtended<?php echo $productExtendedId; ?>',
@@ -67,8 +67,7 @@
                                                     >
                                                     <i class="fa fa-plus"></i>
                                                 </span>
-                                                <span class='checkout-table__number-of-products' id="quantity<?php echo $productExtendedId; ?>">
-                                                    <?php echo $product['quantity'][0]; ?>
+                                                <span class='checkout-table__number-of-products' id="quantity<?php echo $productExtendedId; ?>">                                                    <?php echo $product['quantity'][0]; ?>
                                                 </span>
                                                 <span
                                                     class="fa-stack makeOrder"
@@ -76,7 +75,7 @@
                                                         false,
                                                         <?php echo $product['price'][0]; ?>,
                                                         'quantity<?php echo $productExtendedId; ?>',
-                                                        'amount<?php echo $productExtendedId; ?>',                                            
+                                                        'amount<?php echo $productExtendedId; ?>',
                                                         'serviceFee',
                                                         'totalAmount',
                                                         'orderExtended<?php echo $productExtendedId; ?>',
@@ -141,7 +140,7 @@
                                                         true,
                                                         <?php echo $product['price'][0]; ?>,
                                                         'quantity<?php echo $productExtendedId; ?>',
-                                                        'amount<?php echo $productExtendedId; ?>',                                            
+                                                        'amount<?php echo $productExtendedId; ?>',
                                                         'serviceFee',
                                                         'totalAmount',
                                                         'orderExtended<?php echo $productExtendedId; ?>',
@@ -162,7 +161,7 @@
                                                         false,
                                                         <?php echo $product['price'][0]; ?>,
                                                         'quantity<?php echo $productExtendedId; ?>',
-                                                        'amount<?php echo $productExtendedId; ?>',                                            
+                                                        'amount<?php echo $productExtendedId; ?>',
                                                         'serviceFee',
                                                         'totalAmount',
                                                         'orderExtended<?php echo $productExtendedId; ?>',
@@ -250,54 +249,56 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="emailAddressInput">Email address <sup>*</sup></label>
-                        <input id="emailAddressInput" class="form-control" name="user[email]" value="<?php echo $email; ?>" type="text" placeholder="Email address" required />
+                        <input type="email" id="emailAddressInput" class="form-control" name="user[email]" value="<?php echo $email; ?>" placeholder="Email address" required />
                     </div>
-                    <div class="form-group col-sm-6" style="display:none">
+                    <!-- <div class="form-group col-sm-6" style="display:none">
                         <label for="country-code">Country Code <sup>*</sup></label>
                         <select name="user[country]" class='form-control'>
-                            <?php foreach ($countries as $countryCode => $country) { ?>
+                            <?php #foreach ($countries as $countryCode => $country) { ?>
                                 <option
-                                    value="<?php echo $countryCode; ?>"
+                                    value="<?php #echo $countryCode; ?>"
                                     <?php
-                                        if ( 
-                                            (!$userCountry && $countryCode === 'NL') 
-                                            || ($userCountry && $countryCode === $userCountry)
-                                        ) {
-                                            echo 'selected';
-                                        }
-                                   ?>
+                                        // if ( 
+                                        //     (!$userCountry && $countryCode === 'NL') 
+                                        //     || ($userCountry && $countryCode === $userCountry)
+                                        // ) {
+                                        //     echo 'selected';
+                                        // }
+                                    ?>
                                     >
-                                    <?php echo $country; ?>
+                                    <?php #echo $country; ?>
                                 </option>
-                            <?php } ?>
+                            <?php #} ?>
                         </select>
-                    </div>
-                    <div class="form-group col-sm-6" style="display:none">
-                        <label for="phoneInput">Phone <sup>*</sup></label>
-                        <div>
-                            <select class="form-control" style="width:22% !important; display:inline-block !important" name="phoneCountryCode" style="text-align:center">
-                                <?php foreach ($countryCodes as $code => $data) { ?>                                
-                                    <option
-                                        value="<?php $value = '00' . $data['code']; echo $value ?>"
-                                        <?php
-                                            if (
-                                                ($phoneCountryCode && $code === $phoneCountryCode)
-                                                || ($phoneCountryCode && $value === $phoneCountryCode)
-                                                || (!$phoneCountryCode && $code === 'NL')
-                                            ) echo 'selected';
-                                        ?>
-                                        >
-                                        <?php echo $code; ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                            <input id="phoneInput" class="form-control" style="width:76% !important; display:inline-block !important" name="user[mobile]" value="<?php echo $mobile; ?>" type="text" placeholder="Phone" required />
+                    </div> -->
+                    <?php if ($vendor['requireMobile'] === '1') { ?>
+                        <div class="form-group col-sm-6">
+                            <label for="phoneInput">Phone <sup>*</sup></label>
+                            <div>
+                                <select class="form-control" style="width:22% !important; display:inline-block !important" name="phoneCountryCode" style="text-align:center">
+                                    <?php foreach ($countryCodes as $code => $data) { ?>                                
+                                        <option
+                                            value="<?php $value = '00' . $data['code']; echo $value ?>"
+                                            <?php
+                                                if (
+                                                    ($phoneCountryCode && $code === $phoneCountryCode)
+                                                    || ($phoneCountryCode && $value === $phoneCountryCode)
+                                                    || (!$phoneCountryCode && $code === 'NL')
+                                                ) echo 'selected';
+                                            ?>
+                                            >
+                                            <?php echo $code; ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                                <input id="phoneInput" class="form-control" style="width:76% !important; display:inline-block !important" name="user[mobile]" value="<?php echo $mobile; ?>" type="text" placeholder="Phone" required />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group col-sm-12" style="display:none">
+                    <?php } ?>
+                    <!-- <div class="form-group col-sm-12" style="display:none">
                         <label for="notesInput">Remarks</label>
                         <textarea id="notesInput" class="form-control" name="order[notes]" rows="3"></textarea>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="checkout-btns">
                     <a href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spotId; ?>" style="background-color: #948b6f" class="button">
