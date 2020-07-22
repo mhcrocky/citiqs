@@ -179,19 +179,20 @@
 				<p>Set the number of minutes when the message will be sent to driver after the order status is changed in status "DONE"</p> -->
 				<!-- <p>Add terms and conditions</p> -->
 			
-				<form method="post" action="<?php echo base_url() ?>profile/updateVenodrData">					
+				<form method="post" action="<?php echo base_url() ?>profile/updateVendorData/<?php echo $vendor['id']; ?>">					
 					<input type="number" name="vendorId" value="<?php echo $user->id ?>" readonly requried hidden />
-					<!-- <div class="form group">
-						<label for="driverNumber">Driver number (must include country code starting with zero): </label>
-						<input type="text" value="<?php #echo strval($vendor['driverNumber']); ?>" class="form-control" id="driverNumber" name="driverNumber" pattern="[0-9].{8,}" />
-					</div> -->
-					<!-- <div class="form group">
-						<label for="smsDelay">Number of minutes: </label>
-						<input type="number" value="<?php #echo strval($vendor['smsDelay']); ?>" min="0" step="1" class="form-control" id="smsDelay" name="smsDelay"  />
-					</div> -->
 					<div class="form group">
 						<label for="termsAndConditions">Terms and conditions: </label>
 						<textarea class="form-control" id="termsAndConditions" name="termsAndConditions"><?php echo strval($vendor['termsAndConditions']); ?></textarea>
+					</div>
+					<br/>
+					<div class="form-group">
+						<label for="sendSms">Require user mobile phone on checkout form:&nbsp;&nbsp;&nbsp;</label>
+						<br/>
+						<label class="radio-inline" for="requireMobileYes">Yes</label>
+						<input type="radio" id="requireMobileYes" name="requireMobile" value="1" <?php if ($vendor['requireMobile'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="requireMobileNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="requireMobileNo" name="requireMobile" value="0" <?php if ($vendor['requireMobile'] === '0') echo 'checked'; ?> />
 					</div>
 					<br/>
 					<br/>

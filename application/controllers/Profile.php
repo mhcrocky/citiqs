@@ -14,6 +14,7 @@ class  Profile extends BaseControllerWeb
 		$this->load->helper('url');
 		$this->load->helper('country_helper');
 		$this->load->helper('utility_helper');
+		$this->load->helper('validate_data_helper');
 		
 		$this->load->model('user_model');
 		$this->load->model('businesstype_model');
@@ -41,26 +42,22 @@ class  Profile extends BaseControllerWeb
 			'countries' => Country_helper::getCountries(),
 			'action' => 'profileUpdate',
 			'businessTypes' => $this->businesstype_model->getAll(),
+			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData()
 		];
-
-		$vendor = $this->shopvendor_model->readImproved([
-			'what' => ['driverNumber', 'smsDelay', 'termsAndConditions'],
-			'where' => [
-				'vendorId=' => $this->userId
-			]
-		]);
-		$data['vendor'] = reset($vendor);
 
 		$this->loadViews("profile", $this->global, $data, NULL, 'headerwebloginhotelProfile'); // Menu profilepage
 	}
 
-	public function updateVenodrData(): void
+	public function updateVendorData($id): void
 	{
-		if ($this->shopvendor_model->updateVendorData($_POST)) {
+		$this->shopvendor_model->id = intval($id);
+
+		if ($this->shopvendor_model->setObjectFromArray($_POST)->update()) {
 			$this->session->set_flashdata('success', 'Data updated');
 		} else {
 			$this->session->set_flashdata('error', 'Update data failed');
 		}
+
 		redirect('profile');
 		exit();
 	}

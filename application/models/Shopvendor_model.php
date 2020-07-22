@@ -11,18 +11,17 @@
     {
         public $id;
         public $vendorId;
-        public $serviceFeePercent;
-        public $serviceFeeAmount;
-        public $paynlServiceId;
-        public $driverNumber;
-        public $smsDelay;
+        private $serviceFeePercent;
+        private $serviceFeeAmount;
+        private $paynlServiceId;
         public $termsAndConditions;
+        public $requireMobile;
 
         private $table = 'tbl_shop_vendors';
 
         protected function setValueType(string $property,  &$value): void
         {
-            if ($property === 'id' || $property === 'vendorId' || $property === 'smsDelay') {
+            if ($property === 'id' || $property === 'vendorId') {
                 $value = intval($value);
             }
             if ($property === 'serviceFeePercent' || $property === 'serviceFeeAmount') {
@@ -48,13 +47,9 @@
         {
             if (!count($data)) return false;
             if (isset($data['vendorId']) && !Validate_data_helper::validateInteger($data['vendorId'])) return false;
-            if (isset($data['serviceFeePercent']) && !Validate_data_helper::validateFloat($data['serviceFeePercent'])) return false;
-            if (isset($data['serviceFeeAmount']) && !Validate_data_helper::validateFloat($data['serviceFeeAmount'])) return false;
-            if (isset($data['paynlServiceId']) && !Validate_data_helper::validateString($data['paynlServiceId'])) return false;
-            // if (isset($data['driverNumber']) && !Validate_data_helper::validateString($data['driverNumber'])) return false;
-            // if (isset($data['smsDelay']) && !Validate_data_helper::validateInteger($data['smsDelay'])) return false;
+            if (isset($data['requireMobile']) && !($data['requireMobile'] === '1' || $data['requireMobile'] === '0')) return false;
             // if (isset($data['termsAndConditions']) && !Validate_data_helper::validateString($data['termsAndConditions'])) return false;
-            
+
             return true;
         }
 
@@ -63,9 +58,12 @@
 
             $filter = [
                 'what' => [
+                    $this->table . '.id',
                     $this->table . '.serviceFeePercent',
                     $this->table . '.serviceFeeAmount',
                     $this->table . '.payNlServiceId',
+                    $this->table . '.termsAndConditions',
+                    $this->table . '.requireMobile',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
                     'tbl_user.email AS vendorEmail'
@@ -89,17 +87,6 @@
             $result['serviceFeeAmount'] = floatval($result['serviceFeeAmount']);
             $result['vendorId'] = intval($result['vendorId']);
             return $result;
-        }
-
-        public function updateVendorData(array $data): bool
-        {
-            $where = ' vendorId = ' . $data['vendorId'];
-            $update = [
-                'driverNumber' => $data['driverNumber'],
-                'smsDelay' => $data['smsDelay'],
-                'termsAndConditions' => $data['termsAndConditions'],
-            ];
-            return $this->db->update($this->getThisTable(), $update, $where);
         }
 
     }
