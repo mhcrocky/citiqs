@@ -140,8 +140,7 @@
                     'tbl_shop_order_extended.quantity AS productQuantity',
                     'tbl_shop_products_extended.name AS productName',
                     'tbl_shop_spots.id AS spotId',
-                    'tbl_shop_spots.spotName AS spotName',
-                    'IF (tbl_shop_vendors.driverNumber, tbl_shop_vendors.driverNumber, "") AS driverNumber'
+                    'tbl_shop_spots.spotName AS spotName'
                 ],
                 [
                     'vendor.id' => $userId,
@@ -470,7 +469,6 @@
                     'tbl_shop_orders.id as orderId',
                     'tbl_shop_orders.updated AS orderUpdate',
                     'tbl_shop_orders.spotId AS spotId',
-                    'tbl_shop_vendors.driverNumber AS driverNumber',
                     'tbl_shop_vendors.smsDelay AS smsDelay',
                     'tbl_user.username AS vendorName',
                     'tbl_shop_categories.driverNumber AS driverNumber',
