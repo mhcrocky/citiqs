@@ -262,7 +262,8 @@
                         tbl_user.username AS buyerUserName,
                         tbl_user.email AS buyerEmail,
                         tbl_user.mobile AS buyerMobile,
-                        productData.products
+                        productData.products,
+                        vendorOne.logo AS vendorLogo
                     FROM
                         tbl_shop_orders
                     INNER JOIN
@@ -306,6 +307,14 @@
                         tbl_shop_product_printers ON tbl_shop_product_printers.productId = tbl_shop_products_extended.productId
                     INNER JOIN
                         tbl_shop_printers ON tbl_shop_printers.id = tbl_shop_product_printers.printerId
+                    INNER JOIN
+                        (
+                            SELECT
+                                tbl_user.*
+                            FROM
+                                tbl_user
+                            WHERE tbl_user.roleid = ' . $this->config->item('owner') . '
+                        ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     WHERE
                         tbl_shop_orders.paid = "1"
                         AND tbl_shop_order_extended.printed = "0"
@@ -328,7 +337,8 @@
                         tbl_user.username AS buyerUserName,
                         tbl_user.email AS buyerEmail,
                         tbl_user.mobile AS buyerMobile,
-                        productData.products
+                        productData.products,
+                        vendorOne.logo AS vendorLogo
                     FROM 
                         tbl_shop_orders
                     INNER JOIN
@@ -383,6 +393,14 @@
                                     )
                                 GROUP BY  tbl_shop_order_extended.orderId
                         ) productData ON productData.orderId = tbl_shop_orders.id 
+                    INNER JOIN
+                        (
+                            SELECT
+                                tbl_user.*
+                            FROM
+                                tbl_user
+                            WHERE tbl_user.roleid = ' . $this->config->item('owner') . '
+                        ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     WHERE
                         tbl_shop_orders.paid = "1"
                         AND tbl_shop_order_extended.printed = "0"

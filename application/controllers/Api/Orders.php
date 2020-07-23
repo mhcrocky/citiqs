@@ -27,26 +27,31 @@
 
         public function data_get()
         {
-            $file = FCPATH . 'application/tiqs_logs/messages.txt';
-            Utility_helper::logMessage($file, 'printer conected get');
+            $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
+            Utility_helper::logMessage($logFile, 'printer conected get');
 
             $get = $this->input->get(null, true);
-			Utility_helper::logMessage($file, 'printer MAC '. $get['mac'] );
+			Utility_helper::logMessage($logFile, 'printer MAC '. $get['mac'] );
             if(!$get['mac']) return;
 
 
             $order = $this->shoporder_model->fetchOrdersForPrint($get['mac']);
             if (!$order) return;
             $order = reset($order);
-			Utility_helper::logMessage($file, 'printer order ');
+            Utility_helper::logMessage($logFile, 'printer order ');
 
             $productsarray = explode($this->config->item('contactGroupSeparator'), $order['products']);
             $imageprint = new Imagick();
 
             //-------------- LOGO -------------------------
             // TO DO THIS MUST BE VENDOR LOGO
-            $file = FCPATH . "/assets/home/images/tiqslogonew.png";
-            $imagelogo = new Imagick($file);
+            if (is_null($order['vendorLogo'])) {
+                $logoFile = FCPATH . "/assets/home/images/tiqslogonew.png";
+            } else {
+                $logoFile = $this->config->item('uploadLogoFolder') . $order['vendorLogo'];
+            }
+
+            $imagelogo = new Imagick($logoFile);
             $geometry = $imagelogo->getImageGeometry(); 
 
             $width = intval($geometry['width']);
@@ -171,9 +176,8 @@
             // $imageqr ->readImage('petersqr.png');
             // $imageprint ->addImage($imageqr);
 
-			$file = FCPATH . "/assets/home/images/tiqslogonew.png";
 
-            $imagelogo = new Imagick($file);
+            $imagelogo = new Imagick($logoFile);
             $geometry = $imagelogo->getImageGeometry();
 
             $width = intval($geometry['width']);
@@ -214,7 +218,7 @@
             $imageprint->destroy();
             $draw->destroy();
 
-			Utility_helper::logMessage($file, 'printer echo');
+			Utility_helper::logMessage($logFile, 'printer echo');
             echo $resultpng;
 
 
@@ -310,8 +314,8 @@
         public function sms_get(): void
         {
             $orders = $this->shoporder_model->ordersToSendSmsToDriver();
-//            var_dump($orders);
-//            die();
+            // var_dump($orders);
+            // die();
 
             if (!is_null($orders)) {
                 foreach ($orders as $order) {
