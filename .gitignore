@@ -32,6 +32,9 @@ tiqsimg
 ##Uploads
 uploads/qrcodes/*
 
+## venodr logos
+assets/images/vendorLogos
+
 ##Sessions
 system/sessions/
 

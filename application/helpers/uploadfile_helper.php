@@ -3,7 +3,7 @@
 
     if (!defined('BASEPATH')) exit('No direct script access allowed');
     
-    Class File_helper
+    Class Uploadfile_helper
     {
 
         public static function uploadFiles(string $folder, array $constraints = [], bool $resize = true): bool
@@ -12,6 +12,7 @@
             $constraints['upload_path'] = $folder . DIRECTORY_SEPARATOR;
             $constraints['allowed_types'] = (isset($constraints['allowed_types'])) ? $constraints['allowed_types'] : 'jpeg|jpg|png';
             $CI->load->library('upload');
+
             $CI->upload->initialize($constraints, FALSE);
             foreach($_FILES as $key => $file) {
                 if ($_FILES[$key]['name']) {

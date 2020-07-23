@@ -15,7 +15,8 @@ class  Profile extends BaseControllerWeb
 		$this->load->helper('country_helper');
 		$this->load->helper('utility_helper');
 		$this->load->helper('validate_data_helper');
-		
+		$this->load->helper('uploadfile_helper');
+
 		$this->load->model('user_model');
 		$this->load->model('businesstype_model');
 		$this->load->model('subscription_model');		
@@ -42,7 +43,7 @@ class  Profile extends BaseControllerWeb
 			'countries' => Country_helper::getCountries(),
 			'action' => 'profileUpdate',
 			'businessTypes' => $this->businesstype_model->getAll(),
-			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData()
+			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData(),
 		];
 
 		$this->loadViews("profile", $this->global, $data, NULL, 'headerwebloginhotelProfile'); // Menu profilepage
@@ -58,8 +59,30 @@ class  Profile extends BaseControllerWeb
 			$this->session->set_flashdata('error', 'Update data failed');
 		}
 
+	}
+
+
+    public function updateVendorLogo($userId): void
+    {
+		$folder = $this->config->item('uploadLogoFolder');
+		$logo = $userId . '_' . strval(time()) . '.' . Uploadfile_helper::getFileExtension($_FILES['logo']['name']);
+		$constraints = [
+			'allowed_types'=> 'png'
+		];
+		$_FILES['logo']['name'] = $logo;
+
+		if (
+			Uploadfile_helper::uploadFiles($folder, $constraints)
+			&& $this->user_model->editUser(['logo' => $logo], $userId)
+		) {
+			$this->session->set_flashdata('success', 'Logo uploaded');
+		} else {
+			$this->session->set_flashdata('error', 'Upload logo failed');
+		}
 		redirect('profile');
 		exit();
-	}
+    }
+
+
 
 }

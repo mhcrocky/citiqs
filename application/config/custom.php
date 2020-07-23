@@ -120,3 +120,6 @@ $config['workingDays'] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 $config['weekDays'] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 $config['timeFrom'] = '00:00:00';
 $config['timeTo'] = '23:59:59';
+
+// LOGO FOLDER
+$config['uploadLogoFolder']    = FCPATH . 'assets/images/vendorLogos' . DIRECTORY_SEPARATOR;

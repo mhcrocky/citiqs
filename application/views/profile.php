@@ -179,7 +179,7 @@
 				<p>Set the number of minutes when the message will be sent to driver after the order status is changed in status "DONE"</p> -->
 				<!-- <p>Add terms and conditions</p> -->
 			
-				<form method="post" action="<?php echo base_url() ?>profile/updateVendorData/<?php echo $vendor['id']; ?>">					
+				<form method="post" action="<?php echo base_url() ?>profile/updateVendorData/<?php echo $vendor['id']; ?>">
 					<input type="number" name="vendorId" value="<?php echo $user->id ?>" readonly requried hidden />
 					<div class="form group">
 						<label for="termsAndConditions">Terms and conditions: </label>
@@ -194,13 +194,33 @@
 						<label class="radio-inline" for="requireMobileNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="requireMobileNo" name="requireMobile" value="0" <?php if ($vendor['requireMobile'] === '0') echo 'checked'; ?> />
 					</div>
-					<br/>
-					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />
+				</form>
+				<br/>
+				<form method="post" action="<?php echo base_url() ?>profile/updateVendorLogo/<?php echo $user->id; ?>" enctype="multipart/form-data">
+					<div>
+						<label for="logo">
+							<?php echo $this->language->line("LOGOPNG-1030302119"," Upload logo in png format "); ?>
+						</label>
+					</div>
+					<?php if ($user->logo) { ?>
+						<figure>
+							<img
+								src="<?php echo base_url() . 'assets/images/vendorLogos/' . $user->logo; ?>"
+								class="img-responsive img-thumbnail"
+								alt="logo"
+								/>
+						</figure>
+						<br>
+					<?php } ?>
+					<div class="form-group has-feedback">
+						<input type="file" name="logo" id="logo" class="form-control" accept="image/png" />
+						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+					</div>
+					<input class="btn btn-primary" type="submit" value="Upload" />
 				</form>
 			</div>
 		</div>
-		
 	<?php } ?>
 </div>
 <?php if($this->session->userdata('dropoffpoint')==0) { ?>
