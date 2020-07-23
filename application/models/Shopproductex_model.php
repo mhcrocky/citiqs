@@ -80,7 +80,7 @@
             $resetBy = 'productId';
             $orderBy = $this->table. '.id DESC';
 
-            return $this->filterProducts($userId, $where, $resetBy, $orderBy);
+            return $this->filterProducts($userId, $where, $resetBy, $orderBy, false);
           
         }
         public function getUserProductsPublic(int $userId): ?array
@@ -100,10 +100,10 @@
             $resetBy = 'category';
             $orderBy = 'tbl_shop_categories.sortNumber';
             
-            return $this->filterProducts($userId, $where, $resetBy, $orderBy);
+            return $this->filterProducts($userId, $where, $resetBy, $orderBy, true);
           
         }
-        private function filterProducts(int $userId, array $where, string $resetBy, string $orderBy): ?array
+        private function filterProducts(int $userId, array $where, string $resetBy, string $orderBy, bool $onlyActiveProductSpot): ?array
         {
             $this->load->config('custom');
             $concatSeparator = $this->config->item('concatSeparator');
@@ -239,11 +239,12 @@
             $this->load->helper('utility_helper');
 
             foreach ($products as $key => $product) {
+                $products[$key]['productDetails'] = $this->prepareProductDetails($product['productDetails'], $concatGroupSeparator,  $concatSeparator);
+                $products[$key]['productSpots'] = $this->getProductSpots(intval($products[$key]['productId']), $onlyActiveProductSpot);
+
                 if ($products[$key]['productTimes']) {
                     $products[$key]['productTimes'] = $this->prepareProductTimes($product['productTimes'], $concatGroupSeparator,  $concatSeparator);
                 }
-                
-                $products[$key]['productDetails'] = $this->prepareProductDetails($product['productDetails'], $concatGroupSeparator,  $concatSeparator);
                 if ($products[$key]['addons']) {
                     $products[$key]['addons'] =  $this->prepareAddons($product['addons'], $concatGroupSeparator, $concatSeparator);
                 }
@@ -332,5 +333,15 @@
                 return explode($concatSeparator, $data);
             }, $addons);
             return $addons;
+        }
+
+        private function getProductSpots(int $productId, bool $onlyActiveProductSpot): ?array
+        {
+            $this->load->model('shopspotproduct_model');
+            
+            return  $this
+                        ->shopspotproduct_model
+                            ->setProperty('productId', $productId)
+                            ->getProductSpots($onlyActiveProductSpot);
         }
     }

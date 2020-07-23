@@ -7,7 +7,7 @@
 
     if (!defined('BASEPATH')) exit('No direct script access allowed');
     
-    Class Shopspotproducts_model extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
+    Class Shopspotproduct_model extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
     {
         public $id;
         public $spotId;
@@ -130,5 +130,36 @@
                 return $this->multipleCreate($insertData);
             }
             return null;
+        }
+
+        public function getProductSpots(bool $onlyActive): ?array
+        {
+            $where = [
+                $this->table . '.productId=' => $this->productId,
+            ];
+
+            if ($onlyActive) {
+                $where[$this->table . '.showInPublic='] = '1';
+            }
+            
+            $productSpots = $this->readImproved([
+                                'what' => [
+                                    $this->table . '.id AS productSpotId',
+                                    $this->table . '.showInPublic AS showInPublic',
+                                    $this->table . '.spotId AS spotId',
+                                    'tbl_shop_spots.spotName AS spotName',
+                                ],
+                                'where' => $where,
+                                'joins' => [
+                                    ['tbl_shop_spots', 'ON tbl_shop_spots.id = ' . $this->table . '.spotId', 'INNER']
+                                ],
+                                'codnitions' => [
+                                    'order_by' =>  'tbl_shop_spots.spotName.spotId ASC'
+                                ]
+                            ]);
+            if (is_null($productSpots)) return null;
+
+            $this->load->helper('utility_helper');
+            return Utility_helper::resetArrayByKeyMultiple($productSpots, 'spotId');
         }
     }

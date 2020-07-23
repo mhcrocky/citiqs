@@ -17,7 +17,6 @@ class Home extends BaseControllerWeb {
 		ini_set('display_startup_errors', 1);
 		error_reporting(E_ALL);
 		$this->load->helper('url');
-		$this->load->helper('my_file_helper');
 		$this->load->library('language', array('controller' => $this->router->class));
 		$this->load->library('form_validation');
 		$this->load->model('category_model');

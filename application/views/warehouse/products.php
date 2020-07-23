@@ -202,7 +202,7 @@
                                     <p class="item-description">Category: 
                                         <?php
                                             echo $product['category'];
-                                            echo $product['categoryActive'] === '1' ? ' (<span>ACTIVE</span>)' : ' (<span">BLOCKED</span>)'
+                                            echo $product['categoryActive'] === '1' ? ' (<span>ACTIVE</span>)' : ' (<span>"BLOCKED</span>)'
                                         ?>
                                     </p>
                                     <p class="item-description">VAT: <?php echo floatval($details['vatpercentage']); ?></p>
@@ -234,7 +234,6 @@
                                         
                                         echo $productDetailsString;
                                     ?>
-                                   
                                 </div>
 
                                 <div class="grid-footer">
@@ -255,6 +254,11 @@
                                             </span>
                                         </div>
                                     <?php } ?>
+                                    <div class="iconWrapper">
+                                        <span class="fa-stack fa-2x edit-icon btn-edit-item" data-toggle="modal" data-target="#productSpots<?php echo $product['productId']; ?>"  title="Click to select product spot(s)">
+                                            <i class="fa fa-anchor"></i>
+                                        </span>
+                                    </div>
                                     <?php if ($product['productActive'] === '1') { ?>
                                         <div title="Click to block product" class="iconWrapper delete-icon-wrapper">
                                             <a href="<?php echo $this->baseUrl . 'warehouse/editProduct/' . $product['productId'] .'/0'; ?>" >
@@ -274,7 +278,6 @@
                                     <?php } ?>
                                 </div>
                                 <!--TIME MODAL -->
-                                
                                 <div class="modal" id="timeModal<?php echo $product['productId']; ?>" role="dialog">
                                     <div class="modal-dialog">
                                         <!-- Modal content-->
@@ -370,6 +373,57 @@
                                                 </div>
                                             </div>
                                         </form>
+                                    </div>
+                                </div>
+                                <!-- PRODUCT SPOT MODAL -->
+                                <div class="modal" id="productSpots<?php echo $product['productId']; ?>" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">
+                                                    Set spot(s) for product "<?php echo $details['name']; ?>"
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body row">
+                                                <!-- Modal content-->
+                                                <?php
+                                                    foreach ($product['productSpots'] as $spot) {
+                                                        $spot = reset($spot);
+                                                    ?>
+                                                    <div class="col-lg-4 col-sm-12 form-group">
+                                                        <label>Set status for spot "<?php echo $spot['spotName']; ?>" :&nbsp;&nbsp;&nbsp;</label>
+                                                        <label class="radio-inline" for="active<?php echo $spot['productSpotId']; ?>">Active</label>
+                                                        <input
+                                                            type="radio"
+                                                            id="active<?php echo $spot['productSpotId']; ?>"
+                                                            name="showInPublic<?php echo $spot['productSpotId']; ?>"
+                                                            value="1"
+                                                            <?php if ($spot['showInPublic'] === '1') echo 'checked'; ?>
+                                                            data-spot-product-id="<?php echo $spot['productSpotId']; ?>"
+                                                            onchange="updateProductSpotStatus(this)"                                                            
+                                                            />
+                                                        <label class="radio-inline" for="blocked<?php echo $spot['productSpotId']; ?>">&nbsp;&nbsp;&nbsp;No</label>
+                                                        <input
+                                                            type="radio"
+                                                            id="blocked<?php echo $spot['productSpotId']; ?>"
+                                                            name="showInPublic<?php echo $spot['productSpotId']; ?>"
+                                                            value="0"
+                                                            <?php if ($spot['showInPublic'] === '0') echo 'checked'; ?>
+                                                            data-spot-product-id="<?php echo $spot['productSpotId']; ?>"
+                                                            onchange="updateProductSpotStatus(this)"
+                                                            />
+                                                    </div>
+                                                
+                                                    <?php
+                                                    }
+                                                ?>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                        
                                     </div>
                                 </div>
                                 <!--ADDONS MODAL -->

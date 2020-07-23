@@ -174,6 +174,13 @@ var callThis = (function() {
                 alertify.error('Categories sorting failed!');
             }
         },
+        updateProductSpotStatus: function() {
+            if (this) {
+                alertify.success('Update success');
+            } else {
+                alertify.error('Update failed!');
+            }
+        }
     };
     return methods;
 })();

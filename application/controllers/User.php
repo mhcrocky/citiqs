@@ -15,7 +15,6 @@ class User extends BaseControllerWeb {
     public function __construct() {
         parent::__construct();
         $this->load->helper('url');
-        $this->load->helper('my_file_helper');
         $this->load->helper('country_helper');
         $this->load->helper('form');
         $this->load->helper('google_helper');

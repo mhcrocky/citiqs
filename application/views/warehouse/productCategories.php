@@ -38,9 +38,9 @@
 						</div>
 						<div class="col-lg-4 col-sm-12 form-group">
 							<label style="background-color:#fff" for="sendSms">Send SMS to driver:&nbsp;&nbsp;&nbsp;</label>
-							<label style="background-color:#fff" class="radio-inline" style="background-color:#fff" for="sendSmsYes">Yes</label>
+							<label style="background-color:#fff" class="radio-inline" for="sendSmsYes">Yes</label>
 							<input type="radio" id="sendSmsYes" name="sendSms" value="1" >
-							<label style="background-color:#fff" class="radio-inline" style="background-color:#fff" for="sendSmsNo">&nbsp;&nbsp;&nbsp;No</label>
+							<label style="background-color:#fff" class="radio-inline" for="sendSmsNo">&nbsp;&nbsp;&nbsp;No</label>
 							<input type="radio" id="sendSmsNo" name="sendSms" value="0" checked />
 						</div>
 					</form>

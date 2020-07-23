@@ -25,7 +25,7 @@
             $this->load->model('shopprinters_model');
             $this->load->model('shopproductprinters_model');
             $this->load->model('shopspot_model');
-            $this->load->model('shopspotproducts_model');
+            $this->load->model('shopspotproduct_model');
             $this->load->model('shopproducttime_model');
             $this->load->model('shopprodutctype_model');
             $this->load->model('shopproductaddons_model');
@@ -164,7 +164,7 @@
             $userId = intval($_SESSION['userId']);
 
             //REMOVE AFTER SOME TIME
-            $this->shopspotproducts_model->insertSpotAndProducts($this->shopspot_model, $this->shopproduct_model, $userId);
+            $this->shopspotproduct_model->insertSpotAndProducts($this->shopspot_model, $this->shopproduct_model, $userId);
 
             $where = ['userId' => $userId];
             $data = [
@@ -225,7 +225,7 @@
                 redirect('products');
             };
 
-            $this->shopspotproducts_model->insertProductSpots($this->shopspot_model, $this->shopproduct_model->id, $userId);
+            $this->shopspotproduct_model->insertProductSpots($this->shopspot_model, $this->shopproduct_model->id, $userId);
 
             // insert product extended
             $countTypes = 0;
@@ -534,7 +534,7 @@
             $userId = intval($_SESSION['userId']);
 
             //REMOVE AFTER SOME TIME
-            $this->shopspotproducts_model->insertSpotAndProducts($this->shopspot_model, $this->shopproduct_model, $userId);
+            $this->shopspotproduct_model->insertSpotAndProducts($this->shopspot_model, $this->shopproduct_model, $userId);
 
             $data = [
                 'printers' => $this->shopprinters_model->read(['*'], ['userId=' => $userId]),
@@ -565,7 +565,7 @@
             }
 
             if ($this->shopspot_model->setObjectFromArray($data)->create()) {
-                $this->shopspotproducts_model->insertSpotProducts($this->shopproduct_model, $this->shopspot_model->id, intval($_SESSION['userId']));
+                $this->shopspotproduct_model->insertSpotProducts($this->shopproduct_model, $this->shopspot_model->id, intval($_SESSION['userId']));
                 $this->session->set_flashdata('success', 'Spot added');
             } else {
                 $this->session->set_flashdata('error', 'Spot add failed. Try again.');

@@ -22,9 +22,9 @@ class Ajax extends CI_Controller
         $this->load->model('shoporder_model');
         $this->load->model('shopspot_model');
         $this->load->model('shopcategory_model');
+        $this->load->model('shopspotproduct_model');
 
         $this->load->helper('cookie');
-        // $this->load->helper('my_file_helper');
         $this->load->helper('validation_helper');
         $this->load->helper('utility_helper');
         $this->load->helper('email_helper');
@@ -562,5 +562,20 @@ class Ajax extends CI_Controller
         }
         echo 1;
         return;
+    }
+
+    public function updateProductSpotStatus($id): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = $this->input->post(null, true);
+        
+        $update = $this
+                    ->shopspotproduct_model
+                        ->setObjectId(intval($id))
+                        ->setObjectFromArray($post)
+                        ->update();
+
+        echo $update ? 1 : 0;
     }
 }
