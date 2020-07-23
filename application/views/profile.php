@@ -186,6 +186,43 @@
 						<textarea class="form-control" id="termsAndConditions" name="termsAndConditions"><?php echo strval($vendor['termsAndConditions']); ?></textarea>
 					</div>
 					<br/>
+					<div class="form group">
+						<label for="payNlServiceId">Pay service id: </label>
+						<input
+							type="text"
+							id="payNlServiceId"
+							name="payNlServiceId"
+							class="form-control"
+							value="<?php echo $vendor['payNlServiceId']; ?>"
+							/>
+					</div>
+					<br/>
+					<div class="form group">
+						<label for="serviceFeePercent">Service fee percent: </label>
+						<input
+							type="number"
+							id="serviceFeePercent"
+							name="serviceFeePercent"
+							min="0"
+							step="0.01"
+							class="form-control"
+							value="<?php echo $vendor['serviceFeePercent']; ?>"
+							/>
+					</div>
+					<br/>
+					<div class="form group">
+						<label for="serviceFeeAmount">Service fee amount: </label>
+						<input
+							type="number"
+							id="serviceFeeAmount"
+							name="serviceFeeAmount"
+							min="0"
+							step="0.01"
+							class="form-control"
+							value="<?php echo $vendor['serviceFeeAmount']; ?>"
+							/>
+					</div>
+					<br/>
 					<div class="form-group">
 						<label for="sendSms">Require user mobile phone on checkout form:&nbsp;&nbsp;&nbsp;</label>
 						<br/>
@@ -194,6 +231,7 @@
 						<label class="radio-inline" for="requireMobileNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="requireMobileNo" name="requireMobile" value="0" <?php if ($vendor['requireMobile'] === '0') echo 'checked'; ?> />
 					</div>
+					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />
 				</form>
 				<br/>

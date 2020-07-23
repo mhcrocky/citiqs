@@ -11,9 +11,9 @@
     {
         public $id;
         public $vendorId;
-        private $serviceFeePercent;
-        private $serviceFeeAmount;
-        private $paynlServiceId;
+        public $serviceFeePercent;
+        public $serviceFeeAmount;
+        public $paynlServiceId;
         public $termsAndConditions;
         public $requireMobile;
 
@@ -49,6 +49,9 @@
             if (isset($data['vendorId']) && !Validate_data_helper::validateInteger($data['vendorId'])) return false;
             if (isset($data['requireMobile']) && !($data['requireMobile'] === '1' || $data['requireMobile'] === '0')) return false;
             // if (isset($data['termsAndConditions']) && !Validate_data_helper::validateString($data['termsAndConditions'])) return false;
+            if (isset($data['serviceFeePercent']) && !Validate_data_helper::validateString($data['serviceFeePercent'])) return false;
+            if (isset($data['serviceFeeAmount']) && !Validate_data_helper::validateFloat($data['serviceFeeAmount'])) return false;
+            if (isset($data['paynlServiceId']) && !Validate_data_helper::validateString($data['paynlServiceId'])) return false;
 
             return true;
         }

@@ -58,7 +58,8 @@ class  Profile extends BaseControllerWeb
 		} else {
 			$this->session->set_flashdata('error', 'Update data failed');
 		}
-
+		redirect('profile');
+		exit();
 	}
 
 
