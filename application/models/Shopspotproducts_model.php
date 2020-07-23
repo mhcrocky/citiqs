@@ -12,7 +12,7 @@
         public $id;
         public $spotId;
         public $productId;
-        public $active;
+        public $showInPublic;
         private $table = 'tbl_shop_spot_products';
 
         protected function setValueType(string $property,  &$value): void
@@ -42,7 +42,7 @@
             if (!count($data)) return false;
             if (isset($data['spotId']) && !Validate_data_helper::validateInteger($data['spotId'])) return false;
             if (isset($data['productId']) && !Validate_data_helper::validateInteger($data['productId'])) return false;
-            if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
+            if (isset($data['showInPublic']) && !($data['showInPublic'] === '1' || $data['showInPublic'] === '0')) return false;
 
             return true;
         }
@@ -52,6 +52,9 @@
             $spots = $spot->fetchUserSpots($userId);
             $products = $product->getUserProducts($userId);
             $insertData = [];
+
+            if (is_null($spots) || is_null($products)) return null;
+
             foreach($spots as $spot) {
                 $spotId = intval($spot['spotId']);
                 foreach($products as $product) {
@@ -66,11 +69,7 @@
                 }
             }
 
-            if ($insertData) {
-                return $this->multipleCreate($insertData);
-            }
-            return null;
-            
+            return $this->multipleCreate($insertData);
         }
 
         public function checkIsExists(int $spotId, int $productId): bool
@@ -89,19 +88,47 @@
 
         }
 
-
-        public function updateUproductSpots($productSpots, $productId): bool
+        public function insertProductSpots(object $spot, int $productId, int $userId): ?int
         {
-            $allProductSpots = $this->read(['*'], ['productId=' => $productId]);
-            foreach($allProductSpots as $data) {
-                $update = [];
-                $update['active'] = in_array($data['id'], $productSpots) ? '1' : '0';
-                $update = $this
-                            ->setObjectId(intval($data['id']))
-                            ->setObjectFromArray($update)
-                            ->update();
-                if (!$update) return false;
+            $spots = $spot->fetchUserSpots($userId);
+            $insertData = [];
+            foreach($spots as $spot) {
+                $spotId = intval($spot['spotId']);
+                if (!$this->checkIsExists($spotId, $productId)) {
+                    $insert = [
+                        'spotId' => $spotId,
+                        'productId' => $productId,
+                    ];
+                    array_push($insertData, $insert);
+                }
             }
-            return true;
+            if ($insertData) {
+                return $this->multipleCreate($insertData);
+            }
+            return null;
+        }
+
+
+        public function insertSpotProducts(object $product, int $spotId, int $userId): ?int
+        {
+            $products = $product->getUserProducts($userId);
+            $insertData = [];
+            if (!$products) return null;
+
+            foreach($products as $product) {
+                $productId = intval($product['productId']);
+                if (!$this->checkIsExists($spotId, $productId)) {
+                    $insert = [
+                        'spotId' => $spotId,
+                        'productId' => $productId,
+                    ];
+                    array_push($insertData, $insert);
+                }
+            }
+
+            if ($insertData) {
+                return $this->multipleCreate($insertData);
+            }
+            return null;
         }
     }

@@ -163,6 +163,9 @@
             $this->global['pageTitle'] = 'TIQS : PRODUCTS';
             $userId = intval($_SESSION['userId']);
 
+            //REMOVE AFTER SOME TIME
+            $this->shopspotproducts_model->insertSpotAndProducts($this->shopspot_model, $this->shopproduct_model, $userId);
+
             $where = ['userId' => $userId];
             $data = [
                 'categories' => $this->shopcategory_model->fetch($where),
@@ -221,6 +224,8 @@
                 $this->session->set_flashdata('error', 'Product insert failed! Please try again.');
                 redirect('products');
             };
+
+            $this->shopspotproducts_model->insertProductSpots($this->shopspot_model, $this->shopproduct_model->id, $userId);
 
             // insert product extended
             $countTypes = 0;
@@ -528,6 +533,9 @@
             $this->global['pageTitle'] = 'TIQS : SPOTS';
             $userId = intval($_SESSION['userId']);
 
+            //REMOVE AFTER SOME TIME
+            $this->shopspotproducts_model->insertSpotAndProducts($this->shopspot_model, $this->shopproduct_model, $userId);
+
             $data = [
                 'printers' => $this->shopprinters_model->read(['*'], ['userId=' => $userId]),
                 'spots' => $this->shopspot_model->fetchUserSpots($userId)
@@ -557,6 +565,7 @@
             }
 
             if ($this->shopspot_model->setObjectFromArray($data)->create()) {
+                $this->shopspotproducts_model->insertSpotProducts($this->shopproduct_model, $this->shopspot_model->id, intval($_SESSION['userId']));
                 $this->session->set_flashdata('success', 'Spot added');
             } else {
                 $this->session->set_flashdata('error', 'Spot add failed. Try again.');

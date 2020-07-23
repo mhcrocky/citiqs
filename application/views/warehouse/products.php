@@ -2,7 +2,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 <div class="main-wrapper theme-editor-wrapper">
 	<div class="grid-wrapper">
-        <?php if (is_null($categories) || is_null($printers) || is_null($productTypes)) { ?>
+        <?php if (is_null($categories) || is_null($printers) || is_null($productTypes) || is_null($userSpots)) { ?>
             <p style="margin-left:15px;"> No categories, product types and / or printers.
                 <?php if (is_null($categories)) { ?>
                     <a href="<?php echo $this->baseUrl . 'product_categories'; ?>">
@@ -17,6 +17,11 @@
                 <?php if (is_null($printers)) { ?>
                 <a href="<?php echo $this->baseUrl . 'printers'; ?>">
                     Add printer
+                </a>
+                <?php } ?>
+                <?php if (is_null($userSpots)) { ?>
+                <a href="<?php echo $this->baseUrl . 'spots'; ?>">
+                    Add spot
                 </a>
                 <?php } ?>
             </p>
