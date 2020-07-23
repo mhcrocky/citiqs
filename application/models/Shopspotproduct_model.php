@@ -147,6 +147,7 @@
                                     $this->table . '.id AS productSpotId',
                                     $this->table . '.showInPublic AS showInPublic',
                                     $this->table . '.spotId AS spotId',
+                                    $this->table . '.productId AS productId',
                                     'tbl_shop_spots.spotName AS spotName',
                                 ],
                                 'where' => $where,

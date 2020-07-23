@@ -187,10 +187,12 @@
                         <?php
                             foreach($productsRawData as $productId => $productRaw) {
                                 $productRaw = reset($productRaw);
-                                // ONLY ACTIVE
-                                if ($productRaw['productActive'] === '0') continue;
-                                if (is_null($productRaw['productTimes']) || !checkTime($day, $hours, $productRaw['productTimes'])) continue;
-
+                                if (
+                                    $productRaw['productActive'] === '0'
+                                    || is_null($productRaw['productTimes'])
+                                    || !checkTime($day, $hours, $productRaw['productTimes'])
+                                    || !in_array($spotId, array_keys($productRaw['productSpots']))
+                                ) continue;
                                 $products = $productRaw['productDetails'];
                                 $products = Utility_helper::resetArrayByKeyMultiple($products, 'productTypeIsMain');
                                 
@@ -336,6 +338,7 @@
                                             $addons = $productRaw['addons'];
                                             if ($addons) {
                                                 foreach($addons as $addon) {
+                                                    if (!in_array($spotId, array_keys($productsRawData[$addon[1]][0]['productSpots']))) continue;
                                                     $addonDetails = $productsRawData[$addon[1]][0]['productDetails'];
                                                     foreach($addonDetails as $addonSingle) {
                                                         if ($addonSingle['showInPublic'] === '1' && $addonSingle['productExtendedId'] === $addon[2] && $addonSingle['activeStatus'] === '1') {
