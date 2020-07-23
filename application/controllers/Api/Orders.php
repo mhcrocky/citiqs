@@ -40,6 +40,7 @@
             $order = reset($order);
             Utility_helper::logMessage($logFile, 'printer order ');
 
+
             $productsarray = explode($this->config->item('contactGroupSeparator'), $order['products']);
             $imageprint = new Imagick();
 
@@ -136,15 +137,27 @@
             $emailMessage = '';
             foreach ($productsarray as $product) {
 
-                $product = explode('|', $product);
+                $product = explode($this->config->item('concatSeparator'), $product);
+                // 0 => name
+                // 1 => unit price
+                // 2 => ordered quantity
+                // 3 => category
+                // 4 => category id
+                // 5 => shortDescription
+                // 6 => longDescription
+                // 7 => vatpercentage
+
                 $title = $product[0];
                 $price = $product[1];
                 $quantity = $product[2];
                 $plu =  $product[3];
+                $shortDescription = $product[5];
+                $longDescription = $product[6];
+                $vatpercentage = $product[7];
                 $totalamount +=  floatval($quantity) * floatval($price);
 
                 $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-//                $draw->annotation(0, 165 + ($i * 30), $plu);
+                // $draw->annotation(0, 165 + ($i * 30), $plu);
         
                 $draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
                 $draw->annotation(150, 165 + ($i * 30), $quantity);

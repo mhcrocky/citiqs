@@ -248,6 +248,8 @@
         public function fetchOrdersForPrint(string $macNumber): ?array
         {
             $this->load->config('custom');
+            $concatSeparator = $this->config->item('concatSeparator');
+            $concatGroupSeparator = $this->config->item('contactGroupSeparator');
 
             $query =
             '
@@ -276,11 +278,14 @@
                                 tbl_shop_order_extended.orderId,
                                 GROUP_CONCAT(
                                     tbl_shop_products_extended.name,    
-                                    \'|\', tbl_shop_products_extended.price,
-                                    \'|\', tbl_shop_order_extended.quantity,
-                                    \'|\', tbl_shop_categories.category,
-                                    \'|\', tbl_shop_categories.id
-                                    SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.price,
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.quantity,
+                                    \'' .  $concatSeparator . '\', tbl_shop_categories.category,
+                                    \'' .  $concatSeparator . '\', tbl_shop_categories.id,
+                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.shortDescription) > 0, tbl_shop_products_extended.shortDescription, ""), 
+                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, ""),
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage
+                                    SEPARATOR "' . $this->config->item('contactGroupSeparator') . '"
                                 ) AS products
                             FROM
                                 tbl_shop_products_extended
@@ -355,10 +360,13 @@
                                 tbl_shop_order_extended.orderId,
                                 GROUP_CONCAT(
                                     tbl_shop_products_extended.name,    
-                                    \'|\', tbl_shop_products_extended.price,
-                                    \'|\', tbl_shop_order_extended.quantity,
-                                    \'|\', tbl_shop_categories.category,
-                                    \'|\', tbl_shop_categories.id
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.price,
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.quantity,
+                                    \'' .  $concatSeparator . '\', tbl_shop_categories.category,
+                                    \'' .  $concatSeparator . '\', tbl_shop_categories.id,
+                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.shortDescription) > 0, tbl_shop_products_extended.shortDescription, ""), 
+                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, ""),
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage
                                     SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"
                                 ) AS products
                             FROM
