@@ -1,6 +1,9 @@
 'use strict';
 
 function populateTable(elementId, skiptStatus, orders) {
+    let test = Array.from(orders);
+    console.dir(orders);
+    console.dir(test);
     let tableBody = '';
     let orderId;
     let order;
@@ -9,7 +12,6 @@ function populateTable(elementId, skiptStatus, orders) {
     for (orderId in orders) {
         orderDetails = orders[orderId];
         order = orderDetails[0];
-        console.dir(order);
         finishedClass = order['orderStatus'] === skiptStatus ? 'finished hideRow' : 'notFinished';
         tableBody +=    '<tr class="' + finishedClass + '">';
         tableBody +=        '<th>' + order['orderId'] + '</th>';
@@ -144,8 +146,8 @@ function toggleFinished(element, toggleClas) {
 
 document.addEventListener("DOMContentLoaded", function() {
     fetchOrders();
-    // fetch new data every 300 seconds
-    setInterval(function(){return fetchOrders()}, 300000);
+    // fetch new data every 10 seconds
+    setInterval(function(){return fetchOrders()}, 10000);
     //filter orders
     if ($("#filter").length && $("#orders").length) {
         $("#filter").on("keyup", function() {
