@@ -124,8 +124,11 @@
         public function checkout_order(): void
         {
             $this->global['pageTitle'] = 'TIQS : CHECKOUT';
-            if ( (empty($_POST) && !isset($_SESSION['order'])) || (!isset($_SESSION['vendor']) || !$_SESSION['vendor']) ) {
-                redirect(base_url());
+
+            if ( (empty($_POST) || empty($_SESSION['order'])) && empty($_SESSION['vendor']) ) {
+                $redirect = empty($_SESSION['vendor']) ? base_url() : 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'];
+                redirect($redirect);
+                exit();
             }
 
             $post = $this->input->post(null, true);
@@ -158,19 +161,23 @@
 
         public function submitOrder(): void
         {
-            if (empty($_POST) || !isset($_SESSION['order']) || !$_SESSION['vendor']) {
-                redirect(base_url());
+            if (empty($_POST) || empty($_SESSION['order']) || empty($_SESSION['vendor']) || empty($_SESSION['spotId'])) {
+                $redirect = empty($_SESSION['vendor']) ? base_url() : 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'];
+                redirect($redirect);
+                exit();
             }
+
             $_SESSION['postOrder'] = $this->input->post(null, true);
-            
 
             redirect('pay_order');
         }
 
         public function pay_order(): void
         {
-            if (!isset($_SESSION['order']) || !$_SESSION['vendor'] || !$_SESSION['postOrder']) {
-                redirect(base_url());
+            if (empty($_SESSION['order']) || empty($_SESSION['vendor']) || empty($_SESSION['postOrder']) || empty($_SESSION['spotId'])) {
+                $redirect = empty($_SESSION['vendor']) ? base_url() : 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'];
+                redirect($redirect);
+                exit();
             }
 
             $this->global['pageTitle'] = 'TIQS : PAY';
@@ -186,10 +193,12 @@
             $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
 
-        public function insertOrder($paymentType): void
+        public function insertOrder($paymentType, $paymentOptionSubId): void
         {
-            if (!isset($_SESSION['order']) || !$_SESSION['vendor'] || !$_SESSION['postOrder'] || !$_SESSION['spotId']) {
-                redirect(base_url());
+            if (empty($_SESSION['order']) || empty($_SESSION['vendor']) || empty($_SESSION['postOrder'])) {
+                $redirect = empty($_SESSION['vendor']) ? base_url() : 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'];
+                redirect($redirect);
+                exit();
             }
 
             //fetch data from $_SESSION
@@ -248,12 +257,7 @@
             $_SESSION['orderId'] = $this->shoporder_model->id;
 
             // go to Alfredpament controller to finish paying
-            $successRedirect = 'paymentengine' . DIRECTORY_SEPARATOR . $paymentType;
-
-            // unset session data
-            unset($_SESSION['order']);
-            unset($_SESSION['spotId']);
-            unset($_SESSION['postOrder']);
+            $successRedirect = 'paymentengine' . DIRECTORY_SEPARATOR . $paymentType  . DIRECTORY_SEPARATOR . $paymentOptionSubId;
 
             redirect($successRedirect);
         }

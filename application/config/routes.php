@@ -251,14 +251,14 @@ $route['product_types']         = "warehouse/productTypes";
 $route['make_order']        = 'publicorders/index';
 $route['checkout_order']    = 'publicorders/checkout_order';
 $route['pay_order']         = 'publicorders/pay_order';
-$route['insertorder/(:num)'] = 'publicorders/insertOrder/$1';
+$route['insertorder/(:num)/(:num)'] = 'publicorders/insertOrder/$1/$2';
 
 $route['api/orders/print/get'] = 'Api/Orders/data';
 $route['api/orders/print'] = 'Api/Orders/data';
 $route['sendDriverSms'] = 'Api/Orders/sms';
 
 // ALFRED PAYMENT ENGINE
-$route['paymentengine/(:num)'] = 'Alfredpayment/paymentEngine/$1';
+$route['paymentengine/(:num)/(:num)'] = 'Alfredpayment/paymentEngine/$1/$2';
 $route['successPayment'] = 'Alfredpayment/successPayment';
 $route['exchangePay'] = 'Alfredpayment/ExchangePay';
 

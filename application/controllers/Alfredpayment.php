@@ -28,19 +28,23 @@ class Alfredpayment extends BaseControllerWeb
 	{
         die();
     }
+    
 
-
-    public function paymentEngine($paymentType): void
+    public function paymentEngine($paymentType, $paymentOptionSubId): void
     {
-        $vendor = Utility_helper::getSessionValue('vendor');
+        if (empty($_SESSION['orderId']) || empty($_SESSION['vendor'])) {
+            $redirect = empty($_SESSION['vendor']) ? base_url() : 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'];
+            redirect($redirect);
+            exit();
+        }
+        
+        $vendor = $_SESSION['vendor'];
         $serviceId = $vendor['payNlServiceId'];
         $orderId = Utility_helper::getSessionValue('orderId');
         $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
         $order = reset($order);
-        //$arguments = Pay_helper::getArgumentsArray($order, $paymentType, $serviceId);
-		$arguments = Pay_helper::getArgumentsArray($order, $paymentType, $serviceId);
+        $arguments = Pay_helper::getArgumentsArray($order, $serviceId, intval($paymentType), intval($paymentOptionSubId));
         $url = Pay_helper::getPayUrl($arguments);
-
         $result = @file_get_contents($url);
         $result = json_decode($result);
 
@@ -78,6 +82,11 @@ class Alfredpayment extends BaseControllerWeb
 
     public function successPayment(): void
     {
+        unset($_SESSION['order']);
+        unset($_SESSION['postOrder']);
+        unset($_SESSION['vendor']);
+        unset($_SESSION['spotId']);
+
         $get = $this->input->get(null, true);
         $statuscode = intval($get['orderStatusId']);
         $order = $this
@@ -91,7 +100,7 @@ class Alfredpayment extends BaseControllerWeb
         if ($statuscode == 100) {
             $this->shoporder_model->updatePaidStatus(['paid' => '1']);
             $this->session->set_flashdata('success', 'Your order is paid');
-			redirect('success');
+            $redirect = 'success';
         } elseif ($statuscode < 0 ) {
             $this->session->set_flashdata('error', 'Order not paid');
         } elseif ($statuscode >= 0) {

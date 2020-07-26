@@ -24,8 +24,11 @@
             return $strUrl;
         }
 
-        public static function getArgumentsArray(array $order, string $paymentType, string $serviceId): array
+        public static function getArgumentsArray(array $order, string $serviceId, int $paymentType, int $paymentOptionSubId = 0): array
         {
+            $CI =& get_instance();
+            $CI->load->config('custom');
+
             $amount = round((floatval($order['orderAmount']) + floatval($order['serviceFee'])) * 100, 0);
             $arrArguments = [];
 
@@ -33,7 +36,10 @@
             $arrArguments['amount'] = strval($amount);
             $arrArguments['ipAddress'] = $_SERVER['REMOTE_ADDR'];
             $arrArguments['paymentOptionId'] = $paymentType;
-//            $arrArguments['paymentOptionSubId'] = $paymentType;
+            if ($paymentType ===  $CI->config->item('idealPaymentType') && $paymentOptionSubId) {
+                $arrArguments['paymentOptionSubId'] = $paymentOptionSubId;
+            }
+
             $arrArguments['finishUrl'] = base_url() . 'successPayment';
 
             $arrArguments['transaction']['orderExchangeUrl'] = base_url() . 'exchangePay';

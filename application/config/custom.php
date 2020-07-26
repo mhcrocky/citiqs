@@ -109,10 +109,10 @@ $config['orderStatuses'] = [
 ];
 
 // SEPARATORS
-$config['contactGroupSeparator'] = '!#$%=';
-$config['concatSeparator'] = '#%!$%=?';
+$config['contactGroupSeparator'] = ')$=';
+$config['concatSeparator'] = ')#%';
 
-$config['idealPaymentType'] = '1';
+$config['idealPaymentType'] = '10';
 $config['creditCardPaymentType'] = '706';
 $config['bancontactPaymentType'] = '436';
 
