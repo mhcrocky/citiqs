@@ -17,6 +17,11 @@
         public $termsAndConditions;
         public $requireMobile;
 
+        public $bancontact;
+        public $ideal;
+        public $creditCard;
+
+
         private $table = 'tbl_shop_vendors';
 
         protected function setValueType(string $property,  &$value): void
@@ -52,7 +57,9 @@
             if (isset($data['serviceFeePercent']) && !Validate_data_helper::validateString($data['serviceFeePercent'])) return false;
             if (isset($data['serviceFeeAmount']) && !Validate_data_helper::validateFloat($data['serviceFeeAmount'])) return false;
             if (isset($data['paynlServiceId']) && !Validate_data_helper::validateString($data['paynlServiceId'])) return false;
-
+            if (isset($data['bancontact']) && !($data['bancontact'] === '1' || $data['bancontact'] === '0')) return false;
+            if (isset($data['ideal']) && !($data['ideal'] === '1' || $data['ideal'] === '0')) return false;
+            if (isset($data['creditCard']) && !($data['creditCard'] === '1' || $data['creditCard'] === '0')) return false;
             return true;
         }
 
@@ -67,6 +74,9 @@
                     $this->table . '.payNlServiceId',
                     $this->table . '.termsAndConditions',
                     $this->table . '.requireMobile',
+                    $this->table . '.bancontact',
+                    $this->table . '.ideal',
+                    $this->table . '.creditCard',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
                     'tbl_user.email AS vendorEmail'
