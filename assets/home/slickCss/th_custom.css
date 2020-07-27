@@ -499,7 +499,7 @@ footer .footer-icon li { display : block; height : 40px; width : 100%; }
     display: flex;
     width:40px;
     height:40px;
-    background: #346847;
+    background: #6b6f85;
     color:white;
     justify-content: center;
     align-items:center;
@@ -511,7 +511,7 @@ footer .footer-icon li { display : block; height : 40px; width : 100%; }
     display: flex;
     width: 40px;
     height: 40px;
-    background: #ba7800;
+    background: #6b6f85;
     color: white;
     justify-content: center;
     align-items: center;
@@ -523,7 +523,7 @@ footer .footer-icon li { display : block; height : 40px; width : 100%; }
 	display: flex;
 	width: 40px;
 	height: 40px;
-	background: #ff7162;
+	background: #6b6f85;
 	color: white;
 	justify-content: center;
 	align-items: center;
@@ -574,7 +574,7 @@ div.filter-sidebar ul li a {
     width:calc(100%);
     display: flex;
     flex-direction:column;
-    background: #948b6f;
+    background: #6c6c6a;
     padding:0 20px;
     color:white;
     font-size:16px;
@@ -835,7 +835,7 @@ div.filter-sidebar ul li a {
 }
 
 .slick-prev:before, .slick-next:before{
-	color: #349171 !important;
+	color: #6b6f85 !important;
 	font-size: 40px;
 }
 
@@ -844,7 +844,7 @@ div.filter-sidebar ul li a {
 }
 
 .slick-next{
-	color: #729a7d;
+	color: #6b6f85;
 	right: 10px;
 }
 

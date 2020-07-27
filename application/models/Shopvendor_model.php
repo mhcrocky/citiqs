@@ -79,7 +79,9 @@
                     $this->table . '.creditCard',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
+					'tbl_user.logo AS logo',
                     'tbl_user.email AS vendorEmail'
+
                 ],
                 'where' => [
                     $this->table. '.vendorId' => $this->vendorId,

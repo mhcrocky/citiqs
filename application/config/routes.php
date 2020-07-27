@@ -66,6 +66,7 @@ $route['thuishavenagenda/(:num)'] = "thuishavenagenda/index/$1";
 $route['resendreservations'] = "resendreservations";
 $route['resendreservations/resend'] = "resendreservations/resend";
 
+$route['visitor'] = "createvisitor/index";
 $route['cqrcode'] = "check424/cqrcode";
 $route['check424email'] = "check424/check424email";
 $route['check424/(:any)'] = "check424/index/$1";

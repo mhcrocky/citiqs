@@ -1,8 +1,21 @@
+<?php if($vendor['vendorId'] == 1162 ){?>
+<body style="background-color: white">
+<?php } else {?>
+<body style="background-color: navajowhite">
+<?php } ?>
+
 <style>
     .submitOrder:hover {
         cursor: pointer;
     }
 </style>
+
+<?php if($vendor['vendorId'] == 1162 ){?>
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/slick.css">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/slick-theme.css">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/th_custom.css">
+<?php } ?>
+
 <?php
     function checkTime(string $day, string $hours, array $productTimes): bool
     {
@@ -33,11 +46,19 @@
         $addons = '';
         $type = strtoupper($product['productType']);
 
-        if ($product['longDescription']) {
-            $longDescription = '<i class="fa fa-info-circle" aria-hidden="true" data-toggle="popover" data-trigger="hover"  data-placement="bottom" data-content="' . $product['longDescription'] . '"></i>';
-        } else {
-            $longDescription = '';
-        }
+		if ($product['longDescription']!= 'NA') {
+			$longDescription = '<i class="fa fa-info-circle" aria-hidden="true" data-toggle="popover" data-trigger="hover"  data-placement="bottom" data-content="' . $product['longDescription'] . '"></i>';
+		} else {
+			$longDescription = '';
+		}
+
+//        if ($product['longDescription']) {
+//            $longDescription = '<i class="fa fa-info-circle" aria-hidden="true" data-toggle="popover" data-trigger="hover"  data-placement="bottom" data-content="' . $product['longDescription'] . '"></i>';
+//        } else {
+//            $longDescription = '';
+//        }
+
+
             
         $formElement = '';
         $addons .= 
@@ -58,7 +79,7 @@
                                             justify-content: center;
                                             align-items: center;
                                             font-size: 18px;
-                                            border: 2px solid #ff4f00;
+                                            border: 2px solid #6c6c6a;
                                             height: 30px;
                                             width: 30px;
                                             border-radius: 100px;\"
@@ -161,28 +182,51 @@
     }
 
 ?>
+
+<?php if($vendor['vendorId'] == 1162 ){?>
+<main class="container" style="text-align:left; background-color: white">
+<?php } else {?>
 <main class="container" style="text-align:left; background-color: navajowhite">
+<?php } ?>
+
+
     <?php 
         // include_once FCPATH . 'application/views/includes/sessionMessages.php';
     ?>
     <?php if (!empty($categoryProducts) ) { ?>
-        <h1><?php echo $vendor['vendorName']; ?></h1>
-		<div style="text-align:right; padding-top:5px;">
-			<a href="<?php echo base_url() ?>make_order?vendorid=<?php echo $vendor['vendorId']; ?>">
-				<i aria-hidden="true">CHANGE SPOT</i>
-			</a>
+<!--		--><?php //echo $vendor['logo']; ?>
+<!--        <h1>--><?php //echo $vendor['vendorName']; ?><!--</h1>-->
+<!--		https://tiqs.com/alfred/assets/images/vendorLogos/1162_1595838163.png -->
+		<div style="text-align:center; allign="center">
+			<img src=<?php echo "https://tiqs.com/alfred/assets/images/vendorLogos/".$vendor['logo']; ?> alt="" width="300" height="auto">
 		</div>
-		<h5 style="text-align:center">SWIPE &lt; LINKS EN RECHTS &gt; VOOR ANDERE CATEGORIE</h5>
 
-		<div class="main-slider container" style='overflow-x:hidden; overflow-y: hidden; margin-top: 20px; margin-bottom: 20px; background-color: navajowhite'>
-            <?php
+<!--		<div style="text-align:right; padding-top:5px;">-->
+<!--			<a href="--><?php //echo base_url() ?><!--make_order?vendorid=--><?php //echo $vendor['vendorId']; ?><!--">-->
+<!--				<i aria-hidden="true">CHANGE SPOT</i>-->
+<!--			</a>-->
+<!--		</div>-->
+
+		<h5 style="text-align:center; font-size: xx-small">SWIPE &lt; LINKS EN RECHTS &gt; VOOR ANDERE CATEGORIE</h5>
+
+		<?php if($vendor['vendorId'] == 1162 ){?>
+			<div class="main-slider container" style='overflow-x:hidden; overflow-y: hidden; margin-top: 20px; margin-bottom: 20px; background-color: white'>
+		<?php } else {?>
+			<div class="main-slider container" style='overflow-x:hidden; overflow-y: hidden; margin-top: 20px; margin-bottom: 20px; background-color: navajowhite'>
+		<?php } ?>
+
+		    <?php
                 $form = '';
                 foreach($categoryProducts as $category => $productsRawData) {
                     $productsRawData =  Utility_helper::resetArrayByKeyMultiple($productsRawData, 'productId');
                 ?>
                     <div class="item-category">
                         <div class="filter-sidebar">
-                            <a href="javascript:void(0);"  style="color: black; background-color: navajowhite" class="go-category left-side selected"><?php echo $category;?></a>
+							<?php if($vendor['vendorId'] == 1162 ){?>
+								<a href="javascript:void(0);"  style="color: black; background-color: white" class="go-category left-side selected"><?php echo $category;?></a>
+							<?php } else {?>
+								<a href="javascript:void(0);"  style="color: black; background-color: navajowhite" class="go-category left-side selected"><?php echo $category;?></a>
+							<?php } ?>
                         </div>
                         <?php
                             foreach($productsRawData as $productId => $productRaw) {
@@ -239,7 +283,15 @@
 
                                 
                                 ?>
-                                <div class="product__list" style="background-color: navajowhite">
+
+								<?php if($vendor['vendorId'] == 1162 ){?>
+									<div class="product__list" style="background-color: white">
+								<?php } else {?>
+									<div class="product__list" style="background-color: navajowhite">
+								<?php } ?>
+
+
+
                                     <div class="product">
                                         <div class="product__img">
                                             <!-- <img src="https://tiqs.com/shop/attachments/shop_images/Heinikentap.jpg" alt="Heineken tap (25cl)"> -->
@@ -248,19 +300,20 @@
                                             <div class="product__actions-box">
                                                 <div class="pab pab-1">
                                                     <div class="product__name">
+														<?php if ($product['longDescription']!= 'NA') { ?>
+															<i style="font-size: large; margin-bottom: -30px" class="fa fa-info-circle" aria-hidden="true" data-toggle="popover" data-trigger="hover"  data-placement="bottom" data-content="<?php echo $product['longDescription']; ?>"></i>
+														<?php } ?>
                                                         <?php echo $product['name']; ?>
-                                                        <?php if ($product['longDescription']) { ?>
-                                                            <i class="fa fa-info-circle" aria-hidden="true" data-toggle="popover" data-trigger="hover"  data-placement="bottom" data-content="<?php echo $product['longDescription']; ?>"></i>
-                                                        <?php } ?>
+
                                                         <span
                                                             id="showOrderedQuantity<?php echo $product['productExtendedId']; ?>"
                                                             style=
                                                             "display: inline-flex;
-                                                            color: green;
+                                                            color: #6c6c6a;
                                                             justify-content: center;
                                                             align-items: center;
                                                             font-size: 18px;
-                                                            border: 2px solid #800b00;
+                                                            border: 2px solid #6c6c6a;
                                                             height: 30px;
                                                             width: 30px;
                                                             border-radius: 100px;"
