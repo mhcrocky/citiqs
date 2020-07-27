@@ -1,9 +1,6 @@
 'use strict';
 
 function populateTable(elementId, skiptStatus, orders) {
-    let test = Array.from(orders);
-    console.dir(orders);
-    console.dir(test);
     let tableBody = '';
     let orderId;
     let order;
@@ -29,7 +26,7 @@ function populateTable(elementId, skiptStatus, orders) {
             tableBody += '<button class="btn btn-primary" ' + disabled + ' ';
             tableBody +=    'data-order-id=' + order['orderId'] + '" ';
             tableBody +=    'data-mobile="' + order['buyerMobile'] + '" ';
-            tableBody +=    'data-message="Order staat klaar bij ' + showOrderProducts(orderDetails) + '" ';
+            tableBody +=    'data-message="Jouw bestelling \'' + order['orderId'] + '\' staat klaa" ';
             tableBody +=    'data-recipent="buyer" ';
             tableBody +=    'onclick="sendSms(this)"';
             tableBody += '>Send sms</button>';
@@ -116,7 +113,9 @@ function sendSms(element) {
         messagetext: element.dataset.message,
         recipent: element.dataset.recipent
     }
-    sendAjaxPostRequest(post, url, 'sendSms', fetchOrders);
+    console.dir(element.dataset.message);
+
+    // sendAjaxPostRequest(post, url, 'sendSms', fetchOrders);
 }
 
 function showPhoneNumber(order) {
@@ -144,17 +143,19 @@ function toggleFinished(element, toggleClas) {
 }
 
 
-document.addEventListener("DOMContentLoaded", function() {
-    fetchOrders();
-    // fetch new data every 10 seconds
-    setInterval(function(){return fetchOrders()}, 10000);
-    //filter orders
-    if ($("#filter").length && $("#orders").length) {
-        $("#filter").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("#orders tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    }
-});
+fetchOrders();
+
+// document.addEventListener("DOMContentLoaded", function() {
+//     fetchOrders();
+//     // fetch new data every 10 seconds
+//     setInterval(function(){return fetchOrders()}, 10000);
+//     //filter orders
+//     if ($("#filter").length && $("#orders").length) {
+//         $("#filter").on("keyup", function() {
+//             var value = $(this).val().toLowerCase();
+//             $("#orders tr").filter(function() {
+//                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+//             });
+//         });
+//     }
+// });
