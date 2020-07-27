@@ -495,7 +495,6 @@
                     'tbl_shop_orders.id as orderId',
                     'tbl_shop_orders.updated AS orderUpdate',
                     'tbl_shop_orders.spotId AS spotId',
-                    'tbl_shop_vendors.smsDelay AS smsDelay',
                     'tbl_user.username AS vendorName',
                     'tbl_shop_categories.driverNumber AS driverNumber',
                     'tbl_shop_categories.delayTime as delayTime',

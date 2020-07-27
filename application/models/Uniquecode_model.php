@@ -74,10 +74,10 @@
 		{
 			$data = [];
 			do {
-				$set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKLMNPQRSTVWXY';
+				$set = '3456789BCDEFGHJKLMNPQRSTVWXY';
 				$data = [
 					'timestamp' => date('Y-m-d H:i:s'),
-					'code' => 'S2-' . substr(str_shuffle($set), 0, 8),
+					'code' => 'SPOT-' . substr(str_shuffle($set), 0, 8),
 				];
 			} while (!$this->insert($data));
 			return $data['code'];
