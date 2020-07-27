@@ -42,24 +42,24 @@
 
         public function insertProductsSpots(): void
         {
-            var_dump('START_TIME: ' . date('Y-m-d H:i:s'));
-            $venodrs = $this->shopvendor_model->readImproved([
-                'what' => ['vendorId'],
-                'where' => ['id>' => 0],
-            ]);
+            // var_dump('START_TIME: ' . date('Y-m-d H:i:s'));
+            // $venodrs = $this->shopvendor_model->readImproved([
+            //     'what' => ['vendorId'],
+            //     'where' => ['id>' => 0],
+            // ]);
             
-            foreach ($venodrs as $venodrId) {
-                $userId = intval($venodrId['vendorId']);
-                $this->shopspotproduct_model->insertSpotAndProducts($this->shopspot_model, $this->shopproduct_model, $userId);
+            // foreach ($venodrs as $venodrId) {
+            //     $userId = intval($venodrId['vendorId']);
+            //     $this->shopspotproduct_model->insertSpotAndProducts($this->shopspot_model, $this->shopproduct_model, $userId);
                 
-            }
+            // }
 
             
 
-            var_dump('END_TIME: ' . date('Y-m-d H:i:s'));
-            var_dump('MEMOR_GET_USAGE: '. memory_get_usage());
-            var_dump('MEMOR_GET_PEAK_USAGE: '. memory_get_peak_usage());
-            die('done');
+            // var_dump('END_TIME: ' . date('Y-m-d H:i:s'));
+            // var_dump('MEMOR_GET_USAGE: '. memory_get_usage());
+            // var_dump('MEMOR_GET_PEAK_USAGE: '. memory_get_peak_usage());
+            // die('done');
 
         }
     }
