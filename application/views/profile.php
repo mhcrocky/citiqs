@@ -242,7 +242,7 @@
 							<h4>Credit card</h4>
 							<label class="radio-inline" for="creditCardYes">Yes</label>
 							<input type="radio" id="creditCardYes" name="creditCard" value="1" <?php if ($vendor['creditCard'] === '1') echo 'checked'; ?> />
-							<label class="radio-inline" for="bancontactNo">&nbsp;&nbsp;&nbsp;No</label>
+							<label class="radio-inline" for="creditCardNo">&nbsp;&nbsp;&nbsp;No</label>
 							<input type="radio" id="creditCardNo" name="creditCard" value="0" <?php if ($vendor['creditCard'] === '0') echo 'checked'; ?> />
 						</div>
 					</div>

@@ -195,7 +195,7 @@
 
         public function insertOrder($paymentType, $paymentOptionSubId): void
         {
-            if (empty($_SESSION['order']) || empty($_SESSION['vendor']) || empty($_SESSION['postOrder'])) {
+            if (empty($_SESSION['order']) || empty($_SESSION['vendor']) || empty($_SESSION['postOrder']) || empty($_SESSION['spotId'])) {
                 $redirect = empty($_SESSION['vendor']) ? base_url() : 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'];
                 redirect($redirect);
                 exit();
