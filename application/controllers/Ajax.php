@@ -432,17 +432,10 @@ class Ajax extends CI_Controller
     {
         if (!$this->input->is_ajax_request()) return;
 
-        $data = $this->input->post(null, true);
+        $post = $this->input->post(null, true);
         $userId = intval($_SESSION['userId']);
-        $result = $this->shoporder_model->fetchOrderDetails($userId, $data['paid']);
-
-        if ($result) {
-            $result = Utility_helper::resetArrayByKeyMultiple($result, 'orderId');
-            echo json_encode($result);
-        } else {
-            echo 0;
-        }
-
+        $result = $this->shoporder_model->fetchOrderDetailsJquery($userId, $post['paid']);
+        echo json_encode($result);
         return;
     }
 

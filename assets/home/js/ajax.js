@@ -126,10 +126,9 @@ var callThis = (function() {
                 alertify.error('Update failed');
             }
         },
-        fetchOrders: function(callFunction, functionArg) {
+        fetchOrders: function(callFunction) {
             if (this) {
-                functionArg.push(this);
-                callFunction(...functionArg);
+                callFunction(this);
             }
         },
         changeStatus: function(callFunction) {

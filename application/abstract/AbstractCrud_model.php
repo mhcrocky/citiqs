@@ -60,7 +60,7 @@
             return $result ? $result : null;
         }
 
-        public function readImproved(array $filter): ?array
+        public function readImproved(array $filter, int $querylogging = 0): ?array
         {
             $result = $this->db->select(implode(',', $filter['what']));
             if (isset($filter['joins']) && count($filter['joins']) ) {
@@ -81,11 +81,9 @@
             // echo $this->db->last_query(); die();
             $result = $this->db->get($this->getThisTable())->result_array();
 
-            $querylogging = 1;
-            if($querylogging==1) {
+            if ($querylogging === 1) {
 				$file = FCPATH . 'application/tiqs_logs/querylogging.txt';
-				Utility_helper::logMessage($file,
-					$this->db->last_query());
+				Utility_helper::logMessage($file, $this->db->last_query());
 			}
 
 			return $result ? $result : null;

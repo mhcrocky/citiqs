@@ -56,6 +56,7 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/slick-theme.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
 <?php } elseif ($this->view === 'warehouse/orders') { ?>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/orderList.css">
 <?php } elseif ($this->view === 'warehouse/warehouse') { ?>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">

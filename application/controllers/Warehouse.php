@@ -172,11 +172,6 @@
                 'productTypes' => $this->shopprodutctype_model->fetchProductTypes($userId),
                 'concatSeparator' => $this->config->item('concatSeparator'),
             ];
-
-            // echo '<pre>';
-            // print_r($data['products']);
-            // echo '</pre>';
-            // die();
             $this->loadViews('warehouse/products', $this->global, $data, null, 'headerWarehouse');
             return;
         }
@@ -422,8 +417,8 @@
 
             $data = [
                 'orderStatuses' => $this->config->item('orderStatuses'),
-                'orderFinished' => $this->config->item('orderFinished'),
                 'vendor' => $_SESSION['name'],
+                'orders' => $this->shoporder_model->fetchOrderDetails(intval($_SESSION['userId']), '1'),
             ];
 
             $this->loadViews('warehouse/orders', $this->global, $data, null, 'headerWarehouse');
@@ -517,7 +512,6 @@
             redirect('printers');
             return;
         }
-
 
         //SPOTS
         /**

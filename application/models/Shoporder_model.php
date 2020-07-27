@@ -120,16 +120,20 @@
 
         public function fetchOrderDetails(int $userId, string $paidStatus): ?array
         {
-            return $this->read(
-                [
+            $this->load->config('custom');
+            $concatSeparator = $this->config->item('concatSeparator');
+            $concatGroupSeparator = $this->config->item('contactGroupSeparator');
+
+            $filter = [
+                'what' => [
                     $this->table . '.id AS orderId',
                     $this->table . '.amount AS orderAmount',
                     $this->table . '.paid AS orderPaidStatus',
                     $this->table . '.orderStatus AS orderStatus',
                     $this->table . '.sendSms AS sendSms',
                     $this->table . '.sendSmsDriver AS sendSmsDriver',
-
-                    'tbl_shop_categories.category AS category',
+                    $this->table . '.created AS orderCreated',
+                    $this->table . '.updated AS orderUpdated',
                     'buyer.id AS buyerId',
                     'buyer.email AS buyerEmail',
                     'buyer.username AS buyerUserName',
@@ -137,20 +141,52 @@
                     'vendor.id AS vendorId',
                     'vendor.email AS vendorEmail',
                     'vendor.username AS vendorUserName',
-                    'tbl_shop_order_extended.quantity AS productQuantity',
-                    'tbl_shop_products_extended.name AS productName',
                     'tbl_shop_spots.id AS spotId',
-                    'tbl_shop_spots.spotName AS spotName'
+                    'tbl_shop_spots.spotName AS spotName',
+                    'tbl_shop_spots.printerId AS spotPrinterId',
+                    'tbl_shop_printers.printer AS spotPrinter',
+                    'tblOrderedProducts.orderedProductDetails',
+                    'tblOrderedProducts.productPrinterDetails'
                 ],
-                [
+                'where' => [
                     'vendor.id' => $userId,
                     $this->table . '.paid=' => $paidStatus
                 ],
-                [
-                    ['tbl_shop_order_extended', $this->table . '.id = tbl_shop_order_extended.orderId', 'INNER'],
-                    ['tbl_shop_products_extended', 'tbl_shop_order_extended.productsExtendedId  = tbl_shop_products_extended.id', 'INNER'],
-                    ['tbl_shop_products', 'tbl_shop_products_extended.productId  = tbl_shop_products.id', 'INNER'],
-                    ['tbl_shop_categories', 'tbl_shop_products.categoryId  = tbl_shop_categories.id', 'INNER'],
+                'joins' => [
+                    [
+                        '(
+                            SELECT
+                                tbl_shop_order_extended.orderId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_extended.productId,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.name,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.price,
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.quantity
+                                    SEPARATOR "'. $concatGroupSeparator . '"
+                                ) AS orderedProductDetails,
+                                GROUP_CONCAT(
+                                    tbl_shop_printers.printer,
+                                    \'' .  $concatSeparator . '\', tbl_shop_product_printers.productId
+                                    SEPARATOR "'. $concatGroupSeparator . '"
+                                ) AS productPrinterDetails
+                            FROM
+                                tbl_shop_order_extended
+                            INNER JOIN
+                                tbl_shop_products_extended ON tbl_shop_products_extended.id = tbl_shop_order_extended.productsExtendedId
+                            LEFT JOIN
+                                tbl_shop_product_printers ON tbl_shop_product_printers.productId = tbl_shop_products_extended.productId
+                            LEFT JOIN
+                                tbl_shop_printers ON tbl_shop_printers.id = tbl_shop_product_printers.printerId
+                            GROUP BY tbl_shop_order_extended.orderId
+                            ORDER BY tbl_shop_products_extended.name ASC
+                        ) tblOrderedProducts',
+                        'tblOrderedProducts.orderId = ' . $this->table.'.id',
+                        'LEFT'
+                    ],
+                    ['tbl_shop_order_extended', 'tbl_shop_order_extended.orderId = ' . $this->table . '.id ', 'INNER'],
+                    ['tbl_shop_products_extended', 'tbl_shop_products_extended.id = tbl_shop_order_extended.productsExtendedId', 'INNER'],
+                    ['tbl_shop_products', 'tbl_shop_products.id = tbl_shop_products_extended.productId', 'INNER'],
+                    ['tbl_shop_categories', 'tbl_shop_categories.id = tbl_shop_products.categoryId  ', 'INNER'],
                     [
                         '(SELECT * FROM tbl_user WHERE roleid = '. $this->config->item('owner') .') vendor',
                         'vendor.id  = tbl_shop_categories.userId',
@@ -161,12 +197,27 @@
                         'buyer.id  = ' .  $this->table  . '.buyerId',
                         'INNER'
                     ],
-                    ['tbl_shop_spots', $this->table . '.spotId = tbl_shop_spots.id', 'INNER'],
-                    ['tbl_shop_vendors', 'tbl_shop_vendors.vendorId = vendor.id', 'LEFT']
+                    ['tbl_shop_spots', 'tbl_shop_spots.id =' . $this->table . '.spotId', 'INNER'],
+                    ['tbl_shop_printers', 'tbl_shop_printers.id = tbl_shop_spots.printerId', 'INNER'],
+
                 ],
-                'order_by',
-                [$this->table . '.updated ASC']
-            );
+                'conditions' => [
+                    'group_by' => [$this->table . '.id'],
+                    'order_by' => [$this->table . '.updated DESC']
+                ]
+            ];
+            $result = $this->readImproved($filter);
+
+            if (is_null($result)) return null;
+
+            foreach ($result as $index => $details) {
+                if ($details['orderedProductDetails'] && $details['productPrinterDetails']) {
+                    $result[$index]['orderedProductDetails'] = $this->prepareProductDetails($details['orderedProductDetails'], $details['productPrinterDetails'], $concatGroupSeparator,  $concatSeparator);
+                    $result[$index]['orderedProductDetails']['spotPrinter'] = $result[$index]['spotPrinter'];
+                }
+                unset($result[$index]['productPrinterDetails']);
+            }
+            return $result;
         }
 
         public function fetchReportDetails(int $userId, string $from = '', string $to = ''): ?array
@@ -243,7 +294,6 @@
                 [$this->table . '.updated ASC']
             );
         }
-
 
         public function fetchOrdersForPrint(string $macNumber): ?array
         {
@@ -502,9 +552,9 @@
                     'tbl_shop_spots.spotName AS spotName'
                 ],
                 'where' => [
-//                    'tbl_shop_orders.orderStatus=' => $this->config->item('orderDone'),
-//				 automatically sending means that the order should also be set to done automatically.
-				// because 8 minutes is the preparation time and otherwise it is cold.
+                    // 'tbl_shop_orders.orderStatus=' => $this->config->item('orderDone'),
+                    // automatically sending means that the order should also be set to done automatically.
+                    // because 8 minutes is the preparation time and otherwise it is cold.
 
                     $this->table . '.printStatus' => '1',
                     $this->table . '.sendSmsDriver' => '0',
@@ -524,13 +574,62 @@
                 ]
             ]);
         }
+
+        private function prepareProductDetails(string $productDetails, string $printerDetails, string $groupSeparator, string $concatSeparator): array
+        {
+            
+            $printerDetails = $this->preparePrinterDetails($printerDetails, $groupSeparator, $concatSeparator);
+            $productDetails =  explode($groupSeparator, $productDetails);
+            $productDetails = array_map(function($data) use($concatSeparator, $printerDetails) {
+                $data = explode($concatSeparator, $data);
+                $return = [
+                    'productId' => $data[0],
+                    'productName' => $data[1],
+                    'productPrice' => $data[2],
+                    'productQuantity' => $data[3],
+                ];
+                $return['productPrinter'] = isset($printerDetails[$data[0]]) ? reset($printerDetails[$data[0]]) : null;
+                return $return;
+            }, $productDetails);
+
+            return $productDetails;
+        }
+
+        private function preparePrinterDetails(string $printerDetails, string $groupSeparator, string $concatSeparator): array
+        {
+            $printerDetails =  explode($groupSeparator, $printerDetails);
+            $printerDetails = array_map(function($data) use($concatSeparator) {                
+                return explode($concatSeparator, $data);
+            }, $printerDetails);
+
+            $this->load->helper('utility_helper');
+            $printerDetails = Utility_helper::resetArrayByKeyMultiple($printerDetails, '1');
+
+            return $printerDetails;
+        }
+
+        public function fetchOrderDetailsJquery(int $userId, string $paidStatus): ?array
+        {
+            $data = $this->fetchOrderDetails($userId, $paidStatus);
+            if (is_null($data)) return null;
+
+            $this->load->helper('jquerydatatable_helper');
+
+            $columns = array(
+                array( 'db' => 'orderId',               'dt' => 0),
+                array( 'db' => 'orderedProductDetails', 'dt' => 1),
+                array( 'db' => 'orderAmount',           'dt' => 2),
+                array( 'db' => 'spotName',              'dt' => 3),
+                array( 'db' => 'orderStatus',           'dt' => 4),
+                array( 'db' => 'orderUpdated',          'dt' => 5),
+                array( 'db' => 'buyerUserName',         'dt' => 6),
+                array( 'db' => 'buyerEmail',            'dt' => 7),
+                array( 'db' => 'buyerMobile',           'dt' => 8),
+                array( 'db' => 'sendSms',               'dt' => 9),
+                array( 'db' => 'buyerId',               'dt' => 10),
+
+            );
+
+            return Jquerydatatable_helper::data_output($columns, $data);
+        }
     }
-
-// FROM
-// 	`tbl_shop_orders`
-
-// WHERE 
-// 	(tbl_shop_orders.orderStatus = 'done' OR tbl_shop_orders.orderStatus = 'finished')
-//     AND tbl_shop_orders.printStatus = '1'
-//     AND tbl_shop_orders.sendSmsDriver = '0'
-// 
