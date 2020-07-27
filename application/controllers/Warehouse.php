@@ -163,9 +163,6 @@
             $this->global['pageTitle'] = 'TIQS : PRODUCTS';
             $userId = intval($_SESSION['userId']);
 
-            //REMOVE AFTER SOME TIME
-            $this->shopspotproduct_model->insertSpotAndProducts($this->shopspot_model, $this->shopproduct_model, $userId);
-
             $where = ['userId' => $userId];
             $data = [
                 'categories' => $this->shopcategory_model->fetch($where),
@@ -532,9 +529,6 @@
         {
             $this->global['pageTitle'] = 'TIQS : SPOTS';
             $userId = intval($_SESSION['userId']);
-
-            //REMOVE AFTER SOME TIME
-            $this->shopspotproduct_model->insertSpotAndProducts($this->shopspot_model, $this->shopproduct_model, $userId);
 
             $data = [
                 'printers' => $this->shopprinters_model->read(['*'], ['userId=' => $userId]),
