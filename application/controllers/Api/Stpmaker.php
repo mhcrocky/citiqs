@@ -10,34 +10,35 @@ class Stpmaker extends REST_Controller
 {
 
 	function __construct()
-    {
-        parent::__construct();
-		$this->load->model('Uniquecode_model');
-        $this->load->library('language', array('controller' => $this->router->class));
-    }
+	{
+		parent::__construct();
+		$this->load->model('api_model');
+		$this->load->model('label_model');
+		$this->load->model('spot_model');
+		$this->load->model('bookandpay_model');
+		$this->load->model('uniquecode_model');
+		$this->load->library('language', array('controller' => $this->router->class));
+	}
 
 	public function index_get()
 	{
-		$data = "hello";
+		$data = "No function called like this";
 		$this->response($data, REST_Controller::HTTP_OK);
 	}
 
-	public function getnextsticker_get()
+	public function index_post()
 	{
-		$result = $this->Uniquecode_model->Stpversion2();
-		$UniqueId = $result;
-		$message['uniqueId'] =  "$UniqueId";
-
-		$this->response($message, 200);
+		$data = "No function called like this";
+		$this->response($data, REST_Controller::HTTP_OK);
 	}
 
-	public function getqrcode_get()
+
+	public function getnextsticker_get()
 	{
-//		$userId = $this->security->xss_clean($this->post('user_id'));
-		$result = $this->spotnumber_model->spotpeople();
+		$result = $this->uniquecode_model->STPVersion2();
 		$UniqueId = $result;
 		$message['uniqueId'] =  "$UniqueId";
-
+//		$message="hello form sticker";
 		$this->response($message, 200);
 	}
 
