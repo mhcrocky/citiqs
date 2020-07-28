@@ -57,17 +57,19 @@
 
             $width = intval($geometry['width']);
             $height = intval($geometry['height']);
-            $crop_width = 400;
-            $crop_height = 100;
+            $crop_width = 550;
+            $crop_height = 150;
             $crop_x = intval(($width - $crop_width) / 2);
             $crop_y = intval(($height - $crop_height) / 2);
             $sizeheight = 300;
             $sizewidth = 576;
-            $imagelogo->cropImage($crop_width, $crop_height, $crop_x, $crop_y);
-            $imagelogo->setImageFormat('png');
-            $imagelogo->setImageBackgroundColor(new ImagickPixel('white'));
-            $imagelogo->extentImage($sizewidth, $sizeheight, -($sizewidth - $crop_width) / 2, -($sizeheight - $crop_height) / 2);
-            $imageprint->addImage($imagelogo);
+
+			$imagelogo->cropImage($crop_width, $crop_height, $crop_x, $crop_y);
+			$imagelogo->setImageFormat('png');
+			$imagelogo->setImageBackgroundColor(new ImagickPixel('white'));
+			$imagelogo->extentImage($sizewidth, $sizeheight, -($sizewidth - $crop_width) / 2, -($sizeheight - $crop_height) / 2);
+
+			$imageprint->addImage($imagelogo);
 
             //-------------- SPOT placement -------------------------
 
@@ -78,7 +80,7 @@
             /* New image */
             //--- aantal rows bepalen a.d. hand van aantal order regels.
 
-            $rowheight = (count($productsarray) * 30) + 170;
+            $rowheight = (count($productsarray) * 30) + 500;
             $imagetext->newImage(576, $rowheight, $pixel);
 
             /* Black text */
@@ -111,21 +113,24 @@
 
             // $draw->annotation(0, 30, "SPOT: ". $result->spot_id . " EMAIL: " . $email . ' PHONE: ' . $phone);
             // $draw->annotation(0, 30, "SPOT: ". $result->spot_id );
-			$draw->annotation(0, 30, "ORDER: " . $order['orderId'] . "-NAAM: " . $order['buyerUserName']);;
-			$draw->annotation(0, 70, "DATE:". date("m-d h:i:sa"). " -SPOT: ". $order['spotName'] );
+			$draw->annotation(0, 30, "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);;
+			$draw->annotation(0, 70, "DATE:". date("m-d h:i:sa"). " SPOT: ". $order['spotName'] );
 
             /* Font properties */
             // $draw->setFontWeight(1);
-            $draw->setFontSize(30);
+
 
             //-------- header regel --------
 
+			$draw->setFontSize(18);
             $draw->setStrokeWidth(2);
             $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-            $imagetext->annotateImage($draw, 0, 105, 0, "PLU");
-            $imagetext->annotateImage($draw, 95, 105, 0, "Amt");
-            $imagetext->annotateImage($draw, 160, 105, 0, "Description");
-            // $imagetext->annotateImage($draw, 440, 75, 0, "Price");
+            $imagetext->annotateImage($draw, 0, 105, 0, "ANT");
+            $imagetext->annotateImage($draw, 40, 105, 0, "OMSCHRIJVING");
+            $imagetext->annotateImage($draw, 395, 105, 0, "PRIJS");
+			$imagetext->annotateImage($draw, 485, 105, 0, "%");
+			$imagetext->annotateImage($draw, 505, 105, 0, "TOTAAL");
+
             $draw->setStrokeColor('black');
             $draw->setStrokeWidth(5);
             $draw->line(0, 120, 576, 120);
@@ -134,6 +139,7 @@
 
             $totalamount = 0;
             $i = 0;
+			$Ttotalamount =0;
             $emailMessage = '';
             foreach ($productsarray as $product) {
 
@@ -154,31 +160,75 @@
                 $shortDescription = $product[5];
                 $longDescription = $product[6];
                 $vatpercentage = $product[7];
-                $totalamount +=  floatval($quantity) * floatval($price);
 
-                $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+
+                $totalamount =  floatval($quantity) * floatval($price);
+				$Stotalamount = sprintf("%.2f", $totalamount);
+
+				$Ttotalamount = $Ttotalamount+$totalamount  ;
+				$TStotalamount = sprintf("%.2f", $Ttotalamount);
+
+				$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
                 // $draw->annotation(0, 165 + ($i * 30), $plu);
         
-                $draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
-                $draw->annotation(150, 165 + ($i * 30), $quantity);
+                $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                $draw->annotation(0, 165 + ($i * 30), $quantity);
         
                 $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                $draw->annotation(160, 165 + ($i * 30), $title);
+                $draw->annotation(40, 165 + ($i * 30), $title);
 
-                $i++;
-                $emailMessage .= '<p>';
-                $emailMessage .=    '<tr>';
-                $emailMessage .=        '<td>' . $quantity . '</td>';
-                $emailMessage .=        '<td>' . $title . '</td>';
-                $emailMessage .=        '<td>EURO ' . $price . '</td>';
-                $emailMessage .=    '</tr>';
-                $emailMessage .= '</p>';
+				$draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
+				$draw->annotation(440, 165 + ($i * 30), "€ ". $price);
+
+				$draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
+				$draw->annotation(500, 165 + ($i * 30), $vatpercentage);
+
+				$draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
+				$draw->annotation(570, 165 + ($i * 30), "€ ". $Stotalamount);
+
+				$i++;
+//                $emailMessage .= '<p>';
+//                $emailMessage .=    '<tr>';
+//                $emailMessage .=        '<td>' . $quantity . '</td>';
+//                $emailMessage .=        '<td>' . $title . '</td>';
+//                $emailMessage .=        '<td>EURO ' . $price . '</td>';
+//                $emailMessage .=    '</tr>';
+//                $emailMessage .= '</p>';
             }
 
+			$draw->setStrokeColor('black');
+			$draw->setStrokeWidth(1);
+			$draw->line(500, 165 + ($i * 30), 576, 165 + ($i * 30));
+			$draw->setStrokeWidth(1);
+
+			$i++;
+
+			$draw->setFontSize(18);
+			$draw->setStrokeWidth(2);
+			$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+			$imagetext->annotateImage($draw, 395, 165 + ($i * 30), 0, "TOTAAL");
+			$draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
+			$draw->annotation(570, 165 + ($i * 30), "€ ". $TStotalamount);
+
+			$i++;
+
+			$draw->setStrokeColor('black');
+			$draw->setStrokeWidth(4);
+			$draw->line(500, 165 + ($i * 30), 576, 165 + ($i * 30));
+			$draw->setStrokeWidth(1);
+
+			$i++;
+			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "21 % ");
+			$draw->annotation(570, 165 + ($i * 30), "€ ". $TStotalamount);
+
+			$i++;
+			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, " 9 % ");
+			$draw->annotation(570, 165 + ($i * 30), "€ ". $TStotalamount);
+
+			//-------- regels --------
+
             //-------- Text printen!  --------
-
             $imagetext->drawImage($draw);
-
             $imageprint->addImage($imagetext);
 
             // ------------------ QRCode creation --------------------------
@@ -198,7 +248,7 @@
             $crop_width = 600;
             $crop_height = 150;
             $crop_x = intval(($width - $crop_width) / 2);
-            $crop_y = intval(($height - $crop_height) / 2);    
+            $crop_y = intval(($height - $crop_height) / 2);
             $sizeheight = 300;
             $sizewidth = 576;
 
@@ -225,7 +275,7 @@
             header('Content-type: image/png');
             // $image ->writeImage("peter.png");
 
-            $imageqr->destroy();
+//            $imageqr->destroy();
             $imagetext->destroy();
             $imagelogo->destroy();
             $imageprint->destroy();
@@ -248,8 +298,8 @@
             $this->shoporder_model->updatePrintedStatus();
 
             // SEND EMAIL
-            $subject= "Order : ". $orderId;
-            $emailMessage .= '<p><tr><td>TOTAAL BETAALD EURO '. number_format($totalamount, 2, '.', ',') . '</p></tr></td>';
+            $subject= "tiqs-Order : ". $order['orderId'] ;
+//            $emailMessage .= '<p><tr><td>TOTAAL BETAALD EURO '. number_format($totalamount, 2, '.', ',') . '</p></tr></td>';
             $email = $order['buyerEmail'];
             Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receipt);
         }
