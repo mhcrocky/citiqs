@@ -193,5 +193,5 @@ document.addEventListener("DOMContentLoaded", function() {
     // fetch new data every 10 seconds
     setInterval(function() {        
         return  destroyAndFetch();
-    }, 100000);
+    }, 10000);
 });
