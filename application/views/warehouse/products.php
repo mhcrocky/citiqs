@@ -638,6 +638,18 @@
                                                 <?php
                                                 }
                                             ?>
+
+                                            <div class="col-lg-4 col-sm-12">
+                                                <label for="orderNo<?php echo $product['productId'] ?>">Order number: </label>
+                                                <input
+                                                    type="text"
+                                                    id="orderNo<?php echo $product['productId'] ?>"
+                                                    name="product[orderNo]"
+                                                    class="form-control"
+                                                    value="<?php echo intval($product['orderNo']); ?>"
+                                                    required
+                                                    />
+                                            </div>
                                         </form>
                                     </div>
                                 </div>

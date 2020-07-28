@@ -98,7 +98,7 @@
 
             
             $resetBy = 'category';
-            $orderBy = 'tbl_shop_categories.sortNumber';
+            $orderBy = 'tbl_shop_categories.sortNumber ASC, tbl_shop_products.orderNo DESC';
             
             return $this->filterProducts($userId, $where, $resetBy, $orderBy, true);
           
@@ -122,6 +122,7 @@
                     'tbl_shop_products.showImage',
                     'tbl_shop_products.dateTimeFrom AS dateTimeFrom',
                     'tbl_shop_products.dateTimeTo AS dateTimeTo',
+                    'tbl_shop_products.orderNo AS orderNo',
                     'tbl_shop_categories.category',
                     'tbl_shop_categories.id AS categoryId',
                     'tbl_shop_categories.active AS categoryActive',
