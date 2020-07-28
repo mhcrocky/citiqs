@@ -434,7 +434,12 @@ class Ajax extends CI_Controller
 
         $post = $this->input->post(null, true);
         $userId = intval($_SESSION['userId']);
-        $result = $this->shoporder_model->fetchOrderDetailsJquery($userId, $post['paid']);
+        $where = [
+            'vendor.id' => $userId,
+            'tbl_shop_orders.paid=' => $post['paid'],
+            'tbl_shop_orders.created>=' => date('Y-m-d H:i:s', strtotime('-24 hours', time()))
+        ];
+        $result = $this->shoporder_model->fetchOrderDetailsJquery($where);
         echo json_encode($result);
         return;
     }

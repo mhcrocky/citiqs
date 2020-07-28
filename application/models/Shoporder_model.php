@@ -118,7 +118,7 @@
 
         }
 
-        public function fetchOrderDetails(int $userId, string $paidStatus): ?array
+        public function fetchOrderDetails(array $where): ?array
         {
             $this->load->config('custom');
             $concatSeparator = $this->config->item('concatSeparator');
@@ -148,10 +148,7 @@
                     'tblOrderedProducts.orderedProductDetails',
                     'tblOrderedProducts.productPrinterDetails'
                 ],
-                'where' => [
-                    'vendor.id' => $userId,
-                    $this->table . '.paid=' => $paidStatus
-                ],
+                'where' => $where,
                 'joins' => [
                     [
                         '(
@@ -211,7 +208,7 @@
             if (is_null($result)) return null;
 
             foreach ($result as $index => $details) {
-                if ($details['orderedProductDetails'] && $details['productPrinterDetails']) {
+                if ($details['orderedProductDetails']) {
                     $result[$index]['orderedProductDetails'] = $this->prepareProductDetails($details['orderedProductDetails'], $details['productPrinterDetails'], $concatGroupSeparator,  $concatSeparator);
                     $result[$index]['orderedProductDetails']['spotPrinter'] = $result[$index]['spotPrinter'];
                 }
@@ -575,10 +572,13 @@
             ]);
         }
 
-        private function prepareProductDetails(string $productDetails, string $printerDetails, string $groupSeparator, string $concatSeparator): array
+        private function prepareProductDetails(string $productDetails, ?string $printerDetails, string $groupSeparator, string $concatSeparator): array
         {
             
-            $printerDetails = $this->preparePrinterDetails($printerDetails, $groupSeparator, $concatSeparator);
+            if (!is_null($printerDetails)) {
+                $printerDetails = $this->preparePrinterDetails($printerDetails, $groupSeparator, $concatSeparator);
+            }
+            
             $productDetails =  explode($groupSeparator, $productDetails);
             $productDetails = array_map(function($data) use($concatSeparator, $printerDetails) {
                 $data = explode($concatSeparator, $data);
@@ -604,13 +604,12 @@
 
             $this->load->helper('utility_helper');
             $printerDetails = Utility_helper::resetArrayByKeyMultiple($printerDetails, '1');
-
             return $printerDetails;
         }
 
-        public function fetchOrderDetailsJquery(int $userId, string $paidStatus): ?array
+        public function fetchOrderDetailsJquery(array $where): ?array
         {
-            $data = $this->fetchOrderDetails($userId, $paidStatus);
+            $data = $this->fetchOrderDetails($where);
             if (is_null($data)) return null;
 
             $this->load->helper('jquerydatatable_helper');

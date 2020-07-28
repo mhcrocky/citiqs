@@ -417,8 +417,7 @@
 
             $data = [
                 'orderStatuses' => $this->config->item('orderStatuses'),
-                'vendor' => $_SESSION['name'],
-                'orders' => $this->shoporder_model->fetchOrderDetails(intval($_SESSION['userId']), '1'),
+                'vendor' => $_SESSION['name']
             ];
 
             $this->loadViews('warehouse/orders', $this->global, $data, null, 'headerWarehouse');
