@@ -315,7 +315,15 @@
                         tbl_user.email AS buyerEmail,
                         tbl_user.mobile AS buyerMobile,
                         productData.products,
-                        vendorOne.logo AS vendorLogo
+                        vendorOne.logo AS vendorLogo,
+                        vendorOne.id as vendorId,
+                        vendorOne.username as vendorName,
+                        vendorOne.address as vendorAddress,
+                        vendorOne.zipcode as vendorZipcode,
+                        vendorOne.city as vendorCity,
+                        vendorOne.vat_number as vendorVAT,
+                        vendorOne.country as vendorCountry
+                        
                     FROM
                         tbl_shop_orders
                     INNER JOIN
@@ -393,7 +401,14 @@
                         tbl_user.email AS buyerEmail,
                         tbl_user.mobile AS buyerMobile,
                         productData.products,
-                        vendorOne.logo AS vendorLogo
+                        vendorOne.logo AS vendorLogo,
+                        vendorOne.id as vendorId,
+                        vendorOne.username as vendorName,
+                        vendorOne.address as vendorAddress,
+                        vendorOne.zipcode as vendorZipcode,
+                        vendorOne.city as vendorCity,
+                        vendorOne.vat_number as vendorVAT,
+                        vendorOne.country as vendorCountry
                     FROM 
                         tbl_shop_orders
                     INNER JOIN
