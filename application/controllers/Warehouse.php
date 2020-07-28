@@ -417,7 +417,13 @@
 
             $data = [
                 'orderStatuses' => $this->config->item('orderStatuses'),
-                'vendor' => $_SESSION['name']
+                'vendor'        => $_SESSION['name'],
+                'printers'      => $this->shopprinters_model->readImproved([
+                                        'what' => ['id', 'printer'],
+                                        'where' => [
+                                            'userId' => $_SESSION['userId'],
+                                        ]
+                                    ])
             ];
 
             $this->loadViews('warehouse/orders', $this->global, $data, null, 'headerWarehouse');

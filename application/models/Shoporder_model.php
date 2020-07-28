@@ -123,7 +123,6 @@
             $this->load->config('custom');
             $concatSeparator = $this->config->item('concatSeparator');
             $concatGroupSeparator = $this->config->item('contactGroupSeparator');
-
             $filter = [
                 'what' => [
                     $this->table . '.id AS orderId',
@@ -163,7 +162,8 @@
                                 ) AS orderedProductDetails,
                                 GROUP_CONCAT(
                                     tbl_shop_printers.printer,
-                                    \'' .  $concatSeparator . '\', tbl_shop_product_printers.productId
+                                    \'' .  $concatSeparator . '\', tbl_shop_product_printers.productId,
+                                    \'' .  $concatSeparator . '\', tbl_shop_printers.id
                                     SEPARATOR "'. $concatGroupSeparator . '"
                                 ) AS productPrinterDetails
                             FROM
@@ -203,18 +203,7 @@
                     'order_by' => [$this->table . '.updated DESC']
                 ]
             ];
-            $result = $this->readImproved($filter);
-
-            if (is_null($result)) return null;
-
-            foreach ($result as $index => $details) {
-                if ($details['orderedProductDetails']) {
-                    $result[$index]['orderedProductDetails'] = $this->prepareProductDetails($details['orderedProductDetails'], $details['productPrinterDetails'], $concatGroupSeparator,  $concatSeparator);
-                    $result[$index]['orderedProductDetails']['spotPrinter'] = $result[$index]['spotPrinter'];
-                }
-                unset($result[$index]['productPrinterDetails']);
-            }
-            return $result;
+            return $this->readImproved($filter);
         }
 
         public function fetchReportDetails(int $userId, string $from = '', string $to = ''): ?array
@@ -572,26 +561,46 @@
             ]);
         }
 
-        private function prepareProductDetails(string $productDetails, ?string $printerDetails, string $groupSeparator, string $concatSeparator): array
-        {
-            
+        private function prepareProductDetails(
+            string $productDetails,
+            ?string $printerDetails,
+            string $groupSeparator,
+            string $concatSeparator,
+            string $spotPrinter,
+            string $selectedPrinter
+        ): ?array
+        {   
             if (!is_null($printerDetails)) {
                 $printerDetails = $this->preparePrinterDetails($printerDetails, $groupSeparator, $concatSeparator);
             }
-            
-            $productDetails =  explode($groupSeparator, $productDetails);
-            $productDetails = array_map(function($data) use($concatSeparator, $printerDetails) {
-                $data = explode($concatSeparator, $data);
-                $return = [
-                    'productId' => $data[0],
-                    'productName' => $data[1],
-                    'productPrice' => $data[2],
-                    'productQuantity' => $data[3],
-                ];
-                $return['productPrinter'] = isset($printerDetails[$data[0]]) ? reset($printerDetails[$data[0]]) : null;
-                return $return;
-            }, $productDetails);
 
+            $productDetails =  explode($groupSeparator, $productDetails);
+            $productDetails = array_map(function($data) use($concatSeparator, $printerDetails, $spotPrinter, $selectedPrinter) {
+                $data = explode($concatSeparator, $data);
+                $printerData = isset($printerDetails[$data[0]]) ? reset($printerDetails[$data[0]]) : null;
+                if (!$selectedPrinter) {
+                    return [
+                        'productId' => $data[0],
+                        'productName' => $data[1],
+                        'productPrice' => $data[2],
+                        'productQuantity' => $data[3],
+                        'productPrinter' => $printerData,
+                    ];
+                } else {
+                    if (
+                        (!$printerData && $spotPrinter === $selectedPrinter)
+                        || ($printerData && $selectedPrinter == $printerData[2])
+                    ) {
+                        return [
+                            'productId' => $data[0],
+                            'productName' => $data[1],
+                            'productPrice' => $data[2],
+                            'productQuantity' => $data[3],
+                            'productPrinter' => $printerData,
+                        ];
+                    }
+                }
+            }, $productDetails);
             return $productDetails;
         }
 
@@ -607,12 +616,37 @@
             return $printerDetails;
         }
 
-        public function fetchOrderDetailsJquery(array $where): ?array
+        public function fetchOrderDetailsJquery(array $where, $selectedPrinter): ?array
         {
-            $data = $this->fetchOrderDetails($where);
-            if (is_null($data)) return null;
+            $result = $this->fetchOrderDetails($where);
+            if (is_null($result)) return null;
 
+            $this->load->config('custom');
             $this->load->helper('jquerydatatable_helper');
+
+            $concatSeparator = $this->config->item('concatSeparator');
+            $concatGroupSeparator = $this->config->item('contactGroupSeparator');
+            $return = [];
+
+            foreach ($result as $index => $details) {
+                if ($details['orderedProductDetails']) {
+                    $fineDetails = $this->prepareProductDetails(
+                                        $details['orderedProductDetails'],
+                                        $details['productPrinterDetails'],
+                                        $concatGroupSeparator, 
+                                        $concatSeparator,
+                                        $details['spotPrinterId'],
+                                        $selectedPrinter
+                                    );
+
+                    if ($fineDetails[0]) {
+                        $result[$index]['orderedProductDetails'] = $fineDetails;
+                        $result[$index]['orderedProductDetails']['spotPrinter'] = $result[$index]['spotPrinter'];
+                        unset($result[$index]['productPrinterDetails']);
+                        array_push($return, $result[$index]);
+                    }
+                }
+            }
 
             $columns = array(
                 array( 'db' => 'orderId',               'dt' => 0),
@@ -626,9 +660,9 @@
                 array( 'db' => 'buyerMobile',           'dt' => 8),
                 array( 'db' => 'sendSms',               'dt' => 9),
                 array( 'db' => 'buyerId',               'dt' => 10),
-
             );
 
-            return Jquerydatatable_helper::data_output($columns, $data);
+            return Jquerydatatable_helper::data_output($columns, $return);
         }
+
     }

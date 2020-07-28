@@ -434,13 +434,21 @@ class Ajax extends CI_Controller
 
         $post = $this->input->post(null, true);
         $userId = intval($_SESSION['userId']);
+
         $where = [
             'vendor.id' => $userId,
             'tbl_shop_orders.paid=' => $post['paid'],
             'tbl_shop_orders.created>=' => date('Y-m-d H:i:s', strtotime('-24 hours', time()))
         ];
-        $result = $this->shoporder_model->fetchOrderDetailsJquery($where);
+        if (isset($post['orderStatus'])) {
+            $where['tbl_shop_orders.orderStatus='] = $post['orderStatus'];
+        }
+        $selectedPrinter = (isset($post['selectedPrinter'])) ? $post['selectedPrinter'] : '';
+
+
+        $result = $this->shoporder_model->fetchOrderDetailsJquery($where, $selectedPrinter);
         echo json_encode($result);
+
         return;
     }
 

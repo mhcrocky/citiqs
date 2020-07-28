@@ -6,6 +6,28 @@
 </style>
 <main class="row" style="margin:0px 20px">
     <h1 style="margin:70px 0px 20px 0px">Order list</h1>
+    <div style="margin:140px 0px 20px 0px">
+        <label for="orderStatus">Fiter orders by printer:</label>
+        <?php if (!empty($printers)) { ?>
+        <select id="selectedPrinter" class="custom-select" onchange="destroyAndFetch()">
+            <option value="">All</option>
+            <?php foreach ($printers as $printer) { ?>
+                <option value="<?php echo $printer['id']; ?>"><?php echo $printer['printer']; ?></option>
+            <?php } ?>
+        </select>
+        <?php } ?>
+    </div>
+    <div style="margin:140px 0px 20px 0px">
+        <label for="orderStatus">Fiter orders by status:</label>
+        <select id="orderStatus" class="custom-select" onchange="destroyAndFetch()">
+            <option value="">All</option>
+            <option value="not seen">Not seen</option>
+            <option value="seen">Seen</option>
+            <option value="in process">In process</option>
+            <option value="done">Done</option>
+            <option value="finished">Finished</option>
+        </select>
+    </div>
     <div class="table-responsive col-sm-12" style="margin-top:20px">
         <table id="ordersList" class="display table table-hover table-striped" style="width:100%">
             <thead>

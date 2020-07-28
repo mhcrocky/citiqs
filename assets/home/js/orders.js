@@ -1,5 +1,6 @@
 'use strict';
 function showOrderProducts(data) {
+    if(!data) return;
     let products = data[1];
     let i;
     let list = '<ol>';
@@ -8,6 +9,7 @@ function showOrderProducts(data) {
         let product;
         let printer;
         product = products[i];
+        if (!product) continue;
         if (product['productPrinter']) {
             printer = (products['spotPrinter'] === product['productPrinter'][0]) ? products['spotPrinter'] : product['productPrinter'][0];
         } else {
@@ -100,10 +102,10 @@ function sendSms(element) {
 function populateTable(data) {
     $(document).ready(function() {
         $.fn.dataTable.ext.errMode = 'none';
-        $('#ordersList tfoot th').each( function () {
-            var title = $(this).text();
-            $(this).html('<input type="text" style="width:100px" />');
-        });
+        // $('#ordersList tfoot th').each( function () {
+        //     var title = $(this).text();
+        //     $(this).html('<input type="text" style="width:100px" />');
+        // });
     
         $('#ordersList').DataTable({
             data: data,
@@ -141,19 +143,23 @@ function populateTable(data) {
                     }
                 }            
             ],
-            initComplete: function () {
-                this.api().columns().every( function () {
-                    var that = this;
+            // initComplete: function () {
+            //     this.api().columns().every( function () {
+            //         var that = this;
     
-                    $( 'input', this.footer() ).on( 'keyup change clear', function () {
-                        console.dir(this.value);
-                        if ( that.search() !== this.value ) {
-                            that
-                                .search( this.value )
-                                .draw();
-                        }
-                    });
-                });
+            //         $( 'input', this.footer() ).on( 'keyup change clear', function () {
+            //             if ( that.search() !== this.value ) {
+            //                 that
+            //                     .search( this.value )
+            //                     .draw();
+            //             }
+            //         });
+            //     });
+            // },
+            rowCallback: function(row, data) {
+                if (data[4] === 'not seen') {
+                    row.style.backgroundColor = '#ff4d4d';
+                }
             }
         });
     });
@@ -162,9 +168,18 @@ function populateTable(data) {
 function fetchOrders() {    
     let url = globalVariables.ajax + 'fetchOrders'
     let post = {
-        paid: '1',
-        orderStatus: orderGlobals.orderFinished
+        paid: '1'
     }
+    let selectedStatus = document.getElementById('orderStatus').value;
+    let selectedPrinter = document.getElementById('selectedPrinter').value;
+
+    if (selectedStatus) {
+        post['orderStatus'] = selectedStatus;
+    }
+    if (selectedPrinter) {
+        post['selectedPrinter'] = selectedPrinter;
+    }
+
     sendAjaxPostRequest(post, url, 'fetchOrders', populateTable);
 }
 
@@ -176,134 +191,7 @@ function destroyAndFetch() {
 document.addEventListener("DOMContentLoaded", function() {
     fetchOrders();
     // fetch new data every 10 seconds
-    setInterval(function() {
-        $('#ordersList').DataTable().destroy();
-        return fetchOrders();
-    }, 10000);
-    
+    setInterval(function() {        
+        return  destroyAndFetch();
+    }, 100000);
 });
-
-// function populateTable(elementId, skiptStatus, orders) {
-//     let ordersLength = orders.length;
-//     let i;
-//     let tableBody = '';
-//     let order;
-
-//     for(i = 0 ; i < ordersLength; i++) {
-//         order = orders[i];
-//         console.dir(order);
-//         tableBody +=    '<tr>';
-//         tableBody +=        '<th>' + order['orderId'] + '</th>';
-//         tableBody +=        '<th>' + order['orderId'] + '</th>';
-//         tableBody +=        '<th>' + order['orderId'] + '</th>';
-//         tableBody +=        '<th>' + order['orderId'] + '</th>';
-//         tableBody +=        '<th>' + order['orderId'] + '</th>';
-//         tableBody +=        '<th>' + order['orderId'] + '</th>';
-//         tableBody +=        '<th>' + order['orderId'] + '</th>';
-//         tableBody +=        '<th>' + order['orderId'] + '</th>';
-//         tableBody +=        '<th>' + order['orderId'] + '</th>';
-//         tableBody +=        '<th>' + order['orderId'] + '</th>';
-//         tableBody +=        '<th>' + order['orderId'] + '</th>';
-//         tableBody +=        '<th>' + order['orderId'] + '</th>';
-//         tableBody +=    '</tr>';
-
-//     }
-//     $('#' + elementId).html(tableBody);
-
-//     // let tableBody = '';
-//     // let orderId;
-//     // let order;
-//     // let orderDetails;
-//     // let finishedClass;
-//     // console.dir(orders);
-//     // for (orderId in orders) {
-//     //     orderDetails = orders[orderId];
-//     //     order = orderDetails[0];
-        
-//     //     finishedClass = order['orderStatus'] === skiptStatus ? 'finished hideRow' : 'notFinished';
-//     //     tableBody +=    '<tr class="' + finishedClass + '">';
-//     //     tableBody +=        '<th>' + order['orderId'] + '</th>';
-//     //     tableBody +=        '<th>' + showOrderProducts(orderDetails) + '</th>';
-//     //     tableBody +=        '<th>' + order['orderAmount'] + '</th>';
-//     //     tableBody +=        '<th>' + order['spotName'] + '</th>';
-//     //     tableBody +=        '<th>' + showOrderStatuses(orderGlobals.orderStatuses, order['orderId'], order['orderStatus']) + '</th>';
-//     //     tableBody +=        '<th>' + order['orderStatus'] + '</th>';
-//     //     tableBody +=        '<th>' + order['buyerUserName'] + '</th>';
-//     //     tableBody +=        '<th>' + showPhoneNumber(order) + '</th>';
-//     //     tableBody +=        '<th>' + order['buyerEmail'] + '</th>';
-//     //     tableBody +=        '<th>';
-//     //     if (order['sendSms'] === '0') {
-//     //         let disabled = order['orderStatus'] === 'done' ? '' : 'disabled';
-//     //         tableBody += '<button class="btn btn-primary" ' + disabled + ' ';
-//     //         tableBody +=    'data-order-id=' + order['orderId'] + '" ';
-//     //         tableBody +=    'data-mobile="' + order['buyerMobile'] + '" ';
-//     //         tableBody +=    'data-message="Jouw bestelling \'' + order['orderId'] + '\' staat klaa" ';
-//     //         tableBody +=    'data-recipent="buyer" ';
-//     //         tableBody +=    'onclick="sendSms(this)"';
-//     //         tableBody += '>Send sms</button>';
-//     //     } else {
-//     //         tableBody += 'Sms send (buyer)'
-//     //     }
-//     //     tableBody +=        '<th>';
-//     //     // if (order['sendSmsDriver'] === '0') {
-//     //     //     console.dir(order['driverNumber']);
-//     //     //     if (order['driverNumber']) {
-//     //     //         let disabled = order['orderStatus'] === 'done' ? '' : 'disabled';
-//     //     //         tableBody += '<button class="btn btn-primary" ' + disabled + ' ';
-//     //     //         tableBody +=    'data-order-id=' + order['orderId'] + '" ';
-//     //     //         tableBody +=    'data-mobile="' + order['driverNumber'] + '" ';
-//     //     //         tableBody +=    'data-message="Order staat klaar bij ' + orderGlobals.vendorName + '" ';
-//     //     //         tableBody +=    'data-recipent="driver" ';
-//     //     //         tableBody +=    'onclick="sendSms(this)"';
-//     //     //         tableBody += '>Send sms</button>';
-//     //     //     } else {
-//     //     //         tableBody += '<a href="' + globalVariables.baseUrl + 'profile">SET DRIVER NUMBER</a>';
-//     //     //     }
-            
-//     //     // } else {
-//     //     //     tableBody += 'Sms send (driver)'
-//     //     // }
-//     //     tableBody +=        '</th>';
-//     //     tableBody +=    '</tr>';
-//     // }
-//     $('#' + elementId).html(tableBody);
-// }
-
-// function showOrderStatuses(orderStatuses, orderId, orderStatus) {
-//     let orderStatusesLength = orderStatuses.length;
-//     let status;
-//     let i;
-//     let select = '<select data-order-id="' + orderId + '" onchange="changeStatus(this)">'
-//     for (i = 0; i < orderStatusesLength; i++) {
-//         status = orderStatuses[i];
-//         select += '<option value="'  + status + '" ';
-//         if (status === orderStatus) {
-//             select += 'selected ';
-//         }
-//         select += '>'  + status + '</option>';
-//     }
-//     select += '</select>';
-//     return select;
-// }
-
-// function showOrderProducts(products) {
-//     let productsLength = products.length;
-//     let product;
-//     let i;
-//     let list = '<ol>';
-//     for (i = 0; i < productsLength; i++) {
-//         product = products[i];
-//         list += '<li>Product: ' + product.productName + ' Quantity: ' + product.productQuantity + '</li>';
-//     }
-//     list += '</ol>';
-//     return list;
-// }
-
-
-
-
-
-
-
-
-
