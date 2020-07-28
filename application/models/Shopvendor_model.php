@@ -16,6 +16,7 @@
         public $paynlServiceId;
         public $termsAndConditions;
         public $requireMobile;
+        public $payNlServiceId;
 
         public $bancontact;
         public $ideal;
