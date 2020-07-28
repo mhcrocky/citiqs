@@ -80,7 +80,7 @@
             /* New image */
             //--- aantal rows bepalen a.d. hand van aantal order regels.
 
-            $rowheight = (count($productsarray) * 30) + 500;
+            $rowheight = (count($productsarray) * 30) + 700;
             $imagetext->newImage(576, $rowheight, $pixel);
 
             /* Black text */
@@ -140,6 +140,8 @@
             $totalamount = 0;
             $i = 0;
 			$Ttotalamount =0;
+			$T21totalamount=0;
+			$T9totalamount=0;
             $emailMessage = '';
             foreach ($productsarray as $product) {
 
@@ -162,11 +164,20 @@
                 $vatpercentage = $product[7];
 
 
+
                 $totalamount =  floatval($quantity) * floatval($price);
 				$Stotalamount = sprintf("%.2f", $totalamount);
 
 				$Ttotalamount = $Ttotalamount+$totalamount  ;
 				$TStotalamount = sprintf("%.2f", $Ttotalamount);
+
+				if($vatpercentage==21){
+					$T21totalamount = $T21totalamount+($totalamount-(($totalamount/121)*100))  ;
+				}
+
+				if($vatpercentage==9){
+					$T9totalamount = $T9totalamount+($totalamount-(($totalamount/121)*100))  ;
+				}
 
 				$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
                 // $draw->annotation(0, 165 + ($i * 30), $plu);
@@ -217,47 +228,91 @@
 			$draw->line(500, 165 + ($i * 30), 576, 165 + ($i * 30));
 			$draw->setStrokeWidth(1);
 
-			$i++;
-			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "21 % ");
-			$draw->annotation(570, 165 + ($i * 30), "€ ". $TStotalamount);
+
+			$T21Stotalamount = sprintf("%.2f", $T21totalamount);
+			$T9Stotalamount = sprintf("%.2f", $T9totalamount);
 
 			$i++;
-			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, " 9 % ");
-			$draw->annotation(570, 165 + ($i * 30), "€ ". $TStotalamount);
+			$imagetext->annotateImage($draw, 440, 165 + ($i * 30), 0, "BTW 21 % ");
+			$draw->annotation(570, 165 + ($i * 30), "€ ". $T21Stotalamount);
+
+			$i++;
+			$imagetext->annotateImage($draw, 440, 165 + ($i * 30), 0, "BTW 9 % ");
+			$draw->annotation(570, 165 + ($i * 30), "€ ". $T9Stotalamount);
 
 			//-------- regels --------
+			//
+			//			$i++;
+			//			$imagetext->annotateImage($draw, 0, 165 + ($i * 30), 0, $order['vendorName'] );
 
-            //-------- Text printen!  --------
+			$i++;
+			$draw->setStrokeColor('black');
+			$draw->setStrokeWidth(4);
+			$draw->line(0, 165 + ($i * 30), 576, 165 + ($i * 30));
+			$draw->setStrokeWidth(1);
+
+			$i++;
+			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
+			$draw->annotation(570, 165 + ($i * 30), $order['vendorName']);
+
+			$i++;
+			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
+			$draw->annotation(570, 165 + ($i * 30), $order['vendorAddress']);
+
+			$i++;
+			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
+			$draw->annotation(570, 165 + ($i * 30), $order['vendorZipcode']);
+
+			$i++;
+			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
+			$draw->annotation(570, 165 + ($i * 30), $order['vendorCity']);
+
+			$i++;
+			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
+			$draw->annotation(570, 165 + ($i * 30), $order['vendorCountry']);
+
+			$i++;
+			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
+			$draw->annotation(570, 165 + ($i * 30), "BTW:". $order['vendorVAT']);
+
+			$i++;
+			$draw->setStrokeColor('black');
+			$draw->setStrokeWidth(4);
+			$draw->line(0, 165 + ($i * 30), 576, 165 + ($i * 30));
+			$draw->setStrokeWidth(1);
+
+
+			//-------- Text printen!  --------
             $imagetext->drawImage($draw);
             $imageprint->addImage($imagetext);
 
             // ------------------ QRCode creation --------------------------
 
-            $imageqr = new Imagick();
+//            $imageqr = new Imagick();
 
             // QRcode::png("https://tiqs.nl", 'petersqr.png', QR_ECLEVEL_H, 15);
             // $imageqr ->readImage('petersqr.png');
             // $imageprint ->addImage($imageqr);
 
 
-            $imagelogo = new Imagick($logoFile);
-            $geometry = $imagelogo->getImageGeometry();
-
-            $width = intval($geometry['width']);
-            $height = intval($geometry['height']);
-            $crop_width = 600;
-            $crop_height = 150;
-            $crop_x = intval(($width - $crop_width) / 2);
-            $crop_y = intval(($height - $crop_height) / 2);
-            $sizeheight = 300;
-            $sizewidth = 576;
-
-            $imagelogo->cropImage($crop_width, $crop_height, $crop_x, $crop_y);
-            $imagelogo->setImageFormat('png');
-            $imagelogo->setImageBackgroundColor(new ImagickPixel('white'));
-            $imagelogo->extentImage($sizewidth, $sizeheight, -($sizewidth - $crop_width) / 2, -($sizeheight - $crop_height) / 2);
-
-            $imageprint->addImage($imagelogo);
+//            $imagelogo = new Imagick($logoFile);
+//            $geometry = $imagelogo->getImageGeometry();
+//
+//            $width = intval($geometry['width']);
+//            $height = intval($geometry['height']);
+//            $crop_width = 600;
+//            $crop_height = 150;
+//            $crop_x = intval(($width - $crop_width) / 2);
+//            $crop_y = intval(($height - $crop_height) / 2);
+//            $sizeheight = 300;
+//            $sizewidth = 576;
+//
+//            $imagelogo->cropImage($crop_width, $crop_height, $crop_x, $crop_y);
+//            $imagelogo->setImageFormat('png');
+//            $imagelogo->setImageBackgroundColor(new ImagickPixel('white'));
+//            $imagelogo->extentImage($sizewidth, $sizeheight, -($sizewidth - $crop_width) / 2, -($sizeheight - $crop_height) / 2);
+//
+//            $imageprint->addImage($imagelogo);
 
             // ---------------- Create the print -------------------------
             // $result = $imageprint->mergeImageLayers(imagick::LAYERMETHOD_COMPARECLEAR);
@@ -274,8 +329,7 @@
                 
             header('Content-type: image/png');
             // $image ->writeImage("peter.png");
-
-//            $imageqr->destroy();
+			//            $imageqr->destroy();
             $imagetext->destroy();
             $imagelogo->destroy();
             $imageprint->destroy();
