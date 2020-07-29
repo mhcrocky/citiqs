@@ -18,7 +18,8 @@
         {
             $data = get_object_vars($this);
             foreach($data as $key => $value) {
-                if ($key === 'id' || is_null($value) || is_bool($value)) {
+                
+                if ($key === 'id' || (!$value && !Validate_data_helper::validateNumber($value))) {
                     unset($data[$key]);
                 }
             }
@@ -56,8 +57,6 @@
             if ($condition) {                
                 $result = $this->db->$condition(...$conditionArguments);
             }
-            // $result = $this->db->get($this->getThisTable());
-            // echo $this->db->last_query(); die();
             $result = $this->db->get($this->getThisTable())->result_array();
             return $result ? $result : null;
         }
