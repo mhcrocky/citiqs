@@ -19,6 +19,9 @@
 
         protected function setValueType(string $property,  &$value): void
         {
+            $this->load->helper('validate_data_helper');
+            if (!Validate_data_helper::validateInteger($value)) return;
+
             if ($property === 'id' || $property === 'userId' || $property === 'numberOfCopies') {
                 $value = intval($value);
             }

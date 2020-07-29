@@ -18,7 +18,8 @@
 
         protected function setValueType(string $property,  &$value): void
         {
-            if (is_null($value) || is_bool($value) || !$value) return;
+            $this->load->helper('validate_data_helper');
+            if (!Validate_data_helper::validateInteger($value)) return;
 
             if ($property === 'id' || $property === 'printerId' ) {
                 $value = intval($value);
