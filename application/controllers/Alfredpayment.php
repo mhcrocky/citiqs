@@ -43,7 +43,8 @@ class Alfredpayment extends BaseControllerWeb
         $orderId = Utility_helper::getSessionValue('orderId');
         $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
         $order = reset($order);
-        $arguments = Pay_helper::getArgumentsArray($order, $serviceId, intval($paymentType), intval($paymentOptionSubId));
+        $arguments = Pay_helper::getArgumentsArray($vendor['vendorId'], $order, $serviceId, $paymentType, $paymentOptionSubId);
+
         $url = Pay_helper::getPayUrl($arguments);
         $result = @file_get_contents($url);
         $result = json_decode($result);
@@ -59,7 +60,7 @@ class Alfredpayment extends BaseControllerWeb
         }
 
         $this->session->set_flashdata('error', 'Payment engine error. Please, contact staff');
-        $redirect = 'make_order?vendorid=' . $order['vendorId'] . '&spotid=' . $order['spotId'];
+        $redirect = 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $order['spotId'];
         redirect($redirect);
         exit();
     }
@@ -82,6 +83,8 @@ class Alfredpayment extends BaseControllerWeb
 
     public function successPayment(): void
     {
+        $redirect = 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'] . '&spotid=' . $_SESSION['spotId'];
+
         unset($_SESSION['order']);
         unset($_SESSION['postOrder']);
         unset($_SESSION['vendor']);
@@ -89,16 +92,9 @@ class Alfredpayment extends BaseControllerWeb
 
         $get = $this->input->get(null, true);
         $statuscode = intval($get['orderStatusId']);
-        $order = $this
-                    ->shoporder_model
-                        ->setProperty('transactionId', $get['orderId'])
-                        ->setOrderIdFromTransactionId()
-                        ->fetchOne();
-        $order = reset($order);
-        $redirect = 'make_order?vendorid=' . $order['vendorId'] . '&spotid=' . $order['spotId'];
 
         if ($statuscode == 100) {
-            $this->shoporder_model->updatePaidStatus(['paid' => '1']);
+            $this->shoporder_model->setProperty('transactionId', $get['orderId'])->updatePaidStatus(['paid' => '1']);
             $this->session->set_flashdata('success', 'Your order is paid');
             $redirect = 'success';
         } elseif ($statuscode < 0 ) {

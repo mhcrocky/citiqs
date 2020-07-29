@@ -24,7 +24,7 @@
             return $strUrl;
         }
 
-        public static function getArgumentsArray(array $order, string $serviceId, int $paymentType, int $paymentOptionSubId = 0): array
+        public static function getArgumentsArray(int $vendorId, array $order, string $serviceId, string $paymentType, string $paymentOptionSubId = '0'): array
         {
             $CI =& get_instance();
             $CI->load->config('custom');
@@ -45,7 +45,7 @@
             $arrArguments['transaction']['orderExchangeUrl'] = base_url() . 'exchangePay';
             $arrArguments['transaction']['description'] = 'tiqs - ' . $order['orderId'];
 
-            $arrArguments['statsData']['promotorId'] = $order['vendorId'];
+            $arrArguments['statsData']['promotorId'] = $vendorId;
             $arrArguments['statsData']['extra1'] = $order['orderId'];
             $arrArguments['statsData']['extra2'] = $order['spotId'];
 
@@ -55,7 +55,7 @@
             $arrArguments['saleData']['invoiceDate'] = date('d-m-Y');
             $arrArguments['saleData']['deliveryDate'] = date('d-m-Y');
             $arrArguments['saleData']['orderData'][0]['productId'] = $order['orderId'];
-            $arrArguments['saleData']['orderData'][0]['description'] = 'Order from : ' . $order['vendorId'] . ' Spot : ' . $order['spotId'];
+            $arrArguments['saleData']['orderData'][0]['description'] = 'Order from : ' . $vendorId . ' Spot : ' . $order['spotId'];
             $arrArguments['saleData']['orderData'][0]['productType'] = 'HANDLING';
             $arrArguments['saleData']['orderData'][0]['price'] = $amount;
             $arrArguments['saleData']['orderData'][0]['quantity'] = 1;

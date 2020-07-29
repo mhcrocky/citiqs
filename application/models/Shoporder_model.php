@@ -88,9 +88,9 @@
                     'buyer.id AS buyerId',
                     'buyer.email AS buyerEmail',
                     'buyer.username AS buyerUserName',
-                    'vendor.id AS vendorId',
-                    'vendor.email AS vendorEmail',
-                    'vendor.username AS vendorUserName',
+                    // 'vendor.id AS vendorId',
+                    // 'vendor.email AS vendorEmail',
+                    // 'vendor.username AS vendorUserName',
                     'tbl_shop_spots.id AS spotId',
                     'tbl_shop_spots.spotName AS spotName'
                 ],
@@ -102,11 +102,11 @@
                     ['tbl_shop_products_extended', 'tbl_shop_order_extended.productsExtendedId  = tbl_shop_products_extended.id', 'INNER'],
                     ['tbl_shop_products', 'tbl_shop_products_extended.productId  = tbl_shop_products.id', 'INNER'],
                     ['tbl_shop_categories', 'tbl_shop_products.categoryId  = tbl_shop_categories.id', 'INNER'],
-                    [
-                        '(SELECT * FROM tbl_user WHERE roleid = '. $this->config->item('owner') .') vendor',
-                        'vendor.id  = tbl_shop_categories.userId',
-                        'INNER'
-                    ],
+                    // [
+                    //     '(SELECT * FROM tbl_user WHERE roleid = '. $this->config->item('owner') .') vendor',
+                    //     'vendor.id  = tbl_shop_categories.userId',
+                    //     'INNER'
+                    // ],
                     [
                         '(SELECT * FROM tbl_user WHERE roleid = ' . $this->config->item('buyer') . ' OR roleid = ' . $this->config->item('owner') . ') buyer',
                         'buyer.id  = ' .  $this->table  . '.buyerId',

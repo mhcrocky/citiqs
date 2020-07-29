@@ -74,18 +74,13 @@ function updatePhoneNumber(element) {
 
 function sendSmsButton(data) {
     let button = '';
-    if (data[9] === '0') {
-        let disabled = data[4] === 'done' ? '' : 'disabled';
-        button += '<button class="btn btn-primary" ' + disabled + ' ';
-        button +=    'data-order-id=' + data[0] + '" ';
-        button +=    'data-mobile="' + data[10] + '" ';
-        button +=    'data-message="Jouw bestelling \'' + data[0] + '\' staat klaar in de keuken" ';
-        button +=    'data-recipent="buyer" ';
-        button +=    'onclick="sendSms(this)"';
-        button += '>SMS</button>';
-    } else {
-        button += 'Sent'
-    }
+    button += '<button class="btn btn-primary" ';
+    button +=    'data-order-id=' + data[0] + '" ';
+    button +=    'data-mobile="' + data[10] + '" ';
+    button +=    'data-message="Jouw bestelling \'' + data[0] + '\' staat klaar in de keuken" ';
+    button +=    'data-recipent="buyer" ';
+    button +=    'onclick="sendSms(this)"';
+    button += '>SMS</button>';
     return button;
 }
 
@@ -111,7 +106,7 @@ function populateTable(data) {
             data: data,
             order: [[5, 'desc' ]],
             pagingType: "first_last_numbers",
-            pageLength:10,
+            pageLength: 25,
             columnDefs: [
                 {
                     "targets": 1,
@@ -156,11 +151,11 @@ function populateTable(data) {
             //         });
             //     });
             // },
-            rowCallback: function(row, data) {
-                if (data[4] === 'not seen') {
-                    row.style.backgroundColor = '#ff4d4d';
-                }
-            }
+            // rowCallback: function(row, data) {
+            //     if (data[4] === 'not seen') {
+            //         row.style.backgroundColor = '#ff4d4d';
+            //     }
+            // }
         });
     });
 }
@@ -191,7 +186,19 @@ function destroyAndFetch() {
 document.addEventListener("DOMContentLoaded", function() {
     fetchOrders();
     // fetch new data every 10 seconds
-    setInterval(function() {        
-        return  destroyAndFetch();
-    }, 10000);
+    // setInterval(function() {        
+    //     return  destroyAndFetch();
+    // }, 1000000);
+
+    $('[data-toggle="popover"]').popover({
+        html:true,
+        animation: false,
+        trigger: 'hover',
+        delay: {
+            "hide": 100
+        }
+    });
+    $('.popover-dismiss').popover({
+        trigger: 'focus'
+    })
 });
