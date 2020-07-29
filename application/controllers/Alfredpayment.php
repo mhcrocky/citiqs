@@ -70,15 +70,15 @@ class Alfredpayment extends BaseControllerWeb
         $transactionid = $this->input->get('order_id'); 
         $statuscode = intval($this->input->get('orderStatusId'));
 
-        if ($statuscode === 100) {
+//        if ($statuscode === 100) {
             $update = $this
                         ->shoporder_model
                             ->setProperty('transactionId', $transactionid)
                             ->updatePaidStatus(['paid' => '1']);
             echo('TRUE| '. $transactionid);
-        } else {
-            echo('TRUE| NO INFO ');
-        }
+//        } else {
+//            echo('TRUE| NO INFO ');
+//        }
     }
 
     public function successPayment(): void
