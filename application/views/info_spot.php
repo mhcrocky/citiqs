@@ -303,10 +303,6 @@
 							<li><?=$this->language->line("BUSINESS-SPOT-31100033C","YOUR STANDARD TIQS HOSPITALITY RESERVATION INCLUDING LOST AND FOUND");?></li>
 							<li><?=$this->language->line("BUSINESS-SPOT-31100033D","PHONE RESERVATION SYSTEM PAYMENTS AND ADVANCES PROMOTIONS - ARRANGEMENTS GIFT CARDS ADDITIONAL RESERVATION QUESTIONS LINK WITH POS SYSTEMS");?></li>
 						</ul>
-						<ul style="list-style-type: none; font-family:caption-bold; font-size: medium; margin-left: -40px" >
-							<li><?=$this->language->line("BUSINESS-SPOT-31100033E1-{$subscriptions['standard_spot_year'][0]['amount']}",'YEARLY SUBSCRIPTION = ' . $subscriptions['standard_spot_year'][0]['amount'] . ' EURO');?></li>
-							<li><?=$this->language->line("BUSINESS-SPOT-31100033E1-{$subscriptions['standard_spot_month'][0]['amount']}",'MONTHLY SUBSCRIPTION = ' . $subscriptions['standard_spot_month'][0]['amount'] . ' EURO');?></li>
-						</ul>
 					</p>
 				</div>
 			</div>

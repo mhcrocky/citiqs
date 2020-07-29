@@ -18,7 +18,9 @@
 
         protected function setValueType(string $property,  &$value): void
         {
-            if ($property === 'id' || $property === 'printerId') {
+            if (is_null($value) || is_bool($value) || !$value) return;
+
+            if ($property === 'id' || $property === 'printerId' ) {
                 $value = intval($value);
             }
             if ($property === 'price') {

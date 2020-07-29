@@ -163,4 +163,11 @@
             $this->load->helper('utility_helper');
             return Utility_helper::resetArrayByKeyMultiple($productSpots, 'spotId');
         }
+
+        public function deleteProductSpots(): bool
+        {
+            $query = 'DELETE FROM ' . $this->table . ' WHERE productId = ' . $this->productId . ';';
+            return $this->db->query($query);
+        }
+
     }

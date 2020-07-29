@@ -40,7 +40,7 @@
 
             // FETCH AND SAVE VENDOR DATA IN SESSION
             $vendor = $this->shopvendor_model->setProperty('vendorId', $get['vendorid'])->getVendorData();
-            if (is_null($vendor['payNlServiceId'])) {
+            if (empty($vendor['payNlServiceId'])) {
                 redirect(base_url());
             }
             $_SESSION['vendor'] = $vendor;

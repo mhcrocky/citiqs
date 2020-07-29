@@ -22,7 +22,14 @@
 					<form class="form-inline" id="addCategory" method="post" action="<?php echo $this->baseUrl . 'warehouse/addCategory'; ?>">
                         <legend>Add category</legend>
 						<input type="text" readonly name="userId" required value="<?php echo $userId ?>" hidden />
-						<input type="number" readonly name="sortNumber" required value="<?php echo (count($categories) + 1); ?>" hidden />						
+						<input
+							type="number"
+							readonly
+							name="sortNumber"
+							required
+							value="<?php echo (is_null($categories)) ? '1' :  (count($categories) + 1); ?>"
+							hidden
+							/>
                         <input type="text" readonly name="active" required value="1" hidden />
 						<div class="col-lg-4 col-sm-12 form-group">
 							<label style="background-color:#fff" for="category">Category: </label>
@@ -147,6 +154,15 @@
 							<div style="width:100%">
 								<form class="form-inline" id="editCategory<?php echo $category['categoryId']; ?>" method="post" action="<?php echo $this->baseUrl . 'warehouse/editCategory/' . $category['categoryId']; ?>">
 									<input type="text" name="userId" value="<?php echo $userId; ?>" readonly required hidden />
+									<input
+										type="number"
+										id="sortNumber<?php echo $category['categoryId']; ?>"
+										readonly
+										name="sortNumber"
+										required
+										value="<?php echo $category['sortNumber']; ?>"
+										hidden
+										/>
 									<legend style="text-align:left">Category "<?php echo $category['category']; ?>" details</legend>
 									<div class="col-lg-4 col-sm-12 form-group">
 										<label style="background-color:#fff" for="category<?php echo $category['categoryId']; ?>">Name</label>

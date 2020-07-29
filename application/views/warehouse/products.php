@@ -3,7 +3,7 @@
 <div class="main-wrapper theme-editor-wrapper">
 	<div class="grid-wrapper">
         <?php if (is_null($categories) || is_null($printers) || is_null($productTypes) || is_null($userSpots)) { ?>
-            <p style="margin-left:15px;"> No categories, product types and / or printers.
+            <p style="margin-left:15px;"> No categories, product types, printers  and / or spots.
                 <?php if (is_null($categories)) { ?>
                     <a href="<?php echo $this->baseUrl . 'product_categories'; ?>">
                         Add category  
@@ -753,9 +753,20 @@
         }
     }
 
-    populateClassElements('addOns', '<?php echo str_replace('\'', ' ', $addOnsList); ?>');
-    $(document).ready(function() {
-        $('.selectProducts').select2();
-        $('#filterProducts').html('<?php echo str_replace('\'', ' ', $productList); ?>');
-    });
+    
+
 </script>
+<?php if (!empty($addOnsList)) { ?>
+    <script>
+        populateClassElements('addOns', '<?php echo str_replace('\'', ' ', $addOnsList); ?>');
+    </script>
+<?php } ?>
+
+<?php if (!empty($productList)) { ?>
+    <script>
+            $(document).ready(function() {
+                $('.selectProducts').select2();
+                $('#filterProducts').html('<?php echo str_replace('\'', ' ', $productList); ?>');
+            });
+    </script>
+<?php } ?>

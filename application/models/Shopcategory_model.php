@@ -23,6 +23,7 @@
 
         protected function setValueType(string $property,  &$value): void
         {
+
             if ($property === 'id' || $property === 'userId') {
                 $value = intval($value);
             }
@@ -49,7 +50,7 @@
             if (isset($data['category']) && !Validate_data_helper::validateString($data['category'])) return false;
             if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
             if (isset($data['sendSms']) && !($data['sendSms'] === '1' || $data['sendSms'] === '0')) return false;
-            if (isset($data['driverNumber']) && !Validate_data_helper::validateString($data['driverNumber'])) return false;
+            // if (isset($data['driverNumber']) && !Validate_data_helper::validateString($data['driverNumber'])) return false;
             if (isset($data['delayTime']) && !Validate_data_helper::validateInteger($data['delayTime'])) return false;
             if (isset($data['sortNumber']) && !Validate_data_helper::validateInteger($data['sortNumber'])) return false;
 
@@ -66,6 +67,7 @@
                     $this->table . '.sendSms',
                     $this->table . '.driverNumber',
                     $this->table . '.delayTime',
+                    $this->table . '.sortNumber',
                 ],
                 $where,
                 [],

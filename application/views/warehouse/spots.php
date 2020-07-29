@@ -22,7 +22,7 @@
                             <div>
                                 <label for="addPrinterId">Spot printer: </label>
                                 <select class="form-control" id="addPrinterId" name="printerId">
-                                    <option value="0">Select</option>
+                                    <option value="">Select</option>
                                     <?php foreach ($printers as $printer) { ?>
                                         <option value="<?php echo $printer['id']; ?>">
                                             <?php echo $printer['printer']; ?>
@@ -128,7 +128,7 @@
                                         <div>
                                             <label for="editPrinterId<?php echo $spot['spotId']; ?>">Spot printer: </label>
                                             <select class="form-control" id="editPrinterId<?php echo $spot['spotId']; ?>" name="printerId">
-                                                <option value="0">Select</option>
+                                                <option value="">Select</option>
                                                 <?php foreach ($printers as $printer) { ?>
                                                     <option
                                                         value="<?php echo $printer['id']; ?>"

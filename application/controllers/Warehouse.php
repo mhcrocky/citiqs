@@ -221,6 +221,7 @@
 
             // insert product extended
             $countTypes = 0;
+
             foreach($data['productTypes'] as $typeId => $typeValues) {
                 if (isset($typeValues['check'])) {
                     $countTypes++;
@@ -228,8 +229,9 @@
                     $data['productExtended']['productTypeId'] = intval($typeId);
                     $data['productExtended']['price'] = floatval($typeValues['price']);
                     $data['productExtended']['updateCycle'] = 1;
-                    $data['productExtended']['showInPublic'] = '1';                    
+                    $data['productExtended']['showInPublic'] = '1';
                     if(!$this->shopproductex_model->setObjectFromArray($data['productExtended'])->create()) {
+                        $this->shopspotproduct_model->setProperty('productId', $this->shopproduct_model->id)->deleteProductSpots();
                         $this->shopproduct_model->delete();
                         $this->session->set_flashdata('error', 'Product insert failed! Please try again.');
                         redirect('products');
@@ -250,14 +252,16 @@
                         'productId' => $this->shopproduct_model->id
                     ];
                     if (!$this->shopproductprinters_model->setObjectFromArray($printerInsert)->create()) {
-                        $this->session->set_flashdata('error', 'Pinter insert failed. Please check');
+                        $this->session->set_flashdata('error', 'Printer insert failed. Please check');
                         break;
                     }
                 }
             }
 
             //insert product available times
-            $this->shopproducttime_model->insertProductTimes($this->shopproduct_model->id);
+            if (!$this->shopproducttime_model->insertProductTimes($this->shopproduct_model->id)) {
+                $this->session->set_flashdata('error', 'Product times insert');
+            }
 
             $this->session->set_flashdata('success', 'Product inserted.');
             redirect('products');
@@ -334,7 +338,7 @@
                         $insert = false;
                         break;
                     } else {
-                        if ($typeValues['oldExtendedId']) {
+                        if (!empty($typeValues['oldExtendedId'])) {
                             $oldExtendedId = intval($typeValues['oldExtendedId']);
                             $this->shopproductaddons_model->updateProductExtendedId($oldExtendedId, $this->shopproductex_model->id);
                         }

@@ -197,7 +197,7 @@
 <!--		--><?php //echo $vendor['logo']; ?>
 <!--        <h1>--><?php //echo $vendor['vendorName']; ?><!--</h1>-->
 <!--		https://tiqs.com/alfred/assets/images/vendorLogos/1162_1595838163.png -->
-		<div style="text-align:center; allign="center">
+		<div style="text-align:center; allign=center">
 			<img src=<?php echo "https://tiqs.com/alfred/assets/images/vendorLogos/".$vendor['logo']; ?> alt="" width="300" height="auto">
 		</div>
 

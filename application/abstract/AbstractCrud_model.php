@@ -18,7 +18,7 @@
         {
             $data = get_object_vars($this);
             foreach($data as $key => $value) {
-                if ($key === 'id' || (!$value && !Validate_data_helper::validateNumber($value))) {
+                if ($key === 'id' || is_null($value) || is_bool($value)) {
                     unset($data[$key]);
                 }
             }
