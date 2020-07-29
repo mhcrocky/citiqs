@@ -203,7 +203,7 @@
                 ],
                 'conditions' => [
                     'group_by' => [$this->table . '.id'],
-                    'order_by' => [$this->table . '.updated DESC']
+                    'order_by' => [$this->table . '.id DESC']
                 ]
             ];
             return $this->readImproved($filter);
@@ -619,6 +619,12 @@
                     }
                 }
             }, $productDetails);
+
+            // filter details
+            $productDetails = array_filter($productDetails, function($data){
+                return !empty($data);
+            });
+
             return $productDetails;
         }
 
@@ -657,7 +663,7 @@
                                         $selectedPrinter
                                     );
 
-                    if ($fineDetails[0]) {
+                    if (!empty($fineDetails)) {
                         $result[$index]['orderedProductDetails'] = $fineDetails;
                         $result[$index]['orderedProductDetails']['spotPrinter'] = $result[$index]['spotPrinter'];
                         unset($result[$index]['productPrinterDetails']);

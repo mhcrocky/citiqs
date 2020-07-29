@@ -887,7 +887,14 @@ class User_model extends CI_Model
             // must return non hashed password for activation link
             $this->password = $password;
         } else {
-            $this->editUser($buyer, $this->id);
+            $newData = [
+                'username' => $buyer['username'],
+                'email' => $buyer['email'],
+            ];
+            if ($buyer['mobile']) {
+                $newData['mobile'] = $buyer['mobile'];
+            }
+            $this->editUser($newData, $this->id);
         }
 
 		$this->setUniqueValue($buyer['email'])->setWhereCondtition()->setUser();
