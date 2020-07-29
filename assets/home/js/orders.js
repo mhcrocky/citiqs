@@ -80,7 +80,7 @@ function sendSmsButton(data) {
     button +=    'data-message="Jouw bestelling \'' + data[0] + '\' staat klaar in de keuken" ';
     button +=    'data-recipent="buyer" ';
     button +=    'onclick="sendSms(this)"';
-    button += '>SMS</button>';
+    button += '>SMS <span class="badge badge-light">' + data[11] + '</span></button>';
     return button;
 }
 
@@ -135,7 +135,8 @@ function populateTable(data) {
                     "targets": 9,
                     "data": function (row, type, val, meta) {
                         return sendSmsButton(row);
-                    }
+                    },
+                    "width": "10%"
                 }            
             ],
             // initComplete: function () {

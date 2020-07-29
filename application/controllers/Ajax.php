@@ -477,11 +477,13 @@ class Ajax extends CI_Controller
         $orderId = intval($this->uri->segment(3));
         $url = 'https://tiqs.com/lostandfound/Api/Missing/sendsms';
         if (Curl_helper::sendSms($url, $smsData)) {
+
             $update =    $this
                             ->shoporder_model
                             ->setObjectId($orderId)
                             ->setObjectFromArray($update)
                             ->update();
+            $this->shoporder_model->updateSmsCounter();
             echo $update ? 1 : 0;
         } else {
             echo 0;

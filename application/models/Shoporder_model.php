@@ -22,6 +22,7 @@
         public $spotId;
         public $transactionId;
         public $sendSmsDriver;
+        public $countSentMessages;
 
         private $table = 'tbl_shop_orders';
 
@@ -73,6 +74,7 @@
             if (isset($data['spotId']) && !Validate_data_helper::validateInteger($data['spotId'])) return false;
             if (isset($data['transactionId']) && !Validate_data_helper::validateString($data['transactionId'])) return false;
             if (isset($data['sendSmsDriver']) && !($data['sendSmsDriver'] === '1' || $data['sendSmsDriver'] === '0')) return false;
+            if (isset($data['countSentMessages']) && !Validate_data_helper::validateInteger($data['countSentMessages'])) return false;
 
             return true;
         }
@@ -136,6 +138,7 @@
                     $this->table . '.sendSmsDriver AS sendSmsDriver',
                     $this->table . '.created AS orderCreated',
                     $this->table . '.updated AS orderUpdated',
+                    $this->table . '.countSentMessages AS countSentMessages',
                     'buyer.id AS buyerId',
                     'buyer.email AS buyerEmail',
                     'buyer.username AS buyerUserName',
@@ -684,9 +687,17 @@
                 array( 'db' => 'buyerMobile',           'dt' => 8),
                 array( 'db' => 'sendSms',               'dt' => 9),
                 array( 'db' => 'buyerId',               'dt' => 10),
+                array( 'db' => 'countSentMessages',     'dt' => 11),
+
+                
             );
 
             return Jquerydatatable_helper::data_output($columns, $return);
         }
 
+        public function updateSmsCounter(): bool
+        {
+            $query = 'UPDATE ' . $this->table . ' SET countSentMessages = countSentMessages + 1 WHERE id = ' . $this->id .';';
+            return $this->db->query($query);
+        }
     }
