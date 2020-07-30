@@ -264,7 +264,7 @@ $route['successPayment'] = 'Alfredpayment/successPayment';
 $route['exchangePay'] = 'Alfredpayment/ExchangePay';
 
 $route['success'] = 'Paysuccesslink';
-
+$route['successth'] = 'Paysuccesslinkth';
 
 
 /* End of file routes.php */

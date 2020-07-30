@@ -819,7 +819,7 @@ div.filter-sidebar ul li a {
 	cursor: url('cursor.png'), auto;
 	cursor: grab;
 	margin-top: 50px;
-	margin-bottom: 50px;
+	margin-bottom: 200px;
 	padding-left: 55px;
 	padding-right: 55px;
 }
@@ -853,6 +853,7 @@ div.filter-sidebar ul li a {
 	.main-slider{
 		padding-left: 35px;
 		padding-right: 35px;
+		margin-bottom: 200px;
 	}
 	
 	.slick-prev, .slick-next{

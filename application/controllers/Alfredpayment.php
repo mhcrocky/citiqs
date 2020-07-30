@@ -85,10 +85,12 @@ class Alfredpayment extends BaseControllerWeb
     {
         $redirect = 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'] . '&spotid=' . $_SESSION['spotId'];
 
-        unset($_SESSION['order']);
-        unset($_SESSION['postOrder']);
-        unset($_SESSION['vendor']);
-        unset($_SESSION['spotId']);
+        $lastpageforvendorId = $_SESSION['vendor']['vendorId'];
+
+		unset($_SESSION['order']);
+		unset($_SESSION['postOrder']);
+		unset($_SESSION['spotId']);
+		unset($_SESSION['vendor']);
 
         $get = $this->input->get(null, true);
         $statuscode = intval($get['orderStatusId']);
@@ -96,7 +98,15 @@ class Alfredpayment extends BaseControllerWeb
         if ($statuscode == 100) {
             $this->shoporder_model->setProperty('transactionId', $get['orderId'])->updatePaidStatus(['paid' => '1']);
             $this->session->set_flashdata('success', 'Your order is paid');
-            $redirect = 'success';
+			if($lastpageforvendorId==1162){
+
+				$redirect = 'successth';
+			} else{
+//				var_dump($lastpageforvendorId);
+//				die();
+				$redirect = 'successth';
+			}
+
         } elseif ($statuscode < 0 ) {
             $this->session->set_flashdata('error', 'Order not paid');
         } elseif ($statuscode >= 0) {
@@ -105,6 +115,7 @@ class Alfredpayment extends BaseControllerWeb
             $this->session->set_flashdata('error', 'Payment error. Please, contact staff');
         }
 
+		unset($_SESSION['vendor']);
         redirect($redirect);
         exit();
     }
