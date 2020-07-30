@@ -447,7 +447,7 @@ class Ajax extends CI_Controller
 
 
         $result = $this->shoporder_model->fetchOrderDetailsJquery($where, $selectedPrinter);
-        echo json_encode($result);
+        echo is_null($result) ? json_encode([]): json_encode($result);
 
         return;
     }
