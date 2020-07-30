@@ -211,7 +211,7 @@
 					</div>
 					<br/>
 					<div class="form group">
-						<label for="serviceFeeAmount">Service fee amount: </label>
+						<label for="serviceFeeAmount">Maximum service fee amount: </label>
 						<input
 							type="number"
 							id="serviceFeeAmount"
@@ -221,6 +221,33 @@
 							class="form-control"
 							value="<?php echo $vendor['serviceFeeAmount']; ?>"
 							/>
+					</div>
+					<br/>
+					<div class="form group">
+						<label for="minimumOrderFee">Minimum order fee amount: </label>
+						<input
+							type="number"
+							id="minimumOrderFee"
+							name="minimumOrderFee"
+							min="0"
+							step="0.01"
+							class="form-control"
+							value="<?php echo $vendor['minimumOrderFee']; ?>"
+							/>
+					</div>
+					<br/>
+					<div class="form group">
+						<label for="printTimeConstraint">Print orders created before: 
+						<input
+							type="number"
+							id="printTimeConstraint"
+							name="printTimeConstraint"
+							min="0"
+							step="1"
+							value="<?php echo $vendor['printTimeConstraint']; ?>"
+							/>
+							hours:
+						</label>
 					</div>
 					<div class="form group" style="margin-top:30px !important">
 						<h3>Select payment method(s):</h3>

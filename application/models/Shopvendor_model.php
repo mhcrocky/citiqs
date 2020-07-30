@@ -17,6 +17,8 @@
         public $termsAndConditions;
         public $requireMobile;
         public $payNlServiceId;
+        public $printTimeConstraint;
+        public $minimumOrderFee;
 
         public $bancontact;
         public $ideal;
@@ -64,6 +66,8 @@
             if (isset($data['bancontact']) && !($data['bancontact'] === '1' || $data['bancontact'] === '0')) return false;
             if (isset($data['ideal']) && !($data['ideal'] === '1' || $data['ideal'] === '0')) return false;
             if (isset($data['creditCard']) && !($data['creditCard'] === '1' || $data['creditCard'] === '0')) return false;
+            if (isset($data['printTimeConstraint']) && !Validate_data_helper::validateInteger($data['printTimeConstraint'])) return false;
+            if (isset($data['minimumOrderFee']) && !Validate_data_helper::validateFloat($data['minimumOrderFee'])) return false;
             return true;
         }
 
@@ -81,6 +85,8 @@
                     $this->table . '.bancontact',
                     $this->table . '.ideal',
                     $this->table . '.creditCard',
+                    $this->table . '.printTimeConstraint',
+                    $this->table . '.minimumOrderFee',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',
