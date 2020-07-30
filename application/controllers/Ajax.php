@@ -438,7 +438,7 @@ class Ajax extends CI_Controller
         $where = [
             'vendor.id' => $userId,
             'tbl_shop_orders.paid=' => $post['paid'],
-            'tbl_shop_orders.created>=' => date('Y-m-d H:i:s', strtotime('-24 hours', time()))
+            'tbl_shop_orders.created>=' => date('Y-m-d H:i:s', strtotime('-3 hours', time()))
         ];
         if (isset($post['orderStatus'])) {
             $where['tbl_shop_orders.orderStatus='] = $post['orderStatus'];

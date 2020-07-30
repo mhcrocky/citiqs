@@ -130,7 +130,7 @@ function populateTable(data) {
             data: data,
             order: [[0, 'desc' ]],
             pagingType: "first_last_numbers",
-            pageLength: 100,
+            pageLength: 15,
             columnDefs: [
                 {
                     "targets": 1,
