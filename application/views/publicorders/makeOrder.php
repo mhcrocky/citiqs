@@ -1,4 +1,4 @@
-<?php if($vendor['vendorId'] == 1162 ){?>
+<?php if ($vendor['vendorId'] === 1162 ) { ?>
 <body style="background-color: white">
 <?php } else {?>
 <body style="background-color: navajowhite">
@@ -10,7 +10,7 @@
     }
 </style>
 
-<?php if($vendor['vendorId'] == 1162 ){?>
+<?php if ($vendor['vendorId'] === 1162 ) {?>
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/slick.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/slick-theme.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/th_custom.css">
@@ -46,18 +46,11 @@
         $addons = '';
         $type = strtoupper($product['productType']);
 
-		if ($product['longDescription']!= 'NA') {
+		if ($product['longDescription'] !== 'NA') {
 			$longDescription = '<i class="fa fa-info-circle" aria-hidden="true" data-toggle="popover" data-trigger="hover"  data-placement="bottom" data-content="' . $product['longDescription'] . '"></i>';
 		} else {
 			$longDescription = '';
 		}
-
-//        if ($product['longDescription']) {
-//            $longDescription = '<i class="fa fa-info-circle" aria-hidden="true" data-toggle="popover" data-trigger="hover"  data-placement="bottom" data-content="' . $product['longDescription'] . '"></i>';
-//        } else {
-//            $longDescription = '';
-//        }
-
 
             
         $formElement = '';
@@ -182,49 +175,53 @@
     }
 
 ?>
-
-<?php if($vendor['vendorId'] == 1162 ){?>
-<main class="container" style="text-align:left; background-color: white">
-<?php } else {?>
-<main class="container" style="text-align:left; background-color: navajowhite">
-<?php } ?>
+<main class="container"
+    <?php if ($vendor['vendorId'] === 1162 ) { ?>
+        style="text-align:left; background-color: white"
+    <?php } else { ?>
+        style="text-align:left; background-color: navajowhite"
+    <?php } ?>    
+    >
 
 
     <?php 
         // include_once FCPATH . 'application/views/includes/sessionMessages.php';
     ?>
     <?php if (!empty($categoryProducts) ) { ?>
-<!--		--><?php //echo $vendor['logo']; ?>
-<!--        <h1>--><?php //echo $vendor['vendorName']; ?><!--</h1>-->
-<!--		https://tiqs.com/alfred/assets/images/vendorLogos/1162_1595838163.png -->
+        <!--		--><?php //echo $vendor['logo']; ?>
+        <!--        <h1>--><?php //echo $vendor['vendorName']; ?><!--</h1>-->
+        <!--		https://tiqs.com/alfred/assets/images/vendorLogos/1162_1595838163.png -->
 		<div style="text-align:center" allign="center">
 			<img src=<?php echo "https://tiqs.com/alfred/assets/images/vendorLogos/".$vendor['logo']; ?> alt="" width="300" height="auto">
 		</div>
 
-<!--		<div style="text-align:right; padding-top:5px;">-->
-<!--			<a href="--><?php //echo base_url() ?><!--make_order?vendorid=--><?php //echo $vendor['vendorId']; ?><!--">-->
-<!--				<i aria-hidden="true">CHANGE SPOT</i>-->
-<!--			</a>-->
-<!--		</div>-->
+        <!--		<div style="text-align:right; padding-top:5px;">-->
+        <!--			<a href="--><?php //echo base_url() ?><!--make_order?vendorid=--><?php //echo $vendor['vendorId']; ?><!--">-->
+        <!--				<i aria-hidden="true">CHANGE SPOT</i>-->
+        <!--			</a>-->
+        <!--		</div>-->
 
 		<h5 style="text-align:center; font-size: xx-small">SWIPE &lt; LINKS EN RECHTS &gt; VOOR ANDERE CATEGORIE</h5>
 
-		<?php if($vendor['vendorId'] == 1162 ){?>
-			<div class="main-slider container" style='overflow-x:hidden; overflow-y: hidden; margin-top: 20px; margin-bottom: 20px; background-color: white'>
-		<?php } else {?>
-			<div class="main-slider container" style='overflow-x:hidden; overflow-y: hidden; margin-top: 20px; margin-bottom: 20px; background-color: navajowhite'>
-		<?php } ?>
+
+        <div class="main-slider container"
+            <?php if ($vendor['vendorId'] === 1162 ) { ?>
+                style='overflow-x:hidden; overflow-y: hidden; margin-top: 20px; margin-bottom: 20px; background-color: white'
+            <?php } else { ?> 
+                style='overflow-x:hidden; overflow-y: hidden; margin-top: 20px; margin-bottom: 20px; background-color: navajowhite'
+            <?php } ?>
+            >
 
 		    <?php
                 $form = '';
                 foreach($categoryProducts as $category => $productsRawData) {
                     $productsRawData =  Utility_helper::resetArrayByKeyMultiple($productsRawData, 'productId');
-                ?>
+                    ?>
                     <div class="item-category">
                         <div class="filter-sidebar">
-							<?php if($vendor['vendorId'] == 1162 ){?>
+							<?php if($vendor['vendorId'] === 1162 ) { ?>
 								<a href="javascript:void(0);"  style="color: black; background-color: white" class="go-category left-side selected"><?php echo $category;?></a>
-							<?php } else {?>
+							<?php } else { ?>
 								<a href="javascript:void(0);"  style="color: black; background-color: navajowhite" class="go-category left-side selected"><?php echo $category;?></a>
 							<?php } ?>
                         </div>
@@ -235,8 +232,10 @@
                                     $productRaw['productActive'] === '0'
                                     || is_null($productRaw['productTimes'])
                                     || !checkTime($day, $hours, $productRaw['productTimes'])
+                                    || !is_array($productRaw['productSpots'])
                                     || !in_array($spotId, array_keys($productRaw['productSpots']))
                                 ) continue;
+
                                 $products = $productRaw['productDetails'];
                                 $products = Utility_helper::resetArrayByKeyMultiple($products, 'productTypeIsMain');
                                 
@@ -284,13 +283,12 @@
                                 
                                 ?>
 
-								<?php if($vendor['vendorId'] == 1162 ){?>
-									<div class="product__list" style="background-color: white">
-								<?php } else {?>
-									<div class="product__list" style="background-color: navajowhite">
-								<?php } ?>
-
-
+                                <div class="product__list" 
+                                    <?php if ($vendor['vendorId'] === 1162 ) { ?>
+                                    style="background-color: white"
+                                    <?php } else { ?>
+                                    style="background-color: navajowhite"
+                                    >
 
                                     <div class="product">
                                         <div class="product__img">
@@ -300,9 +298,9 @@
                                             <div class="product__actions-box">
                                                 <div class="pab pab-1">
                                                     <div class="product__name">
-														<?php if ($product['longDescription']!= 'NA') { ?>
-															<i style="font-size: large; margin-bottom: -30px" class="fa fa-info-circle" aria-hidden="true" data-toggle="popover" data-trigger="hover"  data-placement="bottom" data-content="<?php echo $product['longDescription']; ?>"></i>
-														<?php } ?>
+                                                        <?php if ($product['longDescription']!= 'NA') { ?>
+                                                            <i style="font-size: large; margin-bottom: -30px" class="fa fa-info-circle" aria-hidden="true" data-toggle="popover" data-trigger="hover"  data-placement="bottom" data-content="<?php echo $product['longDescription']; ?>"></i>
+                                                        <?php } ?>
                                                         <?php echo $product['name']; ?>
 
                                                         <span
@@ -340,7 +338,7 @@
                                                     <?php } ?>
                                                     <a
                                                         class="pab-minus"
-														style="margin-left: 4px"
+                                                        style="margin-left: 4px"
                                                         href="javascript:void(0);"
                                                         onclick="addToOrder(
                                                             'amount<?php echo  $product['productExtendedId']; ?>',
@@ -391,7 +389,10 @@
                                             $addons = $productRaw['addons'];
                                             if ($addons) {
                                                 foreach($addons as $addon) {
-                                                    if (!in_array($spotId, array_keys($productsRawData[$addon[1]][0]['productSpots']))) continue;
+                                                    if (
+                                                        !is_array($productsRawData[$addon[1]][0]['productSpots'])
+                                                        || !in_array($spotId, array_keys($productsRawData[$addon[1]][0]['productSpots']))
+                                                    ) continue;
                                                     $addonDetails = $productsRawData[$addon[1]][0]['productDetails'];
                                                     foreach($addonDetails as $addonSingle) {
                                                         if ($addonSingle['showInPublic'] === '1' && $addonSingle['productExtendedId'] === $addon[2] && $addonSingle['activeStatus'] === '1') {
@@ -422,10 +423,11 @@
                                     ?>
                                 </div>
                                 <?php
+                                }
                             }
                         ?>
                     </div>
-                <?php
+                    <?php
                 }
             ?>
             <?php if (isset($termsAndConditions) && $termsAndConditions) { ?>
