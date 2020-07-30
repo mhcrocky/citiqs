@@ -225,7 +225,7 @@
                             <b>SERVICE FEE:</b>
                             <span id="serviceFee">
                                 <?php
-                                    $serviceFee = $orderTotal * $vendor['serviceFeePercent'] / 100;
+                                    $serviceFee = $orderTotal * $vendor['serviceFeePercent'] / 100 + $vendor['minimumOrderFee'];
                                     if ($serviceFee > $vendor['serviceFeeAmount']) $serviceFee = $vendor['serviceFeeAmount'];
                                     echo number_format($serviceFee, 2, ".", ","); ?> &euro;
                             </span>
@@ -332,3 +332,12 @@
         <input type="number"    name="order[amount]"        value="<?php echo $orderTotal; ?>" id="orderAmountInput" min="0" step="0.01"  readonly required hidden />
     </form>
 </main>
+<script>
+    var checkoutOrdedGlobals = (function(){
+        let globals = {
+            'minimumOrderFee' : parseFloat('<?php echo $vendor['minimumOrderFee']; ?>')
+        }
+        Object.freeze(globals);
+        return globals;
+    }());
+</script>
