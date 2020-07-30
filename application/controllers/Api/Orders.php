@@ -14,6 +14,7 @@
             $this->load->model('shopprinters_model');
             $this->load->model('shoporder_model');
             $this->load->model('shoporderex_model');
+            $this->load->model('shopvendor_model');
 
             $this->load->helper('utility_helper');
             $this->load->helper('validate_data_helper');
@@ -38,6 +39,11 @@
             $order = $this->shoporder_model->fetchOrdersForPrint($get['mac']);
             if (!$order) return;
             $order = reset($order);
+
+            //check order time
+            $printTimeConstraint = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->getPrintTimeConstraint();
+            if (strtotime($printTimeConstraint) > strtotime($order['orderCreated'])) return;
+
             Utility_helper::logMessage($logFile, 'printer order ');
 
 

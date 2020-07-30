@@ -150,6 +150,11 @@ function populateTable(data) {
                     }
                 },
                 {
+                    "targets": 7,
+                    "visible": false,
+                    "searchable": false,
+                },
+                {
                     "targets": 8,
                     "data": function (row, type, val, meta) {
                         return showPhoneNumber(row);

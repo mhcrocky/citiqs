@@ -108,4 +108,15 @@
             return $result;
         }
 
+        public function getPrintTimeConstraint()
+        {
+            $printTimeConstraint = $this->shopvendor_model->readImproved([
+                'what' => ['printTimeConstraint'],
+                'where' => ['vendorId' => $this->vendorId]
+            ]);
+
+            $printTimeConstraint = reset($printTimeConstraint)['printTimeConstraint'];
+            return date('Y-m-d H:i:s', strtotime( '-' . $printTimeConstraint . ' hours', time() ));
+        }
+
     }
