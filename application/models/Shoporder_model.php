@@ -293,12 +293,15 @@
             $concatSeparator = $this->config->item('concatSeparator');
             $concatGroupSeparator = $this->config->item('contactGroupSeparator');
 
+            $dateConstraint = date('Y-m-d H:i:s', strtotime('-24 hours', time()));
+
             $query =
             '
                 (
                     SELECT
                         tbl_shop_orders.id AS orderId,
                         tbl_shop_orders.spotId,
+                        tbl_shop_orders.created AS orderCreated,
                         tbl_shop_spots.spotName,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
                         tbl_shop_printers.id AS printerId,
@@ -314,8 +317,7 @@
                         vendorOne.zipcode as vendorZipcode,
                         vendorOne.city as vendorCity,
                         vendorOne.vat_number as vendorVAT,
-                        vendorOne.country as vendorCountry
-                        
+                        vendorOne.country as vendorCountry                        
                     FROM
                         tbl_shop_orders
                     INNER JOIN
@@ -385,6 +387,7 @@
                     SELECT
                         tbl_shop_orders.id AS orderId,
                         tbl_shop_orders.spotId,
+                        tbl_shop_orders.created AS orderCreated,
                         tbl_shop_spots.spotName,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
                         tbl_shop_printers.id AS printerId,
