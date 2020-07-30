@@ -42,8 +42,11 @@
 
             //check order time
             $printTimeConstraint = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->getPrintTimeConstraint();
-            if (strtotime($printTimeConstraint) > strtotime($order['orderCreated'])) return;
 
+            if (strtotime($printTimeConstraint) > strtotime($order['orderCreated'])) {
+                $this->shoporder_model->setObjectId(intval($order['orderId']))->updateExpired('1');
+                return;
+            }
             Utility_helper::logMessage($logFile, 'printer order ');
 
 

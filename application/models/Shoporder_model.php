@@ -23,6 +23,7 @@
         public $transactionId;
         public $sendSmsDriver;
         public $countSentMessages;
+        public $expired;
 
         private $table = 'tbl_shop_orders';
 
@@ -75,6 +76,7 @@
             if (isset($data['transactionId']) && !Validate_data_helper::validateString($data['transactionId'])) return false;
             if (isset($data['sendSmsDriver']) && !($data['sendSmsDriver'] === '1' || $data['sendSmsDriver'] === '0')) return false;
             if (isset($data['countSentMessages']) && !Validate_data_helper::validateInteger($data['countSentMessages'])) return false;
+            if (isset($data['expired']) && !($data['expired'] === '1' || $data['expired'] === '0')) return false;
 
             return true;
         }
@@ -302,6 +304,7 @@
                         tbl_shop_orders.id AS orderId,
                         tbl_shop_orders.spotId,
                         tbl_shop_orders.created AS orderCreated,
+                        tbl_shop_orders.expired AS orderExpired,
                         tbl_shop_spots.spotName,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
                         tbl_shop_printers.id AS printerId,
@@ -374,6 +377,7 @@
                         ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     WHERE
                         tbl_shop_orders.paid = "1"
+                        AND tbl_shop_orders.expired = "0"
                         AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_printers.macNumber = "' . $macNumber . '"
@@ -388,6 +392,7 @@
                         tbl_shop_orders.id AS orderId,
                         tbl_shop_orders.spotId,
                         tbl_shop_orders.created AS orderCreated,
+                        tbl_shop_orders.expired AS orderExpired,
                         tbl_shop_spots.spotName,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
                         tbl_shop_printers.id AS printerId,
@@ -471,6 +476,7 @@
                         ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     WHERE
                         tbl_shop_orders.paid = "1"
+                        AND tbl_shop_orders.expired = "0"
                         AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_printers.macNumber = "' . $macNumber . '"
                         AND tbl_shop_order_extended.id not in
@@ -702,5 +708,14 @@
         {
             $query = 'UPDATE ' . $this->table . ' SET countSentMessages = countSentMessages + 1 WHERE id = ' . $this->id .';';
             return $this->db->query($query);
+        }
+
+        public function updateExpired(string $expiredStatus): bool
+        {
+            $update = [
+                'expired' => $expiredStatus,
+            ];
+
+            return $this->setObjectFromArray($update)->update();
         }
     }
