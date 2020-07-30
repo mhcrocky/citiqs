@@ -75,9 +75,9 @@ class Alfredpayment extends BaseControllerWeb
                         ->shoporder_model
                             ->setProperty('transactionId', $transactionid)
                             ->updatePaidStatus(['paid' => '1']);
-            echo('TRUE| '. $transactionid);
+            echo('TRUE| '. $transactionid.'-status-'.$statuscode.'-date-'.date('Y-m-d H:i:s'));
         } else {
-            echo('TRUE| NO INFO ');
+			echo('TRUE| NOT FIND '. $transactionid.'-status-'.$statuscode.'-date-'.date('Y-m-d H:i:s'));
         }
     }
 

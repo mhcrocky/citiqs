@@ -139,18 +139,17 @@ var callThis = (function() {
                 alertify.error('Order status update failed');
             }
         },
-        sendSms: function(callFunction) {
+        sendSms: function() {
             if (this) {
                 alertify.success('SMS send');
-                callFunction();
             } else {
                 alertify.error('SMS not send');
             }
         },
-        updatePhoneNumber: function(callFunction) {
+        updatePhoneNumber: function() {
             if (this) {
                 alertify.success('Mobile number updated');
-                callFunction();
+                // callFunction();
             } else {
                 alertify.error('Mobile number not updated');
             }

@@ -93,7 +93,9 @@ function updatePhoneNumber(element) {
     let post = {
         mobile: element.value
     }
-    sendAjaxPostRequest(post, url, 'updatePhoneNumber', destroyAndFetch);
+
+	sendAjaxPostRequest(post, url, 'updatePhoneNumber');
+    // sendAjaxPostRequest(post, url, 'updatePhoneNumber', destroyAndFetch);
 }
 
 function sendSmsButton(data) {
@@ -115,7 +117,7 @@ function sendSms(element) {
         messagetext: element.dataset.message,
         recipent: element.dataset.recipent
     }
-    sendAjaxPostRequest(post, url, 'sendSms', destroyAndFetch);
+    sendAjaxPostRequest(post, url, 'sendSms');
 }
 
 function populateTable(data) {
