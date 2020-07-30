@@ -238,11 +238,7 @@
 //				$draw->annotation(570, 165 + ($i * 30), "€ ". $Stotalamount);
 
 				$drawemail->setFontSize(18);
-				$drawemail->setStrokeWidth(2);
-				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-
-				$drawemail->setFontSize(18);
-				$drawemail->setStrokeWidth(2);
+				$drawemail->setStrokeWidth(1);
 				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 
 				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
@@ -294,14 +290,11 @@
 //			$draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
 //			$draw->annotation(570, 165 + ($i * 30), "€ ". $TStotalamount);
 
-			$drawemail->setFontSize(18);
-			$drawemail->setStrokeWidth(2);
-			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 
 			$drawemail->setFontSize(18);
-			$drawemail->setStrokeWidth(2);
+			$drawemail->setStrokeWidth(1);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-			$imagetextemail->annotateImage($draw, 395, 165 + ($i * 30), 0, "TOTAAL");
+			$imagetextemail->annotateImage($drawemail, 395, 165 + ($i * 30), 0, "TOTAAL");
 			$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
 			$drawemail->annotation(570, 165 + ($i * 30), "€ ". $TStotalamount);        $i++;
 
@@ -327,8 +320,13 @@
 			$drawemail->setFontSize(18);
 			$drawemail->setStrokeWidth(2);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+
+//			$imagetextemail->setFontSize(18);
+//			$drawemail->setStrokeWidth(2);
+//			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 			//
-			$imagetextemail->annotateImage($draw, 440, 165 + ($i * 30), 0, "BTW 21 % ");
+
+			$imagetextemail->annotateImage($drawemail, 440, 165 + ($i * 30), 0, "BTW 21 % ");
 			$drawemail->annotation(570, 165 + ($i * 30), "€ ". $T21Stotalamount);
 
 
@@ -337,11 +335,11 @@
 //			$draw->annotation(570, 165 + ($i * 30), "€ ". $T9Stotalamount);
 
 			$drawemail->setFontSize(18);
-			$drawemail->setStrokeWidth(2);
+			$drawemail->setStrokeWidth(1);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 
 			//
-			$imagetextemail->annotateImage($draw, 440, 165 + ($i * 30), 0, "BTW 9 % ");
+			$imagetextemail->annotateImage($drawemail, 440, 165 + ($i * 30), 0, "BTW 9 % ");
 			$drawemail->annotation(570, 165 + ($i * 30), "€ ". $T9Stotalamount);
 
 			//-------- regels --------
@@ -359,6 +357,11 @@
 			$drawemail->setStrokeWidth(4);
 			$drawemail->line(0, 165 + ($i * 30), 576, 165 + ($i * 30));
 			$drawemail->setStrokeWidth(1);
+
+
+			$drawemail->setFontSize(18);
+			$drawemail->setStrokeWidth(1);
+			$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
 
 			$i++;
 //			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
