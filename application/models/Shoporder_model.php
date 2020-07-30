@@ -681,7 +681,7 @@
                 array( 'db' => 'orderAmount',           'dt' => 2),
                 array( 'db' => 'spotName',              'dt' => 3),
                 array( 'db' => 'orderStatus',           'dt' => 4),
-                array( 'db' => 'orderUpdated',          'dt' => 5),
+                array( 'db' => 'orderCreated',          'dt' => 5),
                 array( 'db' => 'buyerUserName',         'dt' => 6),
                 array( 'db' => 'buyerEmail',            'dt' => 7),
                 array( 'db' => 'buyerMobile',           'dt' => 8),

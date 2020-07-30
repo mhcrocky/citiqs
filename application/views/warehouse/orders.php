@@ -40,7 +40,7 @@
                     <th>Amount</th>
                     <th>Spot name</th>
                     <th>Order status</th>
-                    <th>Updated</th>
+                    <th>Created</th>
                     <th>Buyer</th>
                     <th>Buyer Email</th>
                     <th>Buyer Mobile</th>
