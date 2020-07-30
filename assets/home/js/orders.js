@@ -121,10 +121,10 @@ function sendSms(element) {
 function populateTable(data) {
     $(document).ready(function() {
         $.fn.dataTable.ext.errMode = 'none';
-        // $('#ordersList tfoot th').each( function () {
-        //     var title = $(this).text();
-        //     $(this).html('<input type="text" style="width:100px" />');
-        // });
+        $('#ordersList tfoot th').each( function () {
+            var title = $(this).text();
+            $(this).html('<input type="text" style="width:100px" />');
+        });
     
         $('#ordersList').DataTable({
             data: data,
@@ -163,22 +163,24 @@ function populateTable(data) {
                     "width": "10%"
                 }            
             ],
-            // initComplete: function () {
-            //     this.api().columns().every( function () {
-            //         var that = this;
+            initComplete: function () {
+                this.api().columns().every( function () {
+                    var that = this;
     
-            //         $( 'input', this.footer() ).on( 'keyup change clear', function () {
-            //             if ( that.search() !== this.value ) {
-            //                 that
-            //                     .search( this.value )
-            //                     .draw();
-            //             }
-            //         });
-            //     });
-            // },
+                    $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                        if ( that.search() !== this.value ) {
+                            that
+                                .search( this.value )
+                                .draw();
+                        }
+                    });
+                });
+            },
             // rowCallback: function(row, data) {
-            //     if (data[4] === 'not seen') {
-            //         row.style.backgroundColor = '#ff4d4d';
+            //     let selectedStatus = document.getElementById('orderStatus').value;
+            //     if (selectedStatus && selectedStatus !== data[4]) {
+            //         console.dir(data[4]);
+            //         row.style.display = 'none';
             //     }
             // }
         });
