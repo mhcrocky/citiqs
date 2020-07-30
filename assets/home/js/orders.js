@@ -3,7 +3,9 @@ function showOrderProducts(data) {
     if(!data) return;
     let products = data[1];
     let i;
-    let list = '<ol>';
+    let list = ''
+    let popover = '';
+
     for (i in products) {
         if (i === 'spotPrinter') continue;
         let product;
@@ -17,11 +19,33 @@ function showOrderProducts(data) {
         }
 
         
-        list += '<li style="text-align:left">Product: ' + product.productName + ' ';
-        list += '| Quantity: ' + product.productQuantity + ' ';
-        list += '| Printer: ' + printer + '</li>';
+        popover += '<p style=\'text-align:left\'>Product: ' + product.productName + ' ';
+        popover += '| Quantity: ' + product.productQuantity + ' ';
+        popover += '| Printer: ' + printer + '</p>';
     }
-    list += '</ol>';
+
+    list += '<a ';
+    list +=     'href="#" ';
+    list +=     'data-toggle="popover" ';
+    list +=     'data-placement="right" ';
+    list +=     'data-trigger="focus" ';
+    list +=     'data-content="' + popover + '" ';
+    list += '>';
+    list +=     'Products';
+    list += '</a>';
+
+    $('[data-toggle="popover"]').popover({
+        html:true,
+        animation: false,
+        trigger: 'hover',
+        delay: {
+            "hide": 100
+        }
+    });
+    $('.popover-dismiss').popover({
+        trigger: 'focus'
+    })
+
     return list;
 }
 
@@ -186,20 +210,4 @@ function destroyAndFetch() {
 
 document.addEventListener("DOMContentLoaded", function() {
     fetchOrders();
-    // fetch new data every 10 seconds
-    // setInterval(function() {        
-    //     return  destroyAndFetch();
-    // }, 1000000);
-
-    $('[data-toggle="popover"]').popover({
-        html:true,
-        animation: false,
-        trigger: 'hover',
-        delay: {
-            "hide": 100
-        }
-    });
-    $('.popover-dismiss').popover({
-        trigger: 'focus'
-    })
 });

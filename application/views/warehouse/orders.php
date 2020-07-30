@@ -28,6 +28,9 @@
             <option value="finished">Finished</option>
         </select>
     </div>
+    <div style="margin:173px 0px 20px 10px">
+        <button type="button" class="btn btn-primary" onclick="destroyAndFetch()">Reload page</button>
+    </div>
     <div class="table-responsive col-sm-12" style="margin-top:20px">
         <table id="ordersList" class="display table table-hover table-striped" style="width:100%">
             <thead>
