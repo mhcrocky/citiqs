@@ -235,6 +235,7 @@
                                     $productRaw['productActive'] === '0'
                                     || is_null($productRaw['productTimes'])
                                     || !checkTime($day, $hours, $productRaw['productTimes'])
+                                    || !is_array($productRaw['productSpots'])
                                     || !in_array($spotId, array_keys($productRaw['productSpots']))
                                 ) continue;
                                 $products = $productRaw['productDetails'];
@@ -391,7 +392,10 @@
                                             $addons = $productRaw['addons'];
                                             if ($addons) {
                                                 foreach($addons as $addon) {
-                                                    if (!in_array($spotId, array_keys($productsRawData[$addon[1]][0]['productSpots']))) continue;
+                                                    if (
+                                                        !is_array($productsRawData[$addon[1]][0]['productSpots'])
+                                                        || !in_array($spotId, array_keys($productsRawData[$addon[1]][0]['productSpots']))
+                                                    ) continue;
                                                     $addonDetails = $productsRawData[$addon[1]][0]['productDetails'];
                                                     foreach($addonDetails as $addonSingle) {
                                                         if ($addonSingle['showInPublic'] === '1' && $addonSingle['productExtendedId'] === $addon[2] && $addonSingle['activeStatus'] === '1') {
