@@ -128,7 +128,7 @@ function populateTable(data) {
     
         $('#ordersList').DataTable({
             data: data,
-            order: [[5, 'desc' ]],
+            order: [[0, 'desc' ]],
             pagingType: "first_last_numbers",
             pageLength: 25,
             columnDefs: [
