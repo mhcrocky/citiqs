@@ -428,7 +428,7 @@ class Ajax extends CI_Controller
         echo intval($result);
     }
 
-    public function fetchOrders(): void
+    public function fetchOrders():void
     {
         if (!$this->input->is_ajax_request()) return;
 

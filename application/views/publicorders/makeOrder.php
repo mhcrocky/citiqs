@@ -210,7 +210,7 @@
 		<h5 style="text-align:center; font-size: xx-small">SWIPE &lt; LINKS EN RECHTS &gt; VOOR ANDERE CATEGORIE</h5>
 
 		<?php if($vendor['vendorId'] == 1162 ){?>
-			<div class="main-slider container" style='overflow-x:hidden; overflow-y: hidden; margin-top: 20px; margin-bottom: 20px; background-color: white'>
+			<div class="main-slider container" style='overflow-x:hidden; overflow-y: hidden; margin-top: 20px; margin-bottom: 100px; background-color: white'>
 		<?php } else {?>
 			<div class="main-slider container" style='overflow-x:hidden; overflow-y: hidden; margin-top: 20px; margin-bottom: 20px; background-color: navajowhite'>
 		<?php } ?>
@@ -285,7 +285,7 @@
                                 ?>
 
 								<?php if($vendor['vendorId'] == 1162 ){?>
-									<div class="product__list" style="background-color: white">
+									<div class="product__list" style="background-color: white; margin-bottom: ">
 								<?php } else {?>
 									<div class="product__list" style="background-color: navajowhite">
 								<?php } ?>
