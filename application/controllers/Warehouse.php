@@ -427,9 +427,9 @@
                                         'where' => [
                                             'userId' => $_SESSION['userId'],
                                         ]
-                                    ])
+                                    ]),
+                'ordersStatuses'  => $this->config->item('orderStatuses')
             ];
-
             $this->loadViews('warehouse/orders', $this->global, $data, null, 'headerWarehouse');
         }
 

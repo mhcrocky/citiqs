@@ -32,7 +32,7 @@
             $this->load->helper('validate_data_helper');
             if (!Validate_data_helper::validateInteger($value)) return;
 
-            if ($property === 'id' || $property === 'buyerId') {
+            if ($property === 'id' || $property === 'buyerId' || $property === 'countSentMessages') {
                 $value = intval($value);
             }
             if ($property === 'amount' || $property === 'serviceFee') {
@@ -704,10 +704,12 @@
             return Jquerydatatable_helper::data_output($columns, $return);
         }
 
-        public function updateSmsCounter(): bool
+        public function updateSmsCounter(): int
         {
             $query = 'UPDATE ' . $this->table . ' SET countSentMessages = countSentMessages + 1 WHERE id = ' . $this->id .';';
-            return $this->db->query($query);
+            $update = $this->db->query($query);
+            $this->setObject();
+            return $this->countSentMessages;
         }
 
         public function updateExpired(string $expiredStatus): bool

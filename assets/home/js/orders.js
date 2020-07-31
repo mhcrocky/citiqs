@@ -101,12 +101,18 @@ function updatePhoneNumber(element) {
 function sendSmsButton(data) {
     let button = '';
     button += '<button class="btn btn-primary" ';
-    button +=    'data-order-id=' + data[0] + '" ';
+    button +=    'data-order-id="' + data[0] + '" ';
     button +=    'data-mobile="' + data[10] + '" ';
     button +=    'data-message="Jouw bestelling \'' + data[0] + '\' staat klaar in de keuken" ';
-    button +=    'data-recipent="buyer" ';
     button +=    'onclick="sendSms(this)"';
-    button += '>SMS <span class="badge badge-light">' + data[11] + '</span></button>';
+    button += '>SMS ';
+    button +=   '<span ';
+    button +=       'class="badge badge-light" ';
+    button +=       'id="smsCounter' + data[0] + '" ';
+    button +=       'data-status="' + data[4] + '">';
+    button +=       data[11];
+    button +=   '</span>';
+    button += '</button>';
     return button;
 }
 
@@ -114,10 +120,10 @@ function sendSms(element) {
     let url = globalVariables.ajax + 'sendSms/' + element.dataset.orderId;
     let post = {
         mobilenumber: document.getElementById(element.dataset.mobile).value,
-        messagetext: element.dataset.message,
-        recipent: element.dataset.recipent
+        messagetext: element.dataset.message
     }
-    sendAjaxPostRequest(post, url, 'sendSms');
+    let smsCounterId = 'smsCounter' + element.dataset.orderId;
+    sendAjaxPostRequest(post, url, 'sendSms', changeElementInnerHtml, [smsCounterId]);
 }
 
 function populateTable(data) {
@@ -217,6 +223,13 @@ function destroyAndFetch() {
     return fetchOrders();
 }
 
+function changeElementInnerHtml(elementId, newContent) {
+    let smsButton = document.getElementById(elementId);
+    smsButton.innerHTML = newContent;
+    if (smsButton.dataset.status !== 'finished') {
+        smsButton.parentElement.parentElement.parentElement.remove();
+    }
+}
 document.addEventListener("DOMContentLoaded", function() {
     fetchOrders();
 });

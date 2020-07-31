@@ -139,8 +139,10 @@ var callThis = (function() {
                 alertify.error('Order status update failed');
             }
         },
-        sendSms: function() {
+        sendSms: function(callFunction, functionArg) {
             if (this) {
+                functionArg.push(this);
+                callFunction(...functionArg);
                 alertify.success('SMS send');
             } else {
                 alertify.error('SMS not send');

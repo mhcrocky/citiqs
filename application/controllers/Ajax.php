@@ -442,6 +442,8 @@ class Ajax extends CI_Controller
         ];
         if (isset($post['orderStatus'])) {
             $where['tbl_shop_orders.orderStatus='] = $post['orderStatus'];
+        } else {
+            $where['tbl_shop_orders.orderStatus!='] = $this->config->item('orderFinished');
         }
         $selectedPrinter = (isset($post['selectedPrinter'])) ? $post['selectedPrinter'] : '';
 
@@ -472,19 +474,20 @@ class Ajax extends CI_Controller
         if (!$this->input->is_ajax_request()) return;
 
         $smsData = $this->input->post(null, true);
-        $update = ($smsData['recipent'] === 'driver') ? ['sendSmsDriver' => '1'] : ['sendSms' => '1'];
-        unset($smsData['recipent']);
         $orderId = intval($this->uri->segment(3));
         $url = 'https://tiqs.com/lostandfound/Api/Missing/sendsms';
-        if (Curl_helper::sendSms($url, $smsData)) {
 
+        if (Curl_helper::sendSms($url, $smsData)) {
+            $updateData = [
+                'orderStatus' => 'finished',
+                'sendSms' => '1'
+            ];
             $update =    $this
                             ->shoporder_model
                             ->setObjectId($orderId)
-                            ->setObjectFromArray($update)
+                            ->setObjectFromArray($updateData)
                             ->update();
-            $this->shoporder_model->updateSmsCounter();
-            echo $update ? 1 : 0;
+            echo $update ? $this->shoporder_model->updateSmsCounter() : 0;
         } else {
             echo 0;
         }
