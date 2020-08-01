@@ -104,7 +104,7 @@ class Alfredpayment extends BaseControllerWeb
 			} else{
 //				var_dump($lastpageforvendorId);
 //				die();
-				$redirect = 'successth';
+				$redirect = 'success';
 			}
 
         } elseif ($statuscode < 0 ) {

@@ -438,13 +438,13 @@ class Ajax extends CI_Controller
         $where = [
             'vendor.id' => $userId,
             'tbl_shop_orders.paid=' => $post['paid'],
-            'tbl_shop_orders.created>=' => date('Y-m-d H:i:s', strtotime('-3 hours', time()))
+            'tbl_shop_orders.created>=' => date('Y-m-d H:i:s', strtotime('-1 hours', time()))
         ];
-        if (isset($post['orderStatus'])) {
-            $where['tbl_shop_orders.orderStatus='] = $post['orderStatus'];
-        } else {
-            $where['tbl_shop_orders.orderStatus!='] = $this->config->item('orderFinished');
-        }
+//        if (isset($post['orderStatus'])) {
+//            $where['tbl_shop_orders.orderStatus='] = $post['orderStatus'];
+//        } else {
+//            $where['tbl_shop_orders.orderStatus!='] = $this->config->item('orderFinished');
+//        }
         $selectedPrinter = (isset($post['selectedPrinter'])) ? $post['selectedPrinter'] : '';
 
 

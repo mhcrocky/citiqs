@@ -20,7 +20,7 @@
     <div style="margin:140px 0px 20px 0px">
         <label for="orderStatus">Fiter orders by status:</label>
         <select id="orderStatus" class="custom-select" onchange="destroyAndFetch()">
-            <option value="">All (without finished)</option>
+            <option value="">All (incl finished)</option>
             <?php foreach ($ordersStatuses as $status) { ?>
                 <option value="<?php echo $status; ?>"><?php echo ucfirst($status); ?></option>
             <?php } ?>

@@ -96,7 +96,8 @@
             //--- aantal rows bepalen a.d. hand van aantal order regels.
 
             $rowheight = (count($productsarray) * 30) + 700;
-            $imagetext->newImage(576, $rowheight, $pixel);
+			$rowheight2 = (count($productsarray) * 30) + 350;
+            $imagetext->newImage(576, $rowheight2, $pixel);
             $imagetextemail->newImage(576, $rowheight, $pixel);
 
             /* Black text */
@@ -182,6 +183,8 @@
 
             $totalamount = 0;
             $i = 0;
+            $ii = 0;
+
 			$Ttotalamount =0;
 			$T21totalamount=0;
 			$T9totalamount=0;
@@ -264,6 +267,9 @@
 
 
 				$i++;
+
+				//
+
 //                $emailMessage .= '<p>';
 //                $emailMessage .=    '<tr>';
 //                $emailMessage .=        '<td>' . $quantity . '</td>';
@@ -273,11 +279,16 @@
 //                $emailMessage .= '</p>';
             }
 
+			$ii = $i;
+
+
+            // set end for the printer...
+
+
 //			$draw->setStrokeColor('black');
 //			$draw->setStrokeWidth(1);
 //			$draw->line(500, 165 + ($i * 30), 576, 165 + ($i * 30));
 //			$draw->setStrokeWidth(1);
-
 
 			$drawemail->setStrokeColor('black');
 			$drawemail->setStrokeWidth(1);
@@ -299,7 +310,9 @@
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 			$imagetextemail->annotateImage($drawemail, 395, 165 + ($i * 30), 0, "TOTAAL");
 			$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-			$drawemail->annotation(570, 165 + ($i * 30), "€ ". $TStotalamount);        $i++;
+			$drawemail->annotation(570, 165 + ($i * 30), "€ ". $TStotalamount);
+
+				$i++;
 
 //			$draw->setStrokeColor('black');
 //			$draw->setStrokeWidth(4);
@@ -321,17 +334,19 @@
 //			$draw->annotation(570, 165 + ($i * 30), "€ ". $T21Stotalamount);
 
 			$drawemail->setFontSize(18);
-			$drawemail->setStrokeWidth(2);
+			$drawemail->setStrokeWidth(1);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 
 //			$imagetextemail->setFontSize(18);
 //			$drawemail->setStrokeWidth(2);
 //			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 			//
+			$drawemail->setFontSize(18);
+			$drawemail->setStrokeWidth(1);
+			$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
 
 			$imagetextemail->annotateImage($drawemail, 440, 165 + ($i * 30), 0, "BTW 21 % ");
 			$drawemail->annotation(570, 165 + ($i * 30), "€ ". $T21Stotalamount);
-
 
 			$i++;
 //			$imagetext->annotateImage($draw, 440, 165 + ($i * 30), 0, "BTW 9 % ");
@@ -339,7 +354,7 @@
 
 			$drawemail->setFontSize(18);
 			$drawemail->setStrokeWidth(1);
-			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+			$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
 
 			//
 			$imagetextemail->annotateImage($drawemail, 440, 165 + ($i * 30), 0, "BTW 9 % ");
@@ -419,7 +434,12 @@
 			$drawemail->line(0, 165 + ($i * 30), 576, 165 + ($i * 30));
 			$drawemail->setStrokeWidth(1);
 
+			$i++;
+//			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
+//			$draw->annotation(570, 165 + ($i * 30), "BTW:". $order['vendorVAT']);
 
+			$imagetextemail->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
+			$drawemail->annotation(570, 165 + ($i * 30), "EXcl terrasfee");
 
 			//-------- Text printen!  --------
             $imagetext->drawImage($draw);

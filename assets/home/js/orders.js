@@ -103,7 +103,7 @@ function sendSmsButton(data) {
     button += '<button class="btn btn-primary" ';
     button +=    'data-order-id="' + data[0] + '" ';
     button +=    'data-mobile="' + data[10] + '" ';
-    button +=    'data-message="Jouw bestelling \'' + data[0] + '\' staat klaar in de keuken" ';
+    button +=    'data-message="Jouw bestelling \'' + data[0] + '\' is klaar." ';
     button +=    'onclick="sendSms(this)"';
     button += '>SMS ';
     button +=   '<span ';
