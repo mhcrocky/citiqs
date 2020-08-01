@@ -34,18 +34,6 @@ function showOrderProducts(data) {
     list +=     'Products';
     list += '</a>';
 
-    $('[data-toggle="popover"]').popover({
-        html:true,
-        animation: false,
-        trigger: 'hover',
-        delay: {
-            "hide": 100
-        }
-    });
-    $('.popover-dismiss').popover({
-        trigger: 'focus'
-    })
-
     return list;
 }
 
@@ -189,6 +177,19 @@ function populateTable(data) {
                     });
                 });
             },
+            drawCallback: function () {
+                $('[data-toggle="popover"]').popover({
+                    html:true,
+                    animation: false,
+                    trigger: 'hover',
+                    delay: {
+                        "hide": 100
+                    }
+                });
+                $('.popover-dismiss').popover({
+                    trigger: 'focus'
+                });
+            }
             // rowCallback: function(row, data) {
             //     let selectedStatus = document.getElementById('orderStatus').value;
             //     if (selectedStatus && selectedStatus !== data[4]) {
