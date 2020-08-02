@@ -34,10 +34,13 @@
             if (isset($reports)) {
                 $keys = array_keys($reports);
             ?>
-                <ul class="nav nav-tabs">
+                <ul class="nav nav-tabs" role="tablist">
                     <?php foreach ($keys as $key) { ?>
-                        <li <?php if ($key === 'orders') echo 'class="active"'?> >
-                            <a data-toggle="tab" href="#<?php echo $key ?>"><?php echo ucfirst($key); ?></a>
+                        <li class="nav-item">
+                            <a
+                                class="nav-link <?php if ($key === 'orders') echo 'active'; ?>"
+                                data-toggle="tab"
+                                href="#<?php echo $key ?>"><?php echo ucfirst($key); ?></a>
                         </li>
                     <?php } ?>
                 </ul>

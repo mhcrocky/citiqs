@@ -24,20 +24,21 @@ $(document).ready(function() {
                     }
                 });
             });
+        },
+        drawCallback: function () {
+            $('[data-toggle="popover"]').popover({
+                html:true,
+                animation: false,
+                trigger: 'hover',
+                delay: {
+                    "hide": 100
+                }
+            });
+            $('.popover-dismiss').popover({
+                trigger: 'focus'
+            });
         }
     });
-
-    $('[data-toggle="popover"]').popover({
-        html:true,
-        animation: false,
-        trigger: 'hover',
-        delay: {
-            "hide": 100
-        }
-    });
-    $('.popover-dismiss').popover({
-        trigger: 'focus'
-    })
 
     // CATEGORIES
     $('#reportesCategories tfoot th').each( function () {
