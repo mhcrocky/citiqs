@@ -125,7 +125,7 @@
             return date('Y-m-d H:i:s', strtotime( '-' . $printTimeConstraint . ' hours', time() ));
         }
 
-        public function getVendors(): ?array
+        public function getVendors(array $where): ?array
         {
 
             $filter = [
@@ -147,9 +147,7 @@
                     'tbl_user.email AS vendorEmail'
 
                 ],
-                'where' => [
-                    $this->table. '.vendorId>' => 0,
-                ],
+                'where' => $where,
                 'joins' => [
                     ['tbl_user', 'tbl_user.id = ' . $this->table .'.vendorId' , 'INNER']
                 ]

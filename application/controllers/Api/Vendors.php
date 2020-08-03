@@ -22,9 +22,11 @@
         {
             $header = getallheaders();
             $key = $header['x-api-key'];
-
             if ($this->api_model->userAuthentication($key)) {
-                $vendors = $this->shopvendor_model->getVendors();
+                $where = [
+                    'tbl_shop_vendors.payNlServiceId!=' => null,
+                ];
+                $vendors = $this->shopvendor_model->getVendors($where);
                 $this->set_response($vendors, 200);
             }
             return;
