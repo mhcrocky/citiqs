@@ -172,6 +172,7 @@
                 'productTypes' => $this->shopprodutctype_model->fetchProductTypes($userId),
                 'concatSeparator' => $this->config->item('concatSeparator'),
             ];
+
             $this->loadViews('warehouse/products', $this->global, $data, null, 'headerWarehouse');
             return;
         }

@@ -83,7 +83,7 @@
             $resetBy = 'productId';
             $orderBy = $this->table. '.id DESC';
 
-            return $this->filterProducts($userId, $where, $resetBy, $orderBy, false);
+            return $this->filterProducts($userId, $where, $resetBy, $orderBy, false, true);
           
         }
         public function getUserProductsPublic(int $userId): ?array
@@ -103,10 +103,10 @@
             $resetBy = 'category';
             $orderBy = 'tbl_shop_categories.sortNumber ASC, tbl_shop_products.orderNo DESC';
             
-            return $this->filterProducts($userId, $where, $resetBy, $orderBy, true);
+            return $this->filterProducts($userId, $where, $resetBy, $orderBy, true, false);
           
         }
-        private function filterProducts(int $userId, array $where, string $resetBy, string $orderBy, bool $onlyActiveProductSpot): ?array
+        private function filterProducts(int $userId, array $where, string $resetBy, string $orderBy, bool $onlyActiveProductSpot, bool $backend): ?array
         {
             $this->load->config('custom');
             $concatSeparator = $this->config->item('concatSeparator');
@@ -236,6 +236,9 @@
                 ]
             ];
 
+            if ($userId === 423 && $backend) {
+                $filter['conditions']['limit'] = ['50'];
+            }
             $products = $this->readImproved($filter);
 
             if (is_null($products)) return null;
