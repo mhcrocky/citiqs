@@ -44,4 +44,13 @@ class Api_model extends CI_Model {
         return $query->result();
     }
 
+    public function userAuthentication(string $apiKey): bool
+    {
+        $this->db->select('id');
+        $this->db->from('tbl_APIkeys');
+        $this->db->where('apikey', $apiKey);
+        $result = $this->db->get();
+        return $result->result() ? true : false;
+    }
+
 }

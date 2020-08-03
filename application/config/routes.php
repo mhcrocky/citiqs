@@ -267,5 +267,7 @@ $route['success'] = 'Paysuccesslink';
 $route['successth'] = 'Paysuccesslinkth';
 
 
+$route['vendors'] = 'Api/Vendors/data';
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

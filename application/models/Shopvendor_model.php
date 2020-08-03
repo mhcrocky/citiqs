@@ -98,7 +98,7 @@
                 ],
                 'joins' => [
                     ['tbl_user', 'tbl_user.id = ' . $this->table .'.vendorId' , 'INNER']
-                ]  
+                ]
             ];
             // var_dump($filter);
             // die();
@@ -125,4 +125,36 @@
             return date('Y-m-d H:i:s', strtotime( '-' . $printTimeConstraint . ' hours', time() ));
         }
 
+        public function getVendors(): ?array
+        {
+
+            $filter = [
+                'what' => [
+                    $this->table . '.id',
+                    $this->table . '.serviceFeePercent',
+                    $this->table . '.serviceFeeAmount',
+                    $this->table . '.payNlServiceId',
+                    $this->table . '.termsAndConditions',
+                    $this->table . '.requireMobile',
+                    $this->table . '.bancontact',
+                    $this->table . '.ideal',
+                    $this->table . '.creditCard',
+                    $this->table . '.printTimeConstraint',
+                    $this->table . '.minimumOrderFee',
+                    'tbl_user.id AS vendorId',
+                    'tbl_user.username AS vendorName',
+					'tbl_user.logo AS logo',
+                    'tbl_user.email AS vendorEmail'
+
+                ],
+                'where' => [
+                    $this->table. '.vendorId>' => 0,
+                ],
+                'joins' => [
+                    ['tbl_user', 'tbl_user.id = ' . $this->table .'.vendorId' , 'INNER']
+                ]
+            ];
+
+            return $this->readImproved($filter);
+        }
     }
