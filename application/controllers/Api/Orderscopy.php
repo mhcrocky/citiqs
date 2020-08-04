@@ -513,18 +513,6 @@
 			Utility_helper::logMessage($logFile, 'printer echo');
             echo $resultpngprinter;
 
-            // UPDATE ORDER EXTENDED PRINT STATUS
-            $orderExtendedIds = explode(',', $order['orderExtendedIds']);
-            foreach ($orderExtendedIds as $id) {
-                $this
-                    ->shoporderex_model
-                    ->setObjectId(intval($id))
-                    ->setObjectFromArray(['printed' => '1'])
-                    ->update();
-            }
-
-            $this->shoporder_model->updatePrintedStatus();
-
             // SEND EMAIL
             $subject= "tiqs-Order : ". $order['orderId'] ;
 			$order['buyerEmail'] = 'pnroos@icloud.com';

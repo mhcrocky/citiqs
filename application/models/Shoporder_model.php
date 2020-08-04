@@ -526,8 +526,6 @@
                         tbl_shop_orders.expired AS orderExpired,
                         tbl_shop_spots.spotName,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
-                        tbl_shop_printers.id AS printerId,
-                        tbl_shop_printers.printer AS printer,
                         tbl_user.username AS buyerUserName,
                         tbl_user.email AS buyerEmail,
                         tbl_user.mobile AS buyerMobile,
@@ -569,10 +567,6 @@
                             tbl_shop_products ON tbl_shop_products_extended.productId = tbl_shop_products.id
                         LEFT JOIN
                             tbl_shop_categories ON tbl_shop_products.categoryId = tbl_shop_categories.id
-                        LEFT JOIN
-                            tbl_shop_product_printers ON tbl_shop_product_printers.productId = tbl_shop_products.id
-                        LEFT JOIN
-                            tbl_shop_printers ON tbl_shop_printers.id = tbl_shop_product_printers.printerId
                         WHERE
                             tbl_shop_order_extended.orderId = "' . $orderIdcopy . '"
                         GROUP BY
@@ -583,9 +577,9 @@
                     INNER JOIN
                         tbl_shop_products_extended ON tbl_shop_products_extended.id = tbl_shop_order_extended.productsExtendedId
                     INNER JOIN
-                        tbl_shop_product_printers ON tbl_shop_product_printers.productId = tbl_shop_products_extended.productId
+                        tbl_shop_products ON tbl_shop_products.Id = tbl_shop_products_extended.productId
                     INNER JOIN
-                        tbl_shop_printers ON tbl_shop_printers.id = tbl_shop_product_printers.printerId
+                        tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
                     INNER JOIN
                         (
                             SELECT
@@ -593,7 +587,7 @@
                             FROM
                                 tbl_user
                             WHERE tbl_user.roleid = ' . $this->config->item('owner') . '
-                        ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
+                        ) vendorOne ON vendorOne.id = tbl_shop_categories.userId
                     WHERE
                         tbl_shop_orders.paid = "1"
                         AND tbl_shop_orders.id = "' . $orderIdcopy . '"
@@ -603,7 +597,6 @@
 			$result = $this->db->query($query);
 			$resultqueryforlog = $this->db->last_query();
 			$logFile = FCPATH . 'application/tiqs_logs/messages.txt';
-			Utility_helper::logMessage($logFile, $resultqueryforlog);
 
 			$result = $result->result_array();
 
