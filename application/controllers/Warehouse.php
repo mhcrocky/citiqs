@@ -47,29 +47,21 @@
         {
             $this->global['pageTitle'] = 'TIQS : WAREHOSUE';
 
-            $userId = intval($_SESSION['userId']);
             $data = [];
-            if (!empty($_POST)) {
-                $post = $this->input->post(null, true);
-                $reportsData = $this->shoporder_model->fetchReportDetails($userId, $post['from'], $post['to']);
-            } else {
-                $reportsData = $this->shoporder_model->fetchReportDetails($userId);
-            }
+            $userId = intval($_SESSION['userId']);
+            $post = (!empty($_POST)) ? $this->input->post(null, true) : [];
+            $data['from'] = empty($post['from']) ? date('Y-m-d H:i:s', strtotime('-2 days')) : $post['from'];
+            $data['to'] = empty($post['to']) ? date('Y-m-d H:i:s') : $post['to'];
+            $reportsData = $this->shoporder_model->fetchReportDetails($userId, $data['from'], $data['to']);
 
             if ($reportsData) {
-                $data = [
-                    'reports' => [
-                        'orders' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'orderId'),
-                        'categories' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'category'),
-                        'spots' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'spotId'),
-                        'buyers' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'buyerId'),
-                        'products' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'productId')
-                    ]
+                $data['reports'] = [
+                    'orders' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'orderId'),
+                    'categories' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'category'),
+                    'spots' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'spotId'),
+                    'buyers' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'buyerId'),
+                    'products' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'productId'),
                 ];
-                if (isset($post['from']) && isset($post['to'])) {
-                    $data['from'] = $post['from'];
-                    $data['to'] = $post['to'];
-                }
             }
 
             $this->loadViews('warehouse/warehouse', $this->global, $data, null, 'headerWarehouse');
