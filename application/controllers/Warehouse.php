@@ -161,11 +161,10 @@
         public function products(): void
         {
             $this->global['pageTitle'] = 'TIQS : PRODUCTS';
+            $userId = intval($_SESSION['userId']);
             if (empty($_SESSION['productNames'])) {
                 $_SESSION['productNames'] = $this->shopproductex_model->getProductsNames($userId);
             }
-
-            $userId = intval($_SESSION['userId']);
             $offset = intval($this->input->get('offset', true));
             $perPage = 21;
             $whereIn = [];
