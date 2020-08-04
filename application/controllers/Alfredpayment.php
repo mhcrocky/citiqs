@@ -68,9 +68,9 @@ class Alfredpayment extends BaseControllerWeb
 	public function ExchangePay():void
 	{
         $transactionid = $this->input->get('order_id'); 
-        $statuscode = intval($this->input->get('orderStatusId'));
+        $action = $this->input->get('action', true);
 
-        if ($statuscode == 100) {
+        if ($action === 'new_ppt') {
             $update = $this
                         ->shoporder_model
                             ->setProperty('transactionId', $transactionid)
