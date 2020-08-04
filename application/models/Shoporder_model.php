@@ -508,7 +508,110 @@
             return $result ? $result : null;
         }
 
-        /**
+		public function fetchOrdersForPrintcopy(string $orderIdcopy): ?array
+		{
+			$this->load->config('custom');
+			$concatSeparator = $this->config->item('concatSeparator');
+			$concatGroupSeparator = $this->config->item('contactGroupSeparator');
+
+			//
+//			$dateConstraint = date('Y-m-d H:i:s', strtotime('-24 hours', time()));
+
+			$query =
+				'
+                    SELECT
+                        tbl_shop_orders.id AS orderId,
+                        tbl_shop_orders.spotId,
+                        tbl_shop_orders.created AS orderCreated,
+                        tbl_shop_orders.expired AS orderExpired,
+                        tbl_shop_spots.spotName,
+                        GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
+                        tbl_shop_printers.id AS printerId,
+                        tbl_shop_printers.printer AS printer,
+                        tbl_user.username AS buyerUserName,
+                        tbl_user.email AS buyerEmail,
+                        tbl_user.mobile AS buyerMobile,
+                        productData.products,
+                        vendorOne.logo AS vendorLogo,
+                        vendorOne.id as vendorId,
+                        vendorOne.username as vendorName,
+                        vendorOne.address as vendorAddress,
+                        vendorOne.zipcode as vendorZipcode,
+                        vendorOne.city as vendorCity,
+                        vendorOne.vat_number as vendorVAT,
+                        vendorOne.country as vendorCountry                        
+                    FROM
+                        tbl_shop_orders
+                    INNER JOIN
+                        tbl_shop_spots ON tbl_shop_spots.id = tbl_shop_orders.spotId
+                    INNER JOIN
+                        tbl_user ON tbl_user.id = tbl_shop_orders.buyerId
+                    INNER JOIN
+                        (
+                            SELECT
+                                tbl_shop_order_extended.orderId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_extended.name,    
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.price,
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.quantity,
+                                    \'' .  $concatSeparator . '\', tbl_shop_categories.category,
+                                    \'' .  $concatSeparator . '\', tbl_shop_categories.id,
+                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.shortDescription) > 0, tbl_shop_products_extended.shortDescription, ""), 
+                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, ""),
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage
+                                    SEPARATOR "' . $this->config->item('contactGroupSeparator') . '"
+                                ) AS products
+                            FROM
+                                tbl_shop_products_extended
+                            INNER JOIN
+                            tbl_shop_order_extended ON tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
+                        LEFT JOIN
+                            tbl_shop_products ON tbl_shop_products_extended.productId = tbl_shop_products.id
+                        LEFT JOIN
+                            tbl_shop_categories ON tbl_shop_products.categoryId = tbl_shop_categories.id
+                        LEFT JOIN
+                            tbl_shop_product_printers ON tbl_shop_product_printers.productId = tbl_shop_products.id
+                        LEFT JOIN
+                            tbl_shop_printers ON tbl_shop_printers.id = tbl_shop_product_printers.printerId
+                        WHERE
+                            tbl_shop_order_extended.orderId = "' . $orderIdcopy . '"
+                        GROUP BY
+                            tbl_shop_order_extended.orderId
+                    ) productData ON productData.orderId = tbl_shop_orders.id
+                    INNER JOIN
+                        tbl_shop_order_extended ON tbl_shop_order_extended.orderId = tbl_shop_orders.id
+                    INNER JOIN
+                        tbl_shop_products_extended ON tbl_shop_products_extended.id = tbl_shop_order_extended.productsExtendedId
+                    INNER JOIN
+                        tbl_shop_product_printers ON tbl_shop_product_printers.productId = tbl_shop_products_extended.productId
+                    INNER JOIN
+                        tbl_shop_printers ON tbl_shop_printers.id = tbl_shop_product_printers.printerId
+                    INNER JOIN
+                        (
+                            SELECT
+                                tbl_user.*
+                            FROM
+                                tbl_user
+                            WHERE tbl_user.roleid = ' . $this->config->item('owner') . '
+                        ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
+                    WHERE
+                        tbl_shop_orders.paid = "1"
+                        AND tbl_shop_orders.id = "' . $orderIdcopy . '"
+                    GROUP BY
+                        orderId
+                     ';
+			$result = $this->db->query($query);
+			$resultqueryforlog = $this->db->last_query();
+			$logFile = FCPATH . 'application/tiqs_logs/messages.txt';
+			Utility_helper::logMessage($logFile, $resultqueryforlog);
+
+			$result = $result->result_array();
+
+			return $result ? $result : null;
+		}
+
+
+		/**
          * updatePrintedStatus
          * 
          * Update printer status to 1 for all printed orders for all users

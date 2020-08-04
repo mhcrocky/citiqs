@@ -21,11 +21,16 @@
         public function data_get(): void
         {
             $header = getallheaders();
-            $key = $header['x-api-key'];
+//            var_dump($header);
+//            die();
+            $key = $header['X-Api-Key'];
+//            var_dump($key);
+//            die();
             if ($this->api_model->userAuthentication($key)) {
                 $where = [
                     'tbl_shop_vendors.payNlServiceId!=' => null,
                 ];
+//                die('123');
                 $vendors = $this->shopvendor_model->getVendors($where);
                 $this->set_response($vendors, 200);
             }
