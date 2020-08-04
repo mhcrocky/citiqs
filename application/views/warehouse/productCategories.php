@@ -101,9 +101,9 @@
             <?php if (is_null($categories)) { ?> 
 				<p>No categories.</p>
             <?php } else { ?>
-				<div class="row" id="sortableCategories" class="list-categories">
+				<div class="row" id="sortableCategories" class="list-categories" style="width:100%">
 				<?php foreach ($categories as $category) { ?>
-					<div class="grid-item col-lg-3 list-categories listCategories" data-category-id="<?php echo $category['categoryId']; ?>" style="background-color:<?php echo $category['active'] === '1' ? '#99ff66' : '#ff4d4d'; ?>">
+					<div class="grid-item list-categories listCategories" data-category-id="<?php echo $category['categoryId']; ?>" style="background-color:<?php echo $category['active'] === '1' ? '#99ff66' : '#ff4d4d'; ?>">
 						<div class="item-header">
 							<p class="item-description"><?php echo $category['category']; ?></p>
 							<p class="item-category">Status:

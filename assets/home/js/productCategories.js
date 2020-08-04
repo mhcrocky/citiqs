@@ -7,7 +7,6 @@ function redirect(element) {
 $(document).ready(function(){
     $("#sortableCategories").sortable({
         update: function(event,ui) {
-            console.dir('defjbkhews');
             updateCategoriesOrder('listCategories');
 
         }
