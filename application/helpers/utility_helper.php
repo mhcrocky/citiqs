@@ -187,4 +187,21 @@
             $message = date('Y-m-d H:i:s') . ' => ' . $message . PHP_EOL;
             return file_put_contents($file, $message, FILE_APPEND);
         }
+
+        public static function getPaginationLinks(int $count, int $perPage, $url) {
+            if (!$count) return '';
+
+            $config['base_url'] = base_url() . $url;
+            $config['total_rows'] = $count;
+            $config['per_page'] = $perPage;
+            $config['enable_query_strings'] = TRUE;
+            $config['page_query_string'] = TRUE;
+            $config['query_string_segment'] = 'offset';
+
+            $CI =& get_instance();
+            $CI->load->library('pagination');
+            $CI->pagination->initialize($config);
+
+            return $CI->pagination->create_links();
+        }
     }

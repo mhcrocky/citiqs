@@ -73,17 +73,23 @@
             return true;
         }
 
-        public function getUserProducts(int $userId): ?array
+        public function getUserProducts(int $userId, int $limit, int $offset, $whereIn = []): ?array
         {
             $this->load->config('custom');
 
-            $where = [
-                'tbl_shop_categories.userId=' => $userId
+            $filter = [
+                'where' => [
+                    'tbl_shop_categories.userId=' => $userId
+                ],
+                'whereIn' => $whereIn,
+                'conditions' => [
+                    'GROUP_BY' => [$this->table. '.productId'],
+                    'LIMIT' => [$limit, $offset],
+                ]
             ];
             $resetBy = 'productId';
-            $orderBy = $this->table. '.id DESC';
 
-            return $this->filterProducts($userId, $where, $resetBy, $orderBy, false, true);
+            return $this->filterProducts($userId, $filter, $resetBy, false);
           
         }
         public function getUserProductsPublic(int $userId): ?array
@@ -92,122 +98,125 @@
 
             $date = date('Y-m-d H:i:s', time());;
 
-            $where = [
-                'tbl_shop_categories.userId=' => $userId,
-                'tbl_shop_categories.active=' => '1',
-                'tbl_shop_products.dateTimeFrom<=' => $date,
-                'tbl_shop_products.dateTimeTo>' => $date,
+            $filter = [
+                'where' => [
+                        'tbl_shop_categories.userId=' => $userId,
+                        'tbl_shop_categories.active=' => '1',
+                        'tbl_shop_products.dateTimeFrom<=' => $date,
+                        'tbl_shop_products.dateTimeTo>' => $date,
+                    ],
+                'conditions' => [
+                        'GROUP_BY' => [$this->table. '.productId'],
+                        'ORDER_BY' => ['tbl_shop_categories.sortNumber ASC, tbl_shop_products.orderNo DESC'],
+                    ]
             ];
-
             
             $resetBy = 'category';
-            $orderBy = 'tbl_shop_categories.sortNumber ASC, tbl_shop_products.orderNo DESC';
             
-            return $this->filterProducts($userId, $where, $resetBy, $orderBy, true, false);
+            return $this->filterProducts($userId, $filter, $resetBy, true);
           
         }
-        private function filterProducts(int $userId, array $where, string $resetBy, string $orderBy, bool $onlyActiveProductSpot, bool $backend): ?array
+        private function filterProducts(int $userId, array $filter, string $resetBy, bool $onlyActiveProductSpot): ?array
         {
             $this->load->config('custom');
             $concatSeparator = $this->config->item('concatSeparator');
             $concatGroupSeparator = $this->config->item('contactGroupSeparator');
 
-            $filter = [
-                'what' => [
-                    $this->table . '.productId',
-                    'GROUP_CONCAT(
-                            tblShopProductDetails.productDetails
-                            SEPARATOR "'. $concatGroupSeparator . '"
-                    ) AS productDetails',
-                    'tbl_shop_products.stock',
-                    'tbl_shop_products.recommendedQuantity',
-                    'tbl_shop_products.active AS productActive',
-                    'tbl_shop_products.showImage',
-                    'tbl_shop_products.dateTimeFrom AS dateTimeFrom',
-                    'tbl_shop_products.dateTimeTo AS dateTimeTo',
-                    'tbl_shop_products.orderNo AS orderNo',
-                    'tbl_shop_categories.category',
-                    'tbl_shop_categories.id AS categoryId',
-                    'tbl_shop_categories.active AS categoryActive',
-                    'tbl_shop_categories.sortNumber AS sortNumber',
-                    'GROUP_CONCAT(
-                        CONCAT(
-                            tbl_shop_printers.id,
-                            \'' .  $concatSeparator . '\', tbl_shop_printers.printer,
-                            \'' .  $concatSeparator . '\', tbl_shop_printers.active
-                        )
-                    ) AS printers',                    
-                    'tblShopProductTimes.productTimes',
-                    'tblShopAddons.addons AS addons'
-                   
-                ],
-                'where' => $where,
-                'joins' =>  [
-                    ['tbl_shop_products', $this->table.'.productId = tbl_shop_products.id', 'LEFT'],
-                    ['tbl_shop_categories', 'tbl_shop_products.categoryId = tbl_shop_categories.id', 'LEFT'],
-                    ['tbl_shop_product_printers', 'tbl_shop_products.id = tbl_shop_product_printers.productId', 'LEFT'],
-                    ['tbl_shop_printers', 'tbl_shop_product_printers.printerId = tbl_shop_printers.id', 'LEFT'],
-                    [
-                        '(
-                            SELECT
+            $filter['what'] = [
+                $this->table . '.productId',
+                'GROUP_CONCAT(
+                        tblShopProductDetails.productDetails
+                        SEPARATOR "'. $concatGroupSeparator . '"
+                ) AS productDetails',
+                'tbl_shop_products.stock',
+                'tbl_shop_products.recommendedQuantity',
+                'tbl_shop_products.active AS productActive',
+                'tbl_shop_products.showImage',
+                'tbl_shop_products.dateTimeFrom AS dateTimeFrom',
+                'tbl_shop_products.dateTimeTo AS dateTimeTo',
+                'tbl_shop_products.orderNo AS orderNo',
+                'tbl_shop_categories.category',
+                'tbl_shop_categories.id AS categoryId',
+                'tbl_shop_categories.active AS categoryActive',
+                'tbl_shop_categories.sortNumber AS sortNumber',
+                'GROUP_CONCAT(
+                    CONCAT(
+                        tbl_shop_printers.id,
+                        \'' .  $concatSeparator . '\', tbl_shop_printers.printer,
+                        \'' .  $concatSeparator . '\', tbl_shop_printers.active
+                    )
+                ) AS printers',                    
+                'tblShopProductTimes.productTimes',
+                'tblShopAddons.addons AS addons'
+                
+            ];
+                
+            $filter['joins'] =  [
+                ['tbl_shop_products', $this->table.'.productId = tbl_shop_products.id', 'LEFT'],
+                ['tbl_shop_categories', 'tbl_shop_products.categoryId = tbl_shop_categories.id', 'LEFT'],
+                ['tbl_shop_product_printers', 'tbl_shop_products.id = tbl_shop_product_printers.productId', 'LEFT'],
+                ['tbl_shop_printers', 'tbl_shop_product_printers.printerId = tbl_shop_printers.id', 'LEFT'],
+                [
+                    '(
+                        SELECT
+                            tbl_shop_product_times.productId,
+                            GROUP_CONCAT(
                                 tbl_shop_product_times.productId,
-                                GROUP_CONCAT(
-                                    tbl_shop_product_times.productId,
-                                    \'' .  $concatSeparator . '\', tbl_shop_product_times.day,
-                                    \'' .  $concatSeparator . '\', tbl_shop_product_times.timeFrom,
-                                    \'' .  $concatSeparator . '\', tbl_shop_product_times.timeTo
-                                    SEPARATOR "'. $concatGroupSeparator . '"
-                                ) AS productTimes                                
-                            FROM
-                                tbl_shop_product_times
-                            GROUP BY tbl_shop_product_times.productId
-                            ORDER BY tbl_shop_product_times.timeFrom ASC
-                        ) tblShopProductTimes',                    
-                        'tblShopProductTimes.productId = ' . $this->table.'.productId',
-                        'LEFT'
-                    ],
-                    ['tbl_shop_products_types', 'tbl_shop_products_types.id = ' . $this->table . '.productTypeId','INNER'],
-                    [
-                        '(
-                            SELECT '
-                                // . $this->table . '.id,'
-                                . $this->table . '.productTypeId,'
-                                . $this->table . '.name,
-                                GROUP_CONCAT('
-                                    . $this->table. '.id,
-                                    \'' .  $concatSeparator . '\',' . $this->table. '.name,
-                                    \'' .  $concatSeparator . '\',' . $this->table. '.shortDescription,
-                                    \'' .  $concatSeparator . '\',' . 'FORMAT(' . $this->table . '.price,2),
-                                    \'' .  $concatSeparator . '\',' . $this->table. '.vatpercentage,
-                                    \'' .  $concatSeparator . '\',' . $this->table. '.productTypeId,
-                                    \'' .  $concatSeparator . '\', tbl_shop_products_types.type,
-                                    \'' .  $concatSeparator . '\', tbl_shop_products_types.isMain,
-                                    \'' .  $concatSeparator . '\',' . $this->table. '.updateCycle,
-                                    \'' .  $concatSeparator . '\',' . $this->table. '.showInPublic,
-                                    \'' .  $concatSeparator . '\',' . $this->table . '.productId,
-                                    \'' .  $concatSeparator . '\', tbl_shop_categories.category,
-                                    \'' .  $concatSeparator . '\', tbl_shop_products.active,
-                                    \'' .  $concatSeparator . '\', IF(CHAR_LENGTH(' . $this->table . '.longDescription) > 0, ' . $this->table . '.longDescription, "")
-                                    ORDER BY ' . $this->table. '.id DESC
-                                    SEPARATOR "'. $concatGroupSeparator . '"                                    
-                                ) AS productDetails
-                            FROM
-                                ' . $this->table . '
-                            INNER JOIN
-                                tbl_shop_products_types ON ' . $this->table . '.productTypeId = tbl_shop_products_types.id
-                            INNER JOIN
-                                tbl_shop_products ON tbl_shop_products.id = ' . $this->table . '.productId
-                            INNER JOIN
-                                tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+                                \'' .  $concatSeparator . '\', tbl_shop_product_times.day,
+                                \'' .  $concatSeparator . '\', tbl_shop_product_times.timeFrom,
+                                \'' .  $concatSeparator . '\', tbl_shop_product_times.timeTo
+                                SEPARATOR "'. $concatGroupSeparator . '"
+                            ) AS productTimes                                
+                        FROM
+                            tbl_shop_product_times
+                        GROUP BY tbl_shop_product_times.productId
+                        ORDER BY tbl_shop_product_times.timeFrom ASC
+                    ) tblShopProductTimes',                    
+                    'tblShopProductTimes.productId = ' . $this->table.'.productId',
+                    'LEFT'
+                ],
+                ['tbl_shop_products_types', 'tbl_shop_products_types.id = ' . $this->table . '.productTypeId','INNER'],
+                [
+                    '(
+                        SELECT '
+                            // . $this->table . '.id,'
+                            . $this->table . '.productTypeId,'
+                            . $this->table . '.name,
+                            GROUP_CONCAT('
+                                . $this->table. '.id,
+                                \'' .  $concatSeparator . '\',' . $this->table. '.name,
+                                \'' .  $concatSeparator . '\',' . $this->table. '.shortDescription,
+                                \'' .  $concatSeparator . '\',' . 'FORMAT(' . $this->table . '.price,2),
+                                \'' .  $concatSeparator . '\',' . $this->table. '.vatpercentage,
+                                \'' .  $concatSeparator . '\',' . $this->table. '.productTypeId,
+                                \'' .  $concatSeparator . '\', tbl_shop_products_types.type,
+                                \'' .  $concatSeparator . '\', tbl_shop_products_types.isMain,
+                                \'' .  $concatSeparator . '\',' . $this->table. '.updateCycle,
+                                \'' .  $concatSeparator . '\',' . $this->table. '.showInPublic,
+                                \'' .  $concatSeparator . '\',' . $this->table . '.productId,
+                                \'' .  $concatSeparator . '\', tbl_shop_categories.category,
+                                \'' .  $concatSeparator . '\', tbl_shop_products.active,
+                                \'' .  $concatSeparator . '\', IF(CHAR_LENGTH(' . $this->table . '.longDescription) > 0, ' . $this->table . '.longDescription, "")
+                                ORDER BY ' . $this->table. '.id DESC
+                                SEPARATOR "'. $concatGroupSeparator . '"                                    
+                            ) AS productDetails
+                        FROM
+                            ' . $this->table . '
+                        INNER JOIN
+                            tbl_shop_products_types ON ' . $this->table . '.productTypeId = tbl_shop_products_types.id
+                        INNER JOIN
+                            tbl_shop_products ON tbl_shop_products.id = ' . $this->table . '.productId
+                        INNER JOIN
+                            tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
 
-                            GROUP BY ' . $this->table. '.productId
-                            ORDER BY ' . $this->table. '.productTypeId DESC
-                            
-                        ) tblShopProductDetails',
-                        'tblShopProductDetails.productTypeId = tbl_shop_products_types.id AND tblShopProductDetails.name = ' . $this->table . '.name',
-                        'INNER'
-                    ],
-                    [
+                        GROUP BY ' . $this->table. '.productId
+                        ORDER BY ' . $this->table. '.productTypeId DESC
+                        
+                    ) tblShopProductDetails',
+                    'tblShopProductDetails.productTypeId = tbl_shop_products_types.id AND tblShopProductDetails.name = ' . $this->table . '.name',
+                    'INNER'
+                ],
+                [
                         '(
                             SELECT 
                                 tbl_shop_products_addons.productId,
@@ -229,16 +238,9 @@
                         'tblShopAddons.productId = tbl_shop_products.id',
                         'LEFT'
                     ]
-                ],
-                'conditions' => [
-                    'GROUP_BY' => [$this->table. '.productId'],
-                    'ORDER_BY' => [$orderBy],
-                ]
             ];
+                
 
-            if ($userId === 423 && $backend) {
-                $filter['conditions']['limit'] = ['50'];
-            }
             $products = $this->readImproved($filter);
 
             if (is_null($products)) return null;
@@ -350,5 +352,25 @@
                         ->shopspotproduct_model
                             ->setProperty('productId', $productId)
                             ->getProductSpots($onlyActiveProductSpot);
+        }
+
+        public function getProductsNames(int $userId): array
+        {
+            $query = 
+
+                'SELECT '
+                    . $this->table . '.name
+                FROM '
+                    . $this->table . ' 
+                INNER JOIN
+                    tbl_shop_products ON tbl_shop_products.id = ' . $this->table . '.productId
+                INNER JOIN
+                    tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+                WHERE
+                    tbl_shop_categories.userId = ' . $userId .'
+                GROUP BY ' . $this->table . '.productId';
+
+            $result = $this->db->query($query);
+            return $result->result_array();
         }
     }

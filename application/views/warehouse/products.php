@@ -127,15 +127,23 @@
                     </div>
                     <?php if ($products) { ?>
                         <div class="col-lg-6 col-md-6 col-12">
-                            <div class="form-group col-lg-6">
-                                <label for="filterProducts">Filter by product name:</label>
-                                <select class="form-control selectProducts" multiple="multiple" id="filterProducts" onchange="toogleProducts(this, 'all')">
-                                    <?php
-                                        $productList = '<option value="all">All</option>';
-                                    ?>
+                            <form method="post" action="<?php echo base_url() ?>products" >
+                                <div class="form-group col-lg-6">
+                                    <label for="filterProducts">Filter by product name:</label>
+                                    <select class="form-control selectProducts" multiple="multiple" id="filterProducts" name="names[]" required>
+                                        <?php if (!empty($productNames)) { ?>
+                                            <?php foreach ($productNames as $name) { ?>
+                                                <option value="<?php echo $name['name']; ?>"><?php echo $name['name']; ?></option>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </select>
                                     
-                                </select>
-                            </div>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <input type="submit" value="Filter" />
+                                    <a href="<?php echo base_url(); ?>products">Show all</a>
+                                </div>
+                            </form>
                         </div>
                     <?php } ?>
                     <div class="col-lg-4 col-md-4 col-sm-12 search-container">
@@ -192,13 +200,12 @@
                             $productDetailsString .=  '</dl>';
                         ?>
                             <div
-                                class="grid-item allProductClass"
+                                class="grid-item"
                                 style="background-color:<?php echo $product['productActive'] === '1' ? '#99ff66' : '#ff4d4d'; ?>"
                                 id="<?php echo 'product_' . str_replace('\'', ' ', $details['name']) . '_' . $details['productExtendedId']; ?>"
                                 >
                                 <div class="item-header">
                                     <p class="item-description">Name: <?php echo $details['name']; ?></p>
-                                    <?php $productList .= '<option value="product_' . $details['name'] . '_' . $details['productExtendedId'] . '">' . $details['name'] . '</option>' ?>
                                     <p class="item-description">Category: 
                                         <?php
                                             echo $product['category'];
@@ -659,6 +666,9 @@
                         <?php
                         }
                     ?>
+                    <div id="paginationLinks">
+                        <?php echo $pagination; ?>
+                    </div>
                 <?php } ?>
             </div>
         <?php } ?>
@@ -725,32 +735,19 @@
     }
 
 
-    function toogleProducts(element, all) {
-        let allProducts = document.getElementsByClassName('allProductClass');
-        let allProductsLength = allProducts.length;
-        let i;
-        let product;
-
+    function toogleProducts(elementl) {
+        let allProducts = document.getElements
         let selected = element.selectedOptions;
         let selectedLength = selected.length;
         let j;
-        let selectedIds = [];
+        let selectedNames = [];
         for (j = 0; j < selectedLength; j++) {
             selectedIds.push(selected[j].value);
         }
 
-        for (i = 0; i < allProductsLength; i++) {
-            product = allProducts[i];
-            if (selectedIds.includes(all)) {            
-                product.style.display = 'initial';
-            } else {
-                if (selectedIds.includes(product.id)) {
-                    product.style.display = 'initial';
-                } else {
-                    product.style.display = 'none';
-                }
-            }
-        }
+        console.dir(selectedIds);
+
+        
     }
 
     
@@ -762,11 +759,10 @@
     </script>
 <?php } ?>
 
-<?php if (!empty($productList)) { ?>
+<?php if (!empty($productNames)) { ?>
     <script>
             $(document).ready(function() {
                 $('.selectProducts').select2();
-                $('#filterProducts').html('<?php echo str_replace('\'', ' ', $productList); ?>');
             });
     </script>
 <?php } ?>

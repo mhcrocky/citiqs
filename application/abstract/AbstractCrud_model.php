@@ -70,7 +70,13 @@
                     $this->db->join(...$join);
                 }
             }
+
             $result = $this->db->where($filter['where']);
+
+            if (!empty($filter['whereIn'])) {
+                $whereIn = $filter['whereIn'];
+                $result = $this->db->where_in($whereIn['column'], $whereIn['array']);
+            }
 
             if (isset($filter['conditions'])) {
                 $conditions = $filter['conditions'];

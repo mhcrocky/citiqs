@@ -161,16 +161,34 @@
         public function products(): void
         {
             $this->global['pageTitle'] = 'TIQS : PRODUCTS';
-            $userId = intval($_SESSION['userId']);
+            if (empty($_SESSION['productNames'])) {
+                $_SESSION['productNames'] = $this->shopproductex_model->getProductsNames($userId);
+            }
 
-            $where = ['userId' => $userId];
+            $userId = intval($_SESSION['userId']);
+            $offset = intval($this->input->get('offset', true));
+            $perPage = 21;
+            $whereIn = [];
+            $pagination = Utility_helper::getPaginationLinks(count($_SESSION['productNames']), $perPage, 'products');
+
+            if (!empty($_POST)) {
+                $post = $this->input->post(null, true);
+                $whereIn = [
+                    'column' => 'tbl_shop_products_extended.name',
+                    'array' => $post['names']
+                ];
+                $pagination = '';
+            }
+
             $data = [
-                'categories' => $this->shopcategory_model->fetch($where),
-                'products' => $this->shopproductex_model->getUserProducts($userId),
-                'printers' => $this->shopprinters_model->read(['*'], $where),
+                'categories' => $this->shopcategory_model->fetch(['userId' => $userId]),
+                'products' => $this->shopproductex_model->getUserProducts($userId, $perPage, $offset, $whereIn),
+                'printers' => $this->shopprinters_model->read(['*'], ['userId' => $userId]),
                 'userSpots' => $this->shopspot_model->fetchUserSpots($userId),
                 'productTypes' => $this->shopprodutctype_model->fetchProductTypes($userId),
                 'concatSeparator' => $this->config->item('concatSeparator'),
+                'productNames' => $_SESSION['productNames'],
+                'pagination' => $pagination
             ];
 
             $this->loadViews('warehouse/products', $this->global, $data, null, 'headerWarehouse');
@@ -184,6 +202,9 @@
          */
         public function addProdcut(): void
         {
+            if (!empty($_SESSION['productNames'])) {
+                unset($_SESSION['productNames']);
+            }
 
             $data = $this->input->post(null, true);
             $userId = intval($_SESSION['userId']);
@@ -196,7 +217,8 @@
 
             if ($this->shopproductex_model->checkProductName($where)) {
                 $this->session->set_flashdata('error', 'Product with this name already exists! Insert failed');
-                redirect('products');
+                $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
+                redirect($redirect);
             };
 
             
@@ -215,7 +237,8 @@
 
             if (!$this->shopproduct_model->setObjectFromArray($data['product'])->create()) {
                 $this->session->set_flashdata('error', 'Product insert failed! Please try again.');
-                redirect('products');
+                $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
+                redirect($redirect);
             };
 
             $this->shopspotproduct_model->insertProductSpots($this->shopspot_model, $this->shopproduct_model->id, $userId);
@@ -235,7 +258,8 @@
                         $this->shopspotproduct_model->setProperty('productId', $this->shopproduct_model->id)->deleteProductSpots();
                         $this->shopproduct_model->delete();
                         $this->session->set_flashdata('error', 'Product insert failed! Please try again.');
-                        redirect('products');
+                        $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
+                        redirect($redirect);
                     };
                 }
             }
@@ -243,7 +267,8 @@
             if ($countTypes === 0) {
                 $this->shopproduct_model->delete();
                 $this->session->set_flashdata('error', 'Please select product type(s).');
-                redirect('products');
+                $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
+                redirect($redirect);
             }
             
             if (isset($data['productPrinters'])) {
@@ -265,7 +290,8 @@
             }
 
             $this->session->set_flashdata('success', 'Product inserted.');
-            redirect('products');
+            $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
+            redirect($redirect);
             return;
         }
 
@@ -276,6 +302,9 @@
          */
         public function editProduct(): void
         {
+            if (!empty($_SESSION['productNames'])) {
+                unset($_SESSION['productNames']);
+            }
 
             $data = $this->input->post(null, true);
             $productId = intval($this->uri->segment(3));
@@ -293,7 +322,8 @@
                 } else {
                     $this->session->set_flashdata('error', 'Update failed');
                 }
-                redirect('products');
+                $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
+                redirect($redirect);
                 return;
             }
 
@@ -306,7 +336,8 @@
 
             if ($this->shopproductex_model->checkProductName($where)) {
                 $this->session->set_flashdata('error', 'Product with this name already exists! Update failed');
-                redirect('products');
+                $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
+                redirect($redirect);
             };
 
             // update
@@ -371,8 +402,8 @@
                     $this->shopproductprinters_model->setObjectFromArray($printerInsert)->create();
                 }
             }
-
-            redirect('products');
+            $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
+            redirect($redirect);
             return;
         }
 
@@ -383,6 +414,10 @@
          */
         public function addProductTimes(): void
         {
+            if (!empty($_SESSION['productNames'])) {
+                unset($_SESSION['productNames']);
+            }
+
             $data = $this->input->post(null, true);
             $days = $data['productTime'];
 
@@ -400,13 +435,15 @@
                         ];
                         if (!$this->shopproducttime_model->setObjectFromArray($insert)->create()) {
                             $this->session->set_flashdata('error', 'Availability time(s) for product "' . $data['productName'] . '" not updated! Please try again');
-                            redirect('products');
+                            $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
+                            redirect($redirect);
                         };
                     }
                 }
             }
             $this->session->set_flashdata('success', 'Availability time(s) for product "' . $data['productName'] . '" updated.');
-            redirect('products');
+            $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
+            redirect($redirect);
             return;
         }
 
@@ -721,6 +758,10 @@
          */
         public function addProductAddons(): void
         {
+            if (!empty($_SESSION['productNames'])) {
+                unset($_SESSION['productNames']);
+            }
+
             $productId = intval($this->uri->segment(3));
             $data = $this->input->post(null, true);
             $productAddons = $data['productAddons'];
@@ -746,6 +787,7 @@
                 if ($success) $this->session->set_flashdata('success', 'Addons inserted for product "' . $product . '"!');
             }
 
-            redirect('products');
+            $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
+            redirect($redirect);
         }
     }

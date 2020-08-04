@@ -1,0 +1,8 @@
+#paginationLinks {
+    width:100%;
+    text-align:center;
+}
+
+#paginationLinks > * {
+    padding: 0px 3px;
+}
