@@ -356,6 +356,7 @@
                             tbl_shop_printers ON tbl_shop_printers.id = tbl_shop_product_printers.printerId
                         WHERE
                             tbl_shop_product_printers.printerId = (SELECT tbl_shop_printers.id WHERE tbl_shop_printers.macNumber = "' . $macNumber . '")
+                            AND tbl_shop_order_extended.printed = "0"
                         GROUP BY
                             tbl_shop_order_extended.orderId
                     ) productData ON productData.orderId = tbl_shop_orders.id
@@ -378,7 +379,6 @@
                     WHERE
                         tbl_shop_orders.paid = "1"
                         AND tbl_shop_orders.expired = "0"
-                        AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_printers.macNumber = "' . $macNumber . '"
                     GROUP BY
@@ -464,7 +464,9 @@
                                         WHERE 
                                             tbl_shop_printers.macNumber != "' . $macNumber . '"
                                     )
-                                GROUP BY  tbl_shop_order_extended.orderId
+                                AND tbl_shop_order_extended.printed = "0"
+                            GROUP BY
+                                tbl_shop_order_extended.orderId
                         ) productData ON productData.orderId = tbl_shop_orders.id 
                     INNER JOIN
                         (
