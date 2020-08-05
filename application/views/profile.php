@@ -249,6 +249,18 @@
 							hours:
 						</label>
 					</div>
+					<div class="form group">
+						<label for="serviceFeeTax">Service fee tax: </label>
+						<input
+							type="number"
+							min="0"
+							step="1"
+							id="serviceFeeTax"
+							name="serviceFeeTax"
+							class="form-control"
+							value="<?php echo $vendor['serviceFeeTax']; ?>"
+							/>
+					</div>
 					<div class="form group" style="margin-top:30px !important">
 						<h3>Select payment method(s):</h3>
 						<div class="col-lg-4">

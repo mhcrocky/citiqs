@@ -19,6 +19,7 @@
         public $payNlServiceId;
         public $printTimeConstraint;
         public $minimumOrderFee;
+        public $serviceFeeTax;
 
         public $bancontact;
         public $ideal;
@@ -32,7 +33,7 @@
             $this->load->helper('validate_data_helper');
             if (!Validate_data_helper::validateInteger($value)) return;
 
-            if ($property === 'id' || $property === 'vendorId') {
+            if ($property === 'id' || $property === 'vendorId' || $property === 'serviceFeeTax') {
                 $value = intval($value);
             }
             if ($property === 'serviceFeePercent' || $property === 'serviceFeeAmount') {
@@ -68,6 +69,8 @@
             if (isset($data['creditCard']) && !($data['creditCard'] === '1' || $data['creditCard'] === '0')) return false;
             if (isset($data['printTimeConstraint']) && !Validate_data_helper::validateInteger($data['printTimeConstraint'])) return false;
             if (isset($data['minimumOrderFee']) && !Validate_data_helper::validateFloat($data['minimumOrderFee'])) return false;
+            if (isset($data['serviceFeeTax']) && !Validate_data_helper::validateInteger($data['serviceFeeTax'])) return false;
+
             return true;
         }
 
@@ -87,6 +90,7 @@
                     $this->table . '.creditCard',
                     $this->table . '.printTimeConstraint',
                     $this->table . '.minimumOrderFee',
+                    $this->table . '.serviceFeeTax',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',
@@ -110,6 +114,9 @@
 
             $result['serviceFeePercent'] = floatval($result['serviceFeePercent']);
             $result['serviceFeeAmount'] = floatval($result['serviceFeeAmount']);
+            $result['minimumOrderFee'] = floatval($result['minimumOrderFee']);
+            $result['serviceFeeTax'] = intval($result['serviceFeeTax']);
+            $result['printTimeConstraint'] = intval($result['printTimeConstraint']);
             $result['vendorId'] = intval($result['vendorId']);
             return $result;
         }
