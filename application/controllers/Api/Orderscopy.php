@@ -224,7 +224,7 @@
 				}
 
 				if($vatpercentage==9){
-					$T9totalamount = $T9totalamount+($totalamount-(($totalamount/121)*100))  ;
+					$T9totalamount = $T9totalamount+($totalamount-(($totalamount/109)*100))  ;
 				}
 
 				$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
