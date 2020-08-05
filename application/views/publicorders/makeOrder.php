@@ -1,4 +1,4 @@
-<?php if($vendor['vendorId'] == 1162 ){?>
+<?php if($vendor['vendorId'] == 1162 || $vendor['vendorId'] == 5655){?>
 <body style="background-color: white">
 <?php } else {?>
 <body style="background-color: navajowhite">
@@ -10,7 +10,7 @@
     }
 </style>
 
-<?php if($vendor['vendorId'] == 1162 ){?>
+<?php if($vendor['vendorId'] == 1162 || $vendor['vendorId'] == 5655 ){?>
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/slick.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/slick-theme.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/th_custom.css">
@@ -183,7 +183,7 @@
 
 ?>
 
-<?php if($vendor['vendorId'] == 1162 ){?>
+<?php if($vendor['vendorId'] == 1162 || $vendor['vendorId'] == 5655 ){?>
 <main class="container" style="text-align:left; background-color: white">
 <?php } else {?>
 <main class="container" style="text-align:left; background-color: navajowhite">
@@ -209,7 +209,7 @@
 
 		<h5 style="text-align:center; font-size: xx-small">SWIPE &lt; LINKS EN RECHTS &gt; VOOR ANDERE CATEGORIE</h5>
 
-		<?php if($vendor['vendorId'] == 1162 ){?>
+		<?php if($vendor['vendorId'] == 1162 || $vendor['vendorId'] == 5655){?>
 			<div class="main-slider container" style='overflow-x:hidden; overflow-y: hidden; margin-top: 20px; margin-bottom: 20px; background-color: white'>
 		<?php } else {?>
 			<div class="main-slider container" style='overflow-x:hidden; overflow-y: hidden; margin-top: 20px; margin-bottom: 20px; background-color: navajowhite'>
@@ -222,7 +222,7 @@
                 ?>
                     <div class="item-category">
                         <div class="filter-sidebar">
-							<?php if($vendor['vendorId'] == 1162 ){?>
+							<?php if($vendor['vendorId'] == 1162 || $vendor['vendorId'] == 5655 ){?>
 								<a href="javascript:void(0);"  style="color: black; background-color: white" class="go-category left-side selected"><?php echo $category;?></a>
 							<?php } else {?>
 								<a href="javascript:void(0);"  style="color: black; background-color: navajowhite" class="go-category left-side selected"><?php echo $category;?></a>
@@ -285,7 +285,7 @@
                                 
                                 ?>
 
-								<?php if($vendor['vendorId'] == 1162 ){?>
+								<?php if($vendor['vendorId'] == 1162 || $vendor['vendorId'] == 5655 ){?>
 									<div class="product__list" style="background-color: white">
 								<?php } else {?>
 									<div class="product__list" style="background-color: navajowhite">

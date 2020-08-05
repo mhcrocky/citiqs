@@ -77,7 +77,7 @@ class Alfredpayment extends BaseControllerWeb
                             ->updatePaidStatus(['paid' => '1']);
             echo('TRUE| '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
         } else {
-			echo('TRUE| NOT FIND '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
+			echo('FALSE| NOT FIND '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
         }
     }
 
