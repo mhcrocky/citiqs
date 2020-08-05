@@ -516,9 +516,6 @@
 			$concatSeparator = $this->config->item('concatSeparator');
 			$concatGroupSeparator = $this->config->item('contactGroupSeparator');
 
-			//
-//			$dateConstraint = date('Y-m-d H:i:s', strtotime('-24 hours', time()));
-
 			$query =
 				'
                     SELECT
@@ -526,6 +523,8 @@
                         tbl_shop_orders.spotId,
                         tbl_shop_orders.created AS orderCreated,
                         tbl_shop_orders.expired AS orderExpired,
+                        tbl_shop_orders.serviceFee AS serviceFee,
+                        tbl_shop_orders.printStatus AS printStatus,
                         tbl_shop_spots.spotName,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
                         tbl_user.username AS buyerUserName,
@@ -539,7 +538,8 @@
                         vendorOne.zipcode as vendorZipcode,
                         vendorOne.city as vendorCity,
                         vendorOne.vat_number as vendorVAT,
-                        vendorOne.country as vendorCountry                        
+                        vendorOne.country as vendorCountry,
+                        tbl_shop_vendors.serviceFeeTax as serviceFeeTax
                     FROM
                         tbl_shop_orders
                     INNER JOIN
@@ -564,16 +564,16 @@
                             FROM
                                 tbl_shop_products_extended
                             INNER JOIN
-                            tbl_shop_order_extended ON tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
-                        LEFT JOIN
-                            tbl_shop_products ON tbl_shop_products_extended.productId = tbl_shop_products.id
-                        LEFT JOIN
-                            tbl_shop_categories ON tbl_shop_products.categoryId = tbl_shop_categories.id
-                        WHERE
-                            tbl_shop_order_extended.orderId = "' . $orderIdcopy . '"
-                        GROUP BY
-                            tbl_shop_order_extended.orderId
-                    ) productData ON productData.orderId = tbl_shop_orders.id
+                                tbl_shop_order_extended ON tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
+                            LEFT JOIN
+                                tbl_shop_products ON tbl_shop_products_extended.productId = tbl_shop_products.id
+                            LEFT JOIN
+                                tbl_shop_categories ON tbl_shop_products.categoryId = tbl_shop_categories.id
+                            WHERE
+                                tbl_shop_order_extended.orderId = "' . $orderIdcopy . '"
+                            GROUP BY
+                                tbl_shop_order_extended.orderId
+                        ) productData ON productData.orderId = tbl_shop_orders.id
                     INNER JOIN
                         tbl_shop_order_extended ON tbl_shop_order_extended.orderId = tbl_shop_orders.id
                     INNER JOIN
@@ -590,6 +590,8 @@
                                 tbl_user
                             WHERE tbl_user.roleid = ' . $this->config->item('owner') . '
                         ) vendorOne ON vendorOne.id = tbl_shop_categories.userId
+                    INNER JOIN
+                        tbl_shop_vendors ON tbl_shop_vendors.vendorId = vendorOne.id
                     WHERE
                         tbl_shop_orders.paid = "1"
                         AND tbl_shop_orders.id = "' . $orderIdcopy . '"
@@ -613,7 +615,7 @@
          *
          * @return void
          */
-        public function updatePrintedStatus(): void
+        public function updatePrintedStatus(): bool
         {
             $query  = 'UPDATE ' . $this->table . ' ';
             $query .= 'set ' . $this->table . '.printStatus = "1" ';
@@ -621,6 +623,7 @@
             $query .= '(SELECT tbl_shop_order_extended.orderId FROM tbl_shop_order_extended WHERE tbl_shop_order_extended.printed = "0" GROUP BY tbl_shop_order_extended.orderId)';
 
             $this->db->query($query);
+            return $this->db->affected_rows() ? true : false;
         }
 
         public function updatePaidStatus(array $what): void
