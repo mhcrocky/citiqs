@@ -178,6 +178,12 @@
                                         </div>
                                     </div>
                                 <?php } ?>
+
+
+
+
+
+
                                 <div class="footer" style="text-align:left">
                                     <a href="<?php echo base_url(); ?>checkout_order" class="btn-cancel">
                                         <i class="fa fa-arrow-left"></i>

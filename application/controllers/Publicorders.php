@@ -188,6 +188,7 @@
                 'idealPaymentType' => $this->config->item('idealPaymentType'),
                 'creditCardPaymentType' => $this->config->item('creditCardPaymentType'),
                 'bancontactPaymentType' => $this->config->item('bancontactPaymentType'),
+				'sofortPaymentType' => $this->config->item('sofortPaymentType'),
             ];
 
             $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
