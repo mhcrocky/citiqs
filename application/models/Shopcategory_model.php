@@ -17,6 +17,7 @@
         public $driverNumber;
         public $delayTime;
         public $sortNumber;
+        public $driverSmsMessage;
 
 
         private $table = 'tbl_shop_categories';
@@ -70,6 +71,7 @@
                     $this->table . '.driverNumber',
                     $this->table . '.delayTime',
                     $this->table . '.sortNumber',
+                    $this->table . '.driverSmsMessage',
                 ],
                 $where,
                 [],

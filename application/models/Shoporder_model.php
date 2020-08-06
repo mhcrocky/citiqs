@@ -666,6 +666,7 @@
                     'tbl_shop_categories.driverNumber AS driverNumber',
                     'tbl_shop_categories.delayTime as delayTime',
                     'tbl_shop_categories.category AS categoryName',
+                    'tbl_shop_categories.driverSmsMessage AS driverSmsMessage',
                     'tbl_shop_spots.spotName AS spotName'
                 ],
                 'where' => [
