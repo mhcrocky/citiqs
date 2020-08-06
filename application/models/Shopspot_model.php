@@ -13,6 +13,7 @@
         public $printerId;
         public $spotName;
         public $active;
+        public $spotTypeId;
 
         private $table = 'tbl_shop_spots';
 
@@ -21,9 +22,10 @@
             $this->load->helper('validate_data_helper');
             if (!Validate_data_helper::validateInteger($value)) return;
 
-            if ($property === 'id' || $property === 'printerId' ) {
+            if ($property === 'id' || $property === 'printerId' || $property === 'spotTypeId') {
                 $value = intval($value);
             }
+
             if ($property === 'price') {
                 $value = floatval($value);
             }
@@ -37,7 +39,7 @@
 
         public function insertValidate(array $data): bool
         {
-            if (isset($data['printerId']) && isset($data['spotName']) && isset($data['active'])) {
+            if (isset($data['printerId']) && isset($data['spotName']) && isset($data['active']) && isset($data['spotTypeId'])) {
                 return $this->updateValidate($data);
             }
             return false;
@@ -49,6 +51,7 @@
             if (isset($data['printerId']) && !Validate_data_helper::validateInteger($data['printerId'])) return false;
             if (isset($data['spotName']) && !Validate_data_helper::validateString($data['spotName'])) return false;
             if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
+            if (isset($data['spotTypeId']) && !Validate_data_helper::validateInteger($data['spotTypeId'])) return false;            
 
             return true;
         }
@@ -61,12 +64,15 @@
                     $this->table . '.printerId AS spotPrinterId',
                     $this->table . '.spotName AS spotName',
                     $this->table . '.active AS spotActive',
+                    $this->table . '.spotTypeId AS spotTypeId',
                     'tbl_shop_printers.printer AS printer',
                     'tbl_shop_printers.active AS printerActive',
+                    'tbl_shop_spot_types.type AS spotType'
                 ],
                 [ 'tbl_shop_printers.userId=' => $userId],
                 [
-                    ['tbl_shop_printers', $this->table . '.printerId = tbl_shop_printers.id', 'INNER']
+                    ['tbl_shop_printers', $this->table . '.printerId = tbl_shop_printers.id', 'INNER'],
+                    ['tbl_shop_spot_types', $this->table . '.spotTypeId = tbl_shop_spot_types.id', 'INNER']
                 ],
                 'order_by',
                 [$this->table . '.spotName', 'ASC']

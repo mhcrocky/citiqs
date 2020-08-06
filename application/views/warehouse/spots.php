@@ -35,6 +35,17 @@
                                 <label for="spotName">Spot name: </label>
                                 <input type="text" class="form-control" id="spotName" name="spotName" required />
                             </div>
+                            <div>
+                                <label for="addSpotTypeId">Spot type: </label>
+                                <select class="form-control" id="addSpotTypeId" name="spotTypeId">
+                                    <option value="">Select</option>
+                                    <?php foreach ($spotTypes as $type) { ?>
+                                        <option value="<?php echo $type['id']; ?>">
+                                            <?php echo $type['type']; ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -42,11 +53,19 @@
                     <div class="col-lg-4 col-md-4 col-sm-12 grid-header-heading">
                         <h2>Spots</h2>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <!-- <div class="form-group">
-                            <label for="filterCategories">Filter printers:</label>						
-                        </div> -->
-                    </div>
+                    <?php if (!empty($spots)) { ?>
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="form-group col-lg-6">
+                                <label for="filterSpots">Filter by spot name:</label>
+                                <select class="form-control selectSpots" multiple="multiple" id="filterSpots" onchange="toogleSpots(this, 'allSpots')">
+                                    <option value="all">Select</option>
+                                    <?php foreach ($spots as $spot) { ?>
+                                        <option value="spotElementId<?php echo $spot['spotId']; ?>"><?php echo $spot['spotName']; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                    <?php } ?>
 
                     <div class="col-lg-4 col-md-4 col-sm-12 search-container">
                         <button
@@ -60,17 +79,18 @@
                 <?php } else { ?>
                     <?php foreach ($spots as $spot) { ?>
 
-                        <div class="grid-item" style="background-color:<?php echo $spot['spotActive'] === '1' ? '#99ff66' : '#ff4d4d'; ?>">
+                        <div class="grid-item allSpots" id="spotElementId<?php echo $spot['spotId']; ?>" style="background-color:<?php echo $spot['spotActive'] === '1' ? '#99ff66' : '#ff4d4d'; ?>">
                             <div class="item-header">
                                 <p class="item-description">Name: <?php echo $spot['spotName']; ?></p>
                                 <!-- <p class="item-description">Spot ID: <?php #echo $spot['spotId']; ?></p> -->
                                 <p class="item-category">Spot status:
                                     <?php echo $spot['spotActive'] === '1' ? '<span>ACTIVE</span>' : '<span>BLOCKED</span>'; ?>
                                 </p>
-                                <p class="item-description">Printer: <?php echo $spot['printer']; ?></p>
+                                <p class="item-description">Printer: <span><?php echo $spot['printer']; ?><span></p>
                                 <p class="item-category">Printer status:
                                     <?php echo $spot['printerActive'] === '1' ? '<span>ACTIVE</span>' : '<span>BLOCKED</span>'; ?>
                                 </p>
+                                <p class="item-description">Spot type: <span><?php echo $spot['spotType']; ?><span></p>
                             </div><!-- end item header -->
                             <!-- END EDIT FOR NEW USER -->
                             <div class="grid-footer">
@@ -140,6 +160,20 @@
                                                 <?php } ?>
                                             </select>
                                         </div>
+                                        <div>
+                                            <label for="editSpotTypeId<?php echo $spot['spotId']; ?>">Spot type: </label>
+                                            <select class="form-control" id="editSpotTypeId<?php echo $spot['spotId']; ?>" name="spotTypeId">
+                                                <option value="">Select</option>
+                                                <?php foreach ($spotTypes as $type) { ?>
+                                                    <option
+                                                        value="<?php echo $type['id']; ?>"
+                                                        <?php if ($spot['spotTypeId'] === $type['id']) echo 'selected'; ?>                                                        
+                                                        >
+                                                        <?php echo $type['type']; ?>
+                                                    </option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -153,3 +187,42 @@
 		<!-- end grid list -->
 	</div>
 </div>
+<script>
+    function toogleSpots(element, className) {
+        let allProducts = document.getElementsByClassName(className)
+        let allProductsLength = allProducts.length;
+        let i;
+
+        let selected = element.selectedOptions;
+        let selectedLength = selected.length;
+        let j;
+
+        let selectedIds = [];
+        let spot;
+
+        for (j = 0; j < selectedLength; j++) {
+            selectedIds.push(selected[j].value);
+        }
+
+        if (selectedIds.includes('all')) {
+            $('.' + className).css("display", "initial");
+            return;
+        }
+
+        for (i = 0; i < allProductsLength; i++) {
+            spot = allProducts[i];
+            if (selectedIds.includes(spot.id)) {
+                spot.style.display = 'initial';
+            } else {
+                spot.style.display = 'none';
+            }
+        }
+    }
+</script>
+<?php if (!empty($spots)) { ?>
+    <script>
+        $(document).ready(function() {
+            $('.selectSpots').select2();
+        });
+    </script>
+<?php } ?>

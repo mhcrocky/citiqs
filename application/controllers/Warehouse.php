@@ -29,6 +29,7 @@
             $this->load->model('shopproducttime_model');
             $this->load->model('shopprodutctype_model');
             $this->load->model('shopproductaddons_model');
+            $this->load->model('shopspottype_model');
 
             $this->load->library('language', array('controller' => $this->router->class));
             $this->load->library('session');
@@ -564,7 +565,8 @@
 
             $data = [
                 'printers' => $this->shopprinters_model->read(['*'], ['userId=' => $userId]),
-                'spots' => $this->shopspot_model->fetchUserSpots($userId)
+                'spots' => $this->shopspot_model->fetchUserSpots($userId),
+                'spotTypes' =>$this->shopspottype_model->read(['*'], ['id>' => 0]),
             ];
 
 
