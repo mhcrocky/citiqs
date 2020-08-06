@@ -819,7 +819,7 @@ div.filter-sidebar ul li a {
 	cursor: url('cursor.png'), auto;
 	cursor: grab;
 	margin-top: 50px;
-	margin-bottom: 150px;
+	margin-bottom: 150px !important;
 	padding-left: 55px;
 	padding-right: 55px;
 }

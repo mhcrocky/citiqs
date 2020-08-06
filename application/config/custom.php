@@ -115,6 +115,7 @@ $config['concatSeparator'] = ')#%';
 $config['idealPaymentType'] = '10';
 $config['creditCardPaymentType'] = '706';
 $config['bancontactPaymentType'] = '436';
+$config['sofortPaymentType'] = '436';
 
 $config['workingDays'] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 $config['weekDays'] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
