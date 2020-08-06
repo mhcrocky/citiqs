@@ -50,6 +50,10 @@
 							<label style="background-color:#fff" class="radio-inline" for="sendSmsNo">&nbsp;&nbsp;&nbsp;No</label>
 							<input type="radio" id="sendSmsNo" name="sendSms" value="0" checked />
 						</div>
+						<div class="col-lg-4 col-sm-12 form-group">
+							<label style="background-color:#fff" for="driverSmsMessage">SMS message for driver: </label>
+							<input type="text" class="form-control" id="driverSmsMessage" name="driverSmsMessage" />
+						</div>
 					</form>
 				</div>
 			</div>
@@ -117,6 +121,9 @@
 							</p>
 							<p class="item-category">Minutes to delay:
 								<?php echo $category['delayTime']; ?>
+							</p>
+							<p class="item-category">Message to driver:
+								<?php echo $category['driverSmsMessage']; ?>
 							</p>
 						</div><!-- end item header -->
 						<div class="grid-footer">
@@ -196,6 +203,16 @@
 										<input type="radio" id="sendSmsYes<?php echo $category['categoryId']; ?>" name="sendSms" value="1" <?php if ($category['sendSms'] === '1') echo 'checked'; ?>>
 										<label class="radio-inline" style="background-color:#fff" for="sendSmsNo<?php echo $category['categoryId']; ?>">&nbsp;&nbsp;&nbsp;No</label>
 										<input type="radio" id="sendSmsNo<?php echo $category['categoryId']; ?>" name="sendSms" value="0" <?php if ($category['sendSms'] === '0') echo 'checked'; ?>>
+									</div>
+									<div class="col-lg-4 col-sm-12 form-group">
+										<label style="background-color:#fff" for="driverSmsMessage<?php echo $category['categoryId']; ?>">SMS message for driver: </label>
+										<input
+											type="text"
+											class="form-control"
+											id="driverSmsMessage<?php echo $category['categoryId']; ?>"
+											value="<?php echo $category['driverSmsMessage']; ?>"
+											name="driverSmsMessage"
+											/>
 									</div>
 								</form>
 							</div>

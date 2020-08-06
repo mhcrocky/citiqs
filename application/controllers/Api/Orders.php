@@ -606,19 +606,15 @@
         public function sms_get(): void
         {
             $orders = $this->shoporder_model->ordersToSendSmsToDriver();
-            // var_dump($orders);
-            // die();
-
             if (!is_null($orders)) {
                 foreach ($orders as $order) {
                     if (
-                        $order['delayTime']
+                        ($order['delayTime'] || intval($order['delayTime']) === 0)
                         && $order['driverNumber']
                         && (strtotime($order['orderUpdate']) < strtotime(date('Y-m-d H:i:s', strtotime('-' . $order['delayTime'] . ' minutes'))))
                     ) {
-                        $message  = 'Go to "'. $order['categoryName'] .'". ';
-                        $message .= 'Order from "' . $order['vendorName']. '"';
-                        $message .= ', order id is "' . $order['orderId'] . '" ';
+                        $message  = $order['driverSmsMessage'] . ' ';
+                        $message .= 'Order id is "' . $order['orderId'] . '" ';
                         $message .= 'and spot name is "' . $order['spotName'] . '" ';
                         if (Curl_helper::sendSmsNew($order['driverNumber'], $message)) {
                             $this

@@ -126,7 +126,7 @@
             $this->shopcategory_model->setObjectId(intval($this->uri->segment(3)));
 
             if(isset($data['category']) && $this->shopcategory_model->checkIsInserted($data)) {
-                $this->session->set_flashdata('error', 'Update failed! Role with name "' . $data['category'] . '" already inserted');
+                $this->session->set_flashdata('error', 'Update failed! Category with name "' . $data['category'] . '" already inserted');
                 redirect('product_categories');
             }
 
