@@ -1197,7 +1197,7 @@ class User extends BaseControllerWeb {
 
             if (empty($resultPas)) {
                 $this->session->set_flashdata('nomatch', 'Your old password is not correct');
-                redirect('profile/' . $active);
+                redirect('profile/');
             } else {
                 $usersData = array('password' => getHashedPassword($newPassword), 'updatedBy' => $this->userId,
                     'updatedDtm' => date('Y-m-d H:i:s'));
@@ -1210,7 +1210,7 @@ class User extends BaseControllerWeb {
                     $this->session->set_flashdata('error', 'Password updation failed');
                 }
 
-                redirect('profile/' . $active);
+                redirect('profile/');
             }
         }
     }

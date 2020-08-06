@@ -607,7 +607,6 @@
 			return $result ? $result : null;
 		}
 
-
 		/**
          * updatePrintedStatus
          * 
