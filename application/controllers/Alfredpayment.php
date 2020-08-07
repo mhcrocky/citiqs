@@ -13,6 +13,7 @@ class Alfredpayment extends BaseControllerWeb
         parent::__construct();
         
         $this->load->model('shoporder_model');
+        $this->load->model('shoporderpaynl_model');
 
         $this->load->helper('pay_helper');
         $this->load->helper('utility_helper');
@@ -49,12 +50,15 @@ class Alfredpayment extends BaseControllerWeb
         $result = @file_get_contents($url);
         $result = json_decode($result);
 
-        if ($result->request->result == '1') {
-            // update order transactionId
+        if ($result->request->result === '1') {
             $this
-                ->shoporder_model
-                    ->setObjectFromArray(['transactionId'=> $result->transaction->transactionId])
-                    ->update();
+                ->shoporderpaynl_model
+                    ->setObjectFromArray([
+                        'orderId' => $orderId,
+                        'transactionId' => $result->transaction->transactionId,
+                        'requestSuccess' => date('Y-m-d H:i:s')
+                    ])
+                    ->create();
             redirect($result->transaction->paymentURL);
             exit();
         }
@@ -67,14 +71,22 @@ class Alfredpayment extends BaseControllerWeb
 
 	public function ExchangePay():void
 	{
+        $get = $this->input->get(null, true);
         $transactionid = $this->input->get('order_id'); 
         $action = $this->input->get('action', true);
 
-        if ($action === 'new_ppt') {
-            $update = $this
-                        ->shoporder_model
-                            ->setProperty('transactionId', $transactionid)
-                            ->updatePaidStatus(['paid' => '1']);
+        if ($get['action'] === 'new_ppt') {
+
+            $this
+                ->shoporderpaynl_model
+                    ->setProperty('transactionId', $get['orderId'])
+                    ->updatePayNl([
+                        'payNlResponse' => serialize($get),
+                        'exchangePay' => date('Y-m-d')
+                    ]);
+
+            $this->shoporder_model->updatePaidStatus($this->shoporderpaynl_model, ['paid' => '1']);
+
             echo('TRUE| '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
         } else {
 			echo('FALSE| NOT FIND '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
@@ -95,18 +107,19 @@ class Alfredpayment extends BaseControllerWeb
         $get = $this->input->get(null, true);
         $statuscode = intval($get['orderStatusId']);
 
-        if ($statuscode == 100) {
-            $this->shoporder_model->setProperty('transactionId', $get['orderId'])->updatePaidStatus(['paid' => '1']);
-            $this->session->set_flashdata('success', 'Your order is paid');
-			if($lastpageforvendorId==1162){
+        if ($statuscode === 100) {
+            $this->shoporderpaynl_model->setProperty('transactionId', $get['orderId'])->updatePayNl(['successPayment' => date('Y-m-d H:i:s')]);
+            $this->shoporder_model->updatePaidStatus($this->shoporderpaynl_model, ['paid' => '1']);
 
+            $this->session->set_flashdata('success', 'Your order is paid');
+
+            if ($lastpageforvendorId == 1162) {
 				$redirect = 'successth';
-			} else{
-//				var_dump($lastpageforvendorId);
-//				die();
+			} else {
+                // var_dump($lastpageforvendorId);
+                // die();
 				$redirect = 'success';
 			}
-
         } elseif ($statuscode < 0 ) {
             $this->session->set_flashdata('error', 'Order not paid');
         } elseif ($statuscode >= 0) {
@@ -115,7 +128,6 @@ class Alfredpayment extends BaseControllerWeb
             $this->session->set_flashdata('error', 'Payment error. Please, contact staff');
         }
 
-		unset($_SESSION['vendor']);
         redirect($redirect);
         exit();
     }

@@ -625,32 +625,18 @@
             return $this->db->affected_rows() ? true : false;
         }
 
-        public function updatePaidStatus(array $what): void
+        public function updatePaidStatus(object $shopOrderPaynl, array $what): void
         {
-            $update = $this
-                        ->db
-                            ->where('transactionId', $this->transactionId)
-                            ->update($this->table, $what);
+            $shopOrderPaynl->setAlfredOrderId();            
+            $this->setObjectId($shopOrderPaynl->orderId);
+
+            $update = $this->db->where('id', $this->id)->update($this->table, $what);
             if (!$update) {
                 $this->load->helper('utility_helper');
                 $file = FCPATH . 'application/tiqs_logs/messages.txt';
-                $message = 'Order with transactionId "tbl_shop_orders.' . $$this->transactionId . '" not updated';
+                $message = 'Record "tbl_shop_orders.id = ' . $this->id . '" status not updated to paid';
                 Utility_helper::logMessage($file, $message);
             }
-        }
-
-        public function setOrderIdFromTransactionId(): Shoporder_model
-        {
-            $result =
-                $this->
-                    readImproved([
-                        'what' => ['id'],
-                        'where' => ['transactionId=' => $this->transactionId]
-                    ]);
-
-            $this->id = reset($result)['id'];
-            $this->id = intval($this->id);
-            return $this;
         }
 
         public function ordersToSendSmsToDriver(): ?array
