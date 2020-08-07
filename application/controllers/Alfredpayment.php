@@ -79,7 +79,7 @@ class Alfredpayment extends BaseControllerWeb
 
             $this
                 ->shoporderpaynl_model
-                    ->setProperty('transactionId', $get['orderId'])
+                    ->setProperty('transactionId', $get['order_id'])
                     ->updatePayNl([
                         'payNlResponse' => serialize($get),
                         'exchangePay' => date('Y-m-d')
