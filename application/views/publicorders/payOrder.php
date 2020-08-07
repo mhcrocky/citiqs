@@ -112,8 +112,19 @@
                                                 <span data-trans="" data-trn-key="Bancontact">Bancontact</span>
                                             </a>
                                         <?php } ?>
+                                        <?php if ($vendor['giro'] === '1') { ?>
+                                            <a
+                                                href="javascript:void(0)"
+                                                class="paymentMethod method-ideal"
+                                                onclick="toogleElements('giroBanks', 'paymentMethodsContainer', 'hidden')"
+                                                >
+                                                <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/giropay(1).png" alt="bancontact">
+                                                <span data-trans="" data-trn-key="Bancontact">Giropay</span>
+                                            </a>
+                                        <?php } ?>
                                         <div class="clearfix"></div>
                                     </div>
+
                                 </div>
                                 <?php if ($vendor['ideal'] === '1') { ?>
                                     <div class="method method-ideal hidden"  id="idealBanks">
@@ -178,18 +189,60 @@
                                         </div>
                                     </div>
                                 <?php } ?>
-
-
-
-
-
-
+                                <?php if ($vendor['giro'] === '1') { ?>
+                                    <div class="method method-ideal hidden"  id="giroBanks">
+                                        <div class="title hidden"><span data-trans="" data-trn-key="Kies een bank">Kies een bank</span>
+                                        </div>
+                                        <div class="payment-container">
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod">
+                                                <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
+                                                <span>Sparkasse</span>
+                                            </a>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod">
+                                                <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
+                                                <span>Volksbanken Raiffeisenbanken</span>
+                                            </a>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod">
+                                                <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
+                                                <span>Postbank</span>
+                                            </a>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod">
+                                                <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
+                                                <span>Comdirect</span>
+                                            </a>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod">
+                                                <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
+                                                <span>BB Bank</span>
+                                            </a>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod">
+                                                <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
+                                                <span>MLP Bank</span>
+                                            </a>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod">
+                                                <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
+                                                <span>PSD Bank</span>
+                                            </a>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod">
+                                                <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
+                                                <span>Deutsche Kreditbank AG</span>
+                                            </a>
+                                            <div class="clearfix"></div>
+                                            <a
+                                                href="javascript:void(0)"
+                                                onclick="toogleElements('paymentMethodsContainer', 'giroBanks', 'hidden')"
+                                                >
+                                                Back to payment methods
+                                            </a>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                                 <div class="footer" style="text-align:left">
                                     <a href="<?php echo base_url(); ?>checkout_order" class="btn-cancel">
                                         <i class="fa fa-arrow-left"></i>
                                         <span data-trans="" data-trn-key="Annuleren">Annuleren</span>
                                     </a>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -198,6 +251,8 @@
         </div>
     </div>
 </div>
+
+<!-- /.content-container -->
 <?php if ($vendor['ideal'] === '1') { ?>
 <script>
 
