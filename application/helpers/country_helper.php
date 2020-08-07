@@ -257,7 +257,28 @@
             ];
         }
 
-        public static function getCountryPhoneCodes(): array
+		public static function getCountryPhoneCodes(): array
+		{
+			return array(
+				'AT'=>array('name'=>'AUSTRIA','code'=>'43'),
+				'BE'=>array('name'=>'BELGIUM','code'=>'32'),
+				'CH'=>array('name'=>'SWITZERLAND','code'=>'41'),
+				'DE'=>array('name'=>'GERMANY','code'=>'49'),
+				'ES'=>array('name'=>'SPAIN','code'=>'34'),
+				'FR'=>array('name'=>'FRANCE','code'=>'33'),
+				'GB'=>array('name'=>'UNITED KINGDOM','code'=>'44'),
+				'GR'=>array('name'=>'GREECE','code'=>'30'),
+				'HR'=>array('name'=>'CROATIA','code'=>'385'),
+				'HU'=>array('name'=>'HUNGARY','code'=>'36'),
+				'IE'=>array('name'=>'IRELAND','code'=>'353'),
+				'LU'=>array('name'=>'LUXEMBOURG','code'=>'352'),
+				'NL'=>array('name'=>'NETHERLANDS','code'=>'31'),
+				'PL'=>array('name'=>'POLAND','code'=>'48'),
+				'US'=>array('name'=>'UNITED STATES','code'=>'1'),
+			);
+		}
+
+        public static function getCountryPhoneCodesBackup(): array
         {
             return array(
                 'AD'=>array('name'=>'ANDORRA','code'=>'376'),
