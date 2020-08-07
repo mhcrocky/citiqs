@@ -263,26 +263,33 @@
 					</div>
 					<div class="form group" style="margin-top:30px !important">
 						<h3>Select payment method(s):</h3>
-						<div class="col-lg-4">
+						<div class="col-lg-3">
 							<h4>Bancontact</h4>
 							<label class="radio-inline" for="bancontactYes">Yes</label>
 							<input type="radio" id="bancontactYes" name="bancontact" value="1" <?php if ($vendor['bancontact'] === '1') echo 'checked'; ?> />
 							<label class="radio-inline" for="bancontactNo">&nbsp;&nbsp;&nbsp;No</label>
 							<input type="radio" id="bancontactNo" name="bancontact" value="0" <?php if ($vendor['bancontact'] === '0') echo 'checked'; ?> />
 						</div>
-						<div class="col-lg-4">
+						<div class="col-lg-3">
 							<h4>Ideal</h4>
 							<label class="radio-inline" for="idealYes">Yes</label>
 							<input type="radio" id="idealYes" name="ideal" value="1" <?php if ($vendor['ideal'] === '1') echo 'checked'; ?> />
 							<label class="radio-inline" for="idealNo">&nbsp;&nbsp;&nbsp;No</label>
 							<input type="radio" id="idealNo" name="ideal" value="0" <?php if ($vendor['ideal'] === '0') echo 'checked'; ?> />
 						</div>
-						<div class="col-lg-4">
+						<div class="col-lg-3">
 							<h4>Credit card</h4>
 							<label class="radio-inline" for="creditCardYes">Yes</label>
 							<input type="radio" id="creditCardYes" name="creditCard" value="1" <?php if ($vendor['creditCard'] === '1') echo 'checked'; ?> />
 							<label class="radio-inline" for="creditCardNo">&nbsp;&nbsp;&nbsp;No</label>
 							<input type="radio" id="creditCardNo" name="creditCard" value="0" <?php if ($vendor['creditCard'] === '0') echo 'checked'; ?> />
+						</div>
+						<div class="col-lg-3">
+							<h4>Giro</h4>
+							<label class="radio-inline" for="giroYes">Yes</label>
+							<input type="radio" id="giroYes" name="giro" value="1" <?php if ($vendor['giro'] === '1') echo 'checked'; ?> />
+							<label class="radio-inline" for="giroNo">&nbsp;&nbsp;&nbsp;No</label>
+							<input type="radio" id="giroNo" name="giro" value="0" <?php if ($vendor['giro'] === '0') echo 'checked'; ?> />
 						</div>
 					</div>
 					<br/>

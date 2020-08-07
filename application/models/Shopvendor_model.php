@@ -24,6 +24,7 @@
         public $bancontact;
         public $ideal;
         public $creditCard;
+        public $giro;
 
 
         private $table = 'tbl_shop_vendors';
@@ -70,6 +71,8 @@
             if (isset($data['printTimeConstraint']) && !Validate_data_helper::validateInteger($data['printTimeConstraint'])) return false;
             if (isset($data['minimumOrderFee']) && !Validate_data_helper::validateFloat($data['minimumOrderFee'])) return false;
             if (isset($data['serviceFeeTax']) && !Validate_data_helper::validateInteger($data['serviceFeeTax'])) return false;
+            if (isset($data['giro']) && !($data['giro'] === '1' || $data['giro'] === '0')) return false;
+            
 
             return true;
         }
@@ -91,6 +94,7 @@
                     $this->table . '.printTimeConstraint',
                     $this->table . '.minimumOrderFee',
                     $this->table . '.serviceFeeTax',
+                    $this->table . '.giro',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',
