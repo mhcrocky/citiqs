@@ -91,9 +91,14 @@ function changeServiceFeeAndTotal(plus, price, serviceFeeId, totalAmountId, serv
 
 function calcualteServiceFee(amount, serviceFeePercent, serviceFeeAmount) {
     let userAmount = parseFloat(serviceFeeAmount);
-    let serviceFee = amount * parseFloat(serviceFeePercent) / 100;
-    if ((serviceFee + checkoutOrdedGlobals.minimumOrderFee) > userAmount) {
+    let serviceFee = amount * parseFloat(serviceFeePercent) / 100  + checkoutOrdedGlobals.minimumOrderFee;
+    if (serviceFee > userAmount) {
         serviceFee = userAmount;
+    }
+
+    if (serviceFee === checkoutOrdedGlobals.minimumOrderFee) {
+        serviceFee = 0;
+
     }
 
     return serviceFee.toFixed(2);
