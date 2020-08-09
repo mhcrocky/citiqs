@@ -402,8 +402,8 @@
                 "ForeignCurrencyISO"    =>  "",
                 "Reference"             =>  "",
             );
-            $jsonoutput['$TransactionDateTime']    =   gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
-            $jsonoutput['$TransactionNumber']      =   "0000".$order['orderId'];//2;
+            $jsonoutput['TransactionDateTime']    =   gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
+            $jsonoutput['TransactionNumber']      =   "0000".$order['orderId'];//2;
 
 			// $imagetextemail->annotateImage($drawemail, 440, 165 + ($i * 30), 0, "BTW 21 % ");
 			// $drawemail->annotation(570, 165 + ($i * 30), "€ ". $T21Stotalamount);
