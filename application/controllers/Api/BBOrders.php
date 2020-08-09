@@ -15,7 +15,7 @@
         {
             parent::__construct();
             $this->load->model('shopprinters_model');
-            $this->load->model('shoporder_model');
+            $this->load->model('shoporder_model2',"shoporder_model");
             $this->load->model('shoporderex_model');
             $this->load->model('shopvendor_model');
 
@@ -29,15 +29,28 @@
             $this->load->library('language', array('controller' => $this->router->class));
         }
 
-        public function data_get($orderId)
+        public function data_get()
         {
-            $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
-            Utility_helper::logMessage($logFile, 'ordernumber ' .$orderId);
+            // $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
+            // Utility_helper::logMessage($logFile, 'ordernumber ' .$orderId);
 
-            $order = $this->shoporder_model->fetchOrdersForPrintcopy($orderId);
+            $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
+            Utility_helper::logMessage($logFile, 'printer conected get');
+            $get = $this->input->get(null, true);
+            Utility_helper::logMessage($logFile, 'printer MAC '. $get['mac'] );
+            if(!$get['mac']) return;
+
+
+            $order = $this->shoporder_model->fetchOrdersForPrint($get['mac']);
             if (!$order) return;
             $order = reset($order);
-            if ($order['printStatus'] === '0') return;
+
+
+            // $order = $this->shoporder_model->fetchOrdersForPrintcopy($orderId);
+            // if (!$order) return;
+            // $order = reset($order);
+
+            // if ($order['printStatus'] === '0') return;
 
 			Utility_helper::logMessage($logFile, 'order vendor'.$order['vendorId']);
 
@@ -275,7 +288,8 @@
                 //                $emailMessage .=    '</tr>';
                 //                $emailMessage .= '</p>';
 
-                //setjson product price and etc
+                //added by Nadeem
+                //set json product price and etc
                 $this->ProductLines[]=  array(
                     "ProductGroupId"    =>  "FOO0100".$order['orderId'],
                     "ProductGroupName"  =>  "PicnicSpot",
@@ -571,6 +585,22 @@
             // echo $resultpngprinter;
             
             // output here added by nadeem
+
+
+            // UPDATE ORDER EXTENDED PRINT STATUS
+            $orderExtendedIds = explode(',', $order['orderExtendedIds']);
+            foreach ($orderExtendedIds as $id) {
+                $this
+                    ->shoporderex_model
+                    ->setObjectId(intval($id))
+                    ->setObjectFromArray(['printed' => '1'])
+                    ->update();
+            }
+
+            if ($this->shoporder_model->updatePrintedStatus()) {
+            }
+
+
             $jsonoutput['ProductLines']=$this->ProductLines;
             $jsonoutput['PaymentLines']=$this->PaymentLines;
             $jsonoutput['image']=$receiptemailBasepath;
