@@ -891,7 +891,7 @@ class User_model extends CI_Model
                 'username' => $buyer['username'],
                 'email' => $buyer['email'],
             ];
-            if ($buyer['mobile']) {
+            if (!empty($buyer['mobile'])) {
                 $newData['mobile'] = $buyer['mobile'];
             }
             $this->editUser($newData, $this->id);

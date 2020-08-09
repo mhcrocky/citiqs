@@ -125,7 +125,7 @@ class Alfredpayment extends BaseControllerWeb
         } elseif ($statuscode >= 0) {
             $this->session->set_flashdata('warning', 'Order not paid');
         } else {
-            $this->session->set_flashdata('error', 'Payment error. Please, contact staff');
+            $this->session->set_flashdata('error', 'Payment error');
         }
 
         redirect($redirect);
