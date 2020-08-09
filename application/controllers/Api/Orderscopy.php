@@ -526,7 +526,7 @@
 
             // SEND EMAIL
             $subject= "tiqs-Order : ". $order['orderId'] ;
-            $order['buyerEmail'] = 'pnroos@icloud.com';
+//            $order['buyerEmail'] = 'pnroos@icloud.com';
             $email = $order['buyerEmail'];
             Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);
         }
