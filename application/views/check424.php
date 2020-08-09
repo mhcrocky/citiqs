@@ -4,6 +4,26 @@
 
 <style>
 
+	input[type="radio"]{
+		display:none;
+	}
+
+	input[type="radio"] + label
+	{
+		background-image:url(https://tiqs.com/alfred/assets/home/images/unchecked.png);
+		background-size: 100px 100px;
+		height: 100px;
+		width: 100px;
+		display:inline-block;
+		padding: 0 0 0 0px;
+		cursor:pointer;
+	}
+
+	input[type="radio"]:checked + label
+	{
+		background-image:url(https://tiqs.com/alfred/assets/home/images/checked.png);
+	}
+
 	.container {
 		position: relative;
 		width: 100%;
@@ -50,69 +70,89 @@
 		width: 33.333%;
 	}
 
+
+
 </style>
 
 <div class="main-wrapper">
 	<?php if($code =='0') { ?>
-	<div class="col-half background-orange height-100">
+	<div class="col-half background-orange height-100" align="center">
 		<?php } elseif($code =='-2') { ?>
 		<div class="col-half background-red height-100">
 			<?php } elseif($code =='-1') { ?>
 			<div class="col-half background-red height-100">
 				<?php } elseif($code !='0') { ?>
-				<div class="col-half background-green-environment height-100">
+				<div class="col-half background-green-environment height-100" align="center">
 					<?php } ?>
 					<?php if ($code =='0') { ?>
 					<?php include_once FCPATH . 'application/views/includes/sessionMessages.php'; ?>
-
-
-
 					<form id="checkItem" action="<?php echo $this->baseUrl; ?>cqrcode" method="post" enctype="multipart/form-data"  >
-						<div class="card">
+						<div class="card" align="center">
 							<div style="visibility: hidden">
 								<div style="visibility: hidden" class="column-center" id="minutes">MM</div>
 								<div style="visibility: hidden" class="column-left" id="hours" >H</div>
 								<div style="visibility: hidden" class="column-right" id="seconds">SS</div>
 							</div>
-							<div class="products" >
+							<h2 class="heading">
+								<div style="margin-bottom: 20px;" >
+									<?=$this->language->line("CHECK424-010ABCD",'COVID-19 GUEST QUESTIONNAIRE');?>
+									<div>
+										<a href="#info424" ><i class="fa fa-info-circle" style="font-size:48px; color:dodgerblue"></i></a>
+									</div>
+								</div>
+							</h2>
 
-								<div class="product active background-orange mb-50" product-id="1">
+							<div class="products" align="center" style="background-color: #ffe294" >
 
-									<div style="text-align:center">
+								<div class="product background-orange" product-id="0">
+									<div align="center">
+										<div style="margin-bottom: 20px; font-family: caption-light; font-size: medium" >
+
+										</div>
 										<div style="text-align:center">
-											<h2 class="heading">
-												<div style="margin-bottom: 20px;" >
-													<?=$this->language->line("CHECK424-010ABC",'COVID-19 GUEST QUESTIONNAIRE FOR FREE!');?>
-													<div>
-														<a href="#info424" ><i class="fa fa-info-circle" style="font-size:48px; color:dodgerblue"></i></a>
-													</div>
-												</div>
-												<div style="margin-bottom: 20px; font-family: caption-light; font-size: medium" >
+											<img src="<?php echo $this->baseUrl; ?>assets/home/images/dooropenwhitegreenchecked.png" alt="tiqs" width="150" height="auto" />
+										</div>
 
-												</div>
-												<div style="text-align:center">
-													<img src="<?php echo $this->baseUrl; ?>assets/home/images/dooropenwhitegreenchecked.png" alt="tiqs" width="150" height="auto" />
-												</div>
-											</h2>
+										<ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px; margin-top: 20px " align="center">
+											<li><?=$this->language->line("CHECK424-029111ABCDEF",'HELP, YOUR LOCAL SHOP, BAR, RESTAURANT, TO BE SAFE.  ');?></li>
+										</ul>
+
+										<ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px " align="center">
+
+										</ul>
+
+
+										<ul style="list-style-type: none  ;font-family: caption-light; font-size:smaller;  margin-left: -40px " align="center">
+											<li><?=$this->language->line("CHECK424-10200012ABCD",'');?></li>
+											<li><?=$this->language->line("CHECK424-10200032ABCDFG",'(AVAILABLE IN MORE THAN 107 LANGUAGES. GO TO THE MENU TO CHANGE YOUR LANGUAGE.)');?></li>
+											<li><?=$this->language->line("CHECK424-10200012ABCD",'');?></li>
+										</ul>
+
+										<div style="margin-bottom: 50px; margin-left: 0px" align="center">
+
 											<div>
-												<ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px; margin-top: 20px " align="center">
-													<li><?=$this->language->line("CHECK424-029111ABCDEF",'HELP, YOUR LOCAL SHOP, BAR, RESTAURANT, TO BE SAFE.  ');?></li>
-												</ul>
+												<input type="radio" id="shipadd1" value=1 name="address" />
+												<label for="shipadd1">
+													<p style="margin-top: 20px; margin-left: 100px; font-size: large" >
+														<?=$this->language->line("CHECK424-11231231ABC",'Entering the location');?>
+													</p>
+												</label>
 
-												<ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px " align="center">
-													<li><?=$this->language->line("CHECK424-0200011ABCDE",'MAKE YOUR PRIVATE QRCODE, TO QUICKLY ENTER ANY PLACE WHERE A QUESTIONNAIRE IS MANDATORY.');?></li>
-												</ul>
+											</div>
 
+											<div>
+												<input type="radio" id="shipadd2" value=2 name="address" />
 
-												<ul style="list-style-type: none  ;font-family: caption-light; font-size:smaller;  margin-left: -40px " align="center">
-													<li><?=$this->language->line("CHECK424-10200012ABCD",'');?></li>
-													<li><?=$this->language->line("CHECK424-10200032ABCDFG",'(AVAILABLE IN MORE THAN 107 LANGUAGES. GO TO THE MENU TO CHANGE YOUR LANGUAGE.)');?></li>
-													<li><?=$this->language->line("CHECK424-10200012ABCD",'');?></li>
-												</ul>
+												<label style="margin-top: 30px" for="shipadd2">
+													<p style="margin-top: 20px; margin-left: 100px; font-size: large" >
+														<?=$this->language->line("CHECK424-112311234A",'Leaving the location');?>
+													</p>
+												</label>
+
 											</div>
 										</div>
+										<br>
 									</div>
-
 								</div>
 
 								<div class="product background-orange" product-id="2" value="peter">
@@ -329,7 +369,7 @@
 										</div>
 
 
-										<div class="mb-30">
+										<div >
 											<p style="font-size: larger; font-family: caption-light">
 												<?=$this->language->line("CHECK424-Q000189BCDE",'AFTER 24 HOURS THE QRCODE WILL BE INVALID AND YOU CAN MAKE A NEW ONE.');?>
 											</p>
@@ -342,7 +382,7 @@
 
 							<div class="mt-50">
 
-								<div class="footeronboarding">
+								<div class="footeronboarding" style="background-color: #ffe294">
 
 									<div>
 										<a style="margin-right:5px; font-family: caption-bold; font-size: x-large; display: none" class="button button-orange" id="prev" href="#top" onclick="getfocus()" ripple="" ripple-color="#ffffff">
@@ -357,200 +397,200 @@
 									</div>
 								</div>
 							</div>
-					</form>
+						</form>
 
-					<div class="row mt-35" style="text-align: center; padding:50px ">
-						<ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px " align="center">
-							<li><?=$this->language->line("CHECK424-020921ED",'THIS SERVICE IS FREE TO HELP AVOIDING A QUEUE... HOPE YOU ALL ENJOY');?></li>
-						</ul>
-						<img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="150" height="auto" />
-					</div>
-
-					<div>
-
-						<div style="text-align:center">
-							<h2 class="heading">
-								<?=$this->language->line("CHECK424-TELL001",'TELL A FRIEND');?>							</h2>
+						<div class="row mt-35" style="text-align: center; padding:50px ">
+							<ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px " align="center">
+								<li><?=$this->language->line("CHECK424-020921ED",'THIS SERVICE IS FREE TO HELP AVOIDING A QUEUE... HOPE YOU ALL ENJOY');?></li>
+							</ul>
+							<img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="150" height="auto" />
 						</div>
 
-						<a style="margin-right: 10px" href="whatsapp://send?text=Check for 24Hours to avoid queuing, check-in check-out... https://check424.com" data-action="share/whatsapp/share" onClick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on whatsapp">
-							<i class="fa fa-whatsapp" style="font-size:48px;color:darkorange"></i>
-						</a>
+						<div>
 
-						<a style="margin-right: 10px" href="https://www.facebook.com/sharer/sharer.php?u=https://check424.com&t=Very handy for restaurants, bars, Visitors Check for 24Hours to avoid queuing, check-in check-out... https://check424.com" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Facebook">
-							<i class="fa fa-facebook" style="font-size:48px;color:darkorange"></i>
-						</a>
-
-						<a style="margin-right: 10px" href="https://twitter.com/share?url=https://check424.com&text=Very handy for restaurants, bars, Visitors Check for 24Hours to avoid queuing, check-in check-out..." onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Twitter">
-							<i class="fa fa-twitter" style="font-size:48px;color:darkorange"></i>
-						</a>
-
-						<a style="margin-right: 10px" href="mailto:?subject=Very handy for restaurants, bars, Visitors Check for 24Hours to avoid queuing, check-in check-out.&body=This is handy! please check this out, and tell your friends and bars, cafe's and restaurants. https://check424.com" onClick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Mail">
-							<i class="fa fa-envelope" style="font-size:48px;color:darkorange"></i>
-						</a>
-
-					</div>
-
-					<?php } elseif($code =='-2') { ?>
-
-				<div class="flex-column align-top" align="center">
-
-					<div class="" align="center">
-						<h1 style="font-family: caption-bold; font-size: x-large">QRCODE INDICATES A HEALTH RISK.</h1>
-						<img src="<?php echo $this->baseUrl; ?>assets/home/images/venueclosed.png" alt="tiqs" width="200" height="200" />
-						<div class="mb-50" align="center">
-							<h1 style="font-family: caption-bold; font-size: x-large">STAY HOME, STAY SAVE.</h1>
-						</div>
-					</div>
-
-					<h2 class="heading mb-35">
-						<?=$this->language->line("CHECK424-HR0101234ABC",'YOU DO NOT AGREE? PLEASE TRY AGAIN AND READ ALL QUESTIONS CAREFULLY. ');?>
-					</h2>
-
-					<div class="form-group has-feedback mt-35" >
-						<div style="text-align: center; ">
-							<a href="https://check424.com" class="button button-orange mb-25"><?=$this->language->line("CHECK424-CHECK1234",'CHECK AGAIN');?></a>
-						</div>
-					</div>
-
-				<?php } elseif($code =='-1') { ?>
-				<div class="container">
-					<h2 class="heading mb-35">
-						<?=$this->language->line("CHECK424-010AB",'COVID-19 GUEST QUESTIONNAIRE');?>
-					</h2>
-					<h1 class="mb-50" style="font-family: caption-bold; font-size: x-large">QRCODE HAS EXPIRED</h1>
-					<img src="<?php echo $this->baseUrl; ?>assets/home/images/scanagain.png" alt="tiqs" width="200" height="225" />
-					<h1 style="font-family: caption-bold; font-size: x-large">A NEW QRCODE NEEDS TO BE MADE</h1>
-				</div>
-
-				<?php } elseif($code !='0') { ?>
-
-				<div class="flex-column align-top">
-					<div align="center">
-						<h1 style="font-family: caption-bold; color:white; font-size: x-large">QRCODE IS VALID FOR THE NEXT.</h1>
-					</div>
-
-							<div>
-								<div style="font-size: large; color:white" align="center">
-								<div class="column-center"><p>Minutes</p></div>
-								<div class="column-left"><p>Hours</p></div>
-								<div class="column-right"><p>Seconds</p></div>
+							<div style="text-align:center">
+								<h2 class="heading">
+									<?=$this->language->line("CHECK424-TELL001",'TELL A FRIEND');?>							</h2>
 							</div>
 
-							<div style="font-size: 350%; color:white" align="center">
-								<div class="column-center"><p id="minutes">MM</p></div>
-								<div class="column-left"><p id="hours" >H</p></div>
-								<div class="column-right"><p id="seconds">SS</p></div>
+							<a style="margin-right: 10px" href="whatsapp://send?text=Check for 24Hours to avoid queuing, check-in check-out... https://check424.com" data-action="share/whatsapp/share" onClick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on whatsapp">
+								<i class="fa fa-whatsapp" style="font-size:48px;color:darkorange"></i>
+							</a>
+
+							<a style="margin-right: 10px" href="https://www.facebook.com/sharer/sharer.php?u=https://check424.com&t=Very handy for restaurants, bars, Visitors Check for 24Hours to avoid queuing, check-in check-out... https://check424.com" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Facebook">
+								<i class="fa fa-facebook" style="font-size:48px;color:darkorange"></i>
+							</a>
+
+							<a style="margin-right: 10px" href="https://twitter.com/share?url=https://check424.com&text=Very handy for restaurants, bars, Visitors Check for 24Hours to avoid queuing, check-in check-out..." onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Twitter">
+								<i class="fa fa-twitter" style="font-size:48px;color:darkorange"></i>
+							</a>
+
+							<a style="margin-right: 10px" href="mailto:?subject=Very handy for restaurants, bars, Visitors Check for 24Hours to avoid queuing, check-in check-out.&body=This is handy! please check this out, and tell your friends and bars, cafe's and restaurants. https://check424.com" onClick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Mail">
+								<i class="fa fa-envelope" style="font-size:48px;color:darkorange"></i>
+							</a>
+
+						</div>
+
+						<?php } elseif($code =='-2') { ?>
+
+					<div class="flex-column align-top" align="center">
+
+						<div class="" align="center">
+							<h1 style="font-family: caption-bold; font-size: x-large">QRCODE INDICATES A HEALTH RISK.</h1>
+							<img src="<?php echo $this->baseUrl; ?>assets/home/images/venueclosed.png" alt="tiqs" width="200" height="200" />
+							<div class="mb-50" align="center">
+								<h1 style="font-family: caption-bold; font-size: x-large">STAY HOME, STAY SAVE.</h1>
 							</div>
 						</div>
 
-						<div class="mb-35" align="center">
-							<img src="<?php echo $this->baseUrl; ?>assets/home/images/covidlistwhitechecked.png" alt="tiqs" width=150" height="auto" />
+						<h2 class="heading mb-35">
+							<?=$this->language->line("CHECK424-HR0101234ABC",'YOU DO NOT AGREE? PLEASE TRY AGAIN AND READ ALL QUESTIONS CAREFULLY. ');?>
+						</h2>
+
+						<div class="form-group has-feedback mt-35" >
+							<div style="text-align: center; ">
+								<a href="https://check424.com" class="button button-orange mb-25"><?=$this->language->line("CHECK424-CHECK1234",'CHECK AGAIN');?></a>
+							</div>
 						</div>
 
-					<div class="" align="center">
-						<div style="text-align:center">
-							<h2 class="heading mb-35" Style="color:white">
-								<?=$this->language->line("CHECK424-TELL001",'TELL A FRIEND');?>							</h2>
+					<?php } elseif($code =='-1') { ?>
+					<div class="container">
+						<h2 class="heading mb-35">
+							<?=$this->language->line("CHECK424-010AB",'COVID-19 GUEST QUESTIONNAIRE');?>
+						</h2>
+						<h1 class="mb-50" style="font-family: caption-bold; font-size: x-large">QRCODE HAS EXPIRED</h1>
+						<img src="<?php echo $this->baseUrl; ?>assets/home/images/scanagain.png" alt="tiqs" width="200" height="225" />
+						<h1 style="font-family: caption-bold; font-size: x-large">A NEW QRCODE NEEDS TO BE MADE</h1>
+					</div>
+
+					<?php } elseif($code !='0') { ?>
+
+					<div class="flex-column align-top">
+						<div align="center">
+							<h1 style="font-family: caption-bold; color:white; font-size: x-large">QRCODE IS VALID FOR THE NEXT.</h1>
 						</div>
 
-						<a style="margin-right: 10px" href="whatsapp://send?text=Check for 24Hours to avoid queuing, check-in check-out... https://check424.com" data-action="share/whatsapp/share" onClick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on whatsapp">
-							<i class="fa fa-whatsapp" style="font-size:48px;color:white"></i>
-						</a>
+								<div>
+									<div style="font-size: large; color:white" align="center">
+									<div class="column-center"><p>Minutes</p></div>
+									<div class="column-left"><p>Hours</p></div>
+									<div class="column-right"><p>Seconds</p></div>
+								</div>
+
+								<div style="font-size: 350%; color:white" align="center">
+									<div class="column-center"><p id="minutes">MM</p></div>
+									<div class="column-left"><p id="hours" >H</p></div>
+									<div class="column-right"><p id="seconds">SS</p></div>
+								</div>
+							</div>
+
+							<div class="mb-35" align="center">
+								<img src="<?php echo $this->baseUrl; ?>assets/home/images/covidlistwhitechecked.png" alt="tiqs" width=150" height="auto" />
+							</div>
+
+						<div class="" align="center">
+							<div style="text-align:center">
+								<h2 class="heading mb-35" Style="color:white">
+									<?=$this->language->line("CHECK424-TELL001",'TELL A FRIEND');?>							</h2>
+							</div>
+
+							<a style="margin-right: 10px" href="whatsapp://send?text=Check for 24Hours to avoid queuing, check-in check-out... https://check424.com" data-action="share/whatsapp/share" onClick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on whatsapp">
+								<i class="fa fa-whatsapp" style="font-size:48px;color:white"></i>
+							</a>
 
 
-						<a style="margin-right: 10px" href="https://www.facebook.com/sharer/sharer.php?u=https://check424.com&t=Very handy for restaurants, bars, Visitors Check for 24Hours to avoid queuing, check-in check-out... https://check424.com" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Facebook">
-							<i class="fa fa-facebook" style="font-size:48px;color:white"></i>
-						</a>
+							<a style="margin-right: 10px" href="https://www.facebook.com/sharer/sharer.php?u=https://check424.com&t=Very handy for restaurants, bars, Visitors Check for 24Hours to avoid queuing, check-in check-out... https://check424.com" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Facebook">
+								<i class="fa fa-facebook" style="font-size:48px;color:white"></i>
+							</a>
 
-						<a style="margin-right: 10px" href="https://twitter.com/share?url=https://check424.com&text=Very handy for restaurants, bars, Visitors Check for 24Hours to avoid queuing, check-in check-out..." onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Twitter">
-							<i class="fa fa-twitter" style="font-size:48px;color:white"></i>
-						</a>
+							<a style="margin-right: 10px" href="https://twitter.com/share?url=https://check424.com&text=Very handy for restaurants, bars, Visitors Check for 24Hours to avoid queuing, check-in check-out..." onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Twitter">
+								<i class="fa fa-twitter" style="font-size:48px;color:white"></i>
+							</a>
 
-						<a style="margin-right: 10px" href="mailto:?subject=Very handy for restaurants, bars, Visitors Check for 24Hours to avoid queuing, check-in check-out.&body=This is handy! please check this out, and tell your friends and bars, cafe's and restaurants. https://check424.com" onClick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Mail">
-							<i class="fa fa-envelope" style="font-size:48px;color:white"></i>
-						</a>
+							<a style="margin-right: 10px" href="mailto:?subject=Very handy for restaurants, bars, Visitors Check for 24Hours to avoid queuing, check-in check-out.&body=This is handy! please check this out, and tell your friends and bars, cafe's and restaurants. https://check424.com" onClick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Mail">
+								<i class="fa fa-envelope" style="font-size:48px;color:white"></i>
+							</a>
 
-					</div>
-
-				<div class="form-group has-feedback mt-50" >
-					<div style="text-align: center; ">
-						<a href="pay424" class="button button-orange mb-25"><?=$this->language->line("CHECK424-BUYUS1234",'BUY US A COFFEE...');?></a>
-				</div>
-				</div>
-
-						<?php } ?>
-				</div>
-				</div>
-
-			<div class="col-half background-yellow" id="info424">
-				<div class="background-orange-light height">
-					<div class="width-650"></div>
-					<div class="text-center mb-50" style="text-align:center">
-						<img src="<?php echo $this->baseUrl; ?>assets/home/images/covid-19-list.png" alt="tiqs" width="150" height="auto" />
-					</div>
-					<p class="text-content mb-50"><?=$this->language->line("CHECK424-1270AB",'WHY THIS QUESTIONNAIRE?');?></p>
-					<ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px " align="leftr">
-						<li><?=$this->language->line("CHECK424-41212ABCDF",'RESTAURANTS, BARS, HOSPITALITY BUSINESSES ARE REQUIRED BY LAW TO QUESTION YOU ABOUT YOUR HEALTH TO DETERMINE THE RISK OF SPREADING COVID-19, THE VIRUS.<br>');?></li>
-						<p><br></p>
-						<li><?=$this->language->line("CHECK424-113243232ABCD",'ADHOC PROCESSING THESE QUESTIONS, TAKES TIME (5 MINUTES PER PERSON) AND DUE TO THE MANUAL LABOUR THERE IS A HIGH COST AND IMPACT ON ANY ORGANISATION .');?></li>
-						<p><br></p>
-						<li><?=$this->language->line("CHECK424-12415232ABCD",'TIQS SUPPORTS FOR FREE A SOLUTION TO HAVE THE QUESTIONS PROCESSED BEFORE AND VALID FOR 24 HOURS. DOES YOUR STATE OF HEALTH CHANGE WITHIN THESE 24 HOURS PLEASE STAY HOME!');?></li>
-						<p><br></p>
-						<li><?=$this->language->line("CHECK4241-41351232ABCD",'YOU CAN HELP YOUR LOCAL BUSINESS BY PROVIDING THE ANSWERS IN A ELECTRICAL READABLE MANNER, HAVE YOUR QRCode READY AND SHOW YOUR QRCode ON ENTRANCE ');?></li>
-						<p><br></p>
-					</ul>
-					<div class="text-center mb-50 mt-50" style="text-align:center">
-						<img src="<?php echo $this->baseUrl; ?>assets/home/images/keepdistance.png" alt="tiqs" width="150" height="auto" />
-					</div>
-
-					<div class="form-group has-feedback mt-35" >
-						<div style="text-align: right">
-							<a href="#top" ><i class="fa fa-arrow-circle-up" style="font-size:48px; color:white"></i></a>
 						</div>
+
+					<div class="form-group has-feedback mt-50" >
 						<div style="text-align: center; ">
 							<a href="pay424" class="button button-orange mb-25"><?=$this->language->line("CHECK424-BUYUS1234",'BUY US A COFFEE...');?></a>
-						</div>
+					</div>
+					</div>
+
+							<?php } ?>
 					</div>
 				</div>
 
-				<div class="text-center mb-30" style="text-align:center">
-					<img src="<?php echo $this->baseUrl; ?>assets/home/images/TIQSKeys.png" alt="tiqs" width="220" height="175" />
-				</div>
-
-				<div class="background-yellow height-50">
-					<div class="width-650">
-						<p class="text-content mb-50"><?=$this->language->line("CHECK424-1370AB",'YOUR PRIVACY');?></p>
+				<div class="col-half background-yellow" id="info424">
+					<div class="background-orange-light height">
+						<div class="width-650"></div>
+						<div class="text-center mb-50" style="text-align:center">
+							<img src="<?php echo $this->baseUrl; ?>assets/home/images/covid-19-list.png" alt="tiqs" width="150" height="auto" />
+						</div>
+						<p class="text-content mb-50"><?=$this->language->line("CHECK424-1270AB",'WHY THIS QUESTIONNAIRE?');?></p>
 						<ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px " align="leftr">
-							<li><?=$this->language->line("CHECK424-91-ABCDEF",'WE ALL VALUE OUR PRIVACY YOUR ANSWERS PER QUESTION ARE NOT STORED ANYWHERE');?></li>
+							<li><?=$this->language->line("CHECK424-41212ABCDF",'RESTAURANTS, BARS, HOSPITALITY BUSINESSES ARE REQUIRED BY LAW TO QUESTION YOU ABOUT YOUR HEALTH TO DETERMINE THE RISK OF SPREADING COVID-19, THE VIRUS.<br>');?></li>
 							<p><br></p>
-							<li><?=$this->language->line("CHECK424-92A2BCD",'WE DO NOT ASK YOU TO REGISTER, A SCREEN PRINT OF THE QRCode WORKS JUST AS FINE');?></li>
+							<li><?=$this->language->line("CHECK424-113243232ABCD",'ADHOC PROCESSING THESE QUESTIONS, TAKES TIME (5 MINUTES PER PERSON) AND DUE TO THE MANUAL LABOUR THERE IS A HIGH COST AND IMPACT ON ANY ORGANISATION .');?></li>
 							<p><br></p>
-							<li><?=$this->language->line("CHECK424-94A2BCD",'IF YOU WANT TO RETRIEVE YOUR QRCode WITH A LINK AND WANT TO BE REMEMBERED ABOUT THE EXPIRATION OF YOUR QRCode YOU CAN SIGN-UP FOR OUR RETRIEVAL AND REMINDER E-MAIL');?></li>
+							<li><?=$this->language->line("CHECK424-12415232ABCD",'TIQS SUPPORTS FOR FREE A SOLUTION TO HAVE THE QUESTIONS PROCESSED BEFORE AND VALID FOR 24 HOURS. DOES YOUR STATE OF HEALTH CHANGE WITHIN THESE 24 HOURS PLEASE STAY HOME!');?></li>
 							<p><br></p>
-							<li><?=$this->language->line("CHECK424-95A2BCDEF",'YOU CAN USE THE PROVIDE LINK IN YOUR E-MAIL FROM US TO RETRIEVE YOUR QRCode AND YOU WILL RECEIVE A REMINDER E-MAIL AFTER 22 HOURS THAT YOUR QRCode WILL EXPIRE.');?></li>
+							<li><?=$this->language->line("CHECK4241-41351232ABCD",'YOU CAN HELP YOUR LOCAL BUSINESS BY PROVIDING THE ANSWERS IN A ELECTRICAL READABLE MANNER, HAVE YOUR QRCode READY AND SHOW YOUR QRCode ON ENTRANCE ');?></li>
 							<p><br></p>
-							<li><?=$this->language->line("CHECK424-195A2BCDE",'2 HOURS AFTER SENDING YOU THE REMINDER OR IN ANY CASE AFTER 24 HOURS YOUR E-MAIL AND YOUR QRCode is COMPLETELY REMOVED FROM OUR SYSTEM');?></li>
-							<p><br></p>
-							<li><?=$this->language->line("CHECK424-197A2BCDE",'WE MAY ASK YOU TO OPT-IN FOR A TIQS NEWS, YOU SUPPORT OUR BUSINESS  WITH THIS. <br/>THE SERVICE IS FREE, HOWEVER IT IS COSTING US SOME MONEY, YOU CAN ALWAYS SUPPORT IS BY BUYING US A COFFEE! SO WE CAN WORK WHILE YOU SLEEP AND KEEP YOU AND YOUR LOVED ONES SAVE!.');?></li>
-							<p><br></p>
-							<li><?=$this->language->line("CHECK424-1197A2BCDE",'THE SERVICE IS FREE, HOWEVER IT IS COSTING US SOME MONEY AND TIME.');?></li>
-							<p><br></p>
-							<li><?=$this->language->line("CHECK424-111197A21BCDE",'YOU CAN ALWAYS SUPPORT US BY BUYING US A COFFEE! SO WE CAN WORK WHILE YOU SLEEP AND KEEP YOU AND YOUR LOVED ONES SAVE!.');?></li>
-							<li><?=$this->language->line("CHECK424-98A2BCD",'');?></li>
 						</ul>
-					</div>
-					<div class="form-group has-feedback mt-35" >
-						<div style="text-align: right">
-							<a href="#top" ><i class="fa fa-arrow-circle-up" style="font-size:48px; color:white"></i></a>
+						<div class="text-center mb-50 mt-50" style="text-align:center">
+							<img src="<?php echo $this->baseUrl; ?>assets/home/images/keepdistance.png" alt="tiqs" width="150" height="auto" />
 						</div>
-						<div style="text-align: center; ">
-							<a href="pay424" class="button button-orange mb-25"><?=$this->language->line("CHECK424-BUYUS1234",'BUY US A COFFEE...');?></a>
+
+						<div class="form-group has-feedback mt-35" >
+							<div style="text-align: right">
+								<a href="#top" ><i class="fa fa-arrow-circle-up" style="font-size:48px; color:white"></i></a>
+							</div>
+							<div style="text-align: center; ">
+								<a href="pay424" class="button button-orange mb-25"><?=$this->language->line("CHECK424-BUYUS1234",'BUY US A COFFEE...');?></a>
+							</div>
+						</div>
+					</div>
+
+					<div class="text-center mb-30" style="text-align:center">
+						<img src="<?php echo $this->baseUrl; ?>assets/home/images/TIQSKeys.png" alt="tiqs" width="220" height="175" />
+					</div>
+
+					<div class="background-yellow height-50">
+						<div class="width-650">
+							<p class="text-content mb-50"><?=$this->language->line("CHECK424-1370AB",'YOUR PRIVACY');?></p>
+							<ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px " align="leftr">
+								<li><?=$this->language->line("CHECK424-91-ABCDEF",'WE ALL VALUE OUR PRIVACY YOUR ANSWERS PER QUESTION ARE NOT STORED ANYWHERE');?></li>
+								<p><br></p>
+								<li><?=$this->language->line("CHECK424-92A2BCD",'WE DO NOT ASK YOU TO REGISTER, A SCREEN PRINT OF THE QRCode WORKS JUST AS FINE');?></li>
+								<p><br></p>
+								<li><?=$this->language->line("CHECK424-94A2BCD",'IF YOU WANT TO RETRIEVE YOUR QRCode WITH A LINK AND WANT TO BE REMEMBERED ABOUT THE EXPIRATION OF YOUR QRCode YOU CAN SIGN-UP FOR OUR RETRIEVAL AND REMINDER E-MAIL');?></li>
+								<p><br></p>
+								<li><?=$this->language->line("CHECK424-95A2BCDEF",'YOU CAN USE THE PROVIDE LINK IN YOUR E-MAIL FROM US TO RETRIEVE YOUR QRCode AND YOU WILL RECEIVE A REMINDER E-MAIL AFTER 22 HOURS THAT YOUR QRCode WILL EXPIRE.');?></li>
+								<p><br></p>
+								<li><?=$this->language->line("CHECK424-195A2BCDE",'2 HOURS AFTER SENDING YOU THE REMINDER OR IN ANY CASE AFTER 24 HOURS YOUR E-MAIL AND YOUR QRCode is COMPLETELY REMOVED FROM OUR SYSTEM');?></li>
+								<p><br></p>
+								<li><?=$this->language->line("CHECK424-197A2BCDE",'WE MAY ASK YOU TO OPT-IN FOR A TIQS NEWS, YOU SUPPORT OUR BUSINESS  WITH THIS. <br/>THE SERVICE IS FREE, HOWEVER IT IS COSTING US SOME MONEY, YOU CAN ALWAYS SUPPORT IS BY BUYING US A COFFEE! SO WE CAN WORK WHILE YOU SLEEP AND KEEP YOU AND YOUR LOVED ONES SAVE!.');?></li>
+								<p><br></p>
+								<li><?=$this->language->line("CHECK424-1197A2BCDE",'THE SERVICE IS FREE, HOWEVER IT IS COSTING US SOME MONEY AND TIME.');?></li>
+								<p><br></p>
+								<li><?=$this->language->line("CHECK424-111197A21BCDE",'YOU CAN ALWAYS SUPPORT US BY BUYING US A COFFEE! SO WE CAN WORK WHILE YOU SLEEP AND KEEP YOU AND YOUR LOVED ONES SAVE!.');?></li>
+								<li><?=$this->language->line("CHECK424-98A2BCD",'');?></li>
+							</ul>
+						</div>
+						<div class="form-group has-feedback mt-35" >
+							<div style="text-align: right">
+								<a href="#top" ><i class="fa fa-arrow-circle-up" style="font-size:48px; color:white"></i></a>
+							</div>
+							<div style="text-align: center; ">
+								<a href="pay424" class="button button-orange mb-25"><?=$this->language->line("CHECK424-BUYUS1234",'BUY US A COFFEE...');?></a>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </body>

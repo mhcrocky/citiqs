@@ -5,8 +5,11 @@
 
     require APPPATH . 'libraries/REST_Controller.php';
 
-    class Orderscopy extends REST_Controller
+    class BBOrders extends REST_Controller
     {
+        private $jsonoutput=array();
+        private $ProductLines=array();
+        private $PaymentLines=array();
 
         function __construct()
         {
@@ -39,6 +42,7 @@
 			Utility_helper::logMessage($logFile, 'order vendor'.$order['vendorId']);
 
             $productsarray = explode($this->config->item('contactGroupSeparator'), $order['products']);
+            // print_r($productsarray);die();
             $imageprint = new Imagick();
 			$imageprintemail = new Imagick();
 
@@ -47,7 +51,6 @@
             } else {
                 $logoFile = $this->config->item('uploadLogoFolder') . $order['vendorLogo'];
             }
-
             $imagelogo = new Imagick($logoFile);
             $geometry = $imagelogo->getImageGeometry(); 
 
@@ -271,6 +274,34 @@
                 //                $emailMessage .=        '<td>EURO ' . $price . '</td>';
                 //                $emailMessage .=    '</tr>';
                 //                $emailMessage .= '</p>';
+
+                //setjson product price and etc
+                $this->ProductLines[]=  array(
+                    "ProductGroupId"    =>  "FOO0100".$order['orderId'],
+                    "ProductGroupName"  =>  "PicnicSpot",
+                    "ProductId"         =>  str_replace(' ', '', $order['spotName']),
+                    "ProductName"       =>  $title,
+                    "Quantity"          =>  $quantity,
+                    "QuantityUnit"      =>  "P",
+                    "SellingPrice"      =>  $price,
+                    "VatRateId"         =>  $this->returnVatGrade($vatpercentage),//"B",
+                    "DiscountLines"     =>array(
+                        // array(
+                        // "DiscountId"        =>  "DISC002",
+                        // "DiscountName"      =>  "Prod. discount10%",
+                        // "DiscountType"      =>  "PRODUCTDISCOUNT",
+                        // "DiscountGrouping"  =>  0,
+                        // "DiscountAmount"    =>  1.19
+                        // ),
+                        // array(
+                        // "DiscountId"        =>  "DISC001",
+                        // "DiscountName"      =>  "Receipt. discount10%",
+                        // "DiscountType"      =>  "RECEIPTDISCOUNT",
+                        // "DiscountGrouping"  =>  0,
+                        // "DiscountAmount"    =>  1.07
+                        // ),
+                    ),
+                );
             }
 
 			$ii = $i;
@@ -346,6 +377,19 @@
                 $drawemail->annotation(570, 165 + ($i * 30), "€ ". $amount);
                 $i++;
             }
+            //added by nadeem
+            $this->PaymentLines[]=array(
+                "PaymentId"             =>  "PAY001".$order['orderId'],
+                "PaymentName"           =>  "Euro",
+                "PaymentType"           =>  "CASH",
+                "Quantity"              =>  1,
+                "PayAmount"             =>  $TStotalamount,
+                "ForeignCurrencyAmount" =>  0,
+                "ForeignCurrencyISO"    =>  "",
+                "Reference"             =>  "",
+            );
+            $jsonoutput['$TransactionDateTime']    =   gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
+            $jsonoutput['$TransactionNumber']      =   "0000".$order['orderId'];//2;
 
 			// $imagetextemail->annotateImage($drawemail, 440, 165 + ($i * 30), 0, "BTW 21 % ");
 			// $drawemail->annotation(570, 165 + ($i * 30), "€ ". $T21Stotalamount);
@@ -507,8 +551,9 @@
 			if (!file_put_contents($receiptemail, $resultpngemail)) {
 				$receiptemail = '';
 			}
+            $receiptemailBasepath = base_url() . 'receipts/'.$order['orderId'].'-email' . '.png';
                 
-            header('Content-type: image/png');
+            
             // $image ->writeImage("peter.png");
 			//            $imageqr->destroy();
             $imagetext->destroy();
@@ -522,13 +567,30 @@
 			$draw->destroy();
 
 			Utility_helper::logMessage($logFile, 'printer echo');
-            echo $resultpngprinter;
+            // header('Content-type: image/png');
+            // echo $resultpngprinter;
+            
+            // output here added by nadeem
+            $jsonoutput['ProductLines']=$this->ProductLines;
+            $jsonoutput['PaymentLines']=$this->PaymentLines;
+            $jsonoutput['image']=$receiptemailBasepath;
+            // header('Content-type: image/png');
+            echo json_encode($jsonoutput);
 
             // SEND EMAIL
-            $subject= "tiqs-Order : ". $order['orderId'] ;
-//            $order['buyerEmail'] = 'pnroos@icloud.com';
-            $email = $order['buyerEmail'];
-            Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);
+            // $subject= "tiqs-Order : ". $order['orderId'] ;
+            // $order['buyerEmail'] = 'pnroos@icloud.com';
+            // $email = $order['buyerEmail'];
+            // Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);
+        }
+        private function returnVatGrade($vatpar){
+            // retunr a or b or or d
+            if($vatpar==21){return "A";}
+            elseif($vatpar==12){return "B";}
+            elseif($vatpar==6){return "C";}
+            elseif($vatpar==0){return "D";}
+            else{return "D";}
+
         }
     }
 
