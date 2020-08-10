@@ -1,0 +1,65 @@
+input[type="radio"]{
+    display:none;
+}
+
+input[type="radio"] + label
+{
+    background-image:url(https://tiqs.com/alfred/assets/home/images/unchecked.png);
+    background-size: 100px 100px;
+    height: 100px;
+    width: 100px;
+    display:inline-block;
+    padding: 0 0 0 0px;
+    cursor:pointer;
+}
+
+input[type="radio"]:checked + label
+{
+    background-image:url(https://tiqs.com/alfred/assets/home/images/checked.png);
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+}
+
+.container img {
+    width: 100%;
+    height: auto;
+}
+
+.container .btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #555;
+    color: white;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.container .btn:hover {
+    background-color: black;
+}
+
+.column-left {
+    float: left;
+    width: 33.333%;
+}
+
+.column-right {
+    float: right;
+    width: 33.333%;
+}
+
+.column-center {
+    display: inline-block;
+    width: 33.333%;
+}

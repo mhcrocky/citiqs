@@ -176,7 +176,7 @@
 			</p>
 			<h2>Booking url</h2>
 			<p>
-				<?php echo base_url() . 'check424?vendorid=' . $user->id; ?>
+				<?php echo base_url() . 'check424/' . $user->id; ?>
 			</p>
 			<div class="background-orange-light timeline-content">
 				<!-- <p>Add driver mobile number (starting with country code with zero) for sending sms.</p>

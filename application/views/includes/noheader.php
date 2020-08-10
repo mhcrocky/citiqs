@@ -42,7 +42,7 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/scriptonboard.js"></script>
 
-	<script src="<?php echo $this->baseUrl; ?>assets/home/js/luxon.js"></script>
+	<!-- <script src="<?php #echo $this->baseUrl; ?>assets/home/js/luxon.js"></script> -->
 
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/hotel-page.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/timeline-page.css">

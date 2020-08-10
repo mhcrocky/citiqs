@@ -29,7 +29,7 @@
 			<?php } ?>
 			</div>
 		</div>
-</div>
+	</div>
 	<div class="col-half background-blue height-100">
 		<div class="flex-column align-start">
 			</div>

@@ -8,47 +8,124 @@ require APPPATH . '/libraries/vendor/autoload.php';
 
 class Check424 extends BaseControllerWeb {
 
-    public function __construct(){
-        parent::__construct();
+	public function __construct()
+	{
+		parent::__construct();
 
-        $this->load->library('session');
-        $this->load->library('form_validation');
-        $this->load->library('language', array('controller' => $this->router->class));
+		$this->load->helper('url');
+		$this->load->helper('validate_data_helper');
+		$this->load->helper('utility_helper');
+		$this->load->helper('cookie');
 
-        $this->load->helper('cookie');
-        $this->load->helper('form');
-        $this->load->helper('utility_helper');
-        $this->load->helper('email_helper');
-        $this->load->helper('validation_helper');
-		$this->load->helper('date');
-
-        $this->load->model('user_model');
-        $this->load->model('label_model');
+		$this->load->model('shopcategory_model');
+		$this->load->model('shopproduct_model');
+		$this->load->model('shopproductex_model');
+		$this->load->model('shoporder_model');
+		$this->load->model('shoporderex_model');
+		$this->load->model('user_model');
+		$this->load->model('shopspot_model');
+		$this->load->model('shopvendor_model');
+		$this->load->model('shopvisitor_model');
 		$this->load->model('check424_model');
-        $this->load->model('log_model');
-        $this->load->model('user_subscription_model');
-        $this->load->model('uniquecode_model');
-        $this->load->model('category_model');
-        $this->load->config('custom');
+		$this->load->model('shopvisitorreservtaion_model');
+
+		
+
+		$this->load->config('custom');
+
+		$this->load->library('language', array('controller' => $this->router->class));
+		$this->load->library('session');
     }
 
-    /**
-     * Index Page for this controller.
-     */
-    public function index($code = "")
-    {
 
+	public function index($vendorId = ''): void
+	{
+		$this->global['pageTitle'] = 'TIQS : REGISTER VISITOR';
+
+		if (empty($vendorId)) {
+			$data = [
+				'vendors' => $this->shopvendor_model->getVendors(['payNlServiceId!=' => NULL])
+			];
+			$this->loadViews('check424/selectVendor', $this->global, $data, null, 'headerWarehousePublic');
+		} else {
+			$data = [
+				'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData(),
+			];
+			$this->loadViews('check424/registerVisitor', $this->global, $data, 'footerweb424', 'headercheck424');
+		}
+		return;
+	}
+
+	public function registerVisitor(): void
+	{
+		$post = $this->input->post(null, true);
+
+		$visitor = $post['visitor'];
+		$redirectReferer = 'check424/' . $visitor['vendorId'];
+
+
+
+		if (!isset($post['checkStatus'])) {
+			$this->session->set_flashdata('error', 'Process failed. Please select are you entering or leaving location');
+			redirect($redirectReferer);
+		}
+
+		foreach ($visitor as $key => $value) {
+			if ($key !== 'vendorId') {
+				set_cookie($key, $value, time() + (365 * 24 * 60 * 60));
+			}
+		}
+
+		$visitor['created'] = date('Y-m-d H:i:s');
+		if (!$this->shopvisitor_model->setObjectFromArray($visitor)->create()) {
+			$this->shopvisitor_model->setIdFromEmail()->update();
+		};
+
+		if (!$this->shopvisitor_model->id) {
+			$this->session->set_flashdata('error', 'Process failed. Please try again');
+			redirect($redirectReferer);
+		}
+
+		$check = [
+			'visitorId' => $this->shopvisitor_model->id,
+			'checkStatus' => $post['checkStatus'],
+			'created' => date('Y-m-d H:i:s')
+		];
+		if (!$this->shopvisitorreservtaion_model->setObjectFromArray($check)->create()) {
+			$this->session->set_flashdata('error', 'Process failed. Please try again');
+			redirect($redirectReferer);
+		}
+
+		$vendor = $this->shopvendor_model->setProperty('vendorId', $visitor['vendorId'])->getVendorData();
+		$this->session->set_flashdata('success', 'Thank you for your registration');
+		redirect($redirectReferer);
+
+		// TO DO HEALTH CHECK
+		// if ($vendor['healthCheck'] === '0') {
+		// 	$this->session->set_flashdata('success', 'Thank you for your registration');
+		// 	redirect($redirectReferer);
+		// } else {
+		// 	#redirect('heal_check');
+		// 	die('1');
+		// }
+	}
+
+
+	/**
+	 * Previous index page for this controller.
+	 */
+	public function checkhealt($code = '')
+	{
+		$code == "";
 		if ($code == ""){
 			$result = null;
 		} else {
-			$result = $this->check424_model->Check424ById($code);
+			$result = null; #$this->check424_model->Check424ById($code);
 		}
 
-		$this->global['pageTitle'] = 'TIQS : CHECK424';
+		if ($result) {
 
-        if ($result) {
-
-        	$checkgood = $result->answer1+$result->answer2+$result->answer3+$result->answer4+$result->answer5+$result->answer6+$result->answer7+$result->answer8+$result->answer9;
+			$checkgood = $result->answer1+$result->answer2+$result->answer3+$result->answer4+$result->answer5+$result->answer6+$result->answer7+$result->answer8+$result->answer9;
 
 			// Declare and define two dates
 			$lastdatetime = $result->lastdatetime;
@@ -128,11 +205,11 @@ class Check424 extends BaseControllerWeb {
 
 			$data['enddatetime']= date('Y-m-d', strtotime("+1 day", strtotime($lastdatetime)));
 
-			if($checkgood<6) {
+			if ($checkgood < 6) {
 				$data['code'] = '-2';
 				$this->session->set_flashdata('error', 'Code "' . $code . '" indicates question answered with yes ! ');
 				$this->loadViews("check424", $this->global, $data, "footerweb424", "headercheck424");
-			}else{
+			} else {
 				if (!$alertvalid) {
 					$data['code'] = '-1';
 					$this->session->set_flashdata('error', 'Code "' . $code . '" is not valid anymore!');
@@ -141,23 +218,19 @@ class Check424 extends BaseControllerWeb {
 					$this->loadViews("check424", $this->global, $data, "footerweb424", "headercheck424");
 				}
 			}
-		}
-
-        else {
-
+		} else {
 			$data['hoursleft'] = 0;
 			$data['minutesleft'] = 0;
 			$data['secondsleft'] = 0;
 			$data['code'] = 0;
-			$data['countdown'] =date('F j, Y, H:i:s', strtotime("+1 day", strtotime(now())));
-			$data['datetimenow'] = date('F j, Y, H:i:s', strtotime(now()));
-			$data['enddatetime']= date('Y-m-d', strtotime("+1 day", strtotime(now())));
+			$data['countdown'] = date('Y-m-d H:i:s');
+			$data['datetimenow'] = date('Y-m-d H:i:s');
+			$data['enddatetime']= date('Y-m-d H:i:s');
 			// new one
 			$data['code'] = '0';
 			$this->loadViews("check424", $this->global, $data, "footerweb424", "headercheck424" );
 		}
-
-    }
+	}
 
 	function getDatetimeNow() {
 		$tz_object = new DateTimeZone('Europe/Amsterdam');
@@ -173,7 +246,7 @@ class Check424 extends BaseControllerWeb {
 		return $datetime->format('F j, Y, H:i:s');
 	}
 
-    public function cqrcode()
+	public function cqrcode()
 	{
 
 		$code = strtolower($this->security->xss_clean($this->input->post('code')));
@@ -190,14 +263,14 @@ class Check424 extends BaseControllerWeb {
 		);
 
 
-//		$checkgood = $result->answer1+$result->answer2+$result->answer3+$result->answer4+$result->answer5+$result->answer6+$result->answer7+$result->answer8+$result->answer9;
-//		if($checkgood <6){
-//
-//			$data['code'] = '-2';
-//			$this->global['pageTitle'] = 'TIQS : C-QRCode';
-//			$this->loadViews("check424", $this->global, $data, "footerweb424", "headercheck424");
-//
-//		}
+		//		$checkgood = $result->answer1+$result->answer2+$result->answer3+$result->answer4+$result->answer5+$result->answer6+$result->answer7+$result->answer8+$result->answer9;
+		//		if($checkgood <6){
+		//
+		//			$data['code'] = '-2';
+		//			$this->global['pageTitle'] = 'TIQS : C-QRCode';
+		//			$this->loadViews("check424", $this->global, $data, "footerweb424", "headercheck424");
+		//
+		//		}
 
 		$result = $this->check424_model->Store424($labelinfo);
 
@@ -305,3 +378,4 @@ class Check424 extends BaseControllerWeb {
 }
 
 ?>
+

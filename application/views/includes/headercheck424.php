@@ -26,6 +26,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" integrity="sha256-PZLhE6wwMbg4AB3d35ZdBF9HD/dI/y4RazA3iRDurss=" crossorigin="anonymous" />
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+
 	<?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -42,7 +43,7 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/scriptonboard.js"></script>
 
-	<script src="<?php echo $this->baseUrl; ?>assets/home/js/luxon.js"></script>
+	<!-- <script src="<?php #echo $this->baseUrl; ?>assets/home/js/luxon.js"></script> -->
 
 </head>
 
@@ -50,7 +51,7 @@
 <body onload="getLocation()">
 <?php } else { ?>
 <body>
-
+<?php include_once FCPATH . 'application/views/includes/alertifySessionMessage.php'; ?>
 
 <?php } ?>
 <header class="header">
@@ -58,7 +59,7 @@
 		<a href="<?php echo base_url(); ?>check424" class="nav-logo">
 			<img src="<?php echo base_url(); ?>assets/home/images/tiqslogonew.png" alt="">
 		</a>
-		<div class="header-menu" id="header-menu" align="right">
+		<div class="header-menu" id="header-menu" style="text-align:right">
 
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>home#dhl-section" id='dhl-button'></a>
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>found"></a>
