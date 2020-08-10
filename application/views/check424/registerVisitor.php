@@ -198,14 +198,7 @@
                 <img src="<?php echo $this->baseUrl; ?>assets/home/images/keepdistance.png" alt="tiqs" width="150" height="auto" />
             </div>
 
-            <div class="form-group has-feedback mt-35" >
-                <div style="text-align: right">
-                    <a href="#top" ><i class="fa fa-arrow-circle-up" style="font-size:48px; color:white"></i></a>
-                </div>
-                <div style="text-align: center; ">
-                    <a href="pay424" class="button button-orange mb-25"><?=$this->language->line("CHECK424-BUYUS1234",'BUY US A COFFEE...');?></a>
-                </div>
-            </div>
+          
         </div>
 
         <div class="text-center mb-30" style="text-align:center">
@@ -226,11 +219,11 @@
                     <p><br></p>
                     <li><?=$this->language->line("CHECK424-195A2BCDE",'2 HOURS AFTER SENDING YOU THE REMINDER OR IN ANY CASE AFTER 24 HOURS YOUR E-MAIL AND YOUR QRCode is COMPLETELY REMOVED FROM OUR SYSTEM');?></li>
                     <p><br></p>
-                    <li><?=$this->language->line("CHECK424-197A2BCDE",'WE MAY ASK YOU TO OPT-IN FOR A TIQS NEWS, YOU SUPPORT OUR BUSINESS  WITH THIS. <br/>THE SERVICE IS FREE, HOWEVER IT IS COSTING US SOME MONEY, YOU CAN ALWAYS SUPPORT IS BY BUYING US A COFFEE! SO WE CAN WORK WHILE YOU SLEEP AND KEEP YOU AND YOUR LOVED ONES SAVE!.');?></li>
+                    <!-- <li><?php #echo $this->language->line("CHECK424-197A2BCDE",'WE MAY ASK YOU TO OPT-IN FOR A TIQS NEWS, YOU SUPPORT OUR BUSINESS  WITH THIS. <br/>THE SERVICE IS FREE, HOWEVER IT IS COSTING US SOME MONEY, YOU CAN ALWAYS SUPPORT IS BY BUYING US A COFFEE! SO WE CAN WORK WHILE YOU SLEEP AND KEEP YOU AND YOUR LOVED ONES SAVE!.');?></li> -->
                     <p><br></p>
                     <li><?=$this->language->line("CHECK424-1197A2BCDE",'THE SERVICE IS FREE, HOWEVER IT IS COSTING US SOME MONEY AND TIME.');?></li>
                     <p><br></p>
-                    <li><?=$this->language->line("CHECK424-111197A21BCDE",'YOU CAN ALWAYS SUPPORT US BY BUYING US A COFFEE! SO WE CAN WORK WHILE YOU SLEEP AND KEEP YOU AND YOUR LOVED ONES SAVE!.');?></li>
+                    <!-- <li><?php #echo $this->language->line("CHECK424-111197A21BCDE",'YOU CAN ALWAYS SUPPORT US BY BUYING US A COFFEE! SO WE CAN WORK WHILE YOU SLEEP AND KEEP YOU AND YOUR LOVED ONES SAVE!.');?></li> -->
                     <li><?=$this->language->line("CHECK424-98A2BCD",'');?></li>
                 </ul>
             </div>
@@ -239,7 +232,7 @@
                     <a href="#top" ><i class="fa fa-arrow-circle-up" style="font-size:48px; color:white"></i></a>
                 </div>
                 <div style="text-align: center; ">
-                    <a href="pay424" class="button button-orange mb-25"><?=$this->language->line("CHECK424-BUYUS1234",'BUY US A COFFEE...');?></a>
+                    <!-- <a href="pay424" class="button button-orange mb-25"><?php #echo $this->language->line("CHECK424-BUYUS1234",'BUY US A COFFEE...');?></a> -->
                 </div>
             </div>
         </div>
