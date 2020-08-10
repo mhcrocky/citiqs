@@ -20,6 +20,7 @@
         public $printTimeConstraint;
         public $minimumOrderFee;
         public $serviceFeeTax;
+        public $healthCheck;
 
         public $bancontact;
         public $ideal;
@@ -72,7 +73,7 @@
             if (isset($data['minimumOrderFee']) && !Validate_data_helper::validateFloat($data['minimumOrderFee'])) return false;
             if (isset($data['serviceFeeTax']) && !Validate_data_helper::validateInteger($data['serviceFeeTax'])) return false;
             if (isset($data['giro']) && !($data['giro'] === '1' || $data['giro'] === '0')) return false;
-            
+            if (isset($data['healthCheck']) && !($data['healthCheck'] === '1' || $data['healthCheck'] === '0')) return false;
 
             return true;
         }
@@ -95,6 +96,7 @@
                     $this->table . '.minimumOrderFee',
                     $this->table . '.serviceFeeTax',
                     $this->table . '.giro',
+                    $this->table . '.healthCheck',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',

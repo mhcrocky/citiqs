@@ -174,6 +174,10 @@
 			<p>
 				<?php echo base_url() . 'make_order?vendorid=' . $user->id; ?>
 			</p>
+			<h2>Booking url</h2>
+			<p>
+				<?php echo base_url() . 'check424?vendorid=' . $user->id; ?>
+			</p>
 			<div class="background-orange-light timeline-content">
 				<!-- <p>Add driver mobile number (starting with country code with zero) for sending sms.</p>
 				<p>Set the number of minutes when the message will be sent to driver after the order status is changed in status "DONE"</p> -->
@@ -293,7 +297,6 @@
 						</div>
 					</div>
 					<br/>
-					<br/>
 					<div class="form-group" style="margin-top:30px !important">
 						<h3>Require user mobile phone on checkout form</h3>
 						<br/>
@@ -301,6 +304,15 @@
 						<input type="radio" id="requireMobileYes" name="requireMobile" value="1" <?php if ($vendor['requireMobile'] === '1') echo 'checked'; ?> />
 						<label class="radio-inline" for="requireMobileNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="requireMobileNo" name="requireMobile" value="0" <?php if ($vendor['requireMobile'] === '0') echo 'checked'; ?> />
+					</div>
+					<br/>
+					<div class="form-group" style="margin-top:30px !important">
+						<h3>Require health information from visitor</h3>
+						<br/>
+						<label class="radio-inline" for="healthCheckYes">Yes</label>
+						<input type="radio" id="healthCheckYes" name="healthCheck" value="1" <?php if ($vendor['healthCheck'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="healthCheckNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="healthCheckNo" name="healthCheck" value="0" <?php if ($vendor['healthCheck'] === '0') echo 'checked'; ?> />
 					</div>
 					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />
