@@ -15,6 +15,7 @@
             $this->load->model('shoporder_model');
             $this->load->model('shoporderex_model');
             $this->load->model('shopvendor_model');
+            $this->load->model('shopprinterrequest_model');
 
             $this->load->helper('utility_helper');
             $this->load->helper('validate_data_helper');
@@ -29,18 +30,16 @@
         public function data_get()
         {
 
-            $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
-            Utility_helper::logMessage($logFile, 'printer conected get');
-
             $get = $this->input->get(null, true);
-			Utility_helper::logMessage($logFile, 'printer MAC '. $get['mac'] );
-            if(!$get['mac']) return;
-
+            if(!$get['mac'] || !$this->shopprinterrequest_model->insertPrinterRequest($get['mac'])) return;
 
             $order = $this->shoporder_model->fetchOrdersForPrint($get['mac']);
             if (!$order) return;
             $order = reset($order);
-
+            $this
+                ->shopprinterrequest_model
+                    ->setObjectFromArray(['orderId' => $order['orderId']])
+                    ->update();
             //check order time
             $printTimeConstraint = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->getPrintTimeConstraint();
 
@@ -48,8 +47,6 @@
                 $this->shoporder_model->setObjectId(intval($order['orderId']))->updateExpired('1');
                 return;
             }
-            Utility_helper::logMessage($logFile, 'printer order ');
-
 
             $productsarray = explode($this->config->item('contactGroupSeparator'), $order['products']);
             $imageprint = new Imagick();
@@ -509,8 +506,12 @@
 			$imageprint->destroy();
 			$draw->destroy();
 
-			Utility_helper::logMessage($logFile, 'printer echo');
             echo $resultpngprinter;
+
+            $this
+                ->shopprinterrequest_model
+                    ->setObjectFromArray(['printerEcho' => date('Y-m-d H:i:s')])
+                    ->update();
 
             // UPDATE ORDER EXTENDED PRINT STATUS
             $orderExtendedIds = explode(',', $order['orderExtendedIds']);
