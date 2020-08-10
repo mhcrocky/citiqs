@@ -15,7 +15,7 @@
         {
             parent::__construct();
             $this->load->model('shopprinters_model');
-            $this->load->model('shoporder_model');
+            $this->load->model('shoporder_model2',"shoporder_model");
             $this->load->model('shoporderex_model');
             $this->load->model('shopvendor_model');
 
@@ -29,15 +29,28 @@
             $this->load->library('language', array('controller' => $this->router->class));
         }
 
-        public function data_get($orderId)
+        public function data_get()
         {
-            $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
-            Utility_helper::logMessage($logFile, 'ordernumber ' .$orderId);
+            // $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
+            // Utility_helper::logMessage($logFile, 'ordernumber ' .$orderId);
 
-            $order = $this->shoporder_model->fetchOrdersForPrintcopy($orderId);
+            $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
+            Utility_helper::logMessage($logFile, 'printer conected get');
+            $get = $this->input->get(null, true);
+            Utility_helper::logMessage($logFile, 'printer MAC '. $get['mac'] );
+            if(!$get['mac']) return;
+
+
+            $order = $this->shoporder_model->fetchOrdersForPrint($get['mac']);
             if (!$order) return;
             $order = reset($order);
-            if ($order['printStatus'] === '0') return;
+
+
+            // $order = $this->shoporder_model->fetchOrdersForPrintcopy($orderId);
+            // if (!$order) return;
+            // $order = reset($order);
+
+            // if ($order['printStatus'] === '0') return;
 
 			Utility_helper::logMessage($logFile, 'order vendor'.$order['vendorId']);
 
@@ -275,15 +288,16 @@
                 //                $emailMessage .=    '</tr>';
                 //                $emailMessage .= '</p>';
 
-                //setjson product price and etc
+                //added by Nadeem
+                //set json product price and etc
                 $this->ProductLines[]=  array(
                     "ProductGroupId"    =>  "FOO0100".$order['orderId'],
                     "ProductGroupName"  =>  "PicnicSpot",
                     "ProductId"         =>  str_replace(' ', '', $order['spotName']),
                     "ProductName"       =>  $title,
-                    "Quantity"          =>  $quantity,
+                    "Quantity"          =>  (int)$quantity,
                     "QuantityUnit"      =>  "P",
-                    "SellingPrice"      =>  $price,
+                    "SellingPrice"      =>  (float)$price,
                     "VatRateId"         =>  $this->returnVatGrade($vatpercentage),//"B",
                     "DiscountLines"     =>array(
                         // array(
@@ -383,13 +397,13 @@
                 "PaymentName"           =>  "Euro",
                 "PaymentType"           =>  "CASH",
                 "Quantity"              =>  1,
-                "PayAmount"             =>  $TStotalamount,
+                "PayAmount"             =>  (float)$TStotalamount,
                 "ForeignCurrencyAmount" =>  0,
                 "ForeignCurrencyISO"    =>  "",
                 "Reference"             =>  "",
             );
-            $jsonoutput['$TransactionDateTime']    =   gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
-            $jsonoutput['$TransactionNumber']      =   "0000".$order['orderId'];//2;
+            $jsonoutput['TransactionDateTime']    =   gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
+            $jsonoutput['TransactionNumber']      =   (int)(10000+$order['orderId']);
 
 			// $imagetextemail->annotateImage($drawemail, 440, 165 + ($i * 30), 0, "BTW 21 % ");
 			// $drawemail->annotation(570, 165 + ($i * 30), "€ ". $T21Stotalamount);
@@ -571,6 +585,22 @@
             // echo $resultpngprinter;
             
             // output here added by nadeem
+
+
+            // UPDATE ORDER EXTENDED PRINT STATUS
+            $orderExtendedIds = explode(',', $order['orderExtendedIds']);
+            foreach ($orderExtendedIds as $id) {
+                $this
+                    ->shoporderex_model
+                    ->setObjectId(intval($id))
+                    ->setObjectFromArray(['printed' => '1'])
+                    ->update();
+            }
+
+            if ($this->shoporder_model->updatePrintedStatus()) {
+            }
+
+
             $jsonoutput['ProductLines']=$this->ProductLines;
             $jsonoutput['PaymentLines']=$this->PaymentLines;
             $jsonoutput['image']=$receiptemailBasepath;
