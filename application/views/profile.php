@@ -75,7 +75,7 @@
 							<?php if ($user->IsDropOffPoint === '1') { ?>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-10303021","
+										<?=$this->language->line("PROF-10303021111","
 									Responsible person first name
 									"); ?>
 									</p>
