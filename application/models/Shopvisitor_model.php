@@ -16,6 +16,7 @@
         public $mobile;
         public $email;
         public $created;
+        public $tableDescription;
         private $table = 'tbl_shop_visitors';
 
         protected function setValueType(string $property,  &$value): void
@@ -44,6 +45,7 @@
                 && isset($data['mobile'])
                 && isset($data['email'])
                 && isset($data['created'])
+                && isset($data['tableDescription'])
             ) {
                 return $this->updateValidate($data);
             }
@@ -52,14 +54,15 @@
 
         public function updateValidate(array $data): bool
         {
-            
+
             if (!count($data)) return false;
-            if (!isset($data['vendorId']) || !Validate_data_helper::validateInteger($data['vendorId'])) return false;
-            if (!isset($data['firstName']) || !Validate_data_helper::validateString($data['firstName'])) return false;
-            if (!isset($data['lastName']) || !Validate_data_helper::validateString($data['lastName'])) return false;
-            if (!isset($data['mobile']) || !Validate_data_helper::validateString($data['mobile'])) return false;
-            if (!isset($data['email']) || !Validate_data_helper::validateEmail($data['email'])) return false;
-            if (!isset($data['created']) || !Validate_data_helper::validateDate($data['created'])) return false;
+            if (!Validate_data_helper::validateInteger($data['vendorId'])) return false;
+            if (!Validate_data_helper::validateString($data['firstName'])) return false;
+            if (!Validate_data_helper::validateString($data['lastName'])) return false;
+            if (!Validate_data_helper::validateString($data['mobile'])) return false;
+            if (!Validate_data_helper::validateEmail($data['email'])) return false;
+            if (!Validate_data_helper::validateDate($data['created'])) return false;
+            if (!Validate_data_helper::validateString($data['tableDescription'])) return false;
             return true;
         }
 

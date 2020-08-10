@@ -90,6 +90,18 @@
                                     <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                                 </div>
                                 <div>
+                                    <label style="font-family: caption-bold" for="tableDescription">TABLE</label>
+                                    <input
+                                        id="tableDescription"
+                                        name="visitor[tableDescription]"
+                                        type="text"
+                                        class="form-control"
+                                        style="font-family:'caption-light'; border-radius: 50px;"
+                                        required
+                                        />
+                                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                                </div>
+                                <div>
                                     <input type="radio" id="timeIn" value="1" name="checkStatus" required>
                                     <label for="timeIn">
                                         <p style="margin-top: 20px; margin-left: 100px; font-size: large">

@@ -59,7 +59,6 @@ class Check424 extends BaseControllerWeb {
 	public function registerVisitor(): void
 	{
 		$post = $this->input->post(null, true);
-
 		$visitor = $post['visitor'];
 		$redirectReferer = 'check424/' . $visitor['vendorId'];
 
@@ -71,20 +70,15 @@ class Check424 extends BaseControllerWeb {
 		}
 
 		foreach ($visitor as $key => $value) {
-			if ($key !== 'vendorId') {
-				set_cookie($key, $value, time() + (365 * 24 * 60 * 60));
-			}
+			if ($key === 'vendorId' || $key === 'table') continue;
+			set_cookie($key, $value, time() + (365 * 24 * 60 * 60));
 		}
 
 		$visitor['created'] = date('Y-m-d H:i:s');
-		if (!$this->shopvisitor_model->setObjectFromArray($visitor)->create()) {
-			$this->shopvisitor_model->setIdFromEmail()->update();
-		};
-
-		if (!$this->shopvisitor_model->id) {
+		if (!($this->shopvisitor_model->setObjectFromArray($visitor)->create() || $this->shopvisitor_model->setIdFromEmail()->update())) {
 			$this->session->set_flashdata('error', 'Process failed. Please try again');
 			redirect($redirectReferer);
-		}
+		};
 
 		$check = [
 			'visitorId' => $this->shopvisitor_model->id,
