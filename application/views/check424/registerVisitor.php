@@ -142,6 +142,11 @@
                         </div>
                     </div>
                 </div>
+                <?php if (!is_null($makeOrderCookie)) { ?>
+                <br/>
+                <br/>
+                <a href="<?php echo $makeOrderCookie; ?>">Now you can make an order</a>
+                <?php } ?>
                 <div class="row mt-35" style="text-align: center; padding:50px ">
                     <ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px; text-align:center">
                         <li>THIS SERVICE IS FREE TO HELP AVOIDING A QUEUE... HOPE YOU ALL ENJOY</li>

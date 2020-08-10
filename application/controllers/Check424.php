@@ -41,7 +41,6 @@ class Check424 extends BaseControllerWeb {
 	public function index($vendorId = ''): void
 	{
 		$this->global['pageTitle'] = 'TIQS : REGISTER VISITOR';
-
 		if (empty($vendorId)) {
 			$data = [
 				'vendors' => $this->shopvendor_model->getVendors(['payNlServiceId!=' => NULL])
@@ -50,6 +49,7 @@ class Check424 extends BaseControllerWeb {
 		} else {
 			$data = [
 				'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData(),
+				'makeOrderCookie' => get_cookie('makeOrder')
 			];
 			$this->loadViews('check424/registerVisitor', $this->global, $data, 'footerweb424', 'headercheck424');
 		}
@@ -62,10 +62,10 @@ class Check424 extends BaseControllerWeb {
 		$visitor = $post['visitor'];
 		$redirectReferer = 'check424/' . $visitor['vendorId'];
 
-
-
 		if (!isset($post['checkStatus'])) {
 			$this->session->set_flashdata('error', 'Process failed. Please select are you entering or leaving location');
+			unset($_COOKIE['makeOrder']);
+			setcookie('makeOrder', '', time() - 3600, '/');
 			redirect($redirectReferer);
 		}
 
@@ -77,7 +77,9 @@ class Check424 extends BaseControllerWeb {
 		$visitor['created'] = date('Y-m-d H:i:s');
 		if (!($this->shopvisitor_model->setObjectFromArray($visitor)->create() || $this->shopvisitor_model->setIdFromEmail()->update())) {
 			$this->session->set_flashdata('error', 'Process failed. Please try again');
+			setcookie('makeOrder', '', time() - 3600, '/');
 			redirect($redirectReferer);
+			exit();
 		};
 
 		$check = [
@@ -87,12 +89,18 @@ class Check424 extends BaseControllerWeb {
 		];
 		if (!$this->shopvisitorreservtaion_model->setObjectFromArray($check)->create()) {
 			$this->session->set_flashdata('error', 'Process failed. Please try again');
+			setcookie('makeOrder', '', time() - 3600, '/');
 			redirect($redirectReferer);
+			exit();
 		}
 
 		$vendor = $this->shopvendor_model->setProperty('vendorId', $visitor['vendorId'])->getVendorData();
 		$this->session->set_flashdata('success', 'Thank you for your registration');
+
+		$makeOrder = base_url() . 'make_order?vendorid=' . $visitor['vendorId'];
+		set_cookie('makeOrder', $makeOrder, time() + (365 * 24 * 60 * 60));
 		redirect($redirectReferer);
+		exit();
 
 		// TO DO HEALTH CHECK
 		// if ($vendor['healthCheck'] === '0') {
