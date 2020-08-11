@@ -1,0 +1,11 @@
+{
+    "name": "koolreport/d3",
+    "version":"1.5.0",
+    "description": "D3-based reusable chart library for KoolReport",
+    "keywords": ["PHP","php reprting tools","php reporting framework","chart","graph","line chart","pie chart","column chart"],
+    "homepage": "https://www.koolreport.com",
+    "type": "library",
+    "license": "https://www.koolreport.com/license#mit-license",
+    "require": {
+    }
+}

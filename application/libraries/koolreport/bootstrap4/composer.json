@@ -1,0 +1,9 @@
+{
+    "name": "koolreport/bootstrap4",
+    "version":"1.5.0",
+    "description": "Bootstrap 4 Theme For KoolReport",
+    "keywords": ["PHP","php reprting tools","php reporting framework","mysql reporting tools","report theme"],
+    "homepage": "https://www.koolreport.com",
+    "type": "library",
+    "license": "MIT"
+}

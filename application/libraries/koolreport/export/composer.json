@@ -1,0 +1,19 @@
+{
+    "name": "koolreport/export",
+    "version":"4.1.0",
+    "description": "Allow KoolReport to export to PDF and other formats",
+    "keywords": ["PHP","Reporting Tools","Data Report","Charts","Exporting","PDF","Export HTML to PDF"],
+    "homepage": "https://www.koolreport.com",
+    "type": "library",
+    "license": "https://www.koolreport.com/license#regular-license",
+    "authors": [
+        {
+            "name": "KoolPHP Inc",
+            "homepage": "https://www.koolphp.net"
+        }
+    ],
+    "require": {
+        "daandesmedt/phpheadlesschrome": "*",
+        "its404/php-puppeteer": "^0.1.1"
+    }
+}

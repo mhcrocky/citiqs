@@ -1,0 +1,11 @@
+{
+    "name": "koolreport/datagrid",
+    "version":"4.0.1",
+    "description": "Display data in grid",
+    "keywords": ["PHP","Reporting Tools","Data Report","Charts","Data Grid"],
+    "homepage": "https://www.koolreport.com",
+    "type": "library",
+    "license": "https://www.koolreport.com/license#regular-license",
+    "require": {
+    }
+}

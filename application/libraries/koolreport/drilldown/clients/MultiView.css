@@ -1,0 +1,21 @@
+div.multiview div.multiview-body
+{
+    padding:0px;
+}
+
+div.multiview div.multiview-handler-group
+{
+    margin:0px 1px 20px 1px;
+    padding:7px 15px 7px 15px;
+}
+
+div.multiview span.multiview-title
+{
+    font-size:16px;
+    font-weight: bold;    
+}
+
+div.multiview div.multiview-content
+{
+    padding:0px 15px;
+}
