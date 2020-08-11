@@ -108,23 +108,13 @@
 				<div class="row" id="sortableCategories" class="list-categories" style="width:100%">
 				<?php foreach ($categories as $category) { ?>
 					<div class="grid-item list-categories listCategories" data-category-id="<?php echo $category['categoryId']; ?>" style="background-color:<?php echo $category['active'] === '1' ? '#99ff66' : '#ff4d4d'; ?>">
-						<div class="item-header">
+						<div class="item-header" style="width:100%">
 							<p class="item-description"><?php echo $category['category']; ?></p>
-							<p class="item-category">Status:
-								<?php echo $category['active'] === '1' ? '<span>ACTIVE</span>' : '<span>BLOCKED</span>'; ?>
-							</p>
-							<p class="item-category">Send SMS to driver:
-								<?php echo $category['sendSms'] === '1' ? '<span>YES</span>' : '<span>NO</span>'; ?>
-							</p>
-							<p class="item-category">Driver number:
-								<?php echo $category['driverNumber']; ?>
-							</p>
-							<p class="item-category">Minutes to delay:
-								<?php echo $category['delayTime']; ?>
-							</p>
-							<p class="item-category">Message to driver:
-								<?php echo $category['driverSmsMessage']; ?>
-							</p>
+							<p class="item-category" style="white-space: initial;">Status: <?php echo $category['active'] === '1' ? '<span>ACTIVE</span>' : '<span>BLOCKED</span>'; ?> </p>
+							<p class="item-category" style="white-space: initial;">Send SMS to driver: <?php echo $category['sendSms'] === '1' ? '<span>YES</span>' : '<span>NO</span>'; ?></p>
+							<p class="item-category" style="white-space: initial;">Driver number: <?php echo $category['driverNumber']; ?></p>
+							<p class="item-category" style="white-space: initial;">Minutes to delay: <?php echo $category['delayTime']; ?></p>
+							<p class="item-category" style="white-space: initial;">Message to driver: <?php echo $category['driverSmsMessage']; ?></p>
 						</div><!-- end item header -->
 						<div class="grid-footer">
 							<div class="iconWrapper">

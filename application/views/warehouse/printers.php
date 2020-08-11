@@ -54,13 +54,13 @@
             <?php } else { ?>
                 <?php foreach ($printers as $printer) { ?>
 					<div class="grid-item" style="background-color:<?php echo $printer['active'] === '1' ? '#99ff66' : '#ff4d4d'; ?>">
-						<div class="item-header">
-							<p class="item-description">Name: <?php echo $printer['printer']; ?></p>
-                            <p class="item-description">MAC number: <?php echo $printer['macNumber']; ?></p>
-							<p class="item-category">Status:
+						<div class="item-header" style="width:100%">
+							<p class="item-description" style="white-space: initial;">Name: <?php echo $printer['printer']; ?></p>
+                            <p class="item-description" style="white-space: initial;">MAC number: <?php echo $printer['macNumber']; ?></p>
+							<p class="item-category" style="white-space: initial;">Status:
 								<?php echo $printer['active'] === '1' ? '<span>ACTIVE</span>' : '<span>BLOCKED</span>'; ?>
 							</p>
-							<p class="item-description">Number of copies: <?php echo $printer['numberOfCopies']; ?></p>							
+							<p class="item-description" style="white-space: initial;">Number of copies: <?php echo $printer['numberOfCopies']; ?></p>							
 						</div><!-- end item header -->
 						<div class="grid-footer">
 							<div class="iconWrapper">
