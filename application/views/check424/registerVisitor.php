@@ -25,10 +25,10 @@
                             <div style="margin-bottom: 20px; font-family: caption-light; font-size: medium">
                             </div>
                             <div style="text-align:center">
-                                <img src="http://localhost/upwork/alfred/assets/home/images/dooropenwhitegreenchecked.png" alt="tiqs" width="150" height="auto">
+                                <img src="https://tiqs.com/alfred/assets/home/images/dooropenwhitegreenchecked.png" alt="tiqs" width="150" height="auto">
                             </div>
                             <ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px; margin-top: 20px; text-align:center">
-                                <li>TOGETHER WE KEEP OUR BARS AND RESTAURANTS SAFE.</li>
+                                <li>TOGETHER WE KEEP OURSELVES SAFE.</li>
                             </ul>
                             <ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px; text-align:center">
                             </ul>
@@ -49,7 +49,6 @@
                                         style="font-family:'caption-light'; border-radius: 50px;"
                                         value="<?php echo get_cookie('firstName'); ?>"
                                         />
-                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
                                 </div>
                                 <div class="form-group has-feedback">
                                     <label style="font-family: caption-bold" for="lastName">LAST NAME</label>
@@ -74,7 +73,6 @@
                                         value="<?php echo get_cookie('email'); ?>"
                                         style="font-family:'caption-light'; border-radius: 50px;"
                                         />
-                                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                                 </div>
                                 <div>
                                     <label style="font-family: caption-bold" for="mobile">MOBILE</label>
@@ -87,7 +85,6 @@
                                         value="<?php echo get_cookie('mobile'); ?>"
                                         required
                                         />
-                                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                                 </div>
                                 <div>
                                     <label style="font-family: caption-bold" for="tableDescription">TABLE</label>
@@ -99,7 +96,6 @@
                                         style="font-family:'caption-light'; border-radius: 50px;"
                                         required
                                         />
-                                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                                 </div>
                                 <div>
                                     <input type="radio" id="timeIn" value="1" name="checkStatus" required>
@@ -143,10 +139,9 @@
                     </div>
                 </div>
                 <div class="row mt-35" style="text-align: center; padding:50px ">
-                    <ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px; text-align:center">
-                        <li>THIS SERVICE IS FREE TO HELP AVOIDING A QUEUE... HOPE YOU ALL ENJOY</li>
-                    </ul>
-                    <img src="http://localhost/upwork/alfred/assets/home/images/tiqslogowhite.png" alt="tiqs" width="150" height="auto">
+
+
+                    <img src="https://tiqs.com/alfred/assets/home/images/tiqslogowhite.png" alt="tiqs" width="150" height="auto">
                 </div>
                 <div>
                     <div style="text-align:center">
@@ -199,11 +194,7 @@
             <ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px " align="leftr">
                 <li><?=$this->language->line("CHECK424-41212ABCDF",'RESTAURANTS, BARS, HOSPITALITY BUSINESSES ARE REQUIRED BY LAW TO QUESTION YOU ABOUT YOUR HEALTH TO DETERMINE THE RISK OF SPREADING COVID-19, THE VIRUS.<br>');?></li>
                 <p><br></p>
-                <li><?=$this->language->line("CHECK424-113243232ABCD",'ADHOC PROCESSING THESE QUESTIONS, TAKES TIME (5 MINUTES PER PERSON) AND DUE TO THE MANUAL LABOUR THERE IS A HIGH COST AND IMPACT ON ANY ORGANISATION .');?></li>
-                <p><br></p>
-                <li><?=$this->language->line("CHECK424-12415232ABCD",'TIQS SUPPORTS FOR FREE A SOLUTION TO HAVE THE QUESTIONS PROCESSED BEFORE AND VALID FOR 24 HOURS. DOES YOUR STATE OF HEALTH CHANGE WITHIN THESE 24 HOURS PLEASE STAY HOME!');?></li>
-                <p><br></p>
-                <li><?=$this->language->line("CHECK4241-41351232ABCD",'YOU CAN HELP YOUR LOCAL BUSINESS BY PROVIDING THE ANSWERS IN A ELECTRICAL READABLE MANNER, HAVE YOUR QRCode READY AND SHOW YOUR QRCode ON ENTRANCE ');?></li>
+                <li><?=$this->language->line("CHECK4241-41351232ABCDE",'YOU CAN HELP YOUR LOCAL BUSINESS BY PROVIDING THE ANSWERS IN A ELECTRICAL READABLE MANNER, ');?></li>
                 <p><br></p>
             </ul>
             <div class="text-center mb-50 mt-50" style="text-align:center">
@@ -223,19 +214,12 @@
                 <ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px " align="leftr">
                     <li><?=$this->language->line("CHECK424-91-ABCDEF",'WE ALL VALUE OUR PRIVACY YOUR ANSWERS PER QUESTION ARE NOT STORED ANYWHERE');?></li>
                     <p><br></p>
-                    <li><?=$this->language->line("CHECK424-92A2BCD",'WE DO NOT ASK YOU TO REGISTER, A SCREEN PRINT OF THE QRCode WORKS JUST AS FINE');?></li>
+                    <li><?=$this->language->line("CHECK424-195A2BCDEFG",'4 WEEKS AFTER REGISTRATION WE COMPLETELY REMOVED YOU FROM OUR SYSTEM');?></li>
                     <p><br></p>
-                    <li><?=$this->language->line("CHECK424-94A2BCD",'IF YOU WANT TO RETRIEVE YOUR QRCode WITH A LINK AND WANT TO BE REMEMBERED ABOUT THE EXPIRATION OF YOUR QRCode YOU CAN SIGN-UP FOR OUR RETRIEVAL AND REMINDER E-MAIL');?></li>
+					Met het invullen van dit formulier ga je akkoord met de gegevensverwerking onder artikel 6 GDPR, c) en het relevante Ministerieel Besluit. Op vraag van de overheid wordt er toegang gegeven tot de data. De gegevens worden niet gebruikt voor commerciële doeleinden en zullen niet aan derden worden verkocht. Na 4 weken worden de gegevens definitief verwijderd. Samen sterk tegen COVID-19!
+
+					<!-- <li><?php #echo $this->language->line("CHECK424-197A2BCDE",'WE MAY ASK YOU TO OPT-IN FOR A TIQS NEWS, YOU SUPPORT OUR BUSINESS  WITH THIS. <br/>THE SERVICE IS FREE, HOWEVER IT IS COSTING US SOME MONEY, YOU CAN ALWAYS SUPPORT IS BY BUYING US A COFFEE! SO WE CAN WORK WHILE YOU SLEEP AND KEEP YOU AND YOUR LOVED ONES SAVE!.');?></li> -->
                     <p><br></p>
-                    <li><?=$this->language->line("CHECK424-95A2BCDEF",'YOU CAN USE THE PROVIDE LINK IN YOUR E-MAIL FROM US TO RETRIEVE YOUR QRCode AND YOU WILL RECEIVE A REMINDER E-MAIL AFTER 22 HOURS THAT YOUR QRCode WILL EXPIRE.');?></li>
-                    <p><br></p>
-                    <li><?=$this->language->line("CHECK424-195A2BCDE",'2 HOURS AFTER SENDING YOU THE REMINDER OR IN ANY CASE AFTER 24 HOURS YOUR E-MAIL AND YOUR QRCode is COMPLETELY REMOVED FROM OUR SYSTEM');?></li>
-                    <p><br></p>
-                    <!-- <li><?php #echo $this->language->line("CHECK424-197A2BCDE",'WE MAY ASK YOU TO OPT-IN FOR A TIQS NEWS, YOU SUPPORT OUR BUSINESS  WITH THIS. <br/>THE SERVICE IS FREE, HOWEVER IT IS COSTING US SOME MONEY, YOU CAN ALWAYS SUPPORT IS BY BUYING US A COFFEE! SO WE CAN WORK WHILE YOU SLEEP AND KEEP YOU AND YOUR LOVED ONES SAVE!.');?></li> -->
-                    <p><br></p>
-                    <li><?=$this->language->line("CHECK424-1197A2BCDE",'THE SERVICE IS FREE, HOWEVER IT IS COSTING US SOME MONEY AND TIME.');?></li>
-                    <p><br></p>
-                    <!-- <li><?php #echo $this->language->line("CHECK424-111197A21BCDE",'YOU CAN ALWAYS SUPPORT US BY BUYING US A COFFEE! SO WE CAN WORK WHILE YOU SLEEP AND KEEP YOU AND YOUR LOVED ONES SAVE!.');?></li> -->
                     <li><?=$this->language->line("CHECK424-98A2BCD",'');?></li>
                 </ul>
             </div>

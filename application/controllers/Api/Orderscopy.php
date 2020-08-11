@@ -522,13 +522,19 @@
 			$draw->destroy();
 
 			Utility_helper::logMessage($logFile, 'printer echo');
-            echo $resultpngprinter;
+//            echo $resultpngprinter;
 
             // SEND EMAIL
             $subject= "tiqs-Order : ". $order['orderId'] ;
 //            $order['buyerEmail'] = 'pnroos@icloud.com';
             $email = $order['buyerEmail'];
             Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);
+
+//            $order['buyerEmail'] = 'pnroos@icloud.com';
+//			$email = $order['buyerEmail'];
+//			Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);
+
+			redirect('https://tiqs.com/spot/sendok');
         }
     }
 

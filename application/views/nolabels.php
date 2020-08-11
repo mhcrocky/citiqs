@@ -1,58 +1,62 @@
 <div class="main-wrapper">
-	<div class="col-half background-yellow height-100">
+	<div class="col-half background-apricot-blue height-100">
 		<div class="flex-column align-start">
-			<div style="text-align:left">
-				<h2 class="heading mb-35">
-					<?=$this->language->line('ALFRED-A10001','QRCODE ORDERING SYSTEM QUICK REFERENCE</a>');?>
-				</h2>
-				<h3 class="heading mb-35">
-					<?=$this->language->line('ALFRED-B100010','LEARN HOW IN THE STEPS ON THIS PAGE');?>
+			<div class="mt-50" style="text-align:left; margin-left: -30px">
+				<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="300" height="auto" />
+			</div>
+			<div style="text-align:left; margin-top: 30px">
+				<h1 class="heading" style="font-size: 400%; margin-bottom: 20px">
+					<?=$this->language->line('ALFRED-VA10001A','ALFRED</a>');?>
+				</h1>
+				<h3 class="heading">
+					<?=$this->language->line('ALFRED-VB100010','THE DIGITAL BUTLER');?>
 				</h3>
 
 			</div>
-			<div class="mt-50" style="text-align:center">
-				<img src="<?php echo base_url(); ?>assets/home/images/tiqsiconlogonew.png" alt="tiqs" width="75" height="auto" />
-			</div>
+
 
 		</div>
 	</div><!-- end col half -->
-	<div class="col-half background-apricot timeline-content">
-		<div class="timeline-block background-yellow">
-			<span class='timeline-number text-orange hide-mobile'>1</span>
+	<div class="col-half background-yankee timeline-content">
+		<div class="timeline-block background-yankee">
+			<span class='timeline-number text-light-blue hide-mobile'>1</span>
 			<div class="timeline-text">
 				<div class="timeline-heading">
-					<span class='timeline-number text-green show-mobile'>1</span>
+					<span class='timeline-number text-light-blue show-mobile'>1</span>
 					<h2 style="font-weight:bold; font-family: caption-bold"><?=$this->language->line('ALFRED-A1010101','GO TO PROFILE');?></h2>
 				</div>
 				<p style="font-family:caption-light; font-size: medium; font-weight: bold">
 					<ul style="list-style-type: disc ; font-family:caption-light; font-size: larger; margin-left: -20px ">
-						<li><?=$this->language->line('ALFRED-B1000111',"COMPLETE YOUR DETAILS");?></>
+						<li><?=$this->language->line('ALFRED-VB10001112',"COMPLETE YOUR PROFILE DETAILS");?></>
+						<li><?=$this->language->line('ALFRED-VB10001113',"COMPLETE YOUR FINANCIAL DETAILS");?></>
+					</ul>
 				<p></p>
+
 				<div class="flex-column align-space">
-					<div style="margin-left: -20px; text-align:center">
+					<div style="text-align:center">
 						<!-- href="https://tiqs.com/lostandfound/menuapp target="_blank"" -->
-						<a href="profile" target="_self" class="button button-orange mb-25"><?=$this->language->line('NOLABELS-B1000131A',"GOTO PROFILE");?></a>
+						<a href="profile" target="_self" class="button button-orange mb-25"><?=$this->language->line('NOLABELS-vB1000131A',"GO TO PROFILE");?></a>
 					</div>
 				</div>
 			</div>
 		</div><!-- end timeline block -->
-		<div class="timeline-block background-orange-light">
-			<span class='timeline-number text-orange hide-mobile'>2</span>
+		<div class="timeline-block background-blue">
+			<span class='timeline-number text-light-blue hide-mobile'>2</span>
 			<div class="timeline-text">
 
 				<div class='timeline-heading'>
-					<span class='timeline-number text-blue show-mobile'>2</span>
-					<h2 style="font-weight:bold; font-family: caption-bold"><?=$this->language->line('ALFRED-B1000101UA','GO TO QRCODE ORDERING SETTINGS');?></h2>
+					<span class='timeline-number text-light-blue show-mobile'>2</span>
+					<h2 style="font-weight:bold; font-family: caption-bold"><?=$this->language->line('ALFRED-VB1000101UA','GO TO SHOP SETTINGS');?></h2>
 				</div>
 				<p style="font-family:caption-light; font-size: medium; font-weight: bold">
 					<ul style="list-style-type: disc ; font-family:caption-light; font-size: larger; margin-left: -20px ">
-						<li><?=$this->language->line('ALFRED-B10001111A',"MANAGE YOUR QRCODE ORDERING SYSTEM");?></>
+						<li><?=$this->language->line('ALFRED-VB10001111A',"MANAGE YOUR SHOP SETTINGS");?></>
 					</ul>
 				<p></p>
 				<div class="flex-column align-space">
 					<div style="text-align:center">
 						<!-- <a class="button button-orange mb-25" id="show-timeline-video-4">LEARN MORE VIDEO</a> -->
-						<a href="warehouse" target="_self" class="button button-orange mb-25"><?=$this->language->line('ALFRED-B100011131B',"GOTO SETTINGS");?></a>
+						<a href="warehouse" target="_self" class="button button-orange mb-25"><?=$this->language->line('ALFRED-vB100011131B',"GO TO SETTINGS");?></a>
 					</div>
 				</div>
 			</div>

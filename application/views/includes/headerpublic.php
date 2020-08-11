@@ -59,8 +59,9 @@
 		<div class="header-menu" id="header-menu" align="right">
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>home#dhl-section" id='dhl-button'></a>
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>found"></a>
-			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>Whatislostisfound"></a>
+			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>check424">VISITOR</a>
 			<a style="color: #E25F2A" href="#" id='modal-button'>choose your language</a>
+			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>login">REGISTER</a>
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>login">LOGIN</a>
 
 		</div>

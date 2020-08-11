@@ -29,8 +29,6 @@ class Check424 extends BaseControllerWeb {
 		$this->load->model('check424_model');
 		$this->load->model('shopvisitorreservtaion_model');
 
-		
-
 		$this->load->config('custom');
 
 		$this->load->library('language', array('controller' => $this->router->class));
@@ -51,7 +49,7 @@ class Check424 extends BaseControllerWeb {
 			$data = [
 				'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData(),
 			];
-			$this->loadViews('check424/registerVisitor', $this->global, $data, 'footerweb424', 'headercheck424');
+			$this->loadViews('check424/registerVisitor', $this->global, $data, 'nofooter', 'noheader');
 		}
 		return;
 	}
