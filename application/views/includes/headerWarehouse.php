@@ -52,15 +52,15 @@
                 <div></div>
             </a>
             <div class="header-menu text-orange" id="header-menu">
-                <a href="<?php echo $this->baseUrl; ?>warehouse">WAREHOUSE</a>
-                <a href="<?php echo $this->baseUrl; ?>product_categories">PRODUCT CATEGORIES</a>
-                <a href="<?php echo $this->baseUrl; ?>product_types">PRODUCT TYPES</a>
-                <a href="<?php echo $this->baseUrl; ?>products">PRODUCTS</a>
-                <a href="<?php echo $this->baseUrl; ?>orders">ORDERS</a>
-                <a href="<?php echo $this->baseUrl; ?>printers">PRINTERS</a>
-                <a href="<?php echo $this->baseUrl; ?>spots">SPOTS</a>
-                <a href="<?php echo $this->baseUrl; ?>visitors">VISITORS</a>
-                <a href="<?php echo $this->baseUrl; ?>loggedin">BACK</a>
+                <a href="<?php echo $this->baseUrl; ?>warehouse"><img width="20px" height="20px" src="<?php echo $this->baseUrl; ?>assets/home/images/datawarehouse.png" title="REPORTS"/></a>
+                <a href="<?php echo $this->baseUrl; ?>product_categories"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/category.png" title="CATEGORY"/></a>
+                <a href="<?php echo $this->baseUrl; ?>product_types"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/types.png" title="TYPES"/></a>
+                <a href="<?php echo $this->baseUrl; ?>products"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/products.png" title="PRODUCTS"/></a>
+                <a href="<?php echo $this->baseUrl; ?>orders"><img width="40px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/qrorder.png" title="ORDERS"/></a>
+                <a href="<?php echo $this->baseUrl; ?>printers"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/print.png" title="PRINTERS"/></a>
+                <a href="<?php echo $this->baseUrl; ?>spots"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/spot.png" title="SPOTS"/></a>
+                <a href="<?php echo $this->baseUrl; ?>visitors"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/person.png" title="VISITORS"/></a>
+                <a href="<?php echo $this->baseUrl; ?>loggedin"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/back.png" title="BACK"/></a>
             </div>
             <div class="hamburger-menu" id="hamburger-menu">
                 <div></div>

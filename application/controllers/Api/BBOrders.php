@@ -588,17 +588,17 @@
 
 
             // UPDATE ORDER EXTENDED PRINT STATUS
-            $orderExtendedIds = explode(',', $order['orderExtendedIds']);
-            foreach ($orderExtendedIds as $id) {
-                $this
-                    ->shoporderex_model
-                    ->setObjectId(intval($id))
-                    ->setObjectFromArray(['printed' => '1'])
-                    ->update();
-            }
-
-            if ($this->shoporder_model->updatePrintedStatus()) {
-            }
+//            $orderExtendedIds = explode(',', $order['orderExtendedIds']);
+//            foreach ($orderExtendedIds as $id) {
+//                $this
+//                    ->shoporderex_model
+//                    ->setObjectId(intval($id))
+//                    ->setObjectFromArray(['printed' => '1'])
+//                    ->update();
+//            }
+//
+//            if ($this->shoporder_model->updatePrintedStatus()) {
+//            }
 
 
             $jsonoutput['ProductLines']=$this->ProductLines;

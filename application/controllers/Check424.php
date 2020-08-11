@@ -95,9 +95,9 @@ class Check424 extends BaseControllerWeb {
 		$vendor = $this->shopvendor_model->setProperty('vendorId', $visitor['vendorId'])->getVendorData();
 		$this->session->set_flashdata('success', 'Thank you for your registration');
 
-		$makeOrder = base_url() . 'make_order?vendorid=';
+		$makeOrder = base_url() . 'make_order?vendorid='.$vendor['vendorId'];
 		set_cookie('makeOrder', $makeOrder, time() + (365 * 24 * 60 * 60));
-		redirect($redirectReferer);
+		redirect($makeOrder);
 		exit();
 
 		// TO DO HEALTH CHECK
