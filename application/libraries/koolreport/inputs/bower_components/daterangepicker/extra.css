@@ -1,0 +1,9 @@
+.date-range-picker
+{
+    cursor:pointer;
+}
+.date-range-picker b.caret
+{
+    float:right;
+    margin-top:8px;
+}

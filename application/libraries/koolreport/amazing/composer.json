@@ -1,0 +1,11 @@
+{
+    "name": "koolreport/amazing",
+    "version":"1.1.0",
+    "description": "Amazing Bootstrap 4 Theme For KoolReport",
+    "keywords": ["PHP","php reprting tools","php reporting framework","mysql reporting tools","report theme"],
+    "homepage": "https://www.koolreport.com",
+    "type": "library",
+    "license": "https://www.koolreport.com/license#regular-license",
+    "require": {
+    }
+}

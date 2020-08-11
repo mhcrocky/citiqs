@@ -1,0 +1,9 @@
+{
+    "name": "koolreport/yii2",
+    "version":"1.0.0",
+    "description": "Ease report setup within Yii2 environment",
+    "keywords": ["PHP","php reprting tools","php reporting framework","yii2","yii reporting"],
+    "homepage": "https://www.koolreport.com",
+    "type": "library",
+    "license": "MIT"
+}

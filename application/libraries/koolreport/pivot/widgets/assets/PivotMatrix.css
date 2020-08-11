@@ -1,0 +1,335 @@
+    #krpmDisabler {
+        background-color: #fff;
+        opacity: 0.7;
+        text-align:center;
+    }
+    #krpmDisabler .krpmSpin {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    #krpmColumnFieldMenu,
+    #krpmRowFieldMenu {
+        background-color: #fff;
+        border-radius: 4px;
+        border: 1px solid #dedede;
+    }
+    #krpmDataFieldMenu {
+        border: 1px solid #006087;
+        border-radius: 4px;
+    }
+    #krpmDataFieldMenu:focus, 
+    #krpmColumnFieldMenu:focus, 
+    #krpmRowFieldMenu:focus {
+        outline:none
+    }
+    .krpmMenuItem {
+        background-color: #E5E5E5;
+        padding: 5px 7px;
+        cursor: pointer;
+    }
+    .krpmMenuItem:hover {
+        background-color: #EEEEEE;
+    }
+    .krpmMenuItem.krpmDisableMenu {
+        color: #999;
+        cursor: default;
+    }
+    #krpmDataFieldMenu .krpmMenuItem {
+        color: #fff;
+        background-color: #006087;
+        padding: 5px 7px;
+        cursor: pointer;
+    }
+    #krpmDataFieldMenu .krpmMenuItem:hover {
+        background-color: #0079A0;
+    }
+    .krpmDropDown {
+        padding: 2px 3px;
+    }
+    
+
+
+    .krPivotMatrix {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .krPivotMatrix {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #333;
+        background-color: #fff;
+        
+        overflow: hidden;
+        border-color:#dedede;
+        border-width: 1px;
+        border-style: solid;
+        /* background-color: #EFEFEF; */
+    }
+    .krPivotMatrix table {
+        margin: 0;
+        width: 100%;
+        /* border-collapse: separate; */
+        border-collapse: collapse !important;
+    }
+    .krPivotMatrix td,
+    .krPivotMatrix th {
+        border-style: solid;
+        border-color:#dedede;
+        padding: 8px;
+        line-height: 1.42857143;
+        vertical-align: top;
+    }  
+    .krPivotMatrix .krpmExpCol {
+        cursor: pointer !important;
+    }
+    .krPivotMatrix td {
+        height: 37px;
+    }
+    
+    
+
+    .krpmWaitingFieldZone, .krpmDataFieldZone, .krpmRowFieldZone {
+        border-width: 0 0 1px 0 !important;
+    }
+    .krpmColumnHeaderZone, .krpmRowHeaderZone, .krpmDataZone, .krpmFooter {
+        border-width: 0 !important;
+    }
+    .krpmFooter {
+        border-top-width: 1px !important;
+    }
+    .krpmColumnFieldZone, .krpmColumnHeaderZone td {
+        border-width: 0 0 1px 1px !important;
+    }
+    .krpmRowHeaderZone td, .krpmDataZone td {
+        border-width: 0 0 0px 0px !important;
+		padding: 0 !important;
+    }
+    .krpmRowHeaderZone td .krpmHeaderText, .krpmDataZone td .krpmDataCellText {
+		border-style: solid;
+        border-color:#dedede;
+        border-width: 0 0 1px 1px !important;
+		margin-bottom: -1px !important;
+		/* margin-left: -1px !important; */
+		padding: 8px !important;
+		height: 100%;
+		width: 100%;
+    }
+    .krpmColumnHeaderZone, .krpmDataZone {
+        border-left-width: 1px !important;
+    }
+    .krpmColumnHeaderZone table,
+    .krpmRowHeaderZone table,
+    .krpmDataZone table {
+        margin-left: -1px;
+    }
+
+
+
+    .krpmFieldZone {
+        text-align: left;
+        vertical-align: top;
+        /* background: linear-gradient(#EEEEEE, #DDDDDD); */
+    }
+    .krpmFieldDropContainer,
+    .krpmFieldDrop {
+        padding-left: 5px;
+    }
+    .krpmField {
+        display: inline-block;
+        box-sizing: border-box;
+        text-align: center;
+        vertical-align: middle;
+        font-weight: normal;
+        line-height: 1.42857143;
+
+        padding: 2px 5px;
+        margin: 2px 0px;
+        border-radius: 4px;
+        white-space: nowrap;
+        cursor: grab;
+        border: 1px solid #ccc;
+        color: #333;
+        background-color: #fff;
+    }
+    .krpmDataField {
+        color: #fff !important;
+        background-color: #006087;
+        /* background: linear-gradient(#0079A0, #006087); */
+    }
+    .krpmDataField:hover {
+        background-color: #0079A0;
+        /* background: linear-gradient(#0079A0, #0079A0); */
+    }
+    .krpmLabelField, .krpmColumnField, .krpmRowField {
+        background-color: #E5E5E5;
+        /* background: linear-gradient(#FFFFFF, #E5E5E5); */
+    }
+    .krpmLabelField:hover, .krpmColumnField:hover, .krpmRowField:hover {
+        background-color: #EEEEEE;
+        /* background: linear-gradient(#FFFFFF, #FFFFFF) !important; */
+    }
+    
+
+    .krpmColumnHeaderZone {
+        /* to make inside div fullfils 100% height */
+        height: 1px; 
+    }
+    .krpmColumnHeaderZoneDiv table,
+    .krpmRowHeaderZoneDiv {
+        height: 100%;
+    }
+    .columnHeaderZone, .krpmColumnHeaderZoneDiv, .krpmRowHeaderZoneDiv {
+        overflow: hidden;
+    }
+    .krpmColumnHeaderZone, .krpmRowHeaderZone, .krpmDataZone {
+        padding: 0 !important;
+    }
+    .krpmDataZoneDiv {
+        overflow: auto;
+    }
+    .krpmColumnHeader, .krpmRowHeader, .krpmDataCell {
+        overflow: hidden;
+    }
+
+    .krpmColumnHeaderZone {
+        border-bottom-width: 1px !important;
+    }
+
+    .krpmColumnHeaderZone table {
+        margin-top: -1px;
+    }
+
+    .krpmColumnHeaderZone td {
+        border-width: 1px 0 0 1px !important;
+        min-width: 70px;
+    }
+
+        /* .krpmHeaderText {
+            cursor: pointer;
+        } */
+
+    .krpmRow {
+        white-space: nowrap;
+    }
+
+    .krpmDataCell {
+        text-align: right;
+    }
+
+
+
+    .krpmFooter {
+        color: #333;
+    }
+    .pagination {
+        margin: 0;
+        vertical-align: middle;
+    }
+    .krpmPageSize {
+        vertical-align: middle;
+        display:inline-block !important;
+        width: auto !important;
+    }
+
+    .krPivotMatrix ul.pagination,
+    .krPivotMatrix .pagination li {
+        display: inline-block;
+    }
+    .krPivotMatrix .pagination > li > a,
+    .krPivotMatrix .pagination > li > span {
+        /* position: relative; */
+        position: static !important;
+        float: left;
+        padding: 6px 12px;
+        margin-left: -1px;
+        line-height: 1.42857143;
+        /* color: #337ab7; */
+        color: #333;
+        text-decoration: none;
+        background-color: #fff;
+        border: 1px solid #ddd;
+    }
+    .krPivotMatrix .pagination > li:first-child > a,
+    .krPivotMatrix .pagination > li:first-child > span {
+        margin-left: 0;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+    }
+    .krPivotMatrix .pagination > li:last-child > a,
+    .krPivotMatrix .pagination > li:last-child > span {
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+    }
+    .krPivotMatrix .pagination > li > a:hover,
+    .krPivotMatrix .pagination > li > span:hover,
+    .krPivotMatrix .pagination > li > a:focus,
+    .krPivotMatrix .pagination > li > span:focus {
+        z-index: 2;
+        color: #23527c;
+        background-color: #eee;
+        border-color: #ddd;
+    }
+    .krPivotMatrix .pagination > .active > a,
+    .krPivotMatrix .pagination > .active > span,
+    .krPivotMatrix .pagination > .active > a:hover,
+    .krPivotMatrix .pagination > .active > span:hover,
+    .krPivotMatrix .pagination > .active > a:focus,
+    .krPivotMatrix .pagination > .active > span:focus {
+        z-index: 3;
+        color: #fff;
+        cursor: default;
+        background-color: #337ab7;
+        border-color: #337ab7;
+    }
+    .krPivotMatrix .btn:focus,.btn:active {
+        outline: none !important;
+        box-shadow: none;
+    }
+    
+    .page-link {
+        padding: 6px 8px !important;
+    }
+    }
+
+    .form-control {
+        display: block;
+        width: 100%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #333;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+             -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+
+    .form-inline .form-control {
+        display: inline-block;
+        width: auto;
+        vertical-align: middle;
+    }
+
+    /* .krPivotMatrix .krpmSortIcon {
+        cursor: default !important;
+    } */
+
+    .krpm-indent {
+        width: 30px;
+        display: inline-block;
+    }
+
+    /* Make empty header take normal space */
+    .krpmHeaderText:after {
+        content: '\200b';
+    }

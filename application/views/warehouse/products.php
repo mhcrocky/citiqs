@@ -204,19 +204,19 @@
                                 style="background-color:<?php echo $product['productActive'] === '1' ? '#99ff66' : '#ff4d4d'; ?>"
                                 id="<?php echo 'product_' . str_replace('\'', ' ', $details['name']) . '_' . $details['productExtendedId']; ?>"
                                 >
-                                <div class="item-header">
-                                    <p class="item-description">Name: <?php echo $details['name']; ?></p>
-                                    <p class="item-description">Category: 
+                                <div class="item-header" style="width:100%">
+                                    <p class="item-description" style="white-space: initial;">Name: <?php echo $details['name']; ?></p>
+                                    <p class="item-description" style="white-space: initial;">Category: 
                                         <?php
                                             echo $product['category'];
                                             echo $product['categoryActive'] === '1' ? ' (<span>ACTIVE</span>)' : ' (<span>"BLOCKED</span>)'
                                         ?>
                                     </p>
-                                    <p class="item-description">VAT: <?php echo floatval($details['vatpercentage']); ?></p>
-                                    <p class="item-description">From: 
+                                    <p class="item-description" style="white-space: initial;">VAT: <?php echo floatval($details['vatpercentage']); ?></p>
+                                    <p class="item-description" style="white-space: initial;">From: 
                                         <?php echo ($product['dateTimeFrom']) ? $product['dateTimeFrom'] : 'All time'; ?>
                                     </p>
-                                    <p class="item-description">To: 
+                                    <p class="item-description" style="white-space: initial;">To: 
                                         <?php echo ($product['dateTimeTo']) ? $product['dateTimeTo'] : 'All time'; ?>
                                     </p>
                                     <?php

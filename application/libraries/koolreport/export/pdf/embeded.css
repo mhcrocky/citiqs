@@ -1,0 +1,18 @@
+@media print
+{
+    .page-break
+    {
+        display:block !important;
+        width:0px !important;
+        height:0px !important;
+        page-break-before: always !important;
+    }
+    .no-break
+    {
+        page-break-inside: avoid;
+    }
+    body
+    {
+        zoom:_zoom_ !important;
+    }
+}
