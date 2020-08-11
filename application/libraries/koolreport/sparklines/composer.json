@@ -1,0 +1,11 @@
+{
+    "name": "koolreport/sparklines",
+    "version":"1.5.0",
+    "description": "Contains sparklines chart types",
+    "keywords": ["PHP","php reprting tools","php reporting framework","mysql reporting tools","charts","graphs","sparkines"],
+    "homepage": "https://www.koolreport.com",
+    "type": "library",
+    "license": "https://www.koolreport.com/license#regular-license",
+    "require": {
+    }
+}

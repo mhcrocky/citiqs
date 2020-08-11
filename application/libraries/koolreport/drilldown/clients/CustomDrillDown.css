@@ -1,0 +1,24 @@
+div.custom-drilldown level-title
+{
+    display:none;
+}
+
+div.custom-drilldown div.custom-drilldown-level
+{
+    padding:15px;
+}
+div.custom-drilldown div.custom-drilldown-body
+{
+    padding:0px 1px 0px 1px;
+}
+
+div.custom-drilldown span.custom-drilldown-title
+{
+    font-size:16px;
+    font-weight: bold;
+}
+
+div.custom-drilldown span.custom-drilldown-clevel-title
+{
+    font-weight: bold;
+}

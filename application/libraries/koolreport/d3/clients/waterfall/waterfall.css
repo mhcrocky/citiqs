@@ -1,0 +1,66 @@
+div.d3-waterfall text
+{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+div.d3-waterfall .title
+{
+  font-size: 14px;
+  font-weight:bold;
+}
+
+
+div.d3-waterfall .bar.total rect {
+  fill: steelblue;
+}
+
+div.d3-waterfall .bar.positive rect {
+  fill: darkolivegreen;
+}
+div.d3-waterfall .bar.negative rect {
+  fill: crimson;
+}
+
+div.d3-waterfall .bar line.connector {
+  stroke: grey;
+  stroke-dasharray: 3;
+}
+
+div.d3-waterfall .bar text {
+  text-anchor: middle;
+  font-size:12px;
+}
+
+div.d3-waterfall .axis text {
+  font: 10px sans-serif;
+}
+
+div.d3-waterfall .axis path,
+div.d3-waterfall .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+div.d3-waterfall div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 60px;
+  height: 16px;
+  padding: 2px;
+  font: 15px sans-serif;
+  background: lightgrey;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+div.d3-waterfall .bubble {
+  font-weight: bold;
+}
+
+div.d3-waterfall .ellipse {
+  fill:none;
+  stroke:black;
+  stroke-width:2;
+}

@@ -138,6 +138,11 @@
                         </div>
                     </div>
                 </div>
+                <?php if (!is_null($makeOrderCookie)) { ?>
+                <br/>
+                <br/>
+                <a href="<?php echo $makeOrderCookie . $vendor['vendorId']; ?>">Now you can make an order</a>
+                <?php } ?>
                 <div class="row mt-35" style="text-align: center; padding:50px ">
 
 

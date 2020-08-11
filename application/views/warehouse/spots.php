@@ -80,14 +80,14 @@
                     <?php foreach ($spots as $spot) { ?>
 
                         <div class="grid-item allSpots" id="spotElementId<?php echo $spot['spotId']; ?>" style="background-color:<?php echo $spot['spotActive'] === '1' ? '#99ff66' : '#ff4d4d'; ?>">
-                            <div class="item-header">
-                                <p class="item-description">Name: <?php echo $spot['spotName']; ?></p>
+                            <div class="item-header" style="width:100%">
+                                <p class="item-description" style="white-space: initial;">Name: <?php echo $spot['spotName']; ?></p>
                                 <!-- <p class="item-description">Spot ID: <?php #echo $spot['spotId']; ?></p> -->
-                                <p class="item-category">Spot status:
+                                <p class="item-category" style="white-space: initial;">Spot status:
                                     <?php echo $spot['spotActive'] === '1' ? '<span>ACTIVE</span>' : '<span>BLOCKED</span>'; ?>
                                 </p>
-                                <p class="item-description">Printer: <span><?php echo $spot['printer']; ?><span></p>
-                                <p class="item-category">Printer status:
+                                <p class="item-description" style="white-space: initial;">Printer: <span><?php echo $spot['printer']; ?><span></p>
+                                <p class="item-category" style="white-space: initial;">Printer status:
                                     <?php echo $spot['printerActive'] === '1' ? '<span>ACTIVE</span>' : '<span>BLOCKED</span>'; ?>
                                 </p>
                                 <p class="item-description">Spot type: <span><?php echo $spot['spotType']; ?><span></p>

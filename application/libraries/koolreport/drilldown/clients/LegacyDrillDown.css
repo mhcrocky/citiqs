@@ -1,0 +1,19 @@
+div.legacy-drilldown div.legacy-drilldown-level
+{
+    padding:15px;
+}
+div.legacy-drilldown div.legacy-drilldown-body
+{
+    padding:0px 1px 0px 1px;
+}
+
+div.legacy-drilldown span.legacy-drilldown-title
+{
+    font-size:16px;
+    font-weight: bold;
+}
+
+div.legacy-drilldown span.legacy-drilldown-clevel-title
+{
+    font-weight: bold;
+}

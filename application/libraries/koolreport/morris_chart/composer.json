@@ -1,0 +1,15 @@
+{
+    "name": "koolreport/morris_chart",
+    "version":"2.2.0",
+    "description": "Widget wrapper to draw Morris js chart",
+    "keywords": ["PHP","Reporting Tools","Data Report","Charts","Morris JS"],
+    "homepage": "https://www.koolreport.com",
+    "type": "library",
+    "license": "https://www.koolreport.com/license#regular-license",
+    "authors": [
+        {
+            "name": "KoolPHP Inc",
+            "homepage": "https://www.koolphp.net"
+        }
+    ]
+}
