@@ -122,7 +122,6 @@
         {
             $data = Validate_data_helper::validateInteger($this->uri->segment(4)) ?
                             ['active' => $this->uri->segment(4)] : $this->input->post(null, true);
-            
             $this->shopcategory_model->setObjectId(intval($this->uri->segment(3)));
 
             if(isset($data['category']) && $this->shopcategory_model->checkIsInserted($data)) {
@@ -782,5 +781,18 @@
 
             $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
             redirect($redirect);
+        }
+
+        // VISITORS
+        /**
+         * Koolreportes visitors
+         */
+        public function visitors(): void
+        {
+            $this->global['pageTitle'] = 'TIQS : VISITORS';
+            $data = [
+                'vendorId' => $_SESSION['userId']
+            ];
+            $this->loadViews('warehouse/visitors', $this->global, $data, null, 'headerWarehouse');
         }
     }

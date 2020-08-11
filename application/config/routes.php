@@ -248,6 +248,7 @@ $route['orders']                = "warehouse/orders";
 $route['spots']                 = "warehouse/spots";
 $route['printers']              = "warehouse/printers";
 $route['product_types']         = "warehouse/productTypes";
+$route['visitors']              = "warehouse/visitors";
 
 $route['make_order']        = 'publicorders/index';
 $route['checkout_order']    = 'publicorders/checkout_order';
