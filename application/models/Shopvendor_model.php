@@ -21,6 +21,7 @@
         public $minimumOrderFee;
         public $serviceFeeTax;
         public $healthCheck;
+        public $requireReservation;
 
         public $bancontact;
         public $ideal;
@@ -74,6 +75,7 @@
             if (isset($data['serviceFeeTax']) && !Validate_data_helper::validateInteger($data['serviceFeeTax'])) return false;
             if (isset($data['giro']) && !($data['giro'] === '1' || $data['giro'] === '0')) return false;
             if (isset($data['healthCheck']) && !($data['healthCheck'] === '1' || $data['healthCheck'] === '0')) return false;
+            if (isset($data['requireReservation']) && !($data['requireReservation'] === '1' || $data['requireReservation'] === '0')) return false;
 
             return true;
         }
@@ -97,6 +99,8 @@
                     $this->table . '.serviceFeeTax',
                     $this->table . '.giro',
                     $this->table . '.healthCheck',
+                    $this->table . '.requireReservation',
+
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',
