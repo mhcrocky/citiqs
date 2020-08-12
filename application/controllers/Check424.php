@@ -95,21 +95,29 @@ class Check424 extends BaseControllerWeb {
 		}
 
 		$vendor = $this->shopvendor_model->setProperty('vendorId', $visitor['vendorId'])->getVendorData();
-		$this->session->set_flashdata('success', 'Thank you for your registration');
 
+		if ($vendor['healthCheck'] === '1' && $post['checkStatus'] === '1') {
+			$_SESSION['visitor'] = $this->shopvisitor_model;
+			$_SESSION['vendor'] = $vendor;
+			redirect('questionnaire');
+			return;
+		}
+
+		$this->session->set_flashdata('success', 'Thank you for your registration');
 		$makeOrder = base_url() . 'make_order?vendorid=';
 		set_cookie('makeOrder', $makeOrder, time() + (365 * 24 * 60 * 60));
 		redirect($redirectReferer);
-		exit();
+		return;
+	}
 
-		// TO DO HEALTH CHECK
-		// if ($vendor['healthCheck'] === '0') {
-		// 	$this->session->set_flashdata('success', 'Thank you for your registration');
-		// 	redirect($redirectReferer);
-		// } else {
-		// 	#redirect('heal_check');
-		// 	die('1');
-		// }
+	public function questionnaire(): void
+	{
+		$this->global['pageTitle'] = 'TIQS : QUESTIONNAIRE';
+		$data = [
+			'code' => '0'
+		];
+
+		$this->loadViews('check424/questionniare', $this->global, $data, 'footerweb424', 'headercheck424');
 	}
 
 
@@ -118,7 +126,6 @@ class Check424 extends BaseControllerWeb {
 	 */
 	public function checkhealt($code = '')
 	{
-		$code == "";
 		if ($code == ""){
 			$result = null;
 		} else {

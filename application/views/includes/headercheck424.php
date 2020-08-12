@@ -47,37 +47,26 @@
 
 </head>
 
-<?php if ($this->view === 'map') {?>
-<body onload="getLocation()">
-<?php } else { ?>
 <body>
-<?php include_once FCPATH . 'application/views/includes/alertifySessionMessage.php'; ?>
+	<header class="header">
+		<nav class="header-nav">
+			<a href="<?php echo base_url(); ?>check424" class="nav-logo">
+				<img src="<?php echo base_url(); ?>assets/home/images/tiqslogonew.png" alt="">
+			</a>
+			<div class="header-menu" id="header-menu" style="text-align:right">
+				<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>home#dhl-section" id='dhl-button'></a>
+				<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>found"></a>
+				<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>check424">QUESTIONNAIRE</a>
+				<!-- <a style="color: #E25F2A" href="<?php #echo $this->baseUrl; ?>info_check424">INFO FOR BUSINESSES</a> -->
+				<a style="color: #E25F2A" href="#" id='modal-button'>choose your language</a>
+				<a style="color: #E25F2A" href="https://tiqs.com/spot/pay424" >BUY US A COFFEE</a>
 
-<?php } ?>
-<header class="header">
-	<nav class="header-nav">
-		<a href="<?php echo base_url(); ?>check424" class="nav-logo">
-			<img src="<?php echo base_url(); ?>assets/home/images/tiqslogonew.png" alt="">
-		</a>
-		<div class="header-menu" id="header-menu" style="text-align:right">
-
-			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>home#dhl-section" id='dhl-button'></a>
-			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>found"></a>
-
-			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>check424">QUESTIONNAIRE</a>
-			<!-- <a style="color: #E25F2A" href="<?php #echo $this->baseUrl; ?>info_check424">INFO FOR BUSINESSES</a> -->
-			<a style="color: #E25F2A" href="#" id='modal-button'>choose your language</a>
-			<a style="color: #E25F2A" href="https://tiqs.com/spot/pay424" >BUY US A COFFEE</a>
-
-		</div>
-		<div class="hamburger-menu" id="hamburger-menu">
-			<div></div>
-			<div></div>
-			<div></div>
-		</div>
-	</nav>
-</header>
-<div id="top" >
-<!--	<a  ></a>-->
-  .
-</div>
+			</div>
+			<div class="hamburger-menu" id="hamburger-menu">
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+		</nav>
+	</header>
+	<div id="top"></div>
