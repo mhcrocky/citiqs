@@ -61,7 +61,7 @@
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>found"></a>
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>check424">VISITOR</a>
 			<a style="color: #E25F2A" href="#" id='modal-button'>choose your language</a>
-			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>login">REGISTER</a>
+			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>registerbusiness">REGISTER</a>
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>login">LOGIN</a>
 
 		</div>
