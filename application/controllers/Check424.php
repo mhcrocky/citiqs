@@ -39,6 +39,11 @@ class Check424 extends BaseControllerWeb {
 	public function index($vendorId = ''): void
 	{
 		$this->global['pageTitle'] = 'TIQS : REGISTER VISITOR';
+
+		if (isset($_SESSION['visitorReservationId'])) {
+			unset($_SESSION['visitorReservationId']);
+		}
+
 		if (empty($vendorId)) {
 			$data = [
 				'vendors' => $this->shopvendor_model->getVendors(['payNlServiceId!=' => NULL])
@@ -47,7 +52,6 @@ class Check424 extends BaseControllerWeb {
 		} else {
 			$data = [
 				'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData(),
-				'makeOrderCookie' => get_cookie('makeOrder')
 			];
 			$this->loadViews('check424/registerVisitor', $this->global, $data, 'nofooter', 'noheader');
 		}
@@ -60,26 +64,27 @@ class Check424 extends BaseControllerWeb {
 		$visitor = $post['visitor'];
 		$redirectReferer = 'check424/' . $visitor['vendorId'];
 
+		// check checkStatus
 		if (!isset($post['checkStatus'])) {
 			$this->session->set_flashdata('error', 'Process failed. Please select are you entering or leaving location');
-			unset($_COOKIE['makeOrder']);
-			setcookie('makeOrder', '', time() - 3600, '/');
 			redirect($redirectReferer);
 		}
 
+		// insert or update visitor
+		$visitor['created'] = date('Y-m-d H:i:s');
+		if (!($this->shopvisitor_model->setObjectFromArray($visitor)->create() || $this->shopvisitor_model->setIdFromEmail()->update())) {
+			$this->session->set_flashdata('error', 'Process failed. Please try again. All fields are mandatory');
+			redirect($redirectReferer);
+			exit();
+		};
+
+		// set cookies
 		foreach ($visitor as $key => $value) {
 			if ($key === 'vendorId' || $key === 'table') continue;
 			set_cookie($key, $value, time() + (365 * 24 * 60 * 60));
 		}
 
-		$visitor['created'] = date('Y-m-d H:i:s');
-		if (!($this->shopvisitor_model->setObjectFromArray($visitor)->create() || $this->shopvisitor_model->setIdFromEmail()->update())) {
-			$this->session->set_flashdata('error', 'Process failed. Please try again');
-			setcookie('makeOrder', '', time() - 3600, '/');
-			redirect($redirectReferer);
-			exit();
-		};
-
+		// insert reservation
 		$check = [
 			'visitorId' => $this->shopvisitor_model->id,
 			'checkStatus' => $post['checkStatus'],
@@ -87,18 +92,27 @@ class Check424 extends BaseControllerWeb {
 		];
 		if (!$this->shopvisitorreservtaion_model->setObjectFromArray($check)->create()) {
 			$this->session->set_flashdata('error', 'Process failed. Please try again');
-			setcookie('makeOrder', '', time() - 3600, '/');
 			redirect($redirectReferer);
 			exit();
 		}
 
-		$vendor = $this->shopvendor_model->setProperty('vendorId', $visitor['vendorId'])->getVendorData();
-		$this->session->set_flashdata('success', 'Thank you for your registration');
+		// redirect visitor on checkout
+		if ($post['checkStatus'] === '0') {
+			$this->session->set_flashdata('success', 'Goodbye! Thanks for visiting us');
+			set_cookie('visitorReservationId', '', time() - 3600, '/');
+			redirect($redirectReferer);
+			return;
+		};
 
-		$makeOrder = base_url() . 'make_order?vendorid='.$vendor['vendorId'];
-		set_cookie('makeOrder', $makeOrder, time() + (365 * 24 * 60 * 60));
+		// redirect visitor on checkin
+		$this->session->set_flashdata('success', 'Thanks for your registration');
+		$vendor = $this->shopvendor_model->setProperty('vendorId', $visitor['vendorId'])->getVendorData();
+		$makeOrder = base_url() . 'make_order?vendorid=' . $vendor['vendorId'];
+		$_SESSION['visitorReservationId'] = $this->shopvisitorreservtaion_model->id;
+		set_cookie('visitorReservationId', $this->shopvisitorreservtaion_model->id, (time() + 12 * 3600));
 		redirect($makeOrder);
-		exit();
+
+		return;
 
 		// TO DO HEALTH CHECK
 		// if ($vendor['healthCheck'] === '0') {

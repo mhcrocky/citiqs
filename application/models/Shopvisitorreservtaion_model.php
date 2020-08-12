@@ -49,4 +49,15 @@
 
             return true;
         }
+
+        public function checkId(): bool
+        {
+            $count = $this->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    'id=' => $this->id
+                ]
+            ]);
+            return $count ? true : false;
+        }
     }

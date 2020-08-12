@@ -138,11 +138,6 @@
                         </div>
                     </div>
                 </div>
-                <?php if (!is_null($makeOrderCookie)) { ?>
-                <br/>
-                <br/>
-<!--                <a href="--><?php //echo $makeOrderCookie . $vendor['vendorId']; ?><!--">Now you can make an order</a>-->
-                <?php } ?>
                 <div class="row mt-35" style="text-align: center; padding:50px ">
 
 
@@ -196,7 +191,7 @@
                 <img src="<?php echo $this->baseUrl; ?>assets/home/images/covid-19-list.png" alt="tiqs" width="150" height="auto" />
             </div>
             <p class="text-content mb-50"><?=$this->language->line("CHECK424-1270AB",'WHY THIS QUESTIONNAIRE?');?></p>
-            <ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px " align="leftr">
+            <ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px; text-align:left">
                 <li><?=$this->language->line("CHECK424-41212ABCDF",'RESTAURANTS, BARS, HOSPITALITY BUSINESSES ARE REQUIRED BY LAW TO QUESTION YOU ABOUT YOUR HEALTH TO DETERMINE THE RISK OF SPREADING COVID-19, THE VIRUS.<br>');?></li>
                 <p><br></p>
                 <li><?=$this->language->line("CHECK4241-41351232ABCDE",'YOU CAN HELP YOUR LOCAL BUSINESS BY PROVIDING THE ANSWERS IN A ELECTRICAL READABLE MANNER, ');?></li>
@@ -216,7 +211,7 @@
         <div class="background-yellow height-50">
             <div class="width-650">
                 <p class="text-content mb-50"><?=$this->language->line("CHECK424-1370AB",'YOUR PRIVACY');?></p>
-                <ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px " align="leftr">
+                <ul style="list-style-type: none  ;font-family: caption-light; font-size:larger; margin-left: -40px; text-align:left">
                     <li><?=$this->language->line("CHECK424-91-ABCDEF",'WE ALL VALUE OUR PRIVACY YOUR ANSWERS PER QUESTION ARE NOT STORED ANYWHERE');?></li>
                     <p><br></p>
                     <li><?=$this->language->line("CHECK424-195A2BCDEFG",'4 WEEKS AFTER REGISTRATION WE COMPLETELY REMOVED YOU FROM OUR SYSTEM');?></li>
