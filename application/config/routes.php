@@ -70,6 +70,8 @@ $route['visitor'] = "createvisitor/index";
 $route['cqrcode'] = "check424/cqrcode";
 $route['check424email'] = "check424/check424email";
 $route['check424/(:any)'] = "check424/index/$1";
+$route['questionnaire'] = "check424/questionnaire";
+
 $route['start'] = 'start';
 $route['loggedin'] = 'loggedin';
 $route['info_spot'] = 'info_spot';

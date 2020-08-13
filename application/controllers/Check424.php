@@ -28,6 +28,7 @@ class Check424 extends BaseControllerWeb {
 		$this->load->model('shopvisitor_model');
 		$this->load->model('check424_model');
 		$this->load->model('shopvisitorreservtaion_model');
+		$this->load->model('shophealth_model');
 
 		$this->load->config('custom');
 
@@ -40,9 +41,9 @@ class Check424 extends BaseControllerWeb {
 	{
 		$this->global['pageTitle'] = 'TIQS : REGISTER VISITOR';
 
-		if (isset($_SESSION['visitorReservationId'])) {
-			unset($_SESSION['visitorReservationId']);
-		}
+		// if (isset($_SESSION['visitorReservationId'])) {
+		// 	unset($_SESSION['visitorReservationId']);
+		// }
 
 		if (empty($vendorId)) {
 			$data = [
@@ -53,6 +54,7 @@ class Check424 extends BaseControllerWeb {
 			$data = [
 				'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData(),
 			];
+			$data['alreadyCheckIn'] = empty($_SESSION['visitorReservationId']) ? false : true;
 			$this->loadViews('check424/registerVisitor', $this->global, $data, 'nofooter', 'noheader');
 		}
 		return;
@@ -100,28 +102,73 @@ class Check424 extends BaseControllerWeb {
 		if ($post['checkStatus'] === '0') {
 			$this->session->set_flashdata('success', 'Goodbye! Thanks for visiting us');
 			set_cookie('visitorReservationId', '', time() - 3600, '/');
+			// unset visitorReservationId in session
+			if (isset($_SESSION['visitorReservationId'])) {
+				unset($_SESSION['visitorReservationId']);
+			}
 			redirect($redirectReferer);
 			return;
 		};
 
-		// redirect visitor on checkin
-		$this->session->set_flashdata('success', 'Thanks for your registration');
-		$vendor = $this->shopvendor_model->setProperty('vendorId', $visitor['vendorId'])->getVendorData();
-		$makeOrder = base_url() . 'make_order?vendorid=' . $vendor['vendorId'];
+		// store visitorReservationId in session
 		$_SESSION['visitorReservationId'] = $this->shopvisitorreservtaion_model->id;
-		set_cookie('visitorReservationId', $this->shopvisitorreservtaion_model->id, (time() + 12 * 3600));
+
+		//  fetch vendor data to see does vendor require that user fill up health questionnaire	
+		$vendor = $this->shopvendor_model->setProperty('vendorId', $visitor['vendorId'])->getVendorData();
+
+		// redirect to questionnaire
+		if ($vendor['healthCheck'] === '1' && $post['checkStatus'] === '1') {
+			$_SESSION['visitor'] = $this->shopvisitor_model;
+			$_SESSION['vendor'] = $vendor;
+			redirect('questionnaire');
+			return;
+		}
+
+		// redirect to make order
+		$this->session->set_flashdata('success', 'Thank you for your registration');
+		$makeOrder = base_url() . 'make_order?vendorid=' . $visitor['vendorId'];
 		redirect($makeOrder);
-
 		return;
+	}
 
-		// TO DO HEALTH CHECK
-		// if ($vendor['healthCheck'] === '0') {
-		// 	$this->session->set_flashdata('success', 'Thank you for your registration');
-		// 	redirect($redirectReferer);
-		// } else {
-		// 	#redirect('heal_check');
-		// 	die('1');
-		// }
+	public function questionnaire(): void
+	{
+		$this->global['pageTitle'] = 'TIQS : QUESTIONNAIRE';
+		$data = [
+			'code' => '0'
+		];
+
+		$this->loadViews('check424/questionniare', $this->global, $data, 'footerweb424', 'headercheck424');
+	}
+
+	public function healthCheckAnswers(): void
+	{
+		$post = $this->input->post(null, true);
+
+		if (count($post) === 6) {
+			$post['pass'] = '1';
+		} else {
+			$post['pass'] = '0';
+		}
+
+		$post['vendorId'] = $_SESSION['vendor']['vendorId'];
+		$post['reservationId'] = $_SESSION['visitorReservationId'];
+		
+		$this->shophealth_model->setObjectFromArray($post)->create();
+
+		if ($post['pass'] === '1') {
+			// redirect to make order
+			$this->session->set_flashdata('success', 'Thank you for your registration');
+			$makeOrder = base_url() . 'make_order?vendorid=' . $post['vendorId'];
+			redirect($makeOrder);
+			return;
+		} else {
+			unset($_SESSION['visitorReservationId']);
+			$this->session->set_flashdata('error', 'Reservation failed. Please take care for yourself');
+			$redirectReferer = 'check424/' . $post['vendorId'];
+			redirect($redirectReferer);
+		}
+		return;
 	}
 
 
@@ -130,7 +177,6 @@ class Check424 extends BaseControllerWeb {
 	 */
 	public function checkhealt($code = '')
 	{
-		$code == "";
 		if ($code == ""){
 			$result = null;
 		} else {
