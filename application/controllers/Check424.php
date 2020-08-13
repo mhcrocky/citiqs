@@ -28,6 +28,7 @@ class Check424 extends BaseControllerWeb {
 		$this->load->model('shopvisitor_model');
 		$this->load->model('check424_model');
 		$this->load->model('shopvisitorreservtaion_model');
+		$this->load->model('shophealth_model');
 
 		$this->load->config('custom');
 
@@ -104,6 +105,9 @@ class Check424 extends BaseControllerWeb {
 			return;
 		};
 
+		// store visitorReservationIdin session
+		$_SESSION['visitorReservationId'] = $this->shopvisitorreservtaion_model->id;
+
 		//  fetch vendor data to see does vendor require that user fill up health questionnaire	
 		$vendor = $this->shopvendor_model->setProperty('vendorId', $visitor['vendorId'])->getVendorData();
 
@@ -130,6 +134,36 @@ class Check424 extends BaseControllerWeb {
 		];
 
 		$this->loadViews('check424/questionniare', $this->global, $data, 'footerweb424', 'headercheck424');
+	}
+
+	public function healthCheckAnswers(): void
+	{
+		$post = $this->input->post(null, true);
+
+		if (count($post) === 6) {
+			$post['pass'] = '1';
+		} else {
+			$post['pass'] = '0';
+		}
+
+		$post['vendorId'] = $_SESSION['vendor']['vendorId'];
+		$post['reservationId'] = $_SESSION['visitorReservationId'];
+		
+		$this->shophealth_model->setObjectFromArray($post)->create();
+
+		if ($post['pass'] === '1') {
+			// redirect to make order
+			$this->session->set_flashdata('success', 'Thank you for your registration');
+			$makeOrder = base_url() . 'make_order?vendorid=' . $post['vendorId'];
+			redirect($makeOrder);
+			return;
+		} else {
+			unset($_SESSION['visitorReservationId']);
+			$this->session->set_flashdata('error', 'Reservation failed. Please take care for yourself');
+			$redirectReferer = 'check424/' . $post['vendorId'];
+			redirect($redirectReferer);
+		}
+		return;
 	}
 
 

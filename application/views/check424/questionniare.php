@@ -72,8 +72,7 @@
 <?php include_once FCPATH . 'application/views/includes/sessionMessages.php'; ?>
 <div class="main-wrapper">	
 	<div class="col-half background-orange height-100" style="text-align:center">
-        <form id="checkItem" action="<?php echo $this->baseUrl; ?>cqrcode" method="post" enctype="multipart/form-data"  >
-            
+        <form action="<?php echo $this->baseUrl; ?>Check424/healthCheckAnswers" method="post">
             <div class="card" style="text-align:center">
                 <h2 class="heading"  style="margin-bottom: 20px;">
                     <?=$this->language->line("CHECK424-010ABCD",'COVID-19 GUEST QUESTIONNAIRE');?>
@@ -241,7 +240,7 @@
                             </label>
                         </div>
                     </div>
-                    <input type="submit" value="submit" />
+                    <input type="submit" value="submit" class="button"/>
                 </div>
                 </div>
                 </div>
