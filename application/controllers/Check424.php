@@ -41,9 +41,9 @@ class Check424 extends BaseControllerWeb {
 	{
 		$this->global['pageTitle'] = 'TIQS : REGISTER VISITOR';
 
-		if (isset($_SESSION['visitorReservationId'])) {
-			unset($_SESSION['visitorReservationId']);
-		}
+		// if (isset($_SESSION['visitorReservationId'])) {
+		// 	unset($_SESSION['visitorReservationId']);
+		// }
 
 		if (empty($vendorId)) {
 			$data = [
@@ -54,6 +54,7 @@ class Check424 extends BaseControllerWeb {
 			$data = [
 				'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData(),
 			];
+			$data['alreadyCheckIn'] = empty($_SESSION['visitorReservationId']) ? false : true;
 			$this->loadViews('check424/registerVisitor', $this->global, $data, 'nofooter', 'noheader');
 		}
 		return;
@@ -101,11 +102,15 @@ class Check424 extends BaseControllerWeb {
 		if ($post['checkStatus'] === '0') {
 			$this->session->set_flashdata('success', 'Goodbye! Thanks for visiting us');
 			set_cookie('visitorReservationId', '', time() - 3600, '/');
+			// unset visitorReservationId in session
+			if (isset($_SESSION['visitorReservationId'])) {
+				unset($_SESSION['visitorReservationId']);
+			}
 			redirect($redirectReferer);
 			return;
 		};
 
-		// store visitorReservationIdin session
+		// store visitorReservationId in session
 		$_SESSION['visitorReservationId'] = $this->shopvisitorreservtaion_model->id;
 
 		//  fetch vendor data to see does vendor require that user fill up health questionnaire	

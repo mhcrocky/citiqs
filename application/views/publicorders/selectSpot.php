@@ -18,7 +18,7 @@
 				</select>
 				<?php if ($vendor['requireReservation'] === '1' ) { ?>
 					<div><br/></div>
-					<a href="<?php echo base_url(); ?>/check424/<?php echo $vendor['vendorId']; ?>">Checkout</a>
+					<a href="<?php echo base_url(); ?>check424/<?php echo $vendor['vendorId']; ?>">Checkout</a>
 				<?php } ?>
 				<!-- <div>
 					<form method=""post onsubmit="return checkSpotId(this)">

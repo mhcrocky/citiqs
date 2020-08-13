@@ -20,7 +20,9 @@
                     <div style="margin-bottom: 20px;">
 
 						<?=$this->language->line("CHECK424-1000101ABCDE",'COVID-19 GUEST REGISTRATION');?>
-						<a href="https://tiqs.com/alfred/make_order?vendorid=<?php echo $vendor['vendorId']; ?>">"<?=$this->language->line("CHECK424-1234ABCDE",'ALREADY REGISTERED?, CLICK HERE');?>" </a>
+                        <?php if ($alreadyCheckIn) { ?>
+						    <a href="<?php echo base_url()?>make_order?vendorid=<?php echo $vendor['vendorId']; ?>">"<?=$this->language->line("CHECK424-1234ABCDE",'ALREADY REGISTERED?, CLICK HERE');?>" </a>
+                        <?php } ?>
                     </div>
                 </h2>
                 <div class="products" style="text-align:center; background-color: rgb(255, 226, 148); height: 577px;">
