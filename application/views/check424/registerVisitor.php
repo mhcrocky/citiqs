@@ -4,19 +4,23 @@
     <div class="col-half background-orange height-100" style="text-align:center">
         <form id="registerVisitor" action="<?php echo base_url()?>Check424/registerVisitor" method="post">
             <input type="number" name="visitor[vendorId]" required readonly hidden value="<?php echo $vendor['vendorId']; ?>"/>
-            <div class="card" style="text-align:center">
+			<ul style="list-style-type: none  ;font-family: caption-light; font-size:smaller;  margin-top: 30px; margin-left: -40px; text-align:center">
+				<li></li>
+				<li>(Available in more than 107 languages. GO TO the menu to change the language.)</li>
+				<li></li>
+			</ul>
+			<div class="card" style="text-align:center">
                 <div style="visibility: hidden">
                     <div style="visibility: hidden" class="column-center" id="minutes">MM</div>
                     <div style="visibility: hidden" class="column-left" id="hours">H</div>
                     <div style="visibility: hidden" class="column-right" id="seconds">SS</div>
                 </div>
                 <h2 class="heading">
-                    <h1>"<?php echo $vendor['vendorName']; ?>"</h1>
+                    <h1 style="font-family: campton-bold"><?php echo $vendor['vendorName']; ?></h1>
                     <div style="margin-bottom: 20px;">
-                        COVID-19 GUEST QUESTIONNAIR
-                        <div>
-                            <a href="#info424"><i class="fa fa-info-circle" style="font-size:48px; color:dodgerblue"></i></a>
-                        </div>
+
+						<?=$this->language->line("CHECK424-1000101ABCDE",'COVID-19 GUEST REGISTRATION');?>
+						<a href="https://tiqs.com/alfred/make_order?vendorid=<?php echo $vendor['vendorId']; ?>">"<?=$this->language->line("CHECK424-1234ABCDE",'ALREADY REGISTERED?, CLICK HERE');?>" </a>
                     </div>
                 </h2>
                 <div class="products" style="text-align:center; background-color: rgb(255, 226, 148); height: 577px;">
@@ -28,15 +32,10 @@
                                 <img src="https://tiqs.com/alfred/assets/home/images/dooropenwhitegreenchecked.png" alt="tiqs" width="150" height="auto">
                             </div>
                             <ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px; margin-top: 20px; text-align:center">
-                                <li>TOGETHER WE KEEP OURSELVES SAFE.</li>
+								<?=$this->language->line("CHECK424-101200101ABCDEF",'TOGETHER WE KEEP OURSELVES SAFE.');?>
                             </ul>
                             <ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px; text-align:center">
                             </ul>
-                            <ul style="list-style-type: none  ;font-family: caption-light; font-size:smaller;  margin-left: -40px; text-align:center">
-                                <li></li>
-                                <li>(Available in more than 107 languages. GO TO the menu to change the language.)</li>
-                                <li></li>
-                            </ul>                            
                             <div style="text-align:center">
                                 <div class="form-group">
                                     <label style="font-family: caption-bold" for="firstName">FIRST NAME</label>

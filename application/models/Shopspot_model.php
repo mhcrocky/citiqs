@@ -114,9 +114,12 @@
                     ['tbl_shop_printers', $this->table . '.printerId = tbl_shop_printers.id', 'INNER']
                 ],
                 'order_by',
-                [$this->table . '.id', 'ASC']
+				['length(`spotName`),`spotName`']
+
             );
         }
+
+//		[$this->table . '.id', 'ASC']
 
         public function isActive(): bool
         {
