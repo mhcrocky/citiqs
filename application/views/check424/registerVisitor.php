@@ -4,7 +4,7 @@
     <div class="col-half background-orange height-100" style="text-align:center">
         <form id="registerVisitor" action="<?php echo base_url()?>Check424/registerVisitor" method="post">
             <input type="number" name="visitor[vendorId]" required readonly hidden value="<?php echo $vendor['vendorId']; ?>"/>
-			<ul style="list-style-type: none  ;font-family: caption-light; font-size:smaller;  margin-top: 30px; margin-left: -40px; text-align:center">
+			<ul style="list-style-type: none  ;font-family: caption-light; font-size:smaller;  margin-top: 30px; margin-left: -30px; text-align:center">
 				<li></li>
 				<li>(Available in more than 107 languages. GO TO the menu to change the language.)</li>
 				<li></li>
@@ -25,17 +25,31 @@
                         <?php } ?>
                     </div>
                 </h2>
-                <div class="products" style="text-align:center; background-color: rgb(255, 226, 148); height: 577px;">
-                    <div class="product background-orange active" style="width:100%">
+                <div class="products" style="text-align:center;width: 100%; background-color: rgb(255, 226, 148);">
+                    <div class="product background-orange active" align="center" style="width: 100%; height: 150%">
                         <div style="text-align:center">
                             <div style="margin-bottom: 20px; font-family: caption-light; font-size: medium">
                             </div>
                             <div style="text-align:center">
-                                <img src="https://tiqs.com/alfred/assets/home/images/dooropenwhitegreenchecked.png" alt="tiqs" width="150" height="auto">
+                                <img src="https://tiqs.com/alfred/assets/home/images/dooropenwhitegreenchecked.png" alt="tiqs" width="100" height="auto">
                             </div>
                             <ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px; margin-top: 20px; text-align:center">
 								<?=$this->language->line("CHECK424-101200101ABCDEF",'TOGETHER WE KEEP OURSELVES SAFE.');?>
                             </ul>
+							<div>
+								<input type="radio" id="timeIn" value="1" name="checkStatus" required>
+								<label for="timeIn">
+									<p style="margin-top: 20px; margin-left: 35px; font-size: x-small">
+										CLICK HERE FOR IN
+									</p>
+								</label>
+								<input type="radio" id="timeOut" value="0" name="checkStatus" required>
+								<label style="margin-top: 30px" for="timeOut">
+									<p style="margin-top: 20px; margin-left: 35px; font-size: x-small">
+										CLICK HERE FOR OUT
+									</p>
+								</label>
+							</div>
                             <ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px; text-align:center">
                             </ul>
                             <div style="text-align:center">
@@ -64,7 +78,7 @@
                                         />
                                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                                 </div>
-                                <div style="margin:auto">
+								<div class="form-group has-feedback">
                                     <label style="font-family: caption-bold" for="email">E-MAIL</label>
                                     <input
                                         id="email"
@@ -75,7 +89,7 @@
                                         style="font-family:'caption-light'; border-radius: 50px;"
                                         />
                                 </div>
-                                <div>
+								<div class="form-group has-feedback">
                                     <label style="font-family: caption-bold" for="mobile">MOBILE</label>
                                     <input
                                         id="mobile"
@@ -98,22 +112,7 @@
                                         required
                                         />
                                 </div>
-                                <div>
-                                    <input type="radio" id="timeIn" value="1" name="checkStatus" required>
-                                    <label for="timeIn">
-                                        <p style="margin-top: 20px; margin-left: 100px; font-size: large">
-                                            Entering the location
-                                        </p>
-                                    </label>
-                                </div>
-                                <div>
-                                    <input type="radio" id="timeOut" value="0" name="checkStatus" required>
-                                    <label style="margin-top: 30px" for="timeOut">
-                                        <p style="margin-top: 20px; margin-left: 100px; font-size: large">
-                                            Leaving the location
-                                        </p>
-                                    </label>
-                                </div>
+
                             </div>
                             <br>
                         </div>
@@ -217,11 +216,11 @@
                     <p><br></p>
                     <li><?=$this->language->line("CHECK424-195A2BCDEFG",'4 WEEKS AFTER REGISTRATION WE COMPLETELY REMOVED YOU FROM OUR SYSTEM');?></li>
                     <p><br></p>
-					Met het invullen van dit formulier ga je akkoord met de gegevensverwerking onder artikel 6 GDPR, c) en het relevante Ministerieel Besluit. Op vraag van de overheid wordt er toegang gegeven tot de data. De gegevens worden niet gebruikt voor commerciële doeleinden en zullen niet aan derden worden verkocht. Na 4 weken worden de gegevens definitief verwijderd. Samen sterk tegen COVID-19!
-
+					<li><?=$this->language->line("CHECK424-1125A2aBCDEFG",'BY COMPLETING THIS FORM YOU AGREE TO THE DATA PROCESSING UNDER ARTICLE 6 GDPR, AND THE RELEVANT MINISTERIAL DECREE. AT THE REQUEST OF THE GOVERNMENT, ACCESS TO THE DATA IS GIVEN. THE DATA WILL NOT BE USED FOR COMMERCIAL PURPOSES AND WILL NOT BE SOLD TO THIRD PARTIES. AFTER 4 WEEKS, THE DATA WILL BE PERMANENTLY DELETED. TOGETHER STRONG TOGETHER AGAINST COVID-19!');?></li>
+					<p><br></p>
 					<!-- <li><?php #echo $this->language->line("CHECK424-197A2BCDE",'WE MAY ASK YOU TO OPT-IN FOR A TIQS NEWS, YOU SUPPORT OUR BUSINESS  WITH THIS. <br/>THE SERVICE IS FREE, HOWEVER IT IS COSTING US SOME MONEY, YOU CAN ALWAYS SUPPORT IS BY BUYING US A COFFEE! SO WE CAN WORK WHILE YOU SLEEP AND KEEP YOU AND YOUR LOVED ONES SAVE!.');?></li> -->
                     <p><br></p>
-                    <li><?=$this->language->line("CHECK424-98A2BCD",'');?></li>
+                    <li><?=$this->language->line("CHECK424-98A2BCD",'');?></li>-
                 </ul>
             </div>
             <div class="form-group has-feedback mt-35" >
