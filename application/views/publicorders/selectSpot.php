@@ -16,6 +16,10 @@
 					</option>
 					<?php } ?>
 				</select>
+				<?php if ($vendor['requireReservation'] === '1' ) { ?>
+					<div><br/></div>
+					<a href="<?php echo base_url(); ?>/check424/<?php echo $vendor['vendorId']; ?>">Checkout</a>
+				<?php } ?>
 				<!-- <div>
 					<form method=""post onsubmit="return checkSpotId(this)">
 						<input type="number" name="vendorId" id="vendorId"  value="<?php #echo $vendor['vendorId']; ?>" readonly requried hidden />

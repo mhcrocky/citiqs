@@ -22,7 +22,7 @@
 									</p>
 								</div>
 								<div class="form-group has-feedback">
-									<input value="<?php echo $user->usershorturl; ?>" name="usershorturl" required type="text" class="form-control"  required id="usershorturl" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("registerbusiness-1700A",'Your shortname');?>" name="usershorturl" pattern="[a-z]{1,15}" title="<?=$this->language->Line("registerbusiness-1800A",'Only [a-z] characters allowed (no capital), no spaces, points or special characters like @#$% and max 15 length');?>" />
+									<input value="<?php echo $user->usershorturl; ?>" type="text" class="form-control"  required id="usershorturl" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("registerbusiness-1700A",'Your shortname');?>" name="usershorturl" pattern="[a-z]{1,15}" title="<?=$this->language->Line("registerbusiness-1800A",'Only [a-z] characters allowed (no capital), no spaces, points or special characters like @#$% and max 15 length');?>" />
 								</div>
 							<?php } ?>
 							<div>
@@ -184,7 +184,7 @@
 				<!-- <p>Add terms and conditions</p> -->
 			
 				<form method="post" action="<?php echo base_url() ?>profile/updateVendorData/<?php echo $vendor['id']; ?>">
-					<input type="number" name="vendorId" value="<?php echo $user->id ?>" readonly requried hidden />
+					<input type="number" name="vendorId" value="<?php echo $user->id ?>" readonly required hidden />
 					<div class="form group">
 						<label for="termsAndConditions">Terms and conditions: </label>
 						<textarea class="form-control" id="termsAndConditions" name="termsAndConditions"><?php echo strval($vendor['termsAndConditions']); ?></textarea>
@@ -265,7 +265,7 @@
 							value="<?php echo $vendor['serviceFeeTax']; ?>"
 							/>
 					</div>
-					<div class="form group" style="margin-top:30px !important">
+					<div class="form-group">
 						<h3>Select payment method(s):</h3>
 						<div class="col-lg-3">
 							<h4>Bancontact</h4>
@@ -297,7 +297,7 @@
 						</div>
 					</div>
 					<br/>
-					<div class="form-group" style="margin-top:30px !important">
+					<div class="form-group" style="margin-top:10% !important">
 						<h3>Require user mobile phone on checkout form</h3>
 						<br/>
 						<label class="radio-inline" for="requireMobileYes">Yes</label>
@@ -306,13 +306,22 @@
 						<input type="radio" id="requireMobileNo" name="requireMobile" value="0" <?php if ($vendor['requireMobile'] === '0') echo 'checked'; ?> />
 					</div>
 					<br/>
-					<div class="form-group" style="margin-top:30px !important">
+					<div class="form-group">
 						<h3>Require health information from visitor</h3>
 						<br/>
 						<label class="radio-inline" for="healthCheckYes">Yes</label>
 						<input type="radio" id="healthCheckYes" name="healthCheck" value="1" <?php if ($vendor['healthCheck'] === '1') echo 'checked'; ?> />
 						<label class="radio-inline" for="healthCheckNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="healthCheckNo" name="healthCheck" value="0" <?php if ($vendor['healthCheck'] === '0') echo 'checked'; ?> />
+					</div>
+					<br/>
+					<div class="form-group">
+						<h3>Require reservation from visitor</h3>
+						<br/>
+						<label class="radio-inline" for="requireReservationkYes">Yes</label>
+						<input type="radio" id="requireReservationkYes" name="requireReservation" value="1" <?php if ($vendor['requireReservation'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="requireReservationNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="requireReservationNo" name="requireReservation" value="0" <?php if ($vendor['requireReservation'] === '0') echo 'checked'; ?> />
 					</div>
 					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />

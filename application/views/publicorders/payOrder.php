@@ -19,7 +19,7 @@
         $tableRows .= '</tr>';
     }
 
-    $serviceFee = $totalOrder * $vendor['serviceFeePercent'] / 100;
+    $serviceFee = $totalOrder * $vendor['serviceFeePercent'] / 100 + $vendor['minimumOrderFee'];
     if ($serviceFee > $vendor['serviceFeeAmount']) $serviceFee = $vendor['serviceFeeAmount'];
     $total = $totalOrder + $serviceFee;
 

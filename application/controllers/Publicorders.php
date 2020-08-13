@@ -27,6 +27,7 @@
             $this->load->model('user_model');
             $this->load->model('shopspot_model');
             $this->load->model('shopvendor_model');
+            $this->load->model('shopvisitorreservtaion_model');
 
             $this->load->config('custom');
 
@@ -43,6 +44,14 @@
             if (empty($vendor['payNlServiceId'])) {
                 redirect(base_url());
             }
+
+            if (
+                $vendor['requireReservation'] === '1'
+                && empty($_SESSION['visitorReservationId'])
+            ) {
+                redirect('check424/' . $vendor['vendorId']);
+            }
+
             $_SESSION['vendor'] = $vendor;
 
             // VENDOR SELECTED SPOT VIEW

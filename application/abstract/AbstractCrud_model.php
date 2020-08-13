@@ -26,6 +26,18 @@
             return $data ? $data : null;
         }
 
+        private function getDataArrayForDatabaseUpdate(): ?array
+        {
+            $data = get_object_vars($this);
+            foreach($data as $key => $value) {
+                
+                if ($key === 'id' || is_null($value) || is_bool($value)) {
+                    unset($data[$key]);
+                }
+            }
+            return $data ? $data : null;
+        }
+
         public function create(): bool
         {
             $data = $this->getDataArrayForDatabase();
@@ -99,7 +111,7 @@
         public function update(): bool
         {
             $data = $this->getDataArrayForDatabase();
-            if (!$data || ! $this->updateValidate($data)) return false;
+            if (!$data || !$this->updateValidate($data)) return false;
             $where = ' id = ' . $this->id;
             return $this->db->update($this->getThisTable(), $data, $where);
         }
