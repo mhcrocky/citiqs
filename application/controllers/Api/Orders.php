@@ -30,22 +30,33 @@
 
         public function data_get()
         {
-
             $get = $this->input->get(null, true);
             if(!$get['mac'] || !$this->shopprinterrequest_model->insertPrinterRequest($get['mac'])) return;
 
-            // check is printer slave
-            // if printer is slave, fetch master mac number, else masterMac is $get['mac']
+            // check is printer slave, if printer is slave, fetch master mac number, else masterMac is $get['mac']
             $masterMac = $this->shopprinters_model->setProperty('macNumber', $get['mac'])->printMacNumber();
 
-            $order = $this->shoporder_model->fetchOrdersForPrint($masterMac);
+
+            // fetch order
+            $filter = apc_fetch('filter') ? apc_fetch('filter') : [];
+            $order = $this->shoporder_model->fetchOrdersForPrint($masterMac, $filter);
+            
             if (!$order) return;
+
             $order = reset($order);
+
+            // fill up apc_store filter
+            if (!in_array($order['orderExtendedIds'], $filter)) {
+                array_push($filter, $order['orderExtendedIds']);
+                apc_store('filter', $filter);
+            }
+
             $this
                 ->shopprinterrequest_model
                     ->setObjectFromArray(['orderId' => $order['orderId']])
                     ->update();
-            //check order time
+
+                    //check order time
             $printTimeConstraint = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->getPrintTimeConstraint();
 
             if (strtotime($printTimeConstraint) > strtotime($order['orderCreated'])) {
@@ -536,7 +547,12 @@
             // SEND EMAIL
             $subject= "tiqs-Order : ". $order['orderId'] ;
             $email = $order['buyerEmail'];
-            Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);            
+            Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail); 
+            
+            //cleaning apc_store
+            $filter = apc_fetch('filter');
+            unset($filter[array_search($order['orderExtendedIds'], $filter)]);
+            apc_store('filter', $filter);
         }
 
         public function data_post()
