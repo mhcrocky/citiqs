@@ -105,4 +105,20 @@
             return $result ? $result : null;
         }
 
+        public function printMacNumber()
+        {
+            $masterMac = $this->readImproved([
+                'what' => ['masterMac'],
+                'where' => [
+                    'macNumber' => $this->macNumber
+                ]
+            ]);
+
+            if (empty($masterMac)) {
+                return $this->macNumber;
+            }
+
+            $macNumber = $masterMac[0]['masterMac'];
+            return $macNumber === '0' ? $this->macNumber : $macNumber;
+        }
     }

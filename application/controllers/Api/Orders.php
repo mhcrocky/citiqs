@@ -16,6 +16,7 @@
             $this->load->model('shoporderex_model');
             $this->load->model('shopvendor_model');
             $this->load->model('shopprinterrequest_model');
+            $this->load->model('shopprinters_model');
 
             $this->load->helper('utility_helper');
             $this->load->helper('validate_data_helper');
@@ -33,7 +34,11 @@
             $get = $this->input->get(null, true);
             if(!$get['mac'] || !$this->shopprinterrequest_model->insertPrinterRequest($get['mac'])) return;
 
-            $order = $this->shoporder_model->fetchOrdersForPrint($get['mac']);
+            // check is printer slave
+            // if printer is slave, fetch master mac number, else masterMac is $get['mac']
+            $masterMac = $this->shopprinters_model->setProperty('macNumber', $get['mac'])->printMacNumber();
+
+            $order = $this->shoporder_model->fetchOrdersForPrint($masterMac);
             if (!$order) return;
             $order = reset($order);
             $this
