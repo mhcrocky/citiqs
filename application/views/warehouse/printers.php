@@ -29,6 +29,17 @@
 							<label for="numberOfCopies">Number of copies: </label>
 							<input type="integer" min="1" value="1" step="1" class="form-control" id="numberOfCopies" name="numberOfCopies" required />
 						</div>
+						<div>
+							<label for="masterMac">Select master printer (only for slave printer): </label>
+							<select class="form-control" id="masterMac" name="masterMac">
+								<option value="">Select</option>
+								<?php foreach ($printers as $printer) { ?>
+									<option value="<?php echo $printer['macNumber']; ?>">
+										<?php echo $printer['printer']; ?>
+									</option>
+								<?php } ?>
+							</select>
+						</div>
 					</form>
 				</div>
 			</div>
@@ -60,7 +71,11 @@
 							<p class="item-category" style="white-space: initial;">Status:
 								<?php echo $printer['active'] === '1' ? '<span>ACTIVE</span>' : '<span>BLOCKED</span>'; ?>
 							</p>
-							<p class="item-description" style="white-space: initial;">Number of copies: <?php echo $printer['numberOfCopies']; ?></p>							
+							<p class="item-description" style="white-space: initial;">Number of copies: <?php echo $printer['numberOfCopies']; ?></p>
+							<?php if (!is_null($printer['master']) && $printer['masterMac'] !== '0') { ?>
+							<p class="item-description" style="white-space: initial;">SLAVE PRINTER</p>
+							<p class="item-description" style="white-space: initial;">Master is: <?php echo $printer['master']; ?></p>
+							<?php } ?>
 						</div><!-- end item header -->
 						<div class="grid-footer">
 							<div class="iconWrapper">
@@ -86,6 +101,7 @@
 								</div>
 							<?php } ?>
 						</div>
+
 						<!-- ITEM EDITOR -->
 						<div class="item-editor theme-editor" id="editPrinterPrinterId<?php echo  $printer['id']; ?>">
 							<div class="theme-editor-header d-flex justify-content-between">
@@ -116,6 +132,27 @@
 									<div>
 										<label for="numberOfCopies<?php echo $printer['numberOfCopies']; ?>">Number of copies:</label>
 										<input type="number" min="1" step="1" class="form-control" id="numberOfCopies<?php echo $printer['numberOfCopies']; ?>" name="numberOfCopies" required value="<?php echo $printer['numberOfCopies']; ?>" />
+									</div>
+									<div>
+										<label for="masterMac">Select master printer (only for slave printer): </label>
+										<select class="form-control" id="masterMac" name="masterMac">
+											<option value="">Select</option>
+											<option value="0">None</option>
+											<?php
+												foreach ($printers as $master) {
+													if ($master['macNumber'] !== $printer['macNumber']) {
+												?>
+													<option
+														value="<?php echo $master['macNumber']; ?>"
+														<?php if ($master['macNumber'] === $printer['masterMac']) echo 'selected'; ?>
+														>
+														<?php echo $master['printer']; ?>
+													</option>
+												<?php
+													}
+												}
+											?>
+										</select>
 									</div>
 								</form>
 							</div>

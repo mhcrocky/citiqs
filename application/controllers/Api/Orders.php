@@ -16,6 +16,7 @@
             $this->load->model('shoporderex_model');
             $this->load->model('shopvendor_model');
             $this->load->model('shopprinterrequest_model');
+            $this->load->model('shopprinters_model');
 
             $this->load->helper('utility_helper');
             $this->load->helper('validate_data_helper');
@@ -29,28 +30,33 @@
 
         public function data_get()
         {
-
             $get = $this->input->get(null, true);
-
             if(!$get['mac'] || !$this->shopprinterrequest_model->insertPrinterRequest($get['mac'])) return;
 
-            // idea is to monitor each printer making request to this orders.
-			// a cronjob should run every minute to check if the printer is still online
-			// (so the time set to check if the latest order / printer request was longer a go than 1 minutes)
-			// the printer request are set in 2-3 seconds to print
-			// so by 1 minutes we know the printer has an issue.
-			//
-			// tiqs-todo
-			// There is an issue in the
+            // check is printer slave, if printer is slave, fetch master mac number, else masterMac is $get['mac']
+            $masterMac = $this->shopprinters_model->setProperty('macNumber', $get['mac'])->printMacNumber();
 
-            $order = $this->shoporder_model->fetchOrdersForPrint($get['mac']);
+
+            // fetch order
+            $filter = apc_fetch('filter') ? apc_fetch('filter') : [];
+            $order = $this->shoporder_model->fetchOrdersForPrint($masterMac, $filter);
+            
             if (!$order) return;
+
             $order = reset($order);
+
+            // fill up apc_store filter
+            if (!in_array($order['orderExtendedIds'], $filter)) {
+                array_push($filter, $order['orderExtendedIds']);
+                apc_store('filter', $filter);
+            }
+
             $this
                 ->shopprinterrequest_model
                     ->setObjectFromArray(['orderId' => $order['orderId']])
                     ->update();
-            //check order time
+
+                    //check order time
             $printTimeConstraint = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->getPrintTimeConstraint();
 
             if (strtotime($printTimeConstraint) > strtotime($order['orderCreated'])) {
@@ -541,7 +547,12 @@
             // SEND EMAIL
             $subject= "tiqs-Order : ". $order['orderId'] ;
             $email = $order['buyerEmail'];
-            Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);            
+            Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail); 
+            
+            //cleaning apc_store
+            $filter = apc_fetch('filter');
+            unset($filter[array_search($order['orderExtendedIds'], $filter)]);
+            apc_store('filter', $filter);
         }
 
         public function data_post()

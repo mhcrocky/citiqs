@@ -23,6 +23,7 @@ class Ajax extends CI_Controller
         $this->load->model('shopspot_model');
         $this->load->model('shopcategory_model');
         $this->load->model('shopspotproduct_model');
+        $this->load->model('shopproductex_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -588,5 +589,30 @@ class Ajax extends CI_Controller
                         ->update();
 
         echo $update ? 1 : 0;
+    }
+
+    public function getAddonsList(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $addons  = $this->shopproductex_model->getProdctesByMainType(intval($_SESSION['userId']));
+        $addonsList = '';
+
+        foreach ($addons as $productId => $product) {
+            $product = reset($product);
+            foreach($product['productDetails'] as $details) {
+                $addonsList .= '<label class="checkbox-inline">';
+                $addonsList .= '<input ';
+                $addonsList .=     'type="checkbox" ';
+                $addonsList .=     'data-extended-id="' . $details['productExtendedId'] . '" ';
+                $addonsList .=     'value="' . $productId . '" ';
+                $addonsList .=     'name="productAddons[' . $details['productExtendedId'] . ']" ';
+                $addonsList .= '/>';
+                $addonsList .= $details['name'] . ' (' . $details['productType']. ')';
+                $addonsList .= '</label>';
+            }
+        }
+
+        echo str_replace('\'', ' ', $addonsList);
     }
 }

@@ -92,6 +92,7 @@
             return $this->filterProducts($userId, $filter, $resetBy, false);
           
         }
+
         public function getUserProductsPublic(int $userId): ?array
         {
             $this->load->config('custom');
@@ -112,11 +113,10 @@
             ];
             
             $resetBy = 'category';
-            
             return $this->filterProducts($userId, $filter, $resetBy, true);
-          
         }
-        private function filterProducts(int $userId, array $filter, string $resetBy, bool $onlyActiveProductSpot): ?array
+
+        private function filterProducts(int $userId, array $filter, string $resetBy, bool $onlyActiveProductSpot, string $typeCondition = ''): ?array
         {
             $this->load->config('custom');
             $concatSeparator = $this->config->item('concatSeparator');
@@ -208,7 +208,7 @@
                             tbl_shop_products ON tbl_shop_products.id = ' . $this->table . '.productId
                         INNER JOIN
                             tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
-
+                        ' . $typeCondition . '
                         GROUP BY ' . $this->table. '.productId
                         ORDER BY ' . $this->table. '.productTypeId DESC
                         
@@ -372,5 +372,23 @@
 
             $result = $this->db->query($query);
             return $result->result_array();
+        }
+
+        public function getProdctesByMainType(int $userId, bool $main = false): ?array
+        {
+            $this->load->config('custom');
+
+            $filter = [
+                'where' => [
+                    'tbl_shop_categories.userId=' => $userId
+                ],
+                'conditions' => [
+                    'GROUP_BY' => [$this->table. '.productId'],
+                ]
+            ];
+            $resetBy = 'productId';
+            $typeCondition = $main ? ' WHERE tbl_shop_products_types.isMain = "1" ' : ' WHERE tbl_shop_products_types.isMain = "0" ';
+
+            return $this->filterProducts($userId, $filter, $resetBy, false, $typeCondition);
         }
     }
