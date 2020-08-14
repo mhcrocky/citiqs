@@ -31,7 +31,17 @@
         {
 
             $get = $this->input->get(null, true);
+
             if(!$get['mac'] || !$this->shopprinterrequest_model->insertPrinterRequest($get['mac'])) return;
+
+            // idea is to monitor each printer making request to this orders.
+			// a cronjob should run every minute to check if the printer is still online
+			// (so the time set to check if the latest order / printer request was longer a go than 1 minutes)
+			// the printer request are set in 2-3 seconds to print
+			// so by 1 minutes we know the printer has an issue.
+			//
+			// tiqs-todo
+			// There is an issue in the
 
             $order = $this->shoporder_model->fetchOrdersForPrint($get['mac']);
             if (!$order) return;
