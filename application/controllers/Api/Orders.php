@@ -38,18 +38,24 @@
 
 
             // fetch order
-            $filter = apc_fetch('filter') ? apc_fetch('filter') : [];
-            $order = $this->shoporder_model->fetchOrdersForPrint($masterMac, $filter);
+            $order = $this->shoporder_model->fetchOrdersForPrint($masterMac);
+            var_dump($order);
             
             if (!$order) return;
 
             $order = reset($order);
 
-            // fill up apc_store filter
-            if (!in_array($order['orderExtendedIds'], $filter)) {
-                array_push($filter, $order['orderExtendedIds']);
-                apc_store('filter', $filter);
+            // UPDATE ORDER EXTENDED PRINT STATUS
+            $orderExtendedIds = explode(',', $order['orderExtendedIds']);
+            foreach ($orderExtendedIds as $id) {
+                $this
+                    ->shoporderex_model
+                    ->setObjectId(intval($id))
+                    ->setObjectFromArray(['printed' => '2'])
+                    ->update();
             }
+
+            die();
 
             $this
                 ->shopprinterrequest_model
@@ -653,6 +659,12 @@
                 }
             }
             exit();
+        }
+
+        public function updateTwoToZero_get(): void
+        {
+            $this->shoporderex_model->updateTwoToZero();
+
         }
     }
 
