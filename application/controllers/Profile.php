@@ -19,11 +19,10 @@ class  Profile extends BaseControllerWeb
 
 		$this->load->model('user_model');
 		$this->load->model('businesstype_model');
-		$this->load->model('subscription_model');		
-		$this->load->model('user_subscription_model');
-		$this->load->model('label_model');
 		$this->load->model('shopvendor_model');
-		
+		$this->load->model('shopspottype_model');
+		$this->load->model('shopvendortypes_model');
+
 		$this->load->config('custom');
 		$this->load->library('language', array('controller' => $this->router->class));
 
@@ -53,11 +52,16 @@ class  Profile extends BaseControllerWeb
 	{
 		$this->shopvendor_model->id = intval($id);
 
-		if ($this->shopvendor_model->setObjectFromArray($_POST)->update()) {
+		$vendorTypes = empty($_POST['vendorTypes']) ? [] : $_POST['vendorTypes'];
+
+		$this->shopvendortypes_model->setProperty('vendorId', intval($_POST ['vendorId']))->updateVendorTypes($vendorTypes);
+
+		if ($this->shopvendor_model->setObjectFromArray($_POST['vendor'])->update()) {
 			$this->session->set_flashdata('success', 'Data updated');
 		} else {
 			$this->session->set_flashdata('error', 'Update data failed');
 		}
+
 		redirect('profile');
 		exit();
 	}

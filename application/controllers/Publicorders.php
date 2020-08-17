@@ -43,6 +43,7 @@
             $vendor = $this->shopvendor_model->setProperty('vendorId', $get['vendorid'])->getVendorData();
             if (empty($vendor['payNlServiceId'])) {
                 redirect(base_url());
+                exit();
             }
 
             if (
@@ -50,6 +51,7 @@
                 && empty($_SESSION['visitorReservationId'])
             ) {
                 redirect('check424/' . $vendor['vendorId']);
+                exit();
             }
 
             $_SESSION['vendor'] = $vendor;

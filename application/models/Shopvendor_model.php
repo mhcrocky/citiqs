@@ -100,22 +100,30 @@
                     $this->table . '.giro',
                     $this->table . '.healthCheck',
                     $this->table . '.requireReservation',
-
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',
-                    'tbl_user.email AS vendorEmail'
-
+                    'tbl_user.email AS vendorEmail',
+                    'GROUP_CONCAT(
+                        CONCAT(
+                            tbl_shop_vendor_types.id,
+                            "|", tbl_shop_vendor_types.active,
+                            "|", tbl_shop_spot_types.type
+                        )                        
+                    ) AS typeData'
                 ],
                 'where' => [
                     $this->table. '.vendorId' => $this->vendorId,
                 ],
                 'joins' => [
-                    ['tbl_user', 'tbl_user.id = ' . $this->table .'.vendorId' , 'INNER']
+                    ['tbl_user', 'tbl_user.id = ' . $this->table .'.vendorId' , 'INNER'],
+                    ['tbl_shop_vendor_types', 'tbl_shop_vendor_types.vendorId = ' . $this->table .'.vendorId' , 'LEFT'],
+                    ['tbl_shop_spot_types', 'tbl_shop_spot_types.id = tbl_shop_vendor_types.typeId' , 'LEFT'],
+                ],
+                'conditons' => [
+                    'group_by' =>  $this->table .'.vendorId'
                 ]
             ];
-            // var_dump($filter);
-            // die();
 
             $result = $this->readImproved($filter);
 
@@ -128,6 +136,7 @@
             $result['serviceFeeTax'] = intval($result['serviceFeeTax']);
             $result['printTimeConstraint'] = intval($result['printTimeConstraint']);
             $result['vendorId'] = intval($result['vendorId']);
+            $result['typeData'] = $this->prepareTypes($result['typeData']);
             return $result;
         }
 
@@ -171,5 +180,21 @@
             ];
 
             return $this->readImproved($filter);
+        }
+
+        private function prepareTypes(string $types): array
+        {
+            $return = [];
+            $types = explode(',', $types);
+            foreach ($types as $type) {
+                $type = explode('|', $type);
+                array_push($return, [
+                    'id' => $type[0],
+                    'active' => $type[1],
+                    'type' => $type[2],
+                ]);
+            }
+
+            return $return;
         }
     }

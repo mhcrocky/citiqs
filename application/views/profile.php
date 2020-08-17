@@ -187,7 +187,7 @@
 					<input type="number" name="vendorId" value="<?php echo $user->id ?>" readonly required hidden />
 					<div class="form group">
 						<label for="termsAndConditions">Terms and conditions: </label>
-						<textarea class="form-control" id="termsAndConditions" name="termsAndConditions"><?php echo strval($vendor['termsAndConditions']); ?></textarea>
+						<textarea class="form-control" id="termsAndConditions" name="vendor[termsAndConditions]"><?php echo strval($vendor['termsAndConditions']); ?></textarea>
 					</div>
 					<br/>
 					<div class="form group">
@@ -195,7 +195,7 @@
 						<input
 							type="text"
 							id="payNlServiceId"
-							name="payNlServiceId"
+							name="vendor[payNlServiceId]"
 							class="form-control"
 							value="<?php echo $vendor['payNlServiceId']; ?>"
 							/>
@@ -206,7 +206,7 @@
 						<input
 							type="number"
 							id="serviceFeePercent"
-							name="serviceFeePercent"
+							name="vendor[serviceFeePercent]"
 							min="0"
 							step="0.01"
 							class="form-control"
@@ -219,7 +219,7 @@
 						<input
 							type="number"
 							id="serviceFeeAmount"
-							name="serviceFeeAmount"
+							name="vendor[serviceFeeAmount]"
 							min="0"
 							step="0.01"
 							class="form-control"
@@ -232,7 +232,7 @@
 						<input
 							type="number"
 							id="minimumOrderFee"
-							name="minimumOrderFee"
+							name="vendor[minimumOrderFee]"
 							min="0"
 							step="0.01"
 							class="form-control"
@@ -245,7 +245,7 @@
 						<input
 							type="number"
 							id="printTimeConstraint"
-							name="printTimeConstraint"
+							name="vendor[printTimeConstraint]"
 							min="0"
 							step="1"
 							value="<?php echo $vendor['printTimeConstraint']; ?>"
@@ -260,7 +260,7 @@
 							min="0"
 							step="1"
 							id="serviceFeeTax"
-							name="serviceFeeTax"
+							name="vendor[serviceFeeTax]"
 							class="form-control"
 							value="<?php echo $vendor['serviceFeeTax']; ?>"
 							/>
@@ -270,30 +270,30 @@
 						<div class="col-lg-3">
 							<h4>Bancontact</h4>
 							<label class="radio-inline" for="bancontactYes">Yes</label>
-							<input type="radio" id="bancontactYes" name="bancontact" value="1" <?php if ($vendor['bancontact'] === '1') echo 'checked'; ?> />
+							<input type="radio" id="bancontactYes" name="vendor[bancontact]" value="1" <?php if ($vendor['bancontact'] === '1') echo 'checked'; ?> />
 							<label class="radio-inline" for="bancontactNo">&nbsp;&nbsp;&nbsp;No</label>
-							<input type="radio" id="bancontactNo" name="bancontact" value="0" <?php if ($vendor['bancontact'] === '0') echo 'checked'; ?> />
+							<input type="radio" id="bancontactNo" name="vendor[bancontact]" value="0" <?php if ($vendor['bancontact'] === '0') echo 'checked'; ?> />
 						</div>
 						<div class="col-lg-3">
 							<h4>Ideal</h4>
 							<label class="radio-inline" for="idealYes">Yes</label>
-							<input type="radio" id="idealYes" name="ideal" value="1" <?php if ($vendor['ideal'] === '1') echo 'checked'; ?> />
+							<input type="radio" id="idealYes" name="vendor[ideal]" value="1" <?php if ($vendor['ideal'] === '1') echo 'checked'; ?> />
 							<label class="radio-inline" for="idealNo">&nbsp;&nbsp;&nbsp;No</label>
-							<input type="radio" id="idealNo" name="ideal" value="0" <?php if ($vendor['ideal'] === '0') echo 'checked'; ?> />
+							<input type="radio" id="idealNo" name="vendor[ideal]" value="0" <?php if ($vendor['ideal'] === '0') echo 'checked'; ?> />
 						</div>
 						<div class="col-lg-3">
 							<h4>Credit card</h4>
 							<label class="radio-inline" for="creditCardYes">Yes</label>
-							<input type="radio" id="creditCardYes" name="creditCard" value="1" <?php if ($vendor['creditCard'] === '1') echo 'checked'; ?> />
+							<input type="radio" id="creditCardYes" name="vendor[creditCard]" value="1" <?php if ($vendor['creditCard'] === '1') echo 'checked'; ?> />
 							<label class="radio-inline" for="creditCardNo">&nbsp;&nbsp;&nbsp;No</label>
-							<input type="radio" id="creditCardNo" name="creditCard" value="0" <?php if ($vendor['creditCard'] === '0') echo 'checked'; ?> />
+							<input type="radio" id="creditCardNo" name="vendor[creditCard]" value="0" <?php if ($vendor['creditCard'] === '0') echo 'checked'; ?> />
 						</div>
 						<div class="col-lg-3">
 							<h4>Giro</h4>
 							<label class="radio-inline" for="giroYes">Yes</label>
-							<input type="radio" id="giroYes" name="giro" value="1" <?php if ($vendor['giro'] === '1') echo 'checked'; ?> />
+							<input type="radio" id="giroYes" name="vendor[giro]" value="1" <?php if ($vendor['giro'] === '1') echo 'checked'; ?> />
 							<label class="radio-inline" for="giroNo">&nbsp;&nbsp;&nbsp;No</label>
-							<input type="radio" id="giroNo" name="giro" value="0" <?php if ($vendor['giro'] === '0') echo 'checked'; ?> />
+							<input type="radio" id="giroNo" name="vendor[giro]" value="0" <?php if ($vendor['giro'] === '0') echo 'checked'; ?> />
 						</div>
 					</div>
 					<br/>
@@ -301,28 +301,52 @@
 						<h3>Require user mobile phone on checkout form</h3>
 						<br/>
 						<label class="radio-inline" for="requireMobileYes">Yes</label>
-						<input type="radio" id="requireMobileYes" name="requireMobile" value="1" <?php if ($vendor['requireMobile'] === '1') echo 'checked'; ?> />
+						<input type="radio" id="requireMobileYes" name="vendor[requireMobile]" value="1" <?php if ($vendor['requireMobile'] === '1') echo 'checked'; ?> />
 						<label class="radio-inline" for="requireMobileNo">&nbsp;&nbsp;&nbsp;No</label>
-						<input type="radio" id="requireMobileNo" name="requireMobile" value="0" <?php if ($vendor['requireMobile'] === '0') echo 'checked'; ?> />
+						<input type="radio" id="requireMobileNo" name="vendor[requireMobile]" value="0" <?php if ($vendor['requireMobile'] === '0') echo 'checked'; ?> />
 					</div>
 					<br/>
 					<div class="form-group">
 						<h3>Require health information from visitor</h3>
 						<br/>
 						<label class="radio-inline" for="healthCheckYes">Yes</label>
-						<input type="radio" id="healthCheckYes" name="healthCheck" value="1" <?php if ($vendor['healthCheck'] === '1') echo 'checked'; ?> />
+						<input type="radio" id="healthCheckYes" name="vendor[healthCheck]" value="1" <?php if ($vendor['healthCheck'] === '1') echo 'checked'; ?> />
 						<label class="radio-inline" for="healthCheckNo">&nbsp;&nbsp;&nbsp;No</label>
-						<input type="radio" id="healthCheckNo" name="healthCheck" value="0" <?php if ($vendor['healthCheck'] === '0') echo 'checked'; ?> />
+						<input type="radio" id="healthCheckNo" name="vendor[healthCheck]" value="0" <?php if ($vendor['healthCheck'] === '0') echo 'checked'; ?> />
 					</div>
 					<br/>
 					<div class="form-group">
 						<h3>Require reservation from visitor</h3>
 						<br/>
 						<label class="radio-inline" for="requireReservationkYes">Yes</label>
-						<input type="radio" id="requireReservationkYes" name="requireReservation" value="1" <?php if ($vendor['requireReservation'] === '1') echo 'checked'; ?> />
+						<input type="radio" id="requireReservationkYes" name="vendor[requireReservation]" value="1" <?php if ($vendor['requireReservation'] === '1') echo 'checked'; ?> />
 						<label class="radio-inline" for="requireReservationNo">&nbsp;&nbsp;&nbsp;No</label>
-						<input type="radio" id="requireReservationNo" name="requireReservation" value="0" <?php if ($vendor['requireReservation'] === '0') echo 'checked'; ?> />
+						<input type="radio" id="requireReservationNo" name="vendor[requireReservation]" value="0" <?php if ($vendor['requireReservation'] === '0') echo 'checked'; ?> />
 					</div>
+					<br/>
+					<div class="form-check-inline">
+						<h3>Select vendor types</h3>
+						<?php foreach ($vendor['typeData'] as $type) { ?>
+							<label class="form-check-label">
+								<?php echo $type['type']; ?>:
+								<input
+									type="checkbox"
+									class="form-check-input"
+									value="<?php echo $type['id']; ?>"
+									name="vendorTypes[<?php echo $type['id']; ?>]"
+									style="width:8px; height: 8px"
+									<?php
+										if ($type['active'] === '1') {
+											echo 'checked';
+										}
+									?>
+									/>
+								
+							</label>
+						<?php } ?>
+					</div>
+					<br/>
+					<br/>
 					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />
 				</form>
