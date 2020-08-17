@@ -47,7 +47,7 @@
             if (isset($data['orderId']) && !Validate_data_helper::validateInteger($data['orderId'])) return false;
             if (isset($data['productsExtendedId']) && !Validate_data_helper::validateInteger($data['productsExtendedId'])) return false;
             if (isset($data['quantity']) && !Validate_data_helper::validateInteger($data['quantity'])) return false;
-            if (isset($data['printed']) && !($data['printed'] === '1' || $data['printed'] === '0')) return false;
+            if (isset($data['printed']) && !($data['printed'] === '1' || $data['printed'] === '0' || $data['printed'] === '2')) return false;
             
             return true;
         }
@@ -56,5 +56,13 @@
         {
             $where = ['orderId=' => $this->orderId];
             return $this->db->delete($this->getThisTable(), $where);
+        }
+
+        public function updateTwoToZero()
+        {
+            $date = date('Y-m-d H:i:s', strtotime('-2 minutes'));
+            $query  = 'UPDATE tbl_shop_order_extended set printed = "0" ';
+            $query .= 'WHERE printed = "2" AND orderId IN (SELECT id FROM tbl_shop_orders WHERE created > "' . $date . '");';
+            $this->db->query($query);
         }
     }

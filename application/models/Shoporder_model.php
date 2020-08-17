@@ -289,14 +289,12 @@
             );
         }
 
-        public function fetchOrdersForPrint(string $macNumber, array $filter): ?array
+        public function fetchOrdersForPrint(string $macNumber): ?array
         {
             $this->load->config('custom');
             $concatSeparator = $this->config->item('concatSeparator');
             $concatGroupSeparator = $this->config->item('contactGroupSeparator');
             $dateConstraint = date('Y-m-d H:i:s', strtotime('-24 hours', time()));
-
-            $filterOrders = !empty($filter) ? ' AND tbl_shop_order_extended.id NOT IN (' . implode(',', $filter) . ') ' : '';
             $query =
             '
                 (
@@ -380,8 +378,7 @@
                         tbl_shop_orders.paid = "1"
                         AND tbl_shop_orders.expired = "0"
                         AND tbl_shop_order_extended.printed = "0"
-                        AND tbl_shop_printers.macNumber = "' . $macNumber . '" '
-                        . $filterOrders . '
+                        AND tbl_shop_printers.macNumber = "' . $macNumber . '" 
                     GROUP BY
                         orderId
                 )
@@ -481,8 +478,7 @@
                         tbl_shop_orders.paid = "1"
                         AND tbl_shop_orders.expired = "0"
                         AND tbl_shop_order_extended.printed = "0"
-                        AND tbl_shop_printers.macNumber = "' . $macNumber . '" '
-                        . $filterOrders . '
+                        AND tbl_shop_printers.macNumber = "' . $macNumber . '" 
                         AND tbl_shop_order_extended.id not in
                             (
                                 SELECT
