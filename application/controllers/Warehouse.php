@@ -795,4 +795,13 @@
             ];
             $this->loadViews('warehouse/visitors', $this->global, $data, null, 'headerWarehouse');
         }
+
+		public function Dayreport(): void
+		{
+			$this->global['pageTitle'] = 'TIQS : Dailyreport';
+			$data = [
+				'vendorId' => $_SESSION['userId']
+			];
+			$this->loadViews('warehouse/dayreport', $this->global, $data, null, 'headerWarehouse');
+		}
     }

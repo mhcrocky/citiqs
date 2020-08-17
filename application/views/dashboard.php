@@ -1,4 +1,9 @@
-<div class="content-wrapper">
+<!DOCTYPE html>
+<html >
+<body>
+
+<!--<div class="content-wrapper">-->
+<div>
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
