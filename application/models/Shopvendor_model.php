@@ -130,6 +130,11 @@
             if (is_null($result)) return null;
             $result = reset($result);
 
+            if (is_null($result['typeData'])) {
+                $this->insertTypes();
+                return $this->getVendorData();
+            }
+
             $result['serviceFeePercent'] = floatval($result['serviceFeePercent']);
             $result['serviceFeeAmount'] = floatval($result['serviceFeeAmount']);
             $result['minimumOrderFee'] = floatval($result['minimumOrderFee']);
@@ -196,5 +201,26 @@
             }
 
             return $return;
+        }
+
+        private function insertTypes()
+        {
+            $this->load->model('shopspottype_model');
+            $this->load->model('shopvendortypes_model');
+            $types = $this->shopspottype_model->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    'id>' => '0'
+                ]
+            ]);
+            foreach ($types as $type) {
+                $active = $type['id'] === '1' ? '1' : '0';
+                $insert = [
+                    'vendorId' => $this->vendorId,
+                    'typeId' => $type['id'],
+                    'active' => $active,
+                ];
+                $this->shopvendortypes_model->setObjectFromArray($insert)->create();
+            }
         }
     }
