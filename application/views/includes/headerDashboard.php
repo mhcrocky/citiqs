@@ -3,7 +3,7 @@
 <html lang="<?php echo $_SESSION['site_lang']; ?>">
 <head>
     <title>
-        <?php echo $pageTitle ? $pageTitle : 'TIQS | ALFRED'; ?>
+        <?php echo $pageTitle ? $pageTitle : 'TIQS | ALFRED DASHBOARD'; ?>
     </title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

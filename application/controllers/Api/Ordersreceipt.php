@@ -5,7 +5,7 @@
 
     require APPPATH . 'libraries/REST_Controller.php';
 
-    class Orderscopy extends REST_Controller
+    class Ordersreceipt extends REST_Controller
     {
 
         function __construct()
@@ -526,11 +526,11 @@
 
             // SEND EMAIL
             $subject= "tiqs-Order : ". $order['orderId'] ;
-//            $order['buyerEmail'] = 'pnroos@icloud.com';
-            $email = $order['buyerEmail'];
-            Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);
+////            $order['buyerEmail'] = 'pnroos@icloud.com';
+//            $email = $order['buyerEmail'];
+//            Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);
 
-            $order['buyerEmail'] = 'pnroos@icloud.com';
+            $order['buyerEmail'] = 'support@tiqs.com';
 			$email = $order['buyerEmail'];
 			Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);
 

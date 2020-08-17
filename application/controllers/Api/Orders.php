@@ -613,8 +613,8 @@
                 // ordernr
                 // vullen onderdelen
                 // printed op 1 zetten.
-    
-                if ($this->shoporder_model->fetchOrdersForPrint($parsedJson['printerMAC'])) {
+				$filter = apc_fetch('filter') ? apc_fetch('filter') : [];
+                if ($this->shoporder_model->fetchOrdersForPrint($parsedJson['printerMAC'],$filter)) {
                     $arr = [
                         "jobReady" => true,
                         // "mediaTypes" => array('text/plain','image/png', 'image/jpeg'));

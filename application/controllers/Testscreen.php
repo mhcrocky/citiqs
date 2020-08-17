@@ -33,7 +33,6 @@ class  Testscreen extends BaseControllerWeb
 //		$this->loadViews("ordernewtiqsbags", $this->global, NULL, NULL); // payment screen
 //		$this->loadViews("homenew", $this->global, NULL, NULL); // payment screen
 
-
         $data = array(
         	'Spotlabel' => '2 Persoonstafel',
         	'price' => 10,
@@ -42,7 +41,7 @@ class  Testscreen extends BaseControllerWeb
 			'numberofpersons' => 2
 		);
 
-		$this->loadViews("thuishavenerror", $this->global, $data, 'nofooter', 'noheader'); // payment screen
+		$this->loadViews("Dashboard", $this->global, $data, 'nofooter', 'headerDashboard'); // payment screen
 
 	}
 

@@ -61,7 +61,7 @@
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>found"></a>
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>Whatislostisfound"></a>
 			<a style="color: #E25F2A" href="#" id='modal-button'>choose your language</a>
-			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>logout">LOGOUT</a>
+			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>logout"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/back.png" title="BACK"/></a>
 
 		</div>
 		<div class="hamburger-menu" id="hamburger-menu">
