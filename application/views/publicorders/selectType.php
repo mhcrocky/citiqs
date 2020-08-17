@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/bigsquare.css">
 <div class="main-wrapper-nh" style="text-align:center">
 	<div class="col-half background-apricot-blue height">
 		<div class="width-650"></div>
@@ -7,15 +8,31 @@
 		<h1 style="text-align:center"><?php echo $vendor['vendorName'] ?></h1>
 		<div class="selectWrapper mb-35">
 			<?php if (!empty($activeTypes)) { ?>
-				<label for="spot">Service types:</label>
-				<select class="selectBox selectSpot" id="type" onchange="redirectTo(this.value)" class="form-control" style="color :black">
-					<option value="">Select type</option>
+<!--				<label for="spot">Service types:</label>-->
+<!--				<select class="selectBox selectSpot" id="type" onchange="redirectTo(this.value)" class="form-control" style="color :black">-->
+<!--					<option value="">Select type</option>-->
+<!--					<div class="middle">-->
+<!--					--><?php //foreach ($activeTypes as $type) { ?>
+<!--					<option value="--><?php //echo 'make_order?vendorid=' . $vendor['vendorId'] . '&typeId=' . $type['typeId'] ?><!--">-->
+<!--						--><?php //echo $type['type']; ?>
+<!--					</option>-->
+<!---->
+<!--					--><?php //} ?>
+<!--				</select>-->
+				<div class="middle">
 					<?php foreach ($activeTypes as $type) { ?>
-					<option value="<?php echo 'make_order?vendorid=' . $vendor['vendorId'] . '&typeId=' . $type['typeId'] ?>">
-						<?php echo $type['type']; ?>
-					</option>
+
+						<label>
+							<input type="radio" name="radio" value="<?php echo 'make_order?vendorid=' . $vendor['vendorId'] . '&typeId=' . $type['typeId'] ?>" onchange="redirectTo(this.value)" class="form-control" checked />
+							<div class="front-end box">
+								<span><?php echo $type['type']; ?></span>
+							</div>
+						</label>
+
 					<?php } ?>
-				</select>
+				</div>
+
+
 				<?php if ($vendor['requireReservation'] === '1' ) { ?>
 					<div><br/></div>
 					<a href="<?php echo base_url(); ?>check424/<?php echo $vendor['vendorId']; ?>">Checkout</a>

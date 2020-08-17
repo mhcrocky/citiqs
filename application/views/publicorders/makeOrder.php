@@ -10,10 +10,13 @@
     }
 </style>
 
+
+
 <?php if($vendor['vendorId'] == 1162 ){?>
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/slick.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/slick-theme.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/th_custom.css">
+
 <?php } ?>
 
 <?php

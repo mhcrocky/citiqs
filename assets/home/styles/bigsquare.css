@@ -1,0 +1,85 @@
+html {
+	background-color: #1a1a1a;
+	overflow: scroll;
+}
+
+.middle {
+	width: 100%;
+	text-align: center;
+	/* Made by */
+}
+.middle h1 {
+	font-family: "Dax", sans-serif;
+	color: #fff;
+}
+.middle input[type="radio"] {
+	display: none;
+}
+.middle input[type="radio"]:checked + .box {
+	background-color: #007e90;
+}
+.middle input[type="radio"]:checked + .box span {
+	color: white;
+	transform: translateY(70px);
+}
+.middle input[type="radio"]:checked + .box span:before {
+	transform: translateY(0px);
+	opacity: 1;
+}
+.middle .box {
+	width: 200px;
+	height: 200px;
+	background-color: #fff;
+	transition: all 250ms ease;
+	will-change: transition;
+	display: inline-block;
+	text-align: center;
+	cursor: pointer;
+	position: relative;
+	font-family: "Dax", sans-serif;
+	font-weight: 900;
+}
+.middle .box:active {
+	transform: translateY(10px);
+}
+.middle .box span {
+	position: absolute;
+	transform: translate(0, 60px);
+	left: 0;
+	right: 0;
+	transition: all 300ms ease;
+	font-size: 1.5em;
+	user-select: none;
+	color: #007e90;
+}
+.middle .box span:before {
+	font-size: 1.2em;
+	font-family: FontAwesome;
+	display: block;
+	transform: translateY(-80px);
+	opacity: 0;
+	transition: all 300ms ease-in-out;
+	font-weight: normal;
+	color: white;
+}
+.middle .front-end span:before {
+	content: "\f14a";
+}
+.middle .back-end span:before {
+	content: "\f14a";
+}
+.middle p {
+	color: #fff;
+	font-family: "Dax", sans-serif;
+	font-weight: 400;
+}
+.middle p a {
+	text-decoration: underline;
+	font-weight: bold;
+	color: #fff;
+}
+.middle p span:after {
+	content: "\f14a";
+	font-family: FontAwesome;
+	color: yellow;
+}
