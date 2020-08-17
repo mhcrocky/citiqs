@@ -615,4 +615,20 @@ class Ajax extends CI_Controller
 
         echo str_replace('\'', ' ', $addonsList);
     }
+
+    public function runMigration(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+        $password = $this->input->post('password', true);
+        if ($this->user_model->checkIsAdmin($this->config->item('petersEmail'), $password)) {
+            $this->load->library('migration');
+            if ($this->migration->current() === FALSE) {
+                echo 'Migration failed';
+            } else {
+                echo 'success';
+            }
+        } else {
+            echo 'Invalid password';
+        }
+    }
 }

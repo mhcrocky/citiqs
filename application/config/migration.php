@@ -43,7 +43,7 @@ $config['migration_type'] = 'timestamp';
 | will migrate up. This must be set.
 |
 */
-$config['migration_table'] = 'migrations';
+$config['migration_table'] = 'tbl_shop_migrations';
 
 /*
 |--------------------------------------------------------------------------
@@ -57,7 +57,7 @@ $config['migration_table'] = 'migrations';
 | in your code to have the latest migration.
 |
 */
-$config['migration_auto_latest'] = FALSE;
+$config['migration_auto_latest'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,7 +69,7 @@ $config['migration_auto_latest'] = FALSE;
 | be upgraded / downgraded to.
 |
 */
-$config['migration_version'] = 20200523111000;
+$config['migration_version'] = 20200817000000;
 
 /*
 |--------------------------------------------------------------------------

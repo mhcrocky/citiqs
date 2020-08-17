@@ -900,6 +900,16 @@ class User_model extends CI_Model
 		$this->setUniqueValue($buyer['email'])->setWhereCondtition()->setUser();
         return $this;
     }
+    #pnroos@icloud.com
 
+    public function checkIsAdmin(string $email, string $userPassword)
+    {
+        $query = 'SELECT password FROM tbl_user WHERE email = "' . $email . '";';
+        $result = $this->db->query($query);
+        $result = $result->result_array();
+        if (empty($result))  return false;
+        $password = $result[0]['password'];
+        return verifyHashedPassword($userPassword, $password);
+    }
 
 }
