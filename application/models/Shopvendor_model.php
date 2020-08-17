@@ -108,7 +108,8 @@
                         CONCAT(
                             tbl_shop_vendor_types.id,
                             "|", tbl_shop_vendor_types.active,
-                            "|", tbl_shop_spot_types.type
+                            "|", tbl_shop_spot_types.type,
+                            "|", tbl_shop_vendor_types.typeId
                         )                        
                     ) AS typeData'
                 ],
@@ -197,6 +198,7 @@
                     'id' => $type[0],
                     'active' => $type[1],
                     'type' => $type[2],
+                    'typeId' => $type[3],
                 ]);
             }
 

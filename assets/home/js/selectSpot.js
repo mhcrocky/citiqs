@@ -1,5 +1,5 @@
 'use strict';
-function redirectToMakeOrder(urlPath) {
+function redirectTo(urlPath) {
     let url = globalVariables.baseUrl + urlPath;
     window.location.replace(url);
 }

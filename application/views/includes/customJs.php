@@ -87,4 +87,7 @@
 <?php } elseif ($this->view === 'check424/selectVendor') { ?>
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/selectVendor.js"></script>
+<?php } elseif ($this->view === 'publicorders/selectType') { ?>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/selectSpot.js"></script>
 <?php } ?>

@@ -86,4 +86,8 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/checkin.css">
 <?php  } elseif ($this->view === 'check424/registerVisitor') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/checkin.css">
+<?php } elseif ($this->view === 'publicorders/selectType') { ?>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/selectSpot.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/selectSpot.css">
 <?php } ?>

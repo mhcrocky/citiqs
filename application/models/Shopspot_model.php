@@ -100,23 +100,29 @@
 
         public function fetchUserSpotsImporved($where): ?array
         {
-            return $this->read(
-                [
-                    $this->table . '.id AS spotId',
+            return $this->readImproved([
+                'what' => [
+                $this->table . '.id AS spotId',
                     $this->table . '.printerId AS spotPrinterId',
                     $this->table . '.spotName AS spotName',
                     $this->table . '.active AS spotActive',
                     'tbl_shop_printers.printer AS printer',
                     'tbl_shop_printers.active AS printerActive',
+                    'tbl_shop_vendor_types.active as typeactive'
                 ],
-                $where,
-                [
-                    ['tbl_shop_printers', $this->table . '.printerId = tbl_shop_printers.id', 'INNER']
+                'where' => $where,
+                'joins' => [
+                    ['tbl_shop_printers', $this->table . '.printerId = tbl_shop_printers.id', 'INNER'],
+                    ['tbl_shop_spot_types', 'tbl_shop_spot_types.id = ' . $this->table . '.spotTypeId' , 'INNER'],
+                    ['tbl_shop_vendor_types', 'tbl_shop_vendor_types.typeId = tbl_shop_spot_types.id', 'INNER']
                 ],
-                'order_by',
-				['length(`spotName`),`spotName`']
+                'conditions' => [
+                    'order_by' => ['length(`spotName`),`spotName`'],
+                    'group_by' =>  [$this->table . '.id']
+                ]
+				
 
-            );
+            ]);
         }
 
 //		[$this->table . '.id', 'ASC']

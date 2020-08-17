@@ -534,28 +534,28 @@ class Ajax extends CI_Controller
         return;
     }
 
-    public function checkSpotId(): void
-    {
-        if (!$this->input->is_ajax_request()) return;
+    // public function checkSpotId(): void
+    // {
+    //     if (!$this->input->is_ajax_request()) return;
 
-        $post = $this->input->post(null, true);
-        $where = [
-            'tbl_shop_printers.userId=' => $post['vendorId'],
-            'tbl_shop_spots.active' => '1',
-            'tbl_shop_spots.spotName' =>  $post['spotName'],
-        ];
+    //     $post = $this->input->post(null, true);
+    //     $where = [
+    //         'tbl_shop_printers.userId=' => $post['vendorId'],
+    //         'tbl_shop_spots.active' => '1',
+    //         'tbl_shop_spots.spotName' =>  $post['spotName'],
+    //     ];
 
-        $spot = $this->shopspot_model->fetchUserSpotsImporved($where);
-        if ($spot) {
-            $id = $spot[0]['spotId'];
-            $result = [
-                'url' => 'make_order?vendorid=' . $post['vendorId'] . '&spotid=' . $id
-            ];
-            echo json_encode($result);
-        } else {
-            echo 0;
-        }
-    }
+    //     $spot = $this->shopspot_model->fetchUserSpotsImporved($where);
+    //     if ($spot) {
+    //         $id = $spot[0]['spotId'];
+    //         $result = [
+    //             'url' => 'make_order?vendorid=' . $post['vendorId'] . '&spotid=' . $id
+    //         ];
+    //         echo json_encode($result);
+    //     } else {
+    //         echo 0;
+    //     }
+    // }
 
     public function updateCategoriesOrder(): void
     {

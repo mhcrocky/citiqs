@@ -38,6 +38,7 @@
         public function index(): void
         {
             $get = $this->input->get(null, true);
+            $typeId = empty($get['typeId']) ? '' : $get['typeId'];
 
             // FETCH AND SAVE VENDOR DATA IN SESSION
             $vendor = $this->shopvendor_model->setProperty('vendorId', $get['vendorid'])->getVendorData();
@@ -63,6 +64,8 @@
                     'tbl_shop_printers.userId=' => $_SESSION['vendor']['vendorId'],
                     'tbl_shop_spots.active' => '1',
                     'tbl_shop_spots.id' => $spotId,
+                    'tbl_shop_vendor_types.active=' => '1',
+                    'tbl_shop_vendor_types.vendorId=' => $_SESSION['vendor']['vendorId']
                 ];
 
                 if ($this->shopspot_model->fetchUserSpotsImporved($where)) {
@@ -75,7 +78,7 @@
             }
             
             // SELECT VENDOR SPOT VIEW
-            $this->loadVendorView();
+            $this->loadVendorView($typeId);
             return;
       
         }
@@ -114,21 +117,36 @@
             return;
         }
 
-        private function loadVendorView(): void
+        private function loadVendorView($typeId = ''): void
         {
             $this->global['pageTitle'] = 'TIQS : SELECT SPOT';
-
+            $types = Utility_helper::resetArrayByKeyMultiple($_SESSION['vendor']['typeData'], 'active');
             $where = [
                 'tbl_shop_printers.userId=' => $_SESSION['vendor']['vendorId'],
                 'tbl_shop_spots.active' => '1'
             ];
 
-            $data = [
-                'vendor' => $_SESSION['vendor'],
-                'spots' => $this->shopspot_model->fetchUserSpotsImporved($where)
-            ];
-
-            $this->loadViews('publicorders/selectSpot', $this->global, $data, null, 'headerWarehousePublic');
+            if (empty($types[1])) {
+                $data = [
+                    'vendor' => $_SESSION['vendor'],
+                    'spots' => []
+                ];
+                $this->loadViews('publicorders/selectType', $this->global, $data, null, 'headerWarehousePublic');
+            } elseif (count($types[1]) === 1 || $typeId) {
+                $where['tbl_shop_spots.spotTypeId'] = $typeId ? $typeId : $types[1][0]['typeId'];
+                $data = [
+                    'vendor' => $_SESSION['vendor'],
+                    'spots' => $this->shopspot_model->fetchUserSpotsImporved($where),
+                ];
+                $this->loadViews('publicorders/selectSpot', $this->global, $data, null, 'headerWarehousePublic');
+            } else {
+                $data = [
+                    'vendor' => $_SESSION['vendor'],
+                    'activeTypes' => $types[1],
+                ];
+                $this->loadViews('publicorders/selectType', $this->global, $data, null, 'headerWarehousePublic');
+            }
+            
             return;
         }
 
