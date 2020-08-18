@@ -563,7 +563,7 @@
             $userId = intval($_SESSION['userId']);
 
             $data = [
-                'printers' => $this->shopprinters_model->read(['*'], ['userId=' => $userId]),
+                'printers' => $this->shopprinters_model->read(['*'], ['userId=' => $userId, 'masterMac=' => '0']),
                 'spots' => $this->shopspot_model->fetchUserSpots($userId),
                 'spotTypes' =>$this->shopspottype_model->read(['*'], ['id>' => 0]),
             ];
