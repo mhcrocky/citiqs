@@ -13,7 +13,7 @@ $config['dropOfPointFalse'] = 0;
 $config['tiqsId'] = 1;
 // TIQS email
 $config['tiqsEmail'] = 'ceo@tiqs.com';
-$config['petersEmail'] = 'pnroos@icloud.com';
+$config['petersEmail'] = MIGRATION_EMAIL;
 
 // business types ids => Id is id value of business type in tbl_business_types
 $config['Airbnb']= '1';
