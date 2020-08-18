@@ -39,8 +39,7 @@
 
             // fetch order
             $order = $this->shoporder_model->fetchOrdersForPrint($masterMac);
-            var_dump($order);
-            
+
             if (!$order) return;
 
             $order = reset($order);
@@ -54,8 +53,6 @@
                     ->setObjectFromArray(['printed' => '2'])
                     ->update();
             }
-
-            die();
 
             $this
                 ->shopprinterrequest_model
@@ -554,11 +551,6 @@
             $subject= "tiqs-Order : ". $order['orderId'] ;
             $email = $order['buyerEmail'];
             Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail); 
-            
-            //cleaning apc_store
-            $filter = apc_fetch('filter');
-            unset($filter[array_search($order['orderExtendedIds'], $filter)]);
-            apc_store('filter', $filter);
         }
 
         public function data_post()
@@ -613,8 +605,7 @@
                 // ordernr
                 // vullen onderdelen
                 // printed op 1 zetten.
-				$filter = apc_fetch('filter') ? apc_fetch('filter') : [];
-                if ($this->shoporder_model->fetchOrdersForPrint($parsedJson['printerMAC'],$filter)) {
+                if ($this->shoporder_model->fetchOrdersForPrint($parsedJson['printerMAC'])) {
                     $arr = [
                         "jobReady" => true,
                         // "mediaTypes" => array('text/plain','image/png', 'image/jpeg'));
