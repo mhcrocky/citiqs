@@ -466,7 +466,8 @@ class Login extends BaseControllerWeb
 
 	public function register()
 	{
-
+		redirect('registerbusiness');
+		exit();
 		if (isset($_SESSION['error'])) {
 			unset($_SESSION['error']);
 		}
