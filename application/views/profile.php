@@ -9,7 +9,7 @@
 						<div class="flex-column align-space">
 							<div class="form-group has-feedback">
 								<p style="font-family: caption-light; padding: 10px">
-									<?=$this->language->line("PROF-020A",'Full Name');?>
+									<?=$this->language->line("PROF-V020A",'FULL NAME');?>
 								</p>
 								<div class="form-group has-feedback">
 									<input  value="<?php echo $user->username; ?>" name="username" required type="text" class="form-control" id="fname" style="border-radius: 50px; border:none" placeholder="<?php echo $name; ?>" maxlength="128" />
@@ -18,7 +18,7 @@
 							<?php if ($user->IsDropOffPoint === '1') { ?>
 								<div>
 									<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin-bottom:10px; text-align: center">
-										<?=$this->language->Line("registerbusiness-1600A",'Your shortname');?>
+										<?=$this->language->Line("registerbusiness-V1600A",'YOUR SHORTNAME');?>
 									</p>
 								</div>
 								<div class="form-group has-feedback">
@@ -28,7 +28,7 @@
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-030A31",'Mobile Number (Country code + number e.g. 0031(country) 0123456789 (number) => 00310123456789)');?>
+										<?=$this->language->line("PROF-V030A31",'MOBILE NUMBER (Country code + number e.g. 0031(country) 0123456789 (number) => 00310123456789)');?>
 									</p>
 									<div class="form-group has-feedback">
 										<input name="mobile" value="<?php echo $user->mobile; ?>" required style="border-radius: 50px; border:none" type="text" class="form-control" id="mobile" placeholder="<?php echo $user->mobile; ?>" maxlength="20">
@@ -40,7 +40,7 @@
 									<p style="font-family: caption-light; padding: 10px">Business type</p>
 									<div class="selectWrapper mb-35">
 										<select class="selectBox" name="business_type_id" style="font-family:'caption-light';" required>
-											<option value=""><?=$this->language->Line("registerbusiness-1600A1","Select business type");?></option>
+											<option value=""><?=$this->language->Line("registerbusiness-V1600A1","SELECT BUSINESS TYPE");?></option>
 											<?php foreach ($businessTypes as $type) { ?>
 												<option <?php if($type['id'] === $user->business_type_id) echo 'selected'; ?> value="<?php echo $type['id'] ?>">
 													<?php echo $this->language->Line(ucfirst($type['busineess_type']),ucfirst($type['busineess_type'])) ?>
@@ -57,14 +57,14 @@
 									</p>
 								</div>
 								<div class="form-group has-feedback">
-									<input type="text" value="<?php echo $user->vat_number; ?>" name="vat_number" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->line("PROF-03031","Business VAT number");?>" />
+									<input type="text" value="<?php echo $user->vat_number; ?>" name="vat_number" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->line("PROF-V03031","BUSINESS VAT NUMBER");?>" />
 									<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 								</div>
 							<?php } ?>
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-031","Your E-mail address");?>
+										<?=$this->language->line("PROF-V031","YOUR E-MAIL ADDRESS");?>
 									</p>
 
 									<div class="form-group has-feedback">
@@ -75,19 +75,19 @@
 							<?php if ($user->IsDropOffPoint === '1') { ?>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-10303021111","
-									Responsible person first name
+										<?=$this->language->line("PROF-V10303021111","
+									RESPONSIBLE PERSON FIRST NAME
 									"); ?>
 									</p>
 								</div>
 								<div class="form-group has-feedback">
-									<input type="text" name="first_name" value="<?php echo $user->first_name; ?>" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="First name" />
+									<input type="text" name="first_name" value="<?php echo $user->first_name; ?>" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="first name" />
 									<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 								</div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-103030211","
-									Responsible person last name
+										<?=$this->language->line("PROF-V103030211","
+									RESPONSIBLE PERSON LAST NAME
 									"); ?>
 									</p>
 								</div>
@@ -99,7 +99,7 @@
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-032","Address");?>
+										<?=$this->language->line("PROF-V032","ADDRESS");?>
 									</p>
 									<div class="form-group has-feedback">
 										<input style="border-radius: 50px; border:none" type="text" class="form-control" id="addres" name="address" placeholder="<?php echo $user->address; ?>" value="<?php echo $user->address; ?>" maxlength="128" />
@@ -109,7 +109,7 @@
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-033","Additional address line");?>
+										<?=$this->language->line("PROF-V033","ADDITIONAL ADDRESS LINE");?>
 									</p>
 									<div class="form-group has-feedback">
 										<input style="border-radius: 50px; border:none" type="text" class="form-control" id="addressa" name="addressa" placeholder="<?php echo $user->addressa; ?>" value="<?php echo $user->addressa; ?>" maxlength="128" />
@@ -119,7 +119,7 @@
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-034","Zipcode");?>
+										<?=$this->language->line("PROF-V034","ZIPCODE");?>
 									</p>
 									<div class="form-group">
 										<input style="border-radius: 50px; border:none" type="text" class="form-control" id="zipcode" name="zipcode" placeholder="<?php echo $user->zipcode; ?>" value="<?php echo $user->zipcode; ?>" maxlength="128" />
@@ -129,7 +129,7 @@
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-035","City");?>
+										<?=$this->language->line("PROF-V035","CITY");?>
 									</p>
 
 									<div class="form-group has-feedback">
@@ -169,7 +169,7 @@
 		</div>
 	</div>
 	<?php if($this->session->userdata('dropoffpoint')==1) { ?>
-		<div class="col-half background-purple-light timeline-content">
+		<div class="col-half background-apricot-blue timeline-content">
 			<h2>Shop url</h2>
 			<p>
 				<?php echo base_url() . 'make_order?vendorid=' . $user->id; ?>
@@ -178,31 +178,32 @@
 			<p>
 				<?php echo base_url() . 'check424/' . $user->id; ?>
 			</p>
-			<div class="background-orange-light timeline-content">
+			<div class="background-blue timeline-content">
 				<!-- <p>Add driver mobile number (starting with country code with zero) for sending sms.</p>
 				<p>Set the number of minutes when the message will be sent to driver after the order status is changed in status "DONE"</p> -->
 				<!-- <p>Add terms and conditions</p> -->
 			
 				<form method="post" action="<?php echo base_url() ?>profile/updateVendorData/<?php echo $vendor['id']; ?>">
 					<input type="number" name="vendorId" value="<?php echo $user->id ?>" readonly required hidden />
-					<div class="form group">
-						<label for="termsAndConditions">Terms and conditions: </label>
+					<div class="form group mb-35">
+						<label for="termsAndConditions">TERMS AND CONDITIONS</label>
 						<textarea class="form-control" id="termsAndConditions" name="vendor[termsAndConditions]"><?php echo strval($vendor['termsAndConditions']); ?></textarea>
 					</div>
 					<br/>
-					<div class="form group">
-						<label for="payNlServiceId">Pay service id: </label>
+					<div class="form group mb-35">
+						<label for="payNlServiceId">PAY SERVICE ID</label>
 						<input
 							type="text"
 							id="payNlServiceId"
 							name="vendor[payNlServiceId]"
 							class="form-control"
+							style="border-radius: 50px"
 							value="<?php echo $vendor['payNlServiceId']; ?>"
 							/>
 					</div>
 					<br/>
-					<div class="form group">
-						<label for="serviceFeePercent">Service fee percent: </label>
+					<div class="form group mb-35">
+						<label for="serviceFeePercent">SERVICE FEE PERCENTAGE</label>
 						<input
 							type="number"
 							id="serviceFeePercent"
@@ -210,12 +211,13 @@
 							min="0"
 							step="0.01"
 							class="form-control"
+							style="border-radius: 50px"
 							value="<?php echo $vendor['serviceFeePercent']; ?>"
 							/>
 					</div>
 					<br/>
-					<div class="form group">
-						<label for="serviceFeeAmount">Maximum service fee amount: </label>
+					<div class="form group mb-35">
+						<label for="serviceFeeAmount">MAXIMUM SERVICE FEE AMOUNT</label>
 						<input
 							type="number"
 							id="serviceFeeAmount"
@@ -223,12 +225,13 @@
 							min="0"
 							step="0.01"
 							class="form-control"
+							style="border-radius: 50px"
 							value="<?php echo $vendor['serviceFeeAmount']; ?>"
 							/>
 					</div>
 					<br/>
-					<div class="form group">
-						<label for="minimumOrderFee">Minimum order fee amount: </label>
+					<div class="form group mb-35">
+						<label for="minimumOrderFee">SERVICE FEE AMOUNT</label>
 						<input
 							type="number"
 							id="minimumOrderFee"
@@ -236,25 +239,27 @@
 							min="0"
 							step="0.01"
 							class="form-control"
+							style="border-radius: 50px"
 							value="<?php echo $vendor['minimumOrderFee']; ?>"
 							/>
 					</div>
 					<br/>
-					<div class="form group">
-						<label for="printTimeConstraint">Print orders created before: 
+					<div class="form group mb-35">
+						<label for="printTimeConstraint">PRINT ORDERS CREATED BEFORE
 						<input
 							type="number"
 							id="printTimeConstraint"
 							name="vendor[printTimeConstraint]"
 							min="0"
 							step="1"
+							style="border-radius: 50px; text-align: center"
 							value="<?php echo $vendor['printTimeConstraint']; ?>"
 							/>
-							hours:
+							HOURS
 						</label>
 					</div>
-					<div class="form group">
-						<label for="serviceFeeTax">Service fee tax: </label>
+					<div class="form group mb-35"  >
+						<label for="serviceFeeTax">SERVICE FEE (VAT PERCENTAGE) </label>
 						<input
 							type="number"
 							min="0"
@@ -262,34 +267,35 @@
 							id="serviceFeeTax"
 							name="vendor[serviceFeeTax]"
 							class="form-control"
+							style="border-radius: 50px"
 							value="<?php echo $vendor['serviceFeeTax']; ?>"
 							/>
 					</div>
-					<div class="form-group">
-						<h3>Select payment method(s):</h3>
+					<div class="form group mb-35">
+						<h3>SELECT PAYMENT METHOD(S)</h3>
 						<div class="col-lg-3">
-							<h4>Bancontact</h4>
+							<h4>BANCONTACT</h4>
 							<label class="radio-inline" for="bancontactYes">Yes</label>
 							<input type="radio" id="bancontactYes" name="vendor[bancontact]" value="1" <?php if ($vendor['bancontact'] === '1') echo 'checked'; ?> />
 							<label class="radio-inline" for="bancontactNo">&nbsp;&nbsp;&nbsp;No</label>
 							<input type="radio" id="bancontactNo" name="vendor[bancontact]" value="0" <?php if ($vendor['bancontact'] === '0') echo 'checked'; ?> />
 						</div>
 						<div class="col-lg-3">
-							<h4>Ideal</h4>
+							<h4>IDEAL</h4>
 							<label class="radio-inline" for="idealYes">Yes</label>
 							<input type="radio" id="idealYes" name="vendor[ideal]" value="1" <?php if ($vendor['ideal'] === '1') echo 'checked'; ?> />
 							<label class="radio-inline" for="idealNo">&nbsp;&nbsp;&nbsp;No</label>
 							<input type="radio" id="idealNo" name="vendor[ideal]" value="0" <?php if ($vendor['ideal'] === '0') echo 'checked'; ?> />
 						</div>
 						<div class="col-lg-3">
-							<h4>Credit card</h4>
+							<h4>VISA / MASTERCARD</h4>
 							<label class="radio-inline" for="creditCardYes">Yes</label>
 							<input type="radio" id="creditCardYes" name="vendor[creditCard]" value="1" <?php if ($vendor['creditCard'] === '1') echo 'checked'; ?> />
 							<label class="radio-inline" for="creditCardNo">&nbsp;&nbsp;&nbsp;No</label>
 							<input type="radio" id="creditCardNo" name="vendor[creditCard]" value="0" <?php if ($vendor['creditCard'] === '0') echo 'checked'; ?> />
 						</div>
 						<div class="col-lg-3">
-							<h4>Giro</h4>
+							<h4>GIRO</h4>
 							<label class="radio-inline" for="giroYes">Yes</label>
 							<input type="radio" id="giroYes" name="vendor[giro]" value="1" <?php if ($vendor['giro'] === '1') echo 'checked'; ?> />
 							<label class="radio-inline" for="giroNo">&nbsp;&nbsp;&nbsp;No</label>
@@ -298,7 +304,7 @@
 					</div>
 					<br/>
 					<div class="form-group" style="margin-top:10% !important">
-						<h3>Require user mobile phone on checkout form</h3>
+						<h3>REQUIRE USER MOBILE PHONE ON CHECKOUT FORm</h3>
 						<br/>
 						<label class="radio-inline" for="requireMobileYes">Yes</label>
 						<input type="radio" id="requireMobileYes" name="vendor[requireMobile]" value="1" <?php if ($vendor['requireMobile'] === '1') echo 'checked'; ?> />
@@ -307,16 +313,7 @@
 					</div>
 					<br/>
 					<div class="form-group">
-						<h3>Require health information from visitor</h3>
-						<br/>
-						<label class="radio-inline" for="healthCheckYes">Yes</label>
-						<input type="radio" id="healthCheckYes" name="vendor[healthCheck]" value="1" <?php if ($vendor['healthCheck'] === '1') echo 'checked'; ?> />
-						<label class="radio-inline" for="healthCheckNo">&nbsp;&nbsp;&nbsp;No</label>
-						<input type="radio" id="healthCheckNo" name="vendor[healthCheck]" value="0" <?php if ($vendor['healthCheck'] === '0') echo 'checked'; ?> />
-					</div>
-					<br/>
-					<div class="form-group">
-						<h3>Require reservation from visitor</h3>
+						<h3>REQUIRE RESERVATION FROM VISITOR</h3>
 						<br/>
 						<label class="radio-inline" for="requireReservationkYes">Yes</label>
 						<input type="radio" id="requireReservationkYes" name="vendor[requireReservation]" value="1" <?php if ($vendor['requireReservation'] === '1') echo 'checked'; ?> />
@@ -324,8 +321,18 @@
 						<input type="radio" id="requireReservationNo" name="vendor[requireReservation]" value="0" <?php if ($vendor['requireReservation'] === '0') echo 'checked'; ?> />
 					</div>
 					<br/>
+					<div class="form-group">
+						<h3>REQUIRE HEALTH INFORMATION FROM VISITOR</h3>
+						<br/>
+						<label class="radio-inline" for="healthCheckYes">Yes</label>
+						<input type="radio" id="healthCheckYes" name="vendor[healthCheck]" value="1" <?php if ($vendor['healthCheck'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="healthCheckNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="healthCheckNo" name="vendor[healthCheck]" value="0" <?php if ($vendor['healthCheck'] === '0') echo 'checked'; ?> />
+					</div>
+					<br/>
+
 					<div class="form-check-inline">
-						<h3>Select vendor types</h3>
+						<h3>SELECT SALES LOCATION TYPES</h3>
 						<?php foreach ($vendor['typeData'] as $type) { ?>
 							<label class="form-check-label">
 								<?php echo $type['type']; ?>:
