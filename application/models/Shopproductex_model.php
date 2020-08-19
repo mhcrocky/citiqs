@@ -359,7 +359,9 @@
             $query = 
 
                 'SELECT '
-                    . $this->table . '.name
+                    . $this->table . '.id, '
+                    . $this->table . '.name, '
+                    . $this->table . '.productId
                 FROM '
                     . $this->table . ' 
                 INNER JOIN
@@ -368,10 +370,18 @@
                     tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
                 WHERE
                     tbl_shop_categories.userId = ' . $userId .'
-                GROUP BY ' . $this->table . '.productId';
-
+                ORDER BY ' . $this->table . '.id DESC;';
             $result = $this->db->query($query);
-            return $result->result_array();
+            $result = $result->result_array();
+            $ids = [];
+            $names = [];
+            foreach ($result as $data) {
+                if (!in_array($data['productId'], $ids)) {
+                    array_push($names, $data);
+                }
+                array_push($ids, $data['productId']);
+            }
+            return $names;
         }
 
         public function getProdctesByMainType(int $userId, bool $main = false): ?array

@@ -597,19 +597,20 @@ class Ajax extends CI_Controller
 
         $addons  = $this->shopproductex_model->getProdctesByMainType(intval($_SESSION['userId']));
         $addonsList = '';
-
-        foreach ($addons as $productId => $product) {
-            $product = reset($product);
-            foreach($product['productDetails'] as $details) {
-                $addonsList .= '<label class="checkbox-inline">';
-                $addonsList .= '<input ';
-                $addonsList .=     'type="checkbox" ';
-                $addonsList .=     'data-extended-id="' . $details['productExtendedId'] . '" ';
-                $addonsList .=     'value="' . $productId . '" ';
-                $addonsList .=     'name="productAddons[' . $details['productExtendedId'] . ']" ';
-                $addonsList .= '/>';
-                $addonsList .= $details['name'] . ' (' . $details['productType']. ')';
-                $addonsList .= '</label>';
+        if (!empty($addons)) {
+            foreach ($addons as $productId => $product) {
+                $product = reset($product);
+                foreach($product['productDetails'] as $details) {
+                    $addonsList .= '<label class="checkbox-inline">';
+                    $addonsList .= '<input ';
+                    $addonsList .=     'type="checkbox" ';
+                    $addonsList .=     'data-extended-id="' . $details['productExtendedId'] . '" ';
+                    $addonsList .=     'value="' . $productId . '" ';
+                    $addonsList .=     'name="productAddons[' . $details['productExtendedId'] . ']" ';
+                    $addonsList .= '/>';
+                    $addonsList .= $details['name'] . ' (' . $details['productType']. ')';
+                    $addonsList .= '</label>';
+                }
             }
         }
 

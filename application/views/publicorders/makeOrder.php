@@ -4,14 +4,6 @@
 <body style="background-color: navajowhite">
 <?php } ?>
 
-<style>
-    .submitOrder:hover {
-        cursor: pointer;
-    }
-</style>
-
-
-
 <?php if($vendor['vendorId'] == 1162 ){?>
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/slick.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/slick-theme.css">
@@ -200,7 +192,7 @@
 <!--		--><?php //echo $vendor['logo']; ?>
 <!--        <h1>--><?php //echo $vendor['vendorName']; ?><!--</h1>-->
 <!--		https://tiqs.com/alfred/assets/images/vendorLogos/1162_1595838163.png -->
-		<div style="text-align:center" allign="center">
+		<div style="text-align:center">
 			<img src=<?php echo "https://tiqs.com/alfred/assets/images/vendorLogos/".$vendor['logo']; ?> alt="" width="300" height="auto">
 		</div>
 

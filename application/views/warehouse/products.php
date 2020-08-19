@@ -133,7 +133,7 @@
                                     <select class="form-control selectProducts" multiple="multiple" id="filterProducts" name="names[]" required>
                                         <?php if (!empty($productNames)) { ?>
                                             <?php foreach ($productNames as $name) { ?>
-                                                <option value="<?php echo $name['name']; ?>"><?php echo $name['name']; ?></option>
+                                                <option value="<?php echo $name['id']; ?>"><?php echo $name['name']; ?></option>
                                             <?php } ?>
                                         <?php } ?>
                                     </select>

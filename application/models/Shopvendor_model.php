@@ -131,6 +131,12 @@
             if (is_null($result)) return null;
             $result = reset($result);
 
+            // FOR OLD USER ... FROM LOST AND FOUND
+            if (is_null($result['id'])) {
+                $this->create();
+                return $this->getVendorData();
+            }
+
             if (is_null($result['typeData'])) {
                 $this->insertTypes();
                 return $this->getVendorData();

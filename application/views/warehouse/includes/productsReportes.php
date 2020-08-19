@@ -63,11 +63,18 @@
                     <td style="text-align:center"><?php echo $productMin['productName']; ?></td>
                     <td style="text-align:center"><?php echo count($orders); ?></td>
                     <td style="text-align:center"><?php echo $quantity ?></td>
-                    <td style="text-align:center"><?php echo $paidProducts; ?> (<?php echo round(($paidProducts / $totalProducts * 100), 2); ?> %)</td>
+                    <td style="text-align:center">
+                        <?php echo $paidProducts; ?>
+                        (
+                            <?php echo ($totalProducts) ? round(($paidProducts / $totalProducts * 100), 2) : '0.00'; ?> %
+                        )
+                    </td>
                     <td style="text-align:center; color:#ff3333;">
                         <?php
                             if ($unpaidProducts) {
                                 echo $unpaidProducts . '&nbsp(' . round(($unpaidProducts / $totalProducts * 100), 2)  . '&nbsp;%)';
+                            } else {
+                                echo '0.00';
                             }
                         ?>
                     </td>

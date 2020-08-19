@@ -23,7 +23,7 @@
 					<?php foreach ($activeTypes as $type) { ?>
 
 						<label>
-							<input type="radio" name="radio" value="<?php echo 'make_order?vendorid=' . $vendor['vendorId'] . '&typeId=' . $type['typeId'] ?>" onchange="redirectTo(this.value)" class="form-control" checked />
+							<input type="radio" name="radio" value="<?php echo 'make_order?vendorid=' . $vendor['vendorId'] . '&typeId=' . $type['typeId'] ?>" onchange="redirectTo(this.value)" class="form-control" <?php if($type['typeId']==='1') echo "checked" ?> />
 							<div class="front-end box">
 								<span><?php echo $type['type']; ?></span>
 							</div>
