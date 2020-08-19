@@ -153,19 +153,21 @@
         public function products(): void
         {
             $this->global['pageTitle'] = 'TIQS : PRODUCTS';
+
             $userId = intval($_SESSION['userId']);
-            if (empty($_SESSION['productNames'])) {
-                $_SESSION['productNames'] = $this->shopproductex_model->getProductsNames($userId);
+            $productNames = $this->shopproductex_model->getProductsNames($userId);
+            if ($productNames) {
+                Utility_helper::array_sort_by_column($productNames, 'name');
             }
             $offset = intval($this->input->get('offset', true));
             $perPage = 21;
             $whereIn = [];
-            $pagination = Utility_helper::getPaginationLinks(count($_SESSION['productNames']), $perPage, 'products');
+            $pagination = Utility_helper::getPaginationLinks(count($productNames), $perPage, 'products');
 
             if (!empty($_POST)) {
                 $post = $this->input->post(null, true);
                 $whereIn = [
-                    'column' => 'tbl_shop_products_extended.name',
+                    'column' => 'tbl_shop_products_extended.id',
                     'array' => $post['names']
                 ];
                 $pagination = '';
@@ -178,7 +180,7 @@
                 'userSpots' => $this->shopspot_model->fetchUserSpots($userId),
                 'productTypes' => $this->shopprodutctype_model->fetchProductTypes($userId),
                 'concatSeparator' => $this->config->item('concatSeparator'),
-                'productNames' => $_SESSION['productNames'],
+                'productNames' => $productNames,
                 'pagination' => $pagination
             ];
 
@@ -193,10 +195,6 @@
          */
         public function addProdcut(): void
         {
-            if (!empty($_SESSION['productNames'])) {
-                unset($_SESSION['productNames']);
-            }
-
             $data = $this->input->post(null, true);
             $userId = intval($_SESSION['userId']);
 
@@ -293,10 +291,6 @@
          */
         public function editProduct(): void
         {
-            if (!empty($_SESSION['productNames'])) {
-                unset($_SESSION['productNames']);
-            }
-
             $data = $this->input->post(null, true);
             $productId = intval($this->uri->segment(3));
             $userId = intval($_SESSION['userId']);
@@ -405,10 +399,6 @@
          */
         public function addProductTimes(): void
         {
-            if (!empty($_SESSION['productNames'])) {
-                unset($_SESSION['productNames']);
-            }
-
             $data = $this->input->post(null, true);
             $days = $data['productTime'];
 
@@ -750,10 +740,6 @@
          */
         public function addProductAddons(): void
         {
-            if (!empty($_SESSION['productNames'])) {
-                unset($_SESSION['productNames']);
-            }
-
             $productId = intval($this->uri->segment(3));
             $data = $this->input->post(null, true);
             $productAddons = $data['productAddons'];
