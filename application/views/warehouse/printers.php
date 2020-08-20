@@ -29,17 +29,20 @@
 							<label for="numberOfCopies">Number of copies: </label>
 							<input type="integer" min="1" value="1" step="1" class="form-control" id="numberOfCopies" name="numberOfCopies" required />
 						</div>
-						<div>
-							<label for="masterMac">Select master printer (only for slave printer): </label>
-							<select class="form-control" id="masterMac" name="masterMac">
-								<option value="">Select</option>
-								<?php foreach ($printers as $printer) { ?>
-									<option value="<?php echo $printer['macNumber']; ?>">
-										<?php echo $printer['printer']; ?>
-									</option>
-								<?php } ?>
-							</select>
-						</div>
+						<?php if ($printers) { ?>
+							<div>
+								<label for="masterMac">Select master printer (only for slave printer): </label>
+								<select class="form-control" id="masterMac" name="masterMac">
+									<option value="">Select</option>
+
+									<?php foreach ($printers as $printer) { ?>
+										<option value="<?php echo $printer['macNumber']; ?>">
+											<?php echo $printer['printer']; ?>
+										</option>
+									<?php } ?>
+								</select>
+							</div>
+						<?php } ?>
 					</form>
 				</div>
 			</div>

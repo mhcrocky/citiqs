@@ -30,6 +30,9 @@
             $this->load->model('shopprodutctype_model');
             $this->load->model('shopproductaddons_model');
             $this->load->model('shopspottype_model');
+            $this->load->model('shopspottime_model');
+
+
 
             $this->load->library('language', array('controller' => $this->router->class));
             $this->load->library('session');
@@ -582,6 +585,10 @@
             }
 
             if ($this->shopspot_model->setObjectFromArray($data)->create()) {
+                $this
+                    ->shopspottime_model
+                    ->setProperty('spotId', $this->shopspot_model->id)
+                    ->insertSpotTime();
                 $this->shopspotproduct_model->insertSpotProducts($this->shopproduct_model, $this->shopspot_model->id, intval($_SESSION['userId']));
                 $this->session->set_flashdata('success', 'Spot added');
             } else {

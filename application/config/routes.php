@@ -256,6 +256,8 @@ $route['dayreport']           	= "warehouse/dayreport";
 $route['make_order']        = 'publicorders/index';
 $route['checkout_order']    = 'publicorders/checkout_order';
 $route['pay_order']         = 'publicorders/pay_order';
+$route['closed/(:num)']     = 'publicorders/closed/$1';
+
 $route['insertorder/(:num)/(:num)'] = 'publicorders/insertOrder/$1/$2';
 
 $route['api/orders/print/get'] = 'Api/Orders/data';

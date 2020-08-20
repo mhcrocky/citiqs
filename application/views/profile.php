@@ -185,12 +185,12 @@
 			
 				<form method="post" action="<?php echo base_url() ?>profile/updateVendorData/<?php echo $vendor['id']; ?>">
 					<input type="number" name="vendorId" value="<?php echo $user->id ?>" readonly required hidden />
-					<div class="form group mb-35">
+					<div class="form-group mb-35">
 						<label for="termsAndConditions">TERMS AND CONDITIONS</label>
 						<textarea class="form-control" id="termsAndConditions" name="vendor[termsAndConditions]"><?php echo strval($vendor['termsAndConditions']); ?></textarea>
 					</div>
 					<br/>
-					<div class="form group mb-35">
+					<div class="form-group mb-35">
 						<label for="payNlServiceId">PAY SERVICE ID</label>
 						<input
 							type="text"
@@ -202,7 +202,7 @@
 							/>
 					</div>
 					<br/>
-					<div class="form group mb-35">
+					<div class="form-group mb-35">
 						<label for="serviceFeePercent">SERVICE FEE PERCENTAGE</label>
 						<input
 							type="number"
@@ -216,7 +216,7 @@
 							/>
 					</div>
 					<br/>
-					<div class="form group mb-35">
+					<div class="form-group mb-35">
 						<label for="serviceFeeAmount">MAXIMUM SERVICE FEE AMOUNT</label>
 						<input
 							type="number"
@@ -230,7 +230,7 @@
 							/>
 					</div>
 					<br/>
-					<div class="form group mb-35">
+					<div class="form-group mb-35">
 						<label for="minimumOrderFee">SERVICE FEE AMOUNT</label>
 						<input
 							type="number"
@@ -244,7 +244,7 @@
 							/>
 					</div>
 					<br/>
-					<div class="form group mb-35">
+					<div class="form-group mb-35">
 						<label for="printTimeConstraint">PRINT ORDERS CREATED BEFORE
 						<input
 							type="number"
@@ -258,7 +258,7 @@
 							HOURS
 						</label>
 					</div>
-					<div class="form group mb-35"  >
+					<div class="form-group mb-35">
 						<label for="serviceFeeTax">SERVICE FEE (VAT PERCENTAGE) </label>
 						<input
 							type="number"
@@ -271,30 +271,30 @@
 							value="<?php echo $vendor['serviceFeeTax']; ?>"
 							/>
 					</div>
-					<div class="form group mb-35">
-						<h3>SELECT PAYMENT METHOD(S)</h3>
-						<div class="col-lg-3">
+					<h4>SELECT PAYMENT METHOD(S)</h4>
+					<div class="form-check-inline mb-35">						
+						<div class="form-group">
 							<h4>BANCONTACT</h4>
 							<label class="radio-inline" for="bancontactYes">Yes</label>
 							<input type="radio" id="bancontactYes" name="vendor[bancontact]" value="1" <?php if ($vendor['bancontact'] === '1') echo 'checked'; ?> />
 							<label class="radio-inline" for="bancontactNo">&nbsp;&nbsp;&nbsp;No</label>
 							<input type="radio" id="bancontactNo" name="vendor[bancontact]" value="0" <?php if ($vendor['bancontact'] === '0') echo 'checked'; ?> />
 						</div>
-						<div class="col-lg-3">
+						<div class="form-group mb-35">
 							<h4>IDEAL</h4>
 							<label class="radio-inline" for="idealYes">Yes</label>
 							<input type="radio" id="idealYes" name="vendor[ideal]" value="1" <?php if ($vendor['ideal'] === '1') echo 'checked'; ?> />
 							<label class="radio-inline" for="idealNo">&nbsp;&nbsp;&nbsp;No</label>
 							<input type="radio" id="idealNo" name="vendor[ideal]" value="0" <?php if ($vendor['ideal'] === '0') echo 'checked'; ?> />
 						</div>
-						<div class="col-lg-3">
+						<div class="form-group mb-35">
 							<h4>VISA / MASTERCARD</h4>
 							<label class="radio-inline" for="creditCardYes">Yes</label>
 							<input type="radio" id="creditCardYes" name="vendor[creditCard]" value="1" <?php if ($vendor['creditCard'] === '1') echo 'checked'; ?> />
 							<label class="radio-inline" for="creditCardNo">&nbsp;&nbsp;&nbsp;No</label>
 							<input type="radio" id="creditCardNo" name="vendor[creditCard]" value="0" <?php if ($vendor['creditCard'] === '0') echo 'checked'; ?> />
 						</div>
-						<div class="col-lg-3">
+						<div class="form-group mb-35">
 							<h4>GIRO</h4>
 							<label class="radio-inline" for="giroYes">Yes</label>
 							<input type="radio" id="giroYes" name="vendor[giro]" value="1" <?php if ($vendor['giro'] === '1') echo 'checked'; ?> />
@@ -302,37 +302,29 @@
 							<input type="radio" id="giroNo" name="vendor[giro]" value="0" <?php if ($vendor['giro'] === '0') echo 'checked'; ?> />
 						</div>
 					</div>
-					<br/>
-					<div class="form-group" style="margin-top:10% !important">
-						<h3>REQUIRE USER MOBILE PHONE ON CHECKOUT FORm</h3>
-						<br/>
+					<h4>REQUIRE USER MOBILE PHONE ON CHECKOUT FORM</h4>
+					<div class="form-group mb-35">
 						<label class="radio-inline" for="requireMobileYes">Yes</label>
 						<input type="radio" id="requireMobileYes" name="vendor[requireMobile]" value="1" <?php if ($vendor['requireMobile'] === '1') echo 'checked'; ?> />
 						<label class="radio-inline" for="requireMobileNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="requireMobileNo" name="vendor[requireMobile]" value="0" <?php if ($vendor['requireMobile'] === '0') echo 'checked'; ?> />
 					</div>
-					<br/>
-					<div class="form-group">
-						<h3>REQUIRE RESERVATION FROM VISITOR</h3>
-						<br/>
+					<h4>REQUIRE RESERVATION FROM VISITOR</h4>
+					<div class="form-group mb-35">
 						<label class="radio-inline" for="requireReservationkYes">Yes</label>
 						<input type="radio" id="requireReservationkYes" name="vendor[requireReservation]" value="1" <?php if ($vendor['requireReservation'] === '1') echo 'checked'; ?> />
 						<label class="radio-inline" for="requireReservationNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="requireReservationNo" name="vendor[requireReservation]" value="0" <?php if ($vendor['requireReservation'] === '0') echo 'checked'; ?> />
 					</div>
-					<br/>
-					<div class="form-group">
-						<h3>REQUIRE HEALTH INFORMATION FROM VISITOR</h3>
-						<br/>
+					<h4>REQUIRE HEALTH INFORMATION FROM VISITOR</h4>
+					<div class="form-group mb-35">
 						<label class="radio-inline" for="healthCheckYes">Yes</label>
 						<input type="radio" id="healthCheckYes" name="vendor[healthCheck]" value="1" <?php if ($vendor['healthCheck'] === '1') echo 'checked'; ?> />
 						<label class="radio-inline" for="healthCheckNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="healthCheckNo" name="vendor[healthCheck]" value="0" <?php if ($vendor['healthCheck'] === '0') echo 'checked'; ?> />
 					</div>
-					<br/>
-
-					<div class="form-check-inline">
-						<h3>SELECT SALES LOCATION TYPES</h3>
+					<h4>SELECT SALES LOCATION TYPES</h4>
+					<div class="form-check-inline mb-35">
 						<?php foreach ($vendor['typeData'] as $type) { ?>
 							<label class="form-check-label">
 								<?php echo $type['type']; ?>:
@@ -352,7 +344,6 @@
 							</label>
 						<?php } ?>
 					</div>
-					<br/>
 					<br/>
 					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />
@@ -379,7 +370,110 @@
 						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 					</div>
 					<input class="btn btn-primary" type="submit" value="Upload" />
-				</form>
+				</form>				
+				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#timeModal" style="margin-top:20px">Set working time</button>
+				<!--TIME MODAL -->
+				<div class="modal" id="timeModal" role="dialog">
+					<div class="modal-dialog">
+						<!-- Modal content-->
+						<form method="post" action="<?php echo base_url() ?>profile/updateVendorTime/<?php echo $user->id; ?>">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h4 class="modal-title">
+										Set availability days and time
+									</h4>
+								</div>
+								<div class="modal-body">
+									<?php foreach($dayOfWeeks as $day) { ?>
+									<div class="from-group">
+										<div>
+											<label for="<?php echo $day; ?>" style="color: #000">
+												<input
+													type="checkbox"
+													id="<?php echo $day; ?>"
+													value="<?php echo $day; ?>"
+													onchange="showDay(this,'<?php echo 'day_' . $day; ?>')"
+													name="<?php echo $day; ?>[day][]"
+													<?php
+														if (isset($workingTime[$day])) {
+															echo 'checked';
+															$first = array_shift($workingTime[$day]);
+														} else {
+															$first = null;
+														}
+													?>
+													/>
+												<br/>
+												<?php echo ucfirst($day); ?>
+											</label>
+										</div>
+										<div id="<?php echo 'day_' . $day; ?>" <?php if (empty($first)) echo 'style="display:none"'; ?>>
+											<label for="from<?php echo $day; ?>" style="color: #000">From:
+												<input
+													type="time"
+													id="from<?php echo $day; ?>"
+													class="<?php echo 'day_' . $day; ?>"
+													name="<?php echo $day; ?>[timeFrom][]"
+													<?php if (!empty($first)) { ?>
+														value="<?php echo $first['timeFrom']; ?>"
+													<?php } else { ?>
+														disabled
+													<?php } ?>
+													/>
+											</label>
+											<Label for="to<?php echo $day; ?>" style="color: #000">To:
+												<input
+													type="time"
+													id="to<?php echo $day; ?>"
+													class="<?php echo 'day_' . $day; ?>"
+													name="<?php echo $day; ?>[timeTo][]"
+													<?php if (!empty($first)) { ?>
+														value="<?php echo $first['timeTo']; ?>"
+													<?php } else { ?>
+														disabled
+													<?php } ?>
+													/>
+											</label>
+											<button type="button" class="btn btn-default" onclick="addTimePeriod('<?php echo $day . 'Times'; ?>','<?php echo $day; ?>')">Add time</button>
+											<div id="<?php echo $day; ?>Times">
+												<?php
+													if (!empty($workingTime[$day])) {
+														foreach($workingTime[$day] as $day) {
+															?>
+															<label style="color: #000">From:
+																<input
+																	type="time"
+																	class="<?php echo 'day_' . $day['day']; ?>"
+																	name="<?php echo $day['day']; ?>[timeFrom][]"
+																	value="<?php echo $day['timeFrom']; ?>"
+																	/>
+															</label>
+															<Label style="color: #000">To:
+																<input
+																	type="time"
+																	class="<?php echo 'day_' . $day['day']; ?>"
+																	name="<?php echo $day['day']; ?>[timeTo][]"
+																	value="<?php echo $day['timeTo']; ?>"
+																	/>
+															</label>	
+															<?php
+														}														
+													}
+												?>
+											</div>
+										</div>
+									</div>
+									<?php } ?>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									<input type="submit" class="btn btn-primary" value="Submit" />
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	<?php } ?>
@@ -557,6 +651,7 @@
 		</div>
 	</div>
 </div>
+
 
 <script>
 	function getUserAjax() {
