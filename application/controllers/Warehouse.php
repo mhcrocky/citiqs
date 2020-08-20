@@ -184,7 +184,8 @@
                 'productTypes' => $this->shopprodutctype_model->fetchProductTypes($userId),
                 'concatSeparator' => $this->config->item('concatSeparator'),
                 'productNames' => $productNames,
-                'pagination' => $pagination
+                'pagination' => $pagination,
+                'dayOfWeeks' => $this->config->item('weekDays'),
             ];
 
             $this->loadViews('warehouse/products', $this->global, $data, null, 'headerWarehouse');
@@ -557,10 +558,10 @@
 
             $data = [
                 'printers' => $this->shopprinters_model->read(['*'], ['userId=' => $userId, 'masterMac=' => '0']),
-                'spots' => $this->shopspot_model->fetchUserSpots($userId),
+                'spots' => $this->shopspot_model->fetchUserSpotsImporved(['tbl_shop_printers.userId=' => $userId]),
                 'spotTypes' =>$this->shopspottype_model->read(['*'], ['id>' => 0]),
+                'dayOfWeeks' => $this->config->item('weekDays'),
             ];
-
 
             $this->loadViews('warehouse/spots', $this->global, $data, null, 'headerWarehouse');
         }
@@ -640,6 +641,42 @@
                 $this->session->set_flashdata('error', 'Update failed! Please try again.');
             }
 
+            redirect('spots');
+            return;
+        }
+
+        public function addSpotTimes($spotId): void
+        {
+            $post = $this->input->post(null, true);
+            $this->shopspottime_model->setProperty('spotId', $spotId)->deleteSpotTimes();
+
+            foreach ($post as $day => $value) {
+                if (count($value['timeFrom']) === count($value['timeTo'])) {
+                    $insert = array_map(function($from, $to) use($day, $spotId) {
+                        if ($from && $to) {
+                            return [
+                                'spotId'	=> $spotId,
+                                'day'		=> $day,
+                                'timeFrom'	=> $from,
+                                'timeTo'	=> $to,
+                            ];
+                        }
+                    }, $value['timeFrom'], $value['timeTo'] );
+
+                    $insert = array_filter($insert, function($data) {
+                        if (!empty($data)) return $data;
+                    });
+
+                    if (!empty($insert)) {
+                        if (!$this->shopspottime_model->multipleCreate($insert)) {
+                            $this->session->set_flashdata('error', 'Time update failed');
+                            redirect('spots');
+                            return;
+                        };
+                    }
+                }
+            }
+            $this->session->set_flashdata('success', 'Time updated');
             redirect('spots');
             return;
         }
@@ -796,5 +833,5 @@
 				'vendorId' => $_SESSION['userId']
 			];
 			$this->loadViews('warehouse/dayreport', $this->global, $data, null, 'headerWarehouse');
-		}
+        }
     }

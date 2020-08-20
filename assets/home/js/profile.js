@@ -15,10 +15,7 @@ function showDay(element, day) {
     }
 
     for (i = 0; i < inputTimesLength; i++) {
-        console.dir(i);
         inputTimes[i].disabled = disableElement;
-        console.dir(disableElement);
-        console.dir(inputTimes[i]);
     }
 }
 

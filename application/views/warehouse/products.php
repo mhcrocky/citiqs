@@ -284,82 +284,76 @@
                                                     </h4>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <?php
-                                                        $dayOfWeeks = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-                                                        foreach($dayOfWeeks as $day) {
-                                                            
-                                                    ?>
-                                                    <div class="from-group">
-                                                        <label class="checkbox-inline" for="<?php echo $day . $product['productId']; ?>">
-                                                            <input
-                                                                type="checkbox"
-                                                                id="<?php echo $day . $product['productId']; ?>"
-                                                                value="<?php echo $day; ?>"
-                                                                onchange="showDay(this,'<?php echo $day . '_'.  $product['productId']; ?>')"
-                                                                name="productTime[<?php echo $day; ?>][day][]"
-                                                                <?php                                                                    
-                                                                    if (isset($product['productTimes'][$day])) {
-                                                                        $first = array_shift($product['productTimes'][$day]);                                                                        
-                                                                        echo 'checked';
-                                                                    }
-                                                                ?>
-                                                                />
-                                                                <?php echo ucfirst($day); ?>
-                                                        </label>
-                                                        <br/>
-                                                        <div id="<?php echo $day . '_'.  $product['productId']; ?>" <?php if (!isset($first)) echo 'style="display:none"'; ?>>
-                                                            <label for="from<?php echo $day . $product['productId']; ?>">From:
+                                                    <?php foreach($dayOfWeeks as $day) { ?>
+                                                        <div class="from-group">
+                                                            <label class="checkbox-inline" for="<?php echo $day . $product['productId']; ?>">
                                                                 <input
-                                                                    type="time"
-                                                                    id="from<?php echo $day . $product['productId']; ?>"
-                                                                    name="productTime[<?php echo $day; ?>][from][]"
-                                                                    <?php
-                                                                        if (isset($first[2])) {
-                                                                            echo 'value="' . $first[2] . '"';
+                                                                    type="checkbox"
+                                                                    id="<?php echo $day . $product['productId']; ?>"
+                                                                    value="<?php echo $day; ?>"
+                                                                    onchange="showDay(this,'<?php echo $day . '_'.  $product['productId']; ?>')"
+                                                                    name="productTime[<?php echo $day; ?>][day][]"
+                                                                    <?php                                                                    
+                                                                        if (isset($product['productTimes'][$day])) {
+                                                                            $first = array_shift($product['productTimes'][$day]);                                                                        
+                                                                            echo 'checked';
                                                                         }
                                                                     ?>
                                                                     />
+                                                                    <?php echo ucfirst($day); ?>
                                                             </label>
-                                                            <Label for="to<?php echo $day . $product['productId']; ?>">To:
-                                                                <input
-                                                                    type="time"
-                                                                    id="to<?php echo $day . $product['productId']; ?>"
-                                                                    name="productTime[<?php echo $day; ?>][to][]"
+                                                            <br/>
+                                                            <div id="<?php echo $day . '_'.  $product['productId']; ?>" <?php if (!isset($first)) echo 'style="display:none"'; ?>>
+                                                                <label for="from<?php echo $day . $product['productId']; ?>">From:
+                                                                    <input
+                                                                        type="time"
+                                                                        id="from<?php echo $day . $product['productId']; ?>"
+                                                                        name="productTime[<?php echo $day; ?>][from][]"
+                                                                        <?php
+                                                                            if (isset($first[2])) {
+                                                                                echo 'value="' . $first[2] . '"';
+                                                                            }
+                                                                        ?>
+                                                                        />
+                                                                </label>
+                                                                <Label for="to<?php echo $day . $product['productId']; ?>">To:
+                                                                    <input
+                                                                        type="time"
+                                                                        id="to<?php echo $day . $product['productId']; ?>"
+                                                                        name="productTime[<?php echo $day; ?>][to][]"
+                                                                        <?php
+                                                                            if (isset($first[3])) {
+                                                                                echo 'value="' . $first[3] . '"';
+                                                                            }
+                                                                            unset($first)
+                                                                        ?>
+                                                                        />
+                                                                </label>
+                                                                <button type="button" class="btn btn-default" onclick="addTimePeriod('<?php echo $day . $product['productId']; ?>Times','<?php echo $day; ?>')">Add time</button>
+                                                                <div id="<?php echo $day . $product['productId']; ?>Times">
                                                                     <?php
-                                                                        if (isset($first[3])) {
-                                                                            echo 'value="' . $first[3] . '"';
+                                                                        if (isset($product['productTimes'][$day]) && $product['productTimes'][$day]) {
+                                                                            foreach($product['productTimes'][$day] as $dayData) {
+                                                                                ?>
+                                                                                    <div>
+                                                                                        <label>From
+                                                                                            <input type="time" name="productTime[<?php echo $day; ?>][from][]" value="<?php echo $dayData[2]; ?>" />
+                                                                                        </label>
+                                                                                        <label>To:
+                                                                                            <input type="time" name="productTime[<?php echo $day; ?>][to][]" value="<?php echo $dayData[3]; ?>"/>
+                                                                                        </label>
+                                                                                        <span class="fa-stack fa-2x" onclick="removeParent(this)">
+                                                                                            <i class="fa fa-times"></i>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                <?php
+                                                                            }
                                                                         }
-                                                                        unset($first)
                                                                     ?>
-                                                                    />
-                                                            </label>
-                                                            <button type="button" class="btn btn-default" onclick="addTimePeriod('<?php echo $day . $product['productId']; ?>Times','<?php echo $day; ?>')">Add time</button>
-                                                            <div id="<?php echo $day . $product['productId']; ?>Times">
-                                                                <?php
-                                                                    if (isset($product['productTimes'][$day]) && $product['productTimes'][$day]) {
-                                                                        foreach($product['productTimes'][$day] as $dayData) {
-                                                                            ?>
-                                                                                <div>
-                                                                                    <label>From
-                                                                                        <input type="time" name="productTime[<?php echo $day; ?>][from][]" value="<?php echo $dayData[2]; ?>" />
-                                                                                    </label>
-                                                                                    <label>To:
-                                                                                        <input type="time" name="productTime[<?php echo $day; ?>][to][]" value="<?php echo $dayData[3]; ?>"/>
-                                                                                    </label>
-                                                                                    <span class="fa-stack fa-2x" onclick="removeParent(this)">
-                                                                                        <i class="fa fa-times"></i>
-                                                                                    </span>
-                                                                                </div>
-                                                                            <?php
-                                                                        }
-                                                                    }
-                                                                ?>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <?php
-                                                        }
-                                                    ?>
+                                                    <?php } ?>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

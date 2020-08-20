@@ -96,7 +96,7 @@
             $result = $this->readImproved([
                 'what' => ['id'],
                 'where' => [
-                    'spotId = '   => $this->spotId,
+                    'spotId = '     => $this->spotId,
                     'day = '        => date('D'),
                     'timeFrom <= '  => $hours,
                     'timeTo > '     => $hours

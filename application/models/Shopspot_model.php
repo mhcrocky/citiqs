@@ -106,15 +106,35 @@
                     $this->table . '.printerId AS spotPrinterId',
                     $this->table . '.spotName AS spotName',
                     $this->table . '.active AS spotActive',
+                    $this->table . '.spotTypeId AS spotTypeId',
                     'tbl_shop_printers.printer AS printer',
                     'tbl_shop_printers.active AS printerActive',
-                    'tbl_shop_vendor_types.active as typeactive'
+                    'tbl_shop_vendor_types.active as typeactive',
+                    'tbl_shop_spot_types.type AS spotType',
+                    'tblShopSpotTimes.spotTimes'
                 ],
                 'where' => $where,
                 'joins' => [
                     ['tbl_shop_printers', $this->table . '.printerId = tbl_shop_printers.id', 'INNER'],
                     ['tbl_shop_spot_types', 'tbl_shop_spot_types.id = ' . $this->table . '.spotTypeId' , 'INNER'],
-                    ['tbl_shop_vendor_types', 'tbl_shop_vendor_types.typeId = tbl_shop_spot_types.id', 'INNER']
+                    ['tbl_shop_vendor_types', 'tbl_shop_vendor_types.typeId = tbl_shop_spot_types.id', 'INNER'],
+                    [
+                        '(
+                            SELECT
+                                tbl_shop_spot_times.spotId,
+                                GROUP_CONCAT(
+                                    tbl_shop_spot_times.day,
+                                    "|", tbl_shop_spot_times.timeFrom,
+                                    "|", tbl_shop_spot_times.timeTo
+                                ) AS spotTimes
+                            FROM
+                            tbl_shop_spot_times
+                            GROUP BY tbl_shop_spot_times.spotId
+                        ) tblShopSpotTimes',
+                        'tblShopSpotTimes.spotId = ' . $this->table . '.id' ,
+                        'LEFT'
+                    ],
+                    
                 ],
                 'conditions' => [
                     'order_by' => ['length(`spotName`),`spotName`'],

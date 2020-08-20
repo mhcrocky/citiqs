@@ -4,11 +4,11 @@ function redirectTo(urlPath) {
     window.location.replace(url);
 }
 
-function checkSpotId(form) {
-    let url = globalVariables.ajax + 'checkSpotId';
-    sendFormAjaxRequest(form, url, 'checkSpotId', redirectToMakeOrder);
-    return false;
-}
+// function checkSpotId(form) {
+//     let url = globalVariables.ajax + 'checkSpotId';
+//     sendFormAjaxRequest(form, url, 'checkSpotId', redirectTo);
+//     return false;
+// }
 
 $(document).ready(function() {
     $('.selectSpot').select2();

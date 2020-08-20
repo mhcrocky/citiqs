@@ -99,6 +99,11 @@
                                         <i class="far fa-edit"></i>
                                     </span>
                                 </div>
+                                <div class="iconWrapper">
+                                    <span class="fa-stack fa-2x edit-icon btn-edit-item" data-toggle="modal" data-target="#timeModal<?php echo $spot['spotId']; ?>"  title="Click to add time">
+                                        <i class="far fa-clock-o"></i>
+                                    </span>
+                                </div>
                                 <?php if ($spot['spotActive'] === '1') { ?>
                                     <div title="Click to block spot" class="iconWrapper delete-icon-wrapper">
                                         <a href="<?php echo $this->baseUrl . 'warehouse/editSpot/' . $spot['spotId'] .'/0'; ?>" >
@@ -176,6 +181,138 @@
                                         </div>
                                     </form>
                                 </div>
+                            </div>
+                        </div>
+
+                        <?php
+                            $spotTimes = explode(',', $spot['spotTimes']);
+                            $spotTimes = array_map(function($data){
+                                return explode('|', $data);
+                            }, $spotTimes);
+
+                            $fineSpotDays = [
+                                'Mon' => [],
+                                'Tue' => [],
+                                'Wed' => [],
+                                'Thu' => [],
+                                'Fri' => [],
+                                'Sat' => [],
+                                'Sun' => [],
+                            ];
+
+                            foreach($spotTimes as $time) {
+                                if (!empty($time[0])) {
+                                    array_push($fineSpotDays[$time[0]], $time);
+                                }
+                            }
+                        ?>
+                        <!--TIME MODAL -->
+                        <div class="modal" id="timeModal<?php echo $spot['spotId']; ?>" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <form method="post" action="warehouse/addSpotTimes/<?php echo $spot['spotId']; ?>">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">
+                                                Set availability days and time for spot "<?php echo $spot['spotName']; ?>"
+                                            </h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <?php foreach($dayOfWeeks as $day) { ?>
+                                                <div class="from-group">
+                                                    <label class="checkbox-inline" for="<?php echo $day . $spot['spotId']; ?>">
+                                                        <input
+                                                            type="checkbox"
+                                                            id="<?php echo $day . $spot['spotId']; ?>"
+                                                            value="<?php echo $day; ?>"
+                                                            onchange="showDay(this,'<?php echo $day . '_'.  $spot['spotId']; ?>')"
+                                                            name="<?php echo $day; ?>[day][]"
+                                                            <?php                                                                    
+                                                                if (!empty($fineSpotDays[$day])) {
+                                                                    $first = array_shift($fineSpotDays[$day]);                                                                        
+                                                                    echo 'checked';
+                                                                } else {
+                                                                    $first = null;
+                                                                }
+                                                            ?>
+                                                            />
+                                                            <?php echo ucfirst($day); ?>
+                                                    </label>
+                                                    <br/>
+                                                    <div id="<?php echo $day . '_'.  $spot['spotId']; ?>" <?php if (empty($first)) echo 'style="display:none"'; ?>>
+                                                        <label for="from<?php echo $day . $spot['spotId']; ?>">From:
+                                                            <input
+                                                                type="time"
+                                                                id="from<?php echo $day . $spot['spotId']; ?>"
+                                                                name="<?php echo $day; ?>[timeFrom][]"
+                                                                class="<?php echo $day . '_'.  $spot['spotId']; ?>"
+                                                                <?php
+                                                                    if (isset($first[1])) {
+                                                                        echo 'value="' . $first[1] . '"';
+                                                                    } else {
+                                                                        echo 'disabled';
+                                                                    }
+                                                                ?>
+                                                                />
+                                                        </label>
+                                                        <Label for="to<?php echo $day . $spot['spotId']; ?>">To:
+                                                            <input
+                                                                type="time"
+                                                                id="to<?php echo $day . $spot['spotId']; ?>"
+                                                                name="<?php echo $day; ?>[timeTo][]"
+                                                                class="<?php echo $day . '_'.  $spot['spotId']; ?>"
+                                                                <?php
+                                                                    if (isset($first[2])) {
+                                                                        echo 'value="' . $first[2] . '"';
+                                                                    } else {
+                                                                        echo 'disabled';
+                                                                    }
+                                                                ?>
+                                                                />
+                                                        </label>
+                                                        <button type="button" class="btn btn-default" onclick="addTimePeriod('<?php echo $day . $spot['spotId']; ?>Times','<?php echo $day; ?>')">Add time</button>
+                                                        <div id="<?php echo $day . $spot['spotId']; ?>Times">
+                                                            <?php
+                                                                if (!empty($fineSpotDays[$day])) {
+                                                                    foreach($fineSpotDays[$day] as $dayData) {
+                                                                        ?>
+                                                                            <div>
+                                                                                <label>From
+                                                                                    <input
+                                                                                        type="time"
+                                                                                        class="<?php echo $day . '_'.  $spot['spotId']; ?>"
+                                                                                        name="<?php echo $day; ?>[timeFrom][]"
+                                                                                        value="<?php echo $dayData[1]; ?>"
+                                                                                        />
+                                                                                </label>
+                                                                                <label>To:
+                                                                                    <input
+                                                                                        type="time"
+                                                                                        class="<?php echo $day . '_'.  $spot['spotId']; ?>"
+                                                                                        name="<?php echo $day; ?>[timeTo][]"
+                                                                                        value="<?php echo $dayData[2]; ?>"
+                                                                                        />
+                                                                                </label>
+                                                                                <span class="fa-stack fa-2x" onclick="removeParent(this)">
+                                                                                    <i class="fa fa-times"></i>
+                                                                                </span>
+                                                                            </div>
+                                                                        <?php
+                                                                    }
+                                                                }
+                                                            ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php } ?>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <input type="submit" class="btn btn-primary" value="Submit" />
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     <?php } ?>
