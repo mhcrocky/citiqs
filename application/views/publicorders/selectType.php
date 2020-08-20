@@ -23,15 +23,35 @@
 					<?php foreach ($activeTypes as $type) { ?>
 
 						<label>
-							<input type="radio" name="radio" value="<?php echo 'make_order?vendorid=' . $vendor['vendorId'] . '&typeId=' . $type['typeId'] ?>" onchange="redirectTo(this.value)" class="form-control" <?php if($type['typeId']==='1') echo "checked" ?> />
+							<input type="radio" name="radio" value="<?php echo 'make_order?vendorid=' . $vendor['vendorId'] . '&typeId=' . $type['typeId'] ?>" onchange="redirectTo(this.value)" class="form-control" <?php if($type['typeId']==='0') echo "checked" ?> />
 							<div class="front-end box">
-								<span><?php echo $type['type']; ?></span>
+								<div style="margin-top: 20px">
+									<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="100" height="" />
+								</div>
+
+								<div style="margin-top: -70px">
+									<div style="margin-top: -30px">
+										<span><?php echo $type['type']; ?></span>
+									</div>
+								</div>
+
+								<div style="margin-top:120px">
+									<i class="<?php if($type['typeId']==='1') echo "fa fa-coffee" ?>" style="font-size:48px;color:ghostwhite"></i>
+									<i class="<?php if($type['typeId']==='2') echo "fa fa-bicycle" ?>" style="font-size:48px;color:ghostwhite"></i>
+									<i class="<?php if($type['typeId']==='3') echo "fa fa-refresh" ?>" style="font-size:48px;color:ghostwhite"></i>
+								</div>
+
+								<div style="margin-top: -90px">
+									<div style="margin-top: 10px">
+										<span style="font-size: xx-small" >click here</span>
+									</div>
+								</div>
+
 							</div>
 						</label>
 
 					<?php } ?>
 				</div>
-
 
 				<?php if ($vendor['requireReservation'] === '1' ) { ?>
 					<div><br/></div>
