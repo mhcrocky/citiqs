@@ -22,6 +22,7 @@ class  Profile extends BaseControllerWeb
 		$this->load->model('shopvendor_model');
 		$this->load->model('shopspottype_model');
 		$this->load->model('shopvendortypes_model');
+		$this->load->model('shopvendortime_model');
 
 		$this->load->config('custom');
 		$this->load->library('language', array('controller' => $this->router->class));
@@ -43,7 +44,15 @@ class  Profile extends BaseControllerWeb
 			'action' => 'profileUpdate',
 			'businessTypes' => $this->businesstype_model->getAll(),
 			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData(),
+			'workingTime' => $this->shopvendortime_model->setProperty('vendorId', $this->userId)->fetchWorkingTime(),
+			'dayOfWeeks' => $this->config->item('weekDays'),
 		];
+		if ($data['workingTime']) {
+			$data['workingTime'] = Utility_helper::resetArrayByKeyMultiple($data['workingTime'], 'day');
+		}
+		// var_dump($data['workingTime']);
+		// var_dump($data['dayOfWeeks']);
+		// die();
 
 		$this->loadViews("profile", $this->global, $data, NULL, 'headerwebloginhotelProfile'); // Menu profilepage
 	}
@@ -89,5 +98,44 @@ class  Profile extends BaseControllerWeb
     }
 
 
+	public function updateVendorTime($vendorId): void
+	{
+		$post = $this->input->post(null, true);		
+
+		$this->shopvendortime_model->setProperty('vendorId', $vendorId)->deleteVenodrTimes();
+
+		foreach ($post as $day => $value) {			
+			if (count($value['timeFrom']) === count($value['timeTo'])) {
+				$insert = array_map(function($from, $to) use($day, $vendorId) {
+					if ($from && $to) {
+						return [
+							'vendorId'	=> $vendorId,
+							'day'		=> $day,
+							'timeFrom'	=> $from,
+							'timeTo'	=> $to,
+						];
+					}					
+				}, $value['timeFrom'], $value['timeTo'] );
+
+				$insert = array_filter($insert, function($data) {
+					if (!empty($data)) return $data;
+				});
+
+				if (!empty($insert)) {
+					if (!$this->shopvendortime_model->multipleCreate($insert)) {
+						$this->session->set_flashdata('error', 'Time update failed');
+						redirect('profile');
+						return;
+					};
+				}
+
+				
+			}
+		}
+
+		$this->session->set_flashdata('success', 'Time updated');
+		redirect('profile');
+		return;
+	}
 
 }

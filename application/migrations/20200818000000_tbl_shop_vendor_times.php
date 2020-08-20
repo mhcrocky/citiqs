@@ -6,7 +6,6 @@ class Migration_tbl_shop_vendor_times extends CI_Migration {
 
 	public function up()
 	{
-        $this->load->config('custom');
         $query = 
             "
             CREATE TABLE IF NOT EXISTS tbl_shop_vendor_times (
@@ -20,17 +19,6 @@ class Migration_tbl_shop_vendor_times extends CI_Migration {
             );
             ";
         $this->db->query($query);
-
-        $days = $this->config->item('weekDays');
-
-        foreach ($days as $day) {
-            $query = "INSERT INTO `tbl_shop_vendor_times` (vendorId, day) SELECT vendorId, '{$day}' FROM tbl_shop_vendors WHERE tbl_shop_vendors.id > 0";
-            $this->db->query($query);
-        }
-    
-        
-
-       
 	}
 
 	public function down()
