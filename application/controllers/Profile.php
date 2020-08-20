@@ -50,9 +50,6 @@ class  Profile extends BaseControllerWeb
 		if ($data['workingTime']) {
 			$data['workingTime'] = Utility_helper::resetArrayByKeyMultiple($data['workingTime'], 'day');
 		}
-		// var_dump($data['workingTime']);
-		// var_dump($data['dayOfWeeks']);
-		// die();
 
 		$this->loadViews("profile", $this->global, $data, NULL, 'headerwebloginhotelProfile'); // Menu profilepage
 	}

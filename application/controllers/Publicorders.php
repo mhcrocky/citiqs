@@ -28,6 +28,7 @@
             $this->load->model('shopspot_model');
             $this->load->model('shopvendor_model');
             $this->load->model('shopvisitorreservtaion_model');
+            $this->load->model('shopvendortime_model');
 
             $this->load->config('custom');
 
@@ -40,21 +41,13 @@
             $get = $this->input->get(null, true);
             $typeId = empty($get['typeId']) ? '' : $get['typeId'];
 
-            // FETCH AND SAVE VENDOR DATA IN SESSION
+            // FETCH VENDOR DATA AND
             $vendor = $this->shopvendor_model->setProperty('vendorId', $get['vendorid'])->getVendorData();
-            if (empty($vendor['payNlServiceId'])) {
-                redirect(base_url());
-                exit();
-            }
 
-            if (
-                $vendor['requireReservation'] === '1'
-                && empty($_SESSION['visitorReservationId'])
-            ) {
-                redirect('check424/' . $vendor['vendorId']);
-                exit();
-            }
+            // CHECK VENDOR CREDENTIALS
+            $this->checkVendorCredentials($vendor);
 
+            // SAVE VENODR DATA IN SESSION
             $_SESSION['vendor'] = $vendor;
 
             // VENDOR SELECTED SPOT VIEW
@@ -160,6 +153,9 @@
                 exit();
             }
 
+            // CHECK VENDOR CREDENTIALS
+            $this->checkVendorCredentials($_SESSION['vendor']);
+
             $post = $this->input->post(null, true);
 
             if (!empty($post)) {
@@ -167,6 +163,7 @@
                 unset($post['spotId']);
                 $_SESSION['order'] = $post;
             }
+
 
             $data = [
                 'spotId' => $_SESSION['spotId'],
@@ -208,6 +205,9 @@
                 redirect($redirect);
                 exit();
             }
+
+            // CHECK VENDOR CREDENTIALS
+            $this->checkVendorCredentials($_SESSION['vendor']);
 
             $this->global['pageTitle'] = 'TIQS : PAY';
 
@@ -290,5 +290,40 @@
             $successRedirect = 'paymentengine' . DIRECTORY_SEPARATOR . $paymentType  . DIRECTORY_SEPARATOR . $paymentOptionSubId;
 
             redirect($successRedirect);
+        }
+
+        private function checkVendorCredentials(array $vendor): void
+        {
+            if (empty($vendor['payNlServiceId'])) {
+                redirect(base_url());
+                exit();
+            }
+
+            if (!$this->shopvendortime_model->setProperty('vendorId', $vendor['vendorId'])->isOpen()) {
+                redirect('closed/' . $vendor['vendorId']);
+                exit();
+            }
+
+            if ($vendor['requireReservation'] === '1' && empty($_SESSION['visitorReservationId'])) {
+                redirect('check424/' . $vendor['vendorId']);
+                exit();
+            }
+
+
+
+            return;
+        }
+
+        public function closed($vendorId): void
+        {
+            $this->global['pageTitle'] = 'TIQS : CLOSED';
+
+            $data = [
+                'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData()
+            ];
+            $workingTime = $this->shopvendortime_model->setProperty('vendorId', $vendorId)->fetchWorkingTime();
+            $data['workingTime'] = $workingTime ? Utility_helper::resetArrayByKeyMultiple($workingTime, 'day') : null;
+
+            $this->loadViews('publicorders/closed', $this->global, $data, null, 'headerWarehousePublic');
         }
     }

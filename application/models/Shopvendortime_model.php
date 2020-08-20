@@ -89,4 +89,20 @@
             $query = 'DELETE FROM ' . $this->table . ' WHERE vendorId = ' . $this->vendorId . ';';
             $this->db->query($query);
         }
+
+        public function isOpen(): bool
+        {
+            $hours = date('H:i:s');
+            $result = $this->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    'vendorId = '   => $this->vendorId,
+                    'day = '        => date('D'),
+                    'timeFrom <= '  => $hours,
+                    'timeTo > '     => $hours
+                ]
+            ]);
+
+            return is_null($result) ? false : true;
+        }
     }
