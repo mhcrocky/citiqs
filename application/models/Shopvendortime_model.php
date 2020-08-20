@@ -69,8 +69,10 @@
             return $data;
         }
 
-        public function insertVendorTimes(): bool
+        public function insertVendorTime(): bool
         {
+            if (empty($this->vendorId)) return false;
+
             $this->load->config('custom');
             $dayOfWeeks = $this->config->item('weekDays');
             foreach ($dayOfWeeks as $day) {
