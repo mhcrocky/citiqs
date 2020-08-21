@@ -4,7 +4,7 @@
     if (!defined('BASEPATH')) exit('No direct script access allowed');
 
     require APPPATH . '/libraries/BaseControllerWeb.php';
-    
+
     class Publicorders extends BaseControllerWeb
     {
         public function __construct()
@@ -29,6 +29,7 @@
             $this->load->model('shopvendor_model');
             $this->load->model('shopvisitorreservtaion_model');
             $this->load->model('shopvendortime_model');
+            $this->load->model('shopspottime_model');
 
             $this->load->config('custom');
 
@@ -79,6 +80,13 @@
         private function loadSpotView(int $spotId): void
         {
             $this->global['pageTitle'] = 'TIQS : ORDERING';
+
+            //CHECK IS SPOT OPEN
+            if (!$this->shopspottime_model->setProperty('spotId', $spotId)->isOpen()) {
+                $redirect = 'spot_closed' . DIRECTORY_SEPARATOR  . $spotId;
+                redirect($redirect);
+                return;
+            };
 
             $userId = $_SESSION['vendor']['vendorId'];
             $time = time();
@@ -309,13 +317,17 @@
                 exit();
             }
 
-
-
             return;
         }
 
         public function closed($vendorId): void
         {
+            if ($this->shopvendortime_model->setProperty('vendorId', $vendorId)->isOpen()) {
+                $redirect = 'make_order?vendorid=' . $vendorId;
+                redirect($redirect);
+                return;
+            };
+
             $this->global['pageTitle'] = 'TIQS : CLOSED';
 
             $data = [
@@ -325,5 +337,27 @@
             $data['workingTime'] = $workingTime ? Utility_helper::resetArrayByKeyMultiple($workingTime, 'day') : null;
 
             $this->loadViews('publicorders/closed', $this->global, $data, null, 'headerWarehousePublic');
+        }
+
+        public function spotClosed($spotId): void
+        {
+            if ($this->shopspottime_model->setProperty('spotId', $spotId)->isOpen()) {
+                $redirect = 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'] . '&spotid=' . $spotId;
+                redirect($redirect);
+                return;
+            };
+
+            $this->global['pageTitle'] = 'TIQS : CLOSED';
+
+            $spotId = intval($spotId);
+            $data = [
+                'vendor' => $this->shopvendor_model->setProperty('vendorId', $_SESSION['vendor']['vendorId'])->getVendorData(),
+                'spot' => $this->shopspot_model->setObjectId($spotId)->setObject()
+            ];
+
+            $workingTime = $this->shopspottime_model->setProperty('spotId', $spotId)->fetchWorkingTime();
+            $data['workingTime'] = $workingTime ? Utility_helper::resetArrayByKeyMultiple($workingTime, 'day') : null;
+
+            $this->loadViews('publicorders/spotClosed', $this->global, $data, null, 'headerWarehousePublic');
         }
     }
