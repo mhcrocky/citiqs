@@ -122,10 +122,6 @@
         {
             $this->global['pageTitle'] = 'TIQS : SELECT SPOT';
             $types = Utility_helper::resetArrayByKeyMultiple($_SESSION['vendor']['typeData'], 'active');
-            $where = [
-                'tbl_shop_printers.userId=' => $_SESSION['vendor']['vendorId'],
-                'tbl_shop_spots.active' => '1'
-            ];
 
             if (empty($types[1])) {
                 $data = [
@@ -134,6 +130,10 @@
                 ];
                 $this->loadViews('publicorders/selectType', $this->global, $data, null, 'headerWarehousePublic');
             } elseif (count($types[1]) === 1 || $typeId) {
+                $where = [
+                    'tbl_shop_printers.userId=' => $_SESSION['vendor']['vendorId'],
+                    'tbl_shop_spots.active' => '1',
+                ];
                 $where['tbl_shop_spots.spotTypeId'] = $typeId ? $typeId : $types[1][0]['typeId'];
                 $data = [
                     'vendor' => $_SESSION['vendor'],
