@@ -389,7 +389,10 @@
 									<div class="from-group">
 										<div>
 											<label for="<?php echo $day; ?>" style="color: #000">
-												<input
+
+												<?php echo ucfirst($day); ?>
+											</label>
+											<input
 													type="checkbox"
 													id="<?php echo $day; ?>"
 													value="<?php echo $day; ?>"
@@ -403,10 +406,9 @@
 															$first = null;
 														}
 													?>
+													style="zoom:2"
 													/>
 												<br/>
-												<?php echo ucfirst($day); ?>
-											</label>
 										</div>
 										<div id="<?php echo 'day_' . $day; ?>" <?php if (empty($first)) echo 'style="display:none"'; ?>>
 											<label for="from<?php echo $day; ?>" style="color: #000">From:
@@ -456,7 +458,10 @@
 																	name="<?php echo $day['day']; ?>[timeTo][]"
 																	value="<?php echo $day['timeTo']; ?>"
 																	/>
-															</label>	
+															</label>
+															<span style="color:#000" class="fa-stack fa-2x" onclick="removeParent(this)">
+																<i class="fa fa-times"></i>
+															</span>
 															<?php
 														}														
 													}
