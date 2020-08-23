@@ -223,8 +223,8 @@
                                 GROUP_CONCAT(
                                     tbl_shop_products_addons.productId,
                                     \'' .  $concatSeparator . '\', tbl_shop_products_addons.addonProductId,
-                                    \'' .  $concatSeparator . '\', tbl_shop_products_addons.productExtendedId
-
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_addons.productExtendedId,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_addons.quantity
                                     SEPARATOR "' . $concatGroupSeparator . '"                                    
                                 ) AS addons
                             FROM

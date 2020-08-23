@@ -1,5 +1,8 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
+<script>
+    var productGloabls = {};
+</script>
 <div class="main-wrapper theme-editor-wrapper">
 	<div class="grid-wrapper">
         <?php if (is_null($categories) || is_null($printers) || is_null($productTypes) || is_null($userSpots)) { ?>
@@ -429,15 +432,26 @@
                                                             <?php
                                                                 $addonsHtmlData = [];
                                                                 if (!is_null($product['addons'])) {
-                                                                    $addonsHtmlData = array_map(function($data){
-                                                                        return $data[2];
-                                                                    }, $product['addons']);
+                                                                    foreach($product['addons'] as $data) {
+                                                                        ?>
+                                                                            <script>
+                                                                                if (!productGloabls.hasOwnProperty('<?php echo $data[0] ?>')) {
+                                                                                    productGloabls['<?php echo $data[0] ?>'] = {};
+                                                                                }
+                                                                                productGloabls['<?php echo $data[0] ?>']['<?php echo $data[2] ?>'] = '<?php echo $data[3] ?>';
+                                                                            </script>
+                                                                        <?php
+                                                                        array_push($addonsHtmlData, $data[2]);
+                                                                    }
                                                                 }
                                                             ?>
                                                         </h4>
                                                     </div>
-                                                    <div class="modal-body addOns" data-addons=<?php echo implode(",", $addonsHtmlData); ?>>
-                                                        
+                                                    <div
+                                                        class="modal-body addOns"
+                                                        data-addons=<?php echo implode(",", $addonsHtmlData); ?>
+                                                        data-product-id = <?php echo $product['productId']; ?>
+                                                        >
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -658,8 +672,8 @@
 </div>
 <?php if (!empty($productNames)) { ?>
     <script>
-            $(document).ready(function() {
-                $('.selectProducts').select2();
-            });
+        $(document).ready(function() {
+            $('.selectProducts').select2();
+        });
     </script>
 <?php } ?>

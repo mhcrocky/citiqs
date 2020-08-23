@@ -42,39 +42,28 @@ function populateClassElements(className, string) {
     let elementsLenght = elements.length;
     let element;
     let i;
-    let addons;
     for (i = 0; i < elementsLenght; i++ ) {
         element = elements[i];
         element.innerHTML = string;
         if (element.dataset.addons) {
-            addons = element.dataset.addons.split(',');
+            let addons = element.dataset.addons.split(',');
             let elementChildren = element.children;
             let childrenLength = elementChildren.length;
             let j;
             for (j = 0; j < childrenLength; j++) {
-                let child;
-                let input;
-                child = elementChildren[j];
-                input = child.children[0];
-                if (addons.includes(input.dataset.extendedId)) {
-                    input.checked = true;
+                let child = elementChildren[j];
+                let inputAddon = child.children[0].children[0];
+                let inputAddonExtende = inputAddon.dataset.extendedId;
+                if (addons.includes(inputAddonExtende)) {
+                    let productId = element.dataset.productId;
+                    inputAddon.checked = true;
+                    child.children[1].children[0].value = productGloabls[productId][inputAddonExtende];
                 }
             }
         }
     }
 }
 
-
-function toogleProducts(elementl) {
-    let allProducts = document.getElements
-    let selected = element.selectedOptions;
-    let selectedLength = selected.length;
-    let j;
-    let selectedNames = [];
-    for (j = 0; j < selectedLength; j++) {
-        selectedIds.push(selected[j].value);
-    }
-}
 
 $(document).ready(function(){
     $('.productTimePickers').datetimepicker({
