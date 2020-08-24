@@ -60,7 +60,7 @@
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>home#dhl-section" id='dhl-button'></a>
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>found"></a>
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>Whatislostisfound"></a>
-			<a style="color: #E25F2A" href="#" id='modal-button'>choose your language</a>
+			<a style="color: #E25F2A" href="#" id='modal-button'><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/world.png" title="LANGUAGE"/></a>
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>logout"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/back.png" title="BACK"/></a>
 
 		</div>

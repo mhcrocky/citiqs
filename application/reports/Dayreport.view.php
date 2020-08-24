@@ -1,9 +1,21 @@
 <?php
-	use \koolreport\datagrid\DataTables;
 	use \koolreport\widgets\koolphp\Card;
-	use \koolreport\amazing\Theme;
 	use \koolreport\widgets\koolphp\Table;
+	use \koolreport\datagrid\DataTables;
 ?>
+
+<script src='https://code.jquery.com/jquery-1.12.3.js'></script>
+<script src='https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js'></script>
+<script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js" charset="utf-8"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.1.0/css/responsive.bootstrap.min.css">
+
+
+<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
+
+<script type="text/javascript" src="DataTables/datatables.min.js"></script>
 
 <div class="main-wrapper">
 	<div class="col-half background-apricot height" style="text-align:left; font-size: smaller" >
@@ -61,18 +73,16 @@
 						)
 					),
 
+
 				));
 				?>
 			</div>
 			<div class="report-content" style="margin-bottom: -30px; margin-top: 30px">
 				<?php
 				DataTables::create(array(
-					"responsive"=>true,
 					"dataSource"=>$this->dataStore("dayreport_day")->sortKeysDesc("DateCreated"),
-
-					"themeBase"=>"bs4", // Optional option to work with Bootsrap 4
 					"cssClass"=>array(
-						"table"=>"table table-striped table-bordered"
+						"table"=>"dt-responsive table table-striped table-bordered"
 					),
 					'width' => '100%',
 					"columns"=>array(
@@ -87,24 +97,39 @@
 							"prefix"=>"€ "
 						),
 
-	//					"amount"=>array(
-	//					   "type"=>"number",
-	//						 "decimals"=>2
-	//					 ),
-	//					"servicefee"=>array(
-	//					   "type"=>"number",
-	//						 "decimals"=>2
-	//					 )
+						"amount"=>array(
+							"label"=> "AMOUNT",
+							"type"=>"number",
+							"decimals"=>2,
+							"prefix"=>"€ "
+						 ),
+
+						"servicefee"=>array(
+							"label"=> "SERVICEFEE",
+							"type"=>"number",
+							"decimals"=>2,
+							"prefix"=>"€ "
+						 )
 
 					 ),
 
 					"options"=>array(
 						"order"=>array(
-							array(0,"desc"), //Sort by first column desc
-							array(1,"asc") //Sort by second column asc
+							array(1,"desc") //Sort by second column asc
 						),
 						"searching"=>true,
 						"colReorder"=>true,
+						"pagingType"=>array("simple",),
+						"language"=>array("paginate"=>array("first"=>'«',
+							"previous"=>'‹',
+							"next"=>'›',
+							"last"=>'»'
+						)),
+//						"paging"=>array(
+//							"pageSize"=>5,
+//							"pageIndex"=>0,
+//							"align"=>"left",
+//						),
 					),
 
 				));
@@ -113,8 +138,10 @@
 		</div>
 
 
+
 		<div class="align-top width-650" >
 			<div class="report-content" >
+
 				<?php
 				\koolreport\amazing\DualChartCard::create(array(
 					"title"=>"TOP LIST PRODUCTS FROM THIS WEEK TOTAL",
@@ -172,19 +199,28 @@
 				));
 				?>
 			</div>
-			<div class="report-content" style="margin-bottom: -30px; margin-top: 30px">
+			<div class="report-content" style="margin-bottom: -30px; margin-top: 30px; margin-left: -10px;">
+				<p>Table</p>
+				<style>
+					.dataTables_paginate {
+											 /*visibility: hidden;*/
+											 justify-content: center !important;
+										 }
+					.paginate_button page-item next {
+						/*visibility: hidden;*/
+						justify-content: center !important;
+						background-color: red;
+					}
+				</style>
 				<?php
-				Table::create(array(
-					"responsive"=>true,
+				DataTables::create(array(
 					"dataSource"=>$this->dataStore("alldata_week")->sort(array(
 						"productQuantity"=>"desc"
 					)),
-
-					"themeBase"=>"bs4", // Optional option to work with Bootsrap 4
+					"width"=>"600px",
 					"cssClass"=>array(
-						"table"=>"table table-striped table-bordered"
+						"table"=>"dt-responsive table table-striped table-bordered",
 					),
-					'width' => '100%',
 					"columns"=>array(
 						"productName"=>array(
 							"label"=> "PRODUCT",
@@ -197,6 +233,15 @@
 							"prefix"=>""
 						),
 
+						"totalamount"=>array(
+							"label"=> "AMOUNT",
+							"type"=>"number",
+							"decimals"=>2,
+							"decimalPoint"=>",",        // Decimal point character
+							"thousand_sep"=>".",  // Thousand separator
+							"prefix"=>"€ "
+						),
+
 						"productlinetotal"=>array(
 							"label"=> "AMOUNT",
 							"type"=>"number",
@@ -206,11 +251,14 @@
 							"prefix"=>"€ "
 						),
 
-
-						//					"servicefee"=>array(
-						//					   "type"=>"number",
-						//						 "decimals"=>2
-						//					 )
+						"servicefee"=>array(
+							"label"=> "SERVICEFEE",
+							"type"=>"number",
+							"decimals"=>2,
+							"decimalPoint"=>",",        // Decimal point character
+							"thousand_sep"=>".",  // Thousand separator
+							"prefix"=>"€ "
+						)
 
 					),
 
@@ -220,73 +268,81 @@
 						),
 						"searching"=>true,
 						"colReorder"=>true,
-					),
-					"paging"=>array(
-						"pageSize"=>5,
-						"pageIndex"=>0,
-					),
-
-
-				));
-				?>
-			</div>
-			<div class="report-content" style="margin-bottom: -30px; margin-top: 30px">
-				<?php
-				Table::create(array(
-					"responsive"=>true,
-					"dataSource"=>$this->dataStore("alldata_week")->sort(array(
-						"productlinetotal"=>"desc"
-					)),
-					"paging"=>array(
-						"pageSize"=>5,
-						"pageIndex"=>0,
-					),
-					"themeBase"=>"bs4", // Optional option to work with Bootsrap 4
-					"cssClass"=>array(
-						"table"=>"table table-striped table-bordered"
-					),
-					'width' => '100%',
-					"columns"=>array(
-						"productName"=>array(
-							"label"=> "PRODUCT",
-							"type"=>"text"
-						),
-						"productQuantity"=>array(
-							"label"=> "Qnt",
-							"type"=>"number",
-							"decimals"=>0,
-							"prefix"=>""
-						),
-
-						"productlinetotal"=>array(
-							"label"=> "AMOUNT",
-							"type"=>"number",
-							"decimals"=>2,
-							"decimalPoint"=>",",        // Decimal point character
-							"thousand_sep"=>".",  // Thousand separator
-							"prefix"=>"€ "
-						),
-
-
-						//					"servicefee"=>array(
-						//					   "type"=>"number",
-						//						 "decimals"=>2
-						//					 )
-
-					),
-
-					"options"=>array(
-						"order"=>array(
-							array(2,"desc") //Sort by second column asc
-						),
-						"searching"=>true,
-						"colReorder"=>true,
+						"pagingType"=>array("simple"),
+						"language"=>array("paginate"=>array("first"=>'«',
+							"previous"=>'‹',
+							"next"=>'›',
+							"last"=>'»'
+						)),
+						"paging"=>true,
+						"columnDefs"=>array(
+							array("width"=> "50px", "targets"=>"1" )
+						)
 					),
 
 
 				));
 				?>
 			</div>
+
+<!--			<div class="report-content" style="margin-bottom: -30px; margin-top: 30px">-->
+<!--				--><?php
+//				Table::create(array(
+//					"responsive"=>true,
+//					"dataSource"=>$this->dataStore("alldata_week")->sort(array(
+//						"productlinetotal"=>"desc"
+//					)),
+//					"paging"=>array(
+//						"pageSize"=>5,
+//						"pageIndex"=>0,
+//					),
+//					"themeBase"=>"bs4", // Optional option to work with Bootsrap 4
+//					"cssClass"=>array(
+//						"table"=>"table table-striped table-bordered"
+//					),
+//					'width' => '100%',
+//					"columns"=>array(
+//						"productName"=>array(
+//							"label"=> "PRODUCT",
+//							"type"=>"text"
+//						),
+//						"productQuantity"=>array(
+//							"label"=> "Qnt",
+//							"type"=>"number",
+//							"decimals"=>0,
+//							"prefix"=>""
+//						),
+//
+//						"productlinetotal"=>array(
+//							"label"=> "AMOUNT",
+//							"type"=>"number",
+//							"decimals"=>2,
+//							"decimalPoint"=>",",        // Decimal point character
+//							"thousand_sep"=>".",  // Thousand separator
+//							"prefix"=>"€ "
+//						),
+//
+//
+//						//					"servicefee"=>array(
+//						//					   "type"=>"number",
+//						//						 "decimals"=>2
+//						//					 )
+//
+//					),
+//
+//					"options"=>array(
+//						"order"=>array(
+//							array(2,"desc") //Sort by second column asc
+//						),
+//						"searching"=>true,
+//						"colReorder"=>true,
+//
+//					),
+//
+//
+//				));
+//				?>
+<!--			</div>-->
 		</div>
 
 
@@ -459,13 +515,12 @@
 			</div>
 			<div class="report-content" style="margin-bottom: -30px; margin-top: 30px">
 				<?php
-				Table::create(array(
-					"responsive"=>true,
+				DataTables::create(array(
 					"dataSource"=>$this->dataStore("dayreport_lastweek")->sortKeysDesc("DateCreated"),
 
 					"themeBase"=>"bs4", // Optional option to work with Bootsrap 4
 					"cssClass"=>array(
-						"table"=>"table table-striped table-bordered"
+						"table"=>"dt-responsive table table-striped table-bordered"
 					),
 					'width' => '100%',
 					"columns"=>array(
@@ -493,17 +548,213 @@
 
 					"options"=>array(
 						"order"=>array(
-							array(0,"desc"), //Sort by first column desc
+							array(0,"desc") //Sort by second column asc
 						),
 						"searching"=>true,
 						"colReorder"=>true,
+						"pagingType"=>array("simple",),
+						"language"=>array("paginate"=>array("first"=>'«',
+							"previous"=>'‹',
+							"next"=>'›',
+							"last"=>'»'
+						)),
+						"paging"=>array(
+							"pageSize"=>5,
+							"pageIndex"=>0,
+							"align"=>"left",
+
+						),
 					),
 
 				));
 				?>
 			</div>
 		</div>
-	</div>
+			<div class="align-top width-650" >
+				<div class="report-content" >
+					<?php
+					\koolreport\amazing\DualChartCard::create(array(
+						"title"=>"AVG SPENDING PER ORDER THIS WEEK",
+						"value"=>$this->dataStore('alldata_bybuyer')->SUM('totalamount')/$this->dataStore('alldata_bybuyer')->COUNT(),
+						"format"=>array(
+							"value"=>array(
+								"type"=>"number",
+								"decimals"=>2,              // Number of decimals to show
+								"decimalPoint"=>",",        // Decimal point character
+								"thousand_sep"=>".",  // Thousand separator
+								"prefix"=>"€ ",
+							)
+						),
+						"cssClass"=>array(
+							"card"=>"my-own-card-class",
+							"tittle"=>"font-bold",
+							"value"=>"big-font",
+							"icon"=>"fa fa-euro"
+						),
+						"cssStyle"=> [
+							"card"=>"background-color:#04a7b8",
+							"title"=>"font-weight:bold",
+							"value"=>"font-style:italic",
+							"icon"=>"font-size:24px;color:white"
+						],
 
+						"chart"=>array(
+							"height"=>"300px",
+							"dataSource"=>$this->dataStore('alldata_bybuyer')->SUM('totalamount')/$this->dataStore('alldata_bybuyer')->COUNT(),
+							"columns"=>array(
+								"createdAt",
+								"productQuantity"=>array(
+									"type"=>"number",
+									"decimals"=>2,              // Number of decimals to show
+									"decimalPoint"=>",",        // Decimal point character
+									"thousand_sep"=>".",  // Thousand separator
+									"prefix"=>"€",
+								)
+							)
+						),
+						"secondChart"=>array(
+							"dataSource"=>$this->dataStore('alldata_bybuyer')->SUM('totalamount')/$this->dataStore('alldata_bybuyer')->COUNT(),
+							"columns"=>array(
+								"createdAt",
+								"productQuantity"=>array(
+									"type"=>"number",
+									"decimals"=>0,              // Number of decimals to show
+									"decimalPoint"=>",",        // Decimal point character
+									"thousandSeparator"=>".",  // Thousand separator
+									"prefix"=>"€"
+								)
+							)
+						),
+
+					));
+					?>
+				</div>
+
+				<div class="report-content" style="margin-top: 30px ">
+					<?php
+					\koolreport\amazing\DualChartCard::create(array(
+						"title"=>"NUMBER OF ORDERS THIS WEEK ",
+						"value"=>$this->dataStore('alldata_bybuyer')->count(),
+						"format"=>array(
+							"value"=>array(
+								"type"=>"number",
+								"decimals"=>0,              // Number of decimals to show
+								"decimalPoint"=>",",        // Decimal point character
+								"thousand_sep"=>".",  // Thousand separator
+								"prefix"=>"",
+							)
+						),
+						"cssClass"=>array(
+							"card"=>"my-own-card-class",
+							"tittle"=>"font-bold",
+							"value"=>"big-font",
+							"icon"=>"fa fa-euro"
+						),
+						"cssStyle"=> [
+							"card"=>"background-color:#04a678",
+							"title"=>"font-weight:bold",
+							"value"=>"font-style:italic",
+							"icon"=>"font-size:24px;color:white"
+						],
+
+						"chart"=>array(
+							"height"=>"300px",
+							"dataSource"=>$this->dataStore('alldata_bybuyer')->count(),
+							"columns"=>array(
+								"createdAt",
+								"totalamount"=>array(
+									"type"=>"number",
+									"decimals"=>2,              // Number of decimals to show
+									"decimalPoint"=>",",        // Decimal point character
+									"thousand_sep"=>".",  // Thousand separator
+									"prefix"=>"€",
+								)
+							)
+						),
+						"secondChart"=>array(
+							"dataSource"=>$this->dataStore('alldata_bybuyer')->count(),
+							"columns"=>array(
+								"createdAt",
+								"productQuantity"=>array(
+									"type"=>"number",
+									"decimals"=>0,              // Number of decimals to show
+									"decimalPoint"=>",",        // Decimal point character
+									"thousandSeparator"=>".",  // Thousand separator
+									"prefix"=>"€"
+								)
+							)
+						),
+
+					));
+					?>
+				</div>
+
+
+
+				<div class="report-content" style="margin-left: -10px; margin-top: 30px">
+					<?php
+					DataTables::create(array(
+						"dataSource"=>$this->dataStore("alldata_bybuyer")->sort(array(
+							"productlinetotal"=>"desc"
+						)),
+
+						"cssClass"=>array(
+							"table"=>"dt-responsive table table-striped table-bordered",
+						),
+						'width' => '100%',
+						"columns"=>array(
+
+							"createdAt"=>array(
+								"label"=> "DATE",
+								"type"=>"date",
+							),
+
+							"buyerEmail"=>array(
+								"label"=> "BUYER E-MAIL",
+								"type"=>"text"
+							),
+
+							"buyerUserName"=>array(
+							   "type"=>"text"
+							 ),
+
+							"totalamount"=>array(
+								"label"=> "AMOUNT",
+								"type"=>"number",
+								"decimals"=>2,
+								"decimalPoint"=>",",        // Decimal point character
+								"thousand_sep"=>".",  // Thousand separator
+								"prefix"=>"€ "
+							),
+
+
+
+						),
+
+						"options"=>array(
+							"order"=>array(
+								array(3,"desc") //Sort by second column asc
+								),
+								"searching"=>true,
+								"colReorder"=>true,
+								"pagingType"=>array("simple",),
+								"language"=>array("paginate"=>array("first"=>'«',
+										"previous"=>'‹',
+										"next"=>'›',
+										"last"=>'»'
+										)),
+								"paging"=>array(
+								"pageSize"=>5,
+								"pageIndex"=>0,
+								"align"=>"left",
+
+							),
+						),
+					));
+					?>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 

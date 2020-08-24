@@ -443,8 +443,14 @@
             <div class="footer-basket">
         
                 <div class="footer-top">
+					<?php if ($vendor['requireReservation'] === '1' ) { ?>
+						<a href="<?php echo base_url(); ?>check424/<?php echo $vendor['vendorId']; ?>" style="margin-left:10px">
+							<i style="font-size: 40px;color: white" class="fa fa-home"></i>
+						</a>
+					<?php } ?>
                     <div class="fb-left">
-                        <!--                        <h4>Your Basket</h4>-->
+
+						<!--                        <h4>Your Basket</h4>-->
                         <h5 onclick="submitMakeOrderForm('makeOrder', 'orderAmount', 'orderQuantity')" >Betaal
                             <?php
                                 $orderedQuantity = 0;
@@ -465,14 +471,10 @@
                     <div class="fb-mid submitOrder" onclick="submitMakeOrderForm('makeOrder', 'orderAmount', 'orderQuantity')">
                         <span class="fb-price">€  <span id="orderAmount"><?php echo number_format($orderedAmount, 2, '.', ',') ; ?></span></span>
                     </div>
-                    
+
                     <div class="fb-right submitOrder" onclick="submitMakeOrderForm('makeOrder', 'orderAmount', 'orderQuantity')">
                         <i style="font-size: 40px" class="fa fa-credit-card-alt"></i>
-                        <?php if ($vendor['requireReservation'] === '1' ) { ?>
-                            <a href="<?php echo base_url(); ?>check424/<?php echo $vendor['vendorId']; ?>" style="margin-left:10px">
-                                <i style="font-size: 40px" class="fa fa-sign-out"></i>
-                            </a>
-                        <?php } ?>
+
                     </div>
                 </div>
                 <div class="footer-order">

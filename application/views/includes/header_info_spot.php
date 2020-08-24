@@ -91,7 +91,7 @@
 			<?php if (!isset($_SESSION['userId'])) { ?>
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>registerbusiness">REGISTER</a>
 			<?php } ?>
-			<a style="color: #E25F2A" href="#" id='modal-button'>choose your language</a>
+			<a style="color: #E25F2A" href="#" id='modal-button'><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/world.png" title="LANGUAGE"/></a>
 			<?php if (!isset($_SESSION['userId'])) { ?>
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>login">LOGIN</a>
 			<?php } else { ?>

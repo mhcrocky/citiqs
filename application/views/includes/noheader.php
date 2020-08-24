@@ -62,7 +62,7 @@
 					<a style="color: #E25F2A" href="https://tiqs.com/spot/pay424" ></a>
 					<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>check424"></a>
 					<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>info_check424"></a>
-					<a style="color: #E25F2A" href="#" id='modal-button'>choose your language</a>
+					<a style="color: #E25F2A" href="#" id='modal-button'><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/world.png" title="LANGUAGE"/></a>
 				</div>
 				<div class="hamburger-menu" id="hamburger-menu">
 					<div></div>

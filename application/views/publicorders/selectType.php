@@ -2,7 +2,7 @@
 <div class="main-wrapper-nh" style="text-align:center">
 	<div class="col-half background-apricot-blue height">
 		<div class="width-650"></div>
-            <div class="form-group has-feedback">
+            <div class="form-group has-feedback" style="margin-top: 0px">
                 <img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="350" height="" />
             </div><!-- /.login-logo -->
 		<h1 style="text-align:center"><?php echo $vendor['vendorName'] ?></h1>
@@ -29,19 +29,19 @@
 									<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="100" height="" />
 								</div>
 
-								<div style="margin-top: -70px">
+								<div style="margin-top: -10px">
 									<div style="margin-top: -30px">
 										<span><?php echo $type['type']; ?></span>
 									</div>
 								</div>
 
-								<div style="margin-top:120px">
+								<div style="margin-top:80px">
 									<i class="<?php if($type['typeId']==='1') echo "fa fa-coffee" ?>" style="font-size:48px;color:ghostwhite"></i>
 									<i class="<?php if($type['typeId']==='2') echo "fa fa-bicycle" ?>" style="font-size:48px;color:ghostwhite"></i>
 									<i class="<?php if($type['typeId']==='3') echo "fa fa-refresh" ?>" style="font-size:48px;color:ghostwhite"></i>
 								</div>
 
-								<div style="margin-top: -90px">
+								<div style="margin-top: -70px">
 									<div style="margin-top: 10px">
 										<span style="font-size: xx-small" >click here</span>
 									</div>
@@ -62,18 +62,19 @@
 			<?php } ?>
 			</div>
 		</div>
+
+		<div class="col-half background-blue height-100">
+			<div class="align-start">
+				</div>
+					<div style="text-align:center;">
+						<img src="<?php echo base_url(); ?>assets/home/images/alfredmenu.png" alt="tiqs" width="auto" height="110" />
+					</div>
+					<h1 style="text-align:center">QR-MENU</h1>
+					<div style="text-align:center; margin-top: 30px">
+						<p style="font-size: larger; margin-top: 50px; margin-left: 0px"><?=$this->language->line("HOMESTART-SPOT-X001111ABC",'BUILD BY TIQS');?></p>
+					</div>
+				</div>
+			</div>
+		</div><!-- end col half -->
 	</div>
-	<div class="col-half background-blue height-100">
-		<div class="flex-column align-start">
-			</div>
-				<div style="text-align:center;">
-                    <img src="<?php echo base_url(); ?>assets/home/images/alfredmenu.png" alt="tiqs" width="auto" height="110" />
-				</div>
-				<h1 style="text-align:center">MENU</h1>
-				<div style="text-align:center; margin-top: 30px">
-					<p style="font-size: larger; margin-top: 50px; margin-left: 0px"><?=$this->language->line("HOMESTART-SPOT-X001111ABC",'BUILD BY TIQS');?></p>
-				</div>
-			</div>
-		</div>
-	</div><!-- end col half -->
 </div>

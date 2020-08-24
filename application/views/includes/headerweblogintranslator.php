@@ -65,7 +65,7 @@
 			<a href="<?php echo base_url(); ?>translate">TRANSLATION</a>
 			<a href="<?php echo base_url(); ?>profile">PROFILE</a>
 			<a href="<?php echo base_url(); ?>Whatislostisfound">LOCATIONS</a>
-            <a href="#" id='modal-button'>choose your language</a>
+            <a href="#" id='modal-button'><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/world.png" title="LANGUAGE"/></a>
             <a href="<?php echo base_url(); ?>logout">LOGOUT</a>
 
         </div>

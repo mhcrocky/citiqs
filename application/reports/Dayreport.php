@@ -3,6 +3,7 @@
 
     use \koolreport\processes\Filter;
     use \koolreport\processes\ColumnMeta;
+	use \koolreport\processes\CalculatedColumn;
     use \koolreport\pivot\processes\Pivot;
     use \koolreport\processes\Group;
     use \koolreport\processes\Sort;
@@ -11,7 +12,6 @@
 
     class Dayreport extends \koolreport\KoolReport
     {
-
         protected function settings()
         {
             return array(
@@ -307,9 +307,15 @@
 				->params([
 					":vendorId" => $this->params["vendorId"]
 				])
+				->pipe(new CalculatedColumn(array(
+					"totalamount"=>"{productlinetotal}+{servicefee}",
+					"totalamount_by_func"=>function($row){
+						return $row["productlinetotal"]+$row["servicefee"];
+					}
+				)))
 				->pipe(new Group(array(
 					"by"=>array("productName"),
-					"sum"=>array("productQuantity","productlinetotal")
+					"sum"=>array("productQuantity","productlinetotal", "servicefee","totalamount")
 				)))
 				->pipe(new Sort(array(
 					"productQuantity"=>"desc",
@@ -317,6 +323,95 @@
 				->pipe($this->dataStore('alldata_week'))
 			;
 
+			$this
+				->src('alfred')
+				->query('
+						SELECT
+							tbl_shop_orders.id AS orderId, 
+							tbl_shop_orders.amount AS orderAmount, 
+							tbl_shop_orders.paid AS orderPaidStatus, 
+							tbl_shop_orders.created AS createdAt, 
+							tbl_shop_categories.category AS category, 
+							buyer.id AS buyerId, 
+							buyer.email AS buyerEmail, 
+							buyer.username AS buyerUserName, 
+							vendor.username AS vendorUserName, 
+							tbl_shop_order_extended.quantity AS productQuantity, 
+							tbl_shop_products_extended.`name` AS productName, 
+							tbl_shop_products_extended.price AS productPrice, 
+							tbl_shop_products_extended.vatpercentage AS productVat, 
+							tbl_shop_spots.spotName AS spotName,
+							tbl_shop_products_extended.price * tbl_shop_order_extended.quantity AS productlinetotal,
+							tbl_shop_orders.serviceFee AS servicefee
+						FROM
+							tbl_shop_orders
+							INNER JOIN
+							tbl_shop_order_extended
+							ON 
+								tbl_shop_orders.id = tbl_shop_order_extended.orderId
+							INNER JOIN
+							tbl_shop_products_extended
+							ON 
+								tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
+							INNER JOIN
+							tbl_shop_products
+							ON 
+								tbl_shop_products_extended.productId = tbl_shop_products.id
+							INNER JOIN
+							tbl_shop_categories
+							ON 
+								tbl_shop_products.categoryId = tbl_shop_categories.id
+							INNER JOIN
+							(
+								SELECT
+									*
+								FROM
+									tbl_user
+								WHERE
+									roleid = 2
+							) AS vendor
+							ON 
+								vendor.id = tbl_shop_categories.userId
+							INNER JOIN
+							(
+								SELECT
+									*
+								FROM
+									tbl_user
+								WHERE
+									roleid = 6 OR
+									roleid = 2
+							) AS buyer
+							ON 
+								buyer.id = tbl_shop_orders.buyerId
+							INNER JOIN
+							tbl_shop_spots
+							ON 
+								tbl_shop_orders.spotId = tbl_shop_spots.id
+						WHERE
+							vendor.id = :vendorId AND
+							tbl_shop_orders.paid = \'1\'
+							AND WEEK(tbl_shop_orders.created,1) = WEEK(CURRENT_DATE(),1) 
+						ORDER BY
+							tbl_shop_orders.created ASC	
+
+                ')
+				->params([
+					":vendorId" => $this->params["vendorId"]
+				])
+				->pipe(new CalculatedColumn(array(
+					"totalamount"=>"{productlinetotal}+{servicefee}",
+					"totalamount_by_func"=>function($row){
+						return $row["productlinetotal"]+$row["servicefee"];
+					}
+				)))
+				->pipe(new Group(array(
+					"by"=>array("orderId","buyerId"),
+					"sum"=>array("productlinetotal", "servicefee","totalamount")
+				)))
+
+				->pipe($this->dataStore('alldata_bybuyer'))
+			;
 
 		}
     }
