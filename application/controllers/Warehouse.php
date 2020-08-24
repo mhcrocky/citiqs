@@ -787,26 +787,27 @@
             $productId = intval($this->uri->segment(3));
             $data = $this->input->post(null, true);
             $productAddons = $data['productAddons'];
+            $productQuantities = $data['productQuantities'];
             $product =  $this->shopproductex_model->setProperty('productId', $productId)->getProductName();
-            $success = true;            
-
+            $success = true;
             if (!$this->shopproductaddons_model->setProperty('productId', $productId)->deleteProductAddons()) {
-                $this->session->set_flashdata('error', 'Addons insert failed for product "' . $product . '"!');
+                $this->session->set_flashdata('error', 'Addons update failed for product "' . $product . '"!');
             } else {
                 foreach($productAddons as $productExtendedId => $addonProductId) {
                     $insert = [
                         'addonProductId' => $addonProductId,
-                        'productExtendedId' => $productExtendedId
+                        'productExtendedId' => $productExtendedId,
+                        'quantity' => $productQuantities[$productExtendedId],
                     ];
                     if (!$this->shopproductaddons_model->setObjectFromArray($insert)->create()) {
                         $this->shopproductaddons_model->setProperty('productId', $productId)->deleteProductAddons();
-                        $this->session->set_flashdata('error', 'Addons insert failed for product "' . $product . '"!');
+                        $this->session->set_flashdata('error', 'Addons update failed for product "' . $product . '"!');
                         $success = false;
                         break;
                     };
                 }
 
-                if ($success) $this->session->set_flashdata('success', 'Addons inserted for product "' . $product . '"!');
+                if ($success) $this->session->set_flashdata('success', 'Addons updated for product "' . $product . '"!');
             }
 
             $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];

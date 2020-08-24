@@ -13,6 +13,7 @@
         public $productId;
         public $productExtendedId;
         public $addonProductId;
+        public $quantity;
         private $table = 'tbl_shop_products_addons';
 
         protected function setValueType(string $property,  &$value): void
@@ -25,6 +26,7 @@
                 || $property === 'productId'
                 || $property === 'productExtendedId'
                 || $property === 'addonProductId'
+                || $property === 'quantity'
             ) {
                 $value = intval($value);
             }
@@ -55,6 +57,7 @@
             if (isset($data['productId']) && !Validate_data_helper::validateInteger($data['productId'])) return false;
             if (isset($data['productExtendedId']) && !Validate_data_helper::validateInteger($data['productExtendedId'])) return false;
             if (isset($data['addonProductId']) && !Validate_data_helper::validateInteger($data['addonProductId'])) return false;
+            if (isset($data['quantity']) && !Validate_data_helper::validateInteger($data['quantity'])) return false;
 
             return true;
         }

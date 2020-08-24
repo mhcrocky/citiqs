@@ -601,15 +601,25 @@ class Ajax extends CI_Controller
             foreach ($addons as $productId => $product) {
                 $product = reset($product);
                 foreach($product['productDetails'] as $details) {
-                    $addonsList .= '<label class="checkbox-inline">';
-                    $addonsList .= '<input ';
-                    $addonsList .=     'type="checkbox" ';
-                    $addonsList .=     'data-extended-id="' . $details['productExtendedId'] . '" ';
-                    $addonsList .=     'value="' . $productId . '" ';
-                    $addonsList .=     'name="productAddons[' . $details['productExtendedId'] . ']" ';
-                    $addonsList .= '/>';
-                    $addonsList .= $details['name'] . ' (' . $details['productType']. ')';
-                    $addonsList .= '</label>';
+                    $addonsList .=  '<div>';
+                    $addonsList .=      '<label class="checkbox-inline">';
+                    $addonsList .=          $details['name'] . ' (' . $details['productType']. '):&nbsp;&nbsp;';
+                    $addonsList .=          '<input ';
+                    $addonsList .=              'type="checkbox" ';
+                    $addonsList .=              'data-extended-id="' . $details['productExtendedId'] . '" ';
+                    $addonsList .=              'value="' . $productId . '" ';
+                    $addonsList .=              'name="productAddons[' . $details['productExtendedId'] . ']" ';
+                    $addonsList .=              '/>&nbsp;&nbsp;';
+                    $addonsList .=      '</label>';
+                    $addonsList .=      '<label class="checkbox-inline">';
+                    $addonsList .=          'Quantity:&nbsp;&nbsp;';
+                    $addonsList .=          '<input ';
+                    $addonsList .=              'style="width:45px" ';
+                    $addonsList .=              'type="number" ';
+                    $addonsList .=              'name="productQuantities[' . $details['productExtendedId'] . ']" ';
+                    $addonsList .=              '/>';
+                    $addonsList .=      '</label>';
+                    $addonsList .=  '</div>';
                 }
             }
         }
