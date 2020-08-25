@@ -272,34 +272,45 @@
 							/>
 					</div>
 					<h4>SELECT PAYMENT METHOD(S)</h4>
-					<div class="form-check-inline mb-35">						
-						<div class="form-group">
-							<h4>BANCONTACT</h4>
-							<label class="radio-inline" for="bancontactYes">Yes</label>
-							<input type="radio" id="bancontactYes" name="vendor[bancontact]" value="1" <?php if ($vendor['bancontact'] === '1') echo 'checked'; ?> />
-							<label class="radio-inline" for="bancontactNo">&nbsp;&nbsp;&nbsp;No</label>
-							<input type="radio" id="bancontactNo" name="vendor[bancontact]" value="0" <?php if ($vendor['bancontact'] === '0') echo 'checked'; ?> />
+					<div class="form-check-inline mb-35">
+						<div class="col-lg-6">
+							<div class="form-group">
+								<h4>BANCONTACT</h4>
+								<label class="radio-inline" for="bancontactYes">Yes</label>
+								<input type="radio" id="bancontactYes" name="vendor[bancontact]" value="1" <?php if ($vendor['bancontact'] === '1') echo 'checked'; ?> />
+								<label class="radio-inline" for="bancontactNo">&nbsp;&nbsp;&nbsp;No</label>
+								<input type="radio" id="bancontactNo" name="vendor[bancontact]" value="0" <?php if ($vendor['bancontact'] === '0') echo 'checked'; ?> />
+							</div>
+							<div class="form-group mb-35">
+								<h4>IDEAL</h4>
+								<label class="radio-inline" for="idealYes">Yes</label>
+								<input type="radio" id="idealYes" name="vendor[ideal]" value="1" <?php if ($vendor['ideal'] === '1') echo 'checked'; ?> />
+								<label class="radio-inline" for="idealNo">&nbsp;&nbsp;&nbsp;No</label>
+								<input type="radio" id="idealNo" name="vendor[ideal]" value="0" <?php if ($vendor['ideal'] === '0') echo 'checked'; ?> />
+							</div>
+							<div class="form-group mb-35">
+								<h4>VISA / MASTERCARD</h4>
+								<label class="radio-inline" for="creditCardYes">Yes</label>
+								<input type="radio" id="creditCardYes" name="vendor[creditCard]" value="1" <?php if ($vendor['creditCard'] === '1') echo 'checked'; ?> />
+								<label class="radio-inline" for="creditCardNo">&nbsp;&nbsp;&nbsp;No</label>
+								<input type="radio" id="creditCardNo" name="vendor[creditCard]" value="0" <?php if ($vendor['creditCard'] === '0') echo 'checked'; ?> />
+							</div>
 						</div>
-						<div class="form-group mb-35">
-							<h4>IDEAL</h4>
-							<label class="radio-inline" for="idealYes">Yes</label>
-							<input type="radio" id="idealYes" name="vendor[ideal]" value="1" <?php if ($vendor['ideal'] === '1') echo 'checked'; ?> />
-							<label class="radio-inline" for="idealNo">&nbsp;&nbsp;&nbsp;No</label>
-							<input type="radio" id="idealNo" name="vendor[ideal]" value="0" <?php if ($vendor['ideal'] === '0') echo 'checked'; ?> />
-						</div>
-						<div class="form-group mb-35">
-							<h4>VISA / MASTERCARD</h4>
-							<label class="radio-inline" for="creditCardYes">Yes</label>
-							<input type="radio" id="creditCardYes" name="vendor[creditCard]" value="1" <?php if ($vendor['creditCard'] === '1') echo 'checked'; ?> />
-							<label class="radio-inline" for="creditCardNo">&nbsp;&nbsp;&nbsp;No</label>
-							<input type="radio" id="creditCardNo" name="vendor[creditCard]" value="0" <?php if ($vendor['creditCard'] === '0') echo 'checked'; ?> />
-						</div>
-						<div class="form-group mb-35">
-							<h4>GIRO</h4>
-							<label class="radio-inline" for="giroYes">Yes</label>
-							<input type="radio" id="giroYes" name="vendor[giro]" value="1" <?php if ($vendor['giro'] === '1') echo 'checked'; ?> />
-							<label class="radio-inline" for="giroNo">&nbsp;&nbsp;&nbsp;No</label>
-							<input type="radio" id="giroNo" name="vendor[giro]" value="0" <?php if ($vendor['giro'] === '0') echo 'checked'; ?> />
+						<div class="col-lg-6">
+							<div class="form-group mb-35">
+								<h4>GIRO</h4>
+								<label class="radio-inline" for="giroYes">Yes</label>
+								<input type="radio" id="giroYes" name="vendor[giro]" value="1" <?php if ($vendor['giro'] === '1') echo 'checked'; ?> />
+								<label class="radio-inline" for="giroNo">&nbsp;&nbsp;&nbsp;No</label>
+								<input type="radio" id="giroNo" name="vendor[giro]" value="0" <?php if ($vendor['giro'] === '0') echo 'checked'; ?> />
+							</div>
+							<div class="form-group mb-35">
+								<h4>CASH</h4>
+								<label class="radio-inline" for="cashYes">Yes</label>
+								<input type="radio" id="cashYes" name="vendor[cash]" value="1" <?php if ($vendor['cash'] === '1') echo 'checked'; ?> />
+								<label class="radio-inline" for="cashNo">&nbsp;&nbsp;&nbsp;No</label>
+								<input type="radio" id="cashNo" name="vendor[cash]" value="0" <?php if ($vendor['cash'] === '0') echo 'checked'; ?> />
+							</div>
 						</div>
 					</div>
 					<h4>REQUIRE USER MOBILE PHONE ON CHECKOUT FORM</h4>

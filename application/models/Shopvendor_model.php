@@ -27,6 +27,7 @@
         public $ideal;
         public $creditCard;
         public $giro;
+        public $cash;
 
 
         private $table = 'tbl_shop_vendors';
@@ -76,6 +77,7 @@
             if (isset($data['giro']) && !($data['giro'] === '1' || $data['giro'] === '0')) return false;
             if (isset($data['healthCheck']) && !($data['healthCheck'] === '1' || $data['healthCheck'] === '0')) return false;
             if (isset($data['requireReservation']) && !($data['requireReservation'] === '1' || $data['requireReservation'] === '0')) return false;
+            if (isset($data['cash']) && !($data['cash'] === '1' || $data['cash'] === '0')) return false;
 
             return true;
         }
@@ -100,6 +102,7 @@
                     $this->table . '.giro',
                     $this->table . '.healthCheck',
                     $this->table . '.requireReservation',
+                    $this->table . '.cash',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',
