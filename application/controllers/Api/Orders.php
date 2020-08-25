@@ -155,10 +155,10 @@
 
 			// $draw->annotation(0, 30, "SPOT: ". $result->spot_id . " EMAIL: " . $email . ' PHONE: ' . $phone);
             // $draw->annotation(0, 30, "SPOT: ". $result->spot_id );
-			$draw->annotation(0, 30, "order: " . $order['orderId'] . " naam: " . $order['buyerUserName']);;
+			$draw->annotation(0, 30, "order: " . $order['orderId'] . " naam: " . $order['buyerUserName']);
 			$draw->annotation(0, 70, "datum:". date("m-d h:i:sa"). " spot: ". $order['spotName'] );
 
-			$drawemail->annotation(0, 30, "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);;
+			$drawemail->annotation(0, 30, "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);
 			$drawemail->annotation(0, 70, "DATE:". date("m-d h:i:sa"). " SPOT: ". $order['spotName'] );
 
 
@@ -173,6 +173,9 @@
             $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
             $imagetext->annotateImage($draw, 0, 105, 0, "A");
             $imagetext->annotateImage($draw, 40, 105, 0, "OMSCHRIJVING");
+            if ($order['paidStatus'] === $this->config->item('orderCashPaying')) {
+                $imagetext->annotateImage($draw, 295, 105, 0, "CASH PAYMENT");
+            }
             // $imagetext->annotateImage($draw, 395, 105, 0, "PRIJS");
             // $imagetext->annotateImage($draw, 485, 105, 0, "%");
             // $imagetext->annotateImage($draw, 505, 105, 0, "TOTAAL");
