@@ -111,7 +111,6 @@ $config['orderStatuses'] = [
 
 $config['orderNotPaid'] = '0';
 $config['orderPaid'] = '1';
-$config['orderCashPaying'] = '2';
 
 // SEPARATORS
 $config['contactGroupSeparator'] = ')$=';
@@ -136,3 +135,7 @@ $config['uploadLogoFolder']    = FCPATH . 'assets/images/vendorLogos' . DIRECTOR
 $config['local'] = 1;
 $config['deliveryType'] = 2;
 $config['pickupType'] = 3;
+
+//cash payment types
+$config['prePaid'] = 'prePaid';
+$config['postPaid'] = 'postPaid';

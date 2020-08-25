@@ -260,7 +260,7 @@ $route['pay_order']             = 'publicorders/pay_order';
 $route['closed/(:num)']         = 'publicorders/closed/$1';
 $route['spot_closed/(:num)']    = 'publicorders/spotClosed/$1';
 $route['insertorder/(:num)/(:num)'] = 'publicorders/insertOrder/$1/$2';
-$route['cashPayment']           = 'publicorders/cashPayment';
+$route['cashPayment/(:num)/(:any)'] = 'publicorders/cashPayment/$1/$2';
 
 // API
 $route['api/orders/print/get']  = 'Api/Orders/data';

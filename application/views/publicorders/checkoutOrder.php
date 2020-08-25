@@ -346,13 +346,14 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group col-sm-12" id="orderTimeDiv" style="display:none">
+                                <label for="orderTime">Select  <?php echo $spotType ?> time (<sup>*</sup>)</label>
+                                <input type="text" id="orderTimeInput" class="form-control timepicker" name="order[time]" />
+                            </div>
                         <?php
                         }
                     ?>
-                    <div class="form-group col-sm-12" id="orderTimeDiv" style="display:none">
-                        <label for="orderTime">Select  <?php echo $spotType ?> time (<sup>*</sup>)</label>
-                        <input type="text" id="orderTimeInput" class="form-control timepicker" name="order[time]" />
-                    </div>
+
                 </div>
 
                 <div class="checkout-btns">

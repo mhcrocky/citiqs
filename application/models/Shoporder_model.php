@@ -24,6 +24,7 @@
         public $sendSmsDriver;
         public $countSentMessages;
         public $expired;
+        public $paymentType;
 
         private $table = 'tbl_shop_orders';
 
@@ -65,8 +66,8 @@
             if (!count($data)) return false;
             if (isset($data['buyerId']) && !Validate_data_helper::validateInteger($data['buyerId'])) return false;
             if (isset($data['amount']) && !Validate_data_helper::validateFloat($data['amount'])) return false;
-            if (isset($data['serviceFee']) && !Validate_data_helper::validateFloat($data['serviceFee'])) return false;            
-            if (isset($data['paid']) && !($data['paid'] === '1' || $data['paid'] === '0' || $data['paid'] === '2')) return false;
+            if (isset($data['serviceFee']) && !Validate_data_helper::validateFloat($data['serviceFee'])) return false;
+            if (isset($data['paid']) && !($data['paid'] === '1' || $data['paid'] === '0')) return false;
             if (isset($data['created']) && !Validate_data_helper::validateDate($data['created'])) return false;
             if (isset($data['updated']) && !Validate_data_helper::validateDate($data['updated'])) return false;
             if (isset($data['orderStatus']) && !Validate_data_helper::validateString($data['orderStatus'])) return false;
@@ -77,6 +78,7 @@
             if (isset($data['sendSmsDriver']) && !($data['sendSmsDriver'] === '1' || $data['sendSmsDriver'] === '0')) return false;
             if (isset($data['countSentMessages']) && !Validate_data_helper::validateInteger($data['countSentMessages'])) return false;
             if (isset($data['expired']) && !($data['expired'] === '1' || $data['expired'] === '0')) return false;
+            if (isset($data['paymentType']) && !Validate_data_helper::validateString($data['paymentType'])) return false;
 
             return true;
         }

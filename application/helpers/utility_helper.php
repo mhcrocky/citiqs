@@ -228,4 +228,16 @@
             ksort($reset);
             return $reset;
         }
+
+
+        public static function unsetPaymentSession(): void
+        {
+            unset($_SESSION['order']);
+            unset($_SESSION['postOrder']);
+            unset($_SESSION['spotId']);
+            unset($_SESSION['vendor']);
+            unset($_SESSION['spot']);
+
+            return;
+        }
     }

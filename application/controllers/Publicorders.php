@@ -332,7 +332,7 @@
             $this->loadViews('publicorders/spotClosed', $this->global, $data, null, 'headerWarehousePublic');
         }
 
-        private function insertOrderProcess(string $paidStatus): void
+        private function insertOrderProcess(string $payStatus, $payType = null): void
         {
             //fetch data from $_SESSION
             $post = $_SESSION['postOrder'];
@@ -368,15 +368,14 @@
             // prepare failed redirect
             $failedRedirect = 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'] . '&spotid=' . $_SESSION['spotId'];
 
-
             // insert order
             if (!empty($post['order']['date']) && !empty($post['order']['time'])) {
                 $orderDate = explode(' ', $post['order']['date']);
                 $post['order']['created'] = $orderDate[0] . ' ' . $post['order']['time'];
             }
             $post['order']['buyerId'] = $this->user_model->id;
-            $post['order']['paid'] = $paidStatus;
-
+            $post['order']['paid'] = $payStatus;
+            $post['order']['paymentType'] = $payType;
             $this->shoporder_model->setObjectFromArray($post['order'])->create();
 
             if (!$this->shoporder_model->id) {
@@ -403,10 +402,11 @@
             $_SESSION['orderId'] = $this->shoporder_model->id;
         }
 
-        public function cashPayment(): void
+        public function cashPayment($payStatus, $payType): void
         {
-            $this->insertOrderProcess($this->config->item('orderCashPaying'));
+            $this->insertOrderProcess($payStatus, $payType);
             $redirect =  ($_SESSION['vendor']['vendorId'] === 1162) ?  'successth' : 'success';
+            Utility_helper::unsetPaymentSession();
             redirect($redirect);
         }
     }
