@@ -79,6 +79,8 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/js/jquery.datetimepicker.full.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/reports.js"></script>
 <?php } elseif ($this->view === 'publicorders/checkoutOrder') { ?>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+	
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/checkoutOrder.js"></script>
 <?php } elseif ($this->view === 'warehouse/productTypes') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js"></script>

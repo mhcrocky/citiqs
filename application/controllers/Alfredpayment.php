@@ -102,7 +102,8 @@ class Alfredpayment extends BaseControllerWeb
 		unset($_SESSION['order']);
 		unset($_SESSION['postOrder']);
 		unset($_SESSION['spotId']);
-		unset($_SESSION['vendor']);
+        unset($_SESSION['vendor']);
+        unset($_SESSION['spot']);
 
         $get = $this->input->get(null, true);
         $statuscode = intval($get['orderStatusId']);

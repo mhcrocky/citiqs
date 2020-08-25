@@ -14,25 +14,27 @@
 						<?php
 							$noSpots = true;
 							foreach ($spots as $spot) {
-								// CHECK SPOT'S AND CURRENT TIME
-								$spotTimes = $spot['spotTimes'];
-								$dayPosition = strpos($spotTimes, date('D'));
-								if (
-									!is_null($spotTimes)
-									&& !is_bool($dayPosition)
-								) {
+								// CHECK SPOT'S AND CURRENT TIME FOR LOCAL TYPE
+								if (intval($spot['spotTypeId']) === $local) {
+									$spotTimes = $spot['spotTimes'];
+									$dayPosition = strpos($spotTimes, date('D'));
+
+									if (is_null($spotTimes) || is_bool($dayPosition)) continue;
+
 									$workingDay = substr($spotTimes, $dayPosition);
 									$workingDay = explode(',', $workingDay);
 									$workingDay = explode('|', $workingDay[0]);
-									$timeNow = date('H:i:s');
+									$timeNow = date('H:i:s');									
 									if ($timeNow < $workingDay[1] || $timeNow > $workingDay[2]) continue;
-									$noSpots = false;
+								}
+
+								$noSpots = false;
 							?>
 								<option value="<?php echo 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spot['spotId'] ?>">
 									<?php echo $spot['spotName']; ?>
 								</option>
 							<?php
-								}
+								
 							}
 						?>
 					</select>

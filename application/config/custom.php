@@ -125,3 +125,8 @@ $config['timeTo'] = '23:59:59';
 
 // LOGO FOLDER
 $config['uploadLogoFolder']    = FCPATH . 'assets/images/vendorLogos' . DIRECTORY_SEPARATOR;
+
+//spot types
+$config['local'] = 1;
+$config['deliveryType'] = 2;
+$config['pickupType'] = 3;

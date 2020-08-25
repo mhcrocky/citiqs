@@ -140,6 +140,12 @@ function populateTable(data) {
                     "searchable": false,
                 },
                 {
+                    "targets": 3,
+                    "data": function (row, type, val, meta) {
+                        return row[3] + '&nbsp(' + row[12] + ')';
+                    }
+                },
+                {
                     "targets": 4,
                     "data": function (row, type, val, meta) {
                         return showOrderStatuses(orderGlobals.orderStatuses, row);

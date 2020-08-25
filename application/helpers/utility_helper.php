@@ -213,4 +213,19 @@
             }
             array_multisort($sort_col, $dir, $arr);
         }
+
+        public static function convertDayToDate(array $arrays, string $key): array
+        {
+            if (empty($arrays)) return [];
+            $reset = [];
+            foreach($arrays as $array) {
+                $date = date('Y-m-d', strtotime($array[$key], strtotime(date('Y-m-d H:i:s'))));
+                if (!isset($reset[$date])) {
+                    $reset[$date] = [];
+                }
+                array_push($reset[$date], $array);
+            }
+            ksort($reset);
+            return $reset;
+        }
     }

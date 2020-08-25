@@ -311,7 +311,50 @@
                         <label for="notesInput">Remarks</label>
                         <textarea id="notesInput" class="form-control" name="order[notes]" rows="3"></textarea>
                     </div> -->
+                    <?php
+                        if (isset($workingTime)) {
+                            ?>
+                            <div class="form-group col-sm-6">
+                                <label for="typeTime">Select <?php echo $spotType ?> period <sup>*</sup></label>
+                                <div>
+                                    <select
+                                        name="order[date]"
+                                        class="form-control"
+                                        style="text-align:center"
+                                        onchange="buyerSelectTime(this.value, 'orderTimeDiv', 'orderTimeInput')"
+                                        >
+                                        <option value="">Select</option>
+                                        <?php
+                                            $checkTimeTo = date('Y-m-d H:i:s', strtotime('-' . $delayTime . ' minutes', strtotime(date('Y-m-d H:i:s'))));
+                                            $checkTimeFrom = date('Y-m-d H:i:s', strtotime('+' . $delayTime . ' minutes', strtotime(date('Y-m-d H:i:s'))));
+                                            foreach ($workingTime as $date => $time) {
+                                                foreach ($time as $hours) {                                                    
+                                                    if ($date === date('Y-m-d') && (date($date . ' ' . $hours['timeTo']) < $checkTimeTo)) continue;
+                                                    if ($date === date('Y-m-d') && (date($date . ' ' . $hours['timeFrom']) < $checkTimeFrom)) {
+                                                        $hours['timeFrom'] = date('H:i:s', strtotime($checkTimeFrom));
+                                                    }
+                                                    ?>
+                                                        <option
+                                                            value="<?php echo $date . ' ' . $hours['timeFrom']. ' ' . $hours['timeTo']; ?>"
+                                                            >
+                                                            <?php echo $date . ' (' . $hours['day'] . ') From: ' . $hours['timeFrom'] . ' To: ' . $hours['timeTo'] ?>
+                                                        </option>
+                                                    <?php
+                                                }
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        <?php
+                        }
+                    ?>
+                    <div class="form-group col-sm-12" id="orderTimeDiv" style="display:none">
+                        <label for="orderTime">Select  <?php echo $spotType ?> time (<sup>*</sup>)</label>
+                        <input type="text" id="orderTimeInput" class="form-control timepicker" name="order[time]" />
+                    </div>
                 </div>
+
                 <div class="checkout-btns">
                     <a href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spotId; ?>" style="background-color: #948b6f" class="button">
                         <i class="fa fa-arrow-left"></i>

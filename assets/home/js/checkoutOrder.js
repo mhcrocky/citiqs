@@ -142,3 +142,33 @@ function submitForm(formId, serviceFeeInputId, orderAmountInputId) {
         document.getElementById(formId).submit();
     }
 }
+
+function buyerSelectTime(value, containerDivId, inputElementId) {
+    let div = document.getElementById(containerDivId);
+    let input = document.getElementById(inputElementId);
+    if (!value) {
+        div.style.display = 'none';
+        input.disabled = true;
+    } else {
+        div.style.display = 'initial';
+        input.disabled = false;
+        let times = value.split(' ');
+        console.dir(times);
+        $('#' +  inputElementId).timepicker('destroy');
+        returnTimePicker(inputElementId, times);
+       
+    }
+    return;
+    
+}
+
+function returnTimePicker(elementId, times) {
+    $('#' + elementId).timepicker({
+        'timeFormat' : 'HH:mm',
+        'interval': 5,
+        'minTime': times[1],
+        'maxTime': times[2],
+        'startTime': times[1],
+        'defaultTime': times[2],
+    });
+}

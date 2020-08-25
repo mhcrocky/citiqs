@@ -153,7 +153,8 @@
                     'tbl_shop_spots.printerId AS spotPrinterId',
                     'tbl_shop_printers.printer AS spotPrinter',
                     'tblOrderedProducts.orderedProductDetails',
-                    'tblOrderedProducts.productPrinterDetails'
+                    'tblOrderedProducts.productPrinterDetails',
+                    'tbl_shop_spot_types.type AS spotType'
                 ],
                 'where' => $where,
                 'joins' => [
@@ -204,6 +205,8 @@
                     ],
                     ['tbl_shop_spots', 'tbl_shop_spots.id =' . $this->table . '.spotId', 'INNER'],
                     ['tbl_shop_printers', 'tbl_shop_printers.id = tbl_shop_spots.printerId', 'INNER'],
+                    ['tbl_shop_spot_types', 'tbl_shop_spot_types.id = tbl_shop_spots.spotTypeId', 'INNER'],
+                    
 
                 ],
                 'conditions' => [
@@ -782,8 +785,7 @@
                 array( 'db' => 'sendSms',               'dt' => 9),
                 array( 'db' => 'buyerId',               'dt' => 10),
                 array( 'db' => 'countSentMessages',     'dt' => 11),
-
-                
+                array( 'db' => 'spotType',              'dt' => 12),                
             );
 
             return Jquerydatatable_helper::data_output($columns, $return);
@@ -804,5 +806,27 @@
             ];
 
             return $this->setObjectFromArray($update)->update();
+        }
+
+        public function returnDelayMinutes(array $productExtendedIds): int
+        {
+            $query =    'SELECT
+                            max(tbl_shop_categories.delayTime) AS minutes
+                        FROM
+                            tbl_shop_products_extended
+                        INNER JOIN
+                            tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
+                        INNER JOIN
+                            tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+                        WHERE
+                            tbl_shop_products_extended.id IN ('. implode(',', $productExtendedIds). ')';
+
+            $minutes = $this->db->query($query);
+
+            if (empty($minutes)) return 0;
+
+            $minutes = $minutes->result_array();
+            $minutes = intval(reset($minutes)['minutes']);
+            return $minutes;
         }
     }

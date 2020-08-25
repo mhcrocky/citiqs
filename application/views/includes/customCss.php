@@ -66,6 +66,7 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/jquery.datetimepicker.min.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/warehouseProducts.css">
 <?php } elseif ($this->view === 'publicorders/checkoutOrder') { ?>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
 <?php } elseif ($this->view === 'publicorders/payOrder') { ?>
