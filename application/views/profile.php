@@ -305,11 +305,18 @@
 								<input type="radio" id="giroNo" name="vendor[giro]" value="0" <?php if ($vendor['giro'] === '0') echo 'checked'; ?> />
 							</div>
 							<div class="form-group mb-35">
-								<h4>CASH</h4>
-								<label class="radio-inline" for="cashYes">Yes</label>
-								<input type="radio" id="cashYes" name="vendor[cash]" value="1" <?php if ($vendor['cash'] === '1') echo 'checked'; ?> />
-								<label class="radio-inline" for="cashNo">&nbsp;&nbsp;&nbsp;No</label>
-								<input type="radio" id="cashNo" name="vendor[cash]" value="0" <?php if ($vendor['cash'] === '0') echo 'checked'; ?> />
+								<h4>PREPAID</h4>
+								<label class="radio-inline" for="prePaidYes">Yes</label>
+								<input type="radio" id="prePaidYes" name="vendor[prePaid]" value="1" <?php if ($vendor['prePaid'] === '1') echo 'checked'; ?> />
+								<label class="radio-inline" for="prePaidNo">&nbsp;&nbsp;&nbsp;No</label>
+								<input type="radio" id="prePaidNo" name="vendor[prePaid]" value="0" <?php if ($vendor['prePaid'] === '0') echo 'checked'; ?> />
+							</div>
+							<div class="form-group mb-35">
+								<h4>POST PAID</h4>
+								<label class="radio-inline" for="postPaidYes">Yes</label>
+								<input type="radio" id="postPaidYes" name="vendor[postPaid]" value="1" <?php if ($vendor['postPaid'] === '1') echo 'checked'; ?> />
+								<label class="radio-inline" for="postPaidNo">&nbsp;&nbsp;&nbsp;No</label>
+								<input type="radio" id="postPaidNo" name="vendor[postPaid]" value="0" <?php if ($vendor['postPaid'] === '0') echo 'checked'; ?> />
 							</div>
 						</div>
 					</div>

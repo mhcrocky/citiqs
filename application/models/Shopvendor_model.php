@@ -27,7 +27,8 @@
         public $ideal;
         public $creditCard;
         public $giro;
-        public $cash;
+        public $prePaid;
+        public $postPaid;
 
 
         private $table = 'tbl_shop_vendors';
@@ -76,8 +77,9 @@
             if (isset($data['serviceFeeTax']) && !Validate_data_helper::validateInteger($data['serviceFeeTax'])) return false;
             if (isset($data['giro']) && !($data['giro'] === '1' || $data['giro'] === '0')) return false;
             if (isset($data['healthCheck']) && !($data['healthCheck'] === '1' || $data['healthCheck'] === '0')) return false;
-            if (isset($data['requireReservation']) && !($data['requireReservation'] === '1' || $data['requireReservation'] === '0')) return false;
-            if (isset($data['cash']) && !($data['cash'] === '1' || $data['cash'] === '0')) return false;
+            if (isset($data['requireReservation']) && !($data['requireReservation'] === '1' || $data['requireReservation'] === '0')) return false;            
+            if (isset($data['prePaid']) && !Validate_data_helper::validateString($data['prePaid'])) return false;
+            if (isset($data['postPaid']) && !Validate_data_helper::validateString($data['postPaid'])) return false;
 
             return true;
         }
@@ -102,7 +104,8 @@
                     $this->table . '.giro',
                     $this->table . '.healthCheck',
                     $this->table . '.requireReservation',
-                    $this->table . '.cash',
+                    $this->table . '.prePaid',
+                    $this->table . '.postPaid',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',
