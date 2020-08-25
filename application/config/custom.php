@@ -109,15 +109,21 @@ $config['orderStatuses'] = [
     $config['orderFinished']
 ];
 
+$config['orderNotPaid'] = '0';
+$config['orderPaid'] = '1';
+$config['orderCashPaying'] = '2';
+
 // SEPARATORS
 $config['contactGroupSeparator'] = ')$=';
 $config['concatSeparator'] = ')#%';
 
+// paynl payment types
 $config['idealPaymentType'] = '10';
 $config['creditCardPaymentType'] = '706';
 $config['bancontactPaymentType'] = '436';
 $config['giroPaymentType'] = '694';
 
+// time utility
 $config['workingDays'] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 $config['weekDays'] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 $config['timeFrom'] = '00:00:00';

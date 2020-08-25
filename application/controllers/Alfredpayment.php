@@ -85,7 +85,7 @@ class Alfredpayment extends BaseControllerWeb
                         'exchangePay' => date('Y-m-d H:i:s')
                     ]);
 
-            $this->shoporder_model->updatePaidStatus($this->shoporderpaynl_model, ['paid' => '1']);
+            $this->shoporder_model->updatePaidStatus($this->shoporderpaynl_model, ['paid' => $this->config->item('orderPaid')]);
 
             echo('TRUE| '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
         } else {
@@ -110,7 +110,7 @@ class Alfredpayment extends BaseControllerWeb
 
         if ($statuscode === 100) {
             $this->shoporderpaynl_model->setProperty('transactionId', $get['orderId'])->updatePayNl(['successPayment' => date('Y-m-d H:i:s')]);
-            $this->shoporder_model->updatePaidStatus($this->shoporderpaynl_model, ['paid' => '1']);
+            $this->shoporder_model->updatePaidStatus($this->shoporderpaynl_model, ['paid' => $this->config->item('orderPaid')]);
 
             $this->session->set_flashdata('success', 'Your order is paid');
 

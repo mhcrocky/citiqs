@@ -264,75 +264,8 @@
                 exit();
             }
 
-            //fetch data from $_SESSION
-            $post = $_SESSION['postOrder'];
+            $this->insertOrderProcess($this->config->item('orderNotPaid'));
 
-            // check pickup period and time for pickup and delivery
-            if (intval($_SESSION['spot']['spotTypeId']) !== $this->config->item('local')) {
-                if (empty($post['order']['date']) || empty($post['order']['time'])) {
-                    $this->session->set_flashdata('error', 'Order not made! Please select pickup period and time');
-                    redirect('checkout_order');
-                    exit();
-                }
-            }
-
-            // check mobile phone
-            if ($_SESSION['vendor']['requireMobile'] === '1') {
-                if (Validate_data_helper::validateMobileNumber($post['user']['mobile'])) {
-                    $post['user']['mobile'] = $post['phoneCountryCode'] . ltrim($post['user']['mobile'], '0');
-                } else {
-                    $this->session->set_flashdata('error', 'Order not made! Mobile phone is required. Please try again');
-                    redirect('checkout_order');
-                    exit();
-                }
-            }
-
-            $this->user_model->manageAndSetBuyer($post['user']);
-
-            if (!$this->user_model->id) {
-                $this->session->set_flashdata('error', 'Order not made! Name and email are mandatory fields. Please try again'); #Email, name and mobile are mandatory fields. 
-                redirect('checkout_order');
-                exit();
-            }
-
-            // prepare failed redirect
-            $failedRedirect = 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'] . '&spotid=' . $_SESSION['spotId'];
-
-
-            // insert order
-            if (!empty($post['order']['date']) && !empty($post['order']['time'])) {
-                $orderDate = explode(' ', $post['order']['date']);
-                $post['order']['created'] = $orderDate[0] . ' ' . $post['order']['time'];
-            }
-            $post['order']['buyerId'] = $this->user_model->id;
-            $post['order']['paid'] = '0';
-
-            $this->shoporder_model->setObjectFromArray($post['order'])->create();
-
-            if (!$this->shoporder_model->id) {
-                $this->session->set_flashdata('error', 'Order not made! Please try again');
-                redirect($failedRedirect);
-                exit();
-            }
-
-            // insert order details
-            foreach ($post['orderExtended'] as $id => $details) {
-                $details['productsExtendedId'] = intval($id);
-                $details['orderId'] = $this->shoporder_model->id;
-                if (!$this->shoporderex_model->setObjectFromArray($details)->create()) {
-                    $this->shoporderex_model->orderId = $details['orderId'];
-                    $this->shoporderex_model->deleteOrderDetails();
-                    $this->shoporder_model->delete();
-                    $this->session->set_flashdata('error', 'Order not made! Please try again');
-                    redirect($failedRedirect);
-                    exit();
-                }
-            }
-
-            // save orderId in SESSION
-            $_SESSION['orderId'] = $this->shoporder_model->id;
-
-            // go to Alfredpament controller to finish paying
             $successRedirect = 'paymentengine' . DIRECTORY_SEPARATOR . $paymentType  . DIRECTORY_SEPARATOR . $paymentOptionSubId;
 
             redirect($successRedirect);
@@ -397,5 +330,83 @@
             $data['workingTime'] = $workingTime ? Utility_helper::resetArrayByKeyMultiple($workingTime, 'day') : null;
 
             $this->loadViews('publicorders/spotClosed', $this->global, $data, null, 'headerWarehousePublic');
+        }
+
+        private function insertOrderProcess(string $paidStatus): void
+        {
+            //fetch data from $_SESSION
+            $post = $_SESSION['postOrder'];
+
+            // check pickup period and time for pickup and delivery
+            if (intval($_SESSION['spot']['spotTypeId']) !== $this->config->item('local')) {
+                if (empty($post['order']['date']) || empty($post['order']['time'])) {
+                    $this->session->set_flashdata('error', 'Order not made! Please select pickup period and time');
+                    redirect('checkout_order');
+                    exit();
+                }
+            }
+
+            // check mobile phone
+            if ($_SESSION['vendor']['requireMobile'] === '1') {
+                if (Validate_data_helper::validateMobileNumber($post['user']['mobile'])) {
+                    $post['user']['mobile'] = $post['phoneCountryCode'] . ltrim($post['user']['mobile'], '0');
+                } else {
+                    $this->session->set_flashdata('error', 'Order not made! Mobile phone is required. Please try again');
+                    redirect('checkout_order');
+                    exit();
+                }
+            }
+
+            $this->user_model->manageAndSetBuyer($post['user']);
+
+            if (!$this->user_model->id) {
+                $this->session->set_flashdata('error', 'Order not made! Name and email are mandatory fields. Please try again'); #Email, name and mobile are mandatory fields. 
+                redirect('checkout_order');
+                exit();
+            }
+
+            // prepare failed redirect
+            $failedRedirect = 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'] . '&spotid=' . $_SESSION['spotId'];
+
+
+            // insert order
+            if (!empty($post['order']['date']) && !empty($post['order']['time'])) {
+                $orderDate = explode(' ', $post['order']['date']);
+                $post['order']['created'] = $orderDate[0] . ' ' . $post['order']['time'];
+            }
+            $post['order']['buyerId'] = $this->user_model->id;
+            $post['order']['paid'] = $paidStatus;
+
+            $this->shoporder_model->setObjectFromArray($post['order'])->create();
+
+            if (!$this->shoporder_model->id) {
+                $this->session->set_flashdata('error', 'Order not made! Please try again');
+                redirect($failedRedirect);
+                exit();
+            }
+
+            // insert order details
+            foreach ($post['orderExtended'] as $id => $details) {
+                $details['productsExtendedId'] = intval($id);
+                $details['orderId'] = $this->shoporder_model->id;
+                if (!$this->shoporderex_model->setObjectFromArray($details)->create()) {
+                    $this->shoporderex_model->orderId = $details['orderId'];
+                    $this->shoporderex_model->deleteOrderDetails();
+                    $this->shoporder_model->delete();
+                    $this->session->set_flashdata('error', 'Order not made! Please try again');
+                    redirect($failedRedirect);
+                    exit();
+                }
+            }
+
+            // save orderId in SESSION
+            $_SESSION['orderId'] = $this->shoporder_model->id;
+        }
+
+        public function cashPayment(): void
+        {
+            $this->insertOrderProcess($this->config->item('orderCashPaying'));
+            $redirect =  ($_SESSION['vendor']['vendorId'] === 1162) ?  'successth' : 'success';
+            redirect($redirect);
         }
     }

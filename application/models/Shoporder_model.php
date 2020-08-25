@@ -66,7 +66,7 @@
             if (isset($data['buyerId']) && !Validate_data_helper::validateInteger($data['buyerId'])) return false;
             if (isset($data['amount']) && !Validate_data_helper::validateFloat($data['amount'])) return false;
             if (isset($data['serviceFee']) && !Validate_data_helper::validateFloat($data['serviceFee'])) return false;            
-            if (isset($data['paid']) && !($data['paid'] === '1' || $data['paid'] === '0')) return false;
+            if (isset($data['paid']) && !($data['paid'] === '1' || $data['paid'] === '0' || $data['paid'] === '2')) return false;
             if (isset($data['created']) && !Validate_data_helper::validateDate($data['created'])) return false;
             if (isset($data['updated']) && !Validate_data_helper::validateDate($data['updated'])) return false;
             if (isset($data['orderStatus']) && !Validate_data_helper::validateString($data['orderStatus'])) return false;
@@ -306,6 +306,7 @@
                         tbl_shop_orders.spotId,
                         tbl_shop_orders.created AS orderCreated,
                         tbl_shop_orders.expired AS orderExpired,
+                        tbl_shop_orders.paid AS paidStatus,
                         tbl_shop_spots.spotName,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
                         tbl_shop_printers.id AS printerId,
@@ -378,7 +379,7 @@
                             WHERE tbl_user.roleid = ' . $this->config->item('owner') . '
                         ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     WHERE
-                        tbl_shop_orders.paid = "1"
+                        tbl_shop_orders.paid != "0"
                         AND tbl_shop_orders.expired = "0"
                         AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_printers.macNumber = "' . $macNumber . '" 
@@ -394,6 +395,7 @@
                         tbl_shop_orders.spotId,
                         tbl_shop_orders.created AS orderCreated,
                         tbl_shop_orders.expired AS orderExpired,
+                        tbl_shop_orders.paid AS paidStatus,
                         tbl_shop_spots.spotName,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
                         tbl_shop_printers.id AS printerId,
@@ -478,7 +480,7 @@
                             WHERE tbl_user.roleid = ' . $this->config->item('owner') . '
                         ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     WHERE
-                        tbl_shop_orders.paid = "1"
+                        tbl_shop_orders.paid != "0"
                         AND tbl_shop_orders.expired = "0"
                         AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_printers.macNumber = "' . $macNumber . '" 

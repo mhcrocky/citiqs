@@ -122,6 +122,12 @@
                                                 <span data-trans="" data-trn-key="Bancontact">Giropay</span>
                                             </a>
                                         <?php } ?>
+                                        <?php if ($vendor['cash'] === '1') { ?>
+                                            <a href="<?php echo base_url(); ?>cashPayment" class="paymentMethod method-card" >
+                                                <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/creditcard.png" alt="Creditcard"> -->
+                                                <span>Cash</span>
+                                            </a>
+                                        <?php } ?>
                                         <div class="clearfix"></div>
                                     </div>
 
