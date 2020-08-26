@@ -73,7 +73,7 @@
             return $result ? $result : null;
         }
 
-        public function readImproved(array $filter, int $querylogging = 1): ?array
+        public function readImproved(array $filter, int $querylogging = 0): ?array
         {
             $result = $this->db->select(implode(',', $filter['what']));
             if (isset($filter['joins']) && count($filter['joins']) ) {
