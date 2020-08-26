@@ -80,11 +80,11 @@ class Check424 extends BaseControllerWeb {
 			exit();
 		};
 
-		// set cookies
-		foreach ($visitor as $key => $value) {
-			if ($key === 'vendorId' || $key === 'table') continue;
-			set_cookie($key, $value, time() + (365 * 24 * 60 * 60));
-		}
+		set_cookie('firstName', $visitor['firstName'], time() + (365 * 24 * 60 * 60));
+		set_cookie('lastName', $visitor['lastName'], time() + (365 * 24 * 60 * 60));
+		set_cookie('userName', $visitor['firstName'] . ' ' .  $visitor['lastName'], time() + (365 * 24 * 60 * 60));
+		set_cookie('email', $visitor['email'], time() + (365 * 24 * 60 * 60));
+		set_cookie('mobile', $visitor['mobile'], time() + (365 * 24 * 60 * 60));
 
 		// insert reservation
 		$check = [

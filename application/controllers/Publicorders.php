@@ -209,11 +209,11 @@
                 }
             }
 
-            $data['username'] = isset($_SESSION['postOrder']['user']['username']) ? $_SESSION['postOrder']['user']['username'] : get_cookie('firstName') . ' ' . get_cookie('lastName');
+            $data['username'] = isset($_SESSION['postOrder']['user']['username']) ? $_SESSION['postOrder']['user']['username'] : get_cookie('userName');
             $data['email'] = isset($_SESSION['postOrder']['user']['email']) ? $_SESSION['postOrder']['user']['email'] : get_cookie('email');
             $data['mobile'] = isset($_SESSION['postOrder']['user']['mobile']) ? $_SESSION['postOrder']['user']['mobile'] : get_cookie('mobile');
-            $data['userCountry'] = isset($_SESSION['postOrder']['user']['country']) ? $_SESSION['postOrder']['user']['country'] : '';#Country_helper::getCountryCodeFromIp();
-            $data['phoneCountryCode'] = isset($_SESSION['postOrder']['phoneCountryCode']) ? $_SESSION['postOrder']['phoneCountryCode'] : '';#Country_helper::getCountryCodeFromIp();
+            $data['userCountry'] = isset($_SESSION['postOrder']['user']['country']) ? $_SESSION['postOrder']['user']['country'] : '';
+            $data['phoneCountryCode'] = isset($_SESSION['postOrder']['phoneCountryCode']) ? $_SESSION['postOrder']['phoneCountryCode'] : '';
 
             $this->loadViews('publicorders/checkoutOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
@@ -227,6 +227,11 @@
             }
 
             $_SESSION['postOrder'] = $this->input->post(null, true);
+
+            set_cookie('userName', $_SESSION['postOrder']['user']['username'], time() + (365 * 24 * 60 * 60));
+            set_cookie('email', $_SESSION['postOrder']['user']['email'], time() + (365 * 24 * 60 * 60));
+            set_cookie('mobile', $_SESSION['postOrder']['user']['mobile'], time() + (365 * 24 * 60 * 60));
+            redirect('pay_order');
 
             redirect('pay_order');
         }
