@@ -513,6 +513,7 @@
 				));
 				?>
 			</div>
+
 			<div class="report-content" style="margin-bottom: -30px; margin-top: 30px">
 				<?php
 				DataTables::create(array(
@@ -600,7 +601,7 @@
 
 						"chart"=>array(
 							"height"=>"300px",
-							"dataSource"=>$this->dataStore('alldata_bybuyer')->SUM('totalamount')/$this->dataStore('alldata_bybuyer')->COUNT(),
+							"dataSource"=>$this->dataStore('alldata_bybuyer'),
 							"columns"=>array(
 								"createdAt",
 								"productQuantity"=>array(
@@ -613,7 +614,7 @@
 							)
 						),
 						"secondChart"=>array(
-							"dataSource"=>$this->dataStore('alldata_bybuyer')->SUM('totalamount')/$this->dataStore('alldata_bybuyer')->COUNT(),
+							"dataSource"=>$this->dataStore('alldata_bybuyer'),
 							"columns"=>array(
 								"createdAt",
 								"productQuantity"=>array(
@@ -659,7 +660,7 @@
 
 						"chart"=>array(
 							"height"=>"300px",
-							"dataSource"=>$this->dataStore('alldata_bybuyer')->count(),
+							"dataSource"=>$this->dataStore('alldata_bybuyer'),
 							"columns"=>array(
 								"createdAt",
 								"totalamount"=>array(
@@ -672,7 +673,7 @@
 							)
 						),
 						"secondChart"=>array(
-							"dataSource"=>$this->dataStore('alldata_bybuyer')->count(),
+							"dataSource"=>$this->dataStore('alldata_bybuyer'),
 							"columns"=>array(
 								"createdAt",
 								"productQuantity"=>array(
@@ -691,7 +692,7 @@
 
 
 
-				<div class="report-content" style="margin-left: -10px; margin-top: 30px">
+				<div class="report-content" style="margin-left: -10px; margin-top: 30px; ">
 					<?php
 					DataTables::create(array(
 						"dataSource"=>$this->dataStore("alldata_bybuyer")->sort(array(
@@ -747,6 +748,10 @@
 								"pageSize"=>5,
 								"pageIndex"=>0,
 								"align"=>"left",
+								"columnDefs"=>array(
+									array("width"=> "50px", "targets"=>"0" ),
+									array("width"=> "50px", "targets"=>"1" )
+								)
 
 							),
 						),
