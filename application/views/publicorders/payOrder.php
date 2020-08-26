@@ -123,16 +123,18 @@
                                             </a>
                                         <?php } ?>
                                         <?php if ($vendor['prePaid'] === '1') { ?>
-                                            <a href="<?php echo base_url() . 'cashPayment/' . $this->config->item('orderNotPaid') . '/' . $this->config->item('prePaid'); ?>" class="paymentMethod method-card" >
-                                                <img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Pay at waiter" />
+                                            <!-- <a href="<?php #echo base_url() . 'cashPayment/' . $this->config->item('orderNotPaid') . '/' . $this->config->item('prePaid'); ?>" class="paymentMethod method-card" > -->
+                                            <p class="paymentMethod method-card" data-toggle="modal" data-target="#prePaid">
+                                                <img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Service by waiter" />
                                                 <span>Service by waiter</span>
-                                            </a>
+                                            </p>
                                         <?php } ?>
                                         <?php if ($vendor['postPaid'] === '1') { ?>
-                                            <a href="<?php echo base_url() . 'cashPayment/' . $this->config->item('orderPaid') . '/' . $this->config->item('postPaid'); ?>" class="paymentMethod method-card" >
-                                                <img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Pay at waiter" />
+                                            <!-- <a href="<?php #echo base_url() . 'cashPayment/' . $this->config->item('orderPaid') . '/' . $this->config->item('postPaid'); ?>" class="paymentMethod method-card" > -->
+                                            <p class="paymentMethod method-card" data-toggle="modal" data-target="#postPaid">
+                                                <img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Service by waiter" />
                                                 <span>Service by waiter</span>
-                                            </a>
+                                            </p>
                                         <?php } ?>
                                         <div class="clearfix"></div>
                                     </div>
@@ -248,6 +250,59 @@
                                         </div>
                                     </div>
                                 <?php } ?>
+                                <?php if ($vendor['prePaid'] === '1') { ?>
+                                    <!-- Modal -->
+                                    <div id="prePaid" class="modal" role="dialog">
+                                    <div class="modal-dialog modal-sm">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <button
+                                                        class="btn btn-success btn-lg"
+                                                        style="border-radius:50%; margin-right:5%; font-size:24px"
+                                                        onclick="redirect('<?php echo base_url() . 'cashPayment/' . $this->config->item('orderNotPaid') . '/' . $this->config->item('prePaid'); ?>')"
+                                                        >
+                                                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                                    </button>
+                                                    <button
+                                                        class="btn btn-danger btn-lg"
+                                                        style="border-radius:50%; margin-left:5%; font-size:24px"
+                                                        data-dismiss="modal"
+                                                        >
+                                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                                <?php if ($vendor['postPaid'] === '1') { ?>
+                                    <!-- Modal -->
+                                    <div id="postPaid" class="modal" role="dialog">
+                                        <div class="modal-dialog modal-sm">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <button
+                                                        class="btn btn-success btn-lg"
+                                                        style="border-radius:50%; margin-right:5%; font-size:24px"
+                                                        onclick="redirect('<?php echo base_url() . 'cashPayment/' . $this->config->item('orderPaid') . '/' . $this->config->item('postPaid'); ?>')"
+                                                        >
+                                                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                                    </button>
+                                                    <button
+                                                        class="btn btn-danger btn-lg"
+                                                        style="border-radius:50%; margin-left:5%; font-size:24px"
+                                                        data-dismiss="modal"
+                                                        >
+                                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+
                                 <div class="footer" style="text-align:left">
                                     <a href="<?php echo base_url(); ?>checkout_order" class="btn-cancel">
                                         <i class="fa fa-arrow-left"></i>
@@ -271,6 +326,10 @@
     function toogleElements(showId, hideId, className) {
         document.getElementById(showId).classList.toggle(className)
         document.getElementById(hideId).classList.toggle(className)
+    }
+
+    function redirect(url) {
+        window.location.href = url;
     }
 </script>
 <?php } ?>
