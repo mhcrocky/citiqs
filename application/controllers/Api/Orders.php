@@ -44,7 +44,16 @@
 
             $order = reset($order);
 
-            // UPDATE ORDER EXTENDED PRINT STATUS
+            if (!empty($order['paymentType'])) {
+                header('Content-type: image/png');
+                //one for waiter
+                echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
+                //one for customer
+                echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
+                if($order['paidStatus'] === '0') return;
+            }
+
+            // UPDATE ORDER EXTENDED PRINT STATUS ON TWO
             $orderExtendedIds = explode(',', $order['orderExtendedIds']);
             foreach ($orderExtendedIds as $id) {
                 $this
@@ -551,9 +560,9 @@
             }
 
             // SEND EMAIL
-            $subject= "tiqs-Order : ". $order['orderId'] ;
-            $email = $order['buyerEmail'];
-            Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail); 
+            // $subject= "tiqs-Order : ". $order['orderId'] ;
+            // $email = $order['buyerEmail'];
+            // Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail); 
         }
 
         public function data_post()

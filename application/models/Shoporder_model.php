@@ -309,6 +309,7 @@
                         tbl_shop_orders.created AS orderCreated,
                         tbl_shop_orders.expired AS orderExpired,
                         tbl_shop_orders.paid AS paidStatus,
+                        tbl_shop_orders.paymentType AS paymentType,
                         tbl_shop_spots.spotName,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
                         tbl_shop_printers.id AS printerId,
@@ -381,7 +382,7 @@
                             WHERE tbl_user.roleid = ' . $this->config->item('owner') . '
                         ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     WHERE
-                        tbl_shop_orders.paid != "0"
+                        (tbl_shop_orders.paid = "1" OR tbl_shop_orders.paymentType IS NOT NULL)
                         AND tbl_shop_orders.expired = "0"
                         AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_printers.macNumber = "' . $macNumber . '" 
@@ -398,6 +399,7 @@
                         tbl_shop_orders.created AS orderCreated,
                         tbl_shop_orders.expired AS orderExpired,
                         tbl_shop_orders.paid AS paidStatus,
+                        tbl_shop_orders.paymentType AS paymentType,
                         tbl_shop_spots.spotName,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
                         tbl_shop_printers.id AS printerId,
@@ -482,7 +484,7 @@
                             WHERE tbl_user.roleid = ' . $this->config->item('owner') . '
                         ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     WHERE
-                        tbl_shop_orders.paid != "0"
+                        (tbl_shop_orders.paid = "1" OR tbl_shop_orders.paymentType IS NOT NULL)
                         AND tbl_shop_orders.expired = "0"
                         AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_printers.macNumber = "' . $macNumber . '" 
@@ -530,6 +532,7 @@
                         tbl_shop_orders.expired AS orderExpired,
                         tbl_shop_orders.serviceFee AS serviceFee,
                         tbl_shop_orders.printStatus AS printStatus,
+                        tbl_shop_orders.paymentType AS paymentType,
                         tbl_shop_spots.spotName,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
                         tbl_user.username AS buyerUserName,
