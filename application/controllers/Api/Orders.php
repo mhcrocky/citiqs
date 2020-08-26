@@ -41,18 +41,30 @@
             $order = $this->shoporder_model->fetchOrdersForPrint($masterMac);
 
             if (!$order) return;
-
             $order = reset($order);
 
             if (!empty($order['paymentType'])) {
-                header('Content-type: image/png');
-                //one for waiter
-                echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
-                //one for customer
-                echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
+                if ($order['waiterReceipt'] === '0') {
+                    // one reeipt for waiter
+                    $waiterUpdate = $this->shoporder_model->setObjectId(intval($order['orderId']))->setProperty('waiterReceipt', '1')->update();
+                    if ($waiterUpdate) {
+                        header('Content-type: image/png');
+                        echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
+                    }
+                    return;
+                }
+
+                if ($order['customerReceipt'] === '0') {
+                    $customerReceipt = $this->shoporder_model->setObjectId(intval($order['orderId']))->setProperty('customerReceipt', '1')->update();
+                    // one receipt for customer
+                    if ($customerReceipt) {
+                        header('Content-type: image/png');
+                        echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
+                    }
+                    return;
+                }
                 if($order['paidStatus'] === '0') return;
             }
-
             // UPDATE ORDER EXTENDED PRINT STATUS ON TWO
             $orderExtendedIds = explode(',', $order['orderExtendedIds']);
             foreach ($orderExtendedIds as $id) {
@@ -555,7 +567,6 @@
             }
 
             if ($this->shoporder_model->updatePrintedStatus()) {
-                // THIS SEND EMAIL TO PETER, HARDCODED IN ORDERSCOPY, $order['buyerEmail'] = 'pnroos@icloud.com';
                 file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
             }
 

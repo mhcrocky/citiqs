@@ -25,6 +25,8 @@
         public $countSentMessages;
         public $expired;
         public $paymentType;
+        public $waiterReceipt;
+        public $customerReceipt;
 
         private $table = 'tbl_shop_orders';
 
@@ -79,6 +81,8 @@
             if (isset($data['countSentMessages']) && !Validate_data_helper::validateInteger($data['countSentMessages'])) return false;
             if (isset($data['expired']) && !($data['expired'] === '1' || $data['expired'] === '0')) return false;
             if (isset($data['paymentType']) && !Validate_data_helper::validateString($data['paymentType'])) return false;
+            if (isset($data['waiterReceipt']) && !($data['waiterReceipt'] === '1' || $data['waiterReceipt'] === '0')) return false;
+            if (isset($data['customerReceipt']) && !($data['customerReceipt'] === '1' || $data['customerReceipt'] === '0')) return false;
 
             return true;
         }
@@ -310,6 +314,8 @@
                         tbl_shop_orders.expired AS orderExpired,
                         tbl_shop_orders.paid AS paidStatus,
                         tbl_shop_orders.paymentType AS paymentType,
+                        tbl_shop_orders.waiterReceipt AS waiterReceipt,
+                        tbl_shop_orders.customerReceipt AS customerReceipt,
                         tbl_shop_spots.spotName,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
                         tbl_shop_printers.id AS printerId,
@@ -400,6 +406,8 @@
                         tbl_shop_orders.expired AS orderExpired,
                         tbl_shop_orders.paid AS paidStatus,
                         tbl_shop_orders.paymentType AS paymentType,
+                        tbl_shop_orders.waiterReceipt AS waiterReceipt,
+                        tbl_shop_orders.customerReceipt AS customerReceipt,
                         tbl_shop_spots.spotName,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
                         tbl_shop_printers.id AS printerId,

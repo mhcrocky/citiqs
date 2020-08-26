@@ -129,7 +129,7 @@
 			$draw->annotation(0, 70, "datum:". date("m-d h:i:sa"). " spot: ". $order['spotName'] );
 
             if (!empty($order['paymentType'])) {
-                $drawemail->annotation(0, 30, 'PAY AT WAITER');
+                $drawemail->annotation(0, 30, 'SERVICE BY WAITER');
             }
 			$drawemail->annotation(0, 70, "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);
 			$drawemail->annotation(0, 105, "DATE:". date("m-d h:i:sa"). " SPOT: ". $order['spotName'] );

@@ -125,13 +125,13 @@
                                         <?php if ($vendor['prePaid'] === '1') { ?>
                                             <a href="<?php echo base_url() . 'cashPayment/' . $this->config->item('orderNotPaid') . '/' . $this->config->item('prePaid'); ?>" class="paymentMethod method-card" >
                                                 <img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Pay at waiter" />
-                                                <span>Pay at waiter</span>
+                                                <span>Service by waiter</span>
                                             </a>
                                         <?php } ?>
                                         <?php if ($vendor['postPaid'] === '1') { ?>
                                             <a href="<?php echo base_url() . 'cashPayment/' . $this->config->item('orderPaid') . '/' . $this->config->item('postPaid'); ?>" class="paymentMethod method-card" >
                                                 <img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Pay at waiter" />
-                                                <span>Pay at waiter</span>
+                                                <span>Service by waiter</span>
                                             </a>
                                         <?php } ?>
                                         <div class="clearfix"></div>
