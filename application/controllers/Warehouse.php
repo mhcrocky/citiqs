@@ -347,6 +347,11 @@
                     ->setObjectFromArray($data['product'])
                     ->update();
 
+            // upload image
+            if (!empty($_FILES['productImage']['name'])) {
+                $this->shopproduct_model->uploadImage();
+            }
+
             // insert new product extended deatils
             $countTypes = 0;
             foreach($data['productTypes'] as $typeId => $typeValues) {

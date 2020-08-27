@@ -237,7 +237,11 @@
                                         echo $productDetailsString;
                                     ?>
                                 </div>
-
+                                <?php if ($product['productImage']) { ?>
+                                    <figure>
+                                        <img src="<?php echo base_url() . 'assets/images/productImages/' . $product['productImage']; ?>" alt="<?php echo $details['name']; ?>"/>
+                                    </figure>
+                                <?php } ?>
                                 <div class="grid-footer">
                                     <div class="iconWrapper">
                                         <span class="fa-stack fa-2x edit-icon btn-edit-item" onclick="toogleAllElementClasses('editProductProductId<?php echo $product['productId']; ?>', 'display')" title="Click to edit" >
@@ -476,7 +480,7 @@
                                         </div>
                                     </div>
                                     <div style="width:100%">
-                                        <form id="editProduct<?php echo $product['productId']; ?>" method="post" action="<?php echo $this->baseUrl . 'warehouse/editProduct/' . $product['productId']; ?>"  class="form-inline">
+                                        <form id="editProduct<?php echo $product['productId']; ?>" method="post" action="<?php echo $this->baseUrl . 'warehouse/editProduct/' . $product['productId']; ?>"  class="form-inline"  enctype="multipart/form-data">
                                             <input type="text" name="productExtended[productId]" value="<?php echo $product['productId']; ?>" readonly required hidden />
                                             <input
                                                 type="text"
@@ -656,6 +660,11 @@
                                                     value="<?php echo intval($product['orderNo']); ?>"
                                                     required
                                                     />
+                                            </div>
+                                            <legend>Upload product image</legend>
+                                            <div class="form-group has-feedback">
+                                                <input type="file" name="productImage" id="uploadProductImage" class="form-control" accept="image/png" />
+                                                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                                             </div>
                                         </form>
                                     </div>
