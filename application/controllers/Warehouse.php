@@ -15,6 +15,7 @@
             $this->load->helper('url');
             $this->load->helper('validate_data_helper');
             $this->load->helper('utility_helper');
+            $this->load->helper('uploadfile_helper');
 
             // $this->load->model('user_subscription_model');
             $this->load->model('shopcategory_model');
@@ -233,6 +234,11 @@
                 $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
                 redirect($redirect);
             };
+
+            // upload image
+            if (!empty($_FILES['productImage']['name'])) {
+                $this->shopproduct_model->uploadImage();
+            }
 
             $this->shopspotproduct_model->insertProductSpots($this->shopspot_model, $this->shopproduct_model->id, $userId);
 

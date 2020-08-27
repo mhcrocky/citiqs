@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <div style="width:100%;">
-                        <form id="addProdcut" method="post" action="<?php echo $this->baseUrl . 'warehouse/addProdcut'; ?>" class="form-inline">
+                        <form id="addProdcut" method="post" action="<?php echo $this->baseUrl . 'warehouse/addProdcut'; ?>" class="form-inline" enctype="multipart/form-data">
                             <input type="text" name="product[active]" value="1" required readonly hidden />
                             <legend>Product basic data</legend>
                             <!-- PRODUCT EXTENDED DATA -->
@@ -120,7 +120,12 @@
                                     <label for="price<?php echo $type['id']; ?>">Price: </label>
                                     <input type="number" required value="0" step="0.01" name="productTypes[<?php echo $type['id']; ?>][price]" id="price<?php echo $type['id']; ?>" min="0" class="form-control" />
                                 </div>
-                                <?php } ?>
+                            <?php } ?>
+                            <legend>Upload product image</legend>
+                            <div class="form-group has-feedback">
+                                <input type="file" name="productImage" id="productImage" class="form-control" accept="image/png" />
+                                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                            </div>
                         </form>
                     </div>
                 </div>

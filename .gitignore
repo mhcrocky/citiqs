@@ -32,7 +32,7 @@ tiqsimg
 ##Uploads
 uploads/qrcodes/*
 
-## venodr logos
+## vendor logos
 assets/images/vendorLogos
 
 ##Sessions
@@ -51,3 +51,6 @@ application/config/constants.php
 db
 
 receipts
+
+## product images
+assets/images/productImages

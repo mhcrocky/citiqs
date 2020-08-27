@@ -128,7 +128,7 @@ $config['weekDays'] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 $config['timeFrom'] = '00:00:00';
 $config['timeTo'] = '23:59:59';
 
-// LOGO FOLDER
+// LOGO IMAGES FOLDER
 $config['uploadLogoFolder']    = FCPATH . 'assets/images/vendorLogos' . DIRECTORY_SEPARATOR;
 
 //spot types
@@ -139,3 +139,6 @@ $config['pickupType'] = 3;
 //cash payment types
 $config['prePaid'] = 'prePaid';
 $config['postPaid'] = 'postPaid';
+
+// PRODUCT IMAGES FOLDER
+$config['uploadProductImageFolder']    = FCPATH . 'assets/images/productImages' . DIRECTORY_SEPARATOR;

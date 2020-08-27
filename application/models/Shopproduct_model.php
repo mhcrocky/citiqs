@@ -14,10 +14,11 @@
         public $stock;
         public $recommendedQuantity;
         public $active;
-        public $showImage;
+        public $productImage;
         public $dateTimeFrom;
         public $dateTimeTo;
         public $orderNo;
+
         private $table = 'tbl_shop_products';
 
         protected function setValueType(string $property,  &$value): void
@@ -60,10 +61,10 @@
             if (isset($data['stock']) && !Validate_data_helper::validateInteger($data['stock'])) return false;
             if (isset($data['recommendedQuantity']) && !Validate_data_helper::validateInteger($data['recommendedQuantity'])) return false;
             if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
-            if (isset($data['showImage']) && !($data['showImage'] === '1' || $data['showImage'] === '0')) return false;
             if (isset($data['dateTimeFrom']) && !Validate_data_helper::validateDate($data['dateTimeFrom'])) return false;
             if (isset($data['dateTimeTo']) && !Validate_data_helper::validateDate($data['dateTimeTo'])) return false;
             if (isset($data['orderNo']) && !Validate_data_helper::validateInteger($data['orderNo'])) return false;
+            if (isset($data['productImage']) && !Validate_data_helper::validateString($data['productImage'])) return false;
 
             return true;
         }
@@ -81,4 +82,21 @@
                     ]
                 );
         }
+
+        public function uploadImage(): bool
+        {
+            $this->load->config('custom');
+            $this->load->helper('uploadfile_helper');
+
+            $this->productImage = $this->id . '_' . strval(time()) . '.' . Uploadfile_helper::getFileExtension($_FILES['productImage']['name']);
+            $constraints = [
+                'allowed_types'=> 'png'
+            ];
+            $_FILES['productImage']['name'] = $this->productImage;
+            if (Uploadfile_helper::uploadFiles($this->config->item('uploadProductImageFolder'), $constraints)) {
+                return $this->update();
+            }
+            return false;
+        }
+
     }

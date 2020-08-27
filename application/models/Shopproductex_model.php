@@ -131,7 +131,7 @@
                 'tbl_shop_products.stock',
                 'tbl_shop_products.recommendedQuantity',
                 'tbl_shop_products.active AS productActive',
-                'tbl_shop_products.showImage',
+                'tbl_shop_products.productImage AS productImage',
                 'tbl_shop_products.dateTimeFrom AS dateTimeFrom',
                 'tbl_shop_products.dateTimeTo AS dateTimeTo',
                 'tbl_shop_products.orderNo AS orderNo',
