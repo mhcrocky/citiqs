@@ -95,10 +95,12 @@
             $_SESSION['spot'] = $spot;
             $userId = $_SESSION['vendor']['vendorId'];
             $time = time();
+            $spotId = intval($spot['spotId']);
 
             $data = [
                 'categoryProducts' => $this->shopproductex_model->getUserProductsPublic($userId),
-                'spotId' => $spot['spotId'],
+                'products' => $this->shopproductex_model->getMainProductsOnBuyerSide($userId, $spotId),
+                'spotId' => $spotId,
                 'day' => date('D', $time),
                 'hours' => strtotime(date('H:i:s', $time)),
                 'vendor' => $_SESSION['vendor'],

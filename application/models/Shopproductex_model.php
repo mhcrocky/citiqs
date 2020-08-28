@@ -401,4 +401,180 @@
 
             return $this->filterProducts($userId, $filter, $resetBy, false, $typeCondition);
         }
+
+        public function fetchSpotProducts(int $userId, int $spotId): ?array
+        {
+            $this->load->config('custom');
+            $concatSeparator = $this->config->item('concatSeparator');
+            $concatGroupSeparator = $this->config->item('contactGroupSeparator');
+
+            $date = date('Y-m-d H:i:s', time());
+            $day = date('D');
+            $hours = date('H:i:s');
+
+            $filter = [
+                'what' => [
+                    $this->table . '.productId',
+                    'GROUP_CONCAT(
+                            tblShopProductDetails.productDetails
+                            SEPARATOR "'. $concatGroupSeparator . '"
+                    ) AS productDetails',
+                    'tbl_shop_products.productImage AS productImage',
+                    'tbl_shop_categories.category',
+                    'tbl_shop_categories.id AS categoryId',
+                    'tblShopAddons.addons AS addons'
+                ],
+                'where' => [
+                    'tbl_shop_categories.userId=' => $userId,
+                    'tbl_shop_categories.active=' => '1',
+                    'tbl_shop_products.dateTimeFrom<=' => $date,
+                    'tbl_shop_products.dateTimeTo>' => $date,
+                    'tbl_shop_products.active=' => '1',
+                    'tbl_shop_spot_products.spotId=' =>  $spotId,
+                    'tbl_shop_spot_products.showInPublic=' => "1",
+                    'tbl_shop_product_times.day=' => $day,
+                    'tbl_shop_product_times.timeFrom<=' => $hours,
+                    'tbl_shop_product_times.timeTo>' => $hours,
+                ],
+                'joins' =>  [
+                    ['tbl_shop_products', $this->table.'.productId = tbl_shop_products.id', 'LEFT'],
+                    ['tbl_shop_categories', 'tbl_shop_products.categoryId = tbl_shop_categories.id', 'LEFT'],
+                    ['tbl_shop_product_times', 'tbl_shop_product_times.productId = tbl_shop_products.id'],
+                    [
+                        '(
+                            SELECT '
+                                // . $this->table . '.id,'
+                                . $this->table . '.productTypeId,'
+                                . $this->table . '.name,
+                                tbl_shop_products_types.isMain,
+                                GROUP_CONCAT('
+                                    . $this->table. '.id,
+                                    \'' .  $concatSeparator . '\',' . $this->table. '.name,
+                                    \'' .  $concatSeparator . '\',' . $this->table. '.shortDescription,
+                                    \'' .  $concatSeparator . '\',' . 'FORMAT(' . $this->table . '.price,2),
+                                    \'' .  $concatSeparator . '\',' . $this->table. '.vatpercentage,
+                                    \'' .  $concatSeparator . '\',' . $this->table. '.productTypeId,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_types.type,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_types.isMain,
+                                    \'' .  $concatSeparator . '\',' . $this->table. '.updateCycle,
+                                    \'' .  $concatSeparator . '\',' . $this->table. '.showInPublic,
+                                    \'' .  $concatSeparator . '\',' . $this->table . '.productId,
+                                    \'' .  $concatSeparator . '\', tbl_shop_categories.category,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products.active,
+                                    \'' .  $concatSeparator . '\', IF(CHAR_LENGTH(' . $this->table . '.longDescription) > 0, ' . $this->table . '.longDescription, "")
+                                    ORDER BY ' . $this->table. '.id DESC
+                                    SEPARATOR "'. $concatGroupSeparator . '"
+                                ) AS productDetails
+                            FROM
+                                ' . $this->table . '
+                            INNER JOIN
+                                tbl_shop_products_types ON ' . $this->table . '.productTypeId = tbl_shop_products_types.id
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products.id = ' . $this->table . '.productId
+                            INNER JOIN
+                                tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+                            GROUP BY ' . $this->table. '.productId
+                            ORDER BY ' . $this->table. '.productTypeId DESC
+                        ) tblShopProductDetails',
+                        'tblShopProductDetails.name = ' . $this->table . '.name',
+                        'INNER'
+                    ],
+                    [
+                        '(
+                            SELECT
+                                tbl_shop_products_addons.productId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_addons.productExtendedId,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_addons.quantity
+                                    SEPARATOR "' . $concatGroupSeparator . '"
+                                ) AS addons
+                            FROM
+                                tbl_shop_products_addons
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products_addons.productId = tbl_shop_products.id
+                            GROUP BY tbl_shop_products_addons.productId
+                        ) tblShopAddons',
+                        'tblShopAddons.productId = tbl_shop_products.id',
+                        'LEFT'
+                    ],
+                    ['tbl_shop_spot_products', 'tbl_shop_spot_products.productId = tbl_shop_products.id ','INNER']
+                ],
+                'conditions' => [
+                    'GROUP_BY' => [$this->table. '.productId'],
+                    'ORDER_BY' => ['tbl_shop_categories.sortNumber ASC, tbl_shop_products.orderNo DESC'],
+                ]
+            ];
+
+            return $this->readImproved($filter);
+        }
+        public function getMainProductsOnBuyerSide(int $userId, int $spotId): ?array
+        {
+            $products = $this->fetchSpotProducts($userId, $spotId);
+            if (is_null($products)) return null;
+
+            $this->load->helper('utility_helper');
+            $this->load->config('custom');
+            $concatSeparator = $this->config->item('concatSeparator');
+            $concatGroupSeparator = $this->config->item('contactGroupSeparator');
+
+            $addons = [];
+            foreach ($products as $key => $product) {
+                $products[$key]['productDetails'] = $this->prepareBuyerProductDetails($product['productDetails'], $concatGroupSeparator,  $concatSeparator, $addons);                
+                if (empty($products[$key]['productDetails'])) {
+                    unset($products[$key]);
+                    continue;
+                }
+                if ($products[$key]['addons']) {
+                    $products[$key]['addons'] =  $this->prepareAddons($product['addons'], $concatGroupSeparator, $concatSeparator);
+                    $products[$key]['addons'] = Utility_helper::resetArrayByKeyMultiple($products[$key]['addons'], '0');
+                }
+            }
+
+            $return = [
+                'main' => Utility_helper::resetArrayByKeyMultiple($products, 'category'),
+                'addons' => Utility_helper::resetArrayByKeyMultiple($addons, 'productExtendedId'),
+            ];
+
+            return $return;
+        }
+
+        private function prepareBuyerProductDetails(string $productDetails, string $separator, string $concatSeparator, array &$addons ): array
+        {
+            $productDetails =  explode($separator, $productDetails);
+            $productDetails = array_map(function($data) use($concatSeparator) {
+                return explode($concatSeparator, $data);
+            }, $productDetails);
+
+            $return = [];
+
+            foreach($productDetails as $index => $details) {
+                // checking the updte cycle
+                if ($index > 0 && $productDetails[$index][8] !== $productDetails[$index - 1][8]) break;
+                if ($details[9] === '0') continue;
+
+                $collect = [
+                    'productExtendedId'     => $details[0],
+                    'name'                  => $details[1],
+                    'shortDescription'      => $details[2],
+                    'price'                 => $details[3],
+                    'vatpercentage'         => $details[4],
+                    'productTypeId'         => $details[5],
+                    'productType'           => $details[6],
+                    'productTypeIsMain'     => $details[7],
+                    'productUpdateCycle'    => $details[8],
+                    'showInPublic'          => $details[9],
+                    'productId'             => $details[10],
+                    'category'              => $details[11],
+                    'activeStatus'          => $details[12],
+                    'longDescription'       => $details[13],
+                ];
+                if ($collect['productTypeIsMain'] === '0') {
+                    array_push($addons, $collect);
+                    continue;
+                }
+                array_push($return, $collect);
+            }
+
+            return $return;
+        }
     }
