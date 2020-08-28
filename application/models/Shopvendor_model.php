@@ -110,6 +110,7 @@
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',
                     'tbl_user.email AS vendorEmail',
+                    'tbl_user.country AS vendorCountry',
                     'GROUP_CONCAT(
                         CONCAT(
                             tbl_shop_vendor_types.id,

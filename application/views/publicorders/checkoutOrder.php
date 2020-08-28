@@ -295,7 +295,7 @@
                                                 if (
                                                     ($phoneCountryCode && $code === $phoneCountryCode)
                                                     || ($phoneCountryCode && $value === $phoneCountryCode)
-                                                    || (!$phoneCountryCode && $code === 'NL')
+                                                    || (!$phoneCountryCode && $code === $vendor['vendorCountry'])
                                                 ) echo 'selected';
                                             ?>
                                             >
