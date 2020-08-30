@@ -95,10 +95,12 @@
             $_SESSION['spot'] = $spot;
             $userId = $_SESSION['vendor']['vendorId'];
             $time = time();
+            $spotId = intval($spot['spotId']);
 
             $data = [
                 'categoryProducts' => $this->shopproductex_model->getUserProductsPublic($userId),
-                'spotId' => $spot['spotId'],
+                'products' => $this->shopproductex_model->getMainProductsOnBuyerSide($userId, $spotId),
+                'spotId' => $spotId,
                 'day' => date('D', $time),
                 'hours' => strtotime(date('H:i:s', $time)),
                 'vendor' => $_SESSION['vendor'],
@@ -252,10 +254,12 @@
             $data = [
                 'ordered' => $_SESSION['order'],
                 'vendor' => $_SESSION['vendor'],
+                'spot' => $_SESSION['spot'],
                 'idealPaymentType' => $this->config->item('idealPaymentType'),
                 'creditCardPaymentType' => $this->config->item('creditCardPaymentType'),
                 'bancontactPaymentType' => $this->config->item('bancontactPaymentType'),
                 'giroPaymentType' => $this->config->item('giroPaymentType'),
+                'localType' => $this->config->item('local'),
             ];
 
             $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
