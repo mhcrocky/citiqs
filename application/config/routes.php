@@ -58,6 +58,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 
 $route['thuishaven'] = "thuishavensoldout";
+$route['places'] = "places";
 //$route['thuishaven'] = "thuishavenagenda/index/1";
 
 $route['thuishavensales/(:any)/(:any)'] = "thuishaven/index/$1/$2";
