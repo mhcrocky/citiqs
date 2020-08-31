@@ -99,12 +99,21 @@
 
             $data = [
                 'categoryProducts' => $this->shopproductex_model->getUserProductsPublic($userId),
-                'products' => $this->shopproductex_model->getMainProductsOnBuyerSide($userId, $spotId),
                 'spotId' => $spotId,
                 'day' => date('D', $time),
                 'hours' => strtotime(date('H:i:s', $time)),
                 'vendor' => $_SESSION['vendor'],
             ];
+
+            // $allProducts = $this->shopproductex_model->getMainProductsOnBuyerSide($userId, $spotId);
+            // if ($allProducts) {
+            //     $data['mainProducts'] = $allProducts['main'];
+            //     $data['addons'] = $allProducts['addons'];
+            // }
+            // echo '<pre>';
+            // print_r($allProducts);
+            // echo '</pre>';
+            // die();
 
             $termsAndConditions = $this->shopvendor_model->readImproved([
                 'what' => ['termsAndConditions'],
@@ -122,6 +131,7 @@
             $data['ordered'] = isset($_SESSION['order']) ? $_SESSION['order'] : null;
 
             $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
+            // $this->loadViews('publicorders/makeOrderNew', $this->global, $data, null, 'headerWarehousePublic');
             return;
         }
 
