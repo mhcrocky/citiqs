@@ -206,8 +206,8 @@
                 // 7 => vatpercentage
 
                 $title = $product[0];
-                $price = (float)$product[1];
-                $quantity = (int)$product[2];
+                $price = $product[1];
+                $quantity = $product[2];
                 $plu =  $product[3];
                 $shortDescription = $product[5];
                 $longDescription = $product[6];
@@ -290,12 +290,14 @@
 
                 //added by Nadeem
                 //set json product price and etc
+                $price=(float)$price;
+                $quantity=(int)$quantity;
                 $this->ProductLines[]=  array(
                     "ProductGroupId"    =>  "FOO0100".$order['orderId'],
                     "ProductGroupName"  =>  "PicnicSpot",
                     "ProductId"         =>  str_replace(' ', '', $order['spotName']),
                     "ProductName"       =>  $title,
-                    "Quantity"          =>  (int)$quantity,
+                    "Quantity"          =>  $quantity,
                     "QuantityUnit"      =>  "P",
                     "SellingPrice"      =>  (float)($price*$quantity),
                     "VatRateId"         =>  $this->returnVatGrade($vatpercentage),//"B",
