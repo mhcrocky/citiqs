@@ -206,8 +206,8 @@
                 // 7 => vatpercentage
 
                 $title = $product[0];
-                $price = $product[1];
-                $quantity = $product[2];
+                $price = (float)$product[1];
+                $quantity = (int)$product[2];
                 $plu =  $product[3];
                 $shortDescription = $product[5];
                 $longDescription = $product[6];
@@ -297,7 +297,7 @@
                     "ProductName"       =>  $title,
                     "Quantity"          =>  (int)$quantity,
                     "QuantityUnit"      =>  "P",
-                    "SellingPrice"      =>  (float)$price,
+                    "SellingPrice"      =>  (float)($price*$quantity),
                     "VatRateId"         =>  $this->returnVatGrade($vatpercentage),//"B",
                     "DiscountLines"     =>array(
                         // array(
