@@ -26,7 +26,7 @@
 								<span style="color: antiquewhite"><?php echo $directory['address']; ?></span>
 								<div class="social-links align-items-center pt-3">
 									<a class="contact-link" target="_blank"
-									   <?php if ($directory['email']) { ?>href="<?php echo $directory['website']; ?>"<?php } ?> >
+									   <?php if ($directory['email']) { ?>href="<?php echo "https://tiqs.com/alfred/make_order?vendorid=".$directory['id']; ?>"<?php } ?> >
 										<i class="fa fa-link fa-lg" style="color: antiquewhite"></i></a>
 									<a class="contact-link"
 									   <?php if ($directory['email']) { ?>href="mailto:<?php echo $directory['email']; ?>"<?php } ?>>

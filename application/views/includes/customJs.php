@@ -53,6 +53,7 @@
 <?php } elseif ($this->view === 'nolabels') { ?>
 	<script src='https://www.google.com/recaptcha/api.js' async defer ></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/nolabels.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/slidertogo.js"></script>
 <?php } elseif ($this->view === 'warehouse/productCategories') { ?>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/productCategories.js"></script>

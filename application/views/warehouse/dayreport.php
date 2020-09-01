@@ -6,5 +6,3 @@ $dailyturnover = new Dayreport([
 ]);
 $dailyturnover->run()->render();
 
-require_once APPPATH . 'reports/Visitors.php';
-
