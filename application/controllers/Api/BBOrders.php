@@ -45,7 +45,7 @@
             if (!$order) return;
             $order = reset($order);
 
-
+            // var_dump($order);
             // $order = $this->shoporder_model->fetchOrdersForPrintcopy($orderId);
             // if (!$order) return;
             // $order = reset($order);
@@ -204,11 +204,12 @@
                 // 5 => shortDescription
                 // 6 => longDescription
                 // 7 => vatpercentage
+                // 8 => productId
 
                 $title = $product[0];
                 $price = $product[1];
                 $quantity = $product[2];
-                $plu =  $product[3];
+                $plu =  $product[3]; //????????????????
                 $shortDescription = $product[5];
                 $longDescription = $product[6];
                 $vatpercentage = $product[7];
@@ -293,9 +294,9 @@
                 $price=(float)$price;
                 $quantity=(int)$quantity;
                 $this->ProductLines[]=  array(
-                    "ProductGroupId"    =>  "FOO0100".$order['orderId'],
-                    "ProductGroupName"  =>  "PicnicSpot",
-                    "ProductId"         =>  str_replace(' ', '', $order['spotName']),
+                    "ProductGroupId"    =>  $product[4], // only categoryId !!! DONE
+                    "ProductGroupName"  =>  $product[3], // categoryName !!! DONE
+                    "ProductId"         =>  $product[8], // productId !!! DONE
                     "ProductName"       =>  $title,
                     "Quantity"          =>  $quantity,
                     "QuantityUnit"      =>  "P",
@@ -395,14 +396,14 @@
             }
             //added by nadeem
             $this->PaymentLines[]=array(
-                "PaymentId"             =>  "PAY001".$order['orderId'],
-                "PaymentName"           =>  "Euro",
-                "PaymentType"           =>  "CASH",
+                "PaymentId"             =>  $order['orderId'], //ONLY ORDER ID WITHOUT PAY TESTING VERSION DONE
+                "PaymentName"           =>  "Alfred",
+                "PaymentType"           =>  "EFT",
                 "Quantity"              =>  1,
                 "PayAmount"             =>  (float)$TStotalamount,
                 "ForeignCurrencyAmount" =>  0,
                 "ForeignCurrencyISO"    =>  "",
-                "Reference"             =>  "",
+                "Reference"             =>  $order['payNlTransactionId'], //PAYNL TRANSACTION ID !!! DONE !!!
             );
             $jsonoutput['TransactionDateTime']    =   gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
             $jsonoutput['TransactionNumber']      =   (int)(10000+$order['orderId']);

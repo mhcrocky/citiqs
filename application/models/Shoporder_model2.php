@@ -321,7 +321,8 @@
                         vendorOne.city as vendorCity,
                         vendorOne.vat_number as vendorVAT,
                         vendorOne.country as vendorCountry,
-                        tbl_shop_vendors.serviceFeeTax as serviceFeeTax, tbl_shop_orders.serviceFee AS serviceFee                      
+                        tbl_shop_vendors.serviceFeeTax as serviceFeeTax, tbl_shop_orders.serviceFee AS serviceFee,
+                        tbl_shop_orders_paynl.transactionId AS payNlTransactionId
                     FROM
                         tbl_shop_orders
                     INNER JOIN
@@ -340,7 +341,8 @@
                                     \'' .  $concatSeparator . '\', tbl_shop_categories.id,
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.shortDescription) > 0, tbl_shop_products_extended.shortDescription, ""), 
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, ""),
-                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.productId
                                     SEPARATOR "' . $this->config->item('contactGroupSeparator') . '"
                                 ) AS products
                             FROM
@@ -379,6 +381,8 @@
                         ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     INNER JOIN
                         tbl_shop_vendors ON tbl_shop_vendors.vendorId = vendorOne.id
+                    INNER JOIN
+                        tbl_shop_orders_paynl ON tbl_shop_orders_paynl.orderId = tbl_shop_orders.id
                     WHERE
                         tbl_shop_orders.paid = "1"
                         AND tbl_shop_orders.expired = "0"
@@ -412,7 +416,9 @@
                         vendorOne.city as vendorCity,
                         vendorOne.vat_number as vendorVAT,
                         vendorOne.country as vendorCountry,
-                        tbl_shop_vendors.serviceFeeTax as serviceFeeTax, tbl_shop_orders.serviceFee AS serviceFee
+                        tbl_shop_vendors.serviceFeeTax as serviceFeeTax,
+                        tbl_shop_orders.serviceFee AS serviceFee,
+                        tbl_shop_orders_paynl.transactionId AS payNlTransactionId
                     FROM 
                         tbl_shop_orders
                     INNER JOIN
@@ -435,7 +441,8 @@
                                     \'' .  $concatSeparator . '\', tbl_shop_categories.id,
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.shortDescription) > 0, tbl_shop_products_extended.shortDescription, ""), 
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, ""),
-                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.productId
                                     SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"
                                 ) AS products
                             FROM
@@ -482,6 +489,8 @@
                         ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     INNER JOIN
                         tbl_shop_vendors ON tbl_shop_vendors.vendorId = vendorOne.id
+                    INNER JOIN
+                        tbl_shop_orders_paynl ON tbl_shop_orders_paynl.orderId = tbl_shop_orders.id
                     WHERE
                         tbl_shop_orders.paid = "1"
                         AND tbl_shop_orders.expired = "0"
