@@ -294,9 +294,9 @@
                 $price=(float)$price;
                 $quantity=(int)$quantity;
                 $this->ProductLines[]=  array(
-                    "ProductGroupId"    =>  $product[4], // only categoryId !!! DONE
+                    "ProductGroupId"    =>  "PRGR".$product[4], // only categoryId !!! DONE
                     "ProductGroupName"  =>  $product[3], // categoryName !!! DONE
-                    "ProductId"         =>  $product[8], // productId !!! DONE
+                    "ProductId"         =>  "PROD".$product[8], // productId !!! DONE
                     "ProductName"       =>  $title,
                     "Quantity"          =>  $quantity,
                     "QuantityUnit"      =>  "P",
@@ -306,7 +306,7 @@
                         // array(
                         // "DiscountId"        =>  "DISC002",
                         // "DiscountName"      =>  "Prod. discount10%",
-                        // "DiscountType"      =>  "PRODUCTDISCOUNT",
+                        // "DiscountType"      =>  "PRODUCTDISCOUNT",z`
                         // "DiscountGrouping"  =>  0,
                         // "DiscountAmount"    =>  1.19
                         // ),
