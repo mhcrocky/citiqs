@@ -290,14 +290,16 @@
 
                 //added by Nadeem
                 //set json product price and etc
+                $price=(float)$price;
+                $quantity=(int)$quantity;
                 $this->ProductLines[]=  array(
                     "ProductGroupId"    =>  "FOO0100".$order['orderId'],
                     "ProductGroupName"  =>  "PicnicSpot",
                     "ProductId"         =>  str_replace(' ', '', $order['spotName']),
                     "ProductName"       =>  $title,
-                    "Quantity"          =>  (int)$quantity,
+                    "Quantity"          =>  $quantity,
                     "QuantityUnit"      =>  "P",
-                    "SellingPrice"      =>  (float)$price,
+                    "SellingPrice"      =>  (float)($price*$quantity),
                     "VatRateId"         =>  $this->returnVatGrade($vatpercentage),//"B",
                     "DiscountLines"     =>array(
                         // array(

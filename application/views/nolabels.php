@@ -11,13 +11,56 @@
 				<h3 class="heading">
 					<?=$this->language->line('ALFRED-VB100010','THE DIGITAL BUTLER');?>
 				</h3>
-
 			</div>
-
 
 		</div>
 	</div><!-- end col half -->
+
+
+
 	<div class="col-half background-yankee timeline-content">
+
+		<div class="timeline-block background-blue">
+			<span class='timeline-number text-light-blue hide-mobile'><img src="<?php echo base_url(); ?>assets/home/images/tiqsiconlogonew.png" alt="tiqs" width="18" height="20" /></span>
+			<div class="timeline-text">
+				<div class="timeline-heading">
+					<span class='timeline-number text-light-blue show-mobile'></span>
+					<h2 style="font-weight:bold; font-family: caption-bold"><?=$this->language->line('ALFRED-ABCE1010101','TO GO BUSY TIME');?></h2>
+				</div>
+
+					<div>
+						<p style="font-family:caption-light; font-size: medium; font-weight: bold">
+						<ul style="list-style-type: disc ; font-family:caption-light; font-size: larger; margin-left: -20px;margin-bottom: 30px ">
+							<div>
+								<label for="min">Minutes for slow </label>
+								<input style="border-radius: 50px; text-align: center" type="number" id="min" onkeydown="checkPostiveInteger(event)" oninput="checkValidLimits()" placeholder="   min">
+							</div>
+							<div>
+								<label for="max">add minutes for busy</label>
+								<input style="border-radius: 50px; text-align: center" type="number" id="max" onkeydown="checkPostiveInteger(event)" oninput="checkValidLimits()" placeholder="   max">
+							</div>
+						</ul>
+
+						<div class="flex-column align-space">
+							<div style="text-align:center">
+								<!-- href="https://tiqs.com/lostandfound/menuapp target="_blank"" -->
+								<a onclick="changeLimits()" id="limitButton" disabled class="button button-orange mb-25"><?=$this->language->line('NOLABELS-vPB1881A',"SET TIME");?></a>
+							</div>
+							<div class="mb-35" align="right" >
+								MINUTES ADDED
+
+							<span id="val"></span>
+							</div>
+							<input style="background-color: #1a2226" id="slide" type="range" min="0" max="100" value="50" oninput="displayValue(event)" />
+
+						<p></p>
+
+				</div>
+
+				</div>
+			</div>
+		</div><!-- end timeline block -->
+
 		<div class="timeline-block background-yankee">
 			<span class='timeline-number text-light-blue hide-mobile'>1</span>
 			<div class="timeline-text">
@@ -40,6 +83,7 @@
 				</div>
 			</div>
 		</div><!-- end timeline block -->
+
 		<div class="timeline-block background-blue">
 			<span class='timeline-number text-light-blue hide-mobile'>2</span>
 			<div class="timeline-text">
