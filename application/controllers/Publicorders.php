@@ -110,10 +110,6 @@
             //     $data['mainProducts'] = $allProducts['main'];
             //     $data['addons'] = $allProducts['addons'];
             // }
-            // echo '<pre>';
-            // print_r($allProducts);
-            // echo '</pre>';
-            // die();
 
             $termsAndConditions = $this->shopvendor_model->readImproved([
                 'what' => ['termsAndConditions'],

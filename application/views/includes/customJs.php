@@ -94,7 +94,6 @@
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/selectSpot.js"></script>
 <?php } elseif ($this->view === 'publicorders/makeOrderNew') { ?>
-	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script src="<?php echo base_url() ?>assets/home/slickJs/slick.min.js"></script>
+	<script src="<?php echo base_url() ?>assets/home/js/makeOrderNew.js"></script>
 <?php } ?>
