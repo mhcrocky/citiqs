@@ -128,7 +128,6 @@ function checkoutHtmlHeader(orderContainer, randomId, element) {
 function populateShoppingCart(randomId) {
     
     let products = document.querySelectorAll('#' + randomId + ' [data-add-product-price]');
-    let productsLength = products.length;
     let addons = document.querySelectorAll('#' + randomId + ' [data-addon-price]');
     let addonsLength = addons.length;
     let i;
@@ -151,7 +150,7 @@ function populateShoppingCart(randomId) {
     html += '<div class="shopping-cart__single-item" data-ordered-id="' + randomId + '">';
     html +=     '<div class="shopping-cart__single-item__details">';
     html +=         '<p>';
-    html +=             '<span class="shopping-cart__single-item__quantity">' + product.value + '</span>'
+    html +=             '<span class="shopping-cart__single-item__quantity">' + product.value + '</span>';
     html +=             ' x ';
     html +=             '<span class="shopping-cart__single-item__name">' + product.dataset.name + '</span>';
     html +=         '</p>';
@@ -236,7 +235,6 @@ function removeOrdered(elementId) {
 }
 
 function focusOnOrderItem(itemId) {
-    console.dir(itemId);
     $('#checkout-modal')
         .modal('show');
 }
@@ -263,9 +261,9 @@ function checkout() {
             'category' : product.dataset.category,
             'name' : product.dataset.name,
             'price' : product.dataset.addProductPrice,
+            'productId' : product.dataset.productId,
             'addons' : {}
         };
-        
 
         if (addonsLength) {
             for (j = 0; j < addonsLength; j++) {
@@ -327,4 +325,5 @@ $(document).ready(function(){
         slidesToShow: 1,
         adaptiveHeight: true
     });
+    resetTotal();
 });

@@ -4,20 +4,48 @@
     $total = 0;
     $quantiy = 0;
 
-    foreach($ordered as $productExtendedId => $data) {
-        if (!isset($data['mainProduct'])) {
-            $mainExtendedId = $productExtendedId;
-        } else {
-            $data = $data['mainProduct'][$mainExtendedId ];
+    if ($vendor['preferredView'] === $oldMakeOrderView) {
+        foreach($ordered as $productExtendedId => $data) {
+            if (!isset($data['mainProduct'])) {
+                $mainExtendedId = $productExtendedId;
+            } else {
+                $data = $data['mainProduct'][$mainExtendedId ];
+            }
+            $quantiy = $quantiy + intval($data['quantity'][0]);
+            $totalOrder = $totalOrder + floatval($data['amount'][0]);
+    
+            $tableRows .= '<tr>';
+            $tableRows .=   '<td>' . $data['quantity'][0] . ' x ' .  $data['name'][0] . '</td>';
+            $tableRows .=   '<td>' . number_format($data['amount'][0], 2, '.', ',') . ' &euro;</td>';
+            $tableRows .= '</tr>';
         }
-        $quantiy = $quantiy + intval($data['quantity'][0]);
-        $totalOrder = $totalOrder + floatval($data['amount'][0]);
+    } elseif ($vendor['preferredView'] === $newMakeOrderView) {
+        
+        foreach($ordered as $data) {
+            $data = reset($data);            
+            $quantiy = $quantiy + intval($data['quantity']);
+            $totalOrder = $totalOrder + floatval($data['amount']);
+    
+            $tableRows .= '<tr>';
+            $tableRows .=   '<td>' . $data['quantity'] . ' x ' .  $data['name'] . '</td>';
+            $tableRows .=   '<td>' . number_format($data['amount'], 2, '.', ',') . ' &euro;</td>';
+            $tableRows .= '</tr>';
 
-        $tableRows .= '<tr>';
-        $tableRows .=   '<td>' . $data['quantity'][0] . ' x ' .  $data['name'][0] . '</td>';
-        $tableRows .=   '<td>' . number_format($data['amount'][0], 2, '.', ',') . ' &euro;</td>';
-        $tableRows .= '</tr>';
-    }
+            if (!empty($data['addons'])) {
+                foreach ($data['addons'] as $addon) {
+                    $quantiy = $quantiy + intval($addon['quantity']);
+                    $totalOrder = $totalOrder + floatval($addon['amount']);
+            
+                    $tableRows .= '<tr>';
+                    $tableRows .=   '<td>' . $addon['quantity'] . ' x ' .  $addon['name'] . '</td>';
+                    $tableRows .=   '<td>' . number_format($addon['amount'], 2, '.', ',') . ' &euro;</td>';
+                    $tableRows .= '</tr>';
+                }
+            }
+        }
+    } 
+
+    
 
     $serviceFee = $totalOrder * $vendor['serviceFeePercent'] / 100 + $vendor['minimumOrderFee'];
     if ($serviceFee > $vendor['serviceFeeAmount']) $serviceFee = $vendor['serviceFeeAmount'];

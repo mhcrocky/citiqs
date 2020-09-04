@@ -127,6 +127,7 @@
 				}
 			}
 
+            // unset($_SESSION['order']);
             $data['ordered'] = isset($_SESSION['order']) ? $_SESSION['order'] : null;
 
             if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
@@ -276,6 +277,8 @@
                 'bancontactPaymentType' => $this->config->item('bancontactPaymentType'),
                 'giroPaymentType' => $this->config->item('giroPaymentType'),
                 'localType' => $this->config->item('local'),
+                'oldMakeOrderView' => $this->config->item('oldMakeOrderView'),
+                'newMakeOrderView' => $this->config->item('newMakeOrderView'),
             ];
 
             $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
@@ -410,16 +413,36 @@
             }
 
             // insert order details
-            foreach ($post['orderExtended'] as $id => $details) {
-                $details['productsExtendedId'] = intval($id);
-                $details['orderId'] = $this->shoporder_model->id;
-                if (!$this->shoporderex_model->setObjectFromArray($details)->create()) {
-                    $this->shoporderex_model->orderId = $details['orderId'];
-                    $this->shoporderex_model->deleteOrderDetails();
-                    $this->shoporder_model->delete();
-                    $this->session->set_flashdata('error', 'Order not made! Please try again');
-                    redirect($failedRedirect);
-                    exit();
+            if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
+                foreach ($post['orderExtended'] as $id => $details) {
+                    $details['productsExtendedId'] = intval($id);
+                    $details['orderId'] = $this->shoporder_model->id;
+                    if (!$this->shoporderex_model->setObjectFromArray($details)->create()) {
+                        $this->shoporderex_model->orderId = $details['orderId'];
+                        $this->shoporderex_model->deleteOrderDetails();
+                        $this->shoporder_model->delete();
+                        $this->session->set_flashdata('error', 'Order not made! Please try again');
+                        redirect($failedRedirect);
+                        exit();
+                    }
+                }
+            } elseif ($_SESSION['vendor']['preferredView'] === $this->config->item('newMakeOrderView')) {
+                foreach ($post['orderExtended'] as $details) {
+                    $id = array_keys($details)[0];
+                    $details = reset($details);
+                    $insert = [
+                        'productsExtendedId' => intval($id),
+                        'orderId' => $this->shoporder_model->id,
+                        'quantity' => $details['quantity']
+                    ];
+                    if (!$this->shoporderex_model->setObjectFromArray($insert)->create()) {
+                        $this->shoporderex_model->orderId = $insert['orderId'];
+                        $this->shoporderex_model->deleteOrderDetails();
+                        $this->shoporder_model->delete();
+                        $this->session->set_flashdata('error', 'Order not made! Please try again');
+                        redirect($failedRedirect);
+                        exit();
+                    }
                 }
             }
 
