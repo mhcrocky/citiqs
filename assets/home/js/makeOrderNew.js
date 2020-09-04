@@ -116,7 +116,7 @@ function cloneProductAndAddons(element) {
 
 function checkoutHtmlHeader(orderContainer, randomId, element) {
     let htmlCheckout = '';
-    htmlCheckout +=  '<div id="' + randomId + '" style="margin-bottom: 30px; padding-left:0px">';
+    htmlCheckout +=  '<div id="' + randomId + '" class="orderedProducts" style="margin-bottom: 30px; padding-left:0px">';
     htmlCheckout +=      '<div class="alert alert-dismissible" style="padding-left: 0px; margin-bottom: 10px;">';
     htmlCheckout +=          '<a href="#" onclick="removeOrdered(\'' + randomId + '\')" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
     htmlCheckout +=          '<h4>' + element.dataset.productName + ' (&euro;' + element.dataset.productPrice + ')';
@@ -219,14 +219,9 @@ function resetAddons(productContainer) {
         addon.checked = false;
 
         let addonInput = addon.parentElement.parentElement.nextElementSibling.children[1];
-        let addonInputStep = parseInt(addonInput.step);
 
-        let newMin = parseInt(addonInput.dataset.min) / addonInputStep;
-        addonInput.setAttribute('min', newMin);
-
-        let newMax = parseInt(addonInput.dataset.max) / addonInputStep;
-        addonInput.setAttribute('max', newMax);
-
+        addonInput.setAttribute('min', addonInput.dataset.min);
+        addonInput.setAttribute('max', addonInput.dataset.max);
         addonInput.setAttribute('value', '1');
         addonInput.setAttribute('step', '1');
 
@@ -240,24 +235,89 @@ function removeOrdered(elementId) {
     resetTotal();
 }
 
+function focusOnOrderItem(itemId) {
+    console.dir(itemId);
+    $('#checkout-modal')
+        .modal('show');
+}
+
+function checkout() {
+    let orderedProducts = document.getElementsByClassName(makeOrderGlobals.orderedProducts);
+    let orderedProductsLength = orderedProducts.length;
+    let orderedItem;
+    let i;
+    let j;
+    let post = [];
+
+    for (i = 0; i < orderedProductsLength; i++) {
+        orderedItem = orderedProducts[i];
+        let product = document.querySelectorAll('#' + orderedItem.id + ' [data-add-product-price]')[0];
+        let addons = document.querySelectorAll('#' + orderedItem.id + ' [data-addon-price]');
+        let addonsLength = addons.length;
+        let productAmount = (parseFloat(product.value) * parseFloat(product.dataset.addProductPrice)).toFixed(2);
+        post[i] = {};
+
+        post[i][product.dataset.productExtendedId] = {
+            'amount' : productAmount,
+            'quantity' : product.value,
+            'category' : product.dataset.category,
+            'name' : product.dataset.name,
+            'price' : product.dataset.addProductPrice,
+            'addons' : {}
+        };
+        
+
+        if (addonsLength) {
+            for (j = 0; j < addonsLength; j++) {
+                let addon = addons[j];
+                if (addon.parentElement.previousElementSibling.children[0].children[0].checked) {
+                    let addonAmount = parseFloat(addon.value) * parseFloat(addon.dataset.addonPrice);
+                    post[i][product.dataset.productExtendedId]['addons'][addon.dataset.addonExtendedId] = {
+                        'amount' : addonAmount,
+                        'quantity' : addon.value,
+                        'category' : addon.dataset.category,
+                        'name' : addon.dataset.addonName,
+                        'price' : addon.dataset.addonPrice,
+                        'minQuantity' : addon.min,
+                        'maxQuantity' : addon.max,
+                        'step' : addon.step
+                    }
+                }
+            }
+        }
+    }
+
+    let send = {
+        'data' : post
+    }
+
+    $.ajax({
+        url: globalVariables.ajax + 'setOrderSession',
+        data: send,
+        type: 'POST',
+        success: function (response) {
+            if (response === '1') {
+                window.location.href = globalVariables.baseUrl + 'checkout_order';
+            }
+        },
+        error: function (err) {
+            console.dir(err);
+        }
+    });
+}
+
 var makeOrderGlobals = (function(){
     let globals = {
         'checkoutModal' : 'checkout-modal',
         'modalCheckoutList' : 'modal__checkout__list',
         'checkProduct' : 'checkProduct',
         'checkAddons' : 'checkAddons',
-        'shoppingCartList' : 'shopping-cart__list'
+        'shoppingCartList' : 'shopping-cart__list',
+        'orderedProducts' : 'orderedProducts'
     }
     Object.freeze(globals);
     return globals;
 }());
-
-
-function focusOnOrderItem(itemId) {
-    console.dir(itemId);
-    $('#checkout-modal')
-        .modal('show');
-}
 
 $(document).ready(function(){
     $('.items-slider').slick({

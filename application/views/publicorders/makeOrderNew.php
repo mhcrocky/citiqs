@@ -62,7 +62,7 @@
                             <p>Total:</p>
                             <p>&euro;&nbsp;<span class="shopping-cart__total-price totalPrice">0</span></p>
                         </div>
-                    <button class='checkout-button button-main button-primary'>checkout</button>
+                    <button class='checkout-button button-main button-primary' onclick="checkout()">checkout</button>
                 </div>
             </div>
             <!-- end right side -->
@@ -90,7 +90,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-6 text-center text-right-md">
-                            <button class='button-main button-secondary bottom-bar__checkout'>CHECKOUT</button>
+                            <button class='button-main button-secondary bottom-bar__checkout' onclick="checkout()">CHECKOUT</button>
                         </div>
                     </div>
                 </div>
@@ -119,7 +119,7 @@
                         <p>TOTAL:
                             <span class="bottom-bar__total-price"></span>
                         </p>
-                        <button class='button-main button-primary'>
+                        <button class='button-main button-primary' onclick="checkout()">
                             CHECKOUT &euro;&nbsp;<span class="totalPrice">0</span>
                         </button>
                     </div>
@@ -181,6 +181,8 @@
                                                 value="1"
                                                 data-name="<?php echo $productDetails['name']; ?>"
                                                 data-add-product-price="<?php echo $productDetails['price']; ?>"
+                                                data-category="<?php echo $product['category']; ?>"
+                                                data-product-extended-id="<?php echo $productDetails['productExtendedId']; ?>"
                                                 class="form-control checkProduct"
                                                 style="display:inline-block"
                                                 />
@@ -210,7 +212,7 @@
                                                                     type="checkbox"
                                                                     class="form-check-input checkAddons"
                                                                     onchange="toggleElement(this)"
-                                                                    />
+                                                                />
                                                                 <?php echo $addons[$addonId][0]['name']; ?>
                                                                 &euro; <?php echo $addons[$addonId][0]['price']; ?>
                                                                 (min per unit 1 / max  per unit <?php echo $addonQuantity; ?>)
@@ -225,7 +227,7 @@
                                                                 style="margin-right:5px;"
                                                                 data-type="minus"
                                                                 onclick="changeAddonQuayntity(this)"
-                                                                >
+                                                            >
                                                                 -
                                                             </span>
                                                             <input
@@ -234,6 +236,9 @@
                                                                 max="<?php echo $addonQuantity; ?>"
                                                                 data-addon-price="<?php echo $addons[$addonId][0]['price']; ?>"
                                                                 data-addon-name="<?php echo $addons[$addonId][0]['name']; ?>"
+                                                                data-category="<?php echo $addons[$addonId][0]['category']; ?>"
+                                                                data-product-extended-id="<?php echo $productDetails['productExtendedId']; ?>"
+                                                                data-addon-extended-id="<?php echo $addons[$addonId][0]['productExtendedId']; ?>"
                                                                 data-min = "1"
                                                                 data-max="<?php echo $addonQuantity; ?>"
                                                                 step="1"
@@ -241,7 +246,7 @@
                                                                 class="form-control addonQuantity_<?php echo $product['productId']; ?>"
                                                                 disabled
                                                                 style="display:inline-block"
-                                                                />
+                                                            />
                                                             <span
                                                                 class='modal-footer__buttons modal-footer__quantity--minus'
                                                                 style="margin-left:5px;"

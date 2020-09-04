@@ -62,7 +62,7 @@
 		</div>
 	</div><!-- end col half -->
 </div>
-<?php if ($noSpots) { ?>
+<?php if (!empty($noSpots)) { ?>
 	<script>
 		$('#selectSpots').html('<p>No available spots</p>');
 	</script>

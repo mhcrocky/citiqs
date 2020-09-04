@@ -87,7 +87,7 @@
                 intval($spot['spotTypeId']) === $this->config->item('local')
                 && !$this->shopspottime_model->setProperty('spotId', $spot['spotId'])->isOpen()
             ) {
-                $redirect = 'spot_closed' . DIRECTORY_SEPARATOR  . $spotId;
+                $redirect = 'spot_closed' . DIRECTORY_SEPARATOR  . $spot['spotId'];
                 redirect($redirect);
                 return;
             };
@@ -105,11 +105,11 @@
                 'vendor' => $_SESSION['vendor'],
             ];
 
-            // $allProducts = $this->shopproductex_model->getMainProductsOnBuyerSide($userId, $spotId);
-            // if ($allProducts) {
-            //     $data['mainProducts'] = $allProducts['main'];
-            //     $data['addons'] = $allProducts['addons'];
-            // }
+            $allProducts = $this->shopproductex_model->getMainProductsOnBuyerSide($userId, $spotId);
+            if ($allProducts) {
+                $data['mainProducts'] = $allProducts['main'];
+                $data['addons'] = $allProducts['addons'];
+            }
 
             $termsAndConditions = $this->shopvendor_model->readImproved([
                 'what' => ['termsAndConditions'],
@@ -126,8 +126,8 @@
 
             $data['ordered'] = isset($_SESSION['order']) ? $_SESSION['order'] : null;
 
-            $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
-            // $this->loadViews('publicorders/makeOrderNew', $this->global, $data, null, 'headerWarehousePublic');
+            // $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
+            $this->loadViews('publicorders/makeOrderNew', $this->global, $data, null, 'headerWarehousePublic');
             return;
         }
 
@@ -181,11 +181,12 @@
             $post = $this->input->post(null, true);
 
             if (!empty($post)) {
-                $_SESSION['spotId'] = $post['spotId'];
                 unset($post['spotId']);
                 $_SESSION['order'] = $post;
             }
 
+            // needed for the first vesrion of th make_order
+            $_SESSION['spotId'] = $_SESSION['spot']['spotId'];
 
             $data = [
                 'spotId' => $_SESSION['spotId'],
