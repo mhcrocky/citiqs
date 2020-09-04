@@ -22,6 +22,7 @@
         public $serviceFeeTax;
         public $healthCheck;
         public $requireReservation;
+        public $preferredView;
 
         public $bancontact;
         public $ideal;
@@ -80,6 +81,7 @@
             if (isset($data['requireReservation']) && !($data['requireReservation'] === '1' || $data['requireReservation'] === '0')) return false;            
             if (isset($data['prePaid']) && !Validate_data_helper::validateString($data['prePaid'])) return false;
             if (isset($data['postPaid']) && !Validate_data_helper::validateString($data['postPaid'])) return false;
+            if (isset($data['preferredView']) && !Validate_data_helper::validateInteger($data['preferredView'])) return false;
 
             return true;
         }
@@ -106,6 +108,7 @@
                     $this->table . '.requireReservation',
                     $this->table . '.prePaid',
                     $this->table . '.postPaid',
+                    $this->table . '.preferredView',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',

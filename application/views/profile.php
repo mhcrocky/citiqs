@@ -362,6 +362,13 @@
 							</label>
 						<?php } ?>
 					</div>
+					<h4>SELECT PREFERRED MAKE ORDER VIEW</h4>
+					<div class="form-group mb-35">
+						<label class="radio-inline" for="preferredViewCheckYes">Old view</label>
+						<input type="radio" id="preferredViewCheckYes" name="vendor[preferredView]" value="1" <?php if ($vendor['preferredView'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="preferredViewCheckNo">&nbsp;&nbsp;&nbsp;New view</label>
+						<input type="radio" id="preferredViewCheckNo" name="vendor[preferredView]" value="2" <?php if ($vendor['preferredView'] === '2') echo 'checked'; ?> />
+					</div>
 					<br/>
 					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />

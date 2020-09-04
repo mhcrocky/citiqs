@@ -1,9 +1,14 @@
 <main class="container" style="text-align:left; margin-bottom:20px">
     <form id="goOrder" method="post" action="<?php echo base_url() . 'publicorders/submitOrder'; ?>">
-        <?php #include_once FCPATH . 'application/views/publicorders/includes/checkoutOrderFirstVresion.php'; ?>
-        <?php include_once FCPATH . 'application/views/publicorders/includes/checkoutOrderSecondVresion.php'; ?>
-        <!-- end checkout table -->
-        
+
+        <?php
+            if ($vendor['preferredView'] === $oldMakeOrderView) {
+                include_once FCPATH . 'application/views/publicorders/includes/checkoutOrderFirstVresion.php';
+            } elseif ($vendor['preferredView'] === $newMakeOrderView) {
+                include_once FCPATH . 'application/views/publicorders/includes/checkoutOrderSecondVresion.php';
+            }
+        ?>
+
         <div class="row d-flex justify-content-center" id="checkout">
             <div class="col-sm-12 col-lg-9 left-side">
                 <div class="checkout-title">

@@ -142,3 +142,7 @@ $config['postPaid'] = 'postPaid';
 
 // PRODUCT IMAGES FOLDER
 $config['uploadProductImageFolder']    = FCPATH . 'assets/images/productImages' . DIRECTORY_SEPARATOR;
+
+//make order view
+$config['oldMakeOrderView'] = '1';
+$config['newMakeOrderView'] = '2';

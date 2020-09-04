@@ -81,7 +81,6 @@
         private function loadSpotView(array $spot): void
         {
             $this->global['pageTitle'] = 'TIQS : ORDERING';
-
             //CHECK IS SPOT OPEN
             if (
                 intval($spot['spotTypeId']) === $this->config->item('local')
@@ -98,19 +97,23 @@
             $spotId = intval($spot['spotId']);
 
             $data = [
-                'categoryProducts' => $this->shopproductex_model->getUserProductsPublic($userId),
                 'spotId' => $spotId,
                 'day' => date('D', $time),
                 'hours' => strtotime(date('H:i:s', $time)),
                 'vendor' => $_SESSION['vendor'],
             ];
 
-            $allProducts = $this->shopproductex_model->getMainProductsOnBuyerSide($userId, $spotId);
-            if ($allProducts) {
-                $data['mainProducts'] = $allProducts['main'];
-                $data['addons'] = $allProducts['addons'];
+            if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
+                $data['categoryProducts'] = $this->shopproductex_model->getUserProductsPublic($userId);
+            } elseif ($_SESSION['vendor']['preferredView'] === $this->config->item('newMakeOrderView')) {
+                $allProducts = $this->shopproductex_model->getMainProductsOnBuyerSide($userId, $spotId);
+                if ($allProducts) {
+                    $data['mainProducts'] = $allProducts['main'];
+                    $data['addons'] = $allProducts['addons'];
+                }
             }
 
+            // terms and conditions
             $termsAndConditions = $this->shopvendor_model->readImproved([
                 'what' => ['termsAndConditions'],
                 'where' => [
@@ -126,8 +129,12 @@
 
             $data['ordered'] = isset($_SESSION['order']) ? $_SESSION['order'] : null;
 
-            // $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
-            $this->loadViews('publicorders/makeOrderNew', $this->global, $data, null, 'headerWarehousePublic');
+            if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
+                $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
+            } elseif ($_SESSION['vendor']['preferredView'] === $this->config->item('newMakeOrderView')) {
+                $this->loadViews('publicorders/makeOrderNew', $this->global, $data, null, 'headerWarehousePublic');
+            }
+
             return;
         }
 
@@ -198,6 +205,8 @@
                 // 'countries' => Country_helper::getCountries(),
                 'countryCodes' => Country_helper::getCountryPhoneCodes(),
                 'spot' => $_SESSION['spot'],
+                'oldMakeOrderView' => $this->config->item('oldMakeOrderView'),
+                'newMakeOrderView' => $this->config->item('newMakeOrderView'),
             ];
 
             if (intval($_SESSION['spot']['spotTypeId']) !== $this->config->item('local')) {
