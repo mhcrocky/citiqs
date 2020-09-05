@@ -649,10 +649,18 @@ class Ajax extends CI_Controller
         $post = $this->input->post(null, true);
 
         if (!empty($post['data'])) {
-            $_SESSION['order'] = $post['data'];
+            $_SESSION['order'] = [];
+            $string = 'qwertzuioplkjhgfdsamnbvcxy';
+            $count = 0;
+            foreach($post['data'] as $data) {
+                $count++;
+                $shuffled = strval($count) . '_' . str_shuffle($string);
+                $_SESSION['order'][$shuffled] = $data;
+            }
         }
 
         echo !empty($_SESSION['order']) ? '1' : '0';
+        return;
     }
 
     public function unsetSessionOrderElement(): void

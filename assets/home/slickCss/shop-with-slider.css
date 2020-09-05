@@ -507,7 +507,7 @@ body{
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
-	display: flex;
+	display: flex !important;
 	justify-content: center;
 	align-items: center;
 	position: sticky;

@@ -5,7 +5,10 @@ function toggleElement(element) {
     let checked = element.checked;
     container.style.visibility = checked ? 'visible' : 'hidden';
     inputField.disabled = checked ? false : true;
-    isOrdered(element);
+    if (isOrdered(element)) {
+        let itemId = element.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id;
+        populateShoppingCart(itemId);
+    }
 }
 
 function changeProductQuayntity(element, className) {
@@ -25,16 +28,19 @@ function changeProductQuayntity(element, className) {
     }
 
     inputField.setAttribute('value', value);
-    changeAddonInputAttributes(value, className, isOrdered);
+    changeAddonInputAttributes(element, value, className, isOrdered);
 
     if (isOrdered) {
+        let itemId = element.parentElement.parentElement.parentElement.parentElement.id;
+        populateShoppingCart(itemId);
         resetTotal();
     }
 }
 
-function changeAddonInputAttributes(quantity, className, isOrdered) {
+function changeAddonInputAttributes(element, quantity, className, isOrdered) {
     let ancestor = '#' + makeOrderGlobals.checkoutModal;
-    let addonInputs = document.getElementsByClassName(className);
+    let classParent = element.parentElement.parentElement.nextElementSibling.children[1];
+    let addonInputs = classParent.getElementsByClassName(className);
     let addonInputsLength = addonInputs.length;
     let i;
 
@@ -84,7 +90,10 @@ function changeAddonQuayntity(element) {
 
     inputField.setAttribute('value', value);
 
-    isOrdered(element);
+    if (isOrdered(element)) {
+        let itemId = element.parentElement.parentElement.parentElement.parentElement.parentElement.id;
+        populateShoppingCart(itemId);
+    }
 }
 
 function isOrdered(element) {
@@ -92,7 +101,9 @@ function isOrdered(element) {
     let isOrdered = element.closest(ancestor);
     if (isOrdered) {
         resetTotal();
+        return true;
     }
+    return false;
 }
 
 function cloneProductAndAddons(element) {
@@ -102,7 +113,7 @@ function cloneProductAndAddons(element) {
     let clone;
 
     let date  = new Date();
-    let randomId = productContainerId + '_' + date.getTime();
+    let randomId = productContainerId + '_' + date.getTime() + '_' + Math.floor(Math.random() * 10000);
 
     checkoutHtmlHeader(orderContainer, randomId, element);
     productContainer.removeAttribute('id');
@@ -127,11 +138,11 @@ function checkoutHtmlHeader(orderContainer, randomId, element) {
 
 function populateShoppingCart(randomId) {
     
+    $('.' + randomId).remove();
     let products = document.querySelectorAll('#' + randomId + ' [data-add-product-price]');
     let addons = document.querySelectorAll('#' + randomId + ' [data-addon-price]');
     let addonsLength = addons.length;
     let i;
-    let value = 0;
     let product = products[0];
     let html = '';
     let aditionalList = [];
@@ -147,7 +158,7 @@ function populateShoppingCart(randomId) {
         }
     }
 
-    html += '<div class="shopping-cart__single-item" data-ordered-id="' + randomId + '">';
+    html += '<div class="shopping-cart__single-item ' + randomId + '" data-ordered-id="' + randomId + '">';
     html +=     '<div class="shopping-cart__single-item__details">';
     html +=         '<p>';
     html +=             '<span class="shopping-cart__single-item__quantity">' + product.value + '</span>';
@@ -157,7 +168,7 @@ function populateShoppingCart(randomId) {
     html +=         '<p class="shopping-cart__single-item__additional">' + aditionalList.join(', ') + '</p>';
     html +=         '<p>&euro; <span class="shopping-cart__single-item__price">' + price.toFixed(2) +'</span></p>';
     html +=     '</div>';
-    html +=     '<div class="shopping-cart__single-item__remove" onclick="focusOnOrderItem(\'' + randomId + '\')">';
+    html +=     '<div class="shopping-cart__single-item__remove" onclick="focusOnOrderItem(\'modal__checkout__list\', \'' + randomId + '\')">';
     html +=         '<i class="fa fa-info-circle" aria-hidden="true"></i>';
     html +=     '</div>';
     html += '</div>';
@@ -234,9 +245,30 @@ function removeOrdered(elementId) {
     resetTotal();
 }
 
-function focusOnOrderItem(itemId) {
-    $('#checkout-modal')
-        .modal('show');
+function focusOnOrderItem(containerId, itemId) {
+    $('#checkout-modal').modal('show');
+    let items = document.getElementById(containerId).children;
+    let itemsLength = items.length;
+    let i;
+    for (i = 0; i < itemsLength; i++) {
+        let item = items[i];
+        if (item.id !== itemId) {
+            item.style.display = 'none';
+        } else {
+            item.style.display = 'initial';
+        }
+    }
+}
+
+function focusCheckOutModal(containerId) {
+    $('#checkout-modal').modal('show');
+    let items = document.getElementById(containerId).children;
+    let itemsLength = items.length;
+    let i;
+    for (i = 0; i < itemsLength; i++) {
+        let item = items[i];
+        item.style.display = 'initial';
+    }
 }
 
 function checkout() {

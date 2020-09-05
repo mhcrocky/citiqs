@@ -1,10 +1,6 @@
 <?php
     $shoppingList = '';
     $checkoutList = '';
-    // echo '<pre>';
-    // print_r($ordered);
-    // echo '</pre>';
-    // die();
     if  (!is_null($ordered)) {
         $count = 0;
         foreach ($ordered as $product) {
@@ -14,7 +10,10 @@
             $product = reset($product);
             $randomId = 'product_' . $product['productId'] . '_' . $count;
 
-            $checkoutList .= '<div id="' . $randomId . '" class="orderedProducts" style="margin-bottom: 30px; padding-left:0px">';
+
+
+
+            $checkoutList .= '<div id="' . $randomId . '" class="orderedProducts" style="margin-bottom: 30px; padding-left: 0px; display: initial;">';
             $checkoutList .=    '<div class="alert alert-dismissible" style="padding-left: 0px; margin-bottom: 10px;">';
             $checkoutList .=        '<a href="#" onclick="removeOrdered(\'' . $randomId . '\')" class="close" data-dismiss="alert" aria-label="close">×</a>';
             $checkoutList .=        '<h4>' . $product['name'] . ' (€' . $product['price'] . ')</h4>';
@@ -23,14 +22,14 @@
             $checkoutList .=        '<div class="modal__adittional">';
             $checkoutList .=            '<h6>Quantity</h6>';
             $checkoutList .=            '<div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">';
-            $checkoutList .=                '<label class="form-check-label">COCA COLA</label>';
+            $checkoutList .=                '<label class="form-check-label">' . $product['name'] . '</label>';
             $checkoutList .=            '</div>';
             $checkoutList .=            '<div class="modal-footer__quantity col-lg-4 col-sm-12" style="margin-bottom:3px">';
             $checkoutList .=                '<span 
                                                 class="modal-footer__buttons modal-footer__quantity--plus" 
                                                 style="margin-right:5px;" 
                                                 data-type="minus"
-                                                onclick="changeProductQuayntity(this, \'addonQuantity_' . $product['productId'] . '\')">';
+                                                onclick="changeProductQuayntity(this, \'addonQuantity\')">';
             $checkoutList .=                ' -';
             $checkoutList .=                '</span>';
             $checkoutList .=                '<input
@@ -45,12 +44,12 @@
                                                 data-product-id="' . $product['productId'] . '"
                                                 class="form-control checkProduct"
                                                 style="display:inline-block"
-                                            >';
+                                            />';
             $checkoutList .=                '<span
                                                 class="modal-footer__buttons modal-footer__quantity--minus"
                                                 style="margin-left:5px;"
                                                 data-type="plus"
-                                                onclick="changeProductQuayntity(this, \'addonQuantity_' . $product['productId'] . '\')"
+                                                onclick="changeProductQuayntity(this, \'addonQuantity\')"
                                             >';
             $checkoutList .=                ' +';
             $checkoutList .=                '</span>';
@@ -71,7 +70,12 @@
                 $checkoutList .=                '</label>';
                 $checkoutList .=            '</div>';
                 $checkoutList .=            '<div class="modal-footer__quantity col-lg-4 col-sm-12" style="visibility: visible; margin-bottom: 3px;">';
-                $checkoutList .=                '<span class="modal-footer__buttons modal-footer__quantity--plus" style="margin-right:5px;" data-type="minus" onclick="changeAddonQuayntity(this)">';
+                $checkoutList .=                '<span 
+                                                    class="modal-footer__buttons modal-footer__quantity--plus"
+                                                    style="margin-right:5px;"
+                                                    data-type="minus"
+                                                    onclick="changeAddonQuayntity(this)"
+                                                >';
                 $checkoutList .=                    ' -';
                 $checkoutList .=                '</span>';
                 $checkoutList .=                '<input
@@ -87,14 +91,15 @@
                                                     data-max="' . $addon['maxQuantity'] . '"
                                                     step="' . $addon['step'] . '"
                                                     value="' . $addon['quantity'] . '"
-                                                    class="form-control
-                                                    addonQuantity_1252"
+                                                    class="form-control addonQuantity"  
                                                     style="display:inline-block"
                                                 />';
+
                 $checkoutList .=                '<span
                                                     class="modal-footer__buttons modal-footer__quantity--minus"
                                                     style="margin-left:5px;"
-                                                    data-type="plus" onclick="changeAddonQuayntity(this)"
+                                                    data-type="plus"
+                                                    onclick="changeAddonQuayntity(this)"
                                                 >';
                 $checkoutList .=                    ' +';
                 $checkoutList .=                '</span>';
@@ -105,6 +110,116 @@
             $checkoutList .=    '</div>';
             $checkoutList .= '</div>';
 
+
+            // <div id="product_1252_1599334732396_648" class="orderedProducts" style="margin-bottom: 30px; padding-left: 0px; display: initial;">
+            //     <div class="alert alert-dismissible" style="padding-left: 0px; margin-bottom: 10px;">            
+            //         <a href="#" onclick="removeOrdered('product_1252_1599334732396_648')" class="close" data-dismiss="alert" aria-label="close">×</a>
+
+            //         <h4>COCA COLA (€2.00)</h4>
+            //     </div>
+            //      <div class="modal__content">
+            //         <div class="modal__adittional">
+            //             <h6>Quantity</h6>
+            //             <div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">
+            //                 <label class="form-check-label">
+            //                     COCA COLA
+            //                 </label>
+            //             </div>
+            //             <div class="modal-footer__quantity col-lg-4 col-sm-12" style="margin-bottom:3px">
+            //                 <span 
+                                    // class="modal-footer__buttons modal-footer__quantity--plus"
+                                    // style="margin-right:5px;"
+                                    // data-type="minus" onclick="changeProductQuayntity(this, 'addonQuantity')">
+            //                 -
+            //                 </span>
+            //                 <input
+                                //     type="number"
+                                //     min="1"
+                                //     step="1"
+                                //     value="2"
+                                //     data-name="COCA COLA"
+                                //     data-add-product-price="2.00"
+                                //     data-category="DRINKS"
+                                //     data-product-extended-id="2848"
+                                //     data-product-id="1252"
+                                //     class="form-control checkProduct"
+                                //     style="display:inline-block"
+                                // >
+            //                 <span class="modal-footer__buttons modal-footer__quantity--minus" style="margin-left:5px;" data-type="plus" onclick="changeProductQuayntity(this, 'addonQuantity')">
+            //                 +
+            //                 </span>
+            //             </div>
+            //         </div>                                
+            //         <div class="modal__adittional">
+            //             <h6>Additional</h6>
+            //             <div class="modal__adittional__list">
+            //                 <div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">
+            //                     <label class="form-check-label">
+            //                         <input type="checkbox" class="form-check-input checkAddons" onchange="toggleElement(this)">
+            //                         HAMBURGER € 4.00 (min per unit 1 / max  per unit 1)
+            //                     </label>
+            //                 </div>
+            //                 <div class="modal-footer__quantity col-lg-4 col-sm-12" style="visibility: visible; margin-bottom: 3px;">
+            //                     <span class="modal-footer__buttons modal-footer__quantity--plus" style="margin-right:5px;" data-type="minus" onclick="changeAddonQuayntity(this)">
+            //                         -
+            //                     </span>
+            //                     <input
+            //                         type="number"
+            //                         min="2"
+            //                         max="2"
+            //                         data-addon-price="4.00"
+            //                         data-addon-name="HAMBURGER"
+            //                         data-category="FOOD"
+            //                         data-product-extended-id="2848"
+            //                         data-addon-extended-id="2845"
+            //                         data-min="1"
+            //                         data-max="1"
+            //                         step="2"
+            //                         value="2"
+            //                         class="form-control addonQuantity"
+            //                         style="display:inline-block"
+            //                     >
+            //                     <span class="modal-footer__buttons modal-footer__quantity--minus" style="margin-left:5px;" data-type="plus" onclick="changeAddonQuayntity(this)">
+            //                         +
+            //                     </span>
+            //                 </div>
+            //                 <div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">
+            //                     <label class="form-check-label">
+            //                         <input type="checkbox" class="form-check-input checkAddons" onchange="toggleElement(this)">
+            //                         EXTRA ICE € 0.02 (min per unit 1 / max  per unit 13)
+            //                     </label>
+            //                 </div>
+            //                 <div class="modal-footer__quantity col-lg-4 col-sm-12" style="visibility: visible; margin-bottom: 3px;">
+            //                     <span class="modal-footer__buttons modal-footer__quantity--plus" style="margin-right:5px;" data-type="minus" onclick="changeAddonQuayntity(this)">
+            //                         -
+            //                     </span>
+            //                     <input
+            //                         type="number"
+            //                         min="2"
+            //                         max="26"
+            //                         data-addon-price="0.02"
+            //                         data-addon-name="EXTRA ICE"
+            //                         data-category="DRINKS"
+            //                         data-product-extended-id="2848"
+            //                         data-addon-extended-id="2844"
+            //                         data-min="1"
+            //                         data-max="13"
+            //                         step="2"
+            //                         value="2"
+            //                         class="form-control addonQuantity"
+            //                         style="display:inline-block"
+            //                     >
+            //                     <span class="modal-footer__buttons modal-footer__quantity--minus" style="margin-left:5px;" data-type="plus" onclick="changeAddonQuayntity(this)">
+            //                         +
+            //                     </span>
+            //                 </div>
+            //             </div>
+            //         </div>
+            //     </div>
+            // </div>
+
+
+
             $price += floatval($product['amount']);
             if (isset($product['addons'])) {
                 $addonsArray = [];
@@ -114,7 +229,7 @@
                     array_push($addonsArray, $addonString);
                 }
             }
-            $shoppingList .= '<div class="shopping-cart__single-item" data-ordered-id="' . $randomId . '">';
+            $shoppingList .= '<div class="shopping-cart__single-item ' . $randomId . '" data-ordered-id="' . $randomId . '">';
             $shoppingList .=     '<div class="shopping-cart__single-item__details">';
             $shoppingList .=         '<p>';
             $shoppingList .=             '<span class="shopping-cart__single-item__quantity">' . $product['quantity'] . '</span>';
@@ -124,7 +239,7 @@
             $shoppingList .=         '<p class="shopping-cart__single-item__additional">' . implode(', ', $addonsArray) . '</p>';
             $shoppingList .=         '<p>&euro; <span class="shopping-cart__single-item__price">' . number_format($price, 2, '.', ',').'</span></p>';
             $shoppingList .=     '</div>';
-            $shoppingList .=     '<div class="shopping-cart__single-item__remove" onclick="focusOnOrderItem(\'' . $randomId . '\')">';
+            $shoppingList .=     '<div class="shopping-cart__single-item__remove" onclick="focusOnOrderItem(\'modal__checkout__list\', \'' . $randomId . '\')">';
             $shoppingList .=         '<i class="fa fa-info-circle" aria-hidden="true"></i>';
             $shoppingList .=     '</div>';
             $shoppingList .= '</div>';
@@ -220,7 +335,7 @@
                         <div class="col-12 col-md-6 text-center text-left-md">
                             <div class="bottom-bar__summary">
                                 <p>TOTAL: <span class='bottom-bar__total-price'>&euro;&nbsp;<span class="totalPrice">0</span></span> </p>
-                                <button class='button-main button-secondary' data-toggle='modal' data-target='#checkout-modal'>Order List</button>
+                                <button class='button-main button-secondary' onclick="focusCheckOutModal('modal__checkout__list')">Order List</button>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 text-center text-right-md">
@@ -246,9 +361,9 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="modal__checkout__list" id='modal__checkout__list' style="margin: 0px 10px; overflow-y: scroll !important;">
-                                        <?php echo $checkoutList; ?>
-                                    </div>
+                            <div>
+                                <div class="modal__checkout__list" id='modal__checkout__list' style="margin: 0px 10px; overflow-y: scroll !important;">
+                                    <?php echo $checkoutList; ?>
                                 </div>
                                 <div class="modal-footer">
                                     <p>TOTAL:
@@ -264,10 +379,13 @@
                 </div>
             </div>
             <!-- end modal checkout -->
-        <?php        
+        <?php 
+        $counter = 0;
         foreach ($mainProducts as $category => $products) {
+
             foreach ($products as $product) {
-                $productDetails = reset($product['productDetails']);            
+                $productDetails = reset($product['productDetails']);
+                $counter++;
                 ?>
                     <!-- start modal single item details -->
                     <div
@@ -307,7 +425,7 @@
                                                 class='modal-footer__buttons modal-footer__quantity--plus'
                                                 style="margin-right:5px;"
                                                 data-type="minus"
-                                                onclick="changeProductQuayntity(this, 'addonQuantity_<?php echo $product['productId']; ?>')"
+                                                onclick="changeProductQuayntity(this, 'addonQuantity')"
                                                 >
                                                 -
                                             </span>
@@ -328,7 +446,7 @@
                                                 class='modal-footer__buttons modal-footer__quantity--minus'
                                                 style="margin-left:5px;"
                                                 data-type="plus"
-                                                onclick="changeProductQuayntity(this, 'addonQuantity_<?php echo $product['productId']; ?>')"
+                                                onclick="changeProductQuayntity(this, 'addonQuantity')"
                                                 >
                                                 +
                                             </span>
@@ -381,7 +499,7 @@
                                                                 data-max="<?php echo $addonQuantity; ?>"
                                                                 step="1"
                                                                 value="1"
-                                                                class="form-control addonQuantity_<?php echo $product['productId']; ?>"
+                                                                class="form-control addonQuantity"
                                                                 disabled
                                                                 style="display:inline-block"
                                                             />

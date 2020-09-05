@@ -282,11 +282,24 @@ function unsetSessionOrderElement(dataset) {
 }
 
 function removeOrderElements(data) {
-    console.dir(data);
     if (data.class) {
         $('.' + data.class).remove();
     } else if (data.addonId) {
         document.getElementById(data.addonId).remove();
     }
     calculateTotal(checkoutOrdedGlobals.calculateTotalClass);
+    setNewOrder();
+}
+
+function setNewOrder() {
+    let products = document.getElementsByClassName('productCount');
+    let productsLength = products.length;
+    let i;
+    if (productsLength) {
+        for (i = 0; i < productsLength; i++) {
+            let product = products[i];
+            console.dir(product);
+            product.innerHTML = (i + 1);
+        }
+    }
 }

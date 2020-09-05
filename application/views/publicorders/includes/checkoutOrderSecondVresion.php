@@ -32,7 +32,7 @@
                     $count = 0;
                     $orderTotal = 0;
                     $total = 0;
-                    foreach ($orderDetails as $details) {
+                    foreach ($orderDetails as $key => $details) {
                         $product = reset($details);
                         $productExtendedId = array_keys($details)[0];
                         $count++;
@@ -43,7 +43,7 @@
                         <!-- start checkout single element -->
                         <div class="checkout-table__single-element <?php echo $removeClass; ?>">
                             <div class='checkout-table__num-order'>
-                                <b class="counterClass"><?php echo $count; ?>.</b>
+                                <b class="counterClass productCount"><?php echo $count; ?>.</b>
                             </div>
                             <div class='checkout-table__product-details'>
                                 <p><?php echo $product['name']; ?></p>
@@ -89,7 +89,7 @@
                                     <i
                                         class="fa fa-trash"
                                         data-class="<?php echo $removeClass; ?>";
-                                        data-order-session-index="<?php echo ($count - 1) ; ?>"
+                                        data-order-session-index="<?php echo $key ; ?>"
                                         onclick="unsetSessionOrderElement(this.dataset)"
                                         >
                                     </i>
@@ -107,7 +107,7 @@
                                 ?>
                                     <div id="<?php echo $addonId; ?>" class="checkout-table__single-element  <?php echo $removeClass; ?>">
                                         <div class='checkout-table__num-order' style="padding-left: 20px;">
-                                            <b class="counterClass" style="padding-left: 20px;"><?php echo $countAddons; ?>.</b>
+                                            <!-- <b class="counterClass" style="padding-left: 20px;"><?php #echo $countAddons; ?>.</b> -->
                                         </div>
                                         <div class='checkout-table__product-details'>
                                             <p  style="padding-left: 20px;"><?php echo $addon['name']; ?></p>
@@ -156,7 +156,7 @@
                                                 <i
                                                     class="fa fa-trash"
                                                     data-addon-id="<?php echo $addonId; ?>"
-                                                    data-order-session-index="<?php echo ($count - 1) ; ?>"
+                                                    data-order-session-index="<?php echo $key; ?>"
                                                     data-product-extended-id="<?php echo $productExtendedId; ?>""
                                                     data-addon-extended-id="<?php echo $addonExtendedId; ?>"
                                                     onclick="unsetSessionOrderElement(this.dataset)"

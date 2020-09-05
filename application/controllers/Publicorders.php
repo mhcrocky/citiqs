@@ -121,14 +121,17 @@
                 ]
             ])[0]['termsAndConditions'];
 
-            if(!empty($termsAndConditions)){
+            if(!empty($termsAndConditions)) {
 				if (trim($termsAndConditions)) {
 					$data['termsAndConditions'] = $termsAndConditions;
 				}
 			}
 
-            // unset($_SESSION['order']);
             $data['ordered'] = isset($_SESSION['order']) ? $_SESSION['order'] : null;
+            // echo '<pre>';
+            // print_r($data['ordered']);
+            // echo '</pre>';
+            // die();
 
             if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
                 $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
