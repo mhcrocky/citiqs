@@ -121,6 +121,7 @@ $config['idealPaymentType'] = '10';
 $config['creditCardPaymentType'] = '706';
 $config['bancontactPaymentType'] = '436';
 $config['giroPaymentType'] = '694';
+$config['PayconicPaymentType'] = '2379';
 
 // time utility
 $config['workingDays'] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];

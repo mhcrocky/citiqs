@@ -106,6 +106,12 @@
                                                 <span data-trans="" data-trn-key="Creditcard">Creditcard</span>
                                             </a>
                                         <?php } ?>
+										<?php if ($vendor['payconic'] === '1') { ?>
+											<a href="<?php echo base_url(); ?>insertorder/<?php echo $payconicPaymentType; ?>/0" class="paymentMethod method-card" >
+												<img src="https://tiqs.com/qrzvafood/assets/imgs/extra/payconic.png" alt="Creditcard">
+												<span data-trans="" data-trn-key="Creditcard">Creditcard</span>
+											</a>
+										<?php } ?>
                                         <?php if ($vendor['bancontact'] === '1') { ?>
                                             <a href="<?php echo base_url(); ?>insertorder/<?php echo $bancontactPaymentType; ?>/0" class="paymentMethod method-card" >
                                                 <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/bancontact.png" alt="bancontact">
@@ -205,6 +211,7 @@
                                         </div>
                                     </div>
                                 <?php } ?>
+
                                 <?php if ($vendor['giro'] === '1') { ?>
                                     <div class="method method-ideal hidden"  id="giroBanks">
                                         <div class="title hidden"><span data-trans="" data-trn-key="Kies een bank">Kies een bank</span>

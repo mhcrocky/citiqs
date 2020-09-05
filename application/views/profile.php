@@ -281,6 +281,13 @@
 								<label class="radio-inline" for="bancontactNo">&nbsp;&nbsp;&nbsp;No</label>
 								<input type="radio" id="bancontactNo" name="vendor[bancontact]" value="0" <?php if ($vendor['bancontact'] === '0') echo 'checked'; ?> />
 							</div>
+							<div class="form-group">
+								<h4>PAYCONIC</h4>
+								<label class="radio-inline" for="payconicYes">Yes</label>
+								<input type="radio" id="payconicYes" name="vendor[payconic]" value="1" <?php if ($vendor['payconic'] === '1') echo 'checked'; ?> />
+								<label class="radio-inline" for="bancontactNo">&nbsp;&nbsp;&nbsp;No</label>
+								<input type="radio" id="payconicNo" name="vendor[payconic]" value="0" <?php if ($vendor['payconic'] === '0') echo 'checked'; ?> />
+							</div>
 							<div class="form-group mb-35">
 								<h4>IDEAL</h4>
 								<label class="radio-inline" for="idealYes">Yes</label>
