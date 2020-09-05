@@ -127,11 +127,10 @@
 				}
 			}
 
-            $data['ordered'] = isset($_SESSION['order']) ? $_SESSION['order'] : null;
-            // echo '<pre>';
-            // print_r($data['ordered']);
-            // echo '</pre>';
-            // die();
+            $ordered = isset($_SESSION['order']) ? $_SESSION['order'] : null;
+            $ordered = Utility_helper::returnMakeNewOrderElements($ordered);
+            $data['shoppingList'] = $ordered['shoppingList'];
+            $data['checkoutList'] = $ordered['checkoutList'];
 
             if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
                 $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
