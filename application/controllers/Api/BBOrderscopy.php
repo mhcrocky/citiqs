@@ -5,17 +5,14 @@
 
     require APPPATH . 'libraries/REST_Controller.php';
 
-    class BBOrders extends REST_Controller
+    class BBOrderscopy extends REST_Controller
     {
-        private $jsonoutput=array();
-        private $ProductLines=array();
-        private $PaymentLines=array();
 
         function __construct()
         {
             parent::__construct();
             $this->load->model('shopprinters_model');
-            $this->load->model('shoporder_model2',"shoporder_model");
+            $this->load->model('shoporder_model');
             $this->load->model('shoporderex_model');
             $this->load->model('shopvendor_model');
 
@@ -29,33 +26,20 @@
             $this->load->library('language', array('controller' => $this->router->class));
         }
 
-        public function data_get()
+        public function data_get($orderId)
         {
-            // $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
-            // Utility_helper::logMessage($logFile, 'ordernumber ' .$orderId);
-
             $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
-            Utility_helper::logMessage($logFile, 'printer conected get');
-            $get = $this->input->get(null, true);
-            Utility_helper::logMessage($logFile, 'printer MAC '. $get['mac'] );
-            if(!$get['mac']) return;
+            Utility_helper::logMessage($logFile, 'ordernumber ' .$orderId);
 
-
-            $order = $this->shoporder_model->fetchOrdersForPrint($get['mac']);
+            $order = $this->shoporder_model->fetchOrdersForPrintcopy($orderId);
             if (!$order) return;
             $order = reset($order);
 
-            // var_dump($order);
-            // $order = $this->shoporder_model->fetchOrdersForPrintcopy($orderId);
-            // if (!$order) return;
-            // $order = reset($order);
-
-            // if ($order['printStatus'] === '0') return;
+            if ($order['printStatus'] === '0' && empty($order['paymentType'])) return;
 
 			Utility_helper::logMessage($logFile, 'order vendor'.$order['vendorId']);
 
             $productsarray = explode($this->config->item('contactGroupSeparator'), $order['products']);
-            // print_r($productsarray);die();
             $imageprint = new Imagick();
 			$imageprintemail = new Imagick();
 
@@ -64,6 +48,7 @@
             } else {
                 $logoFile = $this->config->item('uploadLogoFolder') . $order['vendorLogo'];
             }
+
             $imagelogo = new Imagick($logoFile);
             $geometry = $imagelogo->getImageGeometry(); 
 
@@ -97,7 +82,7 @@
 			/* New image */
             //--- aantal rows bepalen a.d. hand van aantal order regels.
 
-            $rowheight = (count($productsarray) * 30) + 700;
+            $rowheight = (count($productsarray) * 30) + 900;
 			$rowheight2 = (count($productsarray) * 30) + 350;
             $imagetext->newImage(576, $rowheight2, $pixel);
             $imagetextemail->newImage(576, $rowheight, $pixel);
@@ -143,9 +128,18 @@
 			$draw->annotation(0, 30, "order: " . $order['orderId'] . " naam: " . $order['buyerUserName']);;
 			$draw->annotation(0, 70, "datum:". date("m-d h:i:sa"). " spot: ". $order['spotName'] );
 
-			$drawemail->annotation(0, 30, "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);;
-			$drawemail->annotation(0, 70, "DATE:". date("m-d h:i:sa"). " SPOT: ". $order['spotName'] );
+            if (!empty($order['paymentType'])) {
 
+				$drawemail->setStrokeWidth(4);
+				$drawemail->setFontSize(28);
+				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+                $drawemail->annotation(0, 30, 'SERVICE BY WAITER');
+				$drawemail->setStrokeWidth(2);
+				$drawemail->setFontSize(28);
+				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+            }
+			$drawemail->annotation(0, 70, "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);
+			$drawemail->annotation(0, 105, "DATE:". date("m-d h:i:sa"). " SPOT: ". $order['spotName'] );
 
             /* Font properties */
             // $draw->setFontWeight(1);
@@ -156,8 +150,8 @@
 			$draw->setFontSize(30);
             $draw->setStrokeWidth(3);
             $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-            $imagetext->annotateImage($draw, 0, 105, 0, "A");
-            $imagetext->annotateImage($draw, 40, 105, 0, "OMSCHRIJVING");
+            $imagetext->annotateImage($draw, 0, 135, 0, "A");
+            $imagetext->annotateImage($draw, 40, 135, 0, "OMSCHRIJVING");
             //            $imagetext->annotateImage($draw, 395, 105, 0, "PRIJS");
             //			$imagetext->annotateImage($draw, 485, 105, 0, "%");
             //			$imagetext->annotateImage($draw, 505, 105, 0, "TOTAAL");
@@ -165,20 +159,21 @@
 			$drawemail->setFontSize(18);
 			$drawemail->setStrokeWidth(2);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-			$imagetextemail->annotateImage($drawemail, 0, 105, 0, "ANT");
-			$imagetextemail->annotateImage($drawemail, 40, 105, 0, "OMSCHRIJVING");
-			$imagetextemail->annotateImage($drawemail, 395, 105, 0, "PRIJS");
-			$imagetextemail->annotateImage($drawemail, 485, 105, 0, "%");
-			$imagetextemail->annotateImage($drawemail, 505, 105, 0, "TOTAAL");
+			$imagetextemail->annotateImage($drawemail, 0, 135, 0, "ANT");
+			$imagetextemail->annotateImage($drawemail, 40, 135, 0, "OMSCHRIJVING");
+			$imagetextemail->annotateImage($drawemail, 395, 135, 0, "PRIJS");
+			$imagetextemail->annotateImage($drawemail, 485, 135, 0, "%");
+            $imagetextemail->annotateImage($drawemail, 505, 135, 0, "TOTAAL");
+
 
 			$draw->setStrokeColor('black');
             $draw->setStrokeWidth(5);
-            $draw->line(0, 120, 576, 120);
+            $draw->line(0, 150, 576, 150);
             $draw->setStrokeWidth(1);
 
 			$drawemail->setStrokeColor('black');
 			$drawemail->setStrokeWidth(5);
-			$drawemail->line(0, 120, 576, 120);
+			$drawemail->line(0, 150, 576, 150);
 			$drawemail->setStrokeWidth(1);
 
 			//-------- regels --------
@@ -204,12 +199,11 @@
                 // 5 => shortDescription
                 // 6 => longDescription
                 // 7 => vatpercentage
-                // 8 => productId
 
                 $title = $product[0];
                 $price = $product[1];
                 $quantity = $product[2];
-                $plu =  $product[3]; //????????????????
+                $plu =  $product[3];
                 $shortDescription = $product[5];
                 $longDescription = $product[6];
                 $vatpercentage = $product[7];
@@ -240,10 +234,10 @@
                 // $draw->annotation(0, 165 + ($i * 30), $plu);
         
                 $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                $draw->annotation(0, 165 + ($i * 30), $quantity);
+                $draw->annotation(0, 175 + ($i * 30), $quantity);
         
                 $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                $draw->annotation(40, 165 + ($i * 30), $title);
+                $draw->annotation(40, 175 + ($i * 30), $title);
                 //
                 //				$draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
                 //				$draw->annotation(440, 165 + ($i * 30), "€ ". $price);
@@ -262,19 +256,19 @@
 				// $draw->annotation(0, 165 + ($i * 30), $plu);
 
 				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-				$drawemail->annotation(0, 165 + ($i * 30), $quantity);
+				$drawemail->annotation(0, 175 + ($i * 30), $quantity);
 
 				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-				$drawemail->annotation(40, 165 + ($i * 30), $title);
+				$drawemail->annotation(40, 175 + ($i * 30), $title);
 
 				$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-				$drawemail->annotation(440, 165 + ($i * 30), "€ ". $price);
+				$drawemail->annotation(440, 175 + ($i * 30), "€ ". $price);
 
 				$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-				$drawemail->annotation(500, 165 + ($i * 30), $vatpercentage);
+				$drawemail->annotation(500, 175 + ($i * 30), $vatpercentage);
 
 				$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-				$drawemail->annotation(570, 165 + ($i * 30), "€ ". $Stotalamount);
+				$drawemail->annotation(570, 175 + ($i * 30), "€ ". $Stotalamount);
 
 
 				$i++;
@@ -288,37 +282,6 @@
                 //                $emailMessage .=        '<td>EURO ' . $price . '</td>';
                 //                $emailMessage .=    '</tr>';
                 //                $emailMessage .= '</p>';
-
-                //added by Nadeem
-                //set json product price and etc
-                $price=(float)$price;
-                $quantity=(int)$quantity;
-                $this->ProductLines[]=  array(
-                    "ProductGroupId"    =>  "PRGR".$product[4], // only categoryId !!! DONE
-                    "ProductGroupName"  =>  $product[3], // categoryName !!! DONE
-                    "ProductId"         =>  "PROD".$product[8], // productId !!! DONE
-                    "ProductName"       =>  $title,
-                    "Quantity"          =>  $quantity,
-                    "QuantityUnit"      =>  "P",
-                    "SellingPrice"      =>  (float)($price*$quantity),
-                    "VatRateId"         =>  $this->returnVatGrade($vatpercentage),//"B",
-                    "DiscountLines"     =>array(
-                        // array(
-                        // "DiscountId"        =>  "DISC002",
-                        // "DiscountName"      =>  "Prod. discount10%",
-                        // "DiscountType"      =>  "PRODUCTDISCOUNT",z`
-                        // "DiscountGrouping"  =>  0,
-                        // "DiscountAmount"    =>  1.19
-                        // ),
-                        // array(
-                        // "DiscountId"        =>  "DISC001",
-                        // "DiscountName"      =>  "Receipt. discount10%",
-                        // "DiscountType"      =>  "RECEIPTDISCOUNT",
-                        // "DiscountGrouping"  =>  0,
-                        // "DiscountAmount"    =>  1.07
-                        // ),
-                    ),
-                );
             }
 
 			$ii = $i;
@@ -334,7 +297,7 @@
 
 			$drawemail->setStrokeColor('black');
 			$drawemail->setStrokeWidth(1);
-			$drawemail->line(500, 165 + ($i * 30), 576, 165 + ($i * 30));
+			$drawemail->line(500, 175 + ($i * 30), 576, 175 + ($i * 30));
 			$drawemail->setStrokeWidth(1);
 
 
@@ -350,9 +313,9 @@
 			$drawemail->setFontSize(18);
 			$drawemail->setStrokeWidth(1);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-			$imagetextemail->annotateImage($drawemail, 395, 165 + ($i * 30), 0, "TOTAAL");
+			$imagetextemail->annotateImage($drawemail, 395, 175 + ($i * 30), 0, "");
 			$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-			$drawemail->annotation(570, 165 + ($i * 30), "€ ". $TStotalamount);
+			$drawemail->annotation(570, 175 + ($i * 30), "€ ". $TStotalamount);
 
 				$i++;
 
@@ -364,7 +327,7 @@
 			//
 			$drawemail->setStrokeColor('black');
 			$drawemail->setStrokeWidth(4);
-			$drawemail->line(500, 165 + ($i * 30), 576, 165 + ($i * 30));
+			$drawemail->line(500, 175 + ($i * 30), 576, 175 + ($i * 30));
 			$drawemail->setStrokeWidth(1);
 
 
@@ -390,24 +353,11 @@
             foreach ($productVats as $vat => $amount) {
                 $amount = number_format($amount, 2);
                 $amount = sprintf("%.2f", $amount);
-                $imagetextemail->annotateImage($drawemail, 440, 165 + ($i * 30), 0, 'BTW ' . strval($vat) .' % ');
-                $drawemail->annotation(570, 165 + ($i * 30), "€ ". $amount);
+                $imagetextemail->annotateImage($drawemail, 440, 175 + ($i * 30), 0, ' ' . strval($vat) .' % ');
+                $drawemail->annotation(570, 175 + ($i * 30), "€ ". $amount);
                 $i++;
             }
-            //added by nadeem
-            $this->PaymentLines[]=array(
-                "PaymentId"             =>  $order['orderId'], //ONLY ORDER ID WITHOUT PAY TESTING VERSION DONE
-                "PaymentName"           =>  "Alfred",
-                "PaymentType"           =>  "EFT",
-                "Quantity"              =>  1,
-                "PayAmount"             =>  (float)$TStotalamount,
-                "ForeignCurrencyAmount" =>  0,
-                "ForeignCurrencyISO"    =>  "",
-                "Reference"             =>  $order['payNlTransactionId'], //PAYNL TRANSACTION ID !!! DONE !!!
-            );
-            $jsonoutput['TransactionDateTime']    =   gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
-            $jsonoutput['TransactionNumber']      =   (int)(10000+$order['orderId']);
-            $jsonoutput['ordernumberr']           =   $order['orderId'];
+
 			// $imagetextemail->annotateImage($drawemail, 440, 165 + ($i * 30), 0, "BTW 21 % ");
 			// $drawemail->annotation(570, 165 + ($i * 30), "€ ". $T21Stotalamount);
 
@@ -436,91 +386,132 @@
 
 			$drawemail->setStrokeColor('black');
 			$drawemail->setStrokeWidth(4);
-			$drawemail->line(0, 165 + ($i * 30), 576, 165 + ($i * 30));
+			$drawemail->line(0, 175 + ($i * 30), 576, 175 + ($i * 30));
 			$drawemail->setStrokeWidth(1);
 
-
+			$drawemail->setStrokeColor('black');
 			$drawemail->setFontSize(18);
 			$drawemail->setStrokeWidth(1);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
 
 			$i++;
             //			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
-            //			$draw->annotation(570, 165 + ($i * 30), $order['vendorName']);
-
-			$imagetextemail->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
-			$drawemail->annotation(570, 165 + ($i * 30), $order['vendorName']);
-
-			$i++;
-            //			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
-            //			$draw->annotation(570, 165 + ($i * 30), $order['vendorAddress']);
-
-			$imagetextemail->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
-			$drawemail->annotation(570, 165 + ($i * 30), $order['vendorAddress']);
-
-			$i++;
-            //			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
-            //			$draw->annotation(570, 165 + ($i * 30), $order['vendorZipcode']);
-
-			$imagetextemail->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
-			$drawemail->annotation(570, 165 + ($i * 30), $order['vendorZipcode']);
-
-			$i++;
-            //			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
-            //			$draw->annotation(570, 165 + ($i * 30), $order['vendorCity']);
-
-			$imagetextemail->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
-			$drawemail->annotation(570, 165 + ($i * 30), $order['vendorCity']);
-
-			$i++;
-			$imagetextemail->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
-			$drawemail->annotation(570, 165 + ($i * 30), $order['vendorCountry']);
-
-            //			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
-            //			$draw->annotation(570, 165 + ($i * 30), $order['vendorCountry']);
-
-			$i++;
-            //			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
             //			$draw->annotation(570, 165 + ($i * 30), "BTW:". $order['vendorVAT']);
 
-			$imagetextemail->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
-			$drawemail->annotation(570, 165 + ($i * 30), "BTW:". $order['vendorVAT']);
-
-			$i++;
-            //			$draw->setStrokeColor('black');
-            //			$draw->setStrokeWidth(4);
-            //			$draw->line(0, 165 + ($i * 30), 576, 165 + ($i * 30));
-            //			$draw->setStrokeWidth(1);
-
-			$drawemail->setStrokeColor('black');
-			$drawemail->setStrokeWidth(4);
-			$drawemail->line(0, 165 + ($i * 30), 576, 165 + ($i * 30));
-			$drawemail->setStrokeWidth(1);
-
-			$i++;
-            //			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
-            //			$draw->annotation(570, 165 + ($i * 30), "BTW:". $order['vendorVAT']);
-
-			$imagetextemail->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
-            $drawemail->annotation(570, 165 + ($i * 30), 'EXcl terrasfee amount');
+			$imagetextemail->annotateImage($draw, 500, 175 + ($i * 30), 0, "");
+            $drawemail->annotation(570, 175 + ($i * 30), 'EXcl servicefee');
             $i++;
-            $imagetextemail->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
-            $drawemail->annotation(570, 165 + ($i * 30), 'Terrasfee amount € ' . sprintf("%.2f", $order['serviceFee']));
+            $imagetextemail->annotateImage($draw, 500, 175 + ($i * 30), 0, "");
+            $drawemail->annotation(570, 175 + ($i * 30), 'servicefee amount € ' . sprintf("%.2f", $order['serviceFee']));
             $i++;
             // $imagetextemail->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
             $serviceFeeAmount = floatval($order['serviceFee']);
             $serviceFeeTaxAmount = $serviceFeeAmount - $serviceFeeAmount / (100 + intval($order['serviceFeeTax'])) * 100;
             $drawemail->annotation(
                 570,
-                165 + ($i * 30),
-                'Terrasfee BTW  ' .  $order['serviceFeeTax'] . ' % ' .  sprintf("%.2f", $serviceFeeTaxAmount)
+                175 + ($i * 30),
+                'servicefee   ' .  $order['serviceFeeTax'] . ' % ' .  sprintf("%.2f", $serviceFeeTaxAmount)
             );
-			//-------- Text printen!  --------
-            $imagetext->drawImage($draw);
+
+			$i++;
+
+			$drawemail->setStrokeColor('black');
+			$drawemail->setStrokeWidth(4);
+			$drawemail->line(0, 175 + ($i * 30), 576, 175 + ($i * 30));
+			$drawemail->setStrokeWidth(1);
+
 			$imagetextemail->drawImage($drawemail);
 
-            $imageprint->addImage($imagetext);
-			$imageprintemail->addImage($imagetextemail);
+
+			$i++;
+			$i++;
+
+			// --------------------- and final amount !
+
+			$drawemail->setStrokeWidth(3);
+			$drawemail->setFontSize(28);
+			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+			$drawemail->annotation(0, 175 + ($i * 30), 'TOTAAL');
+			if (!empty($order['paymentType'])) {
+				$drawemail->annotation(0, 30, 'SERVICE BY WAITER');
+			}
+			$totalamt = floatval($order['serviceFee']+$TStotalamount);
+			$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+			$drawemail->annotation(570, 175 + ($i * 30), '€ ' . sprintf("%.2f", $totalamt));
+			$drawemail->setStrokeWidth(2);
+			$drawemail->setFontSize(28);
+			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+
+			$i++;
+			$i++;
+
+			$drawemail->setStrokeColor('black');
+			$drawemail->setStrokeWidth(4);
+			$drawemail->line(0, 175 + ($i * 30), 576, 175 + ($i * 30));
+			$drawemail->setStrokeWidth(1);
+
+			$imagetextemail->drawImage($drawemail);
+			$drawemail->setStrokeWidth(1);
+			$drawemail->setFontSize(18);
+			$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+
+			$i++;
+			//			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
+			//			$draw->annotation(570, 165 + ($i * 30), $order['vendorName']);
+
+			$imagetextemail->annotateImage($draw, 500, 175 + ($i * 30), 0, "");
+			$drawemail->annotation(570, 175 + ($i * 30), $order['vendorName']);
+
+			$i++;
+			//			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
+			//			$draw->annotation(570, 165 + ($i * 30), $order['vendorAddress']);
+
+			$imagetextemail->annotateImage($draw, 500, 175 + ($i * 30), 0, "");
+			$drawemail->annotation(570, 175 + ($i * 30), $order['vendorAddress']);
+
+			$i++;
+			//			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
+			//			$draw->annotation(570, 165 + ($i * 30), $order['vendorZipcode']);
+
+			$imagetextemail->annotateImage($draw, 500, 175 + ($i * 30), 0, "");
+			$drawemail->annotation(570, 175 + ($i * 30), $order['vendorZipcode']);
+
+			$i++;
+			//			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
+			//			$draw->annotation(570, 165 + ($i * 30), $order['vendorCity']);
+
+			$imagetextemail->annotateImage($draw, 500, 175 + ($i * 30), 0, "");
+			$drawemail->annotation(570, 175 + ($i * 30), $order['vendorCity']);
+
+			$i++;
+			$imagetextemail->annotateImage($draw, 500, 175 + ($i * 30), 0, "");
+			$drawemail->annotation(570, 175 + ($i * 30), $order['vendorCountry']);
+
+			//			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
+			//			$draw->annotation(570, 165 + ($i * 30), $order['vendorCountry']);
+
+			$i++;
+			//			$imagetext->annotateImage($draw, 500, 165 + ($i * 30), 0, "");
+			//			$draw->annotation(570, 165 + ($i * 30), "BTW:". $order['vendorVAT']);
+
+			$imagetextemail->annotateImage($draw, 500, 175 + ($i * 30), 0, "");
+			$drawemail->annotation(570, 175 + ($i * 30), "VAT/BTW #:". $order['vendorVAT']);
+
+			$i++;
+			//			$draw->setStrokeColor('black');
+			//			$draw->setStrokeWidth(4);
+			//			$draw->line(0, 165 + ($i * 30), 576, 165 + ($i * 30));
+			//			$draw->setStrokeWidth(1);
+
+			$drawemail->setStrokeColor('black');
+			$drawemail->setStrokeWidth(4);
+			$drawemail->line(0, 175 + ($i * 30), 576, 175 + ($i * 30));
+			$drawemail->setStrokeWidth(1);
+
+			$i++;
+
+
+
 
             // ------------------ QRCode creation --------------------------
 
@@ -550,6 +541,14 @@
 
             // ---------------- Create the print -------------------------
             // $result = $imageprint->mergeImageLayers(imagick::LAYERMETHOD_COMPARECLEAR);
+
+			//-------- Text printen!  --------
+			$imagetext->drawImage($draw);
+			$imagetextemail->drawImage($drawemail);
+
+			$imageprint->addImage($imagetext);
+			$imageprintemail->addImage($imagetextemail);
+
             $imageprint->resetIterator();
 			$imageprintemail->resetIterator();
 
@@ -568,9 +567,8 @@
 			if (!file_put_contents($receiptemail, $resultpngemail)) {
 				$receiptemail = '';
 			}
-            $receiptemailBasepath = base_url() . 'receipts/'.$order['orderId'].'-email' . '.png';
                 
-            
+            header('Content-type: image/png');
             // $image ->writeImage("peter.png");
 			//            $imageqr->destroy();
             $imagetext->destroy();
@@ -581,49 +579,22 @@
 			$imagetextemail->destroy();
 			$imagelogo->destroy();
 			$imageprint->destroy();
-			$draw->destroy();
+            $draw->destroy();
 
-			Utility_helper::logMessage($logFile, 'printer echo');
-            // header('Content-type: image/png');
-            // echo $resultpngprinter;
-            
-            // output here added by nadeem
-
-
-            // UPDATE ORDER EXTENDED PRINT STATUS
-            $orderExtendedIds = explode(',', $order['orderExtendedIds']);
-            foreach ($orderExtendedIds as $id) {
-                $this
-                    ->shoporderex_model
-                    ->setObjectId(intval($id))
-                    ->setObjectFromArray(['printed' => '1'])
-                    ->update();
+            if (!empty($order['paymentType'])) {
+                echo $resultpngemail;
             }
 
-            if ($this->shoporder_model->updatePrintedStatus()) {
+			// Utility_helper::logMessage($logFile, 'printer echo');
+            // // echo $resultpngprinter;
+
+            if ($order['printStatus'] === '1') {
+                // SEND EMAIL
+                $subject= "tiqs-Order : ". $order['orderId'] ;
+                $email = $order['buyerEmail'];
+                Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);
+                redirect('https://tiqs.com/spot/sendok');
             }
-
-
-            $jsonoutput['ProductLines']=$this->ProductLines;
-            $jsonoutput['PaymentLines']=$this->PaymentLines;
-            $jsonoutput['image']=$receiptemailBasepath;
-            // header('Content-type: image/png');
-            echo json_encode($jsonoutput);
-
-            // SEND EMAIL
-            // $subject= "tiqs-Order : ". $order['orderId'] ;
-            // $order['buyerEmail'] = 'pnroos@icloud.com';
-            // $email = $order['buyerEmail'];
-            // Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);
-        }
-        private function returnVatGrade($vatpar){
-            // retunr a or b or or d
-            if($vatpar==21){return "A";}
-            elseif($vatpar==12){return "B";}
-            elseif($vatpar==6){return "C";}
-            elseif($vatpar==0){return "D";}
-            else{return "D";}
-
         }
     }
 
