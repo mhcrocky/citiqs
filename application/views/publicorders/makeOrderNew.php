@@ -56,13 +56,14 @@
                 <div class="shopping-cart" id='shopping-cart'>
                     <h3>Items</h3>
                     <div class="shopping-cart__list" id='shopping-cart__list'>
+                        <?php echo $shoppingList; ?>
                     </div>
                     <!-- end shoping cart list -->
                     <div class="shopping-cart__total">
                             <p>Total:</p>
                             <p>&euro;&nbsp;<span class="shopping-cart__total-price totalPrice">0</span></p>
                         </div>
-                    <button class='checkout-button button-main button-primary'>checkout</button>
+                    <button class='checkout-button button-main button-primary' onclick="checkout()">checkout</button>
                 </div>
             </div>
             <!-- end right side -->
@@ -72,9 +73,6 @@
     </div>
 </div>
 <!-- end shop container -->
-
-
-
 
 <?php
     if (!empty($mainProducts)) {
@@ -86,11 +84,11 @@
                         <div class="col-12 col-md-6 text-center text-left-md">
                             <div class="bottom-bar__summary">
                                 <p>TOTAL: <span class='bottom-bar__total-price'>&euro;&nbsp;<span class="totalPrice">0</span></span> </p>
-                                <button class='button-main button-secondary' data-toggle='modal' data-target='#checkout-modal'>Order List</button>
+                                <button class='button-main button-secondary' onclick="focusCheckOutModal('modal__checkout__list')">Order List</button>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 text-center text-right-md">
-                            <button class='button-main button-secondary bottom-bar__checkout'>CHECKOUT</button>
+                            <button class='button-main button-secondary bottom-bar__checkout' onclick="checkout()">CHECKOUT</button>
                         </div>
                     </div>
                 </div>
@@ -100,37 +98,43 @@
             <!-- Modal checkout -->
             <div class="modal modal__checkout" id="checkout-modal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="modal-header__content">
-                            <div class='modal-header__details'>
-                                <h4 class="modal-header__title">Order List:</h4>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="modal-header__content">
+                                <div class='modal-header__details'>
+                                    <h4 class="modal-header__title">Order List:</h4>
+                                </div>
+                            </div>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <div class="modal__checkout__list" id='modal__checkout__list' style="margin: 0px 10px; overflow-y: scroll !important;">
+                                    <?php echo $checkoutList; ?>
+                                </div>
+                                <div class="modal-footer">
+                                    <p>TOTAL:
+                                        <span class="bottom-bar__total-price"></span>
+                                    </p>
+                                    <button class='button-main button-primary' onclick="checkout()">
+                                        CHECKOUT &euro;&nbsp;<span class="totalPrice">0</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span>&times;</span>
-                        </button>
                     </div>
-                    <div class="modal-body">
-                        <div class="modal__checkout__list" id='modal__checkout__list' style="margin: 0px 10px; overflow-y: scroll !important;">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <p>TOTAL:
-                            <span class="bottom-bar__total-price"></span>
-                        </p>
-                        <button class='button-main button-primary'>
-                            CHECKOUT &euro;&nbsp;<span class="totalPrice">0</span>
-                        </button>
-                    </div>
-                </div>
                 </div>
             </div>
             <!-- end modal checkout -->
-        <?php        
+        <?php 
+        $counter = 0;
         foreach ($mainProducts as $category => $products) {
+
             foreach ($products as $product) {
-                $productDetails = reset($product['productDetails']);            
+                $productDetails = reset($product['productDetails']);
+                $counter++;
                 ?>
                     <!-- start modal single item details -->
                     <div
@@ -170,7 +174,7 @@
                                                 class='modal-footer__buttons modal-footer__quantity--plus'
                                                 style="margin-right:5px;"
                                                 data-type="minus"
-                                                onclick="changeProductQuayntity(this, 'addonQuantity_<?php echo $product['productId']; ?>')"
+                                                onclick="changeProductQuayntity(this, 'addonQuantity')"
                                                 >
                                                 -
                                             </span>
@@ -181,6 +185,9 @@
                                                 value="1"
                                                 data-name="<?php echo $productDetails['name']; ?>"
                                                 data-add-product-price="<?php echo $productDetails['price']; ?>"
+                                                data-category="<?php echo $product['category']; ?>"
+                                                data-product-extended-id="<?php echo $productDetails['productExtendedId']; ?>"
+                                                data-product-id="<?php echo $product['productId']; ?>"
                                                 class="form-control checkProduct"
                                                 style="display:inline-block"
                                                 />
@@ -188,7 +195,7 @@
                                                 class='modal-footer__buttons modal-footer__quantity--minus'
                                                 style="margin-left:5px;"
                                                 data-type="plus"
-                                                onclick="changeProductQuayntity(this, 'addonQuantity_<?php echo $product['productId']; ?>')"
+                                                onclick="changeProductQuayntity(this, 'addonQuantity')"
                                                 >
                                                 +
                                             </span>
@@ -210,7 +217,7 @@
                                                                     type="checkbox"
                                                                     class="form-check-input checkAddons"
                                                                     onchange="toggleElement(this)"
-                                                                    />
+                                                                />
                                                                 <?php echo $addons[$addonId][0]['name']; ?>
                                                                 &euro; <?php echo $addons[$addonId][0]['price']; ?>
                                                                 (min per unit 1 / max  per unit <?php echo $addonQuantity; ?>)
@@ -225,7 +232,7 @@
                                                                 style="margin-right:5px;"
                                                                 data-type="minus"
                                                                 onclick="changeAddonQuayntity(this)"
-                                                                >
+                                                            >
                                                                 -
                                                             </span>
                                                             <input
@@ -234,14 +241,17 @@
                                                                 max="<?php echo $addonQuantity; ?>"
                                                                 data-addon-price="<?php echo $addons[$addonId][0]['price']; ?>"
                                                                 data-addon-name="<?php echo $addons[$addonId][0]['name']; ?>"
+                                                                data-category="<?php echo $addons[$addonId][0]['category']; ?>"
+                                                                data-product-extended-id="<?php echo $productDetails['productExtendedId']; ?>"
+                                                                data-addon-extended-id="<?php echo $addons[$addonId][0]['productExtendedId']; ?>"
                                                                 data-min = "1"
                                                                 data-max="<?php echo $addonQuantity; ?>"
                                                                 step="1"
                                                                 value="1"
-                                                                class="form-control addonQuantity_<?php echo $product['productId']; ?>"
+                                                                class="form-control addonQuantity"
                                                                 disabled
                                                                 style="display:inline-block"
-                                                                />
+                                                            />
                                                             <span
                                                                 class='modal-footer__buttons modal-footer__quantity--minus'
                                                                 style="margin-left:5px;"
@@ -276,7 +286,6 @@
                     <!-- end modal single item details -->
                 <?php
             }
-
         }
     }
 ?>

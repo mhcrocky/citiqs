@@ -642,4 +642,49 @@ class Ajax extends CI_Controller
             echo 'Invalid password';
         }
     }
+
+    public function setOrderSession(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+        $post = $this->input->post(null, true);
+
+        if (!empty($post['data'])) {
+            $_SESSION['order'] = [];
+            $string = 'qwertzuioplkjhgfdsamnbvcxy';
+            $count = 0;
+            foreach($post['data'] as $data) {
+                $count++;
+                $shuffled = strval($count) . '_' . str_shuffle($string);
+                $_SESSION['order'][$shuffled] = $data;
+            }
+        }
+
+        echo !empty($_SESSION['order']) ? '1' : '0';
+        return;
+    }
+
+    public function unsetSessionOrderElement(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = $this->input->post(null, true);
+        $indexId = $post['orderSessionIndex'];
+
+        if (!empty($post['addonExtendedId']) && !empty($post['productExtendedId'])) {
+            $addonextenedId = $post['addonExtendedId'];
+            $productExtendedId = $post['productExtendedId'];
+            unset($_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]);
+            echo '1';
+            return;
+        }
+
+        if (!empty($_SESSION['order'][$indexId])) {
+            unset($_SESSION['order'][$indexId]);
+            echo '1';
+            return;
+        }
+
+        echo '0';
+        return;
+    }
 }

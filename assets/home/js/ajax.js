@@ -180,6 +180,14 @@ var callThis = (function() {
             } else {
                 alertify.error('Update failed!');
             }
+        },
+        unsetSessionOrderElement: function(callFunction, functionArg) {
+            if (this == '1') {
+                callFunction(...functionArg);
+                alertify.success('Product(s) removed from list');
+            } else {
+                alertify.error('Product(s) did not remove from list');
+            }
         }
     };
     return methods;

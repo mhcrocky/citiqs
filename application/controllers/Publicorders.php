@@ -81,13 +81,12 @@
         private function loadSpotView(array $spot): void
         {
             $this->global['pageTitle'] = 'TIQS : ORDERING';
-
             //CHECK IS SPOT OPEN
             if (
                 intval($spot['spotTypeId']) === $this->config->item('local')
                 && !$this->shopspottime_model->setProperty('spotId', $spot['spotId'])->isOpen()
             ) {
-                $redirect = 'spot_closed' . DIRECTORY_SEPARATOR  . $spotId;
+                $redirect = 'spot_closed' . DIRECTORY_SEPARATOR  . $spot['spotId'];
                 redirect($redirect);
                 return;
             };
@@ -98,19 +97,23 @@
             $spotId = intval($spot['spotId']);
 
             $data = [
-                'categoryProducts' => $this->shopproductex_model->getUserProductsPublic($userId),
                 'spotId' => $spotId,
                 'day' => date('D', $time),
                 'hours' => strtotime(date('H:i:s', $time)),
                 'vendor' => $_SESSION['vendor'],
             ];
 
-            // $allProducts = $this->shopproductex_model->getMainProductsOnBuyerSide($userId, $spotId);
-            // if ($allProducts) {
-            //     $data['mainProducts'] = $allProducts['main'];
-            //     $data['addons'] = $allProducts['addons'];
-            // }
+            if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
+                $data['categoryProducts'] = $this->shopproductex_model->getUserProductsPublic($userId);
+            } elseif ($_SESSION['vendor']['preferredView'] === $this->config->item('newMakeOrderView')) {
+                $allProducts = $this->shopproductex_model->getMainProductsOnBuyerSide($userId, $spotId);
+                if ($allProducts) {
+                    $data['mainProducts'] = $allProducts['main'];
+                    $data['addons'] = $allProducts['addons'];
+                }
+            }
 
+            // terms and conditions
             $termsAndConditions = $this->shopvendor_model->readImproved([
                 'what' => ['termsAndConditions'],
                 'where' => [
@@ -118,16 +121,23 @@
                 ]
             ])[0]['termsAndConditions'];
 
-            if(!empty($termsAndConditions)){
+            if(!empty($termsAndConditions)) {
 				if (trim($termsAndConditions)) {
 					$data['termsAndConditions'] = $termsAndConditions;
 				}
 			}
 
-            $data['ordered'] = isset($_SESSION['order']) ? $_SESSION['order'] : null;
+            $ordered = isset($_SESSION['order']) ? $_SESSION['order'] : null;
+            $ordered = Utility_helper::returnMakeNewOrderElements($ordered);
+            $data['shoppingList'] = $ordered['shoppingList'];
+            $data['checkoutList'] = $ordered['checkoutList'];
 
-            $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
-            // $this->loadViews('publicorders/makeOrderNew', $this->global, $data, null, 'headerWarehousePublic');
+            if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
+                $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
+            } elseif ($_SESSION['vendor']['preferredView'] === $this->config->item('newMakeOrderView')) {
+                $this->loadViews('publicorders/makeOrderNew', $this->global, $data, null, 'headerWarehousePublic');
+            }
+
             return;
         }
 
@@ -181,11 +191,12 @@
             $post = $this->input->post(null, true);
 
             if (!empty($post)) {
-                $_SESSION['spotId'] = $post['spotId'];
                 unset($post['spotId']);
                 $_SESSION['order'] = $post;
             }
 
+            // needed for the first vesrion of th make_order
+            $_SESSION['spotId'] = $_SESSION['spot']['spotId'];
 
             $data = [
                 'spotId' => $_SESSION['spotId'],
@@ -197,6 +208,8 @@
                 // 'countries' => Country_helper::getCountries(),
                 'countryCodes' => Country_helper::getCountryPhoneCodes(),
                 'spot' => $_SESSION['spot'],
+                'oldMakeOrderView' => $this->config->item('oldMakeOrderView'),
+                'newMakeOrderView' => $this->config->item('newMakeOrderView'),
             ];
 
             if (intval($_SESSION['spot']['spotTypeId']) !== $this->config->item('local')) {
@@ -266,6 +279,8 @@
                 'bancontactPaymentType' => $this->config->item('bancontactPaymentType'),
                 'giroPaymentType' => $this->config->item('giroPaymentType'),
                 'localType' => $this->config->item('local'),
+                'oldMakeOrderView' => $this->config->item('oldMakeOrderView'),
+                'newMakeOrderView' => $this->config->item('newMakeOrderView'),
             ];
 
             $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
@@ -400,16 +415,36 @@
             }
 
             // insert order details
-            foreach ($post['orderExtended'] as $id => $details) {
-                $details['productsExtendedId'] = intval($id);
-                $details['orderId'] = $this->shoporder_model->id;
-                if (!$this->shoporderex_model->setObjectFromArray($details)->create()) {
-                    $this->shoporderex_model->orderId = $details['orderId'];
-                    $this->shoporderex_model->deleteOrderDetails();
-                    $this->shoporder_model->delete();
-                    $this->session->set_flashdata('error', 'Order not made! Please try again');
-                    redirect($failedRedirect);
-                    exit();
+            if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
+                foreach ($post['orderExtended'] as $id => $details) {
+                    $details['productsExtendedId'] = intval($id);
+                    $details['orderId'] = $this->shoporder_model->id;
+                    if (!$this->shoporderex_model->setObjectFromArray($details)->create()) {
+                        $this->shoporderex_model->orderId = $details['orderId'];
+                        $this->shoporderex_model->deleteOrderDetails();
+                        $this->shoporder_model->delete();
+                        $this->session->set_flashdata('error', 'Order not made! Please try again');
+                        redirect($failedRedirect);
+                        exit();
+                    }
+                }
+            } elseif ($_SESSION['vendor']['preferredView'] === $this->config->item('newMakeOrderView')) {
+                foreach ($post['orderExtended'] as $details) {
+                    $id = array_keys($details)[0];
+                    $details = reset($details);
+                    $insert = [
+                        'productsExtendedId' => intval($id),
+                        'orderId' => $this->shoporder_model->id,
+                        'quantity' => $details['quantity']
+                    ];
+                    if (!$this->shoporderex_model->setObjectFromArray($insert)->create()) {
+                        $this->shoporderex_model->orderId = $insert['orderId'];
+                        $this->shoporderex_model->deleteOrderDetails();
+                        $this->shoporder_model->delete();
+                        $this->session->set_flashdata('error', 'Order not made! Please try again');
+                        redirect($failedRedirect);
+                        exit();
+                    }
                 }
             }
 
