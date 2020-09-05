@@ -161,12 +161,12 @@ function populateShoppingCart(randomId) {
 
     html += '<div class="shopping-cart__single-item ' + randomId + '" data-ordered-id="' + randomId + '">';
     html +=     '<div class="shopping-cart__single-item__details">';
-    html +=         '<p>';
+    html +=         '<p style="text-align-left">';
     html +=             '<span class="shopping-cart__single-item__quantity">' + product.value + '</span>';
     html +=             ' x ';
     html +=             '<span class="shopping-cart__single-item__name">' + product.dataset.name + '</span>';
     html +=         '</p>';
-    html +=         '<p class="shopping-cart__single-item__additional">' + aditionalList.join(', ') + '</p>';
+    html +=         '<p class="shopping-cart__single-item__additional"  style="text-align-left">' + aditionalList.join(', ') + '</p>';
     html +=         '<p>&euro; <span class="shopping-cart__single-item__price">' + price.toFixed(2) +'</span></p>';
     html +=     '</div>';
     html +=     '<div class="shopping-cart__single-item__remove" onclick="focusOnOrderItem(\'modal__checkout__list\', \'' + randomId + '\')">';
