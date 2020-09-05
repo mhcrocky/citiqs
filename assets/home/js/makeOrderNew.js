@@ -39,6 +39,7 @@ function changeProductQuayntity(element, className) {
 
 function changeAddonInputAttributes(element, quantity, className, isOrdered) {
     let ancestor = '#' + makeOrderGlobals.checkoutModal;
+    if (!element.parentElement.parentElement.nextElementSibling) return;
     let classParent = element.parentElement.parentElement.nextElementSibling.children[1];
     let addonInputs = classParent.getElementsByClassName(className);
     let addonInputsLength = addonInputs.length;

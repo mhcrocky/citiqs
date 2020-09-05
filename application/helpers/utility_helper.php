@@ -253,10 +253,7 @@
                     $productExtendedId = array_keys($product)[0];
                     $product = reset($product);
                     $randomId = 'product_' . $product['productId'] . '_' . $count;
-        
-        
-        
-        
+
                     $checkoutList .= '<div id="' . $randomId . '" class="orderedProducts" style="margin-bottom: 30px; padding-left: 0px; display: initial;">';
                     $checkoutList .=    '<div class="alert alert-dismissible" style="padding-left: 0px; margin-bottom: 10px;">';
                     $checkoutList .=        '<a href="#" onclick="removeOrdered(\'' . $randomId . '\')" class="close" data-dismiss="alert" aria-label="close">×</a>';
@@ -299,68 +296,64 @@
                     $checkoutList .=                '</span>';
                     $checkoutList .=            '</div>';
                     $checkoutList .=        '</div>';
-        
-                    if (!isset($product['addons'])) continue;
-        
-                    $checkoutList .=        '<div class="modal__adittional">';
-                    $checkoutList .=            '<h6>Additional</h6>';
-                    $checkoutList .=            '<div class="modal__adittional__list">';
-        
-                    foreach ($product['addons'] as $addonExtendedId => $addon) {
-                        $checkoutList .=            '<div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">';
-                        $checkoutList .=                '<label class="form-check-label">';
-                        $checkoutList .=                    '<input type="checkbox" class="form-check-input checkAddons" onchange="toggleElement(this)" checked>&nbsp;';
-                        $checkoutList .=                    $addon['name'] . ' € ' . $addon['price'] . ' (min per unit ' . $addon['minQuantity'] . ' / max  per unit ' . $addon['maxQuantity'] . ')';
-                        $checkoutList .=                '</label>';
+
+                    if (isset($product['addons'])) {
+                        $checkoutList .=        '<div class="modal__adittional">';
+                        $checkoutList .=            '<h6>Additional</h6>';
+                        $checkoutList .=            '<div class="modal__adittional__list">';
+
+                        foreach ($product['addons'] as $addonExtendedId => $addon) {
+                            $checkoutList .=            '<div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">';
+                            $checkoutList .=                '<label class="form-check-label">';
+                            $checkoutList .=                    '<input type="checkbox" class="form-check-input checkAddons" onchange="toggleElement(this)" checked>&nbsp;';
+                            $checkoutList .=                    $addon['name'] . ' € ' . $addon['price'] . ' (min per unit ' . $addon['minQuantity'] . ' / max  per unit ' . $addon['maxQuantity'] . ')';
+                            $checkoutList .=                '</label>';
+                            $checkoutList .=            '</div>';
+                            $checkoutList .=            '<div class="modal-footer__quantity col-lg-4 col-sm-12" style="visibility: visible; margin-bottom: 3px;">';
+                            $checkoutList .=                '<span 
+                                                                class="modal-footer__buttons modal-footer__quantity--plus"
+                                                                style="margin-right:5px;"
+                                                                data-type="minus"
+                                                                onclick="changeAddonQuayntity(this)"
+                                                            >';
+                            $checkoutList .=                    ' -';
+                            $checkoutList .=                '</span>';
+                            $checkoutList .=                '<input
+                                                                type="number"
+                                                                min="' . $addon['minQuantity'] . '"
+                                                                max="' . $addon['maxQuantity'] . '"
+                                                                data-addon-price="' . $addon['price'] . '"
+                                                                data-addon-name="' . $addon['name'] . '"
+                                                                data-category="' . $addon['category'] . '"
+                                                                data-product-extended-id="' . $productExtendedId . '"
+                                                                data-addon-extended-id="' . $addonExtendedId . '"
+                                                                data-min="' . $addon['minQuantity'] . '"
+                                                                data-max="' . $addon['maxQuantity'] . '"
+                                                                step="' . $addon['step'] . '"
+                                                                value="' . $addon['quantity'] . '"
+                                                                class="form-control addonQuantity"  
+                                                                style="display:inline-block"
+                                                            />';
+                            $checkoutList .=                '<span
+                                                                class="modal-footer__buttons modal-footer__quantity--minus"
+                                                                style="margin-left:5px;"
+                                                                data-type="plus"
+                                                                onclick="changeAddonQuayntity(this)"
+                                                            >';
+                            $checkoutList .=                    ' +';
+                            $checkoutList .=                '</span>';
+                            $checkoutList .=            '</div>';
+                        }
                         $checkoutList .=            '</div>';
-                        $checkoutList .=            '<div class="modal-footer__quantity col-lg-4 col-sm-12" style="visibility: visible; margin-bottom: 3px;">';
-                        $checkoutList .=                '<span 
-                                                            class="modal-footer__buttons modal-footer__quantity--plus"
-                                                            style="margin-right:5px;"
-                                                            data-type="minus"
-                                                            onclick="changeAddonQuayntity(this)"
-                                                        >';
-                        $checkoutList .=                    ' -';
-                        $checkoutList .=                '</span>';
-                        $checkoutList .=                '<input
-                                                            type="number"
-                                                            min="' . $addon['minQuantity'] . '"
-                                                            max="' . $addon['maxQuantity'] . '"
-                                                            data-addon-price="' . $addon['price'] . '"
-                                                            data-addon-name="' . $addon['name'] . '"
-                                                            data-category="' . $addon['category'] . '"
-                                                            data-product-extended-id="' . $productExtendedId . '"
-                                                            data-addon-extended-id="' . $addonExtendedId . '"
-                                                            data-min="' . $addon['minQuantity'] . '"
-                                                            data-max="' . $addon['maxQuantity'] . '"
-                                                            step="' . $addon['step'] . '"
-                                                            value="' . $addon['quantity'] . '"
-                                                            class="form-control addonQuantity"  
-                                                            style="display:inline-block"
-                                                        />';
-        
-                        $checkoutList .=                '<span
-                                                            class="modal-footer__buttons modal-footer__quantity--minus"
-                                                            style="margin-left:5px;"
-                                                            data-type="plus"
-                                                            onclick="changeAddonQuayntity(this)"
-                                                        >';
-                        $checkoutList .=                    ' +';
-                        $checkoutList .=                '</span>';
-                        $checkoutList .=            '</div>';
+                        $checkoutList .=        '</div>';                      
                     }
-                    $checkoutList .=            '</div>';
-                    $checkoutList .=        '</div>';
+
                     $checkoutList .=    '</div>';
-                    $checkoutList .= '</div>';
-        
-        
-        
-        
+                    $checkoutList .= '</div>';  
         
                     $price += floatval($product['amount']);
+                    $addonsArray = [];
                     if (isset($product['addons'])) {
-                        $addonsArray = [];
                         foreach($product['addons'] as $addon) {
                             $price += floatval($addon['amount']);
                             $addonString = $addon['name']  . '(' . $addon['price'] . ')';
