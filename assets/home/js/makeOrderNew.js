@@ -311,7 +311,9 @@ function checkout() {
                         'price' : addon.dataset.addonPrice,
                         'minQuantity' : addon.min,
                         'maxQuantity' : addon.max,
-                        'step' : addon.step
+                        'step' : addon.step,
+                        'initialMinQuantity' : addon.dataset.initialMinQuantity,
+                        'initialMaxQuantity' : addon.dataset.initialMaxQuantity,
                     }
                 }
             }

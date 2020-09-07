@@ -243,6 +243,10 @@
 
         public static function returnMakeNewOrderElements(?array $ordered): array
         {
+            // echo '<pre>';
+            // print_r($ordered);
+            // echo '</pre>';
+            // die();
             $shoppingList = '';
             $checkoutList = '';
             if  (!is_null($ordered)) {
@@ -303,6 +307,8 @@
                         $checkoutList .=            '<div class="modal__adittional__list">';
 
                         foreach ($product['addons'] as $addonExtendedId => $addon) {
+                            $step = floatval($addon['step']);
+
                             $checkoutList .=            '<div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">';
                             $checkoutList .=                '<label class="form-check-label">';
                             $checkoutList .=                    '<input type="checkbox" class="form-check-input checkAddons" onchange="toggleElement(this)" checked>&nbsp;';
@@ -320,8 +326,8 @@
                             $checkoutList .=                '</span>';
                             $checkoutList .=                '<input
                                                                 type="number"
-                                                                min="' . $addon['minQuantity'] . '"
-                                                                max="' . $addon['maxQuantity'] . '"
+                                                                min="' . $step * floatval($addon['minQuantity']) . '"
+                                                                max="' . $step * floatval($addon['maxQuantity']) . '"
                                                                 data-addon-price="' . $addon['price'] . '"
                                                                 data-addon-name="' . $addon['name'] . '"
                                                                 data-category="' . $addon['category'] . '"
@@ -362,12 +368,12 @@
                     }
                     $shoppingList .= '<div class="shopping-cart__single-item ' . $randomId . '" data-ordered-id="' . $randomId . '">';
                     $shoppingList .=     '<div class="shopping-cart__single-item__details">';
-                    $shoppingList .=         '<p style="text-align-left">';
+                    $shoppingList .=         '<p style="text-align:left">';
                     $shoppingList .=             '<span class="shopping-cart__single-item__quantity">' . $product['quantity'] . '</span>';
                     $shoppingList .=             ' x ';
                     $shoppingList .=             '<span class="shopping-cart__single-item__name">' . $product['name'] . '</span>';
                     $shoppingList .=         '</p>';
-                    $shoppingList .=         '<p style="text-align-left" class="shopping-cart__single-item__additional">' . implode(', ', $addonsArray) . '</p>';
+                    $shoppingList .=         '<p style="text-align:left" class="shopping-cart__single-item__additional">' . implode(', ', $addonsArray) . '</p>';
                     $shoppingList .=         '<p>&euro; <span class="shopping-cart__single-item__price">' . number_format($price, 2, '.', ',').'</span></p>';
                     $shoppingList .=     '</div>';
                     $shoppingList .=     '<div class="shopping-cart__single-item__remove" onclick="focusOnOrderItem(\'modal__checkout__list\', \'' . $randomId . '\')">';

@@ -196,22 +196,20 @@ function changeQuantityAndPrice(quantityInputElement, type) {
         && quantityInputNewValue >= parseInt(quantityInput.min)
         && quantityInputNewValue <= parseInt(quantityInput.max)
     ) {
-
         newPrice = quantityInputNewValue * parseFloat(quantityInput.dataset.price);
         quantityInput.setAttribute('value', quantityInputNewValue);
         quantityElement.innerHTML = quantityInputNewValue;
         priceElement.innerHTML = newPrice.toFixed(2);
-
+        updateSessionOrderAddon(quantityInput, false);
     } else if (quantityInput.dataset.productType === 'main' && quantityInputNewValue >= parseInt(quantityInput.min)) {
-
         newPrice = quantityInputNewValue * parseFloat(quantityInput.dataset.price);
         quantityInput.setAttribute('value', quantityInputNewValue);
         quantityElement.innerHTML = quantityInputNewValue;
         priceElement.innerHTML = newPrice.toFixed(2);
-
+        updateSessionOrderMainProduct(quantityInput);
         changeAddons(quantityInput.id, quantityInputNewValue)
     }
-    
+
     calculateTotal(checkoutOrdedGlobals.calculateTotalClass);
 }
 
@@ -224,7 +222,8 @@ function changeAddons(mainProductId, quantity) {
         for (i = 0; i < addonsLenght; i++) {
             let addonInput = addons[i];
 
-            let newStep = quantity;
+
+            let newStep = parseFloat(quantity);
             addonInput.setAttribute('step', newStep);
 
             let newMin =  parseInt(newStep) * parseInt(addonInput.dataset.initialMin);
@@ -233,11 +232,12 @@ function changeAddons(mainProductId, quantity) {
             let newMax = parseInt(newStep) * parseInt(addonInput.dataset.initialMax);
             addonInput.setAttribute('max', newMax);
 
-            let newValue = parseInt(newStep) * parseInt(addonInput.dataset.initialValue);
-            addonInput.setAttribute('value', newValue);
+            addonInput.setAttribute('value', newMin);
 
-            document.getElementById(addonInput.dataset.quantityElementId).innerHTML = newValue;
-            document.getElementById(addonInput.dataset.priceElementId).innerHTML = (newValue * parseFloat(addonInput.dataset.price)).toFixed(2);
+            document.getElementById(addonInput.dataset.quantityElementId).innerHTML = newMin;
+            document.getElementById(addonInput.dataset.priceElementId).innerHTML = (newMin * parseFloat(addonInput.dataset.price)).toFixed(2);
+
+            updateSessionOrderAddon(addonInput, true);
         }
     }
 }
@@ -263,8 +263,8 @@ function calculateTotal(className) {
     total = (totalOrders + serviceFee).toFixed(2);
     serviceFee = serviceFee.toFixed(2);
 
-    document.getElementById(checkoutOrdedGlobals.serviceFeeSpanId).innerHTML = serviceFee;
-    document.getElementById(checkoutOrdedGlobals.totalAmountSpanId).innerHTML = total;
+    document.getElementById(checkoutOrdedGlobals.serviceFeeSpanId).innerHTML = serviceFee + '&nbsp;&euro;';
+    document.getElementById(checkoutOrdedGlobals.totalAmountSpanId).innerHTML = total + '&nbsp;&euro;';
     document.getElementById(checkoutOrdedGlobals.serviceFeeInputId).setAttribute('value', total);
     document.getElementById(checkoutOrdedGlobals.orderAmountInputId).setAttribute('value', serviceFee);
 }
@@ -302,4 +302,35 @@ function setNewOrder() {
             product.innerHTML = (i + 1);
         }
     }
+}
+
+function updateSessionOrderAddon(element, isMainChild) {
+    let url = globalVariables.ajax + 'updateSessionOrderAddon';
+    let amount = (parseInt(element.value) * parseFloat(element.dataset.price)).toFixed(2);
+    let mainChild = isMainChild ? '1' : '0'
+    let post = {
+        'orderSessionIndex' : element.dataset.orderSessionIndex,
+        'quantity' : element.value,
+        'amount' : amount,
+        'addonExtendedId': element.dataset.addonExtendedId,
+        'productExtendedId': element.dataset.productExtendedId,
+        'initialMin': element.dataset.initialMin,
+        'initialMax': element.dataset.initialMax,
+        'isMainChild' : mainChild
+    };
+
+    sendAjaxPostRequest(post, url, 'updateSessionOrderAddon');
+}
+
+function updateSessionOrderMainProduct(element) {
+    let url = globalVariables.ajax + 'updateSessionOrderMainProduct';
+    let amount = (parseInt(element.value) * parseFloat(element.dataset.price)).toFixed(2);
+    let post = {
+        'orderSessionIndex' : element.dataset.orderSessionIndex,
+        'productExtendedId' : element.dataset.productExtendedId,
+        'quantity' : element.value,
+        'amount' : amount,
+    };
+
+    sendAjaxPostRequest(post, url, 'updateSessionOrderMainProduct');
 }

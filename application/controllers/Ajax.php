@@ -687,4 +687,45 @@ class Ajax extends CI_Controller
         echo '0';
         return;
     }
+
+    public function updateSessionOrderAddon(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+        
+        $post = $this->input->post(null, true);
+        // var_dump($_SESSION['order']);
+        // var_dump($post);
+        $indexId = $post['orderSessionIndex'];
+        $addonextenedId = $post['addonExtendedId'];
+        $productExtendedId = $post['productExtendedId'];
+
+        $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['amount'] = $post['amount'];
+        $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['quantity'] = $post['quantity'];
+
+        // UPDATE ONLY IF MAIN PRODUCT IS CHANGED
+        if (intval($post['isMainChild'])) {
+            $newQuantity = intval($post['quantity']);
+            $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['step'] = $newQuantity;
+        }
+        var_dump($_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]);
+
+        return;
+    }
+
+    public function updateSessionOrderMainProduct(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+        
+
+        $post = $this->input->post(null, true);
+        $indexId = $post['orderSessionIndex'];
+
+        $post = $this->input->post(null, true);
+
+        $productExtendedId = $post['productExtendedId'];
+        $_SESSION['order'][$indexId][$productExtendedId]['amount'] = $post['amount'];
+        $_SESSION['order'][$indexId][$productExtendedId]['quantity'] = $post['quantity'];
+
+        return;
+    }
 }
