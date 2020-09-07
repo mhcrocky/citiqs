@@ -253,6 +253,7 @@ $route['printers']              = "warehouse/printers";
 $route['product_types']         = "warehouse/productTypes";
 $route['visitors']              = "warehouse/visitors";
 $route['dayreport']           	= "warehouse/dayreport";
+$route['vatreport']           	= "warehouse/vatreport";
 
 // PUBLIC
 $route['make_order']            = 'publicorders/index';

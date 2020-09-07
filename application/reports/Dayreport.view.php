@@ -644,6 +644,7 @@
 				));
 				?>
 			</div>
+
 			<div class="report-content" style="margin-bottom: -30px; margin-top: 30px">
 				<?php
 				DataTables::create(array(

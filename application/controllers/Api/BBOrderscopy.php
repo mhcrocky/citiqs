@@ -28,6 +28,63 @@
 
         public function data_get($orderId)
         {
+
+        	//				'Data' =>
+			//					array (
+			//						'POSSerialNumber' => 'B999000ABC4567',
+			//						'TerminalId' => '10',
+			//						'OperatorId' => 79100590097,
+			//						'TransactionNumber' => 48591,
+			//						'TransactionDateTime' => '2020-09-02T17:27:35',
+			//						'FDMSerialNumber' => 'BMC01000001',
+			//						'VatSplit' =>
+			//							array (
+			//								0 =>
+			//									array (
+			//										'VatRateId' => 'A',
+			//										'VatRate' => 21,
+			//										'TaxableAmount' => 30.58,
+			//										'VatAmount' => 6.42,
+			//										'Used' => true,
+			//									),
+			//								1 =>
+			//									array (
+			//										'VatRateId' => 'B',
+			//										'VatRate' => 9,
+			//										'TaxableAmount' => 0,
+			//										'VatAmount' => 0,
+			//										'Used' => false,
+			//									),
+			//								2 =>
+			//									array (
+			//										'VatRateId' => 'C',
+			//										'VatRate' => 0,
+			//										'TaxableAmount' => 0,
+			//										'VatAmount' => 0,
+			//										'Used' => false,
+			//									),
+			//								3 =>
+			//									array (
+			//										'VatRateId' => 'D',
+			//										'VatRate' => 0,
+			//										'TaxableAmount' => 0,
+			//										'VatAmount' => 0,
+			//										'Used' => false,
+			//									),
+			//							),
+			//						'VSCIdentificationNumber' => '0000000196-675',
+			//						'SignedDateTime' => '2020-09-02T17:25:52',
+			//						'PluHash' => '45ffea32de7c9a57a3fe4e1f276354e8f99c516c',
+			//						'EventLabel' => 'PR',
+			//						'EventTicketCounter' => 46,
+			//						'TotalTicketCounter' => 1298,
+			//						'Signature' => '',
+			//					),
+			//			)
+			
+        	$fdmdata=$this->input->get('data');
+			$fdmdataarray=json_decode($fdmdata);
+
             $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
             Utility_helper::logMessage($logFile, 'ordernumber ' .$orderId);
 

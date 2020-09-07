@@ -846,4 +846,14 @@
 			];
 			$this->loadViews('warehouse/dayreport', $this->global, $data, null, 'headerWarehouse');
         }
+
+		public function Vatreport(): void
+		{
+			$this->global['pageTitle'] = 'TIQS : Dailyreport';
+			$data = [
+				'vendorId' => $_SESSION['userId']
+			];
+			$this->loadViews('warehouse/vatreport', $this->global, $data, null, 'headerWarehouse');
+		}
+
     }

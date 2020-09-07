@@ -194,7 +194,7 @@
 						WHERE
 							tbl_user.id = :vendorId
 							AND tbl_shop_orders.paid = \'1\' 
-							AND WEEK(tbl_shop_orders.created,1) = WEEK(CURRENT_DATE()-7,1) 
+							AND WEEK(tbl_shop_orders.created,1) = WEEK(NOW(),1) - 1
 						GROUP BY
 							DATE( tbl_shop_orders.created ) 
 
@@ -348,7 +348,7 @@
 						WHERE
 							vendor.id = :vendorId AND
 							tbl_shop_orders.paid = \'1\'
-							AND WEEK(tbl_shop_orders.created,1) = WEEK(CURRENT_DATE(),1) 
+							AND WEEK(tbl_shop_orders.created,1) = WEEK(NOW(),1) 
 						ORDER BY
 							tbl_shop_orders.created ASC	
 
@@ -440,7 +440,7 @@
 						WHERE
 							vendor.id = :vendorId AND
 							tbl_shop_orders.paid = \'1\'
-							AND WEEK(tbl_shop_orders.created,1) = WEEK(CURRENT_DATE(),1) 
+							AND WEEK(tbl_shop_orders.created,1) = WEEK(NOW(),1) 
 						ORDER BY
 							tbl_shop_orders.created ASC	
 
@@ -621,7 +621,7 @@
 						WHERE
 							vendor.id = :vendorId AND
 							tbl_shop_orders.paid = \'1\'
-							AND WEEK(tbl_shop_orders.created,1) = WEEK(CURRENT_DATE(),1) 
+							AND WEEK(tbl_shop_orders.created,1) = WEEK(NOW(),1)
 						ORDER BY
 							tbl_shop_orders.created ASC	
 

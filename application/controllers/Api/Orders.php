@@ -570,6 +570,10 @@
                 file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
             }
 
+//			if ($pickup-order) {
+//				file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
+//			}
+
             // SEND EMAIL
             // $subject= "tiqs-Order : ". $order['orderId'] ;
             // $email = $order['buyerEmail'];
