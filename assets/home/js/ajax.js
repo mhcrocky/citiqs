@@ -189,7 +189,7 @@ var callThis = (function() {
                 alertify.error('Product(s) did not remove from list');
             }
         },
-        updateSessionOrder: function() {
+        updateSessionOrderAddon: function() {
 
         },
         updateSessionOrderMainProduct: function() {

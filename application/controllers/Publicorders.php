@@ -16,6 +16,7 @@
             $this->load->helper('validate_data_helper');
             $this->load->helper('utility_helper');
             $this->load->helper('country_helper');
+            $this->load->helper('date');
             
 
             $this->load->model('user_subscription_model');
@@ -212,23 +213,7 @@
                 'newMakeOrderView' => $this->config->item('newMakeOrderView'),
             ];
 
-            if (intval($_SESSION['spot']['spotTypeId']) !== $this->config->item('local')) {
-                $workingTime = $this->shopspottime_model->setProperty('spotId', $_SESSION['spotId'])->fetchWorkingTime();
-                if ($workingTime) {
-                    $data['workingTime'] = Utility_helper::convertDayToDate($workingTime, 'day');
-                    $data['spotType'] = (intval($data['spot']) === $this->config->item('deliveryType')) ? 'delivery' : 'pickup';
-
-                    $extendedIds = array_keys($post);
-                    $extendedIds = array_filter($extendedIds, function($i) {
-                        if (is_int($i)) return $i;
-                    });
-                    $data['delayTime'] = $this->shoporder_model->returnDelayMinutes($extendedIds);
-                } else {
-                    $redirect = 'spot_closed' . DIRECTORY_SEPARATOR  . $_SESSION['spotId'];
-                    redirect($redirect);
-                    return;
-                }
-            }
+            $this->setDelayTime($data);
 
             $data['username'] = isset($_SESSION['postOrder']['user']['username']) ? $_SESSION['postOrder']['user']['username'] : get_cookie('userName');
             $data['email'] = isset($_SESSION['postOrder']['user']['email']) ? $_SESSION['postOrder']['user']['email'] : get_cookie('email');
@@ -237,6 +222,37 @@
             $data['phoneCountryCode'] = isset($_SESSION['postOrder']['phoneCountryCode']) ? $_SESSION['postOrder']['phoneCountryCode'] : '';
 
             $this->loadViews('publicorders/checkoutOrder', $this->global, $data, null, 'headerWarehousePublic');
+        }
+
+        private function setDelayTime(array &$data) {
+            if (intval($_SESSION['spot']['spotTypeId']) !== $this->config->item('local')) {
+                $workingTime = $this->shopspottime_model->setProperty('spotId', $_SESSION['spotId'])->fetchWorkingTime();
+                if ($workingTime) {
+                    $data['workingTime'] = Utility_helper::convertDayToDate($workingTime, 'day');
+                    $data['spotType'] = (intval($data['spot']) === $this->config->item('deliveryType')) ? 'delivery' : 'pickup';
+
+                    if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
+                        $extendedIds = array_keys($post);
+                        $extendedIds = array_filter($extendedIds, function($i) {
+                            if (is_int($i)) return $i;
+                        });
+                    } else {
+                        $extendedIds = [];
+                        foreach($_SESSION['order'] as $key => $product) {
+                            array_push($extendedIds, array_keys($product)[0]);
+                            $product = reset($product);
+                            if ($product['addons']) {
+                                $extendedIds = array_merge($extendedIds, array_keys($product['addons']));
+                            }
+                        }
+                    }
+                    $data['delayTime'] = $this->shoporder_model->returnDelayMinutes($extendedIds);
+                } else {
+                    $redirect = 'spot_closed' . DIRECTORY_SEPARATOR  . $_SESSION['spotId'];
+                    redirect($redirect);
+                    return;
+                }
+            }
         }
 
         public function submitOrder(): void
