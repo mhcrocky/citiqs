@@ -30,7 +30,7 @@
         public $giro;
         public $prePaid;
         public $postPaid;
-        public $payconic;
+        public $payconiq;
 
 
         private $table = 'tbl_shop_vendors';
@@ -72,7 +72,7 @@
             if (isset($data['serviceFeeAmount']) && !Validate_data_helper::validateFloat($data['serviceFeeAmount'])) return false;
             if (isset($data['paynlServiceId']) && !Validate_data_helper::validateString($data['paynlServiceId'])) return false;
             if (isset($data['bancontact']) && !($data['bancontact'] === '1' || $data['bancontact'] === '0')) return false;
-			if (isset($data['payconic']) && !($data['payconic'] === '1' || $data['payconic'] === '0')) return false;
+			if (isset($data['payconiq']) && !($data['payconiq'] === '1' || $data['payconiq'] === '0')) return false;
             if (isset($data['ideal']) && !($data['ideal'] === '1' || $data['ideal'] === '0')) return false;
             if (isset($data['creditCard']) && !($data['creditCard'] === '1' || $data['creditCard'] === '0')) return false;
             if (isset($data['printTimeConstraint']) && !Validate_data_helper::validateInteger($data['printTimeConstraint'])) return false;
@@ -100,7 +100,7 @@
                     $this->table . '.termsAndConditions',
                     $this->table . '.requireMobile',
 					$this->table . '.bancontact',
-					$this->table . '.payconic',
+					$this->table . '.payconiq',
                     $this->table . '.ideal',
                     $this->table . '.creditCard',
                     $this->table . '.printTimeConstraint',

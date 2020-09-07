@@ -134,9 +134,9 @@
                                                 <span data-trans="" data-trn-key="Creditcard">Creditcard</span>
                                             </a>
                                         <?php } ?>
-										<?php if ($vendor['payconic'] === '1') { ?>
-											<a href="<?php echo base_url(); ?>insertorder/<?php echo $payconicPaymentType; ?>/0" class="paymentMethod method-card" >
-												<img src="https://tiqs.com/qrzvafood/assets/imgs/extra/payconic.png" alt="Creditcard">
+										<?php if ($vendor['payconiq'] === '1') { ?>
+											<a href="<?php echo base_url(); ?>insertorder/<?php echo $payconiqPaymentType; ?>/0" class="paymentMethod method-card" >
+												<img src="https://tiqs.com/qrzvafood/assets/imgs/extra/payconiq.png" alt="Creditcard">
 												<span data-trans="" data-trn-key="Creditcard">Creditcard</span>
 											</a>
 										<?php } ?>

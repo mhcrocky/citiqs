@@ -282,11 +282,11 @@
 								<input type="radio" id="bancontactNo" name="vendor[bancontact]" value="0" <?php if ($vendor['bancontact'] === '0') echo 'checked'; ?> />
 							</div>
 							<div class="form-group">
-								<h4>PAYCONIC</h4>
-								<label class="radio-inline" for="payconicYes">Yes</label>
-								<input type="radio" id="payconicYes" name="vendor[payconic]" value="1" <?php if ($vendor['payconic'] === '1') echo 'checked'; ?> />
+								<h4>PAYCONIQ</h4>
+								<label class="radio-inline" for="payconiqYes">Yes</label>
+								<input type="radio" id="payconiqYes" name="vendor[payconiq]" value="1" <?php if ($vendor['payconiq'] === '1') echo 'checked'; ?> />
 								<label class="radio-inline" for="bancontactNo">&nbsp;&nbsp;&nbsp;No</label>
-								<input type="radio" id="payconicNo" name="vendor[payconic]" value="0" <?php if ($vendor['payconic'] === '0') echo 'checked'; ?> />
+								<input type="radio" id="payconiqNo" name="vendor[payconiq]" value="0" <?php if ($vendor['payconiq'] === '0') echo 'checked'; ?> />
 							</div>
 							<div class="form-group mb-35">
 								<h4>IDEAL</h4>
@@ -334,7 +334,7 @@
 						<label class="radio-inline" for="requireMobileNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="requireMobileNo" name="vendor[requireMobile]" value="0" <?php if ($vendor['requireMobile'] === '0') echo 'checked'; ?> />
 					</div>
-					<h4>REQUIRE RESERVATION FROM VISITOR</h4>
+					<h4>REQUIRE REGISTRATION FROM VISITOR</h4>
 					<div class="form-group mb-35">
 						<label class="radio-inline" for="requireReservationkYes">Yes</label>
 						<input type="radio" id="requireReservationkYes" name="vendor[requireReservation]" value="1" <?php if ($vendor['requireReservation'] === '1') echo 'checked'; ?> />
