@@ -312,7 +312,7 @@
                             $checkoutList .=            '<div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">';
                             $checkoutList .=                '<label class="form-check-label">';
                             $checkoutList .=                    '<input type="checkbox" class="form-check-input checkAddons" onchange="toggleElement(this)" checked>&nbsp;';
-                            $checkoutList .=                    $addon['name'] . ' € ' . $addon['price'] . ' (min per unit ' . $addon['minQuantity'] . ' / max  per unit ' . $addon['maxQuantity'] . ')';
+                            $checkoutList .=                    $addon['name'] . ' € ' . $addon['price'] . ' (min per unit ' . $addon['initialMinQuantity'] . ' / max  per unit ' . $addon['initialMaxQuantity'] . ')';
                             $checkoutList .=                '</label>';
                             $checkoutList .=            '</div>';
                             $checkoutList .=            '<div class="modal-footer__quantity col-lg-4 col-sm-12" style="visibility: visible; margin-bottom: 3px;">';
@@ -326,8 +326,8 @@
                             $checkoutList .=                '</span>';
                             $checkoutList .=                '<input
                                                                 type="number"
-                                                                min="' . $step * floatval($addon['minQuantity']) . '"
-                                                                max="' . $step * floatval($addon['maxQuantity']) . '"
+                                                                min="' . $addon['minQuantity'] . '"
+                                                                max="' . $addon['maxQuantity'] . '"
                                                                 data-addon-price="' . $addon['price'] . '"
                                                                 data-addon-name="' . $addon['name'] . '"
                                                                 data-category="' . $addon['category'] . '"
@@ -335,6 +335,8 @@
                                                                 data-addon-extended-id="' . $addonExtendedId . '"
                                                                 data-min="' . $addon['minQuantity'] . '"
                                                                 data-max="' . $addon['maxQuantity'] . '"
+                                                                data-initial-min-quantity="' . $addon['initialMinQuantity'] . '"
+                                                                data-initial-max-quantity="' . $addon['initialMaxQuantity'] . '"
                                                                 step="' . $addon['step'] . '"
                                                                 value="' . $addon['quantity'] . '"
                                                                 class="form-control addonQuantity"  

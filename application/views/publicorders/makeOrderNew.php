@@ -209,7 +209,7 @@
                                                     $productAddons = $product['addons'];
                                                     foreach ($productAddons as $productAddon) {
                                                         $addonId = $productAddon[0][0];
-                                                        $addonQuantity = $productAddon[0][1];
+                                                        $addonAllowedQuantity = $productAddon[0][1];
                                                         ?>
                                                         <div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">
                                                             <label class="form-check-label">
@@ -220,7 +220,7 @@
                                                                 />
                                                                 <?php echo $addons[$addonId][0]['name']; ?>
                                                                 &euro; <?php echo $addons[$addonId][0]['price']; ?>
-                                                                (min per unit 1 / max  per unit <?php echo $addonQuantity; ?>)
+                                                                (min per unit 1 / max  per unit <?php echo $addonAllowedQuantity; ?>)
                                                             </label>
                                                         </div>
                                                         <div
@@ -238,14 +238,16 @@
                                                             <input
                                                                 type="number"
                                                                 min="1"
-                                                                max="<?php echo $addonQuantity; ?>"
+                                                                max="<?php echo $addonAllowedQuantity; ?>"
                                                                 data-addon-price="<?php echo $addons[$addonId][0]['price']; ?>"
                                                                 data-addon-name="<?php echo $addons[$addonId][0]['name']; ?>"
                                                                 data-category="<?php echo $addons[$addonId][0]['category']; ?>"
                                                                 data-product-extended-id="<?php echo $productDetails['productExtendedId']; ?>"
                                                                 data-addon-extended-id="<?php echo $addons[$addonId][0]['productExtendedId']; ?>"
+                                                                data-initial-min-quantity="1"
+                                                                data-initial-max-quantity="<?php echo $addonAllowedQuantity; ?>"
                                                                 data-min = "1"
-                                                                data-max="<?php echo $addonQuantity; ?>"
+                                                                data-max="<?php echo $addonAllowedQuantity; ?>"
                                                                 step="1"
                                                                 value="1"
                                                                 class="form-control addonQuantity"

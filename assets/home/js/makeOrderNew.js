@@ -57,10 +57,10 @@ function changeAddonInputAttributes(element, quantity, className, isOrdered) {
             let newStep = quantity;
             addonInput.setAttribute('step', newStep);
 
-            let newMin = newStep * parseInt(addonInput.dataset.min);
+            let newMin = newStep * parseInt(addonInput.dataset.initialMinQuantity);
             addonInput.setAttribute('min', newMin);
 
-            let newMax = newStep * parseInt(addonInput.dataset.max);
+            let newMax = newStep * parseInt(addonInput.dataset.initialMaxQuantity);
             addonInput.setAttribute('max', newMax);
 
             let newValue = newStep;

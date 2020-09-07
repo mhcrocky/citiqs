@@ -693,8 +693,7 @@ class Ajax extends CI_Controller
         if (!$this->input->is_ajax_request()) return;
         
         $post = $this->input->post(null, true);
-        // var_dump($_SESSION['order']);
-        // var_dump($post);
+        var_dump($post);
         $indexId = $post['orderSessionIndex'];
         $addonextenedId = $post['addonExtendedId'];
         $productExtendedId = $post['productExtendedId'];
@@ -703,9 +702,13 @@ class Ajax extends CI_Controller
         $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['quantity'] = $post['quantity'];
 
         // UPDATE ONLY IF MAIN PRODUCT IS CHANGED
-        if (intval($post['isMainChild'])) {
-            $newQuantity = intval($post['quantity']);
-            $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['step'] = $newQuantity;
+        if (intval($post['mainProductQuantity'])) {
+            $newStep = intval($post['mainProductQuantity']);
+            $newMinQuantity = $newStep * $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['initialMinQuantity'];
+            $newMaxQuantity = $newStep * $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['initialMaxQuantity'];
+            $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['step'] = $newStep;
+            $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['minQuantity'] = $newMinQuantity;
+            $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['maxQuantity'] = $newMaxQuantity;
         }
         var_dump($_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]);
 
