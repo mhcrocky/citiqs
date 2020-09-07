@@ -188,7 +188,13 @@ var callThis = (function() {
             } else {
                 alertify.error('Product(s) did not remove from list');
             }
-        }
+        },
+        updateSessionOrder: function() {
+
+        },
+        updateSessionOrderMainProduct: function() {
+
+        },
     };
     return methods;
 })();
