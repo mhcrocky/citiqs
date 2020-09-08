@@ -243,10 +243,6 @@
 
         public static function returnMakeNewOrderElements(?array $ordered): array
         {
-            // echo '<pre>';
-            // print_r($ordered);
-            // echo '</pre>';
-            // die();
             $shoppingList = '';
             $checkoutList = '';
             if  (!is_null($ordered)) {

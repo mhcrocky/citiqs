@@ -129,13 +129,14 @@
 			}
 
             $ordered = isset($_SESSION['order']) ? $_SESSION['order'] : null;
-            $ordered = Utility_helper::returnMakeNewOrderElements($ordered);
-            $data['shoppingList'] = $ordered['shoppingList'];
-            $data['checkoutList'] = $ordered['checkoutList'];
 
             if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
+                $data['ordered'] = $ordered;
                 $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
             } elseif ($_SESSION['vendor']['preferredView'] === $this->config->item('newMakeOrderView')) {
+                $ordered = Utility_helper::returnMakeNewOrderElements($ordered);
+                $data['shoppingList'] = $ordered['shoppingList'];
+                $data['checkoutList'] = $ordered['checkoutList'];
                 $this->loadViews('publicorders/makeOrderNew', $this->global, $data, null, 'headerWarehousePublic');
             }
 
