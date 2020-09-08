@@ -7,7 +7,7 @@
 <main class="row" style="margin:0px 20px">
     <h1 style="margin:70px 0px 20px 0px">Order list</h1>
     <div style="margin:140px 0px 20px 0px">
-        <label for="orderStatus">Fiter orders by printer:</label>
+        <label for="orderStatus">Filter orders by printer:</label>
         <?php if (!empty($printers)) { ?>
         <select id="selectedPrinter" class="custom-select" onchange="destroyAndFetch()">
             <option value="">All</option>
@@ -18,7 +18,7 @@
         <?php } ?>
     </div>
     <div style="margin:140px 0px 20px 0px">
-        <label for="orderStatus">Fiter orders by status:</label>
+        <label for="orderStatus">Filter orders by status:</label>
         <select id="orderStatus" class="custom-select" onchange="destroyAndFetch()">
             <option value="">All (incl finished)</option>
             <?php foreach ($ordersStatuses as $status) { ?>
@@ -42,6 +42,7 @@
                     <th>Buyer</th>
                     <th>Buyer Email</th>
                     <th>Buyer Mobile</th>
+                    <th>Remarks</th>
                     <th>Send Buyer Sms</th>
                 </tr>
             </thead>
@@ -59,6 +60,7 @@
                     <th>Buyer</th>
                     <th>Buyer Email</th>
                     <th>Buyer Mobile</th>
+                    <th>Remarks</th>
                     <th>Send Buyer Sms</th>
                 </tr>
             </tfoot>

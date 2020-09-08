@@ -163,7 +163,7 @@ function populateTable(data) {
                     }
                 },
                 {
-                    "targets": 9,
+                    "targets": 10,
                     "data": function (row, type, val, meta) {
                         return sendSmsButton(row);
                     },

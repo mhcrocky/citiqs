@@ -67,10 +67,10 @@
                             </div>
                         </div>
                     <?php } ?>
-                    <!-- <div class="form-group col-sm-12" style="display:none">
+                    <div class="form-group col-sm-12">
                         <label for="notesInput">Remarks</label>
-                        <textarea id="notesInput" class="form-control" name="order[notes]" rows="3"></textarea>
-                    </div> -->
+                        <textarea id="notesInput" class="form-control" name="order[remarks]" rows="3" maxlength="250"></textarea>
+                    </div>
                     <?php
                         if (isset($workingTime)) {
                             ?>

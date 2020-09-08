@@ -27,6 +27,7 @@
         public $paymentType;
         public $waiterReceipt;
         public $customerReceipt;
+        public $remarks;
 
         private $table = 'tbl_shop_orders';
 
@@ -147,6 +148,7 @@
                     $this->table . '.created AS orderCreated',
                     $this->table . '.updated AS orderUpdated',
                     $this->table . '.countSentMessages AS countSentMessages',
+                    $this->table . '.remarks AS remarks',
                     'buyer.id AS buyerId',
                     'buyer.email AS buyerEmail',
                     'buyer.username AS buyerUserName',
@@ -797,10 +799,11 @@
                 array( 'db' => 'buyerUserName',         'dt' => 6),
                 array( 'db' => 'buyerEmail',            'dt' => 7),
                 array( 'db' => 'buyerMobile',           'dt' => 8),
-                array( 'db' => 'sendSms',               'dt' => 9),
-                array( 'db' => 'buyerId',               'dt' => 10),
-                array( 'db' => 'countSentMessages',     'dt' => 11),
-                array( 'db' => 'spotType',              'dt' => 12),                
+                array( 'db' => 'remarks',               'dt' => 9),
+                array( 'db' => 'sendSms',               'dt' => 10),
+                array( 'db' => 'buyerId',               'dt' => 11),
+                array( 'db' => 'countSentMessages',     'dt' => 12),
+                array( 'db' => 'spotType',              'dt' => 13),
             );
 
             return Jquerydatatable_helper::data_output($columns, $return);
