@@ -232,7 +232,7 @@
                     $data['spotType'] = (intval($data['spot']) === $this->config->item('deliveryType')) ? 'delivery' : 'pickup';
 
                     if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
-                        $extendedIds = array_keys($post);
+                        $extendedIds = array_keys($_SESSION['order']);
                         $extendedIds = array_filter($extendedIds, function($i) {
                             if (is_int($i)) return $i;
                         });
