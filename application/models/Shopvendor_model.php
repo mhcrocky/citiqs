@@ -23,6 +23,7 @@
         public $healthCheck;
         public $requireReservation;
         public $preferredView;
+        public $busyTime;
 
         public $bancontact;
         public $ideal;
@@ -40,7 +41,7 @@
             $this->load->helper('validate_data_helper');
             if (!Validate_data_helper::validateInteger($value)) return;
 
-            if ($property === 'id' || $property === 'vendorId' || $property === 'serviceFeeTax') {
+            if ($property === 'id' || $property === 'vendorId' || $property === 'serviceFeeTax' || $property === 'busyTime') {
                 $value = intval($value);
             }
             if ($property === 'serviceFeePercent' || $property === 'serviceFeeAmount') {
@@ -84,6 +85,7 @@
             if (isset($data['prePaid']) && !Validate_data_helper::validateString($data['prePaid'])) return false;
             if (isset($data['postPaid']) && !Validate_data_helper::validateString($data['postPaid'])) return false;
             if (isset($data['preferredView']) && !Validate_data_helper::validateInteger($data['preferredView'])) return false;
+            if (isset($data['busyTime']) && !Validate_data_helper::validateInteger($data['busyTime'])) return false;
 
             return true;
         }
@@ -112,6 +114,7 @@
                     $this->table . '.prePaid',
                     $this->table . '.postPaid',
                     $this->table . '.preferredView',
+                    $this->table . '.busyTime',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',

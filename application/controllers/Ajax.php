@@ -24,6 +24,7 @@ class Ajax extends CI_Controller
         $this->load->model('shopcategory_model');
         $this->load->model('shopspotproduct_model');
         $this->load->model('shopproductex_model');
+        $this->load->model('shopvendor_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -728,6 +729,22 @@ class Ajax extends CI_Controller
         $productExtendedId = $post['productExtendedId'];
         $_SESSION['order'][$indexId][$productExtendedId]['amount'] = $post['amount'];
         $_SESSION['order'][$indexId][$productExtendedId]['quantity'] = $post['quantity'];
+
+        return;
+    }
+
+    public function updateVendor($venodrId): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = $this->input->post(null, true);        
+        $update = $this
+                    ->shopvendor_model
+                    ->setObjectId(intval($venodrId))
+                    ->setObjectFromArray($post)
+                    ->update();
+
+        echo $update ? '1' : '0';
 
         return;
     }

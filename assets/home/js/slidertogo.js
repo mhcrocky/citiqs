@@ -42,3 +42,12 @@ function checkPostiveInteger (e) {
 function checkValidLimits () {
   return (!min.value || !max.value || +max.value <= +min.value) ? (button.disabled = true, false) : (button.disabled = false, true);
 }
+
+function saveBusyTime(slideId, id) {
+  let url = globalVariables.ajax + 'updateVendor/' + id;
+  let post = {
+    'busyTime' : document.getElementById(slideId).value
+  }
+
+  sendAjaxPostRequest(post, url, 'saveBusyTime');
+}

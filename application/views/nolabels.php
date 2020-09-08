@@ -46,14 +46,18 @@
 								<!-- href="https://tiqs.com/lostandfound/menuapp target="_blank"" -->
 								<a onclick="changeLimits()" id="limitButton" disabled class="button button-orange mb-25"><?=$this->language->line('NOLABELS-vPB1881A',"SET TIME");?></a>
 							</div>
-							<div class="mb-35" align="right" >
+							<div class="mb-35" style="text-align:right" >
 								MINUTES ADDED
 
-							<span id="val"></span>
+							<span id="val"><?php echo $vendor['busyTime']; ?></span>
 							</div>
-							<input style="background-color: #1a2226" id="slide" type="range" min="0" max="100" value="50" oninput="displayValue(event)" />
+							<input style="background-color: #1a2226" id="slide" type="range" min="0" max="100" value="<?php echo $vendor['busyTime']; ?>" oninput="displayValue(event)"/>
 
 						<p></p>
+						<div style="text-align:center">
+							<!-- href="https://tiqs.com/lostandfound/menuapp target="_blank"" -->
+							<a onclick="saveBusyTime('slide', '<?php echo $vendor['id']; ?>')" id="limitButton" disabled class="button button-orange mb-25"><?=$this->language->line('NOLABELS-vPB18811jKJA',"CONFIRM TIME");?></a>
+						</div>
 
 				</div>
 

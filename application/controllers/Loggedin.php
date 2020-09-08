@@ -11,7 +11,8 @@ class Loggedin extends BaseControllerWeb
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('subscription_model');
+		$this->load->helper('validate_data_helper');
+		$this->load->model('shopvendor_model');
 		$this->load->helper('utility_helper');
 		$this->load->helper('url');
 
@@ -21,14 +22,10 @@ class Loggedin extends BaseControllerWeb
 	public function index()
 	{
 		$this->global['pageTitle'] = 'TIQS : SHOP';
-		$subscriptionWhat = ['id', 'short_description', 'description', 'ROUND(amount, 2) AS amount', 'active', 'tiqssendcom', 'backOfficeItemId', 'type'];
 		$data = [
-//			'subscriptions' => Utility_helper::resetArrayByKeyMultiple($this->subscription_model->select($subscriptionWhat), 'type')
+			'vendor' => $this->shopvendor_model->setProperty('vendorId', $_SESSION['userId'])->getVendorData(),
 		];
-
 		$this->loadViews("nolabels", $this->global, $data, NULL, "headerpubliclogout");
 	}
 
 }
-
-

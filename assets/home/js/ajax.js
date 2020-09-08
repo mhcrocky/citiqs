@@ -195,6 +195,13 @@ var callThis = (function() {
         updateSessionOrderMainProduct: function() {
 
         },
+        saveBusyTime: function() {
+            if (this) {
+                alertify.success('Busy time updated');
+            } else {
+                alertify.error('Update failed!');
+            }
+        },
     };
     return methods;
 })();
