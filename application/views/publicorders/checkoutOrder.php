@@ -21,7 +21,16 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="emailAddressInput">Email address <sup>*</sup></label>
-                        <input type="email" id="emailAddressInput" class="form-control" name="user[email]" value="<?php echo $email; ?>" placeholder="Email address" required />
+                        <input
+                            type="email"
+                            id="emailAddressInput"
+                            class="form-control"
+                            name="user[email]"
+                            value="<?php echo $email; ?>"
+                            placeholder="Email address"
+                            required
+                            oninput="checkUserNewsLetter(this.id)"
+                        />
                     </div>
                     <!-- <div class="form-group col-sm-6" style="display:none">
                         <label for="country-code">Country Code <sup>*</sup></label>
@@ -70,6 +79,17 @@
                     <div class="form-group col-sm-12">
                         <label for="notesInput">Remarks</label>
                         <textarea id="notesInput" class="form-control" name="order[remarks]" rows="3" maxlength="250"></textarea>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label>Recive our newsletter</label>
+                        <label class="radio-inline" for="newsLetterYes">
+                            <input type="radio" id="newsLetterYes" name="user[newsletter]" value="1" />
+                            Yes
+                        </label>
+                        <label class="radio-inline" for="newsLetterNo">
+                            <input type="radio" id="newsLetterNo" name="user[newsletter]"  value="0" checked />
+                            No
+                        </label>
                     </div>
                     <?php
                         if (isset($workingTime)) {

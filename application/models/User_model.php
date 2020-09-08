@@ -881,8 +881,6 @@ class User_model extends CI_Model
             $buyer['code'] = Utility_helper::shuffleString(5);
             $buyer['createdDtm'] = date('Y-m-d H:i:s');
             $this->insertUser($buyer);
-			// echo $this->db->last_query();
-			// die();
 
             // must return non hashed password for activation link
             $this->password = $password;
@@ -890,17 +888,16 @@ class User_model extends CI_Model
             $newData = [
                 'username' => $buyer['username'],
                 'email' => $buyer['email'],
+                'newsletter' => $buyer['newsletter'],
             ];
             if (!empty($buyer['mobile'])) {
                 $newData['mobile'] = $buyer['mobile'];
             }
             $this->editUser($newData, $this->id);
         }
-
 		$this->setUniqueValue($buyer['email'])->setWhereCondtition()->setUser();
         return $this;
     }
-    #pnroos@icloud.com
 
     public function checkIsAdmin(string $email, string $userPassword)
     {

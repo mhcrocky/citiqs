@@ -202,6 +202,10 @@ var callThis = (function() {
                 alertify.error('Update failed!');
             }
         },
+        checkUserNewsLetter: function(callFunction) {
+            let newsLetter = this == 1 ? true : false;
+            callFunction(newsLetter);
+        }
     };
     return methods;
 })();

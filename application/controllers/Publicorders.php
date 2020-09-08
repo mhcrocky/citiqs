@@ -241,7 +241,7 @@
                         foreach($_SESSION['order'] as $key => $product) {
                             array_push($extendedIds, array_keys($product)[0]);
                             $product = reset($product);
-                            if ($product['addons']) {
+                            if (!empty($product['addons'])) {
                                 $extendedIds = array_merge($extendedIds, array_keys($product['addons']));
                             }
                         }

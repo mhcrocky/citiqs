@@ -748,4 +748,15 @@ class Ajax extends CI_Controller
 
         return;
     }
+
+    public function checkUserNewsLetter(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $email = $this->input->post('email', true);
+        $this->user_model->setUniqueValue($email)->setWhereCondtition()->setUser();
+        echo $this->user_model->newsletter;
+
+        return;
+    }
 }

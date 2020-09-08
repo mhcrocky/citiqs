@@ -152,7 +152,6 @@ function buyerSelectTime(value, containerDivId, inputElementId) {
         div.style.display = 'initial';
         input.disabled = false;
         let times = value.split(' ');
-        console.dir(times);
         $('#' +  inputElementId).timepicker('destroy');
         returnTimePicker(inputElementId, times);
        
@@ -298,7 +297,6 @@ function setNewOrder() {
     if (productsLength) {
         for (i = 0; i < productsLength; i++) {
             let product = products[i];
-            console.dir(product);
             product.innerHTML = (i + 1);
         }
     }
@@ -336,3 +334,25 @@ function updateSessionOrderMainProduct(element) {
 
     sendAjaxPostRequest(post, url, 'updateSessionOrderMainProduct');
 }
+
+function checkUserNewsLetter(emailInputId) {
+    let email = document.getElementById(emailInputId).value;
+    if (email.includes('@')) {
+        let emailParts = email.split('@');
+        if (!emailParts[1].includes('.')) return;
+        let post = {
+            'email' : email
+        }
+        let url = globalVariables.ajax + 'checkUserNewsLetter';
+        sendAjaxPostRequest(post, url, 'checkUserNewsLetter', setNewsletterRadioButtons);
+    }
+}
+
+function setNewsletterRadioButtons(newsLetter) {
+    let newsLetterYes = document.getElementById('newsLetterYes');
+    let newsLetterNo = document.getElementById('newsLetterNo');
+    newsLetterYes.checked = newsLetter
+    newsLetterNo.checked = !newsLetter
+}
+
+checkUserNewsLetter('emailAddressInput');
