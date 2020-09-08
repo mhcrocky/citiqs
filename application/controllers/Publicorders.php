@@ -82,7 +82,7 @@
         private function loadSpotView(array $spot): void
         {
             $this->global['pageTitle'] = 'TIQS : ORDERING';
-            //CHECK IS SPOT OPEN
+            //CHECK IS SPOT OPEN ONLY LOCAL TYPE
             if (
                 intval($spot['spotTypeId']) === $this->config->item('local')
                 && !$this->shopspottime_model->setProperty('spotId', $spot['spotId'])->isOpen()
@@ -269,7 +269,9 @@
 
             set_cookie('userName', $_SESSION['postOrder']['user']['username'], time() + (365 * 24 * 60 * 60));
             set_cookie('email', $_SESSION['postOrder']['user']['email'], time() + (365 * 24 * 60 * 60));
-            set_cookie('mobile', $_SESSION['postOrder']['user']['mobile'], time() + (365 * 24 * 60 * 60));
+            if (!empty($_SESSION['postOrder']['user']['mobile'])) {
+                set_cookie('mobile', $_SESSION['postOrder']['user']['mobile'], time() + (365 * 24 * 60 * 60));
+            }
             redirect('pay_order');
 
             redirect('pay_order');

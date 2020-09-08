@@ -828,6 +828,8 @@
 
         public function returnDelayMinutes(array $productExtendedIds): int
         {
+            if (!empty($productExtendedIds)) return 0;
+
             $query =    'SELECT
                             max(tbl_shop_categories.delayTime) AS minutes
                         FROM

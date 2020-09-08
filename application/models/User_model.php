@@ -774,8 +774,10 @@ class User_model extends CI_Model
         $this->db->from($this->table);
         $this->db->where($this->where);
         $user = $this->db->get()->result_array()[0];
-        foreach ($user as $key => $value) {
-            $this->{$key} = $value;
+        if (!empty($user)) {
+            foreach ($user as $key => $value) {
+                $this->{$key} = $value;
+            }
         }
     }
 
