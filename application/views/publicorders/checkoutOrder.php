@@ -85,18 +85,28 @@
                                         >
                                         <option value="">Select</option>
                                         <?php
-                                            $checkTimeTo = date('Y-m-d H:i:s', strtotime('-' . $delayTime . ' minutes', strtotime(date('Y-m-d H:i:s'))));
-                                            $checkTimeFrom = date('Y-m-d H:i:s', strtotime('+' . $delayTime . ' minutes', strtotime(date('Y-m-d H:i:s'))));
+                                            $now = now();
                                             foreach ($workingTime as $date => $time) {
-                                                foreach ($time as $hours) {                                                    
-                                                    if ($date === date('Y-m-d') && (date($date . ' ' . $hours['timeTo']) < $checkTimeTo)) continue;
-                                                    if ($date === date('Y-m-d') && (date($date . ' ' . $hours['timeFrom']) < $checkTimeFrom)) {
-                                                        $hours['timeFrom'] = date('H:i:s', strtotime($checkTimeFrom));
+                                                foreach ($time as $hours) {
+                                                    // checking time from and time to for current date
+                                                    if ($date === date('Y-m-d', $now)) {
+                                                        $userTimeSubstract = $delayTime + $busyTime;
+
+                                                        // first check time to, is period in past
+                                                        $subtractTime = strtotime($hours['timeTo']) - $userTimeSubstract * 60;
+                                                        $checkTimeTo = date('H:i:s', $subtractTime);
+                                                        if (date('H:i:s', $now) > $checkTimeTo) continue;
+
+                                                        // check time to and set new if needed
+                                                        $checkTimeFrom = date('Y-m-d H:i:s', strtotime('+' . $userTimeSubstract . ' minutes', $now));
+                                                        if (date($date . ' ' . $hours['timeFrom']) < $checkTimeFrom) {
+                                                            $hours['timeFrom'] = date('H:i:s', strtotime($checkTimeFrom));
+                                                        }
                                                     }
                                                     ?>
                                                         <option
                                                             value="<?php echo $date . ' ' . $hours['timeFrom']. ' ' . $hours['timeTo']; ?>"
-                                                            >
+                                                        >
                                                             <?php echo $date . ' (' . $hours['day'] . ') From: ' . $hours['timeFrom'] . ' To: ' . $hours['timeTo'] ?>
                                                         </option>
                                                     <?php

@@ -247,6 +247,7 @@
                         }
                     }
                     $data['delayTime'] = $this->shoporder_model->returnDelayMinutes($extendedIds);
+                    $data['busyTime'] = intval($_SESSION['vendor']['busyTime']);
                 } else {
                     $redirect = 'spot_closed' . DIRECTORY_SEPARATOR  . $_SESSION['spotId'];
                     redirect($redirect);
