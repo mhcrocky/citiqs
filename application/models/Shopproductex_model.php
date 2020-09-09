@@ -422,6 +422,8 @@
                             SEPARATOR "'. $concatGroupSeparator . '"
                     ) AS productDetails',
                     'tbl_shop_products.productImage AS productImage',
+                    'tbl_shop_products.onlyOne AS onlyOne',
+                    'tbl_shop_products.addRemark AS addRemark',
                     'tbl_shop_categories.category',
                     'tbl_shop_categories.id AS categoryId',
                     'tblShopAddons.addons AS addons'

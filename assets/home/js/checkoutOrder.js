@@ -351,8 +351,10 @@ function checkUserNewsLetter(emailInputId) {
 function setNewsletterRadioButtons(newsLetter) {
     let newsLetterYes = document.getElementById('newsLetterYes');
     let newsLetterNo = document.getElementById('newsLetterNo');
-    newsLetterYes.checked = newsLetter
-    newsLetterNo.checked = !newsLetter
+    if (newsLetterYes && newsLetterNo) {
+        newsLetterYes.checked = newsLetter
+        newsLetterNo.checked = !newsLetter
+    }
 }
 
 checkUserNewsLetter('emailAddressInput');
