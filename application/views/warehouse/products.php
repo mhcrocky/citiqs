@@ -97,11 +97,33 @@
                                                 id="printerId<?php echo $printer['id']; ?>"
                                                 name="productPrinters[]"
                                                 value="<?php echo $printer['id']; ?>"
-                                                />
-                                            <?php echo $printer['printer']; ?> (<?php echo $printer['active'] === '1' ? 'active' : 'blocked'; ?>)
+                                            />
+                                            &nbsp;&nbsp;<?php echo $printer['printer']; ?> (<?php echo $printer['active'] === '1' ? 'active' : 'blocked'; ?>)
                                         </label>
                                     </div>
                                 <?php } ?>                             
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <label>Only one (for main type): </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="product[onlyOne]" value="1" checked />
+                                    &nbsp;&nbsp;Yes
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="product[onlyOne]" value="0" />
+                                    &nbsp;&nbsp;No
+                                </label>
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <label>Add remark (for main type): </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="product[addRemark]" value="1" />
+                                    &nbsp;&nbsp;Yes
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="product[addRemark]" value="0" checked />
+                                    &nbsp;&nbsp;No
+                                </label>
                             </div>
                             <legend>Select product types</legend>
                             <?php foreach ($productTypes as $type) { ?>
@@ -568,16 +590,36 @@
                                                                 <?php
                                                                     if (isset($printerIds) && in_array($printer['id'], $printerIds)  && !is_null($product['printers'])) echo 'checked';
                                                                 ?>
-                                                                />
-                                                            <?php echo $printer['printer']; ?> (<?php echo $printer['active'] === '1' ? 'active' : 'blocked'; ?>)
+                                                            />
+                                                            &nbsp;&nbsp;<?php echo $printer['printer']; ?> (<?php echo $printer['active'] === '1' ? 'active' : 'blocked'; ?>)
                                                         </label>
                                                 <?php } ?>
                                             </div>
 
-                                            <!-- <div class="col-md-6 col-sm-12"> 
-                                                <label>Available on spot(s)</label>
-                                                <?php #echo $formSpotData; ?>
-                                            </div> -->
+                                            <?php if ($isMain) { ?>
+                                                <div class="col-lg-4 col-sm-12">
+                                                    <label>Only one</label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="product[onlyOne]" value="1" <?php if ($product['onlyOne'] === '1') echo  'checked'; ?> />
+                                                        &nbsp;&nbsp;Yes
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="product[onlyOne]" value="0" <?php if ($product['onlyOne'] === '0') echo  'checked'; ?> />
+                                                        &nbsp;&nbsp;No
+                                                    </label>
+                                                </div>
+                                            <?php } ?>
+                                            <div class="col-lg-4 col-sm-12">
+                                                <label>Add remark</label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="product[addRemark]" value="1" <?php if ($product['addRemark'] === '1') echo  'checked'; ?> />
+                                                    &nbsp;&nbsp;Yes
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="product[addRemark]" value="0" <?php if ($product['addRemark'] === '0') echo  'checked'; ?> />
+                                                    &nbsp;&nbsp;No
+                                                </label>
+                                            </div>
                                             <legend style="text-align:left;">Select product types</legend>
                                             <?php
                                                 foreach ($productTypes as $type) {

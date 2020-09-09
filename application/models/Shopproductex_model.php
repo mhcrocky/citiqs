@@ -135,6 +135,8 @@
                 'tbl_shop_products.dateTimeFrom AS dateTimeFrom',
                 'tbl_shop_products.dateTimeTo AS dateTimeTo',
                 'tbl_shop_products.orderNo AS orderNo',
+                'tbl_shop_products.onlyOne AS onlyOne',
+                'tbl_shop_products.addRemark AS addRemark',
                 'tbl_shop_categories.category',
                 'tbl_shop_categories.id AS categoryId',
                 'tbl_shop_categories.active AS categoryActive',
