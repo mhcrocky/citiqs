@@ -121,7 +121,7 @@ function populateTable(data) {
             var title = $(this).text();
             $(this).html('<input type="text" style="width:100px" />');
         });
-    
+
         $('#ordersList').DataTable({
             data: data,
             order: [[0, 'desc' ]],
@@ -161,6 +161,11 @@ function populateTable(data) {
                     "data": function (row, type, val, meta) {
                         return showPhoneNumber(row);
                     }
+                },
+                {
+                    "targets": 9,
+                    "visible": orderGlobals.getRemarks,
+                    "searchable": orderGlobals.getRemarks,
                 },
                 {
                     "targets": 10,

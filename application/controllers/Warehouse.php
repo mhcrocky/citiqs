@@ -17,7 +17,6 @@
             $this->load->helper('utility_helper');
             $this->load->helper('uploadfile_helper');
 
-            // $this->load->model('user_subscription_model');
             $this->load->model('shopcategory_model');
             $this->load->model('shopproduct_model');
             $this->load->model('shopproductex_model');
@@ -32,8 +31,7 @@
             $this->load->model('shopproductaddons_model');
             $this->load->model('shopspottype_model');
             $this->load->model('shopspottime_model');
-
-
+            $this->load->model('shopvendor_model');
 
             $this->load->library('language', array('controller' => $this->router->class));
             $this->load->library('session');
@@ -452,6 +450,7 @@
         public function orders(): void
         {
             $this->global['pageTitle'] = 'TIQS : ORDERS';
+            $userId = intval($_SESSION['userId']);
 
             $data = [
                 'orderStatuses' => $this->config->item('orderStatuses'),
@@ -459,11 +458,13 @@
                 'printers'      => $this->shopprinters_model->readImproved([
                                         'what' => ['id', 'printer'],
                                         'where' => [
-                                            'userId' => $_SESSION['userId'],
+                                            'userId' => $userId,
                                         ]
                                     ]),
-                'ordersStatuses'  => $this->config->item('orderStatuses')
+                'ordersStatuses'  => $this->config->item('orderStatuses'),
+                'getRemarks'    => $this->shopvendor_model->setProperty('vendorId', $userId)->getProperty('requireRemarks')
             ];
+
             $this->loadViews('warehouse/orders', $this->global, $data, null, 'headerWarehouse');
         }
 

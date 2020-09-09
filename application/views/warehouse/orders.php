@@ -69,10 +69,12 @@
 </main>
 <script>
     var orderGlobals = (function(){
+        let getRemarks = '<?php echo $getRemarks; ?>' === '1' ? true : false;
         let globals = {
             'orderStatuses' : JSON.parse('<?php echo json_encode($orderStatuses) ?>'),
             'tableId' : 'orders',
-            'vendorName' : '<?php echo $vendor; ?>'
+            'vendorName' : '<?php echo $vendor; ?>',
+            'getRemarks' : getRemarks,
         }
         Object.freeze(globals);
         return globals;

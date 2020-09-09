@@ -253,4 +253,23 @@
                 $this->shopvendortypes_model->setObjectFromArray($insert)->create();
             }
         }
+
+        public function getProperty(string $property): ?string
+        {
+            if ($this->id) {
+                $where = ['id=' => $this->id];
+            } elseif ($this->vendorId) {
+                $where = ['vendorId=' => $this->vendorId];
+            } else {
+                return null;
+            }
+
+            $result = $this->readImproved([
+                'what' => [$property],
+                'where' => $where
+            ]);
+
+            if (empty($result)) return null;
+            return $result[0][$property];
+        }
     }
