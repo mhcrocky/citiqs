@@ -48,6 +48,19 @@
                             <!-- end item list -->
                         </div>
                     <?php } ?>
+                    <?php if (isset($termsAndConditions) && $termsAndConditions) { ?>
+                        <div class="shop__items">
+                            <div class="shop__item-list-heading">
+                                <h2>TERMS AND CONDITIONS</h2>
+                            </div>
+                            <div class="shop__item-list">
+                                <p style="padding-left:10px">
+                                    <?php echo $termsAndConditions; ?>
+                                </p>
+                            </div>
+                            <!-- end item list -->
+                        </div>
+                    <?php } ?>
                 </div>
                 <!-- end slider -->
             </div>
