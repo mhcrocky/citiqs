@@ -24,6 +24,8 @@
         public $requireReservation;
         public $preferredView;
         public $busyTime;
+        public $requireRemarks;
+        public $requireNewsletter;
 
         public $bancontact;
         public $ideal;
@@ -86,6 +88,8 @@
             if (isset($data['postPaid']) && !Validate_data_helper::validateString($data['postPaid'])) return false;
             if (isset($data['preferredView']) && !Validate_data_helper::validateInteger($data['preferredView'])) return false;
             if (isset($data['busyTime']) && !Validate_data_helper::validateInteger($data['busyTime'])) return false;
+            if (isset($data['requireRemarks']) && !($data['requireRemarks'] === '1' || $data['requireRemarks'] === '0')) return false;
+            if (isset($data['requireNewsletter']) && !($data['requireNewsletter'] === '1' || $data['requireNewsletter'] === '0')) return false;
 
             return true;
         }
@@ -115,6 +119,8 @@
                     $this->table . '.postPaid',
                     $this->table . '.preferredView',
                     $this->table . '.busyTime',
+                    $this->table . '.requireRemarks',
+                    $this->table . '.requireNewsletter',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',

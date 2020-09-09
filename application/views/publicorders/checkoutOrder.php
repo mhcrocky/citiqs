@@ -76,21 +76,25 @@
                             </div>
                         </div>
                     <?php } ?>
+                    <?php if ($vendor['requireRemarks'] === '1') { ?>
                     <div class="form-group col-sm-12">
                         <label for="notesInput">Remarks</label>
                         <textarea id="notesInput" class="form-control" name="order[remarks]" rows="3" maxlength="250"></textarea>
                     </div>
-                    <div class="form-group col-sm-12">
-                        <label>Recive our newsletter</label>
-                        <label class="radio-inline" for="newsLetterYes">
-                            <input type="radio" id="newsLetterYes" name="user[newsletter]" value="1" />
-                            Yes
-                        </label>
-                        <label class="radio-inline" for="newsLetterNo">
-                            <input type="radio" id="newsLetterNo" name="user[newsletter]"  value="0" checked />
-                            No
-                        </label>
-                    </div>
+                    <?php } ?>
+                    <?php if ($vendor['requireNewsletter'] === '1') { ?>
+                        <div class="form-group col-sm-12">
+                            <label>Recive our newsletter</label>
+                            <label class="radio-inline" for="newsLetterYes">
+                                <input type="radio" id="newsLetterYes" name="user[newsletter]" value="1" />
+                                Yes
+                            </label>
+                            <label class="radio-inline" for="newsLetterNo">
+                                <input type="radio" id="newsLetterNo" name="user[newsletter]"  value="0" checked />
+                                No
+                            </label>
+                        </div>
+                    <?php } ?>
                     <?php
                         if (isset($workingTime)) {
                             ?>
@@ -143,9 +147,7 @@
                         <?php
                         }
                     ?>
-
                 </div>
-
                 <div class="checkout-btns">
                     <a href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spotId; ?>" style="background-color: #948b6f" class="button">
                         <i class="fa fa-arrow-left"></i>
