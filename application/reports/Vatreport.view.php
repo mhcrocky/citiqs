@@ -76,6 +76,7 @@
 						"dataSource"=>$this->dataStore("VATcategory")->sort(array(
 							"productQuantity"=>"desc"
 						)),
+						"responsive"=>true,
 						"showFooter"=>"bottom",
 						"width"=>"600px",
 						"cssClass"=>array(
@@ -156,11 +157,11 @@
 
 		<div class="col-half background-apricot height" style="text-align:left; font-size: smaller" >
 				<div class="align-top width-650" style="margin-bottom: 30px">
-					<div class="report-content" style=" margin-left: -10px; margin-top: 30px">
+					<div class="report-content" style=" margin-left: -10px;">
 						<?php
 						DataTables::create(array(
 							"dataSource"=>$this->dataStore("VATcategorypervatcode"),
-
+							 "responsive"=>true,
 							"showFooter"=>"bottom",
 							"width"=>"600px",
 							"cssClass"=>array(
@@ -249,12 +250,10 @@
 					</div>
 				</div>
 			<div class="align-top width-650" style="margin-bottom: 30px">
-
-
 				<div class="report-content" style=" margin-left: -10px; ">
 					<?php
 					DataTables::create(array(
-						"dataSource"=>$this->dataStore("VATrecords"),
+						"dataSource"=>$this->dataStore("Paymentpertype"),
 						"showFooter"=>"bottom",
 						"width"=>"600px",
 						"cssClass"=>array(
@@ -268,14 +267,17 @@
 							//						"format"=>"Y-m-d H:i:s",
 							//						"displayFormat"=>"d-m-Y"
 							//					),
-							"productVat"=>array(
-								"label"=> "VAT percentage",
-								"type"=>"number",
-								"decimals"=>0,
-								"prefix"=>"% "
+
+//														tbl_shop_orders.paymentType AS paymentType,
+//							SUM(tbl_shop_orders.amount) AS orderTotalAmount,
+//						 	SUM(tbl_shop_orders.serviceFee) AS serviceFeeTotalAmount
+//
+							"paymentType"=>array(
+								"label"=> "PAYMENT TYPE",
+								"type"=>"text"
 							),
 
-							"AMOUNT"=>array(
+							"orderTotalAmount"=>array(
 								"label"=> "INCL",
 								"type"=>"number",
 								"decimals"=>2,
@@ -285,7 +287,7 @@
 								"footer"=>"sum"
 							),
 
-							"EXVAT"=>array(
+							"serviceFeeTotalAmount"=>array(
 								"label"=> "EXCL",
 								"type"=>"number",
 								"decimals"=>2,
@@ -296,25 +298,25 @@
 
 							),
 
-							"VAT"=>array(
-								"label"=> "V.A.T",
-								"type"=>"number",
-								"decimals"=>2,
-								"decimalPoint"=>",",        // Decimal point character
-								"thousand_sep"=>".",  // Thousand separator
-								"prefix"=>"€ ",
-								"footer"=>"sum"
-							),
+//							"VAT"=>array(
+//								"label"=> "V.A.T",
+//								"type"=>"number",
+//								"decimals"=>2,
+//								"decimalPoint"=>",",        // Decimal point character
+//								"thousand_sep"=>".",  // Thousand separator
+//								"prefix"=>"€ ",
+//								"footer"=>"sum"
+//							),
 
-								"ORDERID"=>array(
-									"label"=> "ORDERID",
-									"type"=>"number",
+//								"ORDERID"=>array(
+//									"label"=> "ORDERID",
+//									"type"=>"number",
 //									"decimals"=>0,
 //									"decimalPoint"=>",",        // Decimal point character
-									"thousand_sep"=>""  // Thousand separator
+//									"thousand_sep"=>""  // Thousand separator
 //									"prefix"=>"",
 //									"footer"=>""
-								),
+//								),
 
 
 						),
