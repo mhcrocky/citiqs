@@ -177,48 +177,58 @@
                             </div>
                             <div class="modal-body">
                                 <div class="modal__content" id="product_<?php echo $product['productId']; ?>">
-                                    <div class="modal__adittional">
-                                        <h6>Quantity</h6>
-                                        <div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">                                                        
-                                            <label class="form-check-label">                                                
-                                                <?php echo $productDetails['name']; ?>
-                                            </label>
-                                        </div>
-                                        <div
-                                            class="modal-footer__quantity col-lg-4 col-sm-12"
-                                            style="margin-bottom:3px"
-                                            >
-                                            <span
-                                                class='modal-footer__buttons modal-footer__quantity--plus'
-                                                style="margin-right:5px;"
-                                                data-type="minus"
-                                                onclick="changeProductQuayntity(this, 'addonQuantity')"
+                                    <?php if ($product['onlyOne'] === '0') { ?>
+                                        <div class="modal__adittional">
+                                            <h6>Quantity</h6>
+                                            <div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">                                                        
+                                                <label class="form-check-label">                                                
+                                                    <?php echo $productDetails['name']; ?>
+                                                </label>
+                                            </div>
+                                            <div
+                                                class="modal-footer__quantity col-lg-4 col-sm-12"
+                                                style="margin-bottom:3px"
                                                 >
-                                                -
-                                            </span>
-                                            <input
-                                                type="number"
-                                                min="1"
-                                                step="1"
-                                                value="1"
-                                                data-name="<?php echo $productDetails['name']; ?>"
-                                                data-add-product-price="<?php echo $productDetails['price']; ?>"
-                                                data-category="<?php echo $product['category']; ?>"
-                                                data-product-extended-id="<?php echo $productDetails['productExtendedId']; ?>"
-                                                data-product-id="<?php echo $product['productId']; ?>"
-                                                class="form-control checkProduct"
-                                                style="display:inline-block"
-                                                />
-                                            <span
-                                                class='modal-footer__buttons modal-footer__quantity--minus'
-                                                style="margin-left:5px;"
-                                                data-type="plus"
-                                                onclick="changeProductQuayntity(this, 'addonQuantity')"
-                                                >
-                                                +
-                                            </span>
+                                                <span
+                                                    class='modal-footer__buttons modal-footer__quantity--plus'
+                                                    style="margin-right:5px;"
+                                                    data-type="minus"
+                                                    onclick="changeProductQuayntity(this, 'addonQuantity')"
+                                                    >
+                                                    -
+                                                </span>
+                                    <?php } ?>
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        step="1"
+                                        value="1"
+                                        data-name="<?php echo $productDetails['name']; ?>"
+                                        data-add-product-price="<?php echo $productDetails['price']; ?>"
+                                        data-category="<?php echo $product['category']; ?>"
+                                        data-product-extended-id="<?php echo $productDetails['productExtendedId']; ?>"
+                                        data-product-id="<?php echo $product['productId']; ?>"
+                                        data-only-one="<?php echo $product['onlyOne']; ?>"
+                                        <?php if ($product['onlyOne'] === '0') { ?>
+                                            class="form-control checkProduct"
+                                            style="display:inline-block"
+                                        <?php } elseif ($product['onlyOne'] === '1') { ?>
+                                            readonly
+                                            hidden
+                                        <?php } ?>
+                                    />
+                                    <?php if ($product['onlyOne'] === '0') { ?>
+                                                <span
+                                                    class='modal-footer__buttons modal-footer__quantity--minus'
+                                                    style="margin-left:5px;"
+                                                    data-type="plus"
+                                                    onclick="changeProductQuayntity(this, 'addonQuantity')"
+                                                    >
+                                                    +
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>                                
+                                    <?php } ?>
                                     <?php if ($product['addons']) { ?>
                                         <div class="modal__adittional">
                                             <h6>Additional</h6>

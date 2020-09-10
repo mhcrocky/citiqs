@@ -253,26 +253,29 @@
                     $productExtendedId = array_keys($product)[0];
                     $product = reset($product);
                     $randomId = 'product_' . $product['productId'] . '_' . $count;
-
-                    $checkoutList .= '<div id="' . $randomId . '" class="orderedProducts" style="margin-bottom: 30px; padding-left: 0px; display: initial;">';
+                    $onlyOne = ($product['onlyOne'] === '1') ? true : false;
+                    $checkoutList .= '<div id="' . $randomId . '" class="orderedProducts" style="padding-left: 0px; position:relative; top:20px">';
                     $checkoutList .=    '<div class="alert alert-dismissible" style="padding-left: 0px; margin-bottom: 10px;">';
                     $checkoutList .=        '<a href="#" onclick="removeOrdered(\'' . $randomId . '\')" class="close" data-dismiss="alert" aria-label="close">×</a>';
                     $checkoutList .=        '<h4>' . $product['name'] . ' (€' . $product['price'] . ')</h4>';
                     $checkoutList .=    '</div>';
                     $checkoutList .=    '<div class="modal__content">';
-                    $checkoutList .=        '<div class="modal__adittional">';
-                    $checkoutList .=            '<h6>Quantity</h6>';
-                    $checkoutList .=            '<div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">';
-                    $checkoutList .=                '<label class="form-check-label">' . $product['name'] . '</label>';
-                    $checkoutList .=            '</div>';
-                    $checkoutList .=            '<div class="modal-footer__quantity col-lg-4 col-sm-12" style="margin-bottom:3px">';
-                    $checkoutList .=                '<span 
-                                                        class="modal-footer__buttons modal-footer__quantity--plus" 
-                                                        style="margin-right:5px;" 
-                                                        data-type="minus"
-                                                        onclick="changeProductQuayntity(this, \'addonQuantity\')">';
-                    $checkoutList .=                ' -';
-                    $checkoutList .=                '</span>';
+                    if (!$onlyOne) {
+                        $checkoutList .=        '<div class="modal__adittional">';
+                        $checkoutList .=            '<h6>Quantity</h6>';
+                        $checkoutList .=            '<div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">';
+                        $checkoutList .=                '<label class="form-check-label">' . $product['name'] . '</label>';
+                        $checkoutList .=            '</div>';
+                        $checkoutList .=            '<div class="modal-footer__quantity col-lg-4 col-sm-12" style="margin-bottom:3px">';
+                        $checkoutList .=                '<span 
+                                                            class="modal-footer__buttons modal-footer__quantity--plus" 
+                                                            style="margin-right:5px;" 
+                                                            data-type="minus"
+                                                            onclick="changeProductQuayntity(this, \'addonQuantity\')">';
+                        $checkoutList .=                ' -';
+                        $checkoutList .=                '</span>';
+                    }
+
                     $checkoutList .=                '<input
                                                         type="number"
                                                         min="1"
@@ -280,22 +283,29 @@
                                                         value="' . $product['quantity'] . '"
                                                         data-name="' . $product['name'] . '"
                                                         data-add-product-price="' . $product['price'] . '"
+                                                        data-only-one="' . $product['onlyOne'] . '"
                                                         data-category="' . $product['category'] . '"
                                                         data-product-extended-id="' . $productExtendedId . '"
-                                                        data-product-id="' . $product['productId'] . '"
-                                                        class="form-control checkProduct"
-                                                        style="display:inline-block"
-                                                    />';
-                    $checkoutList .=                '<span
-                                                        class="modal-footer__buttons modal-footer__quantity--minus"
-                                                        style="margin-left:5px;"
-                                                        data-type="plus"
-                                                        onclick="changeProductQuayntity(this, \'addonQuantity\')"
-                                                    >';
-                    $checkoutList .=                ' +';
-                    $checkoutList .=                '</span>';
-                    $checkoutList .=            '</div>';
-                    $checkoutList .=        '</div>';
+                                                        data-product-id="' . $product['productId'] . '" ';
+                    if (!$onlyOne) {                                    
+                        $checkoutList .=                    'class="form-control checkProduct" style="display:inline-block"';
+                    } else {
+                        $checkoutList .=                    'readonly hidden';
+                    }
+                    $checkoutList .=                '/>';
+
+                    if (!$onlyOne) {
+                        $checkoutList .=                '<span
+                                                            class="modal-footer__buttons modal-footer__quantity--minus"
+                                                            style="margin-left:5px;"
+                                                            data-type="plus"
+                                                            onclick="changeProductQuayntity(this, \'addonQuantity\')"
+                                                        >';
+                        $checkoutList .=                ' +';
+                        $checkoutList .=                '</span>';
+                        $checkoutList .=            '</div>';
+                        $checkoutList .=        '</div>';
+                    }
 
                     if (isset($product['addons'])) {
                         $checkoutList .=        '<div class="modal__adittional">';
@@ -353,7 +363,7 @@
                     }
 
                     $checkoutList .=    '</div>';
-                    $checkoutList .= '</div>';  
+                    $checkoutList .= '</div>'; 
         
                     $price += floatval($product['amount']);
                     $addonsArray = [];

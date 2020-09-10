@@ -166,6 +166,7 @@
             $whereIn = [];
             $pagination = Utility_helper::getPaginationLinks(count($productNames), $perPage, 'products');
 
+            // filter productes ny name(s)
             if (!empty($_POST)) {
                 $post = $this->input->post(null, true);
                 $whereIn = [

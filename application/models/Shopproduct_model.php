@@ -18,6 +18,8 @@
         public $dateTimeFrom;
         public $dateTimeTo;
         public $orderNo;
+        public $onlyOne;
+        public $addRemark;
 
         private $table = 'tbl_shop_products';
 
@@ -65,6 +67,8 @@
             if (isset($data['dateTimeTo']) && !Validate_data_helper::validateDate($data['dateTimeTo'])) return false;
             if (isset($data['orderNo']) && !Validate_data_helper::validateInteger($data['orderNo'])) return false;
             if (isset($data['productImage']) && !Validate_data_helper::validateString($data['productImage'])) return false;
+            if (isset($data['onlyOne']) && !($data['onlyOne'] === '1' || $data['onlyOne'] === '0')) return false;
+            if (isset($data['addRemark']) && !($data['addRemark'] === '1' || $data['addRemark'] === '0')) return false;
 
             return true;
         }

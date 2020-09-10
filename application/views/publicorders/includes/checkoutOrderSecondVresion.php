@@ -51,13 +51,27 @@
                             </div>
                             <div class='checkout-table__numbers'>
                                 <div class="checkout-table__quantity">
-                                    <span class="fa-stack makeOrder" onclick='changeQuantityAndPriceById("<?php echo $mainProductId; ?>", "+")'>
+                                    <span
+                                        class="fa-stack makeOrder"
+                                        <?php if ($product['onlyOne'] === '0') { ?>
+                                            onclick='changeQuantityAndPriceById("<?php echo $mainProductId; ?>", "+")'
+                                        <?php } elseif ($product['onlyOne'] === '1') { ?>
+                                            style="visibility: hidden;"
+                                        <?php } ?>
+                                    >
                                         <i class="fa fa-plus"></i>
                                     </span>
                                     <span class='checkout-table__number-of-products' id="quantity_<?php echo $countInputs; ?>">
                                         <?php echo $product['quantity']; ?>
                                     </span>
-                                    <span class="fa-stack makeOrder" onclick='changeQuantityAndPriceById("<?php echo $mainProductId; ?>", "-")'>
+                                    <span
+                                        class="fa-stack makeOrder"
+                                        <?php if ($product['onlyOne'] === '0') { ?>
+                                            onclick='changeQuantityAndPriceById("<?php echo $mainProductId; ?>", "-")'
+                                        <?php } elseif ($product['onlyOne'] === '1') { ?>
+                                            style="visibility: hidden;"
+                                        <?php } ?>
+                                    >
                                         <i class="fa fa-minus"></i>
                                     </span>
                                     <?php
@@ -79,6 +93,9 @@
                                         value="<?php echo $product['quantity']; ?>"
                                         required
                                         hidden
+                                        <?php if ($product['onlyOne'] === '1') { ?>
+                                            readonly
+                                        <?php } ?>
                                     />
                                 </div>
                                 <div class="checkout-table__price">
@@ -117,15 +134,13 @@
                                         </div>
                                         <div class='checkout-table__numbers'>
                                             <div class="checkout-table__quantity">
-                                                <span class="fa-stack makeOrder" onclick='changeQuantityAndPriceById("input_quantity_<?php echo $countInputs; ?>", "+")'
-                                                >
+                                                <span class="fa-stack makeOrder" onclick='changeQuantityAndPriceById("input_quantity_<?php echo $countInputs; ?>", "+")'                                                >
                                                     <i class="fa fa-plus"></i>
                                                 </span>
                                                 <span class='checkout-table__number-of-products' id="quantity_<?php echo $countInputs; ?>">
                                                     <?php echo $addon['quantity']; ?>
                                                 </span>
-                                                <span class="fa-stack makeOrder" onclick='changeQuantityAndPriceById("input_quantity_<?php echo $countInputs; ?>", "-")'
-                                                >
+                                                <span class="fa-stack makeOrder" onclick='changeQuantityAndPriceById("input_quantity_<?php echo $countInputs; ?>", "-")'                                                >
                                                     <i class="fa fa-minus"></i>
                                                 </span>
                                                 <input
