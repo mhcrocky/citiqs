@@ -164,16 +164,16 @@ function populateTable(data) {
                 },
                 {
                     "targets": 9,
-                    "visible": orderGlobals.getRemarks,
-                    "searchable": orderGlobals.getRemarks,
-                },
-                {
-                    "targets": 10,
                     "data": function (row, type, val, meta) {
                         return sendSmsButton(row);
                     },
                     "width": "10%"
-                }            
+                },
+                // {
+                //     "targets": 13,
+                //     "visible": orderGlobals.getRemarks,
+                //     "searchable": orderGlobals.getRemarks,
+                // }
             ],
             initComplete: function () {
                 this.api().columns().every( function () {

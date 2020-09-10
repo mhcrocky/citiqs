@@ -42,8 +42,8 @@
                     <th>Buyer</th>
                     <th>Buyer Email</th>
                     <th>Buyer Mobile</th>
-                    <th>Remarks</th>
                     <th>Send Buyer Sms</th>
+                    <!-- <th>Remarks</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -60,8 +60,8 @@
                     <th>Buyer</th>
                     <th>Buyer Email</th>
                     <th>Buyer Mobile</th>
-                    <th>Remarks</th>
                     <th>Send Buyer Sms</th>
+                    <!-- <th>Remarks</th> -->
                 </tr>
             </tfoot>
         </table>
