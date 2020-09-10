@@ -9,7 +9,7 @@
 						<div class="flex-column align-space">
 							<div class="form-group has-feedback">
 								<p style="font-family: caption-light; padding: 10px">
-									<?=$this->language->line("PROF-V020A",'FULL NAME');?>
+									<?=$this->language->line("PROF-V1V020A",'BUSINESS NAME');?>
 								</p>
 								<div class="form-group has-feedback">
 									<input  value="<?php echo $user->username; ?>" name="username" required type="text" class="form-control" id="fname" style="border-radius: 50px; border:none" placeholder="<?php echo $name; ?>" maxlength="128" />
@@ -18,7 +18,7 @@
 							<?php if ($user->IsDropOffPoint === '1') { ?>
 								<div>
 									<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin-bottom:10px; text-align: center">
-										<?=$this->language->Line("registerbusiness-V1600A",'YOUR SHORTNAME');?>
+										<?=$this->language->Line("registerbusiness-V1V1600A",'SHORTNAME');?>
 									</p>
 								</div>
 								<div class="form-group has-feedback">
@@ -40,7 +40,7 @@
 									<p style="font-family: caption-light; padding: 10px">Business type</p>
 									<div class="selectWrapper mb-35">
 										<select class="selectBox" name="business_type_id" style="font-family:'caption-light';" required>
-											<option value=""><?=$this->language->Line("registerbusiness-V1600A1","SELECT BUSINESS TYPE");?></option>
+											<option value=""><?=$this->language->Line("registerbusiness-V1V1600A1","SELECT BUSINESS TYPE");?></option>
 											<?php foreach ($businessTypes as $type) { ?>
 												<option <?php if($type['id'] === $user->business_type_id) echo 'selected'; ?> value="<?php echo $type['id'] ?>">
 													<?php echo $this->language->Line(ucfirst($type['busineess_type']),ucfirst($type['busineess_type'])) ?>
@@ -140,8 +140,8 @@
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-10303021","
-										Country
+										<?=$this->language->line("PROF-V110303021","
+										COUNTRY
 										"); ?>
 									</p>
 									<div class="form-group has-feedback selectWrapper mb-35">

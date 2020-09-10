@@ -136,8 +136,8 @@
                                         <?php } ?>
 										<?php if ($vendor['payconiq'] === '1') { ?>
 											<a href="<?php echo base_url(); ?>insertorder/<?php echo $payconiqPaymentType; ?>/0" class="paymentMethod method-card" >
-												<img src="https://tiqs.com/qrzvafood/assets/imgs/extra/payconiq.png" alt="Creditcard">
-												<span data-trans="" data-trn-key="Creditcard">Creditcard</span>
+												<img src="https://tiqs.com/qrzvafood/assets/imgs/extra/payconiq.png" alt="Payconiq">
+												<span data-trans="" data-trn-key="Payconiq">Payconiq</span>
 											</a>
 										<?php } ?>
                                         <?php if ($vendor['bancontact'] === '1') { ?>

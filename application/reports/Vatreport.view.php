@@ -156,8 +156,6 @@
 
 		<div class="col-half background-apricot height" style="text-align:left; font-size: smaller" >
 				<div class="align-top width-650" style="margin-bottom: 30px">
-
-
 					<div class="report-content" style=" margin-left: -10px; margin-top: 30px">
 						<?php
 						DataTables::create(array(
@@ -184,8 +182,8 @@
 									"prefix"=>"% "
 								),
 
-								"totalvatamount"=>array(
-									"label"=> "VAT",
+								"AMOUNT"=>array(
+									"label"=> "INCL",
 									"type"=>"number",
 									"decimals"=>2,
 									"decimalPoint"=>",",        // Decimal point character
@@ -194,8 +192,8 @@
 									"footer"=>"sum"
 								),
 
-								"orderAmount"=>array(
-									"label"=> "AMOUNT",
+								"EXVAT"=>array(
+									"label"=> "EXCL",
 									"type"=>"number",
 									"decimals"=>2,
 									"decimalPoint"=>",",        // Decimal point character
@@ -205,8 +203,8 @@
 
 								),
 
-								"servicefee"=>array(
-									"label"=> "SERVICEFEE",
+								"VAT"=>array(
+									"label"=> "V.A.T",
 									"type"=>"number",
 									"decimals"=>2,
 									"decimalPoint"=>",",        // Decimal point character
@@ -215,15 +213,15 @@
 									"footer"=>"sum"
 								),
 
-								"totalamount"=>array(
-									"label"=> "TOTAL",
-									"type"=>"number",
-									"decimals"=>2,
-									"decimalPoint"=>",",        // Decimal point character
-									"thousand_sep"=>".",  // Thousand separator
-									"prefix"=>"€ ",
-									"footer"=>"sum"
-								),
+//								"totalamount"=>array(
+//									"label"=> "TOTAL",
+//									"type"=>"number",
+//									"decimals"=>2,
+//									"decimalPoint"=>",",        // Decimal point character
+//									"thousand_sep"=>".",  // Thousand separator
+//									"prefix"=>"€ ",
+//									"footer"=>"sum"
+//								),
 
 
 							),
@@ -251,6 +249,102 @@
 						?>
 					</div>
 				</div>
+			<div class="align-top width-650" style="margin-bottom: 30px">
+
+
+				<div class="report-content" style=" margin-left: -10px; ">
+					<?php
+					DataTables::create(array(
+						"dataSource"=>$this->dataStore("VATrecords")->sort(array(
+							"productQuantity"=>"desc"
+						)),
+						"showFooter"=>"bottom",
+						"width"=>"600px",
+						"cssClass"=>array(
+							"table"=>"dt-responsive table table-striped table-bordered",
+						),
+						"columns"=>array(
+
+							//					"createdAt"=>array(
+							//						"label"=> "DAY",
+							//						"type"=>"datetime",
+							//						"format"=>"Y-m-d H:i:s",
+							//						"displayFormat"=>"d-m-Y"
+							//					),
+							"productVat"=>array(
+								"label"=> "VAT percentage",
+								"type"=>"number",
+								"decimals"=>0,
+								"prefix"=>"% "
+							),
+
+							"AMOUNT"=>array(
+								"label"=> "INCL",
+								"type"=>"number",
+								"decimals"=>2,
+								"decimalPoint"=>",",        // Decimal point character
+								"thousand_sep"=>".",  // Thousand separator
+								"prefix"=>"€ ",
+								"footer"=>"sum"
+							),
+
+							"EXVAT"=>array(
+								"label"=> "EXCL",
+								"type"=>"number",
+								"decimals"=>2,
+								"decimalPoint"=>",",        // Decimal point character
+								"thousand_sep"=>".",  // Thousand separator
+								"prefix"=>"€ ",
+								"footer"=>"sum"
+
+							),
+
+							"VAT"=>array(
+								"label"=> "V.A.T",
+								"type"=>"number",
+								"decimals"=>2,
+								"decimalPoint"=>",",        // Decimal point character
+								"thousand_sep"=>".",  // Thousand separator
+								"prefix"=>"€ ",
+								"footer"=>"sum"
+							),
+
+								"ORDERID"=>array(
+									"label"=> "ORDERID",
+									"type"=>"number",
+//									"decimals"=>0,
+//									"decimalPoint"=>",",        // Decimal point character
+									"thousand_sep"=>""  // Thousand separator
+//									"prefix"=>"",
+//									"footer"=>""
+								),
+
+
+						),
+
+						"options"=>array(
+							"order"=>array(
+								array(0,"asc") //Sort by second column asc
+							),
+							"searching"=>true,
+							"colReorder"=>true,
+							"pagingType"=>array("simple"),
+							"language"=>array("paginate"=>array("first"=>'«',
+								"previous"=>'‹',
+								"next"=>'›',
+								"last"=>'»'
+							)),
+							"paging"=>true,
+							"columnDefs"=>array(
+								array("width"=> "50px", "targets"=>"1" )
+							)
+						),
+
+
+					));
+					?>
+				</div>
+			</div>
 				<!--		</form>-->
 		</div>
 	</div>

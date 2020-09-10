@@ -56,6 +56,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 /*********** USER DEFINED ROUTES *******************/
 
+$route['emaildesigner/new'] = "emaildesigner/edit";
 
 $route['thuishaven'] = "thuishavensoldout";
 $route['places'] = "places";

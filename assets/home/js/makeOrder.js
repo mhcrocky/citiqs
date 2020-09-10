@@ -85,7 +85,7 @@ function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, 
         nameElement.disabled = false;
         // descriptionElement.disabled = false;
         priceElement.disabled = false;
-        document.getElementById('home').style.display = "none";
+        // document.getElementById('home').style.display = "none";
     } else {
         amountElement.disabled = true;
         quantityElement.disabled = true;
@@ -93,7 +93,7 @@ function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, 
         nameElement.disabled = true;
         // descriptionElement.disabled = true;
         priceElement.disabled = true;
-        document.getElementById('home').style.display = "initial";
+        // document.getElementById('home').style.display = "initial";
     }
 
     return;

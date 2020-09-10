@@ -298,7 +298,8 @@
                 'creditCardPaymentType' => $this->config->item('creditCardPaymentType'),
                 'bancontactPaymentType' => $this->config->item('bancontactPaymentType'),
                 'giroPaymentType' => $this->config->item('giroPaymentType'),
-                'localType' => $this->config->item('local'),
+				'payconiqPaymentType' => $this->config->item('payconiqPaymentType'),
+				'localType' => $this->config->item('local'),
                 'oldMakeOrderView' => $this->config->item('oldMakeOrderView'),
                 'newMakeOrderView' => $this->config->item('newMakeOrderView'),
             ];
