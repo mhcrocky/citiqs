@@ -159,9 +159,8 @@
 					<div class="report-content" style=" margin-left: -10px; margin-top: 30px">
 						<?php
 						DataTables::create(array(
-							"dataSource"=>$this->dataStore("VATcategorypervatcode")->sort(array(
-								"productQuantity"=>"desc"
-							)),
+							"dataSource"=>$this->dataStore("VATcategorypervatcode"),
+
 							"showFooter"=>"bottom",
 							"width"=>"600px",
 							"cssClass"=>array(
@@ -255,9 +254,7 @@
 				<div class="report-content" style=" margin-left: -10px; ">
 					<?php
 					DataTables::create(array(
-						"dataSource"=>$this->dataStore("VATrecords")->sort(array(
-							"productQuantity"=>"desc"
-						)),
+						"dataSource"=>$this->dataStore("VATrecords"),
 						"showFooter"=>"bottom",
 						"width"=>"600px",
 						"cssClass"=>array(
