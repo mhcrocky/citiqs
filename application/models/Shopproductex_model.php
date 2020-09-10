@@ -210,7 +210,7 @@
                             tbl_shop_products ON tbl_shop_products.id = ' . $this->table . '.productId
                         INNER JOIN
                             tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
-                        ' . $typeCondition . '
+                        ' . $typeCondition . ' AND tbl_shop_categories.userId = ' . $userId . '
                         GROUP BY ' . $this->table. '.productId
                         ORDER BY ' . $this->table. '.productTypeId DESC
                         
@@ -465,7 +465,8 @@
                                     \'' .  $concatSeparator . '\',' . $this->table . '.productId,
                                     \'' .  $concatSeparator . '\', tbl_shop_categories.category,
                                     \'' .  $concatSeparator . '\', tbl_shop_products.active,
-                                    \'' .  $concatSeparator . '\', IF(CHAR_LENGTH(' . $this->table . '.longDescription) > 0, ' . $this->table . '.longDescription, "")
+                                    \'' .  $concatSeparator . '\', IF(CHAR_LENGTH(' . $this->table . '.longDescription) > 0, ' . $this->table . '.longDescription, ""),
+                                    \'' .  $concatSeparator . '\', tbl_shop_products.addRemark
                                     ORDER BY ' . $this->table. '.id DESC
                                     SEPARATOR "'. $concatGroupSeparator . '"
                                 ) AS productDetails
@@ -477,6 +478,8 @@
                                 tbl_shop_products ON tbl_shop_products.id = ' . $this->table . '.productId
                             INNER JOIN
                                 tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+                            WHERE
+                                tbl_shop_categories.userId = ' . $userId . '
                             GROUP BY ' . $this->table. '.productId
                             ORDER BY ' . $this->table. '.productTypeId DESC
                         ) tblShopProductDetails',
@@ -571,6 +574,7 @@
                     'category'              => $details[11],
                     'activeStatus'          => $details[12],
                     'longDescription'       => $details[13],
+                    'addRemark'       => $details[14],
                 ];
                 if ($collect['productTypeIsMain'] === '0') {
                     array_push($addons, $collect);
