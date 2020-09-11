@@ -299,7 +299,7 @@ function checkout() {
         };
 
         if (product.dataset.remarkId !== '0') {
-            let productRemark = document.querySelectorAll('#' + orderedItem.id + ' [data-product-remark-id=' + product.dataset.remarkId + ']')[0].value;
+            let productRemark = document.querySelectorAll('#' + orderedItem.id + ' [data-product-remark-id="' + product.dataset.remarkId + '"]')[0].value;
             post[i][product.dataset.productExtendedId]['remark'] = productRemark;
         }
 
@@ -321,7 +321,7 @@ function checkout() {
                         'initialMaxQuantity' : addon.dataset.initialMaxQuantity,
                     }
                     if (addon.dataset.remarkId !== '0') {
-                        let addonRemark = document.querySelectorAll('#' + orderedItem.id + ' [data-addon-remark-id=' + addon.dataset.remarkId + ']')[0].value;
+                        let addonRemark = document.querySelectorAll('#' + orderedItem.id + ' [data-addon-remark-id="' + addon.dataset.remarkId + '"]')[0].value;
                         post[i][product.dataset.productExtendedId]['addons'][addon.dataset.addonExtendedId]['remark'] = addonRemark;
                     }
                 }
