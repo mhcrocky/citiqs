@@ -458,7 +458,7 @@
                         'orderId' => $this->shoporder_model->id,
                         'quantity' => $details['quantity']
                     ];
-                    if ($details['remark']) {
+                    if (isset($details['remark'])) {
                         $insert['remark'] = $details['remark'];
                     }
 
