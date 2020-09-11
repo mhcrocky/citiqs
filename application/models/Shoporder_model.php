@@ -174,7 +174,8 @@
                                     tbl_shop_products_extended.productId,
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.name,
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.price,
-                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.quantity
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.quantity,
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.remark
                                     SEPARATOR "'. $concatGroupSeparator . '"
                                 ) AS orderedProductDetails,
                                 GROUP_CONCAT(
@@ -720,6 +721,7 @@
                         'productPrice' => $data[2],
                         'productQuantity' => $data[3],
                         'productPrinter' => $printerData,
+                        'remark' => $data[4],
                     ];
                 } else {
                     if (
@@ -732,6 +734,7 @@
                             'productPrice' => $data[2],
                             'productQuantity' => $data[3],
                             'productPrinter' => $printerData,
+                            'remark' => $data[4],
                         ];
                     }
                 }
@@ -803,7 +806,7 @@
                 array( 'db' => 'buyerId',               'dt' => 10),
                 array( 'db' => 'countSentMessages',     'dt' => 11),
                 array( 'db' => 'spotType',              'dt' => 12),
-                // array( 'db' => 'remarks',               'dt' => 13),
+                array( 'db' => 'remarks',               'dt' => 13),
             );
 
             return Jquerydatatable_helper::data_output($columns, $return);

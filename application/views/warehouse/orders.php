@@ -43,7 +43,10 @@
                     <th>Buyer Email</th>
                     <th>Buyer Mobile</th>
                     <th>Send Buyer Sms</th>
-                    <!-- <th>Remarks</th> -->
+                    <th>Buyer ID</th>
+                    <th>Count sent messages</th>
+                    <th>Spot type</th>
+                    <th>Remarks</th>
                 </tr>
             </thead>
             <tbody>
@@ -61,7 +64,10 @@
                     <th>Buyer Email</th>
                     <th>Buyer Mobile</th>
                     <th>Send Buyer Sms</th>
-                    <!-- <th>Remarks</th> -->
+                    <th>Buyer ID</th>
+                    <th>Count sent messages</th>
+                    <th>Spot type</th>
+                    <th>Remarks</th>
                 </tr>
             </tfoot>
         </table>
