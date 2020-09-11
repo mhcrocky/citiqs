@@ -153,6 +153,7 @@
             foreach ($products as $product) {
                 $productDetails = reset($product['productDetails']);
                 $counter++;
+                $remarkProductId = ($product['addRemark'] === '1') ? 'remark_' . $counter . '_' . $product['productId'] : '0';
                 ?>
                     <!-- start modal single item details -->
                     <div
@@ -177,11 +178,11 @@
                             </div>
                             <div class="modal-body">
                                 <div class="modal__content" id="product_<?php echo $product['productId']; ?>">
-                                    <?php if ($product['onlyOne'] === '0') { ?>
-                                        <div class="modal__adittional">
+                                    <div class="modal__adittional">
+                                        <?php if ($product['onlyOne'] === '0') { ?>
                                             <h6>Quantity</h6>
-                                            <div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">                                                        
-                                                <label class="form-check-label">                                                
+                                            <div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">
+                                                <label class="form-check-label">
                                                     <?php echo $productDetails['name']; ?>
                                                 </label>
                                             </div>
@@ -197,47 +198,62 @@
                                                     >
                                                     -
                                                 </span>
-                                    <?php } ?>
-                                    <input
-                                        type="number"
-                                        min="1"
-                                        step="1"
-                                        value="1"
-                                        data-name="<?php echo $productDetails['name']; ?>"
-                                        data-add-product-price="<?php echo $productDetails['price']; ?>"
-                                        data-category="<?php echo $product['category']; ?>"
-                                        data-product-extended-id="<?php echo $productDetails['productExtendedId']; ?>"
-                                        data-product-id="<?php echo $product['productId']; ?>"
-                                        data-only-one="<?php echo $product['onlyOne']; ?>"
-                                        <?php if ($product['onlyOne'] === '0') { ?>
-                                            class="form-control checkProduct"
-                                            style="display:inline-block"
-                                        <?php } elseif ($product['onlyOne'] === '1') { ?>
-                                            readonly
-                                            hidden
                                         <?php } ?>
-                                    />
-                                    <?php if ($product['onlyOne'] === '0') { ?>
-                                                <span
-                                                    class='modal-footer__buttons modal-footer__quantity--minus'
-                                                    style="margin-left:5px;"
-                                                    data-type="plus"
-                                                    onclick="changeProductQuayntity(this, 'addonQuantity')"
-                                                    >
-                                                    +
-                                                </span>
+                                        <input
+                                            type="number"
+                                            min="1"
+                                            step="1"
+                                            value="1"
+                                            data-name="<?php echo $productDetails['name']; ?>"
+                                            data-add-product-price="<?php echo $productDetails['price']; ?>"
+                                            data-category="<?php echo $product['category']; ?>"
+                                            data-product-extended-id="<?php echo $productDetails['productExtendedId']; ?>"
+                                            data-product-id="<?php echo $product['productId']; ?>"
+                                            data-only-one="<?php echo $product['onlyOne']; ?>"
+                                            data-remark-id="<?php echo $remarkProductId ?>"
+                                            <?php if ($product['onlyOne'] === '0') { ?>
+                                                class="form-control checkProduct"
+                                                style="display:inline-block"
+                                            <?php } elseif ($product['onlyOne'] === '1') { ?>
+                                                readonly
+                                                hidden
+                                            <?php } ?>
+                                        />
+                                        <?php if ($product['onlyOne'] === '0') { ?>
+                                                    <span
+                                                        class='modal-footer__buttons modal-footer__quantity--minus'
+                                                        style="margin-left:5px;"
+                                                        data-type="plus"
+                                                        onclick="changeProductQuayntity(this, 'addonQuantity')"
+                                                        >
+                                                        +
+                                                    </span>
+                                                </div>
+                                        <?php } ?>
+                                        <?php if ($product['addRemark'] === '1') { ?>
+                                            <h6 class="remark">Remark</h6>
+                                            <div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">
+                                                <textarea
+                                                    class="form-control"
+                                                    rows="1"
+                                                    maxlength="200"
+                                                    data-product-remark-id="<?php echo $remarkProductId; ?>"
+                                                ></textarea>
                                             </div>
-                                        </div>
-                                    <?php } ?>
+                                        <?php } ?>
+                                    </div>
                                     <?php if ($product['addons']) { ?>
-                                        <div class="modal__adittional">
+                                        <div class="modal__adittional" style="position:relative; top: 15px;">
                                             <h6>Additional</h6>
                                             <div class="modal__adittional__list">
                                                 <?php
                                                     $productAddons = $product['addons'];
+                                                    $countAddons = 0;
                                                     foreach ($productAddons as $productAddon) {
+                                                        $countAddons++;
                                                         $addonId = $productAddon[0][0];
                                                         $addonAllowedQuantity = $productAddon[0][1];
+                                                        $remarkAddonId = $addons[$addonId][0]['addRemark'] === '1' ? $remarkProductId . '_' . $countAddons : '0';
                                                         ?>
                                                         <div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">
                                                             <label class="form-check-label">
@@ -276,6 +292,7 @@
                                                                 data-initial-max-quantity="<?php echo $addonAllowedQuantity; ?>"
                                                                 data-min = "1"
                                                                 data-max="<?php echo $addonAllowedQuantity; ?>"
+                                                                data-remark-id="<?php echo $remarkAddonId ?>"
                                                                 step="1"
                                                                 value="1"
                                                                 class="form-control addonQuantity"
@@ -291,10 +308,24 @@
                                                                 +
                                                             </span>
                                                         </div>
+                                                        <?php if ($addons[$addonId][0]['addRemark'] === '1') { ?>
+                                                            <div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">
+                                                                <h6 style="margin-top:0px;">Remark</h6>
+                                                                <div class="col-lg-12 col-sm-12" style="margin-bottom:3px">
+                                                                    <textarea
+                                                                        class="form-control"
+                                                                        rows="1"
+                                                                        maxlength="200"
+                                                                        data-addon-remark-id="<?php echo $remarkAddonId ?>"
+                                                                    ></textarea>
+                                                                </div>
+                                                            </div>
+                                                        <?php } ?>
                                                         <?php
                                                     }
                                                 ?>
                                             </div>
+
                                         </div>
                                     <?php } ?>
                                 </div>

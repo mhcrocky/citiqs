@@ -18,10 +18,13 @@ function showOrderProducts(data) {
             printer = products['spotPrinter'];
         }
 
-        
-        popover += '<p style=\'text-align:left\'>Product: ' + product.productName + ' ';
-        popover += '| Quantity: ' + product.productQuantity + ' ';
-        popover += '| Printer: ' + printer + '</p>';
+        popover += '<p style=\'text-align:left\'>Product: ' + product.productName;
+        popover += ' | Quantity: ' + product.productQuantity;
+        popover += ' | Printer: ' + printer;
+        if (product['remark']) {
+            popover += ' | Remark: ' + product['remark'];
+        }
+        popover += '</p>';
     }
 
     list += '<a ';
@@ -169,11 +172,26 @@ function populateTable(data) {
                     },
                     "width": "10%"
                 },
-                // {
-                //     "targets": 13,
-                //     "visible": orderGlobals.getRemarks,
-                //     "searchable": orderGlobals.getRemarks,
-                // }
+                {
+                    "targets": 10,
+                    "visible": false,
+                    "searchable": false,
+                },
+                {
+                    "targets": 11,
+                    "visible": false,
+                    "searchable": false,
+                },
+                {
+                    "targets": 12,
+                    "visible": false,
+                    "searchable": false,
+                },
+                {
+                    "targets": 13,
+                    "visible": orderGlobals.getRemarks,
+                    "searchable": orderGlobals.getRemarks,
+                }
             ],
             initComplete: function () {
                 this.api().columns().every( function () {

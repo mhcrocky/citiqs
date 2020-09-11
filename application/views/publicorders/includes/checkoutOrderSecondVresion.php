@@ -39,7 +39,7 @@
                         $countInputs++;
                         $mainProductId = 'input_quantity_' . $countInputs;
                         $removeClass = 'removeClass_' . $mainProductId;
-                        ?>                                    
+                        ?>
                         <!-- start checkout single element -->
                         <div class="checkout-table__single-element <?php echo $removeClass; ?>">
                             <div class='checkout-table__num-order'>
@@ -48,6 +48,21 @@
                             <div class='checkout-table__product-details'>
                                 <p><?php echo $product['name']; ?></p>
                                 <small><?php echo $product['category']; ?></small>
+                                <?php if (isset($product['remark'])) { ?>
+                                    <div>
+                                        <label for="orderExtended_<?php echo $countInputs; ?>_<?php echo $productExtendedId; ?>_remark">Remark</label>
+                                        <textarea
+                                            data-order-session-index="<?php echo $key; ?>"
+                                            data-product-extended-id="<?php echo $productExtendedId; ?>"
+                                            class="form-control"
+                                            rows="1"
+                                            maxlength="200"
+                                            id="orderExtended_<?php echo $countInputs; ?>_<?php echo $productExtendedId; ?>_remark"
+                                            name="orderExtended[<?php echo $countInputs; ?>][<?php echo $productExtendedId; ?>][remark]"
+                                            onchange="updateSessionRemarkMainProduct(this)"
+                                        ><?php echo $product['remark']; ?></textarea>
+                                    </div>
+                                <?php } ?>
                             </div>
                             <div class='checkout-table__numbers'>
                                 <div class="checkout-table__quantity">
@@ -74,9 +89,6 @@
                                     >
                                         <i class="fa fa-minus"></i>
                                     </span>
-                                    <?php
-                                        
-                                    ?>
                                     <input
                                         id="<?php echo $mainProductId; ?>"
                                         class="calculateTotal"
@@ -131,6 +143,22 @@
                                         <div class='checkout-table__product-details'>
                                             <p  style="padding-left: 20px;"><?php echo $addon['name']; ?></p>
                                             <small style="padding-left: 20px;"><?php echo $addon['category']; ?></small>
+                                            <?php if (isset($addon['remark'])) { ?>
+                                                <div style="padding:20px;">
+                                                    <label for="orderExtended_<?php echo $countInputs; ?>_<?php echo $addonExtendedId; ?>_remark">Remark</label>
+                                                    <textarea
+                                                        id="orderExtended_<?php echo $countInputs; ?>_<?php echo $addonExtendedId; ?>_remark"
+                                                        class="form-control"
+                                                        data-order-session-index="<?php echo $key; ?>"
+                                                        data-product-extended-id="<?php echo $productExtendedId; ?>"
+                                                        data-addon-extended-id="<?php echo $addonExtendedId; ?>"
+                                                        rows="1"
+                                                        maxlength="200"
+                                                        name="orderExtended[<?php echo $countInputs; ?>][<?php echo $addonExtendedId; ?>][remark]"
+                                                        onchange="updateSessionRemarkAddon(this)"
+                                                    ><?php echo $addon['remark']; ?></textarea>
+                                                </div>
+                                            <?php } ?>
                                         </div>
                                         <div class='checkout-table__numbers'>
                                             <div class="checkout-table__quantity">

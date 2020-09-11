@@ -458,6 +458,10 @@
                         'orderId' => $this->shoporder_model->id,
                         'quantity' => $details['quantity']
                     ];
+                    if (isset($details['remark'])) {
+                        $insert['remark'] = $details['remark'];
+                    }
+
                     if (!$this->shoporderex_model->setObjectFromArray($insert)->create()) {
                         $this->shoporderex_model->orderId = $insert['orderId'];
                         $this->shoporderex_model->deleteOrderDetails();

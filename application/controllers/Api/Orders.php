@@ -43,6 +43,8 @@
             if (!$order) return;
             $order = reset($order);
 
+            //ORDER REMARK FOR PRINITING
+            // Order remak order[remarks] property
             if (!empty($order['paymentType'])) {
                 if ($order['waiterReceipt'] === '0') {
                     // one reeipt for waiter
@@ -241,6 +243,7 @@
                 // 5 => shortDescription
                 // 6 => longDescription
                 // 7 => vatpercentage
+                // 8 => remark
 
                 $title = $product[0];
                 $price = $product[1];

@@ -174,7 +174,8 @@
                                     tbl_shop_products_extended.productId,
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.name,
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.price,
-                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.quantity
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.quantity,
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.remark
                                     SEPARATOR "'. $concatGroupSeparator . '"
                                 ) AS orderedProductDetails,
                                 GROUP_CONCAT(
@@ -318,6 +319,7 @@
                         tbl_shop_orders.paymentType AS paymentType,
                         tbl_shop_orders.waiterReceipt AS waiterReceipt,
                         tbl_shop_orders.customerReceipt AS customerReceipt,
+                        tbl_shop_orders.remarks,
                         tbl_shop_spots.spotName,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
                         tbl_shop_printers.id AS printerId,
@@ -352,7 +354,8 @@
                                     \'' .  $concatSeparator . '\', tbl_shop_categories.id,
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.shortDescription) > 0, tbl_shop_products_extended.shortDescription, ""), 
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, ""),
-                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage,
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.remark
                                     SEPARATOR "' . $this->config->item('contactGroupSeparator') . '"
                                 ) AS products
                             FROM
@@ -410,6 +413,7 @@
                         tbl_shop_orders.paymentType AS paymentType,
                         tbl_shop_orders.waiterReceipt AS waiterReceipt,
                         tbl_shop_orders.customerReceipt AS customerReceipt,
+                        tbl_shop_orders.remarks,
                         tbl_shop_spots.spotName,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
                         tbl_shop_printers.id AS printerId,
@@ -448,7 +452,8 @@
                                     \'' .  $concatSeparator . '\', tbl_shop_categories.id,
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.shortDescription) > 0, tbl_shop_products_extended.shortDescription, ""), 
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, ""),
-                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage,
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.remark
                                     SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"
                                 ) AS products
                             FROM
@@ -720,6 +725,7 @@
                         'productPrice' => $data[2],
                         'productQuantity' => $data[3],
                         'productPrinter' => $printerData,
+                        'remark' => $data[4],
                     ];
                 } else {
                     if (
@@ -732,6 +738,7 @@
                             'productPrice' => $data[2],
                             'productQuantity' => $data[3],
                             'productPrinter' => $printerData,
+                            'remark' => $data[4],
                         ];
                     }
                 }
@@ -803,7 +810,7 @@
                 array( 'db' => 'buyerId',               'dt' => 10),
                 array( 'db' => 'countSentMessages',     'dt' => 11),
                 array( 'db' => 'spotType',              'dt' => 12),
-                // array( 'db' => 'remarks',               'dt' => 13),
+                array( 'db' => 'remarks',               'dt' => 13),
             );
 
             return Jquerydatatable_helper::data_output($columns, $return);
