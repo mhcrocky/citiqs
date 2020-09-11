@@ -377,8 +377,6 @@
 							tbl_shop_orders.created <= :end
 						GROUP BY
 							orderId
-						ORDER BY
-							tbl_shop_categories.category ASC
 
                 ')
 				->params([
