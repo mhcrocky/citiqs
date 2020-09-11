@@ -618,12 +618,12 @@ input[type=number] {
 }
 
 .edit-icon{
-	background-color: #5bc0de;
+	background-color: #09232f;
 	margin-right: 10px;
 }
 
 .edit-icon:hover{
-	background-color: #4eaac6;
+	background-color: #d95e2b;
 }
 
 .delete-icon-wrapper{

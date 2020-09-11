@@ -3,6 +3,9 @@
 <script>
     var productGloabls = {};
 </script>
+<style>
+
+</style>
 <div class="main-wrapper theme-editor-wrapper">
 	<div class="grid-wrapper">
         <?php if (is_null($categories) || is_null($printers) || is_null($productTypes) || is_null($userSpots)) { ?>
@@ -208,7 +211,7 @@
                                 if ($details['showInPublic'] === '1') {
                                     $string .= ' <span style="background-color: #72b19f">(ACTIVE)</span> ';
                                 } else {
-                                    $string .= ' <span style="background-color: #ff4d4d">(BLOCKED)</span> ';
+                                    $string .= ' <span style="background-color: #f2622f">(BLOCKED)</span> ';
                                 }
 
                                 $productDetailsString .= '<dd>' . $string . '</dd>';
@@ -218,7 +221,7 @@
                         ?>
                             <div
                                 class="grid-item"
-                                style="background-color:<?php echo $product['productActive'] === '1' ? '#72b19f' : '#ff4d4d'; ?>"
+                                style="background-color:<?php echo $product['productActive'] === '1' ? '#72b19f' : '#f2622f'; ?>"
                                 id="<?php echo 'product_' . str_replace('\'', ' ', $details['name']) . '_' . $details['productExtendedId']; ?>"
                                 >
                                 <div class="item-header" style="width:100%">
@@ -670,7 +673,7 @@
                                                             <?php echo ($showInPublic && $checked) ? $showInPublic : ''; ?>
                                                             />
                                                             <?php if ($checked) { ?>
-                                                                Active status <?php echo ($showInPublic) ? '<span style="background-color: #72b19f">(ACTIVE)</span>' : '<span style="background-color: #ff4d4d">(BLOCKED)</span> '; ?>
+                                                                Active status <?php echo ($showInPublic) ? '<span style="background-color: #72b19f">(ACTIVE)</span>' : '<span style="background-color: #f2622f">(BLOCKED)</span> '; ?>
                                                             <?php } else { ?>
                                                                 Active status
                                                             <?php } ?>
