@@ -277,8 +277,13 @@
 								"type"=>"text"
 							),
 
+							"paymentcounttype"=>array(
+									"label"=> "PAYMENT TYPE #",
+									"type"=>"number"
+							),
+
 							"orderTotalAmount"=>array(
-								"label"=> "INCL",
+								"label"=> "AMOUNT",
 								"type"=>"number",
 								"decimals"=>2,
 								"decimalPoint"=>",",        // Decimal point character
@@ -288,7 +293,7 @@
 							),
 
 							"serviceFeeTotalAmount"=>array(
-								"label"=> "EXCL",
+								"label"=> "SERVICE FEE",
 								"type"=>"number",
 								"decimals"=>2,
 								"decimalPoint"=>",",        // Decimal point character

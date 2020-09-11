@@ -200,13 +200,13 @@
                                 $string = 'Name: ' . $details['productType'] . ', price: ' . $details['price'] . ' &euro;';
                                 if ($details['productTypeIsMain'] === '1') {
                                     $isMain = true;
-                                    $string .= ' <span style="background-color: #99ff66">(MAIN)</span> ';
+                                    $string .= ' <span style="background-color: #72b19f">(MAIN)</span> ';
                                 } else {
                                     $string .= ' <span>(NOT MAIN</span>) ';
                                 }
 
                                 if ($details['showInPublic'] === '1') {
-                                    $string .= ' <span style="background-color: #99ff66">(ACTIVE)</span> ';
+                                    $string .= ' <span style="background-color: #72b19f">(ACTIVE)</span> ';
                                 } else {
                                     $string .= ' <span style="background-color: #ff4d4d">(BLOCKED)</span> ';
                                 }
@@ -218,7 +218,7 @@
                         ?>
                             <div
                                 class="grid-item"
-                                style="background-color:<?php echo $product['productActive'] === '1' ? '#99ff66' : '#ff4d4d'; ?>"
+                                style="background-color:<?php echo $product['productActive'] === '1' ? '#72b19f' : '#ff4d4d'; ?>"
                                 id="<?php echo 'product_' . str_replace('\'', ' ', $details['name']) . '_' . $details['productExtendedId']; ?>"
                                 >
                                 <div class="item-header" style="width:100%">
@@ -670,7 +670,7 @@
                                                             <?php echo ($showInPublic && $checked) ? $showInPublic : ''; ?>
                                                             />
                                                             <?php if ($checked) { ?>
-                                                                Active status <?php echo ($showInPublic) ? '<span style="background-color: #99ff66">(ACTIVE)</span>' : '<span style="background-color: #ff4d4d">(BLOCKED)</span> '; ?>
+                                                                Active status <?php echo ($showInPublic) ? '<span style="background-color: #72b19f">(ACTIVE)</span>' : '<span style="background-color: #ff4d4d">(BLOCKED)</span> '; ?>
                                                             <?php } else { ?>
                                                                 Active status
                                                             <?php } ?>

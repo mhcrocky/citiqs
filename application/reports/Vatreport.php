@@ -232,8 +232,46 @@
 				->query('
 						SELECT
 							tbl_shop_orders.paymentType AS paymentType,
+							tbl_shop_orders.paymentType AS paymentcounttype,
 							tbl_shop_orders.amount AS orderTotalAmount,
 						 	tbl_shop_orders.serviceFee AS serviceFeeTotalAmount
+						FROM
+							tbl_shop_orders
+						INNER JOIN
+							tbl_shop_spots ON tbl_shop_spots.id = tbl_shop_orders.spotId
+						INNER JOIN
+							tbl_shop_printers ON tbl_shop_spots.printerId = tbl_shop_printers.id
+						WHERE
+							tbl_shop_printers.userId  = :vendorId AND
+							tbl_shop_orders.paid = \'1\' AND
+							tbl_shop_orders.created >= :start AND 
+							tbl_shop_orders.created <= :end
+
+                ')
+				->params([
+					":vendorId" => $this->params["vendorId"],
+					":start"=>$this->params["dateRange"][0],
+					":end"=>$this->params["dateRange"][1]
+				])
+
+				->pipe(new Group(array(
+					"by"=>array("paymentType"),
+					"sum"=>array("orderTotalAmount", "serviceFeeTotalAmount"),
+					"count"=>array("paymentcounttype")
+				)))
+
+				->pipe($this->dataStore('Paymentpertype'))
+			;
+
+			$this // Payment types
+			->src('alfred')
+				->query('
+						SELECT
+						 	tbl_shop_vendors.serviceFeeTax AS serviceTax,
+							tbl_shop_orders.id AS orderId,
+							tbl_shop_orders.serviceFee AS orderServicefeeAmount, 
+							FORMAT((tbl_shop_orders.serviceFee / (100 + tbl_shop_vendors.serviceFeeTax) * 100),2) AS orderServicefeeEXVAT,
+							FORMAT((tbl_shop_orders.serviceFee - tbl_shop_orders.serviceFee / (100 + tbl_shop_vendors.serviceFeeTax) * 100),2) AS orderServicefeeVAT
 						FROM
 							tbl_shop_orders
 						INNER JOIN
@@ -270,11 +308,12 @@
 				])
 
 				->pipe(new Group(array(
-					"by"=>array("paymentType"),
-					"sum"=>array("orderTotalAmount", "serviceFeeTotalAmount")
+					"by"=>array("serviceTax"),
+					"sum"=>array("orderTotalAmount", "serviceFeeTotalAmount"),
+					"count"=>array("paymentcounttype")
 				)))
 
-				->pipe($this->dataStore('Paymentpertype'))
+				->pipe($this->dataStore('ServiceFEEVAT'))
 			;
 
 		}

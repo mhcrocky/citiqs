@@ -79,7 +79,7 @@
                 <?php } else { ?>
                     <?php foreach ($spots as $spot) { ?>
 
-                        <div class="grid-item allSpots" id="spotElementId<?php echo $spot['spotId']; ?>" style="background-color:<?php echo $spot['spotActive'] === '1' ? '#99ff66' : '#ff4d4d'; ?>">
+                        <div class="grid-item allSpots" id="spotElementId<?php echo $spot['spotId']; ?>" style="background-color:<?php echo $spot['spotActive'] === '1' ? '#72b19f' : '#ff4d4d'; ?>">
                             <div class="item-header" style="width:100%">
                                 <p class="item-description" style="white-space: initial;">Name: <?php echo $spot['spotName']; ?></p>
                                 <!-- <p class="item-description">Spot ID: <?php #echo $spot['spotId']; ?></p> -->
