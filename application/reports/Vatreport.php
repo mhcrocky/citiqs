@@ -14,7 +14,10 @@
     {
 		use \koolreport\inputs\Bindable;
 		use \koolreport\inputs\POSTBinding;
-
+		use \koolreport\export\Exportable;
+		use \koolreport\excel\ExcelExportable;
+		use \koolreport\excel\BigSpreadsheetExportable;
+		use \koolreport\codeigniter\Friendship;
 
 		protected function settings()
         {
@@ -275,27 +278,13 @@
 						FROM
 							tbl_shop_orders
 						INNER JOIN
-							tbl_shop_order_extended ON tbl_shop_orders.id = tbl_shop_order_extended.orderId
+							tbl_shop_spots ON tbl_shop_spots.id = tbl_shop_orders.spotId
 						INNER JOIN
-							tbl_shop_products_extended ON tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
+							tbl_shop_printers ON tbl_shop_spots.printerId = tbl_shop_printers.id
 						INNER JOIN
-							tbl_shop_products ON tbl_shop_products_extended.productId = tbl_shop_products.id
-						INNER JOIN
-							tbl_shop_categories ON tbl_shop_products.categoryId = tbl_shop_categories.id
-						INNER JOIN
-							(
-								SELECT
-									*
-								FROM
-									tbl_user
-								WHERE
-									roleid = 2
-							) AS vendor
-							ON vendor.id = tbl_shop_categories.userId
-						INNER JOIN
-							tbl_shop_vendors ON tbl_shop_vendors.vendorId = vendor.id
+							tbl_shop_vendors ON tbl_shop_vendors.vendorId = tbl_shop_printers.userId
 						WHERE
-							vendor.id = :vendorId AND
+							tbl_shop_printers.userId  = :vendorId AND
 							tbl_shop_orders.paid = \'1\' AND
 							tbl_shop_orders.created >= :start AND 
 							tbl_shop_orders.created <= :end
@@ -309,11 +298,106 @@
 
 				->pipe(new Group(array(
 					"by"=>array("serviceTax"),
-					"sum"=>array("orderTotalAmount", "serviceFeeTotalAmount"),
-					"count"=>array("paymentcounttype")
-				)))
+					"sum"=>array("orderServicefeeAmount", "orderServicefeeVAT"),
+					)))
 
 				->pipe($this->dataStore('ServiceFEEVAT'))
+			;
+
+			$this
+				->src('alfred')
+				->query('
+						SELECT
+							tbl_shop_orders.id AS orderId,
+							tbl_shop_orders.amount AS orderAmount,
+							tbl_shop_orders.paid AS orderPaidStatus,
+							tbl_shop_orders.created AS createdAt,
+							tbl_shop_categories.category AS category,
+							buyer.id AS buyerId,
+							buyer.email AS buyerEmail,
+							buyer.username AS buyerUserName,
+							buyer.mobile AS buyerMobile,
+							vendor.username AS vendorUserName,
+							tbl_shop_order_extended.quantity AS productQuantity,
+							tbl_shop_products_extended.`name` AS productName,
+							tbl_shop_products_extended.price AS productPrice,
+							tbl_shop_products_extended.vatpercentage AS productVat,
+							tbl_shop_spots.spotName AS spotName,
+							tbl_shop_products_extended.price * tbl_shop_order_extended.quantity AS productlinetotal,
+							tbl_shop_orders.serviceFee AS servicefee
+						FROM
+							tbl_shop_orders
+							INNER JOIN
+							tbl_shop_order_extended
+							ON
+								tbl_shop_orders.id = tbl_shop_order_extended.orderId
+							INNER JOIN
+							tbl_shop_products_extended
+							ON
+								tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
+							INNER JOIN
+							tbl_shop_products
+							ON
+								tbl_shop_products_extended.productId = tbl_shop_products.id
+							INNER JOIN
+							tbl_shop_categories
+							ON
+								tbl_shop_products.categoryId = tbl_shop_categories.id
+							INNER JOIN
+							(
+								SELECT
+									*
+								FROM
+									tbl_user
+								WHERE
+									roleid = 2
+							) AS vendor
+							ON
+								vendor.id = tbl_shop_categories.userId
+							INNER JOIN
+							(
+								SELECT
+									*
+								FROM
+									tbl_user
+								WHERE
+									roleid = 6 OR
+									roleid = 2
+							) AS buyer
+							ON
+								buyer.id = tbl_shop_orders.buyerId
+							INNER JOIN
+							tbl_shop_spots
+							ON
+								tbl_shop_orders.spotId = tbl_shop_spots.id
+						WHERE
+							vendor.id = :vendorId AND
+							tbl_shop_orders.paid = \'1\' AND
+							tbl_shop_orders.created >= :start AND
+							tbl_shop_orders.created <= :end
+						GROUP BY
+							orderId
+						ORDER BY
+							tbl_shop_categories.category ASC
+
+                ')
+				->params([
+					":vendorId" => $this->params["vendorId"],
+					":start"=>$this->params["dateRange"][0],
+					":end"=>$this->params["dateRange"][1]
+				])
+				->pipe(new CalculatedColumn(array(
+					"totalamount"=>"{orderAmount}+{servicefee}",
+					"totalamount_by_func"=>function($row){
+						return $row["productlinetotal"]+$row["servicefee"];
+					}
+				)))
+				->pipe(new Group(array(
+					"by"=>array("buyerEmail"),
+					"sum"=>array("orderAmount", "servicefee","totalamount")
+				)))
+
+				->pipe($this->dataStore('alldata_Orders'))
 			;
 
 		}

@@ -38,8 +38,13 @@
 									?>
 						</div>
 						<div class="form-group text-center">
-							<button class="btn btn-success"><i class="glyphicon glyphicon-refresh"></i> Load</button>
+							<button class="btn btn-success" style="border-radius: 50px; background-color: #72b19f"><i class="glyphicon glyphicon-refresh"></i> Load</button>
 						</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary" formaction="<?php base_url() ?>Report_table/export?q=1">
+						Download Excel
+					</button>
+				</div>
 					</div>
 					</form>
 
@@ -61,7 +66,7 @@
 							"icon"=>"fa fa-calendar"
 						),
 						"cssStyle"=> [
-							"card"=>"background-color:#138575",
+							"card"=>"background-color:#72b19f",
 							"title"=>"font-weight:bold",
 							"value"=>"font-style:italic",
 							"icon"=>"font-size:24px;color:white"
@@ -349,7 +354,206 @@
 					?>
 				</div>
 			</div>
-				<!--		</form>-->
+			<div class="align-top width-650" style="margin-bottom: 30px">
+				<div class="report-content" style=" margin-left: -10px; ">
+					<?php
+					DataTables::create(array(
+							"dataSource"=>$this->dataStore("ServiceFEEVAT"),
+							"showFooter"=>"bottom",
+							"width"=>"600px",
+							"cssClass"=>array(
+									"table"=>"dt-responsive table table-striped table-bordered",
+							),
+							"columns"=>array(
+
+								//					"createdAt"=>array(
+								//						"label"=> "DAY",
+								//						"type"=>"datetime",
+								//						"format"=>"Y-m-d H:i:s",
+								//						"displayFormat"=>"d-m-Y"
+								//					),
+
+								//							tbl_shop_orders.paymentType AS paymentType,
+								//							SUM(tbl_shop_orders.amount) AS orderTotalAmount,
+								//						 	SUM(tbl_shop_orders.serviceFee) AS serviceFeeTotalAmount
+								//
+									"serviceTax"=>array(
+											"label"=> "VAT PERCENTAGE",
+											"type"=>"number",
+											"decimals"=>0,
+											"decimalPoint"=>",",        // Decimal point character
+											"thousand_sep"=>".",  // Thousand separator
+											"prefix"=>"% "
+
+									),
+
+									"orderServicefeeAmount"=>array(
+											"label"=> "SERVICE FEE INCL",
+											"type"=>"number",
+											"decimals"=>2,
+											"decimalPoint"=>",",        // Decimal point character
+											"thousand_sep"=>".",  // Thousand separator
+											"prefix"=>"€ ",
+											"footer"=>"sum"
+									),
+
+									"orderServicefeeVAT"=>array(
+											"label"=> "VAT AMOUNT",
+											"type"=>"number",
+											"decimals"=>2,
+											"decimalPoint"=>",",        // Decimal point character
+											"thousand_sep"=>".",  // Thousand separator
+											"prefix"=>"€ ",
+											"footer"=>"sum"
+									),
+
+//									"serviceFeeTotalAmount"=>array(
+//											"label"=> "SERVICE FEE",
+//											"type"=>"number",
+//											"decimals"=>2,
+//											"decimalPoint"=>",",        // Decimal point character
+//											"thousand_sep"=>".",  // Thousand separator
+//											"prefix"=>"€ ",
+//											"footer"=>"sum"
+//
+//									),
+
+//							"VAT"=>array(
+//								"label"=> "V.A.T",
+//								"type"=>"number",
+//								"decimals"=>2,
+//								"decimalPoint"=>",",        // Decimal point character
+//								"thousand_sep"=>".",  // Thousand separator
+//								"prefix"=>"€ ",
+//								"footer"=>"sum"
+//							),
+
+//								"ORDERID"=>array(
+//									"label"=> "ORDERID",
+//									"type"=>"number",
+//									"decimals"=>0,
+//									"decimalPoint"=>",",        // Decimal point character
+//									"thousand_sep"=>""  // Thousand separator
+//									"prefix"=>"",
+//									"footer"=>""
+//								),
+
+
+							),
+
+							"options"=>array(
+									"order"=>array(
+											array(0,"asc") //Sort by second column asc
+									),
+									"searching"=>true,
+									"colReorder"=>true,
+									"pagingType"=>array("simple"),
+									"language"=>array("paginate"=>array("first"=>'«',
+											"previous"=>'‹',
+											"next"=>'›',
+											"last"=>'»'
+									)),
+									"paging"=>true,
+									"columnDefs"=>array(
+											array("width"=> "50px", "targets"=>"1" )
+									)
+							),
+					));
+					?>
+				</div>
+
+
+			</div>
+
+			<div class="align-top width-650" style="margin-bottom: 30px">
+				<div class="report-content" style=" margin-left: -10px; ">
+					<form>
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary" formaction="<?php base_url() ?>Report_table/export2?q=1">
+								Download Excel
+							</button>
+						</div>
+					</form>
+					<?php
+					DataTables::create(array(
+							"dataSource"=>$this->dataStore("alldata_Orders"),
+							"showFooter"=>"bottom",
+							"width"=>"600px",
+							"cssClass"=>array(
+									"table"=>"dt-responsive table table-striped table-bordered",
+							),
+							"columns"=>array(
+
+									"buyerEmail"=>array(
+											"label"=> "EMAIL",
+											"type"=>"text"
+									),
+
+									"buyerUserName"=>array(
+											"label"=> "NAME",
+											"type"=>"text"
+									),
+
+									"buyerMobile"=>array(
+											"label"=> "MOBILE",
+											"type"=>"text",
+									),
+
+//									"serviceFeeTotalAmount"=>array(
+//											"label"=> "SERVICE FEE",
+//											"type"=>"number",
+//											"decimals"=>2,
+//											"decimalPoint"=>",",        // Decimal point character
+//											"thousand_sep"=>".",  // Thousand separator
+//											"prefix"=>"€ ",
+//											"footer"=>"sum"
+//
+//									),
+
+//							"VAT"=>array(
+//								"label"=> "V.A.T",
+//								"type"=>"number",
+//								"decimals"=>2,
+//								"decimalPoint"=>",",        // Decimal point character
+//								"thousand_sep"=>".",  // Thousand separator
+//								"prefix"=>"€ ",
+//								"footer"=>"sum"
+//							),
+
+//								"ORDERID"=>array(
+//									"label"=> "ORDERID",
+//									"type"=>"number",
+//									"decimals"=>0,
+//									"decimalPoint"=>",",        // Decimal point character
+//									"thousand_sep"=>""  // Thousand separator
+//									"prefix"=>"",
+//									"footer"=>""
+//								),
+
+
+							),
+
+							"options"=>array(
+									"order"=>array(
+											array(0,"asc") //Sort by second column asc
+									),
+									"searching"=>true,
+									"colReorder"=>true,
+									"pagingType"=>array("simple"),
+									"language"=>array("paginate"=>array("first"=>'«',
+											"previous"=>'‹',
+											"next"=>'›',
+											"last"=>'»'
+									)),
+									"paging"=>true,
+									"columnDefs"=>array(
+											array("width"=> "50px", "targets"=>"1" )
+									)
+							),
+					));
+					?>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
