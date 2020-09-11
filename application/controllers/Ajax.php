@@ -692,18 +692,22 @@ class Ajax extends CI_Controller
     public function updateSessionOrderAddon(): void
     {
         if (!$this->input->is_ajax_request()) return;
-        
+
         $post = $this->input->post(null, true);
-        var_dump($post);
+
         $indexId = $post['orderSessionIndex'];
         $addonextenedId = $post['addonExtendedId'];
         $productExtendedId = $post['productExtendedId'];
+        unset($post['orderSessionIndex']);
+        unset($post['addonExtendedId']);
+        unset($post['productExtendedId']);
 
-        $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['amount'] = $post['amount'];
-        $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['quantity'] = $post['quantity'];
+        foreach($post as $key => $value) {
+            $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId][$key] = $value;
+        }
 
         // UPDATE ONLY IF MAIN PRODUCT IS CHANGED
-        if (intval($post['mainProductQuantity'])) {
+        if (isset($post['mainProductQuantity']) && intval($post['mainProductQuantity'])) {
             $newStep = intval($post['mainProductQuantity']);
             $newMinQuantity = $newStep * $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['initialMinQuantity'];
             $newMaxQuantity = $newStep * $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['initialMaxQuantity'];
@@ -711,7 +715,7 @@ class Ajax extends CI_Controller
             $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['minQuantity'] = $newMinQuantity;
             $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['maxQuantity'] = $newMaxQuantity;
         }
-        var_dump($_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]);
+
 
         return;
     }
@@ -723,12 +727,14 @@ class Ajax extends CI_Controller
 
         $post = $this->input->post(null, true);
         $indexId = $post['orderSessionIndex'];
-
-        $post = $this->input->post(null, true);
-
         $productExtendedId = $post['productExtendedId'];
-        $_SESSION['order'][$indexId][$productExtendedId]['amount'] = $post['amount'];
-        $_SESSION['order'][$indexId][$productExtendedId]['quantity'] = $post['quantity'];
+
+        unset($post['orderSessionIndex']);
+        unset($post['productExtendedId']);
+
+        foreach($post as $key => $value) {
+            $_SESSION['order'][$indexId][$productExtendedId][$key] = $value;
+        }
 
         return;
     }

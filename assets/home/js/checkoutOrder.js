@@ -199,7 +199,7 @@ function changeQuantityAndPrice(quantityInputElement, type) {
         quantityInput.setAttribute('value', quantityInputNewValue);
         quantityElement.innerHTML = quantityInputNewValue;
         priceElement.innerHTML = newPrice.toFixed(2);
-        updateSessionOrderAddon(quantityInput, false);
+        updateSessionOrderAddon(quantityInput);
     } else if (quantityInput.dataset.productType === 'main' && quantityInputNewValue >= parseInt(quantityInput.min)) {
         newPrice = quantityInputNewValue * parseFloat(quantityInput.dataset.price);
         quantityInput.setAttribute('value', quantityInputNewValue);
@@ -302,10 +302,9 @@ function setNewOrder() {
     }
 }
 
-function updateSessionOrderAddon(element, isMainChild) {
+function updateSessionOrderAddon(element) {
     let url = globalVariables.ajax + 'updateSessionOrderAddon';
     let amount = (parseInt(element.value) * parseFloat(element.dataset.price)).toFixed(2);
-    let mainChild = isMainChild ? '1' : '0'
     let mainProductQuantity = isMainChild ? document.getElementById(isMainChild).value : '0';
 
     let post = {
@@ -322,6 +321,18 @@ function updateSessionOrderAddon(element, isMainChild) {
     sendAjaxPostRequest(post, url, 'updateSessionOrderAddon');
 }
 
+function updateSessionRemarkAddon(element) {
+    let url = globalVariables.ajax + 'updateSessionOrderAddon';
+    let post = {
+        'orderSessionIndex' : element.dataset.orderSessionIndex,
+        'addonExtendedId': element.dataset.addonExtendedId,
+        'productExtendedId': element.dataset.productExtendedId,
+        'remark' : element.value,
+    };
+
+    sendAjaxPostRequest(post, url, 'updateSessionOrderAddon');
+}
+
 function updateSessionOrderMainProduct(element) {
     let url = globalVariables.ajax + 'updateSessionOrderMainProduct';
     let amount = (parseInt(element.value) * parseFloat(element.dataset.price)).toFixed(2);
@@ -330,6 +341,17 @@ function updateSessionOrderMainProduct(element) {
         'productExtendedId' : element.dataset.productExtendedId,
         'quantity' : element.value,
         'amount' : amount,
+    };
+
+    sendAjaxPostRequest(post, url, 'updateSessionOrderMainProduct');
+}
+
+function updateSessionRemarkMainProduct(element) {
+    let url = globalVariables.ajax + 'updateSessionOrderMainProduct';
+    let post = {
+        'orderSessionIndex' : element.dataset.orderSessionIndex,
+        'productExtendedId' : element.dataset.productExtendedId,
+        'remark' : element.value,
     };
 
     sendAjaxPostRequest(post, url, 'updateSessionOrderMainProduct');

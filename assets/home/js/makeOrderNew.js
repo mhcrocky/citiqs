@@ -82,7 +82,7 @@ function changeAddonQuayntity(element) {
     let stepValue = parseInt(inputField.step);
     
     if (type === 'minus' && value > minValue) {
-        value = value - stepValue;        
+        value = value - stepValue;
     }
 
     if (type === 'plus' && value < maxValue) {
@@ -298,6 +298,11 @@ function checkout() {
             'addons' : {}
         };
 
+        if (product.dataset.remarkId !== '0') {
+            let productRemark = document.querySelectorAll('#' + orderedItem.id + ' [data-product-remark-id=' + product.dataset.remarkId + ']')[0].value;
+            post[i][product.dataset.productExtendedId]['remark'] = productRemark;
+        }
+
         if (addonsLength) {
             for (j = 0; j < addonsLength; j++) {
                 let addon = addons[j];
@@ -314,6 +319,10 @@ function checkout() {
                         'step' : addon.step,
                         'initialMinQuantity' : addon.dataset.initialMinQuantity,
                         'initialMaxQuantity' : addon.dataset.initialMaxQuantity,
+                    }
+                    if (addon.dataset.remarkId !== '0') {
+                        let addonRemark = document.querySelectorAll('#' + orderedItem.id + ' [data-addon-remark-id=' + addon.dataset.remarkId + ']')[0].value;
+                        post[i][product.dataset.productExtendedId]['addons'][addon.dataset.addonExtendedId]['remark'] = addonRemark;
                     }
                 }
             }

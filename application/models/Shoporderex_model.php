@@ -14,6 +14,7 @@
         public $productsExtendedId;
         public $quantity;
         public $printed;
+        public $remark;
 
         private $table = 'tbl_shop_order_extended';
 
@@ -48,6 +49,7 @@
             if (isset($data['productsExtendedId']) && !Validate_data_helper::validateInteger($data['productsExtendedId'])) return false;
             if (isset($data['quantity']) && !Validate_data_helper::validateInteger($data['quantity'])) return false;
             if (isset($data['printed']) && !($data['printed'] === '1' || $data['printed'] === '0' || $data['printed'] === '2')) return false;
+            if (isset($data['remark']) && !Validate_data_helper::validateString($data['remark'])) return false;
             
             return true;
         }
