@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-include("./vendor/autoload.php");
+// include("./vendor/autoload.php");
 
 require APPPATH . "/reports/Vatreport.php";
 require APPPATH . '/libraries/BaseControllerWeb.php';
@@ -23,9 +23,14 @@ class Report_table extends BaseControllerWeb
 //         $d = $report->run()->render(null, true);
     }
 
-    function export()
+    function export($venodrId)
     {
-		$report = new Vatreport;
+
+        $dateRange = $this->input->post('dateRange', true);
+		$report = new Vatreport([
+            'vendorId' => $venodrId,
+            'dateRange' => $dateRange
+        ]);
 		$report->run()->exportToXLSX(array(
 			"dataStore" => array(
 				'alldata_Orders' )

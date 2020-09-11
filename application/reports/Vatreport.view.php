@@ -28,7 +28,7 @@
 		<div class="align-top width-650" style="margin-bottom: 30px">
 			<div class="report-content" style="margin-top: 30px">
 
-			<form method="post">
+			<form method="post" action="<?php echo base_url() . 'Report_table/export/' . $_SESSION['userId']; ?>">
 						<div class="mb-35" >
 									<?php
 									DateRAngePicker::create(array(
@@ -41,7 +41,7 @@
 							<button class="btn btn-success" style="border-radius: 50px; background-color: #72b19f"><i class="glyphicon glyphicon-refresh"></i> Load</button>
 						</div>
 				<div class="form-group">
-					<button type="submit" class="btn btn-primary" formaction="<?php base_url() ?>Report_table/export?q=1">
+					<button type="submit" class="btn btn-primary">
 						Download Excel
 					</button>
 				</div>
