@@ -26,6 +26,7 @@
         public $busyTime;
         public $requireRemarks;
         public $requireNewsletter;
+        public $sendEmailReceipt;
 
         public $bancontact;
         public $ideal;
@@ -90,6 +91,7 @@
             if (isset($data['busyTime']) && !Validate_data_helper::validateInteger($data['busyTime'])) return false;
             if (isset($data['requireRemarks']) && !($data['requireRemarks'] === '1' || $data['requireRemarks'] === '0')) return false;
             if (isset($data['requireNewsletter']) && !($data['requireNewsletter'] === '1' || $data['requireNewsletter'] === '0')) return false;
+            if (isset($data['sendEmailReceipt']) && !($data['sendEmailReceipt'] === '1' || $data['sendEmailReceipt'] === '0')) return false;
 
             return true;
         }
@@ -121,6 +123,7 @@
                     $this->table . '.busyTime',
                     $this->table . '.requireRemarks',
                     $this->table . '.requireNewsletter',
+                    $this->table . '.sendEmailReceipt',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',
@@ -271,5 +274,19 @@
 
             if (empty($result)) return null;
             return $result[0][$property];
+        }
+
+        public function sendEmailWithReceipt(): bool
+        {
+            $result = $this->readImproved([
+                'what'  => ['sendEmailReceipt'],
+                'where' => [
+                    $this->table . '.vendorId' => $this->vendorId
+                ]
+            ]);
+
+            $result = reset($result)['sendEmailReceipt'];
+
+            return $result === '1' ? true : false;
         }
     }

@@ -583,12 +583,13 @@
 
             if (!empty($order['paymentType'])) {
                 echo $resultpngemail;
-            }
+			}
 
 			// Utility_helper::logMessage($logFile, 'printer echo');
-            // // echo $resultpngprinter;
+			// // echo $resultpngprinter;
+			$sendEmail = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->sendEmailWithReceipt();
 
-            if ($order['printStatus'] === '1') {
+            if ($order['printStatus'] === '1' && $sendEmail) {
                 // SEND EMAIL
                 $subject= "tiqs-Order : ". $order['orderId'] ;
                 $email = $order['buyerEmail'];

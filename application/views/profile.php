@@ -383,12 +383,19 @@
 						<label class="radio-inline" for="requireRemarksNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="requireRemarksNo" name="vendor[requireRemarks]" value="0" <?php if ($vendor['requireRemarks'] === '0') echo 'checked'; ?> />
 					</div>
-					<h4>SHOW SEND NEWSLETTER CHECKBOX IN FOMR</h4>
+					<h4>SHOW SEND NEWSLETTER CHECKBOX IN FORM</h4>
 					<div class="form-group mb-35">
 						<label class="radio-inline" for="requireNewsletterYes">Yes</label>
 						<input type="radio" id="requireNewsletterYes" name="vendor[requireNewsletter]" value="1" <?php if ($vendor['requireNewsletter'] === '1') echo 'checked'; ?> />
 						<label class="radio-inline" for="requireNewsletterNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="requireNewsletterNo" name="vendor[requireNewsletter]" value="0" <?php if ($vendor['requireNewsletter'] === '0') echo 'checked'; ?> />
+					</div>
+					<h4>SEND EMAIL WITH RECEIPT TO BUYER</h4>
+					<div class="form-group mb-35">
+						<label class="radio-inline" for="sendEmailReceiptYes">Yes</label>
+						<input type="radio" id="sendEmailReceiptYes" name="vendor[sendEmailReceipt]" value="1" <?php if ($vendor['sendEmailReceipt'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="sendEmailReceiptNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="sendEmailReceiptNo" name="vendor[sendEmailReceipt]" value="0" <?php if ($vendor['sendEmailReceipt'] === '0') echo 'checked'; ?> />
 					</div>
 					<br/>
 					<br/>
