@@ -1,8 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-// include("./vendor/autoload.php");
-
 require APPPATH . "/reports/Vatreport.php";
 require APPPATH . '/libraries/BaseControllerWeb.php';
 
@@ -23,27 +21,36 @@ class Report_table extends BaseControllerWeb
 //         $d = $report->run()->render(null, true);
     }
 
-    function export($venodrId)
+    function export($vendorId)
     {
 
-        $dateRange = $this->input->post('dateRange', true);
+//        $dateRange1 = $this->input->post('dateRange', true);
 		$report = new Vatreport([
-            'vendorId' => $venodrId,
-            'dateRange' => $dateRange
+			'vendorId' => $vendorId,
+			'dateRange' => $dateRange
         ]);
-		$report->run()->exportToXLSX(array(
+		$report->run()->exportToCSV(array(
 			"dataStore" => array(
-				'alldata_Orders' )
+				'alldata_Orders' => array(
+					"columns"=>array(
+						0,1
+					) )
 				)
-			)
-		->toBrowser("myreport.xlsx");
+			))
+		->toBrowser("myreport.csv");
 
     }
 
-	function export2()
+	function export2($vendorId)
 	{
-		$report = new Vatreport;
-		$report->run()->exportToExcel('alldata_Orders')->toBrowser("myreport.xlsx");
+//		$report = new Vatreport();
+		$report = new Vatreport([
+			'vendorId' => $vendorId,
+			'dateRange' => $dateRange
+//			"start"=>$this->params["dateRange"][0],
+//			"end"=>$this->params["dateRange"][1]
+		]);
+		$report->run()->exportToExcel('Vatreport')->toBrowser("myreport.xlsx");
 	}
 
 }
