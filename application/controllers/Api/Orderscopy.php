@@ -32,10 +32,13 @@
             Utility_helper::logMessage($logFile, 'ordernumber ' .$orderId);
 
             $order = $this->shoporder_model->fetchOrdersForPrintcopy($orderId);
-            if (!$order) return;
-            $order = reset($order);
+			if (!$order) return;
+			$order = reset($order);
 
-            if ($order['printStatus'] === '0' && empty($order['paymentType'])) return;
+			$sendEmail = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->sendEmailWithReceipt();
+
+			if ($order['printStatus'] === '1' && !$sendEmail) return;
+			if ($order['printStatus'] === '0' && empty($order['paymentType'])) return;
 
 			Utility_helper::logMessage($logFile, 'order vendor'.$order['vendorId']);
 
@@ -587,15 +590,13 @@
 
 			// Utility_helper::logMessage($logFile, 'printer echo');
 			// // echo $resultpngprinter;
-			$sendEmail = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->sendEmailWithReceipt();
 
-            if ($order['printStatus'] === '1' && $sendEmail) {
-                // SEND EMAIL
-                $subject= "tiqs-Order : ". $order['orderId'] ;
-                $email = $order['buyerEmail'];
-                Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);
-                redirect('https://tiqs.com/spot/sendok');
-            }
+			
+			// SEND EMAIL
+			$subject= "tiqs-Order : ". $order['orderId'] ;
+			$email = $order['buyerEmail'];
+			Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);
+			redirect('https://tiqs.com/spot/sendok');
         }
     }
 
