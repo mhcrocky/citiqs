@@ -148,3 +148,22 @@ $config['uploadProductImageFolder']    = FCPATH . 'assets/images/productImages' 
 //make order view
 $config['oldMakeOrderView'] = '1';
 $config['newMakeOrderView'] = '2';
+
+//alergies
+$config['allergies'] = [
+    'cereal',
+    'gluten',
+    'milk',
+    'eggs',
+    'peanuts',
+    'nuts',
+    'crustaceans',
+    'mustard',
+    'fish',
+    'lupin',
+    'sesame',
+    'celery',
+    'soya',
+    'molluscs',
+    'sulphur dioxide'
+];

@@ -585,4 +585,18 @@
 
             return $return;
         }
+
+        public function getLastUpdateData(): array
+        {
+            return $this->readImproved([
+                'what'  => ['*'],
+                'where' => [
+                    'id=' => $this->id
+                ],
+                'conditions' => [
+                    'GROUP_BY' => ['LIMIT 1'],
+                    'ORDER_BY' => [$this->table. '.id DESC'],
+                ]
+            ]);
+        }
     }

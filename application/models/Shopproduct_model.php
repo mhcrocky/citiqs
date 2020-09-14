@@ -20,6 +20,7 @@
         public $orderNo;
         public $onlyOne;
         public $addRemark;
+        public $allergies;
 
         private $table = 'tbl_shop_products';
 
@@ -69,6 +70,7 @@
             if (isset($data['productImage']) && !Validate_data_helper::validateString($data['productImage'])) return false;
             if (isset($data['onlyOne']) && !($data['onlyOne'] === '1' || $data['onlyOne'] === '0')) return false;
             if (isset($data['addRemark']) && !($data['addRemark'] === '1' || $data['addRemark'] === '0')) return false;
+            if (isset($data['allergies']) && !Validate_data_helper::validateString($data['allergies'])) return false;
 
             return true;
         }

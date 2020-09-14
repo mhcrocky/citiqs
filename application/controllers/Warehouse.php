@@ -186,6 +186,7 @@
                 'productNames' => $productNames,
                 'pagination' => $pagination,
                 'dayOfWeeks' => $this->config->item('weekDays'),
+                'allergies' => $this->config->item('allergies'),
             ];
 
             $this->loadViews('warehouse/products', $this->global, $data, null, 'headerWarehouse');
@@ -439,6 +440,28 @@
             $this->session->set_flashdata('success', 'Availability time(s) for product "' . $data['productName'] . '" updated.');
             $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
             redirect($redirect);
+            return;
+        }
+
+        public function addProductAllergies($productExId): void
+        {
+            $post = $this->input->post(null, true);
+            $allergies = serialize($post);
+            $product = $this->shopproductex_model->setObjectId(intval($productExId))->setObject();
+
+            $update =   $this
+                            ->shopproduct_model
+                                ->setObjectId($product->productId)
+                                ->setProperty('allergies', $allergies)
+                                ->update();
+
+            if ($update) {
+                $this->session->set_flashdata('success', 'Allergies inserted for product "' . $product->name . '"');
+            } else {
+                $this->session->set_flashdata('error', 'Allergies insert failed  for product "' . $product->name . '"');
+            }
+
+            redirect('products');
             return;
         }
 
