@@ -26,7 +26,7 @@
                     </div>
                 </h2>
                 <div class="products" style="text-align:center;width: 100%; background-color: rgb(255, 226, 148);">
-                    <div class="product background-orange active" align="center" style="width: 100%; height: 150%">
+                    <div class="product background-orange active" style="width: 100%; height: 150%; text-align:center">
                         <div style="text-align:center">
                             <div style="margin-bottom: 20px; font-family: caption-light; font-size: medium">
                             </div>
@@ -37,13 +37,27 @@
 								<?=$this->language->line("CHECK424-101200101ABCDEF",'TOGETHER WE KEEP OURSELVES SAFE.');?>
                             </ul>
 							<div>
-								<input type="radio" id="timeIn" value="1" name="checkStatus" required>
+								<input
+                                    type="radio"
+                                    id="timeIn"
+                                    value="1"
+                                    name="checkStatus"
+                                    required
+                                    <?php if (empty($_SESSION['visitorReservationId'])) echo 'checked'; ?>
+                                />
 								<label for="timeIn">
 									<p style="margin-top: 20px; margin-left: 35px; font-size: x-small">
 										CLICK HERE FOR IN
 									</p>
 								</label>
-								<input type="radio" id="timeOut" value="0" name="checkStatus" required>
+								<input
+                                    type="radio"
+                                    id="timeOut"
+                                    value="0"
+                                    name="checkStatus"
+                                    required
+                                    <?php if (!empty($_SESSION['visitorReservationId'])) echo 'checked'; ?>
+                                />
 								<label style="margin-top: 30px" for="timeOut">
 									<p style="margin-top: 20px; margin-left: 35px; font-size: x-small">
 										CLICK HERE FOR OUT

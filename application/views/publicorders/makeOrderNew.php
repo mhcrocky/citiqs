@@ -1,6 +1,12 @@
 <div class="container shop-container">
     <div class="row">
         <?php if (!empty($mainProducts)) { ?>
+            <?php
+            if ($vendor['logo']) { ?>
+                <div style="text-align:center">
+                    <img src=<?php echo base_url() . 'assets/images/vendorLogos/' . $vendor['logo']; ?> alt="" width="300" height="auto">
+                </div>
+            <?php }?>
             <div class="col-12 col-md-8">
                 <div class="items-slider">
                     <?php
