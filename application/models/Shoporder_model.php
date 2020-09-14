@@ -175,7 +175,7 @@
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.name,
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.price,
                                     \'' .  $concatSeparator . '\', tbl_shop_order_extended.quantity,
-                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.remark
+                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_order_extended.remark) > 0, tbl_shop_order_extended.remark, "")
                                     SEPARATOR "'. $concatGroupSeparator . '"
                                 ) AS orderedProductDetails,
                                 GROUP_CONCAT(
@@ -355,7 +355,7 @@
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.shortDescription) > 0, tbl_shop_products_extended.shortDescription, ""), 
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, ""),
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage,
-                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.remark
+                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_order_extended.remark) > 0, tbl_shop_order_extended.remark, "")
                                     SEPARATOR "' . $this->config->item('contactGroupSeparator') . '"
                                 ) AS products
                             FROM
@@ -453,7 +453,7 @@
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.shortDescription) > 0, tbl_shop_products_extended.shortDescription, ""), 
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, ""),
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage,
-                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.remark
+                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_order_extended.remark) > 0, tbl_shop_order_extended.remark, "")
                                     SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"
                                 ) AS products
                             FROM
