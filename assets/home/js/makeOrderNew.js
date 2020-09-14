@@ -370,16 +370,10 @@ $(document).ready(function(){
         adaptiveHeight: true
     });
 
-    $( '.categoryNav a' ).on("click", function () {
-        let categoryContainer = document.getElementById('categoryContainer');
-        let categoryNav  = document.getElementById('categoryNav');
+    $('.categoryNav a').on("click", function () {
+        let categoryContainer = document.getElementById('categoryContainer');        
         let actIndex = parseInt(this.dataset.index);
         let slider = $('.items-slider');
-
-        categoryNav.style.display = 'none';
-        categoryContainer.style.visibility = 'visible';
-        categoryContainer.focus();
-
         slider[0].slick.slickGoTo(parseInt(actIndex));
     });
     resetTotal();

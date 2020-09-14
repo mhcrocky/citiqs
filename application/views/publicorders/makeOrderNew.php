@@ -12,21 +12,23 @@
                 $categoryList = '<ul class="list-group categoryNav">';
                 $count = 0;
                 foreach ($categories as $categoryName) {
+                    $count++;
                     $categoryList .= '<li class="list-group-item">';
                     $categoryList .=    '<a href="#" data-index="' . $count . '">' . $categoryName . '</a>';
                     $categoryList .= '</li>';
-                    $count++;
                 }
                 $categoryList .= '</ul>';
             ?>
-            <div class="col-12 col-md-8" id="categoryNav">
-                <h3>MENU</h3>
-                <?php echo $categoryList; ?>
-            </div>
             <div>
-                <div class="col-12 col-md-8" id="categoryContainer" style="visibility:hidden">
+                <div class="col-12 col-md-8" id="categoryContainer">
                     <div class="items-slider">
-
+                        <div class="shop__items">
+                            <div class="shop__item-list-heading" id="categoryNav">
+                                <h2>MENU</h2>
+                                <?php echo $categoryList; ?>
+                            </div>
+                            <!-- end item list -->
+                        </div>
                         <?php foreach ($mainProducts as $category => $products) { ?>
                             <div class="shop__items">
                                 <div class="shop__item-list-heading" id='<?php echo $category; ?>'>
@@ -38,11 +40,13 @@
                                             $productDetails = reset($product['productDetails']);
                                             ?>
                                             <div class="shop__single-item" data-toggle="modal" data-target="#single-item-details-modal<?php echo $product['productId']; ?>">
-                                                <div class="shop__single-item__image">
-                                                    <img
-                                                        src="<?php echo base_url() . '/assets/images/productImages/' . $product['productImage']; ?>"
-                                                        alt="<?php echo $productDetails['name']; ?>">
-                                                </div>
+                                                <?php #if ($vendor['showProductsImages'] === '1') { ?>
+                                                    <div class="shop__single-item__image">
+                                                        <img
+                                                            src="<?php echo base_url() . '/assets/images/productImages/' . $product['productImage']; ?>"
+                                                            alt="<?php echo $productDetails['name']; ?>">
+                                                    </div>
+                                                <?php #} ?>
                                                 <div class="shop__single-item__info">
                                                     <strong class='shop__single-item__info--title'><?php echo $productDetails['name']; ?></strong>
                                                     <p class='shop__single-item__info--description'><?php echo $productDetails['shortDescription']; ?></p>
