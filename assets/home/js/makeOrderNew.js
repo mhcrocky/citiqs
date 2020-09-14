@@ -369,5 +369,18 @@ $(document).ready(function(){
         slidesToShow: 1,
         adaptiveHeight: true
     });
+
+    $( '.categoryNav a' ).on("click", function () {
+        let categoryContainer = document.getElementById('categoryContainer');
+        let categoryNav  = document.getElementById('categoryNav');
+        let actIndex = parseInt(this.dataset.index);
+        let slider = $('.items-slider');
+
+        categoryNav.style.display = 'none';
+        categoryContainer.style.visibility = 'visible';
+        categoryContainer.focus();
+
+        slider[0].slick.slickGoTo(parseInt(actIndex));
+    });
     resetTotal();
 });

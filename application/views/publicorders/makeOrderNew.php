@@ -7,82 +7,91 @@
                     <img src=<?php echo base_url() . 'assets/images/vendorLogos/' . $vendor['logo']; ?> alt="" width="300" height="auto">
                 </div>
             <?php }?>
-            <div class="col-12 col-md-8">
-                <div class="items-slider">
-                    <?php
-                        $categories = array_keys($mainProducts);
-                        $navigation = '';
-                        foreach ($categories as $categoryName) {                        
-                            $navigation .= '<a href="#' . $categoryName . '">' .  $categoryName . '</a>';
-                        }
-                    ?>
-                    <?php foreach ($mainProducts as $category => $products) { ?>
-                        <div class="shop__items">
-                            <div class="shop__navigation">
-                                <?php echo $navigation; ?>
-                            </div>
-                            <div class="shop__item-list-heading" id='<?php echo $category; ?>'>
-                                <h2><?php echo $category; ?></h2>
-                            </div>
-                            <div class="shop__item-list">
-                                <?php
-                                    foreach ($products as $product) {
-                                        $productDetails = reset($product['productDetails']);
-                                        ?>
-                                        <div class="shop__single-item" data-toggle="modal" data-target="#single-item-details-modal<?php echo $product['productId']; ?>">
-                                            <div class="shop__single-item__image">
-                                                <img
-                                                    src="<?php echo base_url() . '/assets/images/productImages/' . $product['productImage']; ?>"
-                                                    alt="<?php echo $productDetails['name']; ?>">
-                                            </div>
-                                            <div class="shop__single-item__info">
-                                                <strong class='shop__single-item__info--title'><?php echo $productDetails['name']; ?></strong>
-                                                <p class='shop__single-item__info--description'><?php echo $productDetails['shortDescription']; ?></p>
-                                            </div>
-                                            <div class="shop__single-item__price">
-                                                <span><?php echo $productDetails['price']; ?></span>
-                                            </div>
-                                            <div class="shop__single-item__add-to-cart">
-                                                <span>+</span>
-                                            </div>
-                                        </div>
-                                        <!-- end single item -->                                    
-                                        <?php
-                                    }
-                                ?>
-                            </div>
-                            <!-- end item list -->
-                        </div>
-                    <?php } ?>
-                    <?php if (isset($termsAndConditions) && $termsAndConditions) { ?>
-                        <div class="shop__items">
-                            <div class="shop__item-list-heading">
-                                <h2>TERMS AND CONDITIONS</h2>
-                            </div>
-                            <div class="shop__item-list">
-                                <p style="padding-left:10px">
-                                    <?php echo $termsAndConditions; ?>
-                                </p>
-                            </div>
-                            <!-- end item list -->
-                        </div>
-                    <?php } ?>
-                </div>
-                <!-- end slider -->
+            <?php
+                $categories = array_keys($mainProducts);
+                $categoryList = '<ul class="list-group categoryNav">';
+                $count = 0;
+                foreach ($categories as $categoryName) {
+                    $categoryList .= '<li class="list-group-item">';
+                    $categoryList .=    '<a href="#" data-index="' . $count . '">' . $categoryName . '</a>';
+                    $categoryList .= '</li>';
+                    $count++;
+                }
+                $categoryList .= '</ul>';
+            ?>
+            <div class="col-12 col-md-8" id="categoryNav">
+                <h3>MENU</h3>
+                <?php echo $categoryList; ?>
             </div>
-            <!-- end left side -->
-            <div class="col-12 col-md-4">
-                <div class="shopping-cart" id='shopping-cart'>
-                    <h3>Items</h3>
-                    <div class="shopping-cart__list" id='shopping-cart__list'>
-                        <?php echo $shoppingList; ?>
+            <div>
+                <div class="col-12 col-md-8" id="categoryContainer" style="visibility:hidden">
+                    <div class="items-slider">
+
+                        <?php foreach ($mainProducts as $category => $products) { ?>
+                            <div class="shop__items">
+                                <div class="shop__item-list-heading" id='<?php echo $category; ?>'>
+                                    <h2><?php echo $category; ?></h2>
+                                </div>
+                                <div class="shop__item-list">
+                                    <?php
+                                        foreach ($products as $product) {
+                                            $productDetails = reset($product['productDetails']);
+                                            ?>
+                                            <div class="shop__single-item" data-toggle="modal" data-target="#single-item-details-modal<?php echo $product['productId']; ?>">
+                                                <div class="shop__single-item__image">
+                                                    <img
+                                                        src="<?php echo base_url() . '/assets/images/productImages/' . $product['productImage']; ?>"
+                                                        alt="<?php echo $productDetails['name']; ?>">
+                                                </div>
+                                                <div class="shop__single-item__info">
+                                                    <strong class='shop__single-item__info--title'><?php echo $productDetails['name']; ?></strong>
+                                                    <p class='shop__single-item__info--description'><?php echo $productDetails['shortDescription']; ?></p>
+                                                </div>
+                                                <div class="shop__single-item__price">
+                                                    <span><?php echo $productDetails['price']; ?></span>
+                                                </div>
+                                                <div class="shop__single-item__add-to-cart">
+                                                    <span>+</span>
+                                                </div>
+                                            </div>
+                                            <!-- end single item -->
+                                            <?php
+                                        }
+                                    ?>
+                                </div>
+                                <!-- end item list -->
+                            </div>
+                        <?php } ?>
+                        <?php if (isset($termsAndConditions) && $termsAndConditions) { ?>
+                            <div class="shop__items">
+                                <div class="shop__item-list-heading">
+                                    <h2>TERMS AND CONDITIONS</h2>
+                                </div>
+                                <div class="shop__item-list">
+                                    <p style="padding-left:10px">
+                                        <?php echo $termsAndConditions; ?>
+                                    </p>
+                                </div>
+                                <!-- end item list -->
+                            </div>
+                        <?php } ?>
                     </div>
-                    <!-- end shoping cart list -->
-                    <div class="shopping-cart__total">
-                            <p>Total:</p>
-                            <p>&euro;&nbsp;<span class="shopping-cart__total-price totalPrice">0</span></p>
+                    <!-- end slider -->
+                </div>
+                <!-- end left side -->
+                <div class="col-12 col-md-4">
+                    <div class="shopping-cart" id='shopping-cart'>
+                        <h3>Items</h3>
+                        <div class="shopping-cart__list" id='shopping-cart__list'>
+                            <?php echo $shoppingList; ?>
                         </div>
-                    <button class='checkout-button button-main button-primary' onclick="checkout()">checkout</button>
+                        <!-- end shoping cart list -->
+                        <div class="shopping-cart__total">
+                                <p>Total:</p>
+                                <p>&euro;&nbsp;<span class="shopping-cart__total-price totalPrice">0</span></p>
+                            </div>
+                        <button class='checkout-button button-main button-primary' onclick="checkout()">checkout</button>
+                    </div>
                 </div>
             </div>
             <!-- end right side -->
