@@ -29,6 +29,8 @@
         public $sendEmailReceipt;
         public $showProductsImages;
         public $defaultProductsImage;
+        public $requireEmail;
+        public $requireName;
 
         public $bancontact;
         public $ideal;
@@ -96,6 +98,8 @@
             if (isset($data['sendEmailReceipt']) && !($data['sendEmailReceipt'] === '1' || $data['sendEmailReceipt'] === '0')) return false;
             if (isset($data['showProductsImages']) && !($data['showProductsImages'] === '1' || $data['showProductsImages'] === '0')) return false;
             if (isset($data['defaultProductsImage']) && !Validate_data_helper::validateString($data['defaultProductsImage'])) return false;
+            if (isset($data['requireEmail']) && !($data['requireEmail'] === '1' || $data['requireEmail'] === '0')) return false;
+            if (isset($data['requireName']) && !($data['requireName'] === '1' || $data['requireName'] === '0')) return false;
 
             return true;
         }
@@ -130,11 +134,14 @@
                     $this->table . '.sendEmailReceipt',
                     $this->table . '.showProductsImages',
                     $this->table . '.defaultProductsImage',
+                    $this->table . '.requireEmail',
+                    $this->table . '.requireName',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',
                     'tbl_user.email AS vendorEmail',
                     'tbl_user.country AS vendorCountry',
+                    'tbl_user.receiptEmail AS receiptEmail',
                     'GROUP_CONCAT(
                         CONCAT(
                             tbl_shop_vendor_types.id,
