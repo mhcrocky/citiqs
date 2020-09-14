@@ -302,7 +302,7 @@ function setNewOrder() {
     }
 }
 
-function updateSessionOrderAddon(element) {
+function updateSessionOrderAddon(element, isMainChild = false) {
     let url = globalVariables.ajax + 'updateSessionOrderAddon';
     let amount = (parseInt(element.value) * parseFloat(element.dataset.price)).toFixed(2);
     let mainProductQuantity = isMainChild ? document.getElementById(isMainChild).value : '0';
