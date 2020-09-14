@@ -24,9 +24,11 @@
         public $requireReservation;
         public $preferredView;
         public $busyTime;
-        public $requireRemarks;
+        public $requireRemarks; 
         public $requireNewsletter;
         public $sendEmailReceipt;
+        public $showProductsImages;
+        public $defaultProductsImage;
 
         public $bancontact;
         public $ideal;
@@ -92,6 +94,8 @@
             if (isset($data['requireRemarks']) && !($data['requireRemarks'] === '1' || $data['requireRemarks'] === '0')) return false;
             if (isset($data['requireNewsletter']) && !($data['requireNewsletter'] === '1' || $data['requireNewsletter'] === '0')) return false;
             if (isset($data['sendEmailReceipt']) && !($data['sendEmailReceipt'] === '1' || $data['sendEmailReceipt'] === '0')) return false;
+            if (isset($data['showProductsImages']) && !($data['showProductsImages'] === '1' || $data['showProductsImages'] === '0')) return false;
+            if (isset($data['defaultProductsImage']) && !Validate_data_helper::validateString($data['defaultProductsImage'])) return false;
 
             return true;
         }
@@ -124,6 +128,8 @@
                     $this->table . '.requireRemarks',
                     $this->table . '.requireNewsletter',
                     $this->table . '.sendEmailReceipt',
+                    $this->table . '.showProductsImages',
+                    $this->table . '.defaultProductsImage',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',
@@ -288,5 +294,24 @@
             $result = reset($result)['sendEmailReceipt'];
 
             return $result === '1' ? true : false;
+        }
+
+        public function updateVendor(string $property): ?string
+        {
+            if ($this->id) {
+                $where = ['id=' => $this->id];
+            } elseif ($this->vendorId) {
+                $where = ['vendorId=' => $this->vendorId];
+            } else {
+                return null;
+            }
+
+            $result = $this->readImproved([
+                'what' => [$property],
+                'where' => $where
+            ]);
+
+            if (empty($result)) return null;
+            return $result[0][$property];
         }
     }

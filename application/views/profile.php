@@ -397,6 +397,13 @@
 						<label class="radio-inline" for="sendEmailReceiptNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="sendEmailReceiptNo" name="vendor[sendEmailReceipt]" value="0" <?php if ($vendor['sendEmailReceipt'] === '0') echo 'checked'; ?> />
 					</div>
+					<h4>SHOW PRODUCTS IMAGES IN MAKE ORDER FORM</h4>
+					<div class="form-group mb-35">
+						<label class="radio-inline" for="showProductsImagesYes">Yes</label>
+						<input type="radio" id="showProductsImagesYes" name="vendor[showProductsImages]" value="1" <?php if ($vendor['showProductsImages'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="showProductsImagesNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="showProductsImagesNo" name="vendor[showProductsImages]" value="0" <?php if ($vendor['showProductsImages'] === '0') echo 'checked'; ?> />
+					</div>
 					<br/>
 					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />
@@ -422,8 +429,32 @@
 						<input type="file" name="logo" id="logo" class="form-control" accept="image/png" />
 						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 					</div>
-					<input class="btn btn-primary" type="submit" value="Upload" />
-				</form>				
+					<input class="btn btn-primary" type="submit" value="Upload logo" />
+				</form>
+				<?php if ($vendor['showProductsImages'] === '1') { ?>
+					<form method="post" action="<?php echo base_url() ?>profile/uploadDefaultProductsImage/<?php echo $vendor['id']; ?>" enctype="multipart/form-data">
+						<div class="form-group" style="margin-top:30px !important">
+							<label for="defaultProductsImage">
+								<?php echo $this->language->line("DEFAULTPRODUCTIMAGE-1103030211dd9"," Upload default products image in PNG format "); ?>
+							</label>
+						</div>
+						<?php if ($vendor['defaultProductsImage']) { ?>
+							<figure>
+								<img
+									src="<?php echo base_url() . 'assets/images/defaultProductsImages/' . $vendor['defaultProductsImage']; ?>"
+									class="img-responsive img-thumbnail"
+									alt="default product image"
+									/>
+							</figure>
+							<br>
+						<?php } ?>
+						<div class="form-group has-feedback">
+							<input type="file" name="defaultProductsImage" id="defaultProductsImage" class="form-control" accept="image/png" />
+							<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+						</div>
+						<input class="btn btn-primary" type="submit" value="Upload default products image" />
+					</form>
+				<?php } ?>
 				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#timeModal" style="margin-top:20px">Set working time</button>
 				<!--TIME MODAL -->
 				<div class="modal" id="timeModal" role="dialog">

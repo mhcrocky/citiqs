@@ -93,7 +93,29 @@ class  Profile extends BaseControllerWeb
 		redirect('profile');
 		exit();
     }
+	public function uploadDefaultProductsImage($id): void
+    {
+		$folder = $this->config->item('defaultProductsImages');
+		$defaultProductsImage = $id . '_' . strval(time()) . '.' . Uploadfile_helper::getFileExtension($_FILES['defaultProductsImage']['name']);
+		$constraints = [
+			'allowed_types'=> 'png'
+		];
+		$_FILES['defaultProductsImage']['name'] = $defaultProductsImage;
+		$uploadImage = Uploadfile_helper::uploadFiles($folder, $constraints);
+		$updateVendor = $this
+							->shopvendor_model
+								->setObjectId(intval($id))
+								->setProperty('defaultProductsImage', $defaultProductsImage)
+								->update();
 
+		if ($uploadImage && $updateVendor) {
+			$this->session->set_flashdata('success', 'Default products image uploaded');
+		} else {
+			$this->session->set_flashdata('error', 'Upload of default product image failed');
+		}
+		redirect('profile');
+		exit();
+	}
 
 	public function updateVendorTime($vendorId): void
 	{

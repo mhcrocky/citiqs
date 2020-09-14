@@ -137,6 +137,9 @@
                 $ordered = Utility_helper::returnMakeNewOrderElements($ordered);
                 $data['shoppingList'] = $ordered['shoppingList'];
                 $data['checkoutList'] = $ordered['checkoutList'];
+                $data['uploadProductImageFolder'] = $this->config->item('uploadProductImageFolder');
+                $data['defaultProductsImages'] = $this->config->item('defaultProductsImages');
+
                 $this->loadViews('publicorders/makeOrderNew', $this->global, $data, null, 'headerWarehousePublic');
             }
 

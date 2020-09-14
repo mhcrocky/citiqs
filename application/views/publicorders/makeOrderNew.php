@@ -4,7 +4,7 @@
             <?php
             if ($vendor['logo']) { ?>
                 <div style="text-align:center">
-                    <img src=<?php echo base_url() . 'assets/images/vendorLogos/' . $vendor['logo']; ?> alt="" width="300" height="auto">
+                    <img src=<?php echo base_url() . 'assets/images/vendorLogos/' . $vendor['logo']; ?> alt="" width="300" height="auto" />
                 </div>
             <?php }?>
             <?php
@@ -36,17 +36,20 @@
                                 </div>
                                 <div class="shop__item-list">
                                     <?php
-                                        foreach ($products as $product) {
-                                            $productDetails = reset($product['productDetails']);
-                                            ?>
+                                        foreach ($products as $product) { $productDetails = reset($product['productDetails']); ?>
                                             <div class="shop__single-item" data-toggle="modal" data-target="#single-item-details-modal<?php echo $product['productId']; ?>">
-                                                <?php #if ($vendor['showProductsImages'] === '1') { ?>
-                                                    <div class="shop__single-item__image">
+                                                <?php if ($vendor['showProductsImages'] === '1') { ?>
+                                                    <div class="shop__single-item__image">                                                        
                                                         <img
-                                                            src="<?php echo base_url() . '/assets/images/productImages/' . $product['productImage']; ?>"
-                                                            alt="<?php echo $productDetails['name']; ?>">
+                                                            <?php if ($product['productImage'] && file_exists($uploadProductImageFolder . $product['productImage'])) { ?>
+                                                                src="<?php echo base_url() . 'assets/images/productImages/' . $product['productImage']; ?>"
+                                                            <?php } else { ?>
+                                                                src="<?php echo base_url() . 'assets/images/defaultProductsImages/' . $vendor['defaultProductsImage']; ?>"
+                                                            <?php } ?>
+                                                            alt="<?php echo $productDetails['name']; ?>"
+                                                        />
                                                     </div>
-                                                <?php #} ?>
+                                                <?php } ?>
                                                 <div class="shop__single-item__info">
                                                     <strong class='shop__single-item__info--title'><?php echo $productDetails['name']; ?></strong>
                                                     <p class='shop__single-item__info--description'><?php echo $productDetails['shortDescription']; ?></p>
