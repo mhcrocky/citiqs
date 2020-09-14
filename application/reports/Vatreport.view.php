@@ -28,25 +28,31 @@
 		<div class="align-top width-650" style="margin-bottom: 30px">
 			<div class="report-content" style="margin-top: 30px">
 
-			<form method="post" action="<?php echo base_url() . 'Report_table/export/' . $_SESSION['userId']; ?>">
-						<div class="mb-35" >
-									<?php
-									DateRAngePicker::create(array(
-										"format"=>"D/M/YYYY",
-										"name"=>"dateRange"
-									))
-									?>
-						</div>
-						<div class="form-group text-center">
-							<button class="btn btn-success" style="border-radius: 50px; background-color: #72b19f"><i class="glyphicon glyphicon-refresh"></i> Load</button>
-						</div>
-				<div class="form-group">
-					<button type="submit" class="btn btn-primary">
-						Download Excel
-					</button>
-				</div>
+				<form id="selectdate" method="post" >
+					<div class="mb-35" >
+						<?php
+						$dateRange= DateRangePicker::create(array(
+								"format"=>"D/M/YYYY",
+								"name"=>"dateRange"
+						))
+						?>
 					</div>
-					</form>
+					<div class="form-group text-center">
+						<button class="btn btn-success" style="border-radius: 50px; background-color: #72b19f"><i class="glyphicon glyphicon-refresh"></i> LOAD</button>
+					</div>
+
+					<button type="submit" formaction="<?php echo base_url() . 'Report_table/export/' . $_SESSION['userId']; ?>" class="btn btn-primary">Download EXCEL</button>
+
+
+
+				</form>
+
+<!---->
+<!--				":start"=>$this->params["dateRange"][0],-->
+<!--				":end"=>$this->params["dateRange"][1]-->
+
+
+
 
 				<div class="report-content" style="margin-top: 30px">
 					<?php
@@ -74,7 +80,7 @@
 					));
 					?>
 				</div>
-
+			</div>
 				<div class="report-content" style=" margin-left: -10px; margin-top: 30px">
 					<?php
 					DataTables::create(array(
@@ -156,8 +162,8 @@
 					));
 					?>
 				</div>
-			</div>
-<!--		</form>-->
+		</div>
+		<!--		</form>-->
 		</div>
 
 		<div class="col-half background-apricot height" style="text-align:left; font-size: smaller" >
@@ -469,7 +475,7 @@
 				<div class="report-content" style=" margin-left: -10px; ">
 					<form>
 						<div class="form-group">
-							<button type="submit" class="btn btn-primary" formaction="<?php base_url() ?>Report_table/export2?q=1">
+							<button type="submit" class="btn btn-primary" formaction="<?php echo base_url() . 'Report_table/export2/' . $_SESSION['userId']; ?>">
 								Download Excel
 							</button>
 						</div>
