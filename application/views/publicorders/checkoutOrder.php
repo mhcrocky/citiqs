@@ -183,6 +183,10 @@
 </main>
 <script>
     var checkoutOrdedGlobals = (function(){
+        let askId = '<?php echo THGROUP; ?>';
+        let vendorId = '<?php echo $vendor['vendorId'] ?>';
+        let condition = (askId === vendorId) ? true : false;
+
         let globals = {
             'minimumOrderFee' : parseFloat('<?php echo $vendor['minimumOrderFee']; ?>'),
             'serviceFeePercent': parseFloat('<?php echo $vendor['serviceFeePercent']; ?>'),
@@ -191,7 +195,8 @@
             'totalAmountSpanId': 'totalAmount',
             'serviceFeeInputId' : 'serviceFeeInput',
             'orderAmountInputId' : 'orderAmountInput',
-            'calculateTotalClass' : 'calculateTotal'
+            'calculateTotalClass' : 'calculateTotal',
+            'thGroup': condition,
         }
         Object.freeze(globals);
         return globals;

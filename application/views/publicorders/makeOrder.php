@@ -496,3 +496,16 @@
         </div>
     <?php } ?>
 </main>
+<script>
+    var makeOldOrderGlobals = (function(){
+        let askId = '<?php echo THGROUP; ?>';
+        let vendorId = '<?php echo $vendor['vendorId'] ?>';
+        let condition = (askId === vendorId) ? true : false;
+
+        let globals = {
+            'thGroup': condition,
+        }
+        Object.freeze(globals);
+        return globals;        
+    }());
+</script>

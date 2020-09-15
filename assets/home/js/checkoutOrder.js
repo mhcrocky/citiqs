@@ -137,7 +137,7 @@ function removeElement(thisElement) {
 function submitForm(formId, serviceFeeInputId, orderAmountInputId) {
     let serviceFee = parseFloat(document.getElementById(serviceFeeInputId).value);
     let orderTotal = parseFloat(document.getElementById(orderAmountInputId).value);
-    if (serviceFee > 0 || orderTotal > 0 ) {
+    if (serviceFee > 0 || orderTotal > 0 || checkoutOrdedGlobals.thGroup) {
         document.getElementById(formId).submit();
     }
 }

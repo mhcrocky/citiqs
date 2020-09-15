@@ -102,7 +102,7 @@ function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, 
 function submitMakeOrderForm(formId, orderAmount, orderQuantity) {
     let amount = parseFloat(document.getElementById(orderAmount).innerHTML);
     let quantity = parseInt(document.getElementById(orderQuantity).innerHTML);
-    if (amount && quantity) {
+    if (amount && quantity || makeOldOrderGlobals.thGroup) {
         let form = document.getElementById(formId);
         form.submit();
     }
