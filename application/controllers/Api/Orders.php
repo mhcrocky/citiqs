@@ -50,8 +50,8 @@
                     // one reeipt for waiter
                     $waiterUpdate = $this->shoporder_model->setObjectId(intval($order['orderId']))->setProperty('waiterReceipt', '1')->update();
                     if ($waiterUpdate) {
-                        header('Content-type: image/png');
-                        echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
+                        #header('Content-type: image/png');
+                        #echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
                     }
                     return;
                 }
@@ -60,8 +60,8 @@
                     $customerReceipt = $this->shoporder_model->setObjectId(intval($order['orderId']))->setProperty('customerReceipt', '1')->update();
                     // one receipt for customer
                     if ($customerReceipt) {
-                        header('Content-type: image/png');
-                        echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
+                        #header('Content-type: image/png');
+                        #echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
                     }
                     return;
                 }
@@ -144,21 +144,21 @@
             $draw->setFillColor('black');
 			$drawemail->setFillColor('black');
 
-            switch (strtolower($_SERVER['HTTP_HOST'])) {
-                case 'tiqs.com':
-                    $draw->setFont('Helvetica');
-					$drawemail->setFont('Helvetica');
-                    break;
-                case 'loki-vm':
-                case '10.0.0.48':
-                    $draw->setFont('Helvetica');
-					$drawemail->setFont('Helvetica');
-                    break;
-                default:
-                    $draw->setFont('Arial');
-					$drawemail->setFont('Arial');
-                    break;
-            }
+            // switch (strtolower($_SERVER['HTTP_HOST'])) {
+            //     case 'tiqs.com':
+            //         $draw->setFont('Helvetica');
+			// 		$drawemail->setFont('Helvetica');
+            //         break;
+            //     case 'loki-vm':
+            //     case '10.0.0.48':
+            //         $draw->setFont('Helvetica');
+			// 		$drawemail->setFont('Helvetica');
+            //         break;
+            //     default:
+            //         $draw->setFont('Arial');
+			// 		$drawemail->setFont('Arial');
+            //         break;
+            // }
 
             // $draw->setFontWeight(551);
             // $draw->setStrokeWidth(5);
