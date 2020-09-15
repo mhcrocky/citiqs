@@ -88,7 +88,7 @@
                 ]
             ];
             $resetBy = 'productId';
-
+            $products = $this->filterProducts($userId, $filter, $resetBy, false);
             return $this->filterProducts($userId, $filter, $resetBy, false);
           
         }
@@ -137,6 +137,7 @@
                 'tbl_shop_products.orderNo AS orderNo',
                 'tbl_shop_products.onlyOne AS onlyOne',
                 'tbl_shop_products.addRemark AS addRemark',
+                'tbl_shop_products.allergies AS allergies',
                 'tbl_shop_categories.category',
                 'tbl_shop_categories.id AS categoryId',
                 'tbl_shop_categories.active AS categoryActive',

@@ -443,6 +443,11 @@
             return;
         }
 
+        /**
+        * Add allergies to product
+        *
+        * @return void
+        */
         public function addProductAllergies($productExId): void
         {
             $post = $this->input->post(null, true);

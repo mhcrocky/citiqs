@@ -504,8 +504,12 @@
                                 <!-- ALLERGIES MODAL -->
                                 <div class="modal" id="allergies<?php echo $product['productId']; ?>" role="dialog">
                                     <div class="modal-dialog">
+
                                         <form method="post" action="warehouse/addProductAllergies/<?php echo  $details['productExtendedId']; ?>">
                                             <div class="modal-content">
+                                            <?php
+                                            $product['allergies'] = unserialize($product['allergies']);
+                                        ?>
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                     <h4 class="modal-title">
@@ -520,7 +524,11 @@
                                                                     type="checkbox"
                                                                     name="productAllergies[]"
                                                                     value="<?php echo $allergy; ?>"
-                                                                    
+                                                                    <?php
+                                                                        if (!empty($product['allergies']['productAllergies']) && in_array($allergy, $product['allergies']['productAllergies'])) {
+                                                                            echo 'checked';
+                                                                        }
+                                                                    ?>
                                                                 />
                                                                 <?php echo ucfirst($allergy); ?>&nbsp;&nbsp;&nbsp;&nbsp;
                                                             </label>
