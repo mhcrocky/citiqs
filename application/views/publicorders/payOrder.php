@@ -359,7 +359,7 @@
 </div>
 
 <!-- /.content-container -->
-<?php if ($vendor['ideal'] === '1') { ?>
+<?php if ($vendor['ideal'] === '1' || $vendor['postPaid'] === '1' ) { ?>
 <script>
 
     function toogleElements(showId, hideId, className) {

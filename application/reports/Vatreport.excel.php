@@ -75,7 +75,7 @@
     <div>
         <?php
         Table::create(array(
-            "dataSource" => $this->dataStore('alldata_Orders'),
+            "dataSource" => $this->dataStore('alldata_Emails'),
             "headersExcelStyle" => [
                 'customerName' => [
                     'font' => [
