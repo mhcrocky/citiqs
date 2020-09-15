@@ -144,21 +144,21 @@
             $draw->setFillColor('black');
 			$drawemail->setFillColor('black');
 
-            // switch (strtolower($_SERVER['HTTP_HOST'])) {
-            //     case 'tiqs.com':
-            //         $draw->setFont('Helvetica');
-			// 		$drawemail->setFont('Helvetica');
-            //         break;
-            //     case 'loki-vm':
-            //     case '10.0.0.48':
-            //         $draw->setFont('Helvetica');
-			// 		$drawemail->setFont('Helvetica');
-            //         break;
-            //     default:
-            //         $draw->setFont('Arial');
-			// 		$drawemail->setFont('Arial');
-            //         break;
-            // }
+            switch (strtolower($_SERVER['HTTP_HOST'])) {
+                case 'tiqs.com':
+                    $draw->setFont('Helvetica');
+					$drawemail->setFont('Helvetica');
+                    break;
+                case 'loki-vm':
+                case '10.0.0.48':
+                    $draw->setFont('Helvetica');
+					$drawemail->setFont('Helvetica');
+                    break;
+                default:
+                    $draw->setFont('Arial');
+					$drawemail->setFont('Arial');
+                    break;
+            }
 
             // $draw->setFontWeight(551);
             // $draw->setStrokeWidth(5);
