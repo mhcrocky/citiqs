@@ -46,11 +46,7 @@
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>    
 </head>
 <body>
-<?php
-//var_dump($_SESSION['vendor']['vendorId']);
-//die();
-?>
-   <header class="header">
+    <header class="header">
         <nav class="header-nav">
 			<a href="<?php echo $this->baseUrl; ?>loggedin" class="nav-logo">
                 <img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogonew.png" alt="">
@@ -58,14 +54,15 @@
             </a>
             <div class="header-menu text-orange" id="header-menu">
 				<?php
-				$switchfinance = 1;
-				if($_SESSION['vendor']['vendorId'] === 1162 ){
+                $switchfinance = 1;
+
+				if ($_SESSION['userId'] === '1162' ){
 					$switchfinance = 0;
 				}
 				?>
 
 				<?php
-				if(	$_SESSION['vendor']['vendorId'] === 5655 ){
+				if($_SESSION['userId'] === '5655' ){
 					$switchfinance = 0;
 				}
 				?>
