@@ -241,7 +241,7 @@
             return;
         }
 
-        public static function returnMakeNewOrderElements(?array $ordered): array
+        public static function returnMakeNewOrderElements(?array $ordered, array $vendor, array $mainProducts, array $rawAddons): array
         {
             $shoppingList = '';
             $checkoutList = '';
@@ -256,7 +256,14 @@
                     $remarkProductId = (isset($product['remark'])) ? 'remark_' . $count . '_' . $product['productId'] : '0';
                     $onlyOne = ($product['onlyOne'] === '1') ? true : false;
 
-                    $checkoutList .= '<div id="' . $randomId . '" class="orderedProducts" style="padding-left: 0px; position:relative; top:20px">';
+                    $checkoutList .= '<div id="' . $randomId . '" class="orderedProducts" ';
+                    if ($count === 1) {
+                        $checkoutList .= 'style="padding-left:0px;"';
+                    } else {
+                        $checkoutList .= 'style="padding-left:0px; position:relative; top:40px"';
+                    }
+                    
+                    $checkoutList .= '>';
                     $checkoutList .=    '<div class="alert alert-dismissible" style="padding-left: 0px; margin-bottom: 10px;">';
                     $checkoutList .=        '<a href="#" onclick="removeOrdered(\'' . $randomId . '\')" class="close" data-dismiss="alert" aria-label="close">×</a>';
                     $checkoutList .=        '<h4>' . $product['name'] . ' (€' . $product['price'] . ')</h4>';
@@ -311,7 +318,33 @@
                         $checkoutList .=        '</div>';
 
                     }
-
+                    
+                    if ($vendor['showAllergies'] === '1')  {
+                        $productesInCategory = $mainProducts[$product['category']];
+                        #var_dump($productesInCategory);
+                        foreach ($productesInCategory as $categoryProduct) {
+                            if ($categoryProduct['productId'] === $product['productId']) {
+                                $categoryProduct['allergies'] = unserialize($categoryProduct['allergies']);
+                                if (!empty($categoryProduct['allergies']['productAllergies'])) {
+                                    $productAllergies = $categoryProduct['allergies']['productAllergies'];
+                                    $baseUrl = base_url();
+                                    $checkoutList .= '<div style="margin: 5px 0px;" class="col-lg-12 col-sm-12">';
+                                    foreach ($productAllergies as $allergy) {
+                                        $checkoutList .=    '<img
+                                                                src="'. $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy) . '.png"
+                                                                alt="' . $allergy . '"
+                                                                height="24px"
+                                                                width="24px"
+                                                                style="display:inline; margin:0px 2px 3px 0px"
+                                                            />';
+                                    }
+                                    $checkoutList .= '</div>';
+                                }
+                                break;
+                            }
+                        }
+                    }
+                
                     if ($remarkProductId !== '0') {
 
                         $checkoutList .=        '<h6>Remark</h6>';
@@ -329,8 +362,8 @@
                     $checkoutList .=        '</div>';
 
                     if (isset($product['addons'])) {
-                        $checkoutList .=        '<div class="modal__adittional">';
-                        $checkoutList .=            '<h6>Additional</h6>';
+                        $checkoutList .=        '<div class="modal__adittional"  style="position:relative; top: 15px;">';
+                        $checkoutList .=            '<h6 style="margin-top:10px">Additional</h6>';
                         $checkoutList .=            '<div class="modal__adittional__list">';
 
                         $countAddons = 0;
@@ -344,6 +377,26 @@
                             $checkoutList .=                    '<input type="checkbox" class="form-check-input checkAddons" onchange="toggleElement(this)" checked>&nbsp;';
                             $checkoutList .=                    $addon['name'] . ' € ' . $addon['price'] . ' (min per unit ' . $addon['initialMinQuantity'] . ' / max  per unit ' . $addon['initialMaxQuantity'] . ')';
                             $checkoutList .=                '</label>';
+
+                            if ($vendor['showAllergies'] === '1')  {
+                                $addon['allergies'] = unserialize($rawAddons[$addonExtendedId][0]['allergies']);
+                                if (!empty($addon['allergies']['productAllergies'])) {
+                                    $addonAllergies = $addon['allergies']['productAllergies'];
+                                    $baseUrl = base_url();
+                                    $checkoutList .= '<div>';
+                                    foreach ($addonAllergies as $allergy) {
+                             
+                                        $checkoutList .= '<img
+                                                            src="' . $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy) . '.png"
+                                                            alt="' . $allergy  . '"
+                                                            height="24px"
+                                                            width="24px"
+                                                            style="display:inline; margin:0px 2px 3px 0px"
+                                                        />';
+                                    }
+                                    $checkoutList .= '</div>';
+                                }
+                            }
                             $checkoutList .=            '</div>';
                             $checkoutList .=            '<div class="modal-footer__quantity col-lg-4 col-sm-12" style="visibility: visible; margin-bottom: 3px;">';
                             $checkoutList .=                '<span 

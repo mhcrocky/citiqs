@@ -134,7 +134,7 @@
                 $data['ordered'] = $ordered;
                 $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
             } elseif ($_SESSION['vendor']['preferredView'] === $this->config->item('newMakeOrderView')) {
-                $ordered = Utility_helper::returnMakeNewOrderElements($ordered);
+                $ordered = Utility_helper::returnMakeNewOrderElements($ordered, $data['vendor'], $data['mainProducts'], $data['addons']);
                 $data['shoppingList'] = $ordered['shoppingList'];
                 $data['checkoutList'] = $ordered['checkoutList'];
                 $data['uploadProductImageFolder'] = $this->config->item('uploadProductImageFolder');

@@ -213,7 +213,6 @@
                                     <div class='modal-header__details'>
                                         <h4 class="modal-header__title"><?php echo $productDetails['name']; ?></h4>
                                         <h4 class='modal-price'>&euro; <?php echo $productDetails['price']; ?></h4>
-
                                     </div>
                                     <h6 class="modal-header__description"><?php echo $productDetails['shortDescription']; ?></h6>
                                     <p class='modal__category'>Category: <a href='#'><?php echo $product['category']; ?></a></p>
@@ -223,7 +222,8 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="modal__content" id="product_<?php echo $product['productId']; ?>">
+                                <div class="modal__content" id="product_<?php echo $product['productId']; ?>" style="position:relative; top:20px">
+
                                     <div class="modal__adittional">
                                         <?php if ($product['onlyOne'] === '0') { ?>
                                             <h6>Quantity</h6>
@@ -276,6 +276,28 @@
                                                     </span>
                                                 </div>
                                         <?php } ?>
+                                        <?php
+                                            if ($vendor['showAllergies'] === '1')  {
+                                                $product['allergies'] = unserialize($product['allergies']);
+                                                if (!empty($product['allergies']['productAllergies'])) {
+                                                    $productAllergies = $product['allergies']['productAllergies'];
+                                                    $baseUrl = base_url();
+                                                    echo '<div style="margin: 5px 0px;" class="col-lg-12 col-sm-12">';
+                                                    foreach ($productAllergies as $allergy) {
+                                                        ?>
+                                                            <img
+                                                                src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
+                                                                alt="<?php echo $allergy; ?>"
+                                                                height='24px'
+                                                                width='24px'
+                                                                style="display:inline; margin:0px 2px 3px 0px"
+                                                            />
+                                                        <?php
+                                                    }
+                                                    echo '</div>';
+                                                }
+                                            }
+                                        ?>
                                         <?php if ($product['addRemark'] === '1') { ?>
                                             <h6 class="remark">Remark</h6>
                                             <div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">
@@ -291,7 +313,7 @@
                                     <?php if ($product['addons']) { ?>
                                         <div class="modal__adittional" style="position:relative; top: 15px;">
                                             <h6>Additional</h6>
-                                            <div class="modal__adittional__list">
+                                            <div class="modal__adittional__list"  style="position:relative; top: 15px;">
                                                 <?php
                                                     $productAddons = $product['addons'];
                                                     $countAddons = 0;
@@ -323,7 +345,7 @@
                                                                         foreach ($addonAllergies as $allergy) {
                                                                             ?>
                                                                                 <img
-                                                                                    src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>"
+                                                                                    src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
                                                                                     alt="<?php echo $allergy; ?>"
                                                                                     height='24px'
                                                                                     width='24px'
