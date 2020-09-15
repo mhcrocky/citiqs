@@ -358,7 +358,9 @@ function updateSessionRemarkMainProduct(element) {
 }
 
 function checkUserNewsLetter(emailInputId) {
-    let email = document.getElementById(emailInputId).value;
+    let email = document.getElementById(emailInputId);
+    if(!email) return;
+    email = email.value;
     if (email.includes('@')) {
         let emailParts = email.split('@');
         if (!emailParts[1].includes('.')) return;
