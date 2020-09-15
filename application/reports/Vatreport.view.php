@@ -27,7 +27,6 @@
 	<div class="col-half background-apricot height" style="text-align:left; font-size: smaller" >
 		<div class="align-top width-650" style="margin-bottom: 30px">
 			<div class="report-content" style="margin-top: 30px">
-
 				<form id="selectdate" method="post" >
 					<div class="mb-35" >
 						<?php
@@ -40,19 +39,8 @@
 					<div class="form-group text-center">
 						<button class="btn btn-success" style="border-radius: 50px; background-color: #72b19f"><i class="glyphicon glyphicon-refresh"></i> LOAD</button>
 					</div>
-
 					<button type="submit" formaction="<?php echo base_url() . 'Report_table/export/' . $_SESSION['userId']; ?>" class="btn btn-primary">Download EXCEL</button>
-
-
-
 				</form>
-
-<!---->
-<!--				":start"=>$this->params["dateRange"][0],-->
-<!--				":end"=>$this->params["dateRange"][1]-->
-
-
-
 
 				<div class="report-content" style="margin-top: 30px">
 					<?php
@@ -164,10 +152,34 @@
 				</div>
 		</div>
 		<!--		</form>-->
-		</div>
 
-		<div class="col-half background-apricot height" style="text-align:left; font-size: smaller" >
-				<div class="align-top width-650" style="margin-bottom: 30px">
+				<div class="align-top width-650" style="margin-bottom: 30px; ">
+					<div class="mb-35" style="margin-top: 30px; margin-left: -10px;">
+						<?php
+						\koolreport\amazing\ChartCard::create(array(
+								"title"=>"VAT PER PERCENTAGE",
+								"value"=>$this->dataStore("VATcategorypervatcode")->sum("VAT"),
+								"format"=>array(
+										"value"=>array(
+												"type"=>"number",
+												"decimals"=>2,              // Number of decimals to show
+												"decimalPoint"=>",",        // Decimal point character
+												"thousand_sep"=>".",  // Thousand separator
+												"prefix"=>"€ ",
+										)
+								),
+								"cssClass"=>array(
+										"icon"=>"fa fa-calendar"
+								),
+								"cssStyle"=> [
+										"card"=>"background-color:#72b19f",
+										"title"=>"font-weight:bold",
+										"value"=>"font-style:italic",
+										"icon"=>"font-size:24px;color:white"
+								],
+						));
+						?>
+					</div>
 					<div class="report-content" style=" margin-left: -10px;">
 						<?php
 						DataTables::create(array(
@@ -260,12 +272,43 @@
 						?>
 					</div>
 				</div>
+
+
+
+
 			<div class="align-top width-650" style="margin-bottom: 30px">
+				<div class="mb-35" style="margin-top: 30px; margin-left: -10px;">
+					<?php
+					\koolreport\amazing\ChartCard::create(array(
+							"title"=>"AMOUNTS PER PAYMENT TYPE",
+							"value"=>$this->dataStore("Paymentpertype")->sum("orderTotalAmount"),
+							"format"=>array(
+									"value"=>array(
+											"type"=>"number",
+											"decimals"=>2,              // Number of decimals to show
+											"decimalPoint"=>",",        // Decimal point character
+											"thousand_sep"=>".",  // Thousand separator
+											"prefix"=>"€ ",
+									)
+							),
+							"cssClass"=>array(
+									"icon"=>"fa fa-calendar"
+							),
+							"cssStyle"=> [
+									"card"=>"background-color:#72b19f",
+									"title"=>"font-weight:bold",
+									"value"=>"font-style:italic",
+									"icon"=>"font-size:24px;color:white"
+							],
+					));
+					?>
+				</div>
 				<div class="report-content" style=" margin-left: -10px; ">
 					<?php
 					DataTables::create(array(
 						"dataSource"=>$this->dataStore("Paymentpertype"),
 						"showFooter"=>"bottom",
+							"responsive"=>true,
 						"width"=>"600px",
 						"cssClass"=>array(
 							"table"=>"dt-responsive table table-striped table-bordered",
@@ -360,12 +403,14 @@
 					?>
 				</div>
 			</div>
+
 			<div class="align-top width-650" style="margin-bottom: 30px">
 				<div class="report-content" style=" margin-left: -10px; ">
 					<?php
 					DataTables::create(array(
 							"dataSource"=>$this->dataStore("ServiceFEEVAT"),
 							"showFooter"=>"bottom",
+							"responsive"=>true,
 							"width"=>"600px",
 							"cssClass"=>array(
 									"table"=>"dt-responsive table table-striped table-bordered",
@@ -471,19 +516,34 @@
 
 			</div>
 
-			<div class="align-top width-650" style="margin-bottom: 30px">
+	</div>
+
+	<div class="col-half background-apricot height-100" style="text-align:left; font-size: smaller" >
+
+
+	<div class="align-top width-650" style="margin-bottom: 30px; margin-top: 30px">
 				<div class="report-content" style=" margin-left: -10px; ">
-					<form>
-						<div class="form-group">
-							<button type="submit" class="btn btn-primary" formaction="<?php echo base_url() . 'Report_table/export2/' . $_SESSION['userId']; ?>">
-								Download Excel
-							</button>
+					<form id="selectdateemails" method="post" >
+						<div class="mb-35" >
+							<?php
+							$dateRange= DateRangePicker::create(array(
+									"format"=>"D/M/YYYY",
+									"name"=>"dateRangeEmails"
+							))
+							?>
+						</div>
+						<div class="form-group text-center">
+							<button class="btn btn-success" style="border-radius: 50px; background-color: #72b19f"><i class="glyphicon glyphicon-refresh"></i> LOAD</button>
+						</div>
+						<div class="form-group text-left">
+							<button type="submit" formaction="<?php echo base_url() . 'Report_table/exportemails1/' . $_SESSION['userId']; ?>" class="btn btn-primary">Download EXCEL</button>
 						</div>
 					</form>
 					<?php
 					DataTables::create(array(
-							"dataSource"=>$this->dataStore("alldata_Orders"),
+							"dataSource"=>$this->dataStore("alldata_Emails"),
 							"showFooter"=>"bottom",
+							"responsive"=>true,
 							"width"=>"600px",
 							"cssClass"=>array(
 									"table"=>"dt-responsive table table-striped table-bordered",

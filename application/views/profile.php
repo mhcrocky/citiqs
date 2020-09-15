@@ -72,6 +72,17 @@
 									</div>
 								</div>
 							</div>
+							<div>
+								<div>
+									<p style="font-family: caption-light; padding: 10px">
+										<?=$this->language->line("RECEIPT-V031","E-MAIL ADDRESS FOR RECEIPT");?>
+									</p>
+
+									<div class="form-group has-feedback">
+										<input style="border-radius: 50px; border:none" type="text" class="form-control" id="email" name="receiptEmail" placeholder="Email for receipt" value="<?php echo strval($vendor['receiptEmail']); ?>"  />
+									</div>
+								</div>
+							</div>
 							<?php if ($user->IsDropOffPoint === '1') { ?>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
@@ -333,6 +344,20 @@
 						<input type="radio" id="requireMobileYes" name="vendor[requireMobile]" value="1" <?php if ($vendor['requireMobile'] === '1') echo 'checked'; ?> />
 						<label class="radio-inline" for="requireMobileNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="requireMobileNo" name="vendor[requireMobile]" value="0" <?php if ($vendor['requireMobile'] === '0') echo 'checked'; ?> />
+					</div>
+					<h4>REQUIRE USER EMAIL ON CHECKOUT FORM</h4>
+					<div class="form-group mb-35">
+						<label class="radio-inline" for="requireEmailYes">Yes</label>
+						<input type="radio" id="requireEmailYes" name="vendor[requireEmail]" value="1" <?php if ($vendor['requireEmail'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="requireEmailNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="requireEmailNo" name="vendor[requireEmail]" value="0" <?php if ($vendor['requireEmail'] === '0') echo 'checked'; ?> />
+					</div>
+					<h4>REQUIRE USER NAME ON CHECKOUT FORM</h4>
+					<div class="form-group mb-35">
+						<label class="radio-inline" for="requireNameYes">Yes</label>
+						<input type="radio" id="requireNameYes" name="vendor[requireName]" value="1" <?php if ($vendor['requireName'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="requireNameNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="requireNameNo" name="vendor[requireName]" value="0" <?php if ($vendor['requireName'] === '0') echo 'checked'; ?> />
 					</div>
 					<h4>REQUIRE REGISTRATION FROM VISITOR</h4>
 					<div class="form-group mb-35">

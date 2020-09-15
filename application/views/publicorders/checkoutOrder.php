@@ -15,23 +15,36 @@
                     <span>Checkout</span>
                 </div>
                 <div class="row">
-                    <div class="form-group col-sm-6">
-                        <label for="firstNameInput">Name (<sup>*</sup>)</label>
-                        <input id="firstNameInput" class="form-control" name="user[username]" value="<?php echo $username; ?>" type="text" placeholder="Name" required />
-                    </div>
-                    <div class="form-group col-sm-6">
-                        <label for="emailAddressInput">Email address <sup>*</sup></label>
-                        <input
-                            type="email"
-                            id="emailAddressInput"
-                            class="form-control"
-                            name="user[email]"
-                            value="<?php echo $email; ?>"
-                            placeholder="Email address"
-                            required
-                            oninput="checkUserNewsLetter(this.id)"
-                        />
-                    </div>
+                    <?php if ($vendor['requireName'] === '1') { ?>
+                        <div class="form-group col-sm-6">
+                            <label for="firstNameInput">Name (<sup>*</sup>)</label>
+                            <input id="firstNameInput" class="form-control" name="user[username]" value="<?php echo $username; ?>" type="text" placeholder="Name" required />
+                        </div>
+                    <?php } else { ?>
+                        <input name="user[username]" value="<?php echo $vendor['vendorName']; ?>" type="text" readonly hidden required />
+                    <?php } ?>
+                    <?php
+                        if ($vendor['requireEmail'] === '1') {
+                            ?>
+                            <div class="form-group col-sm-6">
+                                <label for="emailAddressInput">Email address <sup>*</sup></label>
+                                <input
+                                    type="email"
+                                    id="emailAddressInput"
+                                    class="form-control"
+                                    name="user[email]"
+                                    value="<?php echo $email; ?>"
+                                    placeholder="Email address"
+                                    required
+                                    oninput="checkUserNewsLetter(this.id)"
+                                />
+                            </div>
+                            <?php
+                        } else {
+                            $email = !empty($vendor['receiptEmail']) ? $vendor['receiptEmail'] : $vendor['vendorEmail'];
+                        ?>
+                        <input name="user[email]" value="<?php echo $email; ?>" type="text" readonly hidden required />
+                    <?php } ?>
                     <!-- <div class="form-group col-sm-6" style="display:none">
                         <label for="country-code">Country Code <sup>*</sup></label>
                         <select name="user[country]" class='form-control'>

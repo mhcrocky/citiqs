@@ -46,15 +46,37 @@
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>    
 </head>
 <body>
-   <header class="header">
+    <header class="header">
         <nav class="header-nav">
 			<a href="<?php echo $this->baseUrl; ?>loggedin" class="nav-logo">
                 <img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogonew.png" alt="">
                 <div></div>
             </a>
             <div class="header-menu text-orange" id="header-menu">
+				<?php
+                $switchfinance = 1;
+
+				if ($_SESSION['userId'] === '1162' ){
+					$switchfinance = 0;
+				}
+				?>
+
+				<?php
+				if($_SESSION['userId'] === '5655' ){
+					$switchfinance = 0;
+				}
+				?>
+
+				<?php
+				if($switchfinance === 1 ){
+				?>
 				<a href="<?php echo $this->baseUrl; ?>vatreport"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/vatdashboardnew.png" title="FINANCIAL"/></a>
 				<a href="<?php echo $this->baseUrl; ?>dayreport"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/dashboardnew.png" title="DASHBOARD"/></a>
+				<?php
+				}
+				?>
+
+
 				<a href="<?php echo $this->baseUrl; ?>warehouse"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/reports.png" title="REPORTS"/></a>
                 <a href="<?php echo $this->baseUrl; ?>product_categories"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/category.png" title="CATEGORY"/></a>
                 <a href="<?php echo $this->baseUrl; ?>product_types"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/types.png" title="TYPES"/></a>

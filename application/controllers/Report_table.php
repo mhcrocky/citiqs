@@ -23,32 +23,41 @@ class Report_table extends BaseControllerWeb
 
     function export($vendorId)
     {
-
-//        $dateRange1 = $this->input->post('dateRange', true);
-		$report = new Vatreport([
+    	$report = new Vatreport([
 			'vendorId' => $vendorId,
 			'dateRange' => $dateRange
-        ]);
-		$report->run()->exportToCSV(array(
+		]);
+		$report->run()->exportToXLSX(array(
 			"dataStore" => array(
-				'alldata_Orders' => array(
+				'alldata_Orders')
+			)
+		)
+			->toBrowser("myreport.xlsx");
+	}
+
+	function exportemails($vendorId)
+	{
+		$report = new Vatreport([
+			'vendorId' => $vendorId,
+			'dateRange' => $dateRangeEmails
+		]);
+		$report->run()->exportToXLSX(array(
+			"dataStore" => array(
+				'alldata_Emails' => array(
 					"columns"=>array(
 						0,1
 					) )
-				)
-			))
-		->toBrowser("myreport.csv");
+			)
+		))
+			->toBrowser("myemails.xlsx");
+	}
 
-    }
-
-	function export2($vendorId)
+	function exportemails1($vendorId)
 	{
-//		$report = new Vatreport();
+
 		$report = new Vatreport([
 			'vendorId' => $vendorId,
-			'dateRange' => $dateRange
-//			"start"=>$this->params["dateRange"][0],
-//			"end"=>$this->params["dateRange"][1]
+			'dateRange' => $dateRangeEmails
 		]);
 		$report->run()->exportToExcel('Vatreport')->toBrowser("myreport.xlsx");
 	}
