@@ -425,6 +425,7 @@
                     'tbl_shop_products.productImage AS productImage',
                     'tbl_shop_products.onlyOne AS onlyOne',
                     'tbl_shop_products.addRemark AS addRemark',
+                    'tbl_shop_products.allergies AS allergies',
                     'tbl_shop_categories.category',
                     'tbl_shop_categories.id AS categoryId',
                     'tblShopAddons.addons AS addons'
@@ -467,7 +468,8 @@
                                     \'' .  $concatSeparator . '\', tbl_shop_categories.category,
                                     \'' .  $concatSeparator . '\', tbl_shop_products.active,
                                     \'' .  $concatSeparator . '\', IF(CHAR_LENGTH(' . $this->table . '.longDescription) > 0, ' . $this->table . '.longDescription, ""),
-                                    \'' .  $concatSeparator . '\', tbl_shop_products.addRemark
+                                    \'' .  $concatSeparator . '\', tbl_shop_products.addRemark,
+                                    \'' .  $concatSeparator . '\', IF(CHAR_LENGTH(tbl_shop_products.allergies) > 0, tbl_shop_products.allergies, "")
                                     ORDER BY ' . $this->table. '.id DESC
                                     SEPARATOR "'. $concatGroupSeparator . '"
                                 ) AS productDetails
@@ -575,7 +577,8 @@
                     'category'              => $details[11],
                     'activeStatus'          => $details[12],
                     'longDescription'       => $details[13],
-                    'addRemark'       => $details[14],
+                    'addRemark'             => $details[14],
+                    'allergies'             => $details[15],
                 ];
                 if ($collect['productTypeIsMain'] === '0') {
                     array_push($addons, $collect);

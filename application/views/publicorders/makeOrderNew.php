@@ -36,7 +36,8 @@
                                 </div>
                                 <div class="shop__item-list">
                                     <?php
-                                        foreach ($products as $product) { $productDetails = reset($product['productDetails']); ?>
+                                        foreach ($products as $product) {
+                                            $productDetails = reset($product['productDetails']); ?>
                                             <div class="shop__single-item" data-toggle="modal" data-target="#single-item-details-modal<?php echo $product['productId']; ?>">
                                                 <?php if ($vendor['showProductsImages'] === '1') { ?>
                                                     <div class="shop__single-item__image">                                                        
@@ -53,6 +54,28 @@
                                                 <div class="shop__single-item__info">
                                                     <strong class='shop__single-item__info--title'><?php echo $productDetails['name']; ?></strong>
                                                     <p class='shop__single-item__info--description'><?php echo $productDetails['shortDescription']; ?></p>
+                                                    <?php
+                                                        if ($vendor['showAllergies'] === '1')  {
+                                                            $product['allergies'] = unserialize($product['allergies']);
+                                                            if (!empty($product['allergies']['productAllergies'])) {
+                                                                $productAllergies = $product['allergies']['productAllergies'];
+                                                                $baseUrl = base_url();
+                                                                echo '<div>';
+                                                                foreach ($productAllergies as $allergy) {
+                                                                    ?>
+                                                                        <img
+                                                                            src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>"
+                                                                            alt="<?php echo $allergy; ?>"
+                                                                            height='24px'
+                                                                            width='24px'
+                                                                            style="display:inline; margin:0px 2px 3px 0px"
+                                                                        />
+                                                                    <?php
+                                                                }
+                                                                echo '</div>';
+                                                            }
+                                                        }
+                                                    ?>
                                                 </div>
                                                 <div class="shop__single-item__price">
                                                     <span><?php echo $productDetails['price']; ?></span>
@@ -190,6 +213,7 @@
                                     <div class='modal-header__details'>
                                         <h4 class="modal-header__title"><?php echo $productDetails['name']; ?></h4>
                                         <h4 class='modal-price'>&euro; <?php echo $productDetails['price']; ?></h4>
+
                                     </div>
                                     <h6 class="modal-header__description"><?php echo $productDetails['shortDescription']; ?></h6>
                                     <p class='modal__category'>Category: <a href='#'><?php echo $product['category']; ?></a></p>
@@ -275,7 +299,8 @@
                                                         $countAddons++;
                                                         $addonId = $productAddon[0][0];
                                                         $addonAllowedQuantity = $productAddon[0][1];
-                                                        $remarkAddonId = $addons[$addonId][0]['addRemark'] === '1' ? $remarkProductId . '_' . $countAddons : '0';
+                                                        $addon = $addons[$addonId][0];
+                                                        $remarkAddonId = $addon['addRemark'] === '1' ? $remarkProductId . '_' . $countAddons : '0';                                                        
                                                         ?>
                                                         <div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">
                                                             <label class="form-check-label">
@@ -284,10 +309,33 @@
                                                                     class="form-check-input checkAddons"
                                                                     onchange="toggleElement(this)"
                                                                 />
-                                                                <?php echo $addons[$addonId][0]['name']; ?>
-                                                                &euro; <?php echo $addons[$addonId][0]['price']; ?>
+                                                                <?php echo $addon['name']; ?>
+                                                                &euro; <?php echo $addon['price']; ?>
                                                                 (min per unit 1 / max  per unit <?php echo $addonAllowedQuantity; ?>)
                                                             </label>
+                                                            <?php
+                                                                if ($vendor['showAllergies'] === '1')  {
+                                                                    $addon['allergies'] = unserialize($addon['allergies']);
+                                                                    if (!empty($addon['allergies']['productAllergies'])) {
+                                                                        $addonAllergies = $addon['allergies']['productAllergies'];
+                                                                        $baseUrl = base_url();
+                                                                        echo '<div>';
+                                                                        foreach ($addonAllergies as $allergy) {
+                                                                            ?>
+                                                                                <img
+                                                                                    src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>"
+                                                                                    alt="<?php echo $allergy; ?>"
+                                                                                    height='24px'
+                                                                                    width='24px'
+                                                                                    style="display:inline; margin:0px 2px 3px 0px"
+                                                                                />
+                                                                            <?php
+                                                                        }
+                                                                        echo '</div>';
+                                                                    }
+                                                                }
+                                                            ?>
+  
                                                         </div>
                                                         <div
                                                             class="modal-footer__quantity col-lg-4 col-sm-12"
@@ -305,11 +353,11 @@
                                                                 type="number"
                                                                 min="1"
                                                                 max="<?php echo $addonAllowedQuantity; ?>"
-                                                                data-addon-price="<?php echo $addons[$addonId][0]['price']; ?>"
-                                                                data-addon-name="<?php echo $addons[$addonId][0]['name']; ?>"
-                                                                data-category="<?php echo $addons[$addonId][0]['category']; ?>"
+                                                                data-addon-price="<?php echo $addon['price']; ?>"
+                                                                data-addon-name="<?php echo $addon['name']; ?>"
+                                                                data-category="<?php echo $addon['category']; ?>"
                                                                 data-product-extended-id="<?php echo $productDetails['productExtendedId']; ?>"
-                                                                data-addon-extended-id="<?php echo $addons[$addonId][0]['productExtendedId']; ?>"
+                                                                data-addon-extended-id="<?php echo $addon['productExtendedId']; ?>"
                                                                 data-initial-min-quantity="1"
                                                                 data-initial-max-quantity="<?php echo $addonAllowedQuantity; ?>"
                                                                 data-min = "1"
@@ -330,7 +378,7 @@
                                                                 +
                                                             </span>
                                                         </div>
-                                                        <?php if ($addons[$addonId][0]['addRemark'] === '1') { ?>
+                                                        <?php if ($addon['addRemark'] === '1') { ?>
                                                             <div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">
                                                                 <h6 style="margin-top:0px;">Remark</h6>
                                                                 <div class="col-lg-12 col-sm-12" style="margin-bottom:3px">
