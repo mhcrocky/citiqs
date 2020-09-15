@@ -187,6 +187,7 @@
                 'pagination' => $pagination,
                 'dayOfWeeks' => $this->config->item('weekDays'),
                 'allergies' => $this->config->item('allergies'),
+                'showAllergies' => $this->shopvendor_model->setProperty('vendorId', $userId)->getProperty('showAllergies')
             ];
 
             $this->loadViews('warehouse/products', $this->global, $data, null, 'headerWarehouse');

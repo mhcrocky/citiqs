@@ -290,11 +290,13 @@
                                             <i class="fa fa-anchor"></i>
                                         </span>
                                     </div>
-                                    <div class="iconWrapper">
-                                        <span class="fa-stack fa-2x edit-icon btn-edit-item" data-toggle="modal" data-target="#allergies<?php echo $product['productId']; ?>"  title="Click to select allergie(s)">
-                                            <i class="fa fa-exclamation-triangle"></i>
-                                        </span>
-                                    </div>
+                                    <?php if ($showAllergies === '1') { ?>
+                                        <div class="iconWrapper">
+                                            <span class="fa-stack fa-2x edit-icon btn-edit-item" data-toggle="modal" data-target="#allergies<?php echo $product['productId']; ?>"  title="Click to select allergie(s)">
+                                                <i class="fa fa-exclamation-triangle"></i>
+                                            </span>
+                                        </div>
+                                    <?php } ?>
                                     <?php if ($product['productActive'] === '1') { ?>
                                         <div title="Click to block product" class="iconWrapper delete-icon-wrapper">
                                             <a href="<?php echo $this->baseUrl . 'warehouse/editProduct/' . $product['productId'] .'/0'; ?>" >
@@ -502,48 +504,49 @@
                                     </div>
                                 <?php } ?>
                                 <!-- ALLERGIES MODAL -->
-                                <div class="modal" id="allergies<?php echo $product['productId']; ?>" role="dialog">
-                                    <div class="modal-dialog">
+                                <?php if ($showAllergies === '1') { ?>
+                                    <div class="modal" id="allergies<?php echo $product['productId']; ?>" role="dialog">
+                                        <div class="modal-dialog">
 
-                                        <form method="post" action="warehouse/addProductAllergies/<?php echo  $details['productExtendedId']; ?>">
-                                            <div class="modal-content">
-                                            <?php
-                                            $product['allergies'] = unserialize($product['allergies']);
-                                        ?>
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    <h4 class="modal-title">
-                                                        Set allergie(s) for product "<?php echo $details['name']; ?>"
-                                                    </h4>
+                                            <form method="post" action="warehouse/addProductAllergies/<?php echo  $details['productExtendedId']; ?>">
+                                                <div class="modal-content">
+                                                <?php
+                                                $product['allergies'] = unserialize($product['allergies']);
+                                            ?>
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">
+                                                            Set allergie(s) for product "<?php echo $details['name']; ?>"
+                                                        </h4>
+                                                    </div>
+                                                    <div class="modal-body row" style="margin-left:5px">
+                                                        <!-- Modal content-->
+                                                        <?php foreach ($allergies as $allergy) {?>
+                                                                <label class="checkbox-inline" >
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        name="productAllergies[]"
+                                                                        value="<?php echo $allergy; ?>"
+                                                                        <?php
+                                                                            if (!empty($product['allergies']['productAllergies']) && in_array($allergy, $product['allergies']['productAllergies'])) {
+                                                                                echo 'checked';
+                                                                            }
+                                                                        ?>
+                                                                    />
+                                                                    <?php echo ucfirst($allergy); ?>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                </label>
+                                                        <?php } ?>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <input type="submit" class="btn btn-primary" value="Submit" />
+                                                    </div>
                                                 </div>
-                                                <div class="modal-body row" style="margin-left:5px">
-                                                    <!-- Modal content-->
-                                                    <?php foreach ($allergies as $allergy) {?>
-                                                            <label class="checkbox-inline" >
-                                                                <input
-                                                                    type="checkbox"
-                                                                    name="productAllergies[]"
-                                                                    value="<?php echo $allergy; ?>"
-                                                                    <?php
-                                                                        if (!empty($product['allergies']['productAllergies']) && in_array($allergy, $product['allergies']['productAllergies'])) {
-                                                                            echo 'checked';
-                                                                        }
-                                                                    ?>
-                                                                />
-                                                                <?php echo ucfirst($allergy); ?>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                            </label>
-                                                    <?php } ?>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    <input type="submit" class="btn btn-primary" value="Submit" />
-                                                </div>
-                                            </div>
-                                        </form>
-                                        
+                                            </form>
+                                            
+                                        </div>
                                     </div>
-                                </div>
-
+                                <?php } ?>
                                 <!-- ITEM EDITOR -->                                
                                 <div class="item-editor theme-editor" id="editProductProductId<?php echo  $product['productId']; ?>">
                                     <div class="theme-editor-header d-flex justify-content-between">

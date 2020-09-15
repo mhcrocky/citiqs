@@ -429,6 +429,13 @@
 						<label class="radio-inline" for="showProductsImagesNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="showProductsImagesNo" name="vendor[showProductsImages]" value="0" <?php if ($vendor['showProductsImages'] === '0') echo 'checked'; ?> />
 					</div>
+					<h4>SHOW PRODUCT ALLERGIES</h4>
+					<div class="form-group mb-35">
+						<label class="radio-inline" for="showAllergiesYes">Yes</label>
+						<input type="radio" id="showAllergiesYes" name="vendor[showAllergies]" value="1" <?php if ($vendor['showAllergies'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="showAllergiesNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="showAllergiesNo" name="vendor[showAllergies]" value="0" <?php if ($vendor['showAllergies'] === '0') echo 'checked'; ?> />
+					</div>
 					<br/>
 					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />

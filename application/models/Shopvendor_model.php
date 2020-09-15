@@ -31,6 +31,7 @@
         public $defaultProductsImage;
         public $requireEmail;
         public $requireName;
+        public $showAllergies;
 
         public $bancontact;
         public $ideal;
@@ -100,6 +101,7 @@
             if (isset($data['defaultProductsImage']) && !Validate_data_helper::validateString($data['defaultProductsImage'])) return false;
             if (isset($data['requireEmail']) && !($data['requireEmail'] === '1' || $data['requireEmail'] === '0')) return false;
             if (isset($data['requireName']) && !($data['requireName'] === '1' || $data['requireName'] === '0')) return false;
+            if (isset($data['showAllergies']) && !($data['showAllergies'] === '1' || $data['showAllergies'] === '0')) return false;
 
             return true;
         }
@@ -136,6 +138,7 @@
                     $this->table . '.defaultProductsImage',
                     $this->table . '.requireEmail',
                     $this->table . '.requireName',
+                    $this->table . '.showAllergies',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',
