@@ -64,7 +64,7 @@
                                                                 foreach ($productAllergies as $allergy) {
                                                                     ?>
                                                                         <img
-                                                                            src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>"
+                                                                            src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
                                                                             alt="<?php echo $allergy; ?>"
                                                                             height='24px'
                                                                             width='24px'
