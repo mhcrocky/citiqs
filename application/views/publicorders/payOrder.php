@@ -160,23 +160,23 @@
                                             <?php if ($vendor['prePaid'] === '1') { ?>
                                                 <!-- <a href="<?php #echo base_url() . 'cashPayment/' . $this->config->item('orderNotPaid') . '/' . $this->config->item('prePaid'); ?>" class="paymentMethod method-card" > -->
                                                 <p class="paymentMethod method-card" data-toggle="modal" data-target="#prePaid">
-                                                    <img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Service by waiter" />
+                                                    <img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Pay at waiter" />
                                                     <?php if ($vendor['vendorId'] == THGROUP) { ?>
                                                         <span>Collect at the bar</span>
                                                     <?php } else { ?>
-                                                        <span>Service by waiter</span>
+                                                        <span>Pay at waiter</span>
                                                     <?php } ?>
                                                 </p>
                                             <?php } ?>
                                             <?php if ($vendor['postPaid'] === '1') { ?>
                                                 <!-- <a href="<?php #echo base_url() . 'cashPayment/' . $this->config->item('orderPaid') . '/' . $this->config->item('postPaid'); ?>" class="paymentMethod method-card" > -->
                                                 <p class="paymentMethod method-card" data-toggle="modal" data-target="#postPaid">
-                                                    <img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Service by waiter" />
+                                                    <img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Pay at waiter" />
                                                     
                                                     <?php if ($vendor['vendorId'] == THGROUP) { ?>
                                                         <span>Collect at the bar</span>
                                                     <?php } else { ?>
-                                                        <span>Service by waiter</span>
+                                                        <span>Pay at waiter</span>
                                                     <?php } ?>
                                                 </p>
                                             <?php } ?>
