@@ -335,7 +335,8 @@
                         vendorOne.zipcode as vendorZipcode,
                         vendorOne.city as vendorCity,
                         vendorOne.vat_number as vendorVAT,
-                        vendorOne.country as vendorCountry                        
+                        vendorOne.country as vendorCountry,
+                        vendorOne.receiptEmail as receiptEmail
                     FROM
                         tbl_shop_orders
                     INNER JOIN
@@ -429,7 +430,8 @@
                         vendorOne.zipcode as vendorZipcode,
                         vendorOne.city as vendorCity,
                         vendorOne.vat_number as vendorVAT,
-                        vendorOne.country as vendorCountry
+                        vendorOne.country as vendorCountry,
+                        vendorOne.receiptEmail as receiptEmail
                     FROM 
                         tbl_shop_orders
                     INNER JOIN
@@ -548,6 +550,8 @@
                         tbl_shop_orders.serviceFee AS serviceFee,
                         tbl_shop_orders.printStatus AS printStatus,
                         tbl_shop_orders.paymentType AS paymentType,
+                        tbl_shop_orders.waiterReceipt AS waiterReceipt,
+                        tbl_shop_orders.customerReceipt AS customerReceipt,
                         tbl_shop_spots.spotName,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
                         tbl_user.username AS buyerUserName,
@@ -562,7 +566,8 @@
                         vendorOne.city as vendorCity,
                         vendorOne.vat_number as vendorVAT,
                         vendorOne.country as vendorCountry,
-                        tbl_shop_vendors.serviceFeeTax as serviceFeeTax
+                        tbl_shop_vendors.serviceFeeTax as serviceFeeTax,
+                        vendorOne.receiptEmail as receiptEmail
                     FROM
                         tbl_shop_orders
                     INNER JOIN

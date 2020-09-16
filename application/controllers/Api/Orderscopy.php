@@ -37,8 +37,7 @@
 
 			$sendEmail = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->sendEmailWithReceipt();
 
-			if ($order['printStatus'] === '1' && !$sendEmail) return;
-			if ($order['printStatus'] === '0' && empty($order['paymentType'])) return;
+			if (!$sendEmail) return;
 
 			Utility_helper::logMessage($logFile, 'order vendor'.$order['vendorId']);
 
@@ -104,7 +103,8 @@
                     $draw->setFont('Helvetica');
 					$drawemail->setFont('Helvetica');
                     break;
-                default:
+				default:
+					if (ENVIRONMENT === 'development') break;
                     $draw->setFont('Arial');
 					$drawemail->setFont('Arial');
                     break;
@@ -571,7 +571,6 @@
 				$receiptemail = '';
 			}
                 
-            header('Content-type: image/png');
             // $image ->writeImage("peter.png");
 			//            $imageqr->destroy();
             $imagetext->destroy();
@@ -584,19 +583,28 @@
 			$imageprint->destroy();
             $draw->destroy();
 
-            if (!empty($order['paymentType'])) {
-                echo $resultpngemail;
+
+            if ($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid')) {
+				if ($order['waiterReceipt'] === '0') {
+					$email = $order['receiptEmail'];
+				} else {
+					if ($order['customerReceipt'] === '0') {
+						$email = $order['buyerEmail'];
+					}
+				}
+				header('Content-type: image/png');
+				echo $resultpngemail;
+			} else {
+				$email = $order['buyerEmail'];
 			}
 
 			// Utility_helper::logMessage($logFile, 'printer echo');
 			// // echo $resultpngprinter;
 
-			
 			// SEND EMAIL
-			$subject= "tiqs-Order : ". $order['orderId'] ;
-			$email = $order['buyerEmail'];
-			Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);
-			redirect('https://tiqs.com/spot/sendok');
+			if (!empty($email)) {
+				$subject= "tiqs-Order : ". $order['orderId'];			
+				Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);
+			}
         }
     }
-

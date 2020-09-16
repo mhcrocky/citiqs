@@ -45,27 +45,22 @@
 
             //ORDER REMARK FOR PRINITING
             // Order remak order[remarks] property
-            if (!empty($order['paymentType'])) {
+            if ($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid')) {
                 if ($order['waiterReceipt'] === '0') {
                     // one reeipt for waiter
+                    header('Content-type: image/png');
+                    echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
                     $waiterUpdate = $this->shoporder_model->setObjectId(intval($order['orderId']))->setProperty('waiterReceipt', '1')->update();
-                    if ($waiterUpdate) {
-                        #header('Content-type: image/png');
-                        #echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
-                    }
                     return;
                 }
 
                 if ($order['customerReceipt'] === '0') {
+                    header('Content-type: image/png');
+                    echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
                     $customerReceipt = $this->shoporder_model->setObjectId(intval($order['orderId']))->setProperty('customerReceipt', '1')->update();
-                    // one receipt for customer
-                    if ($customerReceipt) {
-                        #header('Content-type: image/png');
-                        #echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
-                    }
                     return;
                 }
-                if($order['paidStatus'] === '0') return;
+                if ($order['paidStatus'] === '0') return;
             }
             // UPDATE ORDER EXTENDED PRINT STATUS ON TWO
             $orderExtendedIds = explode(',', $order['orderExtendedIds']);
@@ -155,6 +150,7 @@
 					$drawemail->setFont('Helvetica');
                     break;
                 default:
+                    if (ENVIRONMENT === 'development') break;
                     $draw->setFont('Arial');
 					$drawemail->setFont('Arial');
                     break;
@@ -569,7 +565,10 @@
                     ->update();
             }
 
-            if ($this->shoporder_model->updatePrintedStatus()) {
+            if (
+                $this->shoporder_model->updatePrintedStatus()
+                && !($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid'))
+            ) {
                 file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
             }
 
