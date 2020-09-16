@@ -96,10 +96,14 @@
 
             $this->productImage = $this->id . '_' . strval(time()) . '.' . Uploadfile_helper::getFileExtension($_FILES['productImage']['name']);
             $constraints = [
-                'allowed_types'=> 'png'
+                'allowed_types'=> 'jpg|png|jpeg'
+            ];
+            $sizeConstraints = [
+                'maxWidth' => 200,
+                'maxHeight' => 200,
             ];
             $_FILES['productImage']['name'] = $this->productImage;
-            if (Uploadfile_helper::uploadFiles($this->config->item('uploadProductImageFolder'), $constraints)) {
+            if (Uploadfile_helper::uploadFiles($this->config->item('uploadProductImageFolder'), $constraints, true, $sizeConstraints)) {
                 return $this->update();
             }
             return false;

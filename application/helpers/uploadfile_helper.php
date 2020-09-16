@@ -6,7 +6,7 @@
     Class Uploadfile_helper
     {
 
-        public static function uploadFiles(string $folder, array $constraints = [], bool $resize = true): bool
+        public static function uploadFiles(string $folder, array $constraints = [], bool $resize = true, array $sizeConstraints = []): bool
         {
             $CI =& get_instance();
             $constraints['upload_path'] = $folder . DIRECTORY_SEPARATOR;
@@ -17,7 +17,7 @@
             foreach($_FILES as $key => $file) {
                 if ($_FILES[$key]['name']) {
                     if (!$CI->upload->do_upload($key)) return false;
-                    if ($resize) self::resizeImage();
+                    if ($resize) self::resizeImage($sizeConstraints);
                 }
             }
             return true;
@@ -38,7 +38,7 @@
             return true;
         }
 
-        public static function resizeImage(): void
+        public static function resizeImage(array $sizeConstraints = []): void
         {
             $CI =& get_instance();
             $imgInfo = $CI->upload->data();
@@ -50,16 +50,21 @@
                 'width' => $imgInfo['image_width'],
                 'height' => $imgInfo['image_height'],
             ];
-            self::resizeWidthAndHeight($config['width'], $config['height']);
+            if (empty($sizeConstraints)) {
+                self::resizeWidthAndHeight($config['width'], $config['height']);
+            } else {
+                self::resizeWidthAndHeight($config['width'], $config['height'], $sizeConstraints['maxWidth'], $sizeConstraints['maxHeight']);
+            }
+
             $CI->load->library('image_lib', $config);
             $CI->image_lib->clear();
             $CI->image_lib->initialize($config);
             $CI->image_lib->resize();
         }
 
-        public static function resizeWidthAndHeight(int &$width, int &$height): void
+        public static function resizeWidthAndHeight(int &$width, int &$height, int $maxWidth = 551,  int $maxHeight = 551): void
         {
-            while ($width > 551 || $height > 551) {
+            while ($width > $maxWidth || $height > $maxHeight) {
                 $width = $width * 0.95;
                 $height = $height * 0.95;
             }
