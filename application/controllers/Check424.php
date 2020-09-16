@@ -101,8 +101,7 @@ class Check424 extends BaseControllerWeb {
 		// redirect visitor on checkout
 		if ($post['checkStatus'] === '0') {
 			$this->session->set_flashdata('success', 'Goodbye! Thanks for visiting us');
-			set_cookie('visitorReservationId', '', time() - 3600, '/');
-			// unset visitorReservationId in session
+			set_cookie('visitorReservationId', null, time() - 1);
 			if (isset($_SESSION['visitorReservationId'])) {
 				unset($_SESSION['visitorReservationId']);
 			}
@@ -112,7 +111,7 @@ class Check424 extends BaseControllerWeb {
 
 		// store visitorReservationId in session
 		$_SESSION['visitorReservationId'] = $this->shopvisitorreservtaion_model->id;
-
+		set_cookie('visitorReservationId', $this->shopvisitorreservtaion_model->id, time() + (8 * 60 * 60));
 		//  fetch vendor data to see does vendor require that user fill up health questionnaire	
 		$vendor = $this->shopvendor_model->setProperty('vendorId', $visitor['vendorId'])->getVendorData();
 

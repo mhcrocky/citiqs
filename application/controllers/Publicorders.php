@@ -337,7 +337,9 @@
                 exit();
             }
 
-            if ($vendor['requireReservation'] === '1' && empty($_SESSION['visitorReservationId'])) {
+            if (
+                $vendor['requireReservation'] === '1' && ( empty($_SESSION['visitorReservationId']) || empty(get_cookie('visitorReservationId')) )
+            ) {
                 redirect('check424/' . $vendor['vendorId']);
                 exit();
             }

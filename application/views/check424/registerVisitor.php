@@ -43,7 +43,7 @@
                                     value="1"
                                     name="checkStatus"
                                     required
-                                    <?php if (empty($_SESSION['visitorReservationId'])) echo 'checked'; ?>
+                                    <?php if (empty($_SESSION['visitorReservationId']) || empty(get_cookie('visitorReservationId'))) echo 'checked'; ?>
                                 />
 								<label for="timeIn">
 									<p style="margin-top: 20px; margin-left: 35px; font-size: x-small">
@@ -56,7 +56,7 @@
                                     value="0"
                                     name="checkStatus"
                                     required
-                                    <?php if (!empty($_SESSION['visitorReservationId'])) echo 'checked'; ?>
+                                    <?php if (!empty($_SESSION['visitorReservationId']) || !empty(get_cookie('visitorReservationId'))) echo 'checked'; ?>
                                 />
 								<label style="margin-top: 30px" for="timeOut">
 									<p style="margin-top: 20px; margin-left: 35px; font-size: x-small">
