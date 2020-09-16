@@ -104,7 +104,7 @@
 				<div class="flex-column align-space">
 					<div style="text-align:center">
 						<!-- <a class="button button-orange mb-25" id="show-timeline-video-4">LEARN MORE VIDEO</a> -->
-						<a href="warehouse" target="_self" class="button button-orange mb-25"><?=$this->language->line('ALFRED-vB100011131B',"GO TO SETTINGS");?></a>
+						<a href="orders" target="_self" class="button button-orange mb-25"><?=$this->language->line('ALFRED-vB100011131B',"GO TO SETTINGS");?></a>
 					</div>
 				</div>
 			</div>
