@@ -47,6 +47,7 @@
                     <th>Count sent messages</th>
                     <th>Spot type</th>
                     <th>Remarks</th>
+                    <th>Payment type</th>
                 </tr>
             </thead>
             <tbody>
@@ -68,6 +69,7 @@
                     <th>Count sent messages</th>
                     <th>Spot type</th>
                     <th>Remarks</th>
+                    <th>Payment type</th>
                 </tr>
             </tfoot>
         </table>

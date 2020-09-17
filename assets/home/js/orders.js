@@ -70,7 +70,6 @@ function showPhoneNumber(data) {
     let number = (data[8]) ? data[8] : '';
     let phoneNumber = ''
     phoneNumber += '<input type="text" ';
-    phoneNumber += 'id="' + data[10] + '" ';
     phoneNumber += 'value="' + number + '" ';
     phoneNumber += 'data-user-id="' + data[10] + '" ';
     phoneNumber += 'onchange="updatePhoneNumber(this)" ';
@@ -191,7 +190,19 @@ function populateTable(data) {
                     "targets": 13,
                     "visible": orderGlobals.getRemarks,
                     "searchable": orderGlobals.getRemarks,
-                }
+                },
+                {
+                    "targets": 14,
+                    "data": function (row, type, val, meta) {
+                        if (row[14] === 'prePaid') {
+                            return 'Pay at waiter (pre paid)';
+                        } else if  (row[14] === 'postPaid') {
+                            return 'Pay at waiter (post paid)';
+                        }
+                        return row[14].charAt(0).toUpperCase() + row[14].slice(1);
+                    },
+                    "width": "10%"
+                },
             ],
             initComplete: function () {
                 this.api().columns().every( function () {

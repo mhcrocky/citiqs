@@ -310,17 +310,32 @@
             $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
 
-        public function insertOrder($paymentType, $paymentOptionSubId): void
+        public function insertOrder($payNlPaymentTypeId, $paymentOptionSubId): void
         {
-            if (empty($_SESSION['order']) || empty($_SESSION['vendor']) || empty($_SESSION['postOrder']) || empty($_SESSION['spotId']) || empty($_SESSION['spot'])) {
-                $redirect = empty($_SESSION['vendor']) ? base_url() : 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'];
+            $redirect = empty($_SESSION['vendor']) ? base_url() : 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'];
+            if (empty($_SESSION['order']) || empty($_SESSION['vendor']) || empty($_SESSION['postOrder']) || empty($_SESSION['spotId']) || empty($_SESSION['spot'])) {                
                 redirect($redirect);
                 exit();
             }
 
-            $this->insertOrderProcess($this->config->item('orderNotPaid'));
+            if ($payNlPaymentTypeId === $this->config->item('idealPaymentType')) {
+                $payType = $this->config->item('idealPayment');
+            } elseif ($payNlPaymentTypeId === $this->config->item('creditCardPaymentType')) {
+                $payType = $this->config->item('creditCardPayment');
+            } elseif ($payNlPaymentTypeId === $this->config->item('bancontactPaymentType')) {
+                $payType = $this->config->item('bancontactPayment');
+            } elseif ($payNlPaymentTypeId === $this->config->item('giroPaymentType')) {
+                $payType = $this->config->item('giroPayment');
+            } elseif ($payNlPaymentTypeId === $this->config->item('payconiqPaymentType')) {
+                $payType = $this->config->item('payconiqPayment');
+            } else {
+                redirect($redirect);
+                exit();
+            }
 
-            $successRedirect = 'paymentengine' . DIRECTORY_SEPARATOR . $paymentType  . DIRECTORY_SEPARATOR . $paymentOptionSubId;
+            $this->insertOrderProcess($this->config->item('orderNotPaid'), $payType);
+
+            $successRedirect = 'paymentengine' . DIRECTORY_SEPARATOR . $payNlPaymentTypeId  . DIRECTORY_SEPARATOR . $paymentOptionSubId;
 
             redirect($successRedirect);
         }
@@ -388,7 +403,7 @@
             $this->loadViews('publicorders/spotClosed', $this->global, $data, null, 'headerWarehousePublic');
         }
 
-        private function insertOrderProcess(string $payStatus, $payType = null): void
+        private function insertOrderProcess(string $payStatus, string $payType): void
         {
             //fetch data from $_SESSION
             $post = $_SESSION['postOrder'];

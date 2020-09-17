@@ -138,9 +138,17 @@ $config['local'] = 1;
 $config['deliveryType'] = 2;
 $config['pickupType'] = 3;
 
+//ALL ALFRED PAYMENT TYPES
 //cash payment types
 $config['prePaid'] = 'prePaid';
 $config['postPaid'] = 'postPaid';
+//paynl payment types
+$config['idealPayment'] = 'ideal payment';
+$config['creditCardPayment'] = 'credit card payment';
+$config['bancontactPayment'] = 'bancontact payment';
+$config['giroPayment'] = 'giro payment';
+$config['payconiqPayment'] = 'payconiq payment';
+
 
 // PRODUCT IMAGES FOLDER
 $config['uploadProductImageFolder']    = FCPATH . 'assets/images/productImages' . DIRECTORY_SEPARATOR;

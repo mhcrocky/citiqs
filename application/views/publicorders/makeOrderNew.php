@@ -321,6 +321,7 @@
                                                         $countAddons++;
                                                         $addonId = $productAddon[0][0];
                                                         $addonAllowedQuantity = $productAddon[0][1];
+                                                        if (empty($addons[$addonId])) continue;
                                                         $addon = $addons[$addonId][0];
                                                         $remarkAddonId = $addon['addRemark'] === '1' ? $remarkProductId . '_' . $countAddons : '0';                                                        
                                                         ?>

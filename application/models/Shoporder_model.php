@@ -149,6 +149,7 @@
                     $this->table . '.updated AS orderUpdated',
                     $this->table . '.countSentMessages AS countSentMessages',
                     $this->table . '.remarks AS remarks',
+                    $this->table . '.paymentType AS paymentType',
                     'buyer.id AS buyerId',
                     'buyer.email AS buyerEmail',
                     'buyer.username AS buyerUserName',
@@ -816,6 +817,7 @@
                 array( 'db' => 'countSentMessages',     'dt' => 11),
                 array( 'db' => 'spotType',              'dt' => 12),
                 array( 'db' => 'remarks',               'dt' => 13),
+                array( 'db' => 'paymentType',           'dt' => 14),
             );
 
             return Jquerydatatable_helper::data_output($columns, $return);
