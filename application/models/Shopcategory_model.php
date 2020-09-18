@@ -63,6 +63,7 @@
 
         public function fetch(array $where): ?array
         {
+            $where['archived'] = '0';
             return $this->read(
                 [
                     $this->table . '.id AS categoryId',

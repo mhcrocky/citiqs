@@ -81,7 +81,9 @@
 
             $filter = [
                 'where' => [
-                    'tbl_shop_categories.userId=' => $userId
+                    'tbl_shop_categories.userId=' => $userId,
+                    'tbl_shop_categories.archived' => '0',
+                    'tbl_shop_products.archived' => '0',
                 ],
                 'whereIn' => $whereIn,
                 'conditions' => [
@@ -213,7 +215,7 @@
                             tbl_shop_products ON tbl_shop_products.id = ' . $this->table . '.productId
                         INNER JOIN
                             tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
-                        ' . $typeCondition . ' AND tbl_shop_categories.userId = ' . $userId . '
+                        ' . $typeCondition . ' AND tbl_shop_categories.userId = ' . $userId . ' AND ' . $this->table . '.archived = "0"
                         GROUP BY ' . $this->table. '.productId
                         ORDER BY ' . $this->table. '.productTypeId DESC
                         
@@ -435,9 +437,11 @@
                 'where' => [
                     'tbl_shop_categories.userId=' => $userId,
                     'tbl_shop_categories.active=' => '1',
+                    'tbl_shop_categories.archived=' => '0',
                     'tbl_shop_products.dateTimeFrom<=' => $date,
                     'tbl_shop_products.dateTimeTo>' => $date,
                     'tbl_shop_products.active=' => '1',
+                    'tbl_shop_products.archived=' => '0',
                     'tbl_shop_spot_products.spotId=' =>  $spotId,
                     'tbl_shop_spot_products.showInPublic=' => "1",
                     'tbl_shop_product_times.day=' => $day,
@@ -485,6 +489,8 @@
                                 tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
                             WHERE
                                 tbl_shop_categories.userId = ' . $userId . '
+                                AND tbl_shop_categories.archived = "0"
+                                AND ' . $this->table . '.archived = "0"
                             GROUP BY ' . $this->table. '.productId
                             ORDER BY ' . $this->table. '.productTypeId DESC
                         ) tblShopProductDetails',

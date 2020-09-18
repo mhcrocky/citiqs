@@ -71,7 +71,10 @@
                     $this->table . '.printer AS printer',
                     $this->table . '.active AS printerActive',
                 ],
-                ['tbl_shop_product_printers.productId=' => $productId],
+                [
+                    'tbl_shop_product_printers.productId=' => $productId,
+                    $this->table . '.archived' => "0",
+                ],
                 [
                     ['tbl_shop_product_printers', $this->table .'.id = tbl_shop_product_printers.printerId' ,'INNER']
                 ]
@@ -100,6 +103,7 @@
                     (SELECT tbl_shop_printers.id, tbl_shop_printers.printer, tbl_shop_printers.masterMac, tbl_shop_printers.macNumber FROM tbl_shop_printers) masters ON masters.macNumber = tbl_shop_printers.masterMac
                 WHERE
                     tbl_shop_printers.userId = ' . $this->userId . '
+                    AND tbl_shop_printers.archived = "0"
                 ORDER BY tbl_shop_printers.printer ASC;
             ';
 

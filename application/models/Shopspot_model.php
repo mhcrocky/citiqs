@@ -71,7 +71,10 @@
                     'tbl_shop_printers.active AS printerActive',
                     'tbl_shop_spot_types.type AS spotType'
                 ],
-                [ 'tbl_shop_printers.userId=' => $userId],
+                [
+                    'tbl_shop_printers.userId=' => $userId,
+                    $this->table . '.archived' => '0',
+                ],
                 [
                     ['tbl_shop_printers', $this->table . '.printerId = tbl_shop_printers.id', 'INNER'],
                     ['tbl_shop_spot_types', $this->table . '.spotTypeId = tbl_shop_spot_types.id', 'INNER']

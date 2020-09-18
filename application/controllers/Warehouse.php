@@ -80,7 +80,11 @@
         {
             $this->global['pageTitle'] = 'TIQS : CATEGOIRES';
 
-            $where['userId'] = intval($_SESSION['userId']);
+            $where = [
+                'userId'    => intval($_SESSION['userId']),
+                'archived'  => '0'
+            ];
+
             if (isset($_GET['active']) && ($_GET['active'] === '0' || $_GET['active'] === '1')) {
                 $where['active'] = $_GET['active'];
             }
@@ -179,7 +183,7 @@
             $data = [
                 'categories' => $this->shopcategory_model->fetch(['userId' => $userId]),
                 'products' => $this->shopproductex_model->getUserProducts($userId, $perPage, $offset, $whereIn),
-                'printers' => $this->shopprinters_model->read(['*'], ['userId' => $userId]),
+                'printers' => $this->shopprinters_model->read(['*'], ['userId' => $userId, 'archived' => '0']),
                 'userSpots' => $this->shopspot_model->fetchUserSpots($userId),
                 'productTypes' => $this->shopprodutctype_model->fetchProductTypes($userId),
                 'concatSeparator' => $this->config->item('concatSeparator'),
@@ -600,7 +604,10 @@
 
             $data = [
                 'printers' => $this->shopprinters_model->read(['*'], ['userId=' => $userId, 'masterMac=' => '0']),
-                'spots' => $this->shopspot_model->fetchUserSpotsImporved(['tbl_shop_printers.userId=' => $userId]),
+                'spots' => $this->shopspot_model->fetchUserSpotsImporved([
+                                                    'tbl_shop_printers.userId=' => $userId,
+                                                    'tbl_shop_spots.archived=' => '0'
+                                                ]),
                 'spotTypes' =>$this->shopspottype_model->read(['*'], ['id>' => 0]),
                 'dayOfWeeks' => $this->config->item('weekDays'),
             ];
