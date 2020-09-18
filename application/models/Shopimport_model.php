@@ -101,11 +101,11 @@
         public function import(): bool
         {
 
-            if ($this->isImported()) {
-                die('Vendor data already imported');
-            };
+            // if ($this->isImported()) {
+            //     die('Vendor data already imported');
+            // };
 
-            $this->setObjectFromArray(['vendorId' => $this->vendorId, 'imported' => '1'])->create();
+            // $this->setObjectFromArray(['vendorId' => $this->vendorId, 'imported' => '1'])->create();
 
             if (!$this->vendor || !$this->mainProductTypeId || !$this->categoryId || !$this->printerId || !$this->spotId ) {
                 die('Required values are not set!');
@@ -234,7 +234,7 @@
 
             $insert = [
                 'printerId' => $this->printerId,
-                'spotName' => 'IMPORT STOP',
+                'spotName' => 'IMPORT SPOT',
                 'active' => '0',
                 'spotTypeId' => $this->config->item('local'),
                 'archived' => '1',
@@ -305,19 +305,19 @@
         {
             $oldProductName = 'old_' . $product['product_info']['title'];
             $query = 
-                'SELECT
-                    tbl_shop_products_extended.*
-                FROM
-                    tbl_shop_products_extended
-                INNER JOIN            
-                    tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
-                INNER JOIN
-                    tbl_shop_categories ON tbl_shop_products.id = tbl_shop_products_extended.productId
-                WHERE
-                tbl_shop_products_extended.name = "' . $oldProductName . '"
-                AND tbl_shop_categories.id = ' . $this->categoryId . '
-                AND tbl_shop_categories.userId = ' . $this->vendorId . ';';
 
+            'SELECT
+	            tbl_shop_products_extended.*
+            FROM
+	            tbl_shop_categories
+            LEFT JOIN
+	            tbl_shop_products ON tbl_shop_products.categoryId = tbl_shop_categories.id
+            LEFT JOIN
+	            tbl_shop_products_extended ON tbl_shop_products_extended.productId = tbl_shop_products.id
+            WHERE
+                tbl_shop_categories.userId = ' . $this->vendorId . '
+                AND tbl_shop_categories.id = ' . $this->categoryId . '
+                AND tbl_shop_products_extended.name = "' . $oldProductName . '";';
             $result = $this->db->query($query);
             $result = $result->result_array();
 
@@ -326,9 +326,11 @@
                 $this->load->model('shopproduct_model');
                 $this->shopproduct_model->setObjectFromArray([
                     'categoryId' => $this->categoryId,
-                    'active' => '1',
-                    'dateTimeFrom' => date('Y-m-d H:i:d'),
-                    'dateTimeTo' => date('Y-m-d H:i:d', strtotime('+10 year')),
+                    'active' => '0',
+                    'archived' => '1',
+                    'dateTimeFrom' => date('2020-06-01 00:00:00'),
+                    'dateTimeTo' => date('2020-09-01 00:00:00'),
+
                 ])->create();
 
                 // insert product ex
@@ -341,12 +343,14 @@
                     'productTypeId'     => $this->mainProductTypeId,
                     'updateCycle'       => 1,
                     'vatpercentage'     => $this->getShopProductVat(strval($product['product_info']['url'])),
+                    'showInPublic'      => '0',
+                    'archived'          => '1'
                 ];
                 $this->shopproductex_model->setObjectFromArray($porductExtended)->create();
 
                 // insert times
                 $this->load->model('shopproducttime_model');
-                $this->shopproducttime_model->insertProductTimes($this->shopproduct_model->id);
+                // $this->shopproducttime_model->insertProductTimes($this->shopproduct_model->id);
                 return $this->shopproductex_model->id;
             } else {
                 $countResult = count($result);
@@ -355,11 +359,10 @@
                 if ($lastInsertedProduct['price'] === $product['product_info']['price']) {
                     return $lastInsertedProduct['id'];
                 } else {
-                    var_dump($lastInsertedProduct);
                     $lastInsertedProduct['updateCycle'] = $countResult;
                     $lastInsertedProduct['price'] = $product['product_info']['price'];
-                    var_dump($lastInsertedProduct);
-                    var_dump($product);
+                    $lastInsertedProduct['showInPublic'] = '0';
+                    $lastInsertedProduct['archived'] = '1';
                     $this->shopproductex_model->setObjectFromArray($lastInsertedProduct)->create();
                     return $this->shopproductex_model->id;
                 }                
