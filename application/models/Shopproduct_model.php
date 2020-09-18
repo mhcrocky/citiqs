@@ -21,6 +21,7 @@
         public $onlyOne;
         public $addRemark;
         public $allergies;
+        public $archived;
 
         private $table = 'tbl_shop_products';
 
@@ -71,6 +72,7 @@
             if (isset($data['onlyOne']) && !($data['onlyOne'] === '1' || $data['onlyOne'] === '0')) return false;
             if (isset($data['addRemark']) && !($data['addRemark'] === '1' || $data['addRemark'] === '0')) return false;
             if (isset($data['allergies']) && !Validate_data_helper::validateString($data['allergies'])) return false;
+            if (isset($data['archived']) && !($data['archived'] === '1' || $data['archived'] === '0')) return false;
 
             return true;
         }

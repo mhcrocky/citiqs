@@ -14,6 +14,7 @@
         public $spotName;
         public $active;
         public $spotTypeId;
+        public $archived;
 
         private $table = 'tbl_shop_spots';
 
@@ -51,7 +52,8 @@
             if (isset($data['printerId']) && !Validate_data_helper::validateInteger($data['printerId'])) return false;
             if (isset($data['spotName']) && !Validate_data_helper::validateString($data['spotName'])) return false;
             if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
-            if (isset($data['spotTypeId']) && !Validate_data_helper::validateInteger($data['spotTypeId'])) return false;            
+            if (isset($data['spotTypeId']) && !Validate_data_helper::validateInteger($data['spotTypeId'])) return false;
+            if (isset($data['archived']) && !($data['archived'] === '1' || $data['archived'] === '0')) return false;
 
             return true;
         }

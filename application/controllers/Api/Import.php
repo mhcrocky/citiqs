@@ -38,7 +38,9 @@
                         ->setDatabaseCredantations($data)
                         ->setConnection()
                         ->setMainProductTypeId()
-                        ->setVendorCategory()
+                        ->setVendorCategoryId()
+                        ->setVendorPrinterId()
+                        ->setVendorSpotId()
                         ->import();
 
             echo ($import) ? 'Import succes' : 'Import failed';

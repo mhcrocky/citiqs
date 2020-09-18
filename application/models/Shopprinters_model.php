@@ -16,6 +16,8 @@
         public $active;
         public $numberOfCopies;
         public $masterMac;
+        public $archived;
+
         private $table = 'tbl_shop_printers';
 
         protected function setValueType(string $property,  &$value): void
@@ -56,6 +58,7 @@
                 && (!Validate_data_helper::validateInteger($data['numberOfCopies']) || intval($data['numberOfCopies']) < 1)
             ) return false;
             if (isset($data['masterMac']) && !Validate_data_helper::validateString($data['masterMac'])) return false;
+            if (isset($data['archived']) && !($data['archived'] === '1' || $data['archived'] === '0')) return false;
 
             return true;
         }

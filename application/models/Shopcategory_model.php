@@ -18,7 +18,7 @@
         public $delayTime;
         public $sortNumber;
         public $driverSmsMessage;
-
+        public $archived;
 
         private $table = 'tbl_shop_categories';
 
@@ -56,6 +56,7 @@
             // if (isset($data['driverNumber']) && !Validate_data_helper::validateString($data['driverNumber'])) return false;
             if (isset($data['delayTime']) && !Validate_data_helper::validateInteger($data['delayTime'])) return false;
             if (isset($data['sortNumber']) && !Validate_data_helper::validateInteger($data['sortNumber'])) return false;
+            if (isset($data['archived']) && !($data['archived'] === '1' || $data['archived'] === '0')) return false;
 
             return true;
         }

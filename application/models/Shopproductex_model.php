@@ -20,6 +20,7 @@
         public $vatpercentage;
         public $updateCycle;
         public $showInPublic;
+        public $archived;
         private $table = 'tbl_shop_products_extended';
 
         protected function setValueType(string $property,  &$value): void
@@ -69,6 +70,7 @@
             if (isset($data['productTypeId']) && !Validate_data_helper::validateInteger($data['productTypeId'])) return false;
             if (isset($data['updateCycle']) && !Validate_data_helper::validateInteger($data['updateCycle'])) return false;
             if (isset($data['showInPublic']) && !($data['showInPublic'] === '1' || $data['showInPublic'] === '0')) return false;
+            if (isset($data['archived']) && !($data['archived'] === '1' || $data['archived'] === '0')) return false;
 
             return true;
         }
