@@ -1,0 +1,206 @@
+/* general styling */
+
+:root {
+	--main-bg-color: coral;
+	--main-bg-color-transparent: #ffb599;
+	--secondary-bg-color: white;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body{
+	font-family: 'Montserrat', sans-serif;	
+	margin-top: 50px;
+}
+
+/* custom select */
+
+.custom__select{
+	position: relative;
+}
+
+.select__dropdown{
+	position: relative;
+}
+
+.select__list{
+	max-height:290px;
+	overflow:hidden;
+	cursor: pointer;
+	text-align: left;
+	white-space: nowrap;
+	color: #444;
+	outline: none;
+	border: 1px solid #dedede;
+	border-bottom: none;
+	border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+	width: 100%;
+	overflow-y: scroll;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+
+/* width */
+.select__list::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.select__list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.select__list::-webkit-scrollbar-thumb {
+  background: #b3b3b3;
+}
+
+/* Handle on hover */
+.select__list::-webkit-scrollbar-thumb:hover {
+  background: #707070;
+}
+
+.select__list li{
+	position: relative;
+	border-bottom: 1px solid #dedede;
+}
+
+.select__list input{
+    position: absolute;
+    right: 15px;
+    top: calc( 0.5em + 3px);
+}
+
+.select__list__item label{
+	display: block;
+	position: relative;
+	padding: 15px 55px 10px 15px;
+	margin-bottom: 0;
+	cursor: pointer;
+	font-size: 14px;
+	width: 100%;
+	overflow: hidden;
+	z-index: 2;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	white-space: normal;
+}
+
+.select__list__item label:hover{
+	background-color: #f5f5f5;
+}
+
+.select__list__item input {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+}
+
+/* radio button */
+.select__list__item .checkmark {
+	position: absolute;
+	top: 0.6em;
+	right: 10px;
+	width: 25px;
+	height: 25px;
+	background-color: white;
+	border-radius: 50%;
+	transition: 0.4s all;
+	border: 1px solid #dcdcdc;
+	background-image: url('checkmark.svg');
+	background-repeat: no-repeat;
+	background-position: -1px 1px;
+	border-radius: 50%;
+	top: 50%;
+    transform: translatey(-50%);
+}
+
+/* check radio button background */
+.select__list__item input:checked ~ .checkmark {
+	background-color: #54E0C7;
+	border: 1px solid #54E0C7;
+}
+
+.select__list__item label input:checked ~ .checkmark:after {
+	display: block;
+}
+
+/* active label background */
+.select__list__item label:before{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    content: '';
+    background-color: #5562eb;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%) scale3d(1, 1, 1);
+    transform: translate(-50%, -50%) scale3d(1, 1, 1);
+    -webkit-transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    z-index: -1;
+}
+
+.select__list__item label.checked:before{
+	-webkit-transform: translate(-50%, -50%) scale3d(56, 56, 1);
+    transform: translate(-50%, -50%) scale3d(56, 56, 1);
+    opacity: 1;
+}
+
+/* active label font color */
+.select__list__item label.checked {
+	color: white;
+}
+
+.submit-type{
+    width: 100%;
+    color: white;
+    background-color: red;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 10px 15px;
+	text-transform: uppercase;
+	outline: none;
+	box-shadow: none;
+	transition: 0.3s all;
+	cursor: pointer;
+	border: none;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+.submit-type:hover{
+	background-color: #e91e63;
+}
+
+@media only screen and (max-width: 568px) {
+
+	#selected-value,
+	.select__list__item label{
+		font-size: 12px;
+	}
+	
+	.select__list__item .checkmark{
+		width: 15px;
+    	height: 15px;
+	}
+	
+	#selected-value:after {
+    	right: 9px;
+	}
+	
+	.select__list__item .checkmark{	
+		background-position: -1px 0px;
+    	background-size: 19px;
+	}
+	
+}
