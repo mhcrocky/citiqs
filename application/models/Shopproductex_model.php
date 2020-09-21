@@ -428,12 +428,14 @@
             return $this->filterProducts($userId, $filter, $resetBy, false, $typeCondition);
         }
 
-        public function fetchSpotProducts(int $userId, int $spotId): ?array
+        public function fetchSpotProducts(int $userId, array $spot): ?array
         {
             $this->load->config('custom');
             $concatSeparator = $this->config->item('concatSeparator');
             $concatGroupSeparator = $this->config->item('contactGroupSeparator');
 
+            $spotId = $spot['spotId'];
+            $spotTypeId = intval($spot['spotTypeId']);
             $date = date('Y-m-d H:i:s', time());
             $day = date('D');
             $hours = date('H:i:s');
@@ -482,8 +484,8 @@
                                     . $this->table. '.id,
                                     \'' .  $concatSeparator . '\',' . $this->table. '.name,
                                     \'' .  $concatSeparator . '\',' . $this->table. '.shortDescription,
-                                    \'' .  $concatSeparator . '\',' . 'FORMAT(' . $this->table . '.price,2),
-                                    \'' .  $concatSeparator . '\',' . $this->table. '.vatpercentage,
+                                    \'' .  $concatSeparator . '\',' . $this->prepareSpotTypePriceCondition($spotTypeId) . ',
+                                    \'' .  $concatSeparator . '\',' . $this->prepareSpotTypeVatCondition($spotTypeId) . ',
                                     \'' .  $concatSeparator . '\',' . $this->table. '.productTypeId,
                                     \'' .  $concatSeparator . '\', tbl_shop_products_types.type,
                                     \'' .  $concatSeparator . '\', tbl_shop_products_types.isMain,
@@ -545,9 +547,9 @@
             return $this->readImproved($filter);
         }
 
-        public function getMainProductsOnBuyerSide(int $userId, int $spotId): ?array
+        public function getMainProductsOnBuyerSide(int $userId, array $spot): ?array
         {
-            $products = $this->fetchSpotProducts($userId, $spotId);
+            $products = $this->fetchSpotProducts($userId, $spot);
             if (is_null($products)) return null;
 
             $this->load->helper('utility_helper');
@@ -630,5 +632,42 @@
                     'ORDER_BY' => [$this->table. '.id DESC'],
                 ]
             ]);
+        }
+
+        private function prepareSpotTypePriceCondition(int $spotTypeId): string
+        {
+            $this->load->config('custom');
+            $localType = $this->config->item('local');
+            $deliveryType = $this->config->item('deliveryType');
+            $pickupType = $this->config->item('pickupType');
+
+            if ($spotTypeId === $localType) {
+                $price = 'FORMAT(' . $this->table . '.price , 2)';
+            } elseif ($spotTypeId === $deliveryType) {
+                $price = 'FORMAT(' . $this->table . '.deliveryPrice , 2)';
+            } elseif ($spotTypeId === $pickupType) {
+                $price = 'FORMAT(' . $this->table . '.pickupPrice , 2)';
+            }
+
+            return $price;
+
+        }
+
+        private function prepareSpotTypeVatCondition(int $spotTypeId): string
+        {
+            $this->load->config('custom');
+            $localType = $this->config->item('local');
+            $deliveryType = $this->config->item('deliveryType');
+            $pickupType = $this->config->item('pickupType');
+
+            if ($spotTypeId === $localType) {
+                $vat = $this->table. '.vatpercentage';
+            } elseif ($spotTypeId === $deliveryType) {
+                $vat = $this->table. '.deliveryVatpercentage';
+            } elseif ($spotTypeId === $pickupType) {
+                $vat = $this->table. '.pickupVatpercentage';
+            }
+
+            return $vat;
         }
     }

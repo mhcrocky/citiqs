@@ -107,7 +107,7 @@
             if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
                 $data['categoryProducts'] = $this->shopproductex_model->getUserProductsPublic($userId);
             } elseif ($_SESSION['vendor']['preferredView'] === $this->config->item('newMakeOrderView')) {
-                $allProducts = $this->shopproductex_model->getMainProductsOnBuyerSide($userId, $spotId);
+                $allProducts = $this->shopproductex_model->getMainProductsOnBuyerSide($userId, $spot);
                 if ($allProducts) {
                     $data['mainProducts'] = $allProducts['main'];
                     $data['addons'] = $allProducts['addons'];
