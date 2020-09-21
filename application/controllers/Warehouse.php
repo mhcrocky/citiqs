@@ -32,6 +32,7 @@
             $this->load->model('shopspottype_model');
             $this->load->model('shopspottime_model');
             $this->load->model('shopvendor_model');
+            $this->load->model('shopvendortypes_model');
 
             $this->load->library('language', array('controller' => $this->router->class));
             $this->load->library('session');
@@ -173,6 +174,7 @@
             // filter productes ny name(s)
             if (!empty($_POST)) {
                 $post = $this->input->post(null, true);
+                #var_dump($post);die();
                 $whereIn = [
                     'column' => 'tbl_shop_products_extended.id',
                     'array' => $post['names']
@@ -191,7 +193,11 @@
                 'pagination' => $pagination,
                 'dayOfWeeks' => $this->config->item('weekDays'),
                 'allergies' => $this->config->item('allergies'),
-                'showAllergies' => $this->shopvendor_model->setProperty('vendorId', $userId)->getProperty('showAllergies')
+                'showAllergies' => $this->shopvendor_model->setProperty('vendorId', $userId)->getProperty('showAllergies'),
+                'vendorTypes' => $this->shopvendortypes_model->setProperty('vendorId', $userId)->fetchActiveVendorTypes(),
+                'localTypeId' => $this->config->item('local'),
+                'deliveryTypeId' => $this->config->item('deliveryType'),
+                'pickupTypeId' => $this->config->item('pickupType'),
             ];
 
             $this->loadViews('warehouse/products', $this->global, $data, null, 'headerWarehouse');
@@ -255,7 +261,9 @@
                     $countTypes++;
                     $data['productExtended']['productId'] = $this->shopproduct_model->id;
                     $data['productExtended']['productTypeId'] = intval($typeId);
-                    $data['productExtended']['price'] = floatval($typeValues['price']);
+                    $data['productExtended']['price'] = !empty($typeValues['price']) ? floatval($typeValues['price']) : '0';
+                    $data['productExtended']['deliveryPrice'] = !empty($typeValues['deliveryPrice']) ? floatval($typeValues['deliveryPrice']) : $data['productExtended']['price'];
+                    $data['productExtended']['pickupPrice'] = !empty($typeValues['pickupPrice']) ? floatval($typeValues['pickupPrice']) : $data['productExtended']['price'];
                     $data['productExtended']['updateCycle'] = 1;
                     $data['productExtended']['showInPublic'] = '1';
                     if(!$this->shopproductex_model->setObjectFromArray($data['productExtended'])->create()) {
@@ -364,7 +372,9 @@
                     $countTypes++;
                     $data['productExtended']['productId'] = $this->shopproduct_model->id;
                     $data['productExtended']['productTypeId'] = intval($typeId);
-                    $data['productExtended']['price'] = floatval($typeValues['price']);
+                    $data['productExtended']['price'] = !empty($typeValues['price']) ? floatval($typeValues['price']) : '0';
+                    $data['productExtended']['deliveryPrice'] = !empty($typeValues['deliveryPrice']) ? floatval($typeValues['deliveryPrice']) : $data['productExtended']['price'];
+                    $data['productExtended']['pickupPrice'] = !empty($typeValues['pickupPrice']) ? floatval($typeValues['pickupPrice']) : $data['productExtended']['price'];
                     if (isset($typeValues['showInPublic'])) {
                         $data['productExtended']['showInPublic'] = '1';
                     } else {

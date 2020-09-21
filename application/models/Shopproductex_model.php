@@ -21,6 +21,11 @@
         public $updateCycle;
         public $showInPublic;
         public $archived;
+        public $deliveryPrice;
+        public $deliveryVatpercentage;
+        public $pickupPrice;
+        public $pickupVatpercentage;
+
         private $table = 'tbl_shop_products_extended';
 
         protected function setValueType(string $property,  &$value): void
@@ -71,6 +76,11 @@
             if (isset($data['updateCycle']) && !Validate_data_helper::validateInteger($data['updateCycle'])) return false;
             if (isset($data['showInPublic']) && !($data['showInPublic'] === '1' || $data['showInPublic'] === '0')) return false;
             if (isset($data['archived']) && !($data['archived'] === '1' || $data['archived'] === '0')) return false;
+            if (isset($data['deliveryPrice']) && !Validate_data_helper::validateFloat($data['deliveryPrice'])) return false;
+            if (isset($data['deliveryVatpercentage']) && !Validate_data_helper::validateFloat($data['deliveryVatpercentage'])) return false;
+            if (isset($data['pickupPrice']) && !Validate_data_helper::validateFloat($data['pickupPrice'])) return false;
+            if (isset($data['pickupVatpercentage']) && !Validate_data_helper::validateFloat($data['pickupVatpercentage'])) return false;
+
 
             return true;
         }
@@ -203,7 +213,11 @@
                                 \'' .  $concatSeparator . '\',' . $this->table . '.productId,
                                 \'' .  $concatSeparator . '\', tbl_shop_categories.category,
                                 \'' .  $concatSeparator . '\', tbl_shop_products.active,
-                                \'' .  $concatSeparator . '\', IF(CHAR_LENGTH(' . $this->table . '.longDescription) > 0, ' . $this->table . '.longDescription, "")
+                                \'' .  $concatSeparator . '\', IF(CHAR_LENGTH(' . $this->table . '.longDescription) > 0, ' . $this->table . '.longDescription, ""),
+                                \'' .  $concatSeparator . '\',' . 'FORMAT(' . $this->table . '.deliveryPrice, 2),
+                                \'' .  $concatSeparator . '\',' . $this->table. '.deliveryVatpercentage,
+                                \'' .  $concatSeparator . '\',' . 'FORMAT(' . $this->table . '.pickupPrice, 2),
+                                \'' .  $concatSeparator . '\',' . $this->table. '.pickupVatpercentage
                                 ORDER BY ' . $this->table. '.id DESC
                                 SEPARATOR "'. $concatGroupSeparator . '"                                    
                             ) AS productDetails
@@ -328,6 +342,10 @@
                     'category'              => $details[11],
                     'activeStatus'          => $details[12],
                     'longDescription'       => $details[13],
+                    'deliveryPrice'         => $details[14],
+                    'deliveryVatpercentage' => $details[15],
+                    'pickupPrice'           => $details[16],
+                    'pickupVatpercentage'   => $details[17],
                 ];
                 array_push($return, $collect);
             }
@@ -525,6 +543,7 @@
 
             return $this->readImproved($filter);
         }
+
         public function getMainProductsOnBuyerSide(int $userId, int $spotId): ?array
         {
             $products = $this->fetchSpotProducts($userId, $spotId);

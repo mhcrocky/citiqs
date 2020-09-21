@@ -69,4 +69,18 @@
             return $result->result_array();
         }
 
+        public function fetchActiveVendorTypes(): array
+        {
+            $query = 'SELECT typeId FROM ' . $this->table . ' WHERE vendorId = ' . $this->vendorId . ' AND active = "1";';
+            $result = $this->db->query($query);
+            $result = $result->result_array();
+            $typeIds = [];
+
+            foreach ($result as $type) {
+                array_push($typeIds, intval($type['typeId']));
+            }
+
+            return  $typeIds;
+        }
+
     }

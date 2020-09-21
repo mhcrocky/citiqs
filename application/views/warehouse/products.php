@@ -86,10 +86,24 @@
                                     class="form-control"
                                     rows="1"></textarea>
                             </div>
-                            <div class="col-lg-4 col-sm-12">
-                                <label for="vatInsert">VAT: </label>
-                                <input type="number" required value="0" step="0.01" min="0" name="productExtended[vatpercentage]" id="vatInsert" class="form-control" />
-                            </div>
+                            <?php if (in_array($localTypeId, $vendorTypes)) { ?>
+                                <div class="col-lg-4 col-sm-12">
+                                    <label for="vatInsert">VAT: </label>
+                                    <input type="number" required value="0" step="0.01" min="0" name="productExtended[vatpercentage]" id="vatInsert" class="form-control" />
+                                </div>
+                            <?php } ?>
+                            <?php if (in_array($deliveryTypeId, $vendorTypes)) { ?>
+                                <div class="col-lg-4 col-sm-12">
+                                    <label for="deliveryVatEdit">Delivery VAT: </label>
+                                    <input type="number" required value="0" step="0.01" min="0" name="productExtended[deliveryVatpercentage]" id="deliveryVatEdit" class="form-control" />
+                                </div>
+                            <?php } ?>
+                            <?php if (in_array($pickupTypeId, $vendorTypes)) { ?>
+                                <div class="col-lg-4 col-sm-12">
+                                    <label for="pickupVatEdit">Pickup VAT: </label>
+                                    <input type="number" required value="0" step="0.01" min="0" name="productExtended[pickupVatpercentage]" id="pickupVatEdit" class="form-control" />
+                                </div>
+                            <?php } ?>
                             <!-- PRODUCT DATA -->
                             <div class="col-lg-4 col-sm-12">
                                 <label for="dateTimeFrom">Availabe from: </label>
@@ -163,8 +177,46 @@
                                             />
                                         Select <?php echo '"' . $type['productType'] . '"'; if ($type['isMain'] === '1') echo ' (main)'; ?>
                                     </label>
-                                    <label for="price<?php echo $type['id']; ?>">Price: </label>
-                                    <input type="number" required value="0" step="0.01" name="productTypes[<?php echo $type['id']; ?>][price]" id="price<?php echo $type['id']; ?>" min="0" class="form-control" />
+                                    <?php if (in_array($localTypeId, $vendorTypes)) { ?>
+                                        <label for="price<?php echo $type['id']; ?>">Price: </label>
+                                        <input
+                                            type="number"
+                                            required
+                                            value="0"
+                                            step="0.01"
+                                            name="productTypes[<?php echo $type['id']; ?>][price]"
+                                            id="price<?php echo $type['id']; ?>"
+                                            min="0"
+                                            class="form-control"
+                                        />
+                                    <?php } ?>
+
+                                    <?php if (in_array($deliveryTypeId, $vendorTypes)) { ?>
+                                        <label for="deliveryPrice<?php echo $type['id']; ?>">Delivery price: </label>
+                                        <input
+                                            type="number"
+                                            required
+                                            step="0.01"
+                                            name="productTypes[<?php echo $type['id']; ?>][deliveryPrice]"
+                                            id="deliveryPrice<?php echo $type['id']; ?>"
+                                            min="0"
+                                            class="form-control"
+                                            value="0"
+                                        />
+                                    <?php } ?>
+                                    <?php if (in_array($pickupTypeId, $vendorTypes)) { ?>
+                                        <label for="pickupPrice<?php echo $type['id']; ?>">Pickup price: </label>
+                                        <input
+                                            type="number"
+                                            required
+                                            step="0.01"
+                                            name="productTypes[<?php echo $type['id']; ?>][pickupPrice]"
+                                            id="pickupPrice<?php echo $type['id']; ?>"
+                                            min="0"
+                                            class="form-control"
+                                            value="0"
+                                        />
+                                    <?php } ?>
                                 </div>
                             <?php } ?>
                             <legend>Upload product image</legend>
@@ -600,19 +652,51 @@
                                                 <label for="longDescription<?php echo $product['productId'] ?>">Long description: </label>
                                                 <textarea name="productExtended[longDescription]" id="longDescription<?php echo $product['productId'] ?>" rows="1" class="form-control"><?php if($details['longDescription']) echo  $details['longDescription']; ?></textarea>
                                             </div>
-                                            <div class="col-lg-4 col-sm-12">
-                                                <label for="vatEdit<?php echo $product['productId'] ?>">VAT: </label>
-                                                <input
-                                                    type="number"
-                                                    required
-                                                    value="<?php echo floatval($details['vatpercentage']); ?>"
-                                                    step="0.01"
-                                                    min="0"
-                                                    name="productExtended[vatpercentage]"
-                                                    id="vatEdit<?php echo $product['productId'] ?>"
-                                                    class="form-control"
+                                            <?php if (in_array($localTypeId, $vendorTypes)) { ?>
+                                                <div class="col-lg-4 col-sm-12">
+                                                    <label for="vatEdit<?php echo $product['productId'] ?>">Local VAT: </label>
+                                                    <input
+                                                        type="number"
+                                                        required
+                                                        value="<?php echo floatval($details['vatpercentage']); ?>"
+                                                        step="0.01"
+                                                        min="0"
+                                                        name="productExtended[vatpercentage]"
+                                                        id="vatEdit<?php echo $product['productId'] ?>"
+                                                        class="form-control"
                                                     />
-                                            </div>
+                                                </div>
+                                            <?php } ?>
+                                            <?php if (in_array($deliveryTypeId, $vendorTypes)) { ?>
+                                                <div class="col-lg-4 col-sm-12">
+                                                    <label for="deliveryVatEdit<?php echo $product['productId'] ?>">Delivery VAT: </label>
+                                                    <input
+                                                        type="number"
+                                                        required
+                                                        value="<?php echo floatval($details['deliveryVatpercentage']); ?>"
+                                                        step="0.01"
+                                                        min="0"
+                                                        name="productExtended[deliveryVatpercentage]"
+                                                        id="deliveryVatEdit<?php echo $product['productId'] ?>"
+                                                        class="form-control"
+                                                    />
+                                                </div>
+                                            <?php } ?>
+                                            <?php if (in_array($pickupTypeId, $vendorTypes)) { ?>
+                                                <div class="col-lg-4 col-sm-12">
+                                                    <label for="pickupVatEdit<?php echo $product['productId'] ?>">Pickup VAT: </label>
+                                                    <input
+                                                        type="number"
+                                                        required
+                                                        value="<?php echo floatval($details['pickupVatpercentage']); ?>"
+                                                        step="0.01"
+                                                        min="0"
+                                                        name="productExtended[pickupVatpercentage]"
+                                                        id="pickupVatEdit<?php echo $product['productId'] ?>"
+                                                        class="form-control"
+                                                    />
+                                                </div>
+                                            <?php } ?>
                                             <div class="col-lg-4 col-sm-12">
                                                 <label for="dateTimeFrom<?php echo $product['productId'] ?>">Availabe from: </label>
                                                 <input
@@ -624,7 +708,7 @@
                                                         value="<?php echo date('Y/m/d H:i:s', strtotime($product['dateTimeFrom'])); ?>"
                                                     <?php } ?>
                                                     required
-                                                    />
+                                                />
                                             </div>
                                             <div class="col-lg-4 col-sm-12">
                                                 <label for="dateTimeTo<?php echo $product['productId'] ?>">Availabe to: </label>
@@ -637,7 +721,7 @@
                                                         value="<?php echo date('Y/m/d H:i:s', strtotime($product['dateTimeTo'])); ?>"
                                                     <?php } ?>
                                                     required
-                                                    />
+                                                />
                                             </div>
                                             <div class="col-lg-4 col-sm-12">
                                                 <label for="editCategoryId<?php echo $product['productId'] ?>">Product category: </label>
@@ -698,7 +782,9 @@
                                             <legend style="text-align:left;">Select product types</legend>
                                             <?php
                                                 foreach ($productTypes as $type) {
-                                                    $value = 0;
+                                                    $localPrice = 0;
+                                                    $deliveryPrice = 0;
+                                                    $pickupPrice = 0;
                                                     $checked = '';
                                                     $showInPublic = '';
 
@@ -710,7 +796,9 @@
                                                                 if ($details['showInPublic'] === '0') {
                                                                     $showInPublic = '';
                                                                 }
-                                                                $value = $details['price'];
+                                                                $localPrice = $details['price'];
+                                                                $deliveryPrice = $details['deliveryPrice'];
+                                                                $pickupPrice = $details['pickupPrice'];
                                                                 $productExtendedId = $details['productExtendedId'];
                                                             }
                                                         }
@@ -736,7 +824,7 @@
                                                             />
                                                         Select <?php echo '"' . $type['productType'] . '"'; if ($type['isMain'] === '1') echo ' (main)'; ?>
                                                     </label>
-                                                    <label class="checkbox-inline" for="productActive<?php echo $type['id'] . $product['productId']; ?>">
+                                                    <label class="checkbox-inline" for="productActive<?php echo $type['id'] . $product['productId']; ?>" style="margin-bottom:10px">
                                                         <input
                                                             type="checkbox"
                                                             id="productActive<?php echo $type['id'] . $product['productId']; ?>"
@@ -750,17 +838,42 @@
                                                                 Active status
                                                             <?php } ?>
                                                     </label>
-                                                    <label for="price<?php echo $type['id'] . $product['productId']; ?>">Price: </label>
+                                                    <?php if (in_array($localTypeId, $vendorTypes)) { ?>
+                                                        <label for="price<?php echo $type['id'] . $product['productId']; ?>">Local price: </label>
+                                                        <input
+                                                            type="number"
+                                                            required
+                                                            step="0.01"
+                                                            name="productTypes[<?php echo $type['id']; ?>][price]"
+                                                            id="price<?php echo $type['id'] . $product['productId']; ?>"
+                                                            min="0" class="form-control"                                                         
+                                                            value = "<?php echo $localPrice; ?>"
+                                                        />
+                                                    <?php } ?>
+                                                    <?php if (in_array($deliveryTypeId, $vendorTypes)) { ?>
+                                                        <label for="deliveryPrice<?php echo $type['id'] . $product['productId']; ?>">Delivery price: </label>
+                                                        <input
+                                                            type="number"
+                                                            required
+                                                            step="0.01"
+                                                            name="productTypes[<?php echo $type['id']; ?>][deliveryPrice]"
+                                                            id="deliveryPrice<?php echo $type['id'] . $product['productId']; ?>"
+                                                            min="0" class="form-control"                                                         
+                                                            value = "<?php echo $deliveryPrice; ?>"
+                                                        />
+                                                    <?php } ?>
+                                                    <?php if (in_array($pickupTypeId, $vendorTypes)) { ?>
+                                                    <label for="pickupPrice<?php echo $type['id'] . $product['productId']; ?>">Pickup price: </label>
                                                     <input
                                                         type="number"
                                                         required
                                                         step="0.01"
-                                                        name="productTypes[<?php echo $type['id']; ?>][price]"
-                                                        id="price<?php echo $type['id'] . $product['productId']; ?>"
-                                                        min="0" class="form-control" 
-                                                        
-                                                        value = "<?php echo $value; ?>"
-                                                        />
+                                                        name="productTypes[<?php echo $type['id']; ?>][pickupPrice]"
+                                                        id="pickupPrice<?php echo $type['id'] . $product['productId']; ?>"
+                                                        min="0" class="form-control"                                                         
+                                                        value = "<?php echo $pickupPrice; ?>"
+                                                    />
+                                                    <?php } ?>
                                                 </div>
                                                 
                                                 <?php
