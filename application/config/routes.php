@@ -262,7 +262,7 @@ $route['checkout_order']        = 'publicorders/checkout_order';
 $route['pay_order']             = 'publicorders/pay_order';
 $route['closed/(:num)']         = 'publicorders/closed/$1';
 $route['spot_closed/(:num)']    = 'publicorders/spotClosed/$1';
-$route['insertorder/(:num)/(:num)'] = 'publicorders/insertOrder/$1/$2';
+$route['insertorder/(:num)/(:any)'] = 'publicorders/insertOrder/$1/$2';
 $route['cashPayment/(:num)/(:any)'] = 'publicorders/cashPayment/$1/$2';
 
 // API
@@ -273,7 +273,7 @@ $route['updateOrderEx']         = 'Api/Orders/updateTwoToZero';
 
 
 // ALFRED PAYMENT ENGINE
-$route['paymentengine/(:num)/(:num)'] = 'Alfredpayment/paymentEngine/$1/$2';
+$route['paymentengine/(:num)/(:any)'] = 'Alfredpayment/paymentEngine/$1/$2';
 $route['successPayment'] = 'Alfredpayment/successPayment';
 $route['exchangePay'] = 'Alfredpayment/ExchangePay';
 

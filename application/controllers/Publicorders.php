@@ -299,17 +299,18 @@
             $this->global['pageTitle'] = 'TIQS : PAY';
 
             $data = [
-                'ordered' => $_SESSION['order'],
-                'vendor' => $_SESSION['vendor'],
-                'spot' => $_SESSION['spot'],
-                'idealPaymentType' => $this->config->item('idealPaymentType'),
+                'ordered'               => $_SESSION['order'],
+                'vendor'                => $_SESSION['vendor'],
+                'spot'                  => $_SESSION['spot'],
+                'idealPaymentType'      => $this->config->item('idealPaymentType'),
                 'creditCardPaymentType' => $this->config->item('creditCardPaymentType'),
                 'bancontactPaymentType' => $this->config->item('bancontactPaymentType'),
-                'giroPaymentType' => $this->config->item('giroPaymentType'),
-				'payconiqPaymentType' => $this->config->item('payconiqPaymentType'),
-				'localType' => $this->config->item('local'),
-                'oldMakeOrderView' => $this->config->item('oldMakeOrderView'),
-                'newMakeOrderView' => $this->config->item('newMakeOrderView'),
+                'giroPaymentType'       => $this->config->item('giroPaymentType'),
+                'payconiqPaymentType'   => $this->config->item('payconiqPaymentType'),
+                'pinMachinePaymentType' => $this->config->item('pinMachinePaymentType'),
+				'localType'             => $this->config->item('local'),
+                'oldMakeOrderView'      => $this->config->item('oldMakeOrderView'),
+                'newMakeOrderView'      => $this->config->item('newMakeOrderView'),
             ];
 
             $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
@@ -333,6 +334,8 @@
                 $payType = $this->config->item('giroPayment');
             } elseif ($payNlPaymentTypeId === $this->config->item('payconiqPaymentType')) {
                 $payType = $this->config->item('payconiqPayment');
+            } elseif ($payNlPaymentTypeId === $this->config->item('pinMachinePaymentType')) {
+                $payType = $this->config->item('pinMachinePayment');
             } else {
                 redirect($redirect);
                 exit();

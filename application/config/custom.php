@@ -122,6 +122,7 @@ $config['creditCardPaymentType'] = '706';
 $config['bancontactPaymentType'] = '436';
 $config['giroPaymentType'] = '694';
 $config['payconiqPaymentType'] = '2379';
+$config['pinMachinePaymentType'] = '1927';
 
 // time utility
 $config['workingDays'] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
@@ -148,7 +149,7 @@ $config['creditCardPayment'] = 'credit card payment';
 $config['bancontactPayment'] = 'bancontact payment';
 $config['giroPayment'] = 'giro payment';
 $config['payconiqPayment'] = 'payconiq payment';
-
+$config['pinMachinePayment'] = 'pin machine';
 
 // PRODUCT IMAGES FOLDER
 $config['uploadProductImageFolder']    = FCPATH . 'assets/images/productImages' . DIRECTORY_SEPARATOR;

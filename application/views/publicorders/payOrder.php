@@ -131,19 +131,19 @@
                                         <?php if ($vendor['creditCard'] === '1') { ?>
                                             <a href="<?php echo base_url(); ?>insertorder/<?php echo $creditCardPaymentType; ?>/0" class="paymentMethod method-card" >
                                                 <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/creditcard.png" alt="Creditcard">
-                                                <span data-trans="" data-trn-key="Creditcard">Creditcard</span>
+                                                <span>Creditcard</span>
                                             </a>
                                         <?php } ?>
 										<?php if ($vendor['payconiq'] === '1') { ?>
 											<a href="<?php echo base_url(); ?>insertorder/<?php echo $payconiqPaymentType; ?>/0" class="paymentMethod method-card" >
 												<img src="https://tiqs.com/qrzvafood/assets/imgs/extra/payconiq.png" alt="Payconiq">
-												<span data-trans="" data-trn-key="Payconiq">Payconiq</span>
+												<span>Payconiq</span>
 											</a>
 										<?php } ?>
                                         <?php if ($vendor['bancontact'] === '1') { ?>
                                             <a href="<?php echo base_url(); ?>insertorder/<?php echo $bancontactPaymentType; ?>/0" class="paymentMethod method-card" >
                                                 <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/bancontact.png" alt="bancontact">
-                                                <span data-trans="" data-trn-key="Bancontact">Bancontact</span>
+                                                <span>Bancontact</span>
                                             </a>
                                         <?php } ?>
                                         <?php if ($vendor['giro'] === '1') { ?>
@@ -180,6 +180,12 @@
                                                     <?php } ?>
                                                 </p>
                                             <?php } ?>
+                                        <?php } ?>
+                                        <?php if ($vendor['pinMachine'] === '1') { ?>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $pinMachinePaymentType; ?>/TH-9268-3020" class="paymentMethod method-card" >
+                                                <img src="" alt="pin machine">
+                                                <span>Pin machine</span>
+                                            </a>
                                         <?php } ?>
                                         <div class="clearfix"></div>
                                     </div>
