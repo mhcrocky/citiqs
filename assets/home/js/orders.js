@@ -203,6 +203,19 @@ function populateTable(data) {
                     },
                     "width": "10%"
                 },
+                {
+                    "targets": 15,
+                    "data": function (row, type, val, meta) {
+                        if (row[15] === '1') {
+                            return 'Local';
+                        } else if  (row[15] === '2') {
+                            return 'Delivery';
+                        } else if  (row[15] === '3') {
+                            return 'Pickup';
+                        }
+                    },
+                    "width": "10%"
+                },
             ],
             initComplete: function () {
                 this.api().columns().every( function () {

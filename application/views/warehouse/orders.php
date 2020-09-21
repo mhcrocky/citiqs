@@ -48,6 +48,7 @@
                     <th>Spot type</th>
                     <th>Remarks</th>
                     <th>Payment type</th>
+                    <th>Service type</th>
                 </tr>
             </thead>
             <tbody>
@@ -70,6 +71,7 @@
                     <th>Spot type</th>
                     <th>Remarks</th>
                     <th>Payment type</th>
+                    <th>Service type</th>
                 </tr>
             </tfoot>
         </table>

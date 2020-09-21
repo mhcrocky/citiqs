@@ -452,6 +452,7 @@
             $post['order']['buyerId'] = $this->user_model->id;
             $post['order']['paid'] = $payStatus;
             $post['order']['paymentType'] = $payType;
+            $post['order']['serviceTypeId'] = $_SESSION['spot']['spotTypeId'];
             $this->shoporder_model->setObjectFromArray($post['order'])->create();
 
             if (!$this->shoporder_model->id) {

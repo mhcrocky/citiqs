@@ -28,6 +28,7 @@
         public $waiterReceipt;
         public $customerReceipt;
         public $remarks;
+        public $serviceTypeId;
 
         private $table = 'tbl_shop_orders';
 
@@ -84,6 +85,7 @@
             if (isset($data['paymentType']) && !Validate_data_helper::validateString($data['paymentType'])) return false;
             if (isset($data['waiterReceipt']) && !($data['waiterReceipt'] === '1' || $data['waiterReceipt'] === '0')) return false;
             if (isset($data['customerReceipt']) && !($data['customerReceipt'] === '1' || $data['customerReceipt'] === '0')) return false;
+            if (isset($data['serviceTypeId']) && !Validate_data_helper::validateInteger($data['serviceTypeId'])) return false;
 
             return true;
         }
@@ -150,6 +152,7 @@
                     $this->table . '.countSentMessages AS countSentMessages',
                     $this->table . '.remarks AS remarks',
                     $this->table . '.paymentType AS paymentType',
+                    $this->table . '.serviceTypeId AS serviceTypeId',
                     'buyer.id AS buyerId',
                     'buyer.email AS buyerEmail',
                     'buyer.username AS buyerUserName',
@@ -818,6 +821,9 @@
                 array( 'db' => 'spotType',              'dt' => 12),
                 array( 'db' => 'remarks',               'dt' => 13),
                 array( 'db' => 'paymentType',           'dt' => 14),
+                array( 'db' => 'serviceTypeId',         'dt' => 15),
+
+                
             );
 
             return Jquerydatatable_helper::data_output($columns, $return);
