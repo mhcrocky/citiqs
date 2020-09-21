@@ -102,7 +102,6 @@
                 ]
             ];
             $resetBy = 'productId';
-            $products = $this->filterProducts($userId, $filter, $resetBy, false);
             return $this->filterProducts($userId, $filter, $resetBy, false);
           
         }
@@ -395,6 +394,8 @@
                     tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
                 WHERE
                     tbl_shop_categories.userId = ' . $userId .'
+                    AND tbl_shop_categories.archived = "0"
+                    AND tbl_shop_products.archived = "0"
                 ORDER BY ' . $this->table . '.id DESC;';
             $result = $this->db->query($query);
             $result = $result->result_array();

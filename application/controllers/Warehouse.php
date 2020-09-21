@@ -174,7 +174,6 @@
             // filter productes ny name(s)
             if (!empty($_POST)) {
                 $post = $this->input->post(null, true);
-                #var_dump($post);die();
                 $whereIn = [
                     'column' => 'tbl_shop_products_extended.id',
                     'array' => $post['names']
