@@ -22,8 +22,8 @@
     font-size: 0;
     line-height: 0;
 
-    position: absolute;
-    top: 50%;
+    /* position: absolute;
+    top: 50%; */
 
     display: block;
 
@@ -201,4 +201,16 @@
 {
     opacity: .75;
     color: black;
+}
+
+.slick-prev {
+    position: fixed;
+    top: 17%;
+    left: 5%;
+}
+.slick-next {
+    position: fixed;
+    top: 17%;
+    left: 85%;
+    
 }

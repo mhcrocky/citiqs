@@ -600,14 +600,14 @@ body{
 	font-size: 30px;
 }
 
-.items-slider .slick-prev,
+/* .items-slider .slick-prev,
 .items-slider .slick-next{
 	top: 40px;
 }
 
 .items-slider .slick-prev {
     left: -35px;
-}
+} */
 
 .items-slider .slick-next {
     right: -25px;

@@ -20,8 +20,8 @@
                 $categoryList .= '</ul>';
             ?>
             <div>
-                <div class="col-12 col-md-8" id="categoryContainer">
-                    <div class="items-slider">
+                <div class="col-12 col-md-8" id="categoryContainer" style="padding-left:0px; padding-right:0px">
+                    <div class="items-slider" style="margin-left:0px; margin-right:0px">
                         <div class="shop__items">
                             <div class="shop__item-list-heading" id="categoryNav">
                                 <h2>MENU</h2>
