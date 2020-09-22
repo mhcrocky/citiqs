@@ -167,7 +167,7 @@ function returnTimePicker(elementId, times) {
         'minTime': times[1],
         'maxTime': times[2],
         'startTime': times[1],
-        'defaultTime': times[2],
+        'defaultTime': times[1],
     });
 }
 
