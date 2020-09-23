@@ -337,11 +337,11 @@
 								<input type="radio" id="postPaidNo" name="vendor[postPaid]" value="0" <?php if ($vendor['postPaid'] === '0') echo 'checked'; ?> />
 							</div>
 							<div class="form-group mb-35">
-								<h4>WALLET</h4>
-								<label class="radio-inline" for="walletYes">Yes</label>
-								<input type="radio" id="walletYes" name="vendor[wallet]" value="1" <?php if ($vendor['wallet'] === '1') echo 'checked'; ?> />
-								<label class="radio-inline" for="walletNo">&nbsp;&nbsp;&nbsp;No</label>
-								<input type="radio" id="walletNo" name="vendor[wallet]" value="0" <?php if ($vendor['wallet'] === '0') echo 'checked'; ?> />
+								<h4>VAUCHER</h4>
+								<label class="radio-inline" for="vaucherYes">Yes</label>
+								<input type="radio" id="vaucherYes" name="vendor[vaucher]" value="1" <?php if ($vendor['vaucher'] === '1') echo 'checked'; ?> />
+								<label class="radio-inline" for="vaucherNo">&nbsp;&nbsp;&nbsp;No</label>
+								<input type="radio" id="vaucherNo" name="vendor[vaucher]" value="0" <?php if ($vendor['vaucher'] === '0') echo 'checked'; ?> />
 							</div>
 							<div class="form-group mb-35">
 								<h4>PIN MACHINE</h4>

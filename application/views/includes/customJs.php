@@ -80,8 +80,7 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/js/jquery.datetimepicker.full.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/reports.js"></script>
 <?php } elseif ($this->view === 'publicorders/checkoutOrder') { ?>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-	
+	<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>	
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/checkoutOrder.js"></script>
 <?php } elseif ($this->view === 'warehouse/productTypes') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js"></script>
@@ -97,4 +96,6 @@
 <?php } elseif ($this->view === 'publicorders/makeOrderNew') { ?>
 	<script src="<?php echo base_url() ?>assets/home/slickJs/slick.min.js"></script>
 	<script src="<?php echo base_url() ?>assets/home/js/makeOrderNew.js"></script>
+<?php } elseif ($this->view === 'publicorders/payOrder') { ?>
+	<script src="<?php echo base_url() ?>assets/home/js/payOrder.js"></script>
 <?php } ?>

@@ -257,13 +257,14 @@ $route['dayreport']           	= "warehouse/dayreport";
 $route['vatreport']           	= "warehouse/vatreport";
 
 // PUBLIC
-$route['make_order']            = 'publicorders/index';
-$route['checkout_order']        = 'publicorders/checkout_order';
-$route['pay_order']             = 'publicorders/pay_order';
-$route['closed/(:num)']         = 'publicorders/closed/$1';
-$route['spot_closed/(:num)']    = 'publicorders/spotClosed/$1';
+$route['make_order']                = 'publicorders/index';
+$route['checkout_order']            = 'publicorders/checkout_order';
+$route['pay_order']                 = 'publicorders/pay_order';
+$route['closed/(:num)']             = 'publicorders/closed/$1';
+$route['spot_closed/(:num)']        = 'publicorders/spotClosed/$1';
 $route['insertorder/(:num)/(:any)'] = 'publicorders/insertOrder/$1/$2';
 $route['cashPayment/(:num)/(:any)'] = 'publicorders/cashPayment/$1/$2';
+$route['voucherPayment/(:num)']     = 'publicorders/voucherPayment/$1';
 
 // API
 $route['api/orders/print/get']  = 'Api/Orders/data';

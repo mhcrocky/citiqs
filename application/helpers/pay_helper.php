@@ -28,8 +28,7 @@
         {
             $CI =& get_instance();
             $CI->load->config('custom');
-
-            $amount = round((floatval($order['orderAmount']) + floatval($order['serviceFee'])) * 100, 0);
+            $amount = round((floatval($order['orderAmount']) + floatval($order['serviceFee']) - floatval($order['voucherAmount'])) * 100, 0);
             $arrArguments = [];
 
             $arrArguments['serviceId'] = $serviceId;

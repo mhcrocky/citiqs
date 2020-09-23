@@ -205,6 +205,9 @@ var callThis = (function() {
         checkUserNewsLetter: function(callFunction) {
             let newsLetter = this == 1 ? true : false;
             callFunction(newsLetter);
+        },
+        voucherPay: function(callFunction) {
+            callFunction(this);
         }
     };
     return methods;

@@ -97,11 +97,15 @@
                                                     <p>Bestellingen</p>
                                                     <p>Service</p>
                                                     <p>TOTAAL</p>
+                                                    <p class="voucher" style="display:none">Voucher amount</p>
+                                                    <p class="voucher" style="display:none">Pay with other method</p>
                                                 </td>
                                                 <td>
                                                     <p><?php echo number_format($totalOrder, 2, ',', '.'); ?> &euro;</p>
                                                     <p><?php echo number_format($serviceFee, 2, ',', '.'); ?> &euro;</p>
                                                     <p><?php echo number_format($total, 2, ',', '.'); ?> &euro;</p>
+                                                    <p class="voucher" style="display:none"><span id="voucherAmount"></span> &euro;</p>
+                                                    <p class="voucher" style="display:none"><span id="leftAmount"></span> &euro;</p>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -120,10 +124,7 @@
                                 <div class="content-container clearfix" id="paymentMethodsContainer">
                                     <div class="payment-container methods">
                                         <?php if ($vendor['ideal'] === '1') { ?>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="paymentMethod method-ideal"
-                                                onclick="toogleElements('idealBanks', 'paymentMethodsContainer', 'hidden')">
+                                            <a href="javascript:void(0)" onclick="toogleElements('idealBanks', 'paymentMethodsContainer', 'hidden')" class="paymentMethod method-card" >
                                                 <img src="https://tiqs.com/shop/assets/imgs/extra/ideal.png" alt="iDEAL">
                                                 <span>iDEAL</span>
                                             </a>
@@ -147,11 +148,7 @@
                                             </a>
                                         <?php } ?>
                                         <?php if ($vendor['giro'] === '1') { ?>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="paymentMethod method-ideal"
-                                                onclick="toogleElements('giroBanks', 'paymentMethodsContainer', 'hidden')"
-                                                >
+                                            <a href="javascript:void(0)" onclick="toogleElements('giroBanks', 'paymentMethodsContainer', 'hidden')" class="paymentMethod method-card" >
                                                 <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/giropay(1).png" alt="bancontact">
                                                 <span data-trans="" data-trn-key="Bancontact">Giropay</span>
                                             </a>
@@ -187,10 +184,17 @@
                                                 <span>Pin machine</span>
                                             </a>
                                         <?php } ?>
+                                        <?php if ($vendor['vaucher'] === '1') { ?>
+                                            <p data-toggle="modal" data-target="#vaucher" class="paymentMethod method-card" >
+                                                <img src="" alt="vaucher">
+                                                <span>Vaucher</span>
+                                            </a>
+                                        <?php } ?>
                                         <div class="clearfix"></div>
                                     </div>
 
                                 </div>
+
                                 <?php if ($vendor['ideal'] === '1') { ?>
                                     <div class="method method-ideal hidden"  id="idealBanks">
                                         <div class="title hidden"><span data-trans="" data-trn-key="Kies een bank">Kies een bank</span>
@@ -302,6 +306,8 @@
                                         </div>
                                     </div>
                                 <?php } ?>
+
+                                <!-- modals -->
                                 <?php if ($localType === intval($spot['spotTypeId'])) { ?>
                                     <?php if ($vendor['prePaid'] === '1') { ?>
                                         <!-- Modal -->
@@ -356,14 +362,49 @@
                                         </div>
                                     <?php } ?>
                                 <?php } ?>
+                                <?php if ($vendor['vaucher'] === '1') { ?>
+                                    <!-- Modal -->
+                                    <div id="vaucher" class="modal" role="dialog">
+                                        <div class="modal-dialog modal-sm">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <label for="codeId">Insert code from vaucher</label>
+                                                    <input
+                                                        type="text"
+                                                        id="codeId"
+                                                        class="form-control"
+                                                        data-total="<?php echo number_format($total, 2, '.', ''); ?>"
+                                                    />
+                                                    <br/>
+                                                    <button
+                                                        class="btn btn-success btn-lg"
+                                                        style="border-radius:50%; margin-right:5%; font-size:24px"
+                                                        onclick="voucherPay('codeId')"
+                                                        >
+                                                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                                    </button>
+                                                    <button
+                                                        class="btn btn-danger btn-lg"
+                                                        style="border-radius:50%; margin-left:5%; font-size:24px"
+                                                        data-dismiss="modal"
+                                                        >
+                                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+
+
 
                                 <div class="footer" style="text-align:left">
                                     <a href="<?php echo base_url(); ?>checkout_order" class="btn-cancel">
                                         <i class="fa fa-arrow-left"></i>
                                         <span data-trans="" data-trn-key="Annuleren">Annuleren</span>
                                     </a>
-                                </div>
-                                
+                                </div>                                
                             </div>
                         </div>
                     </div>
@@ -372,18 +413,3 @@
         </div>
     </div>
 </div>
-
-<!-- /.content-container -->
-<?php if ($vendor['ideal'] === '1' || $vendor['postPaid'] === '1' || $vendor['prePaid'] === '1') { ?>
-<script>
-
-    function toogleElements(showId, hideId, className) {
-        document.getElementById(showId).classList.toggle(className)
-        document.getElementById(hideId).classList.toggle(className)
-    }
-
-    function redirect(url) {
-        window.location.href = url;
-    }
-</script>
-<?php } ?>

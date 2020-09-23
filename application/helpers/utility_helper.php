@@ -324,7 +324,7 @@
                         #var_dump($productesInCategory);
                         foreach ($productesInCategory as $categoryProduct) {
                             if ($categoryProduct['productId'] === $product['productId']) {
-                                $categoryProduct['allergies'] = unserialize($categoryProduct['allergies']);
+                                $categoryProduct['allergies'] = !empty($categoryProduct['allergies']) ? unserialize($categoryProduct['allergies']) : [];
                                 if (!empty($categoryProduct['allergies']['productAllergies'])) {
                                     $productAllergies = $categoryProduct['allergies']['productAllergies'];
                                     $baseUrl = base_url();

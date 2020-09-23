@@ -25,6 +25,7 @@ class Ajax extends CI_Controller
         $this->load->model('shopspotproduct_model');
         $this->load->model('shopproductex_model');
         $this->load->model('shopvendor_model');
+        $this->load->model('shopvoucher_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -871,5 +872,96 @@ class Ajax extends CI_Controller
 			$status = 'error';
 		}
 		echo json_encode(array('msg' => $msg, 'status' =>$status));
-	}
+    }
+
+    public function voucherPay(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        if (get_cookie('codeBlocked')) {
+            unset($_SESSION['failed']);
+            echo json_encode([
+                'status' => '0',
+                'message' => 'Invalid code inserted three times. Code use blocked for next 2 minutes'
+            ]);
+            return;
+        }
+
+        $code = $this->input->post('code', true);
+        $amount = floatval($this->input->post('amount', true));
+
+        $this
+            ->shopvoucher_model
+                ->setProperty('code', $code)
+                ->setVoucher();
+
+        if (is_null($this->shopvoucher_model->id)) {
+
+            if (!isset($_SESSION['failed'])) {
+                $_SESSION['failed'] = 0;
+            }
+            $_SESSION['failed']++;
+            if ($_SESSION['failed'] === 3) {
+                set_cookie('codeBlocked', '1', 120);
+                echo json_encode([
+                    'status' => '0',
+                    'message' => 'Invalid code inserted three times. Code use blocked for next 2 minutes'
+                ]);
+                return;
+            }
+
+            echo json_encode([
+                'status' => '0',
+                'message' => 'Invalid code'
+            ]);
+            return;
+        }
+
+        if (isset($_SESSION['failed'])) {
+            unset($_SESSION['failed']);
+        }
+
+        if ($this->shopvoucher_model->expire < date('Y-m-d')) {
+            echo json_encode([
+                'status' => '0',
+                'message' => 'Voucher expired'
+            ]);
+            return;
+        };
+
+        if ($this->shopvoucher_model->active === '0') {
+            echo json_encode([
+                'status' => '0',
+                'message' => 'The voucher has already been used'
+            ]);
+            return;
+        }
+
+        if ($this->shopvoucher_model->amount >= $amount || $this->shopvoucher_model->percent === 100) {
+            $redirect = base_url() . 'voucherPayment' . DIRECTORY_SEPARATOR . $this->shopvoucher_model->id;
+            echo json_encode([
+                'status' => '1',
+                'redirect' => $redirect
+            ]);
+            return;
+        };
+
+        $leftAmount = $amount - $this->shopvoucher_model->amount;
+        $_SESSION['voucherId'] = $this->shopvoucher_model->id;
+
+        if ($this->shopvoucher_model->amount) {
+            $voucherDiscount = $this->shopvoucher_model->amount;
+        } else {
+            $voucherDiscount = $this->shopvoucher_model->percent * $amount / 100;
+        }
+
+        echo json_encode([
+            'status' => '2',
+            'message' => 'Select method to finish payment',
+            'voucherAmount' => number_format($voucherDiscount, 2, ',', '.'),
+            'leftAmount' => number_format($leftAmount, 2, ',', '.'),
+        ]);
+
+        return;
+    }
 }

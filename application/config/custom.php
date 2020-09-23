@@ -150,6 +150,7 @@ $config['bancontactPayment'] = 'bancontact payment';
 $config['giroPayment'] = 'giro payment';
 $config['payconiqPayment'] = 'payconiq payment';
 $config['pinMachinePayment'] = 'pin machine';
+$config['voucherPayment'] = 'voucher';
 
 // PRODUCT IMAGES FOLDER
 $config['uploadProductImageFolder']    = FCPATH . 'assets/images/productImages' . DIRECTORY_SEPARATOR;

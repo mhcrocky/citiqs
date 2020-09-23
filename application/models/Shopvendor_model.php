@@ -40,7 +40,7 @@
         public $prePaid;
         public $postPaid;
         public $payconiq;
-        public $wallet;
+        public $vaucher;
         public $pinMachine;
 
         private $table = 'tbl_shop_vendors';
@@ -103,7 +103,7 @@
             if (isset($data['requireEmail']) && !($data['requireEmail'] === '1' || $data['requireEmail'] === '0')) return false;
             if (isset($data['requireName']) && !($data['requireName'] === '1' || $data['requireName'] === '0')) return false;
             if (isset($data['showAllergies']) && !($data['showAllergies'] === '1' || $data['showAllergies'] === '0')) return false;
-            if (isset($data['wallet']) && !($data['wallet'] === '1' || $data['wallet'] === '0')) return false;
+            if (isset($data['vaucher']) && !($data['vaucher'] === '1' || $data['vaucher'] === '0')) return false;
             if (isset($data['pinMachine']) && !($data['pinMachine'] === '1' || $data['pinMachine'] === '0')) return false;
 
             return true;
@@ -142,7 +142,7 @@
                     $this->table . '.requireEmail',
                     $this->table . '.requireName',
                     $this->table . '.showAllergies',
-                    $this->table . '.wallet',
+                    $this->table . '.vaucher',
                     $this->table . '.pinMachine',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',

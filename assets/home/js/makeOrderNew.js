@@ -371,7 +371,6 @@ $(document).ready(function(){
     });
 
     $('.categoryNav a').on("click", function () {
-        let categoryContainer = document.getElementById('categoryContainer');        
         let actIndex = parseInt(this.dataset.index);
         let slider = $('.items-slider');
         slider[0].slick.slickGoTo(parseInt(actIndex));

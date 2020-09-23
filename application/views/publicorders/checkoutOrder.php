@@ -177,8 +177,8 @@
         <input type="text"      name="user[usershorturl]"   value="<?php echo $usershorturl; ?>" required readonly hidden />
         <input type="text"      name="user[salesagent]"     value="<?php echo $buyerRole; ?>" required readonly hidden />      
         <input type="number"    name="order[spotId]"        value="<?php echo $spotId; ?>" readonly required hidden />
-        <input type="number"    name="order[serviceFee]"    value="<?php echo $serviceFee; ?>" id="serviceFeeInput" min="0" step="0.01"  readonly required hidden />
-        <input type="number"    name="order[amount]"        value="<?php echo $orderTotal; ?>" id="orderAmountInput" min="0" step="0.01"  readonly required hidden />
+        <input type="number"    name="order[serviceFee]"    value="<?php echo round($serviceFee, 2); ?>" id="serviceFeeInput" min="0" step="0.01"  readonly required hidden />
+        <input type="number"    name="order[amount]"        value="<?php echo round($orderTotal, 2); ?>" id="orderAmountInput" min="0" step="0.01"  readonly required hidden />
     </form>
 </main>
 <script>

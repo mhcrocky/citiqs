@@ -29,6 +29,8 @@
         public $customerReceipt;
         public $remarks;
         public $serviceTypeId;
+        public $voucherAmount;
+        public $voucherId;
 
         private $table = 'tbl_shop_orders';
 
@@ -86,6 +88,8 @@
             if (isset($data['waiterReceipt']) && !($data['waiterReceipt'] === '1' || $data['waiterReceipt'] === '0')) return false;
             if (isset($data['customerReceipt']) && !($data['customerReceipt'] === '1' || $data['customerReceipt'] === '0')) return false;
             if (isset($data['serviceTypeId']) && !Validate_data_helper::validateInteger($data['serviceTypeId'])) return false;
+            if (isset($data['voucherAmount']) && !Validate_data_helper::validateFloat($data['voucherAmount'])) return false;
+            if (isset($data['voucherId']) && !Validate_data_helper::validateInteger($data['voucherId'])) return false;
 
             return true;
         }
@@ -98,6 +102,7 @@
                     $this->table . '.amount AS orderAmount',
                     $this->table . '.paid AS orderPaidStatus',
                     $this->table . '.serviceFee AS serviceFee',
+                    $this->table . '.voucherAmount',
                     'buyer.id AS buyerId',
                     'buyer.email AS buyerEmail',
                     'buyer.username AS buyerUserName',

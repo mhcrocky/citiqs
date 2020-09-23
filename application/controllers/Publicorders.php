@@ -31,6 +31,7 @@
             $this->load->model('shopvisitorreservtaion_model');
             $this->load->model('shopvendortime_model');
             $this->load->model('shopspottime_model');
+            $this->load->model('shopvoucher_model');
 
             $this->load->config('custom');
 
@@ -293,6 +294,11 @@
                 exit();
             }
 
+            // if $_SESSION['voucherId'] and user refresh the page
+            if (isset($_SESSION['voucherId'])) {
+                unset($_SESSION['voucherId']);
+            }
+
             // CHECK VENDOR CREDENTIALS
             $this->checkVendorCredentials($_SESSION['vendor']);
 
@@ -411,7 +417,7 @@
             $this->loadViews('publicorders/spotClosed', $this->global, $data, null, 'headerWarehousePublic');
         }
 
-        private function insertOrderProcess(string $payStatus, string $payType): void
+        private function insertOrderProcess(string $payStatus, string $payType, int $voucherId = 0): void
         {
             //fetch data from $_SESSION
             $post = $_SESSION['postOrder'];
@@ -436,10 +442,10 @@
                 }
             }
 
+            // insert buyer
             $this->user_model->manageAndSetBuyer($post['user']);
-
             if (!$this->user_model->id) {
-                $this->session->set_flashdata('error', 'Order not made! Name and email are mandatory fields. Please try again'); #Email, name and mobile are mandatory fields. 
+                $this->session->set_flashdata('error', 'Order not made! Email is mandatory field. Please try again');
                 redirect('checkout_order');
                 exit();
             }
@@ -452,10 +458,23 @@
                 $orderDate = explode(' ', $post['order']['date']);
                 $post['order']['created'] = $orderDate[0] . ' ' . $post['order']['time'];
             }
+
+            //set $post['order'] keys and value if whole or part of order is paid from wallet
+
             $post['order']['buyerId'] = $this->user_model->id;
             $post['order']['paid'] = $payStatus;
             $post['order']['paymentType'] = $payType;
             $post['order']['serviceTypeId'] = $_SESSION['spot']['spotTypeId'];
+
+            if ($voucherId) {
+                $this->payOrderWithVoucher($voucherId, $post, $failedRedirect);
+            }
+
+            if (isset($_SESSION['voucherId'])) {
+                $this->payPartOfOrderWithVoucher($_SESSION['voucherId'], $post, $failedRedirect);
+                unset($_SESSION['voucherId']);
+            }
+
             $this->shoporder_model->setObjectFromArray($post['order'])->create();
 
             if (!$this->shoporder_model->id) {
@@ -515,5 +534,56 @@
 			//            die();
             Utility_helper::unsetPaymentSession();
             redirect($redirect);
+        }
+
+        public function voucherPayment($voucherId): void
+        {
+            $voucherId = intval($voucherId);
+            $this->insertOrderProcess($this->config->item('orderNotPaid'), $this->config->item('voucherPayment'), $voucherId);
+            $redirect =  ($_SESSION['vendor']['vendorId'] === 1162 || $_SESSION['vendor']['vendorId'] === 5655 ) ?  'successth' : 'success';
+            Utility_helper::unsetPaymentSession();
+            redirect($redirect);
+        }
+
+        private function payOrderWithVoucher(int $voucherId, array &$post, string $failedRedirect): void
+        {
+            $checkAmount = floatval($post['order']['serviceFee']) + floatval($post['order']['amount']);
+            $payOrder = $this
+                            ->shopvoucher_model
+                                ->setObjectId($voucherId)
+                                ->setVoucher()
+                                ->payOrderWithVoucher($checkAmount)
+                                ->updateVoucher();
+            if ($payOrder) {
+                $post['order']['paid'] = $this->config->item('orderPaid');
+                $post['order']['voucherAmount'] = $checkAmount;
+                $post['order']['voucherId'] = $voucherId;
+            } else {
+                $this->session->set_flashdata('error', 'Order not made! Not enough funds on voucher');
+                redirect($failedRedirect);
+            }
+        }
+
+        private function payPartOfOrderWithVoucher(int $voucherId, array &$post, string $failedRedirect): void
+        {
+            $checkAmount = floatval($post['order']['serviceFee']) + floatval($post['order']['amount']);
+            $payOrder = $this
+                            ->shopvoucher_model
+                                ->setObjectId($voucherId)
+                                ->setVoucher()
+                                ->payOrderWithVoucher($checkAmount, true)
+                                ->updateVoucher();
+            $post['order']['voucherId'] = $voucherId;
+
+            $oldAmount = $this->shopvoucher_model->getOldAmount();
+            if ($oldAmount) {
+                $post['order']['voucherAmount'] = $oldAmount;
+            } else {
+                $voucherAmount = $checkAmount * $this->shopvoucher_model->percent / 100;
+                $post['order']['voucherAmount'] = round($voucherAmount, 2);
+                $post['order']['paymentType'] = $post['order']['paymentType'] . ' / ' . $this->config->item('voucherPayment');
+            }
+
+            return;
         }
     }
