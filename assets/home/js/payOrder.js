@@ -33,6 +33,7 @@ function voucherResponse(data) {
         $('.voucher').css('display', 'block');
         document.getElementById('voucherAmount').innerHTML = data['voucherAmount'];
         document.getElementById('leftAmount').innerHTML = data['leftAmount'];
+        $("#voucher .closeModal").click()
         return;
     }
     redirect(data['redirect']);

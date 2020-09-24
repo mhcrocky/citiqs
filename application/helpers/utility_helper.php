@@ -237,6 +237,7 @@
             unset($_SESSION['spotId']);
             unset($_SESSION['vendor']);
             unset($_SESSION['spot']);
+            unset($_SESSION['orderVendorId']);
 
             return;
         }
