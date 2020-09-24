@@ -208,7 +208,12 @@
                         >
                         <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <div class="modal-header">
+                            <div
+                                class="modal-header"
+                                <?php if ($product['onlyOne'] === '1') { ?>
+                                    style="border-bottom:0px"
+                                <?php } ?>
+                            >
                                 <div class="modal-header__content">
                                     <div class='modal-header__details'>
                                         <h4 class="modal-header__title"><?php echo $productDetails['name']; ?></h4>
@@ -423,7 +428,12 @@
                                     <?php } ?>
                                 </div>
                             </div>
-                            <div class="modal-footer">
+                            <div
+                                class="modal-footer"
+                                <?php if ($product['onlyOne'] === '1') { ?>
+                                    style="border-top:0px"
+                                <?php } ?>
+                            >
                                 <button
                                     type="button"
                                     class="button-main button-primary"

@@ -71,6 +71,7 @@ function showPhoneNumber(data) {
     let phoneNumber = ''
     phoneNumber += '<input type="text" ';
     phoneNumber += 'value="' + number + '" ';
+    phoneNumber += 'id="' + data[10] + '" ';
     phoneNumber += 'data-user-id="' + data[10] + '" ';
     phoneNumber += 'onchange="updatePhoneNumber(this)" ';
     phoneNumber += 'required />';
