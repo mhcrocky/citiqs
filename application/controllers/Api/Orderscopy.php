@@ -448,6 +448,20 @@
 			$i++;
 			$i++;
 
+			if ($order['voucherAmount'] != 0) {
+				$drawemail->setStrokeWidth(3);
+				$drawemail->setFontSize(28);
+				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+				$drawemail->annotation(0, 175 + ($i * 30), 'TOTAAL - VOUCHER');
+				$totalamt = $totalamt - floatval($order['voucherAmount']);
+				$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+				$drawemail->annotation(570, 175 + ($i * 30), '€ ' . sprintf("%.2f", $totalamt));
+				$drawemail->setStrokeWidth(2);
+				$drawemail->setFontSize(28);
+				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+			}
+
+			$i++;
 			$drawemail->setStrokeColor('black');
 			$drawemail->setStrokeWidth(4);
 			$drawemail->line(0, 175 + ($i * 30), 576, 175 + ($i * 30));
