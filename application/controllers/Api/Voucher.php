@@ -40,7 +40,7 @@ class Voucher extends REST_Controller
 
 
         while ($numOfCodes > 0) {
-            $data['code'] = Utility_helper::shuffleString(5);
+            $data['code'] = Utility_helper::shuffleStringSmallCaps(6);
 
             if (!$this->shopvoucher_model->insertValidate($data)) die('Invalid data');
 

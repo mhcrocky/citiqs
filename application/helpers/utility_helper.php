@@ -7,7 +7,13 @@
     {
         public static function shuffleString(int $range): string
         {
-            $set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKLMNPQRSTVWXY';
+            $set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKMNPQRSTVWXY';
+            return substr(str_shuffle($set), 0, $range);
+        }
+
+        public static function shuffleStringSmallCaps(int $range): string
+        {
+            $set = '3456789abcdefghjkmnpqrstvwxy';
             return substr(str_shuffle($set), 0, $range);
         }
 
