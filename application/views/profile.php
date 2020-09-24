@@ -337,7 +337,7 @@
 								<input type="radio" id="postPaidNo" name="vendor[postPaid]" value="0" <?php if ($vendor['postPaid'] === '0') echo 'checked'; ?> />
 							</div>
 							<div class="form-group mb-35">
-								<h4>VAUCHER</h4>
+								<h4>VOUCHER</h4>
 								<label class="radio-inline" for="vaucherYes">Yes</label>
 								<input type="radio" id="vaucherYes" name="vendor[vaucher]" value="1" <?php if ($vendor['vaucher'] === '1') echo 'checked'; ?> />
 								<label class="radio-inline" for="vaucherNo">&nbsp;&nbsp;&nbsp;No</label>
