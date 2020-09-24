@@ -89,12 +89,13 @@
 		//						"format"=>"Y-m-d H:i:s",
 		//						"displayFormat"=>"d-m-Y"
 		//					),
+
 							"category"=>array(
 								"label"=> "CATEGORY",
 								"type"=>"text"
 							),
 
-							"orderAmount"=>array(
+							"totalamount"=>array(
 								"label"=> "AMOUNT",
 								"type"=>"number",
 								"decimals"=>2,
@@ -105,8 +106,8 @@
 
 							),
 
-							"servicefee"=>array(
-								"label"=> "SERVICEFEE",
+							"totalvatamount"=>array(
+								"label"=> "EXVAT",
 								"type"=>"number",
 								"decimals"=>2,
 								"decimalPoint"=>",",        // Decimal point character
@@ -115,8 +116,8 @@
 								"footer"=>"sum"
 							),
 
-							"totalamount"=>array(
-								"label"=> "TOTAL",
+							"VATAndAmount"=>array(
+								"label"=> "VAT",
 								"type"=>"number",
 								"decimals"=>2,
 								"decimalPoint"=>",",        // Decimal point character
@@ -276,7 +277,7 @@
 
 
 
-			<div class="align-top width-650" style="margin-bottom: 30px">
+			<div class="align-top width-650">
 				<div class="mb-35" style="margin-top: 30px; margin-left: -10px;">
 					<?php
 					\koolreport\amazing\ChartCard::create(array(
@@ -403,8 +404,160 @@
 					?>
 				</div>
 			</div>
+<!-- 				->pipe(new Group(array(
+					"by"=>array("spotName"),
+					"sum"=>array("orderAmount", "servicefee","totalamount")
+				)))-->
+		<div class="align-top width-650" style="margin-bottom: 30px">
+			<div class="mb-35" style="margin-top: 30px; margin-left: -10px;">
+				<?php
+				\koolreport\amazing\ChartCard::create(array(
+						"title"=>"AMOUNTS PER SPOT TYPE",
+						"value"=>$this->dataStore("alldata_spot")->sum("totalamount"),
+						"format"=>array(
+								"value"=>array(
+										"type"=>"number",
+										"decimals"=>2,              // Number of decimals to show
+										"decimalPoint"=>",",        // Decimal point character
+										"thousand_sep"=>".",  // Thousand separator
+										"prefix"=>"€ ",
+								)
+						),
+						"cssClass"=>array(
+								"icon"=>"fa fa-calendar"
+						),
+						"cssStyle"=> [
+								"card"=>"background-color:#72b19f",
+								"title"=>"font-weight:bold",
+								"value"=>"font-style:italic",
+								"icon"=>"font-size:24px;color:white"
+						],
+				));
+				?>
+			</div>
+			<div class="report-content" style=" margin-left: -10px; ">
+				<?php
+				DataTables::create(array(
+						"dataSource"=>$this->dataStore("alldata_spot"),
+						"showFooter"=>"bottom",
+						"responsive"=>true,
+						"width"=>"600px",
+						"cssClass"=>array(
+								"table"=>"dt-responsive table table-striped table-bordered",
+						),
+						"columns"=>array(
+
+							//					"createdAt"=>array(
+							//						"label"=> "DAY",
+							//						"type"=>"datetime",
+							//						"format"=>"Y-m-d H:i:s",
+							//						"displayFormat"=>"d-m-Y"
+							//					),
+
+//														tbl_shop_orders.paymentType AS paymentType,
+//							SUM(tbl_shop_orders.amount) AS orderTotalAmount,
+//						 	SUM(tbl_shop_orders.serviceFee) AS serviceFeeTotalAmount
+//
+								"spotName"=>array(
+										"label"=> "SPOT",
+										"type"=>"text"
+								),
+
+								"totalamount"=>array(
+										"label"=> "AMOUNT INCL",
+										"type"=>"number",
+										"decimals"=>2,
+										"decimalPoint"=>",",        // Decimal point character
+										"thousand_sep"=>".",  // Thousand separator
+										"prefix"=>"€ ",
+										"footer"=>"sum"
+								),
+
+								"VATAndAmount"=>array(
+										"label"=> "VAT",
+										"type"=>"number",
+										"decimals"=>2,
+										"decimalPoint"=>",",        // Decimal point character
+										"thousand_sep"=>".",  // Thousand separator
+										"prefix"=>"€ ",
+										"footer"=>"sum"
+
+								),
+
+//							"VAT"=>array(
+//								"label"=> "V.A.T",
+//								"type"=>"number",
+//								"decimals"=>2,
+//								"decimalPoint"=>",",        // Decimal point character
+//								"thousand_sep"=>".",  // Thousand separator
+//								"prefix"=>"€ ",
+//								"footer"=>"sum"
+//							),
+
+//								"ORDERID"=>array(
+//									"label"=> "ORDERID",
+//									"type"=>"number",
+//									"decimals"=>0,
+//									"decimalPoint"=>",",        // Decimal point character
+//									"thousand_sep"=>""  // Thousand separator
+//									"prefix"=>"",
+//									"footer"=>""
+//								),
+
+
+						),
+
+						"options"=>array(
+								"order"=>array(
+										array(0,"asc") //Sort by second column asc
+								),
+								"searching"=>true,
+								"colReorder"=>true,
+								"pagingType"=>array("simple"),
+								"language"=>array("paginate"=>array("first"=>'«',
+										"previous"=>'‹',
+										"next"=>'›',
+										"last"=>'»'
+								)),
+								"paging"=>true,
+								"columnDefs"=>array(
+										array("width"=> "50px", "targets"=>"1" )
+								)
+						),
+
+
+				));
+				?>
+			</div>
+		</div>
 
 			<div class="align-top width-650" style="margin-bottom: 30px">
+				<div class="mb-35" style=" margin-left: -10px;">
+					<?php
+					\koolreport\amazing\ChartCard::create(array(
+							"title"=>"TOTAL SERVICE FEE",
+							"value"=>$this->dataStore("ServiceFEEVAT")->sum("orderServicefeeAmount"),
+							"format"=>array(
+									"value"=>array(
+											"type"=>"number",
+											"decimals"=>2,              // Number of decimals to show
+											"decimalPoint"=>",",        // Decimal point character
+											"thousand_sep"=>".",  // Thousand separator
+											"prefix"=>"€ ",
+									)
+							),
+							"cssClass"=>array(
+									"icon"=>"fa fa-calendar"
+							),
+							"cssStyle"=> [
+									"card"=>"background-color:#72b19f",
+									"title"=>"font-weight:bold",
+									"value"=>"font-style:italic",
+									"icon"=>"font-size:24px;color:white"
+							],
+					));
+					?>
+				</div>
 				<div class="report-content" style=" margin-left: -10px; ">
 					<?php
 					DataTables::create(array(

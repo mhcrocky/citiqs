@@ -186,8 +186,8 @@
                                         <?php } ?>
                                         <?php if ($vendor['vaucher'] === '1') { ?>
                                             <p data-toggle="modal" data-target="#vaucher" class="paymentMethod method-card" >
-                                                <img src="" alt="vaucher">
-                                                <span>Vaucher</span>
+                                                <img src="<?php echo base_url() . 'assets/home/images/voucher.png'; ?>" alt="voucher">
+                                                <span>Voucher</span>
                                             </a>
                                         <?php } ?>
                                         <div class="clearfix"></div>
@@ -369,7 +369,7 @@
                                             <!-- Modal content-->
                                             <div class="modal-content">
                                                 <div class="modal-body">
-                                                    <label for="codeId">Insert code from vaucher</label>
+                                                    <label for="codeId">Insert code from voucher</label>
                                                     <input
                                                         type="text"
                                                         id="codeId"
