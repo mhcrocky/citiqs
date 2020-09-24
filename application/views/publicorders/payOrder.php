@@ -180,12 +180,12 @@
                                         <?php } ?>
                                         <?php if ($vendor['pinMachine'] === '1') { ?>
                                             <a href="<?php echo base_url(); ?>insertorder/<?php echo $pinMachinePaymentType; ?>/TH-9268-3020" class="paymentMethod method-card" >
-                                                <img src="" alt="pin machine">
+                                            <img src="<?php echo base_url() . 'assets/home/images/pinmachine.png'; ?>" alt="pin machine">
                                                 <span>Pin machine</span>
                                             </a>
                                         <?php } ?>
                                         <?php if ($vendor['vaucher'] === '1') { ?>
-                                            <p data-toggle="modal" data-target="#vaucher" class="paymentMethod method-card" >
+                                            <p data-toggle="modal" data-target="#voucher" class="paymentMethod method-card" >
                                                 <img src="<?php echo base_url() . 'assets/home/images/voucher.png'; ?>" alt="voucher" >
                                                 <span>Voucher</span>
                                             </p>
@@ -364,7 +364,7 @@
                                 <?php } ?>
                                 <?php if ($vendor['vaucher'] === '1') { ?>
                                     <!-- Modal -->
-                                    <div id="vaucher" class="modal" role="dialog">
+                                    <div id="voucher" class="modal" role="dialog">
                                         <div class="modal-dialog modal-sm">
                                             <!-- Modal content-->
                                             <div class="modal-content">
@@ -379,14 +379,14 @@
                                                     <br/>
                                                     <button
                                                         class="btn btn-success btn-lg"
-                                                        style="border-radius:50%; margin-right:5%; font-size:24px"
+                                                        style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
                                                         onclick="voucherPay('codeId')"
                                                         >
                                                         <i class="fa fa-check-circle" aria-hidden="true"></i>
                                                     </button>
                                                     <button
-                                                        class="btn btn-danger btn-lg"
-                                                        style="border-radius:50%; margin-left:5%; font-size:24px"
+                                                        class="btn btn-danger btn-lg closeModal"
+                                                        style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
                                                         data-dismiss="modal"
                                                         >
                                                         <i class="fa fa-times" aria-hidden="true"></i>
