@@ -9,35 +9,81 @@
 			<?php if (!empty($spots)) { ?>
 				<div id="selectSpots">
 					<label for="spot">Service Point Or Table:</label>
-					<select class="selectBox selectSpot" id="spot" onchange="redirectTo(this.value)" class="form-control" style="color :black">
+					<!-- <select class="selectBox selectSpot" id="spot" onchange="redirectTo(this.value)" class="form-control" style="color :black">
 						<option value="">Select spot</option>
 						<?php
-							$noSpots = true;
-							foreach ($spots as $spot) {
-								// CHECK SPOT'S AND CURRENT TIME FOR LOCAL TYPE
-								if (intval($spot['spotTypeId']) === $local) {
-									$spotTimes = $spot['spotTimes'];
-									$dayPosition = strpos($spotTimes, date('D'));
+							// $noSpots = true;
+							// foreach ($spots as $spot) {
+							// 	// CHECK SPOT'S AND CURRENT TIME FOR LOCAL TYPE
+							// 	if (intval($spot['spotTypeId']) === $local) {
+							// 		$spotTimes = $spot['spotTimes'];
+							// 		$dayPosition = strpos($spotTimes, date('D'));
 
-									if (is_null($spotTimes) || is_bool($dayPosition)) continue;
+							// 		if (is_null($spotTimes) || is_bool($dayPosition)) continue;
 
-									$workingDay = substr($spotTimes, $dayPosition);
-									$workingDay = explode(',', $workingDay);
-									$workingDay = explode('|', $workingDay[0]);
-									$timeNow = date('H:i:s');									
-									if ($timeNow < $workingDay[1] || $timeNow > $workingDay[2]) continue;
-								}
+							// 		$workingDay = substr($spotTimes, $dayPosition);
+							// 		$workingDay = explode(',', $workingDay);
+							// 		$workingDay = explode('|', $workingDay[0]);
+							// 		$timeNow = date('H:i:s');
+							// 		if ($timeNow < $workingDay[1] || $timeNow > $workingDay[2]) continue;
+							// 	}
 
-								$noSpots = false;
+							// 	$noSpots = false;
 							?>
-								<option value="<?php echo 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spot['spotId'] ?>">
-									<?php echo $spot['spotName']; ?>
+								<option value="<?php #echo 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spot['spotId'] ?>">
+									<?php #echo $spot['spotName']; ?>
 								</option>
 							<?php
-								
-							}
+							#}
 						?>
-					</select>
+					</select> -->
+
+					<div class="custom__select">
+						<form action="">
+							<ul class='select__list'>
+								<?php
+									$noSpots = true;
+									foreach ($spots as $spot) {
+										// CHECK SPOT'S AND CURRENT TIME FOR LOCAL TYPE
+										if (intval($spot['spotTypeId']) === $local) {
+											$spotTimes = $spot['spotTimes'];
+											$dayPosition = strpos($spotTimes, date('D'));
+
+											if (is_null($spotTimes) || is_bool($dayPosition)) continue;
+
+											$workingDay = substr($spotTimes, $dayPosition);
+											$workingDay = explode(',', $workingDay);
+											$workingDay = explode('|', $workingDay[0]);
+											$timeNow = date('H:i:s');									
+											if ($timeNow < $workingDay[1] || $timeNow > $workingDay[2]) continue;
+										}
+
+										$noSpots = false;
+									?>
+										<li class='select__list__item'>
+											<label
+												data-redirect="<?php echo 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spot['spotId'] ?>"
+												for="spotId_<?php echo $spot['spotId']; ?>"
+											>
+												<?php echo $spot['spotName']; ?>
+												<input
+													type="radio"
+													name="Type"
+													id="spotId_<?php echo $spot['spotId']; ?>"
+													value="<?php echo $spot['spotName']; ?>"
+												>
+												<span class="checkmark"></span>
+											</label>
+										</li>
+									<?php
+									}
+								?>
+							</ul>
+						</form>
+						<?php if (empty($noSpots)) { ?>
+							<button type='submit' class='submit-type' onclick="redirectToSpot('checked')">Submit</button>
+						<?php } ?>
+					</div>
 					<?php if ($vendor['requireReservation'] === '1' ) { ?>
 						<div><br/></div>
 						<a href="<?php echo base_url(); ?>check424/<?php echo $vendor['vendorId']; ?>">Checkout</a>
@@ -65,5 +111,16 @@
 <?php if (!empty($noSpots)) { ?>
 	<script>
 		$('#selectSpots').html('<p>No available spots</p>');
+	</script>
+<?php } else { ?>
+	<script>
+		var selected_value;
+		var selected__placeholder = $('#selected-value');
+		var custom_dropdown_height;
+
+		$('.select__list label').click(function(){
+			$('.select__list label').removeClass('checked');
+			$(this).addClass('checked');
+		})
 	</script>
 <?php } ?>

@@ -114,7 +114,7 @@ body{
 	border-radius: 50%;
 	transition: 0.4s all;
 	border: 1px solid #dcdcdc;
-	background-image: url('checkmark.svg');
+	background-image: url('assets/images/checkmark.svg');
 	background-repeat: no-repeat;
 	background-position: -1px 1px;
 	border-radius: 50%;
