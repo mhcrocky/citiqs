@@ -27,6 +27,7 @@ class Voucher extends REST_Controller
         $numOfCodes = intval($data['codes']);
 
         if ($numOfCodes <= 0) return;
+        if (isset($data['amount']) && isset($data['percent'])) die('Set only amount or percent');
 
         $data['active'] = '1';
         $data['percentUsed'] = '0';
