@@ -131,6 +131,16 @@
 
             $ordered = isset($_SESSION['order']) ? $_SESSION['order'] : null;
 
+            $ordered = null;
+            if (isset($_SESSION['orderVendorId']) && isset($_SESSION['order'])) {
+                if ($_SESSION['orderVendorId'] === $_SESSION['vendor']['vendorId']) {
+                    $ordered = $_SESSION['order'];
+                } else {
+                    unset($_SESSION['orderVendorId']);
+                    unset($_SESSION['order']);
+                }
+            }
+
             if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
                 $data['ordered'] = $ordered;
                 $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
@@ -201,6 +211,7 @@
 
             $post = $this->input->post(null, true);
 
+            $_SESSION['orderVendorId'] = $_SESSION['vendor']['vendorId'];
             if (!empty($post)) {
                 unset($post['spotId']);
                 $_SESSION['order'] = $post;
