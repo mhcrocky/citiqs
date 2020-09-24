@@ -432,7 +432,7 @@
                                     data-product-name="<?php echo $productDetails['name']; ?>"
                                     data-product-price="<?php echo $productDetails['price']; ?>"
                                     onclick="cloneProductAndAddons(this)"
-                                    >Continue</button>
+                                    >Add <?php echo $productDetails['name']; ?> to list</button>
                             </div>
                         </div>
                         </div>

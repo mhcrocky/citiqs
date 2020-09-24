@@ -265,7 +265,7 @@ function calculateTotal(className) {
     document.getElementById(checkoutOrdedGlobals.serviceFeeSpanId).innerHTML = serviceFee + '&nbsp;&euro;';
     document.getElementById(checkoutOrdedGlobals.totalAmountSpanId).innerHTML = total + '&nbsp;&euro;';
     document.getElementById(checkoutOrdedGlobals.serviceFeeInputId).setAttribute('value', serviceFee);
-    document.getElementById(checkoutOrdedGlobals.orderAmountInputId).setAttribute('value', total);
+    document.getElementById(checkoutOrdedGlobals.orderAmountInputId).setAttribute('value', totalOrders);
 }
 
 function unsetSessionOrderElement(dataset) {
