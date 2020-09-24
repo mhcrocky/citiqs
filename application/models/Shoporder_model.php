@@ -403,7 +403,7 @@
                             WHERE tbl_user.roleid = ' . $this->config->item('owner') . '
                         ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     WHERE
-                        (tbl_shop_orders.paid = "1" OR tbl_shop_orders.paymentType IS NOT NULL)
+                        tbl_shop_orders.paid = "1"
                         AND tbl_shop_orders.expired = "0"
                         AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_printers.macNumber = "' . $macNumber . '" 
@@ -510,7 +510,7 @@
                             WHERE tbl_user.roleid = ' . $this->config->item('owner') . '
                         ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     WHERE
-                        (tbl_shop_orders.paid = "1" OR tbl_shop_orders.paymentType IS NOT NULL)
+                        tbl_shop_orders.paid = "1"
                         AND tbl_shop_orders.expired = "0"
                         AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_printers.macNumber = "' . $macNumber . '" 
