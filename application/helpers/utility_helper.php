@@ -491,4 +491,28 @@
                 'checkoutList' => $checkoutList
             ];
         }
+
+        public static function arrayToCsv(array $csv, string $fileRelaitvePath): void
+        {
+            $csvFile = FCPATH . $fileRelaitvePath;
+            $csvFile = fopen($csvFile, 'w');
+            $firstLine = null;
+
+            foreach ($csv as $data) {
+
+                if (is_null($firstLine)) {
+                    $firstLine = array_keys($data);
+                    fputcsv($csvFile, $firstLine, ';');
+                }
+
+                $dataToScv = array_values($data);
+                fputcsv($csvFile, $dataToScv, ';');
+            }
+
+            fclose($csvFile);
+            $fileLocation = base_url() . $fileRelaitvePath;
+            redirect($fileLocation);
+
+            return;
+        }
     }
