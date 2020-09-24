@@ -186,9 +186,9 @@
                                         <?php } ?>
                                         <?php if ($vendor['vaucher'] === '1') { ?>
                                             <p data-toggle="modal" data-target="#vaucher" class="paymentMethod method-card" >
-                                                <img src="<?php echo base_url() . 'assets/home/images/voucher.png'; ?>" alt="voucher">
+                                                <img src="<?php echo base_url() . 'assets/home/images/voucher.png'; ?>" alt="voucher" >
                                                 <span>Voucher</span>
-                                            </a>
+                                            </p>
                                         <?php } ?>
                                         <div class="clearfix"></div>
                                     </div>
