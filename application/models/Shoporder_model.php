@@ -561,6 +561,7 @@
                         tbl_shop_orders.paymentType AS paymentType,
                         tbl_shop_orders.waiterReceipt AS waiterReceipt,
                         tbl_shop_orders.customerReceipt AS customerReceipt,
+                        tbl_shop_orders.voucherAmount AS voucherAmount,
                         tbl_shop_spots.spotName,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
                         tbl_user.username AS buyerUserName,
