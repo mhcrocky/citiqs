@@ -23,8 +23,6 @@
         public $productId;
 
         private $table = 'tbl_shop_voucher';
-        private $update = false;
-        private $oldAmount;
 
         protected function setValueType(string $property,  &$value): void
         {
@@ -62,7 +60,7 @@
             if (isset($data['amount']) && !Validate_data_helper::validateFloat($data['amount'])) return false;
             if (isset($data['percent']) && !Validate_data_helper::validateInteger($data['percent'])) return false;
             if (isset($data['percentUsed']) && !($data['percentUsed'] === '1' || $data['percentUsed'] === '0')) return false;
-            if (isset($data['expire']) && !Validate_data_helper::validateDate($data['expire'])) return false;            
+            if (isset($data['expire']) && !Validate_data_helper::validateDate($data['expire'])) return false;
             if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
             if (isset($data['productId']) && !Validate_data_helper::validateInteger($data['productId'])) return false;
 
@@ -87,7 +85,7 @@
             if ($voucher) {                
                 $voucher = reset($voucher);
                 foreach ($voucher as $property => $value) {
-                    if ($property === 'id' || $property === 'percent') {
+                    if ($property === 'id' || $property === 'percent' || $property === 'productId') {
                         $this->{$property} = intval($value);
                     } elseif ($property === 'amount') {
                         $this->{$property} = floatval($value);
@@ -100,39 +98,34 @@
             return $this;
         }
 
-        public function payOrderWithVoucher(float $amount, bool $payPartial = false): Shopvoucher_model
+        public function payOrderWithVoucher(float $amount, bool $payPartial = false): ?float
         {
-            if ($this->percent === 100 && $this->percentUsed === '0') {
-                $this->update = true;
-                $this->percentUsed = '1';
-            } else {
+            if ($this->percent === 0) {
                 $newAmount = $this->amount - $amount;
-                if ($newAmount >= 0) {
-                    $this->amount = $newAmount;
-                    $this->update = true;
-                } else  {
-                    if ($payPartial) {
-                        if ($this->percent === 0) {
-                            $this->oldAmount = $this->amount;
-                            $this->amount = 0;
-                        } else {
-                            $this->percentUsed = '1';
-                        }
-                        $this->update = true;
-                    }
-                }
+                // return null if whole order must be paid from voucehr amount and not enough funds on voucher
+                if (!$payPartial && $newAmount < 0) return null;
+                $returnAmount = ($newAmount > 0) ? $amount  : $this->amount;
+                $this->amount = ($newAmount > 0) ? $newAmount  : 0;
+            } else {
+                // extra check is percnet already used
+                if ($this->percentUsed === '1') return null;
+                $this->percentUsed = '1';
+                $returnAmount = $amount * $this->percent / 100;
+                $returnAmount = round($returnAmount, 2);
             }
-            
-            return $this;
+
+            return $this->updateVoucher() ? $returnAmount : null;
         }
 
-        public function updateVoucher(): bool
+        private function updateVoucher(): bool
         {
-            if (!$this->update) return false;
             if ($this->amount == 0 && ($this->percent === 0 || $this->percentUsed === '1')) {
                 $this->active = '0';
             }
 
+            if (!$this->productId) {
+                $this->productId = null;
+            }
             return $this->update();
         }
 

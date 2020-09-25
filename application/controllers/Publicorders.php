@@ -309,6 +309,10 @@
             if (isset($_SESSION['voucherId'])) {
                 unset($_SESSION['voucherId']);
             }
+            // if $_SESSION['payWithVaucher'] and user refresh the page
+            if (isset($_SESSION['payWithVaucher'])) {
+                unset($_SESSION['payWithVaucher']);
+            }
 
             // CHECK VENDOR CREDENTIALS
             $this->checkVendorCredentials($_SESSION['vendor']);
@@ -477,13 +481,14 @@
             $post['order']['paymentType'] = $payType;
             $post['order']['serviceTypeId'] = $_SESSION['spot']['spotTypeId'];
 
-            if ($voucherId) {
-                $this->payOrderWithVoucher($voucherId, $post, $failedRedirect);
-            }
-
-            if (isset($_SESSION['voucherId'])) {
-                $this->payPartOfOrderWithVoucher($_SESSION['voucherId'], $post, $failedRedirect);
-                unset($_SESSION['voucherId']);
+            if ($voucherId || isset($_SESSION['voucherId'])) {
+                $payPartial = false;
+                if (isset($_SESSION['voucherId'])) {
+                    $voucherId = $_SESSION['voucherId'];
+                    $payPartial = true;
+                    unset($_SESSION['voucherId']);
+                }
+                $this->payOrderWithVoucher($voucherId, $post, $failedRedirect, $payPartial);
             }
 
             $this->shoporder_model->setObjectFromArray($post['order'])->create();
@@ -556,45 +561,24 @@
             redirect($redirect);
         }
 
-        private function payOrderWithVoucher(int $voucherId, array &$post, string $failedRedirect): void
+        private function payOrderWithVoucher(int $voucherId, array &$post, string $failedRedirect, bool $payPartial): void
         {
-            $checkAmount = floatval($post['order']['serviceFee']) + floatval($post['order']['amount']);
-            $payOrder = $this
-                            ->shopvoucher_model
-                                ->setObjectId($voucherId)
-                                ->setVoucher()
-                                ->payOrderWithVoucher($checkAmount)
-                                ->updateVoucher();
-            if ($payOrder) {
-                $post['order']['paid'] = $this->config->item('orderPaid');
-                $post['order']['voucherAmount'] = $checkAmount;
+            $checkAmount = (isset($_SESSION['payWithVaucher'])) ? $_SESSION['payWithVaucher'] : floatval($post['order']['serviceFee']) + floatval($post['order']['amount']);
+            $returnAmount = $this->shopvoucher_model->setObjectId($voucherId)->setVoucher()->payOrderWithVoucher($checkAmount, $payPartial);
+
+            if (isset($_SESSION['payWithVaucher'])) {
+                unset($_SESSION['payWithVaucher']);
+            }
+
+            if ($returnAmount) {
                 $post['order']['voucherId'] = $voucherId;
+                $post['order']['voucherAmount'] = $returnAmount;
+                $post['order']['paid'] = $payPartial ? $this->config->item('orderNotPaid') : $this->config->item('orderPaid');
+                $post['order']['paymentType'] = $payPartial ? $post['order']['paymentType'] . ' / ' . $this->config->item('voucherPayment') : $this->config->item('voucherPayment');
             } else {
                 $this->session->set_flashdata('error', 'Order not made! Not enough funds on voucher');
                 redirect($failedRedirect);
             }
         }
 
-        private function payPartOfOrderWithVoucher(int $voucherId, array &$post, string $failedRedirect): void
-        {
-            $checkAmount = floatval($post['order']['serviceFee']) + floatval($post['order']['amount']);
-            $payOrder = $this
-                            ->shopvoucher_model
-                                ->setObjectId($voucherId)
-                                ->setVoucher()
-                                ->payOrderWithVoucher($checkAmount, true)
-                                ->updateVoucher();
-            $post['order']['voucherId'] = $voucherId;
-
-            $oldAmount = $this->shopvoucher_model->getOldAmount();
-            if ($oldAmount) {
-                $post['order']['voucherAmount'] = $oldAmount;
-            } else {
-                $voucherAmount = $checkAmount * $this->shopvoucher_model->percent / 100;
-                $post['order']['voucherAmount'] = round($voucherAmount, 2);
-                $post['order']['paymentType'] = $post['order']['paymentType'] . ' / ' . $this->config->item('voucherPayment');
-            }
-
-            return;
-        }
     }

@@ -388,6 +388,7 @@
                                                                 data-addon-extended-id="<?php echo $addon['productExtendedId']; ?>"
                                                                 data-initial-min-quantity="1"
                                                                 data-initial-max-quantity="<?php echo $addonAllowedQuantity; ?>"
+                                                                data-addon-product-id="<?php echo $addon['productId']; ?>"
                                                                 data-min = "1"
                                                                 data-max="<?php echo $addonAllowedQuantity; ?>"
                                                                 data-remark-id="<?php echo $remarkAddonId ?>"

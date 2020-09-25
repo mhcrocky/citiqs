@@ -882,7 +882,7 @@ class Ajax extends CI_Controller
             unset($_SESSION['failed']);
             echo json_encode([
                 'status' => '0',
-                'message' => 'Invalid code inserted three times. Code use blocked for next 2 minutes'
+                'message' => 'Invalid code inserted three times. You can not use code for next 2 minutes'
             ]);
             return;
         }
@@ -895,6 +895,7 @@ class Ajax extends CI_Controller
                 ->setProperty('code', $code)
                 ->setVoucher();
 
+
         if (is_null($this->shopvoucher_model->id)) {
 
             if (!isset($_SESSION['failed'])) {
@@ -905,7 +906,7 @@ class Ajax extends CI_Controller
                 set_cookie('codeBlocked', '1', 120);
                 echo json_encode([
                     'status' => '0',
-                    'message' => 'Invalid code inserted three times. Code use blocked for next 2 minutes'
+                    'message' => 'Invalid code inserted three times. You can not use code for next 2 minutes'
                 ]);
                 return;
             }
@@ -937,6 +938,62 @@ class Ajax extends CI_Controller
             return;
         }
 
+        if ($this->shopvoucher_model->productId) {
+            if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
+                foreach ($_SESSION['order'] as $key => $productRaw) {
+                    if (isset($productRaw['mainProduct'])) {
+                        $product = $productRaw['mainProduct'][$mainKey];
+                    } else {
+                        $mainKey = $key;
+                        $product = $productRaw;
+                    }
+                    if (intval($product['productId'][0]) === $this->shopvoucher_model->productId) {
+                        $productPrice = floatval($product['price'][0]);
+                        $_SESSION['payWithVaucher'] = $productPrice + $productPrice * $_SESSION['vendor']['serviceFeePercent'] / 100;
+                        $_SESSION['payWithVaucher'] = round($_SESSION['payWithVaucher'], 2);
+                        break;
+                    }
+                }
+            } else {
+                //NEW VIEW
+            }
+
+            if (!isset($_SESSION['payWithVaucher'])) {
+                echo json_encode([
+                    'status' => '0',
+                    'message' => 'Product from voucher is not in order list'
+                ]);
+            } else {
+                if (
+                    ($this->shopvoucher_model->amount >= $_SESSION['payWithVaucher'] || $this->shopvoucher_model->percent === 100)
+                    && $_SESSION['payWithVaucher'] === $amount
+                ) {
+                    $redirect = base_url() . 'voucherPayment' . DIRECTORY_SEPARATOR . $this->shopvoucher_model->id;
+                    echo json_encode([
+                        'status' => '1',
+                        'redirect' => $redirect
+                    ]);
+                } else {
+                    $_SESSION['voucherId'] = $this->shopvoucher_model->id;
+
+                    if ($this->shopvoucher_model->amount) {
+                        $voucherDiscount = ($_SESSION['payWithVaucher'] > $this->shopvoucher_model->amount) ? $this->shopvoucher_model->amount : $_SESSION['payWithVaucher'];
+                    } else {
+                        $voucherDiscount = $this->shopvoucher_model->percent * $_SESSION['payWithVaucher'] / 100;
+                    }
+                    $leftAmount = $amount - $voucherDiscount;
+
+                    echo json_encode([
+                        'status' => '2',
+                        'message' => 'Select method to finish payment',
+                        'voucherAmount' => number_format($voucherDiscount, 2, ',', '.'),
+                        'leftAmount' => number_format($leftAmount, 2, ',', '.'),
+                    ]);
+                }
+            }
+            return;
+        }
+
         if ($this->shopvoucher_model->amount >= $amount || $this->shopvoucher_model->percent === 100) {
             $redirect = base_url() . 'voucherPayment' . DIRECTORY_SEPARATOR . $this->shopvoucher_model->id;
             echo json_encode([
@@ -946,7 +1003,6 @@ class Ajax extends CI_Controller
             return;
         };
 
-        $leftAmount = $amount - $this->shopvoucher_model->amount;
         $_SESSION['voucherId'] = $this->shopvoucher_model->id;
 
         if ($this->shopvoucher_model->amount) {
@@ -954,6 +1010,7 @@ class Ajax extends CI_Controller
         } else {
             $voucherDiscount = $this->shopvoucher_model->percent * $amount / 100;
         }
+        $leftAmount = $amount - $voucherDiscount;
 
         echo json_encode([
             'status' => '2',

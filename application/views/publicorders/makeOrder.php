@@ -104,6 +104,7 @@
                                         \"shortDescription{$product['productExtendedId']}_{$mainProductExtendedId}\",
                                         \"productPrice{$product['productExtendedId']}_{$mainProductExtendedId}\",
                                         \"showOrderedQuantity{$product['productExtendedId']}_{$mainProductExtendedId}\",
+                                        \"productId{$product['productExtendedId']}_{$mainProductExtendedId}\",
                                         false
                                     )'
                                     >
@@ -124,6 +125,7 @@
                                         \"shortDescription{$product['productExtendedId']}\",
                                         \"productPrice{$product['productExtendedId']}_{$mainProductExtendedId}\",
                                         \"showOrderedQuantity{$product['productExtendedId']}_{$mainProductExtendedId}\",
+                                        \"productId{$product['productExtendedId']}_{$mainProductExtendedId}\",
                                         true
                                     )'
                                 >
@@ -170,6 +172,11 @@
         $formElement .= 'value="' . filter_var($product['price'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) . '" class="hideInput" ';
         $formElement .= (isset($orderedProduct)) ? '/>' : 'disabled />';
 
+        $formElement .= '<input type="text"  readonly ';
+        $formElement .= 'name="' . $product['productExtendedId'] . '[mainProduct][' . $mainProductExtendedId . '][productId][]" ';
+        $formElement .= 'id="productId' . $product['productExtendedId'] . '_' . $mainProductExtendedId . '" ';
+        $formElement .= 'value="' . $product['productId'] . '" class="hideInput" ';
+        $formElement .= (isset($orderedProduct)) ? '/>' : 'disabled />';
 
         $return['addons'] = $addons;
         $return['form'] = $formElement;
@@ -225,6 +232,7 @@
                         </div>
                         <?php
                             foreach($productsRawData as $productId => $productRaw) {
+                                
                                 $productRaw = reset($productRaw);
                                 if (
                                     $productRaw['productActive'] === '0'
@@ -273,6 +281,11 @@
                                 $form .= 'name="' . $product['productExtendedId'] . '[price][]" ';
                                 $form .= 'id="productPrice' . $product['productExtendedId'] . '" ';
                                 $form .= 'value="' . filter_var($product['price'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) . '" class="hideInput" ';
+                                $form .= (isset($ordered[$product['productExtendedId']])) ? '/>' : 'disabled />';   
+                                $form .= '<input type="text"  readonly ';
+                                $form .= 'name="' . $product['productExtendedId'] . '[productId][]" ';
+                                $form .= 'id="productId' . $product['productExtendedId'] . '" ';
+                                $form .= 'value="' . $productId . '" class="hideInput" ';
                                 $form .= (isset($ordered[$product['productExtendedId']])) ? '/>' : 'disabled />';   
 
                                 $mainProductExtendedId = $product['productExtendedId'];                                     
@@ -349,6 +362,7 @@
                                                             'shortDescription<?php echo  $product['productExtendedId']; ?>',
                                                             'productPrice<?php echo  $product['productExtendedId']; ?>',
                                                             'showOrderedQuantity<?php echo $product['productExtendedId']; ?>',
+                                                            'productId<?php echo $product['productExtendedId']; ?>',
                                                             false
                                                         )"
                                                         >
@@ -370,6 +384,7 @@
                                                             'shortDescription<?php echo  $product['productExtendedId']; ?>',
                                                             'productPrice<?php echo  $product['productExtendedId']; ?>',
                                                             'showOrderedQuantity<?php echo $product['productExtendedId']; ?>',
+                                                            'productId<?php echo $product['productExtendedId']; ?>',
                                                             true
                                                         )"
                                                         >

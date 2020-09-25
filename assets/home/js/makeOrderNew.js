@@ -319,6 +319,7 @@ function checkout() {
                         'step' : addon.step,
                         'initialMinQuantity' : addon.dataset.initialMinQuantity,
                         'initialMaxQuantity' : addon.dataset.initialMaxQuantity,
+                        'addonProductId' : addon.dataset.addonProductId,
                     }
                     if (addon.dataset.remarkId !== '0') {
                         let addonRemark = document.querySelectorAll('#' + orderedItem.id + ' [data-addon-remark-id="' + addon.dataset.remarkId + '"]')[0].value;

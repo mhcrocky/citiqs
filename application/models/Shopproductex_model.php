@@ -672,4 +672,20 @@
 
             return $vat;
         }
+
+        public function checkProductAndExtendedIds(int $productId, array $extendedIds): bool
+        {
+            $check = $this->readImproved([
+                'what' => [$this->table . '.id'],
+                'where' => [
+                    $this->table . '.productId' => $productId,
+                ],
+                'whereIn' => [
+                    'column' => $this->table . '.id',
+                    'array' => $extendedIds
+                ]
+            ]);
+
+            return empty($check) ? false : true;
+        }
     }

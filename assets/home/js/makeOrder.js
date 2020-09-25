@@ -1,6 +1,6 @@
 'use strict';
 
-function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, categoryId, nameId, decsriptionId, priceId, showOrderedQuantity, plus) {
+function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, categoryId, nameId, decsriptionId, priceId, showOrderedQuantity, productId, plus) {
 
     let amountElement = document.getElementById(amountId);
     let amountValue = parseFloat(amountElement.value);
@@ -16,6 +16,7 @@ function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, 
     let nameElement = document.getElementById(nameId);
     // let descriptionElement = document.getElementById(decsriptionId);
     let priceElement = document.getElementById(priceId);
+    let productIdElement = document.getElementById(productId);
 
     let amountTrigger = false;
     let orderTrigger = false;
@@ -85,6 +86,7 @@ function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, 
         nameElement.disabled = false;
         // descriptionElement.disabled = false;
         priceElement.disabled = false;
+        productIdElement.disabled = false;
         // document.getElementById('home').style.display = "none";
     } else {
         amountElement.disabled = true;
@@ -93,6 +95,7 @@ function addToOrder(amountId, quantiyId, price, orderAmountId, orderQuantityId, 
         nameElement.disabled = true;
         // descriptionElement.disabled = true;
         priceElement.disabled = true;
+        productIdElement.disabled = true;
         // document.getElementById('home').style.display = "initial";
     }
 
