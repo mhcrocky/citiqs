@@ -111,4 +111,20 @@
             return false;
         }
 
+        public function checkProduct(int $productId, int $venodrId): bool
+        {
+            $check = $this->readImproved([
+                'what' => ['tbl_shop_products.id'],
+                'where' => [
+                    $this->table .'.id' => $productId,
+                    'tbl_shop_categories.userId' => $venodrId,
+                ],
+                'joins' => [
+                    ['tbl_shop_categories', 'ON tbl_shop_categories.id = ' . $this->table . '.categoryId', 'INNER']
+                ]
+            ]);
+
+            return empty($check) ? false : true;
+        }
+
     }

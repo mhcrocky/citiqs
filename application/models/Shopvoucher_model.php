@@ -20,6 +20,7 @@
         public $percentUsed;
         public $expire;
         public $active;
+        public $productId;
 
         private $table = 'tbl_shop_voucher';
         private $update = false;
@@ -63,6 +64,7 @@
             if (isset($data['percentUsed']) && !($data['percentUsed'] === '1' || $data['percentUsed'] === '0')) return false;
             if (isset($data['expire']) && !Validate_data_helper::validateDate($data['expire'])) return false;            
             if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
+            if (isset($data['productId']) && !Validate_data_helper::validateInteger($data['productId'])) return false;
 
             return true;
         }
