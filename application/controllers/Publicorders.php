@@ -563,7 +563,7 @@
 
         private function payOrderWithVoucher(int $voucherId, array &$post, string $failedRedirect, bool $payPartial): void
         {
-            $checkAmount = (isset($_SESSION['payWithVaucher'])) ? $_SESSION['payWithVaucher'] : floatval($post['order']['serviceFee']) + floatval($post['order']['amount']);
+            $checkAmount = (isset($_SESSION['payWithVaucher'])) ? $_SESSION['payWithVaucher'] : floatval($post['order']['amount']);
             $voucherAmount = $this->shopvoucher_model->setObjectId($voucherId)->setVoucher()->payOrderWithVoucher($checkAmount, $payPartial);
 
             if (isset($_SESSION['payWithVaucher'])) {
