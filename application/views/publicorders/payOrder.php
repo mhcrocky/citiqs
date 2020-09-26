@@ -374,7 +374,8 @@
                                                         type="text"
                                                         id="codeId"
                                                         class="form-control"
-                                                        data-total="<?php echo number_format($total, 2, '.', ''); ?>"
+                                                        data-total="<?php echo round($totalOrder, 2); ?>"
+                                                        data-total-amount="<?php echo round($total, 2); ?>"
                                                     />
                                                     <br/>
                                                     <button

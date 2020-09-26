@@ -564,15 +564,22 @@
         private function payOrderWithVoucher(int $voucherId, array &$post, string $failedRedirect, bool $payPartial): void
         {
             $checkAmount = (isset($_SESSION['payWithVaucher'])) ? $_SESSION['payWithVaucher'] : floatval($post['order']['serviceFee']) + floatval($post['order']['amount']);
-            $returnAmount = $this->shopvoucher_model->setObjectId($voucherId)->setVoucher()->payOrderWithVoucher($checkAmount, $payPartial);
+            $voucherAmount = $this->shopvoucher_model->setObjectId($voucherId)->setVoucher()->payOrderWithVoucher($checkAmount, $payPartial);
 
             if (isset($_SESSION['payWithVaucher'])) {
                 unset($_SESSION['payWithVaucher']);
             }
 
-            if ($returnAmount) {
+            if ($voucherAmount) {
+                if (
+                    $checkAmount === floatval($post['order']['amount'])
+                    && ($this->shopvoucher_model->percent === 100 || $voucherAmount >= $post['order']['amount'])
+                ) {
+                    $post['order']['serviceFee'] = 0;
+                }
+
                 $post['order']['voucherId'] = $voucherId;
-                $post['order']['voucherAmount'] = $returnAmount;
+                $post['order']['voucherAmount'] = $voucherAmount;
                 $post['order']['paid'] = $payPartial ? $this->config->item('orderNotPaid') : $this->config->item('orderPaid');
                 $post['order']['paymentType'] = $payPartial ? $post['order']['paymentType'] . ' / ' . $this->config->item('voucherPayment') : $this->config->item('voucherPayment');
             } else {

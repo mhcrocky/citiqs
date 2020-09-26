@@ -889,12 +889,12 @@ class Ajax extends CI_Controller
 
         $code = $this->input->post('code', true);
         $amount = floatval($this->input->post('amount', true));
+        $totalAmount  = floatval($this->input->post('totalAmount', true));
 
         $this
             ->shopvoucher_model
                 ->setProperty('code', $code)
                 ->setVoucher();
-
 
         if (is_null($this->shopvoucher_model->id)) {
 
@@ -950,8 +950,7 @@ class Ajax extends CI_Controller
                     }
                     if (intval($product['productId'][0]) === $this->shopvoucher_model->productId) {
                         $productPrice = floatval($product['price'][0]);
-                        $_SESSION['payWithVaucher'] = $productPrice + $productPrice * $_SESSION['vendor']['serviceFeePercent'] / 100;
-                        $_SESSION['payWithVaucher'] = round($_SESSION['payWithVaucher'], 2);
+                        $_SESSION['payWithVaucher'] = round($productPrice, 2);
                         break;
                     }
                 }
@@ -961,8 +960,7 @@ class Ajax extends CI_Controller
                     $productRaw = reset($productRaw);
                     if (intval($productRaw['productId']) === $this->shopvoucher_model->productId) {
                         $productPrice = floatval($productRaw['price']);
-                        $_SESSION['payWithVaucher'] = $productPrice + $productPrice * $_SESSION['vendor']['serviceFeePercent'] / 100;
-                        $_SESSION['payWithVaucher'] = round($_SESSION['payWithVaucher'], 2);
+                        $_SESSION['payWithVaucher'] = round($productPrice, 2);
                         break;
                     }
                     if (isset($productRaw['addons'])) {
@@ -970,9 +968,8 @@ class Ajax extends CI_Controller
                         foreach ($addons as $prodcutExtendedId => $details) {
                             if (intval($details['addonProductId']) === $this->shopvoucher_model->productId) {
                                 $productPrice = floatval($details['price']);
-                                $_SESSION['payWithVaucher'] = $productPrice + $productPrice * $_SESSION['vendor']['serviceFeePercent'] / 100;
-                                $_SESSION['payWithVaucher'] = round($_SESSION['payWithVaucher'], 2);
-                                break;
+                                $_SESSION['payWithVaucher'] = round($productPrice, 2);
+                                break 2;
                             }
                         }
                     }
@@ -1002,7 +999,7 @@ class Ajax extends CI_Controller
                     } else {
                         $voucherDiscount = $this->shopvoucher_model->percent * $_SESSION['payWithVaucher'] / 100;
                     }
-                    $leftAmount = $amount - $voucherDiscount;
+                    $leftAmount = $totalAmount - $voucherDiscount;
 
                     echo json_encode([
                         'status' => '2',
@@ -1031,7 +1028,7 @@ class Ajax extends CI_Controller
         } else {
             $voucherDiscount = $this->shopvoucher_model->percent * $amount / 100;
         }
-        $leftAmount = $amount - $voucherDiscount;
+        $leftAmount = $totalAmount - $voucherDiscount;
 
         echo json_encode([
             'status' => '2',
