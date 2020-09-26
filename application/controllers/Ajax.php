@@ -940,6 +940,7 @@ class Ajax extends CI_Controller
 
         if ($this->shopvoucher_model->productId) {
             if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
+                // OLD MAKE ORDER VIEW
                 foreach ($_SESSION['order'] as $key => $productRaw) {
                     if (isset($productRaw['mainProduct'])) {
                         $product = $productRaw['mainProduct'][$mainKey];
@@ -955,7 +956,27 @@ class Ajax extends CI_Controller
                     }
                 }
             } else {
-                //NEW VIEW
+                // NEW MAKE ORDER VIEW
+                foreach ($_SESSION['order'] as $key => $productRaw) {
+                    $productRaw = reset($productRaw);
+                    if (intval($productRaw['productId']) === $this->shopvoucher_model->productId) {
+                        $productPrice = floatval($productRaw['price']);
+                        $_SESSION['payWithVaucher'] = $productPrice + $productPrice * $_SESSION['vendor']['serviceFeePercent'] / 100;
+                        $_SESSION['payWithVaucher'] = round($_SESSION['payWithVaucher'], 2);
+                        break;
+                    }
+                    if (isset($productRaw['addons'])) {
+                        $addons = $productRaw['addons'];
+                        foreach ($addons as $prodcutExtendedId => $details) {
+                            if (intval($details['addonProductId']) === $this->shopvoucher_model->productId) {
+                                $productPrice = floatval($details['price']);
+                                $_SESSION['payWithVaucher'] = $productPrice + $productPrice * $_SESSION['vendor']['serviceFeePercent'] / 100;
+                                $_SESSION['payWithVaucher'] = round($_SESSION['payWithVaucher'], 2);
+                                break;
+                            }
+                        }
+                    }
+                }
             }
 
             if (!isset($_SESSION['payWithVaucher'])) {
