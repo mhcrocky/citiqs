@@ -464,6 +464,13 @@
 						<label class="radio-inline" for="showTermsAndPrivacyNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="showTermsAndPrivacyNo" name="vendor[showTermsAndPrivacy]" value="0" <?php if ($vendor['showTermsAndPrivacy'] === '0') echo 'checked'; ?> />
 					</div>
+					<h4>TIP TO A WAITER</h4>
+					<div class="form-group mb-35">
+						<label class="radio-inline" for="tipWaiterYes">Yes</label>
+						<input type="radio" id="tipWaiterYes" name="vendor[tipWaiter]" value="1" <?php if ($vendor['tipWaiter'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="tipWaiterNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="tipWaiterNo" name="vendor[tipWaiter]" value="0" <?php if ($vendor['tipWaiter'] === '0') echo 'checked'; ?> />
+					</div>
 					<br/>
 					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />

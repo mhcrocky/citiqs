@@ -34,6 +34,7 @@
         public $showAllergies;
         public $showTermsAndPrivacy;
         public $showMenu;
+        public $tipWaiter;
 
         public $bancontact;
         public $ideal;
@@ -109,6 +110,7 @@
             if (isset($data['pinMachine']) && !($data['pinMachine'] === '1' || $data['pinMachine'] === '0')) return false;
             if (isset($data['showTermsAndPrivacy']) && !($data['showTermsAndPrivacy'] === '1' || $data['showTermsAndPrivacy'] === '0')) return false;
             if (isset($data['showMenu']) && !($data['showMenu'] === '1' || $data['showMenu'] === '0')) return false;
+            if (isset($data['tipWaiter']) && !($data['tipWaiter'] === '1' || $data['tipWaiter'] === '0')) return false;
             return true;
         }
 
@@ -149,6 +151,7 @@
                     $this->table . '.pinMachine',
                     $this->table . '.showTermsAndPrivacy',
                     $this->table . '.showMenu',
+                    $this->table . '.tipWaiter',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',
