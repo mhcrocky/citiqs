@@ -167,8 +167,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <div class="modal-header__content">
-                                <div class='modal-header__details'>
-                                    <h4 class="modal-header__title">Order List:</h4>
+                                
                                 </div>
                             </div>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -276,9 +275,9 @@
                                                 if ($vendor['showAllergies'] === '1')  {
                                                     $product['allergies'] = unserialize($product['allergies']);
                                                     if (!empty($product['allergies']['productAllergies'])) {
-                                                        $productAllergies = $product['allergies']['productAllergies'];
+                                                        $productAllergiesModal = $product['allergies']['productAllergies'];
                                                         ?>
-                                                            data-allergies="<?php echo implode($this->config->item('concatSeparator'), $productAllergies); ?>"
+                                                            data-allergies="<?php echo implode($this->config->item('allergiesSeparator'), $productAllergiesModal); ?>"
                                                         <?php
                                                     }
                                                 }
@@ -296,8 +295,8 @@
                                                 </div>
                                         <?php } ?>
                                         <?php
-                                            if (isset($productAllergies))  {
-                                                foreach ($productAllergies as $allergy) {
+                                            if (isset($productAllergiesModal))  {
+                                                foreach ($productAllergiesModal as $allergy) {
                                                     ?>
                                                         <img
                                                             src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
@@ -308,6 +307,7 @@
                                                         />
                                                     <?php
                                                 }
+                                                unset($productAllergiesModal);
                                             }
                                         ?>
                                         <?php if ($product['addRemark'] === '1') { ?>
@@ -400,9 +400,10 @@
                                                                 data-max="<?php echo $addonAllowedQuantity; ?>"
                                                                 data-remark-id="<?php echo $remarkAddonId ?>"
                                                                 <?php if (isset($addonAllergies)) { ?>
-                                                                data-allergies="<?php echo implode($this->config->item('concatSeparator'), $addonAllergies); ?>"
+                                                                    data-allergies="<?php echo implode($this->config->item('allergiesSeparator'), $addonAllergies); ?>"
+                                                                    <?php unset($addonAllergies); ?>
                                                                 <?php } else { ?>
-                                                                data-allergies=""
+                                                                    data-allergies=""
                                                                 <?php } ?>
                                                                 step="1"
                                                                 value="1"

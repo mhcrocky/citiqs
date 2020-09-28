@@ -115,6 +115,7 @@ $config['orderPaid'] = '1';
 // SEPARATORS
 $config['contactGroupSeparator'] = ')$=';
 $config['concatSeparator'] = ')#%';
+$config['allergiesSeparator'] = '|||';
 
 // paynl payment types
 $config['idealPaymentType'] = '10';

@@ -295,6 +295,7 @@ function checkout() {
             'price' : product.dataset.addProductPrice,
             'productId' : product.dataset.productId,
             'onlyOne' : product.dataset.onlyOne,
+            'allergies': product.dataset.allergies,
             'addons' : {}
         };
         if (product.dataset.allergies) {

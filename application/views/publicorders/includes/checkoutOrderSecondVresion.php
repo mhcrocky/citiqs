@@ -47,6 +47,25 @@
                             </div>
                             <div class='checkout-table__product-details'>
                                 <p><?php echo $product['name']; ?></p>
+                                <?php
+                                    if (!empty($product['allergies']))  {
+                                        $productAllergies = explode($this->config->item('allergiesSeparator'), $product['allergies']);
+                                        $baseUrl = base_url();
+                                        echo '<div style="padding: 5px 0px">';
+                                        foreach ($productAllergies as $allergy) {
+                                            ?>
+                                                <img
+                                                    src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
+                                                    alt="<?php echo $allergy; ?>"
+                                                    height='24px'
+                                                    width='24px'
+                                                    style="display:inline; margin:0px 2px 3px 0px"
+                                                />
+                                            <?php
+                                        }
+                                        echo '</div>';
+                                    }
+                                ?>
                                 <small><?php echo $product['category']; ?></small>
                                 <?php if (isset($product['remark'])) { ?>
                                     <div>
@@ -149,6 +168,25 @@
                                                 <i class="fa fa-paperclip" aria-hidden="true"></i>
                                                 <?php echo $addon['name']; ?>
                                             </p>
+                                            <?php
+                                                if (!empty($addon['allergies']))  {
+                                                    $addonAllergies = explode($this->config->item('allergiesSeparator'), $addon['allergies']);
+                                                    $baseUrl = base_url();
+                                                    echo '<div style="padding: 5px 0px">';
+                                                    foreach ($addonAllergies as $allergy) {
+                                                        ?>
+                                                            <img
+                                                                src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
+                                                                alt="<?php echo $allergy; ?>"
+                                                                height='24px'
+                                                                width='24px'
+                                                                style="display:inline; margin:0px 2px 3px 0px"
+                                                            />
+                                                        <?php
+                                                    }
+                                                    echo '</div>';
+                                                }
+                                            ?>
                                             <small><?php echo $addon['category']; ?></small>
                                             <?php if (isset($addon['remark'])) { ?>
                                                 <div>
