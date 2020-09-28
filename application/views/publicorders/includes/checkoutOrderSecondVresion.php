@@ -136,15 +136,22 @@
                                     $countInputs++;
                                     $addonId = 'addon_' . $countInputs;
                                 ?>
-                                    <div id="<?php echo $addonId; ?>" class="checkout-table__single-element  <?php echo $removeClass; ?>">
-                                        <div class='checkout-table__num-order' style="padding-left: 20px;">
+                                    <div
+                                        id="<?php echo $addonId; ?>"
+                                        class="checkout-table__single-element  <?php echo $removeClass; ?>"
+                                        style="padding-left: 35px;"
+                                    >
+                                        <div class='checkout-table__num-order'>
                                             <!-- <b class="counterClass" style="padding-left: 20px;"><?php #echo $countAddons; ?>.</b> -->
                                         </div>
-                                        <div class='checkout-table__product-details'>
-                                            <p  style="padding-left: 20px;"><?php echo $addon['name']; ?></p>
-                                            <small style="padding-left: 20px;"><?php echo $addon['category']; ?></small>
+                                        <div class='checkout-table__product-details'>                                            
+                                            <p>
+                                                <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                                <?php echo $addon['name']; ?>
+                                            </p>
+                                            <small><?php echo $addon['category']; ?></small>
                                             <?php if (isset($addon['remark'])) { ?>
-                                                <div style="padding:20px;">
+                                                <div>
                                                     <label for="orderExtended_<?php echo $countInputs; ?>_<?php echo $addonExtendedId; ?>_remark">Remark</label>
                                                     <textarea
                                                         id="orderExtended_<?php echo $countInputs; ?>_<?php echo $addonExtendedId; ?>_remark"

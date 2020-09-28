@@ -233,7 +233,6 @@
                 'oldMakeOrderView' => $this->config->item('oldMakeOrderView'),
                 'newMakeOrderView' => $this->config->item('newMakeOrderView'),
             ];
-
             $this->setDelayTime($data);
 
             $data['username'] = isset($_SESSION['postOrder']['user']['username']) ? $_SESSION['postOrder']['user']['username'] : get_cookie('userName');
@@ -241,6 +240,8 @@
             $data['mobile'] = isset($_SESSION['postOrder']['user']['mobile']) ? $_SESSION['postOrder']['user']['mobile'] : get_cookie('mobile');
             $data['userCountry'] = isset($_SESSION['postOrder']['user']['country']) ? $_SESSION['postOrder']['user']['country'] : '';
             $data['phoneCountryCode'] = isset($_SESSION['postOrder']['phoneCountryCode']) ? $_SESSION['postOrder']['phoneCountryCode'] : '';
+            $data['termsAndConditions'] = isset($_SESSION['postOrder']['order']['termsAndConditions']) ? 'checked' : '';
+            $data['privacyPolicy'] = isset($_SESSION['postOrder']['order']['privacyPolicy']) ? 'checked' : '';
 
             $this->loadViews('publicorders/checkoutOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
@@ -444,6 +445,11 @@
                     redirect('checkout_order');
                     exit();
                 }
+            }
+
+            if ($_SESSION['vendor']['termsAndConditions'] && $_SESSION['vendor']['showTermsAndPrivacy'] === '1' && (empty($post['order']['termsAndConditions']) || empty($post['order']['privacyPolicy']))) {
+                $this->session->set_flashdata('error', 'Order not made! Please confirm that you read terms and conditions and privacy policy');
+                    redirect('checkout_order');
             }
 
             // check mobile phone

@@ -297,6 +297,9 @@ function checkout() {
             'onlyOne' : product.dataset.onlyOne,
             'addons' : {}
         };
+        if (product.dataset.allergies) {
+            post[i][product.dataset.productExtendedId]['allergies']  = product.dataset.allergies;
+        }
 
         if (product.dataset.remarkId !== '0') {
             let productRemark = document.querySelectorAll('#' + orderedItem.id + ' [data-product-remark-id="' + product.dataset.remarkId + '"]')[0].value;
@@ -320,6 +323,7 @@ function checkout() {
                         'initialMinQuantity' : addon.dataset.initialMinQuantity,
                         'initialMaxQuantity' : addon.dataset.initialMaxQuantity,
                         'addonProductId' : addon.dataset.addonProductId,
+                        'allergies' : addon.dataset.allergies
                     }
                     if (addon.dataset.remarkId !== '0') {
                         let addonRemark = document.querySelectorAll('#' + orderedItem.id + ' [data-addon-remark-id="' + addon.dataset.remarkId + '"]')[0].value;
@@ -333,6 +337,9 @@ function checkout() {
     let send = {
         'data' : post
     }
+
+    console.dir(send);
+    return;
 
     $.ajax({
         url: globalVariables.ajax + 'setOrderSession',

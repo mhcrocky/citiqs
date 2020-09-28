@@ -131,12 +131,16 @@
                             <div
                                 class="checkout-table__single-element"
                                 id="element<?php echo $productExtendedId; ?>"
+                                style="padding-left:30px"
                                 >
                                 <!-- <div class='checkout-table__num-order'>
                                     <b class="counterClass"></b>
                                 </div> -->
                                 <div class='checkout-table__product-details'>
-                                    <p><?php echo $product['name'][0] . ' (' . $mainName . ')'; ?> </p>
+                                    <p>
+                                        <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                        <?php echo $product['name'][0] . ' (' . $mainName . ')'; ?>
+                                    </p>
                                     <small><?php echo $product['category'][0]; ?></small>
                                 </div>
                                 <div class='checkout-table__numbers'>

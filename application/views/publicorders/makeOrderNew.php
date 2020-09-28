@@ -8,27 +8,31 @@
                 </div>
             <?php }?>
             <?php
-                $categories = array_keys($mainProducts);
-                $categoryList = '<ul class="list-group categoryNav">';
-                $count = 0;
-                foreach ($categories as $categoryName) {
-                    $count++;
-                    $categoryList .= '<li class="list-group-item">';
-                    $categoryList .=    '<a href="#" data-index="' . $count . '">' . $categoryName . '</a>';
-                    $categoryList .= '</li>';
-                }
-                $categoryList .= '</ul>';
+                if ($vendor['showMenu'] === '1') {
+                    $categories = array_keys($mainProducts);
+                    $categoryList = '<ul class="list-group categoryNav">';
+                    $count = 0;
+                    foreach ($categories as $categoryName) {
+                        $count++;
+                        $categoryList .= '<li class="list-group-item">';
+                        $categoryList .=    '<a href="#" data-index="' . $count . '">' . $categoryName . '</a>';
+                        $categoryList .= '</li>';
+                    }
+                    $categoryList .= '</ul>';
+                }              
             ?>
             <div>
                 <div class="col-12 col-md-8" id="categoryContainer" style="padding-left:0px; padding-right:0px">
                     <div class="items-slider" style="margin-left:0px; margin-right:0px">
-                        <div class="shop__items">
-                            <div class="shop__item-list-heading" id="categoryNav">
-                                <h2>MENU</h2>
-                                <?php echo $categoryList; ?>
+                        <?php if ($vendor['showMenu'] === '1') { ?>
+                            <div class="shop__items">
+                                <div class="shop__item-list-heading" id="categoryNav">
+                                    <h2>MENU</h2>
+                                    <?php echo $categoryList; ?>
+                                </div>
+                                <!-- end item list -->
                             </div>
-                            <!-- end item list -->
-                        </div>
+                        <?php } ?>
                         <?php foreach ($mainProducts as $category => $products) { ?>
                             <div class="shop__items">
                                 <div class="shop__item-list-heading" id='<?php echo $category; ?>'>
@@ -268,6 +272,17 @@
                                                 readonly
                                                 hidden
                                             <?php } ?>
+                                            <?php
+                                                if ($vendor['showAllergies'] === '1')  {
+                                                    $product['allergies'] = unserialize($product['allergies']);
+                                                    if (!empty($product['allergies']['productAllergies'])) {
+                                                        $productAllergies = $product['allergies']['productAllergies'];
+                                                        ?>
+                                                            data-allergies="<?php echo implode($this->config->item('concatSeparator'), $productAllergies); ?>"
+                                                        <?php
+                                                    }
+                                                }
+                                            ?>
                                         />
                                         <?php if ($product['onlyOne'] === '0') { ?>
                                                     <span
@@ -281,24 +296,17 @@
                                                 </div>
                                         <?php } ?>
                                         <?php
-                                            if ($vendor['showAllergies'] === '1')  {
-                                                $product['allergies'] = unserialize($product['allergies']);
-                                                if (!empty($product['allergies']['productAllergies'])) {
-                                                    $productAllergies = $product['allergies']['productAllergies'];
-                                                    $baseUrl = base_url();
-                                                    echo '<div style="margin: 5px 0px;" class="col-lg-12 col-sm-12">';
-                                                    foreach ($productAllergies as $allergy) {
-                                                        ?>
-                                                            <img
-                                                                src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
-                                                                alt="<?php echo $allergy; ?>"
-                                                                height='24px'
-                                                                width='24px'
-                                                                style="display:inline; margin:0px 2px 3px 0px"
-                                                            />
-                                                        <?php
-                                                    }
-                                                    echo '</div>';
+                                            if (isset($productAllergies))  {
+                                                foreach ($productAllergies as $allergy) {
+                                                    ?>
+                                                        <img
+                                                            src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
+                                                            alt="<?php echo $allergy; ?>"
+                                                            height='24px'
+                                                            width='24px'
+                                                            style="display:inline; margin:0px 2px 3px 0px"
+                                                        />
+                                                    <?php
                                                 }
                                             }
                                         ?>
@@ -391,6 +399,11 @@
                                                                 data-min = "1"
                                                                 data-max="<?php echo $addonAllowedQuantity; ?>"
                                                                 data-remark-id="<?php echo $remarkAddonId ?>"
+                                                                <?php if (isset($addonAllergies)) { ?>
+                                                                data-allergies="<?php echo implode($this->config->item('concatSeparator'), $addonAllergies); ?>"
+                                                                <?php } else { ?>
+                                                                data-allergies=""
+                                                                <?php } ?>
                                                                 step="1"
                                                                 value="1"
                                                                 class="form-control addonQuantity"
