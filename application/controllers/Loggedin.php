@@ -22,6 +22,11 @@ class Loggedin extends BaseControllerWeb
 	public function index()
 	{
 		$this->global['pageTitle'] = 'TIQS : SHOP';
+
+		if (empty($_SESSION['userId'])) {
+			redirect('login');
+		}
+
 		$data = [
 			'vendor' => $this->shopvendor_model->setProperty('vendorId', $_SESSION['userId'])->getVendorData(),
 		];
