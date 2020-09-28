@@ -338,9 +338,6 @@ function checkout() {
         'data' : post
     }
 
-    console.dir(send);
-    return;
-
     $.ajax({
         url: globalVariables.ajax + 'setOrderSession',
         data: send,

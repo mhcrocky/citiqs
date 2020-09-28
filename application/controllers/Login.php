@@ -604,6 +604,10 @@ class Login extends BaseControllerWeb
 
 	public function registerbusiness()
 	{
+		if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn']) {
+			redirect('profile');
+		}
+
 		$this->global['pageTitle'] = 'TIQS : REGISTERBUSINESS';
 
 		$data = [
@@ -843,20 +847,27 @@ class Login extends BaseControllerWeb
 		$this->form_validation->set_rules('city', 'City', 'trim|required|max_length[128]');
 		$this->form_validation->set_rules('country', 'Country', 'trim|required|max_length[128]');
 
+
+		$hotel = $this->input->post(null, true);
+		$this->user_model->setUniqueValue($hotel['email'])->setWhereCondtition()->setUser();
+		if ($this->user_model->id) {
+			if ($this->user_model->active !== '0') {
+				$this->session->set_flashdata('error', $this->language->Line("registerbusiness-F1001OPA","We already know you, please reset password (forgot password) or use other e-mail address to (register)"));
+			} else {
+				$this->session->set_flashdata('error', $this->language->Line("registerbusiness-F1001231A","We already know you. Please activate your account. Check your email for activation link"));
+			}
+			redirect('/registerbusiness');
+			exit();
+		}
+
 		// $this->form_validation->set_rules('vat_number', 'Vat number', 'required|max_length[20]');
 		if ($this->form_validation->run()) {
-			$hotel = $this->input->post(null, true);
 			unset($hotel['cpassword']);
 			$this->user_model->insertAndSetHotel($hotel)->sendActivationLink();
 		}
 
 		if (!isset($this->user_model->id)) {
 			$this->session->set_flashdata('error', 'Process failed! Data given not valid');
-			redirect('/registerbusiness');
-		}
-
-		if ($this->user_model->active !== '0') {
-			$this->session->set_flashdata('error', $this->language->Line("registerbusiness-F1001A","We already know you, please reset password (forgot password) or use other e-mail address to (register)"));
 			redirect('/registerbusiness');
 		}
 
