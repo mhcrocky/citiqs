@@ -450,6 +450,20 @@
 						<label class="radio-inline" for="showAllergiesNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="showAllergiesNo" name="vendor[showAllergies]" value="0" <?php if ($vendor['showAllergies'] === '0') echo 'checked'; ?> />
 					</div>
+					<h4>SHOW MENU ON MAKE ORDER</h4>
+					<div class="form-group mb-35">
+						<label class="radio-inline" for="showMenuYes">Yes</label>
+						<input type="radio" id="showMenuYes" name="vendor[showMenu]" value="1" <?php if ($vendor['showMenu'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="showMenuNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="showMenuNo" name="vendor[showMenu]" value="0" <?php if ($vendor['showMenu'] === '0') echo 'checked'; ?> />
+					</div>
+					<h4>REQUIRE 'TERMS AND CONDITIONS' AND 'PRIVACY POLICE' CHECKOUT</h4>
+					<div class="form-group mb-35">
+						<label class="radio-inline" for="showTermsAndPrivacyYes">Yes</label>
+						<input type="radio" id="showTermsAndPrivacyYes" name="vendor[showTermsAndPrivacy]" value="1" <?php if ($vendor['showTermsAndPrivacy'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="showTermsAndPrivacyNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="showTermsAndPrivacyNo" name="vendor[showTermsAndPrivacy]" value="0" <?php if ($vendor['showTermsAndPrivacy'] === '0') echo 'checked'; ?> />
+					</div>
 					<br/>
 					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />

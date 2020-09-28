@@ -32,6 +32,8 @@
         public $requireEmail;
         public $requireName;
         public $showAllergies;
+        public $showTermsAndPrivacy;
+        public $showMenu;
 
         public $bancontact;
         public $ideal;
@@ -105,7 +107,8 @@
             if (isset($data['showAllergies']) && !($data['showAllergies'] === '1' || $data['showAllergies'] === '0')) return false;
             if (isset($data['vaucher']) && !($data['vaucher'] === '1' || $data['vaucher'] === '0')) return false;
             if (isset($data['pinMachine']) && !($data['pinMachine'] === '1' || $data['pinMachine'] === '0')) return false;
-
+            if (isset($data['showTermsAndPrivacy']) && !($data['showTermsAndPrivacy'] === '1' || $data['showTermsAndPrivacy'] === '0')) return false;
+            if (isset($data['showMenu']) && !($data['showMenu'] === '1' || $data['showMenu'] === '0')) return false;
             return true;
         }
 
@@ -144,6 +147,8 @@
                     $this->table . '.showAllergies',
                     $this->table . '.vaucher',
                     $this->table . '.pinMachine',
+                    $this->table . '.showTermsAndPrivacy',
+                    $this->table . '.showMenu',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',
