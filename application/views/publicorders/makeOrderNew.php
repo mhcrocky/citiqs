@@ -109,20 +109,19 @@
                     <!-- end slider -->
                 </div>
                 <!-- end left side -->
-                <div class="col-12 col-md-4">
+                <!-- <div class="col-12 col-md-4">
                     <div class="shopping-cart" id='shopping-cart'>
                         <h3>Items</h3>
                         <div class="shopping-cart__list" id='shopping-cart__list'>
-                            <?php echo $shoppingList; ?>
+                            <?php #echo $shoppingList; ?>
                         </div>
-                        <!-- end shoping cart list -->
                         <div class="shopping-cart__total">
                                 <p>Total:</p>
                                 <p>&euro;&nbsp;<span class="shopping-cart__total-price totalPrice">0</span></p>
                             </div>
                         <button class='checkout-button button-main button-primary' onclick="checkout()">checkout</button>
                     </div>
-                </div>
+                </div> -->
             </div>
             <!-- end right side -->
         <?php } else { ?>
@@ -147,7 +146,7 @@
                                     </a>
                                 <?php } ?>
                                 <p>TOTAL: <span class='bottom-bar__total-price'>&euro;&nbsp;<span class="totalPrice">0</span></span> </p>
-                                <button class='button-main button-secondary' onclick="focusCheckOutModal('modal__checkout__list')">Order List</button>
+                                <!-- <button class='button-main button-secondary' onclick="focusCheckOutModal('modal__checkout__list')">Order List</button> -->
                             </div>
                         </div>
                         <div class="col-12 col-md-6 text-center text-right-md">

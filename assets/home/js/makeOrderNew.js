@@ -159,22 +159,22 @@ function populateShoppingCart(randomId) {
         }
     }
 
-    html += '<div class="shopping-cart__single-item ' + randomId + '" data-ordered-id="' + randomId + '">';
-    html +=     '<div class="shopping-cart__single-item__details">';
-    html +=         '<p style="text-align:left">';
-    html +=             '<span class="shopping-cart__single-item__quantity">' + product.value + '</span>';
-    html +=             ' x ';
-    html +=             '<span class="shopping-cart__single-item__name">' + product.dataset.name + '</span>';
-    html +=         '</p>';
-    html +=         '<p class="shopping-cart__single-item__additional"  style="text-align:left">' + aditionalList.join(', ') + '</p>';
-    html +=         '<p>&euro; <span class="shopping-cart__single-item__price">' + price.toFixed(2) +'</span></p>';
-    html +=     '</div>';
-    html +=     '<div class="shopping-cart__single-item__remove" onclick="focusOnOrderItem(\'modal__checkout__list\', \'' + randomId + '\')">';
-    html +=         '<i class="fa fa-info-circle" aria-hidden="true"></i>';
-    html +=     '</div>';
-    html += '</div>';
+    // html += '<div class="shopping-cart__single-item ' + randomId + '" data-ordered-id="' + randomId + '">';
+    // html +=     '<div class="shopping-cart__single-item__details">';
+    // html +=         '<p style="text-align:left">';
+    // html +=             '<span class="shopping-cart__single-item__quantity">' + product.value + '</span>';
+    // html +=             ' x ';
+    // html +=             '<span class="shopping-cart__single-item__name">' + product.dataset.name + '</span>';
+    // html +=         '</p>';
+    // html +=         '<p class="shopping-cart__single-item__additional"  style="text-align:left">' + aditionalList.join(', ') + '</p>';
+    // html +=         '<p>&euro; <span class="shopping-cart__single-item__price">' + price.toFixed(2) +'</span></p>';
+    // html +=     '</div>';
+    // html +=     '<div class="shopping-cart__single-item__remove" onclick="focusOnOrderItem(\'modal__checkout__list\', \'' + randomId + '\')">';
+    // html +=         '<i class="fa fa-info-circle" aria-hidden="true"></i>';
+    // html +=     '</div>';
+    // html += '</div>';
     // data-toggle="modal" data-target="#checkout-modal"
-    $('#' + makeOrderGlobals.shoppingCartList).append(html);
+    // $('#' + makeOrderGlobals.shoppingCartList).append(html);
 }
 
 function changeTotal(value, reset = false) {
@@ -242,7 +242,7 @@ function resetAddons(productContainer) {
 
 function removeOrdered(elementId) {
     document.getElementById(elementId).remove();
-    document.querySelectorAll('#' + makeOrderGlobals.shoppingCartList + ' [data-ordered-id = "' + elementId + '"]')[0].remove();
+    // document.querySelectorAll('#' + makeOrderGlobals.shoppingCartList + ' [data-ordered-id = "' + elementId + '"]')[0].remove();
     resetTotal();
 }
 

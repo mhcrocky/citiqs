@@ -147,10 +147,10 @@
             } elseif ($_SESSION['vendor']['preferredView'] === $this->config->item('newMakeOrderView')) {
                 if ($ordered) {
                     $ordered = Utility_helper::returnMakeNewOrderElements($ordered, $data['vendor'], $data['mainProducts'], $data['addons']);
-                    $data['shoppingList'] = $ordered['shoppingList'];
+                    // $data['shoppingList'] = $ordered['shoppingList'];
                     $data['checkoutList'] = $ordered['checkoutList'];
                 } else {
-                    $data['shoppingList'] = '';
+                    // $data['shoppingList'] = '';
                     $data['checkoutList'] = '';
                 }
                 $data['uploadProductImageFolder'] = $this->config->item('uploadProductImageFolder');

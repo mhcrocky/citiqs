@@ -250,7 +250,7 @@
 
         public static function returnMakeNewOrderElements(?array $ordered, array $vendor, array $mainProducts, array $rawAddons): array
         {
-            $shoppingList = '';
+            // $shoppingList = '';
             $checkoutList = '';
             if  (!is_null($ordered)) {
                 $count = 0;
@@ -475,25 +475,25 @@
                             array_push($addonsArray, $addonString);
                         }
                     }
-                    $shoppingList .= '<div class="shopping-cart__single-item ' . $randomId . '" data-ordered-id="' . $randomId . '">';
-                    $shoppingList .=     '<div class="shopping-cart__single-item__details">';
-                    $shoppingList .=         '<p style="text-align:left">';
-                    $shoppingList .=             '<span class="shopping-cart__single-item__quantity">' . $product['quantity'] . '</span>';
-                    $shoppingList .=             ' x ';
-                    $shoppingList .=             '<span class="shopping-cart__single-item__name">' . $product['name'] . '</span>';
-                    $shoppingList .=         '</p>';
-                    $shoppingList .=         '<p style="text-align:left" class="shopping-cart__single-item__additional">' . implode(', ', $addonsArray) . '</p>';
-                    $shoppingList .=         '<p>&euro; <span class="shopping-cart__single-item__price">' . number_format($price, 2, '.', ',').'</span></p>';
-                    $shoppingList .=     '</div>';
-                    $shoppingList .=     '<div class="shopping-cart__single-item__remove" onclick="focusOnOrderItem(\'modal__checkout__list\', \'' . $randomId . '\')">';
-                    $shoppingList .=         '<i class="fa fa-info-circle" aria-hidden="true"></i>';
-                    $shoppingList .=     '</div>';
-                    $shoppingList .= '</div>';
+                    // $shoppingList .= '<div class="shopping-cart__single-item ' . $randomId . '" data-ordered-id="' . $randomId . '">';
+                    // $shoppingList .=     '<div class="shopping-cart__single-item__details">';
+                    // $shoppingList .=         '<p style="text-align:left">';
+                    // $shoppingList .=             '<span class="shopping-cart__single-item__quantity">' . $product['quantity'] . '</span>';
+                    // $shoppingList .=             ' x ';
+                    // $shoppingList .=             '<span class="shopping-cart__single-item__name">' . $product['name'] . '</span>';
+                    // $shoppingList .=         '</p>';
+                    // $shoppingList .=         '<p style="text-align:left" class="shopping-cart__single-item__additional">' . implode(', ', $addonsArray) . '</p>';
+                    // $shoppingList .=         '<p>&euro; <span class="shopping-cart__single-item__price">' . number_format($price, 2, '.', ',').'</span></p>';
+                    // $shoppingList .=     '</div>';
+                    // $shoppingList .=     '<div class="shopping-cart__single-item__remove" onclick="focusOnOrderItem(\'modal__checkout__list\', \'' . $randomId . '\')">';
+                    // $shoppingList .=         '<i class="fa fa-info-circle" aria-hidden="true"></i>';
+                    // $shoppingList .=     '</div>';
+                    // $shoppingList .= '</div>';
                 }
             }
 
             return [
-                'shoppingList' => $shoppingList,
+                // 'shoppingList' => $shoppingList,
                 'checkoutList' => $checkoutList
             ];
         }
