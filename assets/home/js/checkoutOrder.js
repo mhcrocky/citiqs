@@ -213,7 +213,7 @@ function changeQuantityAndPrice(quantityInputElement, type) {
 }
 
 function changeAddons(mainProductId, quantity) {
-    let addons = document.querySelectorAll('[data-main-product-id=' + mainProductId + ']');
+    let addons = document.querySelectorAll('[data-main-product-id="' + mainProductId + '"]');
     let addonsLenght = addons.length;
     let i;
 
@@ -378,6 +378,31 @@ function setNewsletterRadioButtons(newsLetter) {
     if (newsLetterYes && newsLetterNo) {
         newsLetterYes.checked = newsLetter
         newsLetterNo.checked = !newsLetter
+    }
+}
+
+function toogleDisable(element, id) {
+    let checked = element.checked
+    let waiterTip = document.getElementById(id);
+    if (checked) {
+        waiterTip.disabled = false;
+        waiterTip.hidden = false;
+        waiterTip.classList.add("form-control");
+    } else {
+        waiterTip.disabled = true;
+        waiterTip.hidden = true;
+        waiterTip.classList.remove("form-control");
+    }
+    return;
+}
+
+function checkValue(waiterTip) {
+    let tip = waiterTip.value;
+    if (tip % 0.5 === 0) {
+        waiterTip.value = parseFloat(tip).toFixed(2);
+    } else {
+        tip = Math.round(tip);
+        waiterTip.value = parseFloat(tip).toFixed(2);
     }
 }
 

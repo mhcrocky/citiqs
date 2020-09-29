@@ -29,7 +29,7 @@
             $CI =& get_instance();
             $CI->load->config('custom');
 
-            $amount = floatval($order['orderAmount']) + floatval($order['serviceFee']) - floatval($order['voucherAmount']);
+            $amount = floatval($order['orderAmount']) + floatval($order['serviceFee']) - floatval($order['voucherAmount']) + $order['waiterTip'];
             $amount = round($amount, 2);
             $amount = $amount * 100;
             $arrArguments = [];

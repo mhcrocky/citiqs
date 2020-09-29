@@ -50,6 +50,7 @@
     $serviceFee = $totalOrder * $vendor['serviceFeePercent'] / 100 + $vendor['minimumOrderFee'];
     if ($serviceFee > $vendor['serviceFeeAmount']) $serviceFee = $vendor['serviceFeeAmount'];
     $total = $totalOrder + $serviceFee;
+    $totalWithTip = $total + $waiterTip;
 
 ?>
 <div id="wrapper">
@@ -97,6 +98,10 @@
                                                     <p>Bestellingen</p>
                                                     <p>Service</p>
                                                     <p>TOTAAL</p>
+                                                    <?php if ($waiterTip) { ?>
+                                                    <p>Waiter tip</p>
+                                                    <p>TOTAL WITH TIP</p>
+                                                    <?php } ?>                                                    
                                                     <p class="voucher" style="display:none">Voucher amount</p>
                                                     <p class="voucher" style="display:none">Pay with other method</p>
                                                 </td>
@@ -104,6 +109,10 @@
                                                     <p><?php echo number_format($totalOrder, 2, ',', '.'); ?> &euro;</p>
                                                     <p><?php echo number_format($serviceFee, 2, ',', '.'); ?> &euro;</p>
                                                     <p><?php echo number_format($total, 2, ',', '.'); ?> &euro;</p>
+                                                    <?php if ($waiterTip) { ?>
+                                                        <p><?php echo number_format($waiterTip, 2, ',', '.'); ?> &euro;</p>
+                                                        <p><?php echo number_format($totalWithTip, 2, ',', '.'); ?> &euro;</p>
+                                                    <?php } ?>
                                                     <p class="voucher" style="display:none"><span id="voucherAmount"></span> &euro;</p>
                                                     <p class="voucher" style="display:none"><span id="leftAmount"></span> &euro;</p>
                                                 </td>
@@ -376,20 +385,21 @@
                                                         class="form-control"
                                                         data-total="<?php echo round($totalOrder, 2); ?>"
                                                         data-total-amount="<?php echo round($total, 2); ?>"
+                                                        data-waiter-tip="<?php echo round($waiterTip, 2); ?>"
                                                     />
                                                     <br/>
                                                     <button
                                                         class="btn btn-success btn-lg"
                                                         style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
                                                         onclick="voucherPay('codeId')"
-                                                        >
+                                                    >
                                                         <i class="fa fa-check-circle" aria-hidden="true"></i>
                                                     </button>
                                                     <button
                                                         class="btn btn-danger btn-lg closeModal"
                                                         style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
                                                         data-dismiss="modal"
-                                                        >
+                                                    >
                                                         <i class="fa fa-times" aria-hidden="true"></i>
                                                     </button>
                                                 </div>

@@ -16,7 +16,8 @@ function voucherPay(codeId) {
         let post = {
             'code' : code,
             'amount' : codeElement.dataset.total,
-            'totalAmount' : codeElement.dataset.totalAmount
+            'totalAmount' : codeElement.dataset.totalAmount,
+            'waiterTip' : codeElement.dataset.waiterTip
         }
         let url = globalVariables.ajax + 'voucherPay';
         sendAjaxPostRequest(post, url, 'voucherPay', voucherResponse);

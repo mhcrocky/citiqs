@@ -287,6 +287,9 @@
             }
 
             $_SESSION['postOrder'] = $this->input->post(null, true);
+            if (!isset($_SESSION['postOrder']['order']['waiterTip'])) {
+                $_SESSION['postOrder']['order']['waiterTip'] = 0;
+            }
 
             set_cookie('userName', $_SESSION['postOrder']['user']['username'], time() + (365 * 24 * 60 * 60));
             set_cookie('email', $_SESSION['postOrder']['user']['email'], time() + (365 * 24 * 60 * 60));
@@ -324,6 +327,7 @@
                 'ordered'               => $_SESSION['order'],
                 'vendor'                => $_SESSION['vendor'],
                 'spot'                  => $_SESSION['spot'],
+                'waiterTip'             => floatval($_SESSION['postOrder']['order']['waiterTip']),
                 'idealPaymentType'      => $this->config->item('idealPaymentType'),
                 'creditCardPaymentType' => $this->config->item('creditCardPaymentType'),
                 'bancontactPaymentType' => $this->config->item('bancontactPaymentType'),

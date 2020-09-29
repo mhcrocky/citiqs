@@ -890,6 +890,7 @@ class Ajax extends CI_Controller
         $code = $this->input->post('code', true);
         $amount = floatval($this->input->post('amount', true));
         $totalAmount  = floatval($this->input->post('totalAmount', true));
+        $waiterTip  = floatval($this->input->post('waiterTip', true));
 
         $this
             ->shopvoucher_model
@@ -986,11 +987,31 @@ class Ajax extends CI_Controller
                     ($this->shopvoucher_model->amount >= $_SESSION['payWithVaucher'] || $this->shopvoucher_model->percent === 100)
                     && $_SESSION['payWithVaucher'] === $amount
                 ) {
-                    $redirect = base_url() . 'voucherPayment' . DIRECTORY_SEPARATOR . $this->shopvoucher_model->id;
-                    echo json_encode([
-                        'status' => '1',
-                        'redirect' => $redirect
-                    ]);
+
+                    if ($waiterTip) {
+                        $_SESSION['voucherId'] = $this->shopvoucher_model->id;
+                        $_SESSION['payWithVaucher'] = $amount;
+                        echo json_encode([
+                            'status' => '2',
+                            'message' => 'Select method to finish payment',
+                            'voucherAmount' => number_format($totalAmount, 2, ',', '.'),
+                            'leftAmount' => number_format($waiterTip, 2, ',', '.'),
+                        ]);
+                    } else {
+                        if (isset($_SESSION['voucherId'])) {
+                            unset($_SESSION['voucherId']);
+                        }
+                        if (isset($_SESSION['payWithVaucher'])) {
+                            unset($_SESSION['payWithVaucher']);
+                        }
+        
+                        $redirect = base_url() . 'voucherPayment' . DIRECTORY_SEPARATOR . $this->shopvoucher_model->id;
+                        echo json_encode([
+                            'status' => '1',
+                            'redirect' => $redirect
+                        ]);
+                    }
+
                 } else {
                     $_SESSION['voucherId'] = $this->shopvoucher_model->id;
 
@@ -999,7 +1020,7 @@ class Ajax extends CI_Controller
                     } else {
                         $voucherDiscount = $this->shopvoucher_model->percent * $_SESSION['payWithVaucher'] / 100;
                     }
-                    $leftAmount = $totalAmount - $voucherDiscount;
+                    $leftAmount = $totalAmount - $voucherDiscount + $waiterTip;
 
                     echo json_encode([
                         'status' => '2',
@@ -1013,11 +1034,30 @@ class Ajax extends CI_Controller
         }
 
         if ($this->shopvoucher_model->amount >= $amount || $this->shopvoucher_model->percent === 100) {
-            $redirect = base_url() . 'voucherPayment' . DIRECTORY_SEPARATOR . $this->shopvoucher_model->id;
-            echo json_encode([
-                'status' => '1',
-                'redirect' => $redirect
-            ]);
+            if ($waiterTip) {
+                $_SESSION['voucherId'] = $this->shopvoucher_model->id;
+                $_SESSION['payWithVaucher'] = $amount;
+                echo json_encode([
+                    'status' => '2',
+                    'message' => 'Select method to finish payment',
+                    'voucherAmount' => number_format($totalAmount, 2, ',', '.'),
+                    'leftAmount' => number_format($waiterTip, 2, ',', '.'),
+                ]);
+            } else {
+                if (isset($_SESSION['voucherId'])) {
+                    unset($_SESSION['voucherId']);
+                }
+                if (isset($_SESSION['payWithVaucher'])) {
+                    unset($_SESSION['payWithVaucher']);
+                }
+
+                $redirect = base_url() . 'voucherPayment' . DIRECTORY_SEPARATOR . $this->shopvoucher_model->id;
+                echo json_encode([
+                    'status' => '1',
+                    'redirect' => $redirect
+                ]);
+            }
+
             return;
         };
 
@@ -1028,7 +1068,7 @@ class Ajax extends CI_Controller
         } else {
             $voucherDiscount = $this->shopvoucher_model->percent * $amount / 100;
         }
-        $leftAmount = $totalAmount - $voucherDiscount;
+        $leftAmount = $totalAmount - $voucherDiscount + $waiterTip;
 
         echo json_encode([
             'status' => '2',

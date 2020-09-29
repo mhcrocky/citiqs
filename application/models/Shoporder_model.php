@@ -31,6 +31,7 @@
         public $serviceTypeId;
         public $voucherAmount;
         public $voucherId;
+        public $waiterTip;
 
         private $table = 'tbl_shop_orders';
 
@@ -90,6 +91,7 @@
             if (isset($data['serviceTypeId']) && !Validate_data_helper::validateInteger($data['serviceTypeId'])) return false;
             if (isset($data['voucherAmount']) && !Validate_data_helper::validateFloat($data['voucherAmount'])) return false;
             if (isset($data['voucherId']) && !Validate_data_helper::validateInteger($data['voucherId'])) return false;
+            if (isset($data['waiterTip']) && !Validate_data_helper::validateFloat($data['waiterTip'])) return false;
 
             return true;
         }
@@ -103,6 +105,7 @@
                     $this->table . '.paid AS orderPaidStatus',
                     $this->table . '.serviceFee AS serviceFee',
                     $this->table . '.voucherAmount',
+                    $this->table . '.waiterTip',
                     'buyer.id AS buyerId',
                     'buyer.email AS buyerEmail',
                     'buyer.username AS buyerUserName',
