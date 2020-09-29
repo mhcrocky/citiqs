@@ -228,20 +228,6 @@
 					</div>
 					<br/>
 					<div class="form-group mb-35">
-						<label for="serviceFeeAmount">MAXIMUM SERVICE FEE AMOUNT</label>
-						<input
-							type="number"
-							id="serviceFeeAmount"
-							name="vendor[serviceFeeAmount]"
-							min="0"
-							step="0.01"
-							class="form-control"
-							style="border-radius: 50px"
-							value="<?php echo $vendor['serviceFeeAmount']; ?>"
-							/>
-					</div>
-					<br/>
-					<div class="form-group mb-35">
 						<label for="minimumOrderFee">SERVICE FEE AMOUNT</label>
 						<input
 							type="number"
@@ -252,6 +238,20 @@
 							class="form-control"
 							style="border-radius: 50px"
 							value="<?php echo $vendor['minimumOrderFee']; ?>"
+							/>
+					</div>
+					<br/>
+					<div class="form-group mb-35">
+						<label for="serviceFeeAmount">MAXIMUM SERVICE FEE AMOUNT</label>
+						<input
+							type="number"
+							id="serviceFeeAmount"
+							name="vendor[serviceFeeAmount]"
+							min="0"
+							step="0.01"
+							class="form-control"
+							style="border-radius: 50px"
+							value="<?php echo $vendor['serviceFeeAmount']; ?>"
 							/>
 					</div>
 					<br/>
