@@ -607,6 +607,8 @@
             $jsonoutput['ProductLines']=$this->ProductLines;
             $jsonoutput['PaymentLines']=$this->PaymentLines;
             $jsonoutput['image']=$receiptemailBasepath;
+            $jsonoutput['vendorId']=$order['vendorId'];
+            $jsonoutput['lastNumber']=$order['vendorId'];
             // header('Content-type: image/png');
             echo json_encode($jsonoutput);
 
@@ -615,6 +617,9 @@
             // $order['buyerEmail'] = 'pnroos@icloud.com';
             // $email = $order['buyerEmail'];
             // Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);
+        }
+        function updatelastRecieptCount_get($vendorId){
+            $this->shoporder_model->updatelastRecieptCount($vendorId);
         }
         private function returnVatGrade($vatpar){
             // retunr a or b or or d
