@@ -15,6 +15,12 @@
                     <span>Checkout</span>
                 </div>
                 <div class="row">
+                    <?php if ($vendor['requireRemarks'] === '1') { ?>
+                        <div class="form-group col-sm-12">
+                            <label for="notesInput">Remark</label>
+                            <textarea id="notesInput" class="form-control" name="order[remarks]" rows="3" maxlength="250"></textarea>
+                        </div>
+                    <?php } ?>
                     <?php if ($vendor['requireName'] === '1') { ?>
                         <div class="form-group col-sm-6">
                             <label for="firstNameInput">Name (<sup>*</sup>)</label>
@@ -72,7 +78,7 @@
                                 <select class="form-control" style="width:22% !important; display:inline-block !important" name="phoneCountryCode" style="text-align:center">
                                     <?php foreach ($countryCodes as $code => $data) { ?>                                
                                         <option
-                                            value="<?php $value = '00' . $data['code']; echo $value ?>"
+                                            value="<?php $value = '00' . $data['code']; echo $value ?>"0
                                             <?php
                                                 if (
                                                     ($phoneCountryCode && $code === $phoneCountryCode)
@@ -89,12 +95,6 @@
                             </div>
                         </div>
                     <?php } ?>
-                    <?php if ($vendor['requireRemarks'] === '1') { ?>
-                    <div class="form-group col-sm-12">
-                        <label for="notesInput">Remarks</label>
-                        <textarea id="notesInput" class="form-control" name="order[remarks]" rows="3" maxlength="250"></textarea>
-                    </div>
-                    <?php } ?>
                     <?php if ($vendor['requireNewsletter'] === '1') { ?>
                         <div class="form-group col-sm-12">
                             <label>Recive our newsletter</label>
@@ -108,7 +108,6 @@
                             </label>
                         </div>
                     <?php } ?>
-
                     <?php if ($vendor['termsAndConditions'] && $vendor['showTermsAndPrivacy'] === '1') { ?>
                     <div class="form-group col-sm-12 checkbox">
                         <label>

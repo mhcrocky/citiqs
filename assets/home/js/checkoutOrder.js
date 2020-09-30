@@ -397,12 +397,23 @@ function toogleDisable(element, id) {
 }
 
 function checkValue(waiterTip) {
-    let tip = waiterTip.value;
+    let tip = parseFloat(waiterTip.value);
+
     if (tip % 0.5 === 0) {
-        waiterTip.value = parseFloat(tip).toFixed(2);
+        waiterTip.value = tip.toFixed(2);
     } else {
         tip = Math.round(tip);
-        waiterTip.value = parseFloat(tip).toFixed(2);
+        waiterTip.value = tip.toFixed(2);
+    }
+
+    if (tip > 0) {
+        let orderValue = document.getElementById('orderAmountInput').value;
+        let serviceFeeValue = document.getElementById('serviceFeeInput').value;
+        let totalWithTip = tip + parseFloat(orderValue) + parseFloat(serviceFeeValue);
+        document.getElementById('tipShowContainer').style.visibility = 'visible';
+        document.getElementById('totalWithTip').innerHTML = totalWithTip.toFixed(2) + '&nbsp;&euro;'
+    } else {
+        document.getElementById('tipShowContainer').style.visibility = 'hidden';
     }
 }
 
