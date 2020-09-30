@@ -635,7 +635,6 @@
             // }
 
             if (isset($_FILES['image']['name']) && !empty($_FILES['image']['name'])) {
-            {
                 // $image = time().'-'.$_FILES["image"]['name'];
                 $receiptemail = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'].'-email' . '.png';
                 $config = array(
