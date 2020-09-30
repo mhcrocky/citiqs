@@ -69,45 +69,50 @@
                                 <small><?php echo $product['category']; ?></small>
                                 <?php if (isset($product['remark'])) { ?>
                                     <div>
-                                        <label for="orderExtended_<?php echo $countInputs; ?>_<?php echo $productExtendedId; ?>_remark">Remark</label>
+                                        <?php if ($product['remark']) { ?>
+                                            <label>Remark</label>
+                                            <p><?php echo $product['remark']; ?></p>
+                                        <?php } ?>
+                                        <!-- <label for="orderExtended_<?php #echo $countInputs; ?>_<?php# echo $productExtendedId; ?>_remark">Remark</label>
                                         <textarea
-                                            data-order-session-index="<?php echo $key; ?>"
-                                            data-product-extended-id="<?php echo $productExtendedId; ?>"
+                                            data-order-session-index="<?php #echo $key; ?>"
+                                            data-product-extended-id="<?php# echo $productExtendedId; ?>"
                                             class="form-control"
                                             rows="1"
                                             maxlength="200"
-                                            id="orderExtended_<?php echo $countInputs; ?>_<?php echo $productExtendedId; ?>_remark"
-                                            name="orderExtended[<?php echo $countInputs; ?>][<?php echo $productExtendedId; ?>][remark]"
+                                            id="orderExtended_<?php #echo $countInputs; ?>_<?php #echo $productExtendedId; ?>_remark"
+                                            name="orderExtended[<?php #echo $countInputs; ?>][<?php #echo $productExtendedId; ?>][remark]"
                                             onchange="updateSessionRemarkMainProduct(this)"
-                                        ><?php echo $product['remark']; ?></textarea>
+                                        ><?php #echo $product['remark']; ?></textarea> -->
                                     </div>
                                 <?php } ?>
                             </div>
                             <div class='checkout-table__numbers'>
                                 <div class="checkout-table__quantity">
-                                    <span
+                                    <!-- <span
                                         class="fa-stack makeOrder"
-                                        <?php if ($product['onlyOne'] === '0') { ?>
-                                            onclick='changeQuantityAndPriceById("<?php echo $mainProductId; ?>", "+")'
-                                        <?php } elseif ($product['onlyOne'] === '1') { ?>
+                                        <?php #if ($product['onlyOne'] === '0') { ?>
+                                            onclick='changeQuantityAndPriceById("<?php #echo $mainProductId; ?>", "+")'
+                                        <?php #} elseif ($product['onlyOne'] === '1') { ?>
                                             style="visibility: hidden;"
-                                        <?php } ?>
+                                        <?php #} ?>
                                     >
                                         <i class="fa fa-plus"></i>
-                                    </span>
+                                    </span> -->
                                     <span class='checkout-table__number-of-products' id="quantity_<?php echo $countInputs; ?>">
+                                        <span class="quantity">Quantity:&nbsp;</span>
                                         <?php echo $product['quantity']; ?>
                                     </span>
-                                    <span
+                                    <!-- <span
                                         class="fa-stack makeOrder"
-                                        <?php if ($product['onlyOne'] === '0') { ?>
-                                            onclick='changeQuantityAndPriceById("<?php echo $mainProductId; ?>", "-")'
-                                        <?php } elseif ($product['onlyOne'] === '1') { ?>
+                                        <?php #if ($product['onlyOne'] === '0') { ?>
+                                            onclick='changeQuantityAndPriceById("<?php #echo $mainProductId; ?>", "-")'
+                                        <?php #} elseif ($product['onlyOne'] === '1') { ?>
                                             style="visibility: hidden;"
-                                        <?php } ?>
+                                        <?php #} ?>
                                     >
                                         <i class="fa fa-minus"></i>
-                                    </span>
+                                    </span> -->
                                     <input
                                         id="<?php echo $mainProductId; ?>"
                                         class="calculateTotal"
@@ -136,13 +141,13 @@
                                         </span>&nbsp;&euro;
                                         <?php $orderTotal += filter_var($product['amount'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); ?>
                                     </p>
-                                    <i
+                                    <!-- <i
                                         class="fa fa-trash"
-                                        data-class="<?php echo $removeClass; ?>";
-                                        data-order-session-index="<?php echo $key ; ?>"
+                                        data-class="<?php #echo $removeClass; ?>";
+                                        data-order-session-index="<?php #echo $key ; ?>"
                                         onclick="unsetSessionOrderElement(this.dataset)"
                                         >
-                                    </i>
+                                    </i> -->
                                 </div>
                             </div>
                         </div>
@@ -190,32 +195,37 @@
                                             <small><?php echo $addon['category']; ?></small>
                                             <?php if (isset($addon['remark'])) { ?>
                                                 <div>
-                                                    <label for="orderExtended_<?php echo $countInputs; ?>_<?php echo $addonExtendedId; ?>_remark">Remark</label>
+                                                    <?php if ($addon['remark']) { ?>
+                                                        <label>Remark</label>
+                                                        <p><?php echo $addon['remark']; ?></p>
+                                                    <?php } ?>
+                                                    <!-- <label for="orderExtended_<?php #echo $countInputs; ?>_<?php #echo $addonExtendedId; ?>_remark">Remark</label>
                                                     <textarea
-                                                        id="orderExtended_<?php echo $countInputs; ?>_<?php echo $addonExtendedId; ?>_remark"
+                                                        id="orderExtended_<?php #echo $countInputs; ?>_<?php #echo $addonExtendedId; ?>_remark"
                                                         class="form-control"
-                                                        data-order-session-index="<?php echo $key; ?>"
-                                                        data-product-extended-id="<?php echo $productExtendedId; ?>"
-                                                        data-addon-extended-id="<?php echo $addonExtendedId; ?>"
+                                                        data-order-session-index="<?php #echo $key; ?>"
+                                                        data-product-extended-id="<?php #echo $productExtendedId; ?>"
+                                                        data-addon-extended-id="<?php #echo $addonExtendedId; ?>"
                                                         rows="1"
                                                         maxlength="200"
-                                                        name="orderExtended[<?php echo $countInputs; ?>][<?php echo $addonExtendedId; ?>][remark]"
+                                                        name="orderExtended[<?php #echo $countInputs; ?>][<?php #echo $addonExtendedId; ?>][remark]"
                                                         onchange="updateSessionRemarkAddon(this)"
-                                                    ><?php echo $addon['remark']; ?></textarea>
+                                                    ><?php #echo $addon['remark']; ?></textarea> -->
                                                 </div>
                                             <?php } ?>
                                         </div>
                                         <div class='checkout-table__numbers'>
                                             <div class="checkout-table__quantity">
-                                                <span class="fa-stack makeOrder" onclick='changeQuantityAndPriceById("input_quantity_<?php echo $countInputs; ?>", "+")'                                                >
+                                                <!-- <span class="fa-stack makeOrder" onclick='changeQuantityAndPriceById("input_quantity_<?php #echo $countInputs; ?>", "+")'                                                >
                                                     <i class="fa fa-plus"></i>
-                                                </span>
+                                                </span> -->
                                                 <span class='checkout-table__number-of-products' id="quantity_<?php echo $countInputs; ?>">
+                                                    <span class="quantity">Quantity:&nbsp;</span>
                                                     <?php echo $addon['quantity']; ?>
                                                 </span>
-                                                <span class="fa-stack makeOrder" onclick='changeQuantityAndPriceById("input_quantity_<?php echo $countInputs; ?>", "-")'                                                >
+                                                <!-- <span class="fa-stack makeOrder" onclick='changeQuantityAndPriceById("input_quantity_<?php #echo $countInputs; ?>", "-")'                                                >
                                                     <i class="fa fa-minus"></i>
-                                                </span>
+                                                </span> -->
                                                 <input
                                                     id="input_quantity_<?php echo $countInputs; ?>"
                                                     class="calculateTotal"
@@ -246,15 +256,15 @@
                                                     </span>&nbsp;&euro;
                                                     <?php $orderTotal += filter_var($addon['amount'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); ?>
                                                 </p>
-                                                <i
+                                                <!-- <i
                                                     class="fa fa-trash"
-                                                    data-addon-id="<?php echo $addonId; ?>"
-                                                    data-order-session-index="<?php echo $key; ?>"
-                                                    data-product-extended-id="<?php echo $productExtendedId; ?>""
-                                                    data-addon-extended-id="<?php echo $addonExtendedId; ?>"
+                                                    data-addon-id="<?php #echo $addonId; ?>"
+                                                    data-order-session-index="<?php #echo $key; ?>"
+                                                    data-product-extended-id="<?php #echo $productExtendedId; ?>""
+                                                    data-addon-extended-id="<?php #echo $addonExtendedId; ?>"
                                                     onclick="unsetSessionOrderElement(this.dataset)"
                                                     >
-                                                </i>
+                                                </i> -->
                                             </div>
                                         </div>
                                     </div>
@@ -267,30 +277,3 @@
                 ?>
             </div>
             <!-- end table content -->
-            <div class="checkout-table__single-element checkout-table__single-element--total">
-                <div class="checkout-table__total">
-                    <b>SERVICE FEE:</b>
-                    <span id="serviceFee">
-                        <?php
-                            $serviceFee = $orderTotal * $vendor['serviceFeePercent'] / 100 + $vendor['minimumOrderFee'];
-                            if ($serviceFee > $vendor['serviceFeeAmount']) $serviceFee = $vendor['serviceFeeAmount'];
-                            echo number_format($serviceFee, 2, ".", ","); ?> &euro;
-                    </span>
-                </div>
-            </div>
-            <div class="checkout-table__single-element checkout-table__single-element--total">
-                <div class="checkout-table__total">
-                    <b>TOTAL:</b>
-                    <span id="totalAmount">
-                        <?php
-                            $total = $orderTotal + $serviceFee;
-                            echo number_format($total, 2, ".", ",");
-                        ?> &euro;
-                    </span>
-                </div>
-            </div>
-            <!-- end total sum-->
-        </div>
-        <!-- end checkout table -->
-    </div>
-</div>

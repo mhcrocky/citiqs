@@ -263,12 +263,12 @@
                     $remarkProductId = (isset($product['remark'])) ? 'remark_' . $count . '_' . $product['productId'] : '0';
                     $onlyOne = ($product['onlyOne'] === '1') ? true : false;
 
-                    $checkoutList .= '<div id="' . $randomId . '" class="orderedProducts" ';
-                    if ($count === 1) {
-                        $checkoutList .= 'style="padding-left:0px;"';
-                    } else {
-                        $checkoutList .= 'style="padding-left:0px; position:relative; top:40px"';
-                    }
+                    $checkoutList .= '<div id="' . $randomId . '" class="orderedProducts ' . $product['productId'] . '" ';
+                    // if ($count === 1) {
+                    //     $checkoutList .= 'style="padding-left:0px;"';
+                    // } else {
+                    //     $checkoutList .= 'style="padding-left:0px; position:relative; top:40px"';
+                    // }
                     
                     $checkoutList .= '>';
                     $checkoutList .=    '<div class="alert alert-dismissible" style="padding-left: 0px; margin-bottom: 10px;">';
@@ -303,8 +303,8 @@
                                                         data-category="' . $product['category'] . '"
                                                         data-product-extended-id="' . $productExtendedId . '"
                                                         data-product-id="' . $product['productId'] . '" 
-                                                        data-remark-id="' . $remarkProductId . '" ';
-
+                                                        data-remark-id="' . $remarkProductId . '"                                                        
+                                                        data-order-quantity-value="orderQuantityValue_' .  $product['productId'] . '"';
 
                     if (!$onlyOne) {                                    
                         $checkoutList .=                'class="form-control checkProduct" style="display:inline-block"';
@@ -369,7 +369,7 @@
                     $checkoutList .=        '</div>';
 
                     if (isset($product['addons'])) {
-                        $checkoutList .=        '<div class="modal__adittional"  style="position:relative; top: 15px;">';
+                        $checkoutList .=        '<div class="modal__adittional">';
                         $checkoutList .=            '<h6 style="margin-top:10px">Additional</h6>';
                         $checkoutList .=            '<div class="modal__adittional__list">';
 

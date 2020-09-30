@@ -41,10 +41,11 @@
                                 <div class="shop__item-list">
                                     <?php
                                         foreach ($products as $product) {
-                                            $productDetails = reset($product['productDetails']); ?>
-                                            <div class="shop__single-item" data-toggle="modal" data-target="#single-item-details-modal<?php echo $product['productId']; ?>">
-                                                <?php if ($vendor['showProductsImages'] === '1') { ?>
-                                                    <div class="shop__single-item__image">                                                        
+                                            $productDetails = reset($product['productDetails']);
+                                            ?>
+                                            <div class="shop__single-item">
+                                                <div class="shop__single-item__image">
+                                                    <?php if ($vendor['showProductsImages'] === '1') { ?>
                                                         <img
                                                             <?php if ($product['productImage'] && file_exists($uploadProductImageFolder . $product['productImage'])) { ?>
                                                                 src="<?php echo base_url() . 'assets/images/productImages/' . $product['productImage']; ?>"
@@ -53,12 +54,16 @@
                                                             <?php } ?>
                                                             alt="<?php echo $productDetails['name']; ?>"
                                                         />
+                                                    <?php } ?>
+                                                    <div class="shop__single-item__add-to-cart" style="display:block; margin:3px auto">
+                                                        <span id="orderQuantityValue_<?php echo $product['productId']; ?>" style="font-size:14px; display:block">0</span>
                                                     </div>
-                                                <?php } ?>
+                                                </div>                                                
                                                 <div class="shop__single-item__info">
                                                     <strong class='shop__single-item__info--title'><?php echo $productDetails['name']; ?></strong>
                                                     <p class='shop__single-item__info--description'><?php echo $productDetails['shortDescription']; ?></p>
                                                     <?php
+                                                        $productAllergies = null;
                                                         if ($vendor['showAllergies'] === '1')  {
                                                             $product['allergies'] = unserialize($product['allergies']);
                                                             if (!empty($product['allergies']['productAllergies'])) {
@@ -81,11 +86,34 @@
                                                         }
                                                     ?>
                                                 </div>
-                                                <div class="shop__single-item__price">
+                                                <?php if (!$product['addons'] && !$productAllergies) { ?>
+                                                    <div
+                                                        class="shop__single-item__add-to-cart"
+                                                        onclick="trigerRemoveOrderedClick('removeOrdered_<?php echo $product['productId']; ?>')"
+                                                    >
+                                                        <span
+                                                            style="font-size:16px; vertical-align: middle; text-align:center"
+                                                        >
+                                                            <i class="fa fa-minus" aria-hidden="true"></i>
+                                                        </span>
+                                                    </div>
+                                                <?php } ?>
+                                                <div class="shop__single-item__price" style="margin-right:7px;">
                                                     <span><?php echo $productDetails['price']; ?></span>
+                                                    <br style="display: initial;" />
+                                                    <span style="font-size:14px;" onclick="focusOnOrderItems('<?php echo $product['productId']; ?>')">Details</span>
                                                 </div>
-                                                <div class="shop__single-item__add-to-cart">
-                                                    <span>+</span>
+                                                <div
+                                                    class="shop__single-item__add-to-cart"
+                                                    <?php if ($product['addons'] || $productAllergies) { ?>
+                                                        data-toggle="modal" data-target="#single-item-details-modal<?php echo $product['productId']; ?>"
+                                                    <?php } else { ?>
+                                                        onclick="triggerModalClick('modal_buuton_<?php echo 'single-item-details-modal' . $product['productId']; ?>_<?php echo $productDetails['productExtendedId']?>')"
+                                                    <?php } ?>
+                                                >
+                                                    <span style="font-size:16px; vertical-align: middle; text-align:center">
+                                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    </span>
                                                 </div>
                                             </div>
                                             <!-- end single item -->
@@ -168,10 +196,9 @@
                         <div class="modal-header">
                             <div class="modal-header__content">
                                 
-                                </div>
                             </div>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span>&times;</span>
+                                <span style="color:#000;">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -179,14 +206,14 @@
                                 <div class="modal__checkout__list" id='modal__checkout__list' style="margin: 0px 10px; overflow-y: scroll !important;">
                                     <?php echo $checkoutList; ?>
                                 </div>
-                                <div class="modal-footer">
+                                <!-- <div class="modal-footer">
                                     <p>TOTAL:
                                         <span class="bottom-bar__total-price"></span>
                                     </p>
                                     <button class='button-main button-primary' onclick="checkout()">
                                         CHECKOUT &euro;&nbsp;<span class="totalPrice">0</span>
                                     </button>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -207,8 +234,7 @@
                         class="modal modal__item"
                         id="single-item-details-modal<?php echo $product['productId']; ?>"
                         role="dialog"
-                        >
-                        <div class="modal-dialog" role="document">
+                    >
                         <div class="modal-content">
                             <div
                                 class="modal-header"
@@ -217,7 +243,7 @@
                                 <?php } ?>
                             >
                                 <div class="modal-header__content">
-                                    <div class='modal-header__details'>
+                                    <div class='modal-header__details'  style="margin-top:17px;">
                                         <h4 class="modal-header__title"><?php echo $productDetails['name']; ?></h4>
                                         <h4 class='modal-price'>&euro; <?php echo $productDetails['price']; ?></h4>
                                     </div>
@@ -225,11 +251,11 @@
                                     <p class='modal__category'>Category: <a href='#'><?php echo $product['category']; ?></a></p>
                                 </div>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span>&times;</span>
+                                    <span style="color:#000;">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="modal__content" id="product_<?php echo $product['productId']; ?>" style="position:relative; top:20px">
+                                <div class="modal__content <?php echo $productDetails['productExtendedId']; ?>" id="product_<?php echo $product['productId']; ?>" >
 
                                     <div class="modal__adittional">
                                         <?php if ($product['onlyOne'] === '0') { ?>
@@ -264,6 +290,7 @@
                                             data-product-id="<?php echo $product['productId']; ?>"
                                             data-only-one="<?php echo $product['onlyOne']; ?>"
                                             data-remark-id="<?php echo $remarkProductId ?>"
+                                            data-order-quantity-value="orderQuantityValue_<?php echo $product['productId']; ?>"
                                             <?php if ($product['onlyOne'] === '0') { ?>
                                                 class="form-control checkProduct"
                                                 style="display:inline-block"
@@ -323,9 +350,9 @@
                                         <?php } ?>
                                     </div>
                                     <?php if ($product['addons']) { ?>
-                                        <div class="modal__adittional" style="position:relative; top: 15px;">
+                                        <div class="modal__adittional">
                                             <h6>Additional</h6>
-                                            <div class="modal__adittional__list"  style="position:relative; top: 15px;">
+                                            <div class="modal__adittional__list">
                                                 <?php
                                                     $productAddons = $product['addons'];
                                                     $countAddons = 0;
@@ -456,6 +483,7 @@
                                     data-product-name="<?php echo $productDetails['name']; ?>"
                                     data-product-price="<?php echo $productDetails['price']; ?>"
                                     onclick="cloneProductAndAddons(this)"
+                                    id="modal_buuton_<?php echo 'single-item-details-modal' . $product['productId']; ?>_<?php echo $productDetails['productExtendedId']?>"
                                     >Add <?php echo $productDetails['name']; ?> to list</button>
                             </div>
                         </div>

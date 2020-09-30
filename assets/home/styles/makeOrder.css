@@ -17,3 +17,13 @@ main {
 .submitOrder:hover {
     cursor: pointer;
 }
+
+.quantity {
+    display: none;
+}
+
+@media only screen and (max-width: 768px) {
+    .quantity {
+        display: initial;
+    }
+}

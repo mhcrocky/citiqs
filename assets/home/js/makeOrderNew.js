@@ -27,6 +27,7 @@ function changeProductQuayntity(element, className) {
         value = value + 1;
     }
 
+
     inputField.setAttribute('value', value);
     changeAddonInputAttributes(element, value, className, isOrdered);
 
@@ -108,10 +109,14 @@ function isOrdered(element) {
 }
 
 function cloneProductAndAddons(element) {
+
+    
     let productContainerId = 'product_' + element.dataset.productId;
     let productContainer = document.getElementById(productContainerId);
     let orderContainer = document.getElementById(makeOrderGlobals.modalCheckoutList);
     let clone;
+
+    // resetRemarks(productContainer);
 
     let date  = new Date();
     let randomId = productContainerId + '_' + date.getTime() + '_' + Math.floor(Math.random() * 10000);
@@ -128,9 +133,10 @@ function cloneProductAndAddons(element) {
 
 function checkoutHtmlHeader(orderContainer, randomId, element) {
     let htmlCheckout = '';
-    htmlCheckout +=  '<div id="' + randomId + '" class="orderedProducts" style="margin-bottom: 30px; padding-left:0px; position:relative; top:40px">';
+    // htmlCheckout +=  '<div id="' + randomId + '" class="orderedProducts ' + element.dataset.productId + '" style="margin-bottom: 30px; padding-left:0px; position:relative; top:50px">';
+    htmlCheckout +=  '<div id="' + randomId + '" class="orderedProducts ' + element.dataset.productId + '" >';
     htmlCheckout +=      '<div class="alert alert-dismissible" style="padding-left: 0px; margin-bottom: 10px;">';
-    htmlCheckout +=          '<a href="#" onclick="removeOrdered(\'' + randomId + '\')" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+    htmlCheckout +=          '<a href="#" onclick="removeOrdered(\'' + randomId + '\')" class="close removeOrdered_' + element.dataset.productId + '" data-dismiss="alert" aria-label="close">&times;</a>';
     htmlCheckout +=          '<h4>' + element.dataset.productName + ' (&euro;' + element.dataset.productPrice + ')';
     htmlCheckout +=      '</div>';
     htmlCheckout +=  '</div>';
@@ -141,11 +147,14 @@ function populateShoppingCart(randomId) {
     
     $('.' + randomId).remove();
     let products = document.querySelectorAll('#' + randomId + ' [data-add-product-price]');
+
+    showHtmlQuantity(products[0], true);    
+
     let addons = document.querySelectorAll('#' + randomId + ' [data-addon-price]');
     let addonsLength = addons.length;
     let i;
     let product = products[0];
-    let html = '';
+    // let html = '';
     let aditionalList = [];
     let price = parseFloat(product.value) * parseFloat(product.dataset.addProductPrice);
 
@@ -241,6 +250,11 @@ function resetAddons(productContainer) {
 }
 
 function removeOrdered(elementId) {
+    let inputField = document.querySelectorAll('#' + elementId + ' [data-order-quantity-value]');
+    if (inputField) {
+        inputField = inputField[0];
+        showHtmlQuantity(inputField, false);
+    }
     document.getElementById(elementId).remove();
     // document.querySelectorAll('#' + makeOrderGlobals.shoppingCartList + ' [data-ordered-id = "' + elementId + '"]')[0].remove();
     resetTotal();
@@ -250,15 +264,48 @@ function focusOnOrderItem(containerId, itemId) {
     $('#checkout-modal').modal('show');
     let items = document.getElementById(containerId).children;
     let itemsLength = items.length;
-    let i;
-    for (i = 0; i < itemsLength; i++) {
-        let item = items[i];
-        if (item.id !== itemId) {
-            item.style.display = 'none';
-        } else {
-            item.style.display = 'initial';
+    if (itemsLength) {
+        let i;
+        for (i = 0; i < itemsLength; i++) {
+            let item = items[i];
+            if (item.id !== itemId) {
+                item.style.display = 'none';
+            } else {
+                item.style.display = 'initial';
+            }
         }
     }
+}
+
+function focusOnOrderItems(itemClass) {
+    let checkoutModal = document.getElementById('checkout-modal');
+    let items = checkoutModal.getElementsByClassName('orderedProducts');
+    let itemsLength = items.length;
+
+    if (itemsLength) {
+        let showModal = false;        
+        let i;
+        for (i = 0; i < itemsLength; i++) {
+            let item = items[i];
+            if (item.classList.contains(itemClass)) {
+                if (!showModal) {
+                    $('#checkout-modal').modal('show');
+                    showModal = true;
+                }
+                item.style.display = 'initial';
+            } else {
+                item.style.display = 'none';
+            }
+        }
+        if (!showModal) {
+            alertify.error('Product is not in order list!');
+        }
+    } else {
+        alertify.error('No products in order list!');
+        
+    }
+
+    
 }
 
 function focusCheckOutModal(containerId) {
@@ -352,6 +399,50 @@ function checkout() {
             console.dir(err);
         }
     });
+}
+
+function resetRemarks(productContainer) {
+    let remarks = productContainer.getElementsByTagName('textarea');
+    let remarksLength = remarks.length;
+    if (remarksLength) {
+        let i;
+        for (i = 0; i < remarksLength; i++) {
+            let remark = remarks[i];
+            remark.value = '';
+        }
+    }
+}
+
+function showHtmlQuantity(inputField, increase) {
+    let value = parseInt(inputField.value)
+    if (inputField.dataset.orderQuantityValue) {
+        let showQuantity = document.getElementById(inputField.dataset.orderQuantityValue);
+        if (showQuantity) {
+            let showAuantityValue = showQuantity.innerHTML ? parseInt(showQuantity.innerHTML) : 0;
+            if (increase) {
+                showAuantityValue += value;
+            } else {
+                showAuantityValue -= value;
+            }
+
+            if (showAuantityValue > 0) {
+                showQuantity.innerHTML = showAuantityValue;
+            } else {
+                showQuantity.innerHTML = '0';
+            }
+        }
+    }
+}
+
+function triggerModalClick(modalButtonId) {
+    $('#' + modalButtonId).trigger('click');
+}
+
+function trigerRemoveOrderedClick(className) {
+    let ordered = document.getElementsByClassName(className) 
+    if (ordered.length) {
+        $(ordered[0]).trigger('click')
+    }
 }
 
 var makeOrderGlobals = (function(){
