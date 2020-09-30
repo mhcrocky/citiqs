@@ -396,24 +396,36 @@ function toogleDisable(element, id) {
     return;
 }
 
-function checkValue(waiterTip) {
+function addTip(waiterTip) {
     let tip = parseFloat(waiterTip.value);
-
-    if (tip % 0.5 === 0) {
-        waiterTip.value = tip.toFixed(2);
-    } else {
-        tip = Math.round(tip);
-        waiterTip.value = tip.toFixed(2);
-    }
-
-    if (tip > 0) {
+    if (tip >= 0) {
         let orderValue = document.getElementById('orderAmountInput').value;
         let serviceFeeValue = document.getElementById('serviceFeeInput').value;
         let totalWithTip = tip + parseFloat(orderValue) + parseFloat(serviceFeeValue);
-        document.getElementById('tipShowContainer').style.visibility = 'visible';
-        document.getElementById('totalWithTip').innerHTML = totalWithTip.toFixed(2) + '&nbsp;&euro;'
+        document.getElementById('totalWithTip').value = totalWithTip.toFixed(2);
+    }
+}
+
+function addTotalWithTip(totalWithTip) {
+    let totalWithTipValue = parseFloat(totalWithTip.value);
+    let orderValue = document.getElementById('orderAmountInput').value;
+    let serviceFeeValue = document.getElementById('serviceFeeInput').value;
+    let min = parseFloat(totalWithTip.min);
+    if (totalWithTipValue > min) {    
+        let tip = totalWithTipValue - min;        
+        document.getElementById('waiterTip').value = tip.toFixed(2);
     } else {
-        document.getElementById('tipShowContainer').style.visibility = 'hidden';
+        document.getElementById('waiterTip').value = 0;
+    }
+}
+
+function checkValue(totalWithtip) {
+    let min = parseFloat(totalWithtip.min);
+    let value = parseFloat(totalWithtip.value);
+    if (min > value) {
+        totalWithtip.value = min;
+    } else {
+        totalWithtip.value = value.toFixed(2);
     }
 }
 

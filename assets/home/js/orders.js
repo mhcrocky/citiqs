@@ -109,6 +109,7 @@ function sendSmsButton(data) {
 
 function sendSms(element) {
     let url = globalVariables.ajax + 'sendSms/' + element.dataset.orderId;
+    // let mobile = document.querySelectorAll('[data-user-id="' + element.dataset.mobile + '"]')[0].value;
     let post = {
         mobilenumber: document.getElementById(element.dataset.mobile).value,
         messagetext: element.dataset.message

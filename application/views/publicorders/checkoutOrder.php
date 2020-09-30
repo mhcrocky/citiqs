@@ -7,20 +7,15 @@
             } elseif ($vendor['preferredView'] === $newMakeOrderView) {
                 include_once FCPATH . 'application/views/publicorders/includes/checkoutOrderSecondVresion.php';
             }
+            include_once FCPATH . 'application/views/publicorders/includes/checkoutOrderTip.php';
         ?>
 
         <div class="row d-flex justify-content-center" id="checkout">
             <div class="col-sm-12 col-lg-9 left-side">
                 <div class="checkout-title">
-                    <span>Checkout</span>
+                    <span>Your details</span>
                 </div>
                 <div class="row">
-                    <?php if ($vendor['requireRemarks'] === '1') { ?>
-                        <div class="form-group col-sm-12">
-                            <label for="notesInput">Remark</label>
-                            <textarea id="notesInput" class="form-control" name="order[remarks]" rows="3" maxlength="250"></textarea>
-                        </div>
-                    <?php } ?>
                     <?php if ($vendor['requireName'] === '1') { ?>
                         <div class="form-group col-sm-6">
                             <label for="firstNameInput">Name (<sup>*</sup>)</label>
