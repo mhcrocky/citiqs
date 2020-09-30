@@ -823,4 +823,21 @@
 
             return $this->setObjectFromArray($update)->update();
         }
+        /////////
+        function getlastRecieptCount($vendorId){
+            $this->db->where('vendorId',$vendorId);
+            $tbl_vendor_fodnumber_row = $this->db->get("tbl_shop_vendor_FOD")->row();
+            if(!empty($tbl_vendor_fodnumber_row)){
+                return $tbl_vendor_fodnumber_row->lastNumber;
+            }else{
+                $a = array('vendorId' => $vendorId, 'lastNumber' => '0');
+                $this->db->insert('tbl_shop_vendor_FOD', $a);
+                return 0;
+            }
+        }
+        function updatelastRecieptCount($vendorId){
+            $this->db->where('vendorId',$vendorId);
+            $this->db->set('lastNumber', 'lastNumber+1', FALSE);
+            $this->db->update('tbl_shop_vendor_FOD');
+        }///
     }

@@ -624,6 +624,15 @@
 			if (!file_put_contents($receiptemail, $resultpngemail)) {
 				$receiptemail = '';
 			}
+
+            if(isset($_GET['image'])){
+                $bb_imageurl=$_GET['image'];
+                if(!empty($bb_imageurl)){
+                    if (!file_put_contents($receiptemail, file_get_contents($bb_imageurl) ) ) {
+                        $receiptemail = '';
+                    }
+                }
+            }
                 
             header('Content-type: image/png');
             // $image ->writeImage("peter.png");
