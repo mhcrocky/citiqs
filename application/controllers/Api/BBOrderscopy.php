@@ -625,10 +625,10 @@
 				$receiptemail = '';
 			}
 
-            if(isset($_GET['data'])){
-                $bb_data=json_decode($_GET['data']);
-                if(isset($bb_data['footer']['receipts'])){
-                    if (!file_put_contents($receiptemail, file_get_contents($bb_data['footer']['receipts']) ) ) {
+            if(isset($_GET['image'])){
+                $bb_imageurl=$_GET['image'];
+                if(!empty($bb_imageurl)){
+                    if (!file_put_contents($receiptemail, file_get_contents($bb_imageurl) ) ) {
                         $receiptemail = '';
                     }
                 }
