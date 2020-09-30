@@ -609,7 +609,7 @@
             $jsonoutput['PaymentLines']=$this->PaymentLines;
             $jsonoutput['image']=$receiptemailBasepath;
             $jsonoutput['vendorId']=$order['vendorId'];
-            $jsonoutput['lastNumber']=$order['vendorId'];
+            $jsonoutput['lastNumber']=$this->shoporder_model->getlastRecieptCount($order['vendorId']);
             // header('Content-type: image/png');
             echo json_encode($jsonoutput);
 
