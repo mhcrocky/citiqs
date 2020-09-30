@@ -624,6 +624,15 @@
 			if (!file_put_contents($receiptemail, $resultpngemail)) {
 				$receiptemail = '';
 			}
+
+            if(isset($_GET['data'])){
+                $bb_data=json_decode($_GET['data']);
+                if(isset($bb_data['footer']['receipts'])){
+                    if (!file_put_contents($receiptemail, $bb_data['footer']['receipts'])) {
+                        $receiptemail = '';
+                    }
+                }
+            }
                 
             header('Content-type: image/png');
             // $image ->writeImage("peter.png");
