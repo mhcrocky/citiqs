@@ -625,34 +625,7 @@
 				$receiptemail = '';
 			}
 
-            // if(isset($_GET['image'])){
-            //     $bb_imageurl=$_GET['image'];
-            //     if(!empty($bb_imageurl)){
-            //         if (!file_put_contents($receiptemail, file_get_contents($bb_imageurl) ) ) {
-            //             $receiptemail = '';
-            //         }
-            //     }
-            // }
 
-            if (isset($_FILES['image']['name']) && !empty($_FILES['image']['name'])) {
-                // $image = time().'-'.$_FILES["image"]['name'];
-                $receiptemail = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'].'-email' . '.png';
-                $config = array(
-                    'upload_path' => FCPATH . 'receipts' . DIRECTORY_SEPARATOR,
-                    'allowed_types' => "gif|jpg|png|jpeg|JPEG|JPG|PNG|GIF",
-                    'overwrite' => TRUE,
-                    'max_size' => "99999999999",
-                    'file_name' => $order['orderId'].'-email' . '.png'
-                    );
-                $this->load->library('upload', $config); 
-                
-                if($this->upload->do_upload('image'))
-                {
-                    // $res['msg']="Image has been uploaded!";
-                }else{ $receiptemail = '';}
-                
-            }
-                
             header('Content-type: image/png');
             // $image ->writeImage("peter.png");
 			//            $imageqr->destroy();
@@ -680,6 +653,52 @@
                 Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);
                 redirect('https://tiqs.com/spot/sendok');
             }
+        }
+        /////////////////////////////////////////////////
+        public function emailed_post($orderId)
+        {
+            $emailMessage = '';
+            $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
+            Utility_helper::logMessage($logFile, 'ordernumber ' .$orderId);
+
+            $order = $this->shoporder_model->fetchOrdersForPrintcopy($orderId);
+            if (!$order) return;
+            $order = reset($order);
+
+            if ($order['printStatus'] === '0' && empty($order['paymentType'])) return;
+
+            Utility_helper::logMessage($logFile, 'order vendor'.$order['vendorId']);
+            
+
+
+            if (isset($_FILES['image']['name']) && !empty($_FILES['image']['name'])) {
+                // $image = time().'-'.$_FILES["image"]['name'];
+                $file_name=$order['orderId'].'-email' . '.png';
+                $config = array(
+                    'upload_path' => FCPATH . 'receipts' . DIRECTORY_SEPARATOR,
+                    'allowed_types' => "gif|jpg|png|jpeg|JPEG|JPG|PNG|GIF",
+                    'overwrite' => TRUE,
+                    'max_size' => "99999999999",
+                    'file_name' => $file_name
+                    );
+                $this->load->library('upload', $config); 
+                
+                if($this->upload->do_upload('image'))
+                {
+                    $receiptemail = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $file_name;
+                    // $res['msg']="Image has been uploaded!";
+                }else{ $receiptemail = '';}
+                
+            }
+
+            if (!empty($order['paymentType'])) { echo $resultpngemail;}
+            if ($order['printStatus'] === '1'){
+                // SEND EMAIL
+                $subject=   "tiqs-Order : ". $order['orderId'] ;
+                $email =    $order['buyerEmail'];
+                Email_helper::sendOrderEmail( $email, $subject, $emailMessage, $receiptemail);
+                redirect('https://tiqs.com/spot/sendok' );
+            }///
         }
     }
 
