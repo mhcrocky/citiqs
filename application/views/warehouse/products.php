@@ -337,7 +337,7 @@
                                 </div>
                                 <?php if ($product['productImage']) { ?>
                                     <figure>
-                                        <img src="<?php echo base_url() . 'assets/images/productImages/' . $product['productImage']; ?>" alt="<?php echo $details['name']; ?>" width="200px" height="auto" />
+                                        <img src="<?php echo base_url() . 'assets/images/productImages/' . $product['productImage']; ?>" alt="<?php echo $details['name']; ?>" width="auto" height="auto" />
                                     </figure>
                                 <?php } ?>
                                 <div class="grid-footer">

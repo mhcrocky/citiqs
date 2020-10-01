@@ -2,7 +2,7 @@
     <div class='col-sm-12 col-lg-9'>
         <div class="checkout-table">
             <div class="checkout-table__header">
-                <h3 class='mb-0'>Checkout list</h3>
+                <h3 class='mb-0' style="text-align:center">Your order</h3>
             </div>
             <div class="checkout-table__single-element checkout-table__single-element--header">
                 <div class='checkout-table__num-order'>

@@ -47,6 +47,9 @@
                                             ?>
                                             <div class="shop__single-item">
                                                 <div class="shop__single-item__image">
+                                                    <div class="shop__single-item__add-to-cart" style="display:block; margin:3px auto">
+                                                        <span id="orderQuantityValue_<?php echo $product['productId']; ?>" class="countOrdered" style="font-size:14px; display:block">0</span>
+                                                    </div>
                                                     <?php if ($vendor['showProductsImages'] === '1') { ?>
                                                         <img
                                                             <?php if ($product['productImage'] && file_exists($uploadProductImageFolder . $product['productImage'])) { ?>
@@ -57,9 +60,6 @@
                                                             alt="<?php echo $productDetails['name']; ?>"
                                                         />
                                                     <?php } ?>
-                                                    <div class="shop__single-item__add-to-cart" style="display:block; margin:3px auto">
-                                                        <span id="orderQuantityValue_<?php echo $product['productId']; ?>" class="countOrdered" style="font-size:14px; display:block">0</span>
-                                                    </div>
                                                 </div>                                                
                                                 <div class="shop__single-item__info">
                                                     <?php if ($productDetails['longDescription'] && $productDetails['longDescription'] !== 'NA') { ?>
