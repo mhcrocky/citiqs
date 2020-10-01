@@ -27,8 +27,18 @@ function changeLimits () {
   slide.setAttribute('max', maxVal);
   slide.setAttribute('value', value);
   displayValue.call(slide, {});
+
+
 }
 
+
+function callDisplayValue(e) {
+  displayValue (e);
+  let button = document.getElementById('limitButton');
+  button.classList.remove("btn-primary");
+  button.classList.add("btn-danger");
+  button.innerHTML = "CONFIRM NEW TIME"
+}
 function checkPostiveInteger (e) {
   let c = e.keyCode;
   if ((c < 37 && c != 8 && c != 9) || (c > 40 && c < 48 && c != 46) || (c > 57 && c < 96) || (c > 105 && c != 109 && c != 189)) {
@@ -48,6 +58,13 @@ function saveBusyTime(slideId, id) {
   let post = {
     'busyTime' : document.getElementById(slideId).value
   }
+  sendAjaxPostRequest(post, url, 'saveBusyTime', timeConfirmedButton);
+}
 
-  sendAjaxPostRequest(post, url, 'saveBusyTime');
+
+function timeConfirmedButton() {
+  let button = document.getElementById('limitButton');
+  button.classList.remove("btn-danger");
+  button.classList.add("btn-primary");
+  button.innerHTML = "TIME CONFIRMED"
 }

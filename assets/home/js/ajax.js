@@ -195,8 +195,9 @@ var callThis = (function() {
         updateSessionOrderMainProduct: function() {
 
         },
-        saveBusyTime: function() {
+        saveBusyTime: function(callFunction) {
             if (this) {
+                callFunction();
                 alertify.success('Busy time updated');
             } else {
                 alertify.error('Update failed!');

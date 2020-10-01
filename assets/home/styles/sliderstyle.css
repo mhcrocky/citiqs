@@ -51,7 +51,7 @@ input[type=range]::-webkit-slider-thumb {
 #slide:before {
   content: attr(min);
   position: absolute;
-  bottom: 0;
+  top: 20px;
   left: 0;
   color: black;
   font-size: 1rem;
@@ -59,12 +59,13 @@ input[type=range]::-webkit-slider-thumb {
 #slide:after {
   content: attr(max);
   position: absolute;
-  bottom: 0;
+  top: 20px;
   right: 0;
   color: black;
   font-size: 1rem;
 }
-#val { colorcolor: white;
+#val {
+  /* color: white; */
   font-size: 30px;
   /*position: absolute;*/
   text-align: right;

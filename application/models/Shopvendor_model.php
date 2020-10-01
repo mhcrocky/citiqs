@@ -35,6 +35,8 @@
         public $showTermsAndPrivacy;
         public $showMenu;
         public $tipWaiter;
+        public $minBusyTime;
+        public $maxBusyTime;
 
         public $bancontact;
         public $ideal;
@@ -53,7 +55,14 @@
             $this->load->helper('validate_data_helper');
             if (!Validate_data_helper::validateInteger($value)) return;
 
-            if ($property === 'id' || $property === 'vendorId' || $property === 'serviceFeeTax' || $property === 'busyTime') {
+            if (
+                $property === 'id'
+                || $property === 'vendorId'
+                || $property === 'serviceFeeTax'
+                || $property === 'busyTime'
+                || $property === 'minBusyTime'
+                || $property === 'maxBusyTime'
+            ) {
                 $value = intval($value);
             }
             if ($property === 'serviceFeePercent' || $property === 'serviceFeeAmount') {
@@ -111,6 +120,9 @@
             if (isset($data['showTermsAndPrivacy']) && !($data['showTermsAndPrivacy'] === '1' || $data['showTermsAndPrivacy'] === '0')) return false;
             if (isset($data['showMenu']) && !($data['showMenu'] === '1' || $data['showMenu'] === '0')) return false;
             if (isset($data['tipWaiter']) && !($data['tipWaiter'] === '1' || $data['tipWaiter'] === '0')) return false;
+            if (isset($data['minBusyTime']) && !Validate_data_helper::validateInteger($data['minBusyTime'])) return false;
+            if (isset($data['maxBusyTime']) && !Validate_data_helper::validateInteger($data['maxBusyTime'])) return false;
+
             return true;
         }
 
@@ -152,6 +164,8 @@
                     $this->table . '.showTermsAndPrivacy',
                     $this->table . '.showMenu',
                     $this->table . '.tipWaiter',
+                    $this->table . '.minBusyTime',
+                    $this->table . '.maxBusyTime',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',
@@ -337,4 +351,24 @@
             if (empty($result)) return null;
             return $result[0][$property];
         }
+
+        public function getProperties(array $properties): ?array
+        {
+            if ($this->id) {
+                $where = ['id=' => $this->id];
+            } elseif ($this->vendorId) {
+                $where = ['vendorId=' => $this->vendorId];
+            } else {
+                return null;
+            }
+
+            $result = $this->readImproved([
+                'what' => $properties,
+                'where' => $where
+            ]);
+
+            if (empty($result)) return null;
+            return $result[0];
+        }
+
     }

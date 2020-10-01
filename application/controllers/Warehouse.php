@@ -505,7 +505,7 @@
                                         ]
                                     ]),
                 'ordersStatuses'  => $this->config->item('orderStatuses'),
-                'getRemarks'    => $this->shopvendor_model->setProperty('vendorId', $userId)->getProperty('requireRemarks')
+                'vendorData' => $this->shopvendor_model->setProperty('vendorId', $userId)->getProperties(['id', 'requireRemarks', 'busyTime', 'minBusyTime', 'maxBusyTime'])
             ];
 
             $this->loadViews('warehouse/orders', $this->global, $data, null, 'headerWarehouse');

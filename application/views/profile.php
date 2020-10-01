@@ -471,6 +471,36 @@
 						<label class="radio-inline" for="tipWaiterNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="tipWaiterNo" name="vendor[tipWaiter]" value="0" <?php if ($vendor['tipWaiter'] === '0') echo 'checked'; ?> />
 					</div>
+
+					<h4>SET BUSY AND SLOW TIME</h4>
+					<div class="form-group mb-35">
+						<label for="minBusyTime">Minutes for slow&nbsp;
+						<input
+							type="number"
+							id="minBusyTime"
+							name="vendor[minBusyTime]"
+							min="0"
+							step="1"
+							style="border-radius: 50px; text-align: center"
+							value="<?php echo $vendor['minBusyTime']; ?>"
+							/>							
+						</label>
+						<label for="maxBusyTime">&nbsp;add minutes for busy&nbsp;
+						<input
+							type="number"
+							id="maxBusyTime"
+							name="vendor[maxBusyTime]"
+							min="0"
+							step="1"
+							style="border-radius: 50px; text-align: center"
+							value="<?php echo $vendor['maxBusyTime']; ?>"
+							/>
+							&nbsp; time.
+						</label>
+					</div>
+
+
+
 					<br/>
 					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />

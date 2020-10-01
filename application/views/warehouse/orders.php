@@ -6,7 +6,36 @@
 </style>
 <main class="row" style="margin:0px 20px">
     <h1 style="margin:70px 0px 20px 0px">Order list</h1>
-    <div style="margin:140px 0px 20px 0px">
+    <div class="col-sm-12" style="text-align:center">
+        MINUTES ADDED: <span id="val"><?php echo $vendorData['busyTime']; ?></span>
+        <a
+            href="javascript:void(0)"
+            type="button"
+            onclick="saveBusyTime('slide', '<?php echo $vendorData['id']; ?>')"
+            id="limitButton"
+            disabled
+            class="btn btn-success mb-25"
+            stlye="background: #269900"
+        >
+            TIME CONFIRMED
+        </a>
+        <div style="margin-top:10px">
+            <input
+                style="background-color: #1a2226"
+                id="slide"
+                type="range"
+                min="<?php echo $vendorData['minBusyTime']; ?>"
+                max="<?php echo ($vendorData['maxBusyTime'] === '0') ? '100' : $vendorData['maxBusyTime']; ?>"
+                value="<?php echo $vendorData['busyTime']; ?>"
+                oninput="callDisplayValue(event)"
+            />
+        </div>
+
+        
+    
+    </div>
+
+    <div style="margin:20px 0px 20px 0px">
         <label for="orderStatus">Filter orders by printer:</label>
         <?php if (!empty($printers)) { ?>
         <select id="selectedPrinter" class="custom-select" onchange="destroyAndFetch()">
@@ -17,7 +46,7 @@
         </select>
         <?php } ?>
     </div>
-    <div style="margin:140px 0px 20px 0px">
+    <div style="margin:20px 0px 20px 0px">
         <label for="orderStatus">Filter orders by status:</label>
         <select id="orderStatus" class="custom-select" onchange="destroyAndFetch()">
             <option value="">All (incl finished)</option>
@@ -26,7 +55,7 @@
             <?php } ?>
         </select>
     </div>
-    <div style="margin:173px 0px 20px 10px">
+    <div style="margin:20px 0px 20px 10px">
         <button type="button" class="btn btn-primary" onclick="destroyAndFetch()">Reload page</button>
     </div>
     <div class="table-responsive col-sm-12" style="margin-top:20px">
@@ -79,7 +108,7 @@
 </main>
 <script>
     var orderGlobals = (function(){
-        let getRemarks = '<?php echo $getRemarks; ?>' === '1' ? true : false;
+        let getRemarks = '<?php echo $vendorData['requireRemarks']; ?>' === '1' ? true : false;
         let globals = {
             'orderStatuses' : JSON.parse('<?php echo json_encode($orderStatuses) ?>'),
             'tableId' : 'orders',
