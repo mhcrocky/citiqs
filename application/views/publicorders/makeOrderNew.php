@@ -42,6 +42,8 @@
                                     <?php
                                         foreach ($products as $product) {
                                             $productDetails = reset($product['productDetails']);
+                                            // var_dump($productDetails);
+                                            // die();
                                             ?>
                                             <div class="shop__single-item">
                                                 <div class="shop__single-item__image">
@@ -60,8 +62,21 @@
                                                     </div>
                                                 </div>                                                
                                                 <div class="shop__single-item__info">
+                                                    <?php if ($productDetails['longDescription'] && $productDetails['longDescription'] !== 'NA') { ?>
+                                                        <i
+                                                            style="font-size: large; margin-bottom: -30px"
+                                                            class="fa fa-info-circle"
+                                                            aria-hidden="true"
+                                                            data-toggle="popover"
+                                                            data-trigger="hover"
+                                                            data-placement="bottom"
+                                                            data-content="<?php echo $productDetails['longDescription']; ?>"
+                                                        ></i>
+                                                    <?php } ?>
                                                     <strong class='shop__single-item__info--title'><?php echo $productDetails['name']; ?></strong>
-                                                    <p class='shop__single-item__info--description'><?php echo $productDetails['shortDescription']; ?></p>
+                                                    <?php if (trim($productDetails['name']) !== trim($productDetails['shortDescription']) ) { ?>
+                                                        <p class='shop__single-item__info--description'><?php echo $productDetails['shortDescription']; ?></p>
+                                                    <?php } ?>
                                                     <?php
                                                         $productAllergies = null;
                                                         if ($vendor['showAllergies'] === '1')  {

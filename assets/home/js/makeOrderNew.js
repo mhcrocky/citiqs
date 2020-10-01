@@ -532,5 +532,12 @@ $(document).ready(function(){
         let slider = $('.items-slider');
         slider[0].slick.slickGoTo(parseInt(actIndex));
     });
+
+    $('[data-toggle="popover"]').popover({
+        animation : false,
+        placement : "right",
+        container: 'body'
+    });
+
     resetTotal();
 });
