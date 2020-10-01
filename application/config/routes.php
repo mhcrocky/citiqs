@@ -282,7 +282,7 @@ $route['exchangePay'] = 'Alfredpayment/ExchangePay';
 
 $route['success'] = 'Paysuccesslink';
 $route['successth'] = 'Paysuccesslinkth';
-
+$route['success_reservation'] = 'Reservations/success';
 
 $route['vendors'] = 'Api/Vendors/data';
 

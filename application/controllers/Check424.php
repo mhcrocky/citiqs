@@ -80,11 +80,11 @@ class Check424 extends BaseControllerWeb {
 			exit();
 		};
 
-		set_cookie('firstName', $visitor['firstName'], time() + (365 * 24 * 60 * 60));
-		set_cookie('lastName', $visitor['lastName'], time() + (365 * 24 * 60 * 60));
-		set_cookie('userName', $visitor['firstName'] . ' ' .  $visitor['lastName'], time() + (365 * 24 * 60 * 60));
-		set_cookie('email', $visitor['email'], time() + (365 * 24 * 60 * 60));
-		set_cookie('mobile', $visitor['mobile'], time() + (365 * 24 * 60 * 60));
+		set_cookie('firstName', $visitor['firstName'], (365 * 24 * 60 * 60));
+		set_cookie('lastName', $visitor['lastName'], (365 * 24 * 60 * 60));
+		set_cookie('userName', $visitor['firstName'] . ' ' .  $visitor['lastName'], (365 * 24 * 60 * 60));
+		set_cookie('email', $visitor['email'], (365 * 24 * 60 * 60));
+		set_cookie('mobile', $visitor['mobile'], (365 * 24 * 60 * 60));
 
 		// insert reservation
 		$check = [
@@ -101,7 +101,7 @@ class Check424 extends BaseControllerWeb {
 		// redirect visitor on checkout
 		if ($post['checkStatus'] === '0') {
 			$this->session->set_flashdata('success', 'Goodbye! Thanks for visiting us');
-			set_cookie('visitorReservationId', null, time() - 1);
+			set_cookie('visitorReservationId', null, -1);
 			if (isset($_SESSION['visitorReservationId'])) {
 				unset($_SESSION['visitorReservationId']);
 			}
@@ -111,7 +111,7 @@ class Check424 extends BaseControllerWeb {
 
 		// store visitorReservationId in session
 		$_SESSION['visitorReservationId'] = $this->shopvisitorreservtaion_model->id;
-		set_cookie('visitorReservationId', $this->shopvisitorreservtaion_model->id, time() + (8 * 60 * 60));
+		set_cookie('visitorReservationId', $this->shopvisitorreservtaion_model->id, (8 * 60 * 60));
 		//  fetch vendor data to see does vendor require that user fill up health questionnaire	
 		$vendor = $this->shopvendor_model->setProperty('vendorId', $visitor['vendorId'])->getVendorData();
 
@@ -126,6 +126,11 @@ class Check424 extends BaseControllerWeb {
 		// redirect to make order
 		$this->session->set_flashdata('success', 'Thank you for your registration');
 		$makeOrder = base_url() . 'make_order?vendorid=' . $visitor['vendorId'];
+		if (empty($_SESSION['comeFromAlfred'])) {
+			redirect('success_reservation');
+			return;
+		}
+		unset($_SESSION['comeFromAlfred']);
 		redirect($makeOrder);
 		return;
 	}
@@ -156,6 +161,11 @@ class Check424 extends BaseControllerWeb {
 		$this->shophealth_model->setObjectFromArray($post)->create();
 
 		if ($post['pass'] === '1') {
+			if (empty($_SESSION['comeFromAlfred'])) {
+				redirect('success_reservation');
+				return;
+			}
+			unset($_SESSION['comeFromAlfred']);
 			// redirect to make order
 			$this->session->set_flashdata('success', 'Thank you for your registration');
 			$makeOrder = base_url() . 'make_order?vendorid=' . $post['vendorId'];

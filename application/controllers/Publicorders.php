@@ -389,6 +389,7 @@
             if (
                 $vendor['requireReservation'] === '1' && ( empty($_SESSION['visitorReservationId']) || empty(get_cookie('visitorReservationId')) )
             ) {
+                $_SESSION['comeFromAlfred'] = true;
                 redirect('check424/' . $vendor['vendorId']);
                 exit();
             }

@@ -110,4 +110,11 @@ class  Reservations extends BaseControllerWeb
 		exit();
 	}
 
+
+	public function success()
+    {
+        $this->global['pageTitle'] = 'TIQS : SUCCESS';
+		$this->loadViews("reservationSuccess", $this->global, null, 'nofooter', 'noheader'); // payment screen
+
+	}
 }
