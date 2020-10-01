@@ -56,7 +56,7 @@
                                                         />
                                                     <?php } ?>
                                                     <div class="shop__single-item__add-to-cart" style="display:block; margin:3px auto">
-                                                        <span id="orderQuantityValue_<?php echo $product['productId']; ?>" style="font-size:14px; display:block">0</span>
+                                                        <span id="orderQuantityValue_<?php echo $product['productId']; ?>" class="countOrdered" style="font-size:14px; display:block">0</span>
                                                     </div>
                                                 </div>                                                
                                                 <div class="shop__single-item__info">

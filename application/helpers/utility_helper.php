@@ -272,7 +272,7 @@
                     
                     $checkoutList .= '>';
                     $checkoutList .=    '<div class="alert alert-dismissible" style="padding-left: 0px; margin-bottom: 10px;">';
-                    $checkoutList .=        '<a href="#" onclick="removeOrdered(\'' . $randomId . '\')" class="close" data-dismiss="alert" aria-label="close">×</a>';
+                    $checkoutList .=        '<a href="#" onclick="removeOrdered(\'' . $randomId . '\')" class="close removeOrdered_' . $product['productId'] . '" data-dismiss="alert" aria-label="close">×</a>';
                     $checkoutList .=        '<h4>' . $product['name'] . ' (€' . $product['price'] . ')</h4>';
                     $checkoutList .=    '</div>';
                     $checkoutList .=    '<div class="modal__content">';
@@ -294,7 +294,7 @@
 
                     $checkoutList .=                '<input
                                                         type="number"
-                                                        min="1"
+                                                        min="0"
                                                         step="1"
                                                         value="' . $product['quantity'] . '"
                                                         data-name="' . $product['name'] . '"
@@ -304,7 +304,8 @@
                                                         data-product-extended-id="' . $productExtendedId . '"
                                                         data-product-id="' . $product['productId'] . '" 
                                                         data-remark-id="' . $remarkProductId . '"                                                        
-                                                        data-order-quantity-value="orderQuantityValue_' .  $product['productId'] . '"';
+                                                        data-order-quantity-value="orderQuantityValue_' .  $product['productId'] . '"
+                                                        data-ordered="orderQuantityValue_' .  $product['productId'] . '" ';
 
                     if (!$onlyOne) {                                    
                         $checkoutList .=                'class="form-control checkProduct" style="display:inline-block"';

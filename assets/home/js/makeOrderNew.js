@@ -27,7 +27,6 @@ function changeProductQuayntity(element, className) {
         value = value + 1;
     }
 
-
     inputField.setAttribute('value', value);
     changeAddonInputAttributes(element, value, className, isOrdered);
 
@@ -35,6 +34,12 @@ function changeProductQuayntity(element, className) {
         let itemId = element.parentElement.parentElement.parentElement.parentElement.id;
         populateShoppingCart(itemId);
         resetTotal();
+        let incerase = (type === 'plus') ? true : false;
+        let showValue = showHtmlQuantity(inputField, incerase, false);
+        if (showValue === 0) {
+            element.parentElement.parentElement.parentElement.parentElement.remove();
+            alertify.success('Product removed from list');
+        }
     }
 }
 
@@ -108,9 +113,7 @@ function isOrdered(element) {
     return false;
 }
 
-function cloneProductAndAddons(element) {
-
-    
+function cloneProductAndAddons(element) {    
     let productContainerId = 'product_' + element.dataset.productId;
     let productContainer = document.getElementById(productContainerId);
     let orderContainer = document.getElementById(makeOrderGlobals.modalCheckoutList);
@@ -126,9 +129,11 @@ function cloneProductAndAddons(element) {
     clone = $(productContainer).clone();
     productContainer.setAttribute('id', productContainerId);
     resetAddons(productContainer);
-    clone.appendTo(document.getElementById(randomId));
+    let newOrdered = document.getElementById(randomId);
+    clone.appendTo(newOrdered);
     resetTotal();
-    populateShoppingCart(randomId);
+    setMinToZero(newOrdered);
+    showHtmlQuantity(populateShoppingCart(randomId), true, true);
 }
 
 function checkoutHtmlHeader(orderContainer, randomId, element) {
@@ -147,9 +152,6 @@ function populateShoppingCart(randomId) {
     
     $('.' + randomId).remove();
     let products = document.querySelectorAll('#' + randomId + ' [data-add-product-price]');
-
-    showHtmlQuantity(products[0], true);    
-
     let addons = document.querySelectorAll('#' + randomId + ' [data-addon-price]');
     let addonsLength = addons.length;
     let i;
@@ -184,6 +186,7 @@ function populateShoppingCart(randomId) {
     // html += '</div>';
     // data-toggle="modal" data-target="#checkout-modal"
     // $('#' + makeOrderGlobals.shoppingCartList).append(html);
+    return product;
 }
 
 function changeTotal(value, reset = false) {
@@ -253,11 +256,12 @@ function removeOrdered(elementId) {
     let inputField = document.querySelectorAll('#' + elementId + ' [data-order-quantity-value]');
     if (inputField) {
         inputField = inputField[0];
-        showHtmlQuantity(inputField, false);
     }
     document.getElementById(elementId).remove();
     // document.querySelectorAll('#' + makeOrderGlobals.shoppingCartList + ' [data-ordered-id = "' + elementId + '"]')[0].remove();
     resetTotal();
+    showHtmlQuantity(inputField, false, true);
+    alertify.success('Product removed from list');
 }
 
 function focusOnOrderItem(containerId, itemId) {
@@ -322,6 +326,12 @@ function focusCheckOutModal(containerId) {
 function checkout() {
     let orderedProducts = document.getElementsByClassName(makeOrderGlobals.orderedProducts);
     let orderedProductsLength = orderedProducts.length;
+
+    if (!orderedProductsLength) {
+        alertify.error('No product(s) in order list');
+        return;
+    }
+
     let orderedItem;
     let i;
     let j;
@@ -413,25 +423,33 @@ function resetRemarks(productContainer) {
     }
 }
 
-function showHtmlQuantity(inputField, increase) {
+function showHtmlQuantity(inputField, increase, element) {
     let value = parseInt(inputField.value)
     if (inputField.dataset.orderQuantityValue) {
         let showQuantity = document.getElementById(inputField.dataset.orderQuantityValue);
         if (showQuantity) {
-            let showAuantityValue = showQuantity.innerHTML ? parseInt(showQuantity.innerHTML) : 0;
+            let showQuantityValue = showQuantity.innerHTML ? parseInt(showQuantity.innerHTML) : 0;
             if (increase) {
-                showAuantityValue += value;
+                if (value === 2) {
+                    inputField.setAttribute('min', '1');
+                }
+                if (element) {
+                    showQuantityValue += value;
+                } else {
+                    showQuantityValue++;
+                }
             } else {
-                showAuantityValue -= value;
+                if (element) {
+                    showQuantityValue = showQuantityValue - value;
+                } else {
+                    showQuantityValue--;
+                }
             }
-
-            if (showAuantityValue > 0) {
-                showQuantity.innerHTML = showAuantityValue;
-            } else {
-                showQuantity.innerHTML = '0';
-            }
+            showQuantity.innerHTML = showQuantityValue;
+            return (showQuantityValue > 0) ? value : showQuantityValue;
         }
     }
+    return;
 }
 
 function triggerModalClick(modalButtonId) {
@@ -443,6 +461,46 @@ function trigerRemoveOrderedClick(className) {
     if (ordered.length) {
         $(ordered[0]).trigger('click')
     }
+}
+
+function countOrdered(countOrdered) {
+    let orderedProducts = document.getElementsByClassName(makeOrderGlobals.orderedProducts);
+    if (orderedProducts.length) {
+        let searchOrdered =  document.getElementsByClassName(countOrdered);
+        let searchOrderedLength  = searchOrdered.length;
+        let i;
+        for (i = 0; i < searchOrderedLength; i++) {
+            let id =  searchOrdered[i].id;
+            if (id) {
+                let orderQuanities = document.querySelectorAll('[data-ordered="' + id + '"]');
+                let orderQuanitiesLength = orderQuanities.length;
+                if (orderQuanitiesLength) {
+                    let j;
+                    let value = 0;
+                    for (j = 0; j < orderQuanitiesLength; j++) {
+                        let orderedValue = parseInt(orderQuanities[j].value);
+                        if (orderedValue) {
+                            value += orderedValue;
+                        }
+                    }
+                    if (value) {
+                        searchOrdered[i].innerHTML = value;
+                    }
+                }
+            }
+        }
+    }
+}
+
+function setMinToZero(newOrdered) {
+    let inputs = newOrdered.getElementsByTagName('input');
+    let inputsLength = inputs.length;
+    let i;
+    for (i = 0; i < inputsLength; i++) {
+        let input = inputs[i];
+        input.setAttribute('min', '0');
+    }
+    return;
 }
 
 var makeOrderGlobals = (function(){
@@ -457,6 +515,8 @@ var makeOrderGlobals = (function(){
     Object.freeze(globals);
     return globals;
 }());
+
+countOrdered('countOrdered');
 
 $(document).ready(function(){
     $('.items-slider').slick({
