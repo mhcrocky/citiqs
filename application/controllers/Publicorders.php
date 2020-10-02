@@ -525,26 +525,49 @@
                     }
                 }
             } elseif ($_SESSION['vendor']['preferredView'] === $this->config->item('newMakeOrderView')) {
+                $insertAll = [];
                 foreach ($post['orderExtended'] as $details) {
                     $id = array_keys($details)[0];
                     $details = reset($details);
-                    $insert = [
-                        'productsExtendedId' => intval($id),
-                        'orderId' => $this->shoporder_model->id,
-                        'quantity' => $details['quantity']
-                    ];
+                    $details['quantity'] = intval($details['quantity']);
+
                     if (isset($details['remark'])) {
                         $insert['remark'] = $details['remark'];
+                        $insert = [
+                            'productsExtendedId' => intval($id),
+                            'orderId' => $this->shoporder_model->id,
+                            'quantity' => $details['quantity'],
+                            'remark' => $details['remark'],
+                        ];
+                        if (!$this->shoporderex_model->setObjectFromArray($insert)->create()) {
+                            $this->shoporderex_model->orderId = $insert['orderId'];
+                            $this->shoporderex_model->deleteOrderDetails();
+                            $this->shoporder_model->delete();
+                            $this->session->set_flashdata('error', 'Order not made! Please try again');
+                            redirect($failedRedirect);
+                            exit();
+                        }
+                    } else {
+                        if (!isset($insertAll[$id])) {
+                            $insertAll[$id] = [
+                                'productsExtendedId' => intval($id),
+                                'orderId' => $this->shoporder_model->id,
+                                'quantity' => $details['quantity'],
+                            ];
+                        } else {
+                            $insertAll[$id]['quantity'] += $details['quantity'];
+                        }
                     }
+                }
 
-                    if (!$this->shoporderex_model->setObjectFromArray($insert)->create()) {
-                        $this->shoporderex_model->orderId = $insert['orderId'];
-                        $this->shoporderex_model->deleteOrderDetails();
-                        $this->shoporder_model->delete();
-                        $this->session->set_flashdata('error', 'Order not made! Please try again');
-                        redirect($failedRedirect);
-                        exit();
-                    }
+                $insertValues = array_values($insertAll);
+                if (!$this->shoporderex_model->multipleCreate($insertValues)) {
+                    $this->shoporderex_model->orderId = $insert['orderId'];
+                    $this->shoporderex_model->deleteOrderDetails();
+                    $this->shoporder_model->delete();
+                    $this->session->set_flashdata('error', 'Order not made! Please try again');
+                    redirect($failedRedirect);
+                    exit();
                 }
             }
 
