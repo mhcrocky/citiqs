@@ -305,8 +305,12 @@
                                                         data-product-id="' . $product['productId'] . '" 
                                                         data-remark-id="' . $remarkProductId . '"                                                        
                                                         data-order-quantity-value="orderQuantityValue_' .  $product['productId'] . '"
-                                                        data-ordered="orderQuantityValue_' .  $product['productId'] . '" 
-                                                        data-category-slide="' . $product['categorySlide'] . '"';
+                                                        data-ordered="orderQuantityValue_' .  $product['productId'] . '" ';
+                    
+                    if (!empty($product['categorySlide'])) {
+                        $checkoutList .=                'data-category-slide="' . $product['categorySlide'] . '" ';
+                    }
+                                                        
 
                     if (!$onlyOne) {                                    
                         $checkoutList .=                'class="form-control checkProduct" style="display:inline-block"';
