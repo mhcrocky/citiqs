@@ -103,18 +103,18 @@
                                             </span>&nbsp;&euro;
                                             <?php $orderTotal += filter_var($product['amount'][0], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); ?>
                                         </p>
-                                        <!-- <i
+                                        <i
                                             class="fa fa-trash" 
-                                            data-element-id = "element<?php #echo $productExtendedId; ?>"
+                                            data-element-id = "element<?php echo $productExtendedId; ?>"
                                             data-counter-class = "counterClass"
-                                            data-amount-id = "amount<?php #echo $productExtendedId; ?>"
+                                            data-amount-id = "amount<?php echo $productExtendedId; ?>"
                                             data-service-fee = "serviceFee"
                                             data-total-amount = "totalAmount"
-                                            data-product-ex-id = "<?php #echo $productExtendedId; ?>"
-                                            data-service-fee-percent = "<?php #echo $vendor['serviceFeePercent']; ?>"
-                                            data-service-fee-amount = "<?php #echo $vendor['serviceFeeAmount']; ?>"
+                                            data-product-ex-id = "<?php echo $productExtendedId; ?>"
+                                            data-service-fee-percent = "<?php echo $vendor['serviceFeePercent']; ?>"
+                                            data-service-fee-amount = "<?php echo $vendor['serviceFeeAmount']; ?>"
                                             onclick="removeElement(this)"
-                                        ></i> -->
+                                        ></i>
                                     </div>
                                 </div>
                             </div>
@@ -204,18 +204,19 @@
                                             </span>&nbsp;&euro;
                                             <?php $orderTotal += filter_var($product['amount'][0], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); ?>
                                         </p>
-                                        <!-- <i
-                                            class="fa fa-trash children_element<?php #echo $mainExtendedId; ?>"
-                                            data-element-id = "element<?php #echo $productExtendedId; ?>"
+                                        <i
+                                            class="fa fa-trash children_element<?php echo $mainExtendedId; ?>"
+                                            data-element-id = "element<?php echo $productExtendedId; ?>"
                                             data-counter-class = "counterClass"
-                                            data-amount-id = "amount<?php #echo $productExtendedId; ?>"
+                                            data-amount-id = "amount<?php echo $productExtendedId; ?>"
                                             data-service-fee = "serviceFee"
                                             data-total-amount = "totalAmount"
-                                            data-product-ex-id = "<?php #echo $productExtendedId; ?>"
-                                            data-service-fee-percent = "<?php #echo $vendor['serviceFeePercent']; ?>"
-                                            data-service-fee-amount = "<?php #echo $vendor['serviceFeeAmount']; ?>"
+                                            data-product-ex-id = "<?php echo $productExtendedId; ?>"
+                                            data-service-fee-percent = "<?php echo $vendor['serviceFeePercent']; ?>"
+                                            data-service-fee-amount = "<?php echo $vendor['serviceFeeAmount']; ?>"
                                             onclick="removeElement(this)"
-                                        ></i> -->
+                                        >
+                                        </i>
                                     </div>
                                 </div>
                             </div>

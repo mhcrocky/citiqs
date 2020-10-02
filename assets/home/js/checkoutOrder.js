@@ -132,6 +132,7 @@ function removeElement(thisElement) {
 
     changeServiceFeeAndTotal(false, amountToRemove, thisElement.dataset.serviceFee, thisElement.dataset.totalAmount, thisElement.dataset.serviceFeePercent, thisElement.dataset.serviceFeeAmount);
     ajaxUpdateSession(thisElement.dataset.productExId);
+    calculateTip();
 }
 
 function submitForm(formId, serviceFeeInputId, orderAmountInputId) {
@@ -288,6 +289,7 @@ function removeOrderElements(data) {
     }
     calculateTotal(checkoutOrdedGlobals.calculateTotalClass);
     setNewOrder();
+    calculateTip();
 }
 
 function setNewOrder() {
@@ -408,8 +410,6 @@ function addTip(waiterTip) {
 
 function addTotalWithTip(totalWithTip) {
     let totalWithTipValue = parseFloat(totalWithTip.value);
-    let orderValue = document.getElementById('orderAmountInput').value;
-    let serviceFeeValue = document.getElementById('serviceFeeInput').value;
     let min = parseFloat(totalWithTip.min);
     if (totalWithTipValue > min) {    
         let tip = totalWithTipValue - min;        
@@ -432,6 +432,22 @@ function checkValue(totalWithtip) {
 
 function redirectToMakeOrder(url) {
     window.location.href = url;
+}
+
+function calculateTip() {
+    let totalWithTip = document.getElementById('totalWithTip');
+    
+    if (totalWithTip) {
+        let orderValue = parseFloat(document.getElementById('orderAmountInput').value);
+        let serviceFeeValue = parseFloat(document.getElementById('serviceFeeInput').value);
+        let waiterTip = parseFloat(document.getElementById('waiterTip').value);
+
+        let newMin = orderValue + serviceFeeValue;
+        let newValue = waiterTip + newMin;
+
+        totalWithTip.min = newMin.toFixed(2);
+        totalWithTip.value = newValue.toFixed(2);
+    }    
 }
 
 checkUserNewsLetter('emailAddressInput');

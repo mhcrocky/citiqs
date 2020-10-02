@@ -148,13 +148,13 @@
                                         </span>&nbsp;&euro;
                                         <?php $orderTotal += filter_var($product['amount'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); ?>
                                     </p>
-                                    <!-- <i
+                                    <i
                                         class="fa fa-trash"
-                                        data-class="<?php #echo $removeClass; ?>";
-                                        data-order-session-index="<?php #echo $key ; ?>"
+                                        data-class="<?php echo $removeClass; ?>";
+                                        data-order-session-index="<?php echo $key ; ?>"
                                         onclick="unsetSessionOrderElement(this.dataset)"
                                         >
-                                    </i> -->
+                                    </i>
                                 </div>
                             </div>
                         </div>
@@ -263,15 +263,15 @@
                                                     </span>&nbsp;&euro;
                                                     <?php $orderTotal += filter_var($addon['amount'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); ?>
                                                 </p>
-                                                <!-- <i
+                                                <i
                                                     class="fa fa-trash"
-                                                    data-addon-id="<?php #echo $addonId; ?>"
-                                                    data-order-session-index="<?php #echo $key; ?>"
-                                                    data-product-extended-id="<?php #echo $productExtendedId; ?>""
-                                                    data-addon-extended-id="<?php #echo $addonExtendedId; ?>"
+                                                    data-addon-id="<?php echo $addonId; ?>"
+                                                    data-order-session-index="<?php echo $key; ?>"
+                                                    data-product-extended-id="<?php echo $productExtendedId; ?>"
+                                                    data-addon-extended-id="<?php echo $addonExtendedId; ?>"
                                                     onclick="unsetSessionOrderElement(this.dataset)"
                                                     >
-                                                </i> -->
+                                                </i>
                                             </div>
                                         </div>
                                     </div>
