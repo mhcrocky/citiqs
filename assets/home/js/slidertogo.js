@@ -4,7 +4,7 @@ const spanslide = document.querySelector('#val');
 const slide = document.querySelector('#slide');
 const button = document.querySelector('#limitButton');
 
-displayValue.call(slide, {});
+// displayValue.call(slide, {});
 
 function displayValue (e) {
   const inp = e.target || this;

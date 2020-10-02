@@ -17,11 +17,15 @@
             class="btn btn-success mb-25"
             stlye="background: #269900"
         >
-            TIME CONFIRMED
+            <?php if ( $vendorData['busyTime'] === '0') { ?>
+                BUSY TIME IS NOT SET
+            <?php } else { ?>
+                TIME CONFIRMED
+            <?php } ?>
         </a>
         <div style="margin-top:10px">
             <input
-                style="background-color: #1a2226"
+                style="background-color: #fff"
                 id="slide"
                 type="range"
                 min="<?php echo $vendorData['minBusyTime']; ?>"
