@@ -603,13 +603,21 @@
 					$email = $order['receiptEmail'];
 				} else {
 					if ($order['customerReceipt'] === '0') {
-						$email = $order['buyerEmail'];
+						if (strpos($order['buyerEmail'], 'anonymus_') !== false && strpos($order['buyerEmail'], '@tiqs.com') !== false) {
+							$email = $order['receiptEmail'];
+						} else {
+							$email = $order['buyerEmail'];
+						}
 					}
 				}
 				header('Content-type: image/png');
 				echo $resultpngemail;
 			} else {
-				$email = $order['buyerEmail'];
+				if (strpos($order['buyerEmail'], 'anonymus_') !== false && strpos($order['buyerEmail'], '@tiqs.com') !== false) {
+					$email = $order['receiptEmail'];
+				} else {
+					$email = $order['buyerEmail'];
+				}
 			}
 
 			// Utility_helper::logMessage($logFile, 'printer echo');

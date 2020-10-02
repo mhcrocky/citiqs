@@ -22,7 +22,7 @@
                             <input id="firstNameInput" class="form-control" name="user[username]" value="<?php echo $username; ?>" type="text" placeholder="Name" required />
                         </div>
                     <?php } else { ?>
-                        <input name="user[username]" value="<?php echo $vendor['vendorName']; ?>" type="text" readonly hidden required />
+                        <input name="user[username]" value="<?php echo 'no name ' . date('Y-m-d H:i:s'); ?>" type="text" readonly hidden required />
                     <?php } ?>
                     <?php
                         if ($vendor['requireEmail'] === '1') {
@@ -42,7 +42,7 @@
                             </div>
                             <?php
                         } else {
-                            $email = !empty($vendor['receiptEmail']) ? $vendor['receiptEmail'] : $vendor['vendorEmail'];
+                            $email = 'anonymus_' . strval(time()) . '_' . rand(1, 1000000) . '@tiqs.com';
                         ?>
                         <input name="user[email]" value="<?php echo $email; ?>" type="text" readonly hidden required />
                     <?php } ?>
