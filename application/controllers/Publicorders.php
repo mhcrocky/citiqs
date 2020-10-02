@@ -155,6 +155,9 @@
                 }
                 $data['uploadProductImageFolder'] = $this->config->item('uploadProductImageFolder');
                 $data['defaultProductsImages'] = $this->config->item('defaultProductsImages');
+                if (!empty($_GET['category'])) {
+                    $data['returnCategorySlide'] = $_GET['category'];
+                }
 
                 $this->loadViews('publicorders/makeOrderNew', $this->global, $data, null, 'headerWarehousePublic');
             }
