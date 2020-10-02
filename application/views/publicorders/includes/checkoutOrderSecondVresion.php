@@ -89,33 +89,34 @@
                             </div>
                             <div class='checkout-table__numbers'>
                                 <div class="checkout-table__quantity">
-                                    <!-- <span
+                                    <span
                                         class="fa-stack makeOrder"
-                                        <?php #if ($product['onlyOne'] === '0') { ?>
-                                            onclick='changeQuantityAndPriceById("<?php #echo $mainProductId; ?>", "+")'
-                                        <?php #} elseif ($product['onlyOne'] === '1') { ?>
+                                        <?php if ($product['onlyOne'] === '0') { ?>
+                                            onclick='changeQuantityAndPriceById("<?php echo $mainProductId; ?>", "+")'
+                                        <?php } elseif ($product['onlyOne'] === '1') { ?>
                                             style="visibility: hidden;"
-                                        <?php #} ?>
+                                        <?php } ?>
                                     >
                                         <i class="fa fa-plus"></i>
-                                    </span> -->
+                                    </span>
                                     <span class='checkout-table__number-of-products' id="quantity_<?php echo $countInputs; ?>">
-                                        <span class="quantity">Quantity:&nbsp;</span>
+                                        <!-- <span class="quantity">Quantity:&nbsp;</span> -->
                                         <?php echo $product['quantity']; ?>
                                     </span>
-                                    <!-- <span
+                                    <span
                                         class="fa-stack makeOrder"
-                                        <?php #if ($product['onlyOne'] === '0') { ?>
-                                            onclick='changeQuantityAndPriceById("<?php #echo $mainProductId; ?>", "-")'
-                                        <?php #} elseif ($product['onlyOne'] === '1') { ?>
+                                        <?php if ($product['onlyOne'] === '0') { ?>
+                                            onclick='changeQuantityAndPriceById("<?php echo $mainProductId; ?>", "-")'
+                                        <?php } elseif ($product['onlyOne'] === '1') { ?>
                                             style="visibility: hidden;"
-                                        <?php #} ?>
+                                        <?php } ?>
                                     >
                                         <i class="fa fa-minus"></i>
-                                    </span> -->
+                                    </span>
                                     <span
                                         class="fa-stack makeOrder"
                                         onclick="redirectToMakeOrder('<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spotId .'&category=' . $product['categorySlide'];?>')"
+                                        style="margin-left:20px"
                                         redirect();
                                     >
                                         <i class="fa fa-edit"></i>
@@ -223,16 +224,16 @@
                                         </div>
                                         <div class='checkout-table__numbers'>
                                             <div class="checkout-table__quantity">
-                                                <!-- <span class="fa-stack makeOrder" onclick='changeQuantityAndPriceById("input_quantity_<?php #echo $countInputs; ?>", "+")'>
+                                                <span class="fa-stack makeOrder" onclick='changeQuantityAndPriceById("input_quantity_<?php echo $countInputs; ?>", "+")'>
                                                     <i class="fa fa-plus"></i>
-                                                </span> -->
+                                                </span>
                                                 <span class='checkout-table__number-of-products' id="quantity_<?php echo $countInputs; ?>">
-                                                    <span class="quantity">Quantity:&nbsp;</span>
+                                                    <!-- <span class="quantity">Quantity:&nbsp;</span> -->
                                                     <?php echo $addon['quantity']; ?>
                                                 </span>
-                                                <!-- <span class="fa-stack makeOrder" onclick='changeQuantityAndPriceById("input_quantity_<?php #echo $countInputs; ?>", "-")'>
+                                                <span class="fa-stack makeOrder" onclick='changeQuantityAndPriceById("input_quantity_<?php echo $countInputs; ?>", "-")'>
                                                     <i class="fa fa-minus"></i>
-                                                </span> -->
+                                                </span>
                                                 <input
                                                     id="input_quantity_<?php echo $countInputs; ?>"
                                                     class="calculateTotal"

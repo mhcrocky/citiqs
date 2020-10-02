@@ -211,6 +211,7 @@ function changeQuantityAndPrice(quantityInputElement, type) {
     }
 
     calculateTotal(checkoutOrdedGlobals.calculateTotalClass);
+    calculateTip();
 }
 
 function changeAddons(mainProductId, quantity) {
