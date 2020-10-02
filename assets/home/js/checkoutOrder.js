@@ -429,4 +429,9 @@ function checkValue(totalWithtip) {
     }
 }
 
+
+function redirectToMakeOrder(url) {
+    window.location.href = url;
+}
+
 checkUserNewsLetter('emailAddressInput');

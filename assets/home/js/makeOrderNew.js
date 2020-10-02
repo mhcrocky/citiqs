@@ -353,6 +353,7 @@ function checkout() {
             'productId' : product.dataset.productId,
             'onlyOne' : product.dataset.onlyOne,
             'allergies': product.dataset.allergies,
+            'categorySlide' : product.dataset.categorySlide,
             'addons' : {}
         };
         if (product.dataset.allergies) {
@@ -503,18 +504,11 @@ function setMinToZero(newOrdered) {
     return;
 }
 
-var makeOrderGlobals = (function(){
-    let globals = {
-        'checkoutModal' : 'checkout-modal',
-        'modalCheckoutList' : 'modal__checkout__list',
-        'checkProduct' : 'checkProduct',
-        'checkAddons' : 'checkAddons',
-        'shoppingCartList' : 'shopping-cart__list',
-        'orderedProducts' : 'orderedProducts'
-    }
-    Object.freeze(globals);
-    return globals;
-}());
+function goToSlide(index) {
+    let slider = $('.items-slider');
+    slider[0].slick.slickGoTo(parseInt(index));
+}
+
 
 countOrdered('countOrdered');
 
@@ -529,8 +523,7 @@ $(document).ready(function(){
 
     $('.categoryNav a').on("click", function () {
         let actIndex = parseInt(this.dataset.index);
-        let slider = $('.items-slider');
-        slider[0].slick.slickGoTo(parseInt(actIndex));
+        goToSlide(actIndex);
     });
 
     $('[data-toggle="popover"]').popover({
@@ -540,4 +533,9 @@ $(document).ready(function(){
     });
 
     resetTotal();
+    console.dir(makeOrderGlobals); 
+    if (makeOrderGlobals.categorySlide) {
+        console.dir(makeOrderGlobals.categorySlide);
+        goToSlide(parseInt(makeOrderGlobals.categorySlide));
+    }
 });

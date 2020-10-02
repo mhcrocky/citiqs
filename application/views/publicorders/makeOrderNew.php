@@ -237,8 +237,9 @@
             <!-- end modal checkout -->
         <?php 
         $counter = 0;
+        $categorySlide = 0;
         foreach ($mainProducts as $category => $products) {
-
+            $categorySlide++;
             foreach ($products as $product) {
                 $productDetails = reset($product['productDetails']);
                 $counter++;
@@ -306,6 +307,7 @@
                                             data-only-one="<?php echo $product['onlyOne']; ?>"
                                             data-remark-id="<?php echo $remarkProductId ?>"
                                             data-order-quantity-value="orderQuantityValue_<?php echo $product['productId']; ?>"
+                                            data-category-slide="<?php echo $categorySlide; ?>"
                                             <?php if ($product['onlyOne'] === '0') { ?>
                                                 class="form-control checkProduct"
                                                 style="display:inline-block"
@@ -510,3 +512,22 @@
         }
     }
 ?>
+
+<script>
+var makeOrderGlobals = (function(){
+    let globals = {
+        'checkoutModal' : 'checkout-modal',
+        'modalCheckoutList' : 'modal__checkout__list',
+        'checkProduct' : 'checkProduct',
+        'checkAddons' : 'checkAddons',
+        'shoppingCartList' : 'shopping-cart__list',
+        'orderedProducts' : 'orderedProducts'
+    }
+    <?php if (!empty($returnCategorySlide)) { ?>
+    globals['categorySlide'] = '<?php echo $returnCategorySlide; ?>';
+    <?php } ?>
+
+    Object.freeze(globals);
+    return globals;
+}());
+</script>
