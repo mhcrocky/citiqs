@@ -192,30 +192,37 @@
 									<?php include_once FCPATH . 'application/views/includes/countrySelectOptions.php'; ?>
 								</select>
 							</div>
-							<?php if ($this->baseUrl !== "http://127.0.0.1/lostandfound/") {?>
-							<div class="flex-column align-space">
-								<div style="text-align:center">
-									<div class="g-recaptcha" data-sitekey="6LfxY8oUAAAAANlllpeFQhGDE-SVgssfFNonhl7F"  data-callback="capenable" data-expired-callback="capenable" ></div>
+							<?php if (ENVIRONMENT !== 'development' ) { ?>
+								<?php if ($this->baseUrl !== "http://127.0.0.1/lostandfound/") {?>
+								<div class="flex-column align-space">
+									<div style="text-align:center">
+										<div class="g-recaptcha" data-sitekey="6LfxY8oUAAAAANlllpeFQhGDE-SVgssfFNonhl7F"  data-callback="capenable" data-expired-callback="capenable" ></div>
+									</div>
 								</div>
-							</div>
-							<?php } ?>
+								<?php } ?>
 
-							<?php if ($this->baseUrl === "http://127.0.0.1/lostandfound/")  {?>
-							<div class="form-group align-center mb-35 mt-50" >
+								<?php if ($this->baseUrl === "http://127.0.0.1/lostandfound/")  {?>
+								<div class="form-group align-center mb-35 mt-50" >
+									<p>
+										<input type="submit" id="capsubmit" class="button button-orange" value="<?=$this->language->Line("spot-registerbusiness-3300",'REGISTER ACCOUNT');?>" style="border: none" />
+									</p>
+								</div>
+								<?php } ?>
+
+								<?php if ($this->baseUrl !== "http://127.0.0.1/lostandfound/")  {?>
+								<div class="form-group align-center mb-35 mt-50" >
 								<p>
 									<input type="submit" id="capsubmit" class="button button-orange" value="<?=$this->language->Line("spot-registerbusiness-3300",'REGISTER ACCOUNT');?>" style="border: none" />
 								</p>
-							</div>
-							<?php } ?>
-
-							<?php if ($this->baseUrl !== "http://127.0.0.1/lostandfound/")  {?>
-							<div class="form-group align-center mb-35 mt-50" >
-							<p>
-								<input type="submit" id="capsubmit" class="button button-orange" value="<?=$this->language->Line("spot-registerbusiness-3300",'REGISTER ACCOUNT');?>" style="border: none" />
-							</p>
-							</div>
+								</div>
+								<?php }?>
+							<?php } else { ?>
+								<div class="form-group align-center mb-35 mt-50" >
+									<p>
+										<input type="submit" id="capsubmit" class="button button-orange" value="<?=$this->language->Line("spot-registerbusiness-3300",'REGISTER ACCOUNT');?>" style="border: none" />
+									</p>
+								</div>
 							<?php }?>
-							
 						</form>
 						<div class="row" style="text-align:center; padding:0px ">
 							<img src="<?php echo $this->baseUrl; ?>tiqsimg/tiqslogonew.png" alt="tiqs" width="125" height="45" />
