@@ -23,6 +23,7 @@ class Login extends BaseControllerWeb
 		$this->load->helper('perfex_helper');
 		$this->load->helper('curl_helper');
 		$this->load->helper('validate_data_helper');
+		$this->load->helper('country_helper');
 		$this->load->library('google');
 		$this->load->library('language', array('controller' => $this->router->class));
 		$this->load->library('form_validation');
@@ -615,7 +616,8 @@ class Login extends BaseControllerWeb
 			'roleId' => ROLE_MANAGER,
 			'istype' => 9,
 			'createdBy' => 0,
-			'businessTypes' => $this->businesstype_model->getAll()
+			'businessTypes' => $this->businesstype_model->getAll(),
+			'countries' => Country_helper::getCountries(),
 		];
 		$this->loadViews("registerbusiness", $this->global, $data, NULL, "headerpublic");
 	}
@@ -867,6 +869,11 @@ class Login extends BaseControllerWeb
 		}
 
 		if (!isset($this->user_model->id)) {
+			unset($hotel['password']);
+			unset($hotel['cpassword']);
+			foreach($hotel as $key => $value) {
+				set_cookie($key, $value, (60 * 60));
+			}
 			$this->session->set_flashdata('error', 'Process failed! Data given not valid');
 			redirect('/registerbusiness');
 		}

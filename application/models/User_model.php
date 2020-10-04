@@ -773,8 +773,9 @@ class User_model extends CI_Model
         $this->db->select('*');
         $this->db->from($this->table);
         $this->db->where($this->where);
-        $user = $this->db->get()->result_array()[0];
+        $user = $this->db->get()->result_array();
         if (!empty($user)) {
+            $user = reset($user);
             foreach ($user as $key => $value) {
                 $this->{$key} = $value;
             }

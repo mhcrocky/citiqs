@@ -20,7 +20,15 @@
 								</p>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="text" name="username" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("spot-registerbusiness-1300",'Hotel/(air)BnB/Event/Club-name/Bar');?>" />
+								<input
+									type="text"
+									name="username"
+									value="<?php echo get_cookie('username'); ?>"
+									required
+									class="form-control"
+									style="font-family:'caption-light'; border-radius: 50px;"
+									placeholder="<?=$this->language->Line("spot-registerbusiness-1300",'Hotel/(air)BnB/Event/Club-name/Bar');?>"
+								/>
 								<span class="glyphicon glyphicon-user form-control-feedback"></span>
 							</div>
 							<div>
@@ -33,7 +41,18 @@
 								</p>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="text" class="form-control" name="usershorturl"  required id="usershorturl" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("spot-registerbusiness-1700",'Your shortname');?>" name="usershorturl" pattern="[A-Za-z0-9]{1,20}" title="<?=$this->language->Line("spot-registerbusiness-1800",'Only characters allowed, no spaces, points or special characters like @#$% and max 20 length');?>" />
+								<input
+									type="text"
+									class="form-control"
+									name="usershorturl"
+									value="<?php echo get_cookie('usershorturl'); ?>"
+									required
+									id="usershorturl"
+									style="font-family:'caption-light'; border-radius: 50px;"
+									placeholder="<?=$this->language->Line("spot-registerbusiness-1700",'Your shortname');?>"
+									name="usershorturl"
+									pattern="[A-Za-z0-9]{1,20}" title="<?=$this->language->Line("spot-registerbusiness-1800",'Only characters allowed, no spaces, points or special characters like @#$% and max 20 length');?>"
+								/>
 								<span class="glyphicon glyphicon-user form-control-feedback"></span>
 							</div>
 							<div>
@@ -46,7 +65,12 @@
 								<select class="selectBox" name="business_type_id" style="font-family:'caption-light';" required>
 								<option value=""><?=$this->language->Line("spot-registerbusiness-A200101A","Select business type");?></option>
 								<?php foreach ($businessTypes as $type) { ?>
-								<option value="<?php echo $type['id'] ?>"><?php echo ucfirst($type['busineess_type']); ?></option>
+								<option
+									value="<?php echo $type['id'] ?>"
+									<?php if ($type['id'] === get_cookie('business_type_id')) echo 'selected'; ?>
+								>
+										<?php echo ucfirst($type['busineess_type']); ?>
+								</option>
 								<?php } ?>
 								</select>
 							</div>
@@ -56,7 +80,14 @@
 								</p>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="text" name="vat_number" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("spot-registerbusiness-20120","Business VAT number");?>" />
+								<input
+									type="text"
+									name="vat_number"
+									value="<?php echo get_cookie('vat_number'); ?>"
+									class="form-control"
+									style="font-family:'caption-light'; border-radius: 50px;"
+									placeholder="<?=$this->language->Line("spot-registerbusiness-20120","Business VAT number");?>"
+								/>
 								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 							</div>
 							<div>
@@ -67,7 +98,7 @@
 								</p>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="email" name="email" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("spot-registerbusiness-2000","email");?>" />
+								<input type="email" name="email" value="<?php echo get_cookie('email'); ?>" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("spot-registerbusiness-2000","email");?>" />
 								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 							</div>
 							<div>
@@ -79,7 +110,7 @@
 								</p>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="text" name="first_name" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?=$this->language->Line("spot-registerbusiness-A20011A","First name");?> />
+								<input type="text" name="first_name" value="<?php echo get_cookie('first_name'); ?>" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?=$this->language->Line("spot-registerbusiness-A20011A","First name");?> />
 								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 							</div>
 							<div>
@@ -91,7 +122,7 @@
 								</p>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="text" name="second_name" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?=$this->language->Line("spot-registerbusiness-A2001A","Last name");?> />
+								<input type="text" name="second_name" value="<?php echo get_cookie('second_name'); ?>" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?=$this->language->Line("spot-registerbusiness-A2001A","Last name");?> />
 								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 							</div>
 							<div>
@@ -102,7 +133,7 @@
 								</p>
 							</div>
 							<div class="form-group has-feedback">
-								<input name="mobile" type="tel" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("spot-registerbusiness-2200","Phone number");?>" required />
+								<input name="mobile" value="<?php echo get_cookie('mobile'); ?>" type="tel" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("spot-registerbusiness-2200","Phone number");?>" required />
 								<span class="glyphicon glyphicon-phone form-control-feedback"></span>
 							</div>
 							<div>
@@ -127,23 +158,37 @@
 								</p>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="text" name="address" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?=$this->language->Line("spot-registerbusiness-2800","Address");?> />
+								<input type="text" name="address" value="<?php echo get_cookie('address'); ?>" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?=$this->language->Line("spot-registerbusiness-2800","Address");?> />
 								<span class="glyphicon glyphicon-home form-control-feedback"></span>
 							</div>
 							<div class="form-group has-feedback">
-								<input name="addressa"  type="text" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("spot-registerbusiness-2900"," Additional address line ");?>" />
+								<input name="addressa"  type="text" value="<?php echo get_cookie('addressa'); ?>" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("spot-registerbusiness-2900"," Additional address line ");?>" />
 								<span class="glyphicon glyphicon-home form-control-feedback"></span>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="text" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?=$this->language->Line("spot-registerbusiness-3000","Zipcode");?> name="zipcode" required />
+								<input type="text" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?=$this->language->Line("spot-registerbusiness-3000","Zipcode");?> name="zipcode"  value="<?php echo get_cookie('zipcode'); ?>" required />
 								<span class="glyphicon glyphicon-home form-control-feedback"></span>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="text" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?=$this->language->Line("spot-registerbusiness-3100","City");?> name="city" required />
+								<input type="text" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?=$this->language->Line("spot-registerbusiness-3100","City");?> name="city" required  value="<?php echo get_cookie('city'); ?>" />
 								<span class="glyphicon glyphicon-home form-control-feedback"></span>
 							</div>
 							<div class="selectWrapper mb-35">
 								<select class="selectBox" name="country" style="font-family:'caption-light';" required>
+									<option value="">
+										<?=$this->language->Line("CountrySelect-A2001A","Select country");?>
+									</option>
+									<?php foreach ($countries as $countryCode => $country) { ?>
+										<option
+											value="<?php echo $countryCode; ?>"
+											<?php
+												$selected = get_cookie('country');
+												if ($selected && $selected === $countryCode) echo 'selected';
+											?>
+										>
+											<?php echo $country; ?>
+										</option>
+									<?php } ?>
 									<?php include_once FCPATH . 'application/views/includes/countrySelectOptions.php'; ?>
 								</select>
 							</div>
