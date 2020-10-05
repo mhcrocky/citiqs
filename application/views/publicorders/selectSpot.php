@@ -1,14 +1,17 @@
 <div class="main-wrapper-nh" style="text-align:center">
 	<div class="col-half background-apricot-blue height">
-		<div class="width-650"></div>
-				<div class="form-group has-feedback">
-					<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="350" height="" />
-				</div><!-- /.login-logo -->
-		<h1 style="text-align:center"><?php echo $vendor['vendorName'] ?></h1>
-		<div class="selectWrapper mb-35">
+		<div class="width-650" style="padding-top:0px"></div>
+		<div
+			class="form-group has-feedback"
+			style="padding: 0px"
+		>
+			<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="350" height="" />
+		</div><!-- /.login-logo -->
+		<h1 style="text-align:center; text-transform: uppercase; margin: 0px 7px; border-bottom: 4px solid;"><?php echo $vendor['vendorName'] ?></h1>
+		<div class="selectWrapper mb-35" style="padding-top:10px">
 			<?php if (!empty($spots)) { ?>
-				<div id="selectSpots">
-					<label for="spot">Service Point Or Table:</label>
+				<div id="selectSpots" style="margin-top:10px">
+					<label for="spot" style="text-align:center; text-transform: uppercase;">Service Point Or Table:</label>
 					<!-- <select class="selectBox selectSpot" id="spot" onchange="redirectTo(this.value)" class="form-control" style="color :black">
 						<option value="">Select spot</option>
 						<?php
@@ -81,7 +84,14 @@
 							</ul>
 						</form>
 						<?php if (empty($noSpots)) { ?>
-							<button type='submit' class='submit-type' onclick="redirectToSpot('checked')">Submit</button>
+							<button
+								type='submit'
+								class='submit-type'
+								onclick="redirectToSpot('checked')"
+								style="margin-top:30px;"
+							>
+								CONFIRM
+							</button>
 						<?php } ?>
 					</div>
 					<?php if ($vendor['requireReservation'] === '1' ) { ?>
@@ -94,13 +104,13 @@
 			<?php } ?>
 		</div>
 	</div>
-	<div class="col-half background-blue height-100">
+	<div class="col-half background-blue height-100" id="rightSide">
 		<div class="flex-column align-start">
 			</div>
 				<div style="text-align:center;">
 						<img src="<?php echo base_url(); ?>assets/home/images/alfredmenu.png" alt="tiqs" width="auto" height="110" />
 				</div>
-				<h1 style="text-align:center">MENU</h1>
+				<h1 style="text-align:center"><?php echo $vendor['vendorName'] ?></h1>
 				<div style="text-align:center; margin-top: 30px">
 					<p style="font-size: larger; margin-top: 50px; margin-left: 0px"><?=$this->language->line("HOMESTART-SPOT-X001111ABC",'BUILD BY TIQS');?></p>
 				</div>

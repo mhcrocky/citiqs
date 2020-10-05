@@ -514,7 +514,7 @@ countOrdered('countOrdered');
 
 $(document).ready(function(){
     $('.items-slider').slick({
-        arrows: false,
+        arrows: true,
         infinite: true,
         speed: 300,
         slidesToShow: 1,

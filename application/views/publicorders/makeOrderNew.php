@@ -4,7 +4,7 @@
             <?php
             if ($vendor['logo']) { ?>
                 <div style="text-align:center">
-                    <img src=<?php echo base_url() . 'assets/images/vendorLogos/' . $vendor['logo']; ?> alt="" width="300" height="auto" />
+                    <img src=<?php echo base_url() . 'assets/images/vendorLogos/' . $vendor['logo']; ?> alt="" width="100%" height="auto" />
                 </div>
             <?php }?>
             <?php
@@ -27,7 +27,9 @@
                         <?php if ($vendor['showMenu'] === '1') { ?>
                             <div class="shop__items">
                                 <div class="shop__item-list-heading" id="categoryNav">
-                                    <h2>MENU</h2>
+                                    <h2 style="text-align:center; text-transform: uppercase; margin-bottom:30px;">
+                                        <?php echo $vendor['vendorName'] ?>
+                                    </h2>
                                     <?php echo $categoryList; ?>
                                 </div>
                                 <!-- end item list -->
@@ -60,7 +62,8 @@
                                                             alt="<?php echo $productDetails['name']; ?>"
                                                         />
                                                     <?php } ?>
-                                                </div>                                                
+                                                </div>
+                                                                
                                                 <div class="shop__single-item__info">
                                                     <?php if ($productDetails['longDescription'] && $productDetails['longDescription'] !== 'NA') { ?>
                                                         <i
@@ -186,18 +189,18 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-md-6 text-center text-left-md">
-                            <div class="bottom-bar__summary">
+                            <div>
                                 <?php if ($vendor['requireReservation'] === '1' ) { ?>
                                     <a href="<?php echo base_url(); ?>check424/<?php echo $vendor['vendorId']; ?>" style="margin:0px 20px 0px 10px">
                                         <i style="font-size: 40px;color: white" class="fa fa-home"></i>
                                     </a>
                                 <?php } ?>
-                                <p>TOTAL: <span class='bottom-bar__total-price'>&euro;&nbsp;<span class="totalPrice">0</span></span> </p>
+                                <p class='button-main button-secondary bottom-bar__checkout'>TOTAL: <span class='bottom-bar__total-price'>&euro;&nbsp;<span class="totalPrice">0</span></span> </p>
                                 <!-- <button class='button-main button-secondary' onclick="focusCheckOutModal('modal__checkout__list')">Order List</button> -->
                             </div>
                         </div>
                         <div class="col-12 col-md-6 text-center text-right-md">
-                            <button class='button-main button-secondary bottom-bar__checkout' onclick="checkout()">CHECKOUT</button>
+                            <button class='button-main button-secondary bottom-bar__checkout' onclick="checkout()">PAY</button>
                         </div>
                     </div>
                 </div>

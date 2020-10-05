@@ -204,13 +204,14 @@
 }
 
 .slick-prev {
-    position: fixed;
-    top: 17%;
+    z-index: 1000;
+    position: absolute;
+    top: 63px;
     left: 5%;
 }
 .slick-next {
-    position: fixed;
-    top: 17%;
+    position: absolute;
+    top: 65px;
     left: 85%;
     
 }
