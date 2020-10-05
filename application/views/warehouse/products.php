@@ -144,11 +144,11 @@
                             <div class="col-lg-4 col-sm-12">
                                 <label>Only one (for main type): </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="product[onlyOne]" value="1" checked />
+                                    <input type="radio" name="product[onlyOne]" value="1" />
                                     &nbsp;&nbsp;Yes
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="product[onlyOne]" value="0" />
+                                    <input type="radio" name="product[onlyOne]" value="0" checked />
                                     &nbsp;&nbsp;No
                                 </label>
                             </div>
