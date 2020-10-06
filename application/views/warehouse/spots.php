@@ -70,7 +70,17 @@
                     <div class="col-lg-4 col-md-4 col-sm-12 search-container">
                         <button
                             class="btn button-security my-2 my-sm-0 button grid-button"
-                            onclick="toogleElementClass('add-spot', 'display')">Add spot</button>
+                            onclick="toogleElementClass('add-spot', 'display')">Add spot
+                        </button>
+                        <div class="col-lg-4 col-md-4 col-sm-12 grid-header-heading">
+                            <p>
+                                Legend:&nbsp;
+                                <?php foreach($colors as $type => $color) { ?>
+                                <?php echo $type; ?>&nbsp;&nbsp;<span style="display:inline-block; width:20px; height: 12px; background-color:<?php echo $color; ?>"></span>&nbsp;&nbsp;
+                                <?php } ?>
+                                not active&nbsp;&nbsp;<span style="display:inline-block; width:20px; height: 12px; background-color:<?php echo $notActiveColor; ?>"></span>&nbsp;&nbsp;
+                            </p>
+                        </div>
                     </div>
                 </div><!-- end grid header -->
                 <!-- SINGLE GIRD ITEM -->
@@ -79,7 +89,25 @@
                 <?php } else { ?>
                     <?php foreach ($spots as $spot) { ?>
 
-                        <div class="grid-item allSpots" id="spotElementId<?php echo $spot['spotId']; ?>" style="background-color:<?php echo $spot['spotActive'] === '1' ? '#72b19f' : '#f2622f'; ?>">
+                        <div
+                            class="grid-item allSpots"
+                            id="spotElementId<?php echo $spot['spotId']; ?>"
+                            <?php
+                                if ($spot['spotActive'] === '1') {
+                                    $spotTypedId = intval($spot['spotTypeId']);
+                                    if ($spotTypedId === $localTypeId) {
+                                        $backgroundColor = $colors['local'];
+                                    } elseif ($spotTypedId === $deliveryTypeId) {
+                                        $backgroundColor = $colors['delivery'];
+                                    } elseif ($spotTypedId === $pickupTypeId) {
+                                        $backgroundColor = $colors['pickup'];
+                                    }
+                                } else {
+                                    $backgroundColor = $notActiveColor;
+                                }
+                            ?>
+                            style="background-color:<?php echo $backgroundColor; ?>"
+                        >
                             <div class="item-header" style="width:100%">
                                 <p class="item-description" style="white-space: initial;">Name: <?php echo $spot['spotName']; ?></p>
                                 <!-- <p class="item-description">Spot ID: <?php #echo $spot['spotId']; ?></p> -->

@@ -140,6 +140,12 @@ $config['local'] = 1;
 $config['deliveryType'] = 2;
 $config['pickupType'] = 3;
 
+$config['typeColors'] = [
+    'local' => '#e25f2a',
+    'delivery' => '#72b19f',
+    'pickup' => '#008ae6',
+];
+
 //ALL ALFRED PAYMENT TYPES
 //cash payment types
 $config['prePaid'] = 'prePaid';
@@ -178,3 +184,5 @@ $config['allergies'] = [
     'molluscs',
     'sulphur dioxide'
 ];
+
+$config['notActiveColor'] = '#ff4d4d';

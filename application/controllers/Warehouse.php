@@ -458,10 +458,10 @@
         }
 
         /**
-        * Add allergies to product
-        *
-        * @return void
-        */
+         * Add allergies to product
+         *
+         * @return void
+         */
         public function addProductAllergies($productExId): void
         {
             $post = $this->input->post(null, true);
@@ -619,6 +619,11 @@
                                                 ]),
                 'spotTypes' =>$this->shopspottype_model->read(['*'], ['id>' => 0]),
                 'dayOfWeeks' => $this->config->item('weekDays'),
+                'colors' => $this->config->item('typeColors'),
+                'localTypeId' => $this->config->item('local'),
+                'deliveryTypeId' => $this->config->item('deliveryType'),
+                'pickupTypeId' => $this->config->item('pickupType'),
+                'notActiveColor' => $this->config->item('notActiveColor')
             ];
 
             $this->loadViews('warehouse/spots', $this->global, $data, null, 'headerWarehouse');
