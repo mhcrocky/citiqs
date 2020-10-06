@@ -246,6 +246,10 @@
             $data['termsAndConditions'] = isset($_SESSION['postOrder']['order']['termsAndConditions']) ? 'checked' : '';
             $data['privacyPolicy'] = isset($_SESSION['postOrder']['order']['privacyPolicy']) ? 'checked' : '';
 
+            $data['city'] = isset($_SESSION['postOrder']['user']['city']) ? $_SESSION['postOrder']['user']['city'] : get_cookie('city');
+            $data['zipcode'] = isset($_SESSION['postOrder']['user']['zipcode']) ? $_SESSION['postOrder']['user']['zipcode'] : get_cookie('zipcode');
+            $data['address'] = isset($_SESSION['postOrder']['user']['address']) ? $_SESSION['postOrder']['user']['address'] : get_cookie('address');
+
             $this->loadViews('publicorders/checkoutOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
 
@@ -294,11 +298,21 @@
                 $_SESSION['postOrder']['order']['waiterTip'] = 0;
             }
 
-            set_cookie('userName', $_SESSION['postOrder']['user']['username'], time() + (365 * 24 * 60 * 60));
-            set_cookie('email', $_SESSION['postOrder']['user']['email'], time() + (365 * 24 * 60 * 60));
+            set_cookie('userName', $_SESSION['postOrder']['user']['username'], (365 * 24 * 60 * 60));
+            set_cookie('email', $_SESSION['postOrder']['user']['email'], (365 * 24 * 60 * 60));
             if (!empty($_SESSION['postOrder']['user']['mobile'])) {
-                set_cookie('mobile', $_SESSION['postOrder']['user']['mobile'], time() + (365 * 24 * 60 * 60));
+                set_cookie('mobile', $_SESSION['postOrder']['user']['mobile'], (365 * 24 * 60 * 60));
             }
+            if (!empty($_SESSION['postOrder']['user']['city'])) {
+                set_cookie('city', $_SESSION['postOrder']['user']['city'], (365 * 24 * 60 * 60));
+            }
+            if (!empty($_SESSION['postOrder']['user']['zipcode'])) {
+                set_cookie('zipcode', $_SESSION['postOrder']['user']['zipcode'], (365 * 24 * 60 * 60));
+            }
+            if (!empty($_SESSION['postOrder']['user']['address'])) {
+                set_cookie('address', $_SESSION['postOrder']['user']['address'], (365 * 24 * 60 * 60));
+            }
+
             redirect('pay_order');
 
             redirect('pay_order');
@@ -446,30 +460,7 @@
             //fetch data from $_SESSION
             $post = $_SESSION['postOrder'];
 
-            // check pickup period and time for pickup and delivery
-            if (intval($_SESSION['spot']['spotTypeId']) !== $this->config->item('local')) {
-                if (empty($post['order']['date']) || empty($post['order']['time'])) {
-                    $this->session->set_flashdata('error', 'Order not made! Please select pickup period and time');
-                    redirect('checkout_order');
-                    exit();
-                }
-            }
-
-            if ($_SESSION['vendor']['termsAndConditions'] && $_SESSION['vendor']['showTermsAndPrivacy'] === '1' && (empty($post['order']['termsAndConditions']) || empty($post['order']['privacyPolicy']))) {
-                $this->session->set_flashdata('error', 'Order not made! Please confirm that you read terms and conditions and privacy policy');
-                    redirect('checkout_order');
-            }
-
-            // check mobile phone
-            if ($_SESSION['vendor']['requireMobile'] === '1') {
-                if (Validate_data_helper::validateMobileNumber($post['user']['mobile'])) {
-                    $post['user']['mobile'] = $post['phoneCountryCode'] . ltrim($post['user']['mobile'], '0');
-                } else {
-                    $this->session->set_flashdata('error', 'Order not made! Mobile phone is required. Please try again');
-                    redirect('checkout_order');
-                    exit();
-                }
-            }
+            $this->validateData($post);
 
             // insert buyer
             $this->user_model->manageAndSetBuyer($post['user']);
@@ -625,4 +616,41 @@
             }
         }
 
+        private function validateData(array &$post): void
+        {
+            // check pickup period and time for pickup and delivery
+            if (intval($_SESSION['spot']['spotTypeId']) !== $this->config->item('local')) {
+                if (empty($post['order']['date']) || empty($post['order']['time'])) {
+                    $this->session->set_flashdata('error', 'Order not made! Please select pickup period and time');
+                    redirect('checkout_order');
+                    exit();
+                }
+            }
+
+            // check city, zipcode and addressfor delivery
+            if (intval($_SESSION['spot']['spotTypeId']) === $this->config->item('deliveryType')) {
+                if (empty($post['user']['city']) || empty($post['user']['zipcode']) || empty($post['user']['address'])) {
+                    $this->session->set_flashdata('error', 'Order not made! Please insert delivery city, zipcode and address');
+                    redirect('checkout_order');
+                    exit();
+                }
+            }
+
+            if ($_SESSION['vendor']['termsAndConditions'] && $_SESSION['vendor']['showTermsAndPrivacy'] === '1' && (empty($post['order']['termsAndConditions']) || empty($post['order']['privacyPolicy']))) {
+                $this->session->set_flashdata('error', 'Order not made! Please confirm that you read terms and conditions and privacy policy');
+                    redirect('checkout_order');
+            }
+
+            // check mobile phone
+            if ($_SESSION['vendor']['requireMobile'] === '1') {
+                if (Validate_data_helper::validateMobileNumber($post['user']['mobile'])) {
+                    $post['user']['mobile'] = $post['phoneCountryCode'] . ltrim($post['user']['mobile'], '0');
+                } else {
+                    $this->session->set_flashdata('error', 'Order not made! Mobile phone is required. Please try again');
+                    redirect('checkout_order');
+                    exit();
+                }
+            }
+            return;
+        }
     }

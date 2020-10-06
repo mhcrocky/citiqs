@@ -230,7 +230,7 @@
                             tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
                         ' . $typeCondition . ' AND tbl_shop_categories.userId = ' . $userId . ' AND ' . $this->table . '.archived = "0"
                         GROUP BY ' . $this->table. '.productId
-                        ORDER BY ' . $this->table. '.productTypeId DESC
+                        ORDER BY ' . $this->table. '.updateCycle
                         
                     ) tblShopProductDetails',
                     'tblShopProductDetails.productTypeId = tbl_shop_products_types.id AND tblShopProductDetails.name = ' . $this->table . '.name',
@@ -262,6 +262,7 @@
                 
 
             $products = $this->readImproved($filter);
+            #var_dump($products);
 
             if (is_null($products)) return null;
 

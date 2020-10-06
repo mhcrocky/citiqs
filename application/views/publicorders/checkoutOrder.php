@@ -120,8 +120,47 @@
                     <?php
                         if (isset($workingTime)) {
                             ?>
+                            <?php if (intval($spot['spotTypeId']) === $this->config->item('deliveryType')) { ?>
+                                <div class="form-group col-sm-6">
+                                    <label for="city">City <sup>*</sup></label>
+                                    <input
+                                        type="teyt"
+                                        id="city"
+                                        class="form-control"
+                                        name="user[city]"
+                                        value="<?php echo $city; ?>"
+                                        placeholder="City"
+                                        required
+                                    />
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="zipcode">Zip code <sup>*</sup></label>
+                                    <input
+                                        type="text"
+                                        id="zipcode"
+                                        class="form-control"
+                                        name="user[zipcode]"
+                                        value="<?php echo $zipcode; ?>"
+                                        placeholder="Zip code"
+                                        required
+                                    />
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="address">Address <sup>*</sup></label>
+                                    <input
+                                        type="text"
+                                        id="address"
+                                        class="form-control"
+                                        name="user[address]"
+                                        value="<?php echo $address; ?>"
+                                        placeholder="Delivery address"
+                                        required
+                                        oninput="checkUserNewsLetter(this.id)"
+                                    />
+                                </div>                            
+                            <?php } ?>
                             <div class="form-group col-sm-6">
-                                <label for="typeTime">Select <?php echo $spotType ?> period <sup>*</sup></label>
+                                <label for="typeTime" >Select <?php echo lcfirst($spot['spotType']); ?> period <sup>*</sup></label>
                                 <div>
                                     <select
                                         name="order[date]"
@@ -163,9 +202,11 @@
                                 </div>
                             </div>
                             <div class="form-group col-sm-12" id="orderTimeDiv" style="display:none">
-                                <label for="orderTime">Select  <?php echo $spotType ?> time (<sup>*</sup>)</label>
+                                <label for="orderTime">Select  <?php echo lcfirst($spot['spotType']); ?> time (<sup>*</sup>)</label>
                                 <input type="text" id="orderTimeInput" class="form-control timepicker" name="order[time]" />
                             </div>
+
+
                         <?php
                         }
                     ?>

@@ -860,9 +860,13 @@ class User_model extends CI_Model
 
     private function getGeoCoordinates(array &$user): void
     {
-        if (!isset($user['lat']) || !isset($user['lng'])) {
-            $this->load->helper('google_helper');
-            $geoCoordinates = (Google_helper::getLatLong($user['address'], $user['zipcode'], $user['city'], $user['country']));
+        if (
+            !isset($user['lat']) || !isset($user['lng'])
+            && (isset($user['address']) && isset($user['zipcode']) && isset($user['city']))
+        ) {
+            $this->load->helper('google_helper');            
+            $country = isset($user['country']) ? $user['country'] : '';
+            $geoCoordinates = (Google_helper::getLatLong($user['address'], $user['zipcode'], $user['city'], $country));
             $user['lat'] = $geoCoordinates['lat'];
             $user['lng'] = $geoCoordinates['long'];
             $user['gmtOffSet'] = Google_helper::getGmtOffset($geoCoordinates);
@@ -883,11 +887,13 @@ class User_model extends CI_Model
             $buyer['password'] = getHashedPassword($password);
             $buyer['code'] = Utility_helper::shuffleString(5);
             $buyer['createdDtm'] = date('Y-m-d H:i:s');
+            $this->getGeoCoordinates($buyer);
             $this->insertUser($buyer);
 
             // must return non hashed password for activation link
             $this->password = $password;
         } else {
+            // new data to prevent update of some buyer data (roleId for example)
             $newData = [
                 'username' => $buyer['username'],
                 'email' => $buyer['email'],
@@ -897,6 +903,12 @@ class User_model extends CI_Model
             }
             if (!empty($buyer['newsletter'])) {
                 $newData['newsletter'] = $buyer['newsletter'];
+            }
+            if (isset($buyer['address']) && isset($buyer['zipcode']) && isset($buyer['city'])) {
+                $newData['address'] = $buyer['address'];
+                $newData['zipcode'] = $buyer['zipcode'];
+                $newData['city'] = $buyer['city'];
+                $this->getGeoCoordinates($newData);
             }
             $this->editUser($newData, $this->id);
         }
