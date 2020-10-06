@@ -810,9 +810,11 @@ class User_model extends CI_Model
             $this->setUniqueValue($user['email'])->setWhereCondtition()->setUser();
             // must return non hashed password for activation link
             $this->password = $password;
+            $this->created = true;
 
         } else {
             // update user - maybe it was register as finder and now is claimer or user insert new mobile
+            $this->updated = true;
             $this->setUniqueValue($user['email'])->setWhereCondtition()->updateUser($user)->setUser();
         }
         return $this;
@@ -860,10 +862,7 @@ class User_model extends CI_Model
 
     private function getGeoCoordinates(array &$user): void
     {
-        if (
-            !isset($user['lat']) || !isset($user['lng'])
-            && (isset($user['address']) && isset($user['zipcode']) && isset($user['city']))
-        ) {
+        if ( (!isset($user['lat']) || !isset($user['lng'])) && (isset($user['address']) && isset($user['zipcode']) && isset($user['city'])) ) {
             $this->load->helper('google_helper');            
             $country = isset($user['country']) ? $user['country'] : '';
             $geoCoordinates = (Google_helper::getLatLong($user['address'], $user['zipcode'], $user['city'], $country));
@@ -926,4 +925,14 @@ class User_model extends CI_Model
         return verifyHashedPassword($userPassword, $password);
     }
 
+    public function checkOneSignalId($oneSignalId) : bool
+    {
+        $this->db->select('id');
+        $this->db->from('tbl_user');
+        $this->db->where('tbl_user.oneSignalId', $oneSignalId);
+        $result = $this->db->get();
+        $result = $result->row();
+
+        return $result ? true : false;
+    }
 }
