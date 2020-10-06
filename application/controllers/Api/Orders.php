@@ -163,6 +163,16 @@
             // $draw->annotation(0, 30, "ORDER: " . $order['orderId']);
             // $draw->annotation(0, 70, "NAAM: " . $order['buyerUserName']);
 
+			$draw->setStrokeWidth(4);
+			$draw->setFontSize(28);
+			$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+
+			$drawemail->setStrokeWidth(2);
+			$drawemail->setFontSize(28);
+			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+
+//			$draw->annotation(0, 30, "SPOT: ". $result->spot_id . " EMAIL: " . $email . ' PHONE: ' . $phone);
+			$draw->annotation(0, 3, "GEEN BTW BON");
 
 			$draw->setStrokeWidth(2);
 			$draw->setFontSize(28);
@@ -199,14 +209,24 @@
             // $imagetext->annotateImage($draw, 485, 105, 0, "%");
             // $imagetext->annotateImage($draw, 505, 105, 0, "TOTAAL");
 
-			$drawemail->setFontSize(18);
+			//			$drawemail->setFontSize(22);
+			//			$drawemail->setStrokeWidth(2);
+			//			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+			//			$imagetextemail->annotateImage($drawemail, 0, 105, 0, "ANT");
+			//			$imagetextemail->annotateImage($drawemail, 40, 105, 0, "OMSCHRIJVING");
+			//			$imagetextemail->annotateImage($drawemail, 395, 105, 0, "PRIJS");
+			//			$imagetextemail->annotateImage($drawemail, 485, 105, 0, "%");
+			//			$imagetextemail->annotateImage($drawemail, 505, 105, 0, "TOTAAL");
+
+
+			$drawemail->setFontSize(22);
 			$drawemail->setStrokeWidth(2);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-			$imagetextemail->annotateImage($drawemail, 0, 105, 0, "ANT");
-			$imagetextemail->annotateImage($drawemail, 40, 105, 0, "OMSCHRIJVING");
-			$imagetextemail->annotateImage($drawemail, 395, 105, 0, "PRIJS");
-			$imagetextemail->annotateImage($drawemail, 485, 105, 0, "%");
-			$imagetextemail->annotateImage($drawemail, 505, 105, 0, "TOTAAL");
+			$imagetextemail->annotateImage($drawemail, 0, 135, 0, "ANT");
+			$imagetextemail->annotateImage($drawemail, 48, 135, 0, "OMSCHRIJVING");
+			$imagetextemail->annotateImage($drawemail, 380, 135, 0, "PRIJS");
+			$imagetextemail->annotateImage($drawemail, 475, 135, 0, "%");
+			$imagetextemail->annotateImage($drawemail, 495, 135, 0, "TOTAAL");
 
 			$draw->setStrokeColor('black');
             $draw->setStrokeWidth(5);
@@ -283,7 +303,7 @@
                 // $draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
                 // $draw->annotation(570, 165 + ($i * 30), "€ ". $Stotalamount);
 
-				$drawemail->setFontSize(18);
+				$drawemail->setFontSize(22);
 				$drawemail->setStrokeWidth(1);
 				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 
@@ -337,7 +357,7 @@
 
 
 			$i++;
-            //			$draw->setFontSize(18);
+            //			$draw->setFontSize(22);
             //			$draw->setStrokeWidth(2);
             //			$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
             //			$imagetext->annotateImage($draw, 395, 165 + ($i * 30), 0, "TOTAAL");
@@ -345,7 +365,7 @@
             //			$draw->annotation(570, 165 + ($i * 30), "€ ". $TStotalamount);
 
 
-			$drawemail->setFontSize(18);
+			$drawemail->setFontSize(22);
 			$drawemail->setStrokeWidth(1);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 			$imagetextemail->annotateImage($drawemail, 395, 165 + ($i * 30), 0, "TOTAAL");
@@ -373,15 +393,15 @@
             //			$imagetext->annotateImage($draw, 440, 165 + ($i * 30), 0, "BTW 21 % ");
             //			$draw->annotation(570, 165 + ($i * 30), "€ ". $T21Stotalamount);
 
-			$drawemail->setFontSize(18);
+			$drawemail->setFontSize(22);
 			$drawemail->setStrokeWidth(1);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 
-            //			$imagetextemail->setFontSize(18);
+            //			$imagetextemail->setFontSize(22);
             //			$drawemail->setStrokeWidth(2);
             //			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 			//
-			$drawemail->setFontSize(18);
+			$drawemail->setFontSize(22);
 			$drawemail->setStrokeWidth(1);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
 
@@ -392,7 +412,7 @@
             //			$imagetext->annotateImage($draw, 440, 165 + ($i * 30), 0, "BTW 9 % ");
             //			$draw->annotation(570, 165 + ($i * 30), "€ ". $T9Stotalamount);
 
-			$drawemail->setFontSize(18);
+			$drawemail->setFontSize(22);
 			$drawemail->setStrokeWidth(1);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
 
@@ -417,7 +437,7 @@
 			$drawemail->setStrokeWidth(1);
 
 
-			$drawemail->setFontSize(18);
+			$drawemail->setFontSize(22);
 			$drawemail->setStrokeWidth(1);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
 
@@ -584,8 +604,6 @@
 
         public function data_post()
         {
-
-
             $file = FCPATH . 'application/tiqs_logs/messages.txt';
             Utility_helper::logMessage($file, 'printer send post request');
             // Check is valid POST request type
