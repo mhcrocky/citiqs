@@ -28,6 +28,7 @@ function showOrderProducts(data) {
     }
 
     list += '<a ';
+    list +=     'style="color:#000" ';
     list +=     'href="#" ';
     list +=     'data-toggle="popover" ';
     list +=     'data-placement="right" ';
@@ -208,11 +209,11 @@ function populateTable(data) {
                 {
                     "targets": 15,
                     "data": function (row, type, val, meta) {
-                        if (row[15] === '1') {
+                        if (row[15] === orderGlobals.localTypeId) {
                             return 'Local';
-                        } else if  (row[15] === '2') {
+                        } else if  (row[15] === orderGlobals.deliveryTypeId) {
                             return 'Delivery';
-                        } else if  (row[15] === '3') {
+                        } else if  (row[15] === orderGlobals.pickupTypeId) {
                             return 'Pickup';
                         }
                     },
@@ -244,14 +245,19 @@ function populateTable(data) {
                 $('.popover-dismiss').popover({
                     trigger: 'focus'
                 });
+            },
+            rowCallback: function(row, data) {
+                let typeBackgroundColor;
+                if (data[15] === orderGlobals.localTypeId) {
+                    typeBackgroundColor = orderGlobals.typeColors['local'];
+                } else if (data[15] === orderGlobals.deliveryTypeId) {
+                    typeBackgroundColor = orderGlobals.typeColors['delivery'];
+                } else if (data[15] === orderGlobals.pickupTypeId) {
+                    typeBackgroundColor = orderGlobals.typeColors['pickup'];
+                }
+                row.style.backgroundColor = typeBackgroundColor;
+                row.children[0].style.backgroundColor = typeBackgroundColor;
             }
-            // rowCallback: function(row, data) {
-            //     let selectedStatus = document.getElementById('orderStatus').value;
-            //     if (selectedStatus && selectedStatus !== data[4]) {
-            //         console.dir(data[4]);
-            //         row.style.display = 'none';
-            //     }
-            // }
         });
     });
 }

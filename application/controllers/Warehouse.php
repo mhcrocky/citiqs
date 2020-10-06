@@ -505,7 +505,11 @@
                                         ]
                                     ]),
                 'ordersStatuses'  => $this->config->item('orderStatuses'),
-                'vendorData' => $this->shopvendor_model->setProperty('vendorId', $userId)->getProperties(['id', 'requireRemarks', 'busyTime', 'minBusyTime', 'maxBusyTime'])
+                'vendorData' => $this->shopvendor_model->setProperty('vendorId', $userId)->getProperties(['id', 'requireRemarks', 'busyTime', 'minBusyTime', 'maxBusyTime']),
+                'typeColors' => $this->config->item('typeColors'),
+                'localTypeId' => $this->config->item('local'),
+                'deliveryTypeId' => $this->config->item('deliveryType'),
+                'pickupTypeId' => $this->config->item('pickupType'),
             ];
 
             $this->loadViews('warehouse/orders', $this->global, $data, null, 'headerWarehouse');

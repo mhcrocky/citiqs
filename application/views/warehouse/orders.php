@@ -62,6 +62,14 @@
     <div style="margin:20px 0px 20px 10px">
         <button type="button" class="btn btn-primary" onclick="destroyAndFetch()">Reload page</button>
     </div>
+    <div class="col-sm-12 grid-header-heading">
+        <p>
+            Legend:&nbsp;
+            <?php foreach($typeColors as $type => $color) { ?>
+                <?php echo $type; ?>&nbsp;&nbsp;<span style="display:inline-block; width:20px; height: 12px; background-color:<?php echo $color; ?>"></span>&nbsp;&nbsp;
+            <?php } ?>
+        </p>
+    </div>
     <div class="table-responsive col-sm-12" style="margin-top:20px">
         <table id="ordersList" class="display table table-hover table-striped" style="width:100%">
             <thead>
@@ -118,6 +126,10 @@
             'tableId' : 'orders',
             'vendorName' : '<?php echo $vendor; ?>',
             'getRemarks' : getRemarks,
+            'typeColors' :  JSON.parse('<?php echo json_encode($typeColors) ?>'),
+            'localTypeId' : '<?php echo $localTypeId; ?>',
+            'deliveryTypeId' : '<?php echo $deliveryTypeId; ?>',
+            'pickupTypeId' : '<?php echo $pickupTypeId; ?>',
         }
         Object.freeze(globals);
         return globals;

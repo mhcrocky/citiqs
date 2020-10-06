@@ -533,9 +533,7 @@ $(document).ready(function(){
     });
 
     resetTotal();
-    console.dir(makeOrderGlobals); 
     if (makeOrderGlobals.categorySlide) {
-        console.dir(makeOrderGlobals.categorySlide);
         goToSlide(parseInt(makeOrderGlobals.categorySlide));
     }
 });
