@@ -274,6 +274,8 @@ $route['updateOrderEx']         = 'Api/Orders/updateTwoToZero';
 
 $route['api/voucher']  = 'Api/Voucher/data';
 
+$route['api/onesignal/data']  = 'Api/OneSignal/data';
+
 
 // ALFRED PAYMENT ENGINE
 $route['paymentengine/(:num)/(:any)'] = 'Alfredpayment/paymentEngine/$1/$2';

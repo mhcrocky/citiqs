@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require APPPATH . 'libraries/REST_Controller.php';
 
-class Orderscopy extends REST_Controller
+class Orderscopybig extends REST_Controller
 {
 
 	function __construct()

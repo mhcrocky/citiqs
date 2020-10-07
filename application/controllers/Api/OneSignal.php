@@ -20,14 +20,28 @@
 
         }
 
-        public function data_post()
-        {
-            $header = getallheaders();
-            $key = $header['x-api-key'];
+		public function index_get()
+		{
+			$data = "No function called like this";
+			$this->response($data, REST_Controller::HTTP_OK);
+		}
+
+		public function index_post()
+		{
+			$data = "No function called like this";
+			$this->response($data, REST_Controller::HTTP_OK);
+		}
+
+		public function data_post(): void
+		{
+			$header = getallheaders();
+			$key = $header['X-Api-Key'];
 
             if ($this->api_model->userAuthentication($key)) {
                 $user = $this->input->post(null, true);
 
+//				var_dump($user['email']);
+//				die();
 
                 //CHECK ONE SIGNAL ID
                 if ($this->user_model->checkOneSignalId($user['oneSignalId'])) {
@@ -38,12 +52,15 @@
                     return;
                 };
 
+				//	$user['email']=set in POST.
+
                 // INSERT USER
                 $user['roleId'] = $this->config->item('buyer');
                 $user['salesagent'] = $this->config->item('defaultSalesAgentId');
                 $user['usershorturl'] = 'api one signal';
 
                 $this->user_model->manageAndSetUser($user);
+
                 if ($this->user_model->id) {
                     $message = isset($this->user_model->created) ? 'User created' : 'User updated';
                     echo json_encode([

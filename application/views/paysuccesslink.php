@@ -1,75 +1,75 @@
 <html>
-<head>
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/hotel-page.css">
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/timeline-page.css">
+<!--<head>-->
+<!--	<link rel="stylesheet" href="--><?php //echo base_url(); ?><!--assets/home/styles/hotel-page.css">-->
+<!--	<link rel="stylesheet" href="--><?php //echo base_url(); ?><!--assets/home/styles/timeline-page.css">-->
+<!---->
+<!--	<style>-->
+<!---->
+<!--		.width-650{-->
+<!--			margin: 0 auto;-->
+<!--		}-->
+<!---->
+<!--		.manual-content .heading{-->
+<!--			text-align: center;-->
+<!--			color: #fff;-->
+<!--		}-->
+<!---->
+<!--		.faq-page{-->
+<!--			display: flex;-->
+<!--			flex-direction: column;-->
+<!--		}-->
+<!---->
+<!--		.faq-page{-->
+<!--			margin: 0 auto;-->
+<!--		}-->
+<!---->
+<!--		.faq-login{-->
+<!--			flex-grow:1;-->
+<!--		}-->
+<!---->
+<!--		.panel {-->
+<!--			padding: 0 18px;-->
+<!--			background-color: transparent !important;-->
+<!--			color: #fff !important;-->
+<!--			border:   1px solid transparent !important;-->
+<!--			box-shadow: none !Important;-->
+<!--		}-->
+<!---->
+<!--		/*.panel p{*/-->
+<!--		/*	margin: 18px 0;*/-->
+<!--		/*	font-family: 'caption-light', sans-serif;*/-->
+<!--		/*}*/-->
+<!---->
+<!--		.svg-overflow svg{-->
+<!--			overflow: visible;-->
+<!--		}-->
+<!---->
+<!--		.background-yankee .active, .background-yankee .accordion:hover {-->
+<!--			background-color: #18386663;-->
+<!--		}-->
+<!---->
+<!--		.background-green .active, .background-green .accordion:hover {-->
+<!--			background-color: #66a694;-->
+<!--		}-->
+<!---->
+<!---->
+<!--	</style>-->
+<!---->
+<!--</head>-->
 
-	<style>
-
-		.width-650{
-			margin: 0 auto;
-		}
-
-		.manual-content .heading{
-			text-align: center;
-			color: #fff;
-		}
-
-		.faq-page{
-			display: flex;
-			flex-direction: column;
-		}
-
-		.faq-page{
-			margin: 0 auto;
-		}
-
-		.faq-login{
-			flex-grow:1;
-		}
-
-		.panel {
-			padding: 0 18px;
-			background-color: transparent !important;
-			color: #fff !important;
-			border:   1px solid transparent !important;
-			box-shadow: none !Important;
-		}
-
-		/*.panel p{*/
-		/*	margin: 18px 0;*/
-		/*	font-family: 'caption-light', sans-serif;*/
-		/*}*/
-
-		.svg-overflow svg{
-			overflow: visible;
-		}
-
-		.background-yankee .active, .background-yankee .accordion:hover {
-			background-color: #18386663;
-		}
-
-		.background-green .active, .background-green .accordion:hover {
-			background-color: #66a694;
-		}
-
-
-	</style>
-
-</head>
-
-<script>
-
-	function capenable() {
-		document.getElementById("capsubmit").style.display = "block";
-	}
-
-	function capdisable() {
-		document.getElementById("capsubmit").style.display = "none";
-	}
-
-
-</script>
-<script src='https://www.google.com/recaptcha/api.js' async defer ></script>
+<!--<script>-->
+<!---->
+<!--	function capenable() {-->
+<!--		document.getElementById("capsubmit").style.display = "block";-->
+<!--	}-->
+<!---->
+<!--	function capdisable() {-->
+<!--		document.getElementById("capsubmit").style.display = "none";-->
+<!--	}-->
+<!---->
+<!---->
+<!--</script>-->
+<!--<script src='https://www.google.com/recaptcha/api.js' async defer ></script>-->
 
 </head>
 
@@ -112,10 +112,23 @@
 <div class="main-wrapper">
 	<div class="col-half background-green height-100">
 		<div class="flex-column align-start">
-			<div align="left">
-				<h2 class="heading mb-35">
-					BEDANKT VOOR DE ORDER, SCAN OPNIEUW OM DE VOLGENDE ORDER TE PLAATSEN.
+			<div align="center">
+				<h4 >
+					YOUR ORDER WAS
+				</h4>
+				<h2 >
+					SUCCESSFUL
 				</h2>
+				<h5 >
+					PLEASE BE PATIENT,
+				</h5>
+				<h5 >
+					WE ARE WORKING ON IT!,
+				</h5>
+				<h5 >
+					SCAN THE QR CODE FOR A NEW ORDER
+				</h5>
+
 			</div>
 
 			<div class="mt-50" align="center" >
@@ -132,9 +145,9 @@
 		<div class="timeline-block background-blue">
 			<div class="timeline-text">
 				<div class="timeline-heading">
-					<h2 style="font-weight:bold; font-family: caption-bold">VRAGEN?</h2>
+					<h2 style="font-weight:bold; font-family: caption-bold">QUESTIONS?</h2>
 				</div>
-				<p class="text-content-light" style="font-size: larger">JE KAN MET ONS CONTACT OPNEMEN ALS JE VRAGEN HEBT OVER DEZE ORDER. </p>
+				<p class="text-content-light" style="font-size: larger">CONTACT. </p>
 				<!--<span class="cd-date">Feb 18</span>-->
 				<div class="flex-column align-space">
 					<p class="text-content-light" style="font-size: larger">SEND E-MAIL TO SUPPORT@TIQS.COM</p>
