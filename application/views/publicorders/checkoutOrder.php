@@ -25,7 +25,7 @@
                         <input name="user[username]" value="<?php echo 'no name ' . date('Y-m-d H:i:s'); ?>" type="text" readonly hidden required />
                     <?php } ?>
                     <?php
-                        if ($vendor['requireEmail'] === '1') {
+                        if ($vendor['requireEmail'] === '1' || intval($spot['spotTypeId']) !== $local) {
                             ?>
                             <div class="form-group col-sm-6">
                                 <label for="emailAddressInput">Email address <sup>*</sup></label>
@@ -66,7 +66,7 @@
                             <?php #} ?>
                         </select>
                     </div> -->
-                    <?php if ($vendor['requireMobile'] === '1') { ?>
+                    <?php if ($vendor['requireMobile'] === '1' || intval($spot['spotTypeId']) !== $local ) { ?>
                         <div class="form-group col-sm-6">
                             <label for="phoneInput">Phone <sup>*</sup></label>
                             <div>

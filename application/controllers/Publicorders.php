@@ -17,7 +17,7 @@
             $this->load->helper('utility_helper');
             $this->load->helper('country_helper');
             $this->load->helper('date');
-            
+
 
             $this->load->model('user_subscription_model');
             $this->load->model('shopcategory_model');
@@ -47,9 +47,6 @@
             // FETCH VENDOR DATA AND
             $vendor = $this->shopvendor_model->setProperty('vendorId', $get['vendorid'])->getVendorData();
 
-            // CHECK VENDOR CREDENTIALS
-            $this->checkVendorCredentials($vendor);
-
             // SAVE VENODR DATA IN SESSION
             $_SESSION['vendor'] = $vendor;
 
@@ -73,7 +70,7 @@
                     redirect($redirect);
                 }
             }
-            
+
             // SELECT VENDOR SPOT VIEW
             $this->loadVendorView($typeId);
             return;
@@ -82,6 +79,7 @@
 
         private function loadSpotView(array $spot): void
         {
+            $this->checkVendorCredentials($_SESSION['vendor'], $spot['spotTypeId']);
             $this->global['pageTitle'] = 'TIQS : ORDERING';
             //CHECK IS SPOT OPEN ONLY LOCAL TYPE
             if (
@@ -103,6 +101,8 @@
                 'day' => date('D', $time),
                 'hours' => strtotime(date('H:i:s', $time)),
                 'vendor' => $_SESSION['vendor'],
+                'spotTypeId'  => $spot['spotTypeId'],
+                'localTypeId' => $this->config->item('local'),
             ];
 
             if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
@@ -182,10 +182,13 @@
                     'tbl_shop_spots.active' => '1',
                 ];
                 $where['tbl_shop_spots.spotTypeId'] = $typeId ? $typeId : $types[1][0]['typeId'];
+                $this->checkVendorCredentials($_SESSION['vendor'], $where['tbl_shop_spots.spotTypeId']);
                 $data = [
                     'vendor' => $_SESSION['vendor'],
                     'spots' => $this->shopspot_model->fetchUserSpotsImporved($where),
                     'local' => $this->config->item('local'),
+                    'typeId' => $where['tbl_shop_spots.spotTypeId']
+
                 ];
                 $this->loadViews('publicorders/selectSpot', $this->global, $data, null, 'headerWarehousePublic');
             } else {
@@ -235,6 +238,7 @@
                 'spot' => $_SESSION['spot'],
                 'oldMakeOrderView' => $this->config->item('oldMakeOrderView'),
                 'newMakeOrderView' => $this->config->item('newMakeOrderView'),
+                'local' => $this->config->item('local'),
             ];
             $this->setDelayTime($data);
 
@@ -391,12 +395,14 @@
             redirect($successRedirect);
         }
 
-        private function checkVendorCredentials(array $vendor): void
+        private function checkVendorCredentials(array $vendor, string $typeId = ''): void
         {
             if (empty($vendor['payNlServiceId'])) {
                 redirect(base_url());
                 exit();
             }
+
+            if (!$typeId || intval($typeId) !== $this->config->item('local')) return;
 
             if (!$this->shopvendortime_model->setProperty('vendorId', $vendor['vendorId'])->isOpen()) {
                 redirect('closed/' . $vendor['vendorId']);

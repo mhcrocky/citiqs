@@ -190,7 +190,11 @@
                     <div class="row">
                         <div class="col-12 col-md-6 text-center text-left-md">
                             <div>
-                                <?php if ($vendor['requireReservation'] === '1' ) { ?>
+                                <?php if (
+                                        $vendor['requireReservation'] === '1'
+                                        && !empty($_SESSION['visitorReservationId'])
+                                        && intval($spotTypeId) === $localTypeId
+                                    ) { ?>
                                     <a href="<?php echo base_url(); ?>check424/<?php echo $vendor['vendorId']; ?>" style="margin:0px 20px 0px 10px">
                                         <i style="font-size: 40px;color: white" class="fa fa-home"></i>
                                     </a>

@@ -53,7 +53,7 @@
 					<?php } ?>
 				</div>
 
-				<?php if ($vendor['requireReservation'] === '1' ) { ?>
+				<?php if ($vendor['requireReservation'] === '1' && !empty($_SESSION['visitorReservationId'])) { ?>
 					<div><br/></div>
 					<a href="<?php echo base_url(); ?>check424/<?php echo $vendor['vendorId']; ?>">Checkout</a>
 				<?php } ?>
