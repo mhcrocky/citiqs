@@ -61,8 +61,6 @@
 
                 $this->user_model->manageAndSetUser($user);
 
-
-
                 if ($this->user_model->id) {
                     $message = isset($this->user_model->created) ? 'User created' : 'User updated';
                     echo json_encode([
