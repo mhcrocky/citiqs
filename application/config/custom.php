@@ -100,14 +100,21 @@ $config['orderSeen'] = 'seen';
 $config['orderInProcess'] = 'in process';
 $config['orderDone'] = 'done';
 $config['orderFinished'] = 'finished';
+$config['orderRejected'] = 'rejected';
 
 $config['orderStatuses'] = [
     $config['orderNotSeen'],
     $config['orderSeen'],
     $config['orderInProcess'],
     $config['orderDone'],
-    $config['orderFinished']
+    $config['orderFinished'],
+    $config['orderRejected']
 ];
+
+// ORDED STAUSES
+$config['orderConfirmWaiting'] = '0'; // NO ACTION DONE
+$config['orderConfirmTrue'] = '1'; // CONFIREMD
+$config['orderConfirmFalse'] = '2'; // REJECTED
 
 $config['orderNotPaid'] = '0';
 $config['orderPaid'] = '1';
@@ -186,3 +193,5 @@ $config['allergies'] = [
 ];
 
 $config['notActiveColor'] = '#ff4d4d';
+
+$config['defaultSalesAgentId'] = '1';
