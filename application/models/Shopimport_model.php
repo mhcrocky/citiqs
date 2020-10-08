@@ -101,11 +101,11 @@
         public function import(): bool
         {
 
-            // if ($this->isImported()) {
-            //     die('Vendor data already imported');
-            // };
+            if ($this->isImported()) {
+                die('Vendor data already imported');
+            };
 
-            // $this->setObjectFromArray(['vendorId' => $this->vendorId, 'imported' => '1'])->create();
+            $this->setObjectFromArray(['vendorId' => $this->vendorId, 'imported' => '1'])->create();
 
             if (!$this->vendor || !$this->mainProductTypeId || !$this->categoryId || !$this->printerId || !$this->spotId ) {
                 die('Required values are not set!');
@@ -154,6 +154,7 @@
                     'printStatus'   => '1',
                     'spotId'        => $this->spotId,
                     'transactionId' => $shopOrder['orderTransactionId'],
+                    'old_order'     => $shopOrder['orderNumber'],
                 ];
 
                 $this->load->model('shoporder_model');

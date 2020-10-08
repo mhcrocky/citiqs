@@ -33,6 +33,7 @@
         public $voucherId;
         public $waiterTip;
         public $confirm;
+        public $old_order;
 
         private $table = 'tbl_shop_orders';
 
@@ -94,6 +95,7 @@
             if (isset($data['voucherId']) && !Validate_data_helper::validateInteger($data['voucherId'])) return false;
             if (isset($data['waiterTip']) && !Validate_data_helper::validateFloat($data['waiterTip'])) return false;
             if (isset($data['confirm']) && !($data['confirm'] === '0' || $data['confirm'] === '1' || $data['confirm'] === '2')) return false;
+            if (isset($data['old_order']) && !Validate_data_helper::validateInteger($data['old_order'])) return false;
 
             return true;
         }
