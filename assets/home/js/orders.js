@@ -72,7 +72,6 @@ function showPhoneNumber(data) {
     let phoneNumber = ''
     phoneNumber += '<input type="text" ';
     phoneNumber += 'value="' + number + '" ';
-    phoneNumber += 'id="' + data[10] + '" ';
     phoneNumber += 'data-user-id="' + data[10] + '" ';
     phoneNumber += 'onchange="updatePhoneNumber(this)" ';
     phoneNumber += 'required />';
@@ -110,9 +109,9 @@ function sendSmsButton(data) {
 
 function sendSms(element) {
     let url = globalVariables.ajax + 'sendSms/' + element.dataset.orderId;
-    // let mobile = document.querySelectorAll('[data-user-id="' + element.dataset.mobile + '"]')[0].value;
+    let mobile = document.querySelectorAll('[data-user-id="' + element.dataset.mobile + '"]')[0].value;
     let post = {
-        mobilenumber: document.getElementById(element.dataset.mobile).value,
+        mobilenumber: mobile,
         messagetext: element.dataset.message
     }
     let smsCounterId = 'smsCounter' + element.dataset.orderId;
@@ -281,9 +280,9 @@ function destroyAndFetch() {
 function changeElementInnerHtml(elementId, newContent) {
     let smsButton = document.getElementById(elementId);
     smsButton.innerHTML = newContent;
-    if (smsButton.dataset.status !== 'finished') {
-        smsButton.parentElement.parentElement.parentElement.remove();
-    }
+    // if (smsButton.dataset.status !== 'finished') {
+    //     smsButton.parentElement.parentElement.parentElement.remove();
+    // }
 }
 
 function confrimOrderButton(data) {
