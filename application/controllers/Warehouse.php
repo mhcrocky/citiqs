@@ -175,7 +175,7 @@
             if (!empty($_POST)) {
                 $post = $this->input->post(null, true);
                 $whereIn = [
-                    'column' => 'tbl_shop_products_extended.id',
+                    'column' => 'tbl_shop_products_extended.productId',
                     'array' => $post['names']
                 ];
                 $pagination = '';
