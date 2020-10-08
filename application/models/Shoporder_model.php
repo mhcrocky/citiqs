@@ -32,6 +32,7 @@
         public $voucherAmount;
         public $voucherId;
         public $waiterTip;
+        public $confirm;
 
         private $table = 'tbl_shop_orders';
 
@@ -92,6 +93,7 @@
             if (isset($data['voucherAmount']) && !Validate_data_helper::validateFloat($data['voucherAmount'])) return false;
             if (isset($data['voucherId']) && !Validate_data_helper::validateInteger($data['voucherId'])) return false;
             if (isset($data['waiterTip']) && !Validate_data_helper::validateFloat($data['waiterTip'])) return false;
+            if (isset($data['confirm']) && !($data['confirm'] === '0' || $data['confirm'] === '1' || $data['confirm'] === '2')) return false;
 
             return true;
         }
@@ -161,10 +163,14 @@
                     $this->table . '.remarks AS remarks',
                     $this->table . '.paymentType AS paymentType',
                     $this->table . '.serviceTypeId AS serviceTypeId',
+                    $this->table . '.confirm AS confirmStatus',
                     'buyer.id AS buyerId',
                     'buyer.email AS buyerEmail',
                     'buyer.username AS buyerUserName',
                     'buyer.mobile AS buyerMobile',
+                    'buyer.city AS buyerCity',
+                    'buyer.zipcode AS buyerZipcode',
+                    'buyer.address AS buyerAddress',
                     'vendor.id AS vendorId',
                     'vendor.email AS vendorEmail',
                     'vendor.username AS vendorUserName',
@@ -831,8 +837,10 @@
                 array( 'db' => 'remarks',               'dt' => 13),
                 array( 'db' => 'paymentType',           'dt' => 14),
                 array( 'db' => 'serviceTypeId',         'dt' => 15),
-
-                
+                array( 'db' => 'buyerCity',             'dt' => 16),
+                array( 'db' => 'buyerZipcode',          'dt' => 17),
+                array( 'db' => 'buyerAddress',          'dt' => 18),
+                array( 'db' => 'confirmStatus',         'dt' => 19),
             );
 
             return Jquerydatatable_helper::data_output($columns, $return);

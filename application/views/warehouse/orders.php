@@ -54,7 +54,7 @@
         <label for="orderStatus">Filter orders by status:</label>
         <select id="orderStatus" class="custom-select" onchange="destroyAndFetch()">
             <option value="">All (incl finished)</option>
-            <?php foreach ($ordersStatuses as $status) { ?>
+            <?php foreach ($orderStatuses as $status) { ?>
                 <option value="<?php echo $status; ?>"><?php echo ucfirst($status); ?></option>
             <?php } ?>
         </select>
@@ -68,6 +68,7 @@
             <?php foreach($typeColors as $type => $color) { ?>
                 <?php echo $type; ?>&nbsp;&nbsp;<span style="display:inline-block; width:20px; height: 12px; background-color:<?php echo $color; ?>"></span>&nbsp;&nbsp;
             <?php } ?>
+            rejected&nbsp;&nbsp;<span style="display:inline-block; width:20px; height: 12px; background-color:<?php echo $rejectedColor; ?>"></span>
         </p>
     </div>
     <div class="table-responsive col-sm-12" style="margin-top:20px">
@@ -89,7 +90,7 @@
                     <th>Spot type</th>
                     <th>Remarks</th>
                     <th>Payment type</th>
-                    <th>Service type</th>
+                    <th>Confirm</th>
                 </tr>
             </thead>
             <tbody>
@@ -112,12 +113,29 @@
                     <th>Spot type</th>
                     <th>Remarks</th>
                     <th>Payment type</th>
-                    <th>Service type</th>
+                    <th>Confirm</th>
                 </tr>
             </tfoot>
         </table>
     </div>
 </main>
+
+<div class="modal" id="checkOrderModalId">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Confirm or reject order</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body"></div>
+            <!-- Modal footer -->
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
 <script>
     var orderGlobals = (function(){
         let getRemarks = '<?php echo $vendorData['requireRemarks']; ?>' === '1' ? true : false;
@@ -130,6 +148,11 @@
             'localTypeId' : '<?php echo $localTypeId; ?>',
             'deliveryTypeId' : '<?php echo $deliveryTypeId; ?>',
             'pickupTypeId' : '<?php echo $pickupTypeId; ?>',
+            'checkOrderModalId' : 'checkOrderModalId',
+            'orderConfirmWaiting' : '<?php echo $orderConfirmWaiting; ?>',
+            'orderConfirmTrue' : '<?php echo $orderConfirmTrue; ?>',
+            'orderConfirmFalse' : '<?php echo $orderConfirmFalse; ?>',
+            'rejectedColor' : '<?php echo $rejectedColor; ?>',
         }
         Object.freeze(globals);
         return globals;

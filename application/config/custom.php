@@ -100,15 +100,13 @@ $config['orderSeen'] = 'seen';
 $config['orderInProcess'] = 'in process';
 $config['orderDone'] = 'done';
 $config['orderFinished'] = 'finished';
-$config['orderRejected'] = 'rejected';
 
 $config['orderStatuses'] = [
     $config['orderNotSeen'],
     $config['orderSeen'],
     $config['orderInProcess'],
     $config['orderDone'],
-    $config['orderFinished'],
-    $config['orderRejected']
+    $config['orderFinished']
 ];
 
 // ORDED STAUSES

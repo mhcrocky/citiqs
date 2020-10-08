@@ -202,20 +202,20 @@ function populateTable(data) {
                         } else if  (row[14] === 'postPaid') {
                             return 'Pay at waiter (post paid)';
                         }
-                        return row[14].charAt(0).toUpperCase() + row[14].slice(1);
+                        if (row[14]) {
+                            return row[14].charAt(0).toUpperCase() + row[14].slice(1);
+                        }
+                        return;
                     },
                     "width": "10%"
                 },
                 {
                     "targets": 15,
                     "data": function (row, type, val, meta) {
-                        if (row[15] === orderGlobals.localTypeId) {
-                            return 'Local';
-                        } else if  (row[15] === orderGlobals.deliveryTypeId) {
-                            return 'Delivery';
-                        } else if  (row[15] === orderGlobals.pickupTypeId) {
-                            return 'Pickup';
+                        if (row[15] === orderGlobals.deliveryTypeId || row[15] === orderGlobals.pickupTypeId) {
+                            return confrimOrderButton(row);
                         }
+                        return;
                     },
                     "width": "10%"
                 },
@@ -247,16 +247,9 @@ function populateTable(data) {
                 });
             },
             rowCallback: function(row, data) {
-                let typeBackgroundColor;
-                if (data[15] === orderGlobals.localTypeId) {
-                    typeBackgroundColor = orderGlobals.typeColors['local'];
-                } else if (data[15] === orderGlobals.deliveryTypeId) {
-                    typeBackgroundColor = orderGlobals.typeColors['delivery'];
-                } else if (data[15] === orderGlobals.pickupTypeId) {
-                    typeBackgroundColor = orderGlobals.typeColors['pickup'];
-                }
-                row.style.backgroundColor = typeBackgroundColor;
-                row.children[0].style.backgroundColor = typeBackgroundColor;
+                let type = data[15];
+                let confrimStatus = data[19];
+                colorRow(row, type, confrimStatus);
             }
         });
     });
@@ -292,6 +285,173 @@ function changeElementInnerHtml(elementId, newContent) {
         smsButton.parentElement.parentElement.parentElement.remove();
     }
 }
+
+function confrimOrderButton(data) {
+    let button = '';
+
+    button += '<button class="btn btn-primary" ';
+    button +=    'data-modal-id="' + orderGlobals.checkOrderModalId + '" ';
+    button +=    'data-orderid="' + data[0] + '" ';
+    button +=    'data-buyer-id="' + data[10] + '" ';
+    button +=    'data-buyer-email="' + data[7] + '" ';
+    button +=    'data-buyer-mobile="' + data[8] + '" ';
+    button +=    'data-buyer-city="' + data[16] + '" ';
+    button +=    'data-buyer-zipcode="' + data[17] + '" ';
+    button +=    'data-buyer-address="' + data[18] + '" ';
+    button +=    'data-order-type="' + data[15] + '" ';
+    button +=    'data-spot="' + data[3] + '" ';
+    button +=    'data-pickup-time="' + data[5] + '" ';
+    button +=    'onclick="showDeliveryModal(this)"';
+    button += '>';
+    button +=    prepareButtonInnerHtml(data[15], data[19]);
+    button += '</button>';
+    return button;
+}
+
+function prepareButtonInnerHtml(typeStatus, confirmStatus) {
+    let type = '';
+    let buttonInnerHtml = '';
+
+    if (typeStatus === orderGlobals.deliveryTypeId) {
+        type = 'Delivery';
+    } else if (typeStatus === orderGlobals.pickupTypeId) {
+        type = 'Pickup';
+    }
+
+    if (confirmStatus === orderGlobals.orderConfirmWaiting) {
+        buttonInnerHtml = type.toUpperCase() + ' CHECK'
+    } else if (confirmStatus === orderGlobals.orderConfirmTrue) {
+        buttonInnerHtml = type + ' confirmed'
+    } else if (confirmStatus === orderGlobals.orderConfirmFalse) {
+        buttonInnerHtml = type + ' rejected'
+    }
+
+    return buttonInnerHtml;
+}
+
+function showDeliveryModal(element) {
+    let modalBody = '';
+    if (element.dataset.orderType === orderGlobals.deliveryTypeId) {
+        modalBody = getDeliveryModalBody(element.dataset);
+    } else if (element.dataset.orderType === orderGlobals.pickupTypeId) {
+        modalBody = getPickupModalBody(element.dataset);
+    }
+    let modalFooter = getModalFooter(element.dataset);
+
+    $('#' + element.dataset.modalId + ' .modal-body').html(modalBody);
+    $('#' + element.dataset.modalId + ' .modal-footer').html(modalFooter);
+    $('#' + element.dataset.modalId).modal('show');
+}
+
+function getDeliveryModalBody(data) {
+    let deliveryModalBody = '';
+
+    deliveryModalBody += '<p><span style="font-weight:900">Order ID:&nbsp;</span>' + data.orderid +' </p>';
+    deliveryModalBody += '<p><span style="font-weight:900">City:&nbsp;</span>' + data.buyerCity +' </p>';
+    deliveryModalBody += '<p><span style="font-weight:900">Zipcode:&nbsp;</span>' + data.buyerZipcode +' </p>';
+    deliveryModalBody += '<p><span style="font-weight:900">Address:&nbsp;</span>' + data.buyerAddress +' </p>';
+
+    return deliveryModalBody;
+}
+
+function getPickupModalBody(data) {
+    let pickupModalBody = '';
+
+    pickupModalBody += '<p><span style="font-weight:900">Order ID:&nbsp;</span>' + data.orderid +' </p>';
+    pickupModalBody += '<p><span style="font-weight:900">Spot:&nbsp;</span>' + data.spot +' </p>';
+    pickupModalBody += '<p><span style="font-weight:900">Pickup time:&nbsp;</span>' + data.pickupTime +' </p>';
+
+    return pickupModalBody;
+}
+
+function getModalFooter(data) {
+    let modalFooter = '';
+    modalFooter += '<button ';
+    modalFooter +=     'class="btn btn-danger btn-lg" ';
+    modalFooter +=     'style="border-radius:50%; margin-right:73%; font-size:24px" ';
+    modalFooter +=     'onclick="confrimRejectOrderAction(\'' + data.orderid + '\', \'' + orderGlobals.orderConfirmFalse + '\')" ';
+    modalFooter += '>';
+    modalFooter +=     '<i class="fa fa-times" aria-hidden="true"></i>';
+    modalFooter += '</button>';
+    modalFooter += '<button ';
+    modalFooter +=     'class="btn btn-success btn-lg" ';
+    modalFooter +=     'style="border-radius:50%; margin-right:5px; font-size:24px" ';
+    modalFooter +=     'onclick="confirmOrderAction(\'' + data.orderid + '\', \'' + orderGlobals.orderConfirmTrue + '\')" ';
+    modalFooter += '>';
+    modalFooter +=     '<i class="fa fa-check-circle" aria-hidden="true"></i>';
+    modalFooter += '</button>';
+
+    return modalFooter;
+}
+
+
+function confirmOrderAction(orderId, confirmStatus) {
+    let url = globalVariables.ajax + 'confirmOrderAction';
+    let data = document.querySelectorAll('[data-orderid="' + orderId + '"]')[0].dataset;
+    let key;
+    let post = {};
+
+    for (key in data) {
+        if (data.hasOwnProperty(key)) {
+            post[key] = data[key];
+        }
+    }
+
+    post['confirmStatus'] = confirmStatus;
+
+    $('#' + orderGlobals.checkOrderModalId).modal('hide');
+    sendAjaxPostRequest(post, url, 'confirmOrderAction', manageServerResponse);
+}
+
+function confrimRejectOrderAction(orderId, confirmStatus) {
+    alertify.confirm(
+        'CONFIRM ORDER REJECT',
+        'Are you sure you want to reject this order?',
+        function() {
+            confirmOrderAction(orderId,confirmStatus)
+        },
+        function() {
+            alertify.error('Canceled')
+            $('#' + orderGlobals.checkOrderModalId).modal('hide');
+        }
+    );
+}
+
+function manageServerResponse(data) {
+
+    if (data['status'] === '1') {
+        let button = document.querySelectorAll('[data-orderid="' + data['orderId'] + '"]')[0];
+        let row = button.parentElement.parentElement;
+
+        button.innerHTML = prepareButtonInnerHtml(data['type'], data['confirmStatus']);
+        alertify.success(data['message']);
+        colorRow(row, data['type'], data['confirmStatus']);
+    } else {
+        alertify.error(data['message']);
+    }
+}
+
+function colorRow(row, typeStatus, confrimStatus ) {
+    let typeBackgroundColor = '';
+
+    if (confrimStatus === orderGlobals.orderConfirmFalse) {
+        typeBackgroundColor = orderGlobals.rejectedColor;
+    }
+
+    if (!typeBackgroundColor) {
+        if (typeStatus === orderGlobals.localTypeId) {
+            typeBackgroundColor = orderGlobals.typeColors['local'];
+        } else if (typeStatus === orderGlobals.deliveryTypeId) {
+            typeBackgroundColor = orderGlobals.typeColors['delivery'];
+        } else if (typeStatus === orderGlobals.pickupTypeId) {
+            typeBackgroundColor = orderGlobals.typeColors['pickup'];
+        }
+    }
+
+    row.style.backgroundColor = typeBackgroundColor;
+    row.children[0].style.backgroundColor = typeBackgroundColor;
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     fetchOrders();
 });

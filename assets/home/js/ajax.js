@@ -209,6 +209,9 @@ var callThis = (function() {
         },
         voucherPay: function(callFunction) {
             callFunction(this);
+        },
+        confirmOrderAction: function(callFunction) {
+            callFunction(this);
         }
     };
     return methods;

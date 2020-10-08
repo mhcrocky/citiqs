@@ -1079,4 +1079,61 @@ class Ajax extends CI_Controller
 
         return;
     }
+
+    public function confirmOrderAction(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+        $post = [];
+        foreach ($_POST as $key => $value) {
+            $post[$key] = $this->input->post($key, true);
+        }
+
+        $update = $this
+                    ->shoporder_model
+                    ->setObjectId(intval($post['orderid']))
+                    ->setProperty('confirm', $post['confirmStatus'])
+                    ->update();
+
+        if ($update) {
+            if ($post['confirmStatus'] === $this->config->item('orderConfirmTrue')) {
+                $message = 'Order confirmed.';
+            } elseif ($post['confirmStatus'] === $this->config->item('orderConfirmFalse')) {
+                $message = 'Order rejected.';
+            }
+            $message .= $this->sendOrdeEmail($post) ? ' Notification email sent to a buyer' : ' Notification email did not send to a buyer';
+            $response = [
+                'status'        => '1',
+                'message'       => $message,
+                'orderId'       => $post['orderid'],
+                'confirmStatus' => $post['confirmStatus'],
+                'type'          => $post['orderType'],
+            ];
+        } else {
+            if ($post['confirmStatus'] === $this->config->item('orderConfirmTrue')) {
+                $message = 'Order confirmation failed!';
+            } elseif ($post['confirmStatus'] === $this->config->item('orderConfirmFalse')) {
+                $message = 'Order rejection failed!';
+            }
+            $response = [
+                'status' => '0',
+                'message' => $message,
+            ];
+        }
+
+        echo json_encode($response);
+        return;
+    }
+
+    private function sendOrdeEmail(array &$post): bool
+    {
+        if ($post['confirmStatus'] === $this->config->item('orderConfirmTrue')) {
+            $subject = 'Order confirmed';
+            $message = 'Your order with id "' . $post['orderid']. '" confirmed';
+        } elseif ($post['confirmStatus'] === $this->config->item('orderConfirmFalse')) {
+            $subject = 'Order rejected';
+            $message = 'Your order with id "' . $post['orderid']. '" rejected';
+        }
+
+        return Email_helper::sendOrderEmail($post['buyerEmail'] , $subject, $message);
+    }
 }

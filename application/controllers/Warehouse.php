@@ -504,12 +504,15 @@
                                             'userId' => $userId,
                                         ]
                                     ]),
-                'ordersStatuses'  => $this->config->item('orderStatuses'),
                 'vendorData' => $this->shopvendor_model->setProperty('vendorId', $userId)->getProperties(['id', 'requireRemarks', 'busyTime', 'minBusyTime', 'maxBusyTime']),
                 'typeColors' => $this->config->item('typeColors'),
                 'localTypeId' => $this->config->item('local'),
                 'deliveryTypeId' => $this->config->item('deliveryType'),
                 'pickupTypeId' => $this->config->item('pickupType'),
+                'orderConfirmWaiting' => $this->config->item('orderConfirmWaiting'),
+                'orderConfirmTrue' => $this->config->item('orderConfirmTrue'),
+                'orderConfirmFalse' => $this->config->item('orderConfirmFalse'),
+                'rejectedColor' => $this->config->item('notActiveColor')
             ];
 
             $this->loadViews('warehouse/orders', $this->global, $data, null, 'headerWarehouse');
