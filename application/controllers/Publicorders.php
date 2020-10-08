@@ -648,7 +648,7 @@
             }
 
             // check mobile phone
-            if ($_SESSION['vendor']['requireMobile'] === '1') {
+            if ($_SESSION['vendor']['requireMobile'] === '1' || intval($_SESSION['spot']['spotTypeId']) !== $this->config->item('local')) {
                 if (Validate_data_helper::validateMobileNumber($post['user']['mobile'])) {
                     $post['user']['mobile'] = $post['phoneCountryCode'] . ltrim($post['user']['mobile'], '0');
                 } else {
