@@ -249,8 +249,18 @@
 			$T9totalamount=0;
             $emailMessage = '';
             foreach ($productsarray as $product) {
-
                 $product = explode($this->config->item('concatSeparator'), $product);
+                if (intval($product[9])) {
+                    $mainProductIndex = $product[9];
+                }
+                if (intval($product[10])) {
+                    $subMainProductIndex = $product[10];
+                }
+
+                if (!intval($product[9]) && !intval($product[10])) {
+                    if (isset($mainProductIndex)) unset($mainProductIndex);
+                    if (isset($subMainProductIndex)) unset($subMainProductIndex);
+                }
                 // 0 => name
                 // 1 => unit price
                 // 2 => ordered quantity
@@ -287,12 +297,19 @@
 
 				$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
                 // $draw->annotation(0, 165 + ($i * 30), $plu);
-        
-                $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                $draw->annotation(0, 165 + ($i * 30), $quantity);
-        
-                $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                $draw->annotation(40, 165 + ($i * 30), $title);
+                if (isset($subMainProductIndex) && isset($mainProductIndex) && $subMainProductIndex === $mainProductIndex) {
+                    $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                    $draw->annotation(20, 165 + ($i * 30), $quantity);
+
+                    $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                    $draw->annotation(60, 165 + ($i * 30), $title);
+                } else {
+                    $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                    $draw->annotation(0, 165 + ($i * 30), $quantity);
+
+                    $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                    $draw->annotation(40, 165 + ($i * 30), $title);
+                }
 
                 // $draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
                 // $draw->annotation(440, 165 + ($i * 30), "€ ". $price);

@@ -141,6 +141,15 @@
                                             readonly
                                         <?php } ?>
                                     />
+                                    <?php if (!empty($product['addons'])) { ?>
+                                        <input
+                                            name="orderExtended[<?php echo $countInputs; ?>][<?php echo $productExtendedId; ?>][mainPrductOrderIndex]"
+                                            value="<?php echo $count; ?>"
+                                            required
+                                            hidden
+                                            readonly
+                                        />
+                                    <?php } ?>
                                 </div>
                                 <div class="checkout-table__price">
                                     <p>
@@ -255,6 +264,19 @@
                                                     name="orderExtended[<?php echo $countInputs; ?>][<?php echo $addonExtendedId; ?>][quantity]"
                                                     value="<?php echo $addon['quantity']; ?>"
                                                     required hidden
+                                                />
+                                                <input
+                                                    value="<?php echo $productExtendedId; ?>"
+                                                    name="orderExtended[<?php echo $countInputs; ?>][<?php echo $addonExtendedId; ?>][mainProducIt]"
+                                                    required hidden
+                                                />
+
+                                                <input
+                                                    name="orderExtended[<?php echo $countInputs; ?>][<?php echo $addonExtendedId; ?>][subMainPrductOrderIndex]"
+                                                    value="<?php echo $count; ?>"
+                                                    required
+                                                    hidden
+                                                    readonly
                                                 />
                                             </div>
                                             <div class="checkout-table__price">

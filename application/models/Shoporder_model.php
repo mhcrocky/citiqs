@@ -368,7 +368,7 @@
                             SELECT
                                 tbl_shop_order_extended.orderId,
                                 GROUP_CONCAT(
-                                    tbl_shop_products_extended.name,    
+                                    tbl_shop_products_extended.name,
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.price,
                                     \'' .  $concatSeparator . '\', tbl_shop_order_extended.quantity,
                                     \'' .  $concatSeparator . '\', tbl_shop_categories.category,
@@ -376,7 +376,9 @@
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.shortDescription) > 0, tbl_shop_products_extended.shortDescription, ""), 
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, ""),
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage,
-                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_order_extended.remark) > 0, tbl_shop_order_extended.remark, "")
+                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_order_extended.remark) > 0, tbl_shop_order_extended.remark, ""),
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.mainPrductOrderIndex,
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.subMainPrductOrderIndex
                                     SEPARATOR "' . $this->config->item('contactGroupSeparator') . '"
                                 ) AS products
                             FROM
@@ -396,6 +398,8 @@
                             AND tbl_shop_order_extended.printed = "0"
                         GROUP BY
                             tbl_shop_order_extended.orderId
+                        ORDER BY
+                            tbl_shop_order_extended.id ASC
                     ) productData ON productData.orderId = tbl_shop_orders.id
                     INNER JOIN
                         tbl_shop_order_extended ON tbl_shop_order_extended.orderId = tbl_shop_orders.id
@@ -475,7 +479,9 @@
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.shortDescription) > 0, tbl_shop_products_extended.shortDescription, ""), 
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, ""),
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage,
-                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_order_extended.remark) > 0, tbl_shop_order_extended.remark, "")
+                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_order_extended.remark) > 0, tbl_shop_order_extended.remark, ""),
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.mainPrductOrderIndex,
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.subMainPrductOrderIndex
                                     SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"
                                 ) AS products
                             FROM
@@ -511,6 +517,8 @@
                                 AND tbl_shop_order_extended.printed = "0"
                             GROUP BY
                                 tbl_shop_order_extended.orderId
+                            ORDER BY
+                                tbl_shop_order_extended.id ASC
                         ) productData ON productData.orderId = tbl_shop_orders.id 
                     INNER JOIN
                         (

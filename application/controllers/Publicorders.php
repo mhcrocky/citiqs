@@ -318,8 +318,6 @@
             }
 
             redirect('pay_order');
-
-            redirect('pay_order');
         }
 
         public function pay_order(): void
@@ -531,13 +529,17 @@
                     $details = reset($details);
                     $details['quantity'] = intval($details['quantity']);
 
-                    if (isset($details['remark'])) {
-                        $insert['remark'] = $details['remark'];
+                    if (isset($details['remark']) || isset($details['mainPrductOrderIndex']) || isset($details['subMainPrductOrderIndex'])) {
+                        $remark = isset($details['remark']) ? $details['remark'] : '';
+                        $mainPrductOrderIndex = isset($details['mainPrductOrderIndex']) ? $details['mainPrductOrderIndex'] : 0;
+                        $subMainPrductOrderIndex = isset($details['subMainPrductOrderIndex']) ? $details['subMainPrductOrderIndex'] : 0;
                         $insert = [
                             'productsExtendedId' => intval($id),
                             'orderId' => $this->shoporder_model->id,
                             'quantity' => $details['quantity'],
-                            'remark' => $details['remark'],
+                            'remark' => $remark,
+                            'mainPrductOrderIndex' => $mainPrductOrderIndex,
+                            'subMainPrductOrderIndex' => $subMainPrductOrderIndex,
                         ];
                         if (!$this->shoporderex_model->setObjectFromArray($insert)->create()) {
                             $this->shoporderex_model->orderId = $insert['orderId'];
