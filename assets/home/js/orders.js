@@ -145,8 +145,13 @@ function populateTable(data) {
                 },
                 {
                     "targets": 2,
-                    "visible": false,
-                    "searchable": false,
+                    "data": function (row, type, val, meta) {
+                        console.dir(row);
+                        if (row[14] === orderGlobals.prePaid || row[14] === orderGlobals.postPaid) {
+                            return row[2];
+                        }
+                        return '';
+                    }
                 },
                 {
                     "targets": 3,
@@ -201,9 +206,9 @@ function populateTable(data) {
                 {
                     "targets": 14,
                     "data": function (row, type, val, meta) {
-                        if (row[14] === 'prePaid') {
+                        if (row[14] === orderGlobals.prePaid) {
                             return 'Pay at waiter (pre paid)';
-                        } else if  (row[14] === 'postPaid') {
+                        } else if  (row[14] === orderGlobals.postPaid) {
                             return 'Pay at waiter (post paid)';
                         }
                         if (row[14]) {

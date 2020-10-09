@@ -153,6 +153,8 @@
             'orderConfirmTrue' : '<?php echo $orderConfirmTrue; ?>',
             'orderConfirmFalse' : '<?php echo $orderConfirmFalse; ?>',
             'rejectedColor' : '<?php echo $rejectedColor; ?>',
+            'prePaid' : '<?php echo $prePaid; ?>',
+            'postPaid' : '<?php echo $postPaid; ?>',
         }
         Object.freeze(globals);
         return globals;

@@ -512,7 +512,9 @@
                 'orderConfirmWaiting' => $this->config->item('orderConfirmWaiting'),
                 'orderConfirmTrue' => $this->config->item('orderConfirmTrue'),
                 'orderConfirmFalse' => $this->config->item('orderConfirmFalse'),
-                'rejectedColor' => $this->config->item('notActiveColor')
+                'rejectedColor' => $this->config->item('notActiveColor'),
+                'prePaid' => $this->config->item('prePaid'),
+                'postPaid' => $this->config->item('postPaid'),
             ];
 
             $this->loadViews('warehouse/orders', $this->global, $data, null, 'headerWarehouse');
