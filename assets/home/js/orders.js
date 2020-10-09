@@ -1,31 +1,10 @@
 'use strict';
 function showOrderProducts(data) {
     if(!data) return;
+
     let products = data[1];
-    let i;
     let list = ''
-    let popover = '';
-
-    for (i in products) {
-        if (i === 'spotPrinter') continue;
-        let product;
-        let printer;
-        product = products[i];
-        if (!product) continue;
-        if (product['productPrinter']) {
-            printer = (products['spotPrinter'] === product['productPrinter'][0]) ? products['spotPrinter'] : product['productPrinter'][0];
-        } else {
-            printer = products['spotPrinter'];
-        }
-
-        popover += '<p style=\'text-align:left\'>Product: ' + product.productName;
-        popover += ' | Quantity: ' + product.productQuantity;
-        popover += ' | Printer: ' + printer;
-        if (product['remark']) {
-            popover += ' | Remark: ' + product['remark'];
-        }
-        popover += '</p>';
-    }
+    let popover = productDetailsHtml(products);
 
     list += '<a ';
     list +=     'style="color:#000" ';
@@ -39,6 +18,32 @@ function showOrderProducts(data) {
     list += '</a>';
 
     return list;
+}
+
+function productDetailsHtml(products) {
+    let i;
+    let content = ''
+    for (i in products) {
+        if (i === 'spotPrinter') continue;
+        let product;
+        let printer;
+        product = products[i];
+        if (!product) continue;
+        if (product['productPrinter']) {
+            printer = (products['spotPrinter'] === product['productPrinter'][0]) ? products['spotPrinter'] : product['productPrinter'][0];
+        } else {
+            printer = products['spotPrinter'];
+        }
+
+        content += '<p style=\'text-align:left\'>Product: ' + product.productName;
+        content += ' | Quantity: ' + product.productQuantity;
+        content += ' | Printer: ' + printer;
+        if (product['remark']) {
+            content += ' | Remark: ' + product['remark'];
+        }
+        content += '</p>';
+    }
+    return content;
 }
 
 function showOrderStatuses(orderStatuses, data) {
@@ -300,6 +305,7 @@ function confrimOrderButton(data) {
     button +=    'data-order-type="' + data[15] + '" ';
     button +=    'data-spot="' + data[3] + '" ';
     button +=    'data-pickup-time="' + data[5] + '" ';
+    button +=    'data-products-string=\'' + JSON.stringify(data[1]) + '\' ';
     button +=    'onclick="showDeliveryModal(this)"';
     button += '>';
     button +=    prepareButtonInnerHtml(data[15], data[19]);
@@ -330,10 +336,11 @@ function prepareButtonInnerHtml(typeStatus, confirmStatus) {
 
 function showDeliveryModal(element) {
     let modalBody = '';
+    let productsString = element.dataset.productsString
     if (element.dataset.orderType === orderGlobals.deliveryTypeId) {
-        modalBody = getDeliveryModalBody(element.dataset);
+        modalBody = getDeliveryModalBody(element.dataset, productsString);
     } else if (element.dataset.orderType === orderGlobals.pickupTypeId) {
-        modalBody = getPickupModalBody(element.dataset);
+        modalBody = getPickupModalBody(element.dataset, productsString);
     }
     let modalFooter = getModalFooter(element.dataset);
 
@@ -342,23 +349,29 @@ function showDeliveryModal(element) {
     $('#' + element.dataset.modalId).modal('show');
 }
 
-function getDeliveryModalBody(data) {
+function getDeliveryModalBody(data, productsString) {
+    let products = JSON.parse(productsString)
     let deliveryModalBody = '';
 
     deliveryModalBody += '<p><span style="font-weight:900">Order ID:&nbsp;</span>' + data.orderid +' </p>';
     deliveryModalBody += '<p><span style="font-weight:900">City:&nbsp;</span>' + data.buyerCity +' </p>';
     deliveryModalBody += '<p><span style="font-weight:900">Zipcode:&nbsp;</span>' + data.buyerZipcode +' </p>';
     deliveryModalBody += '<p><span style="font-weight:900">Address:&nbsp;</span>' + data.buyerAddress +' </p>';
+    deliveryModalBody += '<h3 style="font-size:22px; font-weight:900; margin-bottom:10px">Products</h3>';
+    deliveryModalBody += productDetailsHtml(products)
 
     return deliveryModalBody;
 }
 
-function getPickupModalBody(data) {
+function getPickupModalBody(data, productsString) {
+    let products = JSON.parse(productsString)
     let pickupModalBody = '';
 
     pickupModalBody += '<p><span style="font-weight:900">Order ID:&nbsp;</span>' + data.orderid +' </p>';
     pickupModalBody += '<p><span style="font-weight:900">Spot:&nbsp;</span>' + data.spot +' </p>';
     pickupModalBody += '<p><span style="font-weight:900">Pickup time:&nbsp;</span>' + data.pickupTime +' </p>';
+    pickupModalBody += '<h3 style="font-size:22px; font-weight:900; margin-bottom:10px">Products</h3>';
+    pickupModalBody += productDetailsHtml(products)
 
     return pickupModalBody;
 }
