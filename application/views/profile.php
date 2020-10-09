@@ -509,7 +509,7 @@
 				<form method="post" action="<?php echo base_url() ?>profile/updateVendorLogo/<?php echo $user->id; ?>" enctype="multipart/form-data">
 					<div class="form-group" style="margin-top:30px !important">
 						<label for="logo">
-							<?php echo $this->language->line("LOGOPNG-1030302119"," Upload logo in png format "); ?>
+							<?php echo $this->language->line("LOGOPNG-103030211912"," Upload logo in png format 550 * 150 pxl"); ?>
 						</label>
 					</div>
 					<?php if ($user->logo) { ?>

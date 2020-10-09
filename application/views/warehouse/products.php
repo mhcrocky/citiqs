@@ -127,6 +127,12 @@
                             <div class="col-lg-4 col-sm-12">
                             <!-- PRINTERS -->
                                 <label>Printers: </label>
+                                <div class="col-lg-4 col-sm-12">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" checked />
+                                            &nbsp;&nbsp;Default printing
+                                        </label>
+                                    </div>
                                 <?php foreach ($printers as $printer) { ?>
                                     <div class="col-lg-4 col-sm-12">
                                         <label class="checkbox-inline" for="printerId<?php echo $printer['id']; ?>">
@@ -739,6 +745,13 @@
                                             </div>
                                             <div class="col-lg-4 col-sm-12"> 
                                                 <label>Printers</label>
+                                                <label class="checkbox-inline">
+                                                    <input
+                                                        type="checkbox"
+                                                        <?php if (is_null($product['printers'])) echo 'checked'; ?>
+                                                    />
+                                                    &nbsp;&nbsp;Default printing
+                                                </label>
                                                 <?php foreach ($printers as $printer) {?>
                                                         <label class="checkbox-inline" for="printerId<?php echo $product['productId']; ?><?php echo $printer['id']; ?>">
                                                             <input
