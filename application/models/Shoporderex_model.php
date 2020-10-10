@@ -51,7 +51,7 @@
             if (isset($data['productsExtendedId']) && !Validate_data_helper::validateInteger($data['productsExtendedId'])) return false;
             if (isset($data['quantity']) && !Validate_data_helper::validateInteger($data['quantity'])) return false;
             if (isset($data['printed']) && !($data['printed'] === '1' || $data['printed'] === '0' || $data['printed'] === '2')) return false;
-            if (isset($data['remark']) && !Validate_data_helper::validateString($data['remark'])) return false;
+            #if (isset($data['remark']) && !Validate_data_helper::validateString($data['remark'])) return false;
             if (isset($data['mainPrductOrderIndex']) && !Validate_data_helper::validateInteger($data['mainPrductOrderIndex'])) return false;
             if (isset($data['subMainPrductOrderIndex']) && !Validate_data_helper::validateInteger($data['subMainPrductOrderIndex'])) return false;
             

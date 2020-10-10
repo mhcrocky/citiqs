@@ -266,12 +266,6 @@
                                                     required hidden
                                                 />
                                                 <input
-                                                    value="<?php echo $productExtendedId; ?>"
-                                                    name="orderExtended[<?php echo $countInputs; ?>][<?php echo $addonExtendedId; ?>][mainProducIt]"
-                                                    required hidden
-                                                />
-
-                                                <input
                                                     name="orderExtended[<?php echo $countInputs; ?>][<?php echo $addonExtendedId; ?>][subMainPrductOrderIndex]"
                                                     value="<?php echo $count; ?>"
                                                     required

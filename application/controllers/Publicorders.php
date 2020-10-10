@@ -464,8 +464,6 @@
             //fetch data from $_SESSION
             $post = $_SESSION['postOrder'];
 
-            $this->validateData($post);
-
             // insert buyer
             $this->user_model->manageAndSetBuyer($post['user']);
             if (!$this->user_model->id) {
@@ -524,6 +522,7 @@
                 }
             } elseif ($_SESSION['vendor']['preferredView'] === $this->config->item('newMakeOrderView')) {
                 $insertAll = [];
+
                 foreach ($post['orderExtended'] as $details) {
                     $id = array_keys($details)[0];
                     $details = reset($details);
@@ -563,13 +562,15 @@
                 }
 
                 $insertValues = array_values($insertAll);
-                if (!$this->shoporderex_model->multipleCreate($insertValues)) {
-                    $this->shoporderex_model->orderId = $insert['orderId'];
-                    $this->shoporderex_model->deleteOrderDetails();
-                    $this->shoporder_model->delete();
-                    $this->session->set_flashdata('error', 'Order not made! Please try again');
-                    redirect($failedRedirect);
-                    exit();
+                if ($insertValues) {
+                    if (!$this->shoporderex_model->multipleCreate($insertValues)) {
+                        $this->shoporderex_model->orderId = $insert['orderId'];
+                        $this->shoporderex_model->deleteOrderDetails();
+                        $this->shoporder_model->delete();
+                        $this->session->set_flashdata('error', 'Order not made! Please try again');
+                        redirect($failedRedirect);
+                        exit();
+                    }
                 }
             }
 
