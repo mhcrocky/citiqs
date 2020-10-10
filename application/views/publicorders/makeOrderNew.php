@@ -397,7 +397,7 @@
                                                                 />
                                                                 <?php echo $addon['name']; ?>
                                                                 &euro; <?php echo $addon['price']; ?>
-                                                                (min per unit 1 / max  per unit <?php echo $addonAllowedQuantity; ?>)
+<!--                                                                (min per unit 1 / max  per unit --><?php //echo $addonAllowedQuantity; ?><!--)-->
                                                             </label>
                                                             <?php
                                                                 if ($vendor['showAllergies'] === '1')  {

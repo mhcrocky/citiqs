@@ -50,7 +50,10 @@
         <nav class="header-nav">
 			<a href="<?php echo $this->baseUrl; ?>loggedin" class="nav-logo">
                 <img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogonew.png" alt="">
-                <div></div>
+                <div><?php echo $_SESSION['userId']." ".$_SESSION['name'];
+					// var_dump($_SESSION);
+
+					?></div>
             </a>
             <div class="header-menu text-orange" id="header-menu">
 				<?php

@@ -47,13 +47,19 @@
 				if ($this->user_model->checkOneSignalId($user['oneSignalId'])) {
 					echo json_encode([
 						'status' => '0',
-						'message' => 'https://tiqs.com/assets/home/images/radio.png',
+						'message' => 'https://tiqs.com/alfred/assets/home/images/win.png',
+						'url' => 'https://etiqs.com/yourshop/1/RGifIakAE3MQwRbVV9OA1HREGgRwqCqnFwZh',
+						'code' => '3345'
 					]);
+
+					// http://etiqs.com/domains/etiqs.com/public_html/yourshop/1/RGifIakAE3MQwRbVV9OA1HREGgRwqCqnFwZh
 					return;}
 				else{
 					echo json_encode([
 						'status' => '0',
-						'message' => 'https://tiqs.com/assets/home/images/world.png',
+						'message' => 'https://tiqs.com/alfred/assets/home/images/win.png',
+						'url' => 'Https://tiqs.com/alfred/registerbusiness',
+						'code' => '3346'
 					]);
 				return;}
 
