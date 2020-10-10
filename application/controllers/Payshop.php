@@ -34,7 +34,7 @@
             $makeOrderRedirect = 'make_order?spotid=' . $spotId;
 
             if (is_null($this->shoporder_model->id)) {
-                $this->session->set_flashdata('error', 'Order not made! Please try again');
+                $this->session->set_flashdata('error', '(2010) Order not made! Please try again');
                 redirect($makeOrderRedirect);
                 exit();
             }
@@ -43,7 +43,7 @@
             $order = $this->shoporder_model->fetchOne();
 
             if (!$order) {
-                $this->session->set_flashdata('error', 'Order not made! Please try again');
+                $this->session->set_flashdata('error', '(2020) Order not made! Please try again');
                 redirect($makeOrderRedirect);
                 exit();
             }

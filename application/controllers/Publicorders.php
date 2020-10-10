@@ -503,7 +503,7 @@
             $this->shoporder_model->setObjectFromArray($post['order'])->create();
 
             if (!$this->shoporder_model->id) {
-                $this->session->set_flashdata('error', 'Order not made! Please try again');
+                $this->session->set_flashdata('error', '(1000) Order not made!, Please try again');
                 redirect($failedRedirect);
                 exit();
             }
@@ -517,7 +517,7 @@
                         $this->shoporderex_model->orderId = $details['orderId'];
                         $this->shoporderex_model->deleteOrderDetails();
                         $this->shoporder_model->delete();
-                        $this->session->set_flashdata('error', 'Order not made! Please try again');
+                        $this->session->set_flashdata('error', '(1010) Order not made! Please try again');
                         redirect($failedRedirect);
                         exit();
                     }
@@ -545,7 +545,7 @@
                             $this->shoporderex_model->orderId = $insert['orderId'];
                             $this->shoporderex_model->deleteOrderDetails();
                             $this->shoporder_model->delete();
-                            $this->session->set_flashdata('error', 'Order not made! Please try again');
+                            $this->session->set_flashdata('error', '(1020) Order not made! Please try again');
                             redirect($failedRedirect);
                             exit();
                         }
@@ -567,7 +567,7 @@
                     $this->shoporderex_model->orderId = $insert['orderId'];
                     $this->shoporderex_model->deleteOrderDetails();
                     $this->shoporder_model->delete();
-                    $this->session->set_flashdata('error', 'Order not made! Please try again');
+                    $this->session->set_flashdata('error', '(1030) Order not made! Please try again');
                     redirect($failedRedirect);
                     exit();
                 }

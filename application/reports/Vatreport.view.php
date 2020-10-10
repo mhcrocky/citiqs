@@ -31,8 +31,13 @@
 					<div class="mb-35" >
 						<?php
 						$dateRange= DateRangePicker::create(array(
-								"format"=>"D/M/YYYY",
-								"name"=>"dateRange"
+								"format"=>"D/M/YYYY HH:mm",
+								"name"=>"dateRange",
+								"options"=>array(
+										"showWeekNumbers"=>true,
+										"timePicker" =>true,
+										"timePicker24Hour" => true
+								)
 						))
 						?>
 					</div>

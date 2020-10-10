@@ -71,7 +71,8 @@
         <nav class="header-nav">
 			<a href="<?php echo $this->baseUrl; ?>loggedin" class="nav-logo">
                 <img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogonew.png" alt="">
-                <div></div>
+
+				<div></div>
             </a>
             <div class="header-menu text-orange" id="header-menu">
                 <a href="<?php echo $this->baseUrl; ?>warehouse"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/reports.png" title="REPORTS"/></a>
