@@ -35,10 +35,6 @@ class Orderscopy extends REST_Controller
 		if (!$order) return;
 		$order = reset($order);
 
-		$sendEmail = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->sendEmailWithReceipt();
-
-		if (!$sendEmail) return;
-
 		Utility_helper::logMessage($logFile, 'order vendor'.$order['vendorId']);
 
 		$productsarray = explode($this->config->item('contactGroupSeparator'), $order['products']);
@@ -601,6 +597,8 @@ class Orderscopy extends REST_Controller
 		if ($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid')) {
 			if ($order['waiterReceipt'] === '0') {
 				$email = $order['receiptEmail'];
+				header('Content-type: image/png');
+				echo $resultpngemail;
 			} else {
 				if ($order['customerReceipt'] === '0') {
 					if (strpos($order['buyerEmail'], 'anonymus_') !== false && strpos($order['buyerEmail'], '@tiqs.com') !== false) {
@@ -608,10 +606,13 @@ class Orderscopy extends REST_Controller
 					} else {
 						$email = $order['buyerEmail'];
 					}
+					if ($order['receiptOnlyToWaiter'] !== '1') {
+						header('Content-type: image/png');
+						echo $resultpngemail;
+					}
 				}
 			}
-			header('Content-type: image/png');
-			echo $resultpngemail;
+
 		} else {
 			if (strpos($order['buyerEmail'], 'anonymus_') !== false && strpos($order['buyerEmail'], '@tiqs.com') !== false) {
 				$email = $order['receiptEmail'];
@@ -620,11 +621,10 @@ class Orderscopy extends REST_Controller
 			}
 		}
 
-		// Utility_helper::logMessage($logFile, 'printer echo');
-		// // echo $resultpngprinter;
 
 		// SEND EMAIL
-		if (!empty($email)) {
+		$sendEmail = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->sendEmailWithReceipt();
+		if (!empty($email) && $sendEmail) {
 			$subject= "tiqs-Order : ". $order['orderId'];
 			Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);
 		}

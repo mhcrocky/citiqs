@@ -596,7 +596,8 @@
                         vendorOne.vat_number as vendorVAT,
                         vendorOne.country as vendorCountry,
                         tbl_shop_vendors.serviceFeeTax as serviceFeeTax,
-                        vendorOne.receiptEmail as receiptEmail
+                        vendorOne.receiptEmail as receiptEmail,
+                        tbl_shop_vendors.receiptOnlyToWaiter
                     FROM
                         tbl_shop_orders
                     INNER JOIN
