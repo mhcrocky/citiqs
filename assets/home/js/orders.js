@@ -146,7 +146,6 @@ function populateTable(data) {
                 {
                     "targets": 2,
                     "data": function (row, type, val, meta) {
-                        console.dir(row);
                         if (row[14] === orderGlobals.prePaid || row[14] === orderGlobals.postPaid) {
                             return row[2];
                         }
@@ -352,6 +351,8 @@ function showDeliveryModal(element) {
     $('#' + element.dataset.modalId + ' .modal-body').html(modalBody);
     $('#' + element.dataset.modalId + ' .modal-footer').html(modalFooter);
     $('#' + element.dataset.modalId).modal('show');
+
+    getDistance(orderGlobals.userId, element.dataset.buyerId);
 }
 
 function getDeliveryModalBody(data, productsString) {
@@ -359,6 +360,7 @@ function getDeliveryModalBody(data, productsString) {
     let deliveryModalBody = '';
 
     deliveryModalBody += '<p><span style="font-weight:900">Order ID:&nbsp;</span>' + data.orderid +' </p>';
+    deliveryModalBody += '<p><span style="font-weight:900">Distance:&nbsp;</span><span id="distance">Waiting ...</span></p>';
     deliveryModalBody += '<p><span style="font-weight:900">City:&nbsp;</span>' + data.buyerCity +' </p>';
     deliveryModalBody += '<p><span style="font-weight:900">Zipcode:&nbsp;</span>' + data.buyerZipcode +' </p>';
     deliveryModalBody += '<p><span style="font-weight:900">Address:&nbsp;</span>' + data.buyerAddress +' </p>';
@@ -400,7 +402,6 @@ function getModalFooter(data) {
 
     return modalFooter;
 }
-
 
 function confirmOrderAction(orderId, confirmStatus) {
     let url = globalVariables.ajax + 'confirmOrderAction';
@@ -467,6 +468,24 @@ function colorRow(row, typeStatus, confrimStatus ) {
 
     row.style.backgroundColor = typeBackgroundColor;
     row.children[0].style.backgroundColor = typeBackgroundColor;
+}
+
+function getDistance(vendorId, buyerId) {
+    let post = {
+        'vendorId' : vendorId,
+        'buyerId' : buyerId
+    }
+    let url = globalVariables.ajax + 'getDistance'
+    sendAjaxPostRequest(post, url, 'getDistance', showDistance, ['distance']);
+}
+
+function showDistance(distanceId, data = null) {
+    let distance = document.getElementById(distanceId);
+    if (data['status'] === '0' || !data['distance']['text']) {
+        distance.innerHTML = data['message'];
+        return;
+    }
+    distance.innerHTML = data['distance']['text'] ? data['distance']['text'] : 'Information not available';
 }
 
 document.addEventListener("DOMContentLoaded", function() {

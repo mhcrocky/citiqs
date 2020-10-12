@@ -37,7 +37,7 @@
             $address = urlencode($address);
     
             // google map geocode api url
-            $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . $address . '&key=AIzaSyCst0EJ-LFVj3q0a6NHGFDU6HQ10H84HTI';
+            $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . $address . '&key=' . self::getGoogleKey();
             // get the json response
             $resp_json = file_get_contents($url);
     
@@ -49,7 +49,7 @@
         {
             $location =  $lat . ',' . $lng;
             // google map geocode api url
-            $url = 'https://maps.googleapis.com/maps/api/timezone/json?location=' . $location . '&timestamp=' . time() . '&key=AIzaSyCst0EJ-LFVj3q0a6NHGFDU6HQ10H84HTI';
+            $url = 'https://maps.googleapis.com/maps/api/timezone/json?location=' . $location . '&timestamp=' . time() . '&key=' . self::getGoogleKey();
             // get the json response
             $resp_json = file_get_contents($url);    
             // decode the json
@@ -72,7 +72,7 @@
 
         public static function getAddress(float $lat, float $lng): string
         {
-            $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' . $lat . ',' . $lng . '&key=AIzaSyCst0EJ-LFVj3q0a6NHGFDU6HQ10H84HTI';
+            $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' . $lat . ',' . $lng . '&key=' . self::getGoogleKey();
             $json = @file_get_contents($url);
             $data = json_decode($json);
             if($data->status === "OK") {
@@ -80,4 +80,29 @@
             }
             return '';
         }
+
+        public static function getDistance(array $pointeOne, array $pointTwo) : ?array
+        {
+            $url  = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=';
+            $url .= '&origins=' . $pointeOne['lat'] .',' . $pointeOne['lng'];
+            $url .= '&destinations=' . $pointTwo['lat'] .',' . $pointTwo['lng'];
+            $url .= '&key=' . self::getGoogleKey();
+
+            // get the json response            
+            $data = file_get_contents($url);
+            $data = json_decode($data, true);
+
+            if ($data['status'] === 'OK' && $data['rows'][0]['elements'][0]['status'] === 'OK') {
+                return $data['rows'][0]['elements'][0];
+            }
+            return null;
+        }
+
+        public static function getGoogleKey(): string
+        {
+            return 'AIzaSyCst0EJ-LFVj3q0a6NHGFDU6HQ10H84HTI';
+        }
     }
+
+
+    #https://maps.googleapis.com/maps/api/distancematrix/json?units=&origins=40.6655101,-73.89188969999998&destinations=40.6905615,12&key=AIzaSyCst0EJ-LFVj3q0a6NHGFDU6HQ10H84HTI

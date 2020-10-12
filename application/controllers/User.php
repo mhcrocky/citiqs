@@ -1071,8 +1071,8 @@ class User extends BaseControllerWeb {
         if ($this->form_validation->run()) {
             $data = $this->input->post(null, true);
             $geoCoordinates = (Google_helper::getLatLong($data['address'], $data['zipcode'], $data['city'], $data['country']));
-			$hotel['lat'] = $geoCoordinates['lat'];
-			$hotel['lng'] = $geoCoordinates['long'];
+			$data['lat'] = $geoCoordinates['lat'];
+			$data['lng'] = $geoCoordinates['long'];
             $result = $this->user_model->editUser($data, $this->userId);
             if ($result) {
                 $this->session->set_userdata('name', $data['username']);

@@ -935,4 +935,19 @@ class User_model extends CI_Model
 
         return $result ? true : false;
     }
+
+    public function getDistanceBetweenUsers(int $firstId, int $secondId): ?array
+    {
+        $this->db->select('lat, lng');
+        $this->db->from('tbl_user');
+        $this->db->where_in('tbl_user.id', [$firstId, $secondId]);
+        $result = $this->db->get();
+        $result = $result->result_array();
+        if (isset($result[0]['lat']) && isset($result[0]['lng']) && isset($result[1]['lat']) && isset($result[1]['lng'])) {
+            $this->load->helper('google_helper');
+            return Google_helper::getDistance($result[0], $result[1]);
+        }
+        return null;
+
+    }
 }

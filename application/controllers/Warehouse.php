@@ -515,6 +515,7 @@
                 'rejectedColor' => $this->config->item('notActiveColor'),
                 'prePaid' => $this->config->item('prePaid'),
                 'postPaid' => $this->config->item('postPaid'),
+                'userId' => $userId,
             ];
 
             $this->loadViews('warehouse/orders', $this->global, $data, null, 'headerWarehouse');

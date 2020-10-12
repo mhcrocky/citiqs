@@ -212,6 +212,12 @@ var callThis = (function() {
         },
         confirmOrderAction: function(callFunction) {
             callFunction(this);
+        },
+        getDistance: function(callFunction, functionArg) {
+            if (this) {
+                functionArg.push(this);
+            }
+            callFunction(...functionArg);
         }
     };
     return methods;
