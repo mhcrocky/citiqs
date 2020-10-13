@@ -112,7 +112,7 @@
                                 </a>
                                 <a
                                     class='pab-plus refresh-me add-to-cart'
-                                    style='margin-top: 4px'
+                                    style=''
                                     href='javascript:void(0);'
                                     onclick='addToOrder(
                                         \"amount{$product['productExtendedId']}_{$mainProductExtendedId}\",
