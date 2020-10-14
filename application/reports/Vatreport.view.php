@@ -279,9 +279,6 @@
 					</div>
 				</div>
 
-
-
-
 			<div class="align-top width-650">
 				<div class="mb-35" style="margin-top: 30px; margin-left: -10px;">
 					<?php
@@ -440,6 +437,7 @@
 				));
 				?>
 			</div>
+
 			<div class="report-content" style=" margin-left: -10px; ">
 				<?php
 				DataTables::create(array(
@@ -452,17 +450,6 @@
 						),
 						"columns"=>array(
 
-							//					"createdAt"=>array(
-							//						"label"=> "DAY",
-							//						"type"=>"datetime",
-							//						"format"=>"Y-m-d H:i:s",
-							//						"displayFormat"=>"d-m-Y"
-							//					),
-
-//														tbl_shop_orders.paymentType AS paymentType,
-//							SUM(tbl_shop_orders.amount) AS orderTotalAmount,
-//						 	SUM(tbl_shop_orders.serviceFee) AS serviceFeeTotalAmount
-//
 								"spotName"=>array(
 										"label"=> "SPOT",
 										"type"=>"text"
@@ -477,39 +464,6 @@
 										"prefix"=>"€ ",
 										"footer"=>"sum"
 								),
-
-								"VATAndAmount"=>array(
-										"label"=> "VAT",
-										"type"=>"number",
-										"decimals"=>2,
-										"decimalPoint"=>",",        // Decimal point character
-										"thousand_sep"=>".",  // Thousand separator
-										"prefix"=>"€ ",
-										"footer"=>"sum"
-
-								),
-
-//							"VAT"=>array(
-//								"label"=> "V.A.T",
-//								"type"=>"number",
-//								"decimals"=>2,
-//								"decimalPoint"=>",",        // Decimal point character
-//								"thousand_sep"=>".",  // Thousand separator
-//								"prefix"=>"€ ",
-//								"footer"=>"sum"
-//							),
-
-//								"ORDERID"=>array(
-//									"label"=> "ORDERID",
-//									"type"=>"number",
-//									"decimals"=>0,
-//									"decimalPoint"=>",",        // Decimal point character
-//									"thousand_sep"=>""  // Thousand separator
-//									"prefix"=>"",
-//									"footer"=>""
-//								),
-
-
 						),
 
 						"options"=>array(
@@ -575,17 +529,6 @@
 							),
 							"columns"=>array(
 
-								//					"createdAt"=>array(
-								//						"label"=> "DAY",
-								//						"type"=>"datetime",
-								//						"format"=>"Y-m-d H:i:s",
-								//						"displayFormat"=>"d-m-Y"
-								//					),
-
-								//							tbl_shop_orders.paymentType AS paymentType,
-								//							SUM(tbl_shop_orders.amount) AS orderTotalAmount,
-								//						 	SUM(tbl_shop_orders.serviceFee) AS serviceFeeTotalAmount
-								//
 									"serviceTax"=>array(
 											"label"=> "VAT PERCENTAGE",
 											"type"=>"number",
@@ -593,7 +536,6 @@
 											"decimalPoint"=>",",        // Decimal point character
 											"thousand_sep"=>".",  // Thousand separator
 											"prefix"=>"% "
-
 									),
 
 									"orderServicefeeAmount"=>array(
@@ -615,38 +557,6 @@
 											"prefix"=>"€ ",
 											"footer"=>"sum"
 									),
-
-//									"serviceFeeTotalAmount"=>array(
-//											"label"=> "SERVICE FEE",
-//											"type"=>"number",
-//											"decimals"=>2,
-//											"decimalPoint"=>",",        // Decimal point character
-//											"thousand_sep"=>".",  // Thousand separator
-//											"prefix"=>"€ ",
-//											"footer"=>"sum"
-//
-//									),
-
-//							"VAT"=>array(
-//								"label"=> "V.A.T",
-//								"type"=>"number",
-//								"decimals"=>2,
-//								"decimalPoint"=>",",        // Decimal point character
-//								"thousand_sep"=>".",  // Thousand separator
-//								"prefix"=>"€ ",
-//								"footer"=>"sum"
-//							),
-
-//								"ORDERID"=>array(
-//									"label"=> "ORDERID",
-//									"type"=>"number",
-//									"decimals"=>0,
-//									"decimalPoint"=>",",        // Decimal point character
-//									"thousand_sep"=>""  // Thousand separator
-//									"prefix"=>"",
-//									"footer"=>""
-//								),
-
 
 							),
 
@@ -670,15 +580,11 @@
 					));
 					?>
 				</div>
-
-
 			</div>
 
 	</div>
 
 	<div class="col-half background-apricot height-100" style="text-align:left; font-size: smaller" >
-
-
 	<div class="align-top width-650" style="margin-bottom: 30px; margin-top: 30px">
 				<div class="report-content" style=" margin-left: -10px; ">
 					<form id="selectdateemails" method="post" >
@@ -778,7 +684,208 @@
 					?>
 				</div>
 			</div>
-		</div>
+
+		<div class="align-top width-650" style="margin-bottom: 30px; margin-top: 30px">
+			<div class="align-top width-650" style="margin-bottom: 30px">
+				<div class="mb-35" style=" margin-left: -10px;">
+					<?php
+					\koolreport\amazing\ChartCard::create(array(
+							"title"=>"PER PRODUCT",
+							"value"=>$this->dataStore("alldata_orders")->sum("totalamount"),
+							"format"=>array(
+									"value"=>array(
+											"type"=>"number",
+											"decimals"=>2,              // Number of decimals to show
+											"decimalPoint"=>",",        // Decimal point character
+											"thousand_sep"=>".",  // Thousand separator
+											"prefix"=>"€ ",
+									)
+							),
+							"cssClass"=>array(
+									"icon"=>"fa fa-calendar"
+							),
+							"cssStyle"=> [
+									"card"=>"background-color:#72b19f",
+									"title"=>"font-weight:bold",
+									"value"=>"font-style:italic",
+									"icon"=>"font-size:24px;color:white"
+							],
+					));
+					?>
+				</div>
+		<?php
+		DataTables::create(array(
+				"dataSource"=>$this->dataStore("alldata_orders"),
+				"showFooter"=>"bottom",
+				"responsive"=>true,
+				"width"=>"600px",
+				"cssClass"=>array(
+						"table"=>"dt-responsive table table-striped table-bordered",
+				),
+				"columns"=>array(
+
+
+						// orderAmount", "servicefee","totalamount
+
+						"productName"=>array(
+								"label"=> "PRODUCT",
+								"type"=>"text"
+
+						),
+
+						"productNameAantal"=>array(
+								"label"=> "AANTAL",
+								"type"=>"number",
+
+						),
+
+						"productPrice"=>array(
+								"label"=> "PRIJS",
+								"type"=>"number",
+								"decimals"=>2,
+								"decimalPoint"=>",",        // Decimal point character
+								"thousand_sep"=>".",  // Thousand separator
+								"prefix"=>"€ "
+						),
+
+						"totalamount"=>array(
+								"label"=> "TOTAL",
+								"type"=>"number",
+								"decimals"=>2,
+								"decimalPoint"=>",",        // Decimal point character
+								"thousand_sep"=>".",  // Thousand separator
+								"prefix"=>"€ ",
+								"footer"=>"sum"
+
+						),
+
+							"productVat"=>array(
+								"label"=> "V.A.T",
+								"type"=>"number",
+								"decimals"=>2,
+								"decimalPoint"=>",",        // Decimal point character
+								"thousand_sep"=>".",  // Thousand separator
+								"prefix"=>"% ",
+								"footer"=>"sum"
+							),
+
+//								"ORDERID"=>array(
+//									"label"=> "ORDERID",
+//									"type"=>"number",
+//									"decimals"=>0,
+//									"decimalPoint"=>",",        // Decimal point character
+//									"thousand_sep"=>""  // Thousand separator
+//									"prefix"=>"",
+//									"footer"=>""
+//								),
+
+
+				),
+
+				"options"=>array(
+						"order"=>array(
+								array(0,"asc") //Sort by second column asc
+						),
+						"searching"=>true,
+						"colReorder"=>true,
+						"pagingType"=>array("simple"),
+						"language"=>array("paginate"=>array("first"=>'«',
+								"previous"=>'‹',
+								"next"=>'›',
+								"last"=>'»'
+						)),
+						"paging"=>true,
+						"columnDefs"=>array(
+								array("width"=> "50px", "targets"=>"1" )
+						)
+				),
+		));
+		?>
 	</div>
+
+			<div class="align-top width-650" style="margin-bottom: 30px; margin-top: 30px">
+				<div class="align-top width-650" style="margin-bottom: 30px">
+					<div class="mb-35" style=" margin-left: -10px;">
+						<?php
+						\koolreport\amazing\ChartCard::create(array(
+								"title"=>"WAITER TIP PER ORDER",
+								"value"=>$this->dataStore("alldata_waiter")->sum("waiterTip"),
+								"format"=>array(
+										"value"=>array(
+												"type"=>"number",
+												"decimals"=>2,              // Number of decimals to show
+												"decimalPoint"=>",",        // Decimal point character
+												"thousand_sep"=>".",  // Thousand separator
+												"prefix"=>"€ ",
+										)
+								),
+								"cssClass"=>array(
+										"icon"=>"fa fa-calendar"
+								),
+								"cssStyle"=> [
+										"card"=>"background-color:#72b19f",
+										"title"=>"font-weight:bold",
+										"value"=>"font-style:italic",
+										"icon"=>"font-size:24px;color:white"
+								],
+						));
+						?>
+					</div>
+					<?php
+					DataTables::create(array(
+							"dataSource"=>$this->dataStore("alldata_waiter"),
+							"showFooter"=>"bottom",
+							"responsive"=>true,
+							"width"=>"600px",
+							"cssClass"=>array(
+									"table"=>"dt-responsive table table-striped table-bordered",
+							),
+							"columns"=>array(
+
+
+								// orderAmount", "servicefee","totalamount
+
+									"orderId"=>array(
+											"label"=> "ORDER",
+											"type"=>"text"
+
+									),
+
+									"waiterTip"=>array(
+											"label"=> "TIP",
+											"type"=>"number",
+											"decimals"=>2,
+											"decimalPoint"=>",",        // Decimal point character
+											"thousand_sep"=>".",  // Thousand separator
+											"prefix"=>"€ ",
+											"footer"=>"sum"
+									),
+
+							),
+
+							"options"=>array(
+									"order"=>array(
+											array(0,"asc") //Sort by second column asc
+									),
+									"searching"=>true,
+									"colReorder"=>true,
+									"pagingType"=>array("simple"),
+									"language"=>array("paginate"=>array("first"=>'«',
+											"previous"=>'‹',
+											"next"=>'›',
+											"last"=>'»'
+									)),
+									"paging"=>true,
+									"columnDefs"=>array(
+											array("width"=> "50px", "targets"=>"1" )
+									)
+							),
+					));
+					?>
+				</div>
+</div>
+</div>
+</div>
+
 </div>
 

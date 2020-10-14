@@ -185,16 +185,17 @@
 			$draw->annotation(0, 30, "order: " . $order['orderId'] . " naam: " . $order['buyerUserName']);;
 			$draw->annotation(0, 70, "datum:". date("m-d h:i:sa"). " spot: ". $order['spotName'] );
 
-            if (!empty($order['paymentType'])) {
+
+			if ($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid')) {
 
 				$drawemail->setStrokeWidth(4);
 				$drawemail->setFontSize(28);
 				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-                $drawemail->annotation(0, 30, 'SERVICE BY WAITER');
+				$drawemail->annotation(0, 30, 'SERVICE BY WAITER');
 				$drawemail->setStrokeWidth(2);
 				$drawemail->setFontSize(28);
 				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-            }
+			}
 			$drawemail->annotation(0, 70, "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);
 			$drawemail->annotation(0, 105, "DATE:". date("m-d h:i:sa"). " SPOT: ". $order['spotName'] );
 
@@ -489,7 +490,7 @@
 			$drawemail->setFontSize(28);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 			$drawemail->annotation(0, 175 + ($i * 30), 'TOTAAL');
-			if (!empty($order['paymentType'])) {
+			if ($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid')) {
 				$drawemail->annotation(0, 30, 'SERVICE BY WAITER');
 			}
 			$totalamt = floatval($order['serviceFee']+$TStotalamount);
