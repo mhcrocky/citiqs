@@ -527,4 +527,14 @@
 
             return;
         }
+
+        public static function sanitizePost(): array
+        {
+            $CI =& get_instance();
+            $post = [];
+            foreach ($_POST as $key => $value) {
+                $post[$key] = $CI->input->post($key, true);
+            };
+            return $post;
+        }
     }

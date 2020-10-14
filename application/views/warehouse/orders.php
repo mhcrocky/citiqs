@@ -155,6 +155,7 @@
             'rejectedColor' : '<?php echo $rejectedColor; ?>',
             'prePaid' : '<?php echo $prePaid; ?>',
             'postPaid' : '<?php echo $postPaid; ?>',
+            'userId' : '<?php echo $userId; ?>',
         }
         Object.freeze(globals);
         return globals;

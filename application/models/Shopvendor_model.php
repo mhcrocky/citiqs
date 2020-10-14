@@ -37,6 +37,7 @@
         public $tipWaiter;
         public $minBusyTime;
         public $maxBusyTime;
+        public $receiptOnlyToWaiter;
 
         public $bancontact;
         public $ideal;
@@ -122,6 +123,7 @@
             if (isset($data['tipWaiter']) && !($data['tipWaiter'] === '1' || $data['tipWaiter'] === '0')) return false;
             if (isset($data['minBusyTime']) && !Validate_data_helper::validateInteger($data['minBusyTime'])) return false;
             if (isset($data['maxBusyTime']) && !Validate_data_helper::validateInteger($data['maxBusyTime'])) return false;
+            if (isset($data['receiptOnlyToWaiter']) && !($data['receiptOnlyToWaiter'] === '1' || $data['receiptOnlyToWaiter'] === '0')) return false;
 
             return true;
         }
@@ -166,6 +168,7 @@
                     $this->table . '.tipWaiter',
                     $this->table . '.minBusyTime',
                     $this->table . '.maxBusyTime',
+                    $this->table . '.receiptOnlyToWaiter',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',

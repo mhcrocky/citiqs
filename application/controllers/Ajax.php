@@ -1136,4 +1136,20 @@ class Ajax extends CI_Controller
 
         return Email_helper::sendOrderEmail($post['buyerEmail'] , $subject, $message);
     }
+
+    public function getDistance(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+        $post = Utility_helper::sanitizePost();
+        $data = $this->user_model->getDistanceBetweenUsers(intval($post['vendorId']), intval($post['buyerId']));
+        if ($data) {
+            echo json_encode($data);
+        } else {
+            $response = [
+                'status' => '0',
+                'message' => 'Information not available',
+            ];
+            echo json_encode($response);
+        }
+    }
 }

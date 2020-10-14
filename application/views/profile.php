@@ -471,7 +471,6 @@
 						<label class="radio-inline" for="tipWaiterNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="tipWaiterNo" name="vendor[tipWaiter]" value="0" <?php if ($vendor['tipWaiter'] === '0') echo 'checked'; ?> />
 					</div>
-
 					<h4>SET BUSY AND SLOW TIME</h4>
 					<div class="form-group mb-35">
 						<label for="minBusyTime">Minutes for slow&nbsp;
@@ -498,9 +497,13 @@
 							&nbsp; time.
 						</label>
 					</div>
-
-
-
+					<h4>RECEIPT ONLY TO A WAITER</h4>
+					<div class="form-group mb-35">
+						<label class="radio-inline" for="receiptOnlyToWaiterYes">Yes</label>
+						<input type="radio" id="receiptOnlyToWaiterYes" name="vendor[receiptOnlyToWaiter]" value="1" <?php if ($vendor['receiptOnlyToWaiter'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="receiptOnlyToWaiterNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="receiptOnlyToWaiterNo" name="vendor[receiptOnlyToWaiter]" value="0" <?php if ($vendor['receiptOnlyToWaiter'] === '0') echo 'checked'; ?> />
+					</div>
 					<br/>
 					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />
