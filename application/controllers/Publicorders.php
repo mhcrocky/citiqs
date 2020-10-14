@@ -581,11 +581,13 @@
         public function cashPayment($payStatus, $payType): void
         {
             $this->insertOrderProcess($payStatus, $payType);
-            $redirect =  ($_SESSION['vendor']['vendorId'] === 1162 || $_SESSION['vendor']['vendorId'] === 5655 ) ?  'successth' : 'success';
-            // peter  change
-			//            var_dump($redirect);
-			//            die();
-            Utility_helper::unsetPaymentSession();
+            if ($_SESSION['vendor']['vendorId'] === 1162 || $_SESSION['vendor']['vendorId'] === 5655) {
+                Utility_helper::unsetPaymentSession();
+                $redirect = 'successth';
+            } else {
+                $redirect = 'success';
+                $_SESSION['orderStatusCode'] = ($payStatus === $this->config->item('orderPaid')) ? $this->config->item('payNlSuccess') : 0;
+            }
             redirect($redirect);
         }
 

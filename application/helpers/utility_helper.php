@@ -244,6 +244,7 @@
             unset($_SESSION['vendor']);
             unset($_SESSION['spot']);
             unset($_SESSION['orderVendorId']);
+            unset($_SESSION['orderStatusCode']);
 
             return;
         }
