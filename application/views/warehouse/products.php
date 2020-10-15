@@ -86,6 +86,10 @@
                                     class="form-control"
                                     rows="1"></textarea>
                             </div>
+                            <div class="col-lg-4 col-sm-12  form-group">
+                                <label for="preparationTime">Preparation time in minutes: </label>
+                                <input type="number" min="0" value="0" max="255" name="product[preparationTime]" id="preparationTime" class="form-control" />                         
+                            </div>
                             <?php if (in_array($localTypeId, $vendorTypes)) { ?>
                                 <div class="col-lg-4 col-sm-12">
                                     <label for="vatInsert">VAT: </label>
@@ -657,6 +661,10 @@
                                             <div class="col-lg-4 col-sm-12">
                                                 <label for="longDescription<?php echo $product['productId'] ?>">Long description: </label>
                                                 <textarea name="productExtended[longDescription]" id="longDescription<?php echo $product['productId'] ?>" rows="1" class="form-control"><?php if($details['longDescription']) echo  $details['longDescription']; ?></textarea>
+                                            </div>
+                                            <div class="col-lg-4 col-sm-12  form-group">
+                                                <label for="preparationTime<?php echo $product['productId'] ?>">Preparation time in minutes: </label>
+                                                <input type="number" min="0" value="<?php echo $product['preparationTime']; ?>" max="255" name="product[preparationTime]" id="preparationTime<?php echo $product['productId'] ?>" class="form-control" />                         
                                             </div>
                                             <?php if (in_array($localTypeId, $vendorTypes)) { ?>
                                                 <div class="col-lg-4 col-sm-12">
