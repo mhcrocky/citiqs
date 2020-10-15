@@ -41,7 +41,7 @@ class Alfredpayment extends BaseControllerWeb
         
         $vendor = $_SESSION['vendor'];
         $serviceId = $vendor['payNlServiceId'];
-        $orderId = Utility_helper::getSessionValue('orderId');
+        $orderId = $_SESSION['orderId'];
         $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
         $order = reset($order);
         $arguments = Pay_helper::getArgumentsArray($vendor['vendorId'], $order, $serviceId, $paymentType, $paymentOptionSubId);
@@ -63,9 +63,8 @@ class Alfredpayment extends BaseControllerWeb
             exit();
         }
 
-        $this->session->set_flashdata('error', 'Payment engine error. Please, contact staff');
-        $redirect = 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $order['spotId'];
-        redirect($redirect);
+        $_SESSION['orderStatusCode'] = 'err';
+        redirect('success');        
         exit();
     }
 
@@ -95,34 +94,20 @@ class Alfredpayment extends BaseControllerWeb
 
     public function successPayment(): void
     {
-        $redirect = 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'] . '&spotid=' . $_SESSION['spotId'];
-
         $lastpageforvendorId = $_SESSION['vendor']['vendorId'];
-
-        Utility_helper::unsetPaymentSession();
-
         $get = $this->input->get(null, true);
-        $statuscode = intval($get['orderStatusId']);
+        $_SESSION['orderStatusCode'] = intval($get['orderStatusId']);
 
-        if ($statuscode === 100) {
+        if ($_SESSION['orderStatusCode'] === $this->config->item('payNlSuccess')) {
             $this->shoporderpaynl_model->setProperty('transactionId', $get['orderId'])->updatePayNl(['successPayment' => date('Y-m-d H:i:s')]);
             $this->shoporder_model->updatePaidStatus($this->shoporderpaynl_model, ['paid' => $this->config->item('orderPaid')]);
+        }
 
-            $this->session->set_flashdata('success', 'Your order is paid');
-
-            if ($lastpageforvendorId == 1162) {
-				$redirect = 'successth';
-			} else {
-                // var_dump($lastpageforvendorId);
-                // die();
-				$redirect = 'success';
-			}
-        } elseif ($statuscode < 0 ) {
-            $this->session->set_flashdata('error', 'Order not paid');
-        } elseif ($statuscode >= 0) {
-            $this->session->set_flashdata('warning', 'Order not paid');
+        if ($lastpageforvendorId == 1162) {
+            $redirect = 'successth';
+            Utility_helper::unsetPaymentSession();
         } else {
-            $this->session->set_flashdata('error', 'Payment error');
+            $redirect = 'success';
         }
 
         redirect($redirect);

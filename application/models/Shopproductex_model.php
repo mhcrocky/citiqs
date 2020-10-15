@@ -453,6 +453,7 @@
                     'tbl_shop_products.onlyOne AS onlyOne',
                     'tbl_shop_products.addRemark AS addRemark',
                     'tbl_shop_products.allergies AS allergies',
+                    'tbl_shop_products.preparationTime AS preparationTime',
                     'tbl_shop_categories.category',
                     'tbl_shop_categories.id AS categoryId',
                     'tblShopAddons.addons AS addons'

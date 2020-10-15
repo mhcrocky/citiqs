@@ -12,39 +12,41 @@ class  Paysuccesslink extends BaseControllerWeb
     {
         parent::__construct();
         $this->load->helper('url');
+        $this->load->helper('utility_helper');
+        $this->load->config('custom');
         $this->load->library('language', array('controller' => $this->router->class));
     }
 
     public function index()
     {
         $this->global['pageTitle'] = 'TIQS : SUCCESS';
-//        $amount=10;
-//        $description="";
-//        $data = array(
-//        	'amount' => $amount,
-//			'description' =>'testscreen'
-//		);
-//		$this->loadViews("paysuccess", $this->global, $data, NULL); // payment screen
-//		$this->loadViews("checkLabelregisterednew", $this->global, NULL, NULL); // payment screen
-//		$this->loadViews("newregisteredhotelinfo", $this->global, NULL, NULL);
-//		$this->loadViews("nolabels", $this->global, NULL, NULL); // payment screen
-//		$data =array('code'=>'tesscreen', 'token'=>'121212','userId'=> '1');
-//		$this->loadViews("bagit", $this->global, $data, NULL); // payment screen
-//		$this->loadViews("ordernewtiqsbags", $this->global, NULL, NULL); // payment screen
-//		$this->loadViews("homenew", $this->global, NULL, NULL); // payment screen
+        if (empty($_SESSION['redirect'])) {
+            $_SESSION['redirect'] = base_url() . 'make_order?vendorid=' . $_SESSION['orderVendorId'] . '&spotid=' . $_SESSION['spot']['spotId'];
+        }
+        
+        if (
+            empty($_SESSION['orderId'])
+            || empty($_SESSION['postOrder'])
+            || empty($_SESSION['spot'])
+            || empty($_SESSION['orderStatusCode'])
+        ) {
+            $redirect = $_SESSION['redirect'];
+            unset($_SESSION['redirect']);
+            redirect($redirect);
+        }
 
+        $data = [
+        	'odredId' => $_SESSION['orderId'],
+            'amount' => floatval($_SESSION['postOrder']['order']['amount']),
+            'waiterTip' => floatval($_SESSION['postOrder']['order']['waiterTip']),
+            'spotName' => $_SESSION['spot']['spotName'],
+            'orderStatusCode' => $_SESSION['orderStatusCode'],
+            'successCode' => $this->config->item('payNlSuccess'),
+            'redirect' => $_SESSION['redirect'],
+        ];
 
-        $data = array(
-        	'Spotlabel' => '2 Persoonstafel',
-        	'price' => 10,
-			'timeto' =>'12:00',
-			'timefrom' => '13:00',
-			'numberofpersons' => 2
-		);
+        Utility_helper::unsetPaymentSession();
 
-		$this->loadViews("paysuccesslink", $this->global, $data, 'nofooter', 'noheader'); // payment screen
-
+        $this->loadViews("paysuccesslink", $this->global, $data, 'nofooter', 'noheader');
 	}
-
 }
-

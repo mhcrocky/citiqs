@@ -12,211 +12,104 @@
 
         <div class="row d-flex justify-content-center" id="checkout">
             <div class="col-sm-12 col-lg-9 left-side">
-                <div class="checkout-title">
-                    <span>Your details</span>
-                </div>
-                <div class="row">
-                    <?php if ($vendor['requireName'] === '1') { ?>
-                        <div class="form-group col-sm-6">
-                            <label for="firstNameInput">Name (<sup>*</sup>)</label>
-                            <input id="firstNameInput" class="form-control" name="user[username]" value="<?php echo $username; ?>" type="text" placeholder="Name" required />
-                        </div>
-                    <?php } else { ?>
-                        <input name="user[username]" value="<?php echo 'no name ' . date('Y-m-d H:i:s'); ?>" type="text" readonly hidden required />
-                    <?php } ?>
-                    <?php
-                        if ($vendor['requireEmail'] === '1' || intval($spot['spotTypeId']) !== $local) {
-                            ?>
+                <?php if (isset($workingTime)) { ?>
+                    <div class="checkout-title">
+                        <span><?php echo $spot['spotType']; ?> period and time</span>
+                    </div>
+                    <div class="row">                        
+                        <?php if (intval($spot['spotTypeId']) === $this->config->item('deliveryType')) { ?>
                             <div class="form-group col-sm-6">
-                                <label for="emailAddressInput">Email address <sup>*</sup></label>
+                                <label for="city">City <sup>*</sup></label>
                                 <input
-                                    type="email"
-                                    id="emailAddressInput"
+                                    type="teyt"
+                                    id="city"
                                     class="form-control"
-                                    name="user[email]"
-                                    value="<?php echo $email; ?>"
-                                    placeholder="Email address"
+                                    name="user[city]"
+                                    value="<?php echo $city; ?>"
+                                    placeholder="City"
+                                    required
+                                />
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="zipcode">Zip code <sup>*</sup></label>
+                                <input
+                                    type="text"
+                                    id="zipcode"
+                                    class="form-control"
+                                    name="user[zipcode]"
+                                    value="<?php echo $zipcode; ?>"
+                                    placeholder="Zip code"
+                                    required
+                                />
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="address">Address <sup>*</sup></label>
+                                <input
+                                    type="text"
+                                    id="address"
+                                    class="form-control"
+                                    name="user[address]"
+                                    value="<?php echo $address; ?>"
+                                    placeholder="Delivery address"
                                     required
                                     oninput="checkUserNewsLetter(this.id)"
                                 />
-                            </div>
-                            <?php
-                        } else {
-                            $email = 'anonymus_' . strval(time()) . '_' . rand(1, 1000000) . '@tiqs.com';
-                        ?>
-                        <input name="user[email]" value="<?php echo $email; ?>" type="text" readonly hidden required />
-                    <?php } ?>
-                    <!-- <div class="form-group col-sm-6" style="display:none">
-                        <label for="country-code">Country Code <sup>*</sup></label>
-                        <select name="user[country]" class='form-control'>
-                            <?php #foreach ($countries as $countryCode => $country) { ?>
-                                <option
-                                    value="<?php #echo $countryCode; ?>"
-                                    <?php
-                                        // if ( 
-                                        //     (!$userCountry && $countryCode === 'NL') 
-                                        //     || ($userCountry && $countryCode === $userCountry)
-                                        // ) {
-                                        //     echo 'selected';
-                                        // }
-                                    ?>
-                                    >
-                                    <?php #echo $country; ?>
-                                </option>
-                            <?php #} ?>
-                        </select>
-                    </div> -->
-                    <?php if ($vendor['requireMobile'] === '1' || intval($spot['spotTypeId']) !== $local ) { ?>
+                            </div>                            
+                        <?php } ?>
                         <div class="form-group col-sm-6">
-                            <label for="phoneInput">Phone <sup>*</sup></label>
+                            <label for="typeTime" >Select <?php echo lcfirst($spot['spotType']); ?> period <sup>*</sup></label>
                             <div>
-                                <select class="form-control" style="width:22% !important; display:inline-block !important" name="phoneCountryCode" style="text-align:center">
-                                    <?php foreach ($countryCodes as $code => $data) { ?>                                
-                                        <option
-                                            value="<?php $value = '00' . $data['code']; echo $value ?>"0
-                                            <?php
-                                                if (
-                                                    ($phoneCountryCode && $code === $phoneCountryCode)
-                                                    || ($phoneCountryCode && $value === $phoneCountryCode)
-                                                    || (!$phoneCountryCode && $code === $vendor['vendorCountry'])
-                                                ) echo 'selected';
-                                            ?>
-                                            >
-                                            <?php echo $code; ?>
-                                        </option>
-                                    <?php } ?>
-                                </select>
-                                <input id="phoneInput" class="form-control" style="width:76% !important; display:inline-block !important" name="user[mobile]" value="<?php echo $mobile; ?>" type="text" placeholder="Phone" required />
-                            </div>
-                        </div>
-                    <?php } ?>
-                    <?php if ($vendor['requireNewsletter'] === '1') { ?>
-                        <div class="form-group col-sm-12">
-                            <label>Recive our newsletter</label>
-                            <label class="radio-inline" for="newsLetterYes">
-                                <input type="radio" id="newsLetterYes" name="user[newsletter]" value="1" />
-                                Yes
-                            </label>
-                            <label class="radio-inline" for="newsLetterNo">
-                                <input type="radio" id="newsLetterNo" name="user[newsletter]"  value="0" checked />
-                                No
-                            </label>
-                        </div>
-                    <?php } ?>
-                    <?php if ($vendor['termsAndConditions'] && $vendor['showTermsAndPrivacy'] === '1') { ?>
-                    <div class="form-group col-sm-12 checkbox">
-                        <label>
-                            <input type="checkbox" value="1" name="order[termsAndConditions]"  <?php echo $termsAndConditions; ?> />
-                            I read and accept the <a href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spot['spotId']; ?>">Terms and conditions</a>
-                        </label>
-                    </div>
-                    <div class="form-group col-sm-12 checkbox">
-                        <label>
-                            <input type="checkbox" value="1"  name="order[privacyPolicy]" <?php echo $privacyPolicy; ?> />
-                            I took notice of <a href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spot['spotId']; ?>">Privacy policy</a>
-                        </label>
-                    </div>
-                    <?php } ?>
-                    <?php
-                        if (isset($workingTime)) {
-                            ?>
-                            <?php if (intval($spot['spotTypeId']) === $this->config->item('deliveryType')) { ?>
-                                <div class="form-group col-sm-6">
-                                    <label for="city">City <sup>*</sup></label>
-                                    <input
-                                        type="teyt"
-                                        id="city"
-                                        class="form-control"
-                                        name="user[city]"
-                                        value="<?php echo $city; ?>"
-                                        placeholder="City"
-                                        required
-                                    />
-                                </div>
-                                <div class="form-group col-sm-6">
-                                    <label for="zipcode">Zip code <sup>*</sup></label>
-                                    <input
-                                        type="text"
-                                        id="zipcode"
-                                        class="form-control"
-                                        name="user[zipcode]"
-                                        value="<?php echo $zipcode; ?>"
-                                        placeholder="Zip code"
-                                        required
-                                    />
-                                </div>
-                                <div class="form-group col-sm-6">
-                                    <label for="address">Address <sup>*</sup></label>
-                                    <input
-                                        type="text"
-                                        id="address"
-                                        class="form-control"
-                                        name="user[address]"
-                                        value="<?php echo $address; ?>"
-                                        placeholder="Delivery address"
-                                        required
-                                        oninput="checkUserNewsLetter(this.id)"
-                                    />
-                                </div>                            
-                            <?php } ?>
-                            <div class="form-group col-sm-6">
-                                <label for="typeTime" >Select <?php echo lcfirst($spot['spotType']); ?> period <sup>*</sup></label>
-                                <div>
-                                    <select
-                                        name="order[date]"
-                                        class="form-control"
-                                        style="text-align:center"
-                                        onchange="buyerSelectTime(this.value, 'orderTimeDiv', 'orderTimeInput')"
-                                        >
-                                        <option value="">Select</option>
-                                        <?php
-                                            $now = now();
-                                            foreach ($workingTime as $date => $time) {
-                                                foreach ($time as $hours) {
-                                                    // checking time from and time to for current date
-                                                    if ($date === date('Y-m-d', $now)) {
-                                                        $userTimeSubstract = $delayTime + $busyTime;
+                                <select
+                                    name="order[date]"
+                                    class="form-control"
+                                    style="text-align:center"
+                                    onchange="buyerSelectTime(this.value, 'orderTimeDiv', 'orderTimeInput')"
+                                    >
+                                    <option value="">Select</option>
+                                    <?php
+                                        $now = now();
+                                        foreach ($workingTime as $date => $time) {
+                                            foreach ($time as $hours) {
+                                                // checking time from and time to for current date
+                                                if ($date === date('Y-m-d', $now)) {
+                                                    $userTimeSubstract = $delayTime + $busyTime;
 
-                                                        // first check time to, is period in past
-                                                        $subtractTime = strtotime($hours['timeTo']) - $userTimeSubstract * 60;
-                                                        $checkTimeTo = date('H:i:s', $subtractTime);
-                                                        if (date('H:i:s', $now) > $checkTimeTo) continue;
+                                                    // first check time to, is period in past
+                                                    $subtractTime = strtotime($hours['timeTo']) - $userTimeSubstract * 60;
+                                                    $checkTimeTo = date('H:i:s', $subtractTime);
+                                                    if (date('H:i:s', $now) > $checkTimeTo) continue;
 
-                                                        // check time to and set new if needed
-                                                        $checkTimeFrom = date('Y-m-d H:i:s', strtotime('+' . $userTimeSubstract . ' minutes', $now));
-                                                        if (date($date . ' ' . $hours['timeFrom']) < $checkTimeFrom) {
-                                                            $hours['timeFrom'] = date('H:i:s', strtotime($checkTimeFrom));
-                                                        }
+                                                    // check time to and set new if needed
+                                                    $checkTimeFrom = date('Y-m-d H:i:s', strtotime('+' . $userTimeSubstract . ' minutes', $now));
+                                                    if (date($date . ' ' . $hours['timeFrom']) < $checkTimeFrom) {
+                                                        $hours['timeFrom'] = date('H:i:s', strtotime($checkTimeFrom));
                                                     }
-                                                    ?>
-                                                        <option
-                                                            value="<?php echo $date . ' ' . $hours['timeFrom']. ' ' . $hours['timeTo']; ?>"
-                                                        >
-                                                            <?php echo $date . ' (' . $hours['day'] . ') From: ' . $hours['timeFrom'] . ' To: ' . $hours['timeTo'] ?>
-                                                        </option>
-                                                    <?php
                                                 }
+                                                ?>
+                                                    <option
+                                                        value="<?php echo $date . ' ' . $hours['timeFrom']. ' ' . $hours['timeTo']; ?>"
+                                                    >
+                                                        <?php echo $date . ' (' . $hours['day'] . ') From: ' . $hours['timeFrom'] . ' To: ' . $hours['timeTo'] ?>
+                                                    </option>
+                                                <?php
                                             }
-                                        ?>
-                                    </select>
-                                </div>
+                                        }
+                                    ?>
+                                </select>
                             </div>
-                            <div class="form-group col-sm-12" id="orderTimeDiv" style="display:none">
-                                <label for="orderTime">Select  <?php echo lcfirst($spot['spotType']); ?> time (<sup>*</sup>)</label>
-                                <input type="text" id="orderTimeInput" class="form-control timepicker" name="order[time]" />
-                            </div>
-
-
-                        <?php
-                        }
-                    ?>
-                </div>
+                        </div>
+                        <div class="form-group col-sm-12" id="orderTimeDiv" style="display:none">
+                            <label for="orderTime">Select <?php echo lcfirst($spot['spotType']); ?> time (<sup>*</sup>)</label>
+                            <input type="text" id="orderTimeInput" class="form-control timepicker" name="order[time]" />
+                        </div>
+                    </div>
+                <?php } ?>
                 <div class="checkout-btns">
                     <a href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spotId; ?>" style="background-color: #948b6f" class="button">
                         <i class="fa fa-arrow-left"></i>
                         Back to list                    </a>
                     <a href="javascript:void(0);" style="background-color: #349171" class="button" onclick="submitForm('goOrder', 'serviceFeeInput', 'orderAmountInput');">
-                        Pay
+                        Continue
                         <i class="fa fa-arrow-right"></i>
                     </a>
                 </div>
