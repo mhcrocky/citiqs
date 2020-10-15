@@ -995,10 +995,10 @@ div.filter-sidebar ul li a {
 }
 
 .checkout-table__product-details{
-	/*width: calc(100% - 275px);*/
-	width: 70%;
+	width: calc(100% - 180px);
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+	align-items: flex-start;
 }
 
 .checkout-table__product-details--addons{
@@ -1031,21 +1031,27 @@ div.filter-sidebar ul li a {
 	justify-content: center;
 }
 
+.checkout-table__quantity i{
+	color: white !important;
+	margin-left: 0 !important;
+}
+
 .checkout-table__quantity .makeOrder{
 	height: auto;
 	width: auto;
 	line-height: 1em;
 	border-radius: 20%;
-    width: 25px;
-    height: 25px;
-    min-width: 25px;
-    min-height: 25px;
+	width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
     background-color: var(--main-bg-color);
     padding: 0 !important;
     display: flex;
     align-items: center;
     justify-content: center;
 	color: white;
+	
 }
 
 
@@ -1056,12 +1062,17 @@ div.filter-sidebar ul li a {
     align-items: center;
 }
 
+.checkout-table__numbers span{
+	text-align: center;
+}
+
 .checkout-table__quantity .makeOrder:hover{
 	cursor: pointer;
 }
 
 .checkout-table__price{
-	width: calc( 100% - 100px);
+	min-width: 70px;
+	max-width: 90px;
 	display: flex;
     align-items: center;
 	justify-content: flex-end;
@@ -1093,6 +1104,21 @@ div.filter-sidebar ul li a {
 	font-size: 18px;
 	line-height: 1.4em;
 	
+}
+
+.checkout-table__number-of-products{
+	border-radius: 20%;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    background-color: var(--main-bg-color);
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+	margin: 0 10px;
 }
 
 .checkout-table__single-element--total{
@@ -1133,7 +1159,6 @@ div.filter-sidebar ul li a {
 .checkout-table__numbers i{
 	font-size: 18px;
     color: #ec2121;
-	margin-left: 15px;
 }
 
 
@@ -1148,23 +1173,16 @@ div.filter-sidebar ul li a {
 	}
 	
 	.checkout-table__product-details{
-		width: 100%;
 		margin-left: 0;
-		/*padding-left: 10px;*/
 		margin-bottom: 15px;
 	}
 	
 	.checkout-table__quantity{
 		width: auto;
 		max-width: unset;
-		margin-left: 5px;
-   	 	padding: 0;
-	}
-	
-	.checkout-table__price{
-		width: auto;
-		max-width: 240px;
-		justify-content: flex-end;
+		margin-left: 11px;
+		margin-right: 15px;
+		padding: 0;
 	}
 	
 	.checkout-table__num-order b, .checkout-table__product-details p{
@@ -1187,7 +1205,7 @@ div.filter-sidebar ul li a {
 	}
 	
 	.checkout-table__numbers{
-		width: 100%;
+		width: 180px;
 	}
 	
 	.checkout-table__quantity{
