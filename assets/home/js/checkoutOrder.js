@@ -406,6 +406,8 @@ function addTip(waiterTip) {
         let serviceFeeValue = document.getElementById('serviceFeeInput').value;
         let totalWithTip = tip + parseFloat(orderValue) + parseFloat(serviceFeeValue);
         document.getElementById('totalWithTip').value = totalWithTip.toFixed(2);
+    } else {
+        waiterTip.value = '0';
     }
 }
 
