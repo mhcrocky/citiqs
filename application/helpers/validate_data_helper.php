@@ -151,6 +151,8 @@
 
         public static function validateMobileNumber(string $mobile): bool
         {
-            return strlen(trim($mobile)) > 8 && is_numeric($mobile) ? true : false;
+            $CI =& get_instance();
+            $CI->load->config('custom');
+            return strlen(trim($mobile)) >= $CI->config->item('minMobileLength') && is_numeric($mobile) ? true : false;
         }
     }

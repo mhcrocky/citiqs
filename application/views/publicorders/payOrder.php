@@ -411,7 +411,7 @@
 
 
                                 <div class="footer" style="text-align:left">
-                                    <a href="<?php echo base_url(); ?>checkout_order" class="btn-cancel">
+                                    <a href="<?php echo base_url(); ?>buyer_details" class="btn-cancel">
                                         <i class="fa fa-arrow-left"></i>
                                         <span data-trans="" data-trn-key="Annuleren">Annuleren</span>
                                     </a>

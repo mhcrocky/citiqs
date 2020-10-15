@@ -1,5 +1,8 @@
 <main class="container" style="text-align:left; margin-bottom:20px">
-    <form id="goOrder" method="post" action="<?php echo base_url() . 'publicorders/confirmBuyerData'; ?>">
+    <form id="goBuyerDetailsr" method="post" action="<?php echo base_url() . 'publicorders/confirmBuyerData'; ?>">
+        <input type="text"      name="user[roleid]"         value="<?php echo $buyerRole; ?>" required readonly hidden />
+        <input type="text"      name="user[usershorturl]"   value="<?php echo $usershorturl; ?>" required readonly hidden />
+        <input type="text"      name="user[salesagent]"     value="<?php echo $salesagent; ?>" required readonly hidden /> 
         <div class="row d-flex justify-content-center" id="checkout">
             <div class="col-sm-12 col-lg-9 left-side">
                 <div class="checkout-title">
@@ -67,7 +70,16 @@
                                         </option>
                                     <?php } ?>
                                 </select>
-                                <input id="phoneInput" class="form-control" style="width:76% !important; display:inline-block !important" name="user[mobile]" value="<?php echo $mobile; ?>" type="text" placeholder="Phone" required />
+                                <input
+                                    id="phoneInput"
+                                    class="form-control"
+                                    style="width:76% !important; display:inline-block !important"
+                                    name="user[mobile]"
+                                    value="<?php echo $mobile; ?>"
+                                    type="text"
+                                    placeholder="Phone"
+                                    required
+                                />
                             </div>
                         </div>
                     <?php } ?>
@@ -103,7 +115,7 @@
                     <a href="<?php echo base_url() . 'checkout_order'; ?>" style="background-color: #948b6f" class="button">
                         <i class="fa fa-arrow-left"></i>
                         Back to list                    </a>
-                    <a href="javascript:void(0);" style="background-color: #349171" class="button" onclick="submitForm('goOrder', 'serviceFeeInput', 'orderAmountInput');">
+                    <a href="javascript:void(0);" style="background-color: #349171" class="button" onclick="submitBuyerDetails('goBuyerDetailsr', 'emailAddressInput', 'firstNameInput', 'phoneInput');">
                         Pay
                         <i class="fa fa-arrow-right"></i>
                     </a>
@@ -113,5 +125,11 @@
     </form>
 </main>
 <script>
-    
+    var buyerDetailsGlobals = (function(){
+        let gloabls = {
+            'minMobileLength' : '<?php echo $minMobileLength; ?>'
+        }
+        Object.freeze(gloabls);
+        return gloabls;
+    }());
 </script>

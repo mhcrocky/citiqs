@@ -227,15 +227,11 @@
                 'spotId' => $_SESSION['spotId'],
                 'vendor' =>  $_SESSION['vendor'],
                 'orderDetails' => $_SESSION['order'],
-                'buyerRole' => $this->config->item('buyer'),
-                'usershorturl' => 'tiqs_shop_service',
-                'salesagent' => $this->config->item('tiqsId'),
                 // 'countries' => Country_helper::getCountries(),
                 'countryCodes' => Country_helper::getCountryPhoneCodes(),
                 'spot' => $_SESSION['spot'],
                 'oldMakeOrderView' => $this->config->item('oldMakeOrderView'),
                 'newMakeOrderView' => $this->config->item('newMakeOrderView'),
-                'local' => $this->config->item('local'),
             ];
             $this->setDelayTime($data);
 
@@ -289,6 +285,7 @@
             $this->validateDeliveryPickupData($_POST);
 
             $_SESSION['postOrder'] = $this->input->post(null, true);
+            // TO DO CHECK NEWS LETTER
             if (!isset($_SESSION['postOrder']['order']['waiterTip']) || intval($_SESSION['postOrder']['order']['waiterTip']) < 0) {
                 $_SESSION['postOrder']['order']['waiterTip'] = 0;
             }
@@ -313,36 +310,49 @@
 
             $data = [];
             $data['vendor'] = $_SESSION['vendor'];
+            $data['spot'] = $_SESSION['spot'];
             $data['username'] = isset($_SESSION['postOrder']['user']['username']) ? $_SESSION['postOrder']['user']['username'] : get_cookie('userName');
             $data['email'] = isset($_SESSION['postOrder']['user']['email']) ? $_SESSION['postOrder']['user']['email'] : get_cookie('email');
-            $data['mobile'] = isset($_SESSION['postOrder']['user']['mobile']) ? $_SESSION['postOrder']['user']['mobile'] : get_cookie('mobile');
+            $data['mobile'] = isset($_SESSION['onlyMobileNumber']) ? $_SESSION['onlyMobileNumber'] : get_cookie('mobile');
             $data['userCountry'] = isset($_SESSION['postOrder']['user']['country']) ? $_SESSION['postOrder']['user']['country'] : '';
             $data['phoneCountryCode'] = isset($_SESSION['postOrder']['phoneCountryCode']) ? $_SESSION['postOrder']['phoneCountryCode'] : '';
             $data['termsAndConditions'] = isset($_SESSION['postOrder']['order']['termsAndConditions']) ? 'checked' : '';
             $data['privacyPolicy'] = isset($_SESSION['postOrder']['order']['privacyPolicy']) ? 'checked' : '';
+            $data['countryCodes'] = Country_helper::getCountryPhoneCodes();
+            $data['minMobileLength'] = $this->config->item('minMobileLength');
+            $data['local'] = $this->config->item('local');
+            $data['buyerRole'] = $this->config->item('buyer');
+            $data['usershorturl'] = 'tiqs_shop_service';
+            $data['salesagent'] = $this->config->item('tiqsId');
+
+            if (isset($_SESSION['onlyMobileNumber'])) {
+                unset($_SESSION['onlyMobileNumber']);
+            }
 
             $this->loadViews('publicorders/buyerDetails', $this->global, $data, null, 'headerWarehousePublic');
         }
 
         public function confirmBuyerData(): void
         {
-                        // set_cookie('userName', $_SESSION['postOrder']['user']['username'], (365 * 24 * 60 * 60));
-            // set_cookie('email', $_SESSION['postOrder']['user']['email'], (365 * 24 * 60 * 60));
-            // if (!empty($_SESSION['postOrder']['user']['mobile'])) {
-            //     set_cookie('mobile', $_SESSION['postOrder']['user']['mobile'], (365 * 24 * 60 * 60));
-            // }
-            // if (!empty($_SESSION['postOrder']['user']['city'])) {
-            //     set_cookie('city', $_SESSION['postOrder']['user']['city'], (365 * 24 * 60 * 60));
-            // }
-            // if (!empty($_SESSION['postOrder']['user']['zipcode'])) {
-            //     set_cookie('zipcode', $_SESSION['postOrder']['user']['zipcode'], (365 * 24 * 60 * 60));
-            // }
-            // if (!empty($_SESSION['postOrder']['user']['address'])) {
-            //     set_cookie('address', $_SESSION['postOrder']['user']['address'], (365 * 24 * 60 * 60));
-            // }
+            if (empty($_POST) || empty($_SESSION['order']) || empty($_SESSION['vendor']) || empty($_SESSION['spotId']) || empty($_SESSION['spot'])) {
+                $redirect = empty($_SESSION['vendor']) ? base_url() : 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'];
+                redirect($redirect);
+                exit();
+            }
 
+            $post = $this->input->post(null, true);
+            $this->checkBuyerData($post);
+            $user = $post['user'];
 
+            foreach ($user as $key => $value) {
+                $_SESSION['postOrder']['user'][$key] = $value;
+            }
+
+            $this->setBuyerCookies();
+
+            redirect('pay_order');
         }
+
         public function pay_order(): void
         {
             if (empty($_SESSION['order']) || empty($_SESSION['vendor']) || empty($_SESSION['postOrder']) || empty($_SESSION['spotId']) || empty($_SESSION['spot'])) {
@@ -490,7 +500,7 @@
             // insert buyer
             $this->user_model->manageAndSetBuyer($post['user']);
             if (!$this->user_model->id) {
-                $this->session->set_flashdata('error', 'Order not made! Email is mandatory field. Please try again');
+                $this->session->set_flashdata('error', 'Order not made! Please try again');
                 redirect('checkout_order');
                 exit();
             }
@@ -676,16 +686,66 @@
                     redirect('checkout_order');
             }
 
-            // // check mobile phone
-            // if ($_SESSION['vendor']['requireMobile'] === '1' || intval($_SESSION['spot']['spotTypeId']) !== $this->config->item('local')) {
-            //     if (Validate_data_helper::validateMobileNumber($post['user']['mobile'])) {
-            //         $post['user']['mobile'] = $post['phoneCountryCode'] . ltrim($post['user']['mobile'], '0');
-            //     } else {
-            //         $this->session->set_flashdata('error', 'Order not made! Mobile phone is required. Please try again');
-            //         redirect('checkout_order');
-            //         exit();
-            //     }
-            // }
             return;
         }
+
+        private function checkBuyerData(array &$post)
+        {
+            // check mobile phone
+            if ($_SESSION['vendor']['requireMobile'] === '1' || intval($_SESSION['spot']['spotTypeId']) !== $this->config->item('local')) {
+                if (Validate_data_helper::validateMobileNumber($post['user']['mobile'])) {
+                    $_SESSION['onlyMobileNumber'] = ltrim($post['user']['mobile'], '0');
+                    $post['user']['mobile'] = $post['phoneCountryCode'] . $_SESSION['onlyMobileNumber'];
+                    
+                } else {
+                    $this->session->set_flashdata('error', 'Order not made! Mobile phone is required. Please try again');
+                    redirect('buyer_details');
+                    exit();
+                }
+            }
+
+            // check mobile phone
+            if ($_SESSION['vendor']['requireEmail'] === '1' || intval($_SESSION['spot']['spotTypeId']) !== $this->config->item('local')) {
+                if (!Validate_data_helper::validateEmail($post['user']['email'])) {
+                    $this->session->set_flashdata('error', 'Order not made! Email is required. Please try again');
+                    redirect('buyer_details');
+                    exit();
+                }
+            }
+
+            // check mobile phone
+            if ($_SESSION['vendor']['requireName'] === '1' ) {
+                if (!Validate_data_helper::validateString($post['user']['username'])) {
+                    $this->session->set_flashdata('error', 'Order not made! Username is required. Please try again');
+                    redirect('buyer_details');
+                    exit();
+                }
+            }
+        }
+
+        private function setBuyerCookies(): void
+        {
+            if (!empty($_SESSION['postOrder']['user']['username'])) {
+                set_cookie('userName', $_SESSION['postOrder']['user']['username'], (365 * 24 * 60 * 60));
+            }
+            if (!empty($_SESSION['postOrder']['user']['email'])) {
+                set_cookie('email', $_SESSION['postOrder']['user']['email'], (365 * 24 * 60 * 60));
+            }
+            if (!empty($_SESSION['postOrder']['user']['mobile'])) {
+                set_cookie('mobile', $_SESSION['postOrder']['user']['mobile'], (365 * 24 * 60 * 60));
+            }
+            if (!empty($_SESSION['onlyMobileNumber'])) {
+                set_cookie('mobile', $_SESSION['postOrder']['user']['mobile'], (365 * 24 * 60 * 60));
+            }
+            if (!empty($_SESSION['postOrder']['user']['city'])) {
+                set_cookie('city', $_SESSION['postOrder']['user']['city'], (365 * 24 * 60 * 60));
+            }
+            if (!empty($_SESSION['postOrder']['user']['zipcode'])) {
+                set_cookie('zipcode', $_SESSION['postOrder']['user']['zipcode'], (365 * 24 * 60 * 60));
+            }
+            if (!empty($_SESSION['postOrder']['user']['address'])) {
+                set_cookie('address', $_SESSION['postOrder']['user']['address'], (365 * 24 * 60 * 60));
+            }
+        }
+        
     }

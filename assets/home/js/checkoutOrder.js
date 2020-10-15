@@ -140,6 +140,8 @@ function submitForm(formId, serviceFeeInputId, orderAmountInputId) {
     let orderTotal = parseFloat(document.getElementById(orderAmountInputId).value);
     if (serviceFee > 0 || orderTotal > 0 || checkoutOrdedGlobals.thGroup) {
         document.getElementById(formId).submit();
+    } else {
+        alertify.error('No products in order list!');
     }
 }
 
@@ -451,6 +453,55 @@ function calculateTip() {
         totalWithTip.min = newMin.toFixed(2);
         totalWithTip.value = newValue.toFixed(2);
     }    
+}
+
+function submitBuyerDetails(formId, emailId, nameId, mobileId) {
+    let email = document.getElementById(emailId);
+    let name = document.getElementById(nameId);
+    let mobile = document.getElementById(mobileId);
+    let errors = 0;
+    
+    if (email) {
+        let emailValue = email.value.trim();
+        if (!emailValue) {
+            alertify.error('Order not made! Email is required. Please try again');
+            email.style.border = '1px solid #f00'
+            errors++;
+        } else {
+            email.style.border = '1px solid #ccc'
+        }
+    }
+
+    if (name) {
+        let namelValue = name.value.trim();
+        if (!namelValue) {
+            alertify.error('Order not made! Username is required. Please try again');
+            name.style.border = '1px solid #f00'
+            errors++;
+        } else {
+            name.style.border = '1px solid #ccc'
+        }
+    }
+
+    if (mobile) {
+        let mobileValue = mobile.value.trim();
+        let minMobileLength = parseInt(buyerDetailsGlobals.minMobileLength);
+        if (!mobileValue) {
+            alertify.error('Order not made! Mobile phone is required. Please try again');
+            mobile.style.border = '1px solid #f00'
+            errors++;
+        }  else if (mobileValue.length < minMobileLength) {
+            alertify.error('Mobile phone number is not valid');
+            mobile.style.border = '1px solid #f00'
+            errors++;
+        } else {
+            mobile.style.border = '1px solid #ccc'
+        }
+    }
+
+    if (errors === 0) {
+        document.getElementById(formId).submit();
+    }
 }
 
 checkUserNewsLetter('emailAddressInput');

@@ -195,3 +195,5 @@ $config['notActiveColor'] = '#ff4d4d';
 $config['defaultSalesAgentId'] = '1';
 
 $config['payNlSuccess'] = 100;
+
+$config['minMobileLength'] = 6;

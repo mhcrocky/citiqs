@@ -99,4 +99,6 @@
 	<script src="<?php echo base_url() ?>assets/home/js/makeOrderNew.js"></script>
 <?php } elseif ($this->view === 'publicorders/payOrder') { ?>
 	<script src="<?php echo base_url() ?>assets/home/js/payOrder.js"></script>
+<?php } elseif ($this->view === 'publicorders/buyerDetails') { ?>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/checkoutOrder.js"></script>
 <?php } ?>

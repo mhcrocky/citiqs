@@ -762,7 +762,7 @@ class Ajax extends CI_Controller
 
         $email = $this->input->post('email', true);
         $this->user_model->setUniqueValue($email)->setWhereCondtition()->setUser();
-        echo $this->user_model->newsletter;
+        echo is_null($this->user_model->id) ? '0' : $this->user_model->newsletter;
 
         return;
     }
