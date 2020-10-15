@@ -259,6 +259,7 @@ $route['vatreport']           	= "warehouse/vatreport";
 // PUBLIC
 $route['make_order']                = 'publicorders/index';
 $route['checkout_order']            = 'publicorders/checkout_order';
+$route['buyer_details']             = 'publicorders/buyer_details';
 $route['pay_order']                 = 'publicorders/pay_order';
 $route['closed/(:num)']             = 'publicorders/closed/$1';
 $route['spot_closed/(:num)']        = 'publicorders/spotClosed/$1';

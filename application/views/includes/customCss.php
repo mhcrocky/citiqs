@@ -109,4 +109,7 @@
 <?php } elseif ($this->view === 'paysuccesslink') { ?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
+<?php }  elseif ($this->view === 'publicorders/buyerDetails') { ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
 <?php } ?>

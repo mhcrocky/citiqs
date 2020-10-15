@@ -5,7 +5,7 @@
 		<h3>You Order was</h3>
 		<?php if ($orderStatusCode === $successCode) { ?>
 			<p class='order-status order-status--true'>successful</p>
-		<?php } elseif( $orderStatusCode >= 0 || $orderStatusCode < 0 ) { ?>
+		<?php } elseif ( is_int($orderStatusCode) && ($orderStatusCode >= 0 || $orderStatusCode < 0) ) { ?>
 			<p class='order-status order-status--false'>not successful</p>
 		<?php } else { ?>
 			<p class='order-status order-status--false'>payment error</p>

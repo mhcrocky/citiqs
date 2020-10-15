@@ -41,7 +41,7 @@ class Alfredpayment extends BaseControllerWeb
         
         $vendor = $_SESSION['vendor'];
         $serviceId = $vendor['payNlServiceId'];
-        $orderId = Utility_helper::getSessionValue('orderId');
+        $orderId = $_SESSION['orderId'];
         $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
         $order = reset($order);
         $arguments = Pay_helper::getArgumentsArray($vendor['vendorId'], $order, $serviceId, $paymentType, $paymentOptionSubId);
@@ -63,9 +63,8 @@ class Alfredpayment extends BaseControllerWeb
             exit();
         }
 
-        $this->session->set_flashdata('error', 'Payment engine error. Please, contact staff');
-        $redirect = 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $order['spotId'];
-        redirect($redirect);
+        $_SESSION['orderStatusCode'] = 'err';
+        redirect('success');        
         exit();
     }
 

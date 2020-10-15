@@ -238,12 +238,19 @@
 
         public static function unsetPaymentSession(): void
         {
-            unset($_SESSION['order']);
+            $CI =& get_instance();
+            $CI->load->config('custom');
+
+            if ($_SESSION['orderStatusCode'] === $CI->config->item('payNlSuccess')) {
+                unset($_SESSION['order']);
+                unset($_SESSION['orderVendorId']);
+            }
+
+            unset($_SESSION['orderId']);
             unset($_SESSION['postOrder']);
             unset($_SESSION['spotId']);
             unset($_SESSION['vendor']);
             unset($_SESSION['spot']);
-            unset($_SESSION['orderVendorId']);
             unset($_SESSION['orderStatusCode']);
 
             return;
