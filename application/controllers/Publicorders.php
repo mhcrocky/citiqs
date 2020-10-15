@@ -298,7 +298,7 @@
             }
 
             $_SESSION['postOrder'] = $this->input->post(null, true);
-            if (!isset($_SESSION['postOrder']['order']['waiterTip'])) {
+            if (!isset($_SESSION['postOrder']['order']['waiterTip']) || intval($_SESSION['postOrder']['order']['waiterTip']) < 0) {
                 $_SESSION['postOrder']['order']['waiterTip'] = 0;
             }
 
