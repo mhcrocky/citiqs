@@ -233,6 +233,10 @@
                 'oldMakeOrderView' => $this->config->item('oldMakeOrderView'),
                 'newMakeOrderView' => $this->config->item('newMakeOrderView'),
             ];
+
+            $data['termsAndConditions'] = isset($_SESSION['postOrder']['order']['termsAndConditions']) ? 'checked' : '';
+            $data['privacyPolicy'] = isset($_SESSION['postOrder']['order']['privacyPolicy']) ? 'checked' : '';
+
             $this->setDelayTime($data);
 
             $data['city'] = isset($_SESSION['postOrder']['user']['city']) ? $_SESSION['postOrder']['user']['city'] : get_cookie('city');
@@ -282,10 +286,11 @@
                 exit();
             }
 
+            $this->checkTermsAndConditions($_POST);
             $this->validateDeliveryPickupData($_POST);
 
             $_SESSION['postOrder'] = $this->input->post(null, true);
-            // TO DO CHECK NEWS LETTER
+
             if (!isset($_SESSION['postOrder']['order']['waiterTip']) || intval($_SESSION['postOrder']['order']['waiterTip']) < 0) {
                 $_SESSION['postOrder']['order']['waiterTip'] = 0;
             }
@@ -316,8 +321,6 @@
             $data['mobile'] = isset($_SESSION['onlyMobileNumber']) ? $_SESSION['onlyMobileNumber'] : get_cookie('mobile');
             $data['userCountry'] = isset($_SESSION['postOrder']['user']['country']) ? $_SESSION['postOrder']['user']['country'] : '';
             $data['phoneCountryCode'] = isset($_SESSION['postOrder']['phoneCountryCode']) ? $_SESSION['postOrder']['phoneCountryCode'] : '';
-            $data['termsAndConditions'] = isset($_SESSION['postOrder']['order']['termsAndConditions']) ? 'checked' : '';
-            $data['privacyPolicy'] = isset($_SESSION['postOrder']['order']['privacyPolicy']) ? 'checked' : '';
             $data['countryCodes'] = Country_helper::getCountryPhoneCodes();
             $data['minMobileLength'] = $this->config->item('minMobileLength');
             $data['local'] = $this->config->item('local');
@@ -681,11 +684,6 @@
                 }
             }
 
-            if ($_SESSION['vendor']['termsAndConditions'] && $_SESSION['vendor']['showTermsAndPrivacy'] === '1' && (empty($post['order']['termsAndConditions']) || empty($post['order']['privacyPolicy']))) {
-                $this->session->set_flashdata('error', 'Order not made! Please confirm that you read terms and conditions and privacy policy');
-                    redirect('checkout_order');
-            }
-
             return;
         }
 
@@ -747,5 +745,18 @@
                 set_cookie('address', $_SESSION['postOrder']['user']['address'], (365 * 24 * 60 * 60));
             }
         }
-        
+
+        private function checkTermsAndConditions($post): void
+        {
+            if (
+                $_SESSION['vendor']['termsAndConditions']
+                && $_SESSION['vendor']['showTermsAndPrivacy'] === '1'
+                && (
+                    empty($post['order']['termsAndConditions']) || empty($post['order']['privacyPolicy'])
+                )
+            ) {
+                $this->session->set_flashdata('error', 'Order not made! Please confirm that you read terms and conditions and privacy policy');
+                redirect('checkout_order');
+            }
+        }
     }
