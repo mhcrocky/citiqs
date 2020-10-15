@@ -55,7 +55,7 @@
         <?php } else { ?>
             <div class="grid-list">
                 <!-- FILTER AND ADD NEW -->
-                <div class="item-editor theme-editor" id='add-product'>
+                <div class="item-editor theme-editor addEditForm" id='add-product'>
                     <div class="theme-editor-header d-flex justify-content-between" >
                         <div>
                             <img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogonew.png" alt="">
@@ -66,7 +66,13 @@
                         </div>
                     </div>
                     <div style="width:100%;">
-                        <form id="addProdcut" method="post" action="<?php echo $this->baseUrl . 'warehouse/addProdcut'; ?>" class="form-inline" enctype="multipart/form-data">
+                        <form
+                            id="addProdcut"
+                            method="post"
+                            action="<?php echo $this->baseUrl . 'warehouse/addProdcut'; ?>"
+                            class="form-inline"
+                            enctype="multipart/form-data"
+                            >
                             <input type="text" name="product[active]" value="1" required readonly hidden />
                             <legend>Product basic data</legend>
                             <!-- PRODUCT EXTENDED DATA -->
@@ -631,7 +637,7 @@
                                     </div>
                                 <?php } ?>
                                 <!-- ITEM EDITOR -->                                
-                                <div class="item-editor theme-editor" id="editProductProductId<?php echo  $product['productId']; ?>">
+                                <div class="item-editor theme-editor addEditForm" id="editProductProductId<?php echo  $product['productId']; ?>">
                                     <div class="theme-editor-header d-flex justify-content-between">
                                         <div class="theme-editor-header-buttons">
                                             <input type="button" onclick="submitForm('editProduct<?php echo $product['productId']; ?>')" class="grid-button button theme-editor-header-button" value="Submit" />

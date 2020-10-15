@@ -1703,6 +1703,13 @@ footer{
 	background-color: #286a4b;
 }
 
+.addEditForm {
+	overflow-y: scroll;
+	max-height: 100vh;
+}
+.addEditForm::-webkit-scrollbar {
+	width: 0;
+}
 
 @media only screen and (max-width: 864px){
 	
