@@ -55,7 +55,7 @@
         <?php } else { ?>
             <div class="grid-list">
                 <!-- FILTER AND ADD NEW -->
-                <div class="item-editor theme-editor" id='add-product'>
+                <div class="item-editor theme-editor addEditForm" id='add-product'>
                     <div class="theme-editor-header d-flex justify-content-between" >
                         <div>
                             <img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogonew.png" alt="">
@@ -66,7 +66,13 @@
                         </div>
                     </div>
                     <div style="width:100%;">
-                        <form id="addProdcut" method="post" action="<?php echo $this->baseUrl . 'warehouse/addProdcut'; ?>" class="form-inline" enctype="multipart/form-data">
+                        <form
+                            id="addProdcut"
+                            method="post"
+                            action="<?php echo $this->baseUrl . 'warehouse/addProdcut'; ?>"
+                            class="form-inline"
+                            enctype="multipart/form-data"
+                            >
                             <input type="text" name="product[active]" value="1" required readonly hidden />
                             <legend>Product basic data</legend>
                             <!-- PRODUCT EXTENDED DATA -->
@@ -85,6 +91,10 @@
                                     id="longDescription"
                                     class="form-control"
                                     rows="1"></textarea>
+                            </div>
+                            <div class="col-lg-4 col-sm-12  form-group">
+                                <label for="preparationTime">Preparation time in minutes: </label>
+                                <input type="number" min="0" value="0" max="255" name="product[preparationTime]" id="preparationTime" class="form-control" />                         
                             </div>
                             <?php if (in_array($localTypeId, $vendorTypes)) { ?>
                                 <div class="col-lg-4 col-sm-12">
@@ -627,7 +637,7 @@
                                     </div>
                                 <?php } ?>
                                 <!-- ITEM EDITOR -->                                
-                                <div class="item-editor theme-editor" id="editProductProductId<?php echo  $product['productId']; ?>">
+                                <div class="item-editor theme-editor addEditForm" id="editProductProductId<?php echo  $product['productId']; ?>">
                                     <div class="theme-editor-header d-flex justify-content-between">
                                         <div class="theme-editor-header-buttons">
                                             <input type="button" onclick="submitForm('editProduct<?php echo $product['productId']; ?>')" class="grid-button button theme-editor-header-button" value="Submit" />
@@ -657,6 +667,10 @@
                                             <div class="col-lg-4 col-sm-12">
                                                 <label for="longDescription<?php echo $product['productId'] ?>">Long description: </label>
                                                 <textarea name="productExtended[longDescription]" id="longDescription<?php echo $product['productId'] ?>" rows="1" class="form-control"><?php if($details['longDescription']) echo  $details['longDescription']; ?></textarea>
+                                            </div>
+                                            <div class="col-lg-4 col-sm-12  form-group">
+                                                <label for="preparationTime<?php echo $product['productId'] ?>">Preparation time in minutes: </label>
+                                                <input type="number" min="0" value="<?php echo $product['preparationTime']; ?>" max="255" name="product[preparationTime]" id="preparationTime<?php echo $product['productId'] ?>" class="form-control" />                         
                                             </div>
                                             <?php if (in_array($localTypeId, $vendorTypes)) { ?>
                                                 <div class="col-lg-4 col-sm-12">

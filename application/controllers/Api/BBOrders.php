@@ -130,6 +130,8 @@
             // $draw->annotation(0, 70, "NAAM: " . $order['buyerUserName']);
 
 
+			$draw->annotation(0, 30, "GEEN BTW BON");
+
 			$draw->setStrokeWidth(2);
 			$draw->setFontSize(28);
 			$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
@@ -139,46 +141,106 @@
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 
 			// $draw->annotation(0, 30, "SPOT: ". $result->spot_id . " EMAIL: " . $email . ' PHONE: ' . $phone);
-            // $draw->annotation(0, 30, "SPOT: ". $result->spot_id );
-			$draw->annotation(0, 30, "order: " . $order['orderId'] . " naam: " . $order['buyerUserName']);;
-			$draw->annotation(0, 70, "datum:". date("m-d h:i:sa"). " spot: ". $order['spotName'] );
+			// $draw->annotation(0, 30, "SPOT: ". $result->spot_id );
+			$draw->annotation(0, 70, "order: " . $order['orderId'] . " naam: " . $order['buyerUserName']);
+			$draw->annotation(0, 100, "datum:". date("m-d h:i:sa"). " spot: ". $order['spotName'] );
 
-			$drawemail->annotation(0, 30, "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);;
-			$drawemail->annotation(0, 70, "DATE:". date("m-d h:i:sa"). " SPOT: ". $order['spotName'] );
+			$drawemail->annotation(0, 70, "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);
+			$drawemail->annotation(0, 100, "DATE:". date("m-d h:i:sa"). " SPOT: ". $order['spotName'] );
 
+//
+//			$draw->setStrokeWidth(2);
+//			$draw->setFontSize(28);
+//			$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+//
+//			$drawemail->setStrokeWidth(2);
+//			$drawemail->setFontSize(28);
+//			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+//
+//			// $draw->annotation(0, 30, "SPOT: ". $result->spot_id . " EMAIL: " . $email . ' PHONE: ' . $phone);
+//            // $draw->annotation(0, 30, "SPOT: ". $result->spot_id );
+//			$draw->annotation(0, 30, "order: " . $order['orderId'] . " naam: " . $order['buyerUserName']);;
+//			$draw->annotation(0, 70, "datum:". date("m-d h:i:sa"). " spot: ". $order['spotName'] );
+//
+//			$drawemail->annotation(0, 30, "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);;
+//			$drawemail->annotation(0, 70, "DATE:". date("m-d h:i:sa"). " SPOT: ". $order['spotName'] );
+//
 
             /* Font properties */
             // $draw->setFontWeight(1);
 
 
-            //-------- header regel --------
+//            //-------- header regel --------
+//
+//			$draw->setFontSize(30);
+//            $draw->setStrokeWidth(3);
+//            $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+//            $imagetext->annotateImage($draw, 0, 105, 0, "A");
+//            $imagetext->annotateImage($draw, 40, 105, 0, "OMSCHRIJVING");
+//            //            $imagetext->annotateImage($draw, 395, 105, 0, "PRIJS");
+//            //			$imagetext->annotateImage($draw, 485, 105, 0, "%");
+//            //			$imagetext->annotateImage($draw, 505, 105, 0, "TOTAAL");
+//
+//			$drawemail->setFontSize(18);
+//			$drawemail->setStrokeWidth(2);
+//			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+//			$imagetextemail->annotateImage($drawemail, 0, 105, 0, "ANT");
+//			$imagetextemail->annotateImage($drawemail, 40, 105, 0, "OMSCHRIJVING");
+//			$imagetextemail->annotateImage($drawemail, 395, 105, 0, "PRIJS");
+//			$imagetextemail->annotateImage($drawemail, 485, 105, 0, "%");
+//			$imagetextemail->annotateImage($drawemail, 505, 105, 0, "TOTAAL");
+//
+//			$draw->setStrokeColor('black');
+//            $draw->setStrokeWidth(5);
+//            $draw->line(0, 120, 576, 120);
+//            $draw->setStrokeWidth(1);
+//
+//			$drawemail->setStrokeColor('black');
+//			$drawemail->setStrokeWidth(5);
+//			$drawemail->line(0, 120, 576, 120);
+//			$drawemail->setStrokeWidth(1);
+
+			//-------- header regel --------
 
 			$draw->setFontSize(30);
-            $draw->setStrokeWidth(3);
-            $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-            $imagetext->annotateImage($draw, 0, 105, 0, "A");
-            $imagetext->annotateImage($draw, 40, 105, 0, "OMSCHRIJVING");
-            //            $imagetext->annotateImage($draw, 395, 105, 0, "PRIJS");
-            //			$imagetext->annotateImage($draw, 485, 105, 0, "%");
-            //			$imagetext->annotateImage($draw, 505, 105, 0, "TOTAAL");
+			$draw->setStrokeWidth(3);
+			$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+			$imagetext->annotateImage($draw, 0, 135, 0, "#");
+			$imagetext->annotateImage($draw, 40, 135, 0, "OMSCHRIJVING");
+			if ($order['paidStatus'] === $this->config->item('orderCashPaying')) {
+				$imagetext->annotateImage($draw, 295, 135, 0, "CASH PAYMENT");
+			}
+			// $imagetext->annotateImage($draw, 395, 105, 0, "PRIJS");
+			// $imagetext->annotateImage($draw, 485, 105, 0, "%");
+			// $imagetext->annotateImage($draw, 505, 105, 0, "TOTAAL");
 
-			$drawemail->setFontSize(18);
+			//			$drawemail->setFontSize(22);
+			//			$drawemail->setStrokeWidth(2);
+			//			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+			//			$imagetextemail->annotateImage($drawemail, 0, 105, 0, "ANT");
+			//			$imagetextemail->annotateImage($drawemail, 40, 105, 0, "OMSCHRIJVING");
+			//			$imagetextemail->annotateImage($drawemail, 395, 105, 0, "PRIJS");
+			//			$imagetextemail->annotateImage($drawemail, 485, 105, 0, "%");
+			//			$imagetextemail->annotateImage($drawemail, 505, 105, 0, "TOTAAL");
+
+
+			$drawemail->setFontSize(22);
 			$drawemail->setStrokeWidth(2);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-			$imagetextemail->annotateImage($drawemail, 0, 105, 0, "ANT");
-			$imagetextemail->annotateImage($drawemail, 40, 105, 0, "OMSCHRIJVING");
-			$imagetextemail->annotateImage($drawemail, 395, 105, 0, "PRIJS");
-			$imagetextemail->annotateImage($drawemail, 485, 105, 0, "%");
-			$imagetextemail->annotateImage($drawemail, 505, 105, 0, "TOTAAL");
+			$imagetextemail->annotateImage($drawemail, 0, 165, 0, "ANT");
+			$imagetextemail->annotateImage($drawemail, 48, 165, 0, "OMSCHRIJVING");
+			$imagetextemail->annotateImage($drawemail, 380, 165, 0, "PRIJS");
+			$imagetextemail->annotateImage($drawemail, 475, 165, 0, "%");
+			$imagetextemail->annotateImage($drawemail, 495, 165, 0, "TOTAAL");
 
 			$draw->setStrokeColor('black');
-            $draw->setStrokeWidth(5);
-            $draw->line(0, 120, 576, 120);
-            $draw->setStrokeWidth(1);
+			$draw->setStrokeWidth(5);
+			$draw->line(0, 150, 576, 150);
+			$draw->setStrokeWidth(1);
 
 			$drawemail->setStrokeColor('black');
 			$drawemail->setStrokeWidth(5);
-			$drawemail->line(0, 120, 576, 120);
+			$drawemail->line(0, 150, 576, 150);
 			$drawemail->setStrokeWidth(1);
 
 			//-------- regels --------
