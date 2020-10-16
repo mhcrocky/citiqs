@@ -523,7 +523,6 @@
                 $orderDate = explode(' ', $post['order']['date']);
                 $post['order']['created'] = $orderDate[0] . ' ' . $post['order']['time'];
             }
-
             //set $post['order'] keys and value if whole or part of order is paid from wallet
 
             $post['order']['buyerId'] = $this->user_model->id;
@@ -626,9 +625,9 @@
             $this->insertOrderProcess($payStatus, $payType);
             if ($_SESSION['vendor']['vendorId'] === 1162 || $_SESSION['vendor']['vendorId'] === 5655) {
                 Utility_helper::unsetPaymentSession();
-                $redirect = 'successth';
+                $redirect = base_url() . 'successth';
             } else {
-                $redirect = 'success';
+                $redirect = base_url() . 'success';
                 $_SESSION['orderStatusCode'] = ($payStatus === $this->config->item('orderPaid')) ? $this->config->item('payNlSuccess') : 0;
             }
             redirect($redirect);

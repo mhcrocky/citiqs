@@ -891,7 +891,6 @@ class User_model extends CI_Model
 
             // must return non hashed password for activation link
             $this->password = $password;
-            die();
         } else {
             $this->setUniqueValue($buyer['email'])->setWhereCondtition()->setUser();
             if ($this->roleid === $this->config->item('owner')) return $this;
