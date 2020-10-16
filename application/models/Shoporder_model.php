@@ -877,24 +877,41 @@
         public function returnDelayMinutes(array $productExtendedIds): int
         {
             if (empty($productExtendedIds)) return 0;
+            $productExtendedIds = implode(',', $productExtendedIds);
 
-            $query =    'SELECT
-                            max(tbl_shop_categories.delayTime) AS minutes
-                        FROM
-                            tbl_shop_products_extended
-                        INNER JOIN
-                            tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
-                        INNER JOIN
-                            tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
-                        WHERE
-                            tbl_shop_products_extended.id IN ('. implode(',', $productExtendedIds). ')';
+            $query =    '
+                        (
+                            SELECT
+                                max(tbl_shop_categories.delayTime) AS minutes
+                            FROM
+                                tbl_shop_products_extended
+                            INNER JOIN
+                                tbl_shop_products ON tbl_shop_products.id = tbl_shop_products_extended.productId
+                            INNER JOIN
+                                tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+                            WHERE
+                                tbl_shop_products_extended.id IN ('. $productExtendedIds . ')
+                        )
+                        UNION
+                        (
+                            SELECT
+                                max(tbl_shop_products.preparationTime) AS minutes
+                            FROM
+                                tbl_shop_products
+                            INNER JOIN
+                                tbl_shop_products_extended ON tbl_shop_products.id = tbl_shop_products_extended.productId 
+                            WHERE
+                                tbl_shop_products_extended.id IN ('. $productExtendedIds . ')
+                        );';
 
-            $minutes = $this->db->query($query);
-
+            $minutes = $this->db->query($query);            
             if (empty($minutes)) return 0;
 
             $minutes = $minutes->result_array();
-            $minutes = intval(reset($minutes)['minutes']);
-            return $minutes;
+            $categoryDelay = intval($minutes[0]['minutes']);
+            if (!isset($minutes[1])) return $categoryDelay;
+            $productPreparationTime = intval($minutes[1]['minutes']);
+
+            return $categoryDelay >= $productPreparationTime ? $categoryDelay : $productPreparationTime;
         }
     }
