@@ -174,15 +174,24 @@
                 ];
                 $this->loadViews('publicorders/selectType', $this->global, $data, null, 'headerWarehousePublic');
             } elseif (count($types[1]) === 1 || $typeId) {
+                $typeId = $typeId ? $typeId : $types[1][0]['typeId'];
+
+                $this->checkVendorCredentials($_SESSION['vendor'], $typeId);
+
                 $where = [
                     'tbl_shop_printers.userId=' => $_SESSION['vendor']['vendorId'],
                     'tbl_shop_spots.active' => '1',
+                    'tbl_shop_spots.spotTypeId' => $typeId,
                 ];
-                $where['tbl_shop_spots.spotTypeId'] = $typeId ? $typeId : $types[1][0]['typeId'];
-                $this->checkVendorCredentials($_SESSION['vendor'], $where['tbl_shop_spots.spotTypeId']);
+                $spots = $this->shopspot_model->fetchUserSpotsImporved($where);
+
+                if (!empty($spots) && count($spots) === 1) {
+                    $redirect = base_url() . 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'] . '&spotid=' . $spots[0]['spotId'];
+                    redirect($redirect);
+                }
                 $data = [
                     'vendor' => $_SESSION['vendor'],
-                    'spots' => $this->shopspot_model->fetchUserSpotsImporved($where),
+                    'spots' => $spots,
                     'local' => $this->config->item('local'),
                     'typeId' => $where['tbl_shop_spots.spotTypeId']
 

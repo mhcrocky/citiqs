@@ -58,7 +58,7 @@
 					<a href="<?php echo base_url(); ?>check424/<?php echo $vendor['vendorId']; ?>">Checkout</a>
 				<?php } ?>
 			<?php } else { ?>
-				<p>No available types</p>
+				<p>No available service</p>
 			<?php } ?>
 			</div>
 		</div>
