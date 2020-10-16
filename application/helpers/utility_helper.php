@@ -224,8 +224,16 @@
         {
             if (empty($arrays)) return [];
             $reset = [];
+            $today = date('D');
+            $now = now();
+            $time = date('H:i:s', $now);
             foreach($arrays as $array) {
-                $date = date('Y-m-d', strtotime($array[$key], strtotime(date('Y-m-d H:i:s'))));
+                if ($array['day'] === $today && $array['timeTo'] <= $time) {
+                    $date = date('Y-m-d', strtotime('+7days', strtotime(date('Y-m-d H:i:s'))));
+                } else {
+                    $date = date('Y-m-d', strtotime($array[$key], strtotime(date('Y-m-d H:i:s'))));
+                }
+
                 if (!isset($reset[$date])) {
                     $reset[$date] = [];
                 }
