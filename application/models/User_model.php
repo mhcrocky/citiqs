@@ -606,7 +606,7 @@ class User_model extends CI_Model
 
     public function isDuplicate(string $email): bool
     {
-        $this->db->select("id");
+        $this->db->select("id, roleid");
         $this->db->from("tbl_user");
         $this->db->where("email", $email);
         $query = $this->db->get();
@@ -891,7 +891,12 @@ class User_model extends CI_Model
 
             // must return non hashed password for activation link
             $this->password = $password;
+            die();
         } else {
+            $this->setUniqueValue($buyer['email'])->setWhereCondtition()->setUser();
+            if ($this->roleid === $this->config->item('owner')) return $this;
+
+            
             // new data to prevent update of some buyer data (roleId for example)
             $newData = [
                 'username' => $buyer['username'],

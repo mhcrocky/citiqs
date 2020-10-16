@@ -21,11 +21,11 @@
 		<?php if ($orderStatusCode === $successCode) { ?>
 		<h3 class='order-status order-status--true'>please be patiente we are now working on that</h3>
 		<?php } else { ?>
-			<h3 class='order-status order-status--false'>(1023) Please try again</hr>
+			<h3 class='order-status order-status--false'>(2003) Please try again</hr>
 		<?php } ?>
 	</div>
 	<div class="checkout-btns">
-	<a href="<?php echo $redirect; ?>" style="background-color: #948b6f" class="button">
+	<a href="<?php echo base_url() . 'Paysuccesslink/goBack'; ?>" style="background-color: #948b6f" class="button">
 		order again<i class="fa fa-arrow-right"></i>
 	</a>
 	</div>

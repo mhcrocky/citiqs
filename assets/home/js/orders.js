@@ -328,7 +328,7 @@ function prepareButtonInnerHtml(typeStatus, confirmStatus) {
     }
 
     if (confirmStatus === orderGlobals.orderConfirmWaiting) {
-        buttonInnerHtml = type.toUpperCase() + ' CHECK'
+        buttonInnerHtml = type + ' confirmed'
     } else if (confirmStatus === orderGlobals.orderConfirmTrue) {
         buttonInnerHtml = type + ' confirmed'
     } else if (confirmStatus === orderGlobals.orderConfirmFalse) {

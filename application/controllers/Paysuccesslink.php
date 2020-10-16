@@ -20,19 +20,19 @@ class  Paysuccesslink extends BaseControllerWeb
     public function index()
     {
         $this->global['pageTitle'] = 'TIQS : SUCCESS';
-        if (empty($_SESSION['redirect'])) {
+
+        if (!isset($_SESSION['redirect'])) {
             $_SESSION['redirect'] = base_url() . 'make_order?vendorid=' . $_SESSION['orderVendorId'] . '&spotid=' . $_SESSION['spot']['spotId'];
         }
-        
+
         if (
             empty($_SESSION['orderId'])
             || empty($_SESSION['postOrder'])
             || empty($_SESSION['spot'])
             || empty($_SESSION['orderStatusCode'])
         ) {
-            $redirect = $_SESSION['redirect'];
-            unset($_SESSION['redirect']);
-            redirect($redirect);
+
+            $this->goBack();
         }
 
         $data = [
@@ -42,11 +42,15 @@ class  Paysuccesslink extends BaseControllerWeb
             'spotName' => $_SESSION['spot']['spotName'],
             'orderStatusCode' => $_SESSION['orderStatusCode'],
             'successCode' => $this->config->item('payNlSuccess'),
-            'redirect' => $_SESSION['redirect'],
         ];
 
         Utility_helper::unsetPaymentSession();
-
         $this->loadViews("paysuccesslink", $this->global, $data, 'nofooter', 'noheader');
-	}
+    }
+
+    public function goBack(): void
+    {
+        $redirect = Utility_helper::getSessionValue('redirect');
+        redirect($redirect);
+    }
 }
