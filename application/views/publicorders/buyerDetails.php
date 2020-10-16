@@ -1,8 +1,5 @@
 <main class="container" style="text-align:left; margin-bottom:20px">
-    <form id="goBuyerDetailsr" method="post" action="<?php echo base_url() . 'publicorders/confirmBuyerData'; ?>">
-        <input type="text"      name="user[roleid]"         value="<?php echo $buyerRole; ?>" required readonly hidden />
-        <input type="text"      name="user[usershorturl]"   value="<?php echo $usershorturl; ?>" required readonly hidden />
-        <input type="text"      name="user[salesagent]"     value="<?php echo $salesagent; ?>" required readonly hidden /> 
+    <form id="goBuyerDetailsr" method="post" action="<?php echo base_url() . 'publicorders/confirmBuyerData'; ?>">        
         <div class="row d-flex justify-content-center" id="checkout">
             <div class="col-sm-12 col-lg-9 left-side">
                 <div class="checkout-title">

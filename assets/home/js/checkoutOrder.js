@@ -503,10 +503,26 @@ function submitBuyerDetails(formId, emailId, nameId, mobileId) {
 }
 
 function openOrderTimeDiv() {
-    let period = document.getElementById(checkoutOrdedGlobals.periodTime);
-    let periodValue = period.value;
-    buyerSelectTime(periodValue, checkoutOrdedGlobals.orderTimeDiv, checkoutOrdedGlobals.orderTimeInput);
+    try {
+        if (checkoutOrdedGlobals) {
+            let period = document.getElementById(checkoutOrdedGlobals.periodTime);
+            if (period) {
+                let periodValue = period.value;
+                buyerSelectTime(periodValue, checkoutOrdedGlobals.orderTimeDiv, checkoutOrdedGlobals.orderTimeInput);
+                return;
+            }
+        }
+    } catch(err) {
+        return;
+    }
 }
 
-checkUserNewsLetter('emailAddressInput');
-openOrderTimeDiv();
+$(document).ready(function(){
+    checkUserNewsLetter('emailAddressInput');
+    openOrderTimeDiv();
+    $('[data-toggle="popover"]').popover({
+        animation : false,
+        placement : "right",
+        container: 'body'
+    });
+});

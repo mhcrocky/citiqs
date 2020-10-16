@@ -1,5 +1,29 @@
 <main class="container" style="text-align:left; margin-bottom:20px">
     <form id="goOrder" method="post" action="<?php echo base_url() . 'publicorders/submitOrder'; ?>">
+        <!--BUYER DATA-->
+        <input type="text" name="user[roleid]" value="<?php echo $buyerRole; ?>" required readonly hidden />
+        <input type="text" name="user[usershorturl]" value="<?php echo $usershorturl; ?>" required readonly hidden />
+        <input type="text" name="user[salesagent]" value="<?php echo $salesagent; ?>" required readonly hidden /> 
+        <?php if ($vendor['requireEmail'] === '0' ) { ?>                    
+            <input
+                type="email"
+                name="user[email]"
+                value="<?php echo 'anonymus_' . strval(time()) . '_' . rand(1, 1000000) . '@tiqs.com'; ?>"
+                required
+                readonly
+                hidden
+            />
+        <?php } ?>
+        <?php if ($vendor['requireName'] === '0' ) { ?>                    
+            <input
+                type="email"
+                name="user[username]"
+                value="<?php echo 'no name ' . date('Y-m-d H:i:s');; ?>"
+                required
+                readonly
+                hidden
+            />
+        <?php } ?>
 
         <?php
             if ($vendor['preferredView'] === $oldMakeOrderView) {

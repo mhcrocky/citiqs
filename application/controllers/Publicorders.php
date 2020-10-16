@@ -241,6 +241,10 @@
                 'spot' => $_SESSION['spot'],
                 'oldMakeOrderView' => $this->config->item('oldMakeOrderView'),
                 'newMakeOrderView' => $this->config->item('newMakeOrderView'),
+                'buyerRole' => $this->config->item('buyer'),
+                'usershorturl' => 'tiqs_shop_service',
+                'salesagent' => $this->config->item('tiqsId'),
+                'local' => $this->config->item('local'),
             ];
 
             $data['termsAndConditions'] = isset($_SESSION['postOrder']['order']['termsAndConditions']) ? 'checked' : '';
@@ -295,10 +299,12 @@
                 exit();
             }
 
-            $this->checkTermsAndConditions($_POST);
-            $this->validateDeliveryPickupData($_POST);
+            $post =  $this->input->post(null, true);
+            $this->setDeliveryCookies($post);
+            $this->checkTermsAndConditions($post);
+            $this->validateDeliveryPickupData($post);
 
-            $_SESSION['postOrder'] = $this->input->post(null, true);
+            $_SESSION['postOrder'] = $post;
 
             if (!isset($_SESSION['postOrder']['order']['waiterTip']) || intval($_SESSION['postOrder']['order']['waiterTip']) < 0) {
                 $_SESSION['postOrder']['order']['waiterTip'] = 0;
@@ -310,8 +316,6 @@
                 && $_SESSION['vendor']['requireMobile'] === '0'
                 && intval($_SESSION['spot']['spotTypeId']) === $this->config->item('local')
             ) {
-                $_SESSION['postOrder']['user']['username'] = 'no name ' . date('Y-m-d H:i:s');
-                $_SESSION['postOrder']['user']['email'] = 'anonymus_' . strval(time()) . '_' . rand(1, 1000000) . '@tiqs.com';
                 redirect('pay_order');
             } else {
                 redirect('buyer_details');
@@ -325,21 +329,14 @@
             $data = [];
             $data['vendor'] = $_SESSION['vendor'];
             $data['spot'] = $_SESSION['spot'];
-            $data['username'] = isset($_SESSION['postOrder']['user']['username']) ? $_SESSION['postOrder']['user']['username'] : get_cookie('userName');
-            $data['email'] = isset($_SESSION['postOrder']['user']['email']) ? $_SESSION['postOrder']['user']['email'] : get_cookie('email');
-            $data['mobile'] = isset($_SESSION['onlyMobileNumber']) ? $_SESSION['onlyMobileNumber'] : get_cookie('mobile');
+            $data['username'] = get_cookie('userName');
+            $data['email'] = get_cookie('email');
+            $data['mobile'] = get_cookie('mobile');
             $data['userCountry'] = isset($_SESSION['postOrder']['user']['country']) ? $_SESSION['postOrder']['user']['country'] : '';
             $data['phoneCountryCode'] = isset($_SESSION['postOrder']['phoneCountryCode']) ? $_SESSION['postOrder']['phoneCountryCode'] : '';
             $data['countryCodes'] = Country_helper::getCountryPhoneCodes();
             $data['minMobileLength'] = $this->config->item('minMobileLength');
             $data['local'] = $this->config->item('local');
-            $data['buyerRole'] = $this->config->item('buyer');
-            $data['usershorturl'] = 'tiqs_shop_service';
-            $data['salesagent'] = $this->config->item('tiqsId');
-
-            if (isset($_SESSION['onlyMobileNumber'])) {
-                unset($_SESSION['onlyMobileNumber']);
-            }
 
             $this->loadViews('publicorders/buyerDetails', $this->global, $data, null, 'headerWarehousePublic');
         }
@@ -353,6 +350,7 @@
             }
 
             $post = $this->input->post(null, true);
+            $this->setBuyerCookies($post);
             $this->checkBuyerData($post);
             $user = $post['user'];
 
@@ -360,7 +358,7 @@
                 $_SESSION['postOrder']['user'][$key] = $value;
             }
 
-            $this->setBuyerCookies();
+
 
             redirect('pay_order');
         }
@@ -512,7 +510,7 @@
             // insert buyer
             $this->user_model->manageAndSetBuyer($post['user']);
             if (!$this->user_model->id) {
-                $this->session->set_flashdata('error', 'Order not made! Please try again');
+                $this->session->set_flashdata('error', '(1001) Order not made! Please try again');
                 redirect('checkout_order');
                 exit();
             }
@@ -612,7 +610,7 @@
                         $this->shoporderex_model->orderId = $insert['orderId'];
                         $this->shoporderex_model->deleteOrderDetails();
                         $this->shoporder_model->delete();
-                        $this->session->set_flashdata('error', 'Order not made! Please try again');
+                        $this->session->set_flashdata('error', '(1030) Order not made! Please try again');
                         redirect($failedRedirect);
                         exit();
                     }
@@ -641,8 +639,7 @@
             $voucherId = intval($voucherId);
             $this->insertOrderProcess($this->config->item('orderNotPaid'), $this->config->item('voucherPayment'), $voucherId);
             $redirect =  ($_SESSION['vendor']['vendorId'] === 1162 || $_SESSION['vendor']['vendorId'] === 5655 ) ?  'successth' : 'success';
-            // TO DO VOUCHER TEST SUCCESS
-            Utility_helper::unsetPaymentSession();
+            $_SESSION['orderStatusCode'] = $this->config->item('payNlSuccess');
             redirect($redirect);
         }
 
@@ -701,8 +698,7 @@
             // check mobile phone
             if ($_SESSION['vendor']['requireMobile'] === '1' || intval($_SESSION['spot']['spotTypeId']) !== $this->config->item('local')) {
                 if (Validate_data_helper::validateMobileNumber($post['user']['mobile'])) {
-                    $_SESSION['onlyMobileNumber'] = ltrim($post['user']['mobile'], '0');
-                    $post['user']['mobile'] = $post['phoneCountryCode'] . $_SESSION['onlyMobileNumber'];
+                    $post['user']['mobile'] = $post['phoneCountryCode'] . ltrim($post['user']['mobile'], '0');
                     
                 } else {
                     $this->session->set_flashdata('error', 'Order not made! Mobile phone is required. Please try again');
@@ -730,39 +726,49 @@
             }
         }
 
-        private function setBuyerCookies(): void
+        private function setDeliveryCookies(array $post): void
         {
-            if (!empty($_SESSION['postOrder']['user']['username'])) {
-                set_cookie('userName', $_SESSION['postOrder']['user']['username'], (365 * 24 * 60 * 60));
+            if (!empty($post['user']['city'])) {
+                set_cookie('city', $post['user']['city'], (365 * 24 * 60 * 60));
             }
-            if (!empty($_SESSION['postOrder']['user']['email'])) {
-                set_cookie('email', $_SESSION['postOrder']['user']['email'], (365 * 24 * 60 * 60));
+            if (!empty($post['user']['zipcode'])) {
+                set_cookie('zipcode', $post['user']['zipcode'], (365 * 24 * 60 * 60));
             }
-            if (!empty($_SESSION['postOrder']['user']['mobile'])) {
-                set_cookie('mobile', $_SESSION['postOrder']['user']['mobile'], (365 * 24 * 60 * 60));
-            }
-            if (!empty($_SESSION['onlyMobileNumber'])) {
-                set_cookie('mobile', $_SESSION['postOrder']['user']['mobile'], (365 * 24 * 60 * 60));
-            }
-            if (!empty($_SESSION['postOrder']['user']['city'])) {
-                set_cookie('city', $_SESSION['postOrder']['user']['city'], (365 * 24 * 60 * 60));
-            }
-            if (!empty($_SESSION['postOrder']['user']['zipcode'])) {
-                set_cookie('zipcode', $_SESSION['postOrder']['user']['zipcode'], (365 * 24 * 60 * 60));
-            }
-            if (!empty($_SESSION['postOrder']['user']['address'])) {
-                set_cookie('address', $_SESSION['postOrder']['user']['address'], (365 * 24 * 60 * 60));
+            if (!empty($post['user']['address'])) {
+                set_cookie('address', $post['user']['address'], (365 * 24 * 60 * 60));
             }
         }
 
+        private function setBuyerCookies(array $post): void
+        {
+            if (!empty($post['user']['username'])) {
+                set_cookie('userName', $post['user']['username'], (365 * 24 * 60 * 60));
+            }
+            if (!empty($post['user']['email'])) {
+                set_cookie('email', $post['user']['email'], (365 * 24 * 60 * 60));
+            }
+            if (!empty($post['user']['mobile'])) {
+                set_cookie('mobile', $post['user']['mobile'], (365 * 24 * 60 * 60));
+            }
+        }
+
+        
         private function checkTermsAndConditions($post): void
         {
-            if (
-                $_SESSION['vendor']['termsAndConditions']
-                && $_SESSION['vendor']['showTermsAndPrivacy'] === '1'
-                && (
-                    empty($post['order']['termsAndConditions']) || empty($post['order']['privacyPolicy'])
-                )
+            if (empty($post['order']['termsAndConditions'])) {
+                unset($_SESSION['postOrder']['order']['termsAndConditions']);
+            } else {
+                $_SESSION['postOrder']['order']['termsAndConditions'] = $post['order']['termsAndConditions'];
+            }
+
+            if (empty($post['order']['privacyPolicy'])) {
+                unset($_SESSION['postOrder']['order']['privacyPolicy']);
+            } else {
+                $_SESSION['postOrder']['order']['privacyPolicy'] = $post['order']['privacyPolicy'];
+            }
+
+            if ( $_SESSION['vendor']['termsAndConditions'] && $_SESSION['vendor']['showTermsAndPrivacy'] === '1'
+                && (empty($post['order']['termsAndConditions']) || empty($post['order']['privacyPolicy']))
             ) {
                 $this->session->set_flashdata('error', 'Order not made! Please confirm that you read terms and conditions and privacy policy');
                 redirect('checkout_order');

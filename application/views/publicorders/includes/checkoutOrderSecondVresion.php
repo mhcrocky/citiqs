@@ -42,18 +42,26 @@
                         ?>
                         <!-- start checkout single element -->
                         <div class="checkout-table__single-element <?php echo $removeClass; ?>">
-                            <div class='checkout-table__product-details'>
-                              	
-                               	<div class="checkout-table__price">
-									<p>
+                            <div class='checkout-table__product-details'>                              	
+                               	<div>
+									<p class="checkout-table__price">
 										<span id="price_<?php echo $countInputs; ?>">
 											<?php echo number_format($product['amount'], 2, ".", ","); ?>
 										</span>&nbsp;&euro;
 										<?php $orderTotal += filter_var($product['amount'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); ?>
 									</p>
+                                    <p style="margin: 5% 0px 0px 35%;">
+                                        <span
+                                            class="fa-stack makeOrder makeOrder-edit"
+                                            onclick="redirectToMakeOrder('<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spotId .'&category=' . $product['categorySlide'];?>')"
+                                            redirect();
+                                        >
+                                            <i class="fa fa-edit"></i>
+                                        </span>
+                                    </p>
 								</div>
 							   	<!-- end price -->
-                               	
+   
                                	<div>
                                 <p><?php echo $product['name']; ?></p>
                                 <?php
@@ -101,13 +109,6 @@
                             <!-- end details -->
                             
                             <div class='checkout-table__numbers'>
-								<span
-                                        class="fa-stack makeOrder makeOrder-edit"
-                                        onclick="redirectToMakeOrder('<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spotId .'&category=' . $product['categorySlide'];?>')"
-                                        redirect();
-                                    >
-									<i class="fa fa-edit"></i>
-								</span>
                                 <!-- end edit -->
                                 
                                 <div class="checkout-table__quantity">
@@ -200,65 +201,76 @@
                                              <b class="counterClass" style="padding-left: 20px;"><?php #echo $countAddons; ?>.</b> 
                                         </div>-->
                                         <!-- num order -->
-                                        <div class='checkout-table__product-details checkout-table__product-details--addons'>                                    <!--<b class="counterClass"><?php echo $count; ?>.</b>-->
-                                           
-                                           <!-- added wrapper -->
-									   		<div class="checkout-table__price">
-												<p>
+                                        <div class='checkout-table__product-details checkout-table__product-details--addons'>
+                                            <!--<b class="counterClass"><?php echo $count; ?>.</b>-->
+                                            <!-- added wrapper -->
+									   		<div>
+												<p class="checkout-table__price">
 													<span id="price_<?php echo $countInputs; ?>">
 														<?php echo number_format($addon['amount'], 2, ".", ","); ?>
 													</span>&nbsp;&euro;
 													<?php $orderTotal += filter_var($addon['amount'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION); ?>
 												</p>
-									   		</div>
-                                           
-                                          <!-- addon price -->
-                                           <div class='checkout-table__addons-wrapper'>
-                                            <p>
-                                                <i class="fa fa-paperclip" aria-hidden="true"></i>
-                                                <?php echo $addon['name']; ?>
-                                            </p>
-                                            <?php
-                                                if (!empty($addon['allergies']))  {
-                                                    $addonAllergies = explode($this->config->item('allergiesSeparator'), $addon['allergies']);
-                                                    $baseUrl = base_url();
-                                                    echo '<div style="padding: 5px 0px">';
-                                                    foreach ($addonAllergies as $allergy) {
-                                                        ?>
-                                                            <img
-                                                                src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
-                                                                alt="<?php echo $allergy; ?>"
-                                                                height='24px'
-                                                                width='24px'
-                                                                style="display:inline; margin:0px 2px 3px 0px"
-                                                            />
-                                                        <?php
+                                                <p style="margin: 5% 0px 0px 35%">
+                                                    <i
+                                                        class="fa fa-paperclip"
+                                                        aria-hidden="true"
+                                                        data-toggle="popover"
+                                                        data-trigger="hover"
+                                                        data-placement="bottom"
+                                                        data-content="Addon on <?php echo $product['name'] ?>"
+                                                        >
+                                                    </i>
+
+                                                            
+                                                </p>
+									   		</div>                                           
+                                             <!-- addon price -->
+                                            <div class='checkout-table__addons-wrapper'>
+                                                <p>
+                                                    <?php echo $addon['name']; ?>
+                                                </p>
+                                                <?php
+                                                    if (!empty($addon['allergies']))  {
+                                                        $addonAllergies = explode($this->config->item('allergiesSeparator'), $addon['allergies']);
+                                                        $baseUrl = base_url();
+                                                        echo '<div style="padding: 5px 0px">';
+                                                        foreach ($addonAllergies as $allergy) {
+                                                            ?>
+                                                                <img
+                                                                    src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
+                                                                    alt="<?php echo $allergy; ?>"
+                                                                    height='24px'
+                                                                    width='24px'
+                                                                    style="display:inline; margin:0px 2px 3px 0px"
+                                                                />
+                                                            <?php
+                                                        }
+                                                        echo '</div>';
                                                     }
-                                                    echo '</div>';
-                                                }
-                                            ?>
-                                            <small><?php echo $addon['category']; ?></small>
-                                            <?php if (isset($addon['remark'])) { ?>
-                                                <div>
-                                                    <?php if ($addon['remark']) { ?>
-                                                        <label>Remark</label>
-                                                        <p><?php echo $addon['remark']; ?></p>
-                                                    <?php } ?>
-                                                    <!-- <label for="orderExtended_<?php #echo $countInputs; ?>_<?php #echo $addonExtendedId; ?>_remark">Remark</label>
-                                                    <textarea
-                                                        id="orderExtended_<?php #echo $countInputs; ?>_<?php #echo $addonExtendedId; ?>_remark"
-                                                        class="form-control"
-                                                        data-order-session-index="<?php #echo $key; ?>"
-                                                        data-product-extended-id="<?php #echo $productExtendedId; ?>"
-                                                        data-addon-extended-id="<?php #echo $addonExtendedId; ?>"
-                                                        rows="1"
-                                                        maxlength="200"
-                                                        name="orderExtended[<?php #echo $countInputs; ?>][<?php #echo $addonExtendedId; ?>][remark]"
-                                                        onchange="updateSessionRemarkAddon(this)"
-                                                    ><?php #echo $addon['remark']; ?></textarea> -->
-                                                </div>
-                                            <?php } ?>
-                                        </div>
+                                                ?>
+                                                <small><?php echo $addon['category']; ?></small>
+                                                <?php if (isset($addon['remark'])) { ?>
+                                                    <div>
+                                                        <?php if ($addon['remark']) { ?>
+                                                            <label>Remark</label>
+                                                            <p><?php echo $addon['remark']; ?></p>
+                                                        <?php } ?>
+                                                        <!-- <label for="orderExtended_<?php #echo $countInputs; ?>_<?php #echo $addonExtendedId; ?>_remark">Remark</label>
+                                                        <textarea
+                                                            id="orderExtended_<?php #echo $countInputs; ?>_<?php #echo $addonExtendedId; ?>_remark"
+                                                            class="form-control"
+                                                            data-order-session-index="<?php #echo $key; ?>"
+                                                            data-product-extended-id="<?php #echo $productExtendedId; ?>"
+                                                            data-addon-extended-id="<?php #echo $addonExtendedId; ?>"
+                                                            rows="1"
+                                                            maxlength="200"
+                                                            name="orderExtended[<?php #echo $countInputs; ?>][<?php #echo $addonExtendedId; ?>][remark]"
+                                                            onchange="updateSessionRemarkAddon(this)"
+                                                        ><?php #echo $addon['remark']; ?></textarea> -->
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
 										</div>
                                         <div class='checkout-table__numbers'>
                                             <div class="checkout-table__quantity">
