@@ -157,10 +157,8 @@ function buyerSelectTime(value, containerDivId, inputElementId) {
         let times = value.split(' ');
         $('#' +  inputElementId).timepicker('destroy');
         returnTimePicker(inputElementId, times);
-       
     }
     return;
-    
 }
 
 function returnTimePicker(elementId, times) {
@@ -504,4 +502,11 @@ function submitBuyerDetails(formId, emailId, nameId, mobileId) {
     }
 }
 
+function openOrderTimeDiv() {
+    let period = document.getElementById(checkoutOrdedGlobals.periodTime);
+    let periodValue = period.value;
+    buyerSelectTime(periodValue, checkoutOrdedGlobals.orderTimeDiv, checkoutOrdedGlobals.orderTimeInput);
+}
+
 checkUserNewsLetter('emailAddressInput');
+openOrderTimeDiv();

@@ -52,20 +52,19 @@
                                     value="<?php echo $address; ?>"
                                     placeholder="Delivery address"
                                     required
-                                    oninput="checkUserNewsLetter(this.id)"
                                 />
                             </div>                            
                         <?php } ?>
                         <div class="form-group col-sm-6">
-                            <label for="typeTime" >Select <?php echo lcfirst($spot['spotType']); ?> period <sup>*</sup></label>
+                            <label for="periodTime" >Select <?php echo lcfirst($spot['spotType']); ?> period <sup>*</sup></label>
                             <div>
                                 <select
+                                    id="periodTime"
                                     name="order[date]"
                                     class="form-control"
                                     style="text-align:center"
                                     onchange="buyerSelectTime(this.value, 'orderTimeDiv', 'orderTimeInput')"
                                     >
-                                    <option value="">Select</option>
                                     <?php
                                         $now = now();
                                         foreach ($workingTime as $date => $time) {
@@ -98,7 +97,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group col-sm-12" id="orderTimeDiv" style="display:none">
+                        <div class="form-group col-sm-6" id="orderTimeDiv">
                             <label for="orderTime">Select <?php echo lcfirst($spot['spotType']); ?> time (<sup>*</sup>)</label>
                             <input type="text" id="orderTimeInput" class="form-control timepicker" name="order[time]" />
                         </div>
@@ -136,6 +135,9 @@
             'orderAmountInputId' : 'orderAmountInput',
             'calculateTotalClass' : 'calculateTotal',
             'thGroup': condition,
+            'periodTime' : 'periodTime',
+            'orderTimeDiv' : 'orderTimeDiv',
+            'orderTimeInput' : 'orderTimeInput',
         }
         Object.freeze(globals);
         return globals;
