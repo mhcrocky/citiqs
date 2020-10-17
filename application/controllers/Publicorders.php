@@ -43,6 +43,9 @@
         {
             $get = $this->input->get(null, true);
             $typeId = empty($get['typeId']) ? '' : $get['typeId'];
+            if (!empty($get['iframe']) && $get['iframe'] === '1') {
+                $_SESSION['iframe'] = true;
+            }
 
             // FETCH VENDOR DATA AND
             $vendor = $this->shopvendor_model->setProperty('vendorId', $get['vendorid'])->getVendorData();
@@ -400,6 +403,7 @@
                 'oldMakeOrderView'      => $this->config->item('oldMakeOrderView'),
                 'newMakeOrderView'      => $this->config->item('newMakeOrderView'),
             ];
+            $data['iframe'] = (!empty($_SESSION['iframe'])) ? $_SESSION['iframe'] : false;
 
             $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
         }

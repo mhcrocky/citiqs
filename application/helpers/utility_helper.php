@@ -261,6 +261,10 @@
             unset($_SESSION['spot']);
             unset($_SESSION['orderStatusCode']);
 
+            if (isset($_SESSION['iframe'])) {
+                unset($_SESSION['iframe']);
+            }
+
             return;
         }
 
