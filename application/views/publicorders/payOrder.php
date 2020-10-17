@@ -138,19 +138,19 @@
                                             </a>
                                         <?php } ?>
                                         <?php if ($vendor['creditCard'] === '1') { ?>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $creditCardPaymentType; ?>/0" class="paymentMethod method-card" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $creditCardPaymentType; ?>/0" class="paymentMethod method-card addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/creditcard.png" alt="Creditcard">
                                                 <span>Creditcard</span>
                                             </a>
                                         <?php } ?>
 										<?php if ($vendor['payconiq'] === '1') { ?>
-											<a href="<?php echo base_url(); ?>insertorder/<?php echo $payconiqPaymentType; ?>/0" class="paymentMethod method-card" <?php echo $targetBlank; ?>>
+											<a href="<?php echo base_url(); ?>insertorder/<?php echo $payconiqPaymentType; ?>/0" class="paymentMethod method-card addTargetBlank" <?php echo $targetBlank; ?>>
 												<img src="https://tiqs.com/qrzvafood/assets/imgs/extra/payconiq.png" alt="Payconiq">
 												<span>Payconiq</span>
 											</a>
 										<?php } ?>
                                         <?php if ($vendor['bancontact'] === '1') { ?>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $bancontactPaymentType; ?>/0" class="paymentMethod method-card" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $bancontactPaymentType; ?>/0" class="paymentMethod method-card addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/bancontact.png" alt="bancontact">
                                                 <span>Bancontact</span>
                                             </a>
@@ -187,7 +187,7 @@
                                             <?php } ?>
                                         <?php } ?>
                                         <?php if ($vendor['pinMachine'] === '1') { ?>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $pinMachinePaymentType; ?>/TH-9268-3020" class="paymentMethod method-card" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $pinMachinePaymentType; ?>/TH-9268-3020" class="paymentMethod method-card addTargetBlank" <?php echo $targetBlank; ?>>
                                             <img src="<?php echo base_url() . 'assets/home/images/pinmachine.png'; ?>" alt="pin machine">
                                                 <span>Pin machine</span>
                                             </a>
@@ -208,51 +208,51 @@
                                         <div class="title hidden"><span data-trans="" data-trn-key="Kies een bank">Kies een bank</span>
                                         </div>                                        
                                         <div class="payment-container">
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/1" class="bank paymentMethod abn_amro" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/1" class="bank paymentMethod abn_amro addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO">
                                                 <span>ABN AMRO</span>
                                             </a>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/8" class="bank paymentMethod asn_bank" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/8" class="bank paymentMethod asn_bank addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/asn_bank.png" alt="ASN Bank">
                                                 <span>ASN Bank</span>
                                             </a>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/5080" class="bank paymentMethod bunq" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/5080" class="bank paymentMethod bunq addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <img src="https://tiqs.com/qrzvafood/assets/imgs/extra//bunq.png" alt="Bunq">
                                                 <span>Bunq</span>
                                             </a>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/5082" class="bank paymentMethod handelsbanken" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/5082" class="bank paymentMethod handelsbanken addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/handelsbanken.png" alt="Handelsbanken">
                                                 <span>Handelsbanken</span>
                                             </a>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/4" class="bank paymentMethod ing" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/4" class="bank paymentMethod ing addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/ing.png" alt="ING">
                                                 <span>ING</span>
                                             </a>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/12" class="bank paymentMethod knab" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/12" class="bank paymentMethod knab addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/knab(1).png" alt="Knab">
                                                 <span>Knab</span>
                                             </a>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/5081" class="bank paymentMethod moneyou" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/5081" class="bank paymentMethod moneyou addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/moneyou.png" alt="Moneyou">
                                                 <span>Moneyou</span>
                                             </a>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/2" class="bank paymentMethod rabobank" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/2" class="bank paymentMethod rabobank addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/rabobank.png" alt="Rabobank">
                                                 <span>Rabobank</span>
                                             </a>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/9" class="bank paymentMethod regiobank" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/9" class="bank paymentMethod regiobank addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/regiobank.png" alt="RegioBank">
                                                 <span>RegioBank</span>
                                             </a>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/5" class="bank paymentMethod sns_bank" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/5" class="bank paymentMethod sns_bank addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/sns_bank.png" alt="SNS Bank">
                                                 <span>SNS Bank</span>
                                             </a>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/10" class="bank paymentMethod triodos_bank" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/10" class="bank paymentMethod triodos_bank addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/triodos_bank.png" alt="Triodos Bank">
                                                 <span>Triodos Bank</span>
                                             </a>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/11" class="bank paymentMethod van_lanschot" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/11" class="bank paymentMethod van_lanschot addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/van_lanschot.png" alt="van Lanschot">
                                                 <span>van Lanschot</span>
                                             </a>
@@ -272,35 +272,35 @@
                                         <div class="title hidden"><span data-trans="" data-trn-key="Kies een bank">Kies een bank</span>
                                         </div>
                                         <div class="payment-container">
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
                                                 <span>Sparkasse</span>
                                             </a>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
                                                 <span>Volksbanken Raiffeisenbanken</span>
                                             </a>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
                                                 <span>Postbank</span>
                                             </a>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
                                                 <span>Comdirect</span>
                                             </a>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
                                                 <span>BB Bank</span>
                                             </a>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
                                                 <span>MLP Bank</span>
                                             </a>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
                                                 <span>PSD Bank</span>
                                             </a>
-                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod" <?php echo $targetBlank; ?>>
+                                            <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0" class="bank paymentMethod addTargetBlank" <?php echo $targetBlank; ?>>
                                                 <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
                                                 <span>Deutsche Kreditbank AG</span>
                                             </a>
@@ -406,11 +406,8 @@
                                         </div>
                                     </div>
                                 <?php } ?>
-
-
-
                                 <div class="footer" style="text-align:left">
-                                    <a href="<?php echo base_url(); ?>buyer_details" class="btn-cancel">
+                                    <a href="<?php echo base_url() . $redirect; ?>" class="btn-cancel">
                                         <i class="fa fa-arrow-left"></i>
                                         <span data-trans="" data-trn-key="Annuleren">Annuleren</span>
                                     </a>
@@ -423,3 +420,24 @@
         </div>
     </div>
 </div>
+<script>
+    function inIframe () {
+        try {
+            return window.self !== window.top;
+        } catch (e) {
+            return false;
+        }
+    }
+    function addTargetBlank() {
+        let a = document.getElementsByClassName('addTargetBlank');
+        let aLength = a.length;
+        let i;
+        for (i = 0; i < aLength; i++) {
+            a[i].target = "_blank";
+
+        }
+    }
+    if (inIframe()) {
+        addTargetBlank();
+    }
+</script>

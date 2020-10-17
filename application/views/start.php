@@ -43,3 +43,16 @@
 	<div>THIS WEBSITE USES COOKIES. <a href="<?php echo $this->baseUrl; ?>legal">MORE INFO HOW WE USE COOKIES</a>
 	</div>
 </div>
+<script>
+	function isInIframe () {
+		try {
+			if (window.self !== window.top) {
+				let src = window.self['frameElement']['attributes'][0]['nodeValue'];
+				window.self.location = src;
+			}
+		} catch (e) {
+			return true;
+		}
+	}
+	isInIframe();
+</script>

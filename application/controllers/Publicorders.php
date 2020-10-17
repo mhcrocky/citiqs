@@ -327,6 +327,12 @@
 
         public function buyer_details(): void
         {
+            if (empty($_SESSION['order']) || empty($_SESSION['vendor']) || empty($_SESSION['postOrder']) || empty($_SESSION['spotId']) || empty($_SESSION['spot'])) {
+                $redirect = empty($_SESSION['vendor']) ? base_url() : 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'];
+                redirect($redirect);
+                exit();
+            }
+
             $this->global['pageTitle'] = 'TIQS : BUYER DETAILS';
 
             $data = [];
@@ -404,6 +410,18 @@
                 'newMakeOrderView'      => $this->config->item('newMakeOrderView'),
             ];
             $data['iframe'] = (!empty($_SESSION['iframe'])) ? $_SESSION['iframe'] : false;
+
+
+            if (
+                $_SESSION['vendor']['requireEmail'] === '0'
+                && $_SESSION['vendor']['requireName'] === '0'
+                && $_SESSION['vendor']['requireMobile'] === '0'
+                && intval($_SESSION['spot']['spotTypeId']) === $this->config->item('local')
+            ) {
+                $data['redirect'] = 'checkout_order';
+            } else {
+                $data['redirect'] = 'buyer_details';
+            };
 
             $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
         }

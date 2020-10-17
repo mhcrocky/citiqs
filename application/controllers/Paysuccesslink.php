@@ -20,9 +20,15 @@ class  Paysuccesslink extends BaseControllerWeb
     public function index()
     {
         $this->global['pageTitle'] = 'TIQS : SUCCESS';
+        $baseUrl = base_url();
 
         if (!isset($_SESSION['redirect'])) {
-            $_SESSION['redirect'] = base_url() . 'make_order?vendorid=' . $_SESSION['orderVendorId'] . '&spotid=' . $_SESSION['spot']['spotId'];
+            $_SESSION['redirect'] = $baseUrl . 'make_order?vendorid=' . $_SESSION['orderVendorId'] . '&spotid=' . $_SESSION['spot']['spotId'];
+        }
+
+        if (isset($_SESSION['iframe'])) {
+            unset($_SESSION['iframe']);
+            $_SESSION['iframeRedirect'] = $baseUrl . 'make_order?vendorid=' . $_SESSION['orderVendorId'];
         }
 
         if (
@@ -31,7 +37,6 @@ class  Paysuccesslink extends BaseControllerWeb
             || empty($_SESSION['spot'])
             || empty($_SESSION['orderStatusCode'])
         ) {
-
             $this->goBack();
         }
 

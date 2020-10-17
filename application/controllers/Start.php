@@ -12,11 +12,17 @@ class  Start extends BaseControllerWeb
     {
         parent::__construct();
         $this->load->helper('url');
+        $this->load->helper('utility_helper');
         $this->load->library('language', array('controller' => $this->router->class));
     }
 
     public function index()
     {
+        if (isset($_SESSION['iframeRedirect'])) {
+            $iframeRedirect = Utility_helper::getSessionValue('iframeRedirect');
+            redirect($iframeRedirect);
+            exit();
+        };
         $this->global['pageTitle'] = 'TIQS : SPOT';
 
 		$this->loadViews("start", $this->global, NULL, NULL, "headerpublic"); // payment screen
