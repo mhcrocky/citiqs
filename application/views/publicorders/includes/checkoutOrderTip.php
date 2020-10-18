@@ -4,8 +4,8 @@
                     <b>SERVICE FEE:</b>
                     <span id="serviceFee">
                         <?php
-                            $serviceFee = $orderTotal * $vendor['serviceFeePercent'] / 100 + $vendor['minimumOrderFee'];
-                            if ($serviceFee > $vendor['serviceFeeAmount']) $serviceFee = $vendor['serviceFeeAmount'];
+                            $serviceFee = $orderTotal * $serviceFeePercent / 100 + $minimumOrderFee;
+                            if ($serviceFee > $serviceFeeAmount) $serviceFee = $serviceFeeAmount;
                             echo number_format($serviceFee, 2, ".", ","); ?> &euro;
                     </span>
                 </div>

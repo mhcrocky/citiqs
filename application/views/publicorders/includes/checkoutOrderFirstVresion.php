@@ -111,8 +111,8 @@
                                             data-service-fee = "serviceFee"
                                             data-total-amount = "totalAmount"
                                             data-product-ex-id = "<?php echo $productExtendedId; ?>"
-                                            data-service-fee-percent = "<?php echo $vendor['serviceFeePercent']; ?>"
-                                            data-service-fee-amount = "<?php echo $vendor['serviceFeeAmount']; ?>"
+                                            data-service-fee-percent = "<?php echo $serviceFeePercent; ?>"
+                                            data-service-fee-amount = "<?php echo $serviceFeeAmount; ?>"
                                             onclick="removeElement(this)"
                                         ></i>
                                     </div>
@@ -212,8 +212,8 @@
                                             data-service-fee = "serviceFee"
                                             data-total-amount = "totalAmount"
                                             data-product-ex-id = "<?php echo $productExtendedId; ?>"
-                                            data-service-fee-percent = "<?php echo $vendor['serviceFeePercent']; ?>"
-                                            data-service-fee-amount = "<?php echo $vendor['serviceFeeAmount']; ?>"
+                                            data-service-fee-percent = "<?php echo $serviceFeePercent; ?>"
+                                            data-service-fee-amount = "<?php echo $serviceFeeAmount; ?>"
                                             onclick="removeElement(this)"
                                         >
                                         </i>

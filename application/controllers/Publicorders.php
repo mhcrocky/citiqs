@@ -254,6 +254,7 @@
             $data['privacyPolicy'] = isset($_SESSION['postOrder']['order']['privacyPolicy']) ? 'checked' : '';
 
             $this->setDelayTime($data);
+            $this->setFeeValues($data);
 
             $data['city'] = isset($_SESSION['postOrder']['user']['city']) ? $_SESSION['postOrder']['user']['city'] : get_cookie('city');
             $data['zipcode'] = isset($_SESSION['postOrder']['user']['zipcode']) ? $_SESSION['postOrder']['user']['zipcode'] : get_cookie('zipcode');
@@ -262,7 +263,8 @@
             $this->loadViews('publicorders/checkoutOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
 
-        private function setDelayTime(array &$data) {
+        private function setDelayTime(array &$data)
+        {
             if (intval($_SESSION['spot']['spotTypeId']) !== $this->config->item('local')) {
                 $workingTime = $this->shopspottime_model->setProperty('spotId', $_SESSION['spotId'])->fetchWorkingTime();
                 if ($workingTime) {
@@ -291,6 +293,25 @@
                     redirect($redirect);
                     return;
                 }
+            }
+        }
+
+        private function setFeeValues(array &$data)
+        {
+            $spotTypeId = intval($_SESSION['spot']['spotTypeId']);
+
+            if ($spotTypeId === $this->config->item('local')) {
+                $data['serviceFeePercent'] = $_SESSION['vendor']['serviceFeePercent'];
+                $data['serviceFeeAmount'] = $_SESSION['vendor']['serviceFeeAmount'];
+                $data['minimumOrderFee'] = $_SESSION['vendor']['minimumOrderFee'];
+            } elseif ($spotTypeId === $this->config->item('deliveryType')) {
+                $data['serviceFeePercent'] = $_SESSION['vendor']['deliveryServiceFeePercent'];
+                $data['serviceFeeAmount'] = $_SESSION['vendor']['deliveryServiceFeeAmount'];
+                $data['minimumOrderFee'] = $_SESSION['vendor']['deliveryMinimumOrderFee'];
+            } elseif ($spotTypeId === $this->config->item('pickupType')) {
+                $data['serviceFeePercent'] = $_SESSION['vendor']['pickupServiceFeePercent'];
+                $data['serviceFeeAmount'] = $_SESSION['vendor']['pickupServiceFeeAmount'];
+                $data['minimumOrderFee'] = $_SESSION['vendor']['pickupMinimumOrderFee'];
             }
         }
 

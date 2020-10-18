@@ -11,14 +11,11 @@
     {
         public $id;
         public $vendorId;
-        public $serviceFeePercent;
-        public $serviceFeeAmount;
         public $paynlServiceId;
         public $termsAndConditions;
         public $requireMobile;
         public $payNlServiceId;
         public $printTimeConstraint;
-        public $minimumOrderFee;
         public $serviceFeeTax;
         public $healthCheck;
         public $requireReservation;
@@ -39,6 +36,18 @@
         public $maxBusyTime;
         public $receiptOnlyToWaiter;
 
+        public $serviceFeePercent;
+        public $serviceFeeAmount;
+        public $minimumOrderFee;
+
+        public $deliveryServiceFeePercent;
+        public $deliveryServiceFeeAmount;
+        public $deliveryMinimumOrderFee;
+
+        public $pickupServiceFeePercent;
+        public $pickupServiceFeeAmount;
+        public $pickupMinimumOrderFee;
+
         public $bancontact;
         public $ideal;
         public $creditCard;
@@ -48,6 +57,11 @@
         public $payconiq;
         public $vaucher;
         public $pinMachine;
+
+
+
+
+
 
         private $table = 'tbl_shop_vendors';
 
@@ -66,7 +80,10 @@
             ) {
                 $value = intval($value);
             }
-            if ($property === 'serviceFeePercent' || $property === 'serviceFeeAmount') {
+            if (
+                $property === 'serviceFeePercent'
+                || $property === 'serviceFeeAmount'
+            ) {
                 $value = floatval($value);
             }
             return;
@@ -125,6 +142,14 @@
             if (isset($data['maxBusyTime']) && !Validate_data_helper::validateInteger($data['maxBusyTime'])) return false;
             if (isset($data['receiptOnlyToWaiter']) && !($data['receiptOnlyToWaiter'] === '1' || $data['receiptOnlyToWaiter'] === '0')) return false;
 
+            if (isset($data['deliveryServiceFeePercent']) && !Validate_data_helper::validateString($data['deliveryServiceFeePercent'])) return false;
+            if (isset($data['deliveryServiceFeeAmount']) && !Validate_data_helper::validateFloat($data['deliveryServiceFeeAmount'])) return false;
+            if (isset($data['deliveryMinimumOrderFee']) && !Validate_data_helper::validateFloat($data['deliveryMinimumOrderFee'])) return false;
+
+            if (isset($data['pickupServiceFeePercent']) && !Validate_data_helper::validateString($data['pickupServiceFeePercent'])) return false;
+            if (isset($data['pickupServiceFeeAmount']) && !Validate_data_helper::validateFloat($data['pickupServiceFeeAmount'])) return false;
+            if (isset($data['pickupMinimumOrderFee']) && !Validate_data_helper::validateFloat($data['pickupMinimumOrderFee'])) return false;
+
             return true;
         }
 
@@ -169,6 +194,14 @@
                     $this->table . '.minBusyTime',
                     $this->table . '.maxBusyTime',
                     $this->table . '.receiptOnlyToWaiter',
+
+                    $this->table . '.deliveryServiceFeePercent',
+                    $this->table . '.deliveryServiceFeeAmount',
+                    $this->table . '.deliveryMinimumOrderFee',
+                    $this->table . '.pickupServiceFeePercent',
+                    $this->table . '.pickupServiceFeeAmount',
+                    $this->table . '.pickupMinimumOrderFee',
+
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',
@@ -220,6 +253,15 @@
             $result['printTimeConstraint'] = intval($result['printTimeConstraint']);
             $result['vendorId'] = intval($result['vendorId']);
             $result['typeData'] = $this->prepareTypes($result['typeData']);
+
+            $result['deliveryServiceFeePercent'] = floatval($result['deliveryServiceFeePercent']);
+            $result['deliveryServiceFeeAmount'] = floatval($result['deliveryServiceFeeAmount']);
+            $result['deliveryMinimumOrderFee'] = floatval($result['deliveryMinimumOrderFee']);
+
+
+            $result['pickupServiceFeePercent'] = floatval($result['pickupServiceFeePercent']);
+            $result['pickupServiceFeeAmount'] = floatval($result['pickupServiceFeeAmount']);
+            $result['pickupMinimumOrderFee'] = floatval($result['pickupMinimumOrderFee']);
             return $result;
         }
 
