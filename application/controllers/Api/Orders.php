@@ -211,6 +211,8 @@
 				$draw->annotation(0,  35 * $h, "DATE". date("d-m h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
 			}
 			if($order['serviceTypeId']==2){
+				$draw->annotation(0,  35 * $h, "DELIVERY ON". date("d-m h:i:sa",strtotime($order['orderCreated'])));
+				$h++;
 				$draw->annotation(0,  35 * $h, "Phone : ". $order['buyerMobile'] );
 				$h++;
 				$draw->annotation(0,  35 * $h, "Address: ". $order['buyerAddress'] );
@@ -241,6 +243,7 @@
 			$draw->setStrokeWidth(1);
 			$draw->setFontSize(30);
             $draw->setStrokeWidth(3);
+
             $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
             $imagetext->annotateImage($draw, 0,35 * $h, 0, "#");
             $imagetext->annotateImage($draw, 40,35 * $h, 0, "OMSCHRIJVING");
@@ -263,7 +266,7 @@
 
 			$draw->setStrokeColor('black');
             $draw->setStrokeWidth(5);
-            $draw->line(0, 35 * $h, 576, 150);
+            $draw->line(0, 35 * $h, 576, 35 * $h);
             $draw->setStrokeWidth(1);
 
 			$drawemail->setStrokeColor('black');
