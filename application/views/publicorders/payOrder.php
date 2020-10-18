@@ -81,7 +81,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="order-details" style="background-color: white">
+                                <div class="order-details" style="background-color: white; display:none">
                                     <table>
                                         <thead>
                                         <tr>
