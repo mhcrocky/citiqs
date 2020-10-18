@@ -208,24 +208,24 @@
 			$h++;
 
 			if($order['serviceTypeId']==1){
-				$draw->annotation(0,  35 * $h, "DATE". date("m-d h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
+				$draw->annotation(0,  35 * $h, "DATE". date("d-m h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
 			}
 			if($order['serviceTypeId']==2){
-				$draw->annotation(0,  35 * $h, "DELIVERY AT". date("m-d h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
+				$draw->annotation(0,  35 * $h, "DELIVERY AT". date("d-m h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
 			}
 			if($order['serviceTypeId']==3){
-				$draw->annotation(0,  35 * $h, "PICK-UP at : ". date("m-d h:i:sa",strtotime($order['orderCreated'])));
+				$draw->annotation(0,  35 * $h, "PICK-UP at : ". date("d-m h:i:sa",strtotime($order['orderCreated'])));
 			}
 
 
 			if($order['serviceTypeId']==1){
-				$drawemail->annotation(0, 35 * $h, "DATE:". date("m-d h:i:sa",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
+				$drawemail->annotation(0, 35 * $h, "DATE:". date("d-m h:i:sa",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
 			}
 			if($order['serviceTypeId']==2){
-				$drawemail->annotation(0, 35 * $h, "DELIVERY AT:". date("m-d h:i:sa",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
+				$drawemail->annotation(0, 35 * $h, "DELIVERY AT:". date("d-m h:i:sa",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
 			}
 			if($order['serviceTypeId']==3){
-				$drawemail->annotation(0, 35 * $h, "PICK-UP AT". date("m-d h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
+				$drawemail->annotation(0, 35 * $h, "PICK-UP AT". date("d-m h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
 			}
 
 			$h++;
@@ -298,8 +298,8 @@
                 // 7 => vatpercentage
                 // 8 => remark
 
-                $title = $product[0];
-                $price = $product[1];
+                $title =  substr($product[0], 0, 20);
+				$price = $product[1];
                 $quantity = $product[2];
                 $plu =  $product[3];
                 $shortDescription = $product[5];
