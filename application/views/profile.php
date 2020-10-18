@@ -214,7 +214,7 @@
 					</div>
 					<br/>
 					<div class="form-group mb-35">
-						<label for="serviceFeePercent">SERVICE FEE PERCENTAGE</label>
+						<label for="serviceFeePercent">LOCAL SERVICE FEE PERCENTAGE</label>
 						<input
 							type="number"
 							id="serviceFeePercent"
@@ -228,7 +228,7 @@
 					</div>
 					<br/>
 					<div class="form-group mb-35">
-						<label for="minimumOrderFee">SERVICE FEE AMOUNT</label>
+						<label for="minimumOrderFee">LOCAL SERVICE FEE AMOUNT</label>
 						<input
 							type="number"
 							id="minimumOrderFee"
@@ -242,7 +242,7 @@
 					</div>
 					<br/>
 					<div class="form-group mb-35">
-						<label for="serviceFeeAmount">MAXIMUM SERVICE FEE AMOUNT</label>
+						<label for="serviceFeeAmount">LOCAL MAXIMUM SERVICE FEE AMOUNT</label>
 						<input
 							type="number"
 							id="serviceFeeAmount"
@@ -252,6 +252,93 @@
 							class="form-control"
 							style="border-radius: 50px"
 							value="<?php echo $vendor['serviceFeeAmount']; ?>"
+							/>
+					</div>
+
+					<br/>
+					<div class="form-group mb-35">
+						<label for="deliveryServiceFeePercent">DELIVERY SERVICE FEE PERCENTAGE</label>
+						<input
+							type="number"
+							id="deliveryServiceFeePercent"
+							name="vendor[deliveryServiceFeePercent]"
+							min="0"
+							step="0.01"
+							class="form-control"
+							style="border-radius: 50px"
+							value="<?php echo $vendor['deliveryServiceFeePercent']; ?>"
+							/>
+					</div>
+					<br/>
+					<div class="form-group mb-35">
+						<label for="deliveryMinimumOrderFee">DELIVERY SERVICE FEE AMOUNT</label>
+						<input
+							type="number"
+							id="deliveryMinimumOrderFee"
+							name="vendor[deliveryMinimumOrderFee]"
+							min="0"
+							step="0.01"
+							class="form-control"
+							style="border-radius: 50px"
+							value="<?php echo $vendor['deliveryMinimumOrderFee']; ?>"
+							/>
+					</div>
+					<br/>
+					<div class="form-group mb-35">
+						<label for="deliveryServiceFeeAmount">DELIVERY MAXIMUM SERVICE FEE AMOUNT</label>
+						<input
+							type="number"
+							id="deliveryServiceFeeAmount"
+							name="vendor[deliveryServiceFeeAmount]"
+							min="0"
+							step="0.01"
+							class="form-control"
+							style="border-radius: 50px"
+							value="<?php echo $vendor['deliveryServiceFeeAmount']; ?>"
+							/>
+					</div>
+
+
+					<br/>
+					<div class="form-group mb-35">
+						<label for="pickupServiceFeePercent">PICKUP SERVICE FEE PERCENTAGE</label>
+						<input
+							type="number"
+							id="pickupServiceFeePercent"
+							name="vendor[pickupServiceFeePercent]"
+							min="0"
+							step="0.01"
+							class="form-control"
+							style="border-radius: 50px"
+							value="<?php echo $vendor['pickupServiceFeePercent']; ?>"
+							/>
+					</div>
+					<br/>
+					<div class="form-group mb-35">
+						<label for="pickupMinimumOrderFee">PICKUP SERVICE FEE AMOUNT</label>
+						<input
+							type="number"
+							id="pickupMinimumOrderFee"
+							name="vendor[pickupMinimumOrderFee]"
+							min="0"
+							step="0.01"
+							class="form-control"
+							style="border-radius: 50px"
+							value="<?php echo $vendor['pickupMinimumOrderFee']; ?>"
+							/>
+					</div>
+					<br/>
+					<div class="form-group mb-35">
+						<label for="pickupServiceFeeAmount">PICKUP MAXIMUM SERVICE FEE AMOUNT</label>
+						<input
+							type="number"
+							id="pickupServiceFeeAmount"
+							name="vendor[pickupServiceFeeAmount]"
+							min="0"
+							step="0.01"
+							class="form-control"
+							style="border-radius: 50px"
+							value="<?php echo $vendor['pickupServiceFeeAmount']; ?>"
 							/>
 					</div>
 					<br/>

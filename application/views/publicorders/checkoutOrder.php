@@ -150,9 +150,9 @@
         let condition = (askId === vendorId) ? true : false;
 
         let globals = {
-            'minimumOrderFee' : parseFloat('<?php echo $vendor['minimumOrderFee']; ?>'),
-            'serviceFeePercent': parseFloat('<?php echo $vendor['serviceFeePercent']; ?>'),
-            'serviceFeeAmount': parseFloat('<?php echo $vendor['serviceFeeAmount']; ?>'),
+            'serviceFeePercent': parseFloat('<?php echo $serviceFeePercent; ?>'),
+            'serviceFeeAmount': parseFloat('<?php echo $serviceFeeAmount; ?>'),
+            'minimumOrderFee' : parseFloat('<?php echo $minimumOrderFee; ?>'),
             'serviceFeeSpanId' : 'serviceFee',
             'totalAmountSpanId': 'totalAmount',
             'serviceFeeInputId' : 'serviceFeeInput',
