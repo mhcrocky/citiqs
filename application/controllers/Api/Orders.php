@@ -172,15 +172,17 @@
 			$drawemail->setFontSize(28);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 
+			$h = 1;
+
 //			$draw->annotation(0, 30, "SPOT: ". $result->spot_id . " EMAIL: " . $email . ' PHONE: ' . $phone);
 			if($order['serviceTypeId']==1){
-				$draw->annotation(0, 30, "GEEN BTW BON / LOCAL ");
+				$draw->annotation(0, 35 * $h, "GEEN BTW BON / LOCAL ");
 			}
 			if($order['serviceTypeId']==2){
-				$draw->annotation(0, 30, "GEEN BTW BON / DELIVERY ");
+				$draw->annotation(0, 35 * $h, "GEEN BTW BON / DELIVERY ");
 			}
 			if($order['serviceTypeId']==3){
-				$draw->annotation(0, 30, "GEEN BTW BON / PICKUP ");
+				$draw->annotation(0, 35 * $h, "GEEN BTW BON / PICKUP ");
 			}
 
 			$draw->setStrokeWidth(4);
@@ -194,39 +196,39 @@
 			// $draw->annotation(0, 30, "SPOT: ". $result->spot_id . " EMAIL: " . $email . ' PHONE: ' . $phone);
             // $draw->annotation(0, 30, "SPOT: ". $result->spot_id );
 
-			$draw->annotation(0, 70, "order: " . $order['orderId'] . " naam: " . $order['buyerUserName']);
+			$h++;
+
+			$draw->annotation(0, 35 * $h , "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);
+			$drawemail->annotation(0,35 * $h , "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);
+
 
 			$draw->setStrokeColor('black');
 			$draw->setStrokeWidth(2);
 
-			if($order['serviceTypeId']==1){
-				$draw->annotation(0, 100, "DATE". date("m-d h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
-			}
-			if($order['serviceTypeId']==2){
-				$draw->annotation(0, 100, "DELIVERY AT". date("m-d h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
-			}
-			if($order['serviceTypeId']==3){
-				$draw->annotation(0, 100, "PICK-UP at : ". date("m-d h:i:sa",strtotime($order['orderCreated'])));
-			}
-
-			$drawemail->annotation(0, 70, "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);
+			$h++;
 
 			if($order['serviceTypeId']==1){
-				$drawemail->annotation(0, 100, "DATE:". date("m-d h:i:sa",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
+				$draw->annotation(0,  35 * $h, "DATE". date("m-d h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
 			}
 			if($order['serviceTypeId']==2){
-				$drawemail->annotation(0, 100, "DELIVERY AT:". date("m-d h:i:sa",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
+				$draw->annotation(0,  35 * $h, "DELIVERY AT". date("m-d h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
 			}
 			if($order['serviceTypeId']==3){
-				$drawemail->annotation(0, 100, "PICK-UP AT". date("m-d h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
+				$draw->annotation(0,  35 * $h, "PICK-UP at : ". date("m-d h:i:sa",strtotime($order['orderCreated'])));
 			}
 
-			$drawemail->annotation(0, 100, "DATE:". date("m-d h:i:sa",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
 
+			if($order['serviceTypeId']==1){
+				$drawemail->annotation(0, 35 * $h, "DATE:". date("m-d h:i:sa",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
+			}
+			if($order['serviceTypeId']==2){
+				$drawemail->annotation(0, 35 * $h, "DELIVERY AT:". date("m-d h:i:sa",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
+			}
+			if($order['serviceTypeId']==3){
+				$drawemail->annotation(0, 35 * $h, "PICK-UP AT". date("m-d h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
+			}
 
-            /* Font properties */
-            // $draw->setFontWeight(1);
-
+			$h++;
 
             //-------- header regel --------
 			$draw->setStrokeColor('black');
@@ -234,42 +236,33 @@
 			$draw->setFontSize(30);
             $draw->setStrokeWidth(3);
             $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-            $imagetext->annotateImage($draw, 0, 135, 0, "#");
-            $imagetext->annotateImage($draw, 40, 135, 0, "OMSCHRIJVING");
+            $imagetext->annotateImage($draw, 0,35 * $h, 0, "#");
+            $imagetext->annotateImage($draw, 40,35 * $h, 0, "OMSCHRIJVING");
             if ($order['paidStatus'] === $this->config->item('orderCashPaying')) {
-                $imagetext->annotateImage($draw, 295, 135, 0, "CASH PAYMENT");
+                $imagetext->annotateImage($draw, 295, 35 * $h, 0, "CASH PAYMENT");
             }
-            // $imagetext->annotateImage($draw, 395, 105, 0, "PRIJS");
-            // $imagetext->annotateImage($draw, 485, 105, 0, "%");
-            // $imagetext->annotateImage($draw, 505, 105, 0, "TOTAAL");
 
-			//			$drawemail->setFontSize(22);
-			//			$drawemail->setStrokeWidth(2);
-			//			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-			//			$imagetextemail->annotateImage($drawemail, 0, 105, 0, "ANT");
-			//			$imagetextemail->annotateImage($drawemail, 40, 105, 0, "OMSCHRIJVING");
-			//			$imagetextemail->annotateImage($drawemail, 395, 105, 0, "PRIJS");
-			//			$imagetextemail->annotateImage($drawemail, 485, 105, 0, "%");
-			//			$imagetextemail->annotateImage($drawemail, 505, 105, 0, "TOTAAL");
-
+			$h++;
 
 			$drawemail->setFontSize(22);
 			$drawemail->setStrokeWidth(2);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-			$imagetextemail->annotateImage($drawemail, 0, 165, 0, "ANT");
-			$imagetextemail->annotateImage($drawemail, 48, 165, 0, "OMSCHRIJVING");
-			$imagetextemail->annotateImage($drawemail, 380, 165, 0, "PRIJS");
-			$imagetextemail->annotateImage($drawemail, 475, 165, 0, "%");
-			$imagetextemail->annotateImage($drawemail, 495, 165, 0, "TOTAAL");
+			$imagetextemail->annotateImage($drawemail, 0, 35 * $h, 0, "ANT");
+			$imagetextemail->annotateImage($drawemail, 48, 35 * $h, 0, "OMSCHRIJVING");
+			$imagetextemail->annotateImage($drawemail, 380,35 * $h, 0, "PRIJS");
+			$imagetextemail->annotateImage($drawemail, 475, 35 * $h, 0, "%");
+			$imagetextemail->annotateImage($drawemail, 495, 35 * $h, 0, "TOTAAL");
+
+			$h++;
 
 			$draw->setStrokeColor('black');
             $draw->setStrokeWidth(5);
-            $draw->line(0, 150, 576, 150);
+            $draw->line(0, 35 * $h, 576, 150);
             $draw->setStrokeWidth(1);
 
 			$drawemail->setStrokeColor('black');
 			$drawemail->setStrokeWidth(5);
-			$drawemail->line(0, 150, 576, 150);
+			$drawemail->line(0, 35 * $h, 576, 150);
 			$drawemail->setStrokeWidth(1);
 
 			//-------- regels --------
