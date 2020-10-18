@@ -26,7 +26,7 @@
 							<input type="radio" name="radio" value="<?php echo 'make_order?vendorid=' . $vendor['vendorId'] . '&typeId=' . $type['typeId'] ?>" onchange="redirectTo(this.value)" class="form-control" <?php if($type['typeId']==='0') echo "checked" ?> />
 							<div class="front-end box">
 								<div style="margin-top: 20px">
-									<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="100" height="" />
+									<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="100px" height="" />
 								</div>
 
 								<div style="margin-top: -10px">
@@ -38,7 +38,9 @@
 								<div style="margin-top:80px">
 									<i class="<?php if($type['typeId']==='1') echo "fa fa-coffee" ?>" style="font-size:48px;color:ghostwhite"></i>
 									<i class="<?php if($type['typeId']==='2') echo "fa fa-bicycle" ?>" style="font-size:48px;color:ghostwhite"></i>
-									<i class="<?php if($type['typeId']==='3') echo "fa fa-refresh" ?>" style="font-size:48px;color:ghostwhite"></i>
+									<?php if($type['typeId']==='3') { ?>
+									<img src="<?php if($type['typeId']==='3') echo base_url(); ?>assets/home/images/pickup.png" alt="tiqs" width="48px" height="48px" />
+									<?php } ?>
 								</div>
 
 								<div style="margin-top: -70px">

@@ -5,7 +5,7 @@
 
     require APPPATH . 'libraries/REST_Controller.php';
 
-    class Orders extends REST_Controller
+    class Address extends REST_Controller
     {
 
         function __construct()
@@ -36,9 +36,8 @@
             // check is printer slave, if printer is slave, fetch master mac number, else masterMac is $get['mac']
             $masterMac = $this->shopprinters_model->setProperty('macNumber', $get['mac'])->printMacNumber();
 
-
             // fetch order
-            $order = $this->shoporder_model->fetchOrdersForPrint($masterMac);
+            $order = $this->shoporder_model->fetchAddressForPrint($masterMac);
 
             if (!$order) return;
             $order = reset($order);
@@ -80,7 +79,6 @@
                     //check order time
             $printTimeConstraint = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->getPrintTimeConstraint();
 
-            // order expiration settings
             if (strtotime($printTimeConstraint) > strtotime($order['orderCreated'])) {
                 $this->shoporder_model->setObjectId(intval($order['orderId']))->updateExpired('1');
                 return;
@@ -173,55 +171,23 @@
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 
 //			$draw->annotation(0, 30, "SPOT: ". $result->spot_id . " EMAIL: " . $email . ' PHONE: ' . $phone);
-			if($order['serviceTypeId']==1){
-				$draw->annotation(0, 30, "GEEN BTW BON / LOCAL ");
-			}
-			if($order['serviceTypeId']==2){
-				$draw->annotation(0, 30, "GEEN BTW BON / DELIVERY ");
-			}
-			if($order['serviceTypeId']==3){
-				$draw->annotation(0, 30, "GEEN BTW BON / PICKUP ");
-			}
+			$draw->annotation(0, 30, "GEEN BTW BON / ");
 
-			$draw->setStrokeWidth(4);
+			$draw->setStrokeWidth(2);
 			$draw->setFontSize(28);
 			$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
 
-			$drawemail->setStrokeWidth(4);
+			$drawemail->setStrokeWidth(2);
 			$drawemail->setFontSize(28);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 
 			// $draw->annotation(0, 30, "SPOT: ". $result->spot_id . " EMAIL: " . $email . ' PHONE: ' . $phone);
             // $draw->annotation(0, 30, "SPOT: ". $result->spot_id );
-
 			$draw->annotation(0, 70, "order: " . $order['orderId'] . " naam: " . $order['buyerUserName']);
-
-			$draw->setStrokeColor('black');
-			$draw->setStrokeWidth(2);
-
-			if($order['serviceTypeId']==1){
-				$draw->annotation(0, 100, "DATE". date("m-d h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
-			}
-			if($order['serviceTypeId']==2){
-				$draw->annotation(0, 100, "DELIVERY AT". date("m-d h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
-			}
-			if($order['serviceTypeId']==3){
-				$draw->annotation(0, 100, "PICK-UP at : ". date("m-d h:i:sa",strtotime($order['orderCreated'])));
-			}
+			$draw->annotation(0, 100, "datum:". date("m-d h:i:sa",$order['orderCreated']). " spot: ". $order['spotName'] );
 
 			$drawemail->annotation(0, 70, "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);
-
-			if($order['serviceTypeId']==1){
-				$drawemail->annotation(0, 100, "DATE:". date("m-d h:i:sa",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
-			}
-			if($order['serviceTypeId']==2){
-				$drawemail->annotation(0, 100, "DELIVERY AT:". date("m-d h:i:sa",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
-			}
-			if($order['serviceTypeId']==3){
-				$drawemail->annotation(0, 100, "PICK-UP AT". date("m-d h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
-			}
-
-			$drawemail->annotation(0, 100, "DATE:". date("m-d h:i:sa",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
+			$drawemail->annotation(0, 100, "DATE:". date("m-d h:i:sa",$order['orderCreated']). " SPOT: ". $order['spotName'] );
 
 
             /* Font properties */
@@ -229,8 +195,7 @@
 
 
             //-------- header regel --------
-			$draw->setStrokeColor('black');
-			$draw->setStrokeWidth(1);
+
 			$draw->setFontSize(30);
             $draw->setStrokeWidth(3);
             $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
