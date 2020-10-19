@@ -211,16 +211,15 @@
 				$draw->annotation(0,  35 * $h, "DATE". date("d-m h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
 			}
 			if($order['serviceTypeId']==2){
-				$draw->annotation(0,  35 * $h, "DELIVERY ON". date("d-m h:i:sa",strtotime($order['orderCreated'])));
+				$draw->annotation(0,  35 * $h, "DELIVERY ON : ". date("d-m h:i:sa",strtotime($order['orderCreated'])));
 				$h++;
 				$draw->annotation(0,  35 * $h, "Phone : ". $order['buyerMobile'] );
 				$h++;
 				$draw->annotation(0,  35 * $h, "Address: ". $order['buyerAddress'] );
 				$h++;
-				$draw->annotation(0,  35 * $h, $order['buyerZipcode'] );
-				$h++;
-				$draw->annotation(0,  35 * $h, $order['buyerCity']  );
+				$draw->annotation(0,  35 * $h, $order['buyerZipcode']. " " . $order['buyerCity'] );
 			}
+
 			if($order['serviceTypeId']==3){
 				$draw->annotation(0,  35 * $h, "PICK-UP at : ". date("d-m h:i:sa",strtotime($order['orderCreated'])));
 			}
@@ -237,6 +236,8 @@
 			}
 
 			$h++;
+			$h++;
+
 
             //-------- header regel --------
 			$draw->setStrokeColor('black');
@@ -253,32 +254,36 @@
 
 			$h++;
 
+			$draw->setStrokeColor('black');
+			$draw->setStrokeWidth(5);
+			$draw->line(0, 35 * $h, 576, 35 * $h);
+			$draw->setStrokeWidth(1);
+
+			$drawemail->setStrokeColor('black');
+			$drawemail->setStrokeWidth(5);
+			$drawemail->line(0, 35 * $h, 576, $h);
+			$drawemail->setStrokeWidth(1);
+
+			$h++;
+
 			$drawemail->setFontSize(22);
 			$drawemail->setStrokeWidth(2);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-			$imagetextemail->annotateImage($drawemail, 0, 35 * $h, 0, "ANT");
-			$imagetextemail->annotateImage($drawemail, 48, 35 * $h, 0, "OMSCHRIJVING");
+			$imagetextemail->annotateImage($drawemail, 0, 35 * $h, 0, "#");
+			$imagetextemail->annotateImage($drawemail, 45, 35 * $h, 0, "OMSCHRIJVING");
 			$imagetextemail->annotateImage($drawemail, 380,35 * $h, 0, "PRIJS");
 			$imagetextemail->annotateImage($drawemail, 475, 35 * $h, 0, "%");
 			$imagetextemail->annotateImage($drawemail, 495, 35 * $h, 0, "TOTAAL");
 
 			$h++;
 
-			$draw->setStrokeColor('black');
-            $draw->setStrokeWidth(5);
-            $draw->line(0, 35 * $h, 576, 35 * $h);
-            $draw->setStrokeWidth(1);
-
-			$drawemail->setStrokeColor('black');
-			$drawemail->setStrokeWidth(5);
-			$drawemail->line(0, 35 * $h, 576, 150);
-			$drawemail->setStrokeWidth(1);
 
 			//-------- regels --------
 
             $totalamount = 0;
             $i = 0;
             $ii = 0;
+			$hd = $h * 35;
 
 			$Ttotalamount =0;
 			$T21totalamount=0;
@@ -307,7 +312,7 @@
                 // 7 => vatpercentage
                 // 8 => remark
 
-                $title =  substr($product[0], 0, 20);
+                $title =  substr($product[0], 0, 27);
 				$price = $product[1];
                 $quantity = $product[2];
                 $plu =  $product[3];
@@ -333,7 +338,7 @@
 
 				// replace of 195 bu $h (header)
 
-				$hd = $h * 35;
+
 
 				$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
                 // $draw->annotation(0, $hd + ($i * 30), $plu);
@@ -371,7 +376,7 @@
 				$drawemail->annotation(0, $hd + ($i * 30), $quantity);
 
 				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-				$drawemail->annotation(40, $hd + ($i * 30), $title);
+				$drawemail->annotation(40, $hd + ($i * 30), substr($title, 0, 20));
 
 				$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
 				$drawemail->annotation(440, $hd + ($i * 30), "€ ". $price);

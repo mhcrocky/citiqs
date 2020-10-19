@@ -61,25 +61,25 @@
                         <div id="area-container">
                             <div class="page-container">
                                 <div class="heading pay-header">
-                                    <div class="amount"><?php echo number_format($total, 2, ',', '.'); ?> EUR</div>
-                                    <div class="info">
-                                        <b>bestelling</b>
-                                    </div>
+<!--                                    <div class="amount">--><?php //echo number_format($total, 2, ',', '.'); ?><!-- EUR</div>-->
+<!--                                    <div class="info">-->
+<!--                                        <b>bestelling</b>-->
+<!--                                    </div>-->
                                 </div>
                                 <div class="bar bar2">
-                                    <div class="language">
-                                        <a href="#">
-                                            <span class="selectedLanguage">NL</span>
-                                            <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                        </a>
-                                        <div class="menu hidden">
-                                            <ul>
-                                                <li class="selected">NL</li>
-                                                <!-- <li>EN</li>
-                                                <li>FR</li> -->
-                                            </ul>
-                                        </div>
-                                    </div>
+<!--                                    <div class="language">-->
+<!--                                        <a href="#">-->
+<!--                                            <span class="selectedLanguage">NL</span>-->
+<!--                                            <i class="fa fa-angle-down" aria-hidden="true"></i>-->
+<!--                                        </a>-->
+<!--                                        <div class="menu hidden">-->
+<!--                                            <ul>-->
+<!--                                                <li class="selected">NL</li>-->
+<!--                                              <li>EN</li>-->
+<!--                                                <li>FR</li> -->
+<!--                                            </ul>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                 </div>
                                 <div class="order-details" style="background-color: white; display:none">
                                     <table>
@@ -409,7 +409,7 @@
                                 <div class="footer" style="text-align:left">
                                     <a href="<?php echo base_url() . $redirect; ?>" class="btn-cancel">
                                         <i class="fa fa-arrow-left"></i>
-                                        <span data-trans="" data-trn-key="Annuleren">Annuleren</span>
+                                        <span data-trans="" data-trn-key="Annuleren">BACK</span>
                                     </a>
                                 </div>                                
                             </div>

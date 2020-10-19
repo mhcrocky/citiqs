@@ -80,8 +80,8 @@ class Orderscopy extends REST_Controller
 		/* New image */
 		//--- aantal rows bepalen a.d. hand van aantal order regels.
 
-		$rowheight = (count($productsarray) * 30) + 900;
-		$rowheight2 = (count($productsarray) * 30) + 350;
+		$rowheight = (count($productsarray) * 30) + 1000;
+		$rowheight2 = (count($productsarray) * 30) + 550;
 		$imagetext->newImage(576, $rowheight2, $pixel);
 		$imagetextemail->newImage(576, $rowheight, $pixel);
 
@@ -199,7 +199,7 @@ class Orderscopy extends REST_Controller
 			// 6 => longDescription
 			// 7 => vatpercentage
 
-			$title = $product[0];
+			$title = substr($product[0], 0, 20);
 			$price = $product[1];
 			$quantity = $product[2];
 			$plu =  $product[3];

@@ -1,12 +1,14 @@
 <div class="container shop-container">
     <div class="row">
-        <?php if (!empty($mainProducts)) { ?>
-            <?php
-            if ($vendor['logo']) { ?>
-                <div style="text-align:center">
-                    <img src=<?php echo base_url() . 'assets/images/vendorLogos/' . $vendor['logo']; ?> alt="" width="100%" height="auto" />
-                </div>
-            <?php }?>
+        <?php if (!empty($mainProducts)) {
+        	if (!empty($_SESSION['iframe'])) { ?>
+            <?php //we need to have here in case of iframe no logo header
+					if ($vendor['logo']) { ?>
+					<div style="text-align:center">
+						<img src=<?php echo base_url() . 'assets/images/vendorLogos/' . $vendor['logo']; ?> alt="" width="100%" height="auto" />
+					</div>
+				<?php
+			} }?>
             <?php
                 if ($vendor['showMenu'] === '1') {
                     $categories = array_keys($mainProducts);
