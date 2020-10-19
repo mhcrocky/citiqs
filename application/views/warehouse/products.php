@@ -289,7 +289,7 @@
                             foreach($product['productDetails'] as $details) {
                                 array_push($productDetailsIds, $details['productTypeId']);                                                
 
-                                $string = 'Name: ' . $details['productType'] . ', price: ' . $details['price'] . ' &euro;';
+                                $string = 'Name: ' . $details['productType'];
                                 if ($details['productTypeIsMain'] === '1') {
                                     $isMain = true;
                                     $string .= ' <span style="background-color: #72b19f">(MAIN)</span> ';
@@ -444,7 +444,7 @@
                                                                         name="productTime[<?php echo $day; ?>][from][]"
                                                                         <?php
                                                                             if (isset($first[2])) {
-                                                                                echo 'value="' . $first[2] . '"';
+                                                                                echo 'value="' . date('H:i', strtotime($first[2])) . '"';
                                                                             }
                                                                         ?>
                                                                         />
@@ -456,9 +456,9 @@
                                                                         name="productTime[<?php echo $day; ?>][to][]"
                                                                         <?php
                                                                             if (isset($first[3])) {
-                                                                                echo 'value="' . $first[3] . '"';
+                                                                                echo 'value="' . date('H:i', strtotime($first[3])) . '"';
                                                                             }
-                                                                            unset($first)
+                                                                            unset($first);
                                                                         ?>
                                                                         />
                                                                 </label>
@@ -470,10 +470,10 @@
                                                                                 ?>
                                                                                     <div>
                                                                                         <label>From
-                                                                                            <input type="time" name="productTime[<?php echo $day; ?>][from][]" value="<?php echo $dayData[2]; ?>" />
+                                                                                            <input type="time" name="productTime[<?php echo $day; ?>][from][]" value="<?php echo date('H:i', strtotime($dayData[2])); ?>" />
                                                                                         </label>
                                                                                         <label>To:
-                                                                                            <input type="time" name="productTime[<?php echo $day; ?>][to][]" value="<?php echo $dayData[3]; ?>"/>
+                                                                                            <input type="time" name="productTime[<?php echo $day; ?>][to][]" value="<?php echo date('H:i', strtotime($dayData[3])); ?>"/>
                                                                                         </label>
                                                                                         <span class="fa-stack fa-2x" onclick="removeParent(this)">
                                                                                             <i class="fa fa-times"></i>
