@@ -13,12 +13,26 @@
 		<div class="container" style="background-color: #F3D0B5">
 			<div class="row">
 				<?php foreach ($directories as $directory): ?>
-					<div class="col-md-4">
+					<div
+						class="col-md-4 places"
+						data-lat="<?php echo $directory['lat']; ?>"
+						data-lng="<?php echo $directory['lng']; ?>"
+						>
 						<div class="card mb-4 shadow-sm">
-<!--							<img src="--><?php //echo $directory['image']; ?><!--" class="bd-placeholder-img card-img-top"-->
-							<img src="<?php echo 'assets/home/images/bizdir.png' ?>" class="bd-placeholder-img card-img-top"
-								 height="180" alt="<?php echo $directory['business_name']; ?>"/>
-
+							<!-- <img src="--><?php //echo $directory['image']; ?><!--" class="bd-placeholder-img card-img-top" -->
+							<?php if (!$directory['placeImage']) { ?>
+								<img
+									src="<?php echo 'assets/home/images/bizdir.png' ?>"
+									class="bd-placeholder-img card-img-top"
+									height="180" alt="<?php echo $directory['business_name']; ?>"
+								/>
+							<?php } else { ?>
+								<img
+									src="<?php echo base_url() . 'assets/images/placeImages/' . $directory['placeImage']; ?>"
+									class="bd-placeholder-img card-img-top"
+									height="180" alt="<?php echo $directory['business_name']; ?>"
+								/>
+							<?php } ?>
 							<div class="card-body text-center" style="background-color: #003151">
 								<img src="<?php echo 'assets/home/images/tiqslogowhite.png' ?>" style="margin-left:190px; margin-top: -350px; height: 50px; width: auto"/>
 								<p class="pb-2 font-weight-bold"
@@ -43,3 +57,28 @@
 		</div>
 	</div>
 </main>
+<script>
+	// var options = {
+	// 	enableHighAccuracy: true,
+	// 	timeout: 5000,
+	// 	maximumAge: 10
+	// };
+
+	// function success(pos) {
+	// 	if (pos)
+	// 	console.dir(pos);
+	// 	var crd = pos.coords;
+	// 	console.dir(crd);
+
+	// 	console.log('Your current position is:');
+	// 	console.log(`Latitude : ${crd.latitude}`);
+	// 	console.log(`Longitude: ${crd.longitude}`);
+	// 	console.log(`More or less ${crd.accuracy} meters.`);
+	// }
+
+	// function error(err) {
+	// 	console.warn(`ERROR(${err.code}): ${err.message}`);
+	// }
+
+	// navigator.geolocation.getCurrentPosition(success, error, options);
+</script>
