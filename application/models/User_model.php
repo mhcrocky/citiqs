@@ -279,6 +279,25 @@ class User_model extends CI_Model
         return $query->result();
     }
 
+
+
+    public function checkInszNumber($inszNumber, $userId = 0): bool
+    {
+        $this->db->select("inszNumber");
+        $this->db->from("tbl_user");
+        $this->db->where("inszNumber", $inszNumber);
+        $this->db->where("isDeleted", 0);
+
+        if($userId != 0) {
+            $this->db->where("id !=", $userId);
+        }
+
+        $query = $this->db->get();
+        $result = $query->result();
+
+        return !empty($result);
+    }
+
     function checkUserExists($email, $userId = 0)
     {
         $this->db->select("email,id as userId, username as name, mobile, id as userid, lfbuddy");

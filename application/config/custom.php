@@ -139,6 +139,7 @@ $config['timeTo'] = '23:59:59';
 // LOGO IMAGES FOLDER
 $config['uploadLogoFolder']    = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'vendorLogos' . DIRECTORY_SEPARATOR;
 $config['defaultProductsImages'] = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'defaultProductsImages' . DIRECTORY_SEPARATOR;
+$config['placeImages'] = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'placeImages' . DIRECTORY_SEPARATOR;
 
 //spot types
 $config['local'] = 1;

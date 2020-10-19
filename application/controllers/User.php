@@ -17,6 +17,7 @@ class User extends BaseControllerWeb {
         $this->load->helper('url');
         $this->load->helper('country_helper');
         $this->load->helper('form');
+        $this->load->helper('uploadfile_helper');
         $this->load->helper('google_helper');
         $this->load->library('form_validation');
 
@@ -1070,6 +1071,14 @@ class User extends BaseControllerWeb {
 
         if ($this->form_validation->run()) {
             $data = $this->input->post(null, true);
+            if ($this->user_model->checkInszNumber($data['inszNumber'], $this->userId)) {
+                $this->session->set_flashdata('error', 'Profile update failed. Register number "' . $data['inszNumber'] . '" is already in use by another user');
+                redirect('profile');
+                exit();
+            }
+
+            $this->uploadPlaceImage($data);
+
             $geoCoordinates = (Google_helper::getLatLong($data['address'], $data['zipcode'], $data['city'], $data['country']));
 			$data['lat'] = $geoCoordinates['lat'];
 			$data['lng'] = $geoCoordinates['long'];
@@ -1084,6 +1093,20 @@ class User extends BaseControllerWeb {
             $this->session->set_flashdata('error', 'Profile update failed! Check your data');
         }
         redirect('profile');
+    }
+
+    private function uploadPlaceImage(array &$data): void
+    {
+        if (!$_FILES['placeImage']['size']) return;
+
+        $folder = $this->config->item('placeImages');
+        $placeImage = $this->userId . '_' . strval(time()) . '.' . Uploadfile_helper::getFileExtension($_FILES['placeImage']['name']);	
+		$_FILES['placeImage']['name'] = $placeImage;
+        if (Uploadfile_helper::uploadFiles($folder)) {
+            $data['placeImage'] = $placeImage;
+        } else {
+            $this->session->set_flashdata('error', 'Place image upload failed');
+        }
     }
 
 	function profileDropOffPointSettings($active = "details") {

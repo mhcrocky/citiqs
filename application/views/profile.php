@@ -2,7 +2,7 @@
 	<div class="col-half background-blue height-100">
 		<div class="flex-column align-start width-650">
 			<div style="text-align:center">
-				<form action="<?php echo $this->baseUrl; ?>profileUpdate" method="post" id="editProfile">
+				<form action="<?php echo $this->baseUrl; ?>profileUpdate" method="post" id="editProfile" enctype="multipart/form-data">
 					<!--					<input type="text" value="--><?php //echo $user->id; ?><!--" name="id" id="userId" readonly hidden required />-->
 					<h2 class="heading mb-35"><?=$this->language->line("PROF-010A",'YOUR PROFILE PAGE.');?></h2>
 					<div class="">
@@ -166,12 +166,48 @@
 									</div>
 								</div>
 							</div>
+							<div>
+								<div>
+									<p style="font-family: caption-light; padding: 10px">
+										<?=$this->language->line("PROF-V035REGNUMBER","REGISTER NUMBER");?>
+									</p>
+									<div class="form-group has-feedback">
+										<input style="border-radius: 50px; border:none" type="text" class="form-control" id="inszNumber" name="inszNumber" placeholder="<?php echo $user->inszNumber; ?>" value="<?php echo $user->inszNumber; ?>" maxlength="255" />
+									</div>
+								</div>
+							</div>
+							<div>
+								<div>
+									<p style="font-family: caption-light; padding: 10px">
+										<?=$this->language->line("PROF-BIZDIR","SHOW IN PLACES");?>
+									</p>
+									<div class="form-group has-feedback">
+									<label class="radio-inline" for="bizdirYes">Yes</label>
+									<input type="radio" id="bizdirYes" name="bizdir" value="1" <?php if ($user->bizdir === '1') echo 'checked'; ?> />
+									<label class="radio-inline" for="bizdirNo">&nbsp;&nbsp;&nbsp;No</label>
+									<input type="radio" id="bizdirNo" name="bizdir" value="0" <?php if ($user->bizdir === '0') echo 'checked'; ?> />
+									</div>
+								</div>
+							</div>
+							<?php if ($user->placeImage) { ?>
+								<figure style="margin:auto">
+									<img
+										src="<?php echo base_url() . 'assets/images/placeImages/' . $user->placeImage; ?>"
+										class="img-responsive img-thumbnail"
+										alt="place image"
+										width="300px" height="auto"
+										/>
+								</figure>
+								<br>
+							<?php } ?>
+							<div class="form-group has-feedback" style="margin-top:10px">
+								<input type="file" name="placeImage" class="form-control" accept="image/png" />
+								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+							</div>
 							<div class="form-group has-feedback" style="padding: 30px;">
-
 								<div style="text-align: center; ">
 									<input type="submit" class="button button-orange" value="<?=$this->language->line("PROF-040 ",'SAVE');?>" style="border: none" />
 								</div>
-
 							</div>
 						</div>
 					</div>
@@ -603,16 +639,17 @@
 						</label>
 					</div>
 					<?php if ($user->logo) { ?>
-						<figure>
+						<figure style="margin:auto;">
 							<img
 								src="<?php echo base_url() . 'assets/images/vendorLogos/' . $user->logo; ?>"
 								class="img-responsive img-thumbnail"
 								alt="logo"
+								width="300px" height="auto"
 								/>
 						</figure>
 						<br>
 					<?php } ?>
-					<div class="form-group has-feedback">
+					<div class="form-group has-feedback" style="margin-top: 10px">
 						<input type="file" name="logo" id="logo" class="form-control" accept="image/png" />
 						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 					</div>
@@ -626,16 +663,17 @@
 							</label>
 						</div>
 						<?php if ($vendor['defaultProductsImage']) { ?>
-							<figure>
+							<figure style="margin:auto">
 								<img
 									src="<?php echo base_url() . 'assets/images/defaultProductsImages/' . $vendor['defaultProductsImage']; ?>"
 									class="img-responsive img-thumbnail"
 									alt="default product image"
+									width="300px" height="auto"
 									/>
 							</figure>
 							<br>
 						<?php } ?>
-						<div class="form-group has-feedback">
+						<div class="form-group has-feedback"  style="margin-top:10px;">
 							<input type="file" name="defaultProductsImage" id="defaultProductsImage" class="form-control" accept="image/png" />
 							<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 						</div>
