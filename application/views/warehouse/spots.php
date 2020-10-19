@@ -277,7 +277,7 @@
                                                                 class="<?php echo $day . '_'.  $spot['spotId']; ?>"
                                                                 <?php
                                                                     if (isset($first[1])) {
-                                                                        echo 'value="' . $first[1] . '"';
+                                                                        echo 'value="' . date('H:i', strtotime($first[1])) . '"';
                                                                     } else {
                                                                         echo 'disabled';
                                                                     }
@@ -292,7 +292,7 @@
                                                                 class="<?php echo $day . '_'.  $spot['spotId']; ?>"
                                                                 <?php
                                                                     if (isset($first[2])) {
-                                                                        echo 'value="' . $first[2] . '"';
+                                                                        echo 'value="' . date('H:i', strtotime($first[2])) . '"';
                                                                     } else {
                                                                         echo 'disabled';
                                                                     }
