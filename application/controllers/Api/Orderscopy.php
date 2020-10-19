@@ -191,23 +191,36 @@ class Orderscopy extends REST_Controller
 
 			$product = explode($this->config->item('concatSeparator'), $product);
 			// 0 => name
-			// 1 => unit price
+			// 1 => local unit price
 			// 2 => ordered quantity
 			// 3 => category
 			// 4 => category id
 			// 5 => shortDescription
 			// 6 => longDescription
-			// 7 => vatpercentage
+			// 7 => local vatpercentage
+			// 8 => deliveryPrice
+			// 9 => deliveryVatpercentage
+			// 10 => pickupPrice
+			// 11 => pickupVatpercentage
 
 			$title = substr($product[0], 0, 20);
-			$price = $product[1];
 			$quantity = $product[2];
 			$plu =  $product[3];
 			$shortDescription = $product[5];
 			$longDescription = $product[6];
-			$vatpercentage = $product[7];
 
-
+			// SET PRICE AND VATPERCENTAGE
+			$spotTypeId = intval($order['spotTypeId']);
+			if ($spotTypeId === $this->config->item('local')) {
+				$price = $product[1];
+				$vatpercentage = $product[7];
+			} elseif ($spotTypeId === $this->config->item('deliveryType')) {
+				$price = $product[8];
+				$vatpercentage = $product[9];
+			} elseif ($spotTypeId === $this->config->item('pickupType')) {
+				$price = $product[10];
+				$vatpercentage = $product[11];
+			}
 
 			$totalamount =  floatval($quantity) * floatval($price);
 			$Stotalamount = sprintf("%.2f", $totalamount);

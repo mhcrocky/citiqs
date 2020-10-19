@@ -590,7 +590,8 @@
                         tbl_shop_orders.customerReceipt AS customerReceipt,
                         tbl_shop_orders.voucherAmount AS voucherAmount,
                         tbl_shop_orders.serviceTypeId AS serviceTypeId,
-                        tbl_shop_spots.spotName,
+                        tbl_shop_spots.spotName AS spotName,
+                        tbl_shop_spots.spotTypeId AS spotTypeId,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
                         tbl_user.username AS buyerUserName,
                         tbl_user.email AS buyerEmail,
@@ -625,7 +626,11 @@
                                     \'' .  $concatSeparator . '\', tbl_shop_categories.id,
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.shortDescription) > 0, tbl_shop_products_extended.shortDescription, ""), 
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, ""),
-                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.deliveryPrice,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.deliveryVatpercentage,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.pickupPrice,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.pickupVatpercentage
                                     SEPARATOR "' . $this->config->item('contactGroupSeparator') . '"
                                 ) AS products
                             FROM
