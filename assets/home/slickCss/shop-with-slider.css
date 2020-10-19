@@ -768,5 +768,9 @@ body{
 		width: 100%;
 		position: relative;
 	}
-	
+
+	.shop__single-item__image img{
+		width: 80px;
+		margin: auto;
+	}
 }
