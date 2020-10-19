@@ -59,8 +59,8 @@
                                                 'totalAmount',
                                                 'orderExtended<?php #echo $productExtendedId; ?>',
                                                 '<?php #echo $productExtendedId; ?>',
-                                                '<?php #echo $vendor['serviceFeePercent']; ?>',
-                                                '<?php #echo $vendor['serviceFeeAmount']; ?>',
+                                                '<?php #echo $serviceFeePercent; ?>',
+                                                '<?php #echo $serviceFeeAmount; ?>',
                                             )"
                                         >
                                             <i class="fa fa-plus"></i>
@@ -80,8 +80,8 @@
                                                 'totalAmount',
                                                 'orderExtended<?php #echo $productExtendedId; ?>',
                                                 '<?php #echo $productExtendedId; ?>',
-                                                '<?php #echo $vendor['serviceFeePercent']; ?>',
-                                                '<?php #echo $vendor['serviceFeeAmount']; ?>',
+                                                '<?php #echo $serviceFeePercent; ?>',
+                                                '<?php #echo $serviceFeeAmount; ?>',
                                             )"
                                             >
                                             <i class="fa fa-minus"></i>
@@ -159,8 +159,8 @@
                                                 'totalAmount',
                                                 'orderExtended<?php #echo $productExtendedId; ?>',
                                                 '<?php #echo $productExtendedId; ?>',
-                                                '<?php #echo $vendor['serviceFeePercent']; ?>',
-                                                '<?php #echo $vendor['serviceFeeAmount']; ?>',
+                                                '<?php #echo $serviceFeePercent; ?>',
+                                                '<?php #echo $serviceFeeAmount; ?>',
                                                 '<?php# echo $mainExtendedId; ?>'
                                             )"
                                         >
@@ -181,8 +181,8 @@
                                                 'totalAmount',
                                                 'orderExtended<?php #echo $productExtendedId; ?>',
                                                 '<?php #echo $productExtendedId; ?>',
-                                                '<?php #echo $vendor['serviceFeePercent']; ?>',
-                                                '<?php #echo $vendor['serviceFeeAmount']; ?>',
+                                                '<?php #echo $serviceFeePercent; ?>',
+                                                '<?php #echo $serviceFeeAmount; ?>',
                                                 '<?php #echo $mainExtendedId; ?>'
                                             )"
                                         >
