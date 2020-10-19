@@ -311,7 +311,7 @@
                                                                                         type="time"
                                                                                         class="<?php echo $day . '_'.  $spot['spotId']; ?>"
                                                                                         name="<?php echo $day; ?>[timeFrom][]"
-                                                                                        value="<?php echo $dayData[1]; ?>"
+                                                                                        value="<?php echo date('H:i', strtotime($dayData[1])); ?>"
                                                                                         />
                                                                                 </label>
                                                                                 <label>To:
@@ -319,7 +319,7 @@
                                                                                         type="time"
                                                                                         class="<?php echo $day . '_'.  $spot['spotId']; ?>"
                                                                                         name="<?php echo $day; ?>[timeTo][]"
-                                                                                        value="<?php echo $dayData[2]; ?>"
+                                                                                        value="<?php echo date('H:i', strtotime($dayData[2])); ?>"
                                                                                         />
                                                                                 </label>
                                                                                 <span class="fa-stack fa-2x" onclick="removeParent(this)">
