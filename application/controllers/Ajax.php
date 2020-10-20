@@ -1152,4 +1152,35 @@ class Ajax extends CI_Controller
             echo json_encode($response);
         }
     }
+
+    public function getLocation(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = Utility_helper::sanitizePost();
+        $data = Google_helper::getLatLong($post['address'], '', $post['city'], '');
+
+        if ($data['lat'] === '0' && $data['long'] === '0') {
+            $response = [
+                'status' => '0',
+                'message' => 'Unknown location',
+            ];
+            echo json_encode($response);
+            return;
+        }
+        
+        echo json_encode($data);
+        return;
+    }
+
+    public function calculateDistance(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = Utility_helper::sanitizePost();
+
+        $distance = Utility_helper::getDistance(floatval($post['latOne']), floatval($post['lngOne']), floatval($post['latTwo']), floatval($post['lngTwo']));
+
+        echo $distance ? round($distance, 2) : 0;
+    }
 }

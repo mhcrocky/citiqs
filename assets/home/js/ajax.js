@@ -218,7 +218,17 @@ var callThis = (function() {
                 functionArg.push(this);
             }
             callFunction(...functionArg);
-        }
+        },
+        getLocation: function(callFunction, functionArg) {
+            functionArg.push(this);
+            callFunction(...functionArg);
+        },
+        calculateDistance: function(callFunction, functionArg) {
+            if (parseFloat(this)) {
+                functionArg.push(this);
+                callFunction(...functionArg);
+            }            
+        },
     };
     return methods;
 })();

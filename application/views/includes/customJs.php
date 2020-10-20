@@ -101,4 +101,6 @@
 	<script src="<?php echo base_url() ?>assets/home/js/payOrder.js"></script>
 <?php } elseif ($this->view === 'publicorders/buyerDetails') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/checkoutOrder.js"></script>
+<?php } elseif ($this->view === 'bizdir/index') { ?>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/places.js"></script>
 <?php } ?>

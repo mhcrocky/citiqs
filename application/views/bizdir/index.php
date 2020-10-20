@@ -3,7 +3,7 @@
 </style>
 <main role="main" style="margin-bottom: 0px">
 	<section class="jumbotron" style="background-color:#F3D0B5">
-		<div class="container" style="background-color:#F3D0B5 " align="left" >
+		<div class="container" style="background-color:#F3D0B5; text-align:left" >
 			<h1 style="font-family: campton-bold; margin-top: 30px;color:#27253b">TIQS PLACES</h1>
 			<p style="font-family: campton-light;color: #27253b; margin-bottom: 30px">One stop destination to find everything at your favorite place</p>
 		</div>
@@ -11,7 +11,34 @@
 
 	<div class="album py-5" style="background-color: #F3D0B5">
 		<div class="container" style="background-color: #F3D0B5">
-			<div class="row">
+			<div class="row" style="margin-bottom:20px">
+				<h3 class="col-md-12" style="text-align:left">Your location</h3>
+
+					<div class="form-group col-md-5 col-sm-12">
+						<!-- <label for="cityId">City:&nbsp;</label> -->
+						<input
+							type="text"
+							class="form-control"
+							placeholder="Enter city"
+							id="cityId"
+							autofocus
+						/>
+					</div>
+					<div class="form-group col-md-5 col-sm-12">
+						<!-- <label for="addressId">Address:&nbsp;</label> -->
+						<input
+							type="text"
+							class="form-control"
+							placeholder="Enter address"
+							id="addressId"
+						/>
+					</div>
+					<div class="form-group col-md-2 col-sm-12">
+						<input type="submit" class="btn btn-info" value="Submit" onclick="getLocation('cityId', 'addressId', 'places')">
+					</div>
+			</div>
+			<div class="row" id="placesContainer">
+			
 				<?php foreach ($directories as $directory): ?>
 					<div
 						class="col-md-4 places"
@@ -37,6 +64,8 @@
 								<img src="<?php echo 'assets/home/images/tiqslogowhite.png' ?>" style="margin-left:190px; margin-top: -350px; height: 50px; width: auto"/>
 								<p class="pb-2 font-weight-bold"
 								   style="font-size: 24px;color: antiquewhite"><?php echo $directory['username']; ?></p>
+								<p class="pb-2 font-weight-bold distance"
+								   style="font-size: 24px;color: antiquewhite"></p>
 								<span style="color: antiquewhite"><?php echo $directory['address']; ?></span>
 								<div class="social-links align-items-center pt-3">
 									<a class="contact-link" target="_blank"
@@ -57,28 +86,3 @@
 		</div>
 	</div>
 </main>
-<script>
-	// var options = {
-	// 	enableHighAccuracy: true,
-	// 	timeout: 5000,
-	// 	maximumAge: 10
-	// };
-
-	// function success(pos) {
-	// 	if (pos)
-	// 	console.dir(pos);
-	// 	var crd = pos.coords;
-	// 	console.dir(crd);
-
-	// 	console.log('Your current position is:');
-	// 	console.log(`Latitude : ${crd.latitude}`);
-	// 	console.log(`Longitude: ${crd.longitude}`);
-	// 	console.log(`More or less ${crd.accuracy} meters.`);
-	// }
-
-	// function error(err) {
-	// 	console.warn(`ERROR(${err.code}): ${err.message}`);
-	// }
-
-	// navigator.geolocation.getCurrentPosition(success, error, options);
-</script>
