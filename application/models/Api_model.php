@@ -53,4 +53,12 @@ class Api_model extends CI_Model {
         return $result->result() ? true : false;
     }
 
+    public function getDeliveryOrders($buyerId){
+        $this->db->select('*')
+        ->from('tbl_shop_orders')
+        ->where(array('buyerId' => $buyerId,'serviceTypeId' => 2));
+        $result = $this->db->get();
+        return $result->result_array();
+    }
+
 }
