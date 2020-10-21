@@ -437,6 +437,7 @@
                             $checkoutList .=                    ' -';
                             $checkoutList .=                '</span>';
                             $checkoutList .=                '<input
+                                                                readonly
                                                                 type="number"
                                                                 min="' . $addon['minQuantity'] . '"
                                                                 max="' . $addon['maxQuantity'] . '"
