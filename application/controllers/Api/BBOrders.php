@@ -111,23 +111,12 @@
                     $draw->setFont('Helvetica');
 					$drawemail->setFont('Helvetica');
                     break;
-                case 'loki-vm':
-                case '10.0.0.48':
-                    $draw->setFont('Helvetica');
-					$drawemail->setFont('Helvetica');
-                    break;
+
                 default:
                     $draw->setFont('Arial');
 					$drawemail->setFont('Arial');
                     break;
             }
-
-            // $draw->setFontWeight(551);
-            // $draw->setStrokeWidth(5);
-            // $draw->setFontSize(40);
-            // $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-            // $draw->annotation(0, 30, "ORDER: " . $order['orderId']);
-            // $draw->annotation(0, 70, "NAAM: " . $order['buyerUserName']);
 
 
 			$draw->annotation(0, 30, "GEEN BTW BON");
@@ -140,89 +129,97 @@
 			$drawemail->setFontSize(28);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 
+			$h = 1;
+
+			if($order['serviceTypeId']==1){
+				$draw->annotation(0, 35 * $h, "GEEN BTW BON / LOCAL ");
+			}
+			if($order['serviceTypeId']==2){
+				$draw->annotation(0, 35 * $h, "GEEN BTW BON / DELIVERY ");
+			}
+			if($order['serviceTypeId']==3){
+				$draw->annotation(0, 35 * $h, "GEEN BTW BON / PICKUP ");
+			}
+			$draw->setStrokeWidth(4);
+			$draw->setFontSize(28);
+			$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+
+			$drawemail->setStrokeWidth(4);
+			$drawemail->setFontSize(28);
+			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+
 			// $draw->annotation(0, 30, "SPOT: ". $result->spot_id . " EMAIL: " . $email . ' PHONE: ' . $phone);
 			// $draw->annotation(0, 30, "SPOT: ". $result->spot_id );
-			$draw->annotation(0, 70, "order: " . $order['orderId'] . " naam: " . $order['buyerUserName']);
-			$draw->annotation(0, 100, "datum:". date("m-d h:i:sa"). " spot: ". $order['spotName'] );
 
-			$drawemail->annotation(0, 70, "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);
-			$drawemail->annotation(0, 100, "DATE:". date("m-d h:i:sa"). " SPOT: ". $order['spotName'] );
+			$h++;
 
-//
-//			$draw->setStrokeWidth(2);
-//			$draw->setFontSize(28);
-//			$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-//
-//			$drawemail->setStrokeWidth(2);
-//			$drawemail->setFontSize(28);
-//			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-//
-//			// $draw->annotation(0, 30, "SPOT: ". $result->spot_id . " EMAIL: " . $email . ' PHONE: ' . $phone);
-//            // $draw->annotation(0, 30, "SPOT: ". $result->spot_id );
-//			$draw->annotation(0, 30, "order: " . $order['orderId'] . " naam: " . $order['buyerUserName']);;
-//			$draw->annotation(0, 70, "datum:". date("m-d h:i:sa"). " spot: ". $order['spotName'] );
-//
-//			$drawemail->annotation(0, 30, "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);;
-//			$drawemail->annotation(0, 70, "DATE:". date("m-d h:i:sa"). " SPOT: ". $order['spotName'] );
-//
-
-            /* Font properties */
-            // $draw->setFontWeight(1);
+			$draw->annotation(0, 35 * $h , "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);
+			$drawemail->annotation(0,35 * $h , "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);
 
 
-//            //-------- header regel --------
-//
-//			$draw->setFontSize(30);
-//            $draw->setStrokeWidth(3);
-//            $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-//            $imagetext->annotateImage($draw, 0, 105, 0, "A");
-//            $imagetext->annotateImage($draw, 40, 105, 0, "OMSCHRIJVING");
-//            //            $imagetext->annotateImage($draw, 395, 105, 0, "PRIJS");
-//            //			$imagetext->annotateImage($draw, 485, 105, 0, "%");
-//            //			$imagetext->annotateImage($draw, 505, 105, 0, "TOTAAL");
-//
-//			$drawemail->setFontSize(18);
-//			$drawemail->setStrokeWidth(2);
-//			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-//			$imagetextemail->annotateImage($drawemail, 0, 105, 0, "ANT");
-//			$imagetextemail->annotateImage($drawemail, 40, 105, 0, "OMSCHRIJVING");
-//			$imagetextemail->annotateImage($drawemail, 395, 105, 0, "PRIJS");
-//			$imagetextemail->annotateImage($drawemail, 485, 105, 0, "%");
-//			$imagetextemail->annotateImage($drawemail, 505, 105, 0, "TOTAAL");
-//
-//			$draw->setStrokeColor('black');
-//            $draw->setStrokeWidth(5);
-//            $draw->line(0, 120, 576, 120);
-//            $draw->setStrokeWidth(1);
-//
-//			$drawemail->setStrokeColor('black');
-//			$drawemail->setStrokeWidth(5);
-//			$drawemail->line(0, 120, 576, 120);
-//			$drawemail->setStrokeWidth(1);
+			$draw->setStrokeColor('black');
+			$draw->setStrokeWidth(2);
+
+			$h++;
+
+			if($order['serviceTypeId']==1){
+				$draw->annotation(0,  35 * $h, "DATE". date("d-m h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
+			}
+			if($order['serviceTypeId']==2){
+				$draw->annotation(0,  35 * $h, "DELIVERY ON : ". date("d-m h:i:sa",strtotime($order['orderCreated'])));
+				$h++;
+				$draw->annotation(0,  35 * $h, "Phone : ". $order['buyerMobile'] );
+				$h++;
+				$draw->annotation(0,  35 * $h, "Address: ". $order['buyerAddress'] );
+				$h++;
+				$draw->annotation(0,  35 * $h, $order['buyerZipcode']. " " . $order['buyerCity'] );
+			}
+
+			if($order['serviceTypeId']==3){
+				$draw->annotation(0,  35 * $h, "PICK-UP at : ". date("d-m h:i:sa",strtotime($order['orderCreated'])));
+			}
+
+
+			if($order['serviceTypeId']==1){
+				$drawemail->annotation(0, 35 * $h, "DATE:". date("d-m h:i:sa",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
+			}
+			if($order['serviceTypeId']==2){
+				$drawemail->annotation(0, 35 * $h, "DELIVERY AT:". date("d-m h:i:sa",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
+			}
+			if($order['serviceTypeId']==3){
+				$drawemail->annotation(0, 35 * $h, "PICK-UP AT". date("d-m h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
+			}
+
+			$h++;
+			$h++;
+
 
 			//-------- header regel --------
-
+			$draw->setStrokeColor('black');
+			$draw->setStrokeWidth(1);
 			$draw->setFontSize(30);
 			$draw->setStrokeWidth(3);
+
 			$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-			$imagetext->annotateImage($draw, 0, 135, 0, "#");
-			$imagetext->annotateImage($draw, 40, 135, 0, "OMSCHRIJVING");
+			$imagetext->annotateImage($draw, 0,35 * $h, 0, "#");
+			$imagetext->annotateImage($draw, 40,35 * $h, 0, "OMSCHRIJVING");
 			if ($order['paidStatus'] === $this->config->item('orderCashPaying')) {
-				$imagetext->annotateImage($draw, 295, 135, 0, "CASH PAYMENT");
+				$imagetext->annotateImage($draw, 295, 35 * $h, 0, "CASH PAYMENT");
 			}
-			// $imagetext->annotateImage($draw, 395, 105, 0, "PRIJS");
-			// $imagetext->annotateImage($draw, 485, 105, 0, "%");
-			// $imagetext->annotateImage($draw, 505, 105, 0, "TOTAAL");
 
-			//			$drawemail->setFontSize(22);
-			//			$drawemail->setStrokeWidth(2);
-			//			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-			//			$imagetextemail->annotateImage($drawemail, 0, 105, 0, "ANT");
-			//			$imagetextemail->annotateImage($drawemail, 40, 105, 0, "OMSCHRIJVING");
-			//			$imagetextemail->annotateImage($drawemail, 395, 105, 0, "PRIJS");
-			//			$imagetextemail->annotateImage($drawemail, 485, 105, 0, "%");
-			//			$imagetextemail->annotateImage($drawemail, 505, 105, 0, "TOTAAL");
+			$h++;
 
+			$draw->setStrokeColor('black');
+			$draw->setStrokeWidth(5);
+			$draw->line(0, 35 * $h, 576, 35 * $h);
+			$draw->setStrokeWidth(1);
+
+			$drawemail->setStrokeColor('black');
+			$drawemail->setStrokeWidth(5);
+			$drawemail->line(0, 35 * $h, 576, $h);
+			$drawemail->setStrokeWidth(1);
+
+			$h++;
 
 			$drawemail->setFontSize(22);
 			$drawemail->setStrokeWidth(2);
@@ -233,21 +230,12 @@
 			$imagetextemail->annotateImage($drawemail, 475, 165, 0, "%");
 			$imagetextemail->annotateImage($drawemail, 495, 165, 0, "TOTAAL");
 
-			$draw->setStrokeColor('black');
-			$draw->setStrokeWidth(5);
-			$draw->line(0, 150, 576, 150);
-			$draw->setStrokeWidth(1);
-
-			$drawemail->setStrokeColor('black');
-			$drawemail->setStrokeWidth(5);
-			$drawemail->line(0, 150, 576, 150);
-			$drawemail->setStrokeWidth(1);
-
 			//-------- regels --------
 
-            $totalamount = 0;
-            $i = 0;
-            $ii = 0;
+			$totalamount = 0;
+			$i = 0;
+			$ii = 0;
+			$hd = $h * 35;
 
 			$Ttotalamount =0;
 			// $T21totalamount=0;
@@ -299,22 +287,20 @@
                 $productVats[$vatpercentage] += $totalamount - $totalamount / (100 + intval($vatpercentage)) * 100;
 
 				$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                // $draw->annotation(0, 165 + ($i * 30), $plu);
-        
-                $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                $draw->annotation(0, 165 + ($i * 30), $quantity);
-        
-                $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                $draw->annotation(40, 165 + ($i * 30), $title);
-                //
-                //				$draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
-                //				$draw->annotation(440, 165 + ($i * 30), "€ ". $price);
-                //
-                //				$draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
-                //				$draw->annotation(500, 165 + ($i * 30), $vatpercentage);
-                //
-                //				$draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
-                //				$draw->annotation(570, 165 + ($i * 30), "€ ". $Stotalamount);
+				// $draw->annotation(0, $hd + ($i * 30), $plu);
+				if (isset($subMainProductIndex) && isset($mainProductIndex) && $subMainProductIndex === $mainProductIndex) {
+					$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+					$draw->annotation(20, $hd + ($i * 30), $quantity);
+
+					$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+					$draw->annotation(60, $hd + ($i * 30), $title);
+				} else {
+					$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+					$draw->annotation(0, $hd + ($i * 30), $quantity);
+
+					$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+					$draw->annotation(40, $hd + ($i * 30), $title);
+				}
 
 				$drawemail->setFontSize(18);
 				$drawemail->setStrokeWidth(1);

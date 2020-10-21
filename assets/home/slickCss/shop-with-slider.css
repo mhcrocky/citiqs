@@ -1,4 +1,11 @@
 /* varables */
+
+#categoryContainer{
+	float: none;
+	margin: auto;
+}
+
+
 footer {
 	display:none;
 }
@@ -386,7 +393,7 @@ body{
 }
 
 #modal__checkout__list .modal__content {
-	margin: 0px 0px 0px 1shopping-cart__single-item__remove5px;
+	margin: 0px 0px 0px 15px;
 }
 
 /* Track */
@@ -631,6 +638,8 @@ body{
 }
 
 .items-slider .slick-arrow{
+	width: 35px;
+	height: 35px;
 	color: var(--main-bg-color);
 }
 
@@ -648,10 +657,11 @@ body{
     left: -35px;
 } */
 
-.items-slider .slick-next {
-    right: 6%;
-    left: auto;
 
+.items-slider .slick-next {
+	right: 7%;
+	top: 63px;
+	left: unset;
 }
 
 /* RESPONSIVENESS */

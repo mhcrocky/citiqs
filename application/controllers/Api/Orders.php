@@ -131,8 +131,8 @@
 			/* New image */
             //--- aantal rows bepalen a.d. hand van aantal order regels.
 
-            $rowheight = (count($productsarray) * 30) + 700;
-			$rowheight2 = (count($productsarray) * 30) + 350;
+            $rowheight = (count($productsarray) * 30) + 900;
+			$rowheight2 = (count($productsarray) * 30) + 550;
             $imagetext->newImage(576, $rowheight2, $pixel);
             $imagetextemail->newImage(576, $rowheight, $pixel);
 
@@ -145,24 +145,13 @@
                     $draw->setFont('Helvetica');
 					$drawemail->setFont('Helvetica');
                     break;
-                case 'loki-vm':
-                case '10.0.0.48':
-                    $draw->setFont('Helvetica');
-					$drawemail->setFont('Helvetica');
-                    break;
+
                 default:
                     if (ENVIRONMENT === 'development') break;
                     $draw->setFont('Arial');
 					$drawemail->setFont('Arial');
                     break;
             }
-
-            // $draw->setFontWeight(551);
-            // $draw->setStrokeWidth(5);
-            // $draw->setFontSize(40);
-            // $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-            // $draw->annotation(0, 30, "ORDER: " . $order['orderId']);
-            // $draw->annotation(0, 70, "NAAM: " . $order['buyerUserName']);
 
 			$draw->setStrokeWidth(4);
 			$draw->setFontSize(28);
@@ -174,7 +163,6 @@
 
 			$h = 1;
 
-//			$draw->annotation(0, 30, "SPOT: ". $result->spot_id . " EMAIL: " . $email . ' PHONE: ' . $phone);
 			if($order['serviceTypeId']==1){
 				$draw->annotation(0, 35 * $h, "GEEN BTW BON / LOCAL ");
 			}
@@ -337,8 +325,6 @@
 				}
 
 				// replace of 195 bu $h (header)
-
-
 
 				$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
                 // $draw->annotation(0, $hd + ($i * 30), $plu);
