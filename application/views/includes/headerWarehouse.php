@@ -8,8 +8,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="<?php echo $this->baseUrl; ?>assets/home/images/tiqsiconlogonew.png" />
-    
-    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/bootstrap.min.css" />    
+
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/bower_components/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/flatpickr.min.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/main-style.css">
@@ -23,14 +23,14 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/cookie.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/magnific-popup.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/alertify.min.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/alertify_default.min.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>alertify_default.min.css" />
     <?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
     <style>
 	    #myModal {
             overflow: scroll;
         }
     </style>
-    <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jquery.min.js"></script> 
+    <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jquery.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jquery-ui.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/popper.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/bootstrap.min.js"></script>
@@ -43,17 +43,14 @@
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/cookies.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jquery.magnific-popup.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/alertify.min.js"></script>
-    <script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>    
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>
 </head>
 <body>
     <header class="header">
         <nav class="header-nav">
 			<a href="<?php echo $this->baseUrl; ?>loggedin" class="nav-logo">
                 <img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogonew.png" alt="">
-                <div><?php echo $_SESSION['userId']." ".$_SESSION['name'];
-					// var_dump($_SESSION);
-
-					?></div>
+                <div></div>
             </a>
             <div class="header-menu text-orange" id="header-menu">
 				<?php
@@ -80,6 +77,7 @@
 				?>
 
 
+				<a href="<?php echo $this->baseUrl; ?>order/lines"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/orders.png" title="Orders"/></a>
 				<a href="<?php echo $this->baseUrl; ?>warehouse"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/reports.png" title="REPORTS"/></a>
                 <a href="<?php echo $this->baseUrl; ?>product_categories"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/category.png" title="CATEGORY"/></a>
                 <a href="<?php echo $this->baseUrl; ?>product_types"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/types.png" title="TYPES"/></a>
