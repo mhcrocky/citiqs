@@ -1183,4 +1183,15 @@ class Ajax extends CI_Controller
 
         echo $distance ? round($distance, 2) : 0;
     }
+
+    public function getOrderByVendor($user_id = false){
+        $this->load->model('api_model');
+        $buyerId = $user_id ? $user_id : $this->session->userdata('userId');
+        $result = $this->api_model->getDeliveryOrders($buyerId);
+        return $this->output
+        ->set_content_type('application/json')
+        ->set_status_header(200)
+        ->set_output(json_encode($result));
+        
+    }
 }

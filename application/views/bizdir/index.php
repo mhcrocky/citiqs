@@ -1,5 +1,39 @@
 <style>
 
+input[type='range'] {
+ -webkit-appearance: none;
+ border-radius: 5px;
+ box-shadow: inset 0 0 5px #333;
+ background-color: #999;
+ height: 10px;
+ vertical-align: middle;
+}
+input[type='range']::-moz-range-track {
+  -moz-appearance: none;
+  border-radius: 5px;
+  box-shadow: inset 0 0 5px #333;
+  background-color: #999;
+  height: 10px;
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  border-radius: 20px;
+  background-color: #FFF;
+  box-shadow:inset 0 0 10px rgba(000,000,000,0.5);
+  border: 1px solid #999;
+  height: 20px;
+  width: 20px;
+}
+input[type='range']::-moz-range-thumb {
+  -moz-appearance: none;
+  border-radius: 20px;
+  background-color: #FFF;
+  box-shadow:inset 0 0 10px rgba(000,000,000,0.5);
+  border: 1px solid #999;
+  height: 20px;
+  width: 20px;
+}
+
 </style>
 <main role="main" style="margin-bottom: 0px">
 	<section class="jumbotron" style="background-color:#F3D0B5">
@@ -33,10 +67,15 @@
 							id="addressId"
 						/>
 					</div>
+					
+
 					<div class="form-group col-md-2 col-sm-12">
-						<input type="submit" class="btn btn-info" value="Submit" onclick="getLocation('cityId', 'addressId', 'places')">
+						<input type="submit" class="btn btn-info" value="Submit" onclick="getLocation('cityId', 'addressId', 'places', 'myRange')">
 					</div>
+					
 			</div>
+			<input type="range" id="myRange" value="1" max="100">
+					<div style="visibility:hidden" id="rangeValue">1</div>
 			<div class="row" id="placesContainer">
 			
 				<?php foreach ($directories as $directory): ?>
@@ -86,3 +125,8 @@
 		</div>
 	</div>
 </main>
+<script>
+$('#myRange').mousemove(function(){
+    $('#rangeValue').text($('#myRange').val());
+});
+</script>
