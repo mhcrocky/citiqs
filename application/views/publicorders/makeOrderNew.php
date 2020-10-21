@@ -440,6 +440,7 @@
                                                                 -
                                                             </span>
                                                             <input
+                                                                readonly
                                                                 type="number"
                                                                 min="1"
                                                                 max="<?php echo $addonAllowedQuantity; ?>"
