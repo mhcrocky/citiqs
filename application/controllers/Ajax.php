@@ -660,7 +660,9 @@ class Ajax extends CI_Controller
                 $_SESSION['order'][$shuffled] = $data;
             }
         }
-
+		$logFile = FCPATH . 'application/tiqs_logs/messages.txt';
+		Utility_helper::logMessage($logFile, serialize($post));
+		Utility_helper::logMessage($logFile, serialize($_SESSION['order']));
         echo !empty($_SESSION['order']) ? '1' : '0';
         return;
     }

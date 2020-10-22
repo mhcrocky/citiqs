@@ -36,6 +36,8 @@
             $this->load->config('custom');
 
             $this->load->library('language', array('controller' => $this->router->class));
+
+
             $this->load->library('session');
         }
 
@@ -213,6 +215,11 @@
 
         public function checkout_order(): void
         {
+
+//			var_dump($_SESSION);
+//			var_dump($_POST);
+//			die();
+
             $this->global['pageTitle'] = 'TIQS : CHECKOUT';
 
             if ( (empty($_POST) || empty($_SESSION['order'])) && empty($_SESSION['vendor']) && empty($_SESSION['spot'])) {
