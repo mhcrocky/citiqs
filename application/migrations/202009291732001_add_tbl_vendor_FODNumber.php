@@ -2,13 +2,13 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_tbl_vendor_FODNumber extends CI_Migration {
+class Migration_add_tbl_vendor_FODNumber extends CI_Migration {
 
 	public function up()
 	{
 			$query = 
 				"
-				CREATE TABLE IF NOT EXISTS tbl_shop_vendor_FOD ( 
+				CREATE TABLE IF NOT EXISTS tbl_vendor_fodnumber ( 
 					id				INT			UNSIGNED NOT NULL AUTO_INCREMENT ,
 					vendorId		INT			UNSIGNED NOT NULL ,
 					lastNumber		BIGINT		UNSIGNED NOT NULL DEFAULT '0' ,

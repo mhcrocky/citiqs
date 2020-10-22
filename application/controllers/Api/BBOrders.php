@@ -18,6 +18,7 @@
             $this->load->model('shoporder_model2',"shoporder_model");
             $this->load->model('shoporderex_model');
             $this->load->model('shopvendor_model');
+            $this->load->model('FOD_FDM_Model');
 
             $this->load->helper('utility_helper');
             $this->load->helper('validate_data_helper');
@@ -40,6 +41,13 @@
             Utility_helper::logMessage($logFile, 'printer MAC '. $get['mac'] );
             if(!$get['mac']) return;
 
+
+            //Check FDM Status 
+            $FDMStatusByMac=$this->FOD_FDM_Model->getFDMstatusByMac($macNumber);
+        	if(!empty($FDMStatusByMac) && $FDMStatusByMac->FDM_active==0){
+        		return "";
+        	}
+        	//it will not proceed when FDM have an issue
 
             $order = $this->shoporder_model->fetchOrdersForPrint($get['mac']);
             if (!$order) return;
@@ -657,7 +665,7 @@
             $jsonoutput['PaymentLines']=$this->PaymentLines;
             $jsonoutput['image']=$receiptemailBasepath;
             $jsonoutput['vendorId']=$order['vendorId'];
-            $jsonoutput['lastNumber']=$this->shoporder_model->getlastRecieptCount($order['vendorId']);
+            $jsonoutput['lastNumber']=$this->FOD_FDM_Model->getlastRecieptCount($order['vendorId']);
             // header('Content-type: image/png');
             echo json_encode($jsonoutput);
 
@@ -668,7 +676,7 @@
             // Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);
         }
         function updatelastRecieptCount_get($vendorId){
-            $this->shoporder_model->updatelastRecieptCount($vendorId);
+            $this->FOD_FDM_Model->updatelastRecieptCount($vendorId);
         }
         private function returnVatGrade($vatpar){
             // retunr a or b or or d
@@ -678,6 +686,14 @@
             elseif($vatpar==0){return "D";}
             else{return "D";}
 
+        }
+        function fdmStatus_get(){
+        	$macNumber	=	$this->input->get('mac');
+        	$flag		=	$this->input->get('flag');
+
+        	$this->FOD_FDM_Model->updatePrinterStatus($macNumber,$flag);
+        	$jsonarray=array('message'=>"FDM Status st to ".$flag);
+        	
         }
     }
 
