@@ -135,13 +135,34 @@ function removeElement(thisElement) {
     calculateTip();
 }
 
-function submitForm(formId, serviceFeeInputId, orderAmountInputId) {
-    let serviceFee = parseFloat(document.getElementById(serviceFeeInputId).value);
-    let orderTotal = parseFloat(document.getElementById(orderAmountInputId).value);
+function submitForm() {
+    let serviceFee = parseFloat(document.getElementById(checkoutOrdedGlobals.serviceFeeInputId).value);
+    let orderTotal = parseFloat(document.getElementById(checkoutOrdedGlobals.orderAmountInputId).value);
+    let errors = 0;
     if (serviceFee > 0 || orderTotal > 0 || checkoutOrdedGlobals.thGroup) {
-        document.getElementById(formId).submit();
+        if (!checkPrivacyAndTerms()) {
+            errors++;
+        }
+        if (!checkDeliveryLocation()) {
+            errors++;
+        }
+        if (errors === 0) {
+            let url =  globalVariables.ajax + 'submitForm';
+            let form = document.getElementById(checkoutOrdedGlobals.formId);
+            sendFormAjaxRequest(form, url, 'submitForm', redirectSubmit);
+        }
     } else {
         alertify.error('No products in order list!');
+    }
+    return false;
+}
+
+function redirectSubmit(data) {
+    if (data.status === '0') {
+        alertify.error(data.message);
+    } else {
+        let url = globalVariables.baseUrl + data.message;
+        window.location.href = url;
     }
 }
 
@@ -273,7 +294,8 @@ function calculateTotal(className) {
 function unsetSessionOrderElement(dataset) {
     let url = globalVariables.ajax + 'unsetSessionOrderElement';
     let post = {
-        'orderSessionIndex' : dataset.orderSessionIndex
+        'orderSessionIndex' : dataset.orderSessionIndex,
+        'orderRandomKey' :checkoutOrdedGlobals.orderRandomKey
     };
     if (dataset.addonExtendedId && dataset.productExtendedId) {
         post['addonExtendedId'] = dataset.addonExtendedId;
@@ -318,7 +340,8 @@ function updateSessionOrderAddon(element, isMainChild = false) {
         'productExtendedId': element.dataset.productExtendedId,
         'initialMin': element.dataset.initialMin,
         'initialMax': element.dataset.initialMax,
-        'mainProductQuantity' : mainProductQuantity
+        'mainProductQuantity' : mainProductQuantity,
+        'orderRandomKey' :checkoutOrdedGlobals.orderRandomKey
     };
 
     sendAjaxPostRequest(post, url, 'updateSessionOrderAddon');
@@ -331,6 +354,7 @@ function updateSessionRemarkAddon(element) {
         'addonExtendedId': element.dataset.addonExtendedId,
         'productExtendedId': element.dataset.productExtendedId,
         'remark' : element.value,
+        'orderRandomKey' :checkoutOrdedGlobals.orderRandomKey
     };
 
     sendAjaxPostRequest(post, url, 'updateSessionOrderAddon');
@@ -344,6 +368,7 @@ function updateSessionOrderMainProduct(element) {
         'productExtendedId' : element.dataset.productExtendedId,
         'quantity' : element.value,
         'amount' : amount,
+        'orderRandomKey' :checkoutOrdedGlobals.orderRandomKey
     };
 
     sendAjaxPostRequest(post, url, 'updateSessionOrderMainProduct');
@@ -355,6 +380,7 @@ function updateSessionRemarkMainProduct(element) {
         'orderSessionIndex' : element.dataset.orderSessionIndex,
         'productExtendedId' : element.dataset.productExtendedId,
         'remark' : element.value,
+        'orderRandomKey' :checkoutOrdedGlobals.orderRandomKey
     };
 
     sendAjaxPostRequest(post, url, 'updateSessionOrderMainProduct');
@@ -453,53 +479,13 @@ function calculateTip() {
     }    
 }
 
-function submitBuyerDetails(formId, emailId, nameId, mobileId) {
-    let email = document.getElementById(emailId);
-    let name = document.getElementById(nameId);
-    let mobile = document.getElementById(mobileId);
-    let errors = 0;
-    
-    if (email) {
-        let emailValue = email.value.trim();
-        if (!emailValue) {
-            alertify.error('Order not made! Email is required. Please try again');
-            email.style.border = '1px solid #f00'
-            errors++;
-        } else {
-            email.style.border = '1px solid #ccc'
-        }
+function submitBuyerDetails() {
+    if (checkUserData()) {
+        let form = document.getElementById(buyerDetailsGlobals.formId);
+        let url = globalVariables.ajax + 'submitBuyerDetails';
+        sendFormAjaxRequest(form, url, 'submitBuyerDetails', managBuyerDetailsResponse);
     }
-
-    if (name) {
-        let namelValue = name.value.trim();
-        if (!namelValue) {
-            alertify.error('Order not made! Username is required. Please try again');
-            name.style.border = '1px solid #f00'
-            errors++;
-        } else {
-            name.style.border = '1px solid #ccc'
-        }
-    }
-
-    if (mobile) {
-        let mobileValue = mobile.value.trim();
-        let minMobileLength = parseInt(buyerDetailsGlobals.minMobileLength);
-        if (!mobileValue) {
-            alertify.error('Order not made! Mobile phone is required. Please try again');
-            mobile.style.border = '1px solid #f00'
-            errors++;
-        }  else if (mobileValue.length < minMobileLength) {
-            alertify.error('Mobile phone number is not valid');
-            mobile.style.border = '1px solid #f00'
-            errors++;
-        } else {
-            mobile.style.border = '1px solid #ccc'
-        }
-    }
-
-    if (errors === 0) {
-        document.getElementById(formId).submit();
-    }
+    return false;
 }
 
 function openOrderTimeDiv() {
@@ -515,6 +501,91 @@ function openOrderTimeDiv() {
     } catch(err) {
         return;
     }
+}
+
+function checkUserData() {
+    return true;
+    let email = document.getElementById(buyerDetailsGlobals.emailId);
+    let name = document.getElementById(buyerDetailsGlobals.firstNameId);
+    let mobile = document.getElementById(buyerDetailsGlobals.phoneId);
+    let errors = 0;
+
+    if (name) {
+        if (!checkElementValue(name)) errors++;        
+    }
+    if (email) {
+        if (!checkElementValue(email)) errors++;        
+    }
+    if (mobile) {
+        if (!checkElementValue(mobile)) errors++;        
+    }
+
+    return (errors > 0) ? false : true;
+}
+
+function checkDeliveryLocation() {
+    let city = document.getElementById(checkoutOrdedGlobals.cityId);
+    let zipcode = document.getElementById(checkoutOrdedGlobals.zipcodeId);
+    let address = document.getElementById(checkoutOrdedGlobals.addressId);
+    let errors = 0;
+
+    if (city && zipcode && address) {
+        if (!checkElementValue(city)) errors++;
+        if (!checkElementValue(zipcode)) errors++;
+        if (!checkElementValue(address)) errors++;
+        return (errors > 0) ? false : true;
+    }
+    return true;
+}
+
+
+function checkElementValue(element) {
+    let elementValue = element.value;
+    if (!elementValue.trim()) {
+        let message = 'Order not made! ' + element.dataset.name + ' is required field'
+        alertify.error(message);
+        element.style.border = '1px solid #f00'
+        return false;
+    } else {
+        element.style.border = '1px solid #ccc'
+        return true;
+    }
+}
+
+function checkPrivacyAndTerms() {
+    let privacyPolicy = document.getElementById(checkoutOrdedGlobals.privacyPolicy);
+    let termsAndConditions = document.getElementById(checkoutOrdedGlobals.termsAndConditions);
+    let errors = 0;
+    if (privacyPolicy && termsAndConditions)  {
+        if (!termsAndConditions.checked) {
+            alertify.error('Order not made. Please confirm that you read and accept the terms and conditions');
+            errors++;
+        }
+
+        if (!privacyPolicy.checked) {
+            alertify.error('Order not made. Please submit  that you took a notice of privacy policy');
+            errors++;
+        }
+
+        return (errors > 0) ? false : true;
+    }
+    return true;
+}
+
+function managBuyerDetailsResponse(data) {
+    if (data.status === '0') {
+        let messages = data.messages;
+        let messagesLength = messages.length;
+        let i;
+        for (i = 0; i < messagesLength; i++) {
+            let message = messages[i];
+            alertify.error(message)
+        }
+    } else if (data.status === '1') {
+        let redirect = globalVariables.baseUrl + data.message;
+        window.location.href = redirect;
+    }
+    return;
 }
 
 $(document).ready(function(){

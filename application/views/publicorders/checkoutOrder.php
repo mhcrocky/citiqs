@@ -1,8 +1,12 @@
 <main class="container" style="text-align:left; margin-bottom:20px">
-    <form id="goOrder" method="post" action="<?php echo base_url() . 'publicorders/submitOrder'; ?>">
+    <form id="goOrder" method="post" onsubmit="return submitForm">
+        <input type="text" name="orderRandomKey" value="<?php echo $orderRandomKey; ?>" required readonly hidden />
+        <input type="text" name="vendorId" value="<?php echo $vendor['vendorId']; ?>" required readonly hidden />
+        <input type="text" name="spotId" value="<?php echo $spot['spotId']; ?>" required readonly hidden />
+        <input type="text" name="spotTypeId" value="<?php echo $spot['spotTypeId']; ?>" required readonly hidden />
         <!--BUYER DATA-->
         <input type="text" name="user[roleid]" value="<?php echo $buyerRole; ?>" required readonly hidden />
-        <input type="text" name="user[usershorturl]" value="<?php echo $usershorturl; ?>" required readonly hidden />
+        <input type="text" name="user[usershorturl]" value="<?php echo $buyershorturl; ?>" required readonly hidden />
         <input type="text" name="user[salesagent]" value="<?php echo $salesagent; ?>" required readonly hidden /> 
         <?php if ($vendor['requireEmail'] === '0' ) { ?>                    
             <input
@@ -52,6 +56,7 @@
                                     value="<?php echo $city; ?>"
                                     placeholder="City"
                                     required
+                                    data-name='City'
                                 />
                             </div>
                             <div class="form-group col-sm-6">
@@ -64,6 +69,7 @@
                                     value="<?php echo $zipcode; ?>"
                                     placeholder="Zip code"
                                     required
+                                    data-name='Zipcode'
                                 />
                             </div>
                             <div class="form-group col-sm-6">
@@ -76,6 +82,7 @@
                                     value="<?php echo $address; ?>"
                                     placeholder="Delivery address"
                                     required
+                                    data-name='Address'
                                 />
                             </div>                            
                         <?php } ?>
@@ -128,10 +135,13 @@
                     </div>
                 <?php } ?>
                 <div class="checkout-btns">
-                    <a href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spotId; ?>" style="background-color: #948b6f" class="button">
+                    <a
+                        href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spotId . '&' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        style="background-color: #948b6f" class="button"
+                        >
                         <i class="fa fa-arrow-left"></i>
                         Back to list                    </a>
-                    <a href="javascript:void(0);" style="background-color: #349171" class="button" onclick="submitForm('goOrder', 'serviceFeeInput', 'orderAmountInput');">
+                    <a href="javascript:void(0);" style="background-color: #349171" class="button" onclick="submitForm()">
                         Continue
                         <i class="fa fa-arrow-right"></i>
                     </a>
@@ -162,8 +172,18 @@
             'periodTime' : 'periodTime',
             'orderTimeDiv' : 'orderTimeDiv',
             'orderTimeInput' : 'orderTimeInput',
+            'orderDataGetKey' : '<?php echo $orderDataGetKey; ?>',
+            'orderRandomKey' : '<?php echo $orderRandomKey; ?>',
+            'formId': 'goOrder',
+            'cityId': 'city',
+            'zipcodeId': 'zipcode',
+            'addressId': 'address',
+            'privacyPolicy' : 'privacyPolicy',
+            'termsAndConditions' : 'termsAndConditions',
+            
         }
         Object.freeze(globals);
         return globals;
     }());
+    
 </script>

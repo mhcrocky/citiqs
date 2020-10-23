@@ -17,7 +17,7 @@
             $this->load->helper('utility_helper');
             $this->load->helper('country_helper');
             $this->load->helper('date');
-
+            $this->load->helper('jwt_helper');
 
             $this->load->model('user_subscription_model');
             $this->load->model('shopcategory_model');
@@ -32,495 +32,187 @@
             $this->load->model('shopvendortime_model');
             $this->load->model('shopspottime_model');
             $this->load->model('shopvoucher_model');
+            $this->load->model('shopsession_model');
 
             $this->load->config('custom');
 
             $this->load->library('language', array('controller' => $this->router->class));
+
+
             $this->load->library('session');
         }
 
+        // MAKE ORDER VIEW
         public function index(): void
         {
-            $get = $this->input->get(null, true);
-            $typeId = empty($get['typeId']) ? '' : $get['typeId'];
-            if (!empty($get['iframe']) && $get['iframe'] === '1') {
-                $_SESSION['iframe'] = true;
-            }
-
-            // FETCH VENDOR DATA AND
+            $get = Utility_helper::sanitizeGet();
+            $spotId = empty($get['spotid']) ? 0 : intval($get['spotid']);
             $vendor = $this->shopvendor_model->setProperty('vendorId', $get['vendorid'])->getVendorData();
 
-            // SAVE VENODR DATA IN SESSION
-            $_SESSION['vendor'] = $vendor;
-
-            // VENDOR SELECTED SPOT VIEW
-            if (isset($get['spotid'])) {
-                $spotId = intval($_GET['spotid']);
-                $where = [
-                    'tbl_shop_printers.userId=' => $_SESSION['vendor']['vendorId'],
-                    'tbl_shop_spots.active' => '1',
-                    'tbl_shop_spots.id' => $spotId,
-                    'tbl_shop_vendor_types.active=' => '1',
-                    'tbl_shop_vendor_types.vendorId=' => $_SESSION['vendor']['vendorId']
-                ];
-                $spot = $this->shopspot_model->fetchUserSpotsImporved($where);
-                if ($spot) {
-                    $spot = reset($spot);
-                    $this->loadSpotView($spot);
-                    return;
-                } else {
-                    $redirect = 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'];
-                    redirect($redirect);
-                }
+            if ($spotId && $vendor) {
+                $orderDataRandomKey = empty($get[$this->config->item('orderDataGetKey')]) ? '' : $get[$this->config->item('orderDataGetKey')];
+                $this->checkSpot($spotId, $vendor, $orderDataRandomKey);
+            } elseif ($vendor) {
+                $typeId = empty($get['typeId']) ? 0 : intval($get['typeId']);
+                $this->loadVendorView($typeId, $vendor);
+            } else {
+                redirect(base_url());
             }
 
-            // SELECT VENDOR SPOT VIEW
-            $this->loadVendorView($typeId);
-            return;      
+            return;
         }
 
-        private function loadSpotView(array $spot): void
+        private function checkSpot(int $spotId, array $vendor, string $orderDataRandomKey): void
         {
-            $this->checkVendorCredentials($_SESSION['vendor'], $spot['spotTypeId']);
-            $this->global['pageTitle'] = 'TIQS : ORDERING';
-            //CHECK IS SPOT OPEN ONLY LOCAL TYPE
-            if (
-                intval($spot['spotTypeId']) === $this->config->item('local')
-                && !$this->shopspottime_model->setProperty('spotId', $spot['spotId'])->isOpen()
-            ) {
-                $redirect = 'spot_closed' . DIRECTORY_SEPARATOR  . $spot['spotId'];
-                redirect($redirect);
-                return;
-            };
+            $vendorId = intval($vendor['vendorId']);
+            $spot = $this->shopspot_model->fetchSpot($vendorId, $spotId);
 
-            $_SESSION['spot'] = $spot;
-            $userId = $_SESSION['vendor']['vendorId'];
-            $time = time();
+            if ($spot) {
+                $this->loadSpotView($spot, $vendor, $orderDataRandomKey);
+                return;
+            } else {
+                $redirect = 'make_order?vendorid=' . $vendorId;
+                redirect($redirect);
+                exit();
+            }
+        }
+
+        private function loadSpotView(array $spot, array $vendor, string $orderDataRandomKey): void
+        {
+            $vendorId = $vendor['vendorId'];
             $spotId = intval($spot['spotId']);
+            $spotTypeId = intval($spot['spotTypeId']);
+            $time = time();
+
+            $this->checkVendorCredentials($vendor, $spotTypeId);
+            $this->isLocalSpotOpen($spotTypeId, $spotId);
+
+            $this->global['pageTitle'] = 'TIQS : ORDERING';
 
             $data = [
                 'spotId' => $spotId,
                 'day' => date('D', $time),
                 'hours' => strtotime(date('H:i:s', $time)),
-                'vendor' => $_SESSION['vendor'],
-                'spotTypeId'  => $spot['spotTypeId'],
+                'vendor' => $vendor,
+                'spotTypeId'  => $spotTypeId,
                 'localTypeId' => $this->config->item('local'),
+                'termsAndConditions' => $vendor['termsAndConditions'],
+                'uploadProductImageFolder' => $this->config->item('uploadProductImageFolder'),
+                'defaultProductsImages' => $this->config->item('defaultProductsImages'),
+                'orderDataRandomKey' => $orderDataRandomKey,
+                'orderDataGetKey' => $this->config->item('orderDataGetKey'),
             ];
 
-            if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
-                $data['categoryProducts'] = $this->shopproductex_model->getUserProductsPublic($userId);
-            } elseif ($_SESSION['vendor']['preferredView'] === $this->config->item('newMakeOrderView')) {
-                $allProducts = $this->shopproductex_model->getMainProductsOnBuyerSide($userId, $spot);
-                if ($allProducts) {
-                    $data['mainProducts'] = $allProducts['main'];
-                    $data['addons'] = $allProducts['addons'];
-                }
-            }
+            $preferedView = $this->getPreferedView($data, $spot, $vendor, $orderDataRandomKey);
 
-            // terms and conditions
-            $termsAndConditions = $this->shopvendor_model->readImproved([
-                'what' => ['termsAndConditions'],
-                'where' => [
-                    'vendorId=' => $userId
-                ]
-            ])[0]['termsAndConditions'];
-
-            if(!empty($termsAndConditions)) {
-				if (trim($termsAndConditions)) {
-					$data['termsAndConditions'] = $termsAndConditions;
-				}
-			}
-
-            $ordered = null;
-            if (isset($_SESSION['orderVendorId']) && isset($_SESSION['order'])) {
-                if ($_SESSION['orderVendorId'] === $_SESSION['vendor']['vendorId']) {
-                    $ordered = $_SESSION['order'];
-                } else {
-                    unset($_SESSION['orderVendorId']);
-                    unset($_SESSION['order']);
-                }
-            }
-
-            if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
-                $data['ordered'] = $ordered;
-                $this->loadViews('publicorders/makeOrder', $this->global, $data, null, 'headerWarehousePublic');
-            } elseif ($_SESSION['vendor']['preferredView'] === $this->config->item('newMakeOrderView')) {
-                if ($ordered) {
-                    $ordered = Utility_helper::returnMakeNewOrderElements($ordered, $data['vendor'], $data['mainProducts'], $data['addons']);
-                    // $data['shoppingList'] = $ordered['shoppingList'];
-                    $data['checkoutList'] = $ordered['checkoutList'];
-                } else {
-                    // $data['shoppingList'] = '';
-                    $data['checkoutList'] = '';
-                }
-                $data['uploadProductImageFolder'] = $this->config->item('uploadProductImageFolder');
-                $data['defaultProductsImages'] = $this->config->item('defaultProductsImages');
-                if (!empty($_GET['category'])) {
-                    $data['returnCategorySlide'] = $_GET['category'];
-                }
-
-                $this->loadViews('publicorders/makeOrderNew', $this->global, $data, null, 'headerWarehousePublic');
-            }
-
+            $this->loadViews($preferedView, $this->global, $data, null, 'headerWarehousePublic');
             return;
         }
 
-        private function loadVendorView($typeId = ''): void
+        private function loadVendorView(int $typeId, array $vendor): void
         {
             $this->global['pageTitle'] = 'TIQS : SELECT SPOT';
-            $types = Utility_helper::resetArrayByKeyMultiple($_SESSION['vendor']['typeData'], 'active');
+            $types = Utility_helper::resetArrayByKeyMultiple($vendor['typeData'], 'active');
 
             if (empty($types[1])) {
                 $data = [
-                    'vendor' => $_SESSION['vendor'],
+                    'vendor' => $vendor,
                     'spots' => []
                 ];
                 $this->loadViews('publicorders/selectType', $this->global, $data, null, 'headerWarehousePublic');
             } elseif (count($types[1]) === 1 || $typeId) {
-                $typeId = $typeId ? $typeId : $types[1][0]['typeId'];
-
-                $this->checkVendorCredentials($_SESSION['vendor'], $typeId);
-
-                $where = [
-                    'tbl_shop_printers.userId=' => $_SESSION['vendor']['vendorId'],
-                    'tbl_shop_spots.active' => '1',
-                    'tbl_shop_spots.spotTypeId' => $typeId,
-                ];
-                $spots = $this->shopspot_model->fetchUserSpotsImporved($where);
-
-                if (!empty($spots) && count($spots) === 1) {
-                    $redirect = base_url() . 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'] . '&spotid=' . $spots[0]['spotId'];
-                    redirect($redirect);
-                }
-                $data = [
-                    'vendor' => $_SESSION['vendor'],
-                    'spots' => $spots,
-                    'local' => $this->config->item('local'),
-                    'typeId' => $where['tbl_shop_spots.spotTypeId']
-
-                ];
-                $this->loadViews('publicorders/selectSpot', $this->global, $data, null, 'headerWarehousePublic');
+                $typeId = $typeId ? $typeId : intval($types[1][0]['typeId']);
+                $this->checkVendorCredentials($vendor, $typeId);
+                $this->loadSelectSpotView($vendor, $typeId);
             } else {
                 $data = [
-                    'vendor' => $_SESSION['vendor'],
+                    'vendor' => $vendor,
                     'activeTypes' => $types[1],
                 ];
                 $this->loadViews('publicorders/selectType', $this->global, $data, null, 'headerWarehousePublic');
             }
-            
+
             return;
         }
 
-        public function checkout_order(): void
+        private function loadSelectSpotView(array $vendor, int $typeId): void
         {
-            $this->global['pageTitle'] = 'TIQS : CHECKOUT';
+            $where = [
+                'tbl_shop_printers.userId=' => $vendor['vendorId'],
+                'tbl_shop_spots.active' => '1',
+                'tbl_shop_spots.spotTypeId' => $typeId,
+            ];
+            $spots = $this->shopspot_model->fetchUserSpotsImporved($where);
 
-            if ( (empty($_POST) || empty($_SESSION['order'])) && empty($_SESSION['vendor']) && empty($_SESSION['spot'])) {
-                $redirect = empty($_SESSION['vendor']) ? base_url() : 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'];
+            if (!empty($spots) && count($spots) === 1) {
+                $redirect = base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spots[0]['spotId'];
                 redirect($redirect);
-                exit();
             }
-
-            // CHECK VENDOR CREDENTIALS
-            $this->checkVendorCredentials($_SESSION['vendor']);
-
-            $post = $this->input->post(null, true);
-
-            $_SESSION['orderVendorId'] = $_SESSION['vendor']['vendorId'];
-            if (!empty($post)) {
-                unset($post['spotId']);
-                $_SESSION['order'] = $post;
-            }
-
-            // needed for the first vesrion of th make_order
-            $_SESSION['spotId'] = $_SESSION['spot']['spotId'];
-
             $data = [
-                'spotId' => $_SESSION['spotId'],
-                'vendor' =>  $_SESSION['vendor'],
-                'orderDetails' => $_SESSION['order'],
-                // 'countries' => Country_helper::getCountries(),
-                'countryCodes' => Country_helper::getCountryPhoneCodes(),
-                'spot' => $_SESSION['spot'],
-                'oldMakeOrderView' => $this->config->item('oldMakeOrderView'),
-                'newMakeOrderView' => $this->config->item('newMakeOrderView'),
-                'buyerRole' => $this->config->item('buyer'),
-                'usershorturl' => 'tiqs_shop_service',
-                'salesagent' => $this->config->item('tiqsId'),
+                'vendor' => $vendor,
+                'spots' => $spots,
                 'local' => $this->config->item('local'),
+                'typeId' => $where['tbl_shop_spots.spotTypeId']
             ];
-
-            $data['termsAndConditions'] = isset($_SESSION['postOrder']['order']['termsAndConditions']) ? 'checked' : '';
-            $data['privacyPolicy'] = isset($_SESSION['postOrder']['order']['privacyPolicy']) ? 'checked' : '';
-
-            $this->setDelayTime($data);
-            $this->setFeeValues($data);
-
-            $data['city'] = isset($_SESSION['postOrder']['user']['city']) ? $_SESSION['postOrder']['user']['city'] : get_cookie('city');
-            $data['zipcode'] = isset($_SESSION['postOrder']['user']['zipcode']) ? $_SESSION['postOrder']['user']['zipcode'] : get_cookie('zipcode');
-            $data['address'] = isset($_SESSION['postOrder']['user']['address']) ? $_SESSION['postOrder']['user']['address'] : get_cookie('address');
-
-            $this->loadViews('publicorders/checkoutOrder', $this->global, $data, null, 'headerWarehousePublic');
-        }
-
-        private function setDelayTime(array &$data)
-        {
-            if (intval($_SESSION['spot']['spotTypeId']) !== $this->config->item('local')) {
-                $workingTime = $this->shopspottime_model->setProperty('spotId', $_SESSION['spotId'])->fetchWorkingTime();
-                if ($workingTime) {
-                    $data['workingTime'] = Utility_helper::convertDayToDate($workingTime, 'day');
-                    $data['spotType'] = (intval($data['spot']) === $this->config->item('deliveryType')) ? 'delivery' : 'pickup';
-
-                    if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
-                        $extendedIds = array_keys($_SESSION['order']);
-                        $extendedIds = array_filter($extendedIds, function($i) {
-                            if (is_int($i)) return $i;
-                        });
-                    } else {
-                        $extendedIds = [];
-                        foreach($_SESSION['order'] as $key => $product) {
-                            array_push($extendedIds, array_keys($product)[0]);
-                            $product = reset($product);
-                            if (!empty($product['addons'])) {
-                                $extendedIds = array_merge($extendedIds, array_keys($product['addons']));
-                            }
-                        }
-                    }
-                    $data['delayTime'] = $this->shoporder_model->returnDelayMinutes($extendedIds);
-                    $data['busyTime'] = intval($_SESSION['vendor']['busyTime']);
-                } else {
-                    $redirect = 'spot_closed' . DIRECTORY_SEPARATOR  . $_SESSION['spotId'];
-                    redirect($redirect);
-                    return;
-                }
-            }
-        }
-
-        private function setFeeValues(array &$data)
-        {
-            $spotTypeId = intval($_SESSION['spot']['spotTypeId']);
-
-            if ($spotTypeId === $this->config->item('local')) {
-                $data['serviceFeePercent'] = $_SESSION['vendor']['serviceFeePercent'];
-                $data['serviceFeeAmount'] = $_SESSION['vendor']['serviceFeeAmount'];
-                $data['minimumOrderFee'] = $_SESSION['vendor']['minimumOrderFee'];
-            } elseif ($spotTypeId === $this->config->item('deliveryType')) {
-                $data['serviceFeePercent'] = $_SESSION['vendor']['deliveryServiceFeePercent'];
-                $data['serviceFeeAmount'] = $_SESSION['vendor']['deliveryServiceFeeAmount'];
-                $data['minimumOrderFee'] = $_SESSION['vendor']['deliveryMinimumOrderFee'];
-            } elseif ($spotTypeId === $this->config->item('pickupType')) {
-                $data['serviceFeePercent'] = $_SESSION['vendor']['pickupServiceFeePercent'];
-                $data['serviceFeeAmount'] = $_SESSION['vendor']['pickupServiceFeeAmount'];
-                $data['minimumOrderFee'] = $_SESSION['vendor']['pickupMinimumOrderFee'];
-            }
-        }
-
-        public function submitOrder(): void
-        {
-            if (empty($_POST) || empty($_SESSION['order']) || empty($_SESSION['vendor']) || empty($_SESSION['spotId']) || empty($_SESSION['spot'])) {
-                $redirect = empty($_SESSION['vendor']) ? base_url() : 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'];
-                redirect($redirect);
-                exit();
-            }
-
-            $post =  $this->input->post(null, true);
-            $this->setDeliveryCookies($post);
-            $this->checkTermsAndConditions($post);
-            $this->validateDeliveryPickupData($post);
-
-            $_SESSION['postOrder'] = $post;
-
-            if (!isset($_SESSION['postOrder']['order']['waiterTip']) || intval($_SESSION['postOrder']['order']['waiterTip']) < 0) {
-                $_SESSION['postOrder']['order']['waiterTip'] = 0;
-            }
-
-            if (
-                $_SESSION['vendor']['requireEmail'] === '0'
-                && $_SESSION['vendor']['requireName'] === '0'
-                && $_SESSION['vendor']['requireMobile'] === '0'
-                && intval($_SESSION['spot']['spotTypeId']) === $this->config->item('local')
-            ) {
-                redirect('pay_order');
-            } else {
-                redirect('buyer_details');
-            };
-        }
-
-        public function buyer_details(): void
-        {
-            if (empty($_SESSION['order']) || empty($_SESSION['vendor']) || empty($_SESSION['postOrder']) || empty($_SESSION['spotId']) || empty($_SESSION['spot'])) {
-                $redirect = empty($_SESSION['vendor']) ? base_url() : 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'];
-                redirect($redirect);
-                exit();
-            }
-
-            $this->global['pageTitle'] = 'TIQS : BUYER DETAILS';
-
-            $data = [];
-            $data['vendor'] = $_SESSION['vendor'];
-            $data['spot'] = $_SESSION['spot'];
-            $data['username'] = get_cookie('userName');
-            $data['email'] = get_cookie('email');
-            $data['mobile'] = get_cookie('mobile');
-            $data['userCountry'] = isset($_SESSION['postOrder']['user']['country']) ? $_SESSION['postOrder']['user']['country'] : '';
-            $data['phoneCountryCode'] = isset($_SESSION['postOrder']['phoneCountryCode']) ? $_SESSION['postOrder']['phoneCountryCode'] : '';
-            $data['countryCodes'] = Country_helper::getCountryPhoneCodes();
-            $data['minMobileLength'] = $this->config->item('minMobileLength');
-            $data['local'] = $this->config->item('local');
-
-            $this->loadViews('publicorders/buyerDetails', $this->global, $data, null, 'headerWarehousePublic');
-        }
-
-        public function confirmBuyerData(): void
-        {
-            if (empty($_POST) || empty($_SESSION['order']) || empty($_SESSION['vendor']) || empty($_SESSION['spotId']) || empty($_SESSION['spot'])) {
-                $redirect = empty($_SESSION['vendor']) ? base_url() : 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'];
-                redirect($redirect);
-                exit();
-            }
-
-            $post = $this->input->post(null, true);
-            $this->setBuyerCookies($post);
-            $this->checkBuyerData($post);
-            $user = $post['user'];
-
-            foreach ($user as $key => $value) {
-                $_SESSION['postOrder']['user'][$key] = $value;
-            }
-
-
-
-            redirect('pay_order');
-        }
-
-        public function pay_order(): void
-        {
-            if (empty($_SESSION['order']) || empty($_SESSION['vendor']) || empty($_SESSION['postOrder']) || empty($_SESSION['spotId']) || empty($_SESSION['spot'])) {
-                $redirect = empty($_SESSION['vendor']) ? base_url() : 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'];
-                redirect($redirect);
-                exit();
-            }
-
-            // if $_SESSION['voucherId'] and user refresh the page
-            if (isset($_SESSION['voucherId'])) {
-                unset($_SESSION['voucherId']);
-            }
-            // if $_SESSION['payWithVaucher'] and user refresh the page
-            if (isset($_SESSION['payWithVaucher'])) {
-                unset($_SESSION['payWithVaucher']);
-            }
-
-            // CHECK VENDOR CREDENTIALS
-            $this->checkVendorCredentials($_SESSION['vendor']);
-
-            $this->global['pageTitle'] = 'TIQS : PAY';
-
-            $data = [
-                'ordered'               => $_SESSION['order'],
-                'vendor'                => $_SESSION['vendor'],
-                'spot'                  => $_SESSION['spot'],
-                'waiterTip'             => floatval($_SESSION['postOrder']['order']['waiterTip']),
-                'idealPaymentType'      => $this->config->item('idealPaymentType'),
-                'creditCardPaymentType' => $this->config->item('creditCardPaymentType'),
-                'bancontactPaymentType' => $this->config->item('bancontactPaymentType'),
-                'giroPaymentType'       => $this->config->item('giroPaymentType'),
-                'payconiqPaymentType'   => $this->config->item('payconiqPaymentType'),
-                'pinMachinePaymentType' => $this->config->item('pinMachinePaymentType'),
-				'localType'             => $this->config->item('local'),
-                'oldMakeOrderView'      => $this->config->item('oldMakeOrderView'),
-                'newMakeOrderView'      => $this->config->item('newMakeOrderView'),
-            ];
-            $data['iframe'] = (!empty($_SESSION['iframe'])) ? $_SESSION['iframe'] : false;
-
-
-            if (
-                $_SESSION['vendor']['requireEmail'] === '0'
-                && $_SESSION['vendor']['requireName'] === '0'
-                && $_SESSION['vendor']['requireMobile'] === '0'
-                && intval($_SESSION['spot']['spotTypeId']) === $this->config->item('local')
-            ) {
-                $data['redirect'] = 'checkout_order';
-            } else {
-                $data['redirect'] = 'buyer_details';
-            };
-
-            $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
-        }
-
-        public function insertOrder($payNlPaymentTypeId, $paymentOptionSubId): void
-        {
-            $redirect = empty($_SESSION['vendor']) ? base_url() : 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'];
-            if (empty($_SESSION['order']) || empty($_SESSION['vendor']) || empty($_SESSION['postOrder']) || empty($_SESSION['spotId']) || empty($_SESSION['spot'])) {                
-                redirect($redirect);
-                exit();
-            }
-
-            if ($payNlPaymentTypeId === $this->config->item('idealPaymentType')) {
-                $payType = $this->config->item('idealPayment');
-            } elseif ($payNlPaymentTypeId === $this->config->item('creditCardPaymentType')) {
-                $payType = $this->config->item('creditCardPayment');
-            } elseif ($payNlPaymentTypeId === $this->config->item('bancontactPaymentType')) {
-                $payType = $this->config->item('bancontactPayment');
-            } elseif ($payNlPaymentTypeId === $this->config->item('giroPaymentType')) {
-                $payType = $this->config->item('giroPayment');
-            } elseif ($payNlPaymentTypeId === $this->config->item('payconiqPaymentType')) {
-                $payType = $this->config->item('payconiqPayment');
-            } elseif ($payNlPaymentTypeId === $this->config->item('pinMachinePaymentType')) {
-                $payType = $this->config->item('pinMachinePayment');
-            } else {
-                redirect($redirect);
-                exit();
-            }
-
-            $this->insertOrderProcess($this->config->item('orderNotPaid'), $payType);
-
-            $successRedirect = 'paymentengine' . DIRECTORY_SEPARATOR . $payNlPaymentTypeId  . DIRECTORY_SEPARATOR . $paymentOptionSubId;
-
-            redirect($successRedirect);
-        }
-
-        private function checkVendorCredentials(array $vendor, string $typeId = ''): void
-        {
-            if (empty($vendor['payNlServiceId'])) {
-                redirect(base_url());
-                exit();
-            }
-
-            if (!$typeId || intval($typeId) !== $this->config->item('local')) return;
-
-            if (!$this->shopvendortime_model->setProperty('vendorId', $vendor['vendorId'])->isOpen()) {
-                redirect('closed/' . $vendor['vendorId']);
-                exit();
-            }
-
-            if (
-                $vendor['requireReservation'] === '1' && ( empty($_SESSION['visitorReservationId']) || empty(get_cookie('visitorReservationId')) )
-            ) {
-                $_SESSION['comeFromAlfred'] = true;
-                redirect('check424/' . $vendor['vendorId']);
-                exit();
-            }
-
+            $this->loadViews('publicorders/selectSpot', $this->global, $data, null, 'headerWarehousePublic');
             return;
         }
 
-        public function closed($vendorId): void
+        private function isLocalSpotOpen(int $spotTypeId, int $spotId)
         {
-            if ($this->shopvendortime_model->setProperty('vendorId', $vendorId)->isOpen()) {
-                $redirect = 'make_order?vendorid=' . $vendorId;
+            if (
+                $spotTypeId === $this->config->item('local')
+                && !$this->shopspottime_model->setProperty('spotId', $spotId)->isOpen()
+            ) {
+                $redirect = 'spot_closed' . DIRECTORY_SEPARATOR  . $spotId . DIRECTORY_SEPARATOR . $vendor['vendorId'];
                 redirect($redirect);
                 return;
             };
+        }
 
-            $this->global['pageTitle'] = 'TIQS : CLOSED';
+        private function getPreferedView(array &$data, array $spot, array $vendor, string $orderDataRandomKey): string
+        {
+            $vendorId = $vendor['vendorId'];
+            $spotId = intval($spot['spotId']);
+            $ordered = $this->fetchAndChekOrdered($orderDataRandomKey, $vendorId, $spotId);
 
-            $data = [
-                'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData()
-            ];
-            $workingTime = $this->shopvendortime_model->setProperty('vendorId', $vendorId)->fetchWorkingTime();
-            $data['workingTime'] = $workingTime ? Utility_helper::resetArrayByKeyMultiple($workingTime, 'day') : null;
+            if ($vendor['preferredView'] === $this->config->item('oldMakeOrderView')) {
+                $data['categoryProducts'] = $this->shopproductex_model->getUserProductsPublic($vendorId);
+                $data['ordered'] =  $ordered;
+                $preferedView = 'publicorders/makeOrder';
+            } elseif ($vendor['preferredView'] === $this->config->item('newMakeOrderView')) {
+                $allProducts = $this->shopproductex_model->getMainProductsOnBuyerSide($vendorId, $spot);
+                if ($allProducts) {
+                    $data['mainProducts'] = $allProducts['main'];
+                    $data['addons'] = $allProducts['addons'];
+                    $data['returnCategorySlide'] = isset($_GET['category']) ? $_GET['category'] : null;
 
-            $this->loadViews('publicorders/closed', $this->global, $data, null, 'headerWarehousePublic');
+                    if ($ordered) {
+                        $ordered = Utility_helper::returnMakeNewOrderElements($ordered, $data['vendor'], $data['mainProducts'], $data['addons']);
+                        $data['checkoutList'] = $ordered['checkoutList'];
+                    } else {
+                        $data['checkoutList'] = '';
+                    }
+
+                }
+                $preferedView = 'publicorders/makeOrderNew';
+            }
+
+            return $preferedView;
+        }
+
+        private function fetchAndChekOrdered(string $orderDataRandomKey, int $vendorId, int $spotId): ?array
+        {
+            
+            if (empty($orderDataRandomKey)) return null;
+
+            $orderData = $this->shopsession_model->setProperty('randomKey', $orderDataRandomKey)->getArrayOrderDetails();
+
+            Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId']);
+
+            if ($orderData['vendorId'] !== $vendorId || $orderData['spotId'] !== $spotId) redirect(base_url());
+
+            return (empty($orderData['makeOrder'])) ? null : $orderData['makeOrder'];
         }
 
         public function spotClosed($spotId): void
@@ -545,275 +237,258 @@
             $this->loadViews('publicorders/spotClosed', $this->global, $data, null, 'headerWarehousePublic');
         }
 
-        private function insertOrderProcess(string $payStatus, string $payType, int $voucherId = 0): void
+        public function closed($vendorId): void
         {
-            //fetch data from $_SESSION
-            $post = $_SESSION['postOrder'];
+            if ($this->shopvendortime_model->setProperty('vendorId', $vendorId)->isOpen()) {
+                $redirect = 'make_order?vendorid=' . $vendorId;
+                redirect($redirect);
+                return;
+            };
 
-            // insert buyer
-            $this->user_model->manageAndSetBuyer($post['user']);
-            if (!$this->user_model->id) {
-                $this->session->set_flashdata('error', '(1001) Order not made! Please try again');
-                redirect('checkout_order');
-                exit();
-            }
+            $this->global['pageTitle'] = 'TIQS : CLOSED';
 
-            // prepare failed redirect
-            $failedRedirect = 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'] . '&spotid=' . $_SESSION['spotId'];
+            $data = [
+                'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData()
+            ];
+            $workingTime = $this->shopvendortime_model->setProperty('vendorId', $vendorId)->fetchWorkingTime();
+            $data['workingTime'] = $workingTime ? Utility_helper::resetArrayByKeyMultiple($workingTime, 'day') : null;
 
-            // insert order
-            if (!empty($post['order']['date']) && !empty($post['order']['time'])) {
-                $orderDate = explode(' ', $post['order']['date']);
-                $post['order']['created'] = $orderDate[0] . ' ' . $post['order']['time'];
-            }
-            //set $post['order'] keys and value if whole or part of order is paid from wallet
+            $this->loadViews('publicorders/closed', $this->global, $data, null, 'headerWarehousePublic');
+        }
+        // CHECKOUT ORDER
 
-            $post['order']['buyerId'] = $this->user_model->id;
-            $post['order']['paid'] = $payStatus;
-            $post['order']['paymentType'] = $payType;
-            $post['order']['serviceTypeId'] = $_SESSION['spot']['spotTypeId'];
+        // TO DO !!!!!!!!!!!!!
+        // public function oldMakeNedOrderView()
+        // {
+        //     $post = $this->input->post(null, true);
 
-            if ($voucherId || isset($_SESSION['voucherId'])) {
-                $payPartial = false;
-                if (isset($_SESSION['voucherId'])) {
-                    $voucherId = $_SESSION['voucherId'];
-                    $payPartial = true;
-                    unset($_SESSION['voucherId']);
-                }
-                $this->payOrderWithVoucher($voucherId, $post, $failedRedirect, $payPartial);
-            }
+        //     $_SESSION['orderVendorId'] = $_SESSION['vendor']['vendorId'];
+        //     if (!empty($post)) {
+        //         unset($post['spotId']);
+        //         $_SESSION['order'] = $post;
+        //     }
+        // }
 
-            $this->shoporder_model->setObjectFromArray($post['order'])->create();
+        public function checkout_order(): void
+        {
+            $orderRandomKey = $this->input->get($this->config->item('orderDataGetKey'), true);
 
-            if (!$this->shoporder_model->id) {
-                $this->session->set_flashdata('error', '(1000) Order not made!, Please try again');
-                redirect($failedRedirect);
-                exit();
-            }
+            if (empty($orderRandomKey)) redirect(base_url());
 
-            // insert order details
-            if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
-                foreach ($post['orderExtended'] as $id => $details) {
-                    $details['productsExtendedId'] = intval($id);
-                    $details['orderId'] = $this->shoporder_model->id;
-                    if (!$this->shoporderex_model->setObjectFromArray($details)->create()) {
-                        $this->shoporderex_model->orderId = $details['orderId'];
-                        $this->shoporderex_model->deleteOrderDetails();
-                        $this->shoporder_model->delete();
-                        $this->session->set_flashdata('error', '(1010) Order not made! Please try again');
-                        redirect($failedRedirect);
-                        exit();
-                    }
-                }
-            } elseif ($_SESSION['vendor']['preferredView'] === $this->config->item('newMakeOrderView')) {
-                $insertAll = [];
+            $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
 
-                foreach ($post['orderExtended'] as $details) {
-                    $id = array_keys($details)[0];
-                    $details = reset($details);
-                    $details['quantity'] = intval($details['quantity']);
+            Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder']);
 
-                    if (isset($details['remark']) || isset($details['mainPrductOrderIndex']) || isset($details['subMainPrductOrderIndex'])) {
-                        $remark = isset($details['remark']) ? $details['remark'] : '';
-                        $mainPrductOrderIndex = isset($details['mainPrductOrderIndex']) ? $details['mainPrductOrderIndex'] : 0;
-                        $subMainPrductOrderIndex = isset($details['subMainPrductOrderIndex']) ? $details['subMainPrductOrderIndex'] : 0;
-                        $insert = [
-                            'productsExtendedId' => intval($id),
-                            'orderId' => $this->shoporder_model->id,
-                            'quantity' => $details['quantity'],
-                            'remark' => $remark,
-                            'mainPrductOrderIndex' => $mainPrductOrderIndex,
-                            'subMainPrductOrderIndex' => $subMainPrductOrderIndex,
-                        ];
-                        if (!$this->shoporderex_model->setObjectFromArray($insert)->create()) {
-                            $this->shoporderex_model->orderId = $insert['orderId'];
-                            $this->shoporderex_model->deleteOrderDetails();
-                            $this->shoporder_model->delete();
-                            $this->session->set_flashdata('error', '(1020) Order not made! Please try again');
-                            redirect($failedRedirect);
-                            exit();
-                        }
+            $data = [
+                'orderRandomKey'    => $orderRandomKey,
+                'orderDetails'      => $orderData['makeOrder'],
+                'spotId'            => $orderData['spotId'],
+                'vendor'            => $this->shopvendor_model->setProperty('vendorId', $orderData['vendorId'])->getVendorData(),
+                'spot'              => $this->shopspot_model->fetchSpot($orderData['vendorId'], $orderData['spotId']),
+                'oldMakeOrderView'  => $this->config->item('oldMakeOrderView'),
+                'newMakeOrderView'  => $this->config->item('newMakeOrderView'),
+                'buyerRole'         => $this->config->item('buyer'),
+                'salesagent'        => $this->config->item('tiqsId'),
+                'local'             => $this->config->item('local'),
+                'buyershorturl'     => $this->config->item('buyershorturl'),
+                'countryCodes'      => Country_helper::getCountryPhoneCodes(),
+                'orderDataGetKey'   => $this->config->item('orderDataGetKey'),
+            ];
+
+            $this->checkVendorCredentials( $data['vendor'], intval($data['spot']['spotTypeId']) );
+            $this->setOrderData($data, $orderData);
+            $this->setDelayTime($data);
+            $this->setFeeValues($data);
+
+            $this->global['pageTitle'] = 'TIQS : CHECKOUT';
+            $this->loadViews('publicorders/checkoutOrder', $this->global, $data, null, 'headerWarehousePublic');
+        }
+
+        private function setOrderData(array &$data, array $orderData): void
+        {
+            $data['termsAndConditions'] = isset($orderData['order']['termsAndConditions']) ? 'checked' : '';
+            $data['privacyPolicy'] = isset($orderData['order']['privacyPolicy']) ? 'checked' : '';
+            $data['waiterTip'] = isset($orderData['order']['waiterTip']) ? floatval($orderData['order']['waiterTip']) : 0;
+
+            $data['city'] = isset($orderData['user']['city']) ? $orderData['user']['city'] : get_cookie('city');
+            $data['zipcode'] = isset($orderData['user']['zipcode']) ? $orderData['user']['zipcode'] : get_cookie('zipcode');
+            $data['address'] = isset($orderData['user']['address']) ? $orderData['user']['address'] : get_cookie('address');
+        }
+
+        private function setDelayTime(array &$data)
+        {
+            if (intval($data['spot']['spotTypeId']) !== $this->config->item('local')) {
+                $workingTime = $this->shopspottime_model->setProperty('spotId', $data['spotId'])->fetchWorkingTime();
+                if ($workingTime) {
+                    $data['workingTime'] = Utility_helper::convertDayToDate($workingTime, 'day');
+                    $data['spotType'] = (intval($data['spot']) === $this->config->item('deliveryType')) ? 'delivery' : 'pickup';
+
+                    if ($data['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
+                        $extendedIds = array_keys($data['orderDetails']);
+                        $extendedIds = array_filter($extendedIds, function($i) {
+                            if (is_int($i)) return $i;
+                        });
                     } else {
-                        if (!isset($insertAll[$id])) {
-                            $insertAll[$id] = [
-                                'productsExtendedId' => intval($id),
-                                'orderId' => $this->shoporder_model->id,
-                                'quantity' => $details['quantity'],
-                            ];
-                        } else {
-                            $insertAll[$id]['quantity'] += $details['quantity'];
+                        $extendedIds = [];
+                        foreach($data['orderDetails'] as $key => $product) {
+                            array_push($extendedIds, array_keys($product)[0]);
+                            $product = reset($product);
+                            if (!empty($product['addons'])) {
+                                $extendedIds = array_merge($extendedIds, array_keys($product['addons']));
+                            }
                         }
                     }
-                }
-
-                $insertValues = array_values($insertAll);
-                if ($insertValues) {
-                    if (!$this->shoporderex_model->multipleCreate($insertValues)) {
-                        $this->shoporderex_model->orderId = $insert['orderId'];
-                        $this->shoporderex_model->deleteOrderDetails();
-                        $this->shoporder_model->delete();
-                        $this->session->set_flashdata('error', '(1030) Order not made! Please try again');
-                        redirect($failedRedirect);
-                        exit();
-                    }
+                    $data['delayTime'] = $this->shoporder_model->returnDelayMinutes($extendedIds);
+                    $data['busyTime'] = intval($data['vendor']['busyTime']);
+                } else {
+                    $redirect = 'spot_closed' . DIRECTORY_SEPARATOR  . $data['spotId'];
+                    redirect($redirect);
+                    return;
                 }
             }
-
-            // save orderId in SESSION
-            $_SESSION['orderId'] = $this->shoporder_model->id;
         }
 
-        public function cashPayment($payStatus, $payType): void
+        private function setFeeValues(array &$data)
         {
-            $this->insertOrderProcess($payStatus, $payType);
-            if ($_SESSION['vendor']['vendorId'] === 1162 || $_SESSION['vendor']['vendorId'] === 5655) {
-                Utility_helper::unsetPaymentSession();
-                $redirect = base_url() . 'successth';
+            $spotTypeId = intval($data['spot']['spotTypeId']);
+
+            if ($spotTypeId === $this->config->item('local')) {
+                $data['serviceFeePercent'] = $data['vendor']['serviceFeePercent'];
+                $data['serviceFeeAmount'] = $data['vendor']['serviceFeeAmount'];
+                $data['minimumOrderFee'] = $data['vendor']['minimumOrderFee'];
+            } elseif ($spotTypeId === $this->config->item('deliveryType')) {
+                $data['serviceFeePercent'] = $data['vendor']['deliveryServiceFeePercent'];
+                $data['serviceFeeAmount'] = $data['vendor']['deliveryServiceFeeAmount'];
+                $data['minimumOrderFee'] = $data['vendor']['deliveryMinimumOrderFee'];
+            } elseif ($spotTypeId === $this->config->item('pickupType')) {
+                $data['serviceFeePercent'] = $data['vendor']['pickupServiceFeePercent'];
+                $data['serviceFeeAmount'] = $data['vendor']['pickupServiceFeeAmount'];
+                $data['minimumOrderFee'] = $data['vendor']['pickupMinimumOrderFee'];
+            }
+        }
+
+        // BUYER DATA
+        public function buyer_details(): void
+        {
+            $orderRandomKey = $this->input->get($this->config->item('orderDataGetKey'), true);
+
+            if (empty($orderRandomKey)) redirect(base_url());
+
+            $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+
+            Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder', 'user', 'orderExtended', 'order']);
+
+            $data = [];
+            $data['vendor'] = $this->shopvendor_model->setProperty('vendorId', $orderData['vendorId'])->getVendorData();
+            $data['spot'] = $this->shopspot_model->fetchSpot($orderData['vendorId'], $orderData['spotId']);
+            $data['username'] = get_cookie('userName');
+            $data['email'] = get_cookie('email');
+            $data['mobile'] = get_cookie('mobile');
+            $data['userCountry'] = isset($orderData['user']['country']) ? $orderData['user']['country'] : '';
+            $data['phoneCountryCode'] = isset($orderData['phoneCountryCode']) ? $orderData['phoneCountryCode'] : '';
+            $data['countryCodes'] = Country_helper::getCountryPhoneCodes();
+            $data['minMobileLength'] = $this->config->item('minMobileLength');
+            $data['local'] = $this->config->item('local');
+            $data['orderRandomKey'] = $orderRandomKey;
+            $data['orderDataGetKey'] = $this->config->item('orderDataGetKey');
+
+            $this->global['pageTitle'] = 'TIQS : BUYER DETAILS';
+            $this->loadViews('publicorders/buyerDetails', $this->global, $data, null, 'headerWarehousePublic');
+        }
+
+        // PAY ORDER
+        public function pay_order(): void
+        {
+            $orderRandomKey = $this->input->get($this->config->item('orderDataGetKey'), true);
+
+            if (empty($orderRandomKey)) redirect(base_url());
+
+            $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+
+            Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder', 'user', 'orderExtended', 'order']);
+            
+            $vendor = $this->shopvendor_model->setProperty('vendorId', $orderData['vendorId'])->getVendorData();
+            $spot = $this->shopspot_model->fetchSpot($orderData['vendorId'], $orderData['spotId']);
+            $spotTypeId = intval($spot['spotTypeId']);
+
+            $this->checkVendorCredentials($vendor, $spotTypeId);
+            $this->unsetVoocherData($orderData);
+
+            $data = [
+                'vendor'                => $vendor,
+                'spot'                  => $spot,
+                'waiterTip'             => floatval($orderData['order']['waiterTip']),
+                'amount'                => floatval($orderData['order']['amount']),
+                'serviceFee'            => floatval($orderData['order']['serviceFee']),
+                'idealPaymentType'      => $this->config->item('idealPaymentType'),
+                'creditCardPaymentType' => $this->config->item('creditCardPaymentType'),
+                'bancontactPaymentType' => $this->config->item('bancontactPaymentType'),
+                'giroPaymentType'       => $this->config->item('giroPaymentType'),
+                'payconiqPaymentType'   => $this->config->item('payconiqPaymentType'),
+                'pinMachinePaymentType' => $this->config->item('pinMachinePaymentType'),
+				'localType'             => $this->config->item('local'),
+                'oldMakeOrderView'      => $this->config->item('oldMakeOrderView'),
+                'newMakeOrderView'      => $this->config->item('newMakeOrderView'),
+                'redirect'              => $this->getRedirect($vendor, $spotTypeId, $orderRandomKey),
+                'orderRandomKey'        => $orderRandomKey,
+                'orderDataGetKey'       => $this->config->item('orderDataGetKey'),
+            ];
+
+            $this->global['pageTitle'] = 'TIQS : PAY';
+            $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
+        }
+
+        private function unsetVoocherData(array &$orderData): void
+        {
+            // if $orderData['voucherId'] and user refresh the page
+            if (isset($orderData['voucherId'])) {
+                unset($orderData['voucherId']);
+            }
+            // if $orderData['payWithVaucher'] and user refresh the page
+            if (isset($orderData['payWithVaucher'])) {
+                unset($orderData['payWithVaucher']);
+            }
+        }
+
+        private function getRedirect(array $vendor, int $spotTypeId, string $orderRandomKey): string
+        {
+            if (
+                $vendor['requireEmail'] === '0'
+                && $vendor['requireName'] === '0'
+                && $vendor['requireMobile'] === '0'
+                && $spotTypeId === $this->config->item('local')
+            ) {
+                $redirect = 'checkout_order?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
             } else {
-                $redirect = base_url() . 'success';
-                $_SESSION['orderStatusCode'] = ($payStatus === $this->config->item('orderPaid')) ? $this->config->item('payNlSuccess') : 0;
-            }
-            redirect($redirect);
+                $redirect = 'buyer_details?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
+            };
+    
+            return $redirect;
         }
 
-        public function voucherPayment($voucherId): void
+        private function checkVendorCredentials(array $vendor, int $spotTypeId): void
         {
-            $voucherId = intval($voucherId);
-            $this->insertOrderProcess($this->config->item('orderNotPaid'), $this->config->item('voucherPayment'), $voucherId);
-            $redirect =  ($_SESSION['vendor']['vendorId'] === 1162 || $_SESSION['vendor']['vendorId'] === 5655 ) ?  'successth' : 'success';
-            $_SESSION['orderStatusCode'] = $this->config->item('payNlSuccess');
-            redirect($redirect);
-        }
-
-        private function payOrderWithVoucher(int $voucherId, array &$post, string $failedRedirect, bool $payPartial): void
-        {
-            $checkAmount = (isset($_SESSION['payWithVaucher'])) ? $_SESSION['payWithVaucher'] : floatval($post['order']['amount']);
-            $voucherAmount = $this->shopvoucher_model->setObjectId($voucherId)->setVoucher()->payOrderWithVoucher($checkAmount, $payPartial);
-
-            if (isset($_SESSION['payWithVaucher'])) {
-                unset($_SESSION['payWithVaucher']);
+            if (empty($vendor['payNlServiceId'])) {
+                redirect(base_url());
+                exit();
             }
 
-            if ($voucherAmount) {
-                if (
-                    $checkAmount === floatval($post['order']['amount'])
-                    && ($this->shopvoucher_model->percent === 100 || $voucherAmount >= $post['order']['amount'])
-                ) {
-                    $post['order']['serviceFee'] = 0;
-                }
+            if (!$spotTypeId || $spotTypeId !== $this->config->item('local')) return;
 
-                $post['order']['voucherId'] = $voucherId;
-                $post['order']['voucherAmount'] = $voucherAmount;
-                $post['order']['paid'] = $payPartial ? $this->config->item('orderNotPaid') : $this->config->item('orderPaid');
-                $post['order']['paymentType'] = $payPartial ? $post['order']['paymentType'] . ' / ' . $this->config->item('voucherPayment') : $this->config->item('voucherPayment');
-            } else {
-                $this->session->set_flashdata('error', 'Order not made! Not enough funds on voucher');
-                redirect($failedRedirect);
-            }
-        }
-
-        private function validateDeliveryPickupData(array $post): void
-        {
-            // check pickup period and time for pickup and delivery
-            if (intval($_SESSION['spot']['spotTypeId']) !== $this->config->item('local')) {
-                if (empty($post['order']['date']) || empty($post['order']['time'])) {
-                    $this->session->set_flashdata('error', 'Order not made! Please select pickup period and time');
-                    redirect('checkout_order');
-                    exit();
-                }
+            if (!$this->shopvendortime_model->setProperty('vendorId', $vendor['vendorId'])->isOpen()) {
+                redirect('closed/' . $vendor['vendorId']);
+                exit();
             }
 
-            // check city, zipcode and addressfor delivery
-            if (intval($_SESSION['spot']['spotTypeId']) === $this->config->item('deliveryType')) {
-                if (empty($post['user']['city']) || empty($post['user']['zipcode']) || empty($post['user']['address'])) {
-                    $this->session->set_flashdata('error', 'Order not made! Please insert delivery city, zipcode and address');
-                    redirect('checkout_order');
-                    exit();
-                }
+            if (
+                $vendor['requireReservation'] === '1' && ( empty($_SESSION['visitorReservationId']) || empty(get_cookie('visitorReservationId')) )
+            ) {
+                $_SESSION['comeFromAlfred'] = true;
+                redirect('check424/' . $vendor['vendorId']);
+                exit();
             }
 
             return;
         }
 
-        private function checkBuyerData(array &$post)
-        {
-            // check mobile phone
-            if ($_SESSION['vendor']['requireMobile'] === '1' || intval($_SESSION['spot']['spotTypeId']) !== $this->config->item('local')) {
-                if (Validate_data_helper::validateMobileNumber($post['user']['mobile'])) {
-                    $post['user']['mobile'] = $post['phoneCountryCode'] . ltrim($post['user']['mobile'], '0');
-                    
-                } else {
-                    $this->session->set_flashdata('error', 'Order not made! Mobile phone is required. Please try again');
-                    redirect('buyer_details');
-                    exit();
-                }
-            }
-
-            // check mobile phone
-            if ($_SESSION['vendor']['requireEmail'] === '1' || intval($_SESSION['spot']['spotTypeId']) !== $this->config->item('local')) {
-                if (!Validate_data_helper::validateEmail($post['user']['email'])) {
-                    $this->session->set_flashdata('error', 'Order not made! Email is required. Please try again');
-                    redirect('buyer_details');
-                    exit();
-                }
-            }
-
-            // check mobile phone
-            if ($_SESSION['vendor']['requireName'] === '1' ) {
-                if (!Validate_data_helper::validateString($post['user']['username'])) {
-                    $this->session->set_flashdata('error', 'Order not made! Username is required. Please try again');
-                    redirect('buyer_details');
-                    exit();
-                }
-            }
-        }
-
-        private function setDeliveryCookies(array $post): void
-        {
-            if (!empty($post['user']['city'])) {
-                set_cookie('city', $post['user']['city'], (365 * 24 * 60 * 60));
-            }
-            if (!empty($post['user']['zipcode'])) {
-                set_cookie('zipcode', $post['user']['zipcode'], (365 * 24 * 60 * 60));
-            }
-            if (!empty($post['user']['address'])) {
-                set_cookie('address', $post['user']['address'], (365 * 24 * 60 * 60));
-            }
-        }
-
-        private function setBuyerCookies(array $post): void
-        {
-            if (!empty($post['user']['username'])) {
-                set_cookie('userName', $post['user']['username'], (365 * 24 * 60 * 60));
-            }
-            if (!empty($post['user']['email'])) {
-                set_cookie('email', $post['user']['email'], (365 * 24 * 60 * 60));
-            }
-            if (!empty($post['user']['mobile'])) {
-                set_cookie('mobile', $post['user']['mobile'], (365 * 24 * 60 * 60));
-            }
-        }
-
-        
-        private function checkTermsAndConditions($post): void
-        {
-            if (empty($post['order']['termsAndConditions'])) {
-                unset($_SESSION['postOrder']['order']['termsAndConditions']);
-            } else {
-                $_SESSION['postOrder']['order']['termsAndConditions'] = $post['order']['termsAndConditions'];
-            }
-
-            if (empty($post['order']['privacyPolicy'])) {
-                unset($_SESSION['postOrder']['order']['privacyPolicy']);
-            } else {
-                $_SESSION['postOrder']['order']['privacyPolicy'] = $post['order']['privacyPolicy'];
-            }
-
-            if ( $_SESSION['vendor']['termsAndConditions'] && $_SESSION['vendor']['showTermsAndPrivacy'] === '1'
-                && (empty($post['order']['termsAndConditions']) || empty($post['order']['privacyPolicy']))
-            ) {
-                $this->session->set_flashdata('error', 'Order not made! Please confirm that you read terms and conditions and privacy policy');
-                redirect('checkout_order');
-            }
-        }
     }

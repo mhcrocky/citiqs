@@ -97,8 +97,8 @@
 			<div class="header-menu" id="header-menu" align="right">
 				<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>home#dhl-section" id='dhl-button'></a>
 				<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>found"></a>
-				<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>check424"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/visitor.png" title="CHECK424"/></a>
-				<a style="color: #E25F2A" href="#" id='modal-button'><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/world.png" title="REPORTS"/></a>
+<!--				<a style="color: #E25F2A" href="--><?php //echo $this->baseUrl; ?><!--check424"><img width="30px" height="30px" src="--><?php //echo $this->baseUrl; ?><!--assets/home/images/visitor.png" title="CHECK424"/></a>-->
+				<a style="color: #E25F2A" href="#" id='modal-button'><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/world.png" title="LANGUAGE"/> SELECT LANGUAGE </a>
 				<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>registerbusiness">REGISTER</a>
 				<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>login">LOGIN</a>
 			</div>
