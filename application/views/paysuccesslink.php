@@ -22,7 +22,7 @@
 		<?php if ($order['orderPaidStatus'] === $paid) { ?>
 		<h3 class='order-status order-status--true'>please be patiente we are now working on that</h3>
 		<?php } else { ?>
-			<h3 class='order-status order-status--false'>(2003) Please try again</hr>
+			<h3 class='order-status order-status--false'>(2003) Please try again</h3>
 		<?php } ?>
 	</div>
 	<div class="checkout-btns">

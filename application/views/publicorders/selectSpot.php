@@ -1,12 +1,14 @@
 <div class="main-wrapper-nh" style="text-align:center">
 	<div class="col-half background-apricot-blue height">
 		<div class="width-650" style="padding-top:0px"></div>
+		<?php if (!empty($_SESSION['iframe'])) { ?>
 		<div
 			class="form-group has-feedback"
 			style="padding: 0px"
 		>
-			<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="350" height="" />
+			<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="250" height="" />
 		</div><!-- /.login-logo -->
+		<?php } ?>
 		<h1 style="text-align:center; text-transform: uppercase; margin: 0px 7px; border-bottom: 4px solid;"><?php echo $vendor['vendorName'] ?></h1>
 		<div class="selectWrapper mb-35" style="padding-top:10px">
 			<?php if (!empty($spots)) { ?>

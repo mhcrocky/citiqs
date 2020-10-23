@@ -4,26 +4,23 @@
             <div class="checkout-table__header">
                 <h3 class='mb-0' style="text-align:center">Your order</h3>
             </div>
-            <div class="checkout-table__single-element checkout-table__single-element--header">
-                <div class='checkout-table__num-order'>
-                    <b>#</b>
-                </div>
-                <!-- end number of product -->
-                <div class='checkout-table__product-details'>
-                    <p>Name</p>
-                </div>
-                <!-- end product details -->
-                <div class="checkout-table__numbers">
-                    <div class="checkout-table__quantity">
-                        <span class='checkout-table__number-of-products'>Quantity</span>
-                    </div>
-                    <!-- end quantity -->
-                    <div class="checkout-table__price">
-                        <p>Price</p>
-                    </div>
-                    <!-- end price -->
-                </div>
-            </div>
+<!--            <div class="checkout-table__single-element checkout-table__single-element--header">-->
+<!--                <div class='checkout-table__num-order'>-->
+<!--                    <b>#</b>-->
+<!--                </div>-->
+<!--                <div class='checkout-table__product-details'>-->
+<!--                    <p>Name</p>-->
+<!--                </div>-->
+<!--                <div class="checkout-table__numbers">-->
+<!--                    <div class="checkout-table__quantity">-->
+<!--                        <span class='checkout-table__number-of-products'>Quantity</span>-->
+<!--                    </div>-->
+<!--                    <div class="checkout-table__price">-->
+<!--                        <p>Price</p>-->
+<!--                    </div>-->
+
+<!--                </div>-->
+<!--            </div>-->
             <!-- end checkout table header -->
 
             <div class="checkout-table-content">

@@ -1,11 +1,12 @@
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
 <style>
+
+
 .ui-slider, .ui-slider .slider-range-inverse, .ui-slider .ui-slider-range {
   height: 14px;
   border-radius: 10px;
   border-width: 0;
 }
-
 
 #slider-container {
   width: 100%;
@@ -72,21 +73,51 @@
   position: absolute;
   padding-right: 18px;
 }
+/* unvisited link */
+a:link {
+	color: white;
+}
+
+/* visited link */
+a:visited {
+	color: white;
+}
+
+/* mouse over link */
+a:hover {
+	color: white;
+}
+
+/* selected link */
+a:active {
+	color: white;
+}
 </style>
-<main role="main" style="margin-bottom: 0px">
+<main role="main" style="margin-bottom: -30px">
 	<section class="jumbotron" style="background-color:#F3D0B5">
-		<div class="container" style="background-color:#F3D0B5; text-align:left" >
-			<h1 style="font-family: campton-bold; margin-top: 30px;color:#27253b">TIQS PLACES</h1>
-			<p style="font-family: campton-light;color: #27253b; margin-bottom: 30px">One stop destination to find everything at your favorite place</p>
+		<div class="container" style="background-color:#F3D0B5; text-align:center ; margin-bottom: -30px" >
+			<h1 style="font-family: campton-bold; margin-top: 30px;color:#27253b">TIQS PICKUP & DELIVERY</h1>
+			<p style="font-family: campton-light;color: #27253b; margin-bottom: 0px">One stop destination to find everything at your favorite place</p>
 		</div>
 	</section>
 
 	<div class="album py-5" style="background-color: #F3D0B5">
 		<div class="container" style="background-color: #F3D0B5">
 			<div class="row" style="margin-bottom:20px">
-				<h3 class="col-md-12" style="text-align:left">Your location</h3>
+				<h3 class="col-md-12" style="font-family: campton-bold;text-align:left">Your location</h3>
 
 					<div class="form-group col-md-5 col-sm-12">
+
+						<input
+								type="text"
+								class="form-control"
+								placeholder="Enter address"
+								id="addressId"
+						/>
+					</div>
+
+					<div class="form-group col-md-5 col-sm-12">
+
 						<!-- <label for="cityId">City:&nbsp;</label> -->
 						<input
 							type="text"
@@ -96,28 +127,32 @@
 							autofocus
 						/>
 					</div>
+
+					<div class="form-group col-md-5 col-sm-12">
+						<!-- <label for="cityId">City:&nbsp;</label> -->
+						<p>ENTER RANGE</p>
+
+					</div>
+
 					<div class="form-group col-md-5 col-sm-12">
 						<!-- <label for="addressId">Address:&nbsp;</label> -->
-						<input
-							type="text"
-							class="form-control"
-							placeholder="Enter address"
-							id="addressId"
-						/>
+
+							<div id="js-slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="slider-range-inverse" style="width: 51%;"></div><div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="width: 49%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 49%;"><span class="dot"><span class="handle-track" style="width: 1000px; left: -490px;"></span></span></span></span></div>
+							<span id="rangeValue">1 km</span>
+
+						<input type="hidden" id="myRange" value="1">
+
 					</div>
-					
+
+
 
 					<div class="form-group col-md-2 col-sm-12">
-						<input type="submit" class="btn btn-info" value="Submit" onclick="getLocation('cityId', 'addressId', 'places', 'myRange')">
+						<input type="submit" class="btn btn-info" value="SHOW" onclick="getLocation('cityId', 'addressId', 'places', 'myRange')">
 					</div>
 					
 			</div>
 
-			<div id="slider-container">
-				<div id="js-slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="slider-range-inverse" style="width: 51%;"></div><div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="width: 49%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 49%;"><span class="dot"><span class="handle-track" style="width: 1000px; left: -490px;"></span></span></span></span></div>
-				<span id="rangeValue">1 km</span>
-			</div>
-			<input type="hidden" id="myRange" value="1">
+
 
 
 			<!--<input type="range" id="myRange" value="1" max="100">
@@ -146,22 +181,16 @@
 								/>
 							<?php } ?>
 							<div class="card-body text-center" style="background-color: #003151">
-								<img src="<?php echo 'assets/home/images/tiqslogowhite.png' ?>" style="margin-left:190px; margin-top: -350px; height: 50px; width: auto"/>
+								<img src="<?php echo 'assets/home/images/tiqslogowhite.png' ?>" style="margin-left:-50%; margin-top: -350px; height: 50px; width: auto"/>
 								<p class="pb-2 font-weight-bold"
 								   style="font-size: 24px;color: antiquewhite"><?php echo $directory['username']; ?></p>
 								<p class="pb-2 font-weight-bold distance"
 								   style="font-size: 24px;color: antiquewhite"></p>
 								<span style="color: antiquewhite"><?php echo $directory['address']; ?></span>
 								<div class="social-links align-items-center pt-3">
-									<a class="contact-link" target="_blank"
+									<a class="contact-link" target="_blank; color: white; --text-color: white"
 									   <?php if ($directory['email']) { ?>href="<?php echo "https://tiqs.com/alfred/make_order?vendorid=".$directory['id']; ?>"<?php } ?> >
-										<i class="fa fa-link fa-lg" style="color: antiquewhite"></i></a>
-									<a class="contact-link"
-									   <?php if ($directory['email']) { ?>href="mailto:<?php echo $directory['email']; ?>"<?php } ?>>
-										<i class="fa fa-envelope fa-lg" style="color: antiquewhite"></i></a>
-									<a class="contact-link"
-									   <?php if ($directory['phone']) { ?>href="tel:<?php echo $directory['phone']; ?>"<?php } ?>>
-										<i class="fa fa-phone fa-lg" style="color: antiquewhite"></i></a>
+										<i class="fa fa-qrcode fa-lg" style="color: white; --text-color: white"></i> <?=$this->language->line("BIZDIR",'ORDER HERE');?></a>
 								</div>
 							</div>
 						</div>

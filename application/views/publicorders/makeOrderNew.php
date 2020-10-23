@@ -21,7 +21,7 @@
                 }              
             ?>
             <div>
-                <div class="col-12 col-md-8" id="categoryContainer" style="padding-left:0px; padding-right:0px">
+                <div class="col-12 col-md-8" id="categoryContainer" style="padding-left:0px; padding-right:0px" align="center">
                     <div class="items-slider" style="margin-left:0px; margin-right:0px">
                         <?php if ($vendor['showMenu'] === '1') { ?>
                             <div class="shop__items">

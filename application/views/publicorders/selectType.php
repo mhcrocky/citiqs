@@ -1,10 +1,12 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/bigsquare.css">
 <div class="main-wrapper-nh" style="text-align:center">
-	<div class="col-half background-apricot-blue height">
+	<div class="col-half background-apricot-blue height-100">
 		<div class="width-650"></div>
-            <div class="form-group has-feedback" style="margin-top: 0px">
-                <img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="350" height="" />
+		<?php if (empty($_SESSION['iframe'])) { ?>
+            <div class="form-group has-feedback" style="margin-top: -30px">
+                <img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="250" height="auto" />
             </div><!-- /.login-logo -->
+		<?php } ?>
 		<h1 style="text-align:center"><?php echo $vendor['vendorName'] ?></h1>
 		<div class="selectWrapper mb-35">
 			<?php if (!empty($activeTypes)) { ?>
@@ -65,18 +67,18 @@
 			</div>
 		</div>
 
-		<div class="col-half background-blue height-100">
-			<div class="align-start">
-				</div>
-					<div style="text-align:center;">
-						<img src="<?php echo base_url(); ?>assets/home/images/alfredmenu.png" alt="tiqs" width="auto" height="110" />
-					</div>
-					<h1 style="text-align:center">QR-MENU</h1>
-					<div style="text-align:center; margin-top: 30px">
-						<p style="font-size: larger; margin-top: 50px; margin-left: 0px"><?=$this->language->line("HOMESTART-SPOT-X001111ABC",'BUILD BY TIQS');?></p>
-					</div>
-				</div>
-			</div>
-		</div><!-- end col half -->
+<!--		<div class="col-half background-blue height-100">-->
+<!--			<div class="align-start">-->
+<!--				</div>-->
+<!--					<div style="text-align:center;">-->
+<!--						<img src="--><?php //echo base_url(); ?><!--assets/home/images/alfredmenu.png" alt="tiqs" width="auto" height="110" />-->
+<!--					</div>-->
+<!--					<h1 style="text-align:center">QR-MENU</h1>-->
+<!--					<div style="text-align:center; margin-top: 30px">-->
+<!--						<p style="font-size: larger; margin-top: 50px; margin-left: 0px">--><?//=$this->language->line("HOMESTART-SPOT-X001111ABC",'BUILD BY TIQS');?><!--</p>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--		</div> end col half -->
 	</div>
 </div>

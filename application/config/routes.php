@@ -291,5 +291,35 @@ $route['success_reservation'] = 'Reservations/success';
 
 $route['vendors'] = 'Api/Vendors/data';
 
+$route['order/lines'] = 'Orderlines/index';
+$route['visma/export/(:num)'] = 'Api/Visma/export_single_invoice/$1';
+$route['visma'] = 'Api/Visma/index';
+$route['visma/login'] = 'Api/Visma/login';
+$route['visma/config'] = 'Accounting/VismaSetting/index';
+$route['config_visma/app_settings'] = 'Accounting/VismaSetting/app_setting';
+
+$route['setting/visma/vat'] = 'Accounting/VismaAccountSetting/vat_rates';
+$route['setting/visma/vat/(:num)'] = 'Accounting/VismaAccountSetting/vat_rates_edit/$1';
+$route['setting/visma_vatrate/save'] = 'Accounting/VismaAccountSetting/save_visma_vat';
+$route['setting/visma_vatrate/update'] = 'Accounting/VismaAccountSetting/update_visma_vat';
+$route['setting/visma/vat_delete/(:num)'] = 'Accounting/VismaAccountSetting/delete_visma_vat/$1';
+
+$route['setting/visma/debitors'] = 'Accounting/VismaAccountSetting/debitors';
+$route['setting/visma/debitors/(:num)'] = 'Accounting/VismaAccountSetting/debitors_edit/$1';
+$route['setting/visma_debitor/save'] = 'Accounting/VismaAccountSetting/save_debitor';
+$route['setting/visma_debitor/update'] = 'Accounting/VismaAccountSetting/update_debitor';
+$route['setting/visma/debit_delete/(:num)'] = 'Accounting/VismaAccountSetting/delete_debitor/$1';
+
+
+$route['setting/visma/creditors'] = 'Accounting/VismaAccountSetting/creditors';
+$route['setting/visma/creditors/(:num)'] = 'Accounting/VismaAccountSetting/creditors_edit/$1';
+$route['setting/visma_credit/save'] = 'Accounting/VismaAccountSetting/save_credit';
+$route['setting/visma_credit/update'] = 'Accounting/VismaAccountSetting/update_credit';
+$route['setting/visma/credit_delete/(:num)'] = 'Accounting/VismaAccountSetting/delete_credit/$1';
+
+$route['marketing/selection'] = 'marketing/Selection';
+$route['marketing/selection/allbuyers'] = 'marketing/Selection/allbuyers';
+$route['marketing/selection/sendmessage'] = 'marketing/Selection/sendMessage';
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

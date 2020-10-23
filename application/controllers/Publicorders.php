@@ -37,6 +37,8 @@
             $this->load->config('custom');
 
             $this->load->library('language', array('controller' => $this->router->class));
+
+
             $this->load->library('session');
         }
 
