@@ -15,7 +15,6 @@ class Selection extends BaseControllerWeb {
     }
     public function index() {
         $this->global['pageTitle'] = 'TIQS BUYERS';
-        //var_dump($this->Selection_model->get_buyers(1162));
         $this->loadViews("marketing/selection", $this->global, '', 'footerpublicbizdir', 'noheaderbizdir');
     }
 
@@ -33,7 +32,6 @@ class Selection extends BaseControllerWeb {
             $this->load->library('Notification');
             $notification = new Notification;
             $notification->sendMessage($buyerOneSignalId,$message);
-            echo 'success';
         }
 
     }
@@ -51,9 +49,4 @@ class Selection extends BaseControllerWeb {
         echo json_encode($buyers);
     }
 
-    public function test() {
-        $this->global['pageTitle'] = 'TIQS BUYERS';
-        //var_dump($this->Selection_model->get_buyers(1162));
-        $this->loadViews("marketing/test", $this->global, '', 'footerpublicbizdir', 'noheaderbizdir');
-    }
 }
