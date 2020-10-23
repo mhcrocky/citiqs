@@ -315,5 +315,9 @@ $route['setting/visma_credit/save'] = 'Accounting/VismaAccountSetting/save_credi
 $route['setting/visma_credit/update'] = 'Accounting/VismaAccountSetting/update_credit';
 $route['setting/visma/credit_delete/(:num)'] = 'Accounting/VismaAccountSetting/delete_credit/$1';
 
+$route['marketing/selection'] = 'marketing/Selection';
+$route['marketing/selection/allbuyers'] = 'marketing/Selection/allbuyers';
+$route['marketing/selection/sendmessage'] = 'marketing/Selection/sendMessage';
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
