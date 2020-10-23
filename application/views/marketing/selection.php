@@ -83,7 +83,7 @@
     responsive: true,
     ajax: {
             type: 'get',
-            url: '<?= base_url("marketing/selection/allbuyers"); ?>',
+            url: '<?php echo base_url("marketing/selection/allbuyers"); ?>',
             dataSrc: '',
         },
         columns: [{
@@ -146,22 +146,24 @@
    
    // Handle form submission event 
    $('#sendMessage').on('click', function(){
-      var form = this;
-      
       var rows_selected = table.column(0).checkboxes.selected();
-
       // Iterate over all selected checkboxes
-      var buyers = [];
       $.each(rows_selected, function(index, rowId){
          // Create a hidden element ;
          var buyerId = rowId;
          var buyerMobile = $('#mobile-'+rowId).val();
          var buyerOneSignalId = $('#onesignal-'+rowId).val();
          var message = $('textarea#message-text').val();
-        $.post('<?= base_url("marketing/selection/sendMessage"); ?>',{buyerId:buyerId,buyerMobile:buyerMobile,buyerOneSignalId:buyerOneSignalId,message:message},function(data){
-             console.log(data);
-             $("#closeModal").click();
-        });
+         $.ajax({
+           type: "post",
+           url: "<?php echo base_url('Marketing/Selection/sendMessage'); ?>",
+           data: {buyerId:buyerId,buyerMobile:buyerMobile,buyerOneSignalId:buyerOneSignalId,message:message},
+           success: function(data){
+            $("#closeModal").click();
+             //console.log(data);
+           }
+         });
+        
          
       });
        
@@ -173,12 +175,16 @@
      var buyerMobile = $('#mobile-'+buyerId).val();
      var buyerOneSignalId = $('#onesignal-'+buyerId).val();
      var message = $('textarea#usermessage-text').val();
-     $.post('<?= base_url("marketing/selection/sendMessage"); ?>',{buyerId:buyerId,buyerMobile:buyerMobile,buyerOneSignalId:buyerOneSignalId,message:message},function(data){
-       console.log(data);
-       $("#closeUserModal").click();
+     $.ajax({
+       type: "post",
+       url: "<?php echo base_url('Marketing/Selection/sendMessage'); ?>",
+       data: {buyerId:buyerId,buyerMobile:buyerMobile,buyerOneSignalId:buyerOneSignalId,message:message},
+       success: function(data){
+         $("#closeModal").click();
+         //console.log(data);
+       }
      });
-
-       
+      
    }); 
 
 
