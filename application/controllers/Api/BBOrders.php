@@ -43,7 +43,7 @@
 
 
             //Check FDM Status 
-            $FDMStatusByMac=$this->FOD_FDM_Model->getFDMstatusByMac($macNumber);
+            $FDMStatusByMac=$this->FOD_FDM_Model->getFDMstatusByMac($get['mac']);
         	if(!empty($FDMStatusByMac) && $FDMStatusByMac->FDM_active==0){
         		return "";
         	}
