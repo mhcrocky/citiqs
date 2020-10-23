@@ -26,7 +26,7 @@
 		<?php } ?>
 	</div>
 	<div class="checkout-btns">
-	<a href="<?php echo base_url() . 'make_order?vendorid=' . $order['vendorId'] . 'spotid=' . $order['spotId']; ?>" style="background-color: #948b6f" class="button">
+	<a href="<?php echo base_url() . 'make_order?vendorid=' . $order['vendorId'] . '&spotid=' . $order['spotId']; ?>" style="background-color: #948b6f" class="button">
 		order again<i class="fa fa-arrow-right"></i>
 	</a>
 	</div>
