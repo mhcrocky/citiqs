@@ -215,7 +215,7 @@ class Alfredinsertorder extends BaseControllerWeb
         Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder', 'user', 'orderExtended', 'order']);
 
         $orderId = $this->insertOrderProcess($orderData, $payStatus, $payType, $orderRandomKey);
-        if ($orderData['vendorId'] === 1162 || $_SESSION['vendor']['vendorId'] === 5655) {
+        if ($orderData['vendorId'] === 1162 || $orderData['vendorId'] === 5655) {
             $redirect = base_url() . 'successth';
         } else {
             $redirect = base_url() . 'success?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey . '&orderid=' . $orderId;

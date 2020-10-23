@@ -55,7 +55,7 @@
                                                     <p><?php echo number_format(($amount + $serviceFee), 2, ',', '.'); ?> &euro;</p>
                                                     <?php if ($waiterTip) { ?>
                                                         <p><?php echo number_format($waiterTip, 2, ',', '.'); ?> &euro;</p>
-                                                        <p><?php echo number_format(($amount + $serviceFee + $totalWithTip), 2, ',', '.'); ?> &euro;</p>
+                                                        <p><?php echo number_format(($amount + $serviceFee + $waiterTip), 2, ',', '.'); ?> &euro;</p>
                                                     <?php } ?>
                                                     <p class="voucher" style="display:none"><span id="voucherAmount"></span> &euro;</p>
                                                     <p class="voucher" style="display:none"><span id="leftAmount"></span> &euro;</p>
