@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class FOD_FDM_Model extends CI_Model {
+class Fodfdm_model extends CI_Model {
 
 	function getlastRecieptCount($vendorId){
 		$this->db->where('vendorId',$vendorId);
