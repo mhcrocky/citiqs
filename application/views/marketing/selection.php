@@ -5,7 +5,7 @@
 <div class="container">
 
 
-<table id="buyers" class="display" cellspacing="0" width="100%">
+<table id="buyers" class="display table-responsive" cellspacing="0" width="100%">
 
 </table>
 
@@ -162,6 +162,7 @@
            success: function(data){
             $("#closeModal").click();
              console.log(data);
+             $('textarea#message-text').val('');
            }
          });
       });
@@ -178,8 +179,9 @@
        url: "<?php echo base_url('Marketing/Selection/sendMessage/'); ?>",
        data: {buyerId:buyerId,buyerMobile:buyerMobile,buyerOneSignalId:buyerOneSignalId,message:message},
        success: function(data){
-         $("#closeModal").click();
+         $("#closeUserModal").click();
          console.log(data);
+         $('textarea#usermessage-text').val('');
        }
      });
    });
