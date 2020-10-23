@@ -229,6 +229,12 @@ var callThis = (function() {
                 callFunction(...functionArg);
             }            
         },
+        submitForm: function(callFunction) {
+            callFunction(this);
+        },
+        submitBuyerDetails: function(callFunction) {
+            callFunction(this);
+        },
     };
     return methods;
 })();

@@ -35,4 +35,16 @@
         {
             return JWT::encode($jwtArray, JWT_KEY);
         }
+
+        public static function checkJwtArray(array $jwtArray, array $keys): void
+        {
+            foreach ($keys as $key) {
+                if (empty($jwtArray[$key])) {
+                    $redirect = empty($jwtArray['vendorId']) ? base_url() : 'make_order?vendorid=' . $jwtArray['vendorId'];
+                    redirect($redirect);
+                    exit();
+                }
+            }
+            return;
+        }
     }

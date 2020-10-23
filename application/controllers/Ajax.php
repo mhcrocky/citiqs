@@ -26,6 +26,7 @@ class Ajax extends CI_Controller
         $this->load->model('shopproductex_model');
         $this->load->model('shopvendor_model');
         $this->load->model('shopvoucher_model');
+        $this->load->model('shopsession_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -648,41 +649,61 @@ class Ajax extends CI_Controller
     public function setOrderSession(): void
     {
         if (!$this->input->is_ajax_request()) return;
-        $post = $this->input->post(null, true);
+
+        $post = Utility_helper::sanitizePost();
 
         if (!empty($post['data'])) {
-            $_SESSION['order'] = [];
-            $string = 'qwertzuioplkjhgfdsamnbvcxy';
-            $count = 0;
-            foreach($post['data'] as $data) {
-                $count++;
-                $shuffled = strval($count) . '_' . str_shuffle($string);
-                $_SESSION['order'][$shuffled] = $data;
+            $this->prepareOrderData($post);
+            $orderDataRandomKey = trim(Utility_helper::getAndUnsetValue($post, 'orderDataRandomKey'));
+            if ($orderDataRandomKey) {
+                $this
+                    ->shopsession_model
+                        ->setProperty('randomKey', $orderDataRandomKey)
+                        ->updateSessionData($post);
+            } else {
+                $this->shopsession_model->insertSessionData($post);
             }
         }
 
-        echo !empty($_SESSION['order']) ? '1' : '0';
+        echo ($this->shopsession_model->id && $this->shopsession_model->randomKey) ? $this->shopsession_model->randomKey : '0';
         return;
+    }
+
+    private function prepareOrderData(array &$post): void
+    {
+        $post['makeOrder'] = [];
+        $string = 'qwertzuioplkjhgfdsamnbvcxy';
+        $count = 0;
+        foreach($post['data'] as $data) {
+            $count++;
+            $shuffled = strval($count) . '_' . str_shuffle($string);
+            $post['makeOrder'][$shuffled] = $data;
+        }
+        unset($post['data']);
     }
 
     public function unsetSessionOrderElement(): void
     {
         if (!$this->input->is_ajax_request()) return;
 
-        $post = $this->input->post(null, true);
-        $indexId = $post['orderSessionIndex'];
+        $post = Utility_helper::sanitizePost();
+        $orderSessionIndex = Utility_helper::getAndUnsetValue($post, 'orderSessionIndex');
+        $orderRandomKey = Utility_helper::getAndUnsetValue($post, 'orderRandomKey');
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
 
         if (!empty($post['addonExtendedId']) && !empty($post['productExtendedId'])) {
-            $addonextenedId = $post['addonExtendedId'];
-            $productExtendedId = $post['productExtendedId'];
-            unset($_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]);
-            echo '1';
+            $addonExtendedId = Utility_helper::getAndUnsetValue($post, 'addonExtendedId');
+            $productExtendedId = Utility_helper::getAndUnsetValue($post, 'productExtendedId');
+            unset($orderData['makeOrder'][$orderSessionIndex][$productExtendedId]['addons'][$addonExtendedId]);
+            $this->shopsession_model->updateSessionData($orderData);
+            echo ($this->shopsession_model->id && $this->shopsession_model->randomKey) ? '1' : '0';
             return;
         }
 
-        if (!empty($_SESSION['order'][$indexId])) {
-            unset($_SESSION['order'][$indexId]);
-            echo '1';
+        if (!empty($orderData['makeOrder'][$orderSessionIndex])) {
+            unset($orderData['makeOrder'][$orderSessionIndex]);
+            $this->shopsession_model->updateSessionData($orderData);
+            echo ($this->shopsession_model->id && $this->shopsession_model->randomKey) ? '1' : '0';
             return;
         }
 
@@ -694,29 +715,29 @@ class Ajax extends CI_Controller
     {
         if (!$this->input->is_ajax_request()) return;
 
-        $post = $this->input->post(null, true);
-
-        $indexId = $post['orderSessionIndex'];
-        $addonextenedId = $post['addonExtendedId'];
-        $productExtendedId = $post['productExtendedId'];
-        unset($post['orderSessionIndex']);
-        unset($post['addonExtendedId']);
-        unset($post['productExtendedId']);
+        $post = Utility_helper::sanitizePost();
+        $indexId = Utility_helper::getAndUnsetValue($post, 'orderSessionIndex');
+        $addonExtendedId = Utility_helper::getAndUnsetValue($post, 'addonExtendedId');
+        $productExtendedId = Utility_helper::getAndUnsetValue($post, 'productExtendedId');
+        $orderRandomKey = Utility_helper::getAndUnsetValue($post, 'orderRandomKey');
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
 
         foreach($post as $key => $value) {
-            $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId][$key] = $value;
+            $orderData['makeOrder'][$indexId][$productExtendedId]['addons'][$addonExtendedId][$key] = $value;
         }
 
         // UPDATE ONLY IF MAIN PRODUCT IS CHANGED
         if (isset($post['mainProductQuantity']) && intval($post['mainProductQuantity'])) {
             $newStep = intval($post['mainProductQuantity']);
-            $newMinQuantity = $newStep * $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['initialMinQuantity'];
-            $newMaxQuantity = $newStep * $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['initialMaxQuantity'];
-            $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['step'] = $newStep;
-            $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['minQuantity'] = $newMinQuantity;
-            $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['maxQuantity'] = $newMaxQuantity;
+            $newMinQuantity = $newStep * $orderData['makeOrder'][$indexId][$productExtendedId]['addons'][$addonExtendedId]['initialMin'];
+            $newMaxQuantity = $newStep * $orderData['makeOrder'][$indexId][$productExtendedId]['addons'][$addonExtendedId]['initialMax'];
+
+            $orderData['makeOrder'][$indexId][$productExtendedId]['addons'][$addonExtendedId]['step'] = $newStep;
+            $orderData['makeOrder'][$indexId][$productExtendedId]['addons'][$addonExtendedId]['minQuantity'] = $newMinQuantity;
+            $orderData['makeOrder'][$indexId][$productExtendedId]['addons'][$addonExtendedId]['maxQuantity'] = $newMaxQuantity;
         }
 
+        $this->shopsession_model->updateSessionData($orderData);
 
         return;
     }
@@ -725,18 +746,17 @@ class Ajax extends CI_Controller
     {
         if (!$this->input->is_ajax_request()) return;
         
-
-        $post = $this->input->post(null, true);
-        $indexId = $post['orderSessionIndex'];
-        $productExtendedId = $post['productExtendedId'];
-
-        unset($post['orderSessionIndex']);
-        unset($post['productExtendedId']);
+        $post = Utility_helper::sanitizePost();
+        $orderSessionIndex = Utility_helper::getAndUnsetValue($post, 'orderSessionIndex');
+        $productExtendedId = Utility_helper::getAndUnsetValue($post, 'productExtendedId');
+        $orderRandomKey = Utility_helper::getAndUnsetValue($post, 'orderRandomKey');
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
 
         foreach($post as $key => $value) {
-            $_SESSION['order'][$indexId][$productExtendedId][$key] = $value;
+            $orderData['makeOrder'][$orderSessionIndex][$productExtendedId][$key] = $value;
         }
 
+        $this->shopsession_model->updateSessionData($orderData);
         return;
     }
 
@@ -1193,5 +1213,203 @@ class Ajax extends CI_Controller
         ->set_status_header(200)
         ->set_output(json_encode($result));
         
+    }
+
+    public function submitForm(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = Utility_helper::sanitizePost();
+        $vendor = $this->shopvendor_model->setProperty('vendorId', $post['vendorId'])->getVendorData();
+        $spotTypeId = intval($post['spotTypeId']);
+        $orderRandomKey = $post['orderRandomKey'];
+
+        if (!$this->validateDeliveryLocation($post['user'], $spotTypeId)) {
+            $response = [
+                'status' => '0',
+                'message' => 'Order not made! Please insert delivery city, zipcode and/or address'
+            ];
+        } elseif (!$this->checkTermsAndConditions($vendor, $post['order'])) {
+            $response = [
+                'status' => '0',
+                'message' => 'Order not made! Please confirm that you read terms and conditions and privacy policy',
+            ];
+        } else {
+            $this->setDeliveryCookies($post['user']);
+            $this->checkWaiterTip($post);
+            if ($this->populateSessionOrderData($post, $orderRandomKey)) {
+                $response = [
+                    'status' => '1',
+                    'message' => $this->getRedirect($vendor, $spotTypeId, $orderRandomKey)
+                ];
+            } else {
+                $response = [
+                    'status' => '0',
+                    'message' => '(7345) Order not made! Please try again'
+                ];
+            }
+        }
+
+        echo json_encode($response);
+        return;
+    }
+
+    private function checkWaiterTip(array &$post): void
+    {
+        if (!isset($post['order']['waiterTip']) || floatval($post['order']['waiterTip']) < 0) {
+            $post['order']['waiterTip'] = 0;
+        }
+    }
+
+    private function setDeliveryCookies(array $user): void
+    {
+        if (!empty($user['city'])) {
+            set_cookie('city', $user['city'], (365 * 24 * 60 * 60));
+        }
+        if (!empty($user['zipcode'])) {
+            set_cookie('zipcode', $user['zipcode'], (365 * 24 * 60 * 60));
+        }
+        if (!empty($user['address'])) {
+            set_cookie('address', $user['address'], (365 * 24 * 60 * 60));
+        }
+    }
+
+    private function validateDeliveryLocation(array $user, int $spotTypeId): bool
+    {
+        if (
+            $spotTypeId === $this->config->item('deliveryType')
+            && ( empty($user['city']) || empty($user['zipcode']) || empty($user['address']) )
+        ) {
+                return false;
+        }
+        return true;
+    }
+
+    private function checkTermsAndConditions(array $vendor, array $order): bool
+    {
+        if ( $vendor['termsAndConditions'] && $vendor['showTermsAndPrivacy'] === '1'
+            && (empty($order['termsAndConditions']) || empty($order['privacyPolicy']))
+        ) {
+            return false;
+        }
+        return true;
+    }
+
+    private function getRedirect(array $vendor, int $spotTypeId, string $orderRandomKey): string
+    {
+        if (
+            $vendor['requireEmail'] === '0'
+            && $vendor['requireName'] === '0'
+            && $vendor['requireMobile'] === '0'
+            && $spotTypeId === $this->config->item('local')
+        ) {
+            $redirect = 'pay_order?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
+        } else {
+            $redirect = 'buyer_details?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
+        };
+
+        return $redirect;
+    }
+
+    private function populateSessionOrderData(array $post, string $orderRandomKey): bool
+    {
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        $orderData['user'] = $post['user'];
+        $orderData['orderExtended'] = $post['orderExtended'];
+        $orderData['order'] = $post['order'];
+        $this->shopsession_model->updateSessionData($orderData);
+
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        return ($this->shopsession_model->id && $this->shopsession_model->randomKey) ? true : false;
+    }
+
+    public function submitBuyerDetails(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = Utility_helper::sanitizePost();
+        $vendor = $this->shopvendor_model->setProperty('vendorId', $post['vendorId'])->getVendorData();
+        $spotTypeId = intval($post['spotTypeId']);
+        $messages = $this->checkBuyerData($post, $vendor, $spotTypeId);
+
+        if (count($messages)) {
+            $response = [
+                'status' => '0',
+                'messages' => $messages,
+            ];
+        } else {
+            $orderRandomKey = $post['orderRandomKey'];
+            $user = $post['user'];           
+            if ($this->populateUserData($orderRandomKey, $user)) {
+                $this->setBuyerCookies($user);
+                $redirect = 'pay_order?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
+                $response = [
+                    'status' => '1',
+                    'message' => $redirect,
+                ];  
+            } else {
+                $response = [
+                    'status' => '0',
+                    'messages' => ['Order not made. Please try again'],
+                ];
+            }
+        }
+        echo json_encode($response);
+        return;
+    }
+
+    private function checkBuyerData(array &$post, array $vendor, int $spotTypeId): array
+    {
+        $messages = [];
+        // check mobile phone
+        if ($vendor['requireMobile'] === '1' || $spotTypeId !== $this->config->item('local')) {
+            if (Validate_data_helper::validateMobileNumber($post['user']['mobile'])) {
+                $post['user']['mobile'] = $post['phoneCountryCode'] . ltrim($post['user']['mobile'], '0');                
+            } else {
+                $message = 'Order not made! Mobile phone is required. Please try again';
+                array_push($messages, $message);
+            }
+        }
+
+        // check emai
+        if ($vendor['requireEmail'] === '1' || $spotTypeId !== $this->config->item('local')) {
+            if (!Validate_data_helper::validateEmail($post['user']['email'])) {
+                $message = 'Order not made! Email is required. Please try again';
+                array_push($messages, $message);
+            }
+        }
+
+        // check name
+        if ($vendor['requireName'] === '1' ) {
+            if (!Validate_data_helper::validateString($post['user']['username'])) {
+                $message = 'Order not made! Username is required. Please try again';
+                array_push($messages, $message);
+            }
+        }
+
+        return $messages;
+    }
+
+    private function setBuyerCookies(array $post): void
+    {
+        if (!empty($user['username'])) {
+            set_cookie('userName', $user['username'], (365 * 24 * 60 * 60));
+        }
+        if (!empty($user['email'])) {
+            set_cookie('email', $user['email'], (365 * 24 * 60 * 60));
+        }
+        if (!empty($user['mobile'])) {
+            set_cookie('mobile', $user['mobile'], (365 * 24 * 60 * 60));
+        }
+    }
+
+    private function populateUserData(string $orderRandomKey, array $user): bool
+    {
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        foreach ($user as $key => $value) {
+            $orderData['user'][$key] = $value;
+        }
+        $this->shopsession_model->updateSessionData($orderData);
+        return ($this->shopsession_model->id && $this->shopsession_model->randomKey) ? true : false;
     }
 }

@@ -394,7 +394,10 @@ function checkout() {
     }
 
     let send = {
-        'data' : post
+        'data' : post,
+        'vendorId' : makeOrderGlobals.vendorId,
+        'spotId' : makeOrderGlobals.spotId,
+        'orderDataRandomKey' : makeOrderGlobals.orderDataRandomKey,
     }
 
     $.ajax({
@@ -402,8 +405,8 @@ function checkout() {
         data: send,
         type: 'POST',
         success: function (response) {
-            if (response === '1') {
-                window.location.href = globalVariables.baseUrl + 'checkout_order';
+            if (response && response !== '0') {
+                window.location.href = globalVariables.baseUrl + 'checkout_order?' + makeOrderGlobals.orderDataGetKey + '=' + response;
             }
         },
         error: function (err) {
@@ -535,5 +538,9 @@ $(document).ready(function(){
     resetTotal();
     if (makeOrderGlobals.categorySlide) {
         goToSlide(parseInt(makeOrderGlobals.categorySlide));
+    }
+    if (inIframe()) {
+        console.dir(makeOrderGlobals.logoImageId);
+        document.getElementById(makeOrderGlobals.logoImageId).style.display = 'none';
     }
 });

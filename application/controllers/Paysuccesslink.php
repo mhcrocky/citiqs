@@ -3,6 +3,8 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 require APPPATH . '/libraries/BaseControllerWeb.php';
 
+
+
 class  Paysuccesslink extends BaseControllerWeb
 {
     /**
@@ -11,6 +13,7 @@ class  Paysuccesslink extends BaseControllerWeb
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('shoporder_model');
         $this->load->helper('url');
         $this->load->helper('utility_helper');
         $this->load->config('custom');
@@ -19,43 +22,21 @@ class  Paysuccesslink extends BaseControllerWeb
 
     public function index()
     {
-        $this->global['pageTitle'] = 'TIQS : SUCCESS';
-        $baseUrl = base_url();
+        $get = Utility_helper::sanitizeGet();
+        $orderId = $get['orderid'];
+        $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
+        $order = reset($order);
 
-        if (!isset($_SESSION['redirect'])) {
-            $_SESSION['redirect'] = $baseUrl . 'make_order?vendorid=' . $_SESSION['orderVendorId'] . '&spotid=' . $_SESSION['spot']['spotId'];
-        }
-
-        if (isset($_SESSION['iframe'])) {
-            unset($_SESSION['iframe']);
-            $_SESSION['iframeRedirect'] = $baseUrl . 'make_order?vendorid=' . $_SESSION['orderVendorId'];
-        }
-
-        if (
-            empty($_SESSION['orderId'])
-            || empty($_SESSION['postOrder'])
-            || empty($_SESSION['spot'])
-            || empty($_SESSION['orderStatusCode'])
-        ) {
-            $this->goBack();
+        if ($order['orderRandomKey'] !== $get[$this->config->item('orderDataGetKey')]) {
+            redirect(base_url());
         }
 
         $data = [
-        	'odredId' => $_SESSION['orderId'],
-            'amount' => floatval($_SESSION['postOrder']['order']['amount']),
-            'waiterTip' => floatval($_SESSION['postOrder']['order']['waiterTip']),
-            'spotName' => $_SESSION['spot']['spotName'],
-            'orderStatusCode' => $_SESSION['orderStatusCode'],
-            'successCode' => $this->config->item('payNlSuccess'),
+            'order' => $order,
+            'paid' => $this->config->item('orderPaid'),
         ];
 
-        Utility_helper::unsetPaymentSession();
+        $this->global['pageTitle'] = 'TIQS : SUCCESS';
         $this->loadViews("paysuccesslink", $this->global, $data, 'nofooter', 'noheader');
-    }
-
-    public function goBack(): void
-    {
-        $redirect = Utility_helper::getSessionValue('redirect');
-        redirect($redirect);
     }
 }
