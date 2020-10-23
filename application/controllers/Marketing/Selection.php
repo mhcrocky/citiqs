@@ -23,7 +23,9 @@ class Selection extends BaseControllerWeb {
         $buyerMobile = $this->input->get('buyerMobile');
         $buyerOneSignalId = $this->input->get('buyerOneSignalId');
         $message = $this->input->get('message');
-        if($buyerOneSignalId == 'null'){
+        var_dump($buyerId);
+//        die('here we are 2');
+        if($buyerOneSignalId == ''){
             $this->load->library('Sms');
             $sms = new Sms;
             $sms->send($buyerMobile,$message);

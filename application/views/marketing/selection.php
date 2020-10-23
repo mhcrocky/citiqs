@@ -154,6 +154,7 @@
          var buyerMobile = $('#mobile-'+rowId).val();
          var buyerOneSignalId = $('#onesignal-'+rowId).val();
          var message = $('textarea#message-text').val();
+         alert('HERE 1');
          $.ajax({
            type: "get",
            url: "<?php echo base_url('Marketing/Selection/sendMessage/'); ?>",
@@ -163,18 +164,15 @@
              console.log(data);
            }
          });
-        
-         
       });
-       
-   }); 
-
+   });
 
    $('#sendUserMessage').on('click', function(){
      var buyerId = $('#buyerId').val();
      var buyerMobile = $('#mobile-'+buyerId).val();
      var buyerOneSignalId = $('#onesignal-'+buyerId).val();
      var message = $('textarea#usermessage-text').val();
+	   // alert('HERE 1');
      $.ajax({
        type: "get",
        url: "<?php echo base_url('Marketing/Selection/sendMessage/'); ?>",
@@ -184,10 +182,7 @@
          console.log(data);
        }
      });
-      
-   }); 
-
-
+   });
 
 });
 </script>

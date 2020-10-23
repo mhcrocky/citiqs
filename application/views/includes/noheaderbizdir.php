@@ -42,12 +42,16 @@
 		<script src="<?php echo $this->baseUrl; ?>assets/home/js/vanilla-picker.js"></script>
 		<script src="<?php echo $this->baseUrl; ?>assets/home/js/cookies.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+
 		<script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>
 		<script src="<?php echo $this->baseUrl; ?>assets/home/js/scriptonboard.js"></script>
 
 		<!-- <script src="<?php #echo $this->baseUrl; ?>assets/home/js/luxon.js"></script> -->
 		<script src="<?php echo $this->baseUrl; ?>assets/cdn/js/alertify.min.js"></script>
 		<script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>
+
+
 		<style>
 			.bd-placeholder-img {
 				font-size: 1.125rem;
