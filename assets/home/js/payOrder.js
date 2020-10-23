@@ -41,14 +41,6 @@ function voucherResponse(data) {
     redirect(data['redirect']);
 }
 
-function inIframe () {
-    try {
-        return window.self !== window.top;
-    } catch (e) {
-        return false;
-    }
-}
-
 function addTargetBlank() {
     let a = document.getElementsByClassName('addTargetBlank');
     let aLength = a.length;

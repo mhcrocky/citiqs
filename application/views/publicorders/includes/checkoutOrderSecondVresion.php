@@ -50,8 +50,12 @@
                                     <p style="margin: 5% 0px 0px 35%;">
                                         <span
                                             class="fa-stack makeOrder makeOrder-edit"
-                                            onclick="redirectToMakeOrder('<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spotId .'&category=' . $product['categorySlide'];?>')"
-                                            redirect();
+                                            <?php
+                                                $editRedirect  = base_url() . 'make_order?vendorid=' . $vendor['vendorId'];
+                                                $editRedirect .= '&spotid=' . $spotId .'&category=' . $product['categorySlide'];
+                                                $editRedirect .= '&' . $orderDataGetKey .'=' . $orderRandomKey;
+                                            ?>
+                                            onclick="redirectToMakeOrder('<?php echo $editRedirect; ?>')"
                                         >
                                             <i class="fa fa-edit"></i>
                                         </span>
