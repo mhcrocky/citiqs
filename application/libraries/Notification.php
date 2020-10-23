@@ -6,21 +6,21 @@ use SpryngApiHttpPhp\Exception\InvalidRequestException;
 
 class Notification
 {
-	function sendMessage(){
+	function sendMessage($oneSignalId,$message){
 		$content = array(
-			"en" => 'English Message'
+			"en" => $message
 		);
 
 		$fields = array(
-			'app_id' => "6d22c65f-7e13-45b8-b5ce-5ef190468fea",
-			'include_player_ids' => array("eb371598-42b5-4ec8-bfbe-ecaceb605c66"),
+			'app_id' => "147142ad-b9e5-42a0-9de4-0c99ab72093d",
+			'include_player_ids' => array($oneSignalId),
 			'data' => array("foo" => "bar"),
 			'contents' => $content
 		);
 
 		$fields = json_encode($fields);
 		print("\nJSON sent:\n");
-		print($fields);
+		print($fields); 
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");

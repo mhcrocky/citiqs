@@ -34,6 +34,7 @@
         public $waiterTip;
         public $confirm;
         public $old_order;
+        public $orderRandomKey;
 
         private $table = 'tbl_shop_orders';
 
@@ -96,6 +97,7 @@
             if (isset($data['waiterTip']) && !Validate_data_helper::validateFloat($data['waiterTip'])) return false;
             if (isset($data['confirm']) && !($data['confirm'] === '0' || $data['confirm'] === '1' || $data['confirm'] === '2')) return false;
             if (isset($data['old_order']) && !Validate_data_helper::validateInteger($data['old_order'])) return false;
+            if (isset($data['orderRandomKey']) && !Validate_data_helper::validateString($data['orderRandomKey'])) return false;            
 
             return true;
         }
@@ -108,14 +110,16 @@
                     $this->table . '.amount AS orderAmount',
                     $this->table . '.paid AS orderPaidStatus',
                     $this->table . '.serviceFee AS serviceFee',
-                    $this->table . '.voucherAmount',
-                    $this->table . '.waiterTip',
+                    $this->table . '.voucherAmount AS voucherAmount',
+                    $this->table . '.waiterTip AS waiterTip',
+                    $this->table . '.paid AS orderPaidStatus',
+                    $this->table . '.orderRandomKey',
                     'buyer.id AS buyerId',
                     'buyer.email AS buyerEmail',
                     'buyer.username AS buyerUserName',
-                    // 'vendor.id AS vendorId',
-                    // 'vendor.email AS vendorEmail',
-                    // 'vendor.username AS vendorUserName',
+                    'vendor.id AS vendorId',
+                    'vendor.email AS vendorEmail',
+                    'vendor.username AS vendorUserName',
                     'tbl_shop_spots.id AS spotId',
                     'tbl_shop_spots.spotName AS spotName'
                 ],
@@ -127,11 +131,11 @@
                     ['tbl_shop_products_extended', 'tbl_shop_order_extended.productsExtendedId  = tbl_shop_products_extended.id', 'INNER'],
                     ['tbl_shop_products', 'tbl_shop_products_extended.productId  = tbl_shop_products.id', 'INNER'],
                     ['tbl_shop_categories', 'tbl_shop_products.categoryId  = tbl_shop_categories.id', 'INNER'],
-                    // [
-                    //     '(SELECT * FROM tbl_user WHERE roleid = '. $this->config->item('owner') .') vendor',
-                    //     'vendor.id  = tbl_shop_categories.userId',
-                    //     'INNER'
-                    // ],
+                    [
+                        '(SELECT * FROM tbl_user WHERE roleid = '. $this->config->item('owner') .') vendor',
+                        'vendor.id  = tbl_shop_categories.userId',
+                        'INNER'
+                    ],
                     [
                         '(SELECT * FROM tbl_user WHERE roleid = ' . $this->config->item('buyer') . ' OR roleid = ' . $this->config->item('owner') . ') buyer',
                         'buyer.id  = ' .  $this->table  . '.buyerId',

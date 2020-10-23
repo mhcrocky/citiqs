@@ -198,3 +198,7 @@ $config['defaultSalesAgentId'] = '1';
 $config['payNlSuccess'] = 100;
 
 $config['minMobileLength'] = 6;
+
+$config['orderDataGetKey'] = 'order';
+
+$config['buyershorturl'] = 'tiqs_shop_service';

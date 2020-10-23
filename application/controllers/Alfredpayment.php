@@ -14,6 +14,7 @@ class Alfredpayment extends BaseControllerWeb
         
         $this->load->model('shoporder_model');
         $this->load->model('shoporderpaynl_model');
+        $this->load->model('shopvendor_model');
 
         $this->load->helper('pay_helper');
         $this->load->helper('utility_helper');
@@ -31,21 +32,14 @@ class Alfredpayment extends BaseControllerWeb
     }
     
 
-    public function paymentEngine($paymentType, $paymentOptionSubId): void
+    public function paymentEngine($paymentType, $paymentOptionSubId, $orderId): void
     {
-        if (empty($_SESSION['orderId']) || empty($_SESSION['vendor'])) {
-            $redirect = empty($_SESSION['vendor']) ? base_url() : 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'];
-            redirect($redirect);
-            exit();
-        }
-        
-        $vendor = $_SESSION['vendor'];
-        $serviceId = $vendor['payNlServiceId'];
-        $orderId = $_SESSION['orderId'];
+        $orderId = intval($orderId);
         $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
         $order = reset($order);
-        $arguments = Pay_helper::getArgumentsArray($vendor['vendorId'], $order, $serviceId, $paymentType, $paymentOptionSubId);
-
+        $vendorId = intval($order['vendorId']);
+        $serviceId = $this->shopvendor_model->setProperty('vendorId', $vendorId)->getProperty('payNlServiceId');
+        $arguments = Pay_helper::getArgumentsArray($vendorId, $order, $serviceId, $paymentType, $paymentOptionSubId);
         $url = Pay_helper::getPayUrl($arguments);
         $result = @file_get_contents($url);
         $result = json_decode($result);
@@ -62,8 +56,6 @@ class Alfredpayment extends BaseControllerWeb
             redirect($result->transaction->paymentURL);
             exit();
         }
-
-        $_SESSION['orderStatusCode'] = 'err';
         redirect('success');        
         exit();
     }
@@ -94,20 +86,25 @@ class Alfredpayment extends BaseControllerWeb
 
     public function successPayment(): void
     {
-        $lastpageforvendorId = $_SESSION['vendor']['vendorId'];
-        $get = $this->input->get(null, true);
-        $_SESSION['orderStatusCode'] = intval($get['orderStatusId']);
+        $get = Utility_helper::sanitizeGet();
 
-        if ($_SESSION['orderStatusCode'] === $this->config->item('payNlSuccess')) {
-            $this->shoporderpaynl_model->setProperty('transactionId', $get['orderId'])->updatePayNl(['successPayment' => date('Y-m-d H:i:s')]);
+        $this->shoporderpaynl_model->setProperty('transactionId', $get['orderId'])->setAlfredOrderId();
+
+        $orderId = intval($this->shoporderpaynl_model->orderId);
+        $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
+        $order = reset($order);
+        $vendorId = intval($order['vendorId']);
+
+        if (intval($get['orderStatusId']) === $this->config->item('payNlSuccess')) {
+            $this->shoporderpaynl_model->updatePayNl(['successPayment' => date('Y-m-d H:i:s')]);
             $this->shoporder_model->updatePaidStatus($this->shoporderpaynl_model, ['paid' => $this->config->item('orderPaid')]);
         }
 
-        if ($lastpageforvendorId == 1162) {
+        if ($vendorId == 1162) {
             $redirect = 'successth';
             Utility_helper::unsetPaymentSession();
         } else {
-            $redirect = 'success';
+            $redirect = base_url() . 'success?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
         }
 
         redirect($redirect);

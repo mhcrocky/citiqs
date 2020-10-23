@@ -263,9 +263,11 @@ $route['buyer_details']             = 'publicorders/buyer_details';
 $route['pay_order']                 = 'publicorders/pay_order';
 $route['closed/(:num)']             = 'publicorders/closed/$1';
 $route['spot_closed/(:num)']        = 'publicorders/spotClosed/$1';
-$route['insertorder/(:num)/(:any)'] = 'publicorders/insertOrder/$1/$2';
-$route['cashPayment/(:num)/(:any)'] = 'publicorders/cashPayment/$1/$2';
-$route['voucherPayment/(:num)']     = 'publicorders/voucherPayment/$1';
+
+//INSERT ORDER
+$route['insertorder/(:num)/(:any)'] = 'alfredinsertorder/insertOrder/$1/$2';
+$route['cashPayment/(:num)/(:any)'] = 'alfredinsertorder/cashPayment/$1/$2';
+$route['voucherPayment/(:num)']     = 'alfredinsertorder/voucherPayment/$1';
 
 // API
 $route['api/orders/print/get']  = 'Api/Orders/data';
@@ -279,7 +281,7 @@ $route['api/onesignal/data']  = 'Api/OneSignal/data';
 
 
 // ALFRED PAYMENT ENGINE
-$route['paymentengine/(:num)/(:any)'] = 'Alfredpayment/paymentEngine/$1/$2';
+$route['paymentengine/(:num)/(:any)/(:num)'] = 'Alfredpayment/paymentEngine/$1/$2/$3';
 $route['successPayment'] = 'Alfredpayment/successPayment';
 $route['exchangePay'] = 'Alfredpayment/ExchangePay';
 
@@ -314,6 +316,10 @@ $route['setting/visma/creditors/(:num)'] = 'Accounting/VismaAccountSetting/credi
 $route['setting/visma_credit/save'] = 'Accounting/VismaAccountSetting/save_credit';
 $route['setting/visma_credit/update'] = 'Accounting/VismaAccountSetting/update_credit';
 $route['setting/visma/credit_delete/(:num)'] = 'Accounting/VismaAccountSetting/delete_credit/$1';
+
+$route['marketing/selection'] = 'marketing/Selection';
+$route['marketing/selection/allbuyers'] = 'marketing/Selection/allbuyers';
+$route['marketing/selection/sendmessage'] = 'marketing/Selection/sendMessage';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

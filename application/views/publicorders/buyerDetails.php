@@ -1,5 +1,8 @@
 <main class="container" style="text-align:left; margin-bottom:20px">
-    <form id="goBuyerDetailsr" method="post" action="<?php echo base_url() . 'publicorders/confirmBuyerData'; ?>">        
+    <form id="goBuyerDetails" method="post" onsubmit="return submitBuyerDetails()">
+        <input type="text" name="orderRandomKey" value="<?php echo $orderRandomKey; ?>" redonly hidden requried />
+        <input type="text" name="vendorId" value="<?php echo $vendor['vendorId']; ?>" redonly hidden requried />
+        <input type="text" name="spotTypeId" value="<?php echo $spot['spotTypeId']; ?>" redonly hidden requried />
         <div class="row d-flex justify-content-center" id="checkout">
             <div class="col-sm-12 col-lg-9 left-side">
                 <div class="checkout-title">
@@ -9,7 +12,15 @@
                     <?php if ($vendor['requireName'] === '1') { ?>
                         <div class="form-group col-sm-6">
                             <label for="firstNameInput">Name (<sup>*</sup>)</label>
-                            <input id="firstNameInput" class="form-control" name="user[username]" value="<?php echo $username; ?>" type="text" placeholder="Name" required />
+                            <input
+                                id="firstNameInput"
+                                class="form-control"
+                                name="user[username]"
+                                value="<?php echo $username; ?>"
+                                type="text" placeholder="Name"
+                                required
+                                data-name="Name"
+                            />
                         </div>
                     <?php } ?>
                     <?php if ($vendor['requireEmail'] === '1' || intval($spot['spotTypeId']) !== $local) { ?>
@@ -24,6 +35,7 @@
                                 placeholder="Email address"
                                 required
                                 oninput="checkUserNewsLetter(this.id)"
+                                data-name="Email"
                             />
                         </div>
                     <?php } ?>
@@ -76,6 +88,7 @@
                                     type="text"
                                     placeholder="Phone"
                                     required
+                                    data-name="Mobile"
                                 />
                             </div>
                         </div>
@@ -95,10 +108,10 @@
                     <?php } ?>
                 </div>
                 <div class="checkout-btns">
-                    <a href="<?php echo base_url() . 'checkout_order'; ?>" style="background-color: #948b6f" class="button">
+                    <a href="<?php echo base_url() . 'checkout_order?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" style="background-color: #948b6f" class="button">
                         <i class="fa fa-arrow-left"></i>
                         Back to list                    </a>
-                    <a href="javascript:void(0);" style="background-color: #349171" class="button" onclick="submitBuyerDetails('goBuyerDetailsr', 'emailAddressInput', 'firstNameInput', 'phoneInput');">
+                    <a href="javascript:void(0);" style="background-color: #349171" class="button" onclick="submitBuyerDetails();">
                         Pay
                         <i class="fa fa-arrow-right"></i>
                     </a>
@@ -110,7 +123,11 @@
 <script>
     var buyerDetailsGlobals = (function(){
         let gloabls = {
-            'minMobileLength' : '<?php echo $minMobileLength; ?>'
+            'minMobileLength' : '<?php echo $minMobileLength; ?>',
+            'formId' : 'goBuyerDetails',
+            'emailId' : 'emailAddressInput',
+            'firstNameId' : 'firstNameInput', 
+            'phoneId' : 'phoneInput'
         }
         Object.freeze(gloabls);
         return gloabls;

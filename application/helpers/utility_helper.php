@@ -17,6 +17,12 @@
             return substr(str_shuffle($set), 0, $range);
         }
 
+        public static function shuffleBigStringRandom(int $range): string
+        {
+            $set = '123456789abcdefghjkmnpqrstvwxy3456789abcdefghjkmnpqrstvwxyABCDEFGHJKMNPQRSTVWXY3456789abcdefghjkmnpqrstvstvwxy3456789abcdefghwxy123456789abcdefghjkmnpqrstvwxyABCDEFGHJKMNPQRSTVWXY';
+            return substr(str_shuffle($set), 0, $range);
+        }
+
         public static function changeClaimCheckoutView(string $businessTypeId): string
         {
             switch ($businessTypeId) {
@@ -241,27 +247,6 @@
             }
             ksort($reset);
             return $reset;
-        }
-
-
-        public static function unsetPaymentSession(): void
-        {
-            $CI =& get_instance();
-            $CI->load->config('custom');
-
-            if ($_SESSION['orderStatusCode'] === $CI->config->item('payNlSuccess')) {
-                unset($_SESSION['order']);
-                unset($_SESSION['orderVendorId']);
-            }
-
-            unset($_SESSION['orderId']);
-            unset($_SESSION['postOrder']);
-            unset($_SESSION['spotId']);
-            unset($_SESSION['vendor']);
-            unset($_SESSION['spot']);
-            unset($_SESSION['orderStatusCode']);
-
-            return;
         }
 
         public static function returnMakeNewOrderElements(?array $ordered, array $vendor, array $mainProducts, array $rawAddons): array
@@ -564,5 +549,22 @@
             $dist = rad2deg($dist);
             $miles = $dist * 60 * 1.1515;            
             return ($miles * 1.609344);
-          }
+        }
+
+        public static function sanitizeGet(): array
+        {
+            $CI =& get_instance();
+            $get = [];
+            foreach ($_GET as $key => $value) {
+                $get[$key] = $CI->input->get($key, true);
+            };
+            return $get;
+        }
+
+        public static function getAndUnsetValue(array &$array, string $key)
+        {
+            $value = $array[$key];
+            unset($array[$key]);
+            return $value;
+        }
     }
