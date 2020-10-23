@@ -155,12 +155,12 @@
          var buyerOneSignalId = $('#onesignal-'+rowId).val();
          var message = $('textarea#message-text').val();
          $.ajax({
-           type: "post",
-           url: "<?php echo base_url('Marketing/Selection/sendMessage'); ?>",
+           type: "get",
+           url: "<?php echo base_url('Marketing/Selection/sendMessage/'); ?>",
            data: {buyerId:buyerId,buyerMobile:buyerMobile,buyerOneSignalId:buyerOneSignalId,message:message},
            success: function(data){
             $("#closeModal").click();
-             //console.log(data);
+             console.log(data);
            }
          });
         
@@ -176,12 +176,12 @@
      var buyerOneSignalId = $('#onesignal-'+buyerId).val();
      var message = $('textarea#usermessage-text').val();
      $.ajax({
-       type: "post",
-       url: "<?php echo base_url('Marketing/Selection/sendMessage'); ?>",
+       type: "get",
+       url: "<?php echo base_url('Marketing/Selection/sendMessage/'); ?>",
        data: {buyerId:buyerId,buyerMobile:buyerMobile,buyerOneSignalId:buyerOneSignalId,message:message},
        success: function(data){
          $("#closeModal").click();
-         //console.log(data);
+         console.log(data);
        }
      });
       

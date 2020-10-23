@@ -19,10 +19,10 @@ class Selection extends BaseControllerWeb {
     }
 
     public function sendMessage() {
-        $buyerId = $this->input->post('buyerId');
-        $buyerMobile = $this->input->post('buyerMobile');
-        $buyerOneSignalId = $this->input->post('buyerOneSignalId');
-        $message = $this->input->post('message');
+        $buyerId = $this->input->get('buyerId');
+        $buyerMobile = $this->input->get('buyerMobile');
+        $buyerOneSignalId = $this->input->get('buyerOneSignalId');
+        $message = $this->input->get('message');
         if($buyerOneSignalId == 'null'){
             $this->load->library('Sms');
             $sms = new Sms;
