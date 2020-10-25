@@ -102,21 +102,21 @@ a:active {
 
 
 <main role="main" style="margin-bottom: -30px" align="center">
-	<section style="background-color:#F3D0B5; margin-top: 70px" align="center" >
-		<div style="background-color:#F3D0B5;" align="center">
+	<section style="background-color:#fbd19a; margin-top: 70px" align="center" >
+		<div style="background-color:#fbd19a;" align="center">
 <!--			<h1 style="font-family: campton-bold; margin-top: 30px;color:#27253b">--><?//=$this->language->Line("PLACES-A00002",'TIQS PICKUP & DELIVERY');?><!--</h1>-->
-			<h1 style="font-family: campton-bold; padding: 10px 30px; color:#ffffff">PICK UP & DELIVERY</h1>
+			<h1 style="font-family: caption-bold; padding: 10px 30px; color:#ffffff">PICK UP & DELIVERY</h1>
 <!--			<p style="font-family: campton-light;color: #27253b; margin-bottom: 0px">--><?//=$this->language->Line("PLACES-0020",'One stop shop to find everything at your favorite place');?><!--</p>-->
 
 			<div class="mb-35" align="center">
 						<img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslocation.png" alt="tiqs" width=250 height="auto" align="center" />
 			</div>
-			<div class="container" style="background-color: #F3D0B5; margin-top: 10px" align="center">
+			<div class="container" style="background-color: #fbd19a; margin-top: 10px" align="center">
 
 			<div  style="margin-bottom:20px" align="center" >
 
 				<div style="text-align: center" align="center">
-					<h3 style="font-family: campton-bold;text-align:center"><?=$this->language->Line("PLACES-0030",'Your location');?></h3>
+					<h3 style="color: #003152; font-family: caption-bold;text-align:center"><?=$this->language->Line("PLACES-A0030",'Order online near your location');?></h3>
 
 					<div class="form-group">
 
@@ -164,12 +164,12 @@ a:active {
 			</div>
 	</section>
 
-	<div class="album py-5" style="background-color: #F3D0B5">
+	<div class="album py-5" style="background-color: #fbd19a">
 
 				<?php foreach ($directories as $directory): ?>
 					<div
 						class="col-md-4 places"
-						style="background-color: #F3D0B5"
+						style="background-color: #fbd19a"
 						data-lat="<?php echo $directory['lat']; ?>"
 						data-lng="<?php echo $directory['lng']; ?>"
 						>
