@@ -1,7 +1,6 @@
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="assets/home/styles/main-style.css">
 <style>
-
-
 .ui-slider, .ui-slider .slider-range-inverse, .ui-slider .ui-slider-range {
   height: 14px;
   border-radius: 10px;
@@ -93,75 +92,84 @@ a:active {
 	color: white;
 }
 </style>
-<main role="main" style="margin-bottom: -30px">
-	<section class="jumbotron" style="background-color:#F3D0B5">
-		<div class="container" style="background-color:#F3D0B5; text-align:center ; margin-bottom: -30px" >
-			<h1 style="font-family: campton-bold; margin-top: 30px;color:#27253b">TIQS PICKUP & DELIVERY</h1>
-			<p style="font-family: campton-light;color: #27253b; margin-bottom: 0px">One stop destination to find everything at your favorite place</p>
-		</div>
-	</section>
 
-	<div class="album py-5" style="background-color: #F3D0B5">
-		<div class="container" style="background-color: #F3D0B5">
-			<div class="row" style="margin-bottom:20px">
-				<h3 class="col-md-12" style="font-family: campton-bold;text-align:left">Your location</h3>
+<style>
 
-					<div class="form-group col-md-5 col-sm-12">
+
+</style>
+
+
+
+
+<main role="main" style="margin-bottom: -30px" align="center">
+	<section style="background-color:#F3D0B5; margin-top: 70px" align="center" >
+		<div style="background-color:#F3D0B5;" align="center">
+<!--			<h1 style="font-family: campton-bold; margin-top: 30px;color:#27253b">--><?//=$this->language->Line("PLACES-A00002",'TIQS PICKUP & DELIVERY');?><!--</h1>-->
+			<h1 style="font-family: campton-bold; padding: 10px 30px; color:#ffffff">PICK UP & DELIVERY</h1>
+<!--			<p style="font-family: campton-light;color: #27253b; margin-bottom: 0px">--><?//=$this->language->Line("PLACES-0020",'One stop shop to find everything at your favorite place');?><!--</p>-->
+
+			<div class="mb-35" align="center">
+						<img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslocation.png" alt="tiqs" width=250 height="auto" align="center" />
+			</div>
+			<div class="container" style="background-color: #F3D0B5; margin-top: 10px" align="center">
+
+			<div  style="margin-bottom:20px" align="center" >
+
+				<div style="text-align: center" align="center">
+					<h3 style="font-family: campton-bold;text-align:center"><?=$this->language->Line("PLACES-0030",'Your location');?></h3>
+
+					<div class="form-group">
 
 						<input
 								type="text"
 								class="form-control"
-								placeholder="Enter address"
+								placeholder="<?=$this->language->Line("PLACES-0001",'ADDRESS');?>"
 								id="addressId"
 						/>
 					</div>
 
-					<div class="form-group col-md-5 col-sm-12">
+					<div class="form-group">
 
 						<!-- <label for="cityId">City:&nbsp;</label> -->
 						<input
-							type="text"
-							class="form-control"
-							placeholder="Enter city"
-							id="cityId"
-							autofocus
+								type="text"
+								class="form-control"
+								placeholder="<?=$this->language->Line("PLACES-0005",'CITY');?>"
+								id="cityId"
+								autofocus
 						/>
 					</div>
 
-					<div class="form-group col-md-5 col-sm-12">
+					<div class="form-group">
 						<!-- <label for="cityId">City:&nbsp;</label> -->
-						<p>ENTER RANGE</p>
+						<p><?=$this->language->Line("PLACES-0010",'ENTER RANGE');?></p>
 
 					</div>
 
-					<div class="form-group col-md-5 col-sm-12">
+					<div class="form-group">
 						<!-- <label for="addressId">Address:&nbsp;</label> -->
 
-							<div id="js-slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="slider-range-inverse" style="width: 51%;"></div><div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="width: 49%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 49%;"><span class="dot"><span class="handle-track" style="width: 1000px; left: -490px;"></span></span></span></span></div>
-							<span id="rangeValue">1 km</span>
+						<div id="js-slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="slider-range-inverse" style="width: 51%;"></div><div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="width: 49%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 49%;"><span class="dot"><span class="handle-track" style="width: 1000px; left: -490px;"></span></span></span></span></div>
+						<span style="padding: 20px" id="rangeValue">1 km</span>
 
 						<input type="hidden" id="myRange" value="1">
 
 					</div>
-
-
-
-					<div class="form-group col-md-2 col-sm-12">
-						<input type="submit" class="btn btn-info" value="SHOW" onclick="getLocation('cityId', 'addressId', 'places', 'myRange')">
+					<div class="form-group">
+						<input type="submit" class="btn btn-info" style="border-radius: 50px; background-color: #27253b ; border: none " value="<?=$this->language->Line("PLACES-0900",'SEARCH');?>" onclick="getLocation('cityId', 'addressId', 'places', 'myRange')">
 					</div>
-					
+
+				</div>
+
 			</div>
+	</section>
 
+	<div class="album py-5" style="background-color: #F3D0B5">
 
-
-
-			<!--<input type="range" id="myRange" value="1" max="100">
-					<div style="visibility:hidden" id="rangeValue">1</div>
-			<div class="row" id="placesContainer">-->
-			
 				<?php foreach ($directories as $directory): ?>
 					<div
 						class="col-md-4 places"
+						style="background-color: #F3D0B5"
 						data-lat="<?php echo $directory['lat']; ?>"
 						data-lng="<?php echo $directory['lng']; ?>"
 						>
@@ -196,7 +204,6 @@ a:active {
 						</div>
 					</div>
 				<?php endforeach; ?>
-			</div>
 		</div>
 	</div>
 </main>

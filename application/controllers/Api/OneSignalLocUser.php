@@ -58,8 +58,8 @@
 					echo json_encode([
 						'status' => '0',
 						'message' => 'https://tiqs.com/alfred/assets/home/images/win.png',
-						'url' => 'Https://tiqs.com/alfred/registerbusiness',
-						'code' => '3346'
+						'url' => 'https://tiqs.com/alfred/registerbusiness',
+						'code' => '3345'
 					]);
 				return;}
 

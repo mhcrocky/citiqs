@@ -42,52 +42,52 @@
             <div class="col-sm-12 col-lg-9 left-side">
                 <?php if (isset($workingTime)) { ?>
                     <div class="checkout-title">
-                        <span><?php echo $spot['spotType']; ?> period and time</span>
+                        <span><?php echo $spot['spotType']; ?><?=$this->language->line("PAYMENT-C0010",'period and time');?> </span>
                     </div>
                     <div class="row">                        
                         <?php if (intval($spot['spotTypeId']) === $this->config->item('deliveryType')) { ?>
                             <div class="form-group col-sm-6">
-                                <label for="city">City <sup>*</sup></label>
+                                <label for="city"><?=$this->language->line("PAYMENT-C0020",'City');?><sup>*</sup></label>
                                 <input
                                     type="teyt"
                                     id="city"
                                     class="form-control"
                                     name="user[city]"
                                     value="<?php echo $city; ?>"
-                                    placeholder="City"
+                                    placeholder="<?=$this->language->line("PAYMENT-C0020",'City');?>"
                                     required
                                     data-name='City'
                                 />
                             </div>
                             <div class="form-group col-sm-6">
-                                <label for="zipcode">Zip code <sup>*</sup></label>
+                                <label for="zipcode"><?=$this->language->line("PAYMENT-C0020",'Zipcode');?><sup>*</sup></label>
                                 <input
                                     type="text"
                                     id="zipcode"
                                     class="form-control"
                                     name="user[zipcode]"
                                     value="<?php echo $zipcode; ?>"
-                                    placeholder="Zip code"
+                                    placeholder="<?=$this->language->line("PAYMENT-C0020",'Zipcode');?>"
                                     required
                                     data-name='Zipcode'
                                 />
                             </div>
                             <div class="form-group col-sm-6">
-                                <label for="address">Address <sup>*</sup></label>
+                                <label for="address"><?=$this->language->line("PAYMENT-C0020",'Address');?><sup>*</sup></label>
                                 <input
                                     type="text"
                                     id="address"
                                     class="form-control"
                                     name="user[address]"
                                     value="<?php echo $address; ?>"
-                                    placeholder="Delivery address"
+                                    placeholder="<?=$this->language->line("PAYMENT-C0020",'Address');?>"
                                     required
                                     data-name='Address'
                                 />
                             </div>                            
                         <?php } ?>
                         <div class="form-group col-sm-6">
-                            <label for="periodTime" >Select <?php echo lcfirst($spot['spotType']); ?> period <sup>*</sup></label>
+                            <label for="periodTime" ><?=$this->language->line("PAYMENT-PC0020",'Choose');?><?php echo lcfirst($spot['spotType']); ?> <?=$this->language->line("PAYMENT-PC0020",'period');?><sup>*</sup></label>
                             <div>
                                 <select
                                     id="periodTime"
@@ -119,7 +119,9 @@
                                                     <option
                                                         value="<?php echo $date . ' ' . $hours['timeFrom']. ' ' . $hours['timeTo']; ?>"
                                                     >
-                                                        <?php echo $date . ' (' . $hours['day'] . ') From: ' . $hours['timeFrom'] . ' To: ' . $hours['timeTo'] ?>
+
+
+                                                        <?php echo $this->language->line($date . ' (' . $hours['day'] . ')',$date . ' (' . $hours['day'] . ')'). ' '.$this->language->line("PAYMENT-ABC0035"," from ").' '. $hours['timeFrom'] . " ".$this->language->line("PAYMENT-ABC0045"," to ")." " . $hours['timeTo'] ?>
                                                     </option>
                                                 <?php
                                             }
@@ -129,7 +131,7 @@
                             </div>
                         </div>
                         <div class="form-group col-sm-6" id="orderTimeDiv">
-                            <label for="orderTime">Select <?php echo lcfirst($spot['spotType']); ?> time (<sup>*</sup>)</label>
+                            <label for="orderTime"><?=$this->language->line("PAYMENT-PC0110",'Select ');?> <?php echo lcfirst($spot['spotType']); ?><?=$this->language->line("PAYMENT-PC0120",'time');?> (<sup>*</sup>)</label>
                             <input type="text" id="orderTimeInput" class="form-control timepicker" name="order[time]" />
                         </div>
                     </div>
