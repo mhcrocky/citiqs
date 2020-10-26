@@ -849,6 +849,18 @@ class Login extends BaseControllerWeb
 		$this->form_validation->set_rules('city', 'City', 'trim|required|max_length[128]');
 		$this->form_validation->set_rules('country', 'Country', 'trim|required|max_length[128]');
 
+		// send email
+		//'username', [FullName]
+		//'first_name', [Full Name],
+		//'second_name', [Full Name],
+		//'email', [Email],
+		//'mobile', [MobileNumber],
+		//'business_type_id', [Business]
+		//'address', [Address],
+		//'zipcode', [Zipcode],
+		//'city', [City],
+		//'country', [Country],
+
 
 		$hotel = $this->input->post(null, true);
 		$this->user_model->setUniqueValue($hotel['email'])->setWhereCondtition()->setUser();
@@ -862,6 +874,9 @@ class Login extends BaseControllerWeb
 			exit();
 		}
 
+		// hier weg schrihven dan hebben nwe die al.
+
+
 		// $this->form_validation->set_rules('vat_number', 'Vat number', 'required|max_length[20]');
 		if ($this->form_validation->run()) {
 			unset($hotel['cpassword']);
@@ -874,7 +889,7 @@ class Login extends BaseControllerWeb
 			foreach($hotel as $key => $value) {
 				set_cookie($key, $value, (60 * 60));
 			}
-			$this->session->set_flashdata('error', 'Process failed! Data given not valid');
+			$this->session->set_flashdata('error 20101', 'Process failed! Data given not valid');
 			redirect('/registerbusiness');
 		}
 

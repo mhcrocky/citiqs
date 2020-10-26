@@ -5,7 +5,7 @@
 <div class="container">
 
 
-<table id="buyers" class="display" cellspacing="0" width="100%">
+<table id="buyers" class="display table-responsive" cellspacing="0" width="100%">
 
 </table>
 
@@ -83,7 +83,7 @@
     responsive: true,
     ajax: {
             type: 'get',
-            url: '<?= base_url("marketing/selection/allbuyers"); ?>',
+            url: '<?php echo base_url("marketing/selection/allbuyers"); ?>',
             dataSrc: '',
         },
         columns: [{
@@ -146,42 +146,45 @@
    
    // Handle form submission event 
    $('#sendMessage').on('click', function(){
-      var form = this;
-      
       var rows_selected = table.column(0).checkboxes.selected();
-
       // Iterate over all selected checkboxes
-      var buyers = [];
       $.each(rows_selected, function(index, rowId){
          // Create a hidden element ;
          var buyerId = rowId;
          var buyerMobile = $('#mobile-'+rowId).val();
          var buyerOneSignalId = $('#onesignal-'+rowId).val();
          var message = $('textarea#message-text').val();
-        $.post('<?= base_url("marketing/selection/sendMessage"); ?>',{buyerId:buyerId,buyerMobile:buyerMobile,buyerOneSignalId:buyerOneSignalId,message:message},function(data){
+         alert('HERE 1');
+         $.ajax({
+           type: "get",
+           url: "<?php echo base_url('Marketing/Selection/sendMessage/'); ?>",
+           data: {buyerId:buyerId,buyerMobile:buyerMobile,buyerOneSignalId:buyerOneSignalId,message:message},
+           success: function(data){
+            $("#closeModal").click();
              console.log(data);
-             $("#closeModal").click();
-        });
-         
+             $('textarea#message-text').val('');
+           }
+         });
       });
-       
-   }); 
-
+   });
 
    $('#sendUserMessage').on('click', function(){
      var buyerId = $('#buyerId').val();
      var buyerMobile = $('#mobile-'+buyerId).val();
      var buyerOneSignalId = $('#onesignal-'+buyerId).val();
      var message = $('textarea#usermessage-text').val();
-     $.post('<?= base_url("marketing/selection/sendMessage"); ?>',{buyerId:buyerId,buyerMobile:buyerMobile,buyerOneSignalId:buyerOneSignalId,message:message},function(data){
-       console.log(data);
-       $("#closeUserModal").click();
+	   // alert('HERE 1');
+     $.ajax({
+       type: "get",
+       url: "<?php echo base_url('Marketing/Selection/sendMessage/'); ?>",
+       data: {buyerId:buyerId,buyerMobile:buyerMobile,buyerOneSignalId:buyerOneSignalId,message:message},
+       success: function(data){
+         $("#closeUserModal").click();
+         console.log(data);
+         $('textarea#usermessage-text').val('');
+       }
      });
-
-       
-   }); 
-
-
+   });
 
 });
 </script>

@@ -218,13 +218,13 @@
 	<?php if($this->session->userdata('dropoffpoint')==1) { ?>
 		<div class="col-half background-apricot-blue timeline-content">
 			<h2>Shop url</h2>
-			<p>
+			<a href="<?php echo base_url() . 'make_order?vendorid=' . $user->id; ?>" target='_blank' >
 				<?php echo base_url() . 'make_order?vendorid=' . $user->id; ?>
-			</p>
+			</a>
 			<h2>Booking url</h2>
-			<p>
+			<a href="<?php echo base_url() . 'check424/' . $user->id; ?>" target='_blank' >
 				<?php echo base_url() . 'check424/' . $user->id; ?>
-			</p>
+			</a>
 			<div class="background-blue timeline-content">
 				<!-- <p>Add driver mobile number (starting with country code with zero) for sending sms.</p>
 				<p>Set the number of minutes when the message will be sent to driver after the order status is changed in status "DONE"</p> -->

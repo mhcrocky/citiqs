@@ -225,7 +225,7 @@
 							<?php }?>
 						</form>
 						<div class="row" style="text-align:center; padding:0px ">
-							<img src="<?php echo $this->baseUrl; ?>tiqsimg/tiqslogonew.png" alt="tiqs" width="125" height="45" />
+							<img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="125" height="45" />
 						</div>
 					</div>
 				</div>
@@ -257,20 +257,6 @@
 				<p class="text-content-light" style="font-size: larger"><?=$this->language->Line("spot-registerbusiness-A200137A","ACTIVATE YOUR ACCOUNT WITH ACTIVATION CODE IN THE E-MAIL OR BY LOGIN-IN AND MANUALLY ACTIVATE YOUR ACCOUNT.");?> </p>
 				<div class="flex-column align-space">
 				<!-- <p class="text-content-light" >LOST BY YOUR CUSTOMER, <br>RETURNED BY US.</p>-->
-				</div>
-			</div>
-		</div><!-- end timeline block -->
-
-		<div class="timeline-block background-yankee">
-			<span class='timeline-number text-orange hide-mobile'>3</span>
-			<div class="timeline-text">
-				<div class="timeline-heading">
-					<span class='timeline-number text-blue show-mobile'>3</span>
-					<h2 style="font-weight:bold; font-family: caption-bold"><?=$this->language->Line("spot-registerbusiness-3A200136A","FLOORPLAN");?></h2>
-				</div>
-				<p class="text-content-light" style="font-size: larger"><?=$this->language->Line("spot-registerbusiness-3A200137A","SEND YOUR FLOORPLAN, A IMAGE OF YOUR OPEARTIONAL FLOOR, DRAWING SCETCH WE WILL MAKE YOUR FLOORPLAN, ");?> </p>
-				<div class="flex-column align-space">
-					<!-- <p class="text-content-light" >LOST BY YOUR CUSTOMER, <br>RETURNED BY US.</p>-->
 				</div>
 			</div>
 		</div><!-- end timeline block -->

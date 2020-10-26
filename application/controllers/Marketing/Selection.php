@@ -15,16 +15,17 @@ class Selection extends BaseControllerWeb {
     }
     public function index() {
         $this->global['pageTitle'] = 'TIQS BUYERS';
-        //var_dump($this->Selection_model->get_buyers(1162));
         $this->loadViews("marketing/selection", $this->global, '', 'footerpublicbizdir', 'noheaderbizdir');
     }
 
     public function sendMessage() {
-        $buyerId = $this->input->post('buyerId');
-        $buyerMobile = $this->input->post('buyerMobile');
-        $buyerOneSignalId = $this->input->post('buyerOneSignalId');
-        $message = $this->input->post('message');
-        if($buyerOneSignalId == 'null'){
+        $buyerId = $this->input->get('buyerId');
+        $buyerMobile = $this->input->get('buyerMobile');
+        $buyerOneSignalId = $this->input->get('buyerOneSignalId');
+        $message = $this->input->get('message');
+        var_dump($buyerId);
+//        die('here we are 2');
+        if($buyerOneSignalId == ''){
             $this->load->library('Sms');
             $sms = new Sms;
             $sms->send($buyerMobile,$message);
@@ -33,7 +34,6 @@ class Selection extends BaseControllerWeb {
             $this->load->library('Notification');
             $notification = new Notification;
             $notification->sendMessage($buyerOneSignalId,$message);
-            echo 'success';
         }
 
     }
@@ -51,9 +51,4 @@ class Selection extends BaseControllerWeb {
         echo json_encode($buyers);
     }
 
-    public function test() {
-        $this->global['pageTitle'] = 'TIQS BUYERS';
-        //var_dump($this->Selection_model->get_buyers(1162));
-        $this->loadViews("marketing/test", $this->global, '', 'footerpublicbizdir', 'noheaderbizdir');
-    }
 }

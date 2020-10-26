@@ -18,7 +18,7 @@
             $this->load->model('shoporder_model2',"shoporder_model");
             $this->load->model('shoporderex_model');
             $this->load->model('shopvendor_model');
-            $this->load->model('FOD_FDM_Model');
+            $this->load->model('fodfdm_model');
 
             $this->load->helper('utility_helper');
             $this->load->helper('validate_data_helper');
@@ -43,7 +43,7 @@
 
 
             //Check FDM Status 
-            $FDMStatusByMac=$this->FOD_FDM_Model->getFDMstatusByMac($macNumber);
+            $FDMStatusByMac=$this->fodfdm_model->getFDMstatusByMac($get['mac']);
         	if(!empty($FDMStatusByMac) && $FDMStatusByMac->FDM_active==0){
         		return "";
         	}
@@ -665,7 +665,7 @@
             $jsonoutput['PaymentLines']=$this->PaymentLines;
             $jsonoutput['image']=$receiptemailBasepath;
             $jsonoutput['vendorId']=$order['vendorId'];
-            $jsonoutput['lastNumber']=$this->FOD_FDM_Model->getlastRecieptCount($order['vendorId']);
+            $jsonoutput['lastNumber']=$this->fodfdm_model->getlastRecieptCount($order['vendorId']);
             // header('Content-type: image/png');
             echo json_encode($jsonoutput);
 
@@ -676,7 +676,7 @@
             // Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail);
         }
         function updatelastRecieptCount_get($vendorId){
-            $this->FOD_FDM_Model->updatelastRecieptCount($vendorId);
+            $this->fodfdm_model->updatelastRecieptCount($vendorId);
         }
         private function returnVatGrade($vatpar){
             // retunr a or b or or d
@@ -691,7 +691,7 @@
         	$macNumber	=	$this->input->get('mac');
         	$flag		=	$this->input->get('flag');
 
-        	$this->FOD_FDM_Model->updatePrinterStatus($macNumber,$flag);
+        	$this->fodfdm_model->updatePrinterStatus($macNumber,$flag);
         	$jsonarray=array('message'=>"FDM Status st to ".$flag);
         	
         }
