@@ -75,8 +75,7 @@
 <!--					</div>-->
 <!--					<h1 style="text-align:center">QR-MENU</h1>-->
 <!--					<div style="text-align:center; margin-top: 30px">-->
-<!--						<p style="font-size: larger; margin-top: 50px; margin-left: 0px">--><?//=$this->language->line("HOMESTART-SPOT-X001111ABC",'BUILD BY TIQS');?><!--</p>-->
-<!--					</div>-->
+<!--						<p style="font-size: larger; margin-top: 50px; margin-left: 0px">--><?php //$this->language->line("HOMESTART-SPOT-X001111ABC",'BUILD BY TIQS');?><!--</p>--><!--					</div>-->
 <!--				</div>-->
 <!--			</div>-->
 <!--		</div> end col half -->
