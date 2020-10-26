@@ -25,6 +25,11 @@
 							    <input type="checkbox" id="isMain" name="isMain" required value="1" />
                             </label>
 						</div>
+
+						<div>
+							<label for="additionalNumber">Maximum allowed choices:</label>
+							<input type="number" min="0" step="1" class="form-control" id="additionalNumber; ?>" name="additionalNumber" required value="0" />
+						</div>
 					</form>
 				</div>
 			</div>
@@ -53,6 +58,8 @@
 						<div class="item-header">
 							<p class="item-description">Type: <?php echo $type['productType']; ?></p>
                             <p class="item-description">Is main: <?php echo $type['isMain'] === '1' ? '<span>YES</span>' : '<span>NO</span>'; ?></p>
+							<p class="item-description">Maximum allowed choices: <?php echo $type['additionalNumber'] === '0' ? 'Unlimited' : $type['additionalNumber']; ?></p>
+							
 						</div><!-- end item header -->
                         <div class="grid-footer">
 							<div class="iconWrapper">
@@ -87,6 +94,10 @@
                                     <div class="checkbox">
 										<label for="isMain<?php echo $type['id']; ?>">Is main </label>
 										<input type="checkbox" class="form-control" id="isMain<?php echo $type['id']; ?>" name="isMain" required value="1" <?php if ($type['isMain'] === '1') echo 'checked'; ?> />
+									</div>
+									<div>
+										<label for="type<?php echo $type['id']; ?>">Maximum allowed choices:</label>
+										<input type="number" min="0" step="1" class="form-control" id="additionalNumber<?php echo $type['id']; ?>" name="additionalNumber" required value="<?php echo $type['additionalNumber']; ?>" />
 									</div>
 								</form>
 							</div>
