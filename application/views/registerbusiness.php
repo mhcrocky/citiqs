@@ -1,8 +1,6 @@
 <div class="main-wrapper">
-	<div class="col-half background-blue height-100">
+	<div class="col-half background-blue height-100" style="margin-top: -30px">
 		<div class="flex-column align-start">
-			<div class="flex-row align-space">
-				<div class="flex-column align-space">
 					<div style="text-align:center">
 						<p style="font-family:'caption-bold'; font-size:300%; color:#ffffff;">
 						<h2 class="heading"> <?=$this->language->Line("spot-registerbusiness-A1100",'REGISTER BUSINESS ACCOUNT.');?></h2>
@@ -230,9 +228,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-	<div class="col-half background-apricot timeline-content">
+	<div class="col-half background-apricot timeline-content" style="margin-top: -30px">
 		<div class="timeline-block background-yankee">
 			<span class='timeline-number text-orange hide-mobile'>1</span>
 			<div class="timeline-text">
@@ -262,8 +258,8 @@
 		</div><!-- end timeline block -->
 
 
-		<div class="mobile-hide" style="text-align:center; margin-top: 50px; margin-bottom: 50px; margin-left: 50px">
-			<img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="500" height="auto" />
+		<div class="row" style="text-align:center; padding:50px ">
+			<img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="125" height="45" />
 		</div>
 		<div class="text-left mt-50 mobile-hide" style="margin-left: 100px; margin-bottom: 100px;  margin-top: -30px">
 

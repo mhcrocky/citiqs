@@ -47,8 +47,8 @@
 				if ($this->user_model->checkOneSignalId($user['oneSignalId'])) {
 					echo json_encode([
 						'status' => '0',
-						'message' => 'https://tiqs.com/alfred/assets/home/images/win.png',
-						'url' => 'https://etiqs.com/yourshop/1/RGifIakAE3MQwRbVV9OA1HREGgRwqCqnFwZh',
+						'message' => 'https://tiqs.com/alfred/assets/home/images/win2.png',
+						'url' => 'https://etiqs.com/lunchroomzondag/1/1',
 						'code' => '3345'
 					]);
 
@@ -57,7 +57,7 @@
 				else{
 					echo json_encode([
 						'status' => '0',
-						'message' => 'https://tiqs.com/alfred/assets/home/images/win.png',
+						'message' => 'https://tiqs.com/alfred/assets/home/images/win2.png',
 						'url' => 'https://tiqs.com/alfred/registerbusiness',
 						'code' => '3345'
 					]);

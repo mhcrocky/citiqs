@@ -52,17 +52,17 @@
 
 <?php } ?>
 <header class="header">
-	<nav class="header-nav">
+	<nav class="header-nav" style="background-color: #0d173b">
 		<a href="<?php echo base_url(); ?>start" class="nav-logo">
-			<img src="<?php echo base_url(); ?>assets/home/images/tiqslogonew.png" alt="">
+			<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="">
 		</a>
 		<div class="header-menu" id="header-menu" align="right">
-			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>home#dhl-section" id='dhl-button'></a>
-			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>found"></a>
-			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>check424"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/visitor.png" title="CHECK424"/></a>
-			<a style="color: #E25F2A" href="#" id='modal-button'><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/world.png" title="REPORTS"/></a>
-			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>registerbusiness">REGISTER</a>
-			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>login">LOGIN</a>
+			<a style="color: #FFFFFF" href="<?php echo $this->baseUrl; ?>home#dhl-section" id='dhl-button'></a>
+			<a style="color: #FFFFFF" href="<?php echo $this->baseUrl; ?>found"></a>
+			<a style="color: #FFFFFF" href="<?php echo $this->baseUrl; ?>check424"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/visitor.png" title="CHECK424"/></a>
+			<a style="color: #FFFFFF" href="#" id='modal-button'><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/world.png" title="REPORTS"/></a>
+			<a style="color: #FFFFFF" href="<?php echo $this->baseUrl; ?>registerbusiness">REGISTER</a>
+			<a style="color: #FFFFFF" href="<?php echo $this->baseUrl; ?>login">LOGIN</a>
 		</div>
 		<div class="hamburger-menu" id="hamburger-menu">
 			<div></div>

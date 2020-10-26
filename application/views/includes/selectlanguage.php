@@ -1,6 +1,11 @@
+<style>
+	a {
+		color: #352104;
+	}
+</style>
 <div id="myModal" class="langmodal" style="z-index:1000;">
 
-	<div class="langmodal-content" style="text-align:left">
+	<div class="langmodal-content" style="text-align:left;">
 
 		<span class="close">&times;</span>
 

@@ -603,19 +603,19 @@
 
         public function data_post()
         {
-            $file = FCPATH . 'application/tiqs_logs/messages.txt';
-            Utility_helper::logMessage($file, 'printer send post request');
+//            $file = FCPATH . 'application/tiqs_logs/messages.txt';
+//            Utility_helper::logMessage($file, 'printer send post request');
             // Check is valid POST request type
             if (strtolower($_SERVER['CONTENT_TYPE']) !== 'application/json')
 			{
-				Utility_helper::logMessage($file, 'printer send post request CONTENT TYPE');
+//				Utility_helper::logMessage($file, 'printer send post request CONTENT TYPE');
 				return;
 			}
 
 
             // Get JSON payload recieved from the request and parse it
             // $parsedJson = Sanitize_helper::sanitizePhpInput();
-			Utility_helper::logMessage($file, 'printer send post request passed JSON');
+//			Utility_helper::logMessage($file, 'printer send post request passed JSON');
 
             // $parsedJson = Sanitize_helper::sanitizePhpInput();
 			$parsedJson = file_get_contents("php://input");
@@ -623,26 +623,26 @@
 
 			// Validate JSON params
             if (!isset($parsedJson['printerMAC']) || !isset($parsedJson['statusCode']) || !isset($parsedJson['status'])){
-				Utility_helper::logMessage($file, 'printer send post request passed JSON MAC ERROR'.$parsedJson['printerMAC']);
-				Utility_helper::logMessage($file, 'printer send post request passed JSON STATUS CODEERROR'.$parsedJson['statusCode']);
-				Utility_helper::logMessage($file, 'printer send post request passed JSON STATUS ERROR'.$parsedJson['status']);
+//				Utility_helper::logMessage($file, 'printer send post request passed JSON MAC ERROR'.$parsedJson['printerMAC']);
+//				Utility_helper::logMessage($file, 'printer send post request passed JSON STATUS CODEERROR'.$parsedJson['statusCode']);
+//				Utility_helper::logMessage($file, 'printer send post request passed JSON STATUS ERROR'.$parsedJson['status']);
 				return;
 			}
 
     
             if (!Sanitize_helper::isValidMac($parsedJson['printerMAC'])){
-				Utility_helper::logMessage($file, 'printer send post request passed MAC ERROR');
+//				Utility_helper::logMessage($file, 'printer send post request passed MAC ERROR');
 				return;
 			}
 
 
-            Utility_helper::logMessage($file, 'Printer MAC:' .  $parsedJson['printerMAC']);
+//            Utility_helper::logMessage($file, 'Printer MAC:' .  $parsedJson['printerMAC']);
             // If the JSON request contains a request object in the clientAction then the printer is responding to a additional information
             // request (i.e. to get variables like the poll interval from the printer), so in this case the $path variable is set to
             // additional_communication.json to save this additional data
             if (isset($parsedJson["clientAction"][0]["request"])) {
                 $arr = array("jobReady" => false);
-                Utility_helper::logMessage($file, 'JOB NOT READY => 1');
+//                Utility_helper::logMessage($file, 'JOB NOT READY => 1');
             } else {
     
                 // er is een bon betaald
@@ -658,10 +658,10 @@
                         "mediaTypes" => array('image/png')
                         // "deleteMethod" => "GET");
                     ];
-                    Utility_helper::logMessage($file, 'JOB READY => ');
+//                    Utility_helper::logMessage($file, 'JOB READY => ');
                 } else {
                     $arr = array("jobReady" => false);
-                    Utility_helper::logMessage($file, 'JOB NOT READY => 2');
+//                    Utility_helper::logMessage($file, 'JOB NOT READY => 2');
                 }
             }
     

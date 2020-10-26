@@ -94,15 +94,13 @@ a:active {
 </style>
 
 <style>
-
-
+	body {
+		background-color: #fbd19a;
+	}
 </style>
 
-
-
-
 <main role="main" style="margin-bottom: -30px" align="center">
-	<section style="background-color:#fbd19a; margin-top: 70px" align="center" >
+	<section style="background-color:#fbd19a; margin-top: 50px" align="center" >
 		<div style="background-color:#fbd19a;" align="center">
 <!--			<h1 style="font-family: campton-bold; margin-top: 30px;color:#27253b">--><?//=$this->language->Line("PLACES-A00002",'TIQS PICKUP & DELIVERY');?><!--</h1>-->
 			<h1 style="font-family: caption-bold; padding: 10px 30px; color:#ffffff">PICK UP & DELIVERY</h1>
@@ -173,7 +171,7 @@ a:active {
 						data-lat="<?php echo $directory['lat']; ?>"
 						data-lng="<?php echo $directory['lng']; ?>"
 						>
-						<div class="card mb-4 shadow-sm">
+						<div class="card mb-4 shadow-sm" >
 							<!-- <img src="--><?php //echo $directory['image']; ?><!--" class="bd-placeholder-img card-img-top" -->
 							<?php if (!$directory['placeImage']) { ?>
 								<img
@@ -188,7 +186,7 @@ a:active {
 									height="180" alt="<?php echo $directory['business_name']; ?>"
 								/>
 							<?php } ?>
-							<div class="card-body text-center" style="background-color: #003151">
+							<div class="card-body text-center" style="background-color: #0d173b">
 								<img src="<?php echo 'assets/home/images/tiqslogowhite.png' ?>" style="margin-left:-50%; margin-top: -350px; height: 50px; width: auto"/>
 								<p class="pb-2 font-weight-bold"
 								   style="font-size: 24px;color: antiquewhite"><?php echo $directory['username']; ?></p>
@@ -198,6 +196,7 @@ a:active {
 								<div class="social-links align-items-center pt-3">
 									<a class="contact-link" target="_blank; color: white; --text-color: white"
 									   <?php if ($directory['email']) { ?>href="<?php echo "https://tiqs.com/alfred/make_order?vendorid=".$directory['id']; ?>"<?php } ?> >
+
 										<i class="fa fa-qrcode fa-lg" style="color: white; --text-color: white"></i> <?=$this->language->line("BIZDIR",'ORDER HERE');?></a>
 								</div>
 							</div>

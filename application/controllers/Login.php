@@ -619,7 +619,7 @@ class Login extends BaseControllerWeb
 			'businessTypes' => $this->businesstype_model->getAll(),
 			'countries' => Country_helper::getCountries(),
 		];
-		$this->loadViews("registerbusiness", $this->global, $data, NULL, "headerpublic");
+		$this->loadViews("registerbusiness", $this->global, $data, NULL, "headerpubliclogin");
 	}
 
 	public function google()
