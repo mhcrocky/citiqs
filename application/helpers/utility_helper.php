@@ -255,6 +255,8 @@
             $checkoutList = '';
             if  (!is_null($ordered)) {
                 $count = 0;
+
+                $collectAddons = [];
                 foreach ($ordered as $product) {
                     $count++;
                     $price = 0;
@@ -377,97 +379,109 @@
 
                     if (isset($product['addons'])) {
                         $checkoutList .=        '<div class="modal__adittional">';
-                        $checkoutList .=            '<h6 style="margin-top:10px">Additional</h6>';
-                        $checkoutList .=            '<div class="modal__adittional__list">';
+                        // $checkoutList .=            '<h6 style="margin-top:10px">Additional</h6>';
+                        
 
-                        $countAddons = 0;
+
+                        $collectAddons = [];
                         foreach ($product['addons'] as $addonExtendedId => $addon) {
-                            $step = floatval($addon['step']);
-                            $countAddons++;
-                            $remarkAddonId = isset($addon['remark']) ? $remarkProductId . '_' . $countAddons : '0';
+                            $addon['addonExtendedId'] = $addonExtendedId;
+                            array_push($collectAddons, $addon);
+                        }
+                        $collectAddons = Utility_helper::resetArrayByKeyMultiple($collectAddons, 'productType');
+                        $countAddons = 0;
 
-                            $checkoutList .=            '<div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">';
-                            $checkoutList .=                '<label class="form-check-label">';
-                            $checkoutList .=                    '<input type="checkbox" class="form-check-input checkAddons" onchange="toggleElement(this)" checked>&nbsp;';
-                            $checkoutList .=                    $addon['name'] . ' € ' . $addon['price'] . ' (min per unit ' . $addon['initialMinQuantity'] . ' / max  per unit ' . $addon['initialMaxQuantity'] . ')';
-                            $checkoutList .=                '</label>';
-
-                            if ($vendor['showAllergies'] === '1')  {
-                                $addon['allergies'] = unserialize($rawAddons[$addonExtendedId][0]['allergies']);
-                                if (!empty($addon['allergies']['productAllergies'])) {
-                                    $addonAllergies = $addon['allergies']['productAllergies'];
-                                    $baseUrl = base_url();
-                                    $checkoutList .= '<div>';
-                                    foreach ($addonAllergies as $allergy) {
-                             
-                                        $checkoutList .= '<img
-                                                            src="' . $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy) . '.png"
-                                                            alt="' . $allergy  . '"
-                                                            height="24px"
-                                                            width="24px"
-                                                            style="display:inline; margin:0px 2px 3px 0px"
-                                                        />';
+                        foreach ($collectAddons as $key => $elements) {
+                            $checkoutList .=        '<div class="modal__adittional__list" style="width:100%">';
+                            $checkoutList .=            '<h6 style="width:100%">' . $key . '</h6>';
+                            foreach ($elements as $addon) {
+                                $step = floatval($addon['step']);
+                                $countAddons++;
+                                $remarkAddonId = isset($addon['remark']) ? $remarkProductId . '_' . $countAddons : '0';
+                                $addonExtendedId = $addon['addonExtendedId'];                                
+                                $checkoutList .=            '<div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">';
+                                $checkoutList .=                '<label class="form-check-label">';
+                                $checkoutList .=                    '<input type="checkbox" class="form-check-input checkAddons" onchange="toggleElement(this)" checked>&nbsp;';
+                                $checkoutList .=                    $addon['name'] . ' € ' . $addon['price'] . ' (min per unit ' . $addon['initialMinQuantity'] . ' / max  per unit ' . $addon['initialMaxQuantity'] . ')';
+                                $checkoutList .=                '</label>';
+    
+                                if ($vendor['showAllergies'] === '1')  {
+                                    $addon['allergies'] = unserialize($rawAddons[$addonExtendedId][0]['allergies']);
+                                    if (!empty($addon['allergies']['productAllergies'])) {
+                                        $addonAllergies = $addon['allergies']['productAllergies'];
+                                        $baseUrl = base_url();
+                                        $checkoutList .= '<div>';
+                                        foreach ($addonAllergies as $allergy) {
+                                 
+                                            $checkoutList .= '<img
+                                                                src="' . $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy) . '.png"
+                                                                alt="' . $allergy  . '"
+                                                                height="24px"
+                                                                width="24px"
+                                                                style="display:inline; margin:0px 2px 3px 0px"
+                                                            />';
+                                        }
+                                        $checkoutList .= '</div>';
                                     }
-                                    $checkoutList .= '</div>';
+                                }
+                                $checkoutList .=            '</div>';
+                                $checkoutList .=            '<div class="modal-footer__quantity col-lg-4 col-sm-12" style="visibility: visible; margin-bottom: 3px;">';
+                                $checkoutList .=                '<span 
+                                                                    class="modal-footer__buttons modal-footer__quantity--plus"
+                                                                    style="margin-right:5px;"
+                                                                    data-type="minus"
+                                                                    onclick="changeAddonQuayntity(this)"
+                                                                >';
+                                $checkoutList .=                    ' -';
+                                $checkoutList .=                '</span>';
+                                $checkoutList .=                '<input
+                                                                    readonly
+                                                                    type="number"
+                                                                    min="' . $addon['minQuantity'] . '"
+                                                                    max="' . $addon['maxQuantity'] . '"
+                                                                    data-addon-price="' . $addon['price'] . '"
+                                                                    data-addon-name="' . $addon['name'] . '"
+                                                                    data-category="' . $addon['category'] . '"
+                                                                    data-product-extended-id="' . $productExtendedId . '"
+                                                                    data-addon-extended-id="' . $addonExtendedId . '"
+                                                                    data-min="' . $addon['minQuantity'] . '"
+                                                                    data-max="' . $addon['maxQuantity'] . '"
+                                                                    data-initial-min-quantity="' . $addon['initialMinQuantity'] . '"
+                                                                    data-initial-max-quantity="' . $addon['initialMaxQuantity'] . '"
+                                                                    data-remark-id="' .  $remarkAddonId . '"
+                                                                    step="' . $addon['step'] . '"
+                                                                    value="' . $addon['quantity'] . '"
+                                                                    class="form-control addonQuantity"  
+                                                                    style="display:inline-block"
+                                                                />';
+                                $checkoutList .=                '<span
+                                                                    class="modal-footer__buttons modal-footer__quantity--minus"
+                                                                    style="margin-left:5px;"
+                                                                    data-type="plus"
+                                                                    onclick="changeAddonQuayntity(this)"
+                                                                >';
+                                $checkoutList .=                    ' +';
+                                $checkoutList .=                '</span>';
+                                $checkoutList .=            '</div>';
+    
+                                if ($remarkAddonId !== '0') {
+                                    $checkoutList .=        '
+                                                            <div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">
+                                                                <h6>Remark</h6>
+                                                                <div class="col-lg-12 col-sm-12" style="margin-bottom:3px">
+                                                                    <textarea
+                                                                        class="form-control"
+                                                                        rows="1"
+                                                                        maxlength="200"
+                                                                        data-addon-remark-id="' . $remarkAddonId . '"
+                                                                    >' . $addon['remark'] . '</textarea>
+                                                                </div>
+                                                            </div>
+                                                            '; 
                                 }
                             }
-                            $checkoutList .=            '</div>';
-                            $checkoutList .=            '<div class="modal-footer__quantity col-lg-4 col-sm-12" style="visibility: visible; margin-bottom: 3px;">';
-                            $checkoutList .=                '<span 
-                                                                class="modal-footer__buttons modal-footer__quantity--plus"
-                                                                style="margin-right:5px;"
-                                                                data-type="minus"
-                                                                onclick="changeAddonQuayntity(this)"
-                                                            >';
-                            $checkoutList .=                    ' -';
-                            $checkoutList .=                '</span>';
-                            $checkoutList .=                '<input
-                                                                readonly
-                                                                type="number"
-                                                                min="' . $addon['minQuantity'] . '"
-                                                                max="' . $addon['maxQuantity'] . '"
-                                                                data-addon-price="' . $addon['price'] . '"
-                                                                data-addon-name="' . $addon['name'] . '"
-                                                                data-category="' . $addon['category'] . '"
-                                                                data-product-extended-id="' . $productExtendedId . '"
-                                                                data-addon-extended-id="' . $addonExtendedId . '"
-                                                                data-min="' . $addon['minQuantity'] . '"
-                                                                data-max="' . $addon['maxQuantity'] . '"
-                                                                data-initial-min-quantity="' . $addon['initialMinQuantity'] . '"
-                                                                data-initial-max-quantity="' . $addon['initialMaxQuantity'] . '"
-                                                                data-remark-id="' .  $remarkAddonId . '"
-                                                                step="' . $addon['step'] . '"
-                                                                value="' . $addon['quantity'] . '"
-                                                                class="form-control addonQuantity"  
-                                                                style="display:inline-block"
-                                                            />';
-                            $checkoutList .=                '<span
-                                                                class="modal-footer__buttons modal-footer__quantity--minus"
-                                                                style="margin-left:5px;"
-                                                                data-type="plus"
-                                                                onclick="changeAddonQuayntity(this)"
-                                                            >';
-                            $checkoutList .=                    ' +';
-                            $checkoutList .=                '</span>';
-                            $checkoutList .=            '</div>';
-
-                            if ($remarkAddonId !== '0') {
-                                $checkoutList .=        '
-                                                        <div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">
-                                                            <h6>Remark</h6>
-                                                            <div class="col-lg-12 col-sm-12" style="margin-bottom:3px">
-                                                                <textarea
-                                                                    class="form-control"
-                                                                    rows="1"
-                                                                    maxlength="200"
-                                                                    data-addon-remark-id="' . $remarkAddonId . '"
-                                                                >' . $addon['remark'] . '</textarea>
-                                                            </div>
-                                                        </div>
-                                                        '; 
-                            }
+                            $checkoutList .=        '</div>';
                         }
-                        $checkoutList .=            '</div>';
                         $checkoutList .=        '</div>';                      
                     }
 

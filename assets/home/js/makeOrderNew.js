@@ -46,7 +46,7 @@ function changeProductQuayntity(element, className) {
 function changeAddonInputAttributes(element, quantity, className, isOrdered) {
     let ancestor = '#' + makeOrderGlobals.checkoutModal;
     if (!element.parentElement.parentElement.nextElementSibling) return;
-    let classParent = element.parentElement.parentElement.nextElementSibling.children[1];
+    let classParent = element.parentElement.parentElement.nextElementSibling;
     let addonInputs = classParent.getElementsByClassName(className);
     let addonInputsLength = addonInputs.length;
     let i;
@@ -382,7 +382,8 @@ function checkout() {
                         'initialMinQuantity' : addon.dataset.initialMinQuantity,
                         'initialMaxQuantity' : addon.dataset.initialMaxQuantity,
                         'addonProductId' : addon.dataset.addonProductId,
-                        'allergies' : addon.dataset.allergies
+                        'allergies' : addon.dataset.allergies,
+                        'productType' : addon.dataset.productType,
                     }
                     if (addon.dataset.remarkId !== '0') {
                         let addonRemark = document.querySelectorAll('#' + orderedItem.id + ' [data-addon-remark-id="' + addon.dataset.remarkId + '"]')[0].value;

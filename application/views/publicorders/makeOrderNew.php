@@ -376,17 +376,29 @@
                                     </div>
                                     <?php if ($product['addons']) { ?>
                                         <div class="modal__adittional">
-                                            <h6>Additional</h6>
-                                            <div class="modal__adittional__list">
-                                                <?php
-                                                    $productAddons = $product['addons'];
-                                                    $countAddons = 0;
-                                                    foreach ($productAddons as $productAddon) {
+                                            <?php
+                                                $productAddons = $product['addons'];
+                                                $countAddons = 0;
+                                                $collectAddons = [];
+                                                foreach ($productAddons as $productAddon) {
+                                                    $countAddons++;
+                                                    $addonId = $productAddon[0][0];
+                                                    $addonAllowedQuantity = $productAddon[0][1];
+                                                    if (empty($addons[$addonId])) continue;
+                                                    $addon = $addons[$addonId][0];
+                                                    $addon['addonAllowedQuantity'] = $addonAllowedQuantity;
+                                                    array_push($collectAddons, $addon);
+                                                }
+
+                                                $collectAddons = Utility_helper::resetArrayByKeyMultiple($collectAddons, 'productType');
+                                                $countAddons = 0;
+                                                echo '<div class="modal__adittional__list" style="width:100%">';
+                                                foreach ($collectAddons as $key => $elements) {
+                                                    echo '<h6 style="width:100%">' . $key . '</h6>';
+                                                    
+                                                    foreach ($elements as $addon) {
                                                         $countAddons++;
-                                                        $addonId = $productAddon[0][0];
-                                                        $addonAllowedQuantity = $productAddon[0][1];
-                                                        if (empty($addons[$addonId])) continue;
-                                                        $addon = $addons[$addonId][0];
+                                                        $addonAllowedQuantity = $addon['addonAllowedQuantity'];
                                                         $remarkAddonId = $addon['addRemark'] === '1' ? $remarkProductId . '_' . $countAddons : '0';                                                        
                                                         ?>
                                                         <div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">
@@ -398,7 +410,7 @@
                                                                 />
                                                                 <?php echo $addon['name']; ?>
                                                                 &euro; <?php echo $addon['price']; ?>
-                                                               <!-- (min per unit 1 / max  per unit --><?php //echo $addonAllowedQuantity; ?><!--) -->
+                                                                <!-- (min per unit 1 / max  per unit --><?php //echo $addonAllowedQuantity; ?><!--) -->
                                                             </label>
                                                             <?php
                                                                 if ($vendor['showAllergies'] === '1')  {
@@ -422,7 +434,7 @@
                                                                     }
                                                                 }
                                                             ?>
-  
+    
                                                         </div>
                                                         <div
                                                             class="modal-footer__quantity col-lg-4 col-sm-12"
@@ -452,6 +464,7 @@
                                                                 data-min = "1"
                                                                 data-max="<?php echo $addonAllowedQuantity; ?>"
                                                                 data-remark-id="<?php echo $remarkAddonId ?>"
+                                                                data-product-type="<?php echo $addon['productType']; ?>"
                                                                 <?php if (isset($addonAllergies)) { ?>
                                                                     data-allergies="<?php echo implode($this->config->item('allergiesSeparator'), $addonAllergies); ?>"
                                                                     <?php unset($addonAllergies); ?>
@@ -488,9 +501,10 @@
                                                         <?php } ?>
                                                         <?php
                                                     }
-                                                ?>
-                                            </div>
-
+                                                    
+                                                }
+                                                echo '</div>';
+                                            ?>
                                         </div>
                                     <?php } ?>
                                 </div>
