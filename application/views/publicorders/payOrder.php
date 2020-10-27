@@ -78,25 +78,25 @@
                                     <div class="payment-container methods">
                                         <?php if ($vendor['ideal'] === '1') { ?>
                                             <a href="javascript:void(0)" onclick="toogleElements('idealBanks', 'paymentMethodsContainer', 'hidden')" class="paymentMethod method-card" >
-                                                <img src="https://tiqs.com/shop/assets/imgs/extra/ideal.png" alt="iDEAL">
+                                                <img src="https://tiqs.com/alfred/assets/home/imgs/extra/ideal.png" alt="iDEAL">
                                                 <span>iDEAL</span>
                                             </a>
                                         <?php } ?>
                                         <?php if ($vendor['creditCard'] === '1') { ?>
                                             <a href="<?php echo base_url(); ?>insertorder/<?php echo $creditCardPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
-                                                <img src="https://tiqs.com/shop/assets/imgs/extra/creditcard.png" alt="Creditcard">
+                                                <img src="https://tiqs.com/alfred/assets/home/imgs/extra/creditcard.png" alt="Creditcard">
                                                 <span>Creditcard</span>
                                             </a>
                                         <?php } ?>
 										<?php if ($vendor['payconiq'] === '1') { ?>
 											<a href="<?php echo base_url(); ?>insertorder/<?php echo $payconiqPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
-												<img src="https://tiqs.com/shop/assets/imgs/extra/payconiq.png" alt="Payconiq">
+												<img src="https://tiqs.com/alfred/assets/home/imgs/extra/payconiq.png" alt="Payconiq">
 												<span>Payconiq</span>
 											</a>
 										<?php } ?>
                                         <?php if ($vendor['bancontact'] === '1') { ?>
                                             <a href="<?php echo base_url(); ?>insertorder/<?php echo $bancontactPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
-                                                <img src="https://tiqs.com/shop/assets/imgs/extra/bancontact.png" alt="bancontact">
+                                                <img src="https://tiqs.com/alfred/assets/home/imgs/extra/bancontact.png" alt="bancontact">
                                                 <span>Bancontact</span>
                                             </a>
                                         <?php } ?>
@@ -152,51 +152,51 @@
                                         </div>                                        
                                         <div class="payment-container">
                                             <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/1<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="bank paymentMethod abn_amro addTargetBlank">
-                                                <img src="https://tiqs.com/shop/assets/imgs/extra/abn_amro.png" alt="ABN AMRO">
+                                                <img src="https://tiqs.com/alfred/assets/home/imgs/extra/abn_amro.png" alt="ABN AMRO">
                                                 <span>ABN AMRO</span>
                                             </a>
                                             <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/8<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="bank paymentMethod asn_bank addTargetBlank">
-                                                <img src="https://tiqs.com/shop/assets/imgs/extra/asn_bank.png" alt="ASN Bank">
+                                                <img src="https://tiqs.com/alfred/assets/home/imgs/extra/asn_bank.png" alt="ASN Bank">
                                                 <span>ASN Bank</span>
                                             </a>
                                             <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/5080<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="bank paymentMethod bunq addTargetBlank">
-                                                <img src="https://tiqs.com/shop/assets/imgs/extra/bunq.png" alt="Bunq">
+                                                <img src="https://tiqs.com/alfred/assets/home/imgs/extra/bunq.png" alt="Bunq">
                                                 <span>Bunq</span>
                                             </a>
                                             <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/5082<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="bank paymentMethod handelsbanken addTargetBlank">
-                                                <img src="https://tiqs.com/shop/assets/imgs/extra/handelsbanken.png" alt="Handelsbanken">
+                                                <img src="https://tiqs.com/alfred/assets/home/imgs/extra/handelsbanken.png" alt="Handelsbanken">
                                                 <span>Handelsbanken</span>
                                             </a>
                                             <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/4<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="bank paymentMethod ing addTargetBlank">
-                                                <img src="https://tiqs.com/shop/assets/imgs/extra/ing.png" alt="ING">
+                                                <img src="https://tiqs.com/alfred/assets/home/imgs/extra/ing.png" alt="ING">
                                                 <span>ING</span>
                                             </a>
                                             <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/12<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="bank paymentMethod knab addTargetBlank">
-                                                <img src="https://tiqs.com/shop/assets/imgs/extra/knab(1).png" alt="Knab">
+                                                <img src="https://tiqs.com/alfred/assets/home/imgs/extra/knab(1).png" alt="Knab">
                                                 <span>Knab</span>
                                             </a>
                                             <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/5081<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="bank paymentMethod moneyou addTargetBlank">
-                                                <img src="https://tiqs.com/shop/assets/imgs/extra/moneyou.png" alt="Moneyou">
+                                                <img src="https://tiqs.com/alfred/assets/home/imgs/extra/moneyou.png" alt="Moneyou">
                                                 <span>Moneyou</span>
                                             </a>
                                             <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/2<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="bank paymentMethod rabobank addTargetBlank">
-                                                <img src="https://tiqs.com/shop/assets/imgs/extra/rabobank.png" alt="Rabobank">
+                                                <img src="https://tiqs.com/alfred/assets/home/imgs/extra/rabobank.png" alt="Rabobank">
                                                 <span>Rabobank</span>
                                             </a>
                                             <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/9<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="bank paymentMethod regiobank addTargetBlank">
-                                                <img src="https://tiqs.com/shop/assets/imgs/extra/regiobank.png" alt="RegioBank">
+                                                <img src="https://tiqs.com/alfred/assets/home/imgs/extra/regiobank.png" alt="RegioBank">
                                                 <span>RegioBank</span>
                                             </a>
                                             <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/5<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="bank paymentMethod sns_bank addTargetBlank">
-                                                <img src="https://tiqs.com/shop/assets/imgs/extra/sns_bank.png" alt="SNS Bank">
+                                                <img src="https://tiqs.com/alfred/assets/home/imgs/extra/sns_bank.png" alt="SNS Bank">
                                                 <span>SNS Bank</span>
                                             </a>
                                             <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/10<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="bank paymentMethod triodos_bank addTargetBlank">
-                                                <img src="https://tiqs.com/shop/assets/imgs/extra/triodos_bank.png" alt="Triodos Bank">
+                                                <img src="https://tiqs.com/alfred/assets/home/imgs/extra/triodos_bank.png" alt="Triodos Bank">
                                                 <span>Triodos Bank</span>
                                             </a>
                                             <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/11<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="bank paymentMethod van_lanschot addTargetBlank">
-                                                <img src="https://tiqs.com/shop/assets/imgs/extra/van_lanschot.png" alt="van Lanschot">
+                                                <img src="https://tiqs.com/alfred/assets/home/imgs/extra/van_lanschot.png" alt="van Lanschot">
                                                 <span>van Lanschot</span>
                                             </a>
                                             <div class="clearfix"></div>
