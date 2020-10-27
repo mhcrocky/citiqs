@@ -321,5 +321,8 @@ $route['marketing/selection'] = 'Marketing/Selection';
 $route['marketing/selection/allbuyers'] = 'Marketing/Selection/allbuyers';
 $route['marketing/selection/sendmessage'] = 'Marketing/Selection/sendMessage';
 
+$route['marketing/calculator'] = 'Marketing/Calculator';
+$route['marketing/calculator/savecalc'] = 'Marketing/Calculator/saveCalc';
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
