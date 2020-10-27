@@ -9,15 +9,13 @@ class Calculator extends BaseControllerWeb {
     
     public function __construct(){
         parent::__construct();
-        /*
         if (empty($this->session->userdata('userId'))) {
 			redirect('login');
         }
-        */
     }
 
     public function index() {
-        $this->global['pageTitle'] = 'TIQS BUYERS';
+        $this->global['pageTitle'] = 'TIQS CALCULATOR';
         $this->loadViews("marketing/calculator", $this->global, '', 'footerpublicbizdir', 'noheaderbizdir');
     }
 
