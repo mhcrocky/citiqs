@@ -138,6 +138,9 @@
             if (empty($arrays)) return [];
             $reset = [];
             foreach($arrays as $array) {
+                if (is_object($array)) {
+                    $array = (array) $array;
+                }
                 if (!isset($reset[$array[$key]])) {
                     $reset[$array[$key]] = [];
                 }
@@ -308,7 +311,9 @@
                                                         data-product-id="' . $product['productId'] . '" 
                                                         data-remark-id="' . $remarkProductId . '"                                                        
                                                         data-order-quantity-value="orderQuantityValue_' .  $product['productId'] . '"
-                                                        data-ordered="orderQuantityValue_' .  $product['productId'] . '" ';
+                                                        data-ordered="orderQuantityValue_' .  $product['productId'] . '" 
+                                                        readonly 
+                                                        oninput="reloadPageIfMinus(this)" ';
                     
                     if (!empty($product['categorySlide'])) {
                         $checkoutList .=                'data-category-slide="' . $product['categorySlide'] . '" ';
@@ -399,10 +404,13 @@
                                 $countAddons++;
                                 $remarkAddonId = isset($addon['remark']) ? $remarkProductId . '_' . $countAddons : '0';
                                 $addonExtendedId = $addon['addonExtendedId'];                                
-                                $checkoutList .=            '<div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">';
-                                $checkoutList .=                '<label class="form-check-label">';
+                                $checkoutList .=            '<div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="width:50%; margin-bottom:3px">';
+                                $checkoutList .=                '<label class="form-check-label" style="word-wrap: break-word;">';
                                 $checkoutList .=                    '<input type="checkbox" class="form-check-input checkAddons" onchange="toggleElement(this)" checked>&nbsp;';
-                                $checkoutList .=                    $addon['name'] . ' € ' . $addon['price'] . ' (min per unit ' . $addon['initialMinQuantity'] . ' / max  per unit ' . $addon['initialMaxQuantity'] . ')';
+                                $checkoutList .=                    $addon['name'];
+                                if (floatval($addon['price']) > 0) {
+                                    $checkoutList .=                '&nbsp;&euro; ' . $addon['price'];
+                                }                                
                                 $checkoutList .=                '</label>';
     
                                 if ($vendor['showAllergies'] === '1')  {
@@ -425,17 +433,26 @@
                                     }
                                 }
                                 $checkoutList .=            '</div>';
-                                $checkoutList .=            '<div class="modal-footer__quantity col-lg-4 col-sm-12" style="visibility: visible; margin-bottom: 3px;">';
+                                $checkoutList .=            '<div class="modal-footer__quantity col-lg-4 col-sm-12" style="visibility: visible; margin: 0px 0px 3px 0px; padding: 0px">';
                                 $checkoutList .=                '<span 
                                                                     class="modal-footer__buttons modal-footer__quantity--plus"
-                                                                    style="margin-right:5px;"
-                                                                    data-type="minus"
-                                                                    onclick="changeAddonQuayntity(this)"
-                                                                >';
+                                                                    data-type="minus" ';
+                                
+                                if ($addon['initialMaxQuantity'] === '1' || $addon['isBoolean'] === '1') { 
+                                    $checkoutList .=                'style="visibility:hidden; height:0px"';
+                                } else {
+                                    $checkoutList .=                'onclick="changeAddonQuayntity(this)" style="margin-right:5px;" ';
+                                }
+
+
+                                $checkoutList .=                '>';
+
+                                                                
                                 $checkoutList .=                    ' -';
                                 $checkoutList .=                '</span>';
                                 $checkoutList .=                '<input
-                                                                    readonly
+                                                                    readonly 
+                                                                    oninput="reloadPageIfMinus(this)"
                                                                     type="number"
                                                                     min="' . $addon['minQuantity'] . '"
                                                                     max="' . $addon['maxQuantity'] . '"
@@ -449,17 +466,32 @@
                                                                     data-initial-min-quantity="' . $addon['initialMinQuantity'] . '"
                                                                     data-initial-max-quantity="' . $addon['initialMaxQuantity'] . '"
                                                                     data-remark-id="' .  $remarkAddonId . '"
+                                                                    data-is-boolean="' .  $addon['isBoolean'] . '"
+                                                                    data-product-type="' . $addon['productType'] . '"
                                                                     step="' . $addon['step'] . '"
-                                                                    value="' . $addon['quantity'] . '"
-                                                                    class="form-control addonQuantity"  
-                                                                    style="display:inline-block"
-                                                                />';
+                                                                    value="' . $addon['quantity'] . '" ';
+                                if ($addon['isBoolean'] === '1') {
+                                    $checkoutList .=                'hidden ';
+                                    $checkoutList .=                'class="addonQuantity" ';
+                                } else {
+                                    if ($addon['initialMaxQuantity'] !== '1') {
+                                        $checkoutList .=                'style="display:inline-block; border:0px; background-color: #fff;" ';
+                                        $checkoutList .=                'class="form-control addonQuantity" ';
+                                    } else {
+                                        $checkoutList .=                'style="display:inline-block; border:0px; background-color: #fff; margin-left:7px" ';
+                                        $checkoutList .=                'class="form-control addonQuantity" ';
+                                    }
+                                }
+                                $checkoutList .=                '/>';
                                 $checkoutList .=                '<span
                                                                     class="modal-footer__buttons modal-footer__quantity--minus"
-                                                                    style="margin-left:5px;"
-                                                                    data-type="plus"
-                                                                    onclick="changeAddonQuayntity(this)"
-                                                                >';
+                                                                    data-type="plus" ';
+                                if ($addon['initialMaxQuantity'] === '1' || $addon['isBoolean'] === '1') {
+                                    $checkoutList .=                'style="visibility:hidden; height:0px"';
+                                } else {
+                                    $checkoutList .=                'onclick="changeAddonQuayntity(this)" style="margin-right:5px;" ';
+                                }
+                                $checkoutList .=                '>';
                                 $checkoutList .=                    ' +';
                                 $checkoutList .=                '</span>';
                                 $checkoutList .=            '</div>';

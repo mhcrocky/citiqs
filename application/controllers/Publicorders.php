@@ -79,7 +79,6 @@
 
         private function loadSpotView(array $spot, array $vendor, string $orderDataRandomKey): void
         {
-            $vendorId = $vendor['vendorId'];
             $spotId = intval($spot['spotId']);
             $spotTypeId = intval($spot['spotTypeId']);
             $time = time();
@@ -164,7 +163,7 @@
                 $spotTypeId === $this->config->item('local')
                 && !$this->shopspottime_model->setProperty('spotId', $spotId)->isOpen()
             ) {
-                $redirect = 'spot_closed' . DIRECTORY_SEPARATOR  . $spotId . DIRECTORY_SEPARATOR . $vendor['vendorId'];
+                $redirect = 'spot_closed' . DIRECTORY_SEPARATOR  . $spotId;
                 redirect($redirect);
                 return;
             };
@@ -438,7 +437,7 @@
             $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
 
-        private function unsetVoocherData(array &$orderData): void
+        private function unsetVoocherData(array &$orderData): void //TO DO VOUCHER NOT FINISHED FRO JWT !!!!!
         {
             // if $orderData['voucherId'] and user refresh the page
             if (isset($orderData['voucherId'])) {
