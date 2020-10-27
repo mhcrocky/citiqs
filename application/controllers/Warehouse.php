@@ -173,7 +173,7 @@
 
             // filter productes ny name(s)
             if (!empty($_POST)) {
-                $post = Utility_hepler::sanitizePost();
+                $post = Utility_helper::sanitizePost();
                 $whereIn = [
                     'column' => 'tbl_shop_products_extended.productId',
                     'array' => $post['names']
@@ -313,7 +313,7 @@
          */
         public function editProduct(): void
         {
-            $data = Utility_hepler::sanitizePost();
+            $data = Utility_helper::sanitizePost();
             $productId = intval($this->uri->segment(3));
             $userId = intval($_SESSION['userId']);
 
