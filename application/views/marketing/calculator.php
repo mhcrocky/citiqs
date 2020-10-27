@@ -6,9 +6,14 @@
           <h3 class="text-muted text-center mb-3" >Calculator</h3>
 
           <div class="form-group text-left">
+            <label for="">Email : </label>
+            <input class="form-control" type="email" id="email" required placeholder="Email"/>
+          </div>
+
+          <div class="form-group text-left">
             <label for="">Amount : </label>
             <input class="form-control" type="number" id="amount" required placeholder="Amount of order"/>
-            <!--<small class="form-text text-muted">Seu email não será compartilhado com ninguém</small>-->
+            <!--<small class="form-text text-muted">Amount of order</small>-->
           </div>
 
           <div class="form-group text-left">
@@ -35,7 +40,7 @@
             </div>
           </div>
 
-          <button class="btn  btn-outline-primary btn-block mt-4"  type="submit">Save</button>
+          <button class="btn  btn-outline-primary btn-block mt-4"  type="submit" id="save">Save</button>
         </form>
       </div>
     </div>
@@ -136,11 +141,13 @@
           let amount = $("#amount").val();
           let times_per_day = $("#time").val();
           let commission = $("#commission").val();
-          $.post("<?php echo base_url('marketing/calculator/saveCalc'); ?>", {amount: amount,times_per_day: times_per_day,commission: commission}, function(data){
+          let email = $("#email").val();
+          $.post("<?php echo base_url('marketing/calculator/saveCalc'); ?>", {email: email,amount: amount,times_per_day: times_per_day,commission: commission}, function(data){
             toastr["success"]("Saved successfully!");
             setTimeout(function(){ location.reload(); }, 2000);
           });
           event.preventDefault();
+          $("#save").prop('disabled', true);
         }
         form.classList.add('was-validated');
       }, false);
