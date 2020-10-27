@@ -468,6 +468,7 @@
                                                                     data-remark-id="' .  $remarkAddonId . '"
                                                                     data-is-boolean="' .  $addon['isBoolean'] . '"
                                                                     data-product-type="' . $addon['productType'] . '"
+                                                                    data-allowed-choices="' . $addon['allowedChoices'] . '"
                                                                     step="' . $addon['step'] . '"
                                                                     value="' . $addon['quantity'] . '" ';
                                 if ($addon['isBoolean'] === '1') {

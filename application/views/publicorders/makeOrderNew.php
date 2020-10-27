@@ -476,6 +476,7 @@
                                                                 data-remark-id="<?php echo $remarkAddonId ?>"
                                                                 data-product-type="<?php echo $addon['productType']; ?>"
                                                                 data-is-boolean="<?php echo $addon['isBoolean']; ?>"
+                                                                data-allowed-choices="<?php echo $addon['additionalNumber']; ?>"
                                                                 <?php if (isset($addonAllergies)) { ?>
                                                                     data-allergies="<?php echo implode($this->config->item('allergiesSeparator'), $addonAllergies); ?>"
                                                                     <?php unset($addonAllergies); ?>

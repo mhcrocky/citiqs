@@ -501,7 +501,8 @@
                                     \'' .  $concatSeparator . '\', tbl_shop_products.addRemark,
                                     \'' .  $concatSeparator . '\', IF(CHAR_LENGTH(tbl_shop_products.allergies) > 0, tbl_shop_products.allergies, ""),
                                     \'' .  $concatSeparator . '\', IF(CHAR_LENGTH(tbl_shop_products.productImage) > 0, tbl_shop_products.productImage, ""),
-                                    \'' .  $concatSeparator . '\', tbl_shop_products_types.isBoolean
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_types.isBoolean,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_types.additionalNumber
                                     ORDER BY ' . $this->table. '.id DESC
                                     SEPARATOR "'. $concatGroupSeparator . '"
                                 ) AS productDetails
@@ -615,7 +616,8 @@
                     'addRemark'             => $details[14],
                     'allergies'             => $details[15],
                     'productImage'          => $details[16],
-                    'isBoolean'          => $details[17],
+                    'isBoolean'             => $details[17],
+                    'additionalNumber'      => $details[18]
                 ];
                 if ($collect['productTypeIsMain'] === '0') {
                     array_push($addons, $collect);

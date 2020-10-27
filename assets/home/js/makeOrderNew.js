@@ -3,6 +3,14 @@ function toggleElement(element) {
     let container = element.parentElement.parentElement.nextElementSibling;
     let inputField = container.children[1];
     let checked = element.checked;
+    let allowedChoices = parseInt(inputField.dataset.allowedChoices);
+
+    if (allowedChoices > 0 && !checkAllowedChoices(container.parentElement, allowedChoices)) {
+        element.checked = false;
+        let message = 'You can select only ' + allowedChoices + ' options';
+        alertify.error(message);
+        return;
+    }
     if (inputField.dataset.isBoolean === '0') {
         container.style.visibility = checked ? 'visible' : 'hidden';
     } else if (inputField.dataset.isBoolean === '1') {
@@ -13,6 +21,15 @@ function toggleElement(element) {
         let itemId = element.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id;
         populateShoppingCart(itemId);
     }
+}
+
+function checkAllowedChoices(container, allowedChoices) {
+
+    let checkedElements = container.querySelectorAll('[type="checkbox"]:checked').length;
+    if (checkedElements > allowedChoices) {
+        return false;
+    }
+    return true;
 }
 
 function changeProductQuayntity(element, className) {
@@ -392,7 +409,8 @@ function checkout() {
                         'addonProductId' : addon.dataset.addonProductId,
                         'allergies' : addon.dataset.allergies,
                         'productType' : addon.dataset.productType,
-                        'isBoolean' : addon.dataset.isBoolean
+                        'isBoolean' : addon.dataset.isBoolean,
+                        'allowedChoices' : addon.dataset.allowedChoices
                     }
                     if (addon.dataset.remarkId !== '0') {
                         let addonRemark = document.querySelectorAll('#' + orderedItem.id + ' [data-addon-remark-id="' + addon.dataset.remarkId + '"]')[0].value;
