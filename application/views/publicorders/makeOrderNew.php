@@ -196,7 +196,7 @@
                                         && !empty($_SESSION['visitorReservationId'])
                                         && intval($spotTypeId) === $localTypeId
                                     ) { ?>
-                                    <a href="<?php echo base_url(); ?>check424/<?php echo $vendor['vendorId']; ?>" style="margin:0px 20px 0px 10px">
+                                    <a href="<?php echo base_url(); ?>check424/<?php echo $vendor['vendorId']; ?>" style="margin:0px 20px 0px 10px;">
                                         <i style="font-size: 40px;color: white" class="fa fa-home"></i>
                                     </a>
                                 <?php } ?>
@@ -316,6 +316,8 @@
                                             data-remark-id="<?php echo $remarkProductId ?>"
                                             data-order-quantity-value="orderQuantityValue_<?php echo $product['productId']; ?>"
                                             data-category-slide="<?php echo $categorySlide; ?>"
+                                            readonly
+                                            oninput="reloadPageIfMinus(this)"
                                             <?php if ($product['onlyOne'] === '0') { ?>
                                                 class="form-control checkProduct"
                                                 style="display:inline-block"
@@ -401,15 +403,17 @@
                                                         $addonAllowedQuantity = $addon['addonAllowedQuantity'];
                                                         $remarkAddonId = $addon['addRemark'] === '1' ? $remarkProductId . '_' . $countAddons : '0';                                                        
                                                         ?>
-                                                        <div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">
-                                                            <label class="form-check-label">
+                                                        <div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="width:50%; margin-bottom:3px">
+                                                            <label class="form-check-label" style="word-wrap: break-word;">
                                                                 <input
                                                                     type="checkbox"
                                                                     class="form-check-input checkAddons"
                                                                     onchange="toggleElement(this)"
                                                                 />
                                                                 <?php echo $addon['name']; ?>
-                                                                &euro; <?php echo $addon['price']; ?>
+                                                                <?php if (floatval($addon['price']) > 0) { ?>
+                                                                    &euro;&nbsp;<?php echo $addon['price']; ?>
+                                                                <?php } ?>
                                                                 <!-- (min per unit 1 / max  per unit --><?php //echo $addonAllowedQuantity; ?><!--) -->
                                                             </label>
                                                             <?php
@@ -438,18 +442,24 @@
                                                         </div>
                                                         <div
                                                             class="modal-footer__quantity col-lg-4 col-sm-12"
-                                                            style="visibility: hidden; margin-bottom:3px"
+                                                            style="visibility: hidden; margin:0px 0px 3px 0px; padding:0px"
                                                             >
                                                             <span
                                                                 class='modal-footer__buttons modal-footer__quantity--plus'
-                                                                style="margin-right:5px;"
-                                                                data-type="minus"
-                                                                onclick="changeAddonQuayntity(this)"
+                                                                <?php if ($addonAllowedQuantity !== '1') { ?>
+                                                                    onclick="changeAddonQuayntity(this)"
+                                                                    style="margin-right:5px;"
+                                                                <?php } else { ?>
+                                                                    style="visibility:hidden; height:0px"
+                                                                <?php }?>
+                                                                data-type="minus"                                                                
                                                             >
                                                                 -
                                                             </span>
+                                                            
                                                             <input
                                                                 readonly
+                                                                oninput="reloadPageIfMinus(this)"
                                                                 type="number"
                                                                 min="1"
                                                                 max="<?php echo $addonAllowedQuantity; ?>"
@@ -465,6 +475,7 @@
                                                                 data-max="<?php echo $addonAllowedQuantity; ?>"
                                                                 data-remark-id="<?php echo $remarkAddonId ?>"
                                                                 data-product-type="<?php echo $addon['productType']; ?>"
+                                                                data-is-boolean="<?php echo $addon['isBoolean']; ?>"
                                                                 <?php if (isset($addonAllergies)) { ?>
                                                                     data-allergies="<?php echo implode($this->config->item('allergiesSeparator'), $addonAllergies); ?>"
                                                                     <?php unset($addonAllergies); ?>
@@ -474,14 +485,22 @@
                                                                 step="1"
                                                                 value="1"
                                                                 class="form-control addonQuantity"
-                                                                disabled
-                                                                style="display:inline-block"
+                                                                disabled                                                                
+                                                                <?php if ($addonAllowedQuantity !== '1') { ?>
+                                                                    style="display:inline-block; border:0px; background-color: #fff;"
+                                                                <?php } else { ?>
+                                                                    style="display:inline-block; border:0px; background-color: #fff; margin-left:7px"
+                                                                <?php } ?>
                                                             />
                                                             <span
-                                                                class='modal-footer__buttons modal-footer__quantity--minus'
-                                                                style="margin-left:5px;"
+                                                                class='modal-footer__buttons modal-footer__quantity--minus'                                                                
                                                                 data-type="plus"
-                                                                onclick="changeAddonQuayntity(this)"
+                                                                <?php if ($addonAllowedQuantity !== '1') { ?>
+                                                                    onclick="changeAddonQuayntity(this)"
+                                                                    style="margin-left:5px;"
+                                                                <?php } else { ?>
+                                                                    style="visibility:hidden; height:0px"
+                                                                <?php }?>
                                                                 >
                                                                 +
                                                             </span>
