@@ -15,6 +15,7 @@
         public $active;
         public $isMain;
         public $additionalNumber;
+        public $isBoolean;
 
         private $table = 'tbl_shop_products_types';
 
@@ -50,6 +51,7 @@
             if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
             if (isset($data['isMain']) && !($data['isMain'] === '1' || $data['isMain'] === '0')) return false;
             if (isset($data['additionalNumber']) && !Validate_data_helper::validateInteger($data['additionalNumber'])) return false;
+            if (isset($data['isBoolean']) && !($data['isBoolean'] === '1' || $data['isBoolean'] === '0')) return false;
 
             return true;
         }
@@ -64,6 +66,7 @@
                     $this->table . '.active AS active',
                     $this->table . '.isMain AS isMain',
                     $this->table . '.additionalNumber AS additionalNumber',
+                    $this->table . '.isBoolean AS isBoolean',
                 ],
                 'where' => $where,
                 'conditions' => [

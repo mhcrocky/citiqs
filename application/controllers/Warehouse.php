@@ -173,7 +173,7 @@
 
             // filter productes ny name(s)
             if (!empty($_POST)) {
-                $post = $this->input->post(null, true);
+                $post = Utility_hepler::sanitizePost();
                 $whereIn = [
                     'column' => 'tbl_shop_products_extended.productId',
                     'array' => $post['names']
@@ -210,7 +210,7 @@
          */
         public function addProdcut(): void
         {
-            $data = $this->input->post(null, true);
+            $data = Utility_hepler::sanitizePost();
             $userId = intval($_SESSION['userId']);
 
             //CHECK PRODUCT NAME
@@ -313,7 +313,7 @@
          */
         public function editProduct(): void
         {
-            $data = $this->input->post(null, true);
+            $data = Utility_hepler::sanitizePost();
             $productId = intval($this->uri->segment(3));
             $userId = intval($_SESSION['userId']);
 

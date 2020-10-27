@@ -25,10 +25,18 @@
 							    <input type="checkbox" id="isMain" name="isMain" required value="1" />
                             </label>
 						</div>
-
 						<div>
 							<label for="additionalNumber">Maximum allowed choices:</label>
 							<input type="number" min="0" step="1" class="form-control" id="additionalNumber; ?>" name="additionalNumber" required value="0" />
+						</div>
+						<div>
+							<label>Is boolean</label>
+							<label for="isBoolYes">
+								&nbsp;Yes&nbsp;<input type="radio" id="isBoolYes" name="isBoolean" value="1" />
+							</label>
+							<label for="isBoolNo">
+								&nbsp;No&nbsp;<input type="radio" id="isBoolNo" name="isBoolean" value="0" checked />
+							</label>
 						</div>
 					</form>
 				</div>
@@ -59,7 +67,7 @@
 							<p class="item-description">Type: <?php echo $type['productType']; ?></p>
                             <p class="item-description">Is main: <?php echo $type['isMain'] === '1' ? '<span>YES</span>' : '<span>NO</span>'; ?></p>
 							<p class="item-description">Maximum allowed choices: <?php echo $type['additionalNumber'] === '0' ? 'Unlimited' : $type['additionalNumber']; ?></p>
-							
+							<p class="item-description">Only yes or no values: <?php echo ($type['isBoolean'] === '0') ? 'NO' : 'YES'; ?></p>
 						</div><!-- end item header -->
                         <div class="grid-footer">
 							<div class="iconWrapper">
@@ -98,6 +106,29 @@
 									<div>
 										<label for="type<?php echo $type['id']; ?>">Maximum allowed choices:</label>
 										<input type="number" min="0" step="1" class="form-control" id="additionalNumber<?php echo $type['id']; ?>" name="additionalNumber" required value="<?php echo $type['additionalNumber']; ?>" />
+									</div>
+									<div>
+										<label>Only yes or no values</label>
+										<label for="isBoolYes<?php echo $type['id']; ?>">
+											&nbsp;Yes&nbsp;
+											<input
+												type="radio"
+												id="isBoolYes<?php echo $type['id']; ?>"
+												name="isBoolean"
+												value="1"
+												<?php if ($type['isBoolean'] === '1') echo 'checked'; ?>
+											/>
+										</label>
+										<label for="isBoolNo<?php echo $type['id']; ?>">
+											&nbsp;No&nbsp;
+											<input
+												type="radio"
+												id="isBoolNo<?php echo $type['id']; ?>"
+												name="isBoolean"
+												value="0"
+												<?php if ($type['isBoolean'] === '0') echo 'checked'; ?>
+											/>
+										</label>
 									</div>
 								</form>
 							</div>

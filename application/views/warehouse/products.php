@@ -3,30 +3,6 @@
 <script>
     var productGloabls = {};
 </script>
-<!-- <style>
-#addProdcut::-webkit-scrollbar {
-    width: 10px;
-}
-
-
-#addProdcut::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-
-#addProdcut::-webkit-scrollbar-thumb {
-    background: #d4d4d4;
-}
-
-
-#addProdcut::-webkit-scrollbar-thumb:hover {
-    background: #a9a9a9;
-}
-#addProduct{
-    overflow-y: scroll;
-    max-height: 100vh;
-}
-</style> -->
 <div class="main-wrapper theme-editor-wrapper">
 	<div class="grid-wrapper">
         <?php if (is_null($categories) || is_null($printers) || is_null($productTypes) || is_null($userSpots)) { ?>
@@ -179,11 +155,17 @@
                                     &nbsp;&nbsp;No
                                 </label>
                             </div>
+                            <!-- PRODUCT TYPES -->
                             <legend>Select product types</legend>
                             <?php foreach ($productTypes as $type) { ?>
                 
                                 <div class="col-lg-4 col-sm-12">
-                                    <h3><?php echo $type['productType']; ?></h3>
+                                    <h3>
+                                        <?php
+                                            echo $type['productType'];
+                                            if ($type['isBoolean'] === '1') echo '&nbsp;&nbsp;(only yes or no)';
+                                        ?>
+                                    </h3>
                                     <label class="checkbox-inline" for="productType<?php echo $type['id']; ?>">
                                         <input
                                             type="checkbox"
@@ -840,7 +822,12 @@
                                                             unset($productExtendedId);
                                                         }
                                                     ?>
-                                                    <h3><?php echo $type['productType']; ?></h3>
+                                                    <h3>
+                                                        <?php
+                                                            echo $type['productType'];
+                                                            if ($type['isBoolean'] === '1') echo '&nbsp;&nbsp;(only yes or no)';
+                                                        ?>
+                                                    </h3>
                                                     <label class="checkbox-inline" for="productType<?php echo $type['id'] . $product['productId']; ?>">
                                                         <input
                                                             type="checkbox"
