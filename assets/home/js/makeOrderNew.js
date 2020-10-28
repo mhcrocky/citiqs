@@ -7,9 +7,7 @@ function toggleElement(element) {
     let addonTypeId = element.dataset.addonTypeIdCheck;
 
     if (allowedChoices > 0 && !checkAllowedChoices(container.parentElement, allowedChoices, addonTypeId)) {
-        element.checked = false;
-        let message = 'You can select only ' + allowedChoices + ' options';
-        alertify.error(message);
+        element.checked = true;
         return;
     }
 
@@ -27,8 +25,14 @@ function toggleElement(element) {
 
 function checkAllowedChoices(container, allowedChoices, addonTypeId) {
 
-    let checkedElements = container.querySelectorAll('[data-addon-type-id-check="' + addonTypeId + '"]:checked').length;
-    if (checkedElements > allowedChoices) {
+    let checkedElements = container.querySelectorAll('[data-addon-type-id-check="' + addonTypeId + '"]:checked');
+    let checkedElementsLength = checkedElements.length;
+    if (checkedElementsLength > allowedChoices) {
+        let i;
+        for (i = 0; i < checkedElementsLength; i++) {
+            let element = checkedElements[i];
+            element.checked = false;
+        }
         return false;
     }
     return true;
