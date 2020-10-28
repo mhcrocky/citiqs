@@ -187,7 +187,6 @@
 				$draw->annotation(0,  35 * $h, "PICK-UP at : ". date("d-m h:i:sa",strtotime($order['orderCreated'])));
 			}
 
-
 			if($order['serviceTypeId']==1){
 				$drawemail->annotation(0, 35 * $h, "DATE:". date("d-m h:i:sa",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
 			}
@@ -224,7 +223,7 @@
 
 			$drawemail->setStrokeColor('black');
 			$drawemail->setStrokeWidth(5);
-			$drawemail->line(0, 35 * $h, 576, $h);
+			$drawemail->line(0, 35 * $h, 576, 35 * $h);
 			$drawemail->setStrokeWidth(1);
 
 			$h++;
