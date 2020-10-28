@@ -129,6 +129,10 @@ function changeAddonInputAttributes(element, quantity, className, isOrdered) {
             let newValue = newStep;
             addonInput.setAttribute('value', newValue);
 
+            // INTILAT ALLOWED CHOICES
+            // let newAlloweChoices = parseInt(addonInput.dataset.allowedChoices) * newStep;
+            // addonInput.setAttribute('data-allowed-choices', newAlloweChoices);
+
             if (toggleDisabled) {
                 addonInput.disabled = true;
             }
@@ -200,7 +204,7 @@ function cloneProductAndAddons(element) {
     let newOrdered = document.getElementById(randomId);
     clone.appendTo(newOrdered);
     resetTotal();
-    setMinToZero(newOrdered);
+    // setMinToZero(newOrdered);
     showHtmlQuantity(populateShoppingCart(randomId), true, true);
 }
 
@@ -311,10 +315,10 @@ function resetAddons(productContainer) {
 
         let addonInput = addon.parentElement.parentElement.nextElementSibling.children[1];
 
-        addonInput.setAttribute('min', addonInput.dataset.min);
-        addonInput.setAttribute('max', addonInput.dataset.max);
-        addonInput.setAttribute('value', '1');
-        addonInput.setAttribute('step', '1');
+        addonInput.min = addonInput.dataset.min;
+        addonInput.max = addonInput.dataset.max;
+        addonInput.value = '1';
+        addonInput.step = '1';
 
         toggleElement(addon);
     }
@@ -376,8 +380,6 @@ function focusOnOrderItems(itemClass) {
         alertify.error('No products in order list!');
         
     }
-
-    
 }
 
 function focusCheckOutModal(containerId) {
