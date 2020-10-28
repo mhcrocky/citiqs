@@ -148,7 +148,7 @@ function changeAddonQuayntity(element) {
     let allowedChoices = parseInt(inputField.dataset.allowedChoices);
     let addonTypeId = inputField.dataset.addonTypeId;
 
-    if (type === 'plus' && !checkQuantity(container, allowedChoices, addonTypeId)) return;
+    if (allowedChoices > 0 && type === 'plus' && !checkQuantity(container, allowedChoices, addonTypeId)) return;
 
     let value = parseInt(inputField.value);
     let minValue = parseInt(inputField.min);
