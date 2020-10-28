@@ -6,18 +6,10 @@ function toggleElement(element) {
     let allowedChoices = parseInt(inputField.dataset.allowedChoices);
     let addonTypeId = element.dataset.addonTypeIdCheck;
 
-    if (allowedChoices > 0) {
-        if (!checkQuantity(container.parentElement, allowedChoices, addonTypeId)) {
-            element.checked = false;
-            container.style.visibility = 'hidden';
-            inputField.disabled = element.checke ? false : true;
-            return;
-        }
-        if (!checkAllowedChoices(container.parentElement, allowedChoices, addonTypeId)) {
-            element.checked = true;
-            return;
-        }
+    if (allowedChoices > 0 && checked) {
+        checkAllowedChoices(container.parentElement, allowedChoices, addonTypeId, element)
     }
+
 
     if (inputField.dataset.isBoolean === '0') {
         container.style.visibility = checked ? 'visible' : 'hidden';
@@ -26,6 +18,8 @@ function toggleElement(element) {
     }
 
     inputField.disabled = checked ? false : true;
+    if (!checked) inputField.value = inputField.min;
+
     if (isOrdered(element)) {
         let itemId = element.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id;
         populateShoppingCart(itemId);
@@ -49,15 +43,21 @@ function checkQuantity(container, allowedChoices, addonTypeId) {
     return true;
 }
 
-function checkAllowedChoices(container, allowedChoices, addonTypeId) {
-
+function checkAllowedChoices(container, allowedChoices, addonTypeId, elementChecked) {
     let checkedElements = container.querySelectorAll('[data-addon-type-id-check="' + addonTypeId + '"]:checked');
     let checkedElementsLength = checkedElements.length;
-    if (checkedElementsLength > allowedChoices) {
+    if (checkedElementsLength > allowedChoices || !checkQuantity(container, allowedChoices, addonTypeId)) {
         let i;
         for (i = 0; i < checkedElementsLength; i++) {
             let element = checkedElements[i];
-            element.checked = false;
+            let container = element.parentElement.parentElement.nextElementSibling;
+            let inputField = container.children[1];
+            if (element !== elementChecked) {
+                element.checked = false;
+                container.style.visibility = 'hidden';
+                inputField.value = inputField.min;
+                inputField.disabled = true;
+            }
         }
         return false;
     }
@@ -163,7 +163,7 @@ function changeAddonQuayntity(element) {
         value = value + stepValue;
     }
 
-    inputField.setAttribute('value', value);
+    inputField.value = value;
 
     if (isOrdered(element)) {
         let itemId = element.parentElement.parentElement.parentElement.parentElement.parentElement.id;
