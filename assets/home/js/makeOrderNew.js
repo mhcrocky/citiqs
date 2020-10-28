@@ -6,9 +6,17 @@ function toggleElement(element) {
     let allowedChoices = parseInt(inputField.dataset.allowedChoices);
     let addonTypeId = element.dataset.addonTypeIdCheck;
 
-    if (allowedChoices > 0 && !checkAllowedChoices(container.parentElement, allowedChoices, addonTypeId)) {
-        element.checked = true;
-        return;
+    if (allowedChoices > 0) {
+        if (!checkQuantity(container.parentElement, allowedChoices, addonTypeId)) {
+            element.checked = false;
+            container.style.visibility = 'hidden';
+            inputField.disabled = element.checke ? false : true;
+            return;
+        }
+        if (!checkAllowedChoices(container.parentElement, allowedChoices, addonTypeId)) {
+            element.checked = true;
+            return;
+        }
     }
 
     if (inputField.dataset.isBoolean === '0') {
@@ -16,11 +24,29 @@ function toggleElement(element) {
     } else if (inputField.dataset.isBoolean === '1') {
         container.style.visibility = 'hidden';
     }
+
     inputField.disabled = checked ? false : true;
     if (isOrdered(element)) {
         let itemId = element.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id;
         populateShoppingCart(itemId);
     }
+}
+
+function checkQuantity(container, allowedChoices, addonTypeId) {
+    let quantityElements = container.querySelectorAll('input[data-addon-type-id="' + addonTypeId + '"]');
+    let quantityElementsLength = quantityElements.length;
+    let i;
+    let quantity = 0;
+    for (i = 0; i < quantityElementsLength; i++) {
+        let element = quantityElements[i]
+        if (!element.disabled) {
+            quantity += parseInt(element.value);
+        }
+        if (quantity >= allowedChoices) {
+            return false;
+        }
+    }
+    return true;
 }
 
 function checkAllowedChoices(container, allowedChoices, addonTypeId) {
@@ -110,9 +136,20 @@ function changeAddonInputAttributes(element, quantity, className, isOrdered) {
     }
 }
 
+function calculateQuantity(element) {
+    
+}
+
 function changeAddonQuayntity(element) {
     let type = element.dataset.type;
     let inputField = (type === 'plus') ? element.previousElementSibling : element.nextElementSibling;
+
+    let container = element.parentElement.parentElement;
+    let allowedChoices = parseInt(inputField.dataset.allowedChoices);
+    let addonTypeId = inputField.dataset.addonTypeId;
+
+    if (type === 'plus' && !checkQuantity(container, allowedChoices, addonTypeId)) return;
+
     let value = parseInt(inputField.value);
     let minValue = parseInt(inputField.min);
     let maxValue = parseInt(inputField.max);
