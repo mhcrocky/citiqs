@@ -100,10 +100,10 @@ a:active {
 </style>
 
 <main role="main" style="margin-bottom: -30px" align="center">
-	<section style="background-color:#fbd19a; margin-top: 50px" align="center" >
+	<section style="background-color:#fbd19a; " align="center" >
 		<div style="background-color:#fbd19a;" align="center">
 <!--			<h1 style="font-family: campton-bold; margin-top: 30px;color:#27253b">--><?//=$this->language->Line("PLACES-A00002",'TIQS PICKUP & DELIVERY');?><!--</h1>-->
-			<h1 style="font-family: caption-bold; padding: 10px 30px; color:#ffffff">PICK UP & DELIVERY</h1>
+			<h1 style="font-family: caption-bold; padding: 50px 10px 10px 10px; color:#ffffff">PICK UP & DELIVERY</h1>
 <!--			<p style="font-family: campton-light;color: #27253b; margin-bottom: 0px">--><?//=$this->language->Line("PLACES-0020",'One stop shop to find everything at your favorite place');?><!--</p>-->
 
 			<div class="mb-35" align="center">
