@@ -210,7 +210,7 @@
          */
         public function addProdcut(): void
         {
-            $data = Utility_hepler::sanitizePost();
+            $data = Utility_helper::sanitizePost();
             $userId = intval($_SESSION['userId']);
 
             //CHECK PRODUCT NAME

@@ -4,13 +4,15 @@ function toggleElement(element) {
     let inputField = container.children[1];
     let checked = element.checked;
     let allowedChoices = parseInt(inputField.dataset.allowedChoices);
+    let addonTypeId = element.dataset.addonTypeIdCheck;
 
-    if (allowedChoices > 0 && !checkAllowedChoices(container.parentElement, allowedChoices)) {
+    if (allowedChoices > 0 && !checkAllowedChoices(container.parentElement, allowedChoices, addonTypeId)) {
         element.checked = false;
         let message = 'You can select only ' + allowedChoices + ' options';
         alertify.error(message);
         return;
     }
+
     if (inputField.dataset.isBoolean === '0') {
         container.style.visibility = checked ? 'visible' : 'hidden';
     } else if (inputField.dataset.isBoolean === '1') {
@@ -23,9 +25,9 @@ function toggleElement(element) {
     }
 }
 
-function checkAllowedChoices(container, allowedChoices) {
+function checkAllowedChoices(container, allowedChoices, addonTypeId) {
 
-    let checkedElements = container.querySelectorAll('[type="checkbox"]:checked').length;
+    let checkedElements = container.querySelectorAll('[data-addon-type-id-check="' + addonTypeId + '"]:checked').length;
     if (checkedElements > allowedChoices) {
         return false;
     }
@@ -410,7 +412,8 @@ function checkout() {
                         'allergies' : addon.dataset.allergies,
                         'productType' : addon.dataset.productType,
                         'isBoolean' : addon.dataset.isBoolean,
-                        'allowedChoices' : addon.dataset.allowedChoices
+                        'allowedChoices' : addon.dataset.allowedChoices,
+                        'addonTypeId' : addon.dataset.addonTypeId
                     }
                     if (addon.dataset.remarkId !== '0') {
                         let addonRemark = document.querySelectorAll('#' + orderedItem.id + ' [data-addon-remark-id="' + addon.dataset.remarkId + '"]')[0].value;

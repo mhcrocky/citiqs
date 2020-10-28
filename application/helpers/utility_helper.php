@@ -406,7 +406,12 @@
                                 $addonExtendedId = $addon['addonExtendedId'];                                
                                 $checkoutList .=            '<div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="width:50%; margin-bottom:3px">';
                                 $checkoutList .=                '<label class="form-check-label" style="word-wrap: break-word;">';
-                                $checkoutList .=                    '<input type="checkbox" class="form-check-input checkAddons" onchange="toggleElement(this)" checked>&nbsp;';
+                                $checkoutList .=                    '<input
+                                                                        type="checkbox"
+                                                                        class="form-check-input checkAddons"
+                                                                        onchange="toggleElement(this)" checked
+                                                                        data-addon-type-id-check="' . $addon['addonTypeId'] . '"
+                                                                    >&nbsp;';
                                 $checkoutList .=                    $addon['name'];
                                 if (floatval($addon['price']) > 0) {
                                     $checkoutList .=                '&nbsp;&euro; ' . $addon['price'];
@@ -468,6 +473,7 @@
                                                                     data-remark-id="' .  $remarkAddonId . '"
                                                                     data-is-boolean="' .  $addon['isBoolean'] . '"
                                                                     data-product-type="' . $addon['productType'] . '"
+                                                                    data-addon-type-id="' . $addon['addonTypeId'] . '"
                                                                     data-allowed-choices="' . $addon['allowedChoices'] . '"
                                                                     step="' . $addon['step'] . '"
                                                                     value="' . $addon['quantity'] . '" ';

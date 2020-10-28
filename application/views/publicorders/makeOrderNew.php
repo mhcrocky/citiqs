@@ -408,6 +408,7 @@
                                                                 <input
                                                                     type="checkbox"
                                                                     class="form-check-input checkAddons"
+                                                                    data-addon-type-id-check="<?php echo $addon['productTypeId']; ?>"
                                                                     onchange="toggleElement(this)"
                                                                 />
                                                                 <?php echo $addon['name']; ?>
@@ -475,6 +476,7 @@
                                                                 data-max="<?php echo $addonAllowedQuantity; ?>"
                                                                 data-remark-id="<?php echo $remarkAddonId ?>"
                                                                 data-product-type="<?php echo $addon['productType']; ?>"
+                                                                data-addon-type-id="<?php echo $addon['productTypeId']; ?>"
                                                                 data-is-boolean="<?php echo $addon['isBoolean']; ?>"
                                                                 data-allowed-choices="<?php echo $addon['additionalNumber']; ?>"
                                                                 <?php if (isset($addonAllergies)) { ?>
