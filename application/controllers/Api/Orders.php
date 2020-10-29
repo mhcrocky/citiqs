@@ -42,6 +42,11 @@
 
             if (!$order) return;
             $order = reset($order);
+            if ($get['mac'] === '00:11:62:0D:9D:BA') {
+                echo '<pre>';
+                print_r($order);
+                echo '</pre>';
+            }
 
             //ORDER REMARK FOR PRINITING
             // Order remak order[remarks] property
@@ -92,7 +97,7 @@
 
             //-------------- LOGO -------------------------
             // TO DO THIS MUST BE VENDOR LOGO
-            if (is_null($order['vendorLogo'])) {
+            if (is_null($order['vendorLogo']) || !is_file($this->config->item('uploadLogoFolder') . $order['vendorLogo'])) {
                 $logoFile = FCPATH . "/assets/home/images/tiqslogonew.png";
             } else {
                 $logoFile = $this->config->item('uploadLogoFolder') . $order['vendorLogo'];
@@ -279,6 +284,11 @@
             $emailMessage = '';
             foreach ($productsarray as $product) {
                 $product = explode($this->config->item('concatSeparator'), $product);
+
+                if ($get['mac'] === '00:11:62:0D:9D:BA') {
+                    var_dump($product);
+                }
+                // var_dump($product);
                 if (intval($product[9])) {
                     $mainProductIndex = $product[9];
                 }
@@ -378,6 +388,9 @@
 
             }
 
+            if ($get['mac'] === '00:11:62:0D:9D:BA') {
+                die();
+            }
 			$ii = $i;
 
 			$drawemail->setStrokeColor('black');
