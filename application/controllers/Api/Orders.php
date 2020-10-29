@@ -304,6 +304,7 @@
                     $shortDescription = $product[5];
                     $longDescription = $product[6];
                     $vatpercentage = $product[7];
+                    $remark = $product[8];
 
 
 
@@ -331,12 +332,24 @@
 
                         $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
                         $draw->annotation(60, $hd + ($i * 30), $title);
+
+                        if ($remark) {
+                            $i++;
+                            $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                            $draw->annotation(60, $hd + ($i * 30), $remark);;
+                        }
                     } else {
                         $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
                         $draw->annotation(0, $hd + ($i * 30), $quantity);
 
                         $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
                         $draw->annotation(40, $hd + ($i * 30), $title);
+
+                        if ($remark) {
+                            $i++;
+                            $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                            $draw->annotation(40, $hd + ($i * 30), $remark);;
+                        }
                     }
 
                     // $draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
@@ -375,6 +388,16 @@
                 }
             }
 
+            if ($order['remarks']) {
+                $i = $i + 2;
+                $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                $draw->annotation(0, $hd + ($i * 30), 'ORDER REMARK');
+                $i++;
+                $draw->annotation(0, $hd + ($i * 30), $order['remarks']);
+                $i++;
+            }
+
+            
 			$ii = $i;
 
 			$drawemail->setStrokeColor('black');
