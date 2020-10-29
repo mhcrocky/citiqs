@@ -286,7 +286,9 @@
                 $product = explode($this->config->item('concatSeparator'), $product);
 
                 if ($masterMac === '00:11:62:0D:9D:BA') {
-                    var_dump($product);
+                    echo '<pre>';
+                    print_r($product);
+                    echo '</pre>';
                 }
                 // var_dump($product);
                 if (intval($product[9])) {
