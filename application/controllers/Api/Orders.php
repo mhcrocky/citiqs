@@ -42,11 +42,6 @@
 
             if (!$order) return;
             $order = reset($order);
-            if ($masterMac === '00:11:62:0D:9D:BA') {
-                echo '<pre>';
-                print_r($order);
-                echo '</pre>';
-            }
 
             //ORDER REMARK FOR PRINITING
             // Order remak order[remarks] property
@@ -282,117 +277,104 @@
 			$T21totalamount=0;
 			$T9totalamount=0;
             $emailMessage = '';
-            foreach ($productsarray as $product) {
+            foreach ($productsarray as $index => $product) {
                 $product = explode($this->config->item('concatSeparator'), $product);
+                if (intval($product[10])) $product[9] = $product[10];
+                $productsarray[$index] = $product;
+            }
+            $productsarray = Utility_helper::resetArrayByKeyMultiple($productsarray, '9');
+            foreach ($productsarray as $mainIdnex => $products) {
+                Utility_helper::array_sort_by_column($products, '10');
+                foreach($products as $product) {
+                   
+                    // 0 => name
+                    // 1 => unit price
+                    // 2 => ordered quantity
+                    // 3 => category
+                    // 4 => category id
+                    // 5 => shortDescription
+                    // 6 => longDescription
+                    // 7 => vatpercentage
+                    // 8 => remark
 
-                if ($masterMac === '00:11:62:0D:9D:BA') {
-                    echo '<pre>';
-                    print_r($product);
-                    echo '</pre>';
-                }
-                // var_dump($product);
-                if (intval($product[9])) {
-                    $mainProductIndex = $product[9];
-                }
-                if (intval($product[10])) {
-                    $subMainProductIndex = $product[10];
-                }
-
-                if (!intval($product[9]) && !intval($product[10])) {
-                    if (isset($mainProductIndex)) unset($mainProductIndex);
-                    if (isset($subMainProductIndex)) unset($subMainProductIndex);
-                }
-                // 0 => name
-                // 1 => unit price
-                // 2 => ordered quantity
-                // 3 => category
-                // 4 => category id
-                // 5 => shortDescription
-                // 6 => longDescription
-                // 7 => vatpercentage
-                // 8 => remark
-
-                $title =  substr($product[0], 0, 27);
-				$price = $product[1];
-                $quantity = $product[2];
-                $plu =  $product[3];
-                $shortDescription = $product[5];
-                $longDescription = $product[6];
-                $vatpercentage = $product[7];
+                    $title =  substr($product[0], 0, 27);
+                    $price = $product[1];
+                    $quantity = $product[2];
+                    $plu =  $product[3];
+                    $shortDescription = $product[5];
+                    $longDescription = $product[6];
+                    $vatpercentage = $product[7];
 
 
 
-                $totalamount =  floatval($quantity) * floatval($price);
-				$Stotalamount = sprintf("%.2f", $totalamount);
+                    $totalamount =  floatval($quantity) * floatval($price);
+                    $Stotalamount = sprintf("%.2f", $totalamount);
 
-				$Ttotalamount = $Ttotalamount+$totalamount  ;
-				$TStotalamount = sprintf("%.2f", $Ttotalamount);
+                    $Ttotalamount = $Ttotalamount+$totalamount  ;
+                    $TStotalamount = sprintf("%.2f", $Ttotalamount);
 
-				if($vatpercentage==21){
-					$T21totalamount = $T21totalamount+($totalamount-(($totalamount/121)*100))  ;
-				}
+                    if($vatpercentage==21){
+                        $T21totalamount = $T21totalamount+($totalamount-(($totalamount/121)*100))  ;
+                    }
 
-				if($vatpercentage==9){
-					$T9totalamount = $T9totalamount+($totalamount-(($totalamount/121)*100))  ;
-				}
+                    if($vatpercentage==9){
+                        $T9totalamount = $T9totalamount+($totalamount-(($totalamount/121)*100))  ;
+                    }
 
-				// replace of 195 bu $h (header)
-
-				$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                // $draw->annotation(0, $hd + ($i * 30), $plu);
-                if (isset($subMainProductIndex) && isset($mainProductIndex) && $subMainProductIndex === $mainProductIndex) {
-                    $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                    $draw->annotation(20, $hd + ($i * 30), $quantity);
+                    // replace of 195 bu $h (header)
 
                     $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                    $draw->annotation(60, $hd + ($i * 30), $title);
-                } else {
-                    $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                    $draw->annotation(0, $hd + ($i * 30), $quantity);
+                    // $draw->annotation(0, $hd + ($i * 30), $plu);
+                    if (intval($product[10])) {
+                        $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                        $draw->annotation(20, $hd + ($i * 30), $quantity);
 
-                    $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                    $draw->annotation(40, $hd + ($i * 30), $title);
+                        $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                        $draw->annotation(60, $hd + ($i * 30), $title);
+                    } else {
+                        $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                        $draw->annotation(0, $hd + ($i * 30), $quantity);
+
+                        $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                        $draw->annotation(40, $hd + ($i * 30), $title);
+                    }
+
+                    // $draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
+                    // $draw->annotation(440, $hd + ($i * 30), "€ ". $price);
+
+                    // $draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
+                    // $draw->annotation(500, $hd + ($i * 30), $vatpercentage);
+
+                    // $draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
+                    // $draw->annotation(570, $hd + ($i * 30), "€ ". $Stotalamount);
+
+                    $drawemail->setFontSize(22);
+                    $drawemail->setStrokeWidth(1);
+                    $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+
+                    $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+                    // $draw->annotation(0, $hd + ($i * 30), $plu);
+
+                    $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+                    $drawemail->annotation(0, $hd + ($i * 30), $quantity);
+
+                    $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+                    $drawemail->annotation(40, $hd + ($i * 30), substr($title, 0, 20));
+
+                    $drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+                    $drawemail->annotation(440, $hd + ($i * 30), "€ ". $price);
+
+                    $drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+                    $drawemail->annotation(500, $hd + ($i * 30), $vatpercentage);
+
+                    $drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+                    $drawemail->annotation(570, $hd + ($i * 30), "€ ". $Stotalamount);
+
+
+                    $i++;
                 }
-
-                // $draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
-                // $draw->annotation(440, $hd + ($i * 30), "€ ". $price);
-
-                // $draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
-                // $draw->annotation(500, $hd + ($i * 30), $vatpercentage);
-
-                // $draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
-                // $draw->annotation(570, $hd + ($i * 30), "€ ". $Stotalamount);
-
-				$drawemail->setFontSize(22);
-				$drawemail->setStrokeWidth(1);
-				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-				// $draw->annotation(0, $hd + ($i * 30), $plu);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-				$drawemail->annotation(0, $hd + ($i * 30), $quantity);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-				$drawemail->annotation(40, $hd + ($i * 30), substr($title, 0, 20));
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-				$drawemail->annotation(440, $hd + ($i * 30), "€ ". $price);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-				$drawemail->annotation(500, $hd + ($i * 30), $vatpercentage);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-				$drawemail->annotation(570, $hd + ($i * 30), "€ ". $Stotalamount);
-
-
-				$i++;
-
             }
 
-            if ($masterMac === '00:11:62:0D:9D:BA') {
-                die();
-            }
 			$ii = $i;
 
 			$drawemail->setStrokeColor('black');
