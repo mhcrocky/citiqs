@@ -2,7 +2,7 @@
     <div class="row">
         <?php if (!empty($mainProducts)) { ?>        	
 			    <?php if ($vendor['logo']) { ?>
-					<div id="vendorLogo" style="text-align:center">
+					<div id="vendorLogo" style="text-align:center" >
 						<img src=<?php echo base_url() . 'assets/images/vendorLogos/' . $vendor['logo']; ?> alt="" width="100%" height="auto" />
 					</div>
 				<?php }?>
@@ -562,6 +562,23 @@
     }
 ?>
 
+<!-- IMAGE MODAL -->
+<!-- Image Modal -->
+<div class="modal fade image-modal"  tabindex="-1" id="image-modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class='modal-image-container'>
+				<img src="" alt="" id='modal-image'>
+			</div>
+			<button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
+				<p aria-hidden="true">&times;</p>
+			</button>
+		</div>
+
+	</div>
+</div>
+<!-- end modal image -->
+
 <script>
     var makeOrderGlobals = (function(){
         let globals = {
@@ -585,4 +602,26 @@
         Object.freeze(globals);
         return globals;
     }());
+</script>
+
+<script>
+
+	$(document).ready(function(){
+		$(".shop__single-item__image").click(function(){
+			$("#image-modal").modal({
+				backdrop: 'static',
+				keyboard: false
+			});
+		});
+	});
+
+	var open_modal = $('.shop__single-item__image');
+	var img_src = '';
+	var modal_img_src = $('#modal-image');
+
+	open_modal.on('click tap', function(){
+		img_src = $(this).children('img').attr('src');
+		modal_img_src.attr('src', img_src);
+		console.log(img_src)
+	})
 </script>

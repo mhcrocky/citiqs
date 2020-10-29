@@ -27,9 +27,9 @@
 		x.pause();
 	}
 
-	$(document).ready( function () {
-		playAudio();
-	});
+	// $(document).ready( function () {
+	// 	playAudio();
+	// });
 
 </script>
 

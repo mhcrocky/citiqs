@@ -60,7 +60,7 @@ body{
 }
 
 .shop__item-list-heading{
-	padding: 30px 15px;
+	padding: 30px 40px;
 	text-align: center;
 }
 
@@ -659,7 +659,7 @@ body{
 
 
 .items-slider .slick-next {
-	right: 7%;
+	right: 3%;
 	top: 63px;
 	left: unset;
 }

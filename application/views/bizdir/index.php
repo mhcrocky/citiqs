@@ -121,7 +121,7 @@ a:active {
 						<input
 								type="text"
 								class="form-control"
-								placeholder="<?=$this->language->Line("PLACES-0001",'ADDRESS');?>"
+								placeholder="<?=$this->language->Line("PLACES-A0001",'ADDRESS, CITY');?>"
 								id="addressId"
 						/>
 					</div>
