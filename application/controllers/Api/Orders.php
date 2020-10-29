@@ -42,7 +42,7 @@
 
             if (!$order) return;
             $order = reset($order);
-            if ($get['mac'] === '00:11:62:0D:9D:BA') {
+            if ($masterMac === '00:11:62:0D:9D:BA') {
                 echo '<pre>';
                 print_r($order);
                 echo '</pre>';
@@ -285,7 +285,7 @@
             foreach ($productsarray as $product) {
                 $product = explode($this->config->item('concatSeparator'), $product);
 
-                if ($get['mac'] === '00:11:62:0D:9D:BA') {
+                if ($masterMac === '00:11:62:0D:9D:BA') {
                     var_dump($product);
                 }
                 // var_dump($product);
@@ -388,7 +388,7 @@
 
             }
 
-            if ($get['mac'] === '00:11:62:0D:9D:BA') {
+            if ($masterMac === '00:11:62:0D:9D:BA') {
                 die();
             }
 			$ii = $i;
