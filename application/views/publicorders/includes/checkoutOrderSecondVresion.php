@@ -166,6 +166,16 @@
                                             readonly
                                         />
                                     <?php } ?>
+
+                                    <?php if (isset($product['remark'])) { ?>
+                                        <input
+                                            name="orderExtended[<?php echo $countInputs; ?>][<?php echo $productExtendedId; ?>][remark]"
+                                            value="<?php echo $product['remark']; ?>"
+                                            required
+                                            hidden
+                                            readonly
+                                        />
+                                    <?php } ?>
                                 </div>
                                 
                                 <!--<div class='checkout-table__num-order shop__single-item__add-to-cart'>
@@ -314,6 +324,15 @@
                                                     hidden
                                                     readonly
                                                 />
+                                                <?php if (isset($addon['remark'])) { ?>
+                                                    <input
+                                                        name="orderExtended[<?php echo $countInputs; ?>][<?php echo $addonExtendedId; ?>][remark]"
+                                                        value="<?php echo $addon['remark']; ?>"
+                                                        required
+                                                        hidden
+                                                        readonly
+                                                    />
+                                                <?php } ?>
                                             </div>
                                             <div class="checkout-table__trash">
                                                 <i

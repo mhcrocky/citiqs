@@ -426,11 +426,12 @@ function checkout() {
             'categorySlide' : product.dataset.categorySlide,
             'addons' : {}
         };
+        
         if (product.dataset.allergies) {
             post[i][product.dataset.productExtendedId]['allergies']  = product.dataset.allergies;
         }
 
-        if (product.dataset.remarkId !== '0') {
+        if (product.dataset['remarkId'] !== '0') {
             let productRemark = document.querySelectorAll('#' + orderedItem.id + ' [data-product-remark-id="' + product.dataset.remarkId + '"]')[0].value;
             post[i][product.dataset.productExtendedId]['remark'] = productRemark;
         }
@@ -458,7 +459,7 @@ function checkout() {
                         'allowedChoices' : addon.dataset.allowedChoices,
                         'addonTypeId' : addon.dataset.addonTypeId
                     }
-                    if (addon.dataset.remarkId !== '0') {
+                    if (addon.dataset['remarkId'] !== '0') {
                         let addonRemark = document.querySelectorAll('#' + orderedItem.id + ' [data-addon-remark-id="' + addon.dataset.remarkId + '"]')[0].value;
                         post[i][product.dataset.productExtendedId]['addons'][addon.dataset.addonExtendedId]['remark'] = addonRemark;
                     }
