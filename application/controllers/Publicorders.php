@@ -185,6 +185,7 @@
                     $data['mainProducts'] = $allProducts['main'];
                     $data['addons'] = $allProducts['addons'];
                     $data['returnCategorySlide'] = isset($_GET['category']) ? $_GET['category'] : null;
+                    $data['maxRemarkLength'] = $this->config->item('maxRemarkLength');
 
                     if ($ordered) {
                         $ordered = Utility_helper::returnMakeNewOrderElements($ordered, $data['vendor'], $data['mainProducts'], $data['addons']);
@@ -292,6 +293,7 @@
                 'buyershorturl'     => $this->config->item('buyershorturl'),
                 'countryCodes'      => Country_helper::getCountryPhoneCodes(),
                 'orderDataGetKey'   => $this->config->item('orderDataGetKey'),
+                'maxRemarkLength'   => $this->config->item('maxRemarkLength'),
             ];
 
             $this->checkVendorCredentials( $data['vendor'], intval($data['spot']['spotTypeId']) );

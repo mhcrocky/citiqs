@@ -367,12 +367,14 @@
                                         <?php if ($product['addRemark'] === '1') { ?>
                                             <h6 class="remark"><?=$this->language->line("PAYMENT-LL0010",'Remarks');?> </h6>
                                             <div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">
-                                                <textarea
+                                                <input
+                                                    type="text"
                                                     class="form-control"
                                                     rows="1"
-                                                    maxlength="200"
+                                                    maxlength="<?php echo $maxRemarkLength; ?>"
                                                     data-product-remark-id="<?php echo $remarkProductId; ?>"
-                                                ></textarea>
+                                                    placeholder="Allowed <?php echo $maxRemarkLength; ?> characters"
+                                                />
                                             </div>
                                         <?php } ?>
                                     </div>
@@ -512,12 +514,14 @@
                                                             <div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">
                                                                 <h6 style="margin-top:0px;">Remark</h6>
                                                                 <div class="col-lg-12 col-sm-12" style="margin-bottom:3px">
-                                                                    <textarea
+                                                                    <input
+                                                                        type="text"
                                                                         class="form-control"
                                                                         rows="1"
-                                                                        maxlength="200"
+                                                                        maxlength="<?php echo $maxRemarkLength; ?>"
                                                                         data-addon-remark-id="<?php echo $remarkAddonId ?>"
-                                                                    ></textarea>
+                                                                        placeholder="Allowed <?php echo $maxRemarkLength; ?> characters"
+                                                                    />
                                                                 </div>
                                                             </div>
                                                         <?php } ?>

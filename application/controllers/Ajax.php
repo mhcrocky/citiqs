@@ -653,7 +653,10 @@ class Ajax extends CI_Controller
         $post = Utility_helper::sanitizePost();
 
         if (!empty($post['data'])) {
-            $this->prepareOrderData($post);
+            if (!$this->prepareOrderData($post)) {
+                echo '0';
+                return;
+            }
             $orderDataRandomKey = trim(Utility_helper::getAndUnsetValue($post, 'orderDataRandomKey'));
             if ($orderDataRandomKey) {
                 $this
@@ -664,22 +667,34 @@ class Ajax extends CI_Controller
                 $this->shopsession_model->insertSessionData($post);
             }
         }
-
         echo ($this->shopsession_model->id && $this->shopsession_model->randomKey) ? $this->shopsession_model->randomKey : '0';
         return;
     }
 
-    private function prepareOrderData(array &$post): void
+    private function prepareOrderData(array &$post): bool
     {
         $post['makeOrder'] = [];
         $string = 'qwertzuioplkjhgfdsamnbvcxy';
         $count = 0;
         foreach($post['data'] as $data) {
+            if (!$this->checkRemarkLength($data)) return false;
             $count++;
             $shuffled = strval($count) . '_' . str_shuffle($string);
             $post['makeOrder'][$shuffled] = $data;
-        }
+        };
         unset($post['data']);
+        return true;
+    }
+
+    private function checkRemarkLength(array $data): bool
+    {
+        foreach($data as $key => $value)  {
+            if (isset($value['remark']) && strlen($value['remark']) > $this->config->item('maxRemarkLength')) {
+                return false;
+            }
+            if (!empty($value['addons']) && !$this->checkRemarkLength($value['addons'])) return false;
+        }
+        return true;
     }
 
     public function unsetSessionOrderElement(): void
@@ -1233,6 +1248,11 @@ class Ajax extends CI_Controller
             $response = [
                 'status' => '0',
                 'message' => 'Order not made! Please confirm that you read terms and conditions and privacy policy',
+            ];
+        } elseif (isset($post['order']['remarks']) && strlen($post['order']['remarks']) > $this->config->item('maxRemarkLength')) {
+            $response = [
+                'status' => '0',
+                'message' => 'Order not made! Remark is too long',
             ];
         } else {
             $this->setDeliveryCookies($post['user']);

@@ -66,7 +66,15 @@
             <?php if ($vendor['requireRemarks'] === '1') { ?>
                 <div class="form-group col-sm-12">
                     <label for="notesInput"><?=$this->language->line("PAYMENT-LL0010",'Remarks');?> </label>
-                    <textarea id="notesInput" class="form-control" name="order[remarks]" rows="3" maxlength="250"></textarea>
+                    <input
+                        type="text"
+                        id="notesInput"
+                        class="form-control"
+                        name="order[remarks]"
+                        rows="3"
+                        maxlength="<?php echo $maxRemarkLength; ?>"
+                        placeholder="Allowed <?php echo $maxRemarkLength; ?> characters"
+                    />
                 </div>
             <?php } ?>
             <?php if ($vendor['termsAndConditions'] && $vendor['showTermsAndPrivacy'] === '1') { ?>

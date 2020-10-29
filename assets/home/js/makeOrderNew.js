@@ -481,6 +481,8 @@ function checkout() {
         success: function (response) {
             if (response && response !== '0') {
                 window.location.href = globalVariables.baseUrl + 'checkout_order?' + makeOrderGlobals.orderDataGetKey + '=' + response;
+            } else {
+                alertify.error('Process failed! Check order details')
             }
         },
         error: function (err) {

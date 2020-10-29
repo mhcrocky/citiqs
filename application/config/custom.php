@@ -202,3 +202,5 @@ $config['minMobileLength'] = 6;
 $config['orderDataGetKey'] = 'order';
 
 $config['buyershorturl'] = 'tiqs_shop_service';
+
+$config['maxRemarkLength'] = 35;
