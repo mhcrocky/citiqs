@@ -110,7 +110,7 @@
 
         public function update(): bool
         {
-            $data = $this->getDataArrayForDatabase();
+            $data = $this->getDataArrayForDatabaseUpdate();
             if (!$data || !$this->updateValidate($data)) return false;
             $where = ' id = ' . $this->id;
             return $this->db->update($this->getThisTable(), $data, $where);
