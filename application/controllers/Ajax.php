@@ -445,11 +445,11 @@ class Ajax extends CI_Controller
             'tbl_shop_orders.paid=' => $post['paid'],
             'tbl_shop_orders.created>=' => date('Y-m-d H:i:s', strtotime('-1 hours', time()))
         ];
-        // if (isset($post['orderStatus'])) {
-        //     $where['tbl_shop_orders.orderStatus='] = $post['orderStatus'];
-        // } else {
-        //     $where['tbl_shop_orders.orderStatus!='] = $this->config->item('orderFinished');
-        // }
+//        if (isset($post['orderStatus'])) {
+//            $where['tbl_shop_orders.orderStatus='] = $post['orderStatus'];
+//        } else {
+//            $where['tbl_shop_orders.orderStatus!='] = $this->config->item('orderFinished');
+//        }
         $selectedPrinter = (isset($post['selectedPrinter'])) ? $post['selectedPrinter'] : '';
 
 
@@ -1191,7 +1191,11 @@ class Ajax extends CI_Controller
 
     public function getPlaceByLocation(){
         $location = $this->input->post('location');
-        $data['directories'] = $this->Bizdir_model->get_bizdir_by_location($location);
+        $range = $this->input->post('range');
+        $coordinates = Google_helper::getLatLong($location);
+        $lat = $coordinates['lat'];
+        $long = $coordinates['long'];
+        $data['directories'] = $this->Bizdir_model->get_bizdir_by_location(floatval($lat),floatval($long),$range);
         $result = $this->load->view('bizdir/place_card', $data,true);
         if( isset($result) ) {
             return $this->output
@@ -1207,7 +1211,6 @@ class Ajax extends CI_Controller
                 'type' => 'Error 404'
             )));
         }
-			 
 		
 	}
 
@@ -1262,22 +1265,11 @@ class Ajax extends CI_Controller
         $spotTypeId = intval($post['spotTypeId']);
         $orderRandomKey = $post['orderRandomKey'];
 
-        if ($spotTypeId === $this->config->item('deliveryType') && !$this->validateDeliveryLocation($post['user'])) {
+        if (!$this->validateDeliveryLocation($post['user'], $spotTypeId)) {
             $response = [
                 'status' => '0',
                 'message' => 'Order not made! Please insert delivery city, zipcode and/or address'
             ];
-        } elseif ($spotTypeId === $this->config->item('deliveryType') && !$this->validateDeliveryDistance($post['user'], $vendor)) {
-            $response = [
-                'status' => '0',
-                'pickup' => '0'
-            ];
-            foreach ($vendor['typeData'] as $type) {
-                if (intval($type['typeId']) === $this->config->item('pickupType')) {
-                    $response['pickup'] = '1';
-                    break;
-                }
-            }
         } elseif (!$this->checkTermsAndConditions($vendor, $post['order'])) {
             $response = [
                 'status' => '0',
@@ -1328,20 +1320,15 @@ class Ajax extends CI_Controller
         }
     }
 
-    private function validateDeliveryLocation(array $user): bool
+    private function validateDeliveryLocation(array $user, int $spotTypeId): bool
     {
-        if ( empty($user['city']) || empty($user['zipcode']) || empty($user['address']) ) {
+        if (
+            $spotTypeId === $this->config->item('deliveryType')
+            && ( empty($user['city']) || empty($user['zipcode']) || empty($user['address']) )
+        ) {
                 return false;
         }
         return true;
-    }
-
-    private function validateDeliveryDistance(array $user, array $vendor): bool
-    {
-        $point = Google_helper::getLatLong($user['address'], $user['zipcode'], $user['city']);;
-        $distance = Utility_helper::getDistance($point['lat'], $point['long'], $vendor['vendorLat'], $vendor['vendorLon']);
-
-        return ($distance > $vendor['deliveryAirDistance']) ? false : true;
     }
 
     private function checkTermsAndConditions(array $vendor, array $order): bool
