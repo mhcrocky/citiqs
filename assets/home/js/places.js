@@ -1,12 +1,12 @@
 'use strict';
 
-function getPlaceByLocation(location, myRange) {
+function getPlaceByLocation(location, places, myRange) {
     let address = document.getElementById(location);
     let range = document.getElementById(myRange);
    
 
     if (address.value) { 
-        let url = globalVariables.ajax + 'getPlaceByLocation';
+        let url = "ajaxdorian/getPlaceByLocation";
         let post = {
             'location' : address.value,
             'range' : range.value
