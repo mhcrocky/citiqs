@@ -79,7 +79,7 @@
                     </div>
 
                     <div class="mb-35">
-                        <a href="<?php echo base_url(); ?>howitworksbusiness" class="button button-orange mb-35"><?=$this->language->line("HABINFO-010",'HOW IT WORKS');?></a>
+                        <a href="<?php echo base_url(); ?>howitworksbusiness" class="button button-orange mb-35"><?php $this->language->line("HABINFO-010",'HOW IT WORKS');?></a>
 					</div>
 					<a href="https://apps.apple.com/us/app/tiqs-hospitality-lost-found/id1481467292" target="_blank">
 						<img src="<?php echo base_url(); ?>assets/home/images/appstore.png" alt="DOWNLOAD ON APPLE STORE" style="width:110px;height:30px;border:0;">

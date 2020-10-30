@@ -11,15 +11,15 @@
         <span style='display:inline-block; white-space:nowrap'>
 
             <span class="krpmFieldDrop" style='padding:5px 3px;'
-                data-field-drop=true data-field-order=<?= $o-1 ?> >
+                data-field-drop=true data-field-order=<?php $o-1 ?> >
                 &nbsp;</span>
 
-            <span class="krpmField krpm<?= ucfirst($fieldsType[$o-1]) ?>Field btn
+            <span class="krpmField krpm<?php ucfirst($fieldsType[$o-1]) ?>Field btn
                     <?php echo Util::get($classMap, $df, ""); ?>" 
-                data-field-type = "<?= $fieldsType[$o-1] ?>"
-                data-field-name = "<?= $fields[$o-1] ?>"
-                data-field-order = "<?= $o-1 ?>" >
-                <?= $df ?>
+                data-field-type = "<?php $fieldsType[$o-1] ?>"
+                data-field-name = "<?php $fields[$o-1] ?>"
+                data-field-order = "<?php $o-1 ?>" >
+                <?php $df ?>
                 
                 <?php 
                     $sort = strtolower($fieldsSort[$o - 1]);
@@ -53,7 +53,7 @@
 
             <?php  if ($o === count($mappedFields)) { ?>
                 <span class="krpmFieldDrop" style='padding:5px 3px;'
-                    data-field-drop=true  data-field-order=<?= $o ?> >
+                    data-field-drop=true  data-field-order=<?php $o ?> >
                     &nbsp;</span>
             <?php } ?>
 

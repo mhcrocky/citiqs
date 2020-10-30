@@ -65,7 +65,7 @@ $results = $service->volumes->listVolumes('Henry David Thoreau', $optParams);
 
 <h3>Results Of Call:</h3>
 <?php foreach ($results as $item): ?>
-  <?= $item['volumeInfo']['title'] ?>
+  <?php $item['volumeInfo']['title'] ?>
   <br />
 <?php endforeach ?>
 

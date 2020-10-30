@@ -83,13 +83,13 @@
                                     ?>
                                     <tr>
                                         <td class="text-left">
-        <?= $appointment->dayofweek; ?>
+        <?php $appointment->dayofweek; ?>
                                         </td>
                                         <td class="text-left">
-        <?= $appointment->timefrom; ?>
+        <?php $appointment->timefrom; ?>
                                         </td>
                                         <td class="text-left">
-        <?= $appointment->timeto; ?>
+        <?php $appointment->timeto; ?>
                                         </td>
                                         <td class="text-left">
                                             <a class="btn btn-sm btn-info" href="<?php echo base_url() . 'editOldAppointment/' . $appointment->id; ?>" title="Edit"><i class="fa fa-pencil"></i></a>

@@ -4,12 +4,12 @@
 			<div style="text-align:center">
 				<form action="<?php echo $this->baseUrl; ?>profileUpdate" method="post" id="editProfile">
 <!--					<input type="text" value="--><?php //echo $user->id; ?><!--" name="id" id="userId" readonly hidden required />-->
-					<h2 class="heading mb-35"><?=$this->language->line("PROF-010A",'YOUR PROFILE PAGE.');?></h2>
+					<h2 class="heading mb-35"><?php $this->language->line("PROF-010A",'YOUR PROFILE PAGE.');?></h2>
 					<div class="flex-row align-space">
 						<div class="flex-column align-space">
 							<div class="form-group has-feedback">
 								<p style="font-family: caption-light; padding: 10px">
-									<?=$this->language->line("PROF-020A",'Full Name');?>
+									<?php $this->language->line("PROF-020A",'Full Name');?>
 								</p>
 								<div class="form-group has-feedback">
 									<input  value="<?php echo $user->username; ?>" name="username" required type="text" class="form-control" id="fname" style="border-radius: 50px; border:none" placeholder="<?php echo $name; ?>" maxlength="128" />
@@ -18,17 +18,17 @@
 							<?php if ($user->IsDropOffPoint === '1') { ?>
 							<div>
 								<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center">
-									<?=$this->language->Line("registerbusiness-1600A",'Your shortname');?>
+									<?php $this->language->Line("registerbusiness-1600A",'Your shortname');?>
 								</p>
 							</div>
 							<div class="form-group has-feedback">
-								<input value="<?php echo $user->usershorturl; ?>" name="usershorturl" required type="text" class="form-control"  required id="usershorturl" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("registerbusiness-1700A",'Your shortname');?>" name="usershorturl" pattern="[a-z]{1,15}" title="<?=$this->language->Line("registerbusiness-1800A",'Only [a-z] characters allowed (no capital), no spaces, points or special characters like @#$% and max 15 length');?>" />
+								<input value="<?php echo $user->usershorturl; ?>" name="usershorturl" required type="text" class="form-control"  required id="usershorturl" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php $this->language->Line("registerbusiness-1700A",'Your shortname');?>" name="usershorturl" pattern="[a-z]{1,15}" title="<?php $this->language->Line("registerbusiness-1800A",'Only [a-z] characters allowed (no capital), no spaces, points or special characters like @#$% and max 15 length');?>" />
 							</div>
 							<?php } ?>
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-030A31",'Mobile Number (Country code + number e.g. 0031(country) 0123456789 (number) => 00310123456789)');?>
+										<?php $this->language->line("PROF-030A31",'Mobile Number (Country code + number e.g. 0031(country) 0123456789 (number) => 00310123456789)');?>
 									</p>
 									<div class="form-group has-feedback">
 										<input name="mobile" value="<?php echo $user->mobile; ?>" required style="border-radius: 50px; border:none" type="text" class="form-control" id="mobile" placeholder="<?php echo $user->mobile; ?>" maxlength="20">
@@ -40,7 +40,7 @@
 								<p style="font-family: caption-light; padding: 10px">Business type</p>
 								<div class="selectWrapper mb-35">
 									<select class="selectBox" name="business_type_id" style="font-family:'caption-light';" required>
-									<option value=""><?=$this->language->Line("registerbusiness-1600A1","Select business type");?></option>
+									<option value=""><?php $this->language->Line("registerbusiness-1600A1","Select business type");?></option>
 									<?php foreach ($businessTypes as $type) { ?>
 									<option <?php if($type['id'] === $user->business_type_id) echo 'selected'; ?> value="<?php echo $type['id'] ?>">
 									<?php echo $this->language->Line(ucfirst($type['busineess_type']),ucfirst($type['busineess_type'])) ?>
@@ -52,26 +52,26 @@
 
 							<div>
 								<div style="text-align: center ">
-									<input type="input" class="button button-orange" value="<?=$this->language->line("PROF-AB040 ",'TELL US MORE');?>" style="text-align: center;border: none" />
+									<input type="input" class="button button-orange" value="<?php $this->language->line("PROF-AB040 ",'TELL US MORE');?>" style="text-align: center;border: none" />
 								</div>
 							</div>
 
 							<div>
 								<p style="font-family: caption-light; padding: 10px">
-									<?=$this->language->line("PROF-0303021","
+									<?php $this->language->line("PROF-0303021","
 									VAT number
 									");?>
 								</p>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="text" value="<?php echo $user->vat_number; ?>" name="vat_number" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->line("PROF-03031","Business VAT number");?> />
+								<input type="text" value="<?php echo $user->vat_number; ?>" name="vat_number" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php $this->language->line("PROF-03031","Business VAT number");?> />
 								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 							</div>
 							<?php } ?>
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-031","Your E-mail address");?>
+										<?php $this->language->line("PROF-031","Your E-mail address");?>
 									</p>
 
 									<div class="form-group has-feedback">
@@ -82,7 +82,7 @@
 							<?php if ($user->IsDropOffPoint === '1') { ?>
 							<div>
 								<p style="font-family: caption-light; padding: 10px">
-									<?=$this->language->line("PROF-10303021","
+									<?php $this->language->line("PROF-10303021","
 									Responsible person first name
 									"); ?>
 								</p>
@@ -93,7 +93,7 @@
 							</div>
 							<div>
 								<p style="font-family: caption-light; padding: 10px">
-									<?=$this->language->line("PROF-103030211","
+									<?php $this->language->line("PROF-103030211","
 									Responsible person last name
 									"); ?>
 								</p>
@@ -106,7 +106,7 @@
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-032","Address");?>
+										<?php $this->language->line("PROF-032","Address");?>
 									</p>
 									<div class="form-group has-feedback">
 										<input style="border-radius: 50px; border:none" type="text" class="form-control" id="addres" name="address" placeholder="<?php echo $user->address; ?>" value="<?php echo $user->address; ?>" maxlength="128" />
@@ -116,7 +116,7 @@
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-033","Additional address line");?>
+										<?php $this->language->line("PROF-033","Additional address line");?>
 									</p>
 									<div class="form-group has-feedback">
 										<input style="border-radius: 50px; border:none" type="text" class="form-control" id="addressa" name="addressa" placeholder="<?php echo $user->addressa; ?>" value="<?php echo $user->addressa; ?>" maxlength="128" />
@@ -126,7 +126,7 @@
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-034","Zipcode");?>
+										<?php $this->language->line("PROF-034","Zipcode");?>
 									</p>
 									<div class="form-group">
 										<input style="border-radius: 50px; border:none" type="text" class="form-control" id="zipcode" name="zipcode" placeholder="<?php echo $user->zipcode; ?>" value="<?php echo $user->zipcode; ?>" maxlength="128" />
@@ -136,7 +136,7 @@
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-035","City");?>
+										<?php $this->language->line("PROF-035","City");?>
 									</p>
 
 									<div class="form-group has-feedback">
@@ -147,7 +147,7 @@
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-10303021","
+										<?php $this->language->line("PROF-10303021","
 										Country
 										"); ?>
 									</p>
@@ -165,7 +165,7 @@
 							<div class="form-group has-feedback" style="padding: 30px;">
 
 								<div style="text-align: center; ">
-									<input type="submit" class="button button-orange" value="<?=$this->language->line("PROF-040 ",'SAVE');?>" style="border: none" />
+									<input type="submit" class="button button-orange" value="<?php $this->language->line("PROF-040 ",'SAVE');?>" style="border: none" />
 								</div>
 
 							</div>
@@ -185,16 +185,16 @@
 
 		<div align="left">
 				<div class="contact-text-box" style="margin-bottom: 0px">
-					<p><?=$this->language->line("BUSINESS-100031",'FREE STARTERS PACKAGE');?></p>
+					<p><?php $this->language->line("BUSINESS-100031",'FREE STARTERS PACKAGE');?></p>
 					<p style="font-family:caption-light; font-size: medium; font-weight: bold">
 						<ul style="list-style-type: disc ; font-family:caption-light; font-size: larger; margin-left: -20px ">
-							<li><?=$this->language->line("BUSINESS-100032B","FREE REGISTRATION OF LOST AND FOUND ITEMS");?></>
-							<li><?=$this->language->line("BUSINESS-100032C","20 TIQS BAGS (EX SHIPPING COSTS) MULTI TIQS SCAN USERS");?></>
-							<li><?=$this->language->line("BUSINESS-100032D","INTEGRATED SHIPPING SOLUTION (DHL) SET-UP PICK-UP TIME");?></>
+							<li><?php $this->language->line("BUSINESS-100032B","FREE REGISTRATION OF LOST AND FOUND ITEMS");?></>
+							<li><?php $this->language->line("BUSINESS-100032C","20 TIQS BAGS (EX SHIPPING COSTS) MULTI TIQS SCAN USERS");?></>
+							<li><?php $this->language->line("BUSINESS-100032D","INTEGRATED SHIPPING SOLUTION (DHL) SET-UP PICK-UP TIME");?></>
 					<p></p>
 					</ul>
 					<ul style="list-style-type: none; font-family:caption-bold; font-size: medium; margin-left: -40px" >
-						<li><?=$this->language->line("BUSINESS-100032E","PRICE = 0 EURO + SHIPPING COSTS");?></>
+						<li><?php $this->language->line("BUSINESS-100032E","PRICE = 0 EURO + SHIPPING COSTS");?></>
 					</ul>
 					</p>
 				</div>
@@ -337,7 +337,7 @@
 	<div class="col-half background-orange-light height-100 align-center">
 		<div class="flex-column align-start width-650">
 			<div style="text-align:center">
-				<h2 class="heading mb-35"><?=$this->language->line("PROF-A010",'YOUR BUDDY.');?></h2>
+				<h2 class="heading mb-35"><?php $this->language->line("PROF-A010",'YOUR BUDDY.');?></h2>
 				<div class="flex-row align-space">
 					<div class="flex-column align-space">
 						<div class="form-group has-feedback">
@@ -412,7 +412,7 @@
 									</div>
 
 									<div class="box-footer">
-										<input type="submit" class="button button-orange" value="<?=$this->language->line("PROF-05100 ",'SUBMIT');?>" style="border: none" />
+										<input type="submit" class="button button-orange" value="<?php $this->language->line("PROF-05100 ",'SUBMIT');?>" style="border: none" />
 									</div>
 						<!--			-->
 						<!--			<div class="box-footer">-->

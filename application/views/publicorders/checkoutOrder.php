@@ -42,52 +42,52 @@
             <div class="col-sm-12 col-lg-9 left-side">
                 <?php if (isset($workingTime)) { ?>
                     <div class="checkout-title">
-                        <span><?php echo $spot['spotType']; ?>&nbsp;<?=$this->language->line("PAYMENT-C0010",'period and time');?> </span>
+                        <span><?php echo $spot['spotType']; ?>&nbsp;<?php $this->language->line("PAYMENT-C0010",'period and time');?> </span>
                     </div>
                     <div class="row">                        
                         <?php if (intval($spot['spotTypeId']) === $this->config->item('deliveryType')) { ?>
                             <div class="form-group col-sm-6">
-                                <label for="city"><?=$this->language->line("PAYMENT-C0020",'City');?><sup>*</sup></label>
+                                <label for="city"><?php $this->language->line("PAYMENT-C0020",'City');?><sup>*</sup></label>
                                 <input
                                     type="teyt"
                                     id="city"
                                     class="form-control"
                                     name="user[city]"
                                     value="<?php echo $city; ?>"
-                                    placeholder="<?=$this->language->line("PAYMENT-C0020",'City');?>"
+                                    placeholder="<?php $this->language->line("PAYMENT-C0020",'City');?>"
                                     required
                                     data-name='City'
                                 />
                             </div>
                             <div class="form-group col-sm-6">
-                                <label for="zipcode"><?=$this->language->line("PAYMENT-C0020",'Zipcode');?><sup>*</sup></label>
+                                <label for="zipcode"><?php $this->language->line("PAYMENT-C0020",'Zipcode');?><sup>*</sup></label>
                                 <input
                                     type="text"
                                     id="zipcode"
                                     class="form-control"
                                     name="user[zipcode]"
                                     value="<?php echo $zipcode; ?>"
-                                    placeholder="<?=$this->language->line("PAYMENT-C0020",'Zipcode');?>"
+                                    placeholder="<?php $this->language->line("PAYMENT-C0020",'Zipcode');?>"
                                     required
                                     data-name='Zipcode'
                                 />
                             </div>
                             <div class="form-group col-sm-6">
-                                <label for="address"><?=$this->language->line("PAYMENT-C0020",'Address');?><sup>*</sup></label>
+                                <label for="address"><?php $this->language->line("PAYMENT-C0020",'Address');?><sup>*</sup></label>
                                 <input
                                     type="text"
                                     id="address"
                                     class="form-control"
                                     name="user[address]"
                                     value="<?php echo $address; ?>"
-                                    placeholder="<?=$this->language->line("PAYMENT-C0020",'Address');?>"
+                                    placeholder="<?php $this->language->line("PAYMENT-C0020",'Address');?>"
                                     required
                                     data-name='Address'
                                 />
                             </div>                            
                         <?php } ?>
                         <div class="form-group col-sm-6">
-                            <label for="periodTime" ><?=$this->language->line("PAYMENT-PC00120",'Choose');?>&nbsp;<?php echo lcfirst($spot['spotType']); ?>&nbsp;<?=$this->language->line("PAYMENT-PC0020",'period');?><sup>*</sup></label>
+                            <label for="periodTime" ><?php $this->language->line("PAYMENT-PC00120",'Choose');?>&nbsp;<?php echo lcfirst($spot['spotType']); ?>&nbsp;<?php $this->language->line("PAYMENT-PC0020",'period');?><sup>*</sup></label>
                             <div>
                                 <select
                                     id="periodTime"
@@ -131,7 +131,7 @@
                             </div>
                         </div>
                         <div class="form-group col-sm-6" id="orderTimeDiv">
-                            <label for="orderTime"><?=$this->language->line("PAYMENT-PC0110",'Select ');?>&nbsp;<?php echo lcfirst($spot['spotType']); ?>&nbsp;<?=$this->language->line("PAYMENT-PC0120",'time');?> (<sup>*</sup>)</label>
+                            <label for="orderTime"><?php $this->language->line("PAYMENT-PC0110",'Select ');?>&nbsp;<?php echo lcfirst($spot['spotType']); ?>&nbsp;<?php $this->language->line("PAYMENT-PC0120",'time');?> (<sup>*</sup>)</label>
                             <input type="text" id="orderTimeInput" class="form-control timepicker" name="order[time]" />
                         </div>
                     </div>
@@ -166,7 +166,8 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                Sorry, but we do not deliver to given address. Please change delivery location.
+				&nbsp;<?php $this->language->line("DELIVERY-A0001",'Sorry, but we do not deliver to given address, due to the distance. Please change delivery location.');?>
+
             </div>
 
             <!-- Modal footer -->
@@ -193,7 +194,9 @@
                 <i
                     class="fa fa-info-circle" aria-hidden="true"
                     data-toggle="pickupPopover"
-                    data-content="Order will be reset because selected products maybe are not available in pickup option or it can have different price"
+
+					data-content="<?php $this->language->line("DELIVERY-A0010",'We will reset your order because the selected products may be not available in pick-up option or can be differently priced.');?>
+"
                 >
                 </i>
             </div>

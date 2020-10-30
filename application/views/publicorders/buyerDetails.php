@@ -11,13 +11,13 @@
                 <div class="row">
                     <?php if ($vendor['requireName'] === '1') { ?>
                         <div class="form-group col-sm-6">
-                            <label for="firstNameInput"><?=$this->language->line("PAYMENT-805",'Name');?> (<sup>*</sup>)</label>
+                            <label for="firstNameInput"><?php $this->language->line("PAYMENT-805",'Name');?> (<sup>*</sup>)</label>
                             <input
                                 id="firstNameInput"
                                 class="form-control"
                                 name="user[username]"
                                 value="<?php echo $username; ?>"
-                                type="text" placeholder="<?=$this->language->line("PAYMENT-805",'Name');?> "
+                                type="text" placeholder="<?php $this->language->line("PAYMENT-805",'Name');?> "
                                 required
                                 data-name="Name"
                             />
@@ -25,14 +25,14 @@
                     <?php } ?>
                     <?php if ($vendor['requireEmail'] === '1' || intval($spot['spotTypeId']) !== $local) { ?>
                         <div class="form-group col-sm-6">
-                            <label for="emailAddressInput"><?=$this->language->line("PAYMENT-810",'Email address');?>  <sup>*</sup></label>
+                            <label for="emailAddressInput"><?php $this->language->line("PAYMENT-810",'Email address');?>  <sup>*</sup></label>
                             <input
                                 type="email"
                                 id="emailAddressInput"
                                 class="form-control"
                                 name="user[email]"
                                 value="<?php echo $email; ?>"
-                                placeholder="<?=$this->language->line("PAYMENT-810",'Email address');?>"
+                                placeholder="<?php $this->language->line("PAYMENT-810",'Email address');?>"
                                 required
                                 oninput="checkUserNewsLetter(this.id)"
                                 data-name="Email"
@@ -61,7 +61,7 @@
                     </div> -->
                     <?php if ($vendor['requireMobile'] === '1' || intval($spot['spotTypeId']) !== $local ) { ?>
                         <div class="form-group col-sm-6">
-                            <label for="phoneInput"><?=$this->language->line("PAYMENT-I0010",'Phone');?><sup>*</sup></label>
+                            <label for="phoneInput"><?php $this->language->line("PAYMENT-I0010",'Phone');?><sup>*</sup></label>
                             <div>
                                 <select class="form-control" style="width:22% !important; display:inline-block !important" name="phoneCountryCode" style="text-align:center">
                                     <?php foreach ($countryCodes as $code => $data) { ?>                                
@@ -86,7 +86,7 @@
                                     name="user[mobile]"
                                     value="<?php echo $mobile; ?>"
                                     type="text"
-                                    placeholder="<?=$this->language->line("PAYMENT-I0010",'Phone');?>"
+                                    placeholder="<?php $this->language->line("PAYMENT-I0010",'Phone');?>"
                                     required
                                     data-name="Mobile"
                                 />
@@ -95,14 +95,14 @@
                     <?php } ?>
                     <?php if ($vendor['requireNewsletter'] === '1') { ?>
                         <div class="form-group col-sm-12">
-                            <label><?=$this->language->line("PAYMENT-Q0001",'Receive our newsletter');?></label>
+                            <label><?php $this->language->line("PAYMENT-Q0001",'Receive our newsletter');?></label>
                             <label class="radio-inline" for="newsLetterYes">
                                 <input type="radio" id="newsLetterYes" name="user[newsletter]" value="1" />
-								<?=$this->language->line("PAYMENT-0001",'YES');?>
+								<?php $this->language->line("PAYMENT-0001",'YES');?>
 							</label>
                             <label class="radio-inline" for="newsLetterNo">
                                 <input type="radio" id="newsLetterNo" name="user[newsletter]"  value="0" checked />
-								<?=$this->language->line("PAYMENT-0002",'NO');?>
+								<?php $this->language->line("PAYMENT-0002",'NO');?>
                             </label>
                         </div>
                     <?php } ?>
@@ -110,9 +110,9 @@
                 <div class="checkout-btns">
                     <a href="<?php echo base_url() . 'checkout_order?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" style="background-color: #948b6f" class="button">
                         <i class="fa fa-arrow-left"></i>
-						<?=$this->language->line("PAYMENT-9100",'Back to list');?>                   </a>
+						<?php $this->language->line("PAYMENT-9100",'Back to list');?>                   </a>
                     <a href="javascript:void(0);" style="background-color: #349171" class="button" onclick="submitBuyerDetails();">
-						<?=$this->language->line("PAYMENT-9110",'Pay');?>
+						<?php $this->language->line("PAYMENT-9110",'Pay');?>
                         <i class="fa fa-arrow-right"></i>
                     </a>
                 </div>

@@ -118,7 +118,7 @@
 				</div>
 				<h1 style="text-align:center"><?php echo $vendor['vendorName'] ?></h1>
 				<div style="text-align:center; margin-top: 30px">
-					<p style="font-size: larger; margin-top: 50px; margin-left: 0px"><?=$this->language->line("HOMESTART-SPOT-X001111ABC",'BUILD BY TIQS');?></p>
+					<p style="font-size: larger; margin-top: 50px; margin-left: 0px"><?php $this->language->line("HOMESTART-SPOT-X001111ABC",'BUILD BY TIQS');?></p>
 				</div>
 			</div>
 		</div>

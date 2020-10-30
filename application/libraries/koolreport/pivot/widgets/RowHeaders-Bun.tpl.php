@@ -25,10 +25,10 @@
                                     }
                                     echo ' ' . Util::get($nodeClass, $rf, '');
                                 ?>'
-                                data-row-field=<?= $rowTotalHeader ? $j-1 : $j?>
-                                data-row-index=<?=$r?>
-                                data-node='<?= htmlspecialchars($node[$rf], ENT_QUOTES) ?>'
-                                data-num-children=<?= $rowNodeInfo[$rf]['numChildren']; ?> 
+                                data-row-field=<?php $rowTotalHeader ? $j-1 : $j?>
+                                data-row-index=<?php $r?>
+                                data-node='<?php htmlspecialchars($node[$rf], ENT_QUOTES) ?>'
+                                data-num-children=<?php $rowNodeInfo[$rf]['numChildren']; ?> 
                                 data-row-layer=1
                                 data-column-layer=1
                                 data-page-layer=1
@@ -41,7 +41,7 @@
                                         ! $rowTotalHeader) { ?>
                                         <i class='krpmExpCol far fa-minus-square' data-command='collapse' aria-hidden='true'></i>
                                     <?php } ?>
-                                        <?= $mappedNode[$rf]; ?>
+                                        <?php $mappedNode[$rf]; ?>
                                 </div>
                             </td>
                         <?php }   

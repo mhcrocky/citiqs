@@ -113,7 +113,7 @@
 		<div class="flex-column align-start">
 			<div align="left">
 				<h2 class="heading mb-35">
-					<?=$this->language->line('VACANCIES-A10001a','JOIN OUR TEAM !');?>
+					<?php $this->language->line('VACANCIES-A10001a','JOIN OUR TEAM !');?>
 				</h2>
 				<iframe width="600" height="850" src="https://tiqs.com/backoffice/forms/ticket" frameborder="0" allowfullscreen></iframe>
 			</div>
@@ -127,12 +127,12 @@
 				<div class="timeline-heading">
 					<span class='timeline-number text-green show-mobile'>1</span>
 					<h2 style="font-weight:bold; font-family: caption-bold">
-						<?=$this->language->line('VACANCIES-A100011','
+						<?php $this->language->line('VACANCIES-A100011','
 					     WE LOVE TO HAVE YOU ONBOARD.
 					');?></h2>
 				</div>
 				<p class="text-content-light" style="font-size: larger">
-					<?=$this->language->line('VACANCIES-A100012','
+					<?php $this->language->line('VACANCIES-A100012','
 					FILL IN THE FORM ON THIS PAGE AND WE WILL CONTACT YOU AS SOON AS POSSIBLE! 
 					');?>
 				</p>
@@ -145,12 +145,12 @@
 				<div class="timeline-heading">
 					<span class='timeline-number text-green show-mobile'>2</span>
 					<h2 style="font-weight:bold; font-family: caption-bold">
-						<?=$this->language->line('VACANCIES-A100013','
+						<?php $this->language->line('VACANCIES-A100013','
 					     BECOME AN AMBASSADOR 
 					');?></h2>
 				</div>
 				<p class="text-content-light" style="font-size: larger">
-					<?=$this->language->line('VACANCIES-A100014a','
+					<?php $this->language->line('VACANCIES-A100014a','
 					APPLY TO BECOME AN AMBASSADOR AND WE GET YOU STARTED IMMEDIATELY.  
 					');?>
 				</p>
@@ -163,12 +163,12 @@
 				<div class="timeline-heading">
 					<span class='timeline-number text-green show-mobile'>3</span>
 					<h2 style="font-weight:bold; font-family: caption-bold">
-						<?=$this->language->line('VACANCIES-A100015','
+						<?php $this->language->line('VACANCIES-A100015','
 					     EARN MONEY
 					');?></h2>
 				</div>
 				<p class="text-content-light" style="font-size: larger">
-					<?=$this->language->line('VACANCIES-A100016','
+					<?php $this->language->line('VACANCIES-A100016','
 					EARN MONEY AS AN AFFILIATE APPLY THROUGH THE FORM! AND GET STARTED.   
 					');?>
 				</p>
@@ -181,12 +181,12 @@
 				<div class="timeline-heading">
 					<span class='timeline-number text-green show-mobile'>4</span>
 					<h2 style="font-weight:bold; font-family: caption-bold">
-						<?=$this->language->line('VACANCIES-A100017a','
+						<?php $this->language->line('VACANCIES-A100017a','
 					     TIQS MANAGER
 					');?></h2>
 				</div>
 				<p class="text-content-light" style="font-size: larger">
-					<?=$this->language->line('VACANCIES-A100018a','
+					<?php $this->language->line('VACANCIES-A100018a','
 					WE ARE STILL EXPANDING WORLD WIDE BECOME A TIQS MANAGER. APPLY THROUGH THE FORM ON THIS PAGE.   
 					');?>
 				</p>

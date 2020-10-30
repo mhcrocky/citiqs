@@ -9,17 +9,17 @@
 
 	<!-- styles -->
 
-	<link href="<?= $path ?>/css/colpick.css" rel="stylesheet"  type="text/css"/>
+	<link href="<?php $path ?>/css/colpick.css" rel="stylesheet"  type="text/css"/>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	<link href="<?= $path ?>/css/themes/default.css" rel="stylesheet" type="text/css"/>
-	<link href="<?= $path ?>/css/template.editor.css" rel="stylesheet"/>
-	<link href="<?= $path ?>/css/responsive-table.css" rel="stylesheet"/>
+	<link href="<?php $path ?>/css/themes/default.css" rel="stylesheet" type="text/css"/>
+	<link href="<?php $path ?>/css/template.editor.css" rel="stylesheet"/>
+	<link href="<?php $path ?>/css/responsive-table.css" rel="stylesheet"/>
 
 	<!--[if lt IE 9]>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 	<![endif]-->
-	<script type="text/javascript"> var path = '<?= $path; ?>';</script>
+	<script type="text/javascript"> var path = '<?php $path; ?>';</script>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.min.js"></script>
@@ -28,8 +28,8 @@
 
 	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.2.6/plugins/colorpicker/plugin.min.js"></script>
-	<script type="text/javascript" src="<?= $path ?>/js/colpick.js"></script>
-	<script type="text/javascript" src="<?= $path ?>/js/template.editor.js"></script>
+	<script type="text/javascript" src="<?php $path ?>/js/colpick.js"></script>
+	<script type="text/javascript" src="<?php $path ?>/js/template.editor.js"></script>
 
 
 </head>

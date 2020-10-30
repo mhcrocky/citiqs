@@ -117,7 +117,7 @@
 				<div class="flex-column align-space">
 					<div align="center">
 						<p style="font-family:'caption-bold'; font-size:300%; color:#ffffff;">
-						<h2 class="heading"> <?=$this->language->Line("registerbusiness-B1100",'THANK YOU FOR REGISTERING.');?></h2>
+						<h2 class="heading"> <?php $this->language->Line("registerbusiness-B1100",'THANK YOU FOR REGISTERING.');?></h2>
 
 					</div>
 
@@ -130,27 +130,27 @@
 
 			<div align="left">
 				<p style="font-family:'caption-bold'; font-size:300%; color:#ffffff;">
-					<?=$this->language->Line("LOGIN-LX103400",'BUSINESS LOGIN.');?>
+					<?php $this->language->Line("LOGIN-LX103400",'BUSINESS LOGIN.');?>
 				</p>
 			</div>
 			<div class="width-650">
 				<form action="<?php echo base_url(); ?>loginMe" method="post">
 					<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
-						<?=$this->language->Line("registerbusiness-3500",'Use your e-mail to login');?>
+						<?php $this->language->Line("registerbusiness-3500",'Use your e-mail to login');?>
 					</p>
 					<div class="form-group has-feedback" align="center">
-						<input type="email" class="form-control" style="font-family:'caption-light'; border:none; border-radius: 50px; " placeholder="<?=$this->language->Line("registerbusiness-3600",'Your e-mail');?>" name="email" required />
+						<input type="email" class="form-control" style="font-family:'caption-light'; border:none; border-radius: 50px; " placeholder="<?php $this->language->Line("registerbusiness-3600",'Your e-mail');?>" name="email" required />
 					</div>
 					<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
-						<?=$this->language->Line("registerbusiness-3800",'Password');?>
+						<?php $this->language->Line("registerbusiness-3800",'Password');?>
 					</p>
 					<div class="form-group has-feedback">
-						<input type="password" class="form-control" style="font-family:'caption-light';border:none; border-radius: 50px" placeholder="<?=$this->language->Line("registerbusiness-3900",'Your Password');?>" name="password" required />
+						<input type="password" class="form-control" style="font-family:'caption-light';border:none; border-radius: 50px" placeholder="<?php $this->language->Line("registerbusiness-3900",'Your Password');?>" name="password" required />
 					</div>
 
 					<br>
 					<div style="text-align: center; ">
-						<input type="submit" class="button button-orange" value="<?=$this->language->Line("registerbusiness-4100",'LOGIN');?>" style="border: none" />
+						<input type="submit" class="button button-orange" value="<?php $this->language->Line("registerbusiness-4100",'LOGIN');?>" style="border: none" />
 					</div>
 					<div class="mobile-hide" align="center" style="margin-top: 70px; margin-bottom: 30px; margin-left: 100px">
 						<img border="0" src="<?php echo base_url(); ?>assets/home/images/TIQSLaptop.png" alt="tiqs" width="300" height="300" />

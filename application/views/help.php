@@ -113,7 +113,7 @@
 		<div class="flex-column align-start">
 			<div align="left">
 				<h2 class="heading mb-35">
-					<?=$this->language->line('HELP-A10001','ASK A QUESTION');?>
+					<?php $this->language->line('HELP-A10001','ASK A QUESTION');?>
 				</h2>
 				<iframe width="600" height="850" src="https://tiqs.com/backoffice/forms/ticket" frameborder="0" allowfullscreen></iframe>
 			</div>

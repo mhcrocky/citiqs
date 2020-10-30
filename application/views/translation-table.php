@@ -36,7 +36,7 @@
 							$selected = "";
 						}
 						?>
-						<option value="<?= $result->language; ?>"<?= $selected; ?>><?= $result->language; ?></option>
+						<option value="<?php $result->language; ?>"<?php $selected; ?>><?php $result->language; ?></option>
 					<?php } ?>
 				</select>
 			</div>
@@ -73,15 +73,15 @@
 								?>
 								<tr class='translate-row'>
 									<td  width="20%" style="word-wrap:break-word;">
-										<?= strip_tags("$translation->key"); ?>
+										<?php strip_tags("$translation->key"); ?>
 									</td>
 									<td  width="20px" style="word-wrap:break-word;">
-										<?= $translation->langID; ?>
+										<?php $translation->langID; ?>
 									</td>
 									<td class='translation-edit-field' >
-										<textarea class='edit-translation disabled' rows="4" cols="100" id="<?= $translation->id;?>" type="text" form="translationsForm" ><?= strip_tags("$translation->text"); ?></textarea>
-										<a type="button" data-id="<?= $translation->id;?>" class="btn button-green submit-translate" value="Save" />Save</a>
-										<a type="button" data-id="<?= $translation->id;?>" class="btn button-orange delete-translate" value="Delete" />Delete</a>
+										<textarea class='edit-translation disabled' rows="4" cols="100" id="<?php $translation->id;?>" type="text" form="translationsForm" ><?php strip_tags("$translation->text"); ?></textarea>
+										<a type="button" data-id="<?php $translation->id;?>" class="btn button-green submit-translate" value="Save" />Save</a>
+										<a type="button" data-id="<?php $translation->id;?>" class="btn button-orange delete-translate" value="Delete" />Delete</a>
 									</td>
 								</tr>
 							<?php }

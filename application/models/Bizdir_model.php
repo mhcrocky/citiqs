@@ -22,6 +22,17 @@ class Bizdir_model extends CI_Model {
 		// check this with the stored coordinates lat long in user table
 		// show results
 
+
+		$address = 'avenida+gustavo+paiva,maceio,alagoas,brasil';
+
+		$geocode = file_get_contents('http://maps.google.com/maps/api/geocode/json?address=' . $address . '&sensor=false');
+
+		$output = json_decode($geocode);
+
+		$lat = $output->results[0]->geometry->location->lat;
+		$long = $output->results[0]->geometry->location->lng;
+
+
 		$this->db->where('roleid', 2);
 		$this->db->where('bizdir', 1);
 		$query = $this->db->get('tbl_user');

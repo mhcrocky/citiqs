@@ -2,15 +2,15 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
-<link rel="stylesheet" href="<?= base_url('assets/css/extra/all.min.css') ?>" />
-<script src="<?= base_url('assets/js/extra/all.min.js') ?>"></script>
+<link rel="stylesheet" href="<?php base_url('assets/css/extra/all.min.css') ?>" />
+<script src="<?php base_url('assets/js/extra/all.min.js') ?>"></script>
 
 <!-- Third party styles and scripts -->
-<script src="<?= base_url('assets/js/extra/jquery-3.3.1.slim.min.js') ?>"></script>
-<link rel="stylesheet" href="<?= base_url('assets/css/extra/select2.min.css') ?>" />
+<script src="<?php base_url('assets/js/extra/jquery-3.3.1.slim.min.js') ?>"></script>
+<link rel="stylesheet" href="<?php base_url('assets/css/extra/select2.min.css') ?>" />
 
 <!-- Style -->
-<link rel="stylesheet" href="<?= base_url('assets/css/extra/style.min.css') ?>" />
+<link rel="stylesheet" href="<?php base_url('assets/css/extra/style.min.css') ?>" />
 
 
 <style>
@@ -93,7 +93,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	.button2 {background-color: #008CBA;} /* Blue */
 
 	#area-container .payment-container .table-in3 td.calendar {
-		background-image: url('<?= base_url('assets/imgs/extra/in3-calendar.png') ?>') !important;
+		background-image: url('<?php base_url('assets/imgs/extra/in3-calendar.png') ?>') !important;
 	}
 	.bar2 {
 		padding-top:2px !important;
@@ -170,7 +170,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 			(function () {
 				setTimeout(function () {
-					invokeCSCode('<?= $orderid ?>');
+					invokeCSCode('<?php $orderid ?>');
 				}, 1000)
 			})();
 

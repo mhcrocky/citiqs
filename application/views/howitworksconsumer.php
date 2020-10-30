@@ -63,7 +63,7 @@
     <div class="col-half background-orange height-100">
         <div class="flex-column align-start width-650">
             <p style="font-family:'caption-bold'; font-size:300%; color:#ffffff; text-align: center">
-                <?=$this->language->line("HOWCONSUMER-1000",'HOW IT WORKS. ');?>
+                <?php $this->language->line("HOWCONSUMER-1000",'HOW IT WORKS. ');?>
             </p>
             <section id="cd-timeline" >
                 <div class="cd-timeline-block">
@@ -77,7 +77,7 @@
 							<img border="0" src="<?php echo base_url(); ?>assets/home/images/HOWITWORKSCONSUMER-001.jpg" alt="tiqs" width="125" height="125" />
 						</div class="login-box">
                         <div class="flex-column align-space">
-                            <p class="text-content-light"><?=$this->language->line("HOWCONSUMER-1100",'LOST BY YOU, <br>RETURNED BY US.');?>
+                            <p class="text-content-light"><?php $this->language->line("HOWCONSUMER-1100",'LOST BY YOU, <br>RETURNED BY US.');?>
                             </p>
                         </div>
                     </div> <!-- cd-timeline-content -->
@@ -97,9 +97,9 @@
                         <div class="flex-column align-space">
 							<div align="center" style="padding:10px">
 								<!--                                href="<?php echo base_url(); ?>menuapp target="_blank"" -->
-								<a  class="button button-orange mb-25" id='show-timeline-video-2'><?=$this->language->line("HOWCONSUMER-01500",'SHOW HOW TO');?></a>
+								<a  class="button button-orange mb-25" id='show-timeline-video-2'><?php $this->language->line("HOWCONSUMER-01500",'SHOW HOW TO');?></a>
 							</div>
-							<p class="text-content-light"><?=$this->language->line("HOWCONSUMER-1100",'LOST BY YOU, <br>RETURNED BY US.');?>
+							<p class="text-content-light"><?php $this->language->line("HOWCONSUMER-1100",'LOST BY YOU, <br>RETURNED BY US.');?>
                             </p>
 
                         </div>
@@ -115,10 +115,10 @@
                         <h2>MAKE THE ITEMS VISIBLE ON YOUR WEBSITE</h2>
                         <p class="text-content-light">AFTER REGISTRATION OF LOST AND FOUND ITEMS IN YOUR ACCOUNT, YOU CAN MAKE AN OVERVIEW AVAILABLE ON YOUR WEBSITE, OR USE THE TIQS LOST AND FOUND WEB-PAGE. </p>
                         <div class="flex-column align-space">
-                            <p class="text-content-light"><?=$this->language->line("HOWCONSUMER-1600",'LOST BY YOUR CUSTOMER, <br>RETURNED BY US.');?>
+                            <p class="text-content-light"><?php $this->language->line("HOWCONSUMER-1600",'LOST BY YOUR CUSTOMER, <br>RETURNED BY US.');?>
                             </p>
                             <div align="center">
-                                <a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?=$this->language->line("HOWCONSUMER-1700",'HOW TO SHOW ITEMS');?></a>
+                                <a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?php $this->language->line("HOWCONSUMER-1700",'HOW TO SHOW ITEMS');?></a>
                             </div>
                         </div>
                         <!--<span class="cd-date">Jan 18</span>-->
@@ -148,7 +148,7 @@
                         <!--<span class="cd-date">Feb 18</span>-->
                         <div class="flex-column align-space">
                             <div align="center">
-                                <a href="" target="_blank" class="button button-orange mb-25"><?=$this->language->line("HOWCONSUMER-1800",'LEARN MORE VIDEO');?></a>
+                                <a href="" target="_blank" class="button button-orange mb-25"><?php $this->language->line("HOWCONSUMER-1800",'LEARN MORE VIDEO');?></a>
                             </div>
                         </div>
                     </div> <!-- cd-timeline-content -->
@@ -166,7 +166,7 @@
                         <!-- <span class="cd-date">Feb 26</span>-->
                         <div class="flex-column align-space">
                             <div align="center">
-                                <a href="" target="_blank" class="button button-orange mb-25"><?=$this->language->line("HOWCONSUMER-1900",'CONTACT');?></a>
+                                <a href="" target="_blank" class="button button-orange mb-25"><?php $this->language->line("HOWCONSUMER-1900",'CONTACT');?></a>
                             </div>
                         </div>
                     </div> <!-- cd-timeline-content -->
@@ -242,7 +242,7 @@
 								<p>Your ANONYMITY is guaranteed through a secure process. </p>
 								<div class="flex-column align-space mb-35">
 									<div align="center">
-										<a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?=$this->language->line("HOWCONSUMER-1900",'SHOW VIDEO');?></a>
+										<a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?php $this->language->line("HOWCONSUMER-1900",'SHOW VIDEO');?></a>
 									</div>
 								</div>
 							</div>
@@ -251,7 +251,7 @@
 								<p>This video will show you how to create an account.</p>
 								<div class="flex-column align-space mb-35">
 									<div align="center">
-										<a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?=$this->language->line("HOWCONSUMER-2000",'SHOW VIDEO');?></a>
+										<a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?php $this->language->line("HOWCONSUMER-2000",'SHOW VIDEO');?></a>
 									</div>
 								</div>
 							</div>
@@ -260,7 +260,7 @@
 								<p>This video will show you how to create an account.</p>
 								<div class="flex-column align-space mb-35">
 									<div align="center">
-										<a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?=$this->language->line("HOWCONSUMER-2100",'SHOW VIDEO');?></a>
+										<a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?php $this->language->line("HOWCONSUMER-2100",'SHOW VIDEO');?></a>
 									</div>
 								</div>
 							</div>

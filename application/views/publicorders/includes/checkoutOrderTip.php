@@ -1,7 +1,7 @@
 
             <div class="checkout-table__single-element checkout-table__single-element--total">
                 <div class="checkout-table__total">
-                    <b><?=$this->language->line("PAYMENT-AL9999",'FEE');?></b>
+                    <b><?php $this->language->line("PAYMENT-AL9999",'FEE');?></b>
                     <span id="serviceFee">
                         <?php
                             $serviceFee = $orderTotal * $serviceFeePercent / 100 + $minimumOrderFee;
@@ -12,7 +12,7 @@
             </div>
             <div class="checkout-table__single-element checkout-table__single-element--total">
                 <div class="checkout-table__total">
-                    <b><?=$this->language->line("PAYMENT-AL0010",'AMOUNT');?></b>
+                    <b><?php $this->language->line("PAYMENT-AL0010",'AMOUNT');?></b>
                     <span id="totalAmount">
                         <?php
                             $total = $orderTotal + $serviceFee;
@@ -24,7 +24,7 @@
             <?php if ($vendor['tipWaiter'] === '1') { ?>
                 <div class="checkout-table__single-element checkout-table__single-element--total">
                     <div class="checkout-table__total" style="text-align:right">
-                        <b><?=$this->language->line("PAYMENT-AL0010",'TIP');?></b>
+                        <b><?php $this->language->line("PAYMENT-AL0010",'TIP');?></b>
                         <span>
                             <input
                                 type="number"
@@ -42,7 +42,7 @@
                 </div>
                 <div class="checkout-table__single-element checkout-table__single-element--total" style="text-align:right">
                     <div class="checkout-table__total">
-                        <b><?=$this->language->line("PAYMENT-AL0010",'TOTAL');?> </b>
+                        <b><?php $this->language->line("PAYMENT-AL0010",'TOTAL');?> </b>
                         <span>
                             <input
                                 type="number"
@@ -65,7 +65,7 @@
             <?php } ?>
             <?php if ($vendor['requireRemarks'] === '1') { ?>
                 <div class="form-group col-sm-12">
-                    <label for="notesInput"><?=$this->language->line("PAYMENT-LL0010",'Remarks');?> </label>
+                    <label for="notesInput"><?php $this->language->line("PAYMENT-LL0010",'Remarks');?> </label>
                     <input
                         type="text"
                         id="notesInput"

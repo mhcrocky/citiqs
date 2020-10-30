@@ -26,8 +26,8 @@
                                 }
                                 echo ' ' . Util::get($nodeClass, $cf, '');
                             ?>'
-                            data-column-field=<?=$colTotalHeader ? $i-1 : $i?>
-                            data-column-index=<?=$c;?>
+                            data-column-field=<?php $colTotalHeader ? $i-1 : $i?>
+                            data-column-index=<?php $c;?>
                             data-column-layer=1
                             data-row-layer=1
                             data-page-layer=1
@@ -39,16 +39,16 @@
                                 $numChildren = $colNodeInfo[$cf]['numChildren'];
                                 echo $numChildren;
                             ?>
-                            data-node = '<?= htmlspecialchars($node[$cf], ENT_QUOTES) ?>'
-                            colspan=<?= $hideSubTotalColumns ? $numLeaf : $numChildren; ?>
-                            rowspan=<?= $colTotalHeader ? $colNodeInfo[$cf]['level'] : 1 ?>
+                            data-node = '<?php htmlspecialchars($node[$cf], ENT_QUOTES) ?>'
+                            colspan=<?php $hideSubTotalColumns ? $numLeaf : $numChildren; ?>
+                            rowspan=<?php $colTotalHeader ? $colNodeInfo[$cf]['level'] : 1 ?>
                             style='display:' 
                         >
                             <div class='krpmHeaderText'>
 								<?php if ($i < count($colFields) - 1 && ! $colTotalHeader) { ?>
 									<i class='krpmExpCol far fa-minus-square' data-command='collapse' aria-hidden='true'></i>
 								<?php } ?>
-                                <?= $mappedNode[$cf]; ?>
+                                <?php $mappedNode[$cf]; ?>
                             </div>
                         </td>
                     <?php } ?>
@@ -68,9 +68,9 @@
                                         ' krpmDataHeaderColumnTotal';  
                                 echo ' ' . Util::get($dataHeadersClass, $df, '');
                             ?>' 
-                            data-data-field=<?=$di?>
-                            data-column-field=<?=$colNodeInfo['fieldOrder']?>
-                            data-column-index=<?=$c;?>
+                            data-data-field=<?php $di?>
+                            data-column-field=<?php $colNodeInfo['fieldOrder']?>
+                            data-column-index=<?php $c;?>
                             data-column-layer=1
                             data-row-layer=1
                             data-page-layer=1 

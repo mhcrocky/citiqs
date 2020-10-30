@@ -2,7 +2,7 @@
     <div class='col-sm-12 col-lg-9'>
         <div class="checkout-table">
             <div class="checkout-table__header">
-                <h3 class='mb-0' style="text-align:center"><?=$this->language->line("PAYMENT-HD0010",'YOUR ORDER');?> </h3>
+                <h3 class='mb-0' style="text-align:center"><?php $this->language->line("PAYMENT-HD0010",'YOUR ORDER');?> </h3>
             </div>
 <!--            <div class="checkout-table__single-element checkout-table__single-element--header">-->
 <!--                <div class='checkout-table__num-order'>-->
@@ -88,7 +88,7 @@
                                 <?php if (isset($product['remark'])) { ?>
                                     <div>
                                         <?php if ($product['remark']) { ?>
-                                            <label><?=$this->language->line("PAYMENT-LL0010",'Remarks');?> </label>
+                                            <label><?php $this->language->line("PAYMENT-LL0010",'Remarks');?> </label>
                                             <p><?php echo $product['remark']; ?></p>
                                         <?php } ?>
                                         <!-- <label for="orderExtended_<?php #echo $countInputs; ?>_<?php# echo $productExtendedId; ?>_remark">Remark</label>
@@ -264,7 +264,7 @@
                                                 <?php if (isset($addon['remark'])) { ?>
                                                     <div>
                                                         <?php if ($addon['remark']) { ?>
-                                                            <label><?=$this->language->line("PAYMENT-LL0010",'Remarks');?> </label>
+                                                            <label><?php $this->language->line("PAYMENT-LL0010",'Remarks');?> </label>
                                                             <p><?php echo $addon['remark']; ?></p>
                                                         <?php } ?>
                                                         <!-- <label for="orderExtended_<?php #echo $countInputs; ?>_<?php #echo $addonExtendedId; ?>_remark">Remark</label>

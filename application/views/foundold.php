@@ -89,11 +89,11 @@
 		<div class="flex-column align-start width-650">
 			<div align="center">
 				<h2 class="heading mb-35">
-					<?=$this->language->line("FOUND-010","LET'S GET THIS ITEM BACK TO THE RIGHTFUL OWNER. ");?>
+					<?php $this->language->line("FOUND-010","LET'S GET THIS ITEM BACK TO THE RIGHTFUL OWNER. ");?>
 				</h2>
 			</div>
 			<div align="center" style="margin-bottom: 30px">
-				<?=$this->language->line("FOUND-020",'TO GET THE ITEM YOU FOUND BACK TO TH RIGHTFUL OWNER WE NEED SOME INFORMATION TO MAKE THIS HAPPEN.');?>
+				<?php $this->language->line("FOUND-020",'TO GET THE ITEM YOU FOUND BACK TO TH RIGHTFUL OWNER WE NEED SOME INFORMATION TO MAKE THIS HAPPEN.');?>
 				<p class="text-content-light" style="font-size: 24px; padding-top: 10px" >
 					LOST AND FOUND, RETURNED WITH YOUR HELP.
 				</p>
@@ -132,26 +132,26 @@
 					<img border="0" src="<?php echo base_url(); ?>tiqsimg/StickerMockup.png" alt="tiqs" width="250" height="90" />
 					<?php if (empty($code)) { ?>
 						<div align="center" style="font-family:caption-light; padding: 10px">
-							<input type="code" class="form-control" placeholder="<?=$this->language->line("FOUND-01030",'Unique code from sticker or tag');?>" name="code" style="border-radius: 50px" required/>
+							<input type="code" class="form-control" placeholder="<?php $this->language->line("FOUND-01030",'Unique code from sticker or tag');?>" name="code" style="border-radius: 50px" required/>
 						</div>
 						<div style="text-align: center; ">
-							<a href="<?php echo base_url(); ?>itemfound" class="button button-orange"><?=$this->language->line("FOUND-01032",'NO TAG? PLEASE MAKE A PICTURE');?></a>
+							<a href="<?php echo base_url(); ?>itemfound" class="button button-orange"><?php $this->language->line("FOUND-01032",'NO TAG? PLEASE MAKE A PICTURE');?></a>
 						</div>
 					<?php
 					}
 					?>
-					<h2><?=$code;?></h2>
+					<h2><?php $code;?></h2>
 				</div>
 
 
 
 				<div style="font-family:caption-light; padding: 10px; margin-bottom: 30px" align="center">
-					<h2 style="font-family: caption-bold"><?=$this->language->line("FOUND-040",'HOW IT WORKS');?></h2>
+					<h2 style="font-family: caption-bold"><?php $this->language->line("FOUND-040",'HOW IT WORKS');?></h2>
 				</div>
 
 				<div style="font-family:caption-light; padding: 10px" align="center">
 					<p style="font-family: caption-light">
-						<?=$this->language->line("FOUND-050",'PLEASE STATE YOUR MOBILE NUMBER AND/OR E-MAIL. (WE WILL NOT SHARE THIS INFO WITH THE OWNER UNLESS YOU CONSENT TO THIS BY CHECKING THE GDPR AND SHARE CHECKBOX BELOW. )');?>
+						<?php $this->language->line("FOUND-050",'PLEASE STATE YOUR MOBILE NUMBER AND/OR E-MAIL. (WE WILL NOT SHARE THIS INFO WITH THE OWNER UNLESS YOU CONSENT TO THIS BY CHECKING THE GDPR AND SHARE CHECKBOX BELOW. )');?>
 						<br>
 					</p>
 				</div>
@@ -160,43 +160,43 @@
 				</div>
 
 				<div style="font-family:caption-light; padding: 10px">
-					<input type="email" id="email" value="<?=$email;?>" class="form-control" style="font-family:'caption-light'; border-radius: 50px; " placeholder="<?=$this->language->line("FOUND-070",'Your e-mail');?>" id="email" name="email"  required />
+					<input type="email" id="email" value="<?php $email;?>" class="form-control" style="font-family:'caption-light'; border-radius: 50px; " placeholder="<?php $this->language->line("FOUND-070",'Your e-mail');?>" id="email" name="email"  required />
 				</div>
 
 				<div style="font-family:caption-light; padding: 10px">
-					<input type="email" value="<?=$email;?>" class="form-control" style="font-family:'caption-light'; border-radius: 50px; " placeholder="Repeat email for verification" name="emailverify" onfocusout="myFunction(this.value)" required />
+					<input type="email" value="<?php $email;?>" class="form-control" style="font-family:'caption-light'; border-radius: 50px; " placeholder="Repeat email for verification" name="emailverify" onfocusout="myFunction(this.value)" required />
 				</div>
 
 				<div style="font-family:caption-light; padding: 10px">
 					<p id="UnkownAddressText" style="font-family:'caption-light'; display:none; text-align: center">
-						<?=$this->language->line("FOUND-080",'WHERE CAN WE LET DHL EXPRESS COLLECT THE FOUND ITEM?<br/> YOU CAN HAVE DHL EXPRESS COLLECT THE FOUND ITEM AT A GIVEN TIME AT YOUR ADDRESS,PLEASE STATE YOUR NAME, HOME OR OTHER PHYSICAL ADDRESS. WHEN YOUR NAME AND ADDRESS HAS BEEN FILED, WE DO NOT ASK (SHOW) THIS AGAIN, FOR SECURITY REASONS. CHANGE OF ADDRESS CAN BE DONE IN YOUR PERSONAL PROFILE, WHEN SECURELY LOGGED IN, YOUR CREDENTIALS HAVE BEEN SEND BY SEPARATE MAIL, TO THE GIVEN E-MAIL ACCOUNT IN THIS SCREEN.');?>
+						<?php $this->language->line("FOUND-080",'WHERE CAN WE LET DHL EXPRESS COLLECT THE FOUND ITEM?<br/> YOU CAN HAVE DHL EXPRESS COLLECT THE FOUND ITEM AT A GIVEN TIME AT YOUR ADDRESS,PLEASE STATE YOUR NAME, HOME OR OTHER PHYSICAL ADDRESS. WHEN YOUR NAME AND ADDRESS HAS BEEN FILED, WE DO NOT ASK (SHOW) THIS AGAIN, FOR SECURITY REASONS. CHANGE OF ADDRESS CAN BE DONE IN YOUR PERSONAL PROFILE, WHEN SECURELY LOGGED IN, YOUR CREDENTIALS HAVE BEEN SEND BY SEPARATE MAIL, TO THE GIVEN E-MAIL ACCOUNT IN THIS SCREEN.');?>
 					</p>
 				</div>
 
 				<div style="font-family:caption-light; padding: 10px; display:none" id="label1">
-					<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("FOUND-090",'Name');?>" id="name" name="name"  />
+					<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php $this->language->line("FOUND-090",'Name');?>" id="name" name="name"  />
 				</div>
 
 				<div style="font-family:caption-light; padding: 10px; display:none" id="label2">
-					<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("FOUND-100",'Address');?>" id="address" name="address"  />
+					<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php $this->language->line("FOUND-100",'Address');?>" id="address" name="address"  />
 				</div>
 
 				<div style="font-family:caption-light; padding: 10px; display:none" id="label3">
-					<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("FOUND-110",'Extra address line');?>" id="addressa" name="addressa"  />
+					<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php $this->language->line("FOUND-110",'Extra address line');?>" id="addressa" name="addressa"  />
 				</div>
 
 				<div style="font-family:caption-light; padding: 10px; display:none" id="label4" >
-					<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("FOUND-120",'Zipcode');?>" id="zipcode" name="zipcode"  />
+					<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php $this->language->line("FOUND-120",'Zipcode');?>" id="zipcode" name="zipcode"  />
 				</div>
 
 				<div style="font-family:caption-light; padding: 10px; display:none" id="label5">
-					<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("FOUND-130",'City');?>" id="city" name="city"  />
+					<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php $this->language->line("FOUND-130",'City');?>" id="city" name="city"  />
 				</div>
 				<div style="font-family:caption-light; padding: 10px; display:none" id="label6">
 					<div class="selectWrapper" style="display: none; padding: 10px" id="country1">
 						<select class="selectBox" id="country" name="country" font-family:'caption-light';" required />
 						<option value="">
-							<?=$this->language->line("FOUND-140","Select your country");?>
+							<?php $this->language->line("FOUND-140","Select your country");?>
 						</option>
 						<option value="AF">Afghanistan</option>
 						<option value="AX">Åland Islands</option>
@@ -453,7 +453,7 @@
 
 				<div class="login-box" align="center">
 					<p style="font-family:'caption-light'; font-size:100%; color: #fff9df; margin:20px,20px,20px,200px; text-align: center">
-						<?=$this->language->line("FOUND-160",'I GIVE MY CONSENT (GDPR PRIVACY) THAT THE OWNER CAN DIRECTLY CONTACT ME. ');?>
+						<?php $this->language->line("FOUND-160",'I GIVE MY CONSENT (GDPR PRIVACY) THAT THE OWNER CAN DIRECTLY CONTACT ME. ');?>
 					</p>
 
 					<div class="form-group has-feedback">
@@ -470,13 +470,13 @@
 
  				<p>
 					<br>
-					<?=$this->language->line("FOUND-170",'THE OWNER MAY HAVE SET A FINDERS FEE. AFTER THE ITEM HAS RETURNED TO THE RIGHTFUL OWNER, THE FINDERS FEE WILL BE TRANSFERRED TO YOUR BANK ACCOUNT. YOUR BANK DETAILS CAN BE SECURELY SUBMITTED IN YOUR PROFILE CREDENTIALS ARE SEND BY E-MAIL (PLEASE CHECK YOUR SPAM)');?>
+					<?php $this->language->line("FOUND-170",'THE OWNER MAY HAVE SET A FINDERS FEE. AFTER THE ITEM HAS RETURNED TO THE RIGHTFUL OWNER, THE FINDERS FEE WILL BE TRANSFERRED TO YOUR BANK ACCOUNT. YOUR BANK DETAILS CAN BE SECURELY SUBMITTED IN YOUR PROFILE CREDENTIALS ARE SEND BY E-MAIL (PLEASE CHECK YOUR SPAM)');?>
 					<br>
 
 				<div class="form-group has-feedback" style="padding: 30px;">
 
 					<div style="text-align: center; ">
-						<input type="submit" class="button button-orange" value="<?=$this->language->line("FOUND-180",'SUBMIT FOUND ITEM');?>" style="border: none" />
+						<input type="submit" class="button button-orange" value="<?php $this->language->line("FOUND-180",'SUBMIT FOUND ITEM');?>" style="border: none" />
 					</div>
 					<br>
 
@@ -498,7 +498,7 @@
 			<div align="left">
 				<div class="flex-column align-start width-650">
 					<p style="font-family:'caption-bold'; font-size:300%; color:#ffffff; text-align: center">
-						<?=$this->language->line("HOWITORKSBUSINESS-1000",'HOW IT WORKS. ');?>
+						<?php $this->language->line("HOWITORKSBUSINESS-1000",'HOW IT WORKS. ');?>
 					</p>
 					<section id="cd-timeline" >
 						<div class="cd-timeline-block">
@@ -519,10 +519,10 @@
 								<!--                        </div>-->
 								<p class="text-content-light">Working alongside requires registration of your business. This is the first step of using the lost & found TIQS solution </p>
 								<div class="flex-column align-space">
-									<p class="text-content-light"><?=$this->language->line("HOWITORKSBUSINESS-1200",'LOST BY YOUR CUSTOMER, <br>RETURNED BY US.');?>
+									<p class="text-content-light"><?php $this->language->line("HOWITORKSBUSINESS-1200",'LOST BY YOUR CUSTOMER, <br>RETURNED BY US.');?>
 									</p>
 									<div align="center">
-										<a href="<?php echo base_url(); ?>registerbusiness" target="_blank" class="button button-orange mb-25"><?=$this->language->line("HOWITORKSBUSINESS-1300",'GET YOUR ACCOUNT');?></a>
+										<a href="<?php echo base_url(); ?>registerbusiness" target="_blank" class="button button-orange mb-25"><?php $this->language->line("HOWITORKSBUSINESS-1300",'GET YOUR ACCOUNT');?></a>
 									</div>
 								</div>
 							</div> <!-- cd-timeline-content -->
@@ -542,11 +542,11 @@
 								<h2>DOWNLOAD THE APP</h2>
 								<p class="text-content-light">After registering your account, you have a business login (send by e-mail to you, please check your spam). When you login for the first time you need to activate your account with a code. This code is also send to your e-mail address. Now you are able to register lost and found items with a mobile phone (ANDROID and/or IOS). </p>
 								<div class="flex-column align-space">
-									<p class="text-content-light"><?=$this->language->line("HOWITORKSBUSINESS-1400",'LOST BY YOUR CUSTOMER, <br>RETURNED BY US.');?>
+									<p class="text-content-light"><?php $this->language->line("HOWITORKSBUSINESS-1400",'LOST BY YOUR CUSTOMER, <br>RETURNED BY US.');?>
 									</p>
 									<div align="center">
 										<!--                                href="<?php echo base_url(); ?>menuapp target="_blank"" -->
-										<a  class="button button-orange mb-25" id='show-timeline-video-2'><?=$this->language->line("HOWITORKSBUSINESS-1500",'DOWNLOAD APP');?></a>
+										<a  class="button button-orange mb-25" id='show-timeline-video-2'><?php $this->language->line("HOWITORKSBUSINESS-1500",'DOWNLOAD APP');?></a>
 									</div>
 								</div>
 								<!--<span class="cd-date">Jan 18</span>-->
@@ -561,10 +561,10 @@
 								<h2>MAKE THE ITEMS VISIBLE ON YOUR WEBSITE</h2>
 								<p class="text-content-light">After registration of lost and found items in your account, you can make an overview available on your website, or use the TIQS lost and found web-page. </p>
 								<div class="flex-column align-space">
-									<p class="text-content-light"><?=$this->language->line("HOWITORKSBUSINESS-1600",'LOST BY YOUR CUSTOMER, <br>RETURNED BY US.');?>
+									<p class="text-content-light"><?php $this->language->line("HOWITORKSBUSINESS-1600",'LOST BY YOUR CUSTOMER, <br>RETURNED BY US.');?>
 									</p>
 									<div align="center">
-										<a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?=$this->language->line("HOWITORKSBUSINESS-1700",'HOW TO SHOW ITEMS');?></a>
+										<a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?php $this->language->line("HOWITORKSBUSINESS-1700",'HOW TO SHOW ITEMS');?></a>
 									</div>
 								</div>
 								<!--<span class="cd-date">Jan 18</span>-->
@@ -594,7 +594,7 @@
 								<!--<span class="cd-date">Feb 18</span>-->
 								<div class="flex-column align-space">
 									<div align="center">
-										<a href="" target="_blank" class="button button-orange mb-25"><?=$this->language->line("HOWITORKSBUSINESS-1800",'LEARN MORE VIDEO');?></a>
+										<a href="" target="_blank" class="button button-orange mb-25"><?php $this->language->line("HOWITORKSBUSINESS-1800",'LEARN MORE VIDEO');?></a>
 									</div>
 								</div>
 							</div> <!-- cd-timeline-content -->
@@ -612,7 +612,7 @@
 								<!-- <span class="cd-date">Feb 26</span>-->
 								<div class="flex-column align-space">
 									<div align="center">
-										<a href="" target="_blank" class="button button-orange mb-25"><?=$this->language->line("HOWITORKSBUSINESS-1900",'CONTACT');?></a>
+										<a href="" target="_blank" class="button button-orange mb-25"><?php $this->language->line("HOWITORKSBUSINESS-1900",'CONTACT');?></a>
 									</div>
 								</div>
 							</div> <!-- cd-timeline-content -->

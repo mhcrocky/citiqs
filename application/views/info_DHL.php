@@ -48,7 +48,7 @@
 					</p>
 
 					<div class="mb-35">
-						<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?=$this->language->line('HOME-E012','GET YOUR BUSINESS ACCOUNT ');?></a>
+						<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php $this->language->line('HOME-E012','GET YOUR BUSINESS ACCOUNT ');?></a>
 					</div>
 
 					<div class="clearfix">

@@ -39,30 +39,30 @@
 				<div class="width-650 mb-50" style="min-height:600px">
 					<div align="left">
 						<div class="contact-text-box mb-50">
-							<p><?=$this->language->line("CHECK424-INFO-A100015",'HOW DOES IT WORK?');?></p>
+							<p><?php $this->language->line("CHECK424-INFO-A100015",'HOW DOES IT WORK?');?></p>
 							<p style="font-size: medium; font-weight: bold">
-								<?=$this->language->line("CHECK424-INFO-A100017",'CUSTOMERS');?>
+								<?php $this->language->line("CHECK424-INFO-A100017",'CUSTOMERS');?>
 							</p>
 							<ul style="list-style-type:none;font-family:caption-light; font-size: small; font-weight: lighter; margin-left: -40px">
-								<li><?=$this->language->line("CHECK424-INFO-A100018",'1. CUSTOMER SCANS QRCODE');?></>
-								<li><?=$this->language->line("CHECK424-INFO-A100019",'2. CUSTOMERS ANSWERS 6 QUESTIONS');?>
-								<li><?=$this->language->line("CHECK424-INFO-A100020",'3. CUSTOMER GETS A 24HOURS VALID QRCODE');?></>
+								<li><?php $this->language->line("CHECK424-INFO-A100018",'1. CUSTOMER SCANS QRCODE');?></>
+								<li><?php $this->language->line("CHECK424-INFO-A100019",'2. CUSTOMERS ANSWERS 6 QUESTIONS');?>
+								<li><?php $this->language->line("CHECK424-INFO-A100020",'3. CUSTOMER GETS A 24HOURS VALID QRCODE');?></>
 							</ul>
 							<p style="font-size: medium; font-weight: bold">
-								<?=$this->language->line("CHECK424-INFO-A100014",'YOU');?>
+								<?php $this->language->line("CHECK424-INFO-A100014",'YOU');?>
 							</p>
 							<ul style="list-style-type:none;font-family:caption-light; font-size: small; font-weight: lighter; margin-left: -40px">
-								<li><?=$this->language->line("CHECK424-INFO-AB100021",'1. CUSTOMER SHOWS THEIR QRCODE');?></>
-								<li><?=$this->language->line("CHECK424-INFO-AB100022",'2. YOU SCAN THE QRCODE WITH YOUR MOBILE PHONE (ANY SCANNER WIL WORK)');?></>
-								<li><?=$this->language->line("CHECK424-INFO-AB100023",'3. YOU GET A GREEN SCREEN WITH THE TIME LEFT THAT THE QRCODE IS STILL VALID, IF NOT VALID YOU GET A MESAGE THAT THE QRCODE IS NOT VALID ANYMORE. ');?></>
+								<li><?php $this->language->line("CHECK424-INFO-AB100021",'1. CUSTOMER SHOWS THEIR QRCODE');?></>
+								<li><?php $this->language->line("CHECK424-INFO-AB100022",'2. YOU SCAN THE QRCODE WITH YOUR MOBILE PHONE (ANY SCANNER WIL WORK)');?></>
+								<li><?php $this->language->line("CHECK424-INFO-AB100023",'3. YOU GET A GREEN SCREEN WITH THE TIME LEFT THAT THE QRCODE IS STILL VALID, IF NOT VALID YOU GET A MESAGE THAT THE QRCODE IS NOT VALID ANYMORE. ');?></>
 							</ul>
 							<p style="font-size: medium; font-weight: bold;">
-								<?=$this->language->line("CHECK424-INFO-A100024",'HAPPY CUSTOMER YOU HAPPY');?>
+								<?php $this->language->line("CHECK424-INFO-A100024",'HAPPY CUSTOMER YOU HAPPY');?>
 							</p>
 							<ul style="list-style-type:square;font-family:caption-light; font-size: small; font-weight: lighter; margin-left: -40px">
-								<li><?=$this->language->line("CHECK424-INFO-AB100025",'YOU COMMITTED IN TAKING HEALTH OF YOUR CUSTOMERS AND STAFF SERIOUS');?></>
-								<li><?=$this->language->line("CHECK424-INFO-AB100026",'YOU DO NOT HAVE LONG WAITING LINES AT THE DOOR, INTERACTION BETWEEN STAFF AND VISITORS IS MINIMAL');?></>
-								<li><?=$this->language->line("CHECK424-INFO-AB100027",'YOU COMPLY FULLY TO THE RULES AND REGULATIONS OF HOSPITALITY VISITORS COVID-19 TRIAGE. ');?></>
+								<li><?php $this->language->line("CHECK424-INFO-AB100025",'YOU COMMITTED IN TAKING HEALTH OF YOUR CUSTOMERS AND STAFF SERIOUS');?></>
+								<li><?php $this->language->line("CHECK424-INFO-AB100026",'YOU DO NOT HAVE LONG WAITING LINES AT THE DOOR, INTERACTION BETWEEN STAFF AND VISITORS IS MINIMAL');?></>
+								<li><?php $this->language->line("CHECK424-INFO-AB100027",'YOU COMPLY FULLY TO THE RULES AND REGULATIONS OF HOSPITALITY VISITORS COVID-19 TRIAGE. ');?></>
 							</ul>
 							</p>
 						</div>
@@ -87,43 +87,43 @@
 
 		<div class="col-half background-blue col-half-mobile height-100 contact-text">
 				<div align="left">
-					<p><?=$this->language->line("CHECK424-INFO-100001A",'WHY TIQS COVID-19 QUESTIONNAIRE');?></p>
+					<p><?php $this->language->line("CHECK424-INFO-100001A",'WHY TIQS COVID-19 QUESTIONNAIRE');?></p>
 					<div class="contact-text-box">
 
 						</p>
 						<p style="font-size: medium; font-weight: bold">
-							<?=$this->language->line("CHECK424-INFO-100004AC",'1. AVOID QUEUING');?>
+							<?php $this->language->line("CHECK424-INFO-100004AC",'1. AVOID QUEUING');?>
 						</p>
 
 						<p style="font-family:caption-light; font-size: medium">
-							<?=$this->language->line("CHECK424-INFO-100005AB",'5 Minutes per customer, in complying to do a triage on the door is time consuming.');?>
+							<?php $this->language->line("CHECK424-INFO-100005AB",'5 Minutes per customer, in complying to do a triage on the door is time consuming.');?>
 						<p style="font-size: medium; font-weight: bold">
 
 						<p style="font-size: medium; font-weight: bold">
-							<?=$this->language->line("CHECK424-INFO-100002ABC",'2. INCREASE CUSTOMER TRUST AND LOWER COST')?><br>
+							<?php $this->language->line("CHECK424-INFO-100002ABC",'2. INCREASE CUSTOMER TRUST AND LOWER COST')?><br>
 						</p>
 						<p style="font-family:caption-light; font-size: medium">
-							<?=$this->language->line("CHECK424-INFO-100003A",'With the questionnaire you let your customers know that you take their health serious as well as for your staff.');?>
+							<?php $this->language->line("CHECK424-INFO-100003A",'With the questionnaire you let your customers know that you take their health serious as well as for your staff.');?>
 						<p style="font-size: medium; font-weight: bold">
-							<?=$this->language->line("CHECK424-INFO-100006A",'3. E-MAIL QUESTIONNAIRES');?>
+							<?php $this->language->line("CHECK424-INFO-100006A",'3. E-MAIL QUESTIONNAIRES');?>
 						</p>
 						<p style="font-family:caption-light; font-size: medium">
-							<?=$this->language->line("CHECK424-INFO-100007AB",' E-mail questionnaires are not compliant when a  reservation is made outside a 24-hour time frame and or e-mails are send outside this time frame. Administration is cumbersome and costly.');?>
+							<?php $this->language->line("CHECK424-INFO-100007AB",' E-mail questionnaires are not compliant when a  reservation is made outside a 24-hour time frame and or e-mails are send outside this time frame. Administration is cumbersome and costly.');?>
 						<p style="font-size: medium; font-weight: bold">
-							<?=$this->language->line("CHECK424-INFO-100008A",'4. LESS IMPACT ON THE INTERNAL PROCESS');?>
+							<?php $this->language->line("CHECK424-INFO-100008A",'4. LESS IMPACT ON THE INTERNAL PROCESS');?>
 						</p>
 						<p style="font-family:caption-light; font-size: medium">
-							<?=$this->language->line("CHECK424-INFO-100009A",'The QRCode solution is not proprieatary to one business, the scanning is possible on any smartphone device with a camera. ');?>
+							<?php $this->language->line("CHECK424-INFO-100009A",'The QRCode solution is not proprieatary to one business, the scanning is possible on any smartphone device with a camera. ');?>
 						<p style="font-size: medium; font-weight: bold">
-							<?=$this->language->line("CHECK424-INFO-1000010A",'5. MORE THAN 107 LANGUAGES');?>
+							<?php $this->language->line("CHECK424-INFO-1000010A",'5. MORE THAN 107 LANGUAGES');?>
 						</p>
 						<p style="font-family:caption-light; font-size: medium">
-							<?=$this->language->line("CHECK424-INFO-1000111A",'The QRCODE questionnaire is operational in more than 107 languages.');?>
+							<?php $this->language->line("CHECK424-INFO-1000111A",'The QRCODE questionnaire is operational in more than 107 languages.');?>
 						<p style="font-size: medium; font-weight: bold">
-							<?=$this->language->line("CHECK424-INFO-10001112A",'6. FREE SCANNING / FREE TO USE');?>
+							<?php $this->language->line("CHECK424-INFO-10001112A",'6. FREE SCANNING / FREE TO USE');?>
 						</p>
 						<p style="font-family:caption-light; font-size: medium">
-							<?=$this->language->line("CHECK424-INFO-100013AB",'We do not charge anything, we support a FREE use of the Questionnaire. If you like our work you can buy a Coffee, Croissant, Lunch or Dinner for us.   ');?>
+							<?php $this->language->line("CHECK424-INFO-100013AB",'We do not charge anything, we support a FREE use of the Questionnaire. If you like our work you can buy a Coffee, Croissant, Lunch or Dinner for us.   ');?>
 						<p></p>
 					</div>
 					<div class="mb-35 div-no-mobile" align="right" style="">

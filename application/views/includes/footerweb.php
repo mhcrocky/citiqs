@@ -2,14 +2,14 @@
         <div class="footer-container">
             <div class="footer-box background-yankee">
                 <p class='footer-heading'>Business</p>
-                <a href="APIrequest"><?=$this->language->line('FOOTERSPOT-API1A',"API developers integration tools");?></a>
-				<a href="info_download"><?=$this->language->line('FOOTERSPOT-brochure1A',"More info in this brochure about tiqs SPOT");?></a>
+                <a href="APIrequest"><?php $this->language->line('FOOTERSPOT-API1A',"API developers integration tools");?></a>
+				<a href="info_download"><?php $this->language->line('FOOTERSPOT-brochure1A',"More info in this brochure about tiqs SPOT");?></a>
             </div>
             <div class="footer-box background-orange">
                 <p class='footer-heading'>Consumer</p>
                 <a href="<?php echo $this->baseUrl; ?>contactform">Contact</a><br>
-                <a target="_blank" href="https://www.dhl.nl/en/express/tracking.html"><?=$this->language->line('FOOTERSPOT-DHL1A',"");?></a><br>
-				<a target="_blank" href="https://locator.dhl.com/"><?=$this->language->line('FOOTERSPOT-DHL2A',"");?></a><br>
+                <a target="_blank" href="https://www.dhl.nl/en/express/tracking.html"><?php $this->language->line('FOOTERSPOT-DHL1A',"");?></a><br>
+				<a target="_blank" href="https://locator.dhl.com/"><?php $this->language->line('FOOTERSPOT-DHL2A',"");?></a><br>
 				<a href=""></a><br>
             </div>
             <div class="footer-box background-apricot">

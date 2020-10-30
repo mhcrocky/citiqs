@@ -5,7 +5,7 @@
 				<div class="flex-column align-space">
 					<div style="text-align:center">
 						<p style="font-family:'caption-bold'; font-size:300%; color:#ffffff;">
-						<h2 class="heading"> <?=$this->language->Line("registerbusiness-A1100",'REGISTER BUSINESS ACCOUNT.');?></h2>
+						<h2 class="heading"> <?php $this->language->Line("registerbusiness-A1100",'REGISTER BUSINESS ACCOUNT.');?></h2>
 						<?php include_once APPPATH . 'views/includes/sessionMessages.php' ?>
 						<form action="<?php echo $this->baseUrl; ?>login/registerbusinessAction" method="post">
 							<input type="text" name="IsDropOffPoint" value ='<?php echo $isDropOffPoint; ?>' readonly hidden required />
@@ -14,37 +14,37 @@
 							<input type="text" name="createdBy" value ='<?php echo $createdBy; ?>' readonly hidden required />							
 							<div>
 								<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center">
-									<?=$this->language->Line("registerbusiness-1200",'Your business name');?>
+									<?php $this->language->Line("registerbusiness-1200",'Your business name');?>
 									<br>
 									<br/>
 								</p>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="text" name="username" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("registerbusiness-1300",'Hotel/(air)BnB/Event/Club-name/Bar');?>" />
+								<input type="text" name="username" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php $this->language->Line("registerbusiness-1300",'Hotel/(air)BnB/Event/Club-name/Bar');?>" />
 								<span class="glyphicon glyphicon-user form-control-feedback"></span>
 							</div>
 							<div>
 								<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center">
-									<?=$this->language->Line("registerbusiness-1400ac",'With a short name of your business and or event, your visitors can browse and find the');?>
-									<?=$this->language->Line("registerbusiness-1500ac",'website, to claim their lost Items. The link will represent, the url:');?>
-									<?=$this->language->Line("registerbusiness-1600ac",'Your shortname');?>
+									<?php $this->language->Line("registerbusiness-1400ac",'With a short name of your business and or event, your visitors can browse and find the');?>
+									<?php $this->language->Line("registerbusiness-1500ac",'website, to claim their lost Items. The link will represent, the url:');?>
+									<?php $this->language->Line("registerbusiness-1600ac",'Your shortname');?>
 									<br/>
 									<br/>
 								</p>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="text" class="form-control" name="usershorturl"  required id="usershorturl" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("registerbusiness-1700",'Your shortname');?>" name="usershorturl" pattern="[A-Za-z0-9]{1,20}" title="<?=$this->language->Line("registerbusiness-1800",'Only characters allowed, no spaces, points or special characters like @#$% and max 20 length');?>" />
+								<input type="text" class="form-control" name="usershorturl"  required id="usershorturl" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php $this->language->Line("registerbusiness-1700",'Your shortname');?>" name="usershorturl" pattern="[A-Za-z0-9]{1,20}" title="<?php $this->language->Line("registerbusiness-1800",'Only characters allowed, no spaces, points or special characters like @#$% and max 20 length');?>" />
 								<span class="glyphicon glyphicon-user form-control-feedback"></span>
 							</div>
 							<div>
 								<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin-bottom:10px; text-align: center">
-									<?=$this->language->Line("registerbusiness-S20120A","Your business type");?>
+									<?php $this->language->Line("registerbusiness-S20120A","Your business type");?>
 								</p>
 							</div>
 
 							<div class="selectWrapper mb-35">
 								<select class="selectBox" name="business_type_id" style="font-family:'caption-light';" required>
-								<option value=""><?=$this->language->Line("registerbusiness-A200101A","Select business type");?></option>
+								<option value=""><?php $this->language->Line("registerbusiness-A200101A","Select business type");?></option>
 								<?php foreach ($businessTypes as $type) { ?>
 								<option value="<?php echo $type['id'] ?>"><?php echo ucfirst($type['busineess_type']); ?></option>
 								<?php } ?>
@@ -52,26 +52,26 @@
 							</div>
 							<div>
 								<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin-bottom:10px; text-align: center">
-									<?=$this->language->Line("registerbusiness-20120","Business VAT number");?>
+									<?php $this->language->Line("registerbusiness-20120","Business VAT number");?>
 								</p>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="text" name="vat_number" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("registerbusiness-20120","Business VAT number");?>" />
+								<input type="text" name="vat_number" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php $this->language->Line("registerbusiness-20120","Business VAT number");?>" />
 								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 							</div>
 							<div>
 								<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center">
-									<?=$this->language->Line("registerbusiness-1900",'Company e-mail');?>
+									<?php $this->language->Line("registerbusiness-1900",'Company e-mail');?>
 									<br/>
 									<br/>
 								</p>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="email" name="email" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("registerbusiness-2000","email");?>" />
+								<input type="email" name="email" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php $this->language->Line("registerbusiness-2000","email");?>" />
 								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 							</div>
 							<div>
-								<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center"><?=$this->language->Line("registerbusiness-A2001A","
+								<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center"><?php $this->language->Line("registerbusiness-A2001A","
 									Responsible person first name
 									");?>
 									<br/>
@@ -79,11 +79,11 @@
 								</p>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="text" name="first_name" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?=$this->language->Line("registerbusiness-A20011A","First name");?> />
+								<input type="text" name="first_name" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?php $this->language->Line("registerbusiness-A20011A","First name");?> />
 								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 							</div>
 							<div>
-								<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center"><?=$this->language->Line("registerbusiness-A20012A","
+								<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center"><?php $this->language->Line("registerbusiness-A20012A","
 									Responsible person last name
 									");?>
 									<br/>
@@ -91,55 +91,55 @@
 								</p>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="text" name="second_name" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?=$this->language->Line("registerbusiness-A2001A","Last name");?> />
+								<input type="text" name="second_name" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?php $this->language->Line("registerbusiness-A2001A","Last name");?> />
 								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 							</div>
 							<div>
 								<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center">
-									<?=$this->language->Line("registerbusiness-2100",'Company phone number');?>
+									<?php $this->language->Line("registerbusiness-2100",'Company phone number');?>
 									<br/>
 									<br/>
 								</p>
 							</div>
 							<div class="form-group has-feedback">
-								<input name="mobile" type="tel" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("registerbusiness-2200","Phone number");?>" required />
+								<input name="mobile" type="tel" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php $this->language->Line("registerbusiness-2200","Phone number");?>" required />
 								<span class="glyphicon glyphicon-phone form-control-feedback"></span>
 							</div>
 							<div>
 								<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center">
-									<?=$this->language->Line("registerbusiness-2300",'Choose a good unique password');?>
+									<?php $this->language->Line("registerbusiness-2300",'Choose a good unique password');?>
 									<br/>
 									<br/>
 								</p>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="password" name="password"  required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("registerbusiness-2400","Password");?>" />
+								<input type="password" name="password"  required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php $this->language->Line("registerbusiness-2400","Password");?>" />
 							</div>
 							<div class="form-group has-feedback">
-								<input type="password" name="cpassword" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("registerbusiness-2500"," Confirm Password ");?>" />
+								<input type="password" name="cpassword" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php $this->language->Line("registerbusiness-2500"," Confirm Password ");?>" />
 							</div>
 							<div>
 								<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center">
-									<?=$this->language->Line("registerbusiness-2600",'Your business address, this is the address where the');?> lost + found
-									<?=$this->language->Line("registerbusiness-2700",'will be picked-up by DHL and/or customers, to repatriate the lost Items.');?>
+									<?php $this->language->Line("registerbusiness-2600",'Your business address, this is the address where the');?> lost + found
+									<?php $this->language->Line("registerbusiness-2700",'will be picked-up by DHL and/or customers, to repatriate the lost Items.');?>
 									<br/>
 									<br/>
 								</p>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="text" name="address" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?=$this->language->Line("registerbusiness-2800","Address");?> />
+								<input type="text" name="address" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?php $this->language->Line("registerbusiness-2800","Address");?> />
 								<span class="glyphicon glyphicon-home form-control-feedback"></span>
 							</div>
 							<div class="form-group has-feedback">
-								<input name="addressa"  type="text" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("registerbusiness-2900"," Additional address line ");?>" />
+								<input name="addressa"  type="text" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php $this->language->Line("registerbusiness-2900"," Additional address line ");?>" />
 								<span class="glyphicon glyphicon-home form-control-feedback"></span>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="text" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?=$this->language->Line("registerbusiness-3000","Zipcode");?> name="zipcode" required />
+								<input type="text" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?php $this->language->Line("registerbusiness-3000","Zipcode");?> name="zipcode" required />
 								<span class="glyphicon glyphicon-home form-control-feedback"></span>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="text" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?=$this->language->Line("registerbusiness-3100","City");?> name="city" required />
+								<input type="text" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?php $this->language->Line("registerbusiness-3100","City");?> name="city" required />
 								<span class="glyphicon glyphicon-home form-control-feedback"></span>
 							</div>
 							<div class="selectWrapper mb-35">
@@ -158,7 +158,7 @@
 							<?php if ($this->baseUrl === "http://127.0.0.1/lostandfound/")  {?>
 							<div class="form-group align-center mb-35 mt-50" >
 								<p>
-									<input type="submit" id="capsubmit" class="button button-orange" value="<?=$this->language->Line("registerbusiness-3300",'REGISTER ACCOUNT');?>" style="border: none" />
+									<input type="submit" id="capsubmit" class="button button-orange" value="<?php $this->language->Line("registerbusiness-3300",'REGISTER ACCOUNT');?>" style="border: none" />
 								</p>
 							</div>
 							<?php }?>
@@ -166,7 +166,7 @@
 							<?php if ($this->baseUrl !== "http://127.0.0.1/lostandfound/")  {?>
 							<div class="form-group align-center mb-35 mt-50" >
 							<p>
-								<input type="submit" id="capsubmit" style="display:none;" class="button button-orange" value="<?=$this->language->Line("registerbusiness-3300",'REGISTER ACCOUNT');?>" style="border: none" />
+								<input type="submit" id="capsubmit" style="display:none;" class="button button-orange" value="<?php $this->language->Line("registerbusiness-3300",'REGISTER ACCOUNT');?>" style="border: none" />
 							</p>
 							</div>
 							<?php }?>
@@ -186,9 +186,9 @@
 			<div class="timeline-text">
 				<div class='timeline-heading'>
 					<span class='timeline-number text-orange show-mobile'>1</span>
-					<h2 style="font-weight:bold; font-family: caption-bold"><?=$this->language->Line("registerbusiness-A200133A","REGISTER");?></h2>
+					<h2 style="font-weight:bold; font-family: caption-bold"><?php $this->language->Line("registerbusiness-A200133A","REGISTER");?></h2>
 				</div>
-				<p class="text-content-light" style="font-size: larger"><?=$this->language->Line("registerbusiness-A200134A","REGISTER AND RECEIVE AN E-MAIL WITH YOUR CREDENTIALS AND AN ACTIVATION LINK.");?></p>
+				<p class="text-content-light" style="font-size: larger"><?php $this->language->Line("registerbusiness-A200134A","REGISTER AND RECEIVE AN E-MAIL WITH YOUR CREDENTIALS AND AN ACTIVATION LINK.");?></p>
 				<!-- <p class="text-content-light">NO CREDENTIALS RECEIVED YET, WAIT A MINUTE AND PLEASE CHECK YOUR SPAM MAIL  </p>-->
 				<div class="flex-column align-space">
 				<!-- <p class="text-content-light" style="">LOST BY YOUR CUSTOMER, <br>RETURNED BY US.</p>-->
@@ -198,7 +198,7 @@
 						</div>
 					</div>
 					<div style="text-align:center">
-						<span class="button button-orange mb-25" id="show-timeline-video-2" onclick="playThisVideo(this)"><?=$this->language->Line("registerbusiness-A200135A","LEARN MORE VIDEO");?></span>
+						<span class="button button-orange mb-25" id="show-timeline-video-2" onclick="playThisVideo(this)"><?php $this->language->Line("registerbusiness-A200135A","LEARN MORE VIDEO");?></span>
 					</div>
 				</div>
 			</div>
@@ -208,9 +208,9 @@
 			<div class="timeline-text">
 				<div class="timeline-heading">
 					<span class='timeline-number text-blue show-mobile'>2</span>
-					<h2 style="font-weight:bold; font-family: caption-bold"><?=$this->language->Line("registerbusiness-A200136A","ACTIVATE");?></h2>
+					<h2 style="font-weight:bold; font-family: caption-bold"><?php $this->language->Line("registerbusiness-A200136A","ACTIVATE");?></h2>
 				</div>
-				<p class="text-content-light" style="font-size: larger"><?=$this->language->Line("registerbusiness-A200137A","ACTIVATE YOUR ACCOUNT WITH THE E-MAIL OR BY LOGIN-IN AND MANUALLY ACTIVATE YOUR ACCOUNT.");?> </p>
+				<p class="text-content-light" style="font-size: larger"><?php $this->language->Line("registerbusiness-A200137A","ACTIVATE YOUR ACCOUNT WITH THE E-MAIL OR BY LOGIN-IN AND MANUALLY ACTIVATE YOUR ACCOUNT.");?> </p>
 				<div class="flex-column align-space">
 				<!-- <p class="text-content-light" >LOST BY YOUR CUSTOMER, <br>RETURNED BY US.</p>-->
 					<div class="videos" id="timeline-video-3">
@@ -219,7 +219,7 @@
 						</div>
 					</div>
 					<div style="text-align:center">
-						<span  onclick="playThisVideo(this)" class="button button-orange mb-25" id="show-timeline-video-3"><?=$this->language->Line("registerbusiness-A200138A","LEARN MORE VIDEO");?></span>
+						<span  onclick="playThisVideo(this)" class="button button-orange mb-25" id="show-timeline-video-3"><?php $this->language->Line("registerbusiness-A200138A","LEARN MORE VIDEO");?></span>
 					</div>
 				</div>
 			</div>

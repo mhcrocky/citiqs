@@ -114,7 +114,7 @@
 			<div align="left">
 
 				<h2 class="heading mb-35">
-					<?=$this->language->line('PAYMENTERROR-AB100010','WE COULD NOT PROCESS YOUR PAYMENT');?>
+					<?php $this->language->line('PAYMENTERROR-AB100010','WE COULD NOT PROCESS YOUR PAYMENT');?>
 				</h2>
 
 				<?php
@@ -147,7 +147,7 @@
 				<?php } ?>
 
 
-				<p style="font-family: caption-light" class="text-content mb-35"><?=$this->language->line("PAYMENTERROR-A003",'LOST BY YOU,<br> RETURNED BY US.');?></p>
+				<p style="font-family: caption-light" class="text-content mb-35"><?php $this->language->line("PAYMENTERROR-A003",'LOST BY YOU,<br> RETURNED BY US.');?></p>
 
 			</div>
 			<div class="text-Left mt-50 mobile-hide" style="margin-top: 0px; margin-left: 0px">

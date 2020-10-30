@@ -71,14 +71,14 @@ $resultsDeferred = $client->execute($request);
 
 <h3>Results Of Call:</h3>
 <?php foreach ($results as $item): ?>
-  <?= $item['volumeInfo']['title'] ?>
+  <?php $item['volumeInfo']['title'] ?>
   <br />
 <?php endforeach ?>
 
 <h3>Results Of Deferred Call:</h3>
 <?php foreach ($resultsDeferred as $item): ?>
-  <?= $item['volumeInfo']['title'] ?>
+  <?php $item['volumeInfo']['title'] ?>
   <br />
 <?php endforeach ?>
 
-<?= pageFooter(__FILE__) ?>
+<?php pageFooter(__FILE__) ?>

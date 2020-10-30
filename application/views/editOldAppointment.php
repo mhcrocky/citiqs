@@ -24,13 +24,13 @@
                                     <div class="form-group">
                                         <label for="dayofweek">Day of the week</label>
                                         <select id="dayofweek" name="dayofweek" class="form-control">
-                                            <option value="Monday"<?= getSelectedDropdownValue("Monday", $appointment_details->dayofweek); ?>>Monday</option>
-                                            <option value="Tuesday"<?= getSelectedDropdownValue("Tuesday", $appointment_details->dayofweek); ?>>Tuesday</option>
-                                            <option value="Wednesday"<?= getSelectedDropdownValue("Wednesday", $appointment_details->dayofweek); ?>>Wednesday</option>
-                                            <option value="Thursday"<?= getSelectedDropdownValue("Thursday", $appointment_details->dayofweek); ?>>Thursday</option>
-                                            <option value="Friday"<?= getSelectedDropdownValue("Friday", $appointment_details->dayofweek); ?>>Friday</option>
-                                            <option value="Saturday"<?= getSelectedDropdownValue("Saturday", $appointment_details->dayofweek); ?>>Saturday</option>
-                                            <option value="Sunday"<?= getSelectedDropdownValue("Sunday", $appointment_details->dayofweek); ?>>Sunday</option>
+                                            <option value="Monday"<?php getSelectedDropdownValue("Monday", $appointment_details->dayofweek); ?>>Monday</option>
+                                            <option value="Tuesday"<?php getSelectedDropdownValue("Tuesday", $appointment_details->dayofweek); ?>>Tuesday</option>
+                                            <option value="Wednesday"<?php getSelectedDropdownValue("Wednesday", $appointment_details->dayofweek); ?>>Wednesday</option>
+                                            <option value="Thursday"<?php getSelectedDropdownValue("Thursday", $appointment_details->dayofweek); ?>>Thursday</option>
+                                            <option value="Friday"<?php getSelectedDropdownValue("Friday", $appointment_details->dayofweek); ?>>Friday</option>
+                                            <option value="Saturday"<?php getSelectedDropdownValue("Saturday", $appointment_details->dayofweek); ?>>Saturday</option>
+                                            <option value="Sunday"<?php getSelectedDropdownValue("Sunday", $appointment_details->dayofweek); ?>>Sunday</option>
                                         </select>
                                     </div>
                                 </div>

@@ -10,8 +10,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 			
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-	<link href="<?= base_url(); ?>assets/pdfdesigner/css/fpdf-designer-style.css" rel="stylesheet">
-	<link href="<?= base_url(); ?>assets/pdfdesigner/help.css" rel="stylesheet">
+	<link href="<?php base_url(); ?>assets/pdfdesigner/css/fpdf-designer-style.css" rel="stylesheet">
+	<link href="<?php base_url(); ?>assets/pdfdesigner/help.css" rel="stylesheet">
 </head>
 
 <body class="fpdf-designer-body">
@@ -20,12 +20,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			FPDF jQuery WYSIWYG Script Editor
 		</div>
 		<div id="fpdf_designer_elements" class="col p-4" style="max-width:100px;">
-			<a href="<?= base_url(); ?>pdfdesigner" class="btn btn-primary fdpf-element" id="send_fpdf">Back</a>
+			<a href="<?php base_url(); ?>pdfdesigner" class="btn btn-primary fdpf-element" id="send_fpdf">Back</a>
 		</div>
 		<div id="fpdf_designer_output" class="col p-4" style="max-width:2000px;">
 			<h1>Help / Documentation 
-					<a href="<?= base_url(); ?>pdfdesigner/help_editor" title="How to use editor">How to use editor</a> | 
-					<a href="<?= base_url(); ?>pdfdesigner/help_plugin" title="How to use FPDF editor jQuery plugin">How to use FPDF editor jQuery plugin</a>
+					<a href="<?php base_url(); ?>pdfdesigner/help_editor" title="How to use editor">How to use editor</a> | 
+					<a href="<?php base_url(); ?>pdfdesigner/help_plugin" title="How to use FPDF editor jQuery plugin">How to use FPDF editor jQuery plugin</a>
 			</h1>
 			<div id="output_content">
 				<p> This editor helps you to create a PHP script to create an FPDF. Without any experimentations.

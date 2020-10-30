@@ -7,7 +7,7 @@
 		<div class="flex-column align-start width-650">
 			<div style="text-align:center">
 				<div class="contact-text-box">
-					<p><?=$this->language->line("CONTACT-10001","
+					<p><?php $this->language->line("CONTACT-10001","
 					AT TIQS, WE PROVIDE THE EXCEPTIONAL SERVICE WE'D WANT TO EXPERIENCE OURSELVES!
 					");?>
 					</p>
@@ -39,7 +39,7 @@
 		<div class="flex-column align-start width-650">
 			<div style="text-align:center">
 				<div class="contact-text-box">
-					<p><?=$this->language->line("CONTACT-10008","
+					<p><?php $this->language->line("CONTACT-10008","
 						YOUR EMAIL ISN'T GOING INTO THE INBOX
 						ABYSS. WE NEED HOWEVER TWO BUSINESS DAYS TO RESPOND.
 						"); ?>

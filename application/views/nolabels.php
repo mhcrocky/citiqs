@@ -6,10 +6,10 @@
 			</div>
 			<div style="text-align:left; margin-top: 30px">
 				<h1 class="heading" style="font-size: 400%; margin-bottom: 20px">
-					<?=$this->language->line('ALFRED-VA10001A','ALFRED</a>');?>
+					<?php $this->language->line('ALFRED-VA10001A','ALFRED</a>');?>
 				</h1>
 				<h3 class="heading">
-					<?=$this->language->line('ALFRED-VB100010','THE DIGITAL BUTLER');?>
+					<?php $this->language->line('ALFRED-VB100010','THE DIGITAL BUTLER');?>
 				</h3>
 			</div>
 
@@ -25,7 +25,7 @@
 			<div class="timeline-text">
 				<div class="timeline-heading">
 					<span class='timeline-number text-light-blue show-mobile'></span>
-					<h2 style="font-weight:bold; font-family: caption-bold"><?=$this->language->line('ALFRED-ABCE1010101','TO GO BUSY TIME');?></h2>
+					<h2 style="font-weight:bold; font-family: caption-bold"><?php $this->language->line('ALFRED-ABCE1010101','TO GO BUSY TIME');?></h2>
 				</div>
 				<div>
 					<p style="font-family:caption-light; font-size: medium; font-weight: bold">
@@ -43,7 +43,7 @@
 					<div class="flex-column align-space">
 						<div style="text-align:center">
 							<!-- href="https://tiqs.com/lostandfound/menuapp target="_blank"" -->
-							<a onclick="changeLimits()" id="limitButton" disabled class="button button-orange mb-25"><?=$this->language->line('NOLABELS-vPB1881A',"SET TIME");?></a>
+							<a onclick="changeLimits()" id="limitButton" disabled class="button button-orange mb-25"><?php $this->language->line('NOLABELS-vPB1881A',"SET TIME");?></a>
 						</div>
 						<div class="mb-35" style="text-align:right" >
 							MINUTES ADDED
@@ -55,7 +55,7 @@
 					<p></p>
 					<div style="text-align:center">
 						<!-- href="https://tiqs.com/lostandfound/menuapp target="_blank"" -->
-						<a onclick="saveBusyTime('slide', '<?php echo $vendor['id']; ?>')" id="limitButton" disabled class="button button-orange mb-25"><?=$this->language->line('NOLABELS-vPB18811jKJA',"CONFIRM TIME");?></a>
+						<a onclick="saveBusyTime('slide', '<?php echo $vendor['id']; ?>')" id="limitButton" disabled class="button button-orange mb-25"><?php $this->language->line('NOLABELS-vPB18811jKJA',"CONFIRM TIME");?></a>
 					</div>
 
 				</div>
@@ -69,19 +69,19 @@
 			<div class="timeline-text">
 				<div class="timeline-heading">
 					<span class='timeline-number text-light-blue show-mobile'>1</span>
-					<h2 style="font-weight:bold; font-family: caption-bold"><?=$this->language->line('ALFRED-A1010101','GO TO PROFILE');?></h2>
+					<h2 style="font-weight:bold; font-family: caption-bold"><?php $this->language->line('ALFRED-A1010101','GO TO PROFILE');?></h2>
 				</div>
 				<p style="font-family:caption-light; font-size: medium; font-weight: bold">
 					<ul style="list-style-type: disc ; font-family:caption-light; font-size: larger; margin-left: -20px ">
-						<li><?=$this->language->line('ALFRED-VB10001112',"COMPLETE YOUR PROFILE DETAILS");?></>
-						<li><?=$this->language->line('ALFRED-VB10001113',"COMPLETE YOUR FINANCIAL DETAILS");?></>
+						<li><?php $this->language->line('ALFRED-VB10001112',"COMPLETE YOUR PROFILE DETAILS");?></>
+						<li><?php $this->language->line('ALFRED-VB10001113',"COMPLETE YOUR FINANCIAL DETAILS");?></>
 					</ul>
 				<p></p>
 
 				<div class="flex-column align-space">
 					<div style="text-align:center">
 						<!-- href="https://tiqs.com/lostandfound/menuapp target="_blank"" -->
-						<a href="profile" target="_self" class="button button-orange mb-25"><?=$this->language->line('NOLABELS-vB1000131A',"GO TO PROFILE");?></a>
+						<a href="profile" target="_self" class="button button-orange mb-25"><?php $this->language->line('NOLABELS-vB1000131A',"GO TO PROFILE");?></a>
 					</div>
 				</div>
 			</div>
@@ -93,17 +93,17 @@
 
 				<div class='timeline-heading'>
 					<span class='timeline-number text-light-blue show-mobile'>2</span>
-					<h2 style="font-weight:bold; font-family: caption-bold"><?=$this->language->line('ALFRED-VB1000101UA','GO TO SHOP SETTINGS');?></h2>
+					<h2 style="font-weight:bold; font-family: caption-bold"><?php $this->language->line('ALFRED-VB1000101UA','GO TO SHOP SETTINGS');?></h2>
 				</div>
 				<p style="font-family:caption-light; font-size: medium; font-weight: bold">
 					<ul style="list-style-type: disc ; font-family:caption-light; font-size: larger; margin-left: -20px ">
-						<li><?=$this->language->line('ALFRED-VB10001111A',"MANAGE YOUR SHOP SETTINGS");?></>
+						<li><?php $this->language->line('ALFRED-VB10001111A',"MANAGE YOUR SHOP SETTINGS");?></>
 					</ul>
 				<p></p>
 				<div class="flex-column align-space">
 					<div style="text-align:center">
 						<!-- <a class="button button-orange mb-25" id="show-timeline-video-4">LEARN MORE VIDEO</a> -->
-						<a href="orders" target="_self" class="button button-orange mb-25"><?=$this->language->line('ALFRED-vB100011131B',"GO TO SETTINGS");?></a>
+						<a href="orders" target="_self" class="button button-orange mb-25"><?php $this->language->line('ALFRED-vB100011131B',"GO TO SETTINGS");?></a>
 					</div>
 				</div>
 			</div>

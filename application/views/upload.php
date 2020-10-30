@@ -3,12 +3,12 @@
 		<div class="flex-column align-start ">
 			<div style="text-align:left">
 				<h2 class="heading mb-35" style="color: white">
-					<?=$this->language->line("ITEMFOUND-1000",'MAKE A PICTURE OF THE FOUND ITEM');?>
+					<?php $this->language->line("ITEMFOUND-1000",'MAKE A PICTURE OF THE FOUND ITEM');?>
 				</h2>
 				<div >
 					<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  text-align: left">
-						<?=$this->language->line("PHOTO-45550",'NO TAG, NO TIQS IDENTIFICATION, LETS MAKE ONE!')?>
-						<?=$this->language->line("PHOTO-45560",'
+						<?php $this->language->line("PHOTO-45550",'NO TAG, NO TIQS IDENTIFICATION, LETS MAKE ONE!')?>
+						<?php $this->language->line("PHOTO-45560",'
                                 <br/><br/>When an item is uploaded or a picture is made, the image gets automatically a unique TIQS identification code. With this code the item can be claimed by the rightful owner. Lets make one.    
                                 ');?>
 					</p>
@@ -16,7 +16,7 @@
 				<?php
 					include_once APPPATH . 'views/includes/sessionMessages.php';
 				?>
-				<form action="<?= base_url(); ?>home/insertLabel" method="post" enctype="multipart/form-data">
+				<form action="<?php base_url(); ?>home/insertLabel" method="post" enctype="multipart/form-data">
 					<input type="text" name="userId" hidden readonly value="<?php echo $userId; ?>" />
 					
 					<input type="text" name="createdDtm" hidden readonly value="<?php echo date('Y-m-d H:i:s'); ?>" />
@@ -40,8 +40,8 @@
 					</div>
 					<div >
 						<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  text-align: left">
-							<?=$this->language->line("PHOTO-35550",'PLEASE DESCRIBE THE ITEM FOUND')?>
-							<?=$this->language->line("PHOTO-35560",'
+							<?php $this->language->line("PHOTO-35550",'PLEASE DESCRIBE THE ITEM FOUND')?>
+							<?php $this->language->line("PHOTO-35560",'
                                 <br/><br/>An item is best found when we know what it is. Please state the color, what the item is and some caracteristics, more info how to describe an item kan be found in the FAQ.  
                                 ');?>
 						</p>
@@ -55,9 +55,9 @@
 					<div style="text-align:center">
 						<div class="selectWrapper mb-50">
 							<select class="selectBox" name="categoryId" style="font-family:'caption-light';" required onchange="toggleItemData(this)">
-							<option value="" selected="selected"><?=$this->language->line("PHOTO-10120","Choose a category");?></option>
+							<option value="" selected="selected"><?php $this->language->line("PHOTO-10120","Choose a category");?></option>
 							<?php foreach ($categories as $category) { ?>
-								<option value="<?= $category->id; ?>"><?= $category->description; ?></option>
+								<option value="<?php $category->id; ?>"><?php $category->description; ?></option>
 							<?php } ?>
 						</select>
 						</div>
@@ -95,7 +95,7 @@
 						<input type="number" id="dclwgt" name="dclwgt" hidden step="0.01" min='0' style="font-family:'caption-light'; border-radius: 50px;" />
 					</div>
 					<div  style="text-align:center">
-						<input type="submit" class="button button-orange" id="submit" name="submit" value="<?=$this->language->line("IITEMFOUND-1300",'UPLOAD THE ITEM');?>" style="border: none; border-radius: 50px"/>
+						<input type="submit" class="button button-orange" id="submit" name="submit" value="<?php $this->language->line("IITEMFOUND-1300",'UPLOAD THE ITEM');?>" style="border: none; border-radius: 50px"/>
 					</div>
 				</form>
 			</div>
@@ -103,8 +103,8 @@
 		</div>
 		<div style="text-align:center">
 			<p id="UnkownAddressText1" style="font-family:'caption-light'; font-size:100%; color:#ffffff; text-align: center">
-				<?=$this->language->line("PHOTO-10050",'THANKS! FOR REGISTERING THIS FOUND ITEM')?>
-				<?=$this->language->line("PHOTO-A11060",'
+				<?php $this->language->line("PHOTO-10050",'THANKS! FOR REGISTERING THIS FOUND ITEM')?>
+				<?php $this->language->line("PHOTO-A11060",'
                                 <br/><br/>.<br/><br/> 
                                 ');?>
 				<br/>
@@ -116,36 +116,36 @@
 		<div class="background-yellow height-75">
 			<div class="width-650">
 				<!--        HERE THE UPLOAD ID SCREEN-->
-				<h2 style="color:#ffffff; margin-bottom: 30px"  class="heading"><?=$this->language->line("PHOTO-101010",'GET YOUR REWARD');?></h2>
+				<h2 style="color:#ffffff; margin-bottom: 30px"  class="heading"><?php $this->language->line("PHOTO-101010",'GET YOUR REWARD');?></h2>
 				<div >
 					<p id="UnkownAddressText2" style="font-family:'caption-light'; font-size:100%; color:#ffffff;  text-align: left">
-						<?=$this->language->line("PHOTO-15550",'WE APPRECIATE YOUR EFFORT!')?>
-						<?=$this->language->line("PHOTO-15560",'
+						<?php $this->language->line("PHOTO-15550",'WE APPRECIATE YOUR EFFORT!')?>
+						<?php $this->language->line("PHOTO-15560",'
                                 <br/><br/>AS YOU HAVE REGISTERED THE ITEM AT TIQS LOST + FOUND, WE WOULD LIKE TO REWARD YOUR EFFORTS.
                                 <br/> YOU RECIEVE FROM US A FREE PACKAGE OF TIQS-TAGS STICKERS TO USE FOR YOURSELF OR AS A GIVE AWAY TO YOUR FRIENDS OR RELATIVES.
                                 BESIDES THE RECEIPT OF THIS FREE PACKAGE ON THE GIVEN PERSONAL ADDRESS, YOU ALSO GET 3 MONTHS OF FREE SMS NOTIFICATIONS!   
                                 WE REALLY APPRECIATE YOUR EFFORT AND LOVE TO BRING THE LOST ITEM BACK TO THE RIGHTFUL OWNER. 
                                 ');?>
 						<br/><br/>
-						<?=$this->language->line("PHOTO-25560",'
+						<?php $this->language->line("PHOTO-25560",'
                                 <br/><br/>READ IN THE FREQUENTLY ASKED QUESTIONS MORE ABOUT THE LOST + FOUND PROCEDURE
                                 ');?>
 					</p>
 				</div>
 				<div>
-					<a style="color:#ffffff" class='how-we-works-link' href="<?php echo base_url(); ?>howitworksbusiness"><?=$this->language->line('Home-002','MORE INFO HOW IT WORKS');?></a>
+					<a style="color:#ffffff" class='how-we-works-link' href="<?php echo base_url(); ?>howitworksbusiness"><?php $this->language->line('Home-002','MORE INFO HOW IT WORKS');?></a>
 				</div>
 				<div style="text-align:center">
-					<a href="<?php echo base_url(); ?>check" class="button button-orange mb-35"><?=$this->language->line("PHOTO-10280",'GET YOUR REWARD');?></a>
+					<a href="<?php echo base_url(); ?>check" class="button button-orange mb-35"><?php $this->language->line("PHOTO-10280",'GET YOUR REWARD');?></a>
 
 				</div>
-				<p style="color:#ffffff" class="text-content mb-50"><?=$this->language->line("ITEMFOUND-1110",'lost by you, <br> returned by us');?></p>
+				<p style="color:#ffffff" class="text-content mb-50"><?php $this->language->line("ITEMFOUND-1110",'lost by you, <br> returned by us');?></p>
 			</div>
 		</div>
 		<div class="background-apricot height-50">
 			<div class="width-650">
 				<!--        HERE THE UTILITY BILL PROOF OF CONCEPT SCREEN-->
-				<h2 class="heading mb-35"><?=$this->language->line("ITEMFOUND-A1111",'MORE INFO');?></h2>
+				<h2 class="heading mb-35"><?php $this->language->line("ITEMFOUND-A1111",'MORE INFO');?></h2>
 			</div>
 		</div>
 	</div><!-- end col half -->

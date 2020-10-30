@@ -284,12 +284,12 @@
             <a href="<?php echo base_url() ?>switchlang/es"><span class="flag flag-es"></span></a>
             <a href="<?php echo base_url() ?>switchlang/de"><span class="flag flag-de"></span></a>
             <a href="<?php echo base_url() ?>switchlang/fr"><span class="flag flag-fr"></span></a>
-            <p  style="font-family:'Century Gothic W01'; font-size:100%; text-align: center"><?=$this->language->line('Select your language');?></p>
+            <p  style="font-family:'Century Gothic W01'; font-size:100%; text-align: center"><?php $this->language->line('Select your language');?></p>
 
             <!-- <p class="login-box-msg" style="font-weight: bold font-family:"Century Gothic" font-size: larger">Login</p> -->
-            <p  style="font-family:'Century Gothic W01'; font-size:100%; color: #ff5722; text-align: center"><?=$this->language->line('Your personal tag-code');?><br></p>
+            <p  style="font-family:'Century Gothic W01'; font-size:100%; color: #ff5722; text-align: center"><?php $this->language->line('Your personal tag-code');?><br></p>
             <div>
-                <p  style="font-family:'Century Gothic W01'; font-size:300%; color: #000000; text-align: center"><?=$code;?><br></p>
+                <p  style="font-family:'Century Gothic W01'; font-size:300%; color: #000000; text-align: center"><?php $code;?><br></p>
             </div>
             <?php
             $this->load->helper('form');
@@ -350,46 +350,46 @@
 
                     <div class="form-group has-feedback" style="font-family:'Century Gothic W01'; font-size:100%; color: rgba(0,0,0,0.35); margin:20px,20px,20px,200px; text-align: center">
                         <input type="checkbox" name="ismyphone" />
-                        <label for="checkboxconsent"><?=$this->language->line('Check this box, when your code is attached to your mobile phone. (SMS will be send to your friends phone)');?></label>
+                        <label for="checkboxconsent"><?php $this->language->line('Check this box, when your code is attached to your mobile phone. (SMS will be send to your friends phone)');?></label>
                         <!--                    <span class="glyphicon glyphicon-envelope form-control-feedback" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></span>-->
                     </div>
 
                     <div>
-                        <p style="font-family:'Century Gothic W01'; font-size:300%; color: #ff5722; margin:20px,20px,20px,200px; text-align: center"><span><?=$this->language->line('How it works..');?></span></p>
+                        <p style="font-family:'Century Gothic W01'; font-size:300%; color: #ff5722; margin:20px,20px,20px,200px; text-align: center"><span><?php $this->language->line('How it works..');?></span></p>
                     </div>
                     <p <br /></p>
                     <div>
-                        <p style="font-family:'Century Gothic W01'; font-size:100%; color:#000000; margin:20px,20px,20px,200px; text-align: center"><?=$this->language->line('Your code is registered on your e-mail account. ');?><br> <br><?=$this->language->line('In your personal dashboard, the login info, is send to you, by separate mail - PLEASE CHECK YOUR SPAM - ');?><?=$this->language->line(' , you can add a picture of the item, and add your address. ');?><br>  <br /></p>
+                        <p style="font-family:'Century Gothic W01'; font-size:100%; color:#000000; margin:20px,20px,20px,200px; text-align: center"><?php $this->language->line('Your code is registered on your e-mail account. ');?><br> <br><?php $this->language->line('In your personal dashboard, the login info, is send to you, by separate mail - PLEASE CHECK YOUR SPAM - ');?><?php $this->language->line(' , you can add a picture of the item, and add your address. ');?><br>  <br /></p>
                     </div>
                     <p <br /></p>
                 <div class="login-box" >
                     <div>
-                        <p style="font-family:'Century Gothic W01'; font-size:100%; color:#000000; margin:20px,20px,20px,200px; text-align: center"><?=$this->language->line('Your mobile phone number for SMS when someone finds this registered item. Number formatted as country code and phone number 0099123456789');?><br>  <br /></p>
+                        <p style="font-family:'Century Gothic W01'; font-size:100%; color:#000000; margin:20px,20px,20px,200px; text-align: center"><?php $this->language->line('Your mobile phone number for SMS when someone finds this registered item. Number formatted as country code and phone number 0099123456789');?><br>  <br /></p>
                     </div>
                     <div class="form-group has-feedback">
-                        <input type="tel" value="<?=$mobile;?>" class="form-control" placeholder="<?=$this->language->line('Your mobile number');?>"  name="mobile" data-toggle="tooltip" data-placement="top" title="<?=$this->language->line('Your mobile number is only used by tiqs we do not share any mobile number with 3rd parties!');?>" />
+                        <input type="tel" value="<?php $mobile;?>" class="form-control" placeholder="<?php $this->language->line('Your mobile number');?>"  name="mobile" data-toggle="tooltip" data-placement="top" title="<?php $this->language->line('Your mobile number is only used by tiqs we do not share any mobile number with 3rd parties!');?>" />
                         <span class="glyphicon glyphicon-phone form-control-feedback" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></span>
                     </div>
                     <p <br><br /></p>
                     <div>
-                        <p style="font-family:'Century Gothic W01'; font-size:100%; color:#000000; margin:20px,20px,20px,200px; text-align: center"><?=$this->language->line('Your friends mobile number, when you lost your phone. Number formatted as country code and phone number 0099123456789');?><br>  <br /></p>
+                        <p style="font-family:'Century Gothic W01'; font-size:100%; color:#000000; margin:20px,20px,20px,200px; text-align: center"><?php $this->language->line('Your friends mobile number, when you lost your phone. Number formatted as country code and phone number 0099123456789');?><br>  <br /></p>
                     </div>
 
                     <div class="form-group has-feedback">
-                        <input type="tel" value="<?=$lfbuddymobile;?>"class="form-control" placeholder="<?=$this->language->line('Your friends mobile number');?>" name="lfbuddymobile" data-toggle="tooltip" data-placement="top" title="<?=$this->language->line('Your mobile number is only used by tiqs we do not share any mobile number with 3rd parties!');?>" />
+                        <input type="tel" value="<?php $lfbuddymobile;?>"class="form-control" placeholder="<?php $this->language->line('Your friends mobile number');?>" name="lfbuddymobile" data-toggle="tooltip" data-placement="top" title="<?php $this->language->line('Your mobile number is only used by tiqs we do not share any mobile number with 3rd parties!');?>" />
                         <span class="glyphicon glyphicon-phone form-control-feedback" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></span>
                     </div>
                     <p <br><br /></p>
                     <div class="login-box">
-                        <p style="font-family:'Century Gothic W01'; font-size:100%; color:#000000; margin:20px,20px,20px,200px; text-align: center"><?=$this->language->line('Your e-mail address for registration');?><br>  <br /></p>
+                        <p style="font-family:'Century Gothic W01'; font-size:100%; color:#000000; margin:20px,20px,20px,200px; text-align: center"><?php $this->language->line('Your e-mail address for registration');?><br>  <br /></p>
                     </div>
 
                     <div class="form-group has-feedback">
-                        <input type="email" value="<?=$email;?>" class="form-control" placeholder="<?=$this->language->line('Your e-mail');?>" name="email" data-toggle="tooltip" data-placement="top" title="<?=$this->language->line('Your e-mail address is only used by tiqs we do not share any e-mail addresses with 3rd parties!');?>" required />
+                        <input type="email" value="<?php $email;?>" class="form-control" placeholder="<?php $this->language->line('Your e-mail');?>" name="email" data-toggle="tooltip" data-placement="top" title="<?php $this->language->line('Your e-mail address is only used by tiqs we do not share any e-mail addresses with 3rd parties!');?>" required />
                         <span class="glyphicon glyphicon-envelope form-control-feedback" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></span>
                     </div>
                     <div class="form-group has-feedback">
-                        <input type="email" value="<?=$email;?>" class="form-control" placeholder=<?=$this->language->line("Repeat email for verification");?> name="emailverify"  required />
+                        <input type="email" value="<?php $email;?>" class="form-control" placeholder=<?php $this->language->line("Repeat email for verification");?> name="emailverify"  required />
                         <span class="glyphicon glyphicon-envelope form-control-feedback" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></span>
                     </div>
                 </div>
@@ -408,15 +408,15 @@
                     <!-- <div class="col-xs-8"> -->
                     <!-- <input type="submit" class="btn btn-primary btn-block btn-flat" value="Sign In" /> -->
                     <div>
-                        <p style="font-family:'Century Gothic W01'; font-size:100%; color: #ff5722; margin:20px,20px,20px,200px; text-align: center"><span><?=$this->language->line("Your consent");?></span></p>
+                        <p style="font-family:'Century Gothic W01'; font-size:100%; color: #ff5722; margin:20px,20px,20px,200px; text-align: center"><span><?php $this->language->line("Your consent");?></span></p>
                     </div>
                     <p <br /></p>
                 <div>
-                    <p style="font-family:'Century Gothic W01'; font-size:100%; color:#000000; margin:20px,20px,20px,200px; text-align: center"><?=$this->language->line("By clicking the \"Register\" button, ");?><?=$this->language->line("you agree to our Terms of use, explicit e-mail opt-in, Privacy policy and Disclaimer.");?><br /></p>
+                    <p style="font-family:'Century Gothic W01'; font-size:100%; color:#000000; margin:20px,20px,20px,200px; text-align: center"><?php $this->language->line("By clicking the \"Register\" button, ");?><?php $this->language->line("you agree to our Terms of use, explicit e-mail opt-in, Privacy policy and Disclaimer.");?><br /></p>
                 </div>
                     <br>
                     <div style="text-align: center">
-                        <input type="submit" class="myButtonOrange" value=<?=$this->language->line("Register");?> />
+                        <input type="submit" class="myButtonOrange" value=<?php $this->language->line("Register");?> />
                     </div><br>
                 </div>
 
@@ -433,7 +433,7 @@
             </form>
         </div><!-- /.login-box-body -->
         <div class="row" align="center" >
-        <a href="https://lostandfound.tips" ><font size="4"  color="white"><?=$this->language->line("Back to menu");?></font></a><br>
+        <a href="https://lostandfound.tips" ><font size="4"  color="white"><?php $this->language->line("Back to menu");?></font></a><br>
         </div>
     </div><!-- /.login-box -->
 </div>

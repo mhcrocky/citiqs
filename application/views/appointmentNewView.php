@@ -84,11 +84,11 @@
                 <div class="grid-item">
                     <div class="item-header">
                         <?php if($appointment->date) { ?>
-                        <p class="item-description"><?= $appointment->date; ?></p>
+                        <p class="item-description"><?php $appointment->date; ?></p>
                         <?php } ?>
-                        <p class="item-description"><?= $appointment->dayofweek; ?></p>
-                        <p class="item-category"><?= $appointment->timefrom; ?></p>
-                        <p class="item-category"><?= $appointment->timeto; ?></p>
+                        <p class="item-description"><?php $appointment->dayofweek; ?></p>
+                        <p class="item-category"><?php $appointment->timefrom; ?></p>
+                        <p class="item-category"><?php $appointment->timeto; ?></p>
                     </div><!-- end item header -->
                     <div class="grid-footer">
                         <div class="iconWrapper">

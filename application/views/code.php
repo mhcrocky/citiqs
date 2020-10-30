@@ -69,12 +69,12 @@
 		<div class="flex-column align-start">
 			<div align="center">
 				<h2 class="heading">
-					<?=$this->language->line("CODE-010",'VERIFICATION CODE');?>
+					<?php $this->language->line("CODE-010",'VERIFICATION CODE');?>
 				</h2>
 			</div>
 			<div style="font-family: caption-light; font-size: larger">
 				<p align="center">
-					<?=$this->language->line("CODE-010AB","
+					<?php $this->language->line("CODE-010AB","
 					FOR BUSINESS AND PERSONAL
 					");?>
 				</p>
@@ -152,7 +152,7 @@
 							<div class="row">
 								<div class="form-group has-feedback" >
 									<div style="text-align: center; ">
-										<input type="submit" class="button button-orange" value="<?=$this->language->line("CODE-A240",'VERIFY THAT IT IS YOU');?>" style="border: none" />
+										<input type="submit" class="button button-orange" value="<?php $this->language->line("CODE-A240",'VERIFY THAT IT IS YOU');?>" style="border: none" />
 									</div>
 								</div>
 							</div>
@@ -182,7 +182,7 @@
 					<div style="margin-top: 0px; margin-left: 0px">
 						<img border="0" src="<?php echo base_url(); ?>assets/home/images/tiqsbusiness.png" alt="tiqs" width="auto" height="110" />
 					</div>
-					<p style="font-size: larger; margin-top: 50px; margin-left: 0px"><?=$this->language->line("HOMESTART-001C",'THE NUMBER ONE PLATFORM <br> FOR LOST AND FOUND');?></p>
+					<p style="font-size: larger; margin-top: 50px; margin-left: 0px"><?php $this->language->line("HOMESTART-001C",'THE NUMBER ONE PLATFORM <br> FOR LOST AND FOUND');?></p>
 				</div>
 				<div style="text-align:center; margin-top: 30px">
 					<img border="0" src="<?php echo base_url(); ?>assets/home/images/dhlpoweredby.png" alt="tiqs" width="auto" height="15" />
@@ -196,7 +196,7 @@
 					<div style="margin-top: 0px; margin-left: 0px">
 						<img border="0" src="<?php echo base_url(); ?>assets/home/images/tiqscustomer.png" alt="tiqs" width="auto" height="110" />
 					</div>
-					<p style=" font-size: larger; margin-top: 50px; margin-left: 0px"><?=$this->language->line("HOMESTART-002A",'WE REUNITE LOST AND FOUND ITEMS <br>WITH THEIR RIGHTFUL OWNERS');?></p>
+					<p style=" font-size: larger; margin-top: 50px; margin-left: 0px"><?php $this->language->line("HOMESTART-002A",'WE REUNITE LOST AND FOUND ITEMS <br>WITH THEIR RIGHTFUL OWNERS');?></p>
 				</div>
 				<div style="text-align:center; margin-top: 30px">
 					<img border="0" src="<?php echo base_url(); ?>assets/home/images/dhlpoweredby.png" alt="tiqs" width="auto" height="15" />
@@ -211,7 +211,7 @@
 				<div style="margin-top: 0px; margin-left: 0px">
 					<img border="0" src="<?php echo base_url(); ?>assets/home/images/tiqscustomer.png" alt="tiqs" width="auto" height="80" />
 				</div>
-				<p style="font-family: caption-light; font-size: larger; margin-top: 50px; margin-left: 30px ; margin-right: 30px"><?=$this->language->line("HOMESTART-002C",'WE REUNITE LOST AND FOUND ITEMS <br>WITH THEIR RIGHTFUL OWNERS');?></p>
+				<p style="font-family: caption-light; font-size: larger; margin-top: 50px; margin-left: 30px ; margin-right: 30px"><?php $this->language->line("HOMESTART-002C",'WE REUNITE LOST AND FOUND ITEMS <br>WITH THEIR RIGHTFUL OWNERS');?></p>
 			</div>
 			<div style="text-align:center; margin-top: 30px">
 				<img border="0" src="<?php echo base_url(); ?>assets/home/images/dhlpoweredby.png" alt="tiqs" width="auto" height="15" />
@@ -225,7 +225,7 @@
 				<div style="margin-top: 0px; margin-left: 0px">
 					<img border="0" src="<?php echo base_url(); ?>assets/home/images/tiqsbusiness.png" alt="tiqs" width="auto" height="80" />
 				</div>
-				<p style="font-family: caption-light;font-size: larger; margin-top: 50px; margin-left: 30px ; margin-right: 30px"><?=$this->language->line("HOMESTART-001A",'THE NUMBER ONE PLATFORM <br> FOR LOST AND FOUND');?></p>
+				<p style="font-family: caption-light;font-size: larger; margin-top: 50px; margin-left: 30px ; margin-right: 30px"><?php $this->language->line("HOMESTART-001A",'THE NUMBER ONE PLATFORM <br> FOR LOST AND FOUND');?></p>
 			</div>
 			<div style="text-align:center; margin-top: 30px">
 				<img border="0" src="<?php echo base_url(); ?>assets/home/images/dhlpoweredby.png" alt="tiqs" width="auto" height="15" />

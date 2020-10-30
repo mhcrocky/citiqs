@@ -133,7 +133,7 @@
                             <form id="addUser_<?php echo $record->id; ?>" class="file_form" action="<?php echo base_url() ?>userLabelImageCreate" method="post" role="form" enctype='multipart/form-data' >
                                 <label class="thumbnail-file" for="file_<?php echo $record->id; ?>">
                                     <?php if (!empty($record->image)){ ?>
-                                    <img src="<?php echo base_url(); ?>uploads/LabelImages/<?=$record->userId?>-<?=$record->code;?>-<?=$record->image;?>">
+                                    <img src="<?php echo base_url(); ?>uploads/LabelImages/<?php $record->userId?>-<?php $record->code;?>-<?php $record->image;?>">
                                     <?php } else { ?>
                                         <img src="<?php echo base_url(); ?>uploads/default.jpg">
                                     <?php }?>
@@ -142,7 +142,7 @@
                                 <input type="hidden" value="<?php echo $record->id; ?>" name="id" id="id" />
                                 <button type="submit" name="labelimage" value="Submit" >Submit</button>
                                 <?php if (!empty($record->image)) { ?>
-                                <a data-fancybox="gallery" href="<?php echo base_url(); ?>uploads/LabelImages/<?=$record->userId?>-<?=$record->code;?>-<?=$record->image;?>" _target="blank"><img height="32" width="32" src="<?php echo base_url(); ?>tiqsimg/zoomIn.png" title="Zoom"></a>
+                                <a data-fancybox="gallery" href="<?php echo base_url(); ?>uploads/LabelImages/<?php $record->userId?>-<?php $record->code;?>-<?php $record->image;?>" _target="blank"><img height="32" width="32" src="<?php echo base_url(); ?>tiqsimg/zoomIn.png" title="Zoom"></a>
                                 <?php } ?>
                             </form>
                         </td>
