@@ -640,7 +640,20 @@
 							value="<?php echo $vendor['deliveryAirDistance']; ?>"
 							/>							
 						</label>
-					</div>					
+					</div>
+					<h4>SET CUT TIME</h4>
+					<div class="form-group mb-35">
+						<label for="cutTime">CUT TIME&nbsp;
+						<input
+							type="time"
+							id="cutTime"
+							name="vendor[cutTime]"
+							style="border-radius: 50px; text-align: center"
+							value="<?php echo ($vendor['cutTime']) ? $vendor['cutTime'] : ''; ?>"
+							step="60"
+							/>							
+						</label>
+					</div>										
 					<br/>
 					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />

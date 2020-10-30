@@ -36,6 +36,7 @@
         public $maxBusyTime;
         public $receiptOnlyToWaiter;
         public $deliveryAirDistance;
+        public $cutTime;
 
         public $serviceFeePercent;
         public $serviceFeeAmount;
@@ -198,6 +199,7 @@
                     $this->table . '.maxBusyTime',
                     $this->table . '.receiptOnlyToWaiter',
                     $this->table . '.deliveryAirDistance',
+                    $this->table . '.cutTime',
 
                     $this->table . '.deliveryServiceFeePercent',
                     $this->table . '.deliveryServiceFeeAmount',

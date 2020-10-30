@@ -1259,17 +1259,28 @@ class Ajax extends CI_Controller
     public function submitForm(): void
     {
         if (!$this->input->is_ajax_request()) return;
-
+    
         $post = Utility_helper::sanitizePost();
         $vendor = $this->shopvendor_model->setProperty('vendorId', $post['vendorId'])->getVendorData();
         $spotTypeId = intval($post['spotTypeId']);
         $orderRandomKey = $post['orderRandomKey'];
-
-        if (!$this->validateDeliveryLocation($post['user'], $spotTypeId)) {
+    
+        if ($spotTypeId === $this->config->item('deliveryType') && !$this->validateDeliveryLocation($post['user'])) {
             $response = [
                 'status' => '0',
                 'message' => 'Order not made! Please insert delivery city, zipcode and/or address'
             ];
+        } elseif ($spotTypeId === $this->config->item('deliveryType') && !$this->validateDeliveryDistance($post['user'], $vendor)) {
+            $response = [
+                'status' => '0',
+                'pickup' => '0'
+            ];
+            foreach ($vendor['typeData'] as $type) {
+                if (intval($type['typeId']) === $this->config->item('pickupType')) {
+                    $response['pickup'] = '1';
+                    break;
+                }
+            }
         } elseif (!$this->checkTermsAndConditions($vendor, $post['order'])) {
             $response = [
                 'status' => '0',
@@ -1295,11 +1306,12 @@ class Ajax extends CI_Controller
                 ];
             }
         }
-
+    
         echo json_encode($response);
         return;
     }
-
+    
+    
     private function checkWaiterTip(array &$post): void
     {
         if (!isset($post['order']['waiterTip']) || floatval($post['order']['waiterTip']) < 0) {
@@ -1320,15 +1332,20 @@ class Ajax extends CI_Controller
         }
     }
 
-    private function validateDeliveryLocation(array $user, int $spotTypeId): bool
+    private function validateDeliveryLocation(array $user): bool
     {
-        if (
-            $spotTypeId === $this->config->item('deliveryType')
-            && ( empty($user['city']) || empty($user['zipcode']) || empty($user['address']) )
-        ) {
+        if ( empty($user['city']) || empty($user['zipcode']) || empty($user['address']) ) {
                 return false;
         }
         return true;
+    }
+    
+    private function validateDeliveryDistance(array $user, array $vendor): bool
+    {
+        $point = Google_helper::getLatLong($user['address'], $user['zipcode'], $user['city']);;
+        $distance = Utility_helper::getDistance($point['lat'], $point['long'], $vendor['vendorLat'], $vendor['vendorLon']);
+    
+        return ($distance > $vendor['deliveryAirDistance']) ? false : true;
     }
 
     private function checkTermsAndConditions(array $vendor, array $order): bool
