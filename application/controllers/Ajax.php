@@ -17,6 +17,7 @@ class Ajax extends CI_Controller
         $this->load->model('uniquecode_model');
         $this->load->model('user_subscription_model');
         $this->load->model('dhl_model');
+        $this->load->model('Bizdir_model');
         $this->load->model('floorplanareas_model');
         $this->load->model('floorplandetails_model');
         $this->load->model('shoporder_model');
@@ -1187,6 +1188,28 @@ class Ajax extends CI_Controller
             echo json_encode($response);
         }
     }
+
+    public function getPlaceByLocation(){
+        $location = $this->input->post('location');
+        $data['directories'] = $this->Bizdir_model->get_bizdir_by_location($location);
+        $result = $this->load->view('bizdir/place_card', $data,true);
+        if( isset($result) ) {
+            return $this->output
+			->set_content_type('application/json')
+			->set_status_header(200)
+            ->set_output(json_encode($result));
+        } else {
+            return $this->output
+			->set_content_type('application/json')
+			->set_status_header(500)
+			->set_output(json_encode(array(
+                'text' => 'Not Found',
+                'type' => 'Error 404'
+            )));
+        }
+			 
+		
+	}
 
     public function getLocation(): void
     {

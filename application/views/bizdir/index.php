@@ -102,9 +102,9 @@ a:active {
 <main role="main" style="margin-bottom: -30px" align="center">
 	<section style="background-color:#fbd19a; " align="center" >
 		<div style="background-color:#fbd19a;" align="center">
-<!--			<h1 style="font-family: campton-bold; margin-top: 30px;color:#27253b">--><?//=$this->language->Line("PLACES-A00002",'TIQS PICKUP & DELIVERY');?><!--</h1>-->
-			<h1 style="font-family: caption-bold; padding: 50px 10px 10px 10px; color:#ffffff">PICK UP & DELIVERY</h1>
-<!--			<p style="font-family: campton-light;color: #27253b; margin-bottom: 0px">--><?//=$this->language->Line("PLACES-0020",'One stop shop to find everything at your favorite place');?><!--</p>-->
+			<h1 style="font-family: campton-bold; padding: 50px 10px 10px 10px; margin-top: 30px;color:#27253b"><?=$this->language->Line("PLACES-A00002",'TIQS PICKUP & DELIVERY');?></h1>
+<!--			<h1 style="font-family: caption-bold; padding: 50px 10px 10px 10px; color:#ffffff">PICK UP & DELIVERY</h1>-->
+			<p style="font-family: campton-light;color: #27253b; margin-bottom: 0px"><?=$this->language->Line("PLACES-0020",'One stop shop to find everything at your favorite place');?></p>
 
 			<div class="mb-35" align="center">
 						<img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslocation.png" alt="tiqs" width=250 height="auto" align="center" />
@@ -122,13 +122,14 @@ a:active {
 								type="text"
 								class="form-control"
 								placeholder="<?=$this->language->Line("PLACES-A0001",'ADDRESS, CITY');?>"
-								id="addressId"
+								id="location"
 						/>
 					</div>
 
+					<!--
 					<div class="form-group">
 
-						<!-- <label for="cityId">City:&nbsp;</label> -->
+						 <label for="cityId">City:&nbsp;</label> 
 						<input
 								type="text"
 								class="form-control"
@@ -138,6 +139,7 @@ a:active {
 						/>
 					</div>
 
+					-->
 					<div class="form-group">
 						<!-- <label for="cityId">City:&nbsp;</label> -->
 						<p><?=$this->language->Line("PLACES-0010",'ENTER RANGE');?></p>
@@ -154,7 +156,7 @@ a:active {
 
 					</div>
 					<div class="form-group">
-						<input type="submit" class="btn btn-info" style="border-radius: 50px; background-color: #27253b ; border: none " value="<?=$this->language->Line("PLACES-0900",'SEARCH');?>" onclick="getLocation('cityId', 'addressId', 'places', 'myRange')">
+						<input type="submit" class="btn btn-info" style="border-radius: 50px; background-color: #27253b ; border: none " value="<?=$this->language->Line("PLACES-0900",'SEARCH');?>" onclick="getPlaceByLocation('location', 'places', 'myRange')">
 					</div>
 
 				</div>
@@ -162,47 +164,9 @@ a:active {
 			</div>
 	</section>
 
-	<div class="album py-5" style="background-color: #fbd19a">
+	<div id="places" class="album py-5" style="background-color: #fbd19a">
 
-				<?php foreach ($directories as $directory): ?>
-					<div
-						class="col-md-4 places"
-						style="background-color: #fbd19a"
-						data-lat="<?php echo $directory['lat']; ?>"
-						data-lng="<?php echo $directory['lng']; ?>"
-						>
-						<div class="card mb-4 shadow-sm" >
-							<!-- <img src="--><?php //echo $directory['image']; ?><!--" class="bd-placeholder-img card-img-top" -->
-							<?php if (!$directory['placeImage']) { ?>
-								<img
-									src="<?php echo 'assets/home/images/bizdir.png' ?>"
-									class="bd-placeholder-img card-img-top"
-									height="180" alt="<?php echo $directory['business_name']; ?>"
-								/>
-							<?php } else { ?>
-								<img
-									src="<?php echo base_url() . 'assets/images/placeImages/' . $directory['placeImage']; ?>"
-									class="bd-placeholder-img card-img-top"
-									height="180" alt="<?php echo $directory['business_name']; ?>"
-								/>
-							<?php } ?>
-							<div class="card-body text-center" style="background-color: #0d173b">
-								<img src="<?php echo 'assets/home/images/tiqslogowhite.png' ?>" style="margin-left:-50%; margin-top: -350px; height: 50px; width: auto"/>
-								<p class="pb-2 font-weight-bold"
-								   style="font-size: 24px;color: antiquewhite"><?php echo $directory['username']; ?></p>
-								<p class="pb-2 font-weight-bold distance"
-								   style="font-size: 24px;color: antiquewhite"></p>
-								<span style="color: antiquewhite"><?php echo $directory['address']; ?></span>
-								<div class="social-links align-items-center pt-3">
-									<a class="contact-link" target="_blank; color: white; --text-color: white"
-									   <?php if ($directory['email']) { ?>href="<?php echo "https://tiqs.com/alfred/make_order?vendorid=".$directory['id']; ?>"<?php } ?> >
-
-										<i class="fa fa-qrcode fa-lg" style="color: white; --text-color: white"></i> <?=$this->language->line("BIZDIR",'ORDER HERE');?></a>
-								</div>
-							</div>
-						</div>
-					</div>
-				<?php endforeach; ?>
+				
 		</div>
 	</div>
 </main>

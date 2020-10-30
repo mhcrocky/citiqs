@@ -16,6 +16,18 @@ class Bizdir_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	public function get_bizdir_by_location($location)
+	{
+		// get given location coordinates
+		// check this with the stored coordinates lat long in user table
+		// show results
+
+		$this->db->where('roleid', 2);
+		$this->db->where('bizdir', 1);
+		$query = $this->db->get('tbl_user');
+		return $query->result_array();
+	}
+
 	public function set_bizdir()
 	{
 		$data = array(
