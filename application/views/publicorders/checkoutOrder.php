@@ -98,7 +98,18 @@
                                     >
                                     <?php
                                         $now = now();
+                                        $skip = 0;
                                         foreach ($workingTime as $date => $time) {
+                                            if ($vendor['cutTime'] && $vendor['cutTime'] !== '00:00:00') {
+                                                if ($skip === 0) {
+                                                    $skip++;
+                                                    continue;
+                                                }
+                                                if (date('H:i:s', now()) >= $vendor['cutTime'] && $skip === 1) {
+                                                    $skip++;
+                                                    continue;
+                                                }
+                                            }
                                             foreach ($time as $hours) {
                                                 // checking time from and time to for current date
                                                 if ($date === date('Y-m-d', $now)) {
