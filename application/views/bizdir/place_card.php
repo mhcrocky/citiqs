@@ -2,10 +2,11 @@
 		if (!empty($directories)): 
 		foreach ($directories as $directory): ?>
 					<div
-						class="col-md-4 places"
+						class="col-md-4 places fade"
 						style="background-color: #fbd19a;"
 						data-lat="<?php echo $directory['lat']; ?>"
 						data-lng="<?php echo $directory['lng']; ?>"
+						data-distance="<?php echo $directory['distance']; ?>"
 						>
 						<div class="card mb-4 shadow-sm" >
 							<!-- <img src="--><?php //echo $directory['image']; ?><!--" class="bd-placeholder-img card-img-top" -->
@@ -27,7 +28,7 @@
 								<p class="pb-2 font-weight-bold"
 								   style="font-size: 24px;color: antiquewhite"><?php echo $directory['username']; ?></p>
 								<p class="pb-2 font-weight-bold distance"
-								   style="font-size: 24px;color: antiquewhite"></p>
+								   style="font-size: 24px;color: antiquewhite"><?php echo $directory['distance']." km"; ?></p>
 								<span style="color: antiquewhite"><?php echo $directory['address']; ?></span>
 								<div class="social-links align-items-center pt-3">
 									<a class="contact-link" target="_blank; color: white; --text-color: white"

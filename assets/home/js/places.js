@@ -1,15 +1,16 @@
 'use strict';
 
-function getPlaceByLocation(location, places, myRange) {
+function getPlaceByLocation(location, myRange) {
     let address = document.getElementById(location);
     let range = document.getElementById(myRange);
+   
 
     if (address.value) { 
         let url = globalVariables.ajax + 'getPlaceByLocation';
         let post = {
-            'location' : address.value
+            'location' : address.value,
+            'range' : range.value
         }
-        console.log(globalVariables.ajax);
 
         
         address.style.border = '1px solid #ced4da';        
@@ -21,6 +22,10 @@ function getPlaceByLocation(location, places, myRange) {
             success: function (response) {
                 $("#places").empty();
                 $("#places").append(response);
+                $('#places .places').sort(function(a, b) {
+                    return $(a).data('distance') - $(b).data('distance');
+                }).appendTo('#places');
+                $(".places").removeClass("fade");
                 
             },
             error: function (err) {
