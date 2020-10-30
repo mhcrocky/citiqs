@@ -18,23 +18,11 @@ class Bizdir_model extends CI_Model {
 
 	public function get_bizdir_by_location($location)
 	{
-		if(strstr($location, ',')){
-			$locations = explode(',' , $location);
-			//var_dump($arr);
-			$address = $locations[0];
-			$city = $locations[1];
-			$this->db->like('address', $address);
-			$this->db->like('city', $city);
-		} else {
-			$this->db->or_like('address', $location);
-			$this->db->or_like('city', $location);
-			$this->db->or_like('zipcode', $location);
-			
-		}
-		//$this->db->or_like('address', $address);
+		// get given location coordinates
+		// check this with the stored coordinates lat long in user table
+		// show results
+
 		$this->db->where('roleid', 2);
-		$this->db->where('IsDropOffPoint', 1);
-		$this->db->where('address !=', '');
 		$this->db->where('bizdir', 1);
 		$query = $this->db->get('tbl_user');
 		return $query->result_array();
