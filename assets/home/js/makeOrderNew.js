@@ -190,9 +190,6 @@ function cloneProductAndAddons(element) {
     let productContainer = document.getElementById(productContainerId);
     let orderContainer = document.getElementById(makeOrderGlobals.modalCheckoutList);
     let clone;
-
-    // resetRemarks(productContainer);
-
     let date  = new Date();
     let randomId = productContainerId + '_' + date.getTime() + '_' + Math.floor(Math.random() * 10000);
 
@@ -201,6 +198,7 @@ function cloneProductAndAddons(element) {
     clone = $(productContainer).clone();
     productContainer.setAttribute('id', productContainerId);
     resetAddons(productContainer);
+    resetRemarks(productContainer);
     let newOrdered = document.getElementById(randomId);
     clone.appendTo(newOrdered);
     resetTotal();
@@ -493,7 +491,7 @@ function checkout() {
 }
 
 function resetRemarks(productContainer) {
-    let remarks = productContainer.getElementsByTagName('textarea');
+    let remarks = productContainer.getElementsByClassName('remarks');
     let remarksLength = remarks.length;
     if (remarksLength) {
         let i;
