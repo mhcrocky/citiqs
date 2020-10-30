@@ -3,7 +3,6 @@ function showOrderProducts(data) {
     if(!data) return;
 
     let products = data[1];
-    let list = ''
     let popover = productDetailsHtml(products);
 
     // list += '<a ';
@@ -24,26 +23,23 @@ function productDetailsHtml(products) {
     let i;
     let content = '';
     for (i in products) {        
-        let el;
-        for (el in products) {
-            if (el === 'spotPrinter') continue;
-            let rawProduct = products[el];
-            let rawProductLength = rawProduct.length;
-            let j;
-            for (j = 0; j < rawProductLength; j++) {
-                let product = rawProduct[j];
-                if (!product) continue;
-                let style = (product['subMainPrductOrderIndex'] === '0') ? '' : ' padding-left:15px';
+        if (i === 'spotPrinter') continue;
+        let rawProduct = products[i];
+        let rawProductLength = rawProduct.length;
+        let j;
+        for (j = 0; j < rawProductLength; j++) {
+            let product = rawProduct[j];
+            if (!product) continue;
+            let style = (product['subMainPrductOrderIndex'] === '0') ? '' : ' padding-left:15px';
+            content += '<p style=\'text-align:left;margin-bottom:0px;' + style + '\'>';
+            content += '# ' + product.productQuantity + ' ' + product.productName;
+            content += '</p>';
+            if (product['remark']) {
                 content += '<p style=\'text-align:left;margin-bottom:0px;' + style + '\'>';
-                content += '# ' + product.productQuantity + ' ' + product.productName;
+                content += product['remark'];
                 content += '</p>';
-                if (product['remark']) {
-                    content += '<p style=\'text-align:left;margin-bottom:0px;' + style + '\'>';
-                    content += product['remark'];
-                    content += '</p>';
-                }
             }
-        }
+        }        
     }
     return content;
 }
