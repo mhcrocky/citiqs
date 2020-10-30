@@ -35,6 +35,7 @@
         public $minBusyTime;
         public $maxBusyTime;
         public $receiptOnlyToWaiter;
+        public $deliveryAirDistance;
 
         public $serviceFeePercent;
         public $serviceFeeAmount;
@@ -77,6 +78,7 @@
                 || $property === 'busyTime'
                 || $property === 'minBusyTime'
                 || $property === 'maxBusyTime'
+                || $property === 'deliveryAirDistance'
             ) {
                 $value = intval($value);
             }
@@ -141,6 +143,7 @@
             if (isset($data['minBusyTime']) && !Validate_data_helper::validateInteger($data['minBusyTime'])) return false;
             if (isset($data['maxBusyTime']) && !Validate_data_helper::validateInteger($data['maxBusyTime'])) return false;
             if (isset($data['receiptOnlyToWaiter']) && !($data['receiptOnlyToWaiter'] === '1' || $data['receiptOnlyToWaiter'] === '0')) return false;
+            if (isset($data['deliveryAirDistance']) && !Validate_data_helper::validateInteger($data['deliveryAirDistance'])) return false;            
 
             if (isset($data['deliveryServiceFeePercent']) && !Validate_data_helper::validateString($data['deliveryServiceFeePercent'])) return false;
             if (isset($data['deliveryServiceFeeAmount']) && !Validate_data_helper::validateFloat($data['deliveryServiceFeeAmount'])) return false;
@@ -194,6 +197,7 @@
                     $this->table . '.minBusyTime',
                     $this->table . '.maxBusyTime',
                     $this->table . '.receiptOnlyToWaiter',
+                    $this->table . '.deliveryAirDistance',
 
                     $this->table . '.deliveryServiceFeePercent',
                     $this->table . '.deliveryServiceFeeAmount',
@@ -208,6 +212,8 @@
                     'tbl_user.email AS vendorEmail',
                     'tbl_user.country AS vendorCountry',
                     'tbl_user.receiptEmail AS receiptEmail',
+                    'tbl_user.lat AS vendorLat',
+                    'tbl_user.lng AS vendorLon',
                     'GROUP_CONCAT(
                         CONCAT(
                             tbl_shop_vendor_types.id,
@@ -253,6 +259,9 @@
             $result['printTimeConstraint'] = intval($result['printTimeConstraint']);
             $result['vendorId'] = intval($result['vendorId']);
             $result['typeData'] = $this->prepareTypes($result['typeData']);
+            $result['vendorLat'] = floatval($result['vendorLat']);
+            $result['vendorLon'] = floatval($result['vendorLon']);
+            $result['deliveryAirDistance'] = floatval($result['deliveryAirDistance']);
 
             $result['deliveryServiceFeePercent'] = floatval($result['deliveryServiceFeePercent']);
             $result['deliveryServiceFeeAmount'] = floatval($result['deliveryServiceFeeAmount']);

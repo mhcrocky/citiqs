@@ -627,6 +627,20 @@
 						<label class="radio-inline" for="receiptOnlyToWaiterNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="receiptOnlyToWaiterNo" name="vendor[receiptOnlyToWaiter]" value="0" <?php if ($vendor['receiptOnlyToWaiter'] === '0') echo 'checked'; ?> />
 					</div>
+					<h4>SET MAX DELIVERY DISTANCE</h4>
+					<div class="form-group mb-35">
+						<label for="deliveryAirDistance">Add kilometars&nbsp;
+						<input
+							type="number"
+							id="deliveryAirDistance"
+							name="vendor[deliveryAirDistance]"
+							min="0"
+							step="1"
+							style="border-radius: 50px; text-align: center"
+							value="<?php echo $vendor['deliveryAirDistance']; ?>"
+							/>							
+						</label>
+					</div>					
 					<br/>
 					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />

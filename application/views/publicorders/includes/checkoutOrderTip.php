@@ -77,31 +77,38 @@
                     />
                 </div>
             <?php } ?>
-            <?php if ($vendor['termsAndConditions'] && $vendor['showTermsAndPrivacy'] === '1') { ?>
-                <div class="form-group col-sm-12 checkbox">
-                    <label>
-                        <input
-                            type="checkbox"
-                            value="1" name="order[termsAndConditions]"
-                            <?php echo $termsAndConditions; ?>
-                            id="termsAndConditions"
-                        />
-                        I read and accept the <a href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spot['spotId']; ?>">Terms and conditions</a>
-                    </label>
-                </div>
-                <div class="form-group col-sm-12 checkbox">
-                    <label>
-                        <input
-                            type="checkbox"
-                            value="1"
-                            name="order[privacyPolicy]"
-                            <?php echo $privacyPolicy; ?>
-                            id="privacyPolicy"
-                        />
-                        I took notice of <a href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spot['spotId']; ?>">Privacy policy</a>
-                    </label>
-                </div>
-            <?php } ?>
+            <?php
+                if ($vendor['termsAndConditions'] && $vendor['showTermsAndPrivacy'] === '1') {
+                    $return = base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spot['spotId'] . '&' . $orderDataGetKey . '=' . $orderRandomKey;
+                    ?>
+                    <div class="form-group col-sm-12 checkbox">
+                        <label>
+                            <input
+                                type="checkbox"
+                                value="1" name="order[termsAndConditions]"
+                                <?php echo $termsAndConditions; ?>
+                                id="termsAndConditions"
+                            />
+                            I read and accept the
+                            <a href="<?php echo $return; ?>">
+                            Terms and conditions</a>
+                        </label>
+                    </div>
+                    <div class="form-group col-sm-12 checkbox">
+                        <label>
+                            <input
+                                type="checkbox"
+                                value="1"
+                                name="order[privacyPolicy]"
+                                <?php echo $privacyPolicy; ?>
+                                id="privacyPolicy"
+                            />
+                            I took notice of <a href="<?php echo $return; ?>">Privacy policy</a>
+                        </label>
+                    </div>
+                    <?php
+                }
+            ?>
             <!-- end total sum-->
         </div>
         <!-- end checkout table -->

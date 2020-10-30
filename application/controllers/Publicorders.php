@@ -294,6 +294,7 @@
                 'countryCodes'      => Country_helper::getCountryPhoneCodes(),
                 'orderDataGetKey'   => $this->config->item('orderDataGetKey'),
                 'maxRemarkLength'   => $this->config->item('maxRemarkLength'),
+                'pickupTypeId'      => $this->config->item('pickupType'),
             ];
 
             $this->checkVendorCredentials( $data['vendor'], intval($data['spot']['spotTypeId']) );

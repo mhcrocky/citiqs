@@ -159,7 +159,17 @@ function submitForm() {
 
 function redirectSubmit(data) {
     if (data.status === '0') {
-        alertify.error(data.message);
+        if (data.message) {
+            alertify.error(data.message);
+        }
+        if (data.pickup) {
+            if (data.pickup === '1') {
+                $("#modalPickup").modal("show");
+            } else if (data.pickup === '0') {
+                $("#modalDelivery").modal("show");
+            }
+        }
+        console.dir(data);
     } else {
         let url = globalVariables.baseUrl + data.message;
         window.location.href = url;
@@ -595,5 +605,17 @@ $(document).ready(function(){
         animation : false,
         placement : "right",
         container: 'body'
+    });
+    $('[data-toggle="pickupPopover"]').popover({
+        animation : false,
+        placement : "bottom",
+        container: 'body'
+    });
+    $('body').on('click', function (e) {
+        $('[data-toggle="pickupPopover"]').each(function () {
+            if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                $(this).popover('hide');
+            }
+        });
     });
 });

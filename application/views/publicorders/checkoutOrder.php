@@ -42,7 +42,7 @@
             <div class="col-sm-12 col-lg-9 left-side">
                 <?php if (isset($workingTime)) { ?>
                     <div class="checkout-title">
-                        <span><?php echo $spot['spotType']; ?><?=$this->language->line("PAYMENT-C0010",'period and time');?> </span>
+                        <span><?php echo $spot['spotType']; ?>&nbsp;<?=$this->language->line("PAYMENT-C0010",'period and time');?> </span>
                     </div>
                     <div class="row">                        
                         <?php if (intval($spot['spotTypeId']) === $this->config->item('deliveryType')) { ?>
@@ -87,7 +87,7 @@
                             </div>                            
                         <?php } ?>
                         <div class="form-group col-sm-6">
-                            <label for="periodTime" ><?=$this->language->line("PAYMENT-PC0020",'Choose');?><?php echo lcfirst($spot['spotType']); ?> <?=$this->language->line("PAYMENT-PC0020",'period');?><sup>*</sup></label>
+                            <label for="periodTime" ><?=$this->language->line("PAYMENT-PC00120",'Choose');?>&nbsp;<?php echo lcfirst($spot['spotType']); ?>&nbsp;<?=$this->language->line("PAYMENT-PC0020",'period');?><sup>*</sup></label>
                             <div>
                                 <select
                                     id="periodTime"
@@ -131,7 +131,7 @@
                             </div>
                         </div>
                         <div class="form-group col-sm-6" id="orderTimeDiv">
-                            <label for="orderTime"><?=$this->language->line("PAYMENT-PC0110",'Select ');?> <?php echo lcfirst($spot['spotType']); ?><?=$this->language->line("PAYMENT-PC0120",'time');?> (<sup>*</sup>)</label>
+                            <label for="orderTime"><?=$this->language->line("PAYMENT-PC0110",'Select ');?>&nbsp;<?php echo lcfirst($spot['spotType']); ?>&nbsp;<?=$this->language->line("PAYMENT-PC0120",'time');?> (<sup>*</sup>)</label>
                             <input type="text" id="orderTimeInput" class="form-control timepicker" name="order[time]" />
                         </div>
                     </div>
@@ -155,6 +155,62 @@
         <input type="number" name="order[amount]"     value="<?php echo round($orderTotal, 2); ?>" id="orderAmountInput" min="0" step="0.01"  readonly required hidden />
     </form>
 </main>
+
+<div class="modal" id="modalDelivery">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Delivery notice</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                Sorry, but we do not deliver to given address. Please change delivery location.
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalPickup">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Delivery notice</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                Sorry, but we do not deliver to given address.
+                <br style="display:initial"/>
+                You can click cancel and change delivery location or you can select pickup option.
+                In that case you order details will be reset.
+                <i
+                    class="fa fa-info-circle" aria-hidden="true"
+                    data-toggle="pickupPopover"
+                    data-content="Order will be reset because selected products maybe are not available in pickup option or it can have different price"
+                >
+                </i>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <a
+                    href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&typeId=' . $pickupTypeId; ?>"
+                    class="btn btn-primary btn-lg active"
+                    role="button"
+                    aria-pressed="true">Select pickup
+                </a>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     var checkoutOrdedGlobals = (function(){
         let askId = '<?php echo THGROUP; ?>';
