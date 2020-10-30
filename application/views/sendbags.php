@@ -46,7 +46,7 @@
 						</ul>
 					</div>	
 					<div class="form-group has-feedback">
-						<input  type="button" onclick="sendInvoice()"  class="button button-orange" value="<?php $this->language->line("SENDINVOCIE-A1111000020","SEND INVOICE")?>"  style="border: none" />
+						<input  type="button" onclick="sendInvoice()"  class="button button-orange" value="<?php echo $this->language->line("SENDINVOCIE-A1111000020","SEND INVOICE")?>"  style="border: none" />
 					</div>
 				</div>
 			</div>
@@ -126,7 +126,7 @@
 							</div>
 						</div><!-- single testimonial -->
 						<p class="text-content-light mb-35 mt-50" >
-							<?php $this->language->line("SEND-A000100","<br>LOST BY YOUR CUSTOMERS, <br/>RETRUNED BY US.")?>
+							<?php echo $this->language->line("SEND-A000100","<br>LOST BY YOUR CUSTOMERS, <br/>RETRUNED BY US.")?>
 						</p>
 						<div class="clearfix">
 						</div>

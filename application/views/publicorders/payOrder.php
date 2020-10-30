@@ -31,9 +31,9 @@
                                     <table>
                                         <thead>
                                         <tr>
-                                            <th data-trans="" data-trn-key="Productnaam"><?php $this->language->line("PAYMENT-010",'Productname');?>
+                                            <th data-trans="" data-trn-key="Productnaam"><?php echo $this->language->line("PAYMENT-010",'Productname');?>
                                             </th>
-                                            <th data-trans="" data-trn-key="Totaal"><?php $this->language->line("PAYMENT-020",'Total');?></th>
+                                            <th data-trans="" data-trn-key="Totaal"><?php echo $this->language->line("PAYMENT-020",'Total');?></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -67,11 +67,11 @@
                                 <div class="bar">
                                     <div class="bar-title">
                                         <span data-trans="" data-trn-key="Kies een betaalmethode">
-												<?php $this->language->line("PAYMENT-050",'Kies een betaalmethode');?>
+												<?php echo $this->language->line("PAYMENT-050",'Kies een betaalmethode');?>
                                         </span>
                                     </div>
                                     <span class="bar-title-original hidden">
-                                        <span data-trans="" data-trn-key="Kies een betaalmethode"><?php $this->language->line("PAYMENT-050",'Kies een betaalmethode');?></span>
+                                        <span data-trans="" data-trn-key="Kies een betaalmethode"><?php echo $this->language->line("PAYMENT-050",'Kies een betaalmethode');?></span>
                                     </span>
                                 </div>
                                 <div class="content-container clearfix" id="paymentMethodsContainer">
@@ -148,7 +148,7 @@
 
                                 <?php if ($vendor['ideal'] === '1') { ?>
                                     <div class="method method-ideal hidden"  id="idealBanks">
-                                        <div class="title hidden"><span data-trans="" data-trn-key="Kies een bank"><?php $this->language->line("PAYMENT-030",'Choose your bank');?></span>
+                                        <div class="title hidden"><span data-trans="" data-trn-key="Kies een bank"><?php echo $this->language->line("PAYMENT-030",'Choose your bank');?></span>
                                         </div>                                        
                                         <div class="payment-container">
                                             <a href="<?php echo base_url(); ?>insertorder/<?php echo $idealPaymentType; ?>/1<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="bank paymentMethod abn_amro addTargetBlank">
@@ -204,7 +204,7 @@
                                                 href="javascript:void(0)"                                                
                                                 onclick="toogleElements('paymentMethodsContainer', 'idealBanks', 'hidden')"
                                                 >
-												<?php $this->language->line("PAYMENT-910",'Back to payment methods');?>
+												<?php echo $this->language->line("PAYMENT-910",'Back to payment methods');?>
 
                                             </a>
                                         </div>
@@ -213,7 +213,7 @@
 
                                 <?php if ($vendor['giro'] === '1') { ?>
                                     <div class="method method-ideal hidden"  id="giroBanks">
-                                        <div class="title hidden"><span data-trans="" data-trn-key="Kies een bank"><?php $this->language->line("PAYMENT-030",'Choose your bank');?></span>
+                                        <div class="title hidden"><span data-trans="" data-trn-key="Kies een bank"><?php echo $this->language->line("PAYMENT-030",'Choose your bank');?></span>
                                         </div>
                                         <div class="payment-container">
                                             <a href="<?php echo base_url(); ?>insertorder/<?php echo $giroPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="bank paymentMethod addTargetBlank">
@@ -253,7 +253,7 @@
                                                 href="javascript:void(0)"
                                                 onclick="toogleElements('paymentMethodsContainer', 'giroBanks', 'hidden')"
                                                 >
-												<?php $this->language->line("PAYMENT-910",'Back to payment methods');?>
+												<?php echo $this->language->line("PAYMENT-910",'Back to payment methods');?>
                                             </a>
                                         </div>
                                     </div>

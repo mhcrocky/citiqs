@@ -33,7 +33,7 @@
 									<a class="contact-link" target="_blank; color: white; --text-color: white"
 									   <?php if ($directory['email']) { ?>href="<?php echo "https://tiqs.com/alfred/make_order?vendorid=".$directory['id']; ?>"<?php } ?> >
 
-										<i class="fa fa-qrcode fa-lg" style="color: white; --text-color: white"></i> <?php $this->language->line("BIZDIR",'ORDER HERE');?></a>
+										<i class="fa fa-qrcode fa-lg" style="color: white; --text-color: white"></i> <?php echo $this->language->line("BIZDIR",'ORDER HERE');?></a>
 								</div>
 							</div>
 						</div>

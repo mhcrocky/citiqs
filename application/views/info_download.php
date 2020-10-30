@@ -34,17 +34,17 @@
 		<div class="flex-column align-start width-650">
 			<div align="center">
 				<form action="info_download/actiondownloadpdf" method="post" id="downloadForm" role="form">
-					<h2 class="heading mb-35"><?php $this->language->line("DOWNLOADPDF-10000","DOWNLOAD YOUR DOCUMENT");?></h2>
+					<h2 class="heading mb-35"><?php echo $this->language->line("DOWNLOADPDF-10000","DOWNLOAD YOUR DOCUMENT");?></h2>
 					<div class="flex-row align-space">
 						<div class="flex-column align-space width-650" style="font-family: caption-light">
 							<div class="mb-35" style="font-family: caption-light">
 								<p for="name">
-									<?php $this->language->line("DOWNLOADPDF-10001","
+									<?php echo $this->language->line("DOWNLOADPDF-10001","
 									Name
 									");?>
 								</p>
 								<div>
-									<input type="text" class="form-control" id="name" name="name" style="border-radius: 50px; font-family: caption-light" placeholder="<?php $this->language->line("DOWNLOADPDF-10001","
+									<input type="text" class="form-control" id="name" name="name" style="border-radius: 50px; font-family: caption-light" placeholder="<?php echo $this->language->line("DOWNLOADPDF-10001","
 									Name
 									");?>" maxlength="128">
 									<input type="hidden" value="1" name="nameId" id="nameId">
@@ -52,24 +52,24 @@
 							</div>
 							<div class="form-group has-feedback">
 								<p for="phone">
-									<?php $this->language->line("DOWNLOADPDF-10002","
+									<?php echo $this->language->line("DOWNLOADPDF-10002","
 									Phone
 									");?>
 									</p>
 								<div class="form-group has-feedback">
-									<input type="number" class="form-control" id="phone" style="border-radius: 50px; font-family: caption-light"  name="phone" placeholder="<?php $this->language->line("DOWNLOADPDF-10002","Phone
+									<input type="number" class="form-control" id="phone" style="border-radius: 50px; font-family: caption-light"  name="phone" placeholder="<?php echo $this->language->line("DOWNLOADPDF-10002","Phone
 									");?>" maxlength="128">
 									<input type="hidden" value="1" name="" id="">
 								</div>
 							</div>
 							<div class="form-group has-feedback">
 								<p for="phone">
-									<?php $this->language->line("DOWNLOADPDF-10003","
+									<?php echo $this->language->line("DOWNLOADPDF-10003","
 									E-mail Address
 									");?>
 								</p>
 								<div class="form-group has-feedback">
-									<input type="email" class="form-control" id="email" style="border-radius: 50px; font-family: caption-light"  name="email" placeholder="<?php $this->language->line("DOWNLOADPDF-10003","
+									<input type="email" class="form-control" id="email" style="border-radius: 50px; font-family: caption-light"  name="email" placeholder="<?php echo $this->language->line("DOWNLOADPDF-10003","
 									E-mail Address
 									");?>" maxlength="128">
 									<input type="hidden" value="" name="" id="">
@@ -78,7 +78,7 @@
 
 							<div class="form-group has-feedback submit-form">
 								<div>
-									<input type="submit" class="button button-orange" value="<?php $this->language->line("DOWNLOADPDF-10004","SEND" );?>" style="border: none" class='button-submit'>
+									<input type="submit" class="button button-orange" value="<?php echo $this->language->line("DOWNLOADPDF-10004","SEND" );?>" style="border: none" class='button-submit'>
 								</div>
 							</div>
 						</div>

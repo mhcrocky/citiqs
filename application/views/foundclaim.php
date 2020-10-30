@@ -1,7 +1,7 @@
 <div class="main-wrapper background-yankee"  style="text-align:center">
 	<div class="col-half background-yankee align-center height-75">
 		<div class="flex-column align-center">
-			<h2 class="heading mb-35"><?php $this->language->line("FOUNDCLAIM-010",'GET YOUR ITEM BACK.');?></h2>
+			<h2 class="heading mb-35"><?php echo $this->language->line("FOUNDCLAIM-010",'GET YOUR ITEM BACK.');?></h2>
 			<div class="grid-image">
 				<label class="thumbnail-file">
 					<?php if (!empty($image)){ ?>
@@ -12,7 +12,7 @@
 				</label>
 			</div>
 			<p>
-				<?php $this->language->line("FOUNDCLAIM-030",'WITH THE ITEM TAG-CODE');?>
+				<?php echo $this->language->line("FOUNDCLAIM-030",'WITH THE ITEM TAG-CODE');?>
 			</p>
 			<?php include_once APPPATH . 'views/includes/sessionMessages.php' ?>
 			<div class="flex-row align-space">
@@ -22,7 +22,7 @@
 						<input type="text" value="2" name="user[roleId]" readonly required hidden />
 						<?php if (empty($code)) { ?>
 							<div>
-								<p><?php $this->language->line("FOUNDCLAIM-040",'PLEASE ENTER THE UNIQUE CODE IDENTIFYING  THE ITEM ');?></p>
+								<p><?php echo $this->language->line("FOUNDCLAIM-040",'PLEASE ENTER THE UNIQUE CODE IDENTIFYING  THE ITEM ');?></p>
 							</div>
 							<div class="form-group has-feedback" style="font-family: caption" >
 								<input style="border-radius:50px" type="text" class="form-control" placeholder="Code" name="code" required/>
@@ -32,51 +32,51 @@
 							<input type="text" name="code" value="<?php echo $code ?>" readonly required hidden />
 						<?php } ?>
 						<p>
-							<?php $this->language->line("FOUNDCLAIM-060",'THE PROCESS TO START RETURNING THE ITEM TO YOU, REQUIRES ADDITIONAL INFO');?>
+							<?php echo $this->language->line("FOUNDCLAIM-060",'THE PROCESS TO START RETURNING THE ITEM TO YOU, REQUIRES ADDITIONAL INFO');?>
 						</p>
 
-						<a href="<?php echo $this->baseUrl; ?>whatislostisfound" class="button button-orange"><?php $this->language->line('CLAIMFOUND-CC101012','NOT YOUR ITEM GO BACK');?></a>
-						<h2 style="font-family: caption-bold"> <?php $this->language->line("FOUNDCLAIM-070",'HOW IT WORKS');?></h2>
+						<a href="<?php echo $this->baseUrl; ?>whatislostisfound" class="button button-orange"><?php echo $this->language->line('CLAIMFOUND-CC101012','NOT YOUR ITEM GO BACK');?></a>
+						<h2 style="font-family: caption-bold"> <?php echo $this->language->line("FOUNDCLAIM-070",'HOW IT WORKS');?></h2>
 						<p>
-							<?php $this->language->line("FOUNDCLAIM-080",'WE NEED YOUR MOBILE PHONE NUMBER, TO CONTACT YOU');?>
+							<?php echo $this->language->line("FOUNDCLAIM-080",'WE NEED YOUR MOBILE PHONE NUMBER, TO CONTACT YOU');?>
 						</p>
 						<div class="form-group has-feedback" style="font-family: caption" >
-							<input type="tel" class="form-control" style="font-family:caption-light; border-radius: 50px" placeholder="<?php $this->language->line("FOUNDCLAIM-090"," Mobile ");?>" name="user[mobile]"  />
+							<input type="tel" class="form-control" style="font-family:caption-light; border-radius: 50px" placeholder="<?php echo $this->language->line("FOUNDCLAIM-090"," Mobile ");?>" name="user[mobile]"  />
 						</div>
 						<p>
-							<?php $this->language->line("FOUNDCLAIM-100",'WE NEED YOUR E-MAIL, TO KEEP YOU INFORMED');?>
+							<?php echo $this->language->line("FOUNDCLAIM-100",'WE NEED YOUR E-MAIL, TO KEEP YOU INFORMED');?>
 						</p>
 						<div class="form-group has-feedback" style="font-family: caption" >
-							<input type="email" id="email" name="user[email]" required onblur="checkEmail(this)"  class="form-control" placeholder="<?php $this->language->line("FOUNDCLAIM-110"," Email ");?>" style="font-family:caption-light; border-radius: 50px" />
+							<input type="email" id="email" name="user[email]" required onblur="checkEmail(this)"  class="form-control" placeholder="<?php echo $this->language->line("FOUNDCLAIM-110"," Email ");?>" style="font-family:caption-light; border-radius: 50px" />
 						</div>
 						<p>
-							<?php $this->language->line("FOUNDCLAIM-180",'VERIFY YOUR E-MAIL ADDRESS');?>
+							<?php echo $this->language->line("FOUNDCLAIM-180",'VERIFY YOUR E-MAIL ADDRESS');?>
 						</p>
 						<div class="form-group has-feedback" style="font-family: caption" >
-							<input type="email" id="emailverify" name="emailverify" required class="form-control" placeholder="<?php $this->language->line("FOUNDCLAIM-190"," Repeat email for verification ");?>"  style="font-family:caption-light; border-radius: 50px"  />
+							<input type="email" id="emailverify" name="emailverify" required class="form-control" placeholder="<?php echo $this->language->line("FOUNDCLAIM-190"," Repeat email for verification ");?>"  style="font-family:caption-light; border-radius: 50px"  />
 							<br/>
 						</div>
 						<div class="login-box">
 							<p id="UnkownAddressText" style="font-family:'caption-light'; display:none; font-size:100%; color:#ffffff;  text-align: center">
-								<?php $this->language->line("FOUNDCLAIM-120",'WHERE DO WE SENT THE ITEM TO? PLEASE STATE YOUR NAME AND ADDRESS. YOUR NAME AND ADDRESS IS ENCRYPTED AND SECURED STORED. WE DO NOT ASK (SHOW) THIS AGAIN, FOR SECURITY REASONS. CHANGE OF ADDRESS CAN ONLY BE DONE IN YOUR PERSONAL PROFILE. YOUR CREDENTIALS HAVE BEEN SEND BY SEPARATE MAIL (PLEASE CHECK YOUR SPAM FOLDER). ');?>
+								<?php echo $this->language->line("FOUNDCLAIM-120",'WHERE DO WE SENT THE ITEM TO? PLEASE STATE YOUR NAME AND ADDRESS. YOUR NAME AND ADDRESS IS ENCRYPTED AND SECURED STORED. WE DO NOT ASK (SHOW) THIS AGAIN, FOR SECURITY REASONS. CHANGE OF ADDRESS CAN ONLY BE DONE IN YOUR PERSONAL PROFILE. YOUR CREDENTIALS HAVE BEEN SEND BY SEPARATE MAIL (PLEASE CHECK YOUR SPAM FOLDER). ');?>
 								<br/>
 								<br/>
 							</p>
 						</div>
 						<div class="form-group has-feedback">
-							<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php $this->language->line("FOUNDCLAIM-121",'Name');?>" id="username" name="user[username]" disabled/>
+							<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("FOUNDCLAIM-121",'Name');?>" id="username" name="user[username]" disabled/>
 						</div>
 						<div class="form-group has-feedback">
-							<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php $this->language->line("FOUNDCLAIM-122",'Address');?>" id="address" name="user[address]" disabled />
+							<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("FOUNDCLAIM-122",'Address');?>" id="address" name="user[address]" disabled />
 						</div>
 						<div class="form-group has-feedback">
-							<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php $this->language->line("FOUNDCLAIM-123",'Extra address line');?>" id="addressa" name="user[addressa]" disabled />
+							<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("FOUNDCLAIM-123",'Extra address line');?>" id="addressa" name="user[addressa]" disabled />
 						</div>
 						<div class="form-group has-feedback">
-							<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php $this->language->line("FOUNDCLAIM-1249",'zipcode');?>" id="zipcode" name="user[zipcode]" disabled />
+							<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("FOUNDCLAIM-1249",'zipcode');?>" id="zipcode" name="user[zipcode]" disabled />
 						</div>
 						<div class="form-group has-feedback">
-							<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php $this->language->line("FOUNDCLAIM-124",'City');?>" id="city" name="user[city]" disabled />
+							<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("FOUNDCLAIM-124",'City');?>" id="city" name="user[city]" disabled />
 						</div>
 						<div class="selectWrapper mb-35" style="display: none" id="country1">
 							<select class="selectBox" id="country" name="user[country]" style="display: none; font-family:'caption-light';" disabled >
@@ -84,7 +84,7 @@
 							</select>
 						</div>
 						<div class="clearfix"></div>
-						<input type="button" onclick="checkValuesAndSubmit('foundRegister', 'email', 'emailverify')" class="button button-orange" value="<?php $this->language->line("FOUNDCLAIM-200",'CLAIM YOUR ITEM');?>" />
+						<input type="button" onclick="checkValuesAndSubmit('foundRegister', 'email', 'emailverify')" class="button button-orange" value="<?php echo $this->language->line("FOUNDCLAIM-200",'CLAIM YOUR ITEM');?>" />
 					</form>
 					<div class="mobile-hide" style="text-align:center; margin-top: 30px; margin-bottom: 50px; margin-left: 100px">
 						<img src="<?php echo $this->baseUrl; ?>assets/home/images/Mobilephone.png" alt="tiqs" width="125" height="250" />

@@ -113,7 +113,7 @@
 		<div class="flex-column align-start">
 			<div align="left">
 				<h2 class="heading mb-35">
-					<?php $this->language->line('API-A10001','REQUEST API ACCESS');?>
+					<?php echo $this->language->line('API-A10001','REQUEST API ACCESS');?>
 				</h2>
 				<iframe width="600" height="850" src="https://tiqs.com/backoffice/forms/ticket" frameborder="0" allowfullscreen></iframe>
 			</div>
@@ -127,12 +127,12 @@
 				<div class="timeline-heading">
 					<span class='timeline-number text-green show-mobile'>1</span>
 					<h2 style="font-weight:bold; font-family: caption-bold">
-						<?php $this->language->line('API-A100011','
+						<?php echo $this->language->line('API-A100011','
 					     FILL THE FORM 
 					');?></h2>
 				</div>
 				<p class="text-content-light" style="font-size: larger">
-					<?php $this->language->line('API-A100012','
+					<?php echo $this->language->line('API-A100012','
 					REQUEST FOR API ACCESS CAN BE MADE IN THE FORM ON THIS PAGE. 
 					');?>
 				</p>
@@ -145,12 +145,12 @@
 				<div class="timeline-heading">
 					<span class='timeline-number text-green show-mobile'>2</span>
 					<h2 style="font-weight:bold; font-family: caption-bold">
-						<?php $this->language->line('API-A100013','
+						<?php echo $this->language->line('API-A100013','
 					     API MANUAL AND API ACCESS  
 					');?></h2>
 				</div>
 				<p class="text-content-light" style="font-size: larger">
-					<?php $this->language->line('API-A100014a','
+					<?php echo $this->language->line('API-A100014a','
 					AFTER APPROVAL YOU WILL GET YOUR API ACCESS TOKEN AND URL.  DOCUMENTATION IS SEND BY MAIL TO YOU.  
 					');?>
 				</p>
@@ -163,12 +163,12 @@
 				<div class="timeline-heading">
 					<span class='timeline-number text-green show-mobile'>3</span>
 					<h2 style="font-weight:bold; font-family: caption-bold">
-						<?php $this->language->line('API-A100015','
+						<?php echo $this->language->line('API-A100015','
 					     SUPPORT ON API DEVELOPMENT
 					');?></h2>
 				</div>
 				<p class="text-content-light" style="font-size: larger">
-					<?php $this->language->line('API-A100016','
+					<?php echo $this->language->line('API-A100016','
 					SUPPORT ON THE API WILL BE THROUGH YOUR TIQS CONTACT / MANAGER   
 					');?>
 				</p>
@@ -181,12 +181,12 @@
 				<div class="timeline-heading">
 					<span class='timeline-number text-green show-mobile'>4</span>
 					<h2 style="font-weight:bold; font-family: caption-bold">
-						<?php $this->language->line('API-A100017','
+						<?php echo $this->language->line('API-A100017','
 					     CONTRACT AND SUPPORT  
 					');?></h2>
 				</div>
 				<p class="text-content-light" style="font-size: larger">
-					<?php $this->language->line('API-A100018a','
+					<?php echo $this->language->line('API-A100018a','
 					USAGE OF THE API IS UNDER THE TIQS PROVIDED API DEVELOPMENT USAGE AND SUPPORT PROVISIONS, RULES AND REGULATIONS.   
 					');?>
 				</p>

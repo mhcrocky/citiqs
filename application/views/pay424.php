@@ -30,7 +30,7 @@
 			<div class="mt-50" align="center" style="text-align:center; margin-bottom: 20px">
 				<div style="text-align:center; margin-bottom: 10px">
 					<h2 class="heading">
-						<?php $this->language->line("CHECK424-TELL001",'TELL A FRIEND');?>
+						<?php echo $this->language->line("CHECK424-TELL001",'TELL A FRIEND');?>
 					</h2>
 				</div>
 
@@ -69,7 +69,7 @@
 			<div class="mt-50" align="center" style="text-align:center; margin-bottom: 20px">
 				<div style="text-align:center; margin-bottom: 10px">
 					<h2 class="heading">
-						<?php $this->language->line("CHECK424-TELL001",'TELL A FRIEND');?>
+						<?php echo $this->language->line("CHECK424-TELL001",'TELL A FRIEND');?>
 					</h2>
 				</div>
 
@@ -108,7 +108,7 @@
 			<div class="mt-50" align="center" style="text-align:center; margin-bottom: 20px">
 				<div style="text-align:center; margin-bottom: 10px">
 					<h2 class="heading">
-						<?php $this->language->line("CHECK424-TELL001",'TELL A FRIEND');?>
+						<?php echo $this->language->line("CHECK424-TELL001",'TELL A FRIEND');?>
 					</h2>
 				</div>
 
@@ -147,7 +147,7 @@
 			<div class="mt-50" align="center" style="text-align:center; margin-bottom: 20px">
 				<div style="text-align:center; margin-bottom: 10px">
 					<h2 class="heading">
-						<?php $this->language->line("CHECK424-TELL001",'TELL A FRIEND');?>
+						<?php echo $this->language->line("CHECK424-TELL001",'TELL A FRIEND');?>
 					</h2>
 				</div>
 
@@ -181,7 +181,7 @@
 				<div class="mt-50" align="center" style="text-align:center; margin-bottom: 20px">
 					<div style="text-align:center; margin-bottom: 10px">
 						<h2 class="heading">
-							<?php $this->language->line("CHECK424-TELL001",'TELL A FRIEND');?>
+							<?php echo $this->language->line("CHECK424-TELL001",'TELL A FRIEND');?>
 						</h2>
 					</div>
 

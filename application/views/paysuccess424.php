@@ -113,7 +113,7 @@
 	<div class="col-half background-green height-100">
 		<div class="flex-column align-start">
 			<div class="timeline-heading">
-				<h2 style="font-weight:bold; font-family: caption-bold"><?php $this->language->line('PAYMENTSUCCESS-CHECK424001','THANK YOU FOR YOUR KIND DONATION');?></h2>
+				<h2 style="font-weight:bold; font-family: caption-bold"><?php echo $this->language->line('PAYMENTSUCCESS-CHECK424001','THANK YOU FOR YOUR KIND DONATION');?></h2>
 			</div>
 			<div class="" align="center" >
 				<img border="0" src="<?php echo base_url(); ?>assets/home/images/donation.png" alt="tiqs" width="275" height="auto" />

@@ -84,9 +84,9 @@
                     </div>
 
                     <div>
-                        <a href="https://tiqs.com/lostandfound/howitworksconsumer" class="button button-orange"><?php $this->language->line("xxx-xxx",'HOW IT WORKS');?></a>
+                        <a href="https://tiqs.com/lostandfound/howitworksconsumer" class="button button-orange"><?php echo $this->language->line("xxx-xxx",'HOW IT WORKS');?></a>
 
-						<a href="https://tiqs.com/lostandfound/check" class="button button-orange"><?php $this->language->line("xxx-xxx",'ORDER YOUR TAGS');?></a>
+						<a href="https://tiqs.com/lostandfound/check" class="button button-orange"><?php echo $this->language->line("xxx-xxx",'ORDER YOUR TAGS');?></a>
 					</div>
 
                     <div id="images" class="images">

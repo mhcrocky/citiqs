@@ -15,7 +15,7 @@
 			</div><!-- end pricing block body -->
 			<h2 style="font-family: caption-bold">NAAM</h2>
 			<div class="form-group has-feedback">
-				<input type="text" id="username" name="username" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php $this->language->Line("spot-reservationspay-1300",'je naam');?>" />
+				<input type="text" id="username" name="username" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php echo $this->language->Line("spot-reservationspay-1300",'je naam');?>" />
 				<span class="glyphicon glyphicon-user form-control-feedback"></span>
 			</div>
 			<h2 style="font-family: caption-bold">E-MAIL</h2>
@@ -25,7 +25,7 @@
 			</div>
 			<h2 style="font-family: caption-bold">MOBIEL</h2>
 			<div class="form-group has-feedback">
-				<input name="mobile" id="mobile" type="tel" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php $this->language->Line("spot-resrevationpay-2200","je Phone number");?>" required />
+				<input name="mobile" id="mobile" type="tel" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php echo $this->language->Line("spot-resrevationpay-2200","je Phone number");?>" required />
 				<span class="glyphicon glyphicon-phone form-control-feedback"></span>
 			</div>
 			<div class="pricing-block-footer" style="height: 200px" >

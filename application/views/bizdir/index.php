@@ -102,9 +102,9 @@ a:active {
 <main role="main" style="margin-bottom: -30px" align="center">
 	<section style="background-color:#fbd19a; " align="center" >
 		<div style="background-color:#fbd19a;" align="center">
-			<h1 style="font-family: campton-bold; padding: 50px 10px 10px 10px; margin-top: 30px;color:#27253b"><?php $this->language->Line("PLACES-A00002",'TIQS PICKUP & DELIVERY');?></h1>
+			<h1 style="font-family: campton-bold; padding: 50px 10px 10px 10px; margin-top: 30px;color:#27253b"><?php echo $this->language->Line("PLACES-A00002",'TIQS PICKUP & DELIVERY');?></h1>
 <!--			<h1 style="font-family: caption-bold; padding: 50px 10px 10px 10px; color:#ffffff">PICK UP & DELIVERY</h1>-->
-			<p style="font-family: campton-light;color: #27253b; margin-bottom: 0px"><?php $this->language->Line("PLACES-0020",'One stop shop to find everything at your favorite place');?></p>
+			<p style="font-family: campton-light;color: #27253b; margin-bottom: 0px"><?php echo $this->language->Line("PLACES-0020",'One stop shop to find everything at your favorite place');?></p>
 
 			<div class="mb-35" align="center">
 						<img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslocation.png" alt="tiqs" width=250 height="auto" align="center" />
@@ -114,14 +114,14 @@ a:active {
 			<div  style="margin-bottom:20px" align="center" >
 
 				<div style="text-align: center" align="center">
-					<h3 style="color: #003152; font-family: caption-bold;text-align:center"><?php $this->language->Line("PLACES-A0030",'Order online near your location');?></h3>
+					<h3 style="color: #003152; font-family: caption-bold;text-align:center"><?php echo $this->language->Line("PLACES-A0030",'Order online near your location');?></h3>
 
 					<div class="form-group">
 
 						<input
 								type="text"
 								class="form-control"
-								placeholder="<?php $this->language->Line("PLACES-A0001",'ADDRESS, CITY');?>"
+								placeholder="<?php echo $this->language->Line("PLACES-A0001",'ADDRESS, CITY');?>"
 								id="location"
 						/>
 					</div>
@@ -133,7 +133,7 @@ a:active {
 						<input
 								type="text"
 								class="form-control"
-								placeholder="<?php $this->language->Line("PLACES-0005",'CITY');?>"
+								placeholder="<?php echo $this->language->Line("PLACES-0005",'CITY');?>"
 								id="cityId"
 								autofocus
 						/>
@@ -142,7 +142,7 @@ a:active {
 					-->
 					<div class="form-group">
 						<!-- <label for="cityId">City:&nbsp;</label> -->
-						<p><?php $this->language->Line("PLACES-0010",'ENTER RANGE');?></p>
+						<p><?php echo $this->language->Line("PLACES-0010",'ENTER RANGE');?></p>
 
 					</div>
 
@@ -156,7 +156,7 @@ a:active {
 
 					</div>
 					<div class="form-group">
-						<input type="submit" class="btn btn-info" style="border-radius: 50px; background-color: #27253b ; border: none " value="<?php $this->language->Line("PLACES-0900",'SEARCH');?>" onclick="getPlaceByLocation('location', 'places', 'myRange')">
+						<input type="submit" class="btn btn-info" style="border-radius: 50px; background-color: #27253b ; border: none " value="<?php echo $this->language->Line("PLACES-0900",'SEARCH');?>" onclick="getPlaceByLocation('location', 'places', 'myRange')">
 					</div>
 
 				</div>

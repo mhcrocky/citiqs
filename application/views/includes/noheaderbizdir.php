@@ -104,7 +104,7 @@
 <!--				<a style="color: #FFFFFF; background: #0d173b" href="--><?php //echo $this->baseUrl; ?><!--found"></a>-->
 <!--				<a style="color: #FFFFFF; background: #0d173b" href="--><?php //echo $this->baseUrl; ?><!--check424"></a>-->
 				<a style="color: #FFFFFF; background: #0d173b" href="#" id='modal-button'>SELECT LANGUAGE </a>
-				<a style="color: #FFFFFF; background: #0d173b" href="<?php echo $this->baseUrl; ?>registerbusiness"><?php $this->language->Line("BIZDIR-MENU001","REGISTER YOUR BUSINESS");?></a>
+				<a style="color: #FFFFFF; background: #0d173b" href="<?php echo $this->baseUrl; ?>registerbusiness"><?php echo $this->language->Line("BIZDIR-MENU001","REGISTER YOUR BUSINESS");?></a>
 				<a style="color: #FFFFFF; background: #0d173b" href="<?php echo $this->baseUrl; ?>login">LOGIN</a>
 			</div>
 			<div class="hamburger-menu" id="hamburger-menu">

@@ -1,5 +1,5 @@
 <option value="">
-<?php $this->language->Line("CountrySelect-A2001A","Select country");?>
+<?php echo $this->language->Line("CountrySelect-A2001A","Select country");?>
 </option>
 <option value="AF">Afghanistan</option>
 <option value="AX">Åland Islands</option>

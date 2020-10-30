@@ -163,11 +163,11 @@
 				<!--				Claime your reward-->
 				<div class="width-650">
 					<!--        HERE THE UPLOAD ID SCREEN-->
-					<h2 style="color:#ffffff; margin-bottom: 30px"  class="heading"><?php $this->language->line("NOFOUND-101010",'WE ARE SORRY,');?></h2>
+					<h2 style="color:#ffffff; margin-bottom: 30px"  class="heading"><?php echo $this->language->line("NOFOUND-101010",'WE ARE SORRY,');?></h2>
 					<div >
 						<p id="UnkownAddressText" style="font-family:'caption-light'; font-size:100%; color:#ffffff;  text-align: left">
-							<?php $this->language->line("NOFOUND-25551",'THERE ARE NO FOUND ITEMS REGISTERED ON THIS LOCATION, WE HAVE LOOKED BUT WE COULD NOT FIND ANY....')?>
-							<?php $this->language->line("NOFOUND-15560",'
+							<?php echo $this->language->line("NOFOUND-25551",'THERE ARE NO FOUND ITEMS REGISTERED ON THIS LOCATION, WE HAVE LOOKED BUT WE COULD NOT FIND ANY....')?>
+							<?php echo $this->language->line("NOFOUND-15560",'
                                 <br/><br/>AS ON A DAILY BASES WE GET REGISTRATIONS OF ITEMS FOUND AT TIQS LOST + FOUND, WE WOULD LIKE TO GIVE YOU THE OPPORTUNITY
                                 TO REGISTER YOURSELF. YOU CAN DESCRIBE YOUR LOST ITEM AND WE WILL INFORM YOU BY MAIL ABOUT THE REGISTERED FOUND ITEMS WHO ARE MATCHING YOUR DESCRIPTIONS.
                                 <br/><br/>OUR TECHNOLOGY USES STATE OF THE ART ARTIFICIAL INTELLIGENCE TO MATCH LOST + FOUND ITEMS. 
@@ -176,19 +176,19 @@
                                 BECOME PART OF THE BIGGEST WORLDWIDE LOST + FOUND COMMUNITY START REGISTERING NOW WITH A PICTURE OF YOUR ITEM AND ORDER THE TIQS-TAGS-STICKERS NOW!  
                                 ');?>
 							<br/><br/>
-							<?php $this->language->line("NOFOUND-25560",'
+							<?php echo $this->language->line("NOFOUND-25560",'
                                 <br/><br/>READ IN THE FREQUENTLY ASKED QUESTIONS MORE ABOUT THE WORLDWIDE LOST + FOUND SOLUTION
                                 ');?>
 						</p>
 					</div>
 					<div>
-						<a style="color:#ffffff" class='how-we-works-link' href="<?php echo base_url(); ?>howitworksbusiness"><?php $this->language->line('Home-002','MORE INFO HOW IT WORKS');?></a>
+						<a style="color:#ffffff" class='how-we-works-link' href="<?php echo base_url(); ?>howitworksbusiness"><?php echo $this->language->line('Home-002','MORE INFO HOW IT WORKS');?></a>
 					</div>
 					<div align="center" >
-						<a href="<?php echo base_url(); ?>check" class="button button-orange mb-35"><?php $this->language->line("NOFOUND-10280",'REGISTER YOUR LOST ITEM');?></a>
+						<a href="<?php echo base_url(); ?>check" class="button button-orange mb-35"><?php echo $this->language->line("NOFOUND-10280",'REGISTER YOUR LOST ITEM');?></a>
 
 					</div>
-					<p style="color:#ffffff" class="text-content mb-50"><?php $this->language->line("ITEMFOUND-1110",'lost by you, <br> returned by us');?></p>
+					<p style="color:#ffffff" class="text-content mb-50"><?php echo $this->language->line("ITEMFOUND-1110",'lost by you, <br> returned by us');?></p>
 				</div>
 			</div>
 		</div>
@@ -197,11 +197,11 @@
 		<div class="background-yellow">
 			<div class="width-650">
 				<!--        HERE THE UPLOAD ID SCREEN-->
-				<h2 style="color:#ffffff; margin-bottom: 30px"  class="heading"><?php $this->language->line("NOFOUND-1101010",'GET EXTRA TIQS-TAGS-STICKERS FOR YOUR FRIENDS AND RELATIVES');?></h2>
+				<h2 style="color:#ffffff; margin-bottom: 30px"  class="heading"><?php echo $this->language->line("NOFOUND-1101010",'GET EXTRA TIQS-TAGS-STICKERS FOR YOUR FRIENDS AND RELATIVES');?></h2>
 				<div >
 					<p id="UnkownAddressText" style="font-family:'caption-light'; font-size:100%; color:#ffffff;  text-align: left">
-						<?php $this->language->line("NOFOUND-15550",'WE APPRECIATE YOUR EFFORT!')?>
-						<?php $this->language->line("NOFOUND-15560",'
+						<?php echo $this->language->line("NOFOUND-15550",'WE APPRECIATE YOUR EFFORT!')?>
+						<?php echo $this->language->line("NOFOUND-15560",'
                                 <br/><br/>YOU KNOW HOW IT FEELS TO LOSE SOMETHING AND TRYING TO GET IT BACK, AS YOU HAVE REGISTERED THE ITEM AT TIQS LOST + FOUND, 
                                 WE WOULD LIKE TO REWARD YOUR EFFORTS.
                                 <br/> YOU RECEIVE FROM, 3 EXTRA PACKAGES OF TIQS-TAGS STICKERS AS A GIVE AWAY TO YOUR FRIENDS OR RELATIVES.
@@ -209,19 +209,19 @@
                                 WE REALLY APPRECIATE YOUR EFFORT AND LOVE TO BRING THE LOST ITEM BACK TO THE RIGHTFUL OWNER. 
                                 ');?>
 						<br/><br/>
-						<?php $this->language->line("NOFOUND-25560",'
+						<?php echo $this->language->line("NOFOUND-25560",'
                                 <br/><br/>READ IN THE FREQUENTLY ASKED QUESTIONS MORE ABOUT THE LOST + FOUND PROCEDURE
                                 ');?>
 					</p>
 				</div>
 				<div>
-					<a style="color:#ffffff" class='how-we-works-link' href="<?php echo base_url(); ?>howitworksbusiness"><?php $this->language->line('Home-002','MORE INFO HOW IT WORKS');?></a>
+					<a style="color:#ffffff" class='how-we-works-link' href="<?php echo base_url(); ?>howitworksbusiness"><?php echo $this->language->line('Home-002','MORE INFO HOW IT WORKS');?></a>
 				</div>
 				<div align="center" >
-					<a href="<?php echo base_url(); ?>check" class="button button-orange mb-35"><?php $this->language->line("NOFOUND-1130280",'GET YOUR EXTRA STICKERS');?></a>
+					<a href="<?php echo base_url(); ?>check" class="button button-orange mb-35"><?php echo $this->language->line("NOFOUND-1130280",'GET YOUR EXTRA STICKERS');?></a>
 
 				</div>
-				<p style="color:#ffffff" class="text-content mb-50"><?php $this->language->line("ITEMFOUND-1111110",'lost by you, <br> returned by us');?></p>
+				<p style="color:#ffffff" class="text-content mb-50"><?php echo $this->language->line("ITEMFOUND-1111110",'lost by you, <br> returned by us');?></p>
 			</div>
 		</div>
 

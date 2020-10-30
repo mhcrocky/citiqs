@@ -39,53 +39,53 @@
 		</div>
 		<div class="mt-50 div-only-mobile" >
 			<div class="contact-text-box align-center" style="margin-left: 100px">
-				<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php $this->language->line('INFOBUSINESS-A0101','GET YOUR ACCOUNT');?></a>
+				<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php echo $this->language->line('INFOBUSINESS-A0101','GET YOUR ACCOUNT');?></a>
 			</div>
 
 		</div>
 		<div class="col-half background-blue col-half-mobile height-100 contact-text">
 				<div align="left">
-					<p><?php $this->language->line("BUSINESS-100001",'WHY TIQS?');?></p>
+					<p><?php echo $this->language->line("BUSINESS-100001",'WHY TIQS?');?></p>
 					<div class="contact-text-box">
 						<div class="mb-35 div-no-mobile" align="right" style="margin-top: -50px">
-							<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php $this->language->line('INFOBUSINESS-A0101','GET YOUR ACCOUNT');?></a>
+							<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php echo $this->language->line('INFOBUSINESS-A0101','GET YOUR ACCOUNT');?></a>
 						</div>
 						<p style="font-size: medium; font-weight: bold">
-							<?php $this->language->line("BUSINESS-100002",'1. INCREASED CUSTOMER LOYALTY')?><br>
+							<?php echo $this->language->line("BUSINESS-100002",'1. INCREASED CUSTOMER LOYALTY')?><br>
 						</p>
 						<p style="font-family:caption-light; font-size: medium">
-							<?php $this->language->line("BUSINESS-100003a",'Our platform supports you enabling higher customer satisfaction, greater customer experience leading to increased customer loyalty');?>
+							<?php echo $this->language->line("BUSINESS-100003a",'Our platform supports you enabling higher customer satisfaction, greater customer experience leading to increased customer loyalty');?>
 						</p>
 						<p style="font-size: medium; font-weight: bold">
-							<?php $this->language->line("BUSINESS-100004",'2. STANDARDIZED WORKFLOW');?>
+							<?php echo $this->language->line("BUSINESS-100004",'2. STANDARDIZED WORKFLOW');?>
 						</p>
 						<p style="font-family:caption-light; font-size: medium">
-							<?php $this->language->line("BUSINESS-100005",'Our platform simplifies your internal and external Lost & Found process through a standardized workflow which is developed on registration, claim and return of the Lost & Found items to the rightful owner.');?>
+							<?php echo $this->language->line("BUSINESS-100005",'Our platform simplifies your internal and external Lost & Found process through a standardized workflow which is developed on registration, claim and return of the Lost & Found items to the rightful owner.');?>
 						<p style="font-size: medium; font-weight: bold">
-							<?php $this->language->line("BUSINESS-100006",'3. ALL LOST & FOUND ITEMS IN ONE PLACE');?>
+							<?php echo $this->language->line("BUSINESS-100006",'3. ALL LOST & FOUND ITEMS IN ONE PLACE');?>
 						</p>
 						<p style="font-family:caption-light; font-size: medium">
-							<?php $this->language->line("BUSINESS-100007",'All Lost & Found items are stored in one secured digital database, that you and your customer can easily acces through the personal Tiqs Lost & Found page of your company.');?>
+							<?php echo $this->language->line("BUSINESS-100007",'All Lost & Found items are stored in one secured digital database, that you and your customer can easily acces through the personal Tiqs Lost & Found page of your company.');?>
 						<p style="font-size: medium; font-weight: bold">
-							<?php $this->language->line("BUSINESS-100003b",'4. LESS IMPACT ON THE INTERNAL PROCESS');?>
+							<?php echo $this->language->line("BUSINESS-100003b",'4. LESS IMPACT ON THE INTERNAL PROCESS');?>
 						</p>
 						<p style="font-family:caption-light; font-size: medium">
-							<?php $this->language->line("BUSINESS-100008",'Our intuitive software interface, standardized workflow and integrated shipping solution lowers the impact on your operational workload, so your organisation can focus on its core business.');?>
+							<?php echo $this->language->line("BUSINESS-100008",'Our intuitive software interface, standardized workflow and integrated shipping solution lowers the impact on your operational workload, so your organisation can focus on its core business.');?>
 						<p style="font-size: medium; font-weight: bold">
-							<?php $this->language->line("BUSINESS-100009",'5. INTEGRATED SHIPPING SOLUTION (DHL)');?>
+							<?php echo $this->language->line("BUSINESS-100009",'5. INTEGRATED SHIPPING SOLUTION (DHL)');?>
 						</p>
 						<p style="font-family:caption-light; font-size: medium">
-							<?php $this->language->line("BUSINESS-100010",'Our platform relieves you from the logistic handling of the Lost & Found items to their owners via our integrated and automated shipping solution. Our exclusive partnership with DHL guarantees insured Track & Trace returns and pick-up worldwide.');?>
+							<?php echo $this->language->line("BUSINESS-100010",'Our platform relieves you from the logistic handling of the Lost & Found items to their owners via our integrated and automated shipping solution. Our exclusive partnership with DHL guarantees insured Track & Trace returns and pick-up worldwide.');?>
 						<p style="font-size: medium; font-weight: bold">
-							<?php $this->language->line("BUSINESS-100011",'6. HIGHER RETURN RATE');?>
+							<?php echo $this->language->line("BUSINESS-100011",'6. HIGHER RETURN RATE');?>
 						</p>
 						<p style="font-family:caption-light; font-size: medium">
-							<?php $this->language->line("BUSINESS-100012",'Our end-to-end tailored and time saving solution increases the return percentage of your Lost & Found thanks to its efficiency.');?>
+							<?php echo $this->language->line("BUSINESS-100012",'Our end-to-end tailored and time saving solution increases the return percentage of your Lost & Found thanks to its efficiency.');?>
 						<p style="font-size: medium; font-weight: bold">
-							<?php $this->language->line("BUSINESS-100013",'7. REVENUE MODEL');?>
+							<?php echo $this->language->line("BUSINESS-100013",'7. REVENUE MODEL');?>
 						</p>
 						<p style="font-family:caption-light; font-size: medium">
-							<?php $this->language->line("BUSINESS-100014a","In addition to cost efficiency and time savings, Tiqs offers you more revenue with less resources. Tiqs transforms from a cost to a revenue model and creates an extra value proposition for your organisation.");?>
+							<?php echo $this->language->line("BUSINESS-100014a","In addition to cost efficiency and time savings, Tiqs offers you more revenue with less resources. Tiqs transforms from a cost to a revenue model and creates an extra value proposition for your organisation.");?>
 						</p>
 						<p></p>
 					</div>
@@ -101,36 +101,36 @@
 			<div class="width-650 mb-50" style="min-height:600px">
 				<div align="left">
 					<div class="contact-text-box mb-50">
-						<p><?php $this->language->line("BUSINESS-100015",'HOW?');?></p>
+						<p><?php echo $this->language->line("BUSINESS-100015",'HOW?');?></p>
 						<div class="mb-35 div-no-mobile" align="right" style="margin-top: -50px">
-							<a href="<?php echo base_url(); ?>registerbusiness" style="background-color:#eb5d16; color: white" class="button button-orange"><?php $this->language->line('INFOBUSINESS-A0101','GET YOUR ACCOUNT');?></a>
+							<a href="<?php echo base_url(); ?>registerbusiness" style="background-color:#eb5d16; color: white" class="button button-orange"><?php echo $this->language->line('INFOBUSINESS-A0101','GET YOUR ACCOUNT');?></a>
 						</div>
 						<p style="font-size: medium; font-weight: bold">
-						<?php $this->language->line("BUSINESS-100016",'OUR SOLUTION IS ALL ABOUT (A) REGISTRATION, (B) CLAIM AND (C) RETURN OF LOST & FOUND ITEMS TO THEIR RIGHTFUL OWNERS - YOUR CLIENTS!');?>
+						<?php echo $this->language->line("BUSINESS-100016",'OUR SOLUTION IS ALL ABOUT (A) REGISTRATION, (B) CLAIM AND (C) RETURN OF LOST & FOUND ITEMS TO THEIR RIGHTFUL OWNERS - YOUR CLIENTS!');?>
 						</p>
 						<p style="font-size: medium; font-weight: bold">
-							<?php $this->language->line("BUSINESS-100017",'A - YOUR COMPANY');?>
+							<?php echo $this->language->line("BUSINESS-100017",'A - YOUR COMPANY');?>
 						</p>
 						<ul style="list-style-type:none;font-family:caption-light; font-size: small; font-weight: lighter; margin-left: -40px">
-							<li><?php $this->language->line("BUSINESS-100018",'1. FOUNDS A LOST ITEM');?></>
-							<li><?php $this->language->line("BUSINESS-100019",'2. REGISTERS THE ITEM WITH THE TIQS SCAN AND SECURES IT WITH A UNIQUE QR CODE');?>
-							<li><?php $this->language->line("BUSINESS-100020",'3. PLACES THE ITEM IN A TIQS BAG AND SEALES IT');?></>
+							<li><?php echo $this->language->line("BUSINESS-100018",'1. FOUNDS A LOST ITEM');?></>
+							<li><?php echo $this->language->line("BUSINESS-100019",'2. REGISTERS THE ITEM WITH THE TIQS SCAN AND SECURES IT WITH A UNIQUE QR CODE');?>
+							<li><?php echo $this->language->line("BUSINESS-100020",'3. PLACES THE ITEM IN A TIQS BAG AND SEALES IT');?></>
 						</ul>
 						<p style="font-size: medium; font-weight: bold">
-						<?php $this->language->line("BUSINESS-100014",'B - YOUR CLIENT');?>
+						<?php echo $this->language->line("BUSINESS-100014",'B - YOUR CLIENT');?>
 						</p>
 						<ul style="list-style-type:none;font-family:caption-light; font-size: small; font-weight: lighter; margin-left: -40px">
-							<li><?php $this->language->line("BUSINESS-100021",'4. CLAIMS THE ITEM ON THE COMPANY LOST & FOUND PAGE');?></>
-							<li><?php $this->language->line("BUSINESS-100022",'5. HAS TO IDENTIFY HIMSELF AND TIQS VERIFIES WITH A SECURE ALGORITHM THE OWNERSHIP');?></>
-							<li><?php $this->language->line("BUSINESS-100023",'6. CHOOSES PICK-UP OR DELIVERY BY DHL AND PAYS ONLINE');?></>
+							<li><?php echo $this->language->line("BUSINESS-100021",'4. CLAIMS THE ITEM ON THE COMPANY LOST & FOUND PAGE');?></>
+							<li><?php echo $this->language->line("BUSINESS-100022",'5. HAS TO IDENTIFY HIMSELF AND TIQS VERIFIES WITH A SECURE ALGORITHM THE OWNERSHIP');?></>
+							<li><?php echo $this->language->line("BUSINESS-100023",'6. CHOOSES PICK-UP OR DELIVERY BY DHL AND PAYS ONLINE');?></>
 						</ul>
 						<p style="font-size: medium; font-weight: bold;">
-							<?php $this->language->line("BUSINESS-100024",'C - RETURN & HAPPY CUSTOMER');?>
+							<?php echo $this->language->line("BUSINESS-100024",'C - RETURN & HAPPY CUSTOMER');?>
 						</p>
 						<ul style="list-style-type:none;font-family:caption-light; font-size: small; font-weight: lighter; margin-left: -40px">
-							<li><?php $this->language->line("BUSINESS-100025",'7. DHL COLLECTS THE LOST ITEM AND PREPARES IT FOR SHIPMENT');?></>
-							<li><?php $this->language->line("BUSINESS-100026",'8. DHL DELIVERS THE LOST ITEM WITH TRACK & TRACE');?></>
-							<li><?php $this->language->line("BUSINESS-100027",'9. YOU JUST CREATED A NEW HAPPY CUSTOMER');?></>
+							<li><?php echo $this->language->line("BUSINESS-100025",'7. DHL COLLECTS THE LOST ITEM AND PREPARES IT FOR SHIPMENT');?></>
+							<li><?php echo $this->language->line("BUSINESS-100026",'8. DHL DELIVERS THE LOST ITEM WITH TRACK & TRACE');?></>
+							<li><?php echo $this->language->line("BUSINESS-100027",'9. YOU JUST CREATED A NEW HAPPY CUSTOMER');?></>
 						</ul>
 						</p>
 					</div>
@@ -160,17 +160,17 @@
 				<div align="left">
 					<div class="contact-text-box">
 						<div class=" mb-35 div-only-mobile" align="center" style="text-align: center">
-							<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php $this->language->line('INFOBUSINESS-A0101','GET YOUR ACCOUNT');?></a>
+							<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php echo $this->language->line('INFOBUSINESS-A0101','GET YOUR ACCOUNT');?></a>
 						</div>
-						<p><?php $this->language->line("BUSINESS-100028",'FOR WHO?');?></p>
+						<p><?php echo $this->language->line("BUSINESS-100028",'FOR WHO?');?></p>
 						<div class="mb-35 div-no-mobile" align="right" style="margin-top: -50px">
-							<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php $this->language->line('INFOBUSINESS-A0101','GET YOUR ACCOUNT');?></a>
+							<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php echo $this->language->line('INFOBUSINESS-A0101','GET YOUR ACCOUNT');?></a>
 						</div>
 						<p style="font-size: medium; font-weight: bold">
-						<?php $this->language->line("BUSINESS-100029",'TIQS IS DEVELOPED FOR ALL COMPANIES WHOSE CUSTOMERS ARE VISITORS AND IS RECOGNIZED AS THE UNIVERSAL STANDARD FOR YOUR LOST AND FOUND PROCESS AND MANAGEMENT.');?><br>
+						<?php echo $this->language->line("BUSINESS-100029",'TIQS IS DEVELOPED FOR ALL COMPANIES WHOSE CUSTOMERS ARE VISITORS AND IS RECOGNIZED AS THE UNIVERSAL STANDARD FOR YOUR LOST AND FOUND PROCESS AND MANAGEMENT.');?><br>
 						</p>
 						<p style="font-family:caption-light; font-size: small; font-weight: lighter">
-						<?php $this->language->line("BUSINESS-100030",'
+						<?php echo $this->language->line("BUSINESS-100030",'
 							AIR BNB,
 							AMUSEMENT PARK AVIATION,
 							BAR,
@@ -219,7 +219,7 @@
 			<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="auto" height="100" />
 		</div>
 		<div class="div-no-mobile" style="margin-top: -95px; margin-left: 280px">
-			<h1 style="font-family:caption-bold; font-size: 60px; font-weight: bold" ><?php $this->language->line("BUSINESS-pack100031",'PACKAGES');?></h1>
+			<h1 style="font-family:caption-bold; font-size: 60px; font-weight: bold" ><?php echo $this->language->line("BUSINESS-pack100031",'PACKAGES');?></h1>
 		</div>
 	</div>
 
@@ -228,17 +228,17 @@
 		<div class="col-half background-orange-light col-half-mobile contact-text" style="margin-bottom: 0px">
 			<div style="text-align:left">
 				<div class="contact-text-box" style="margin-bottom: 0px">
-					<h2 style="font-family:caption-bold"><?php $this->language->line("BUSINESS-100031",'FREE STARTERS PACKAGE');?></h2>
+					<h2 style="font-family:caption-bold"><?php echo $this->language->line("BUSINESS-100031",'FREE STARTERS PACKAGE');?></h2>
 					<p style="font-family:caption-light; font-size: medium; font-weight: bold">
 						<ul style="list-style-type: disc ; font-family:caption-light; font-size: larger; margin-left: -20px ">
 							<li>
 								<?php strtoupper($this->language->line('BUSINESS-100031-' . $subscriptions['Free'][0]['description'], $subscriptions['Free'][0]['description'])); ?>
 							</li>
-							<li><?php $this->language->line("BUSINESS-100032C","20 TIQS BAGS (EX SHIPPING COSTS) MULTI TIQS SCAN USERS");?></li>
-							<li><?php $this->language->line("BUSINESS-100032D","INTEGRATED SHIPPING SOLUTION (DHL) SET-UP PICK-UP TIME");?></li>
+							<li><?php echo $this->language->line("BUSINESS-100032C","20 TIQS BAGS (EX SHIPPING COSTS) MULTI TIQS SCAN USERS");?></li>
+							<li><?php echo $this->language->line("BUSINESS-100032D","INTEGRATED SHIPPING SOLUTION (DHL) SET-UP PICK-UP TIME");?></li>
 						</ul>
 						<ul style="list-style-type: none; font-family:caption-bold; font-size: medium; margin-left: -40px" >
-							<li><?php $this->language->line("BUSINESS-100032E","PRICE = 0 EURO + SHIPPING COSTS");?></li>
+							<li><?php echo $this->language->line("BUSINESS-100032E","PRICE = 0 EURO + SHIPPING COSTS");?></li>
 						</ul>
 					</p>
 				</div>
@@ -247,14 +247,14 @@
 		<div class="col-half background-orange col-half-mobile contact-text">
 			<div style="text-align:left">
 				<div class="contact-text-box">
-					<h2 style="font-family:caption-bold"><?php $this->language->line("BUSINESS-100035",'BASIC PACKAGE');?></h2>
+					<h2 style="font-family:caption-bold"><?php echo $this->language->line("BUSINESS-100035",'BASIC PACKAGE');?></h2>
 					<p style="font-family:caption-light; font-size: medium; font-weight: bold">
 						<ul style="list-style-type: disc ; font-family:caption-light; font-size: larger; margin-left: -20px ">
 							<li>
 								<?php strtoupper($this->language->line('BUSINESS-100035B-' . $subscriptions['basic_yearly'][0]['description'], $subscriptions['basic_yearly'][0]['description'])); ?>
 							</li>
-							<li><?php $this->language->line("BUSINESS-100035C","WEBSITE INTEGRATION AND PERSONALISATION MULTI TIQS SCAN USERS");?></li>
-							<li><?php $this->language->line("BUSINESS-100035D","INTEGRATED SHIPPING SOLUTION (DHL) PICK-UP TIME AND LOCATION");?></li>
+							<li><?php echo $this->language->line("BUSINESS-100035C","WEBSITE INTEGRATION AND PERSONALISATION MULTI TIQS SCAN USERS");?></li>
+							<li><?php echo $this->language->line("BUSINESS-100035D","INTEGRATED SHIPPING SOLUTION (DHL) PICK-UP TIME AND LOCATION");?></li>
 						</ul>
 						</ul>						
 					</ul>
@@ -262,8 +262,8 @@
 					</ul>
 						</ul>						
 						<ul style="list-style-type: none; font-family:caption-bold; font-size: medium; margin-left: -40px" >
-							<li><?php $this->language->line("BUSINESS-{$subscriptions['basic_yearly'][0]['amount']}", 'YEARLY SUBSCRIPTION = ' . $subscriptions['basic_yearly'][0]['amount'] . ' EURO');?></li>
-							<li><?php $this->language->line("BUSINESS-{$subscriptions['basic_monthly'][0]['amount']}12", 'MONTHLY SUBSCRIPTION = ' . $subscriptions['basic_monthly'][0]['amount'] . ' EURO');?></li>
+							<li><?php echo $this->language->line("BUSINESS-{$subscriptions['basic_yearly'][0]['amount']}", 'YEARLY SUBSCRIPTION = ' . $subscriptions['basic_yearly'][0]['amount'] . ' EURO');?></li>
+							<li><?php echo $this->language->line("BUSINESS-{$subscriptions['basic_monthly'][0]['amount']}12", 'MONTHLY SUBSCRIPTION = ' . $subscriptions['basic_monthly'][0]['amount'] . ' EURO');?></li>
 						</ul>
 					</p>
 				</div>				
@@ -273,18 +273,18 @@
 		<div class="col-half background-apricot col-half-mobile contact-text" style="margin-bottom: 0px">
 			<div style="text-align:left">
 				<div class="contact-text-box">
-					<h2 style="font-family:caption-bold"><?php $this->language->line("BUSINESS-100033",'STANDARD PACKAGE');?></h2>
+					<h2 style="font-family:caption-bold"><?php echo $this->language->line("BUSINESS-100033",'STANDARD PACKAGE');?></h2>
 					<p style="font-family:caption-light; font-size: medium; font-weight: bold">
 						<ul style="list-style-type: disc ; font-family:caption-light; font-size: larger; margin-left: -20px ">
 							<li>
 								<?php strtoupper($this->language->line('BUSINESS-100035B1-' . $subscriptions['standard_yearly'][0]['description'], $subscriptions['standard_yearly'][0]['description'])); ?>
 							</li>
-							<li><?php $this->language->line("BUSINESS-100033C","100 FREE TIQS BAGS (EX SHIPPING COSTS) REVENUE MODEL WITH OWN ADMINISTRATION FEE WEBSITE INTEGRATION AND PERSONALISATION MULTI TIQS SCAN USERS");?></li>
-							<li><?php $this->language->line("BUSINESS-100033D","INTEGRATED SHIPPING SOLUTION (DHL) SET-UP PICK-UP TIME AND LOCATION");?></li>
+							<li><?php echo $this->language->line("BUSINESS-100033C","100 FREE TIQS BAGS (EX SHIPPING COSTS) REVENUE MODEL WITH OWN ADMINISTRATION FEE WEBSITE INTEGRATION AND PERSONALISATION MULTI TIQS SCAN USERS");?></li>
+							<li><?php echo $this->language->line("BUSINESS-100033D","INTEGRATED SHIPPING SOLUTION (DHL) SET-UP PICK-UP TIME AND LOCATION");?></li>
 						</ul>
 						<ul style="list-style-type: none; font-family:caption-bold; font-size: medium; margin-left: -40px" >
-							<li><?php $this->language->line("BUSINESS-100033E1-{$subscriptions['standard_yearly'][0]['amount']}",'YEARLY SUBSCRIPTION = ' . $subscriptions['standard_yearly'][0]['amount'] . ' EURO');?></li>
-							<li><?php $this->language->line("BUSINESS-100033E1-{$subscriptions['standard_monthly'][0]['amount']}",'MONTHLY SUBSCRIPTION = ' . $subscriptions['standard_monthly'][0]['amount'] . ' EURO');?></li>
+							<li><?php echo $this->language->line("BUSINESS-100033E1-{$subscriptions['standard_yearly'][0]['amount']}",'YEARLY SUBSCRIPTION = ' . $subscriptions['standard_yearly'][0]['amount'] . ' EURO');?></li>
+							<li><?php echo $this->language->line("BUSINESS-100033E1-{$subscriptions['standard_monthly'][0]['amount']}",'MONTHLY SUBSCRIPTION = ' . $subscriptions['standard_monthly'][0]['amount'] . ' EURO');?></li>
 						</ul>
 					</p>
 				</div>
@@ -299,7 +299,7 @@
 					<div align="left">
 						<div class="contact-text-box">
 							<div class="" align="left" style="margin-top: 0px">
-								<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php $this->language->line('INFOBUSINESS-A0101','GET YOUR ACCOUNT');?></a>
+								<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php echo $this->language->line('INFOBUSINESS-A0101','GET YOUR ACCOUNT');?></a>
 							</div>
 						</div>
 					</div>
@@ -309,7 +309,7 @@
 					<div align="left">
 						<div class="contact-text-box">
 							<div class="div-no-mobile" align="left" style="margin-top: 0px">
-								<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php $this->language->line('INFOBUSINESS-A0101','GET YOUR ACCOUNT');?></a>
+								<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php echo $this->language->line('INFOBUSINESS-A0101','GET YOUR ACCOUNT');?></a>
 							</div>
 						</div>
 					</div>
@@ -319,7 +319,7 @@
 					<div align="left">
 						<div class="contact-text-box">
 							<div class="" align="left" style="margin-top: 0px">
-								<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php $this->language->line('INFOBUSINESS-A0101','GET YOUR ACCOUNT');?></a>
+								<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php echo $this->language->line('INFOBUSINESS-A0101','GET YOUR ACCOUNT');?></a>
 							</div>
 						</div>
 					</div>
@@ -335,10 +335,10 @@
 		<div class="col-half background-blue col-half-mobile contact-text">
 			<div align="left">
 				<div class="contact-text-box">
-					<p><?php $this->language->line("BUSINESS-100037",'VOLUME PACKAGE');?></p>
+					<p><?php echo $this->language->line("BUSINESS-100037",'VOLUME PACKAGE');?></p>
 					<p style="font-family:caption-light; font-size: medium; font-weight: bold">
 						<ul style="list-style-type: none ; font-family:caption-light; font-size: larger; margin-left: -40px ">
-							<li><?php $this->language->line("BUSINESS-1X100037B1","FOR BUSINESSES WITH A LARGE QUANTITY OF VISITORS. FULLY COMMITTED TO CUSTOMER LOYALTY");?></>
+							<li><?php echo $this->language->line("BUSINESS-1X100037B1","FOR BUSINESSES WITH A LARGE QUANTITY OF VISITORS. FULLY COMMITTED TO CUSTOMER LOYALTY");?></>
 						<p></p>
 					</ul>
 					</p>
@@ -351,8 +351,8 @@
 				<div class="contact-text-box">
 					<p style="font-family:caption-light; font-size: small; font-weight: bold">
 						<ul style="list-style-type: disc ; font-family:caption-light; font-size: small; margin-left: -20px ">
-							<li><?php $this->language->line("BUSINESS-2X100037B","FROM 200 TILL 10.000 LOST & FOUND ITEMS A YEAR 100 OR MORE FREE TIQS BAGS (EX SHIPPING COSTS) REVENUE MODEL WITH OWN ADMINISTRATION FEE WEBSITE INTEGRATION AND PERSONALISATION MULTI TIQS SCAN USERS");?></>
-							<li><?php $this->language->line("BUSINESS-2X100037C","INTEGRATED SHIPPING SOLUTION (DHL) PICK-UP TIME AND LOCATION / +100 SECURE TIQS-BAGS / REGISTRATION BY MULTIPLE EMPLOYEES");?></>
+							<li><?php echo $this->language->line("BUSINESS-2X100037B","FROM 200 TILL 10.000 LOST & FOUND ITEMS A YEAR 100 OR MORE FREE TIQS BAGS (EX SHIPPING COSTS) REVENUE MODEL WITH OWN ADMINISTRATION FEE WEBSITE INTEGRATION AND PERSONALISATION MULTI TIQS SCAN USERS");?></>
+							<li><?php echo $this->language->line("BUSINESS-2X100037C","INTEGRATED SHIPPING SOLUTION (DHL) PICK-UP TIME AND LOCATION / +100 SECURE TIQS-BAGS / REGISTRATION BY MULTIPLE EMPLOYEES");?></>
 
 							<p></p>
 						</ul>
@@ -367,17 +367,17 @@
 				<div class="contact-text-box">
 					<p style="font-family:caption-light; font-size: medium; font-weight: bold">
 						<ul style="list-style-type: disc ; font-family:caption-light; font-size: larger; margin-left: -20px ">
-							<li><?php $this->language->line("BUSINESS-2X100037D","OVERVIEW OF ALL LOST AND FOUND ITEMS");?></>
-							<li><?php $this->language->line("BUSINESS-3X100037B","24/7 support");?></>
-							<li><?php $this->language->line("BUSINESS-3X100037C","iFRAME INTEGRATION");?></>
-							<li><?php $this->language->line("BUSINESS-3X100037D","API CONNECTION / INTEGRATION");?></>
-							<li><?php $this->language->line("BUSINESS-3X100037E","YOUR OWN BUSINESS BRANDING");?></>
+							<li><?php echo $this->language->line("BUSINESS-2X100037D","OVERVIEW OF ALL LOST AND FOUND ITEMS");?></>
+							<li><?php echo $this->language->line("BUSINESS-3X100037B","24/7 support");?></>
+							<li><?php echo $this->language->line("BUSINESS-3X100037C","iFRAME INTEGRATION");?></>
+							<li><?php echo $this->language->line("BUSINESS-3X100037D","API CONNECTION / INTEGRATION");?></>
+							<li><?php echo $this->language->line("BUSINESS-3X100037E","YOUR OWN BUSINESS BRANDING");?></>
 					<p></p>
 					</ul>
 					</p>
 				</div>
 				<div class="" align="left" style="margin-top: 50px">
-					<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php $this->language->line('INFOBUSINESS-A0101','GET YOUR ACCOUNT');?></a>
+					<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php echo $this->language->line('INFOBUSINESS-A0101','GET YOUR ACCOUNT');?></a>
 				</div>
 			</div>
 		</div>

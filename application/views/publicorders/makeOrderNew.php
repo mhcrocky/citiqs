@@ -365,7 +365,7 @@
                                             }
                                         ?>
                                         <?php if ($product['addRemark'] === '1') { ?>
-                                            <h6 class="remark"><?php $this->language->line("PAYMENT-LL0010",'Remarks');?> </h6>
+                                            <h6 class="remark"><?php echo $this->language->line("PAYMENT-LL0010",'Remarks');?> </h6>
                                             <div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">
                                                 <input
                                                     type="text"

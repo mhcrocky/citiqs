@@ -3,35 +3,35 @@
     <div class="col-half" align="left">
         <div class=" background-yankee height-50">
             <div class="width-650">
-                <h2 style="color:#ffffff" class="heading"><?php $this->language->line("PRINTQR-1000",'PRINT YOUR OWN TIQS-TAG STICKERS');?></h2>
-                <a style="color:#ffffff" class='how-we-works-link' href="<?php echo base_url(); ?>howitworksconsumer"><?php $this->language->line("PRINTQR-1100",'HOW IT WORKS');?></a>
-                <p style="color:#ffffff" class="text-content mb-50"><?php $this->language->line("PRINTQR-1110",'LOST BY YOU, <br> RETURNED BY US');?></p>
+                <h2 style="color:#ffffff" class="heading"><?php echo $this->language->line("PRINTQR-1000",'PRINT YOUR OWN TIQS-TAG STICKERS');?></h2>
+                <a style="color:#ffffff" class='how-we-works-link' href="<?php echo base_url(); ?>howitworksconsumer"><?php echo $this->language->line("PRINTQR-1100",'HOW IT WORKS');?></a>
+                <p style="color:#ffffff" class="text-content mb-50"><?php echo $this->language->line("PRINTQR-1110",'LOST BY YOU, <br> RETURNED BY US');?></p>
             </div>
         </div>
         <div class=" background-yellow height-50">
             <div class="width-650">
-                <h2 class="heading mb-35"><?php $this->language->line("PRINTQR-1111",'LOGIN.');?></h2>
+                <h2 class="heading mb-35"><?php echo $this->language->line("PRINTQR-1111",'LOGIN.');?></h2>
                 <form action="<?php echo base_url(); ?>loginMe" method="post" class='homepage-form'>
                     <p>
-                        <?php $this->language->line("PRINTQR-1112",'Use your e-mail to login');?>
+                        <?php echo $this->language->line("PRINTQR-1112",'Use your e-mail to login');?>
                     </p>
                     <div  align="center" >
-                        <input type="email" class="form-control" placeholder="<?php $this->language->line("PRINTQR-1113",'Your e-mail');?>" name="email"  required />
+                        <input type="email" class="form-control" placeholder="<?php echo $this->language->line("PRINTQR-1113",'Your e-mail');?>" name="email"  required />
                     </div>
 					<div align="center" style="margin-top: 10px">
 
                     <p>
-                        <?php $this->language->line("PRINTQR-1114",'Password');?>
+                        <?php echo $this->language->line("PRINTQR-1114",'Password');?>
                     </p>
 					</div>
                     <div >
-                        <input type="password" class="form-control"placeholder="<?php $this->language->line("PRINTQR-1115",'Your Password');?>" name="password"  required />
+                        <input type="password" class="form-control"placeholder="<?php echo $this->language->line("PRINTQR-1115",'Your Password');?>" name="password"  required />
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
 
                     <br>
                     <div style="text-align: center; ">
-                        <input type="submit" class="button button-apricot" value="<?php $this->language->line("PRINTQR-1116",'LOGIN');?>" style="border: none"/>
+                        <input type="submit" class="button button-apricot" value="<?php echo $this->language->line("PRINTQR-1116",'LOGIN');?>" style="border: none"/>
                     </div>
                 </form>
             </div>

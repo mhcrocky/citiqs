@@ -27,7 +27,7 @@
 		<div class="flex-column background-blue width-650">
 			<!--BEGIN SCANNER CAMERA-->
 			<h2 class="heading mb-35">
-				<?php $this->language->line('SCAN-10001','SCAN YOUR QRCODE');?>
+				<?php echo $this->language->line('SCAN-10001','SCAN YOUR QRCODE');?>
 			</h2>
 			<div>
 				<b style="font-family: caption-light">Device has camera to scan: </b>
@@ -48,7 +48,7 @@
 
 			<!--		NEED TO PUT HERE THE SCAN RESULT AS HREF TO REGISTER THE ITEM. -->
 
-			<a href="#cam-qr-result" id="registertag" class="button button-orange mb-35"><?php $this->language->line("Home-01610",'REGISTER YOUR ITEMS');?></a>
+			<a href="#cam-qr-result" id="registertag" class="button button-orange mb-35"><?php echo $this->language->line("Home-01610",'REGISTER YOUR ITEMS');?></a>
 
 			<!--END QRSCANNER CAMERA-->
 			<b>Detected QR code: </b>
@@ -67,32 +67,32 @@
 	<div class="col-half background-apricot">
 		<div class=" background-orange height-50">
 			<div class="width-650">
-				<h2 class="heading"><?php $this->language->line("Home-10005",'<a href="https://tiqs.com/lostandfound/personaltagsinfo">REGISTER YOUR PERSONAL ITEMS WITH THE LOST + FOUND <br>KEYCHAIN, TIQS-TAG AND STICKERS OR PHOTO</a>');?></h2>
-				<a style="color:#ffffff" class='how-we-works-link' href="https://tiqs.com/lostandfound/howitworksconsumer"><?php $this->language->line("Home-006",'MORE INFO, HOW IT WORKS');?></a>
-				<p class="text-content mb-50"><?php $this->language->line("Home-0065",'LOST BY YOU, <br> RETURNED BY US');?></p>
-				<a href="<?php echo base_url(); ?>check" class="button button-orange mb-35"><?php $this->language->line("Home-01610",'REGISTER YOUR ITEMS');?></a>
+				<h2 class="heading"><?php echo $this->language->line("Home-10005",'<a href="https://tiqs.com/lostandfound/personaltagsinfo">REGISTER YOUR PERSONAL ITEMS WITH THE LOST + FOUND <br>KEYCHAIN, TIQS-TAG AND STICKERS OR PHOTO</a>');?></h2>
+				<a style="color:#ffffff" class='how-we-works-link' href="https://tiqs.com/lostandfound/howitworksconsumer"><?php echo $this->language->line("Home-006",'MORE INFO, HOW IT WORKS');?></a>
+				<p class="text-content mb-50"><?php echo $this->language->line("Home-0065",'LOST BY YOU, <br> RETURNED BY US');?></p>
+				<a href="<?php echo base_url(); ?>check" class="button button-orange mb-35"><?php echo $this->language->line("Home-01610",'REGISTER YOUR ITEMS');?></a>
 			</div>
 		</div>
 		<div class="background-apricot height-50">
 			<div class="width-650">
-				<h2 class="heading mb-35"><?php $this->language->line("Home-007",'LOGIN.');?></h2>
+				<h2 class="heading mb-35"><?php echo $this->language->line("Home-007",'LOGIN.');?></h2>
 				<form action="<?php echo base_url(); ?>loginMe" method="post" class='homepage-form'>
 					<p>
-						<?php $this->language->line("Home-008",'Use your e-mail to login');?>
+						<?php echo $this->language->line("Home-008",'Use your e-mail to login');?>
 					</p>
 					<div  align="center" >
-						<input type="email" class="form-control" placeholder="<?php $this->language->line("Home-009",'Your e-mail');?>" name="email" required />
+						<input type="email" class="form-control" placeholder="<?php echo $this->language->line("Home-009",'Your e-mail');?>" name="email" required />
 					</div>
 					<p>
-						<?php $this->language->line("Home-008a",'Password');?>
+						<?php echo $this->language->line("Home-008a",'Password');?>
 					</p>
 					<div >
-						<input type="password" class="form-control"placeholder="<?php $this->language->line("Home-010",'Your Password');?>" name="password" required />
+						<input type="password" class="form-control"placeholder="<?php echo $this->language->line("Home-010",'Your Password');?>" name="password" required />
 					</div>
 
 					<br>
 					<div style="text-align: center; ">
-						<input type="submit" class="button button-apricot" value="<?php $this->language->line("Home-011",'LOGIN');?>" style="border: none"/>
+						<input type="submit" class="button button-apricot" value="<?php echo $this->language->line("Home-011",'LOGIN');?>" style="border: none"/>
 					</div>
 				</form>
 			</div>

@@ -77,7 +77,7 @@
                     </div>
 
 					<div class="mb-35">
-						<a type="button" href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php $this->language->line("HABINFO-020",'REGISTER YOUR BUSINESS');?></a>
+						<a type="button" href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php echo $this->language->line("HABINFO-020",'REGISTER YOUR BUSINESS');?></a>
 					</div>
 
                     <div id="images" class="images">

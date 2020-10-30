@@ -88,21 +88,21 @@
 		<div class="flex-column align-start">
 			<div  style="text-align:center">
 				<h2 class="heading mb-35">
-					<?php $this->language->line('CHECKOUT-A10001','GET YOUR ITEM BACK PROCESS</a>');?>
+					<?php echo $this->language->line('CHECKOUT-A10001','GET YOUR ITEM BACK PROCESS</a>');?>
 				</h2>
 				<h3 class="heading mb-35 text-blue-dark">
-					<?php $this->language->line('CHECKOUT-C100010','FOLLOW THE 3 STEPS ON THIS SCREEN.');?>
+					<?php echo $this->language->line('CHECKOUT-C100010','FOLLOW THE 3 STEPS ON THIS SCREEN.');?>
 				</h3>
-				<p style="font-family: caption-light" class="text-content mb-35"><?php $this->language->line("CLAIMCHECKOUT-A003111",'LOST BY YOU,<br> RETURNED BY US.');?></p>
+				<p style="font-family: caption-light" class="text-content mb-35"><?php echo $this->language->line("CLAIMCHECKOUT-A003111",'LOST BY YOU,<br> RETURNED BY US.');?></p>
 
-				<p style="font-family: caption-bold" class="text-content mb-35"><?php $this->language->line("CLAIMCHECKOUT-A00301",'YOU HAVE CLAIMED AN ITEM ON TIQS LOST AND FOUND. TO REPATRIATE THE ITEM BACK TO YOU, WE NEED TO PROCESS YOUR PAYMENT, ID AND UTILITY BILL (PROOF OF ADDRESS).
+				<p style="font-family: caption-bold" class="text-content mb-35"><?php echo $this->language->line("CLAIMCHECKOUT-A00301",'YOU HAVE CLAIMED AN ITEM ON TIQS LOST AND FOUND. TO REPATRIATE THE ITEM BACK TO YOU, WE NEED TO PROCESS YOUR PAYMENT, ID AND UTILITY BILL (PROOF OF ADDRESS).
 					');?></p>
 
-				<p style="font-family: caption-light" class="text-content mb-35"><?php $this->language->line("CLAIMCHECKOUT-A00305",'
+				<p style="font-family: caption-light" class="text-content mb-35"><?php echo $this->language->line("CLAIMCHECKOUT-A00305",'
 					TIQS LOST AND FOUND USES A STATE OF THE ART ARTIFICIAL INTELLIGENCE, MACHINE LEARNING MECHANISM TO DETERMINE, THAT THIS IS AN APPROPRIATE CLAIM OF OWNERSHIP.
 					UNDER GDPR RULING WE WILL STORE YOUR PAYMENT DETAILS, DETERMINE IF YOUR ID IS VALID (BY A VALIDATED CHECK OF YOUR ID, THROUGH A THIRD PARTY, ID IS NOT STORED AT THIRD PARTY SITE JUST TO CHECK IF THIS IS A VALID ID) AND BY CHECKING THE DETAILS OF YOUR UTILITY BILL (GAS, WATER COMPANY, TAX LETTER) SO WE CAN VALIDATE YOUR ADDRESS');?></p>
 
-				<p style="font-family: caption-light" class="text-content mb-35"><?php $this->language->line("CLAIMCHECKOUT-A00310",'FOR THE DURATION OF THE PROCESS OF THE REPATRIATING PROCESS AND 3 MONTHS AFTER RECEIVING THE GOODS, THIS INFORMATION WILL BE STORED ENCRYPTED IN OUR SYSTEM. WHEN YOU HAVE CLAIMED AN ITEM NOT YOURS AND THE RIGHTFUL OWNER PROCESSED A CLAIM
+				<p style="font-family: caption-light" class="text-content mb-35"><?php echo $this->language->line("CLAIMCHECKOUT-A00310",'FOR THE DURATION OF THE PROCESS OF THE REPATRIATING PROCESS AND 3 MONTHS AFTER RECEIVING THE GOODS, THIS INFORMATION WILL BE STORED ENCRYPTED IN OUR SYSTEM. WHEN YOU HAVE CLAIMED AN ITEM NOT YOURS AND THE RIGHTFUL OWNER PROCESSED A CLAIM
 				BY LAW, JUSTICE, OR ANY LEGAL PROCESS WE WILL PROVIDE LEGAL SERVICES WITH INFORMATION ABOUT THE CLAIM ALLEGEDLY MADE BY YOU. WE WILL ONLY SUPPLY INFROMATION REGARDING THE CLAIM FORCED BY LAW. ');?></p>
 
 

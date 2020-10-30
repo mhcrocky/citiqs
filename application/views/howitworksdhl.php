@@ -119,7 +119,7 @@
 				<!--<span class="cd-date">Feb 18</span>-->
 				<div class="flex-column align-space">
 					<div class="left">
-						<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php $this->language->line('HOME-E012','GET YOUR BUSINESS ACCOUNT ');?></a>
+						<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php echo $this->language->line('HOME-E012','GET YOUR BUSINESS ACCOUNT ');?></a>
 					</div>
 <!--					<div align="center">-->
 <!--						<a href="" target="_blank" class="button button-orange mb-25">GET YOUR ACCOUNT</a>-->
@@ -160,7 +160,7 @@
 							<div class="selectWrapper"  id="language">
 								<select class="selectBox" id="languageselect" name="country" style="background-color:#eec5a7; font-family:'caption-light';" style="border-radius: 50px; border: none; height: 40px" />
 								<option value="">
-									<?php $this->language->line("CONTACT-A360","Select your language");?>
+									<?php echo $this->language->line("CONTACT-A360","Select your language");?>
 								</option>
 								<option value="tenglish">English</option>
 								<option value="german">German</option>

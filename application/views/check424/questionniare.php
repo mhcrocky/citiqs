@@ -75,7 +75,7 @@
         <form action="<?php echo $this->baseUrl; ?>Check424/healthCheckAnswers" method="post">
             <div class="card" style="text-align:center">
                 <h2 class="heading"  style="margin-bottom: 20px;">
-                    <?php $this->language->line("CHECK424-010ABCD",'COVID-19 GUEST QUESTIONNAIRE');?>
+                    <?php echo $this->language->line("CHECK424-010ABCD",'COVID-19 GUEST QUESTIONNAIRE');?>
                     <!-- <br/>
                     <a href="#info424" ><i class="fa fa-info-circle" style="font-size:48px; color:dodgerblue"></i></a> -->
                 </h2>
@@ -84,7 +84,7 @@
                         <div style="text-align:center">
                             <div style="text-align:center">
                                 <h2 class="heading mb-35">
-                                    <?php $this->language->line("CHECK424-3Q010AB",'3 QUESTIONS ABOUT YOU');?>
+                                    <?php echo $this->language->line("CHECK424-3Q010AB",'3 QUESTIONS ABOUT YOU');?>
                                 </h2>
                             </div>
                             <div>
@@ -98,7 +98,7 @@
                                 </div>
                                 <div>
                                     <p style="font-size: larger; font-family: caption-light">
-                                        <?php $this->language->line("CHECK424-Q1-00001A",'CHECK THIS BOX, WHEN YOU DO NOT SNEEZE AND/OR COUGH AND/OR ARE SHORT OF BREATH AND/OR HAVE A FEVER AND/OR TEMPERATURE HIGHER THAN 38 DEGREES');?>
+                                        <?php echo $this->language->line("CHECK424-Q1-00001A",'CHECK THIS BOX, WHEN YOU DO NOT SNEEZE AND/OR COUGH AND/OR ARE SHORT OF BREATH AND/OR HAVE A FEVER AND/OR TEMPERATURE HIGHER THAN 38 DEGREES');?>
                                     </p>
                                 </div>
                                 <div class="form-group has-feedback" style="text-align:center">
@@ -122,7 +122,7 @@
                                 </div>
                                 <div>
                                     <p style="font-size: larger; font-family: caption-light">
-                                        <?php $this->language->line("CHECK424-Q2-00001A",'CHECK THIS BOX, WHEN YOU WHERE NOT TESTED FOR COVID-19 AND DID NOT HAD COVID-19 IN THE LAST 7 DAYS');?>
+                                        <?php echo $this->language->line("CHECK424-Q2-00001A",'CHECK THIS BOX, WHEN YOU WHERE NOT TESTED FOR COVID-19 AND DID NOT HAD COVID-19 IN THE LAST 7 DAYS');?>
                                     </p>
                                 </div>
                                 <div class="form-group has-feedback mb-35" style="text-align:center">
@@ -146,7 +146,7 @@
                                 </div>
                                 <div>
                                     <p style="font-size: larger; font-family: caption-light">
-                                        <?php $this->language->line("CHECK424-Q3-00001A",'CHECK THIS BOX, WHEN YOU WHERE NOT IN CONTACT WITH SOMEONE WHO WAS TESTED WITHIN 14 DAYS FOR COVID-19 AND SHOWED SYMPTOMS.');?>
+                                        <?php echo $this->language->line("CHECK424-Q3-00001A",'CHECK THIS BOX, WHEN YOU WHERE NOT IN CONTACT WITH SOMEONE WHO WAS TESTED WITHIN 14 DAYS FOR COVID-19 AND SHOWED SYMPTOMS.');?>
                                     </p>
                                 </div>
                                 <div class="form-group has-feedback" style="text-align:center">
@@ -165,7 +165,7 @@
                         <div style="text-align:center">
                             <div style="text-align:center">
                                 <h2 class="heading mb-35">
-                                    <?php $this->language->line("CHECK424-3Q3010AB",'3 QUESTIONS ABOUT YOUR ENVIRONMENT');?>
+                                    <?php echo $this->language->line("CHECK424-3Q3010AB",'3 QUESTIONS ABOUT YOUR ENVIRONMENT');?>
                                 </h2>
                             </div>
                         <div>
@@ -179,7 +179,7 @@
                         </div>
                         <div>
                             <p style="font-size: larger; font-family: caption-light">
-                                <?php $this->language->line("CHECK424-Q00011A",'Check this box, when roommates, household members are NOT sneezing and/or coughing and/or short of breath and/or having a fever and/or temperature higher dan 38 degrees');?>
+                                <?php echo $this->language->line("CHECK424-Q00011A",'Check this box, when roommates, household members are NOT sneezing and/or coughing and/or short of breath and/or having a fever and/or temperature higher dan 38 degrees');?>
                             </p>
                         </div>
                         <div class="form-group has-feedback" style="text-align:center">
@@ -203,7 +203,7 @@
                         </div>
                         <div>
                             <p style="font-size: larger; font-family: caption-light">
-                                <?php $this->language->line("CHECK424-Q00016AB",'Check this box, when roommates, household members where NOT in contact with someone who was tested within 14 days for COVID-19 and showed symptoms.');?>
+                                <?php echo $this->language->line("CHECK424-Q00016AB",'Check this box, when roommates, household members where NOT in contact with someone who was tested within 14 days for COVID-19 and showed symptoms.');?>
                             </p>
                         </div>
                         <div class="form-group has-feedback" style="text-align:center">
@@ -228,7 +228,7 @@
                     </div>
                     <div>
                         <p style="font-size: larger; font-family: caption-light">
-                            <?php $this->language->line("CHECK424-Q00017ABCD",'Check this box, when you are NOT in quarantine or any of your roommates, household members.');?>
+                            <?php echo $this->language->line("CHECK424-Q00017ABCD",'Check this box, when you are NOT in quarantine or any of your roommates, household members.');?>
                         </p>
                     </div>
                     <div class="form-group has-feedback" style="text-align:center">
@@ -248,17 +248,17 @@
                     <div style="text-align:center">
                         <div style="text-align:center">
                             <h2 class="heading mb-35">
-                                <?php $this->language->line("CHECK424-QR010ABC",'YOU ARE READY!');?>
+                                <?php echo $this->language->line("CHECK424-QR010ABC",'YOU ARE READY!');?>
                             </h2>
                         </div>
 
                         <div class="container mb-35" style="text-align:center">
                             <img src="assets/home/images/getyourqrcode.png" alt="tiqs" style="width:100%">
-                            <button type="submit" class="btn" style="background-color: darkorange; color: white; "><?php $this->language->line("CHECK424-1240A",'GET YOUR QRCODE');?></button>
+                            <button type="submit" class="btn" style="background-color: darkorange; color: white; "><?php echo $this->language->line("CHECK424-1240A",'GET YOUR QRCODE');?></button>
                         </div>
                         <div >
                             <p style="font-size: larger; font-family: caption-light">
-                                <?php $this->language->line("CHECK424-Q000189BCDE",'AFTER 24 HOURS THE QRCODE WILL BE INVALID AND YOU CAN MAKE A NEW ONE.');?>
+                                <?php echo $this->language->line("CHECK424-Q000189BCDE",'AFTER 24 HOURS THE QRCODE WILL BE INVALID AND YOU CAN MAKE A NEW ONE.');?>
                             </p>
                         </div>
                     </div>
@@ -281,13 +281,13 @@
             
                 <div class="row mt-35" style="text-align: center; padding:50px ">
                     <ul style="list-style-type: none; font-family: caption-light; font-size:larger;  margin-left: -40px; text-align:center">
-                        <li><?php $this->language->line("CHECK424-020921ED",'THIS SERVICE IS FREE TO HELP AVOIDING A QUEUE... HOPE YOU ALL ENJOY');?></li>
+                        <li><?php echo $this->language->line("CHECK424-020921ED",'THIS SERVICE IS FREE TO HELP AVOIDING A QUEUE... HOPE YOU ALL ENJOY');?></li>
                     </ul>
                     <img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="150" />
                 </div>
                 <div>
                     <div style="text-align:center">
-                        <h2 class="heading"><?php $this->language->line("CHECK424-TELL001",'TELL A FRIEND');?></h2>
+                        <h2 class="heading"><?php echo $this->language->line("CHECK424-TELL001",'TELL A FRIEND');?></h2>
                     </div>
                     <a style="margin-right: 10px" href="whatsapp://send?text=Check for 24Hours to avoid queuing, check-in check-out... https://check424.com" data-action="share/whatsapp/share" onClick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on whatsapp">
                         <i class="fa fa-whatsapp" style="font-size:48px;color:darkorange"></i>
@@ -311,12 +311,12 @@
             <div class="text-center mb-50" style="text-align:center">
                 <img src="<?php echo $this->baseUrl; ?>assets/home/images/covid-19-list.png" alt="tiqs" width="150"  />
             </div>
-            <p class="text-content mb-50"><?php $this->language->line("CHECK424-1270AB",'WHY THIS QUESTIONNAIRE?');?></p>
+            <p class="text-content mb-50"><?php echo $this->language->line("CHECK424-1270AB",'WHY THIS QUESTIONNAIRE?');?></p>
             <ul style="list-style-type: none  ;font-family: caption-light; font-size:larger;  margin-left: -40px; text-align:left">
-                <li><?php $this->language->line("CHECK424-41212ABCDF",'RESTAURANTS, BARS, HOSPITALITY BUSINESSES ARE REQUIRED BY LAW TO QUESTION YOU ABOUT YOUR HEALTH TO DETERMINE THE RISK OF SPREADING COVID-19, THE VIRUS.<br>');?></li>
-                <li><?php $this->language->line("CHECK424-113243232ABCD",'ADHOC PROCESSING THESE QUESTIONS, TAKES TIME (5 MINUTES PER PERSON) AND DUE TO THE MANUAL LABOUR THERE IS A HIGH COST AND IMPACT ON ANY ORGANISATION .');?></li>
-                <li><?php $this->language->line("CHECK424-12415232ABCD",'TIQS SUPPORTS FOR FREE A SOLUTION TO HAVE THE QUESTIONS PROCESSED BEFORE AND VALID FOR 24 HOURS. DOES YOUR STATE OF HEALTH CHANGE WITHIN THESE 24 HOURS PLEASE STAY HOME!');?></li>
-                <li><?php $this->language->line("CHECK4241-41351232ABCD",'YOU CAN HELP YOUR LOCAL BUSINESS BY PROVIDING THE ANSWERS IN A ELECTRICAL READABLE MANNER, HAVE YOUR QRCode READY AND SHOW YOUR QRCode ON ENTRANCE ');?></li>
+                <li><?php echo $this->language->line("CHECK424-41212ABCDF",'RESTAURANTS, BARS, HOSPITALITY BUSINESSES ARE REQUIRED BY LAW TO QUESTION YOU ABOUT YOUR HEALTH TO DETERMINE THE RISK OF SPREADING COVID-19, THE VIRUS.<br>');?></li>
+                <li><?php echo $this->language->line("CHECK424-113243232ABCD",'ADHOC PROCESSING THESE QUESTIONS, TAKES TIME (5 MINUTES PER PERSON) AND DUE TO THE MANUAL LABOUR THERE IS A HIGH COST AND IMPACT ON ANY ORGANISATION .');?></li>
+                <li><?php echo $this->language->line("CHECK424-12415232ABCD",'TIQS SUPPORTS FOR FREE A SOLUTION TO HAVE THE QUESTIONS PROCESSED BEFORE AND VALID FOR 24 HOURS. DOES YOUR STATE OF HEALTH CHANGE WITHIN THESE 24 HOURS PLEASE STAY HOME!');?></li>
+                <li><?php echo $this->language->line("CHECK4241-41351232ABCD",'YOU CAN HELP YOUR LOCAL BUSINESS BY PROVIDING THE ANSWERS IN A ELECTRICAL READABLE MANNER, HAVE YOUR QRCode READY AND SHOW YOUR QRCode ON ENTRANCE ');?></li>
             </ul>
             <div class="text-center mb-50 mt-50" style="text-align:center">
                 <img src="<?php echo $this->baseUrl; ?>assets/home/images/keepdistance.png" alt="tiqs" width="150" />
@@ -327,7 +327,7 @@
                     <a href="#top" ><i class="fa fa-arrow-circle-up" style="font-size:48px; color:white"></i></a>
                 </div>
                 <div style="text-align: center; ">
-                    <a href="pay424" class="button button-orange mb-25"><?php $this->language->line("CHECK424-BUYUS1234",'BUY US A COFFEE...');?></a>
+                    <a href="pay424" class="button button-orange mb-25"><?php echo $this->language->line("CHECK424-BUYUS1234",'BUY US A COFFEE...');?></a>
                 </div>
             </div>
         </div>
@@ -338,17 +338,17 @@
 
         <div class="background-yellow height-50">
             <div class="width-650">
-                <p class="text-content mb-50"><?php $this->language->line("CHECK424-1370AB",'YOUR PRIVACY');?></p>
+                <p class="text-content mb-50"><?php echo $this->language->line("CHECK424-1370AB",'YOUR PRIVACY');?></p>
                 <ul style="list-style-type: none  ;font-family: caption-light; font-size:larger; margin-left: -40px; text-align:left">
-                    <li><?php $this->language->line("CHECK424-91-ABCDEF",'WE ALL VALUE OUR PRIVACY YOUR ANSWERS PER QUESTION ARE NOT STORED ANYWHERE');?></li>
-                    <li><?php $this->language->line("CHECK424-92A2BCD",'WE DO NOT ASK YOU TO REGISTER, A SCREEN PRINT OF THE QRCode WORKS JUST AS FINE');?></li>
-                    <li><?php $this->language->line("CHECK424-94A2BCD",'IF YOU WANT TO RETRIEVE YOUR QRCode WITH A LINK AND WANT TO BE REMEMBERED ABOUT THE EXPIRATION OF YOUR QRCode YOU CAN SIGN-UP FOR OUR RETRIEVAL AND REMINDER E-MAIL');?></li>
-                    <li><?php $this->language->line("CHECK424-95A2BCDEF",'YOU CAN USE THE PROVIDE LINK IN YOUR E-MAIL FROM US TO RETRIEVE YOUR QRCode AND YOU WILL RECEIVE A REMINDER E-MAIL AFTER 22 HOURS THAT YOUR QRCode WILL EXPIRE.');?></li>
-                    <li><?php $this->language->line("CHECK424-195A2BCDE",'2 HOURS AFTER SENDING YOU THE REMINDER OR IN ANY CASE AFTER 24 HOURS YOUR E-MAIL AND YOUR QRCode is COMPLETELY REMOVED FROM OUR SYSTEM');?></li>
-                    <li><?php $this->language->line("CHECK424-197A2BCDE",'WE MAY ASK YOU TO OPT-IN FOR A TIQS NEWS, YOU SUPPORT OUR BUSINESS  WITH THIS. <br/>THE SERVICE IS FREE, HOWEVER IT IS COSTING US SOME MONEY, YOU CAN ALWAYS SUPPORT IS BY BUYING US A COFFEE! SO WE CAN WORK WHILE YOU SLEEP AND KEEP YOU AND YOUR LOVED ONES SAVE!.');?></li>
-                    <li><?php $this->language->line("CHECK424-1197A2BCDE",'THE SERVICE IS FREE, HOWEVER IT IS COSTING US SOME MONEY AND TIME.');?></li>
-                    <li><?php $this->language->line("CHECK424-111197A21BCDE",'YOU CAN ALWAYS SUPPORT US BY BUYING US A COFFEE! SO WE CAN WORK WHILE YOU SLEEP AND KEEP YOU AND YOUR LOVED ONES SAVE!.');?></li>
-                    <li><?php $this->language->line("CHECK424-98A2BCD",'');?></li>
+                    <li><?php echo $this->language->line("CHECK424-91-ABCDEF",'WE ALL VALUE OUR PRIVACY YOUR ANSWERS PER QUESTION ARE NOT STORED ANYWHERE');?></li>
+                    <li><?php echo $this->language->line("CHECK424-92A2BCD",'WE DO NOT ASK YOU TO REGISTER, A SCREEN PRINT OF THE QRCode WORKS JUST AS FINE');?></li>
+                    <li><?php echo $this->language->line("CHECK424-94A2BCD",'IF YOU WANT TO RETRIEVE YOUR QRCode WITH A LINK AND WANT TO BE REMEMBERED ABOUT THE EXPIRATION OF YOUR QRCode YOU CAN SIGN-UP FOR OUR RETRIEVAL AND REMINDER E-MAIL');?></li>
+                    <li><?php echo $this->language->line("CHECK424-95A2BCDEF",'YOU CAN USE THE PROVIDE LINK IN YOUR E-MAIL FROM US TO RETRIEVE YOUR QRCode AND YOU WILL RECEIVE A REMINDER E-MAIL AFTER 22 HOURS THAT YOUR QRCode WILL EXPIRE.');?></li>
+                    <li><?php echo $this->language->line("CHECK424-195A2BCDE",'2 HOURS AFTER SENDING YOU THE REMINDER OR IN ANY CASE AFTER 24 HOURS YOUR E-MAIL AND YOUR QRCode is COMPLETELY REMOVED FROM OUR SYSTEM');?></li>
+                    <li><?php echo $this->language->line("CHECK424-197A2BCDE",'WE MAY ASK YOU TO OPT-IN FOR A TIQS NEWS, YOU SUPPORT OUR BUSINESS  WITH THIS. <br/>THE SERVICE IS FREE, HOWEVER IT IS COSTING US SOME MONEY, YOU CAN ALWAYS SUPPORT IS BY BUYING US A COFFEE! SO WE CAN WORK WHILE YOU SLEEP AND KEEP YOU AND YOUR LOVED ONES SAVE!.');?></li>
+                    <li><?php echo $this->language->line("CHECK424-1197A2BCDE",'THE SERVICE IS FREE, HOWEVER IT IS COSTING US SOME MONEY AND TIME.');?></li>
+                    <li><?php echo $this->language->line("CHECK424-111197A21BCDE",'YOU CAN ALWAYS SUPPORT US BY BUYING US A COFFEE! SO WE CAN WORK WHILE YOU SLEEP AND KEEP YOU AND YOUR LOVED ONES SAVE!.');?></li>
+                    <li><?php echo $this->language->line("CHECK424-98A2BCD",'');?></li>
                 </ul>
             </div>
             <div class="form-group has-feedback mt-35" >
@@ -356,7 +356,7 @@
                     <a href="#top" ><i class="fa fa-arrow-circle-up" style="font-size:48px; color:white"></i></a>
                 </div>
                 <div style="text-align: center; ">
-                    <a href="pay424" class="button button-orange mb-25"><?php $this->language->line("CHECK424-BUYUS1234",'BUY US A COFFEE...');?></a>
+                    <a href="pay424" class="button button-orange mb-25"><?php echo $this->language->line("CHECK424-BUYUS1234",'BUY US A COFFEE...');?></a>
                 </div>
             </div>
         </div>

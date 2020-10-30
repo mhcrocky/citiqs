@@ -11,10 +11,10 @@
 		<div class="flex-column align-start">
 			<div align="left">
 				<p style="font-family:'caption-bold'; font-size:200%; color:#ffffff; text-align: center; ">
-					<?php $this->language->line("BAGIT-010",'UNIQUE CODE');?>
+					<?php echo $this->language->line("BAGIT-010",'UNIQUE CODE');?>
 				</p>
 				<p style="font-family:'caption-bold'; font-size:100%; color:#ffffff; text-align: center; ">
-					<?php $this->language->line("BAGIT-A010",'WRITE THIS NUMBER ON THE TIQS-BAG');?>
+					<?php echo $this->language->line("BAGIT-A010",'WRITE THIS NUMBER ON THE TIQS-BAG');?>
 				</p>
 				<p style="font-family:'caption-bold'; font-size:300%; color:#ffffff; text-align: center;">
 					<?php echo $code ?>
@@ -66,7 +66,7 @@
 					<!--					<p class="text-content-light" style="font-weight: bold">LOST BY YOUR CUSTOMER, <br>RETURNED BY US.</p>-->
 					<div align="center">
 						<!--                                href="https://tiqs.com/lostandfound/menuapp target="_blank"" -->
-							<a href="<?php echo base_url()?>itemfound/<?php echo $token?>/<?php echo $userId?>" class="button button-orange mb-25"><?php $this->language->line("BAGIT-LA1900",'REGISTER AN OTHER FOUND ITEM');?></a>
+							<a href="<?php echo base_url()?>itemfound/<?php echo $token?>/<?php echo $userId?>" class="button button-orange mb-25"><?php echo $this->language->line("BAGIT-LA1900",'REGISTER AN OTHER FOUND ITEM');?></a>
 					</div>
 				</div>
 			</div>

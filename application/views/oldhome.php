@@ -9,14 +9,14 @@
         <div class="flex-column align-start width-650">
 			<div align="left" >
 				<h2 class="heading mb-35">
-					<?php $this->language->line('Home-Ha10001','<a href="https://tiqs.com/lostandfound/hotelairbnbinfo">BUSINESS LOST AND FOUND</a>');?>
+					<?php echo $this->language->line('Home-Ha10001','<a href="https://tiqs.com/lostandfound/hotelairbnbinfo">BUSINESS LOST AND FOUND</a>');?>
 				</h2>
-				<p style="font-family: caption-light" class="text-content mb-35"><?php $this->language->line("Home-100003",'SELECT YOUR BUSINESS CATEGORY.');?></p>
+				<p style="font-family: caption-light" class="text-content mb-35"><?php echo $this->language->line("Home-100003",'SELECT YOUR BUSINESS CATEGORY.');?></p>
 				<h3 class="heading mb-35">
-				<?php $this->language->line('Home-10001','<a href="https://tiqs.com/lostandfound/hotelairbnbinfo"> HOTELS, AIRBNB, B&B, </a><br><a href="https://tiqs.com/lostandfound/festivaleventsinfo">FESTIVALS, EVENTS, CLUBS<br>RESTAURANTS, BARS, </a><br><a href="https://tiqs.com/lostandfound/howitworksbusiness">MUSEUMS, AMUSEMENT-PARKS, SPORT CLUBS, </a><a href="https://tiqs.com/lostandfound/howitworksbusiness">MUNICIPALITIES </a><a href="https://tiqs.com/lostandfound/howitworksbusiness">OR ANY OTHER BUSINESS WITH VISITORS</a>');?>
+				<?php echo $this->language->line('Home-10001','<a href="https://tiqs.com/lostandfound/hotelairbnbinfo"> HOTELS, AIRBNB, B&B, </a><br><a href="https://tiqs.com/lostandfound/festivaleventsinfo">FESTIVALS, EVENTS, CLUBS<br>RESTAURANTS, BARS, </a><br><a href="https://tiqs.com/lostandfound/howitworksbusiness">MUSEUMS, AMUSEMENT-PARKS, SPORT CLUBS, </a><a href="https://tiqs.com/lostandfound/howitworksbusiness">MUNICIPALITIES </a><a href="https://tiqs.com/lostandfound/howitworksbusiness">OR ANY OTHER BUSINESS WITH VISITORS</a>');?>
 				</h3>
-				<p style="font-family: caption-light" class="text-content mb-35"><?php $this->language->line("Home-003",'LOST BY YOUR CUSTOMER,<br> RETURNED BY US.');?></p>
-				<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange mb-35"><?php $this->language->line("Home-004",'GET YOUR ACCOUNT');?></a>
+				<p style="font-family: caption-light" class="text-content mb-35"><?php echo $this->language->line("Home-003",'LOST BY YOUR CUSTOMER,<br> RETURNED BY US.');?></p>
+				<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange mb-35"><?php echo $this->language->line("Home-004",'GET YOUR ACCOUNT');?></a>
 				<div class="mobile-hide" align="right" style="margin-top: -100px; margin-bottom: 50px; margin-left: 100px">
 
 					<img border="0" src="<?php echo base_url(); ?>assets/home/images/TIQSLaptop.png" alt="tiqs" width="250" height="250" />
@@ -35,13 +35,13 @@
         <div class=" background-orange height-100">
             <div class="width-650">
 				<h2 class="heading mb-35">
-					<?php $this->language->line('Home-Hb10002','<a href="https://tiqs.com/lostandfound/hotelairbnbinfo">PERSONAL LOST AND FOUND</a>');?>
+					<?php echo $this->language->line('Home-Hb10002','<a href="https://tiqs.com/lostandfound/hotelairbnbinfo">PERSONAL LOST AND FOUND</a>');?>
 				</h2>
 				<h2 class="heading mb-35">
-					<p style="font-family: caption-light" class="text-content mb-35"><?php $this->language->line("Home-11a11003",'LOST BY YOU,<br> RETURNED BY US.');?></p>
+					<p style="font-family: caption-light" class="text-content mb-35"><?php echo $this->language->line("Home-11a11003",'LOST BY YOU,<br> RETURNED BY US.');?></p>
 				</h2>
-				<h2 class="heading mb-50"><?php $this->language->line("Home-10005",'<a href="https://tiqs.com/lostandfound/personaltagsinfo">REGISTER YOUR PERSONAL ITEMS WITH THE LOST + FOUND <br>KEYCHAIN, TIQS-TAG AND STICKERS OR PHOTO</a>');?></h2>
-                <a href="<?php echo base_url(); ?>check" class="button button-orange mb-35"><?php $this->language->line("Home-01610",'REGISTER YOUR ITEMS');?></a>
+				<h2 class="heading mb-50"><?php echo $this->language->line("Home-10005",'<a href="https://tiqs.com/lostandfound/personaltagsinfo">REGISTER YOUR PERSONAL ITEMS WITH THE LOST + FOUND <br>KEYCHAIN, TIQS-TAG AND STICKERS OR PHOTO</a>');?></h2>
+                <a href="<?php echo base_url(); ?>check" class="button button-orange mb-35"><?php echo $this->language->line("Home-01610",'REGISTER YOUR ITEMS');?></a>
             </div>
         </div>
     </div><!-- end col half -->
@@ -58,7 +58,7 @@
                         <div class="testimonial testimonial-one">
                             <div class="testimonial-section__text-wrapper">
                                 <p class="testimonial-section__text">
-									<?php $this->language->line("Home-00410","EVEN TODAY, MOST LOST AND FOUND SYSTEMS ARE MANUALLY RUN, BURDENING STAFF AND LEAVING YOUR CUSTOMERS FRUSTRATED WITH CUMBERSOME PROCEDURES TO THE POINT THEY WOULD GIVE UP TRYING TO RETRIEVE THEIR LOST ITEM."); ?>
+									<?php echo $this->language->line("Home-00410","EVEN TODAY, MOST LOST AND FOUND SYSTEMS ARE MANUALLY RUN, BURDENING STAFF AND LEAVING YOUR CUSTOMERS FRUSTRATED WITH CUMBERSOME PROCEDURES TO THE POINT THEY WOULD GIVE UP TRYING TO RETRIEVE THEIR LOST ITEM."); ?>
 								</p>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                         <div class="testimonial testimonial-two">
                             <div class="testimonial-section__text-wrapper">
                                 <p class="testimonial-section__text">
-									<?php $this->language->line("Home-00420","SOCIAL MEDIA IS DRIVING YOUR BUSINESS LIKE NEVER BEFORE AND SOMETHING AS IMPORTANT AS A CUSTOMER LOSING A VALUABLE ITEM AND HAVING THAT SHOWN UP ON SOCIAL MEDIA, CAN BE BRUTAL FOR YOUR BUSINESS.
+									<?php echo $this->language->line("Home-00420","SOCIAL MEDIA IS DRIVING YOUR BUSINESS LIKE NEVER BEFORE AND SOMETHING AS IMPORTANT AS A CUSTOMER LOSING A VALUABLE ITEM AND HAVING THAT SHOWN UP ON SOCIAL MEDIA, CAN BE BRUTAL FOR YOUR BUSINESS.
 									<br>THIS IS WHY LOST AND FOUND SOFTWARE IS SO IMPORTANT.");?>"
                                 </p>
                             </div>
@@ -75,7 +75,7 @@
                         <div class="testimonial testimonial-three">
                             <div class="testimonial-section__text-wrapper">
                                 <p class="testimonial-section__text">
-									<?php $this->language->line("Home-00430","WE SIMPLIFY THE PROCESS SO BUSINESSES AND CONSUMERS, VISITORS AND LEISURE TRAVELERS ALIKE HAVE A SINGLE PLATFORM THROUGH WHICH LOST AND FOUND ITEMS ARE REPORTED, LOGGED, MANAGED, AUTOMATICALLY MATCHED AND ULTIMATELY SWIFT RETURNED TO THEIR OWNER.");?>
+									<?php echo $this->language->line("Home-00430","WE SIMPLIFY THE PROCESS SO BUSINESSES AND CONSUMERS, VISITORS AND LEISURE TRAVELERS ALIKE HAVE A SINGLE PLATFORM THROUGH WHICH LOST AND FOUND ITEMS ARE REPORTED, LOGGED, MANAGED, AUTOMATICALLY MATCHED AND ULTIMATELY SWIFT RETURNED TO THEIR OWNER.");?>
                                 </p>
                             </div>
                         </div>
@@ -83,7 +83,7 @@
                         <div class="testimonial testimonial-four">
                             <div class="testimonial-section__text-wrapper">
                                 <p class="testimonial-section__text">
-									<?php $this->language->line("Home-00440","NOT ONLY DOES THIS CREATE SMOOTHER INTERNAL PROCESSING AND COST REDUCTION FOR YOU AND YOUR CUSTOMERS, BUT IT ALSO HELPS CREATE A BETTER LONG LASTING EXPERIENCE AND LOYALTY.");?>
+									<?php echo $this->language->line("Home-00440","NOT ONLY DOES THIS CREATE SMOOTHER INTERNAL PROCESSING AND COST REDUCTION FOR YOU AND YOUR CUSTOMERS, BUT IT ALSO HELPS CREATE A BETTER LONG LASTING EXPERIENCE AND LOYALTY.");?>
                                 </p>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
 
                          <div class="testimonial testimonial-five">
                             <div class="testimonial-section__text-wrapper">
-                                <p class="testimonial-section__text"><?php $this->language->line("Home-00450","THE WORLDWIDE LOST AND FOUND STANDARD.
+                                <p class="testimonial-section__text"><?php echo $this->language->line("Home-00450","THE WORLDWIDE LOST AND FOUND STANDARD.
                                     <br>PARTNER DHL EXPRESS. AVAILABLE IN 165 COUNTRIES.
                                     <br>PRIVACY AND SECURITY FIRST. ON DEMAND DELIVERY, SECURE, FAST RETURN OF YOUR LOST AND FOUND ITEM(S).
                                     <br> DHL EXPRESS IS COMPLIANT WITH  ISO 9001, ISO 14001 and ISO 50001
@@ -106,7 +106,7 @@
 				</p>
 
 				<div class="mb-35">
-					<a href="<?php echo base_url(); ?>info_DHL" class="button button-orange"><?php $this->language->line('Home-012','DHL EXPRESS HOW IT WORKS');?></a>
+					<a href="<?php echo base_url(); ?>info_DHL" class="button button-orange"><?php echo $this->language->line('Home-012','DHL EXPRESS HOW IT WORKS');?></a>
 				</div>
 
                 <div class="clearfix">

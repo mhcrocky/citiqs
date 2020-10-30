@@ -44,7 +44,7 @@
 
         ?>
       <h1>
-        <i class="fa fa-tags"></i>  <large><?php echo $location ?></large> <small><?php $this->language->line("xxx-xxx",'Found items');?>
+        <i class="fa fa-tags"></i>  <large><?php echo $location ?></large> <small><?php echo $this->language->line("xxx-xxx",'Found items');?>
           </small>
       </h1>
     </section>
@@ -84,11 +84,11 @@
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title"><?php $this->language->line("xxx-xxx",'list of items');?></h3>
+                    <h3 class="box-title"><?php echo $this->language->line("xxx-xxx",'list of items');?></h3>
                     <div class="box-tools">
                         <form action="<?php echo base_url() ?>lostandfoundlistpublic" method="POST" id="searchList">
                             <div class="input-group">
-                              <input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 150px;" placeholder=<?php $this->language->line("xxx-xxx","Search");?> >
+                              <input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 150px;" placeholder=<?php echo $this->language->line("xxx-xxx","Search");?> >
                               <div class="input-group-btn">
                                 <button class="btn btn-sm btn-default searchList"><i class="fa fa-search"></i></button>
                               </div>
@@ -101,11 +101,11 @@
                     <tr>
 <!--                        <th class="text-left">Found items</th>-->
 <!--                        <th class="text-left">Claimed</th>-->
-                        <th><?php $this->language->line("xxx-xxx",'Code');?></th>
-                        <th><?php $this->language->line("xxx-xxx",'Image');?></th>
-                        <th><?php $this->language->line("xxx-xxx",'Description');?></th>
-                        <th><?php $this->language->line("xxx-xxx",'Category');?></th>
-                        <th><?php $this->language->line("xxx-xxx",'Date found');?></th>
+                        <th><?php echo $this->language->line("xxx-xxx",'Code');?></th>
+                        <th><?php echo $this->language->line("xxx-xxx",'Image');?></th>
+                        <th><?php echo $this->language->line("xxx-xxx",'Description');?></th>
+                        <th><?php echo $this->language->line("xxx-xxx",'Category');?></th>
+                        <th><?php echo $this->language->line("xxx-xxx",'Date found');?></th>
 
                     </tr>
                     <?php
@@ -149,7 +149,7 @@
 <!--                                <input type="hidden" value="--><?php //echo $record->id; ?><!--" name="id" id="id" />-->
 <!--                                <button type="submit" name="labelimage" value="Submit" >Submit</button>-->
                                 <?php if (!empty($record->image)) { ?>
-                                <a data-fancybox="gallery" href="<?php echo base_url(); ?>uploads/LabelImages/<?php $record->userId?>-<?php $record->code;?>-<?php $record->image;?>" _target="blank"><img height="32" width="32" src="<?php echo base_url(); ?>tiqsimg/zoomIn.png" title=<?php $this->language->line("xxx-xxx","Zoom");?>></a>
+                                <a data-fancybox="gallery" href="<?php echo base_url(); ?>uploads/LabelImages/<?php $record->userId?>-<?php $record->code;?>-<?php $record->image;?>" _target="blank"><img height="32" width="32" src="<?php echo base_url(); ?>tiqsimg/zoomIn.png" title=<?php echo $this->language->line("xxx-xxx","Zoom");?>></a>
                                 <?php } ?>
                             </form>
                         </td>
