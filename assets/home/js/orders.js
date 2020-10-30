@@ -6,42 +6,44 @@ function showOrderProducts(data) {
     let list = ''
     let popover = productDetailsHtml(products);
 
-    list += '<a ';
-    list +=     'style="color:#000" ';
-    list +=     'href="#" ';
-    list +=     'data-toggle="popover" ';
-    list +=     'data-placement="right" ';
-    list +=     'data-trigger="focus" ';
-    list +=     'data-content="' + popover + '" ';
-    list += '>';
-    list +=     'Products';
-    list += '</a>';
+    // list += '<a ';
+    // list +=     'style="color:#000" ';
+    // list +=     'href="#" ';
+    // list +=     'data-toggle="popover" ';
+    // list +=     'data-placement="right" ';
+    // list +=     'data-trigger="focus" ';
+    // list +=     'data-content="' + popover + '" ';
+    // list += '>';
+    // list +=     'Products';
+    // list += '</a>';
 
-    return list;
+    return popover;
 }
 
 function productDetailsHtml(products) {
     let i;
-    let content = ''
-    for (i in products) {
-        if (i === 'spotPrinter') continue;
-        let product;
-        let printer;
-        product = products[i];
-        if (!product) continue;
-        if (product['productPrinter']) {
-            printer = (products['spotPrinter'] === product['productPrinter'][0]) ? products['spotPrinter'] : product['productPrinter'][0];
-        } else {
-            printer = products['spotPrinter'];
+    let content = '';
+    for (i in products) {        
+        let el;
+        for (el in products) {
+            if (el === 'spotPrinter') continue;
+            let rawProduct = products[el];
+            let rawProductLength = rawProduct.length;
+            let j;
+            for (j = 0; j < rawProductLength; j++) {
+                let product = rawProduct[j];
+                if (!product) continue;
+                let style = (product['subMainPrductOrderIndex'] === '0') ? '' : ' padding-left:15px';
+                content += '<p style=\'text-align:left;margin-bottom:0px;' + style + '\'>';
+                content += '# ' + product.productQuantity + ' ' + product.productName;
+                content += '</p>';
+                if (product['remark']) {
+                    content += '<p style=\'text-align:left;margin-bottom:0px;' + style + '\'>';
+                    content += product['remark'];
+                    content += '</p>';
+                }
+            }
         }
-
-        content += '<p style=\'text-align:left\'>Product: ' + product.productName;
-        content += ' | Quantity: ' + product.productQuantity;
-        content += ' | Printer: ' + printer;
-        if (product['remark']) {
-            content += ' | Remark: ' + product['remark'];
-        }
-        content += '</p>';
     }
     return content;
 }
@@ -352,7 +354,7 @@ function showDeliveryModal(element) {
     $('#' + element.dataset.modalId + ' .modal-footer').html(modalFooter);
     $('#' + element.dataset.modalId).modal('show');
 
-    getDistance(orderGlobals.userId, element.dataset.buyerId);
+    // getDistance(orderGlobals.userId, element.dataset.buyerId);
 }
 
 function getDeliveryModalBody(data, productsString) {

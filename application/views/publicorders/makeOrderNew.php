@@ -369,7 +369,7 @@
                                             <div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">
                                                 <input
                                                     type="text"
-                                                    class="form-control"
+                                                    class="form-control remarks"
                                                     rows="1"
                                                     maxlength="<?php echo $maxRemarkLength; ?>"
                                                     data-product-remark-id="<?php echo $remarkProductId; ?>"
@@ -516,7 +516,7 @@
                                                                 <div class="col-lg-12 col-sm-12" style="margin-bottom:3px">
                                                                     <input
                                                                         type="text"
-                                                                        class="form-control"
+                                                                        class="form-control remarks"
                                                                         rows="1"
                                                                         maxlength="<?php echo $maxRemarkLength; ?>"
                                                                         data-addon-remark-id="<?php echo $remarkAddonId ?>"

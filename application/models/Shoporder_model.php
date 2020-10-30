@@ -199,7 +199,9 @@
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.name,
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.price,
                                     \'' .  $concatSeparator . '\', tbl_shop_order_extended.quantity,
-                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_order_extended.remark) > 0, tbl_shop_order_extended.remark, "")
+                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_order_extended.remark) > 0, tbl_shop_order_extended.remark, ""),
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.mainPrductOrderIndex,
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.subMainPrductOrderIndex
                                     SEPARATOR "'. $concatGroupSeparator . '"
                                 ) AS orderedProductDetails,
                                 GROUP_CONCAT(
@@ -779,6 +781,8 @@
                         'productQuantity' => $data[3],
                         'productPrinter' => $printerData,
                         'remark' => $data[4],
+                        'mainPrductOrderIndex' => $data[5],
+                        'subMainPrductOrderIndex' => $data[6]
                     ];
                 } else {
                     if (
@@ -792,6 +796,8 @@
                             'productQuantity' => $data[3],
                             'productPrinter' => $printerData,
                             'remark' => $data[4],
+                            'mainPrductOrderIndex' => $data[5],
+                            'subMainPrductOrderIndex' => $data[6]
                         ];
                     }
                 }
@@ -802,6 +808,17 @@
                 return !empty($data);
             });
 
+            // TO DO => TO MANY FOREACH NEED REFACTOR OR MANAGE DATA ON FRONT END !!!!!!!!!!!
+            foreach ($productDetails as $index => $data) {
+                if (intval($data['subMainPrductOrderIndex'])) {
+                    $productDetails[$index]['mainPrductOrderIndex'] = $data['subMainPrductOrderIndex'];
+                }
+            }
+            $this->load->helper('utility_helper');
+            $productDetails = Utility_helper::resetArrayByKeyMultiple($productDetails, 'mainPrductOrderIndex');
+            foreach($productDetails as $i => $data) {
+                Utility_helper::array_sort_by_column($productDetails[$i], 'subMainPrductOrderIndex');
+            }
             return $productDetails;
         }
 
