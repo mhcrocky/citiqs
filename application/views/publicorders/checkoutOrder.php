@@ -194,9 +194,7 @@
                 <i
                     class="fa fa-info-circle" aria-hidden="true"
                     data-toggle="pickupPopover"
-
-					data-content="<?php $this->language->line("DELIVERY-A0010",'We will reset your order because the selected products may be not available in pick-up option or can be differently priced.');?>
-"
+					data-content="<?php echo $this->language->line("DELIVERY-A0010",'We will reset your order because the selected products may be not available in pick-up option or can be differently priced.');?>"
                 >
                 </i>
             </div>
