@@ -28,6 +28,7 @@ class Ajaxdorian extends CI_Controller
         $this->load->model('shopvendor_model');
         $this->load->model('shopvoucher_model');
         $this->load->model('shopsession_model');
+        $this->load->model('email_templates_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -75,5 +76,74 @@ class Ajaxdorian extends CI_Controller
         }
 		
     }
+
+    public function saveEmailTemplate  () {
+		if (!$this->input->is_ajax_request()) return;
+		
+	}
+
+	public function saveEmailTemplateSource () {
+		if (!$this->input->is_ajax_request()) return;
+
+		$user_id = $this->input->post('user_id');
+		$html = $this->input->post('html');
+
+		$dir = FCPATH.'assets/email_templates/'.$user_id;
+		if (!is_dir($dir)) {
+			mkdir($dir, 0777, TRUE);
+		}
+
+		$clear_name = mb_strtolower(preg_replace('/[^ a-z\d]/ui', '', $this->input->post('template_name')));
+		$filename = $clear_name.time().'.html';
+		$filepath = $dir.'/'.$filename;
+
+        $template_id = $this->input->post('template_id');
+		if ($template_id && $template_id != 'false') {
+			$email_template = $this->email_templates_model->get_emails_by_id($template_id);
+			$filename = $email_template->template_file;
+		}
+
+		$data = [
+			'user_id' => $user_id,
+			'template_file' => $filename,
+			'template_name' => $this->input->post('template_name')
+		];
+
+		if (!write_file($filepath, $html) )
+		{
+			$msg = 'Unable to write the file';
+			$status = 'error';
+		}
+		else
+		{
+			if ($template_id && $template_id != 'false') {
+				$result = $this->email_templates_model->update_email_template($data, $template_id);
+			} else {
+				$result = $this->email_templates_model->add_email_template($data);
+			}
+			if ($result) {
+				$msg = 'Email saved';
+				$status = 'success';
+			} else {
+				$msg = 'Email not saved in db';
+				$status = 'error';
+			}
+
+		}
+
+		echo json_encode(array('msg' => $msg, 'status' =>$status));
+	}
     
+    public function delete_email_template () {
+		$email_id = $this->input->post('email_id');
+
+		if ($this->email_templates_model->deleteEmail($email_id)) {
+			$msg = 'Email template deleted!';
+			$status = 'success';
+		} else {
+			$msg = 'Something goes wrong!';
+			$status = 'error';
+		}
+		echo json_encode(array('msg' => $msg, 'status' =>$status));
+    }
 }
