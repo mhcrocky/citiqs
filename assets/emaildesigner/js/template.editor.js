@@ -1250,7 +1250,7 @@ $(document).ready(function () {
 
         var save = $('#tosave');
 
-        $.post(path + 'ajax/saveemailtemplatesource', {
+        $.post(path + 'ajaxdorian/saveemailtemplatesource', {
             html: save.html(),
             data : save.data(),
             user_id: user_id,

@@ -2,9 +2,9 @@
     <section class="content">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-12">
                 <div class="col-xs-12" style="text-align:left; margin-top: 90px; margin-bottom: 20px;">
-                    <a href='emaildesigner/new' class="btn btn-primary" role="button">Add New Template</a>
+                    <a href="<?php echo base_url('emaildesigner/new'); ?>" class="btn btn-primary" role="button">Add New Template</a>
                 </div>
                     <table class="table table-striped" style="margin-top: 100px;">
                         <thead>
@@ -23,10 +23,10 @@
                                 <td><?php echo $email->template_file; ?></td>
                                 <td class="action">
                                     <a href="emaildesigner/edit/<?php echo $email->id; ?>">
-                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        <i class="fa fa-pencil text-primary" aria-hidden="true"></i>
                                     </a>
                                     <a href="#" onclick="confirmDelete(<?php echo $email->id; ?>)">
-                                        <i class="fa fa-trash" aria-hidden="true" ></i>
+                                        <i class="fa fa-trash text-danger" aria-hidden="true" ></i>
                                     </a>
                                 </td>
                             </tr>
@@ -40,7 +40,7 @@
 </div>
 
 
-<div class="modal fade" id="delete_confirm" tabindex="-1" role="dialog" aria-labelledby="delete_confirmLabel">
+<div class="modal" id="delete_confirm" tabindex="-1" role="dialog" aria-labelledby="delete_confirmLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -71,7 +71,7 @@
 
         $.ajax({
             type: "POST",
-            url: globalVariables.ajax + "delete_email_template",
+            url: "ajaxdorian/delete_email_template",
             data: { email_id: email_id }
         }).done(function( response ) {
             $(el).data('email_id', '');
