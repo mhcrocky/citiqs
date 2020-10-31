@@ -1295,7 +1295,7 @@ $(document).ready(function () {
     $("#sourcepreview").click(function (i) {
         i.preventDefault();
         downloadLayoutSrc();
-        $.post(path + 'ajax/saveemailtemplate', {html: $('#download').val(), id: $('#tosave').data('id')}, function (data) {
+        $.post(path + 'ajaxdorian/saveemailtemplate', {html: $('#download').val(), id: $('#tosave').data('id')}, function (data) {
             $('#httphref').val(data);
             $('#previewFrame').attr('src', data);
         }, 'html');
