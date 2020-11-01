@@ -38,4 +38,22 @@ class Email_templates_model extends CI_Model
         return $this->db->affected_rows() || $id;
     }
 
+    public function get_emails_by_name ($name) {
+        $this->db->from('tbl_email_templates');
+        $this->db->where('template_name', $name);
+        $query = $this->db->get();
+        $result = $query->result_array();
+        return $result[0]['id'];
+    }
+
+    public function check_template_exists($name)
+    {
+        $query = $this->db->get_where('tbl_email_templates', array('template_name' => $name));
+        if (!empty($query->result_array())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
