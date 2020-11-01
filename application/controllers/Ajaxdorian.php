@@ -78,7 +78,24 @@ class Ajaxdorian extends CI_Controller
     }
 
     public function saveEmailTemplate  () {
-		if (!$this->input->is_ajax_request()) return;
+        if (!$this->input->is_ajax_request()) return;
+        $user_id = $this->input->post('user_id');
+		$html = $this->input->post('html');
+        $dir = FCPATH.'assets/email_templates/'.$user_id;
+		if (!is_dir($dir)) {
+			mkdir($dir, 0777, TRUE);
+		}
+
+		$clear_name = mb_strtolower(preg_replace('/[^ a-z\d]/ui', '', $this->input->post('template_name')));
+		$filename = $clear_name.time().'.html';
+        $filepath = $dir.''.$filename;
+        if (!write_file($filepath, $html) )
+		{
+			$msg = 'Unable to write the file';
+			$status = 'error';
+		} else {
+            echo base_url("assets/email_templates/$filename");
+        }
 		
 	}
 
@@ -95,12 +112,20 @@ class Ajaxdorian extends CI_Controller
 
 		$clear_name = mb_strtolower(preg_replace('/[^ a-z\d]/ui', '', $this->input->post('template_name')));
 		$filename = $clear_name.time().'.html';
-		$filepath = $dir.'/'.$filename;
+        $filepath = $dir.'/'.$filename;
+        
 
-        $template_id = $this->input->post('template_id');
+        if($this->email_templates_model->check_template_exists($this->input->post('template_name')))
+        {
+            $template_id = $this->email_templates_model->get_emails_by_name($this->input->post('template_name'));
+        } else {
+            $template_id = $this->input->post('template_id');
+        }
+
 		if ($template_id && $template_id != 'false') {
 			$email_template = $this->email_templates_model->get_emails_by_id($template_id);
-			$filename = $email_template->template_file;
+            $filename = $email_template->template_file;
+            $filepath = $dir.'/'.$filename;
 		}
 
 		$data = [
@@ -122,7 +147,7 @@ class Ajaxdorian extends CI_Controller
 				$result = $this->email_templates_model->add_email_template($data);
 			}
 			if ($result) {
-				$msg = 'Email saved';
+				$msg = "Email saved";
 				$status = 'success';
 			} else {
 				$msg = 'Email not saved in db';
