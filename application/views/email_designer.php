@@ -926,7 +926,7 @@
             $('#required').css('visibility', 'hidden');
             $('#template_name').css('border', '1px solid #ced4da');
             $('#template_name').css('border-color', '#ced4da');
-        })
+        });
 
         //html5 uploader
         $('.button').click(function(){
