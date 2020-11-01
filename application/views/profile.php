@@ -642,8 +642,8 @@
 						</label>
 					</div>
 					<h4>
-						SKIP CALENDAR DATE IF CUT TIME HAS PASSE
-						(application will skipped working day if it is set to 'no')
+						SKIP CALENDAR DATE IF CUT TIME HAS PASSED
+						(application will skipp working day if value is set to 'no')
 					</h4>
 					<div class="form-group mb-35">
 						<label class="radio-inline" for="skipDateYes">Yes</label>
