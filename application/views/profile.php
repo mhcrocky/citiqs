@@ -641,6 +641,16 @@
 							/>							
 						</label>
 					</div>
+					<h4>
+						SKIP CALENDAR DATE IF CUT TIME HAS PASSED
+						(application will skipp working day if value is set to 'no')
+					</h4>
+					<div class="form-group mb-35">
+						<label class="radio-inline" for="skipDateYes">Yes</label>
+						<input type="radio" id="skipDateYes" name="vendor[skipDate]" value="1" <?php if ($vendor['skipDate'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="skipDateNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="skipDateNo" name="vendor[skipDate]" value="0" <?php if ($vendor['skipDate'] === '0') echo 'checked'; ?> />
+					</div>	
 					<h4>SET CUT TIME</h4>
 					<div class="form-group mb-35">
 						<label for="cutTime">CUT TIME&nbsp;
