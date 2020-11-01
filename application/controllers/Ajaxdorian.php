@@ -157,7 +157,16 @@ class Ajaxdorian extends CI_Controller
 		}
 
 		echo json_encode(array('msg' => $msg, 'status' =>$status));
-	}
+    }
+    
+    public function check_template_exists () {
+		if($this->email_templates_model->check_template_exists($this->input->post('template_name')))
+        {
+            echo 'true';
+        } else {
+            echo 'false';
+        }
+    }
     
     public function delete_email_template () {
 		$email_id = $this->input->post('email_id');
