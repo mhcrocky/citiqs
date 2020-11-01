@@ -1135,6 +1135,7 @@ $(document).ready(function () {
     /*settings functions*/
 
     $(document).on('click', '#saveElement', function (e) {
+        
         e.preventDefault();
         /*
          * must apply element properties
@@ -1246,6 +1247,11 @@ $(document).ready(function () {
 
 
     $("#save").click(function () {
+        if($('#template_name').val().length == 0){
+            $('#required').css('visibility', 'visible');
+            $('#template_name').css('border-color', '#dc3545');
+            return ;
+        }
         downloadLayoutSrc();
 
         var save = $('#tosave');
