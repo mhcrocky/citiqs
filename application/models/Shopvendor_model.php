@@ -37,6 +37,7 @@
         public $receiptOnlyToWaiter;
         public $deliveryAirDistance;
         public $cutTime;
+        public $skipDate;
 
         public $serviceFeePercent;
         public $serviceFeeAmount;
@@ -144,7 +145,8 @@
             if (isset($data['minBusyTime']) && !Validate_data_helper::validateInteger($data['minBusyTime'])) return false;
             if (isset($data['maxBusyTime']) && !Validate_data_helper::validateInteger($data['maxBusyTime'])) return false;
             if (isset($data['receiptOnlyToWaiter']) && !($data['receiptOnlyToWaiter'] === '1' || $data['receiptOnlyToWaiter'] === '0')) return false;
-            if (isset($data['deliveryAirDistance']) && !Validate_data_helper::validateInteger($data['deliveryAirDistance'])) return false;            
+            if (isset($data['deliveryAirDistance']) && !Validate_data_helper::validateInteger($data['deliveryAirDistance'])) return false;   
+            if (isset($data['skipDate']) && !($data['skipDate'] === '1' || $data['skipDate'] === '0')) return false;
 
             if (isset($data['deliveryServiceFeePercent']) && !Validate_data_helper::validateString($data['deliveryServiceFeePercent'])) return false;
             if (isset($data['deliveryServiceFeeAmount']) && !Validate_data_helper::validateFloat($data['deliveryServiceFeeAmount'])) return false;
@@ -200,7 +202,7 @@
                     $this->table . '.receiptOnlyToWaiter',
                     $this->table . '.deliveryAirDistance',
                     $this->table . '.cutTime',
-
+                    $this->table . '.skipDate',
                     $this->table . '.deliveryServiceFeePercent',
                     $this->table . '.deliveryServiceFeeAmount',
                     $this->table . '.deliveryMinimumOrderFee',

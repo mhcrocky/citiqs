@@ -98,16 +98,21 @@
                                     >
                                     <?php
                                         $now = now();
+                                        $today = date('Y-m-d', $now);
+                                        $currentTime = date('H:i:s', now());
+                                        $tomorrow = date('Y-m-d', strtotime($today . "+1 days"));
                                         $skip = 0;
                                         foreach ($workingTime as $date => $time) {
                                             if ($vendor['cutTime'] && $vendor['cutTime'] !== '00:00:00') {
-                                                if ($skip === 0) {
-                                                    $skip++;
-                                                    continue;
-                                                }
-                                                if (date('H:i:s', now()) >= $vendor['cutTime'] && $skip === 1) {
-                                                    $skip++;
-                                                    continue;
+                                                if ($vendor['skipDate'] === '1') {
+                                                    if ($date === $today || ($currentTime >= $vendor['cutTime'] && $date === $tomorrow)) {
+                                                        continue;
+                                                    }
+                                                } elseif ($vendor['skipDate'] === '0') {
+                                                    if ($skip === 0 || ($currentTime >= $vendor['cutTime'] && $skip === 1)) {
+                                                        $skip++;
+                                                        continue;
+                                                    }
                                                 }
                                             }
                                             foreach ($time as $hours) {
@@ -118,7 +123,7 @@
                                                     // first check time to, is period in past
                                                     $subtractTime = strtotime($hours['timeTo']) - $userTimeSubstract * 60;
                                                     $checkTimeTo = date('H:i:s', $subtractTime);
-                                                    if (date('H:i:s', $now) > $checkTimeTo) continue;
+                                                    if ($currentTime > $checkTimeTo) continue;
 
                                                     // check time to and set new if needed
                                                     $checkTimeFrom = date('Y-m-d H:i:s', strtotime('+' . $userTimeSubstract . ' minutes', $now));
@@ -130,8 +135,6 @@
                                                     <option
                                                         value="<?php echo $date . ' ' . $hours['timeFrom']. ' ' . $hours['timeTo']; ?>"
                                                     >
-
-
                                                         <?php echo $this->language->line($date . ' (' . $hours['day'] . ')',$date . ' (' . $hours['day'] . ')'). ' '.$this->language->line("PAYMENT-ABC0035"," from ").' '. $hours['timeFrom'] . " ".$this->language->line("PAYMENT-ABC0045"," to ")." " . $hours['timeTo'] ?>
                                                     </option>
                                                 <?php
