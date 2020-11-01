@@ -115,7 +115,7 @@ class Ajaxdorian extends CI_Controller
         $filepath = $dir.'/'.$filename;
         
 
-        if($this->email_templates_model->check_template_exists($this->input->post('template_name')))
+        if($this->email_templates_model->check_template_exists($this->input->post('template_name'),$user_id))
         {
             $template_id = $this->email_templates_model->get_emails_by_name($this->input->post('template_name'));
         } else {
@@ -160,7 +160,8 @@ class Ajaxdorian extends CI_Controller
     }
     
     public function check_template_exists () {
-		if($this->email_templates_model->check_template_exists($this->input->post('template_name')))
+        $userId = $this->session->userdata('userId');
+		if($this->email_templates_model->check_template_exists($this->input->post('template_name'),$userId))
         {
             echo 'true';
         } else {
