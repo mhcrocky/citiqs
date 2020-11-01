@@ -1245,13 +1245,35 @@ $(document).ready(function () {
             $(".demo .column .lyrow").find('.drag').removeClass('hide');
         }});
 
-
-    $("#save").click(function () {
-        if($('#template_name').val().length == 0){
+    var clickSave = 0;
+    $('#save').on('click', function(){
+         if($('#template_name').val().length == 0){
             $('#required').css('visibility', 'visible');
             $('#template_name').css('border-color', '#dc3545');
+            return ; 
+        }
+        if(template_id){
+            saveTemplate();
             return ;
         }
+
+        if(clickSave == 0){
+            $.post(path + 'ajaxdorian/check_template_exists', {template_name: $('#template_name').val()}, function (data) {
+                if(data == 'true'){
+                    alertify['error']('This template name already exists!');
+                    return ;
+                } else {
+                    saveTemplate();
+                }      
+            });
+        } else {
+            saveTemplate();
+        }
+        clickSave++;
+    });
+
+
+    function saveTemplate() {
         downloadLayoutSrc();
 
         var save = $('#tosave');
@@ -1266,7 +1288,7 @@ $(document).ready(function () {
             response = $.parseJSON(data)
             alertify[response.status](response.msg);
         }, 'html');
-    });
+    }
 
     $("#edit").click(function () {
         $("body").removeClass("devpreview sourcepreview");
