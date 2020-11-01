@@ -379,8 +379,8 @@
 
             <br>
             <label for="template_name">Template Name</label>
-            <input type="text" name="template_name" id="template_name" value="<?php echo isset($email_template) ? $email_template->template_name : '' ?>">
-
+            <input style="border:1px solid #ced4da;" type="text" name="template_name" id="template_name" required value="<?php echo isset($email_template) ? $email_template->template_name : '' ?>">
+            <div style="visibility: hidden;" class="required text-danger text-center" id="required">&nbsp &nbsp &nbsp This field is required</div>
         </div>
         <!-- END DROP ELEMENTS -->
         <!-- START ELEMENT -->
@@ -862,7 +862,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+<div class="modal" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="min-width:120px">
             <div class="modal-header">
@@ -874,7 +874,7 @@
                     <a class="btn btn-default btn-sm " href="#">smalltablet</a>
                     <a class="btn btn-default btn-sm " href="#">ipad</a>
                 </div>
-                <iframe id="previewFrame" class="iphone"></iframe>
+                <iframe width="100%" id="previewFrame" class="iphone">fhfhfhfhfh</iframe>
             </div>
             <div class="modal-footer">
 
@@ -922,7 +922,11 @@
 
 <script>
     $(document).ready(function(){
-        
+        $('#template_name').on('keyup', function(){
+            $('#required').css('visibility', 'hidden');
+            $('#template_name').css('border', '1px solid #ced4da');
+            $('#template_name').css('border-color', '#ced4da');
+        })
 
         //html5 uploader
         $('.button').click(function(){
