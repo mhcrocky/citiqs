@@ -46,6 +46,10 @@ class Calculator extends BaseControllerWeb {
             $mailtemplate = str_replace('[amount]', $amount, $mailtemplate);
             $mailtemplate = str_replace('[times_per_day]', $times_per_day, $mailtemplate);
             $mailtemplate = str_replace('[commission]', $commission, $mailtemplate);
+            $mailtemplate = str_replace('border: 1px', 'border: 0px', $mailtemplate);
+            $mailtemplate = str_replace('border: 2px', 'border: 0px', $mailtemplate);
+            $mailtemplate = str_replace('Image', '', $mailtemplate);
+			$mailtemplate = str_replace('Text', '', $mailtemplate);
             $subject = 'Your tiqs calculation';
             $this->sendEmail($email, $subject, $mailtemplate);
         }
