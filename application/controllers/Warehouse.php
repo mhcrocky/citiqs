@@ -927,7 +927,7 @@
             $iframeSrc = base_url() . 'make_order?vendorid=' . $_SESSION['userId'];
             $vendorData = $this->shopvendor_model->setProperty('vendorId', $_SESSION['userId'])->getProperties(['id', 'design']);
             $id = $vendorData['id'];
-            $design = unserialize($vendorData['design']);
+            $design = ($vendorData['design']) ? unserialize($vendorData['design']) : null;
 
             $data = [
                 'iframeSrc' => $iframeSrc,

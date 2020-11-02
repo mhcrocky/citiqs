@@ -225,6 +225,10 @@
 			<a href="<?php echo base_url() . 'check424/' . $user->id; ?>" target='_blank' >
 				<?php echo base_url() . 'check424/' . $user->id; ?>
 			</a>
+			<h2>Set public design</h2>
+			<a href="<?php echo base_url() . 'design'; ?>">
+				Design
+			</a>
 			<div class="background-blue timeline-content">
 				<!-- <p>Add driver mobile number (starting with country code with zero) for sending sms.</p>
 				<p>Set the number of minutes when the message will be sent to driver after the order status is changed in status "DONE"</p> -->

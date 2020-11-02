@@ -124,7 +124,8 @@ class BaseControllerWeb extends CI_Controller
         $this->setBaseUrl();
         $this->setHeader($Headermenu);
         $this->setView($viewName);
-
+        $headerInfo['viewName'] = explode('/', $viewName);
+        $headerInfo['viewName'] = $headerInfo['viewName'][count($headerInfo['viewName']) - 1];
         $this->load->view($this->header, $headerInfo);
         $this->load->view($viewName, $pageinfo);
 

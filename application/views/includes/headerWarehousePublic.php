@@ -26,7 +26,7 @@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
     <?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
-    <?php include_once FCPATH . 'application/views/includes/customDesign.php'; ?>
+
     <style>
 	    #myModal {
             overflow: scroll;
@@ -44,7 +44,8 @@
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/cookies.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-    <script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>    
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>
+    <?php include_once FCPATH . 'application/views/includes/customDesign.php'; ?>
 </head>
 
 

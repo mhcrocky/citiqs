@@ -204,3 +204,5 @@ $config['orderDataGetKey'] = 'order';
 $config['buyershorturl'] = 'tiqs_shop_service';
 
 $config['maxRemarkLength'] = 35;
+
+$config['design'] = 'design';

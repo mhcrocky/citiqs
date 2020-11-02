@@ -111,6 +111,9 @@
         private function loadVendorView(int $typeId, array $vendor): void
         {
             $this->global['pageTitle'] = 'TIQS : SELECT SPOT';
+            $this->global[$this->config->item('design')] = (!empty($vendor['design'])) ? unserialize($vendor['design']) : null;
+
+
             $types = Utility_helper::resetArrayByKeyMultiple($vendor['typeData'], 'active');
 
             if (empty($types[1])) {
@@ -303,6 +306,7 @@
             $this->setFeeValues($data);
 
             $this->global['pageTitle'] = 'TIQS : CHECKOUT';
+            $this->global[$this->config->item('design')] = (!empty($data['vendor']['design'])) ? unserialize($data['vendor']['design']) : null;
             $this->loadViews('publicorders/checkoutOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
 
@@ -395,6 +399,7 @@
             $data['orderDataGetKey'] = $this->config->item('orderDataGetKey');
 
             $this->global['pageTitle'] = 'TIQS : BUYER DETAILS';
+            $this->global[$this->config->item('design')] = (!empty($data['vendor']['design'])) ? unserialize($data['vendor']['design']) : null;
             $this->loadViews('publicorders/buyerDetails', $this->global, $data, null, 'headerWarehousePublic');
         }
 

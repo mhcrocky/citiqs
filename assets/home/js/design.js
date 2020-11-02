@@ -6,7 +6,9 @@ function styleELements(element) {
     let iframeElements = $('iframe').contents().find(selector);
     if (iframeElements) {
         element.setAttribute('data-value', '1');
-        iframeElements.css(property, value);
+        // iframeElements.css(property, value);
+        let style = property + ':' + value + ' !important';
+        iframeElements.attr('style',style);
     }
 
 }
@@ -136,6 +138,7 @@ var designGlobals = (function() {
     }
     return globals;
 }());
+
 $(document).ready(function(){
     let iframe = document.getElementById(designGlobals.iframeId);
     iframeURLChange(iframe, function (newURL) {
