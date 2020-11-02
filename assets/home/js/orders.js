@@ -158,9 +158,12 @@ function populateTable(data) {
                 },
                 {
                     "targets": 4,
-                    "data": function (row, type, val, meta) {
-                        return showOrderStatuses(orderGlobals.orderStatuses, row);
-                    }
+                    "visible": false,
+                    "searchable": false,
+                    "width": "20%"
+                    // "data": function (row, type, val, meta) {
+                    //     return showOrderStatuses(orderGlobals.orderStatuses, row);
+                    // }
                 },
                 {
                     "targets": 7,
