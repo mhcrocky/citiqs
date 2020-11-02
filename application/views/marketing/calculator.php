@@ -25,6 +25,22 @@
             <label for="">Commission : </label>
             <input class="form-control required" type="number" min="1" max="100" id="commission" required="true" placeholder="Percentage for commission"/>
           </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-8 text-left">
+              <label for="costPerDay">Hardware Cost :  </label>
+              <input class="form-control required" type="number" min="0"id="hardware_cost" placeholder="Hardware Cost">
+            </div>
+            <div class="form-group col-md-4 text-left">
+              <label for=""> Years : </label>
+              <input class="form-control required" type="number" min="1" id="years" placeholder="Years">
+            </div>
+          </div>
+
+          <div class="form-group text-left">
+            <label for="">Monthly Subscription  : </label>
+            <input type="text" class="form-control" id="monthly" value="" disabled>
+          </div>
           <div class="form-row">
             <div class="form-group col-md-4">
               <label for="costPerDay">Cost Per Day </label>
@@ -62,7 +78,7 @@
         $("#costPerDay").val(costPerDay_formated);
         $("#e").val(e_formated);
         $("#f").val(f_formated);
-      });
+      }); 
       
       $("#time").on('change',function(){
         let time = this.value;
@@ -94,6 +110,22 @@
         $("#costPerDay").val(costPerDay_formated);
         $("#e").val(e_formated);
         $("#f").val(f_formated);
+      });
+
+      $("#hardware_cost").on('change',function(){
+        let hardware_cost = this.value;
+        let years = $.isNumeric($("#years").val()) ? $("#years").val() : 0;
+        let monthly = (years == 0) ? hardware_cost : hardware_cost/(years * 12);
+        let monthly_formated = Number.isInteger(monthly) ? monthly : number_format(monthly, 2, '.', '');
+        $("#monthly").val(monthly_formated);
+      });
+
+      $("#years").on('change',function(){
+        let years = this.value;
+        let hardware_cost = $.isNumeric($("#hardware_cost").val()) ? $("#hardware_cost").val() : 0;
+        let monthly = (years == 0) ? hardware_cost : hardware_cost/(years * 12);
+        let monthly_formated = Number.isInteger(monthly) ? monthly : number_format(monthly, 2, '.', '');
+        $("#monthly").val(monthly_formated);
       });
 
     });
@@ -138,13 +170,20 @@
           event.preventDefault();
           event.stopPropagation();
         } else {
-          let amount = $("#amount").val();
-          let times_per_day = $("#time").val();
-          let commission = $("#commission").val();
-          let email = $("#email").val();
-          $.post("<?php echo base_url('marketing/calculator/saveCalc'); ?>", {email: email,amount: amount,times_per_day: times_per_day,commission: commission}, function(data){
+
+          
+          let data = {
+            'amount': $("#amount").val(),
+            'times_per_day': $("#time").val(),
+            'commission': $("#commission").val(),
+            'email': $("#email").val(),
+            'hardware_cost': $("#hardware_cost").val(),
+            'monthly': $("#monthly").val()
+          }
+          $.post("<?php echo base_url('marketing/calculator/saveCalc'); ?>", data , function(response){
             toastr["success"]("Saved successfully!");
             setTimeout(function(){ location.reload(); }, 2000);
+            console.log(response);
           });
           event.preventDefault();
           $("#save").prop('disabled', true);

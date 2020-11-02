@@ -21,7 +21,9 @@ class Calculator extends BaseControllerWeb {
             'amount' => $this->input->post('amount'),
             'times_per_day' => $this->input->post('times_per_day'),
             'commission' => $this->input->post('commission'),
-            'email' => $this->input->post('email')
+            'email' => $this->input->post('email'),
+            'hardware_cost' => $this->input->post('hardware_cost'),
+            'monthly_cost' => $this->input->post('monthly')
         );
 
         $this->load->model('Calculator_model');
