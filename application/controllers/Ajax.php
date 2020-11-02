@@ -1475,4 +1475,27 @@ class Ajax extends CI_Controller
         $this->shopsession_model->updateSessionData($orderData);
         return ($this->shopsession_model->id && $this->shopsession_model->randomKey) ? true : false;
     }
+
+    public function saveDesign($id): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = Utility_helper::sanitizePost();
+        $design = serialize($post);
+        $id = intval($id);
+        $update = $this->shopvendor_model->setObjectId($id)->setProperty('design', $design)->update();
+
+        if ($update) {
+            $response = [
+                'status' => '1',
+                'message' => 'Design updated'
+            ];
+        } else {
+            $response = [
+                'status' => '0',
+                'message' => 'Design update failed'
+            ];
+        }
+        echo json_encode($response);
+    }
 }

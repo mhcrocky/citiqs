@@ -916,6 +916,32 @@
 				'vendorId' => $_SESSION['userId']
 			];
 			$this->loadViews('warehouse/vatreport', $this->global, $data, null, 'headerWarehouse');
-		}
+        }
+
+        // Design
+        /**
+         * Add colors to make order new view
+         */
+        public function design(): void
+        {
+            $iframeSrc = base_url() . 'make_order?vendorid=' . $_SESSION['userId'];
+            $vendorData = $this->shopvendor_model->setProperty('vendorId', $_SESSION['userId'])->getProperties(['id', 'design']);
+            $id = $vendorData['id'];
+            $design = unserialize($vendorData['design']);
+
+            $data = [
+                'iframeSrc' => $iframeSrc,
+                'id' => $id,
+                'design' => $design,
+            ];
+
+            // echo '<pre>';
+            // print_r($data['design']);
+            // die();
+
+            $this->global['pageTitle'] = 'TIQS : DESIGN';
+            $this->loadViews('warehouse/design', $this->global, $data, null, 'headerWarehouse');
+            return;
+        }
 
     }

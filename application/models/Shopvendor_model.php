@@ -38,6 +38,7 @@
         public $deliveryAirDistance;
         public $cutTime;
         public $skipDate;
+        public $design;
 
         public $serviceFeePercent;
         public $serviceFeeAmount;
@@ -147,6 +148,7 @@
             if (isset($data['receiptOnlyToWaiter']) && !($data['receiptOnlyToWaiter'] === '1' || $data['receiptOnlyToWaiter'] === '0')) return false;
             if (isset($data['deliveryAirDistance']) && !Validate_data_helper::validateInteger($data['deliveryAirDistance'])) return false;   
             if (isset($data['skipDate']) && !($data['skipDate'] === '1' || $data['skipDate'] === '0')) return false;
+            if (isset($data['design']) && !Validate_data_helper::validateString($data['design'])) return false;
 
             if (isset($data['deliveryServiceFeePercent']) && !Validate_data_helper::validateString($data['deliveryServiceFeePercent'])) return false;
             if (isset($data['deliveryServiceFeeAmount']) && !Validate_data_helper::validateFloat($data['deliveryServiceFeeAmount'])) return false;
@@ -209,6 +211,7 @@
                     $this->table . '.pickupServiceFeePercent',
                     $this->table . '.pickupServiceFeeAmount',
                     $this->table . '.pickupMinimumOrderFee',
+                    $this->table . '.design',
 
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
@@ -391,24 +394,24 @@
             return $result === '1' ? true : false;
         }
 
-        public function updateVendor(string $property): ?string
-        {
-            if ($this->id) {
-                $where = ['id=' => $this->id];
-            } elseif ($this->vendorId) {
-                $where = ['vendorId=' => $this->vendorId];
-            } else {
-                return null;
-            }
+        // public function updateVendor(string $property): ?string
+        // {
+        //     if ($this->id) {
+        //         $where = ['id=' => $this->id];
+        //     } elseif ($this->vendorId) {
+        //         $where = ['vendorId=' => $this->vendorId];
+        //     } else {
+        //         return null;
+        //     }
 
-            $result = $this->readImproved([
-                'what' => [$property],
-                'where' => $where
-            ]);
+        //     $result = $this->readImproved([
+        //         'what' => [$property],
+        //         'where' => $where
+        //     ]);
 
-            if (empty($result)) return null;
-            return $result[0][$property];
-        }
+        //     if (empty($result)) return null;
+        //     return $result[0][$property];
+        // }
 
         public function getProperties(array $properties): ?array
         {

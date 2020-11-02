@@ -1,4 +1,4 @@
-<main class="container" style="text-align:left; margin-bottom:20px">
+<main class="container" style="text-align:left; margin-bottom:20px" id="checkoutOrderBody">
     <form id="goOrder" method="post" onsubmit="return submitForm">
         <input type="text" name="orderRandomKey" value="<?php echo $orderRandomKey; ?>" required readonly hidden />
         <input type="text" name="vendorId" value="<?php echo $vendor['vendorId']; ?>" required readonly hidden />

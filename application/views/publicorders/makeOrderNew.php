@@ -374,7 +374,7 @@
                                                     maxlength="<?php echo $maxRemarkLength; ?>"
                                                     data-product-remark-id="<?php echo $remarkProductId; ?>"
                                                     placeholder="Allowed <?php echo $maxRemarkLength; ?> characters"
-                                                />
+                                               />
                                             </div>
                                         <?php } ?>
                                     </div>
@@ -622,6 +622,5 @@
 	open_modal.on('click tap', function(){
 		img_src = $(this).children('img').attr('src');
 		modal_img_src.attr('src', img_src);
-		console.log(img_src)
 	})
 </script>

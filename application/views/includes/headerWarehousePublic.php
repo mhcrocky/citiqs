@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
     <?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
+    <?php include_once FCPATH . 'application/views/includes/customDesign.php'; ?>
     <style>
 	    #myModal {
             overflow: scroll;

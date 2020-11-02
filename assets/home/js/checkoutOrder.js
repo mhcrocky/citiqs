@@ -183,7 +183,7 @@ function buyerSelectTime(value, containerDivId, inputElementId) {
         div.style.display = 'none';
         input.disabled = true;
     } else {
-        div.style.display = 'initial';
+        div.style.display = 'block';
         input.disabled = false;
         let times = value.split(' ');
         $('#' +  inputElementId).timepicker('destroy');

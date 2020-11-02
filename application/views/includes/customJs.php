@@ -103,4 +103,6 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/checkoutOrder.js"></script>
 <?php } elseif ($this->view === 'bizdir/index') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/places.js"></script>
+<?php } elseif ($this->view === 'warehouse/design') { ?>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/design.js"></script>
 <?php } ?>

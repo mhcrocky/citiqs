@@ -234,6 +234,9 @@ var callThis = (function() {
         submitBuyerDetails: function(callFunction) {
             callFunction(this);
         },
+        saveDesign: function(callFunction) {
+            callFunction(this);
+        }
     };
     return methods;
 })();

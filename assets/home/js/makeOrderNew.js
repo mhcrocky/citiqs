@@ -614,6 +614,9 @@ $(document).ready(function(){
         goToSlide(parseInt(makeOrderGlobals.categorySlide));
     }
     if (inIframe()) {
-        document.getElementById(makeOrderGlobals.logoImageId).style.display = 'none';
+        let logo = document.getElementById(makeOrderGlobals.logoImageId);
+        if (logo) {
+            logo.style.display = 'none';
+        }
     }
 });
