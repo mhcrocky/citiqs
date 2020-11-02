@@ -38,21 +38,26 @@
           </div>
 
           <div class="form-group text-left">
-            <label for="">Monthly Subscription  : </label>
+            <label for="">Monthly Hardware Cost : </label>
             <input type="text" class="form-control" id="monthly" value="" disabled>
           </div>
+
           <div class="form-row">
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3 text-left">
               <label for="costPerDay">Cost Per Day </label>
               <input type="text" class="form-control" id="costPerDay" value="" disabled>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
               <label for=""> &nbsp </label>
               <input type="text" class="form-control" id="e" value="" disabled>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
               <label for="">&nbsp </label>
               <input type="text" class="form-control" id="f" value="" disabled>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="">&nbsp </label>
+              <input type="text" class="form-control" id="hardware_day_cost" value="" disabled>
             </div>
           </div>
 
@@ -116,7 +121,9 @@
         let hardware_cost = this.value;
         let years = $.isNumeric($("#years").val()) ? $("#years").val() : 0;
         let monthly = (years == 0) ? hardware_cost : hardware_cost/(years * 12);
+        let cost_day = Number.isInteger(monthly/365) ? monthly/365 : number_format(monthly/365, 2, '.', '');
         let monthly_formated = Number.isInteger(monthly) ? monthly : number_format(monthly, 2, '.', '');
+        $("#hardware_day_cost").val(cost_day);
         $("#monthly").val(monthly_formated);
       });
 
@@ -125,6 +132,8 @@
         let hardware_cost = $.isNumeric($("#hardware_cost").val()) ? $("#hardware_cost").val() : 0;
         let monthly = (years == 0) ? hardware_cost : hardware_cost/(years * 12);
         let monthly_formated = Number.isInteger(monthly) ? monthly : number_format(monthly, 2, '.', '');
+        let cost_day = Number.isInteger(monthly/365) ? monthly/365 : number_format(monthly/365, 2, '.', '');
+        $("#hardware_day_cost").val(cost_day);
         $("#monthly").val(monthly_formated);
       });
 
