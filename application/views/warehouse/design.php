@@ -7,7 +7,7 @@
                     include_once FCPATH . 'application/views/warehouse/includes/design/selectTypeView.php';
                     include_once FCPATH . 'application/views/warehouse/includes/design/closed.php';
                     include_once FCPATH . 'application/views/warehouse/includes/design/selectSpotView.php';
-                    include_once FCPATH . 'application/views/warehouse/includes/design/selectedSpotView.php';
+                    include_once FCPATH . 'application/views/warehouse/includes/design/makeOrderNewView.php';
                     include_once FCPATH . 'application/views/warehouse/includes/design/checkoutOrderView.php';
                     include_once FCPATH . 'application/views/warehouse/includes/design/buyerDetailsView.php';
                     include_once FCPATH . 'application/views/warehouse/includes/design/payOrderView.php';

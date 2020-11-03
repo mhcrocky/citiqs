@@ -1,5 +1,5 @@
-<div class="container shop-container">
-    <div class="row">
+<div class="container shop-container selectedSpotBackground">
+    <div class="row selectedSpotBackground">
         <?php if (!empty($mainProducts)) { ?>        	
 			    <?php if ($vendor['logo']) { ?>
 					<div id="vendorLogo" style="text-align:center" >
@@ -9,24 +9,24 @@
             <?php
                 if ($vendor['showMenu'] === '1') {
                     $categories = array_keys($mainProducts);
-                    $categoryList = '<ul class="list-group categoryNav">';
+                    $categoryList = '<ul class="list-group categoryNav selectedSpotBackground">';
                     $count = 0;
                     foreach ($categories as $categoryName) {
                         $count++;
-                        $categoryList .= '<li class="list-group-item">';
-                        $categoryList .=    '<a href="#" data-index="' . $count . '">' . $categoryName . '</a>';
+                        $categoryList .= '<li class="list-group-item selectedSpotBackground">';
+                        $categoryList .=    '<a class="menuColor" href="#" data-index="' . $count . '">' . $categoryName . '</a>';
                         $categoryList .= '</li>';
                     }
                     $categoryList .= '</ul>';
                 }              
             ?>
-            <div>
-                <div class="col-12 col-md-8" id="categoryContainer" style="padding-left:0px; padding-right:0px" align="center">
-                    <div class="items-slider" style="margin-left:0px; margin-right:0px">
+            <div class="selectedSpotBackground">
+                <div class="col-12 col-md-8 selectedSpotBackground" id="categoryContainer" style="padding-left:0px; padding-right:0px; text-align:center">
+                    <div class="items-slider selectedSpotBackground" style="margin-left:0px; margin-right:0px">
                         <?php if ($vendor['showMenu'] === '1') { ?>
-                            <div class="shop__items">
+                            <div class="shop__items selectedSpotBackground">
                                 <div class="shop__item-list-heading" id="categoryNav">
-                                    <h2 style="text-align:center; text-transform: uppercase; margin-bottom:30px;">
+                                    <h2 class="categoryName" style="text-align:center; text-transform: uppercase; margin-bottom:30px;">
                                         <?php echo $vendor['vendorName'] ?>
                                     </h2>
                                     <?php echo $categoryList; ?>
@@ -35,11 +35,11 @@
                             </div>
                         <?php } ?>
                         <?php foreach ($mainProducts as $category => $products) { ?>
-                            <div class="shop__items">
+                            <div class="shop__items selectedSpotBackground">
                                 <div class="shop__item-list-heading" id='<?php echo $category; ?>'>
-                                    <h2><?php echo $category; ?></h2>
+                                    <h2 class="categoryName"><?php echo $category; ?></h2>
                                 </div>
-                                <div class="shop__item-list">
+                                <div class="shop__item-list selectedSpotBackground">
                                     <?php foreach ($products as $product) { ?>
                                         <?php
                                             $productDetails = reset($product['productDetails']);
@@ -48,7 +48,7 @@
                                             <div class="shop__single-item__info">
                                                 <!-- wrapped long description and title -->
                                                 <div>
-                                                    <strong class='shop__single-item__info--title'><?php echo $productDetails['name']; ?></strong>
+                                                    <strong class='shop__single-item__info--title productName'><?php echo $productDetails['name']; ?></strong>
                                                     <?php if ($productDetails['longDescription'] && $productDetails['longDescription'] !== 'NA') { ?>
                                                         <i
                                                             style="width: 15px"
@@ -62,7 +62,7 @@
                                                     <?php } ?>
                                                 </div>
                                                 <?php if (trim($productDetails['name']) !== trim($productDetails['shortDescription']) ) { ?>
-                                                    <p class='shop__single-item__info--description'><?php echo $productDetails['shortDescription']; ?></p>
+                                                    <p class='shop__single-item__info--description productDescription'><?php echo $productDetails['shortDescription']; ?></p>
                                                 <?php } ?>
                                                 <?php
                                                     $productAllergies = null;
@@ -102,12 +102,12 @@
                                             <?php } ?>
                                             <!-- ADDED DIV FOR + PRICE - -->
                                             <div class='shop__single-item__cart-wrapper'>
-                                                <div class="shop__single-item__price">
+                                                <div class="shop__single-item__price priceQuantity">
                                                     <span><?php echo $productDetails['price']; ?></span>
                                                 </div>
                                                 <div class="shop__single-item__quanitity-buttons">
                                                     <div
-                                                        class="shop__single-item__add-to-cart"
+                                                        class="shop__single-item__add-to-cart priceQuantity"
                                                         <?php if ($product['addons'] || $productDetails['addRemark'] === '1') { ?>
                                                             onclick="focusOnOrderItems('<?php echo $product['productId']; ?>')"
                                                         <?php } else { ?>
@@ -115,16 +115,16 @@
                                                         <?php } ?>
                                                         >
                                                         <span style="font-size:16px; vertical-align: middle; text-align:center">
-                                                            <i class="fa fa-minus" aria-hidden="true"></i>
+                                                            <i class="fa fa-minus priceQuantity" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                     <div class="shop__single-item__quiantity">
-                                                        <div class="shop__single-item__add-to-cart">
-                                                            <span id="orderQuantityValue_<?php echo $product['productId']; ?>" class="countOrdered" style="font-size:14px;">0</span>
+                                                        <div class="shop__single-item__add-to-cart priceQuantity">
+                                                            <span id="orderQuantityValue_<?php echo $product['productId']; ?>" class="countOrdered priceQuantity" style="font-size:14px;">0</span>
                                                         </div>
                                                     </div>
                                                     <div
-                                                        class="shop__single-item__add-to-cart"
+                                                        class="shop__single-item__add-to-cart priceQuantity"
                                                         <?php if ($product['addons'] || $productDetails['addRemark'] === '1') { ?>
                                                             data-toggle="modal" data-target="#single-item-details-modal<?php echo $product['productId']; ?>"
                                                         <?php } else { ?>
@@ -132,7 +132,7 @@
                                                         <?php } ?>
                                                         >
                                                         <span style="font-size:16px; vertical-align: middle; text-align:center">
-                                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                                            <i class="fa fa-plus priceQuantity" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -144,11 +144,11 @@
                             </div>
                         <?php } ?>
                         <?php if (isset($termsAndConditions) && $termsAndConditions) { ?>
-                            <div class="shop__items">
+                            <div class="shop__items selectedSpotBackground">
                                 <div class="shop__item-list-heading">
                                     <h2>TERMS AND CONDITIONS</h2>
                                 </div>
-                                <div class="shop__item-list">
+                                <div class="shop__item-list selectedSpotBackground">
                                     <p style="padding-left:10px">
                                         <?php echo $termsAndConditions; ?>
                                     </p>
@@ -186,11 +186,11 @@
     if (!empty($mainProducts)) {
         ?>
             <!-- bottom bar for smaller screens -->
-            <div class='bottom-bar'>
+            <div class='bottom-bar footer'>
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-md-6 text-center text-left-md">
-                            <div>
+                            <div class="totalButton">
                                 <?php if (
                                         $vendor['requireReservation'] === '1'
                                         && !empty($_SESSION['visitorReservationId'])
@@ -200,12 +200,12 @@
                                         <i style="font-size: 40px;color: white" class="fa fa-home"></i>
                                     </a>
                                 <?php } ?>
-                                <p class='button-main button-secondary bottom-bar__checkout'>TOTAL: <span class='bottom-bar__total-price'>&euro;&nbsp;<span class="totalPrice">0</span></span> </p>
+                                <p class='button-main button-secondary bottom-bar__checkout totalButton'>TOTAL: <span class='bottom-bar__total-price'>&euro;&nbsp;<span class="totalPrice">0</span></span> </p>
                                 <!-- <button class='button-main button-secondary' onclick="focusCheckOutModal('modal__checkout__list')">Order List</button> -->
                             </div>
                         </div>
                         <div class="col-12 col-md-6 text-center text-right-md">
-                            <button class='button-main button-secondary bottom-bar__checkout' onclick="checkout()">PAY</button>
+                            <button class='button-main button-secondary bottom-bar__checkout payButton' onclick="checkout()">PAY</button>
                         </div>
                     </div>
                 </div>
@@ -259,14 +259,14 @@
                         id="single-item-details-modal<?php echo $product['productId']; ?>"
                         role="dialog"
                     >
-                        <div class="modal-content">
+                        <div class="modal-content selectedSpotBackground">
                             <div
-                                class="modal-header"
+                                class="modal-header selectedSpotBackground"
                                 <?php if ($product['onlyOne'] === '1') { ?>
                                     style="border-bottom:0px"
                                 <?php } ?>
                                 >
-                                <div class="modal-header__content">
+                                <div class="modal-header__content selectedSpotBackground">
                                     <div class='modal-header__details'  style="margin-top:17px;">
                                         <h4 class="modal-header__title"><?php echo $productDetails['name']; ?></h4>
                                         <h4 class='modal-price'>&euro; <?php echo $productDetails['price']; ?></h4>
@@ -278,7 +278,7 @@
                                     <span style="color:#000;">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body selectedSpotBackground">
                                 <div class="modal__content <?php echo $productDetails['productExtendedId']; ?>" id="product_<?php echo $product['productId']; ?>" >
 
                                     <div class="modal__adittional">
@@ -536,7 +536,7 @@
                                 </div>
                             </div>
                             <div
-                                class="modal-footer"
+                                class="modal-footer selectedSpotBackground"
                                 <?php if ($product['onlyOne'] === '1') { ?>
                                     style="border-top:0px"
                                 <?php } ?>
@@ -564,7 +564,7 @@
 
 <!-- IMAGE MODAL -->
 <!-- Image Modal -->
-<div class="modal fade image-modal"  tabindex="-1" id="image-modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade image-modal selectedSpotBackground"  tabindex="-1" id="image-modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class='modal-image-container'>
