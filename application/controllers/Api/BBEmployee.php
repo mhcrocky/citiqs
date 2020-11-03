@@ -27,10 +27,10 @@ class BBEmployee extends REST_Controller
 		$quantity=1;
 		$vatpercentage=0;
 		$this->ProductLines[]=	array(
-			"ProductGroupId"	=>	"Main",	// only categoryId !!! DONE
-			"ProductGroupName"	=>	"basic",		// categoryName !!! DONE
-			"ProductId"			=>	"PROD00",	// productId !!! DONE
-			"ProductName"		=>	"Null",
+			"ProductGroupId"	=>	"employee",	// only categoryId !!! DONE
+			"ProductGroupName"	=>	"registration",		// categoryName !!! DONE
+			"ProductId"			=>	"INSZ0".$employeedetail->id,	// productId !!! DONE
+			"ProductName"		=>	$employeedetail->username,
 			"Quantity"			=>	$quantity,
 			"QuantityUnit"		=>	"P",
 			"SellingPrice"		=>	(float)($price*$quantity),
@@ -55,7 +55,7 @@ class BBEmployee extends REST_Controller
 		$TStotalamount=$price*$quantity;
 		$this->PaymentLines[]=array(
 			"PaymentId"				=>	($nextemployee)+1, //ONLY ORDER ID WITHOUT PAY TESTING VERSION DONE
-			"PaymentName"			=>	"Alfred",
+			"PaymentName"			=>	$employeedetail->username,
 			"PaymentType"			=>	"EFT",
 			"Quantity"				=>	1,
 			"PayAmount"				=>	(float)$TStotalamount,
@@ -75,23 +75,23 @@ class BBEmployee extends REST_Controller
 		// $imageqr ->readImage('petersqr.png');
 		// $imageprint ->addImage($imageqr);
 
-		//            $imagelogo = new Imagick($logoFile);
-		//            $geometry = $imagelogo->getImageGeometry();
+		// $imagelogo = new Imagick($logoFile);
+		// $geometry = $imagelogo->getImageGeometry();
 		//
-		//            $width = intval($geometry['width']);
-		//            $height = intval($geometry['height']);
-		//            $crop_width = 600;
-		//            $crop_height = 150;
-		//            $crop_x = intval(($width - $crop_width) / 2);
-		//            $crop_y = intval(($height - $crop_height) / 2);
-		//            $sizeheight = 300;
-		//            $sizewidth = 576;
+		// $width = intval($geometry['width']);
+		// $height = intval($geometry['height']);
+		// $crop_width = 600;
+		// $crop_height = 150;
+		// $crop_x = intval(($width - $crop_width) / 2);
+		// $crop_y = intval(($height - $crop_height) / 2);
+		// $sizeheight = 300;
+		// $sizewidth = 576;
 		//
-		//            $imagelogo->cropImage($crop_width, $crop_height, $crop_x, $crop_y);
-		//            $imagelogo->setImageFormat('png');
-		//            $imagelogo->setImageBackgroundColor(new ImagickPixel('white'));
-		//            $imagelogo->extentImage($sizewidth, $sizeheight, -($sizewidth - $crop_width) / 2, -($sizeheight - $crop_height) / 2);
-		//            $imageprint->addImage($imagelogo);
+		// $imagelogo->cropImage($crop_width, $crop_height, $crop_x, $crop_y);
+		// $imagelogo->setImageFormat('png');
+		// $imagelogo->setImageBackgroundColor(new ImagickPixel('white'));
+		// $imagelogo->extentImage($sizewidth, $sizeheight, -($sizewidth - $crop_width) / 2, -($sizeheight - $crop_height) / 2);
+		// $imageprint->addImage($imagelogo);
 
 		// ---------------- Create the print -------------------------
 		// $result = $imageprint->mergeImageLayers(imagick::LAYERMETHOD_COMPARECLEAR);
