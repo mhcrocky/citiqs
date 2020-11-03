@@ -54,7 +54,7 @@ class BBEmployee extends REST_Controller
 		);
 		$TStotalamount=$price*$quantity;
 		$this->PaymentLines[]=array(
-			"PaymentId"				=>	($nextemployee)+1, //ONLY ORDER ID WITHOUT PAY TESTING VERSION DONE
+			"PaymentId"				=>	$nextemployee, //ONLY ORDER ID WITHOUT PAY TESTING VERSION DONE
 			"PaymentName"			=>	$employeedetail->username,
 			"PaymentType"			=>	"EFT",
 			"Quantity"				=>	1,
@@ -64,7 +64,7 @@ class BBEmployee extends REST_Controller
 			"Reference"				=>	"Employee in", //PAYNL TRANSACTION ID !!! DONE !!!
 			);
 		$jsonoutput['TransactionDateTime']	=	gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
-		$jsonoutput['TransactionNumber']	=	(int)(10+($nextemployee+1));
+		$jsonoutput['TransactionNumber']	=	(int)( ("2000").(200000+$nextemployee));
 		$jsonoutput['ordernumberr']			=	$nextemployee;
 		$this->bbemployee_model->updateemployeenext($employeedetail->id,$nextemployee);
 		// ------------------ QRCode creation --------------------------

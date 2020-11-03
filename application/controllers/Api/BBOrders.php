@@ -462,7 +462,7 @@
                 "Reference"             =>  $order['payNlTransactionId'], //PAYNL TRANSACTION ID !!! DONE !!!
             );
             $jsonoutput['TransactionDateTime']    =   gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
-            $jsonoutput['TransactionNumber']      =   (int)(10000+$order['orderId']);
+            $jsonoutput['TransactionNumber']      =   (int)(("1000").(100000+$order['orderId']) );
             $jsonoutput['ordernumberr']           =   $order['orderId'];
 			// $imagetextemail->annotateImage($drawemail, 440, 165 + ($i * 30), 0, "BTW 21 % ");
 			// $drawemail->annotation(570, 165 + ($i * 30), "€ ". $T21Stotalamount);
