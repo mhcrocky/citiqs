@@ -6,15 +6,15 @@ footer {
 }
 
 .hideFieldsets {
-    visibility: hidden;
+    /* visibility: hidden;
     height: 0px;
-    width: 0px;
-    display: inline;
+    width: 0px; */
+    display: none;
 }
 
 .showFieldsets {
-    visibility: visible;
+    /* visibility: visible;
     height: initial;
-    width: initial;
+    width: initial; */
     display: block;
 }

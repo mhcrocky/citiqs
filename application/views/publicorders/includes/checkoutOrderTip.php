@@ -1,5 +1,5 @@
 
-            <div class="checkout-table__single-element checkout-table__single-element--total">
+            <div class="checkout-table__single-element checkout-table__single-element--total checkoutOrderBody borderColor">
                 <div class="checkout-table__total">
                     <b><?php echo $this->language->line("PAYMENT-AL9999",'FEE');?></b>
                     <span id="serviceFee">
@@ -10,8 +10,8 @@
                     </span>
                 </div>
             </div>
-            <div class="checkout-table__single-element checkout-table__single-element--total">
-                <div class="checkout-table__total">
+            <div class="checkout-table__single-element checkout-table__single-element--total checkoutOrderBody borderColor">
+                <div class="checkout-table__total checkoutOrderBody">
                     <b><?php echo $this->language->line("PAYMENT-AL0010",'AMOUNT');?></b>
                     <span id="totalAmount">
                         <?php
@@ -22,9 +22,9 @@
                 </div>
             </div>
             <?php if ($vendor['tipWaiter'] === '1') { ?>
-                <div class="checkout-table__single-element checkout-table__single-element--total">
-                    <div class="checkout-table__total" style="text-align:right">
-                        <b><?php echo $this->language->line("PAYMENT-AL0010",'TIP');?></b>
+                <div class="checkout-table__single-element checkout-table__single-element--total checkoutOrderBody borderColor">
+                    <div class="checkout-table__total checkoutOrderBody" style="text-align:right">
+                        <b><?php echo $this->language->line("PAYMENT-AL00101",'TIP');?></b>
                         <span>
                             <input
                                 type="number"
@@ -33,15 +33,15 @@
                                 step="0.01"
                                 id="waiterTip"
                                 name="order[waiterTip]"
-                                class="form-control"
+                                class="form-control inputFieldCheckout"
                                 oninput="addTip(this)"
                                 style="width:25%; display:inline"
                             /> &euro;
                         </span>
                     </div>
                 </div>
-                <div class="checkout-table__single-element checkout-table__single-element--total" style="text-align:right">
-                    <div class="checkout-table__total">
+                <div class="checkout-table__single-element checkout-table__single-element--total checkoutOrderBody borderColor" style="text-align:right">
+                    <div class="checkout-table__total ">
                         <b><?php echo $this->language->line("PAYMENT-AL0010",'TOTAL');?> </b>
                         <span>
                             <input
@@ -54,7 +54,7 @@
                                 step="0.01"
                                 id="totalWithTip"
                                 placeholder="Waiter tip"
-                                class="form-control"
+                                class="form-control inputFieldCheckout"
                                 oninput="addTotalWithTip(this)"
                                 onchange="checkValue(this)"
                                 style="width:25%; display:inline"
@@ -64,12 +64,12 @@
                 </div>
             <?php } ?>
             <?php if ($vendor['requireRemarks'] === '1') { ?>
-                <div class="form-group col-sm-12">
-                    <label for="notesInput"><?php echo $this->language->line("PAYMENT-LL0010",'Remarks');?> </label>
+                <div class="form-group col-sm-12 checkoutOrderBody borderColor">
+                    <label class="labelColorCheckout" for="notesInput"><?php echo $this->language->line("PAYMENT-LL0010",'Remarks');?> </label>
                     <input
                         type="text"
                         id="notesInput"
-                        class="form-control"
+                        class="form-control inputFieldCheckout"
                         name="order[remarks]"
                         rows="3"
                         maxlength="<?php echo $maxRemarkLength; ?>"
@@ -88,6 +88,7 @@
                                 value="1" name="order[termsAndConditions]"
                                 <?php echo $termsAndConditions; ?>
                                 id="termsAndConditions"
+                                class="inputFieldCheckout"
                             />
                             I read and accept the
                             <a href="<?php echo $return; ?>">
@@ -102,6 +103,7 @@
                                 name="order[privacyPolicy]"
                                 <?php echo $privacyPolicy; ?>
                                 id="privacyPolicy"
+                                class="inputFieldCheckout"
                             />
                             I took notice of <a href="<?php echo $return; ?>">Privacy policy</a>
                         </label>

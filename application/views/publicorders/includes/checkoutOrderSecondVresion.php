@@ -1,7 +1,7 @@
 <div class="row d-flex justify-content-center">
     <div class='col-sm-12 col-lg-9'>
         <div class="checkout-table">
-            <div class="checkout-table__header">
+            <div id="headlineYourOrder" class="checkout-table__header">
                 <h3 class='mb-0' style="text-align:center"><?php echo $this->language->line("PAYMENT-HD0010",'YOUR ORDER');?> </h3>
             </div>
 <!--            <div class="checkout-table__single-element checkout-table__single-element--header">-->
@@ -38,10 +38,10 @@
                         $removeClass = 'removeClass_' . $mainProductId;
                         ?>
                         <!-- start checkout single element -->
-                        <div class="checkout-table__single-element <?php echo $removeClass; ?>">
+                        <div class="checkout-table__single-element <?php echo $removeClass; ?> borderColor">
                             <div class='checkout-table__product-details'>                              	
                                	<div>
-									<p class="checkout-table__price">
+									<p class="checkout-table__price markedButtons">
 										<span id="price_<?php echo $countInputs; ?>">
 											<?php echo number_format($product['amount'], 2, ".", ","); ?>
 										</span>&nbsp;&euro;
@@ -57,14 +57,14 @@
                                             ?>
                                             onclick="redirectToMakeOrder('<?php echo $editRedirect; ?>')"
                                         >
-                                            <i class="fa fa-edit"></i>
+                                            <i class="fa fa-edit editIcon"></i>
                                         </span>
                                     </p>
 								</div>
 							   	<!-- end price -->
    
                                	<div>
-                                <p><?php echo $product['name']; ?></p>
+                                <p class="productName"><?php echo $product['name']; ?></p>
                                 <?php
                                     if (!empty($product['allergies']))  {
                                         $productAllergies = explode($this->config->item('allergiesSeparator'), $product['allergies']);
@@ -84,7 +84,7 @@
                                         echo '</div>';
                                     }
                                 ?>
-                                <small><?php echo $product['category']; ?></small>
+                                <small class="categoryName"><?php echo $product['category']; ?></small>
                                 <?php if (isset($product['remark'])) { ?>
                                     <div>
                                         <?php if ($product['remark']) { ?>
@@ -114,28 +114,28 @@
                                 
                                 <div class="checkout-table__quantity">
                                     <span
-                                        class="fa-stack makeOrder"
+                                        class="fa-stack makeOrder plusAndMinus"
                                         <?php if ($product['onlyOne'] === '0') { ?>
                                             onclick='changeQuantityAndPriceById("<?php echo $mainProductId; ?>", "+")'
                                         <?php } elseif ($product['onlyOne'] === '1') { ?>
                                             style="visibility: hidden;"
                                         <?php } ?>
                                     >
-                                        <i class="fa fa-plus"></i>
+                                        <i class="fa fa-plus plusAndMinusColor"></i>
                                     </span>
-                                    <span class='checkout-table__number-of-products' id="quantity_<?php echo $countInputs; ?>">
+                                    <span class='checkout-table__number-of-products markedButtons' id="quantity_<?php echo $countInputs; ?>">
                                         <!-- <span class="quantity">Quantity:&nbsp;</span> -->
                                         <?php echo $product['quantity']; ?>
                                     </span>
                                     <span
-                                        class="fa-stack makeOrder"
+                                        class="fa-stack makeOrder plusAndMinus"
                                         <?php if ($product['onlyOne'] === '0') { ?>
                                             onclick='changeQuantityAndPriceById("<?php echo $mainProductId; ?>", "-")'
                                         <?php } elseif ($product['onlyOne'] === '1') { ?>
                                             style="visibility: hidden;"
                                         <?php } ?>
                                     >
-                                        <i class="fa fa-minus"></i>
+                                        <i class="fa fa-minus plusAndMinusColor"></i>
                                     </span>
                                     <input
                                         id="<?php echo $mainProductId; ?>"
@@ -185,7 +185,7 @@
                          		
                           		<div class="checkout-table__trash">
                           			<i
-									class="fa fa-trash"
+									class="fa fa-trash trashIcon"
 									data-class="<?php echo $removeClass; ?>";
 									data-order-session-index="<?php echo $key ; ?>"
 									onclick="unsetSessionOrderElement(this.dataset)"
@@ -206,7 +206,7 @@
                                 ?>
                                     <div
                                         id="<?php echo $addonId; ?>"
-                                        class="checkout-table__single-element  <?php echo $removeClass; ?>" 
+                                        class="checkout-table__single-element  <?php echo $removeClass; ?> borderColor" 
                                     >
                                         <!--<div class='checkout-table__num-order'>
                                              <b class="counterClass" style="padding-left: 20px;"><?php #echo $countAddons; ?>.</b> 
@@ -216,7 +216,7 @@
                                             <!--<b class="counterClass"><?php echo $count; ?>.</b>-->
                                             <!-- added wrapper -->
 									   		<div>
-												<p class="checkout-table__price">
+												<p class="checkout-table__price markedButtons">
 													<span id="price_<?php echo $countInputs; ?>">
 														<?php echo number_format($addon['amount'], 2, ".", ","); ?>
 													</span>&nbsp;&euro;
@@ -238,7 +238,7 @@
 									   		</div>                                           
                                              <!-- addon price -->
                                             <div class='checkout-table__addons-wrapper'>
-                                                <p>
+                                                <p  class="productName">
                                                     <?php echo $addon['name']; ?>
                                                 </p>
                                                 <?php
@@ -260,7 +260,7 @@
                                                         echo '</div>';
                                                     }
                                                 ?>
-                                                <small><?php echo $addon['category']; ?></small>
+                                                <small class="categoryName"><?php echo $addon['category']; ?></small>
                                                 <?php if (isset($addon['remark'])) { ?>
                                                     <div>
                                                         <?php if ($addon['remark']) { ?>
@@ -285,15 +285,15 @@
 										</div>
                                         <div class='checkout-table__numbers'>
                                             <div class="checkout-table__quantity">
-                                                <span class="fa-stack makeOrder" onclick='changeQuantityAndPriceById("input_quantity_<?php echo $countInputs; ?>", "+")'>
-                                                    <i class="fa fa-plus"></i>
+                                                <span class="fa-stack makeOrder plusAndMinus" onclick='changeQuantityAndPriceById("input_quantity_<?php echo $countInputs; ?>", "+")'>
+                                                    <i class="fa fa-plus plusAndMinusColor"></i>
                                                 </span>
-                                                <span class='checkout-table__number-of-products' id="quantity_<?php echo $countInputs; ?>">
+                                                <span class='checkout-table__number-of-products markedButtons' id="quantity_<?php echo $countInputs; ?>">
                                                     <!-- <span class="quantity">Quantity:&nbsp;</span> -->
                                                     <?php echo $addon['quantity']; ?>
                                                 </span>
-                                                <span class="fa-stack makeOrder" onclick='changeQuantityAndPriceById("input_quantity_<?php echo $countInputs; ?>", "-")'>
-                                                    <i class="fa fa-minus"></i>
+                                                <span class="fa-stack makeOrder plusAndMinus" onclick='changeQuantityAndPriceById("input_quantity_<?php echo $countInputs; ?>", "-")'>
+                                                    <i class="fa fa-minus plusAndMinusColor"></i>
                                                 </span>
                                                 <input
                                                     id="input_quantity_<?php echo $countInputs; ?>"
@@ -315,7 +315,8 @@
                                                     max="<?php echo $addon['maxQuantity']; ?>"
                                                     name="orderExtended[<?php echo $countInputs; ?>][<?php echo $addonExtendedId; ?>][quantity]"
                                                     value="<?php echo $addon['quantity']; ?>"
-                                                    required hidden
+                                                    required
+                                                    hidden
                                                 />
                                                 <input
                                                     name="orderExtended[<?php echo $countInputs; ?>][<?php echo $addonExtendedId; ?>][subMainPrductOrderIndex]"
@@ -336,7 +337,7 @@
                                             </div>
                                             <div class="checkout-table__trash">
                                                 <i
-                                                    class="fa fa-trash"
+                                                    class="fa fa-trash trashIcon"
                                                     data-addon-id="<?php echo $addonId; ?>"
                                                     data-order-session-index="<?php echo $key; ?>"
                                                     data-product-extended-id="<?php echo $productExtendedId; ?>"

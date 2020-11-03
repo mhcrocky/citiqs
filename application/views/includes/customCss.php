@@ -115,4 +115,6 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
 <?php } elseif ($this->view === 'warehouse/design') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/design.css">
-<?php } ?>
+<?php }  elseif ($this->view === 'publicorders/closed') { ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/closed.css">
+<?php }?>

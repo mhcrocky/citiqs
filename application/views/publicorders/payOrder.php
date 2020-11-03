@@ -6,7 +6,7 @@
                     <div class="col-md-12">
                         <div id="area-container">
                             <div class="page-container">
-                                <div class="heading pay-header">
+                                <div id="payHeader" class="heading pay-header">
 <!--                                    <div class="amount">--><?php //echo number_format($total, 2, ',', '.'); ?><!-- EUR</div>-->
 <!--                                    <div class="info">-->
 <!--                                        <b>bestelling</b>-->
@@ -64,7 +64,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="bar">
+                                <div  id="choosePaymentMethod" class="bar">
                                     <div class="bar-title">
                                         <span data-trans="" data-trn-key="Kies een betaalmethode">
 												<?php echo $this->language->line("PAYMENT-050",'Kies een betaalmethode');?>
@@ -75,7 +75,7 @@
                                     </span>
                                 </div>
                                 <div class="content-container clearfix" id="paymentMethodsContainer">
-                                    <div class="payment-container methods">
+                                    <div id="paymentContainer" class="payment-container methods">
                                         <?php if ($vendor['ideal'] === '1') { ?>
                                             <a href="javascript:void(0)" onclick="toogleElements('idealBanks', 'paymentMethodsContainer', 'hidden')" class="paymentMethod method-card" >
                                                 <img src="https://tiqs.com/alfred/assets/home/imgs/extra/ideal.png" alt="iDEAL">
@@ -360,8 +360,8 @@
                                         </div>
                                     </div>
                                 <?php } ?>
-                                <div class="footer" style="text-align:left">
-                                    <a href="<?php echo base_url() . $redirect; ?>" class="btn-cancel">
+                                <div id="payFooter" class="footer" style="text-align:left">
+                                    <a id="backLink" href="<?php echo base_url() . $redirect; ?>" class="btn-cancel">
                                         <i class="fa fa-arrow-left"></i>
                                         <span data-trans="" data-trn-key="Annuleren">BACK</span>
                                     </a>

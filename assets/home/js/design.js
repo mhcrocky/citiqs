@@ -6,9 +6,12 @@ function styleELements(element) {
     let iframeElements = $('iframe').contents().find(selector);
     if (iframeElements) {
         element.setAttribute('data-value', '1');
-        // iframeElements.css(property, value);
-        let style = property + ':' + value + ' !important';
-        iframeElements.attr('style',style);
+        let iframeElementsLength = iframeElements.length;
+        let i;
+        for (i = 0; i < iframeElementsLength; i++) {
+            let iframeElement = iframeElements[i];
+            iframeElement.style.setProperty(property, value, 'important');
+        }
     }
 
 }
@@ -24,6 +27,7 @@ function getJquerySelector(selector, selectorValue) {
 }
 
 function showViewSettings(filedsetId) {
+    if (!filedsetId) return;
     let fieldsets = document.getElementsByTagName('fieldset');
     let fieldsetsLength = fieldsets.length;
     let i;
@@ -109,6 +113,7 @@ var designGlobals = (function() {
         'showClass' : 'showFieldsets',
         'hideClass' : 'hideFieldsets',
         'selectTypeView' : 'selectTypeView',
+        'closed' : 'closed',
         'selectSpotView' : 'selectSpotView',
         'selectedSpotView' : 'selectedSpotView',
         'checkoutOrderView' : 'checkoutOrderView',
@@ -117,6 +122,10 @@ var designGlobals = (function() {
         'checkUrl' : function (url) {
                         if (url.includes('make_order?vendorid=') && !url.includes('&typeId=') && !url.includes('&spotid=')) {
                             return this['selectTypeView']
+                        }
+                        if (url.includes('closed')) {
+                            console.dir(url);
+                            return this['closed']
                         }
                         if (url.includes('make_order?vendorid=') && url.includes('&typeId=') && !url.includes('&spotid=')) {
                             return this['selectSpotView']

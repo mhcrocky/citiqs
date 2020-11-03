@@ -1,5 +1,5 @@
 <div class="main-wrapper-nh" style="text-align:center">
-	<div class="col-half background-apricot-blue height">
+	<div id="selectSpotContainer" class="col-half background-apricot-blue height">
 		<div class="width-650" style="padding-top:0px"></div>
 		<?php if (!empty($_SESSION['iframe'])) { ?>
 		<div
@@ -9,11 +9,11 @@
 			<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="250" height="" />
 		</div><!-- /.login-logo -->
 		<?php } ?>
-		<h1 style="text-align:center; text-transform: uppercase; margin: 0px 7px; border-bottom: 4px solid;"><?php echo $vendor['vendorName'] ?></h1>
+		<h1 id="selectSpotH1" style="text-align:center; text-transform: uppercase; margin: 0px 7px; border-bottom: 4px solid;"><?php echo $vendor['vendorName'] ?></h1>
 		<div class="selectWrapper mb-35" style="padding-top:10px">
 			<?php if (!empty($spots)) { ?>
 				<div id="selectSpots" style="margin-top:10px">
-					<label for="spot" style="text-align:center; text-transform: uppercase;">Service Point Or Table:</label>
+					<label id="labelColor" for="spot" style="text-align:center; text-transform: uppercase;">Service Point Or Table:</label>
 					<!-- <select class="selectBox selectSpot" id="spot" onchange="redirectTo(this.value)" class="form-control" style="color :black">
 						<option value="">Select spot</option>
 						<?php
@@ -45,7 +45,7 @@
 
 					<div class="custom__select">
 						<form action="">
-							<ul class='select__list'>
+							<ul class='select__list bordersColor' id="productList">
 								<?php
 									$noSpots = true;
 									foreach ($spots as $spot) {
@@ -62,10 +62,9 @@
 											$timeNow = date('H:i:s');									
 											if ($timeNow < $workingDay[1] || $timeNow > $workingDay[2]) continue;
 										}
-
 										$noSpots = false;
 									?>
-										<li class='select__list__item'>
+										<li class='select__list__item bordersColor'>
 											<label
 												data-redirect="<?php echo 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spot['spotId'] ?>"
 												for="spotId_<?php echo $spot['spotId']; ?>"
@@ -87,6 +86,7 @@
 						</form>
 						<?php if (empty($noSpots)) { ?>
 							<button
+								id="confirmButton"
 								type='submit'
 								class='submit-type'
 								onclick="redirectToSpot('checked')"

@@ -1,20 +1,20 @@
-<main class="container" style="text-align:left; margin-bottom:20px" id="buyerDetails">
+<main class="container" style="text-align:left; margin-bottom:20px" id="buyerDetailsContainer">
     <form id="goBuyerDetails" method="post" onsubmit="return submitBuyerDetails()">
         <input type="text" name="orderRandomKey" value="<?php echo $orderRandomKey; ?>" redonly hidden requried />
         <input type="text" name="vendorId" value="<?php echo $vendor['vendorId']; ?>" redonly hidden requried />
         <input type="text" name="spotTypeId" value="<?php echo $spot['spotTypeId']; ?>" redonly hidden requried />
         <div class="row d-flex justify-content-center" id="checkout">
             <div class="col-sm-12 col-lg-9 left-side">
-                <div class="checkout-title">
+                <div id="yourDetails" class="checkout-title">
                     <span>Your details</span>
                 </div>
                 <div class="row">
                     <?php if ($vendor['requireName'] === '1') { ?>
                         <div class="form-group col-sm-6">
-                            <label for="firstNameInput"><?php echo $this->language->line("PAYMENT-805",'Name');?> (<sup>*</sup>)</label>
+                            <label class="labelColorBuyer" for="firstNameInput"><?php echo $this->language->line("PAYMENT-805",'Name');?> (<sup>*</sup>)</label>
                             <input
                                 id="firstNameInput"
-                                class="form-control"
+                                class="form-control inputFieldsBuyer"
                                 name="user[username]"
                                 value="<?php echo $username; ?>"
                                 type="text" placeholder="<?php echo $this->language->line("PAYMENT-805",'Name');?> "
@@ -25,11 +25,11 @@
                     <?php } ?>
                     <?php if ($vendor['requireEmail'] === '1' || intval($spot['spotTypeId']) !== $local) { ?>
                         <div class="form-group col-sm-6">
-                            <label for="emailAddressInput"><?php echo $this->language->line("PAYMENT-810",'Email address');?>  <sup>*</sup></label>
+                            <label class="labelColorBuyer" for="emailAddressInput"><?php echo $this->language->line("PAYMENT-810",'Email address');?>  <sup>*</sup></label>
                             <input
                                 type="email"
                                 id="emailAddressInput"
-                                class="form-control"
+                                class="form-control inputFieldsBuyer"
                                 name="user[email]"
                                 value="<?php echo $email; ?>"
                                 placeholder="<?php echo $this->language->line("PAYMENT-810",'Email address');?>"
@@ -61,9 +61,9 @@
                     </div> -->
                     <?php if ($vendor['requireMobile'] === '1' || intval($spot['spotTypeId']) !== $local ) { ?>
                         <div class="form-group col-sm-6">
-                            <label for="phoneInput"><?php echo $this->language->line("PAYMENT-I0010",'Phone');?><sup>*</sup></label>
+                            <label class="labelColorBuyer" for="phoneInput"><?php echo $this->language->line("PAYMENT-I0010",'Phone');?><sup>*</sup></label>
                             <div>
-                                <select class="form-control" style="width:22% !important; display:inline-block !important" name="phoneCountryCode" style="text-align:center">
+                                <select class="form-control inputFieldsBuyer" style="width:22% !important; display:inline-block !important" name="phoneCountryCode" style="text-align:center">
                                     <?php foreach ($countryCodes as $code => $data) { ?>                                
                                         <option
                                             value="<?php $value = '00' . $data['code']; echo $value ?>"0
@@ -81,7 +81,7 @@
                                 </select>
                                 <input
                                     id="phoneInput"
-                                    class="form-control"
+                                    class="form-control inputFieldsBuyer"
                                     style="width:76% !important; display:inline-block !important"
                                     name="user[mobile]"
                                     value="<?php echo $mobile; ?>"
@@ -95,7 +95,7 @@
                     <?php } ?>
                     <?php if ($vendor['requireNewsletter'] === '1') { ?>
                         <div class="form-group col-sm-12">
-                            <label><?php echo $this->language->line("PAYMENT-Q0001",'Receive our newsletter');?></label>
+                            <label class="labelColorBuyer" ><?php echo $this->language->line("PAYMENT-Q0001",'Receive our newsletter');?></label>
                             <label class="radio-inline" for="newsLetterYes">
                                 <input type="radio" id="newsLetterYes" name="user[newsletter]" value="1" />
 								<?php echo $this->language->line("PAYMENT-0001",'YES');?>
@@ -108,10 +108,10 @@
                     <?php } ?>
                 </div>
                 <div class="checkout-btns">
-                    <a href="<?php echo base_url() . 'checkout_order?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" style="background-color: #948b6f" class="button">
+                    <a id="backButton" href="<?php echo base_url() . 'checkout_order?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" style="background-color: #948b6f" class="button">
                         <i class="fa fa-arrow-left"></i>
 						<?php echo $this->language->line("PAYMENT-9100",'Back to list');?>                   </a>
-                    <a href="javascript:void(0);" style="background-color: #349171" class="button" onclick="submitBuyerDetails();">
+                    <a id="payButton" href="javascript:void(0);" style="background-color: #349171" class="button" onclick="submitBuyerDetails();">
 						<?php echo $this->language->line("PAYMENT-9110",'Pay');?>
                         <i class="fa fa-arrow-right"></i>
                     </a>

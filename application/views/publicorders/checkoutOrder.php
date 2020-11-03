@@ -1,4 +1,4 @@
-<main class="container" style="text-align:left; margin-bottom:20px" id="checkoutOrderBody">
+<main class="container checkoutOrderBody" style="text-align:left; margin-bottom:20px">
     <form id="goOrder" method="post" onsubmit="return submitForm">
         <input type="text" name="orderRandomKey" value="<?php echo $orderRandomKey; ?>" required readonly hidden />
         <input type="text" name="vendorId" value="<?php echo $vendor['vendorId']; ?>" required readonly hidden />
@@ -47,11 +47,11 @@
                     <div class="row">                        
                         <?php if (intval($spot['spotTypeId']) === $this->config->item('deliveryType')) { ?>
                             <div class="form-group col-sm-6">
-                                <label for="city"><?php echo $this->language->line("PAYMENT-C0020",'City');?><sup>*</sup></label>
+                                <label class="labelColorCheckout" for="city"><?php echo $this->language->line("PAYMENT-C0020",'City');?><sup>*</sup></label>
                                 <input
                                     type="teyt"
                                     id="city"
-                                    class="form-control"
+                                    class="form-control inputFieldCheckout"
                                     name="user[city]"
                                     value="<?php echo $city; ?>"
                                     placeholder="<?php echo $this->language->line("PAYMENT-C0020",'City');?>"
@@ -60,11 +60,11 @@
                                 />
                             </div>
                             <div class="form-group col-sm-6">
-                                <label for="zipcode"><?php echo $this->language->line("PAYMENT-C0020",'Zipcode');?><sup>*</sup></label>
+                                <label class="labelColorCheckout" for="zipcode"><?php echo $this->language->line("PAYMENT-C0020",'Zipcode');?><sup>*</sup></label>
                                 <input
                                     type="text"
                                     id="zipcode"
-                                    class="form-control"
+                                    class="form-control inputFieldCheckout"
                                     name="user[zipcode]"
                                     value="<?php echo $zipcode; ?>"
                                     placeholder="<?php echo $this->language->line("PAYMENT-C0020",'Zipcode');?>"
@@ -73,11 +73,11 @@
                                 />
                             </div>
                             <div class="form-group col-sm-6">
-                                <label for="address"><?php echo $this->language->line("PAYMENT-C0020",'Address');?><sup>*</sup></label>
+                                <label class="labelColorCheckout" for="address"><?php echo $this->language->line("PAYMENT-C0020",'Address');?><sup>*</sup></label>
                                 <input
                                     type="text"
                                     id="address"
-                                    class="form-control"
+                                    class="form-control inputFieldCheckout"
                                     name="user[address]"
                                     value="<?php echo $address; ?>"
                                     placeholder="<?php echo $this->language->line("PAYMENT-C0020",'Address');?>"
@@ -87,12 +87,12 @@
                             </div>                            
                         <?php } ?>
                         <div class="form-group col-sm-6">
-                            <label for="periodTime" ><?php echo $this->language->line("PAYMENT-PC00120",'Choose');?>&nbsp;<?php echo lcfirst($spot['spotType']); ?>&nbsp;<?php echo $this->language->line("PAYMENT-PC0020",'period');?><sup>*</sup></label>
+                            <label class="labelColorCheckout" for="periodTime" ><?php echo $this->language->line("PAYMENT-PC00120",'Choose');?>&nbsp;<?php echo lcfirst($spot['spotType']); ?>&nbsp;<?php echo $this->language->line("PAYMENT-PC0020",'period');?><sup>*</sup></label>
                             <div>
                                 <select
                                     id="periodTime"
                                     name="order[date]"
-                                    class="form-control"
+                                    class="form-control inputFieldCheckout"
                                     style="text-align:center"
                                     onchange="buyerSelectTime(this.value, 'orderTimeDiv', 'orderTimeInput')"
                                     >
@@ -145,19 +145,26 @@
                             </div>
                         </div>
                         <div class="form-group col-sm-6" id="orderTimeDiv">
-                            <label for="orderTime"><?php echo $this->language->line("PAYMENT-PC0110",'Select ');?>&nbsp;<?php echo lcfirst($spot['spotType']); ?>&nbsp;<?php echo $this->language->line("PAYMENT-PC0120",'time');?> (<sup>*</sup>)</label>
-                            <input type="text" id="orderTimeInput" class="form-control timepicker" name="order[time]" />
+                            <label class="labelColorCheckout" for="orderTime"><?php echo $this->language->line("PAYMENT-PC0110",'Select ');?>&nbsp;<?php echo lcfirst($spot['spotType']); ?>&nbsp;<?php echo $this->language->line("PAYMENT-PC0120",'time');?> (<sup>*</sup>)</label>
+                            <input type="text" id="orderTimeInput" class="form-control timepicker inputFieldCheckout" name="order[time]" />
                         </div>
                     </div>
                 <?php } ?>
                 <div class="checkout-btns">
                     <a
+                        id="checkoutBack"
                         href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spotId . '&' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                         style="background-color: #948b6f" class="button"
                         >
                         <i class="fa fa-arrow-left"></i>
                         Back to list                    </a>
-                    <a href="javascript:void(0);" style="background-color: #349171" class="button" onclick="submitForm()">
+                    <a
+                        id="checkoutContinue"
+                        href="javascript:void(0);"
+                        style="background-color: #349171"
+                        class="button"
+                        onclick="submitForm()"
+                        >
                         Continue
                         <i class="fa fa-arrow-right"></i>
                     </a>

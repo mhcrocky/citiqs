@@ -49,6 +49,8 @@
             $spotId = empty($get['spotid']) ? 0 : intval($get['spotid']);
             $vendor = $this->shopvendor_model->setProperty('vendorId', $get['vendorid'])->getVendorData();
 
+            $this->global[$this->config->item('design')] = (!empty($vendor['design'])) ? unserialize($vendor['design']) : null;
+
             if ($spotId && $vendor) {
                 $orderDataRandomKey = empty($get[$this->config->item('orderDataGetKey')]) ? '' : $get[$this->config->item('orderDataGetKey')];
                 $this->checkSpot($spotId, $vendor, $orderDataRandomKey);
@@ -110,10 +112,6 @@
 
         private function loadVendorView(int $typeId, array $vendor): void
         {
-            $this->global['pageTitle'] = 'TIQS : SELECT SPOT';
-            $this->global[$this->config->item('design')] = (!empty($vendor['design'])) ? unserialize($vendor['design']) : null;
-
-
             $types = Utility_helper::resetArrayByKeyMultiple($vendor['typeData'], 'active');
 
             if (empty($types[1])) {
@@ -131,6 +129,8 @@
                     'vendor' => $vendor,
                     'activeTypes' => $types[1],
                 ];
+
+                $this->global['pageTitle'] = 'TIQS : SELECT TYPE';
                 $this->loadViews('publicorders/selectType', $this->global, $data, null, 'headerWarehousePublic');
             }
 
@@ -156,6 +156,8 @@
                 'local' => $this->config->item('local'),
                 'typeId' => $where['tbl_shop_spots.spotTypeId']
             ];
+
+            $this->global['pageTitle'] = 'TIQS : SELECT SPOT';
             $this->loadViews('publicorders/selectSpot', $this->global, $data, null, 'headerWarehousePublic');
             return;
         }
@@ -248,13 +250,14 @@
                 return;
             };
 
-            $this->global['pageTitle'] = 'TIQS : CLOSED';
-
             $data = [
                 'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData()
             ];
             $workingTime = $this->shopvendortime_model->setProperty('vendorId', $vendorId)->fetchWorkingTime();
             $data['workingTime'] = $workingTime ? Utility_helper::resetArrayByKeyMultiple($workingTime, 'day') : null;
+
+            $this->global['pageTitle'] = 'TIQS : CLOSED';
+            $this->global[$this->config->item('design')] = (!empty($data['vendor']['design'])) ? unserialize($data['vendor']['design']) : null;
 
             $this->loadViews('publicorders/closed', $this->global, $data, null, 'headerWarehousePublic');
         }
@@ -442,6 +445,7 @@
             ];
 
             $this->global['pageTitle'] = 'TIQS : PAY';
+            $this->global[$this->config->item('design')] = (!empty($data['vendor']['design'])) ? unserialize($data['vendor']['design']) : null;
             $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
 
