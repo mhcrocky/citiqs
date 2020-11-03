@@ -97,7 +97,7 @@ class BBEmployee extends REST_Controller
 		// $result = $imageprint->mergeImageLayers(imagick::LAYERMETHOD_COMPARECLEAR);
 		$jsonoutput['ProductLines']=$this->ProductLines;
 		$jsonoutput['PaymentLines']=$this->PaymentLines;
-
+		$jsonoutput['employeedetail']=$employeedetail;
 		// header('Content-type: image/png');
 		echo json_encode($jsonoutput);
 	}
