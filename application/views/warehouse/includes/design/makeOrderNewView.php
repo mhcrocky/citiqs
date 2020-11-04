@@ -113,7 +113,83 @@
                 <?php } ?>
             />
         </label>
-    </div>   
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Product category font color (popup):
+            <input
+                type="color"
+                class="form-control"
+                name="makeOrderNew[class][productCategory][color]"
+                data-css-selector="class"
+                data-css-selector-value="productCategory"
+                data-css-property="color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['makeOrderNew']['class']['productCategory']['color']) ) { ?>
+                value = "<?php echo $design['makeOrderNew']['class']['productCategory']['color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Remark label font color (popup):
+            <input
+                type="color"
+                class="form-control"
+                name="makeOrderNew[class][remarkStyle][color]"
+                data-css-selector="class"
+                data-css-selector-value="remarkStyle"
+                data-css-property="color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['makeOrderNew']['class']['remarkStyle']['color']) ) { ?>
+                value = "<?php echo $design['makeOrderNew']['class']['remarkStyle']['color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Labels font color (popup):
+            <input
+                type="color"
+                class="form-control"
+                name="makeOrderNew[class][labelsMain][color]"
+                data-css-selector="class"
+                data-css-selector-value="labelsMain"
+                data-css-property="color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['makeOrderNew']['class']['labelsMain']['color']) ) { ?>
+                value = "<?php echo $design['makeOrderNew']['class']['labelsMain']['color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Label items font color (popup):
+            <input
+                type="color"
+                class="form-control"
+                name="makeOrderNew[class][labelItems][color]"
+                data-css-selector="class"
+                data-css-selector-value="labelItems"
+                data-css-property="color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['makeOrderNew']['class']['labelItems']['color']) ) { ?>
+                value = "<?php echo $design['makeOrderNew']['class']['labelItems']['color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
     <div class="form-group col-sm-12">
         <label style="display:block;">
             Price, quantity, plus and minus background color:
@@ -246,5 +322,119 @@
                 <?php } ?>
             />
         </label>
-    </div>    
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Add product button font color:
+            <input
+                type="color"
+                class="form-control"
+                name="makeOrderNew[class][addProductOnList][color]"
+                data-css-selector="class"
+                data-css-selector-value="addProductOnList"
+                data-css-property="color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['makeOrderNew']['class']['addProductOnList']['color']) ) { ?>
+                value = "<?php echo $design['makeOrderNew']['class']['addProductOnList']['color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Add product button background color:
+            <input
+                type="color"
+                class="form-control"
+                name="makeOrderNew[class][addProductOnList][background-color]"
+                data-css-selector="class"
+                data-css-selector-value="addProductOnList"
+                data-css-property="background-color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['makeOrderNew']['class']['addProductOnList']['background-color']) ) { ?>
+                value = "<?php echo $design['makeOrderNew']['class']['addProductOnList']['background-color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Add product button font color:
+            <input
+                type="color"
+                class="form-control"
+                name="makeOrderNew[class][addProductOnList][color]"
+                data-css-selector="class"
+                data-css-selector-value="addProductOnList"
+                data-css-property="color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['makeOrderNew']['class']['addProductOnList']['color']) ) { ?>
+                value = "<?php echo $design['makeOrderNew']['class']['addProductOnList']['color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Input field color:
+            <input
+                type="color"
+                class="form-control"
+                name="checkoutOrder[class][inputFieldsMakeOrder][color]"
+                data-css-selector="class"
+                data-css-selector-value="inputFieldsMakeOrder"
+                data-css-property="color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['checkoutOrder']['class']['inputFieldsMakeOrder']['color']) ) { ?>
+                value = "<?php echo $design['checkoutOrder']['class']['inputFieldsMakeOrder']['color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div> 
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Input field border color:
+            <input
+                type="color"
+                class="form-control"
+                name="checkoutOrder[class][inputFieldsMakeOrder][border-color]"
+                data-css-selector="class"
+                data-css-selector-value="inputFieldsMakeOrder"
+                data-css-property="border-color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['checkoutOrder']['class']['inputFieldsMakeOrder']['border-color']) ) { ?>
+                value = "<?php echo $design['checkoutOrder']['class']['inputFieldsMakeOrder']['border-color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Input field background color:
+            <input
+                type="color"
+                class="form-control"
+                name="checkoutOrder[class][inputFieldsMakeOrder][background-color]"
+                data-css-selector="class"
+                data-css-selector-value="inputFieldsMakeOrder"
+                data-css-property="background-color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['checkoutOrder']['class']['inputFieldsMakeOrder']['background-color']) ) { ?>
+                value = "<?php echo $design['checkoutOrder']['class']['inputFieldsMakeOrder']['background-color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
 </fieldset>

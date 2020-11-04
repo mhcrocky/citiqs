@@ -268,11 +268,11 @@
                                 >
                                 <div class="modal-header__content selectedSpotBackground">
                                     <div class='modal-header__details'  style="margin-top:17px;">
-                                        <h4 class="modal-header__title"><?php echo $productDetails['name']; ?></h4>
-                                        <h4 class='modal-price'>&euro; <?php echo $productDetails['price']; ?></h4>
+                                        <h4 class="modal-header__title productName"><?php echo $productDetails['name']; ?></h4>
+                                        <h4 class='modal-price productName productName'>&euro; <?php echo $productDetails['price']; ?></h4>
                                     </div>
-                                    <h6 class="modal-header__description"><?php echo $productDetails['shortDescription']; ?></h6>
-                                    <p class='modal__category'>Category: <a href='#'><?php echo $product['category']; ?></a></p>
+                                    <h6 class="modal-header__description productDescription"><?php echo $productDetails['shortDescription']; ?></h6>
+                                    <p class='modal__category productCategory'>Category: <a href='#' class='productCategory'><?php echo $product['category']; ?></a></p>
                                 </div>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span style="color:#000;">&times;</span>
@@ -283,7 +283,7 @@
 
                                     <div class="modal__adittional">
                                         <?php if ($product['onlyOne'] === '0') { ?>
-                                            <h6>Quantity</h6>
+                                            <h6 class="labelsMain">Quantity</h6>
                                             <div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">
                                                 <label class="form-check-label">
                                                     <?php echo $productDetails['name']; ?>
@@ -294,7 +294,7 @@
                                                 style="margin-bottom:3px"
                                                 >
                                                 <span
-                                                    class='modal-footer__buttons modal-footer__quantity--plus'
+                                                    class='modal-footer__buttons modal-footer__quantity--plus priceQuantity'
                                                     style="margin-right:5px;"
                                                     data-type="minus"
                                                     onclick="changeProductQuayntity(this, 'addonQuantity')"
@@ -319,7 +319,7 @@
                                             readonly
                                             oninput="reloadPageIfMinus(this)"
                                             <?php if ($product['onlyOne'] === '0') { ?>
-                                                class="form-control checkProduct"
+                                                class="form-control checkProduct inputFieldsMakeOrder"
                                                 style="display:inline-block"
                                             <?php } elseif ($product['onlyOne'] === '1') { ?>
                                                 readonly
@@ -339,7 +339,7 @@
                                         />
                                         <?php if ($product['onlyOne'] === '0') { ?>
                                                     <span
-                                                        class='modal-footer__buttons modal-footer__quantity--minus'
+                                                        class='modal-footer__buttons modal-footer__quantity--minus priceQuantity'
                                                         style="margin-left:5px;"
                                                         data-type="plus"
                                                         onclick="changeProductQuayntity(this, 'addonQuantity')"
@@ -365,11 +365,11 @@
                                             }
                                         ?>
                                         <?php if ($product['addRemark'] === '1') { ?>
-                                            <h6 class="remark"><?php echo $this->language->line("PAYMENT-LL0010",'Remarks');?> </h6>
+                                            <h6 class="remark remarkStyle"><?php echo $this->language->line("PAYMENT-LL0010",'Remarks');?> </h6>
                                             <div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">
                                                 <input
                                                     type="text"
-                                                    class="form-control remarks"
+                                                    class="form-control remarks inputFieldsMakeOrder"
                                                     rows="1"
                                                     maxlength="<?php echo $maxRemarkLength; ?>"
                                                     data-product-remark-id="<?php echo $remarkProductId; ?>"
@@ -398,7 +398,7 @@
                                                 $countAddons = 0;
                                                 echo '<div class="modal__adittional__list" style="width:100%">';
                                                 foreach ($collectAddons as $key => $elements) {
-                                                    echo '<h6 style="width:100%">' . $key . '</h6>';
+                                                    echo '<h6 style="width:100%" class="labelsMain">' . $key . '</h6>';
                                                     
                                                     foreach ($elements as $addon) {
                                                         $countAddons++;
@@ -406,10 +406,10 @@
                                                         $remarkAddonId = $addon['addRemark'] === '1' ? $remarkProductId . '_' . $countAddons : '0';                                                        
                                                         ?>
                                                         <div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="width:50%; margin-bottom:3px">
-                                                            <label class="form-check-label" style="word-wrap: break-word;">
+                                                            <label class="form-check-label labelItems" style="word-wrap: break-word;">
                                                                 <input
                                                                     type="checkbox"
-                                                                    class="form-check-input checkAddons"
+                                                                    class="form-check-input checkAddons inputFieldsMakeOrder"
                                                                     data-addon-type-id-check="<?php echo $addon['productTypeId']; ?>"
                                                                     onchange="toggleElement(this)"
                                                                 />
@@ -448,7 +448,7 @@
                                                             style="visibility: hidden; margin:0px 0px 3px 0px; padding:0px"
                                                             >
                                                             <span
-                                                                class='modal-footer__buttons modal-footer__quantity--plus'
+                                                                class='modal-footer__buttons modal-footer__quantity--plus priceQuantity'
                                                                 <?php if ($addonAllowedQuantity !== '1') { ?>
                                                                     onclick="changeAddonQuayntity(this)"
                                                                     style="margin-right:5px;"
@@ -489,7 +489,7 @@
                                                                 <?php } ?>
                                                                 step="1"
                                                                 value="1"
-                                                                class="form-control addonQuantity"
+                                                                class="form-control addonQuantity inputFieldsMakeOrder"
                                                                 disabled                                                                
                                                                 <?php if ($addonAllowedQuantity !== '1') { ?>
                                                                     style="display:inline-block; border:0px; background-color: #fff;"
@@ -498,7 +498,7 @@
                                                                 <?php } ?>
                                                             />
                                                             <span
-                                                                class='modal-footer__buttons modal-footer__quantity--minus'                                                                
+                                                                class='modal-footer__buttons modal-footer__quantity--minus priceQuantity'                                                                
                                                                 data-type="plus"
                                                                 <?php if ($addonAllowedQuantity !== '1') { ?>
                                                                     onclick="changeAddonQuayntity(this)"
@@ -512,11 +512,11 @@
                                                         </div>
                                                         <?php if ($addon['addRemark'] === '1') { ?>
                                                             <div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">
-                                                                <h6 style="margin-top:0px;">Remark</h6>
+                                                                <h6 class="remarkStyle" style="margin-top:0px;">Remark</h6>
                                                                 <div class="col-lg-12 col-sm-12" style="margin-bottom:3px">
                                                                     <input
                                                                         type="text"
-                                                                        class="form-control remarks"
+                                                                        class="form-control remarks inputFieldsMakeOrder"
                                                                         rows="1"
                                                                         maxlength="<?php echo $maxRemarkLength; ?>"
                                                                         data-addon-remark-id="<?php echo $remarkAddonId ?>"
@@ -543,7 +543,7 @@
                             >
                                 <button
                                     type="button"
-                                    class="button-main button-primary"
+                                    class="button-main button-primary addProductOnList"
                                     data-dismiss="modal"
                                     data-product-id="<?php echo $product['productId']; ?>"
                                     data-product-name="<?php echo $productDetails['name']; ?>"
