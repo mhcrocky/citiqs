@@ -268,7 +268,7 @@ $route['spot_closed/(:num)']        = 'publicorders/spotClosed/$1';
 //INSERT ORDER
 $route['insertorder/(:num)/(:any)'] = 'alfredinsertorder/insertOrder/$1/$2';
 $route['cashPayment/(:num)/(:any)'] = 'alfredinsertorder/cashPayment/$1/$2';
-$route['voucherPayment/(:num)']     = 'alfredinsertorder/voucherPayment/$1';
+$route['voucherPayment']     = 'alfredinsertorder/voucherPayment';
 
 // API
 $route['api/orders/print/get']  = 'Api/Orders/data';

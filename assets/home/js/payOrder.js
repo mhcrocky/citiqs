@@ -11,14 +11,13 @@ function redirect(url) {
 function voucherPay(codeId) {    
     let codeElement = document.getElementById(codeId);
     let code = codeElement.value;
+    let orderKey = payOrderGlobals['orderDataGetKey'];
 
     if (code.trim()) {
         let post = {
             'code' : code,
-            'amount' : codeElement.dataset.total,
-            'totalAmount' : codeElement.dataset.totalAmount,
-            'waiterTip' : codeElement.dataset.waiterTip
         }
+        post[orderKey] = codeElement.dataset[orderKey];
         let url = globalVariables.ajax + 'voucherPay';
         sendAjaxPostRequest(post, url, 'voucherPay', voucherResponse);
     } else {

@@ -910,210 +910,252 @@ class Ajax extends CI_Controller
 		echo json_encode(array('msg' => $msg, 'status' =>$status));
     }
 
-    public function voucherPay(): void
+    private function isBlocked(array $orderData): bool
     {
-        if (!$this->input->is_ajax_request()) return;
-
         if (get_cookie('codeBlocked')) {
-            unset($_SESSION['failed']);
+            if (isset($orderData['failed'])) {
+                unset($orderData['failed']);
+                $this->shopsession_model->updateSessionData($orderData);
+            }
             echo json_encode([
                 'status' => '0',
                 'message' => 'Invalid code inserted three times. You can not use code for next 2 minutes'
             ]);
-            return;
+            return false;
         }
+        return true;
+    }
 
-        $code = $this->input->post('code', true);
-        $amount = floatval($this->input->post('amount', true));
-        $totalAmount  = floatval($this->input->post('totalAmount', true));
-        $waiterTip  = floatval($this->input->post('waiterTip', true));
+    private function checkIsVoucherExist(array $orderData, object $voucher, object $shopsession): bool
+    {
+        if (is_null($voucher->id)) {
 
-        $this
-            ->shopvoucher_model
-                ->setProperty('code', $code)
-                ->setVoucher();
-
-        if (is_null($this->shopvoucher_model->id)) {
-
-            if (!isset($_SESSION['failed'])) {
-                $_SESSION['failed'] = 0;
+            if (!isset($orderData['failed'])) {
+                $orderData['failed'] = 0;
             }
-            $_SESSION['failed']++;
-            if ($_SESSION['failed'] === 3) {
+            $orderData['failed']++;
+            $shopsession->updateSessionData($orderData);
+
+            if ($orderData['failed'] === 3) {
                 set_cookie('codeBlocked', '1', 120);
                 echo json_encode([
                     'status' => '0',
                     'message' => 'Invalid code inserted three times. You can not use code for next 2 minutes'
                 ]);
-                return;
+                return false;
             }
 
             echo json_encode([
                 'status' => '0',
                 'message' => 'Invalid code'
             ]);
-            return;
+            return false;
         }
 
-        if (isset($_SESSION['failed'])) {
-            unset($_SESSION['failed']);
+        unset($orderData['failed']);
+        $this->shopsession_model->updateSessionData($orderData);
+
+        return true;
+    }
+
+    private function checkVoucher(array $orderData, object $voucher): bool
+    {
+        if (intval($voucher->vendorId) !== $orderData['vendorId']) {
+            echo json_encode([
+                'status' => '0',
+                'message' => 'Vendor did not create this voucher'
+            ]);
+            return false;
         }
 
-        if ($this->shopvoucher_model->expire < date('Y-m-d')) {
+        if ($voucher->expire < date('Y-m-d')) {
             echo json_encode([
                 'status' => '0',
                 'message' => 'Voucher expired'
             ]);
-            return;
+            return false;
         };
 
-        if ($this->shopvoucher_model->active === '0') {
+        if ($voucher->active === '0') {
             echo json_encode([
                 'status' => '0',
                 'message' => 'The voucher has already been used'
             ]);
-            return;
+            return false;
         }
 
-        if ($this->shopvoucher_model->productId) {
-            if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
-                // OLD MAKE ORDER VIEW
-                foreach ($_SESSION['order'] as $key => $productRaw) {
-                    if (isset($productRaw['mainProduct'])) {
-                        $product = $productRaw['mainProduct'][$mainKey];
-                    } else {
-                        $mainKey = $key;
-                        $product = $productRaw;
-                    }
-                    if (intval($product['productId'][0]) === $this->shopvoucher_model->productId) {
-                        $productPrice = floatval($product['price'][0]);
-                        $_SESSION['payWithVaucher'] = round($productPrice, 2);
-                        break;
-                    }
-                }
-            } else {
-                // NEW MAKE ORDER VIEW
-                foreach ($_SESSION['order'] as $key => $productRaw) {
-                    $productRaw = reset($productRaw);
-                    if (intval($productRaw['productId']) === $this->shopvoucher_model->productId) {
-                        $productPrice = floatval($productRaw['price']);
-                        $_SESSION['payWithVaucher'] = round($productPrice, 2);
-                        break;
-                    }
-                    if (isset($productRaw['addons'])) {
-                        $addons = $productRaw['addons'];
-                        foreach ($addons as $prodcutExtendedId => $details) {
-                            if (intval($details['addonProductId']) === $this->shopvoucher_model->productId) {
-                                $productPrice = floatval($details['price']);
-                                $_SESSION['payWithVaucher'] = round($productPrice, 2);
-                                break 2;
-                            }
-                        }
-                    }
-                }
-            }
+        return true;
+    }
 
-            if (!isset($_SESSION['payWithVaucher'])) {
-                echo json_encode([
-                    'status' => '0',
-                    'message' => 'Product from voucher is not in order list'
-                ]);
-            } else {
-                if (
-                    ($this->shopvoucher_model->amount >= $_SESSION['payWithVaucher'] || $this->shopvoucher_model->percent === 100)
-                    && $_SESSION['payWithVaucher'] === $amount
-                ) {
+    public function voucherPay(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
 
-                    if ($waiterTip) {
-                        $_SESSION['voucherId'] = $this->shopvoucher_model->id;
-                        $_SESSION['payWithVaucher'] = $amount;
-                        echo json_encode([
-                            'status' => '2',
-                            'message' => 'Select method to finish payment',
-                            'voucherAmount' => number_format($totalAmount, 2, ',', '.'),
-                            'leftAmount' => number_format($waiterTip, 2, ',', '.'),
-                        ]);
-                    } else {
-                        if (isset($_SESSION['voucherId'])) {
-                            unset($_SESSION['voucherId']);
-                        }
-                        if (isset($_SESSION['payWithVaucher'])) {
-                            unset($_SESSION['payWithVaucher']);
-                        }
+        $code = $this->input->post('code', true);
+        $orderRandomKey = $this->input->post($this->config->item('orderDataGetKey'), true);
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        $amount = floatval($orderData['order']['amount']);
+        $waiterTip = floatval($orderData['order']['waiterTip']);
+        $serviceFee = floatval($orderData['order']['serviceFee']);
+        $totalAmount = $amount + $waiterTip + $serviceFee;
+
+        $this->shopvoucher_model->setProperty('code', $code)->setVoucher();
+
+        if (
+            !$this->isBlocked($orderData)
+            || !$this->checkIsVoucherExist($orderData, $this->shopvoucher_model, $this->shopsession_model)
+            || !$this->checkVoucher($orderData, $this->shopvoucher_model)
+        ) return;
+
         
-                        $redirect = base_url() . 'voucherPayment' . DIRECTORY_SEPARATOR . $this->shopvoucher_model->id;
-                        echo json_encode([
-                            'status' => '1',
-                            'redirect' => $redirect
-                        ]);
-                    }
+        $orderData['order']['voucherAmount'] = $this->calculateVoucherDicsount($orderData, $this->shopvoucher_model);
+        $orderData['order']['voucherId'] = $this->shopvoucher_model->id;
+        $this->shopsession_model->updateSessionData($orderData);
 
-                } else {
-                    $_SESSION['voucherId'] = $this->shopvoucher_model->id;
-
-                    if ($this->shopvoucher_model->amount) {
-                        $voucherDiscount = ($_SESSION['payWithVaucher'] > $this->shopvoucher_model->amount) ? $this->shopvoucher_model->amount : $_SESSION['payWithVaucher'];
-                    } else {
-                        $voucherDiscount = $this->shopvoucher_model->percent * $_SESSION['payWithVaucher'] / 100;
-                    }
-                    $leftAmount = $totalAmount - $voucherDiscount + $waiterTip;
-
-                    echo json_encode([
-                        'status' => '2',
-                        'message' => 'Select method to finish payment',
-                        'voucherAmount' => number_format($voucherDiscount, 2, ',', '.'),
-                        'leftAmount' => number_format($leftAmount, 2, ',', '.'),
-                    ]);
-                }
-            }
-            return;
-        }
-
-        if ($this->shopvoucher_model->amount >= $amount || $this->shopvoucher_model->percent === 100) {
-            if ($waiterTip) {
-                $_SESSION['voucherId'] = $this->shopvoucher_model->id;
-                $_SESSION['payWithVaucher'] = $amount;
-                echo json_encode([
-                    'status' => '2',
-                    'message' => 'Select method to finish payment',
-                    'voucherAmount' => number_format($totalAmount, 2, ',', '.'),
-                    'leftAmount' => number_format($waiterTip, 2, ',', '.'),
-                ]);
-            } else {
-                if (isset($_SESSION['voucherId'])) {
-                    unset($_SESSION['voucherId']);
-                }
-                if (isset($_SESSION['payWithVaucher'])) {
-                    unset($_SESSION['payWithVaucher']);
-                }
-
-                $redirect = base_url() . 'voucherPayment' . DIRECTORY_SEPARATOR . $this->shopvoucher_model->id;
-                echo json_encode([
-                    'status' => '1',
-                    'redirect' => $redirect
-                ]);
-            }
-
-            return;
-        };
-
-        $_SESSION['voucherId'] = $this->shopvoucher_model->id;
-
-        if ($this->shopvoucher_model->amount) {
-            $voucherDiscount = $this->shopvoucher_model->amount;
+        if ($totalAmount > $orderData['order']['voucherAmount']) {
+            $voucherDiscount = $orderData['order']['voucherAmount'];
+            $leftAmount =  $totalAmount - $orderData['order']['voucherAmount'];
+            echo json_encode([
+                'status' => '2',
+                'message' => 'Select method to finish payment',
+                'voucherAmount' => number_format($voucherDiscount, 2, ',', '.'),
+                'leftAmount' => number_format($leftAmount, 2, ',', '.'),
+            ]);
         } else {
-            $voucherDiscount = $this->shopvoucher_model->percent * $amount / 100;
+            $redirect = base_url() . 'voucherPayment?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
+            echo json_encode([
+                'status' => '1',
+                'redirect' => $redirect
+            ]);
         }
-        $leftAmount = $totalAmount - $voucherDiscount + $waiterTip;
-
-        echo json_encode([
-            'status' => '2',
-            'message' => 'Select method to finish payment',
-            'voucherAmount' => number_format($voucherDiscount, 2, ',', '.'),
-            'leftAmount' => number_format($leftAmount, 2, ',', '.'),
-        ]);
-
         return;
+     
+        
+        // $orderData['voucherId'] = $this->shopvoucher_model->id;
+        // $this->shopsession_model->updateSessionData($orderData);
+
+        // if ($this->shopvoucher_model->productId) {
+        //     if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
+        //         // OLD MAKE ORDER VIEW
+        //         foreach ($_SESSION['order'] as $key => $productRaw) {
+        //             if (isset($productRaw['mainProduct'])) {
+        //                 $product = $productRaw['mainProduct'][$mainKey];
+        //             } else {
+        //                 $mainKey = $key;
+        //                 $product = $productRaw;
+        //             }
+        //             if (intval($product['productId'][0]) === $this->shopvoucher_model->productId) {
+        //                 $productPrice = floatval($product['price'][0]);
+        //                 $_SESSION['payWithVaucher'] = round($productPrice, 2);
+        //                 break;
+        //             }
+        //         }
+        //     } else {
+        //         // NEW MAKE ORDER VIEW
+        //         foreach ($_SESSION['order'] as $key => $productRaw) {
+        //             $productRaw = reset($productRaw);
+        //             if (intval($productRaw['productId']) === $this->shopvoucher_model->productId) {
+        //                 $productPrice = floatval($productRaw['price']);
+        //                 $_SESSION['payWithVaucher'] = round($productPrice, 2);
+        //                 break;
+        //             }
+        //             if (isset($productRaw['addons'])) {
+        //                 $addons = $productRaw['addons'];
+        //                 foreach ($addons as $prodcutExtendedId => $details) {
+        //                     if (intval($details['addonProductId']) === $this->shopvoucher_model->productId) {
+        //                         $productPrice = floatval($details['price']);
+        //                         $_SESSION['payWithVaucher'] = round($productPrice, 2);
+        //                         break 2;
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+
+        //     if (!isset($_SESSION['payWithVaucher'])) {
+        //         echo json_encode([
+        //             'status' => '0',
+        //             'message' => 'Product from voucher is not in order list'
+        //         ]);
+        //     } else {
+        //         if (
+        //             ($this->shopvoucher_model->amount >= $_SESSION['payWithVaucher'] || $this->shopvoucher_model->percent === 100)
+        //             && $_SESSION['payWithVaucher'] === $amount
+        //         ) {
+
+        //             if ($waiterTip) {
+        //                 $_SESSION['voucherId'] = $this->shopvoucher_model->id;
+        //                 $_SESSION['payWithVaucher'] = $amount;
+        //                 echo json_encode([
+        //                     'status' => '2',
+        //                     'message' => 'Select method to finish payment',
+        //                     'voucherAmount' => number_format($totalAmount, 2, ',', '.'),
+        //                     'leftAmount' => number_format($waiterTip, 2, ',', '.'),
+        //                 ]);
+        //             } else {
+        //                 if (isset($_SESSION['voucherId'])) {
+        //                     unset($_SESSION['voucherId']);
+        //                 }
+        //                 if (isset($_SESSION['payWithVaucher'])) {
+        //                     unset($_SESSION['payWithVaucher']);
+        //                 }
+        
+        //                 $redirect = base_url() . 'voucherPayment' . DIRECTORY_SEPARATOR . $this->shopvoucher_model->id;
+        //                 echo json_encode([
+        //                     'status' => '1',
+        //                     'redirect' => $redirect
+        //                 ]);
+        //             }
+
+        //         } else {
+        //             $_SESSION['voucherId'] = $this->shopvoucher_model->id;
+
+        //             if ($this->shopvoucher_model->amount) {
+        //                 $voucherDiscount = ($_SESSION['payWithVaucher'] > $this->shopvoucher_model->amount) ? $this->shopvoucher_model->amount : $_SESSION['payWithVaucher'];
+        //             } else {
+        //                 $voucherDiscount = $this->shopvoucher_model->percent * $_SESSION['payWithVaucher'] / 100;
+        //             }
+        //             $leftAmount = $totalAmount - $voucherDiscount + $waiterTip;
+
+        //             echo json_encode([
+        //                 'status' => '2',
+        //                 'message' => 'Select method to finish payment',
+        //                 'voucherAmount' => number_format($voucherDiscount, 2, ',', '.'),
+        //                 'leftAmount' => number_format($leftAmount, 2, ',', '.'),
+        //             ]);
+        //         }
+        //     }
+        //     return;
+        // }
+
+        // no product id on voucher
+        
+
+
+        
+        // echo json_encode([
+        //     'status' => '1',
+        //     'redirect' => $redirect
+        // ]);
+        // $redirect = base_url() . 'voucherPayment' . DIRECTORY_SEPARATOR . $this->shopvoucher_model->id;
+    }
+
+    private function calculateVoucherDicsount($orderData, $shopVoucher): float
+    {
+        $amount = floatval($orderData['order']['amount']);
+        $waiterTip = floatval($orderData['order']['waiterTip']);
+        $serviceFee = floatval($orderData['order']['serviceFee']);
+        $totalAmount = $amount + $waiterTip + $serviceFee;
+
+        if (!$shopVoucher->productId) {
+            if (!$shopVoucher->percent) {
+                $voucherAmount = ($shopVoucher->amount >= $totalAmount) ? $totalAmount : $shopVoucher->amount;
+            } else {
+                $voucherAmount = ($shopVoucher->percent === 100) ? ($amount + $serviceFee) : $amount * $shopVoucher->percent / 100;
+            }
+        }
+
+        return $voucherAmount;
     }
 
     public function confirmOrderAction(): void

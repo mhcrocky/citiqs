@@ -102,7 +102,6 @@ class Alfredpayment extends BaseControllerWeb
 
         if ($vendorId == 1162) {
             $redirect = 'successth';
-            Utility_helper::unsetPaymentSession();
         } else {
             $redirect = base_url() . 'success?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
         }

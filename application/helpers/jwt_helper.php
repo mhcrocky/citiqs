@@ -47,4 +47,25 @@
             }
             return;
         }
+
+        public static function unsetVoucherData(array &$jwtArray, string $orderRandomKey): void
+        {
+            $count = 0;
+
+            if (isset($jwtArray['order']['voucherId'])) {
+                unset($jwtArray['order']['voucherId']);
+                $count ++;
+            }
+            if (isset($jwtArray['order']['voucherAmount'])) {
+                unset($jwtArray['order']['voucherAmount']);
+                $count ++;
+            }
+
+            if (!$count) return;
+
+            $CI =& get_instance();
+            $CI->load->model('shopsession_model');
+            $CI->shopsession_model->setProperty('randomKey', $orderRandomKey)->updateSessionData($jwtArray);
+            return;
+        }
     }

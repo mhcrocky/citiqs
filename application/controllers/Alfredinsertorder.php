@@ -61,6 +61,14 @@ class Alfredinsertorder extends BaseControllerWeb
 
         if (!$payType) redirect(base_url());
 
+        if (!empty($orderData['order']['voucherId']) && !empty($orderData['order']['voucherAmount']) && !$this->payingWithVoucher($orderData['order'])) {
+            Jwt_helper::unsetVoucherData($orderData, $orderRandomKey);
+            $redirect  = 'make_order?vendorid=' . $orderData['vendorId'] . '&spotid=' . $orderData['spotId'];
+            $redirect .= '&' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
+            $this->session->set_flashdata('error', '(1082) Order not made! Voucher is not valid');
+            return;
+        }
+
         $orderId = $this->insertOrderProcess($orderData, $this->config->item('orderNotPaid'), $payType, $orderRandomKey);
         
         if (is_null($orderId)) {
@@ -96,7 +104,7 @@ class Alfredinsertorder extends BaseControllerWeb
         return $payType;
     }
 
-    private function insertOrderProcess(array $post, string $payStatus, string $payType, string $orderRandomKey, int $voucherId = 0): ?int
+    private function insertOrderProcess(array $post, string $payStatus, string $payType, string $orderRandomKey): ?int
     {
         $this->user_model->manageAndSetBuyer($post['user']);
         if (!$this->user_model->id) return null;
@@ -123,21 +131,10 @@ class Alfredinsertorder extends BaseControllerWeb
             $post['order']['created'] = $orderDate[0] . ' ' . $post['order']['time'];
         }
 
-        // TO DO VOUCHER PAYMENT !!!!!!!!!!!!!!!!!!!!!!!!!!
-        // if ($voucherId || isset($_SESSION['voucherId'])) {
-        //     $payPartial = false;
-        //     if (isset($_SESSION['voucherId'])) {
-        //         $voucherId = $_SESSION['voucherId'];
-        //         $payPartial = true;
-        //         unset($_SESSION['voucherId']);
-        //     }
-        //     $this->payOrderWithVoucher($voucherId, $post, $failedRedirect, $payPartial);
-        // }
-
         $this->shoporder_model->setObjectFromArray($post['order'])->create();
     }
 
-    private function insertOrderExtended($post)
+    private function insertOrderExtended($post): void
     {
         $vendor = $this->shopvendor_model->setProperty('vendorId', $post['vendorId'])->getVendorData();
 
@@ -202,6 +199,7 @@ class Alfredinsertorder extends BaseControllerWeb
                 }
             }
         }
+        return;
     }
 
     public function cashPayment($payStatus, $payType): void
@@ -221,43 +219,36 @@ class Alfredinsertorder extends BaseControllerWeb
             $redirect = base_url() . 'success?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey . '&orderid=' . $orderId;
         }
         redirect($redirect);
+        return;
     }
 
-
-    // TO DO !!!!!!!!!!!!!!!!!!!!!
-    public function voucherPayment($voucherId): void
+    public function voucherPayment(): void
     {
-        $voucherId = intval($voucherId);
-        $this->insertOrderProcess($this->config->item('orderNotPaid'), $this->config->item('voucherPayment'), $voucherId);
-        $redirect =  ($_SESSION['vendor']['vendorId'] === 1162 || $_SESSION['vendor']['vendorId'] === 5655 ) ?  'successth' : 'success';
-        $_SESSION['orderStatusCode'] = $this->config->item('payNlSuccess');
-        redirect($redirect);
-    }
+        $orderRandomKey = $this->input->get($this->config->item('orderDataGetKey'), true);
 
-    private function payOrderWithVoucher(int $voucherId, array &$post, string $failedRedirect, bool $payPartial): void
-    {
-        $checkAmount = (isset($_SESSION['payWithVaucher'])) ? $_SESSION['payWithVaucher'] : floatval($post['order']['amount']);
-        $voucherAmount = $this->shopvoucher_model->setObjectId($voucherId)->setVoucher()->payOrderWithVoucher($checkAmount, $payPartial);
+        if (empty($orderRandomKey)) redirect(base_url());
 
-        if (isset($_SESSION['payWithVaucher'])) {
-            unset($_SESSION['payWithVaucher']);
-        }
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
 
-        if ($voucherAmount) {
-            if (
-                $checkAmount === floatval($post['order']['amount'])
-                && ($this->shopvoucher_model->percent === 100 || $voucherAmount >= $post['order']['amount'])
-            ) {
-                $post['order']['serviceFee'] = 0;
-            }
+        Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder', 'user', 'orderExtended', 'order']);
 
-            $post['order']['voucherId'] = $voucherId;
-            $post['order']['voucherAmount'] = $voucherAmount;
-            $post['order']['paid'] = $payPartial ? $this->config->item('orderNotPaid') : $this->config->item('orderPaid');
-            $post['order']['paymentType'] = $payPartial ? $post['order']['paymentType'] . ' / ' . $this->config->item('voucherPayment') : $this->config->item('voucherPayment');
+        $payStatus = $this->payingWithVoucher($orderData['order']) ? $this->config->item('orderPaid') : $this->config->item('orderNotPaid');
+        $orderId = $this->insertOrderProcess($orderData, $payStatus, $this->config->item('voucherPayment'), $orderRandomKey);
+        
+        if ($orderData['vendorId'] === 1162 || $orderData['vendorId'] === 5655) {
+            $redirect = base_url() . 'successth';
         } else {
-            $this->session->set_flashdata('error', 'Order not made! Not enough funds on voucher');
-            redirect($failedRedirect);
+            $redirect = base_url() . 'success?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey . '&orderid=' . $orderId;
         }
+        redirect($redirect);
+        return;
+    }
+
+    private function payingWithVoucher(array $order): bool
+    {
+        return $this->shopvoucher_model
+                ->setObjectId(intval($order['voucherId']))
+                ->setVoucher()
+                ->payOrderWithVoucher(floatval($order['voucherAmount']));
     }
 }

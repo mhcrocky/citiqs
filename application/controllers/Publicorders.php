@@ -422,7 +422,9 @@
             $spotTypeId = intval($spot['spotTypeId']);
 
             $this->checkVendorCredentials($vendor, $spotTypeId);
-            $this->unsetVoocherData($orderData);
+
+            // if $orderData['voucherId'] and $orderData['payWithVaucher'] unset on refresh page
+            Jwt_helper::unsetVoucherData($orderData, $orderRandomKey);
 
             $data = [
                 'vendor'                => $vendor,
@@ -442,23 +444,12 @@
                 'redirect'              => $this->getRedirect($vendor, $spotTypeId, $orderRandomKey),
                 'orderRandomKey'        => $orderRandomKey,
                 'orderDataGetKey'       => $this->config->item('orderDataGetKey'),
+                'orderRandomKey'        => $orderRandomKey,
             ];
 
             $this->global['pageTitle'] = 'TIQS : PAY';
             $this->global[$this->config->item('design')] = (!empty($data['vendor']['design'])) ? unserialize($data['vendor']['design']) : null;
             $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
-        }
-
-        private function unsetVoocherData(array &$orderData): void //TO DO VOUCHER NOT FINISHED FRO JWT !!!!!
-        {
-            // if $orderData['voucherId'] and user refresh the page
-            if (isset($orderData['voucherId'])) {
-                unset($orderData['voucherId']);
-            }
-            // if $orderData['payWithVaucher'] and user refresh the page
-            if (isset($orderData['payWithVaucher'])) {
-                unset($orderData['payWithVaucher']);
-            }
         }
 
         private function getRedirect(array $vendor, int $spotTypeId, string $orderRandomKey): string
