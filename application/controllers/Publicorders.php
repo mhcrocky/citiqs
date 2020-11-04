@@ -193,7 +193,7 @@
                     $data['maxRemarkLength'] = $this->config->item('maxRemarkLength');
 
                     if ($ordered) {
-                        $ordered = Utility_helper::returnMakeNewOrderElements($ordered, $data['vendor'], $data['mainProducts'], $data['addons']);
+                        $ordered = Utility_helper::returnMakeNewOrderElements($ordered, $data['vendor'], $data['mainProducts'], $data['addons'], $data['maxRemarkLength']);
                         $data['checkoutList'] = $ordered['checkoutList'];
                     } else {
                         $data['checkoutList'] = '';

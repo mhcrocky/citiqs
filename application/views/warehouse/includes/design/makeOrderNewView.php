@@ -386,14 +386,14 @@
             <input
                 type="color"
                 class="form-control"
-                name="checkoutOrder[class][inputFieldsMakeOrder][color]"
+                name="makeOrderNew[class][inputFieldsMakeOrder][color]"
                 data-css-selector="class"
                 data-css-selector-value="inputFieldsMakeOrder"
                 data-css-property="color"
                 onfocus="styleELements(this)"
                 oninput="styleELements(this)"
-                <?php if ( isset($design['checkoutOrder']['class']['inputFieldsMakeOrder']['color']) ) { ?>
-                value = "<?php echo $design['checkoutOrder']['class']['inputFieldsMakeOrder']['color']?>"
+                <?php if ( isset($design['makeOrderNew']['class']['inputFieldsMakeOrder']['color']) ) { ?>
+                value = "<?php echo $design['makeOrderNew']['class']['inputFieldsMakeOrder']['color']?>"
                 data-value="1"
                 <?php } ?>
             />
@@ -405,14 +405,14 @@
             <input
                 type="color"
                 class="form-control"
-                name="checkoutOrder[class][inputFieldsMakeOrder][border-color]"
+                name="makeOrderNew[class][inputFieldsMakeOrder][border-color]"
                 data-css-selector="class"
                 data-css-selector-value="inputFieldsMakeOrder"
                 data-css-property="border-color"
                 onfocus="styleELements(this)"
                 oninput="styleELements(this)"
-                <?php if ( isset($design['checkoutOrder']['class']['inputFieldsMakeOrder']['border-color']) ) { ?>
-                value = "<?php echo $design['checkoutOrder']['class']['inputFieldsMakeOrder']['border-color']?>"
+                <?php if ( isset($design['makeOrderNew']['class']['inputFieldsMakeOrder']['border-color']) ) { ?>
+                value = "<?php echo $design['makeOrderNew']['class']['inputFieldsMakeOrder']['border-color']?>"
                 data-value="1"
                 <?php } ?>
             />
@@ -424,14 +424,14 @@
             <input
                 type="color"
                 class="form-control"
-                name="checkoutOrder[class][inputFieldsMakeOrder][background-color]"
+                name="makeOrderNew[class][inputFieldsMakeOrder][background-color]"
                 data-css-selector="class"
                 data-css-selector-value="inputFieldsMakeOrder"
                 data-css-property="background-color"
                 onfocus="styleELements(this)"
                 oninput="styleELements(this)"
-                <?php if ( isset($design['checkoutOrder']['class']['inputFieldsMakeOrder']['background-color']) ) { ?>
-                value = "<?php echo $design['checkoutOrder']['class']['inputFieldsMakeOrder']['background-color']?>"
+                <?php if ( isset($design['makeOrderNew']['class']['inputFieldsMakeOrder']['background-color']) ) { ?>
+                value = "<?php echo $design['makeOrderNew']['class']['inputFieldsMakeOrder']['background-color']?>"
                 data-value="1"
                 <?php } ?>
             />

@@ -252,7 +252,7 @@
             return $reset;
         }
 
-        public static function returnMakeNewOrderElements(?array $ordered, array $vendor, array $mainProducts, array $rawAddons): array
+        public static function returnMakeNewOrderElements(?array $ordered, array $vendor, array $mainProducts, array $rawAddons, int $maxRemarkLength): array
         {
             // $shoppingList = '';
             $checkoutList = '';
@@ -279,7 +279,7 @@
                     $checkoutList .= '>';
                     $checkoutList .=    '<div class="alert alert-dismissible" style="padding-left: 0px; margin-bottom: 10px;">';
                     $checkoutList .=        '<a href="#" onclick="removeOrdered(\'' . $randomId . '\')" class="close removeOrdered_' . $product['productId'] . '" data-dismiss="alert" aria-label="close">×</a>';
-                    $checkoutList .=        '<h4>' . $product['name'] . ' (€' . $product['price'] . ')</h4>';
+                    $checkoutList .=        '<h4 class="productName">' . $product['name'] . ' (€' . $product['price'] . ')</h4>';
                     $checkoutList .=    '</div>';
                     $checkoutList .=    '<div class="modal__content">';
                     $checkoutList .=        '<div class="modal__adittional">';
@@ -290,7 +290,7 @@
                         $checkoutList .=        '</div>';
                         $checkoutList .=        '<div class="modal-footer__quantity col-lg-4 col-sm-12" style="margin-bottom:3px">';
                         $checkoutList .=            '<span 
-                                                        class="modal-footer__buttons modal-footer__quantity--plus" 
+                                                        class="modal-footer__buttons modal-footer__quantity--plus priceQuantity" 
                                                         style="margin-right:5px;" 
                                                         data-type="minus"
                                                         onclick="changeProductQuayntity(this, \'addonQuantity\')">';
@@ -321,7 +321,7 @@
                                                         
 
                     if (!$onlyOne) {                                    
-                        $checkoutList .=                'class="form-control checkProduct" style="display:inline-block"';
+                        $checkoutList .=                'class="form-control checkProduct inputFieldsMakeOrder" style="display:inline-block"';
                     } else {
                         $checkoutList .=                'readonly hidden';
                     }
@@ -329,7 +329,7 @@
 
                     if (!$onlyOne) {
                         $checkoutList .=            '<span
-                                                        class="modal-footer__buttons modal-footer__quantity--minus"
+                                                        class="modal-footer__buttons modal-footer__quantity--minus priceQuantity"
                                                         style="margin-left:5px;"
                                                         data-type="plus"
                                                         onclick="changeProductQuayntity(this, \'addonQuantity\')"
@@ -368,14 +368,17 @@
                 
                     if ($remarkProductId !== '0') {
 
-                        $checkoutList .=        '<h6>Remark</h6>';
+                        $checkoutList .=        '<h6 class="remarkStyle">Remark</h6>';
                         $checkoutList .=            '<div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">';
-                        $checkoutList .=                '<textarea
-                                                            class="form-control"
+                        $checkoutList .=                '<input
+                                                            type="text"
+                                                            class="form-control remarks inputFieldsMakeOrder"
                                                             rows="1"
-                                                            maxlength="200"
+                                                            maxlength="' . $maxRemarkLength . '"
+                                                            placeholder="Allowed ' . $maxRemarkLength . ' characters"
                                                             data-product-remark-id="' . $remarkProductId . '"
-                                                        >' . $product['remark'] . '</textarea>
+                                                            value="' . $product['remark'] . '"
+                                                        />
                                                     </div>';
 
                     }
@@ -398,17 +401,17 @@
 
                         foreach ($collectAddons as $key => $elements) {
                             $checkoutList .=        '<div class="modal__adittional__list" style="width:100%">';
-                            $checkoutList .=            '<h6 style="width:100%">' . $key . '</h6>';
+                            $checkoutList .=            '<h6 style="width:100%" class="labelsMain">' . $key . '</h6>';
                             foreach ($elements as $addon) {
                                 $step = floatval($addon['step']);
                                 $countAddons++;
                                 $remarkAddonId = isset($addon['remark']) ? $remarkProductId . '_' . $countAddons : '0';
                                 $addonExtendedId = $addon['addonExtendedId'];                                
                                 $checkoutList .=            '<div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="width:50%; margin-bottom:3px">';
-                                $checkoutList .=                '<label class="form-check-label" style="word-wrap: break-word;">';
+                                $checkoutList .=                '<label class="form-check-label labelItems" style="word-wrap: break-word;">';
                                 $checkoutList .=                    '<input
                                                                         type="checkbox"
-                                                                        class="form-check-input checkAddons"
+                                                                        class="form-check-input checkAddons inputFieldsMakeOrder"
                                                                         onchange="toggleElement(this)" checked
                                                                         data-addon-type-id-check="' . $addon['addonTypeId'] . '"
                                                                     >&nbsp;';
@@ -440,7 +443,7 @@
                                 $checkoutList .=            '</div>';
                                 $checkoutList .=            '<div class="modal-footer__quantity col-lg-4 col-sm-12" style="visibility: visible; margin: 0px 0px 3px 0px; padding: 0px">';
                                 $checkoutList .=                '<span 
-                                                                    class="modal-footer__buttons modal-footer__quantity--plus"
+                                                                    class="modal-footer__buttons modal-footer__quantity--plus priceQuantity"
                                                                     data-type="minus" ';
                                 
                                 if ($addon['initialMaxQuantity'] === '1' || $addon['isBoolean'] === '1') { 
@@ -479,19 +482,19 @@
                                                                     value="' . $addon['quantity'] . '" ';
                                 if ($addon['isBoolean'] === '1') {
                                     $checkoutList .=                'hidden ';
-                                    $checkoutList .=                'class="addonQuantity" ';
+                                    $checkoutList .=                'class="addonQuantity inputFieldsMakeOrder" ';
                                 } else {
                                     if ($addon['initialMaxQuantity'] !== '1') {
                                         $checkoutList .=                'style="display:inline-block; border:0px; background-color: #fff;" ';
-                                        $checkoutList .=                'class="form-control addonQuantity" ';
+                                        $checkoutList .=                'class="form-control addonQuantity inputFieldsMakeOrder" ';
                                     } else {
                                         $checkoutList .=                'style="display:inline-block; border:0px; background-color: #fff; margin-left:7px" ';
-                                        $checkoutList .=                'class="form-control addonQuantity" ';
+                                        $checkoutList .=                'class="form-control addonQuantity inputFieldsMakeOrder" ';
                                     }
                                 }
                                 $checkoutList .=                '/>';
                                 $checkoutList .=                '<span
-                                                                    class="modal-footer__buttons modal-footer__quantity--minus"
+                                                                    class="modal-footer__buttons modal-footer__quantity--minus priceQuantity"
                                                                     data-type="plus" ';
                                 if ($addon['initialMaxQuantity'] === '1' || $addon['isBoolean'] === '1') {
                                     $checkoutList .=                'style="visibility:hidden; height:0px"';
@@ -506,14 +509,17 @@
                                 if ($remarkAddonId !== '0') {
                                     $checkoutList .=        '
                                                             <div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">
-                                                                <h6>Remark</h6>
+                                                                <h6 class="remarkStyle">Remark</h6>
                                                                 <div class="col-lg-12 col-sm-12" style="margin-bottom:3px">
-                                                                    <textarea
-                                                                        class="form-control"
+                                                                    <input
+                                                                        type="text"
+                                                                        class="form-control remarks inputFieldsMakeOrder"
                                                                         rows="1"
-                                                                        maxlength="200"
+                                                                        maxlength="' . $maxRemarkLength . '"
+                                                                        placeholder="Allowed ' . $maxRemarkLength . ' characters"
                                                                         data-addon-remark-id="' . $remarkAddonId . '"
-                                                                    >' . $addon['remark'] . '</textarea>
+                                                                        value="' . $addon['remark'] . '"
+                                                                    />
                                                                 </div>
                                                             </div>
                                                             '; 

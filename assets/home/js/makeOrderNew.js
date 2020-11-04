@@ -212,7 +212,7 @@ function checkoutHtmlHeader(orderContainer, randomId, element) {
     htmlCheckout +=  '<div id="' + randomId + '" class="orderedProducts ' + element.dataset.productId + '" >';
     htmlCheckout +=      '<div class="alert alert-dismissible" style="padding-left: 0px; margin-bottom: 10px;">';
     htmlCheckout +=          '<a href="#" onclick="removeOrdered(\'' + randomId + '\')" class="close removeOrdered_' + element.dataset.productId + '" data-dismiss="alert" aria-label="close">&times;</a>';
-    htmlCheckout +=          '<h4>' + element.dataset.productName + ' (&euro;' + element.dataset.productPrice + ')';
+    htmlCheckout +=          '<h4 class="productName">' + element.dataset.productName + ' (&euro;' + element.dataset.productPrice + ')';
     htmlCheckout +=      '</div>';
     htmlCheckout +=  '</div>';
     $(orderContainer).append(htmlCheckout);
