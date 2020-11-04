@@ -639,13 +639,19 @@ body{
 
 .items-slider .slick-arrow{
 	width: 35px;
-	height: 35px;
+	height: 35px;	
+	color: var(--main-bg-color);
 }
 
 .items-slider .slick-arrow:before{
+	color: var(--main-bg-color) !important;
 	font-size: 30px;
 }
+.items-slider .slick-arrow{
+	width: 35px;
+	height: 35px;
 
+}
 /* .items-slider .slick-prev,
 .items-slider .slick-next{
 	top: 40px;
