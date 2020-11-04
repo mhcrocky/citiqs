@@ -236,6 +236,7 @@
 			$imagetextemail->annotateImage($drawemail, 380, 165, 0, "PRIJS");
 			$imagetextemail->annotateImage($drawemail, 475, 165, 0, "%");
 			$imagetextemail->annotateImage($drawemail, 495, 165, 0, "TOTAAL");
+			$h++;
 
 			//-------- regels --------
 
@@ -336,13 +337,13 @@
 
 				//
 
-                //                $emailMessage .= '<p>';
-                //                $emailMessage .=    '<tr>';
-                //                $emailMessage .=        '<td>' . $quantity . '</td>';
-                //                $emailMessage .=        '<td>' . $title . '</td>';
-                //                $emailMessage .=        '<td>EURO ' . $price . '</td>';
-                //                $emailMessage .=    '</tr>';
-                //                $emailMessage .= '</p>';
+                // $emailMessage .= '<p>';
+                // $emailMessage .=    '<tr>';
+                // $emailMessage .=        '<td>' . $quantity . '</td>';
+                // $emailMessage .=        '<td>' . $title . '</td>';
+                // $emailMessage .=        '<td>EURO ' . $price . '</td>';
+                // $emailMessage .=    '</tr>';
+                // $emailMessage .= '</p>';
 
                 //added by Nadeem
                 //set json product price and etc
