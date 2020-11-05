@@ -27,7 +27,7 @@
         protected function setValueType(string $property,  &$value): void
         {
             $this->load->helper('validate_data_helper');
-            if (!Validate_data_helper::validateInteger($value)) return;
+            if (!Validate_data_helper::validateNumber($value)) return;
 
             if ($property === 'id' || $property === 'vendorId' || $property === 'percent') {
                 $value = intval($value);
@@ -126,10 +126,9 @@
             return $this->update();
         }
 
-        private function checkIsValid(): bool
+        public function checkIsValid(): bool
         {
-            $now = date('Y-m-d' , now());
-            return  ($this->active === '0' || $this->expire < $now || $this->percentUsed === '1') ? false : true;
+            return  ($this->active === '0' || $this->expire < date('Y-m-d') || $this->percentUsed === '1' || ($this->amount <= 0 && $this->percent === 0)) ? false : true;
         }
         
     }
