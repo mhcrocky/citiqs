@@ -91,7 +91,7 @@
                                             <label><?php echo $this->language->line("PAYMENT-LL0010",'Remarks');?> </label>
                                             <p><?php echo $product['remark']; ?></p>
                                         <?php } ?>
-                                        <!-- <label for="orderExtended_<?php #echo $countInputs; ?>_<?php# echo $productExtendedId; ?>_remark">Remark</label>
+                                        <!-- <label for="orderExtended_<?php #echo $countInputs; ?>_<?php #echo $productExtendedId; ?>_remark">Remark</label>
                                         <textarea
                                             data-order-session-index="<?php #echo $key; ?>"
                                             data-product-extended-id="<?php #echo $productExtendedId; ?>"
