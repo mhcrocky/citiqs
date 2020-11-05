@@ -1053,7 +1053,7 @@
 				$drawemail->annotation(440, 165 + ($i * 30), "€ ". $price);
 
 				$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-				$drawemail->annotation(500, 165 + ($i * 30), (string)$vatpercentage);
+				$drawemail->annotation(500, 165 + ($i * 30), strval($vatpercentage));
 
 				$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
 				$drawemail->annotation(570, 165 + ($i * 30), "€ ". $Stotalamount);
