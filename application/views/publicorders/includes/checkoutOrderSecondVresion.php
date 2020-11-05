@@ -94,7 +94,7 @@
                                         <!-- <label for="orderExtended_<?php #echo $countInputs; ?>_<?php# echo $productExtendedId; ?>_remark">Remark</label>
                                         <textarea
                                             data-order-session-index="<?php #echo $key; ?>"
-                                            data-product-extended-id="<?php# echo $productExtendedId; ?>"
+                                            data-product-extended-id="<?php #echo $productExtendedId; ?>"
                                             class="form-control"
                                             rows="1"
                                             maxlength="200"
