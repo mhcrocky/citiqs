@@ -920,7 +920,6 @@
 			}
 
 			$h++;
-			$h++;
 
 
 			//-------- header regel --------
@@ -959,11 +958,13 @@
 			$imagetextemail->annotateImage($drawemail, 475, 165, 0, "%");
 			$imagetextemail->annotateImage($drawemail, 495, 165, 0, "TOTAAL");
 			$h++;
+			$h++;
+			$h++;
 
 			//-------- regels --------
 
 			$totalamount = 0;
-			$i = 0;
+			$i = 2;//
 			$ii = 0;
 			$hd = $h * 35;
 
