@@ -259,8 +259,8 @@
                                     </div>
                                 <?php } ?>
 
-                                <p class="voucher" style="display:none; text-align:left; color:#fff; font-weight:900; padding-left:5px">Pay with voucher: <span id="voucherAmount"></span> &euro;</p>
-                                <p class="voucher" style="display:none; text-align:left; color:#fff; font-weight:900; padding-left:5px">Left amount: <span id="leftAmount"></span> &euro;</p>
+                                <p class="voucher" style="display:none; text-align:left; color:#000; font-weight:900; padding-left:5px">Pay with voucher: <span id="voucherAmount"></span> &euro;</p>
+                                <p class="voucher" style="display:none; text-align:left; color:#000; font-weight:900; padding-left:5px">Left amount: <span id="leftAmount"></span> &euro;</p>
                                 <div id="payFooter" class="footer" style="text-align:left">
                                     <a id="backLink" href="<?php echo base_url() . $redirect; ?>" class="btn-cancel">
                                         <i class="fa fa-arrow-left"></i>

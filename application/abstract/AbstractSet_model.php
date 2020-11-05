@@ -31,15 +31,16 @@
             foreach ($data as $property => $value) {
                 if (in_array($property, $publics)) {
                     $this->setValueType($property, $value);
-                    $this->$property = $value;
+                    $this->{$property} = $value;
                 }
             }
             return $this;
         }
 
-        public function setObject(): ?object
+        public function setObject(array $what = []): ?object
         {
-            $data = $this->read(['*'], ['id=' => $this->id]);
+            $find = (empty($what)) ? '*' : implode(',', $what);
+            $data = $this->read([$find], ['id=' => $this->id]);
             if ($data) {
                 $data = reset($data);
                 $this->setObjectFromArray($data);
