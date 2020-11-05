@@ -86,10 +86,10 @@
                             } 
                             echo ' ' . Util::get($nodeClass, $cf, '');
                         ?>"
-                        data-value='<?phphtmlspecialchars($node[$cf]);?>'
-                        data-text='<?phphtmlspecialchars($mappedNode[$cf]);?>'
-                        data-full-value='<?phphtmlspecialchars(implode(" || ", $nodeFullValue));?>'
-                        data-full-text='<?phphtmlspecialchars(implode(" || ", $nodeFullText));?>'
+                        data-value='<?php htmlspecialchars($node[$cf]);?>'
+                        data-text='<?php htmlspecialchars($mappedNode[$cf]);?>'
+                        data-full-value='<?php htmlspecialchars(implode(" || ", $nodeFullValue));?>'
+                        data-full-text='<?php htmlspecialchars(implode(" || ", $nodeFullText));?>'
 
                         data-column-field=<?php $isColTotalHeader ? $i-1 : $i?>
                         data-column-index=<?php $c;?>
@@ -138,10 +138,10 @@
                                     ' pivot-data-header-total';  
                             echo ' ' . Util::get($dataHeadersClass, $df, '');
                         ?>' 
-                        data-value='<?phphtmlspecialchars($df);?>'
-                        data-text='<?phphtmlspecialchars($mappedDH);?>'
-                        data-full-value='<?phphtmlspecialchars(implode(" || ", $nodeFullValue));?>'
-                        data-full-text='<?phphtmlspecialchars(implode(" || ", $nodeFullText));?>'
+                        data-value='<?php htmlspecialchars($df);?>'
+                        data-text='<?php htmlspecialchars($mappedDH);?>'
+                        data-full-value='<?php htmlspecialchars(implode(" || ", $nodeFullValue));?>'
+                        data-full-text='<?php htmlspecialchars(implode(" || ", $nodeFullText));?>'
 
                         data-data-field=<?php $di?>
                         data-column-field=<?php $colNodeInfo['fieldOrder']?>
@@ -177,10 +177,10 @@
                                 }
                                 echo ' ' . Util::get($nodeClass, $rf, '');
                             ?>'
-                            data-value='<?phphtmlspecialchars($node[$rf]);?>'
-                            data-text='<?phphtmlspecialchars($mappedNode[$rf]);?>'
-                            data-full-value='<?phphtmlspecialchars(implode(" || ", $nodeFullValue));?>'
-                            data-full-text='<?phphtmlspecialchars(implode(" || ", $nodeFullText));?>'
+                            data-value='<?php htmlspecialchars($node[$rf]);?>'
+                            data-text='<?php htmlspecialchars($mappedNode[$rf]);?>'
+                            data-full-value='<?php htmlspecialchars(implode(" || ", $nodeFullValue));?>'
+                            data-full-text='<?php htmlspecialchars(implode(" || ", $nodeFullText));?>'
 
                             data-row-field=<?php $isRowTotalHeader ? $j-1 : $j?>
                             data-row-index=<?php $r?>
