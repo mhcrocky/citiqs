@@ -146,7 +146,7 @@
                         </div>
                         <div class="form-group col-sm-6" id="orderTimeDiv">
                             <label class="labelColorCheckout" for="orderTime"><?php echo $this->language->line("PAYMENT-PC0110",'Select ');?>&nbsp;<?php echo lcfirst($spot['spotType']); ?>&nbsp;<?php echo $this->language->line("PAYMENT-PC0120",'time');?> (<sup>*</sup>)</label>
-                            <input type="text" id="orderTimeInput" class="form-control timepicker inputFieldCheckout" name="order[time]" />
+                            <input type="text" id="orderTimeInput" class="form-control timepicker inputFieldCheckout" name="order[time]" readonly />
                         </div>
                     </div>
                 <?php } ?>
