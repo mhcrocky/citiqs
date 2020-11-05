@@ -31,9 +31,9 @@
 							</div>
 							<div>
 								<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center">
-									<?php echo $this->language->Line("spot-registerbusiness-1400ac",'With a short name of your business and or event, your visitors can browse and find the');?>
-									<?php echo $this->language->Line("spot-registerbusiness-1500ac",'website, to claim their lost Items. The link will represent, the url:');?>
-									<?php echo $this->language->Line("spot-registerbusiness-1600ac",'Your shortname');?>
+									<?php echo $this->language->Line("spot-registerbusiness-A1400ac",'With a short name of your business and or event, your visitors can browse and find the');?>
+									<?php echo $this->language->Line("spot-registerbusiness-A1500ac",'website. The link will represent, the url:tiqs.com/presence/[yourshortname]');?>
+									<?php echo $this->language->Line("spot-registerbusiness-A1600ac",'Your shortname');?>
 									<br/>
 									<br/>
 								</p>
@@ -148,12 +148,12 @@
 								<input type="password" name="cpassword" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php echo $this->language->Line("spot-registerbusiness-2500"," Confirm Password ");?>" />
 							</div>
 							<div>
-								<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center">
-									<?php echo $this->language->Line("spot-registerbusiness-2600",'Your business address, this is the address where the');?> lost + found
-									<?php echo $this->language->Line("spot-registerbusiness-2700",'will be picked-up by DHL and/or customers, to repatriate the lost Items.');?>
-									<br/>
-									<br/>
-								</p>
+<!--								<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center">-->
+<!--									--><?php //echo $this->language->Line("spot-registerbusiness-2600",'Your business address, this is the address where the');?><!-- lost + found-->
+<!--									--><?php //echo $this->language->Line("spot-registerbusiness-2700",'will be picked-up by DHL and/or customers, to repatriate the lost Items.');?>
+<!--									<br/>-->
+<!--									<br/>-->
+<!--								</p>-->
 							</div>
 							<div class="form-group has-feedback">
 								<input type="text" name="address" value="<?php echo get_cookie('address'); ?>" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?php echo $this->language->Line("spot-registerbusiness-2800","Address");?> />

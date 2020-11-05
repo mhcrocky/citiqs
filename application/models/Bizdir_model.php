@@ -30,6 +30,7 @@ class Bizdir_model extends CI_Model {
 		$places = [];
 		foreach($results as $result){
 			$distance = Utility_helper::getDistance(floatval($lat), floatval($long), floatval($result['lat']), floatval($result['lng']));
+
 			if($distance<=$range){
 				$result['distance'] = number_format($distance, 2, '.', '');
 				$places[] = $result;

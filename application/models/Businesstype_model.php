@@ -14,6 +14,7 @@ class Businesstype_model extends CI_Model
     public function getAll(): array
     {
         $this->db->select('*');
+        $this->db->where('view',1);
         $results = $this->db->get($this->table);
         return $results->result_array();
     }

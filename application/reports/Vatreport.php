@@ -70,9 +70,20 @@
 							tbl_shop_products_extended.`name` AS productName, 
 							tbl_shop_products_extended.price AS productPrice, 
 							tbl_shop_products_extended.vatpercentage AS productVat, 
+							tbl_shop_products_extended.deliveryPrice AS deliveryproductPrice, 
+							tbl_shop_products_extended.deliveryVatpercentage AS deliveryproductVat, 
+							tbl_shop_products_extended.pickupPrice AS pickupproductPrice, 
+							tbl_shop_products_extended.pickupVatpercentage AS pickupproductVat, 
+							
 							tbl_shop_spots.spotName AS spotName,
 							tbl_shop_products_extended.price * tbl_shop_order_extended.quantity AS productlinetotal,
 							((tbl_shop_products_extended.price * tbl_shop_order_extended.quantity) * 100)/(tbl_shop_products_extended.vatpercentage+100) AS EXVAT,
+							
+							tbl_shop_products_extended.deliveryPrice * tbl_shop_order_extended.quantity AS deliveryproductlinetotal,
+							((tbl_shop_products_extended.deliveryPrice * tbl_shop_order_extended.quantity) * 100)/(tbl_shop_products_extended.deliveryVatpercentage+100) AS deliveryEXVAT,
+							
+							tbl_shop_products_extended.pickupPrice * tbl_shop_order_extended.quantity AS pickupproductlinetotal,
+							((tbl_shop_products_extended.pickupPrice * tbl_shop_order_extended.quantity) * 100)/(tbl_shop_products_extended.pickupVatpercentage+100) AS pickupEXVAT,
 							tbl_shop_orders.serviceFee AS servicefee
 						FROM
 						   `tbl_shop_orders` 
@@ -304,22 +315,33 @@
 				->src('alfred')
 				->query('
 						SELECT
-							tbl_shop_orders.id AS orderId,
-							tbl_shop_orders.amount AS orderAmount,
-							tbl_shop_orders.paid AS orderPaidStatus,
-							tbl_shop_orders.created AS createdAt,
-							tbl_shop_categories.category AS category,
-							buyer.id AS buyerId,
-							buyer.email AS buyerEmail,
-							buyer.username AS buyerUserName,
-							buyer.mobile AS buyerMobile,
-							vendor.username AS vendorUserName,
-							tbl_shop_order_extended.quantity AS productQuantity,
-							tbl_shop_products_extended.`name` AS productName,
-							tbl_shop_products_extended.price AS productPrice,
-							tbl_shop_products_extended.vatpercentage AS productVat,
+							tbl_shop_orders.id AS orderId, 
+							tbl_shop_orders.amount AS orderAmount, 
+							tbl_shop_orders.paid AS orderPaidStatus, 
+							tbl_shop_orders.created AS createdAt, 
+							tbl_shop_categories.category AS category, 
+							buyer.id AS buyerId, 
+							buyer.email AS buyerEmail, 
+							buyer.username AS buyerUserName, 
+							vendor.username AS vendorUserName, 
+							tbl_shop_order_extended.quantity AS productQuantity, 
+							tbl_shop_products_extended.`name` AS productName, 
+							tbl_shop_products_extended.price AS productPrice, 
+							tbl_shop_products_extended.vatpercentage AS productVat, 
+							tbl_shop_products_extended.deliveryPrice AS deliveryproductPrice, 
+							tbl_shop_products_extended.deliveryVatpercentage AS deliveryproductVat, 
+							tbl_shop_products_extended.pickupPrice AS pickupproductPrice, 
+							tbl_shop_products_extended.pickupVatpercentage AS pickupproductVat, 
+							
 							tbl_shop_spots.spotName AS spotName,
 							tbl_shop_products_extended.price * tbl_shop_order_extended.quantity AS productlinetotal,
+							((tbl_shop_products_extended.price * tbl_shop_order_extended.quantity) * 100)/(tbl_shop_products_extended.vatpercentage+100) AS EXVAT,
+							
+							tbl_shop_products_extended.deliveryPrice * tbl_shop_order_extended.quantity AS deliveryproductlinetotal,
+							((tbl_shop_products_extended.deliveryPrice * tbl_shop_order_extended.quantity) * 100)/(tbl_shop_products_extended.deliveryVatpercentage+100) AS deliveryEXVAT,
+							
+							tbl_shop_products_extended.pickupPrice * tbl_shop_order_extended.quantity AS pickupproductlinetotal,
+							((tbl_shop_products_extended.pickupPrice * tbl_shop_order_extended.quantity) * 100)/(tbl_shop_products_extended.pickupVatpercentage+100) AS pickupEXVAT,
 							tbl_shop_orders.serviceFee AS servicefee
 						FROM
 							tbl_shop_orders
@@ -486,9 +508,20 @@
 							tbl_shop_products_extended.`name` AS productName, 
 							tbl_shop_products_extended.price AS productPrice, 
 							tbl_shop_products_extended.vatpercentage AS productVat, 
+							tbl_shop_products_extended.deliveryPrice AS deliveryproductPrice, 
+							tbl_shop_products_extended.deliveryVatpercentage AS deliveryproductVat, 
+							tbl_shop_products_extended.pickupPrice AS pickupproductPrice, 
+							tbl_shop_products_extended.pickupVatpercentage AS pickupproductVat, 
+							
 							tbl_shop_spots.spotName AS spotName,
 							tbl_shop_products_extended.price * tbl_shop_order_extended.quantity AS productlinetotal,
 							((tbl_shop_products_extended.price * tbl_shop_order_extended.quantity) * 100)/(tbl_shop_products_extended.vatpercentage+100) AS EXVAT,
+							
+							tbl_shop_products_extended.deliveryPrice * tbl_shop_order_extended.quantity AS deliveryproductlinetotal,
+							((tbl_shop_products_extended.deliveryPrice * tbl_shop_order_extended.quantity) * 100)/(tbl_shop_products_extended.deliveryVatpercentage+100) AS deliveryEXVAT,
+							
+							tbl_shop_products_extended.pickupPrice * tbl_shop_order_extended.quantity AS pickupproductlinetotal,
+							((tbl_shop_products_extended.pickupPrice * tbl_shop_order_extended.quantity) * 100)/(tbl_shop_products_extended.pickupVatpercentage+100) AS pickupEXVAT,
 							tbl_shop_orders.serviceFee AS servicefee
 						FROM
 						   `tbl_shop_orders` 
@@ -543,7 +576,15 @@
 				])
 
 				->pipe(new CalculatedColumn(array(
-					"totalamount"=>"{productPrice}*{productQuantity}"
+					"totalamount"=>"{productPrice}*{productQuantity}+{deliveryproductPrice}*{productQuantity}+{pickupproductPrice}*{productQuantity}"
+				)))
+
+				->pipe(new CalculatedColumn(array(
+					"deliverytotalamount"=>"{deliveryproductPrice}*{productQuantity}"
+				)))
+
+				->pipe(new CalculatedColumn(array(
+					"pickuptotalamount"=>"{pickupproductPrice}*{productQuantity}"
 				)))
 
 				->pipe(new CalculatedColumn(array(
@@ -582,12 +623,22 @@
 							vendor.username AS vendorUserName, 
 							tbl_shop_order_extended.quantity AS productQuantity, 
 							tbl_shop_products_extended.`name` AS productName, 
-							tbl_shop_products_extended.`name` AS productNameAantal, 
 							tbl_shop_products_extended.price AS productPrice, 
 							tbl_shop_products_extended.vatpercentage AS productVat, 
+							tbl_shop_products_extended.deliveryPrice AS deliveryproductPrice, 
+							tbl_shop_products_extended.deliveryVatpercentage AS deliveryproductVat, 
+							tbl_shop_products_extended.pickupPrice AS pickupproductPrice, 
+							tbl_shop_products_extended.pickupVatpercentage AS pickupproductVat, 
+							
 							tbl_shop_spots.spotName AS spotName,
 							tbl_shop_products_extended.price * tbl_shop_order_extended.quantity AS productlinetotal,
 							((tbl_shop_products_extended.price * tbl_shop_order_extended.quantity) * 100)/(tbl_shop_products_extended.vatpercentage+100) AS EXVAT,
+							
+							tbl_shop_products_extended.deliveryPrice * tbl_shop_order_extended.quantity AS deliveryproductlinetotal,
+							((tbl_shop_products_extended.deliveryPrice * tbl_shop_order_extended.quantity) * 100)/(tbl_shop_products_extended.deliveryVatpercentage+100) AS deliveryEXVAT,
+							
+							tbl_shop_products_extended.pickupPrice * tbl_shop_order_extended.quantity AS pickupproductlinetotal,
+							((tbl_shop_products_extended.pickupPrice * tbl_shop_order_extended.quantity) * 100)/(tbl_shop_products_extended.pickupVatpercentage+100) AS pickupEXVAT,
 							tbl_shop_orders.serviceFee AS servicefee
 						FROM
 						   `tbl_shop_orders` 
@@ -867,6 +918,8 @@
 			;
 
 		}
+
+
 
     }
 

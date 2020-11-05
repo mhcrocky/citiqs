@@ -922,7 +922,7 @@
         /**
          * Add colors to make order new view
          */
-        public function design(): void
+        public function viewdesign(): void
         {
             $iframeSrc = base_url() . 'make_order?vendorid=' . $_SESSION['userId'];
             $vendorData = $this->shopvendor_model->setProperty('vendorId', $_SESSION['userId'])->getProperties(['id', 'design']);
@@ -940,7 +940,7 @@
             // die();
 
             $this->global['pageTitle'] = 'TIQS : DESIGN';
-            $this->loadViews('warehouse/design', $this->global, $data, null, 'headerWarehouse');
+            $this->loadViews('warehouse/design', $this->global, $data, null, 'headerDesign');
             return;
         }
 
