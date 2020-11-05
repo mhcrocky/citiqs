@@ -920,7 +920,6 @@
 			}
 
 			$h++;
-			$h++;
 
 
 			//-------- header regel --------
@@ -959,11 +958,13 @@
 			$imagetextemail->annotateImage($drawemail, 475, 165, 0, "%");
 			$imagetextemail->annotateImage($drawemail, 495, 165, 0, "TOTAAL");
 			$h++;
+			$h++;
+			$h++;
 
 			//-------- regels --------
 
 			$totalamount = 0;
-			$i = 0;
+			$i = 2;//
 			$ii = 0;
 			$hd = $h * 35;
 
@@ -1341,7 +1342,7 @@
             /* Give image a format */
             $resultpngprinter->setImageFormat('png');
 			$resultpngemail->setImageFormat('png');
-			$img__filename=$order['orderId'].rand(00,99);
+			$img__filename=$order['orderId'].'_'.rand(00,99);
             $receipt = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $img__filename . '.png';
 			$receiptemail = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $img__filename.'-email' . '.png';
             if (!file_put_contents($receipt, $resultpngprinter)) {
