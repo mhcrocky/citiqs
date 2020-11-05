@@ -31,11 +31,11 @@
 
         <?php
             if ($vendor['preferredView'] === $oldMakeOrderView) {
-                include_once FCPATH . 'application/views/publicorders/includes/checkoutOrderFirstVresion.php';
+                include_once FCPATH . 'application/views/publicorders/includes/modals/checkout/checkoutOrderFirstVresion.php';
             } elseif ($vendor['preferredView'] === $newMakeOrderView) {
-                include_once FCPATH . 'application/views/publicorders/includes/checkoutOrderSecondVresion.php';
+                include_once FCPATH . 'application/views/publicorders/includes/modals/checkout/checkoutOrderSecondVresion.php';
             }
-            include_once FCPATH . 'application/views/publicorders/includes/checkoutOrderTip.php';
+            include_once FCPATH . 'application/views/publicorders/includes/modals/checkout/checkoutOrderTip.php';
         ?>
 
         <div class="row d-flex justify-content-center" id="checkout">
@@ -146,7 +146,7 @@
                         </div>
                         <div class="form-group col-sm-6" id="orderTimeDiv">
                             <label class="labelColorCheckout" for="orderTime"><?php echo $this->language->line("PAYMENT-PC0110",'Select ');?>&nbsp;<?php echo lcfirst($spot['spotType']); ?>&nbsp;<?php echo $this->language->line("PAYMENT-PC0120",'time');?> (<sup>*</sup>)</label>
-                            <input type="text" id="orderTimeInput" class="form-control timepicker inputFieldCheckout" name="order[time]" />
+                            <input type="text" id="orderTimeInput" class="form-control timepicker inputFieldCheckout" name="order[time]" readonly />
                         </div>
                     </div>
                 <?php } ?>

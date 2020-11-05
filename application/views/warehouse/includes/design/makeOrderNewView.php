@@ -437,4 +437,42 @@
             />
         </label>
     </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Arrows color:
+            <input
+                type="color"
+                class="form-control"
+                name="makeOrderNew[class][slick-arrow:before][color]"
+                data-css-selector="class"
+                data-css-selector-value="slick-arrow"
+                data-css-property="color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['makeOrderNew']['class']['slick-arrow:before']['color']) ) { ?>
+                value = "<?php echo $design['makeOrderNew']['class']['slick-arrow:before']['color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Info circle color:
+            <input
+                type="color"
+                class="form-control"
+                name="makeOrderNew[class][infoCircle][color]"
+                data-css-selector="class"
+                data-css-selector-value="infoCircle"
+                data-css-property="color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['makeOrderNew']['class']['infoCircle']['color']) ) { ?>
+                value = "<?php echo $design['makeOrderNew']['class']['infoCircle']['color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>    
 </fieldset>

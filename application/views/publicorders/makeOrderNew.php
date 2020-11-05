@@ -52,7 +52,7 @@
                                                     <?php if ($productDetails['longDescription'] && $productDetails['longDescription'] !== 'NA') { ?>
                                                         <i
                                                             style="width: 15px"
-                                                            class="fa fa-info-circle"
+                                                            class="fa fa-info-circle infoCircle"
                                                             aria-hidden="true"
                                                             data-toggle="popover"
                                                             data-trigger="hover"

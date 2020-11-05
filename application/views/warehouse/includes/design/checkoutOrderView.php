@@ -234,14 +234,14 @@
             <input
                 type="color"
                 class="form-control"
-                name="buyerDetails[class][labelColorCheckout][color]"
+                name="checkoutOrder[class][labelColorCheckout][color]"
                 data-css-selector="class"
                 data-css-selector-value="labelColorCheckout"
                 data-css-property="color"
                 onfocus="styleELements(this)"
                 oninput="styleELements(this)"
-                <?php if ( isset($design['buyerDetails']['class']['labelColorCheckout']['color']) ) { ?>
-                value = "<?php echo $design['buyerDetails']['class']['labelColorCheckout']['color']?>"
+                <?php if ( isset($design['checkoutOrder']['class']['labelColorCheckout']['color']) ) { ?>
+                value = "<?php echo $design['checkoutOrder']['class']['labelColorCheckout']['color']?>"
                 data-value="1"
                 <?php } ?>
             />
@@ -249,7 +249,7 @@
     </div>
     <div class="form-group col-sm-12">
         <label style="display:block;">
-            Input field color:
+            Input field font color:
             <input
                 type="color"
                 class="form-control"
