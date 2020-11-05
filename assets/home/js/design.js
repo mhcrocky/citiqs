@@ -10,7 +10,13 @@ function styleELements(element) {
         let i;
         for (i = 0; i < iframeElementsLength; i++) {
             let iframeElement = iframeElements[i];
-            iframeElement.style.setProperty(property, value, 'important');
+            if (selector === '.slick-arrow') {
+                console.dir($('iframe').contents().find('head')[0]);
+                let head = $('iframe').contents().find('head')[0];
+                $(head).append('<style>.slick-arrow:before{color:' + value +' !important}</style>');
+            } else {
+                iframeElement.style.setProperty(property, value, 'important');
+            }
         }
     }
 
