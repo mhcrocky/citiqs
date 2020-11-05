@@ -226,7 +226,7 @@
 				<?php echo base_url() . 'check424/' . $user->id; ?>
 			</a>
 			<h2>Set public design</h2>
-			<a href="<?php echo base_url() . 'design'; ?>">
+			<a href="<?php echo base_url() . 'viewdesign'; ?>">
 				Design
 			</a>
 			<div class="background-blue timeline-content">
