@@ -64,7 +64,8 @@ class Login extends REST_Controller
 
         $message = [
             'hash' => $hash,
-            'affected_rows' => "$affected_rows"
+            'affected_rows' => "$affected_rows",
+			'vendor' => $user->userId
         ];
 
         $this->set_response($message, 200); // CREATED (201) being the HTTP response code

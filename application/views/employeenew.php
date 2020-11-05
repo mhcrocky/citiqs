@@ -15,7 +15,7 @@
 				</div>
 
 				<div class="edit-single-user-container">
-					<form class="form-inline" id="addEmployee" method="post" action="<?php echo $this->baseUrl . 'index.php/addNewEmployeeSetup'; ?>">
+					<form class="form-inline" id="addEmployee" method="post" action="<?php echo $this->baseUrl . 'addNewEmployeeSetup'; ?>">
 						<input type="text" readonly name="ownerId" required value="<?php echo $ownerId ?>" hidden />
 						<h3>Employee Details</h3>
 						<div>

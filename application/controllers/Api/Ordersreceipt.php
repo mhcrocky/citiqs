@@ -26,17 +26,19 @@
             $this->load->library('language', array('controller' => $this->router->class));
         }
 
-        public function data_get($orderId)
+
+
+			public function data_get($orderId)
         {
             $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
-            Utility_helper::logMessage($logFile, 'ordernumber ' .$orderId);
+//            Utility_helper::logMessage($logFile, 'ordernumber ' .$orderId);
 
             $order = $this->shoporder_model->fetchOrdersForPrintcopy($orderId);
             if (!$order) return;
             $order = reset($order);
             if ($order['printStatus'] === '0') return;
 
-			Utility_helper::logMessage($logFile, 'order vendor'.$order['vendorId']);
+//			Utility_helper::logMessage($logFile, 'order vendor'.$order['vendorId']);
 
             $productsarray = explode($this->config->item('contactGroupSeparator'), $order['products']);
             $imageprint = new Imagick();

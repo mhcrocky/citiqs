@@ -30,7 +30,14 @@
 
         public function data_get()
         {
+
             $get = $this->input->get(null, true);
+
+//			$this->shopprinterrequest_model->insertPrinterRequest($get['mac']);
+
+//			$logFile = FCPATH . 'application/tiqs_logs/messages.txt';
+//			Utility_helper::logMessage($logFile, 'MACNUMBER' .$get['mac']);
+
             if(!$get['mac'] || !$this->shopprinterrequest_model->insertPrinterRequest($get['mac'])) return;
 
             // check is printer slave, if printer is slave, fetch master mac number, else masterMac is $get['mac']
@@ -298,6 +305,7 @@
                     // 8 => remark
 
                     $title =  substr($product[0], 0, 27);
+                    $titleorder = substr($product[0], 0, 37);
                     $price = $product[1];
                     $quantity = $product[2];
                     $plu =  $product[3];
@@ -331,7 +339,7 @@
                         $draw->annotation(20, $hd + ($i * 30), $quantity);
 
                         $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                        $draw->annotation(60, $hd + ($i * 30), $title);
+                        $draw->annotation(60, $hd + ($i * 30), $titleorder);
 
                         if ($remark) {
                             $i++;
@@ -343,7 +351,7 @@
                         $draw->annotation(0, $hd + ($i * 30), $quantity);
 
                         $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                        $draw->annotation(40, $hd + ($i * 30), $title);
+                        $draw->annotation(40, $hd + ($i * 30), $titleorder);
 
                         if ($remark) {
                             $i++;
@@ -559,15 +567,18 @@
 			$imageprintemail->resetIterator();
 
             $resultpngprinter = $imageprint->appendImages(true);
+
 			$resultpngemail = $imageprintemail->appendImages(true);
             
             /* Output the image with headers */
             /* Give image a format */
             $resultpngprinter->setImageFormat('png');
 			$resultpngemail->setImageFormat('png');
+
             $receipt = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '.png';
 			$receiptemail = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'].'-email' . '.png';
-            if (!file_put_contents($receipt, $resultpngprinter)) {
+
+			if (!file_put_contents($receipt, $resultpngprinter)) {
                 $receipt = '';
             }
 			if (!file_put_contents($receiptemail, $resultpngemail)) {
@@ -623,9 +634,12 @@
 
         public function data_post()
         {
-//            $file = FCPATH . 'application/tiqs_logs/messages.txt';
-//            Utility_helper::logMessage($file, 'printer send post request');
+			// $file = FCPATH . 'application/tiqs_logs/messages.txt';
+			// Utility_helper::logMessage($file, 'printer send post request');
             // Check is valid POST request type
+
+			// DO HERE CHECK IF PRINTER CONNECTED NOT AT GET BECAUSE THAN WE KNOW IT IS...
+
             if (strtolower($_SERVER['CONTENT_TYPE']) !== 'application/json')
 			{
 //				Utility_helper::logMessage($file, 'printer send post request CONTENT TYPE');
@@ -650,10 +664,15 @@
 			}
 
     
-            if (!Sanitize_helper::isValidMac($parsedJson['printerMAC'])){
+            if (!Sanitize_helper::isValidMac($parsedJson['printerMAC']))
+            	{
 //				Utility_helper::logMessage($file, 'printer send post request passed MAC ERROR');
 				return;
-			}
+            	}
+            else
+				{
+					$this->shopprinterrequest_model->insertPrinterRequest($parsedJson['printerMAC']);
+				};
 
 
 //            Utility_helper::logMessage($file, 'Printer MAC:' .  $parsedJson['printerMAC']);

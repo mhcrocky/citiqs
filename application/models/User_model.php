@@ -803,6 +803,7 @@ class User_model extends CI_Model
 
     public function insertUser(array $user): bool
     {
+
         $this->db->insert('tbl_user', $user);
         $this->id = $this->db->insert_id();
         return $this->id ? true : false;
@@ -846,7 +847,7 @@ class User_model extends CI_Model
         $hotel['code'] = Utility_helper::shuffleString(5);
         $hotel['createdDtm'] = date('Y-m-d H:i:s');
         $this->getGeoCoordinates($hotel);
-        $this->insertUser($hotel);    
+        $this->insertUser($hotel);
         $this->setUniqueValue($hotel['email'])->setWhereCondtition()->setUser();
         $this->password = $password;
         return $this;

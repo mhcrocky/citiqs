@@ -109,6 +109,28 @@
 			</div>
 		</div><!-- end timeline block -->
 
+		<div class="timeline-block background-apricot-blue">
+			<span class='timeline-number text-light-blue'>3</span>
+			<div class="timeline-text">
+
+				<div class='timeline-heading'>
+					<span class='timeline-number text-light-blue show-mobile'>3</span>
+					<h2 style="font-weight:bold; font-family: caption-bold"><?php echo $this->language->line('ALFRED-NL0010A','MY DESIGNS');?></h2>
+				</div>
+				<p style="font-family:caption-light; font-size: medium; font-weight: bold">
+				<ul style="list-style-type: disc ; font-family:caption-light; font-size: larger; margin-left: -20px ">
+					<li><?php echo $this->language->line('ALFRED-NL0020A',"E-mail templates, iFrame template (colors, fonts, size), Settings landing pages (Succes payments), ");?></>
+				</ul>
+				<p></p>
+				<div class="flex-column align-space">
+					<div style="text-align:center">
+						<!-- <a class="button button-orange mb-25" id="show-timeline-video-4">LEARN MORE VIDEO</a> -->
+						<a href="emaildesigner" target="_self" class="button button-orange mb-25"><?php echo $this->language->line('ALFRED-NL0030A',"GO TO SETTINGS");?></a>
+					</div>
+				</div>
+			</div>
+		</div><!-- end timeline block -->
+
 	</div>
 	<!-- time-line -->
 <!-- end col half -->

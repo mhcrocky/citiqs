@@ -40,6 +40,7 @@
             $query  = 'INSERT INTO ' . $this->table . ' (printerId) ';
             $query .= 'SELECT id FROM tbl_shop_printers WHERE macNumber = "' . $macNumber . '";';
             $this->db->query($query);
+
             $this->id = $this->db->insert_id();
             return  $this->id ? true : false;
         }

@@ -849,21 +849,10 @@ class Login extends BaseControllerWeb
 		$this->form_validation->set_rules('city', 'City', 'trim|required|max_length[128]');
 		$this->form_validation->set_rules('country', 'Country', 'trim|required|max_length[128]');
 
-		// send email
-		//'username', [FullName]
-		//'first_name', [Full Name],
-		//'second_name', [Full Name],
-		//'email', [Email],
-		//'mobile', [MobileNumber],
-		//'business_type_id', [Business]
-		//'address', [Address],
-		//'zipcode', [Zipcode],
-		//'city', [City],
-		//'country', [Country],
-
-
 		$hotel = $this->input->post(null, true);
 		$this->user_model->setUniqueValue($hotel['email'])->setWhereCondtition()->setUser();
+
+		// when user already exists...
 		if ($this->user_model->id) {
 			if ($this->user_model->active !== '0') {
 				$this->session->set_flashdata('error', $this->language->Line("registerbusiness-F1001OPA","We already know you, please reset password (forgot password) or use other e-mail address to (register)"));
@@ -910,6 +899,7 @@ class Login extends BaseControllerWeb
 		$this->shopvendortime_model->setProperty('vendorId', $this->user_model->id)->insertVendorTime();
 
 		$this->session->set_flashdata('success', $this->language->Line("registerbusiness-F1002A","Account created Successfully. In your given email we have send your activation link/code and credentials"));
-		redirect('/login');
+
+		redirect('https://tiqs.com/alfred/login');
 	}
 }
