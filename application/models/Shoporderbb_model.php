@@ -641,6 +641,10 @@
             $this->db->query($query);
             return $this->db->affected_rows() ? true : false;
         }
+        function updateorderextended($id,$data){
+            $this->db->where();
+            $this->db->update('tbl_shop_order_extended',$data);
+        }
 
         public function updatePaidStatus(object $shopOrderPaynl, array $what): void
         {

@@ -1867,6 +1867,8 @@
                     ->setObjectId(intval($id))
                     ->setObjectFromArray(['drawprinted' => '1'])
                     ->update();
+                    $dataa=array('drawprinted'=>1)
+                    $this->shoporder_model->updateorderextended($id,$dataa);
             }
             // if ($this->shoporder_model->updatePrintedStatus()) {
             // }
