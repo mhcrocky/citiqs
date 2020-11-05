@@ -642,7 +642,7 @@
             return $this->db->affected_rows() ? true : false;
         }
         function updateorderextended($id,$data){
-            $this->db->where();
+            $this->db->where('id',$id);
             $this->db->update('tbl_shop_order_extended',$data);
         }
 
