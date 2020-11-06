@@ -289,7 +289,7 @@
             );
         }
 
-        public function fetchOrdersForPrint(string $macNumber, $where=''): ?array
+        public function fetchOrdersForPrint(string $macNumber, string $where = ''): ?array
         {
             // $where= 'tbl_shop_order_extended.printed = "0" ';
             $this->load->config('custom');
@@ -331,7 +331,7 @@
                         vendorOne.city as vendorCity,
                         vendorOne.vat_number as vendorVAT,
                         vendorOne.country as vendorCountry,
-                        vendorOne.receiptEmail as receiptEmail
+                        vendorOne.receiptEmail as receiptEmail,
                         tbl_shop_vendors.serviceFeeTax as serviceFeeTax,
                         tbl_shop_orders.serviceFee AS serviceFee,
                         tbl_shop_orders_paynl.transactionId AS payNlTransactionId
@@ -374,7 +374,7 @@
                             tbl_shop_printers ON tbl_shop_printers.id = tbl_shop_product_printers.printerId
                         WHERE
                             tbl_shop_product_printers.printerId = (SELECT tbl_shop_printers.id WHERE tbl_shop_printers.macNumber = "' . $macNumber . '")
-                            AND  '.$where.' 
+                            AND  ' . $where . ' 
                         GROUP BY
                             tbl_shop_order_extended.orderId
                     ) productData ON productData.orderId = tbl_shop_orders.id
@@ -440,7 +440,7 @@
                         vendorOne.city as vendorCity,
                         vendorOne.vat_number as vendorVAT,
                         vendorOne.country as vendorCountry,
-                        vendorOne.receiptEmail as receiptEmail
+                        vendorOne.receiptEmail as receiptEmail,
                         tbl_shop_vendors.serviceFeeTax as serviceFeeTax,
                         tbl_shop_orders.serviceFee AS serviceFee,
                         tbl_shop_orders_paynl.transactionId AS payNlTransactionId
