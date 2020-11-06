@@ -24,6 +24,7 @@ class  Paysuccesslink extends BaseControllerWeb
     {
         $get = Utility_helper::sanitizeGet();
         $orderId = $get['orderid'];
+
         $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
         $order = reset($order);
 

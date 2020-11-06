@@ -28,12 +28,36 @@ class Ordersmobile extends REST_Controller
 
 	public function orders_get($vendorId)
 	{
-		var_dump($vendorId);die();
+//		var_dump($vendorId);die();
 
-		$orders = $this->shoporder_model_mobile->returnOrders($vendorId);
-		if(!empty($orders)){
-			return $orders;
-		}
+		$orderslist = $this->shoporder_model_mobile->returnOrders($vendorId);
+
+
+//		var_dump($orderslist);
+
+		echo json_encode($orderslist);
+//		die();
+//		if(!empty($orders)){
+//			return $orders;
+//		}
+
+
+	}
+
+	public function orderprocessed_get($vendorId)
+	{
+//		var_dump($vendorId);die();
+
+//		$orderslist = $this->shoporder_model_mobile->returnOrders($vendorId);
+
+
+//		var_dump($orderslist);
+		$processed = true;
+		echo json_encode($processed);
+//		die();
+//		if(!empty($orders)){
+//			return $orders;
+//		}
 
 
 	}

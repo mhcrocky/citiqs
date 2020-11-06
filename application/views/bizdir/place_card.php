@@ -3,7 +3,7 @@
 		foreach ($directories as $directory): ?>
 					<div
 						class="col-md-4 places fade"
-						style="background-color: #fbd19a;"
+						style="background-color: #fbd19a; padding: 10px 50px 10px 50px"
 						data-lat="<?php echo $directory['lat']; ?>"
 						data-lng="<?php echo $directory['lng']; ?>"
 						data-distance="<?php echo $directory['distance']; ?>"
@@ -33,7 +33,7 @@
 								<div class="social-links align-items-center pt-3">
 									<a class="contact-link" target="_blank; color: white; --text-color: white"
 									   <?php if ($directory['email']) { ?>href="<?php echo "https://tiqs.com/alfred/make_order?vendorid=".$directory['id']; ?>"<?php } ?> >
-
+										<button data-brackets-id="2918" type="submit" class="button button-orange"><?php echo $this->language->line("BIZDIR",'ORDER HERE');?></button>
 										<i class="fa fa-qrcode fa-lg" style="color: white; --text-color: white"></i> <?php echo $this->language->line("BIZDIR",'ORDER HERE');?></a>
 								</div>
 							</div>
