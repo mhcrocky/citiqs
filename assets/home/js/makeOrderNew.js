@@ -95,7 +95,7 @@ function changeProductQuayntity(element, className) {
         let showValue = showHtmlQuantity(inputField, incerase, false);
         if (showValue === 0) {
             element.parentElement.parentElement.parentElement.parentElement.remove();
-            alertify.success('Product removed from list');
+            // alertify.success('Product removed from list');
         }
     }
 }
@@ -331,7 +331,7 @@ function removeOrdered(elementId) {
     // document.querySelectorAll('#' + makeOrderGlobals.shoppingCartList + ' [data-ordered-id = "' + elementId + '"]')[0].remove();
     resetTotal();
     showHtmlQuantity(inputField, false, true);
-    alertify.success('Product removed from list');
+    // alertify.success('Product removed from list');
 }
 
 function focusOnOrderItem(containerId, itemId) {
@@ -500,33 +500,41 @@ function resetRemarks(productContainer) {
             remark.value = '';
         }
     }
+}function returnInteger(number) {
+    return number ? parseInt(number) : 0;
+}
+function getLastNode(element) {
+    let lastChild =  element.lastChild;
+    if (lastChild.nodeType === 3) {
+        return returnInteger(lastChild.nodeValue)
+    } else {
+        return getLastNode(lastChild);
+    }
 }
 
 function showHtmlQuantity(inputField, increase, element) {
     let value = parseInt(inputField.value)
     if (inputField.dataset.orderQuantityValue) {
         let showQuantity = document.getElementById(inputField.dataset.orderQuantityValue);
-        if (showQuantity) {
-            let showQuantityValue = showQuantity.innerHTML ? parseInt(showQuantity.innerHTML) : 0;
-            if (increase) {
-                if (value === 2) {
-                    inputField.setAttribute('min', '1');
-                }
-                if (element) {
-                    showQuantityValue += value;
-                } else {
-                    showQuantityValue++;
-                }
-            } else {
-                if (element) {
-                    showQuantityValue = showQuantityValue - value;
-                } else {
-                    showQuantityValue--;
-                }
+        let showQuantityValue = getLastNode(showQuantity);
+        if (increase) {
+            if (value === 2) {
+                inputField.setAttribute('min', '1');
             }
-            showQuantity.innerHTML = showQuantityValue;
-            return (showQuantityValue > 0) ? value : showQuantityValue;
+            if (element) {
+                showQuantityValue += value;
+            } else {
+                showQuantityValue++;
+            }
+        } else {
+            if (element) {
+                showQuantityValue = showQuantityValue - value;
+            } else {
+                showQuantityValue--;
+            }
         }
+        showQuantity.innerHTML = showQuantityValue;
+        return (showQuantityValue > 0) ? value : showQuantityValue;
     }
     return;
 }
