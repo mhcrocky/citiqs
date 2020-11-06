@@ -289,7 +289,7 @@
             );
         }
 
-        public function fetchOrdersForPrint(string $macNumber,$where=''): ?array
+        public function fetchOrdersForPrint(string $macNumber, $where=''): ?array
         {
             // $where= 'tbl_shop_order_extended.printed = "0" ';
             $this->load->config('custom');
@@ -306,6 +306,12 @@
                         tbl_shop_orders.spotId,
                         tbl_shop_orders.created AS orderCreated,
                         tbl_shop_orders.expired AS orderExpired,
+                        tbl_shop_orders.paid AS paidStatus,
+                        tbl_shop_orders.paymentType AS paymentType,
+                        tbl_shop_orders.waiterReceipt AS waiterReceipt,
+                        tbl_shop_orders.customerReceipt AS customerReceipt,
+                        tbl_shop_orders.serviceTypeId AS serviceTypeId,
+                        tbl_shop_orders.remarks,
                         tbl_shop_spots.spotName,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
                         tbl_shop_printers.id AS printerId,
@@ -313,6 +319,9 @@
                         tbl_user.username AS buyerUserName,
                         tbl_user.email AS buyerEmail,
                         tbl_user.mobile AS buyerMobile,
+                        tbl_user.city AS buyerCity,
+                        tbl_user.zipcode AS buyerZipcode,
+                        tbl_user.address AS buyerAddress,
                         productData.products,
                         vendorOne.logo AS vendorLogo,
                         vendorOne.id as vendorId,
@@ -322,7 +331,9 @@
                         vendorOne.city as vendorCity,
                         vendorOne.vat_number as vendorVAT,
                         vendorOne.country as vendorCountry,
-                        tbl_shop_vendors.serviceFeeTax as serviceFeeTax, tbl_shop_orders.serviceFee AS serviceFee,
+                        vendorOne.receiptEmail as receiptEmail
+                        tbl_shop_vendors.serviceFeeTax as serviceFeeTax,
+                        tbl_shop_orders.serviceFee AS serviceFee,
                         tbl_shop_orders_paynl.transactionId AS payNlTransactionId
                     FROM
                         tbl_shop_orders
@@ -343,7 +354,9 @@
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.shortDescription) > 0, tbl_shop_products_extended.shortDescription, ""), 
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, ""),
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage,
-                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.productId
+                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_order_extended.remark) > 0, tbl_shop_order_extended.remark, ""),
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.mainPrductOrderIndex,
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.subMainPrductOrderIndex
                                     SEPARATOR "' . $this->config->item('contactGroupSeparator') . '"
                                 ) AS products
                             FROM
@@ -401,6 +414,12 @@
                         tbl_shop_orders.spotId,
                         tbl_shop_orders.created AS orderCreated,
                         tbl_shop_orders.expired AS orderExpired,
+                        tbl_shop_orders.paid AS paidStatus,
+                        tbl_shop_orders.paymentType AS paymentType,
+                        tbl_shop_orders.waiterReceipt AS waiterReceipt,
+                        tbl_shop_orders.customerReceipt AS customerReceipt,
+                        tbl_shop_orders.serviceTypeId AS serviceTypeId,
+                        tbl_shop_orders.remarks,
                         tbl_shop_spots.spotName,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
                         tbl_shop_printers.id AS printerId,
@@ -408,6 +427,9 @@
                         tbl_user.username AS buyerUserName,
                         tbl_user.email AS buyerEmail,
                         tbl_user.mobile AS buyerMobile,
+                        tbl_user.city AS buyerCity,
+                        tbl_user.zipcode AS buyerZipcode,
+                        tbl_user.address AS buyerAddress,
                         productData.products,
                         vendorOne.logo AS vendorLogo,
                         vendorOne.id as vendorId,
@@ -417,6 +439,7 @@
                         vendorOne.city as vendorCity,
                         vendorOne.vat_number as vendorVAT,
                         vendorOne.country as vendorCountry,
+                        vendorOne.receiptEmail as receiptEmail
                         tbl_shop_vendors.serviceFeeTax as serviceFeeTax,
                         tbl_shop_orders.serviceFee AS serviceFee,
                         tbl_shop_orders_paynl.transactionId AS payNlTransactionId
@@ -443,7 +466,9 @@
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.shortDescription) > 0, tbl_shop_products_extended.shortDescription, ""), 
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, ""),
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage,
-                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.productId
+                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_order_extended.remark) > 0, tbl_shop_order_extended.remark, ""),
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.mainPrductOrderIndex,
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.subMainPrductOrderIndex
                                     SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"
                                 ) AS products
                             FROM
