@@ -354,6 +354,7 @@
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.shortDescription) > 0, tbl_shop_products_extended.shortDescription, ""), 
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, ""),
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.productId,
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_order_extended.remark) > 0, tbl_shop_order_extended.remark, ""),
                                     \'' .  $concatSeparator . '\', tbl_shop_order_extended.mainPrductOrderIndex,
                                     \'' .  $concatSeparator . '\', tbl_shop_order_extended.subMainPrductOrderIndex
@@ -458,7 +459,7 @@
                             SELECT
                                 tbl_shop_order_extended.orderId,
                                 GROUP_CONCAT(
-                                    tbl_shop_products_extended.name,    
+                                    tbl_shop_products_extended.name,
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.price,
                                     \'' .  $concatSeparator . '\', tbl_shop_order_extended.quantity,
                                     \'' .  $concatSeparator . '\', tbl_shop_categories.category,
@@ -466,6 +467,7 @@
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.shortDescription) > 0, tbl_shop_products_extended.shortDescription, ""), 
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, ""),
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.productId,
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_order_extended.remark) > 0, tbl_shop_order_extended.remark, ""),
                                     \'' .  $concatSeparator . '\', tbl_shop_order_extended.mainPrductOrderIndex,
                                     \'' .  $concatSeparator . '\', tbl_shop_order_extended.subMainPrductOrderIndex
