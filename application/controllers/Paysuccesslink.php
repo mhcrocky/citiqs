@@ -28,13 +28,13 @@ class  Paysuccesslink extends BaseControllerWeb
         $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
         $order = reset($order);
 
-        // if ($order['orderRandomKey'] !== $get[$this->config->item('orderDataGetKey')]) {
-        //     redirect(base_url());
-        // }
+        if ($order['orderRandomKey'] !== $get[$this->config->item('orderDataGetKey')]) {
+            redirect(base_url());
+        }
 
         $data = [
-            // 'order' => $order,
-            // 'paid' => $this->config->item('orderPaid'),
+            'order' => $order,
+            'paid' => $this->config->item('orderPaid'),
         ];
 
         $this->global['pageTitle'] = 'TIQS : SUCCESS';
