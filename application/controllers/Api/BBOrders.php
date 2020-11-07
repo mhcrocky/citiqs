@@ -717,8 +717,9 @@
 //        		return "";
 //        	}
         	//it will not proceed when FDM have an issue
-
-            $order = $this->shoporder_model->fetchOrdersForPrint($get['mac'],'tbl_shop_order_extended.printed = "0" ');
+			$order = $this->shoporder_model->fetchOrdersForPrint($get['mac'], 'tbl_shop_order_extended.printed = "0" ');
+			
+			die("");
             if (!$order) return;
             $order = reset($order);
             $receiptemailBasepath=$this->VatnoVatdata($order,0);

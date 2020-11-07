@@ -113,47 +113,6 @@ function setDesign() {
     }   
 }
 
-var designGlobals = (function() {
-    let globals = {
-        'iframeId' : 'iframe',
-        'showClass' : 'showFieldsets',
-        'hideClass' : 'hideFieldsets',
-        'selectTypeView' : 'selectTypeView',
-        'closed' : 'closed',
-        'selectSpotView' : 'selectSpotView',
-        'selectedSpotView' : 'selectedSpotView',
-        'checkoutOrderView' : 'checkoutOrderView',
-        'buyerDetailsView' : 'buyerDetailsView',
-        'payOrderView' : 'payOrderView',
-        'checkUrl' : function (url) {
-                        if (url.includes('make_order?vendorid=') && !url.includes('&typeId=') && !url.includes('&spotid=')) {
-                            return this['selectTypeView']
-                        }
-                        if (url.includes('closed')) {
-                            console.dir(url);
-                            return this['closed']
-                        }
-                        if (url.includes('make_order?vendorid=') && url.includes('&typeId=') && !url.includes('&spotid=')) {
-                            return this['selectSpotView']
-                        }
-                        if (url.includes('make_order?vendorid=') && !url.includes('&typeId=') && url.includes('&spotid=')) {
-                            return this['selectedSpotView']
-                        }
-                        if (url.includes('checkout_order?order=')) {
-                            return this['checkoutOrderView']
-                        }
-                        if (url.includes('buyer_details?order=')) {
-                            return this['buyerDetailsView']
-                        }
-                        if (url.includes('pay_order?order=')) {
-                            return this['payOrderView']
-                        }
-                        return false;
-                    }
-    }
-    return globals;
-}());
-
 $(document).ready(function(){
     let iframe = document.getElementById(designGlobals.iframeId);
     iframeURLChange(iframe, function (newURL) {
@@ -164,3 +123,30 @@ $(document).ready(function(){
         setDesign();
     }
 })
+
+function copyToClipboard(id) {
+    /* Get the text field */
+    var copyText = document.getElementById(id);
+    /* Select the text field */
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+    /* Copy the text inside the text field */
+    document.execCommand("copy");
+    /* Alert the copied text */
+    alert(copyText.value);
+}
+
+function changeIframe(widthId, heightId, iframeId) {
+    let newIframe = ''
+    let width   = document.getElementById(widthId);
+    let height  = document.getElementById(heightId);
+    let iframe  = document.getElementById(iframeId);
+
+    newIframe += '<iframe frameborder="0" ';
+    newIframe += 'style="width:' + width.value + 'px; height:' + height.value + 'px;" ';
+    newIframe += 'src="' + designGlobals.iframe + '"></iframe>';
+
+    iframe.value = newIframe;
+}
+
+// https://tiqs.com/alfred/places
