@@ -13,7 +13,7 @@
 
 		location.reload();
 
-	}, 30000);
+	}, 90000);
 </script>
 <script>
 
