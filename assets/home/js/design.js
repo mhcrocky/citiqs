@@ -147,6 +147,17 @@ function changeIframe(widthId, heightId, iframeId) {
     newIframe += 'src="' + designGlobals.iframe + '"></iframe>';
 
     iframe.value = newIframe;
+
+    // saveIrame(width.value, height.value, newIframe)
 }
 
+function saveIrame(width, height, iframe) {
+    let url = globalVariables.ajax + 'saveIrame/' + designGlobals.id;
+    let post = {
+        'width' : width,
+        'height' : height,
+        'iframe' : iframe
+    }    
+    sendAjaxPostRequest(post, url, 'saveIrame');
+}
 // https://tiqs.com/alfred/places

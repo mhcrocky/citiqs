@@ -1447,4 +1447,17 @@ class Ajax extends CI_Controller
         }
         echo json_encode($response);
     }
+
+    public function saveIrame($id): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = Utility_helper::sanitizePost();
+        $iframeSettings = serialize($post);
+        $id = intval($id);
+        // $update = $this->shopvendor_model->setObjectId($id)->setProperty('iframeSettings', $iframe)->update();
+        // var_dump($id);
+        // var_dump($iframeSettings);
+        return;
+    }
 }

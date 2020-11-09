@@ -236,6 +236,8 @@ var callThis = (function() {
         },
         saveDesign: function(callFunction) {
             callFunction(this);
+        },
+        saveIrame: function() {            
         }
     };
     return methods;
