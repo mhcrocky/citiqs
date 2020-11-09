@@ -3,7 +3,7 @@
 		foreach ($directories as $directory): ?>
 					<div
 						class="col-md-4 places fade"
-						style="background-color: #fbd19a; padding: 10px 50px 10px 50px"
+						style="background-color: #fbd19a; "
 						data-lat="<?php echo $directory['lat']; ?>"
 						data-lng="<?php echo $directory['lng']; ?>"
 						data-distance="<?php echo $directory['distance']; ?>"
@@ -14,13 +14,13 @@
 								<img
 									src="<?php echo 'assets/home/images/bizdir.png' ?>"
 									class="bd-placeholder-img card-img-top"
-									height="180" alt="<?php echo $directory['business_name']; ?>"
+									width="100%" alt="<?php echo $directory['business_name']; ?>"
 								/>
 							<?php } else { ?>
 								<img
 									src="<?php echo base_url() . 'assets/images/placeImages/' . $directory['placeImage']; ?>"
 									class="bd-placeholder-img card-img-top"
-									height="180" alt="<?php echo $directory['business_name']; ?>"
+									width="100%" alt="<?php echo $directory['business_name']; ?>"
 								/>
 							<?php } ?>
 							<div class="card-body text-center" style="background-color: #0d173b">
@@ -34,7 +34,7 @@
 									<a class="contact-link" target="_blank; color: white; --text-color: white"
 									   <?php if ($directory['email']) { ?>href="<?php echo "https://tiqs.com/alfred/make_order?vendorid=".$directory['id']; ?>"<?php } ?> >
 										<button data-brackets-id="2918" type="submit" class="button button-orange"><?php echo $this->language->line("BIZDIR",'ORDER HERE');?></button>
-										<i class="fa fa-qrcode fa-lg" style="color: white; --text-color: white"></i> <?php echo $this->language->line("BIZDIR",'ORDER HERE');?></a>
+
 								</div>
 							</div>
 						</div>
