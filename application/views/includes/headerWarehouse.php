@@ -28,6 +28,9 @@
     <style>
 	    #myModal {
             overflow: scroll;
+        }     
+        #myModal a {
+            color: #352104;
         }
     </style>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jquery.min.js"></script> 
@@ -88,6 +91,7 @@
                 <a href="<?php echo $this->baseUrl; ?>printers"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/print.png" title="PRINTERS"/></a>
                 <a href="<?php echo $this->baseUrl; ?>spots"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/spot.png" title="SPOTS"/></a>
                 <a href="<?php echo $this->baseUrl; ?>visitors"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/person.png" title="VISITORS"/></a>
+                <a href="<?php echo $this->baseUrl; ?>pos">POS</a>
                 <a href="<?php echo $this->baseUrl; ?>loggedin"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/back.png" title="BACK"/></a>
             </div>
             <div class="hamburger-menu" id="hamburger-menu">

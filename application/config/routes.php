@@ -265,6 +265,10 @@ $route['pay_order']                 = 'publicorders/pay_order';
 $route['closed/(:num)']             = 'publicorders/closed/$1';
 $route['spot_closed/(:num)']        = 'publicorders/spotClosed/$1';
 
+
+// POS
+$route['pos'] = 'pos/index';
+
 //INSERT ORDER
 $route['insertorder/(:num)/(:any)'] = 'alfredinsertorder/insertOrder/$1/$2';
 $route['cashPayment/(:num)/(:any)'] = 'alfredinsertorder/cashPayment/$1/$2';
