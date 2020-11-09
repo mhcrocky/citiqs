@@ -49,21 +49,7 @@
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jquery.magnific-popup.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/alertify.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>
-    <script src="<?php echo $this->baseUrl; ?>assets/home/js/keyboard.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            let element = document.querySelector('#fname');
-            element.addEventListener('onEnterKey_VK', (event) => {
-                console.dir('lol2');
-                console.log(event.detail.keyAscii);
-                console.log(event.detail.newInputValue);
-                console.log(event.detail.keyValue);
-                console.log(event.detail.newInputValue);
-            });
-        })
-    </script>
- 
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/keyboard.js"></script> 
 </head>
 <body>
     <header class="header">

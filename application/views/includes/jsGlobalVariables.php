@@ -13,8 +13,8 @@
     }());
     // CREATE KEYBOARD 
     
-    document.addEventListener('DOMContentLoaded', () => {
-        let element = document.querySelectorsAll('input');
-        element.addEventListener('onEnterKey_VK', (event) => {});
-    })
+    // document.addEventListener('DOMContentLoaded', () => {
+    //     let element = document.querySelectorsAll('input');
+    //     element.addEventListener('onEnterKey_VK', (event) => {});
+    // })
 </script>
