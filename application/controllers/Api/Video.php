@@ -1,7 +1,7 @@
 <?php
-// require(APPPATH.'/libraries/REST_Controller.php');
+//require(APPPATH.'/libraries/REST_Controller.php');
 
-class Video extends REST_Controller
+class Video extends \CI_Controller
 {
     public function __construct()
     {
@@ -16,7 +16,8 @@ class Video extends REST_Controller
     {
         // maak onderstaande directory writable.
         // chmod -R 777 /Applications/uploads
-
+        
+        /*
         switch (strtolower($_SERVER['HTTP_HOST']))
         {
             case 'tiqs.com':
@@ -29,8 +30,39 @@ class Video extends REST_Controller
                 $uploaddir = '/Users/peterroos/www/tiqs/application/uploads/video/';
                 break;
         }
+        */
+        $config['upload_path']   = $uploaddir;
+        $config['allowed_types'] = 'mp4|3gp|mov|wmv|flv|avi|qt|mkv|webm';
+        $config['max_size']      = '102400'; // 102400 100mb
+        $post_image              = $_FILES['file']['name'];
+        $video_name_array          = explode(".", $post_image);
+        $extension               = end($video_name_array);
+        $video_name                = rand() . '.' . $extension;
+        $config['file_name']     = $video_name;
+        $this->load->library('upload', $config);
 
-        $valid_formats = array("mp4");
+        if (!$this->upload->do_upload('file')) {
+            $errors   = $this->upload->display_errors('', '');
+            $data['type'] = "Error";
+            $data['text'] = $this->upload->display_errors('', '');
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(500)
+            ->set_output(json_encode($data));
+        } else {
+            $this->data = array('upload_data' => $this->upload->data());
+            $data['type'] = "Success";
+            $data['text'] = "Uploaded successfully!";
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode($data));
+        }
+
+      
+        /*
+
+        $valid_formats = array("mp4", "avi", "wmv", "3gp", "mov", "mobi");
         $filename = $_FILES['file']['name'];
         if (strlen($filename) > 0)
         {
@@ -52,7 +84,7 @@ class Video extends REST_Controller
 
         $vendor = $this->security->xss_clean($this->input->post('vendor'));
 
-       	$path = $uploaddir . $vendor . "-" ;
+       	$path = $uploaddir . $vendor . "-" ; 
         // $uploadfile = $uploaddir . basename($_FILES['file']['name']);
         // if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile))
 
@@ -66,6 +98,7 @@ class Video extends REST_Controller
             $data['message'] = "video not uploaded, try again";
         }
         $this->response($data, 200);
+        */
     }
 
 }
