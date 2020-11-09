@@ -14,6 +14,7 @@
 								<div class="form-group has-feedback">
 									<input  value="<?php echo $user->username; ?>" name="username" required type="text" class="form-control" id="fname" style="border-radius: 50px; border:none" placeholder="<?php echo $name; ?>" maxlength="128" />
 								</div>
+								<div class="virtual-keyboard-hook" data-target-id="fname" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
 							</div>
 							<?php if ($user->IsDropOffPoint === '1') { ?>
 								<div>
@@ -23,6 +24,7 @@
 								</div>
 								<div class="form-group has-feedback">
 									<input value="<?php echo $user->usershorturl; ?>" type="text" class="form-control"  required id="usershorturl" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php echo $this->language->Line("registerbusiness-1700A",'Your shortname');?>" name="usershorturl" pattern="[a-z]{1,15}" title="<?php echo $this->language->Line("registerbusiness-1800A",'Only [a-z] characters allowed (no capital), no spaces, points or special characters like @#$% and max 15 length');?>" />
+									<div class="virtual-keyboard-hook" data-target-id="usershorturl" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
 								</div>
 							<?php } ?>
 							<div>

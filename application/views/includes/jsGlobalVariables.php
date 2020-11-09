@@ -11,4 +11,10 @@
         Object.freeze(globals);
         return globals;
     }());
+    // CREATE KEYBOARD 
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        let element = document.querySelectorsAll('input');
+        element.addEventListener('onEnterKey_VK', (event) => {});
+    })
 </script>

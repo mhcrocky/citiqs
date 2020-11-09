@@ -1,0 +1,81 @@
+/*
+    Virtual Keyboard CSS
+    @Author Stephen31
+*/
+
+.keyboard-container {
+    position: absolute;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, sans-serif;
+    font-size: 14px;
+    width: 485px;
+    height: auto;
+    justify-content: space-around;
+    padding: 8px;
+    background-color: #EEE;
+    box-shadow: 0px 1px 0px 1px #DDD;
+    visibility: hidden;
+}
+
+.keyboard-container.visible {
+    visibility: visible;
+}
+
+.keyboard-container .actions-container {
+    display: flex;
+    justify-content: flex-end;
+    color: grey;
+}
+
+.keyboard-container .actions-container span {
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 3px;
+    transition: transform 0.2s ease;
+}
+
+.keyboard-container .actions-container span:hover {
+    transform: scale(1.5);
+}
+
+.keyboard-container .row-virtual-keyboard {
+    display: flex;
+    width: 100%;
+    height: 50px;
+}
+
+.keyboard-container .row-virtual-keyboard .key {
+    display: flex;
+    border-radius: 4px;
+    flex-direction: row;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0 0.5rem;
+    margin: 4px;
+    border-radius: 4px;
+    background: #FFF;
+    box-shadow: 0px 2px 0px 1px #AAA;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.keyboard-container .row-virtual-keyboard .key:active {
+    box-shadow: 0px 0px 1px 0px rgb(138, 138, 138);
+    transform: translateY(2px);
+}
+
+.keyboard-container .row-virtual-keyboard .key.space-key {
+    flex-grow: 4;
+}
+
+.keyboard-container .row-virtual-keyboard .key.enter-key {
+    flex-grow: 2;
+}
+
+.keyboard-container .row-virtual-keyboard .key.backspace-key {
+    flex-grow: 2;
+}

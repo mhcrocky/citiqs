@@ -24,6 +24,8 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/magnific-popup.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/alertify.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/alertify_default.min.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/keyboard.css" />
+    
     <?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
     <style>
 	    #myModal {
@@ -33,7 +35,7 @@
             color: #352104;
         }
     </style>
-    <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jquery.min.js"></script> 
+    <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jquery.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jquery-ui.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/popper.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/bootstrap.min.js"></script>
@@ -46,7 +48,22 @@
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/cookies.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jquery.magnific-popup.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/alertify.min.js"></script>
-    <script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>    
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/keyboard.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let element = document.querySelector('#fname');
+            element.addEventListener('onEnterKey_VK', (event) => {
+                console.dir('lol2');
+                console.log(event.detail.keyAscii);
+                console.log(event.detail.newInputValue);
+                console.log(event.detail.keyValue);
+                console.log(event.detail.newInputValue);
+            });
+        })
+    </script>
+ 
 </head>
 <body>
     <header class="header">
