@@ -14,13 +14,13 @@
 								<img
 									src="<?php echo 'assets/home/images/bizdir.png' ?>"
 									class="bd-placeholder-img card-img-top"
-									width="100%" alt="<?php echo $directory['business_name']; ?>"
+									height="220px" width="100%" alt="<?php echo $directory['business_name']; ?>"
 								/>
 							<?php } else { ?>
 								<img
 									src="<?php echo base_url() . 'assets/images/placeImages/' . $directory['placeImage']; ?>"
 									class="bd-placeholder-img card-img-top"
-									width="100%" alt="<?php echo $directory['business_name']; ?>"
+									height="220px" width="100%" alt="<?php echo $directory['business_name']; ?>"
 								/>
 							<?php } ?>
 							<div class="card-body text-center" style="background-color: #0d173b">
