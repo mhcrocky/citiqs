@@ -622,7 +622,7 @@
             $userId = intval($_SESSION['userId']);
 
             $data = [
-                'printers' => $this->shopprinters_model->read(['*'], ['userId=' => $userId, 'masterMac=' => '0']),
+                'printers' => $this->shopprinters_model->read(['*'], ['userId=' => $userId]),
                 'spots' => $this->shopspot_model->fetchUserSpotsImporved([
                                                     'tbl_shop_printers.userId=' => $userId,
                                                     'tbl_shop_spots.archived=' => '0'
