@@ -103,8 +103,7 @@ class Alfredpayment extends BaseControllerWeb
         if ($vendorId == 1162) {
             $redirect = 'successth';
         } else {
-            // $redirect = base_url() . 'success?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
-            $redirect = base_url() . 'success';
+            $redirect = base_url() . 'success?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
         }
 
         redirect($redirect);
