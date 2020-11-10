@@ -5,12 +5,17 @@
 				<div class="pos-main">
 					<div class="pos-main__top-bar">
 						<div class="pos-main__add-item">
-							<button class='pos-main__add-new-button'>+ ADD NEW ITEM</button>
+							<a href="<?php echo base_url() . 'orders'; ?>">
+								<button class='pos-main__add-new-button'>
+									<i class="fa fa-hand-o-left" aria-hidden="true"></i>
+									BACK
+								</button>
+							</a>
 						</div>
-						<div class="pos-main__search">
+						<!-- <div class="pos-main__search">
 							<input type="text" class='form-control'>
 							<button class="pos-main__search__button"><i class="fas fa-search"></i></button>
-						</div>
+						</div> -->
 					</div>
 					<!-- end pos top bar -->
 
@@ -28,9 +33,18 @@
 										<?php foreach ($products as $product) { ?>										
 											<div class="pos-item">
 												<?php $productDetails = reset($product['productDetails']); ?>
-												<div class='pos-item__image'>
-													<img src="cocacola.jpg" alt="">
-												</div>
+												<?php if ($vendor['showProductsImages'] === '1') { ?>
+													<div class='pos-item__image'>
+														<img
+															<?php if ($product['productImage'] && file_exists($uploadProductImageFolder . $product['productImage'])) { ?>
+																src="<?php echo base_url() . 'assets/images/productImages/' . $product['productImage']; ?>"
+															<?php } else { ?>
+																src="<?php echo base_url() . 'assets/images/defaultProductsImages/' . $vendor['defaultProductsImage']; ?>"
+															<?php } ?>
+															alt="<?php echo $productDetails['name']; ?>"
+														/>
+													</div>
+												<?php } ?>
 												<p class='pos-item__title'><?php echo $productDetails['name']; ?></p>
 												<p class='pos-item__price'><?php echo $productDetails['price']; ?>&nbsp;&euro;</p>
 											</div>
@@ -50,8 +64,12 @@
 							foreach ($categories as $index => $category) {
 								$categoryId = str_replace(['\'', '"', ' ', '*', '/'], '', $category)
 							?>
-								<div class="pos_categories__single-item <?php if (array_key_first($categories) === $index) echo 'pos_categories__single-item--active'; ?>">
-									<p onclick="showCategory('<?php echo $categoryId; ?>')">
+								<div
+									class="pos_categories__single-item <?php if (array_key_first($categories) === $index) echo 'pos_categories__single-item--active'; ?>"
+									onclick="showCategory(this, '<?php echo $categoryId; ?>', 'categories')"
+									data-id="<?php echo $categoryId; ?>"
+								>
+									<p>
 										<?php echo  $category; ?>
 									</p>
 								</div>
@@ -384,3 +402,30 @@
 		<!-- end row item grid -->
 	</div>
 </div>
+<script>
+	var posGlobals = (function(){
+		let globals = {
+			'activeClass' : 'pos_categories__single-item--active'
+		}
+		Object.freeze(globals);
+		return globals;
+	}());
+
+	function showCategory(element, categoryId, categoriesClass) {
+		let categories = document.getElementsByClassName(categoriesClass);
+		let categoriesLength = categories.length;
+		let i;
+		for (i = 0; i < categoriesLength; i++) {
+			let category = categories[i];			
+			if (category.id !== categoryId) {
+				let categoryButton = document.querySelector('[data-id="' + category.id + '"]');
+				category.style.display = 'none';
+				categoryButton.classList.remove(posGlobals.activeClass);
+			} else {
+				category.style.display = 'block';				
+			}
+		}
+		element.classList.add(posGlobals.activeClass);
+	}
+</script>
+

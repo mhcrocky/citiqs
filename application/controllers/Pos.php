@@ -55,12 +55,13 @@
             $allProducts = $spot ? $this->shopproductex_model->getMainProductsOnBuyerSide($vendorId, $spot) : null;
             if (!$allProducts) redirect('pos_spots');
 
-
             $data = [
                 'mainProducts' => $allProducts['main'],
                 'addons' => $allProducts['addons'],
                 'maxRemarkLength' => $this->config->item('maxRemarkLength'),
-                'categories' => array_keys($allProducts['main'])
+                'categories' => array_keys($allProducts['main']),
+                'uploadProductImageFolder' => $this->config->item('uploadProductImageFolder'),
+                'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData()
             ];
 
             // echo '<pre>';
