@@ -13,157 +13,51 @@
 						</div>
 					</div>
 					<!-- end pos top bar -->
+
 					<div class="pos-main__grid-content">
-						<div class="pos-main__overflow">
-							<div class="pos-main__grid">
-								<div class="pos-item">
-									<div class='pos-item__image'>
-										<img src="cocacola.jpg" alt="">
+						<?php
+							foreach ($mainProducts as $category => $products) {
+								$categoryId = str_replace(['\'', '"', ' ', '*', '/'], '', $category)
+							?>
+								<div
+									class="pos-main__overflow categories"
+									id="<?php echo $categoryId; ?>"
+									<?php if (array_key_first($mainProducts) !== $category) echo 'style="display:none"'; ?>
+								>
+									<div class="pos-main__grid">
+										<?php foreach ($products as $product) { ?>										
+											<div class="pos-item">
+												<?php $productDetails = reset($product['productDetails']); ?>
+												<div class='pos-item__image'>
+													<img src="cocacola.jpg" alt="">
+												</div>
+												<p class='pos-item__title'><?php echo $productDetails['name']; ?></p>
+												<p class='pos-item__price'><?php echo $productDetails['price']; ?>&nbsp;&euro;</p>
+											</div>
+											<!-- end single pos item-->
+										<?php } ?>
 									</div>
-									<p class='pos-item__title'>Coca Cola</p>
-									<p class='pos-item__price'>$7.66</p>
 								</div>
-								<!-- end single pos item-->
-								<div class="pos-item">
-									<div class='pos-item__image'>
-										<img src="cocacola.jpg" alt="">
-									</div>
-									<p class='pos-item__title'>Coca Cola</p>
-									<p class='pos-item__price'>$7.66</p>
-								</div>
-								<!-- end single pos item-->
-								<div class="pos-item">
-									<div class='pos-item__image'>
-										<img src="cocacola.jpg" alt="">
-									</div>
-									<p class='pos-item__title'>Coca Cola</p>
-									<p class='pos-item__price'>$7.66</p>
-								</div>
-								<!-- end single pos item-->
-								<div class="pos-item">
-									<div class='pos-item__image'>
-										<img src="cocacola.jpg" alt="">
-									</div>
-									<p class='pos-item__title'>Coca Cola</p>
-									<p class='pos-item__price'>$7.66</p>
-								</div>
-								<!-- end single pos item-->
-								<div class="pos-item">
-									<div class='pos-item__image'>
-										<img src="cocacola.jpg" alt="">
-									</div>
-									<p class='pos-item__title'>Coca Cola</p>
-									<p class='pos-item__price'>$7.66</p>
-								</div>
-								<!-- end single pos item-->
-								<div class="pos-item">
-									<div class='pos-item__image'>
-										<img src="cocacola.jpg" alt="">
-									</div>
-									<p class='pos-item__title'>Coca Cola</p>
-									<p class='pos-item__price'>$7.66</p>
-								</div>
-								<!-- end single pos item-->
-								<div class="pos-item">
-									<div class='pos-item__image'>
-										<img src="cocacola.jpg" alt="">
-									</div>
-									<p class='pos-item__title'>Coca Cola</p>
-									<p class='pos-item__price'>$7.66</p>
-								</div>
-								<!-- end single pos item-->
-								<div class="pos-item">
-									<div class='pos-item__image'>
-										<img src="cocacola.jpg" alt="">
-									</div>
-									<p class='pos-item__title'>Coca Cola</p>
-									<p class='pos-item__price'>$7.66</p>
-								</div>
-								<!-- end single pos item-->
-								<div class="pos-item">
-									<div class='pos-item__image'>
-										<img src="cocacola.jpg" alt="">
-									</div>
-									<p class='pos-item__title'>Coca Cola</p>
-									<p class='pos-item__price'>$7.66</p>
-								</div>
-								<!-- end single pos item-->
-								<div class="pos-item">
-									<div class='pos-item__image'>
-										<img src="cocacola.jpg" alt="">
-									</div>
-									<p class='pos-item__title'>Coca Cola</p>
-									<p class='pos-item__price'>$7.66</p>
-								</div>
-								<!-- end single pos item-->
-								<div class="pos-item">
-									<div class='pos-item__image'>
-										<img src="cocacola.jpg" alt="">
-									</div>
-									<p class='pos-item__title'>Coca Cola</p>
-									<p class='pos-item__price'>$7.66</p>
-								</div>
-								<!-- end single pos item-->
-								<div class="pos-item">
-									<div class='pos-item__image'>
-										<img src="cocacola.jpg" alt="">
-									</div>
-									<p class='pos-item__title'>Coca Cola</p>
-									<p class='pos-item__price'>$7.66</p>
-								</div>
-								<!-- end single pos item-->
-								<div class="pos-item">
-									<div class='pos-item__image'>
-										<img src="cocacola.jpg" alt="">
-									</div>
-									<p class='pos-item__title'>Coca Cola</p>
-									<p class='pos-item__price'>$7.66</p>
-								</div>
-								<!-- end single pos item-->
-								<div class="pos-item">
-									<div class='pos-item__image'>
-										<img src="cocacola.jpg" alt="">
-									</div>
-									<p class='pos-item__title'>Coca Cola</p>
-									<p class='pos-item__price'>$7.66</p>
-								</div>
-								<!-- end single pos item-->
-								<div class="pos-item">
-									<div class='pos-item__image'>
-										<img src="cocacola.jpg" alt="">
-									</div>
-									<p class='pos-item__title'>Coca Cola</p>
-									<p class='pos-item__price'>$7.66</p>
-								</div>
-								<!-- end single pos item-->
-							</div>
-						</div>
-		            </div>
-	                <!-- end pos grid -->	
+							<?php
+							}
+						?>
+					</div>
 	            </div>
 				<!-- end pos main-->
 				<div class="pos_categories">
 					<div class="pos_categories__grid">
-						<div class="pos_categories__single-item pos_categories__single-item--active">
-							<i class="fas fa-coffee"></i>
-							<p>Coctail</p>
-						</div>
-						<div class="pos_categories__single-item">
-							<i class="fas fa-coffee"></i>
-							<p>Coctail</p>
-						</div>
-						<div class="pos_categories__single-item">
-							<i class="fas fa-coffee"></i>
-							<p>Coctail</p>
-						</div>
-						<div class="pos_categories__single-item">
-							<i class="fas fa-coffee"></i>
-							<p>Coctail</p>
-						</div>
-						<div class="pos_categories__single-item">
-							<i class="fas fa-coffee"></i>
-							<p>Coctail</p>
-						</div>
+						<?php
+							foreach ($categories as $index => $category) {
+								$categoryId = str_replace(['\'', '"', ' ', '*', '/'], '', $category)
+							?>
+								<div class="pos_categories__single-item <?php if (array_key_first($categories) === $index) echo 'pos_categories__single-item--active'; ?>">
+									<p onclick="showCategory('<?php echo $categoryId; ?>')">
+										<?php echo  $category; ?>
+									</p>
+								</div>
+							<?php
+							}
+						?>
 					</div>
 				</div>
 				<!-- end categories -->

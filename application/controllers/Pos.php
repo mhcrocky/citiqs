@@ -44,17 +44,48 @@
 
         public function index(): void
         {
+            $vendorId = intval($_SESSION['userId']);
 
-            $data = [];
-            $userId = intval($_SESSION['userId']);
+            $spotId = $_GET['spotid'] ? intval($this->input->get('spotid', true)) : 0;
+            if (!$spotId) redirect('pos_spots');
 
-            // var_dump($userId);
+            $spot = $spotId ? $this->shopspot_model->fetchSpot($vendorId, $spotId) : [];
+            if (!$spot || ! $this->isLocalSpotOpen($spot)) redirect('pos_spots');
+
+            $allProducts = $spot ? $this->shopproductex_model->getMainProductsOnBuyerSide($vendorId, $spot) : null;
+            if (!$allProducts) redirect('pos_spots');
+
+
+            $data = [
+                'mainProducts' => $allProducts['main'],
+                'addons' => $allProducts['addons'],
+                'maxRemarkLength' => $this->config->item('maxRemarkLength'),
+                'categories' => array_keys($allProducts['main'])
+            ];
+
+            // echo '<pre>';
+            // print_r($data);
             // die();
-
-
             $this->global['pageTitle'] = 'TIQS : POS';
-            $this->loadViews('pos/pos', $this->global, null, null, 'headerWarehouse');
+            $this->loadViews('pos/pos', $this->global, $data, null, 'headerWarehouse');
+            return;
         }
 
+        public function selectPosPost(): void
+        {
+            var_dump($_SERVER);
+            return;
+        }
+
+        private function isLocalSpotOpen(array $spot): bool
+        {
+            $spotTypeId = intval($spot['spotTypeId']);
+            $spotId = intval($spot['spotId']);
+
+            if ($spotTypeId === $this->config->item('local') && !$this->shopspottime_model->setProperty('spotId', $spotId)->isOpen() ) {
+                return false;;
+            }
+            return true;
+        }
 
     }

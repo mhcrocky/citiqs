@@ -12,7 +12,20 @@
 									<?php echo $this->language->line("PROF-V1V020A",'BUSINESS NAME');?>
 								</p>
 								<div class="form-group has-feedback">
-									<input  value="<?php echo $user->username; ?>" name="username" required type="text" class="form-control" id="fname" style="border-radius: 50px; border:none" placeholder="<?php echo $name; ?>" maxlength="128" />
+									<input
+										value="<?php echo $user->username; ?>"
+										name="username"
+										required
+										type="text"
+										class="form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview"
+										id="fname"
+										style="border-radius: 50px; border:none"
+										placeholder="<?php echo $name; ?>"
+										maxlength="128"
+										role="textbox"
+										autocomplete="off"
+										tabindex="-1"							
+									/>
 								</div>
 								<div class="virtual-keyboard-hook" data-target-id="fname" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
 							</div>
@@ -253,6 +266,9 @@
 							style="border-radius: 50px"
 							value="<?php echo $vendor['payNlServiceId']; ?>"
 							/>
+
+
+							
 					</div>
 					<br/>
 					<div class="form-group mb-35">

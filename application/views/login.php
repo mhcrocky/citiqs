@@ -98,7 +98,17 @@
 						<?php echo $this->language->Line("registerbusiness-3500",'Use your e-mail to login');?>
 					</p>
 					<div class="form-group has-feedback" style="text-align:center">
-						<input type="email" class="form-control" style="font-family:'caption-light'; border:none; border-radius: 50px; " placeholder="<?php echo $this->language->Line("registerbusiness-3600",'Your e-mail');?>" name="email" required />
+						<input
+							type="email"
+							style="font-family:'caption-light'; border:none; border-radius: 50px;"
+							placeholder="<?php echo $this->language->Line("registerbusiness-3600",'Your e-mail');?>"
+							name="email"
+							required
+							class="form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview"
+							role="textbox"
+							autocomplete="off"
+							tabindex="-1"							
+						/>
 					</div>
 					<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
 						<?php echo $this->language->Line("registerbusiness-3800",'Password');?>
