@@ -1,7 +1,8 @@
 <?php
-//require(APPPATH.'/libraries/REST_Controller.php');
+require APPPATH . 'libraries/REST_Controller.php';
 
-class Video extends \CI_Controller
+class Video extends REST_Controller
+
 {
     public function __construct()
     {
@@ -16,7 +17,7 @@ class Video extends \CI_Controller
     {
         // maak onderstaande directory writable.
         // chmod -R 777 /Applications/uploads
-        
+
         switch (strtolower($_SERVER['HTTP_HOST']))
         {
             case 'tiqs.com':
@@ -38,9 +39,16 @@ class Video extends \CI_Controller
         $extension               = end($video_name_array);
         $video_name                = rand() . '.' . $extension;
         $config['file_name']     = $video_name;
+
         $this->load->library('upload', $config);
 
-        if (!$this->upload->do_upload('file')) {
+		//		echo var_dump($config);
+		//		die();
+		//		$filename = $this->post('userfile');
+		//		echo var_dump($filename);
+		//		die();
+
+        if (!$this->upload->do_upload('userfile')) {
             $errors   = $this->upload->display_errors('', '');
             $data['type'] = "Error";
             $data['text'] = $this->upload->display_errors('', '');
@@ -57,6 +65,47 @@ class Video extends \CI_Controller
             ->set_status_header(200)
             ->set_output(json_encode($data));
         }
+
+
+        /*
+
+        $valid_formats = array("mp4", "avi", "wmv", "3gp", "mov", "mobi");
+        $filename = $_FILES['file']['name'];
+        if (strlen($filename) > 0)
+        {
+            list($txt, $ext) = explode(".", strtolower($filename));
+            if (!in_array($ext, $valid_formats))
+            {
+                $data['status'] = "0";
+                $data['message'] = "Invalid movie format";
+                $this->response($data, 200);
+            }
+        }
+        else
+        {
+            $data['status'] = "0";
+            $data['message'] = "Invalid movie filename";
+            $this->response($data, 200);
+            return;
+        }
+
+        $vendor = $this->security->xss_clean($this->input->post('vendor'));
+
+       	$path = $uploaddir . $vendor . "-" ;
+        // $uploadfile = $uploaddir . basename($_FILES['file']['name']);
+        // if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile))
+
+        if(move_uploaded_file($_FILES['file']['tmp_name'], $path . $_FILES['file']['name']))
+        {
+
+        }
+        else
+        {
+            $data['status'] =  "0";
+            $data['message'] = "video not uploaded, try again";
+        }
+        $this->response($data, 200);
+        */
     }
 
 }
