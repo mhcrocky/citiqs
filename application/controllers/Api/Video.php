@@ -31,11 +31,26 @@ class Video extends REST_Controller
                 break;
         }
 
+        if(!$this->input->post('vendor_id')){
+            $data['type'] = "Error";
+            $data['text'] = "Vendor id cannot be null!";
+            return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(500)
+            ->set_output(json_encode($data));
+        }
+
+        $vendor_id = $this->input->post('vendor_id');
+        $uploaddir .= $vendor_id;
+		if (!is_dir($dir)) {
+			mkdir($dir, 0777, TRUE);
+		}
+
         $config['upload_path']   = $uploaddir;
         $config['allowed_types'] = 'mp4|3gp|mov|wmv|flv|avi|qt|mkv|webm';
         $config['max_size']      = '102400'; // 102400 100mb
-        $post_image              = $_FILES['file']['name'];
-        $video_name_array          = explode(".", $post_image);
+        $post_video              = $_FILES['userfile']['name'];
+        $video_name_array          = explode(".", $post_video);
         $extension               = end($video_name_array);
         $video_name                = rand() . '.' . $extension;
         $config['file_name']     = $video_name;
