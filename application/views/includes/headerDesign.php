@@ -54,7 +54,9 @@
 					// var_dump($_SESSION);
 					?></div>
             </a>
+
             <div class="header-menu text-orange" id="header-menu">
+				<a href="http://localhost/tiqsbox/index.php/Admin"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/print.png" title="LOCAL PRINTERS"/></a>
 				<a href="<?php echo $this->baseUrl; ?>emaildesigner"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/reports.png" title="Email Templates"/></a>
                 <a href="<?php echo $this->baseUrl; ?>viewdesign"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/qrorder.png" title="Shop design"/></a>
                 <a href="<?php echo $this->baseUrl; ?>loggedin"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/back.png" title="BACK"/></a>
