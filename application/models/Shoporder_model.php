@@ -366,7 +366,8 @@
                         vendorOne.city as vendorCity,
                         vendorOne.vat_number as vendorVAT,
                         vendorOne.country as vendorCountry,
-                        vendorOne.receiptEmail as receiptEmail
+                        vendorOne.receiptEmail as receiptEmail,
+                        vendorOne.email as vendorEmail
                     FROM
                         tbl_shop_orders
                     INNER JOIN
@@ -469,7 +470,8 @@
                         vendorOne.city as vendorCity,
                         vendorOne.vat_number as vendorVAT,
                         vendorOne.country as vendorCountry,
-                        vendorOne.receiptEmail as receiptEmail
+                        vendorOne.receiptEmail as receiptEmail,
+                        vendorOne.email as vendorEmail
                     FROM 
                         tbl_shop_orders
                     INNER JOIN

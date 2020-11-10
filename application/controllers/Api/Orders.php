@@ -584,8 +584,7 @@
 			if (!file_put_contents($receiptemail, $resultpngemail)) {
 				$receiptemail = '';
 			}
-                
-            header('Content-type: image/png');
+ 
             // $image ->writeImage("peter.png");
 			//            $imageqr->destroy();
             $imagetext->destroy();
@@ -597,7 +596,8 @@
 			$imagelogo->destroy();
 			$imageprint->destroy();
 			$draw->destroy();
-
+            
+            header('Content-type: image/png');
             echo $resultpngprinter;
 
             $this
@@ -630,6 +630,17 @@
             // $subject= "tiqs-Order : ". $order['orderId'] ;
             // $email = $order['buyerEmail'];
             // Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail); 
+            #if (intval($order['vendorId']) === 43538) {
+            if (intval($order['vendorId']) === 43533) {
+                
+                $receiptAttach = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '.png';
+                
+		        if (file_put_contents($receipt, $resultpngprinter)) {
+                    var_dump($order);
+                    $subject= "tiqs order receipt : ". $order['orderId'];
+                    Email_helper::sendOrderEmail($order['vendorEmail'], $subject, '', $receiptAttach);
+		        }
+            }
         }
 
         public function data_post()
