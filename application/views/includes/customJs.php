@@ -105,4 +105,6 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/places.js"></script>
 <?php } elseif ($this->view === 'warehouse/design') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/design.js"></script>
+<?php } elseif ($this->view === 'login') { ?>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/createKeyBoard.js"></script>
 <?php } ?>
