@@ -57,7 +57,7 @@
             if (isset($data['numberOfCopies']) 
                 && (!Validate_data_helper::validateInteger($data['numberOfCopies']) || intval($data['numberOfCopies']) < 1)
             ) return false;
-            if (isset($data['masterMac']) && !Validate_data_helper::validateString($data['masterMac'])) return false;
+            // if (isset($data['masterMac']) && !Validate_data_helper::validateString($data['masterMac'])) return false;
             if (isset($data['archived']) && !($data['archived'] === '1' || $data['archived'] === '0')) return false;
 
             return true;
