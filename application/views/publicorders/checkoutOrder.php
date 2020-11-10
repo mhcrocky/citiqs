@@ -31,11 +31,11 @@
 
         <?php
             if ($vendor['preferredView'] === $oldMakeOrderView) {
-                include_once FCPATH . 'application/views/publicorders/includes/modals/checkout/checkoutOrderFirstVresion.php';
+                include_once FCPATH . 'application/views/publicorders/includes/checkout/checkoutOrderFirstVresion.php';
             } elseif ($vendor['preferredView'] === $newMakeOrderView) {
-                include_once FCPATH . 'application/views/publicorders/includes/modals/checkout/checkoutOrderSecondVresion.php';
+                include_once FCPATH . 'application/views/publicorders/includes/checkout/checkoutOrderSecondVresion.php';
             }
-            include_once FCPATH . 'application/views/publicorders/includes/modals/checkout/checkoutOrderTip.php';
+            include_once FCPATH . 'application/views/publicorders/includes/checkout/checkoutOrderTip.php';
         ?>
 
         <div class="row d-flex justify-content-center" id="checkout">
