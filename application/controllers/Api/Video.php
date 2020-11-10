@@ -42,7 +42,7 @@ class Video extends REST_Controller
 
         $vendor_id = $this->input->post('vendor_id');
         $uploaddir .= $vendor_id;
-		if (!is_dir($dir)) {
+		if (!is_dir($uploaddir)) {
 			mkdir($dir, 0777, TRUE);
 		}
 
