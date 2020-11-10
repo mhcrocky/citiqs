@@ -6,7 +6,12 @@
 				<option value="">Select</option>
 				<?php foreach ($spots as $spot) { ?>
 					<?php if ($spot['spotActive'] !== '1') continue; ?>
-					<option value="pos?spotid=<?php echo $spot['spotId']; ?>"><?php echo $spot['spotName']; ?></option>
+					<option
+						value="pos?spotid=<?php echo $spot['spotId']; ?>"
+						<?php if ($spot['spotId'] === $spotId) echo 'selected'; ?>
+					>
+						<?php echo $spot['spotName']; ?>
+					</option>
 				<?php } ?>
 			</select>
 		</div>

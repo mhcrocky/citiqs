@@ -52,9 +52,8 @@
         public function index(): void
         {
             $vendorId = intval($_SESSION['userId']);
-
-            $spotId = !empty($_GET['spotid']) ? intval($this->input->get('spotid', true)) : null;
-            $spot = $spotId ? $this->shopspot_model->fetchSpot($vendorId, $spotId) : null;
+            $spotId = !empty($_GET['spotid']) ? $this->input->get('spotid', true) : null;
+            $spot = $spotId ? $this->shopspot_model->fetchSpot($vendorId, intval($spotId)) : null;
 
             $allProducts = ($spot && $this->isLocalSpotOpen($spot)) ? $this->shopproductex_model->getMainProductsOnBuyerSide($vendorId, $spot) : null;
 
@@ -65,7 +64,8 @@
                     'maxRemarkLength' => $this->config->item('maxRemarkLength'),
                     'categories' => array_keys($allProducts['main']),
                     'uploadProductImageFolder' => $this->config->item('uploadProductImageFolder'),
-                    'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData()
+                    'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData(),
+                    'spotId' => $spotId,
                 ];
             }
             $data['spots'] = $this->shopspot_model->fetchUserSpots($vendorId);
