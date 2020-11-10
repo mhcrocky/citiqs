@@ -268,7 +268,6 @@ $route['spot_closed/(:num)']        = 'publicorders/spotClosed/$1';
 
 // POS
 $route['pos']       = 'pos/index';
-$route['pos_spots'] = 'pos/selectPosPost';
 
 //INSERT ORDER
 $route['insertorder/(:num)/(:any)'] = 'alfredinsertorder/insertOrder/$1/$2';

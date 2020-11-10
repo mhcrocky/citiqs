@@ -53,40 +53,25 @@
         {
             $vendorId = intval($_SESSION['userId']);
 
-            $spotId = $_GET['spotid'] ? intval($this->input->get('spotid', true)) : 0;
-            if (!$spotId) redirect('pos_spots');
+            $spotId = !empty($_GET['spotid']) ? intval($this->input->get('spotid', true)) : null;
+            $spot = $spotId ? $this->shopspot_model->fetchSpot($vendorId, $spotId) : null;
 
-            $spot = $spotId ? $this->shopspot_model->fetchSpot($vendorId, $spotId) : [];
-            if (!$spot || ! $this->isLocalSpotOpen($spot)) redirect('pos_spots');
+            $allProducts = ($spot && $this->isLocalSpotOpen($spot)) ? $this->shopproductex_model->getMainProductsOnBuyerSide($vendorId, $spot) : null;
 
-            $allProducts = $spot ? $this->shopproductex_model->getMainProductsOnBuyerSide($vendorId, $spot) : null;
-            if (!$allProducts) redirect('pos_spots');
+            if ($allProducts) {
+                $data = [
+                    'mainProducts' => $allProducts['main'],
+                    'addons' => $allProducts['addons'],
+                    'maxRemarkLength' => $this->config->item('maxRemarkLength'),
+                    'categories' => array_keys($allProducts['main']),
+                    'uploadProductImageFolder' => $this->config->item('uploadProductImageFolder'),
+                    'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData()
+                ];
+            }
+            $data['spots'] = $this->shopspot_model->fetchUserSpots($vendorId);
 
-            $data = [
-                'mainProducts' => $allProducts['main'],
-                'addons' => $allProducts['addons'],
-                'maxRemarkLength' => $this->config->item('maxRemarkLength'),
-                'categories' => array_keys($allProducts['main']),
-                'uploadProductImageFolder' => $this->config->item('uploadProductImageFolder'),
-                'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData()
-            ];
-
-            // echo '<pre>';
-            // print_r($data);
-            // die();
             $this->global['pageTitle'] = 'TIQS : POS';
             $this->loadViews('pos/pos', $this->global, $data, null, 'headerWarehouse');
-            return;
-        }
-
-        public function selectPosPost(): void
-        {
-            $vendorId = intval($_SESSION['userId']);
-            $data = [
-                'spots' => $this->shopspot_model->fetchUserSpots($vendorId),
-            ];
-            $this->global['pageTitle'] = 'TIQS : SELECT POS SPOT';
-            $this->loadViews('pos/selectPosSpot', $this->global, $data, null, 'headerWarehouse');
             return;
         }
 
