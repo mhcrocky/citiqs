@@ -33,12 +33,13 @@
 							<div>
 								<label for="masterMac">Select master printer (only for slave printer): </label>
 								<select class="form-control" id="masterMac" name="masterMac">
-									<option value="">Select</option>
-
+									<option value="0">Select</option>
 									<?php foreach ($printers as $printer) { ?>
-										<option value="<?php echo $printer['macNumber']; ?>">
-											<?php echo $printer['printer']; ?>
-										</option>
+										<?php if ($printer['masterMac'] === '0') { ?>
+											<option value="<?php echo $printer['macNumber']; ?>">
+												<?php echo $printer['printer']; ?>
+											</option>
+										<?php } ?>
 									<?php } ?>
 								</select>
 							</div>
@@ -139,11 +140,10 @@
 									<div>
 										<label for="masterMac">Select master printer (only for slave printer): </label>
 										<select class="form-control" id="masterMac" name="masterMac">
-											<option value="">Select</option>
 											<option value="0">None</option>
 											<?php
-												foreach ($printers as $master) {
-													if ($master['macNumber'] !== $printer['macNumber']) {
+												foreach ($printers as $master) {													
+													if ($master['macNumber'] !== $printer['macNumber'] && $master['masterMac'] === '0') {
 												?>
 													<option
 														value="<?php echo $master['macNumber']; ?>"
