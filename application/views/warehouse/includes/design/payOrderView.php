@@ -2,6 +2,25 @@
     <legend>Pay order view</legend>
     <div class="form-group col-sm-12">
         <label style="display:block;">
+            Page background color:
+            <input
+                type="color"
+                class="form-control"
+                name="payOrder[class][payOrderBackgroundColor][background-color]"
+                data-css-selector="class"
+                data-css-selector-value="payOrderBackgroundColor"
+                data-css-property="background-color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['payOrder']['class']['payOrderBackgroundColor']['background-color']) ) { ?>
+                value = "<?php echo $design['payOrder']['class']['payOrderBackgroundColor']['background-color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>    
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
             Header background color:
             <input
                 type="color"

@@ -1,4 +1,4 @@
-<div class="container shop-container selectedSpotBackground">
+<div class="container shop-container selectedSpotBackground" style="width:100%">
     <div class="row selectedSpotBackground">
         <?php if (!empty($mainProducts)) { ?>        	
 			    <?php if ($vendor['logo']) { ?>

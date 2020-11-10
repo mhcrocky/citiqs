@@ -1,4 +1,4 @@
-<div class="main-wrapper-nh" style="text-align:center">
+<div class="main-wrapper-nh" style="text-align:center; width:100vw: height:100vh">
 	<div id="selectSpotContainer" class="col-half background-apricot-blue height">
 		<div class="width-650" style="padding-top:0px"></div>
 		<?php if (!empty($_SESSION['iframe'])) { ?>

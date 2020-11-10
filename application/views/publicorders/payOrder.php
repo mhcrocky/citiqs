@@ -1,18 +1,18 @@
-<div id="wrapper">
-    <div id="content">
-        <div class="container" id="shopping-cart">
-            <div class="container" id="page-wrapper">
+<div id="wrapper" class="payOrderBackgroundColor">
+    <div id="content" class="payOrderBackgroundColor">
+        <div class="container payOrderBackgroundColor" id="shopping-cart">
+            <div class="container payOrderBackgroundColor" id="page-wrapper">
                 <div class="row">
-                    <div class="col-md-12">
-                        <div id="area-container">
-                            <div class="page-container">
-                                <div id="payHeader" class="heading pay-header">
+                    <div class="col-md-12 payOrderBackgroundColor">
+                        <div id="area-container" class="payOrderBackgroundColor">
+                            <div class="page-containe payOrderBackgroundColorr">
+                                <div id="payHeader" class="heading pay-header payOrderBackgroundColor">
 <!--                                    <div class="amount">--><?php //echo number_format($total, 2, ',', '.'); ?><!-- EUR</div>-->
 <!--                                    <div class="info">-->
 <!--                                        <b>bestelling</b>-->
 <!--                                    </div>-->
                                 </div>
-                                <div class="bar bar2">
+                                <div class="bar bar2 payOrderBackgroundColor">
 <!--                                    <div class="language">-->
 <!--                                        <a href="#">-->
 <!--                                            <span class="selectedLanguage">NL</span>-->
@@ -63,7 +63,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div  id="choosePaymentMethod" class="bar">
+                                <div  id="choosePaymentMethod" class="bar" style="width:100 vw; height:100">
                                     <div class="bar-title">
                                         <span data-trans="" data-trn-key="Kies een betaalmethode">
 												<?php echo $this->language->line("PAYMENT-050",'Kies een betaalmethode');?>

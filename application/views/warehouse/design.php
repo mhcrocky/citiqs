@@ -31,7 +31,7 @@
                     </div>
                     <div class="col-lg-6">
                         <div style="margin:auto; width:80%;">
-                            <iframe id="iframe" src="<?php echo $iframeSrc; ?>" width="400px" height="650px" style="position:fixed"></iframe>
+                            <iframe id="iframe" src="<?php echo $iframeSrc; ?>" width="420px" height="650px" style="position:fixed"></iframe>
                         </div>
                     </div>
                 </div>
