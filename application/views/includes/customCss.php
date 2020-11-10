@@ -119,4 +119,6 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/closed.css">
 <?php } elseif ($this->view === 'pos/pos') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/pos.css">
+<?php } elseif ($this->view === 'pos/selectPosSpot') { ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/selectPosSpot.css">
 <?php } ?>

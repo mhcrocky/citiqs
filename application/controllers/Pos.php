@@ -40,6 +40,13 @@
             $this->load->library('session');
 
             $this->isLoggedIn();
+            $this->checkIsPosActive();
+        }
+
+        private function checkIsPosActive() {            
+            if ($_SESSION['activatePos'] !== '1') {
+                redirect('loggedin');
+            }
         }
 
         public function index(): void
@@ -74,7 +81,12 @@
 
         public function selectPosPost(): void
         {
-            var_dump($_SERVER);
+            $vendorId = intval($_SESSION['userId']);
+            $data = [
+                'spots' => $this->shopspot_model->fetchUserSpots($vendorId),
+            ];
+            $this->global['pageTitle'] = 'TIQS : SELECT POS SPOT';
+            $this->loadViews('pos/selectPosSpot', $this->global, $data, null, 'headerWarehouse');
             return;
         }
 

@@ -26,3 +26,13 @@ function reloadPageIfMinus(element, checkZeroValue = '1') {
     }
     return;
 }
+
+function redirectToNewLocation(location) {
+    let newLocation = location.trim();
+    if (location.trim()) {
+        console.dir(globalVariables)
+        newLocation = globalVariables['baseUrl'] + newLocation
+        window.location.href = newLocation;
+    }
+    
+}

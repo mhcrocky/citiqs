@@ -633,7 +633,8 @@
                 'localTypeId' => $this->config->item('local'),
                 'deliveryTypeId' => $this->config->item('deliveryType'),
                 'pickupTypeId' => $this->config->item('pickupType'),
-                'notActiveColor' => $this->config->item('notActiveColor')
+                'notActiveColor' => $this->config->item('notActiveColor'),
+                'activePos' => $_SESSION['activatePos'],
             ];
 
             $this->loadViews('warehouse/spots', $this->global, $data, null, 'headerWarehouse');

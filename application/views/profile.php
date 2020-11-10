@@ -686,6 +686,15 @@
 							/>							
 						</label>
 					</div>										
+
+					<h4>ACTIVATE POS</h4>
+					<div class="form-group mb-35">
+						<label class="radio-inline" for="activatePosYes">Yes</label>
+						<input type="radio" id="activatePosYes" name="vendor[activatePos]" value="1" <?php if ($vendor['activatePos'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="activatePosNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="activatePosNo" name="vendor[activatePos]" value="0" <?php if ($vendor['activatePos'] === '0') echo 'checked'; ?> />
+					</div>
+					
 					<br/>
 					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />

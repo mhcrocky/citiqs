@@ -63,6 +63,7 @@ class  Profile extends BaseControllerWeb
 		$this->shopvendortypes_model->setProperty('vendorId', intval($post['vendorId']))->updateVendorTypes($vendorTypes);
 
 		if ($this->shopvendor_model->setObjectFromArray($post['vendor'])->update()) {
+			$_SESSION['activatePos'] = $post['vendor']['activatePos'];
 			$this->session->set_flashdata('success', 'Data updated');
 		} else {
 			$this->session->set_flashdata('error', 'Update data failed');

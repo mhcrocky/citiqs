@@ -61,6 +61,7 @@ class Login extends BaseControllerWeb
 	 */
 	public function loginMe()
 	{
+
 		$code = strtolower($this->security->xss_clean($this->input->post('code')));
 		if (!empty($code)) {
 			$email = trim($this->security->xss_clean($this->session->userdata('email')));
@@ -128,7 +129,7 @@ class Login extends BaseControllerWeb
 						'lat' => $result->lat,
 						'lng' => $result->lng,
 					);
-
+					$sessionArray['activatePos'] = $this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('activatePos');
 					$this->session->set_userdata($sessionArray);
 					unset($sessionArray['userId'], $sessionArray['isLoggedIn'], $sessionArray['lastLogin']);
 					$loginInfo = array("userId" => $result->userId, "sessionData" => json_encode($sessionArray), "machineIp" => $_SERVER['REMOTE_ADDR'], "userAgent" => getBrowserAgent(), "agentString" => $this->agent->agent_string(), "platform" => $this->agent->platform());
@@ -166,6 +167,7 @@ class Login extends BaseControllerWeb
 		}
 
 		$result = $this->login_model->loginMe($email, $password);
+
 		$this->session->set_userdata('dropoffpoint', $result->IsDropOffPoint);
 
 		if (!empty($result)) {

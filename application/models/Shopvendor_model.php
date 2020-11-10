@@ -39,6 +39,7 @@
         public $cutTime;
         public $skipDate;
         public $design;
+        public $activatePos;
 
         public $serviceFeePercent;
         public $serviceFeeAmount;
@@ -149,6 +150,7 @@
             if (isset($data['deliveryAirDistance']) && !Validate_data_helper::validateInteger($data['deliveryAirDistance'])) return false;   
             if (isset($data['skipDate']) && !($data['skipDate'] === '1' || $data['skipDate'] === '0')) return false;
             if (isset($data['design']) && !Validate_data_helper::validateString($data['design'])) return false;
+            if (isset($data['activatePos']) && !($data['activatePos'] === '1' || $data['activatePos'] === '0')) return false;
 
             if (isset($data['deliveryServiceFeePercent']) && !Validate_data_helper::validateString($data['deliveryServiceFeePercent'])) return false;
             if (isset($data['deliveryServiceFeeAmount']) && !Validate_data_helper::validateFloat($data['deliveryServiceFeeAmount'])) return false;
@@ -212,6 +214,7 @@
                     $this->table . '.pickupServiceFeeAmount',
                     $this->table . '.pickupMinimumOrderFee',
                     $this->table . '.design',
+                    $this->table . '.activatePos',
 
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
