@@ -294,6 +294,12 @@ $route['success'] = 'Paysuccesslink';
 $route['successth'] = 'Paysuccesslinkth';
 $route['success_reservation'] = 'Reservations/success';
 
+$route['pending']       = 'paysuccesslink/pending';
+$route['authorised']    = 'paysuccesslink/authorised';
+$route['verify']        = 'paysuccesslink/verify';
+$route['cancel']        = 'paysuccesslink/cancel';
+$route['denied']        = 'paysuccesslink/denied';
+
 $route['vendors'] = 'Api/Vendors/data';
 
 $route['order/lines'] = 'Orderlines/index';

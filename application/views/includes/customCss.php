@@ -121,4 +121,7 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/pos.css">
 <?php } elseif ($this->view === 'pos/selectPosSpot') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/selectPosSpot.css">
+<?php } elseif (strpos($this->view, 'paysuccesslink/') !== false) { ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
 <?php } ?>
