@@ -291,7 +291,10 @@
 
         public function fetchOrdersForPrint(string $macNumber, string $where = ''): ?array
         {
-            // $where= 'tbl_shop_order_extended.printed = "0" ';
+			$logFile = FCPATH . 'application/tiqs_logs/messages.txt';
+			Utility_helper::logMessage($logFile, $macNumber);
+			Utility_helper::logMessage($logFile, $where);
+			// $where= 'tbl_shop_order_extended.printed = "0" ';
             $this->load->config('custom');
             $concatSeparator = $this->config->item('concatSeparator');
             $concatGroupSeparator = $this->config->item('contactGroupSeparator');

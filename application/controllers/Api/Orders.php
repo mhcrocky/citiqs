@@ -203,10 +203,10 @@
 			$h++;
 
 			if($order['serviceTypeId']==1){
-				$draw->annotation(0,  35 * $h, "DATE". date("d-m h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
+				$draw->annotation(0,  35 * $h, "DATE". date("d-m H:i:s",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
 			}
 			if($order['serviceTypeId']==2){
-				$draw->annotation(0,  35 * $h, "DELIVERY ON : ". date("d-m h:i:sa",strtotime($order['orderCreated'])));
+				$draw->annotation(0,  35 * $h, "DELIVERY ON : ". date("d-m H:i:s",strtotime($order['orderCreated'])));
 				$h++;
 				$draw->annotation(0,  35 * $h, "Phone : ". $order['buyerMobile'] );
 				$h++;
@@ -216,18 +216,18 @@
 			}
 
 			if($order['serviceTypeId']==3){
-				$draw->annotation(0,  35 * $h, "PICK-UP at : ". date("d-m h:i:sa",strtotime($order['orderCreated'])));
+				$draw->annotation(0,  35 * $h, "PICK-UP at : ". date("d-m H:i:s",strtotime($order['orderCreated'])));
 			}
 
 
 			if($order['serviceTypeId']==1){
-				$drawemail->annotation(0, 35 * $h, "DATE:". date("d-m h:i:sa",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
+				$drawemail->annotation(0, 35 * $h, "DATE:". date("d-m H:i:s",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
 			}
 			if($order['serviceTypeId']==2){
-				$drawemail->annotation(0, 35 * $h, "DELIVERY AT:". date("d-m h:i:sa",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
+				$drawemail->annotation(0, 35 * $h, "DELIVERY AT:". date("d-m H:i:s",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
 			}
 			if($order['serviceTypeId']==3){
-				$drawemail->annotation(0, 35 * $h, "PICK-UP AT". date("d-m h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
+				$drawemail->annotation(0, 35 * $h, "PICK-UP AT". date("d-m H:i:s",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
 			}
 
 			$h++;
@@ -632,11 +632,9 @@
             // Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail); 
             #if (intval($order['vendorId']) === 43538) {
             if (intval($order['vendorId']) === 43533) {
-                
                 $receiptAttach = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '.png';
-                
+
 		        if (file_put_contents($receipt, $resultpngprinter)) {
-                    var_dump($order);
                     $subject= "tiqs order receipt : ". $order['orderId'];
                     Email_helper::sendOrderEmail($order['vendorEmail'], $subject, '', $receiptAttach);
 		        }

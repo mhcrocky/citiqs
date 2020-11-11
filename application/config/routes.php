@@ -337,5 +337,8 @@ $route['marketing/calculator/savecalc'] = 'Marketing/Calculator/saveCalc';
 
 $route['api/video/upload_post'] = 'Api/Video/upload_post';
 
+$route['businessreport'] = 'Businessreport/index';
+$route['businessreport/get_report'] = 'Businessreport/get_report';
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

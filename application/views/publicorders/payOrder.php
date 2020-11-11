@@ -137,7 +137,7 @@
                                         <?php if ($vendor['vaucher'] === '1') { ?>
                                             <p data-toggle="modal" data-target="#voucher" class="paymentMethod method-card" >
                                                 <img src="<?php echo base_url() . 'assets/home/images/voucher.png'; ?>" alt="voucher" >
-                                                <span>Voucher</span>
+                                                <span>gebruik Voucher</span>
                                             </p>
                                         <?php } ?>
                                         <div class="clearfix"></div>

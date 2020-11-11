@@ -20,7 +20,7 @@
         </label>
     </div>
     <div class="form-group col-sm-12">
-        <labe style="display:block;"l>
+        <label style="display:block;"l>
             Headline backgorund color:
             <input
                 type="color"
