@@ -55,7 +55,7 @@
                 $orderDataRandomKey = empty($get[$this->config->item('orderDataGetKey')]) ? '' : $get[$this->config->item('orderDataGetKey')];
                 $this->checkSpot($spotId, $vendor, $orderDataRandomKey);
             } elseif ($vendor) {
-                $typeId = empty($get['typeId']) ? 0 : intval($get['typeId']);
+                $typeId = empty($get['typeid']) ? 0 : intval($get['typeid']);
                 $this->loadVendorView($typeId, $vendor);
             } else {
                 redirect(base_url());
@@ -120,10 +120,12 @@
                     'spots' => []
                 ];
                 $this->loadViews('publicorders/selectType', $this->global, $data, null, 'headerWarehousePublic');
-            } elseif (count($types[1]) === 1 || $typeId) {
-                $typeId = $typeId ? $typeId : intval($types[1][0]['typeId']);
+            } elseif ($typeId) {
                 $this->checkVendorCredentials($vendor, $typeId);
                 $this->loadSelectSpotView($vendor, $typeId);
+            } elseif (count($types[1]) === 1) {
+                $redirect = base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&typeid=' . $types[1]['0']['typeId'];
+                redirect($redirect);
             } else {
                 $data = [
                     'vendor' => $vendor,

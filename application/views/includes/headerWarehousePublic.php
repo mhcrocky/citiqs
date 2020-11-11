@@ -38,7 +38,7 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js'></script>
     <!-- <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <!-- <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script> -->
     <script src="<?php echo $this->baseUrl; ?>assets/dist/js/tooltipster.bundle.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/vanilla-picker.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/cookies.js"></script>

@@ -113,17 +113,6 @@ function setDesign() {
     }   
 }
 
-$(document).ready(function(){
-    let iframe = document.getElementById(designGlobals.iframeId);
-    iframeURLChange(iframe, function (newURL) {
-        showViewSettings(designGlobals.checkUrl(newURL));
-    });
-
-    iframe.onload = function () {
-        setDesign();
-    }
-})
-
 function copyToClipboard(id) {
     /* Get the text field */
     var copyText = document.getElementById(id);
@@ -161,3 +150,14 @@ function saveIrame(width, height, iframe) {
     sendAjaxPostRequest(post, url, 'saveIrame');
 }
 // https://tiqs.com/alfred/places
+
+$(document).ready(function(){
+    let iframe = document.getElementById(designGlobals.iframeId);
+    iframeURLChange(iframe, function (newURL) {
+        showViewSettings(designGlobals.checkUrl(newURL));
+    });
+
+    iframe.onload = function () {
+        setDesign();
+    }
+})

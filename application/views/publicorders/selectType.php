@@ -12,7 +12,7 @@
 				<?php foreach ($activeTypes as $type) { ?>
 
 					<label>
-						<input type="radio" name="radio" value="<?php echo 'make_order?vendorid=' . $vendor['vendorId'] . '&typeId=' . $type['typeId'] ?>" onchange="redirectTo(this.value)" class="form-control" <?php if($type['typeId']==='0') echo "checked" ?> />
+						<input type="radio" name="radio" value="<?php echo 'make_order?vendorid=' . $vendor['vendorId'] . '&typeid=' . $type['typeId'] ?>" onchange="redirectTo(this.value)" class="form-control" <?php if($type['typeId']==='0') echo "checked" ?> />
 						<div class="front-end box selectTypeLabels">
 							<div style="margin-top: 20px">
 								<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="100px" height="" />
