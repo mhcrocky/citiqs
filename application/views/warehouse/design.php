@@ -59,17 +59,17 @@
             'buyerDetailsView' : 'buyerDetailsView',
             'payOrderView' : 'payOrderView',
             'checkUrl' : function (url) {
-                            if (url.includes('make_order?vendorid=') && !url.includes('&typeId=') && !url.includes('&spotid=')) {
+                            if (url.includes('make_order?vendorid=') && !url.includes('&typeid=') && !url.includes('&spotid=')) {
                                 return this['selectTypeView']
                             }
                             if (url.includes('closed')) {
                                 console.dir(url);
                                 return this['closed']
                             }
-                            if (url.includes('make_order?vendorid=') && url.includes('&typeId=') && !url.includes('&spotid=')) {
+                            if (url.includes('make_order?vendorid=') && url.includes('&typeid=') && !url.includes('&spotid=')) {
                                 return this['selectSpotView']
                             }
-                            if (url.includes('make_order?vendorid=') && !url.includes('&typeId=') && url.includes('&spotid=')) {
+                            if (url.includes('make_order?vendorid=') && !url.includes('&typeid=') && url.includes('&spotid=')) {
                                 return this['selectedSpotView']
                             }
                             if (url.includes('checkout_order?order=')) {
