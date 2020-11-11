@@ -95,15 +95,24 @@ class Alfredpayment extends BaseControllerWeb
         $order = reset($order);
         $vendorId = intval($order['vendorId']);
 
-        if (intval($get['orderStatusId']) === $this->config->item('payNlSuccess')) {
+        if ($get['orderStatusId'] === $this->config->item('payNlSuccess')) {
             $this->shoporderpaynl_model->updatePayNl(['successPayment' => date('Y-m-d H:i:s')]);
             $this->shoporder_model->updatePaidStatus($this->shoporderpaynl_model, ['paid' => $this->config->item('orderPaid')]);
-        }
-
-        if ($vendorId == 1162) {
-            $redirect = 'successth';
-        } else {
-            $redirect = base_url() . 'success?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
+            if ($vendorId == 1162) {
+                $redirect = 'successth';
+            } else {
+                $redirect = base_url() . 'success?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
+            }
+        } elseif ($get['orderStatusId'] === $this->config->item('payNlPending')) {
+            $redirect = base_url() . 'pending?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
+        } elseif ($get['orderStatusId'] === $this->config->item('payNlAuthorised')) {
+            $redirect = base_url() . 'authorised?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
+        } elseif ($get['orderStatusId'] === $this->config->item('payNlVerify')) {
+            $redirect = base_url() . 'verify?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
+        } elseif ($get['orderStatusId'] === $this->config->item('payNlCancel')) {
+            $redirect = base_url() . 'cancel?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
+        } elseif ($get['orderStatusId'] === $this->config->item('payNlDenied')) {
+            $redirect = base_url() . 'denied?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
         }
 
         redirect($redirect);

@@ -22,22 +22,82 @@ class  Paysuccesslink extends BaseControllerWeb
 
     public function index()
     {
-        $get = Utility_helper::sanitizeGet();
-        $orderId = $get['orderid'];
+        $data = [];
 
-        $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
-        $order = reset($order);
+        $this->getOrderData($data);
+        $this->global['pageTitle'] = 'TIQS : SUCCESS';
+        $this->loadViews("paysuccesslink/success", $this->global, $data, 'nofooter', 'noheader');
+    }
 
-        if ($order['orderRandomKey'] !== $get[$this->config->item('orderDataGetKey')]) {
-            redirect(base_url());
-        }
-
+    public function pending()
+    {
         $data = [
-            'order' => $order,
-            'paid' => $this->config->item('orderPaid'),
+            'paynlInfo' => 'Payment has not been finalized and could still be paid'
         ];
 
-        $this->global['pageTitle'] = 'TIQS : SUCCESS';
-        $this->loadViews("paysuccesslink", $this->global, $data, 'nofooter', 'noheader');
+        $this->getOrderData($data);
+        $this->global['pageTitle'] = 'TIQS : PENDING';
+        $this->loadViews("paysuccesslink/notPaid", $this->global, $data, 'nofooter', 'noheader');
+    }
+
+    public function authorised()
+    {
+        $data = [
+            'paynlInfo' => 'Put the payment in the "reservation" status.'
+        ];
+
+        $this->getOrderData($data);
+        $this->global['pageTitle'] = 'TIQS : AUTHORISED';
+        $this->loadViews("paysuccesslink/notPaid", $this->global, $data, 'nofooter', 'noheader');
+    }
+
+    public function verify()
+    {
+        $data = [
+            'paynlInfo' => 'Payment can be completed after manual confirmation from admin'
+        ];
+
+        $this->getOrderData($data);
+        $this->global['pageTitle'] = 'TIQS : VERIFY';
+        $this->loadViews("paysuccesslink/notPaid", $this->global, $data, 'nofooter', 'noheader');
+    }
+
+    public function cancel()
+    {
+        $data = [
+            'paynlInfo' => 'Payment was canceled by the user'
+        ];
+
+        $this->getOrderData($data);
+        $this->global['pageTitle'] = 'TIQS : CANCEL';
+        $this->loadViews("paysuccesslink/notPaid", $this->global, $data, 'nofooter', 'noheader');
+    }
+
+    public function denied()
+    {
+        $data = [
+            'paynlInfo' => 'Payment is denined'
+        ];
+
+        $this->getOrderData($data);
+        $this->global['pageTitle'] = 'TIQS : DENIED';
+        $this->loadViews("paysuccesslink/notPaid", $this->global, $data, 'nofooter', 'noheader');
+    }
+
+    private function getOrderData(array &$data): void
+    {
+        $get = Utility_helper::sanitizeGet();
+        $orderId = ( isset($get['orderid']) && is_numeric($get['orderid']) ) ? intval($get['orderid']) : null;
+        $orderRandomKey = !empty($get[$this->config->item('orderDataGetKey')]) ? $get[$this->config->item('orderDataGetKey')] : null;
+
+        if ($orderId && $orderRandomKey) {
+            $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
+            if (is_null($order) || $order[0]['orderRandomKey'] !== $get[$this->config->item('orderDataGetKey')]) {
+                redirect('places');
+            }
+            $order = reset($order);
+            $data['order'] = $order;
+        }
+        return;
     }
 }
