@@ -116,6 +116,7 @@
 
         private function updateVoucher(): bool
         {
+            if ($this->vendorId == VENDOR_NO_UPDATE) return true;
             if ($this->amount == 0 && ($this->percent === 0 || $this->percentUsed === '1')) {
                 $this->active = '0';
             }
