@@ -76,7 +76,7 @@ class  Paysuccesslink extends BaseControllerWeb
     public function denied()
     {
         $data = [
-            'paynlInfo' => 'Payment is denined'
+            'paynlInfo' => 'Payment is denied'
         ];
 
         $this->getOrderData($data);
@@ -97,6 +97,7 @@ class  Paysuccesslink extends BaseControllerWeb
             }
             $order = reset($order);
             $data['order'] = $order;
+            $data['orderDataGetKey'] = $this->config->item('orderDataGetKey');
         }
         return;
     }

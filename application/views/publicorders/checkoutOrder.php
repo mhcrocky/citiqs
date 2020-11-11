@@ -153,11 +153,16 @@
                 <div class="checkout-btns">
                     <a
                         id="checkoutBack"
+                        <?php if ($pos === 0) { ?>
                         href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spotId . '&' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        <?php } elseif ($pos === 1) { ?>
+                            href="<?php echo base_url() . 'pos?spotid=' . $spotId; ?>"
+                        <?php } ?>
                         style="background-color: #948b6f" class="button"
                         >
                         <i class="fa fa-arrow-left"></i>
-                        Back to list                    </a>
+                        Back to list
+                    </a>
                     <a
                         id="checkoutContinue"
                         href="javascript:void(0);"

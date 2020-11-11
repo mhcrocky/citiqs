@@ -447,3 +447,8 @@ header, footer {
     font-weight: 600;
     border-bottom: 1px dotted black;
 }
+
+.modal__item .modal-content {
+	width: 50vw;
+	margin: auto;
+}

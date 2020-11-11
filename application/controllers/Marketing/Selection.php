@@ -15,7 +15,7 @@ class Selection extends BaseControllerWeb {
     }
     public function index() {
         $this->global['pageTitle'] = 'TIQS BUYERS';
-        $this->loadViews("marketing/selection", $this->global, '', 'footerpublicbizdir', 'noheaderbizdir');
+        $this->loadViews("marketing/selection", $this->global, '', 'footerpublicbizdir', 'headerWarehouse');
     }
 
     public function sendMessage() {
