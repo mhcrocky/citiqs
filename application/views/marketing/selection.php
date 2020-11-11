@@ -2,8 +2,9 @@
 <link type="text/css" href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css" rel="stylesheet" />
 
 <hr><br>
-<div class="container">
+<div class="main-wrapper">
 
+	<div class="container">
 
 <table id="buyers" class="display table-responsive" cellspacing="0" width="100%">
 
@@ -26,7 +27,7 @@
       </div>
       <div class="modal-body">
         <form>
-          
+
           <div class="form-group">
             <label for="message-text" class="col-form-label">Message:</label>
             <textarea class="form-control" id="message-text"></textarea>
@@ -52,7 +53,7 @@
       </div>
       <div class="modal-body">
         <form>
-          
+
           <div class="form-group">
             <label for="message-text" class="col-form-label">Message:</label>
             <textarea class="form-control" id="usermessage-text"></textarea>
@@ -69,12 +70,13 @@
 </div>
 
 </div>
+</div>
 <script src="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.js"></script>
 
 <script type="text/javascript" src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
 <script>
    function getBuyerId(buyerId){
-     $("#buyerId").val(buyerId);   
+     $("#buyerId").val(buyerId);
    }
 
     $(document).ready(function() {
@@ -143,8 +145,8 @@
       },
       order: [[1, 'asc']]
    });
-   
-   // Handle form submission event 
+
+   // Handle form submission event
    $('#sendMessage').on('click', function(){
       var rows_selected = table.column(0).checkboxes.selected();
       // Iterate over all selected checkboxes
