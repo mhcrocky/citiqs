@@ -102,6 +102,7 @@
                 'defaultProductsImages' => $this->config->item('defaultProductsImages'),
                 'orderDataRandomKey' => $orderDataRandomKey,
                 'orderDataGetKey' => $this->config->item('orderDataGetKey'),
+                'baseUrl' => base_url(),
             ];
 
             $preferedView = $this->getPreferedView($data, $spot, $vendor, $orderDataRandomKey);
@@ -265,18 +266,6 @@
         }
         // CHECKOUT ORDER
 
-        // TO DO !!!!!!!!!!!!!
-        // public function oldMakeNedOrderView()
-        // {
-        //     $post = $this->input->post(null, true);
-
-        //     $_SESSION['orderVendorId'] = $_SESSION['vendor']['vendorId'];
-        //     if (!empty($post)) {
-        //         unset($post['spotId']);
-        //         $_SESSION['order'] = $post;
-        //     }
-        // }
-
         public function checkout_order(): void
         {
             $orderRandomKey = $this->input->get($this->config->item('orderDataGetKey'), true);
@@ -303,6 +292,7 @@
                 'orderDataGetKey'   => $this->config->item('orderDataGetKey'),
                 'maxRemarkLength'   => $this->config->item('maxRemarkLength'),
                 'pickupTypeId'      => $this->config->item('pickupType'),
+                'pos'               => intval($orderData['pos']),
             ];
 
             $this->checkVendorCredentials( $data['vendor'], intval($data['spot']['spotTypeId']) );

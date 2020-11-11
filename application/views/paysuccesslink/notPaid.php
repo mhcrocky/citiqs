@@ -21,7 +21,9 @@
 	</div>
 	<div class="checkout-btns">
         <?php if (isset($order)) { ?>
-            <a href="<?php echo base_url() . 'make_order?vendorid=' . $order['vendorId'] . '&spotid=' . $order['spotId']; ?>" style="background-color: #948b6f" class="button">
+            <a href="<?php echo base_url() . 'make_order?vendorid=' . $order['vendorId'] . '&spotid=' . $order['spotId'] . '&' . $orderDataGetKey . '=' . $order['orderRandomKey']; ?>"
+                style="background-color: #948b6f" class="button"
+            >
                 Try again<i class="fa fa-arrow-right"></i>
             </a>
         <?php } else { ?>

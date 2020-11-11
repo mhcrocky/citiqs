@@ -118,9 +118,11 @@
 <?php } elseif ($this->view === 'publicorders/closed') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/closed.css">
 <?php } elseif ($this->view === 'pos/pos') { ?>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/slick.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/slick-theme.css"/>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/shop-with-slider.css"/>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/order-popup.css"/>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/pos.css">
-<?php } elseif ($this->view === 'pos/selectPosSpot') { ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/selectPosSpot.css">
 <?php } elseif (strpos($this->view, 'paysuccesslink/') !== false) { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">

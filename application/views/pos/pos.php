@@ -21,7 +21,7 @@
 			<div class="container container-large pos-container">
 				<div class="row d-flex">
 					<div class="col-lg-8">
-						<div class="pos_categories">
+						<div class="pos_categories" style="margin-bottom: 10px">
 							<div class="pos_categories__grid">
 								<?php
 									foreach ($categories as $index => $category) {
@@ -71,8 +71,15 @@
 										>
 											<div class="pos-main__grid">
 												<?php foreach ($products as $product) { ?>
-													<div class="pos-item">
-														<?php $productDetails = reset($product['productDetails']); ?>
+													<?php $productDetails = reset($product['productDetails']); ?>
+													<div
+														class="pos-item"
+														<?php #if ($product['addons'] || $productDetails['addRemark'] === '1') { ?>
+                                                            data-toggle="modal" data-target="#single-item-details-modal<?php echo $product['productId']; ?>"
+                                                        <?php #} else { ?>
+                                                            
+                                                        <?php #} ?>
+													>
 														<?php if ($vendor['showProductsImages'] === '1') { ?>
 															<div class='pos-item__image'>
 																<img
@@ -124,297 +131,10 @@
 									</div>
 									<!-- end checkout row -->
 								</div>
-								<!-- end post header -->
-								<div class="pos-checkout-list">
-									<div class="pos-checkout-row">
-										<div class="pos-checkout-delete">
-											<i class="fa fa-trash"></i>
-										</div>
-										<div class="pos-checkout-name">
-											<span>Coca Cola</span>
-										</div>
-										<div class="pos-checkout-quantity">
-											<span class="fa-stack">
-												<i class="fa fa-plus"></i>
-											</span>
-											<span class="pos-checkout-quantity__number">1</span>
-											<span class="fa-stack">
-												<i class="fa fa-minus"></i>
-											</span>
-										</div>
-										<div class="pos-checkout-price">
-											<span>Price</span>
-										</div>
-									</div>
-									<!-- end checkout row -->
-									<div class="pos-checkout-row">
-										<div class="pos-checkout-delete">
-											<i class="fa fa-trash"></i>
-										</div>
-										<div class="pos-checkout-name">
-											<span>Coca Cola</span>
-										</div>
-										<div class="pos-checkout-quantity">
-											<span class="fa-stack">
-												<i class="fa fa-plus"></i>
-											</span>
-											<span class="pos-checkout-quantity__number">1</span>
-											<span class="fa-stack">
-												<i class="fa fa-minus"></i>
-											</span>
-										</div>
-										<div class="pos-checkout-price">
-											<span>Price</span>
-										</div>
-									</div>
-									<!-- end checkout row -->
-									<div class="pos-checkout-row">
-										<div class="pos-checkout-delete">
-											<i class="fa fa-trash"></i>
-										</div>
-										<div class="pos-checkout-name">
-											<span>Coca Cola</span>
-										</div>
-										<div class="pos-checkout-quantity">
-											<span class="fa-stack">
-												<i class="fa fa-plus"></i>
-											</span>
-											<span class="pos-checkout-quantity__number">1</span>
-											<span class="fa-stack">
-												<i class="fa fa-minus"></i>
-											</span>
-										</div>
-										<div class="pos-checkout-price">
-											<span>Price</span>
-										</div>
-									</div>
-									<!-- end checkout row -->
-									<div class="pos-checkout-row">
-										<div class="pos-checkout-delete">
-											<i class="fa fa-trash"></i>
-										</div>
-										<div class="pos-checkout-name">
-											<span>Coca Cola</span>
-										</div>
-										<div class="pos-checkout-quantity">
-											<span class="fa-stack">
-												<i class="fa fa-plus"></i>
-											</span>
-											<span class="pos-checkout-quantity__number">1</span>
-											<span class="fa-stack">
-												<i class="fa fa-minus"></i>
-											</span>
-										</div>
-										<div class="pos-checkout-price">
-											<span>Price</span>
-										</div>
-									</div>
-									<!-- end checkout row -->
-									<div class="pos-checkout-row">
-										<div class="pos-checkout-delete">
-											<i class="fa fa-trash"></i>
-										</div>
-										<div class="pos-checkout-name">
-											<span>Coca Cola</span>
-										</div>
-										<div class="pos-checkout-quantity">
-											<span class="fa-stack">
-												<i class="fa fa-plus"></i>
-											</span>
-											<span class="pos-checkout-quantity__number">1</span>
-											<span class="fa-stack">
-												<i class="fa fa-minus"></i>
-											</span>
-										</div>
-										<div class="pos-checkout-price">
-											<span>Price</span>
-										</div>
-									</div>
-									<!-- end checkout row -->
-									<div class="pos-checkout-row">
-										<div class="pos-checkout-delete">
-											<i class="fa fa-trash"></i>
-										</div>
-										<div class="pos-checkout-name">
-											<span>Coca Cola</span>
-										</div>
-										<div class="pos-checkout-quantity">
-											<span class="fa-stack">
-												<i class="fa fa-plus"></i>
-											</span>
-											<span class="pos-checkout-quantity__number">1</span>
-											<span class="fa-stack">
-												<i class="fa fa-minus"></i>
-											</span>
-										</div>
-										<div class="pos-checkout-price">
-											<span>Price</span>
-										</div>
-									</div>
-									<!-- end checkout row -->
-									<div class="pos-checkout-row">
-										<div class="pos-checkout-delete">
-											<i class="fa fa-trash"></i>
-										</div>
-										<div class="pos-checkout-name">
-											<span>Coca Cola</span>
-										</div>
-										<div class="pos-checkout-quantity">
-											<span class="fa-stack">
-												<i class="fa fa-plus"></i>
-											</span>
-											<span class="pos-checkout-quantity__number">1</span>
-											<span class="fa-stack">
-												<i class="fa fa-minus"></i>
-											</span>
-										</div>
-										<div class="pos-checkout-price">
-											<span>Price</span>
-										</div>
-									</div>
-									<!-- end checkout row -->
-									<div class="pos-checkout-row">
-										<div class="pos-checkout-delete">
-											<i class="fa fa-trash"></i>
-										</div>
-										<div class="pos-checkout-name">
-											<span>Coca Cola</span>
-										</div>
-										<div class="pos-checkout-quantity">
-											<span class="fa-stack">
-												<i class="fa fa-plus"></i>
-											</span>
-											<span class="pos-checkout-quantity__number">1</span>
-											<span class="fa-stack">
-												<i class="fa fa-minus"></i>
-											</span>
-										</div>
-										<div class="pos-checkout-price">
-											<span>Price</span>
-										</div>
-									</div>
-									<!-- end checkout row -->
-									<div class="pos-checkout-row">
-										<div class="pos-checkout-delete">
-											<i class="fa fa-trash"></i>
-										</div>
-										<div class="pos-checkout-name">
-											<span>Coca Cola</span>
-										</div>
-										<div class="pos-checkout-quantity">
-											<span class="fa-stack">
-												<i class="fa fa-plus"></i>
-											</span>
-											<span class="pos-checkout-quantity__number">1</span>
-											<span class="fa-stack">
-												<i class="fa fa-minus"></i>
-											</span>
-										</div>
-										<div class="pos-checkout-price">
-											<span>Price</span>
-										</div>
-									</div>
-									<!-- end checkout row -->
-									<div class="pos-checkout-row">
-										<div class="pos-checkout-delete">
-											<i class="fa fa-trash"></i>
-										</div>
-										<div class="pos-checkout-name">
-											<span>Coca Cola</span>
-										</div>
-										<div class="pos-checkout-quantity">
-											<span class="fa-stack">
-												<i class="fa fa-plus"></i>
-											</span>
-											<span class="pos-checkout-quantity__number">1</span>
-											<span class="fa-stack">
-												<i class="fa fa-minus"></i>
-											</span>
-										</div>
-										<div class="pos-checkout-price">
-											<span>Price</span>
-										</div>
-									</div>
-									<!-- end checkout row -->
-									<div class="pos-checkout-row">
-										<div class="pos-checkout-delete">
-											<i class="fa fa-trash"></i>
-										</div>
-										<div class="pos-checkout-name">
-											<span>Coca Cola</span>
-										</div>
-										<div class="pos-checkout-quantity">
-											<span class="fa-stack">
-												<i class="fa fa-plus"></i>
-											</span>
-											<span class="pos-checkout-quantity__number">1</span>
-											<span class="fa-stack">
-												<i class="fa fa-minus"></i>
-											</span>
-										</div>
-										<div class="pos-checkout-price">
-											<span>Price</span>
-										</div>
-									</div>
-									<!-- end checkout row -->
-									<div class="pos-checkout-row">
-										<div class="pos-checkout-delete">
-											<i class="fa fa-trash"></i>
-										</div>
-										<div class="pos-checkout-name">
-											<span>Coca Cola</span>
-										</div>
-										<div class="pos-checkout-quantity">
-											<span class="fa-stack">
-												<i class="fa fa-plus"></i>
-											</span>
-											<span class="pos-checkout-quantity__number">1</span>
-											<span class="fa-stack">
-												<i class="fa fa-minus"></i>
-											</span>
-										</div>
-										<div class="pos-checkout-price">
-											<span>Price</span>
-										</div>
-									</div>
-									<!-- end checkout row -->
-									<div class="pos-checkout__summary">
-										<div class="pos-checkout__summary__row  pos-checkout__summary__discount">
-											<div class="pos-checkout__summary__label">
-											<span>Discount</span>
-											</div>
-											<div class="pos-checkout__summary__ammout">
-												<span>20%</span>
-											</div>
-										</div>
-										<!-- end row -->
-										<div class="pos-checkout__summary__row">
-											<div class="pos-checkout__summary__label">
-											<span>Sub Total</span>
-											</div>
-											<div class="pos-checkout__summary__ammout">
-												<span>$34.33</span>
-											</div>
-										</div>
-										<!-- end row -->
-										<div class="pos-checkout__summary__row">
-											<div class="pos-checkout__summary__label">
-											<span>Tax</span>
-											<span class='pos-checkout__summary__tax'>1.5%</span>
-											</div>
-											<div class="pos-checkout__summary__ammout">
-												<span>$3.33</span>
-											</div>
-										</div>
-										<!-- end row -->
-										
-									</div>
-									<!-- end summary -->
-								</div>
 								<!-- end checout list -->
 							</div>
 						</div>
-						<a href="#" class='pos-checkout__button'>Pay <span>(10.00$)</span></a>
+						<a href="#" class='pos-checkout__button' onclick="checkout(1)">Pay <span>(10.00$)</span></a>
 					</div>
 					<!-- end pos sidebar -->
 				</div>
@@ -423,29 +143,11 @@
 		</div>
 	<?php } ?>
 </main>
-<script>
-	var posGlobals = (function(){
-		let globals = {
-			'activeClass' : 'pos_categories__single-item--active'
-		}
-		Object.freeze(globals);
-		return globals;
-	}());
+<?php if (isset($mainProducts)) { ?>
+	<div style="display:none">
+		<?php include_once FCPATH . 'application/views/publicorders/includes/modals/makeOrderPos/checkoutModals.php'; ?>
+	</div>
 
-	function showCategory(element, categoryId, categoriesClass) {
-		let categories = document.getElementsByClassName(categoriesClass);
-		let categoriesLength = categories.length;
-		let i;
-		for (i = 0; i < categoriesLength; i++) {
-			let category = categories[i];			
-			if (category.id !== categoryId) {
-				let categoryButton = document.querySelector('[data-id="' + category.id + '"]');
-				category.style.display = 'none';
-				categoryButton.classList.remove(posGlobals.activeClass);
-			} else {
-				category.style.display = 'block';				
-			}
-		}
-		element.classList.add(posGlobals.activeClass);
-	}
-</script>
+	<?php include_once FCPATH . 'application/views/publicorders/includes/modals/makeOrderPos/productModals.php'; ?>
+<?php } ?>
+<?php include_once FCPATH . 'application/views/publicorders/includes/makeOrderGlobalsJs.php'; ?>

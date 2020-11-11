@@ -65,7 +65,6 @@
                                                     <p class='shop__single-item__info--description productDescription'><?php echo $productDetails['shortDescription']; ?></p>
                                                 <?php } ?>
                                                 <?php
-                                                    $productAllergies = null;
                                                     $baseUrl = base_url();
                                                     if ($vendor['showAllergies'] === '1')  {
                                                         $product['allergies'] = unserialize($product['allergies']);
@@ -203,7 +202,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-6 text-center text-right-md">
-                    <button class='button-main button-secondary bottom-bar__checkout payButton' onclick="checkout()">PAY</button>
+                    <button class='button-main button-secondary bottom-bar__checkout payButton' onclick="checkout(0)">PAY</button>
                 </div>
             </div>
         </div>
@@ -233,30 +232,7 @@
 </div>
 <!-- end modal image -->
 
-<script>
-    var makeOrderGlobals = (function(){
-        let globals = {
-            'checkoutModal' : 'checkout-modal',
-            'modalCheckoutList' : 'modal__checkout__list',
-            'checkProduct' : 'checkProduct',
-            'checkAddons' : 'checkAddons',
-            'shoppingCartList' : 'shopping-cart__list',
-            'orderedProducts' : 'orderedProducts',
-            'spotId' : '<?php echo $spotId; ?>',
-            'vendorId': '<?php echo $vendor['vendorId']; ?>',
-            'orderDataRandomKey' : '<?php echo $orderDataRandomKey; ?>',
-            'orderDataGetKey' : '<?php echo $orderDataGetKey; ?>',
-            'logoImageId' : 'vendorLogo'
-        }
-
-        <?php if (!empty($returnCategorySlide)) { ?>
-            globals['categorySlide'] = '<?php echo $returnCategorySlide; ?>';
-        <?php } ?>
-
-        Object.freeze(globals);
-        return globals;
-    }());
-</script>
+<?php include_once FCPATH . 'application/views/publicorders/includes/makeOrderGlobalsJs.php'; ?>
 
 <script>
 
