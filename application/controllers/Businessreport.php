@@ -22,7 +22,7 @@ class Businessreport extends BaseControllerWeb
 	public function index()
 	{ 
 		$data['title'] = 'Business Reports';
-		$vendor_id = 418;//$this->session->userdata("userId");
+		$vendor_id = $this->session->userdata("userId");
 		$this->global['pageTitle'] = 'TIQS Business Reports';
 		$data['local_total'] = $this->businessreport_model->get_local_total($vendor_id);
 		$data['delivery_total'] = $this->businessreport_model->get_delivery_total($vendor_id);
@@ -33,7 +33,7 @@ class Businessreport extends BaseControllerWeb
 	}
 
 	public function get_report(){
-		$vendor_id = 418;//$this->session->userdata("userId");//418
+		$vendor_id = $this->session->userdata("userId");//418
 		$pickup = $this->businessreport_model->get_pickup_report($vendor_id);
 		$delivery = $this->businessreport_model->get_delivery_report($vendor_id);
 		$local = $this->businessreport_model->get_local_report($vendor_id);
