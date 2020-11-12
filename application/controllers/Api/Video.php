@@ -57,11 +57,13 @@ class Video extends REST_Controller
         $video_name                = rand() . '.' . $extension;
         $config['file_name']     = $video_name;
 
-        $this->load->library('upload', $config);
+
+		$mime = finfo_file(finfo_open(FILEINFO_MIME_TYPE), $_FILES['userfile']['name']);
+		$this->load->library('upload', $config);
 
 		//		echo var_dump($config);
 		//		die();
-		//		$filename = $this->post('userfile');
+		//				$filename = $this->post('userfile');
 		//		echo var_dump($filename);
 		//		die();
 
