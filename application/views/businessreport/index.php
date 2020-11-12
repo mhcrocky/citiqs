@@ -72,12 +72,6 @@ border-radius: .25rem;
                .reduce( function (a, b) {
                    return parseFloat(a) + parseFloat(b);
                }, 0 );
-           let pageProductVatTotal = api
-               .column( 3, { page: 'current'} )
-               .data()
-               .reduce( function (a, b) {
-                   return parseFloat(a) + parseFloat(b);
-               }, 0 );
           let pageQuantityTotal = api
                .column( 4, { page: 'current'} )
                .data()
@@ -90,57 +84,47 @@ border-radius: .25rem;
                .reduce( function (a, b) {
                    return parseFloat(a) + parseFloat(b);
                }, 0 );
-          let pageExvatTotal = api
-               .column( 7, { page: 'current'} )
-               .data()
-               .reduce( function (a, b) {
-                   return parseFloat(a) + parseFloat(b);
-               }, 0 );
-          let pageVatTotal = api
-               .column( 8, { page: 'current'} )
-               .data()
-               .reduce( function (a, b) {
-                   return parseFloat(a) + parseFloat(b);
-               }, 0 );
+          let pageExvatData = api.column( 7, { page: 'current'} ).cache('search');
+          let pageExvatTotal = pageExvatData.length ? 
+            pageExvatData.reduce( function (a, b) {
+              return parseFloat(a) + parseFloat(b);
+            }) : 0;
+          let pageVatData = api.column( 8, { page: 'current'} ).cache('search');
+          let pageVatTotal = pageVatData.length ? 
+            pageVatData.reduce( function (a, b) {
+              return parseFloat(a) + parseFloat(b);
+            }) : 0;
 
            let priceTotal = api
-               .column( 2 )
-               .data()
-               .reduce( function (a, b) {
-                   return parseFloat(a) + parseFloat(b);
-               }, 0 );
-           let productVatTotal = api
-               .column( 3 )
+               .column( 2, { search: 'applied' } )
                .data()
                .reduce( function (a, b) {
                    return parseFloat(a) + parseFloat(b);
                }, 0 );
           let quantityTotal = api
-               .column( 4 )
+               .column( 4, { search: 'applied' } )
                .data()
                .reduce( function (a, b) {
                    return parseInt(a) + parseInt(b);
                }, 0 );
           let amountTotal = api
-               .column( 6 )
+               .column( 6, { search: 'applied' } )
                .data()
                .reduce( function (a, b) {
                    return parseFloat(a) + parseFloat(b);
                }, 0 );
-          let exvatTotal = api
-               .column( 7 )
-               .data()
-               .reduce( function (a, b) {
-                   return parseFloat(a) + parseFloat(b);
-               }, 0 );
-          let vatTotal = api
-               .column( 8 )
-               .data()
-               .reduce( function (a, b) {
-                   return parseFloat(a) + parseFloat(b);
-               }, 0 );
+          let exvatData = api.column( 7,{ search: 'applied' } ).cache('search');
+          let exvatTotal = exvatData.length ? 
+            exvatData.reduce( function (a, b) {
+              return parseFloat(a) + parseFloat(b);
+            }) : 0;
+          let vatData = api.column( 8, { search: 'applied' }).cache('search');
+          let vatTotal = vatData.length ? 
+            vatData.reduce( function (a, b) {
+              return parseFloat(a) + parseFloat(b);
+            }) : 0;
            $(tfoot).find('th').eq(1).html(pagePriceTotal.toFixed(2)+'('+priceTotal.toFixed(2)+')');
-           $(tfoot).find('th').eq(2).html(pageProductVatTotal.toFixed(2)+'('+productVatTotal.toFixed(2)+')');
+           $(tfoot).find('th').eq(2).html('-');
            $(tfoot).find('th').eq(3).html(pageQuantityTotal+'('+quantityTotal+')');
            $(tfoot).find('th').eq(4).html('-');
            $(tfoot).find('th').eq(5).html(pageAmountTotal.toFixed(2)+'('+amountTotal.toFixed(2)+')');
@@ -178,11 +162,19 @@ border-radius: .25rem;
         },
         {
           title: 'EXVAT',
-          data: 'EXVAT'
+          data: null,
+          "render": function (data, type, row) {
+            let exvat = parseFloat(data.EXVAT);
+            return exvat.toFixed(2);
+          }
         },
         {
           title: 'VAT',
-          data: 'VAT'
+          data: null,
+          "render": function (data, type, row) {
+            let vat = parseFloat(data.VAT);
+            return vat.toFixed(2);
+          }
         },
         {
           title: 'Date',
@@ -216,9 +208,4 @@ border-radius: .25rem;
       });
 
 });
-
-function number_format(num){
-  let rounded_num = parseInt(num * 100) / 100;
-  return rounded_num;
-}
 </script>
