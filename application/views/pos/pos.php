@@ -1,21 +1,40 @@
 <main style="margin:30px 0px">
 	<div class="container">
-		<div class="col-lg-4 col-12 form-inline">
-			<label for='selectSpot'>Select POS spot:&nbsp;&nbsp;</label>
-			<select onchange="redirectToNewLocation(this.value)"class="form-control">
-				<option value="">Select</option>
-				<?php foreach ($spots as $spot) { ?>
-					<?php if ($spot['spotActive'] !== '1') continue; ?>
-					<option
-						value="pos?spotid=<?php echo $spot['spotId']; ?>"
-						<?php if ($spot['spotId'] === $spotId) echo 'selected'; ?>
-					>
-						<?php echo $spot['spotName']; ?>
-					</option>
-				<?php } ?>
-			</select>
+		<div class="row" style="margin-bottom:20px">
+			<div class="col-lg-4 col-12 form-inline">
+				<label for='selectSpot'>Select POS spot:&nbsp;&nbsp;</label>
+				<select onchange="redirectToNewLocation(this.value)"class="form-control">
+					<option value="">Select</option>
+					<?php foreach ($spots as $spot) { ?>
+						<?php if ($spot['spotActive'] !== '1') continue; ?>
+						<option
+							value="pos?spotid=<?php echo $spot['spotId']; ?>"
+							<?php if (intval($spot['spotId']) === $spotId) echo 'selected'; ?>
+						>
+							<?php echo $spot['spotName']; ?>
+						</option>
+					<?php } ?>
+				</select>
+			</div>
+			<?php if ($spotPosOrders) { ?>
+				<div class="col-lg-5 col-12 form-inline">
+					<label for='selectSpot'>Select holded order:&nbsp;&nbsp;</label>
+					<select onchange="redirectToNewLocation(this.value)"class="form-control">
+						<option value="">Select</option>
+						<?php foreach ($spotPosOrders as $order) { ?>
+							<option
+								value="pos?spotid=<?php echo $order['spotId'] . '&' . $orderDataGetKey . '=' . $order['randomKey']; ?>"
+								<?php if ($order['randomKey'] === $orderDataRandomKey) echo 'selected'; ?>
+							>
+								<?php echo $order['saveName']; ?>
+							</option>
+						<?php } ?>
+					</select>
+				</div>
+			<?php } ?>
 		</div>
 	</div>
+	
 	<?php if (isset($mainProducts)) { ?>
 		<div class='pos-template'>
 			<div class="container container-large pos-container">
@@ -116,8 +135,9 @@
 						</div>
 						<!-- end pos main-->
 						<div class="pos_categories__footer">
-							<a href="#" class='pos_categories__button pos_categories__button--secondary' onclick="cancelPosOrder()">Cancel Order</a>
-							<a href="#" class='pos_categories__button pos_categories__button--primary'>Hold Order</a>
+							<a href="javascript:void(0)" class='pos_categories__button pos_categories__button--secondary' onclick="cancelPosOrder('<?php echo $orderDataRandomKey; ?>')">Cancel Order</a>
+							<a href="javascript:void(0)" class='pos_categories__button pos_categories__button--primary' data-toggle="modal" data-target="#holdOrder">Hold Order</a>
+							<a href="<?php echo base_url() . 'pos?spotid=' . $spotId; ?>" class='pos_categories__button pos_categories__button--third' onclick="cancelPosOrder()">New order</a>
 						</div>
 						<!-- end pos footer -->
 					</div>
@@ -127,17 +147,7 @@
 								<div class="pos-checkout__header">
 									<h3>Checkout</h3>
 									<div class="pos-checkout-row pos-checkout-row--top" id="modal__checkout__list">
-										<!-- <div class="pos-checkout-delete">
-										</div>
-										<div class="pos-checkout-name">
-											<span>Name</span>
-										</div>
-										<div class="pos-checkout-quantity">
-											<span>QTY</span>
-										</div>
-										<div class="pos-checkout-price">
-											<span>Price</span>
-										</div> -->
+										<?php echo $checkoutList; ?>
 									</div>
 									<!-- end checkout row -->
 								</div>
@@ -158,3 +168,61 @@
 	<?php include_once FCPATH . 'application/views/publicorders/includes/modals/makeOrderPos/productModals.php'; ?>
 <?php } ?>
 <?php include_once FCPATH . 'application/views/publicorders/includes/makeOrderGlobalsJs.php'; ?>
+
+<div id="holdOrder" class="modal" role="dialog">
+	<div class="modal-dialog modal-sm">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body" style="text-align:center">
+				<label for="codeId" class="">Save order</label>
+				<input
+					type="text"
+					id="saveOrder"
+					class="form-control payOrderInputFields"
+				/>
+				<div class="virtual-keyboard-hook" data-target-id="saveOrder" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
+				<br/>
+				<button
+					class="btn btn-success btn-lg"
+					style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
+					onclick="holdOrder('<?php echo $spotId; ?>', 'saveOrder')"
+				>
+					<i class="fa fa-check-circle" aria-hidden="true"></i>
+				</button>
+				<button
+					class="btn btn-danger btn-lg closeModal"
+					style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
+					data-dismiss="modal"
+				>
+					<i class="fa fa-times" aria-hidden="true"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="confirmCancel" class="modal" role="dialog">
+	<div class="modal-dialog modal-sm">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body" style="text-align:center">
+				<label for="codeId" class="">This order will be removed. Are you sure?</label>
+				<br/>
+				<button
+					class="btn btn-success btn-lg"
+					style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
+					onclick="deleteOrder('<?php echo $orderDataRandomKey; ?>')"
+				>
+					<i class="fa fa-check-circle" aria-hidden="true"></i>
+				</button>
+				<button
+					class="btn btn-danger btn-lg closeModal"
+					style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
+					data-dismiss="modal"
+				>
+					<i class="fa fa-times" aria-hidden="true"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

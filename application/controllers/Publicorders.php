@@ -181,7 +181,7 @@
         {
             $vendorId = $vendor['vendorId'];
             $spotId = intval($spot['spotId']);
-            $ordered = $this->fetchAndChekOrdered($orderDataRandomKey, $vendorId, $spotId);
+            $ordered = Jwt_helper::fetchAndChekOrdered($orderDataRandomKey, $vendorId, $spotId, ['vendorId', 'spotId']);
 
             if ($vendor['preferredView'] === $this->config->item('oldMakeOrderView')) {
                 $data['categoryProducts'] = $this->shopproductex_model->getUserProductsPublic($vendorId);
@@ -207,20 +207,6 @@
             }
 
             return $preferedView;
-        }
-
-        private function fetchAndChekOrdered(string $orderDataRandomKey, int $vendorId, int $spotId): ?array
-        {
-            
-            if (empty($orderDataRandomKey)) return null;
-
-            $orderData = $this->shopsession_model->setProperty('randomKey', $orderDataRandomKey)->getArrayOrderDetails();
-
-            Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId']);
-
-            if ($orderData['vendorId'] !== $vendorId || $orderData['spotId'] !== $spotId) redirect(base_url());
-
-            return (empty($orderData['makeOrder'])) ? null : $orderData['makeOrder'];
         }
 
         public function spotClosed($spotId): void

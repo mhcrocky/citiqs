@@ -109,6 +109,7 @@
 <?php } elseif ($this->view === 'login') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/createKeyBoard.js"></script>
 <?php } elseif ($this->view === 'pos/pos') { ?>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/createKeyBoard.js"></script>
 	<script src="<?php echo base_url() ?>assets/home/js/makeOrderFunctions.js"></script>
 	<script src="<?php echo base_url() ?>assets/home/js/posWrapper.js"></script>
 <?php } ?>
