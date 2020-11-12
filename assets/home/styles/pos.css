@@ -1,6 +1,7 @@
 header, footer {
     display: none;
 }
+
 /* general */
 
 .container-large{
@@ -451,4 +452,14 @@ header, footer {
 .modal__item .modal-content {
 	width: 50vw;
 	margin: auto;
+}
+
+#modal__checkout__list {
+	display: block;
+}
+#modal__checkout__list div {
+	text-align: left;
+}
+#modal__checkout__list .checkProduct {
+	width: 70px
 }

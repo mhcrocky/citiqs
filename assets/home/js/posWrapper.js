@@ -20,3 +20,8 @@ function showCategory(element, categoryId, categoriesClass) {
 function posTriggerModalClick(modalButtonId) {
     triggerModalClick(modalButtonId);
 }
+
+function cancelPosOrder() {
+    document.getElementById(makeOrderGlobals.modalCheckoutList).innerHTML = '';
+    resetTotal();
+}

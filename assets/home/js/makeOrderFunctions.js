@@ -71,6 +71,10 @@ function changeProductQuayntity(element, className) {
     let minValue = parseInt(inputField.min);
     let ancestor = '#' + makeOrderGlobals.checkoutModal;
     let isOrdered = element.closest(ancestor);
+    if (!isOrdered) {
+        ancestor = '#' + makeOrderGlobals.posCheckoutId;
+        isOrdered = element.closest(ancestor);
+    }
 
     if (value <= 0) {
         value = minValue;
@@ -84,25 +88,31 @@ function changeProductQuayntity(element, className) {
         value = value + 1;
     }
 
-    inputField.setAttribute('value', value);
+    inputField.value = value;
     changeAddonInputAttributes(element, value, className, isOrdered);
 
     if (isOrdered) {
         let itemId = element.parentElement.parentElement.parentElement.parentElement.id;
         populateShoppingCart(itemId);
-        resetTotal();
         let incerase = (type === 'plus') ? true : false;
         let showValue = showHtmlQuantity(inputField, incerase, false);
         if (showValue === 0) {
             element.parentElement.parentElement.parentElement.parentElement.remove();
             // alertify.success('Product removed from list');
         }
+        resetTotal();
     }
 }
 
+function isProductOrdered(containerId, inputField) {
+    let checkoutContainer = document.getElementById(containerId);
+    return (checkoutContainer && checkoutContainer.contains(inputField)) ? true : false; 
+}
+
 function changeAddonInputAttributes(element, quantity, className, isOrdered) {
-    let ancestor = '#' + makeOrderGlobals.checkoutModal;
     if (!element.parentElement.parentElement.nextElementSibling) return;
+    let ancestorBuyer = '#' + makeOrderGlobals.checkoutModal;
+    let ancestorPos = '#' + makeOrderGlobals.posCheckoutId;
     let classParent = element.parentElement.parentElement.nextElementSibling;
     let addonInputs = classParent.getElementsByClassName(className);
     let addonInputsLength = addonInputs.length;
@@ -111,7 +121,7 @@ function changeAddonInputAttributes(element, quantity, className, isOrdered) {
     for (i = 0; i < addonInputsLength; i++) {
         let addonInput = addonInputs[i];
         let toggleDisabled = false;
-        if (addonInput.closest(ancestor) === isOrdered) {
+        if (addonInput.closest(ancestorBuyer) === isOrdered || addonInput.closest(ancestorPos) === isOrdered) {
             if (addonInput.disabled === true) {
                 toggleDisabled = true;
                 addonInput.disabled = false;
@@ -127,7 +137,7 @@ function changeAddonInputAttributes(element, quantity, className, isOrdered) {
             addonInput.setAttribute('max', newMax);
 
             let newValue = newStep;
-            addonInput.setAttribute('value', newValue);
+            addonInput.value = newValue;
 
             // INTILAT ALLOWED CHOICES
             // let newAlloweChoices = parseInt(addonInput.dataset.allowedChoices) * newStep;
@@ -178,6 +188,12 @@ function changeAddonQuayntity(element) {
 function isOrdered(element) {
     let ancestor = '#' + makeOrderGlobals.checkoutModal;
     let isOrdered = element.closest(ancestor);
+
+    if (!isOrdered) {
+        ancestor = '#' + makeOrderGlobals.posCheckoutId;
+        isOrdered = element.closest(ancestor);
+    }
+
     if (isOrdered) {
         resetTotal();
         return true;
@@ -191,7 +207,7 @@ function cloneProductAndAddons(element) {
     let orderContainer = document.getElementById(makeOrderGlobals.modalCheckoutList);
     let clone;
     let date  = new Date();
-    let randomId = productContainerId + '_' + date.getTime() + '_' + Math.floor(Math.random() * 10000);
+    let randomId = productContainerId + '_' + date.getTime() + '_' + Math.floor(Math.random() * 100000);
 
     checkoutHtmlHeader(orderContainer, randomId, element);
     productContainer.removeAttribute('id');
@@ -202,7 +218,7 @@ function cloneProductAndAddons(element) {
     let newOrdered = document.getElementById(randomId);
     clone.appendTo(newOrdered);
     resetTotal();
-    // setMinToZero(newOrdered);
+    setMinToZero(newOrdered);
     showHtmlQuantity(populateShoppingCart(randomId), true, true);
 }
 
@@ -305,7 +321,7 @@ function resetAddons(productContainer) {
     let i;
     for (i = 0; i < productsLength; i++) {
         let product = products[i];
-        product.setAttribute('value', '1');
+        product.value = '1';
     }
     for (i = 0; i < addonsLength; i++) {
         let addon = addons[i];
@@ -392,12 +408,36 @@ function focusCheckOutModal(containerId) {
 }
 
 function checkout(pos) {
+    let send = prepareSendData(pos);
+    if (!send) {
+        alertify.error('No product(s) in order list');
+        return;
+    }
+
+    $.ajax({
+        url: globalVariables.ajax + 'setOrderSession',
+        data: send,
+        type: 'POST',
+        success: function (response) {
+            if (response && response !== '0') {
+                window.location.href = globalVariables.baseUrl + 'checkout_order?' + makeOrderGlobals.orderDataGetKey + '=' + response;
+            } else {
+                alertify.error('Process failed! Check order details')
+            }
+        },
+        error: function (err) {
+            console.dir(err);
+        }
+    });
+    return;
+}
+
+function prepareSendData(pos) {
     let orderedProducts = document.getElementsByClassName(makeOrderGlobals.orderedProducts);
     let orderedProductsLength = orderedProducts.length;
 
     if (!orderedProductsLength) {
-        alertify.error('No product(s) in order list');
-        return;
+        return false;
     }
 
     let orderedItem;
@@ -473,24 +513,9 @@ function checkout(pos) {
         'orderDataRandomKey' : makeOrderGlobals.orderDataRandomKey,
         'pos' : pos,
     }
-
-
-    $.ajax({
-        url: globalVariables.ajax + 'setOrderSession',
-        data: send,
-        type: 'POST',
-        success: function (response) {
-            if (response && response !== '0') {
-                window.location.href = globalVariables.baseUrl + 'checkout_order?' + makeOrderGlobals.orderDataGetKey + '=' + response;
-            } else {
-                alertify.error('Process failed! Check order details')
-            }
-        },
-        error: function (err) {
-            console.dir(err);
-        }
-    });
+    return send;
 }
+
 
 function resetRemarks(productContainer) {
     let remarks = productContainer.getElementsByClassName('remarks');
@@ -502,9 +527,12 @@ function resetRemarks(productContainer) {
             remark.value = '';
         }
     }
-}function returnInteger(number) {
+}
+
+function returnInteger(number) {
     return number ? parseInt(number) : 0;
 }
+
 function getLastNode(element) {
     let lastChild =  element.lastChild;
     if (lastChild.nodeType === 3) {

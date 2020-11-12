@@ -13,7 +13,9 @@
             'orderDataRandomKey' : '<?php echo $orderDataRandomKey; ?>',
             'orderDataGetKey' : '<?php echo $orderDataGetKey; ?>',
             'logoImageId' : 'vendorLogo',
-            'activeClass' : 'pos_categories__single-item--active' //POS
+            'activeClass' : 'pos_categories__single-item--active', //POS
+            'posCheckoutId': 'posCheckoutId',
+            'spanQuantityIdPrefix' : 'orderQuantityValue_'
         }
 
         <?php if (!empty($returnCategorySlide)) { ?>
