@@ -25,7 +25,7 @@
 							<div class="pos_categories__grid">
 								<?php
 									foreach ($categories as $index => $category) {
-										$categoryId = str_replace(['\'', '"', ' ', '*', '/'], '', $category)
+										$categoryId = str_replace(['\'', '"', ' ', '*', '/'], '', $category);
 									?>
 										<div
 											class="pos_categories__single-item <?php if (array_key_first($categories) === $index) echo 'pos_categories__single-item--active'; ?>"
@@ -62,7 +62,7 @@
 							<div class="pos-main__grid-content">
 								<?php
 									foreach ($mainProducts as $category => $products) {
-										$categoryId = str_replace(['\'', '"', ' ', '*', '/'], '', $category)
+										$categoryId = str_replace(['\'', '"', ' ', '*', '/'], '', $category);
 									?>
 										<div
 											class="pos-main__overflow categories"
@@ -92,8 +92,18 @@
 																/>
 															</div>
 														<?php } ?>
-														<p class='pos-item__title'><?php echo $productDetails['name']; ?></p>
+														<p class='pos-item__title'>
+															<?php echo $productDetails['name']; ?>
+															
+														</p>
 														<p class='pos-item__price'><?php echo $productDetails['price']; ?>&nbsp;&euro;</p>
+														<p>
+															<span
+																id="orderQuantityValue_<?php echo $product['productId']; ?>"
+																class="countOrdered priceQuantity"
+																style="font-size:14px;border-radius: 100%;text-align: center;background: coral;width: 20px;display: inline-block;"
+															>0</span>
+														</p>
 													</div>
 													<!-- end single pos item-->
 												<?php } ?>
@@ -106,18 +116,18 @@
 						</div>
 						<!-- end pos main-->
 						<div class="pos_categories__footer">
-							<a href="#" class='pos_categories__button pos_categories__button--secondary'>Cancel Order</a>
+							<a href="#" class='pos_categories__button pos_categories__button--secondary' onclick="cancelPosOrder()">Cancel Order</a>
 							<a href="#" class='pos_categories__button pos_categories__button--primary'>Hold Order</a>
 						</div>
 						<!-- end pos footer -->
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-4" id="posCheckoutId">
 						<div class="pos-sidebar">
 							<div class="pos-checkout">
 								<div class="pos-checkout__header">
 									<h3>Checkout</h3>
-									<div class="pos-checkout-row pos-checkout-row--top">
-										<div class="pos-checkout-delete">
+									<div class="pos-checkout-row pos-checkout-row--top" id="modal__checkout__list">
+										<!-- <div class="pos-checkout-delete">
 										</div>
 										<div class="pos-checkout-name">
 											<span>Name</span>
@@ -127,14 +137,14 @@
 										</div>
 										<div class="pos-checkout-price">
 											<span>Price</span>
-										</div>
+										</div> -->
 									</div>
 									<!-- end checkout row -->
 								</div>
 								<!-- end checout list -->
 							</div>
 						</div>
-						<a href="#" class='pos-checkout__button' onclick="checkout(1)">Pay <span>(10.00$)</span></a>
+						<a href="javascript:void(0)" class='pos-checkout__button' onclick="checkout(1)">Pay (<span class="totalPrice">0</span>&nbsp;&euro;)</a>
 					</div>
 					<!-- end pos sidebar -->
 				</div>
@@ -144,9 +154,6 @@
 	<?php } ?>
 </main>
 <?php if (isset($mainProducts)) { ?>
-	<div style="display:none">
-		<?php include_once FCPATH . 'application/views/publicorders/includes/modals/makeOrderPos/checkoutModals.php'; ?>
-	</div>
 
 	<?php include_once FCPATH . 'application/views/publicorders/includes/modals/makeOrderPos/productModals.php'; ?>
 <?php } ?>
