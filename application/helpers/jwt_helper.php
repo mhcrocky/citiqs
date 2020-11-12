@@ -68,4 +68,20 @@
             $CI->shopsession_model->setProperty('randomKey', $orderRandomKey)->updateSessionData($jwtArray);
             return;
         }
+
+        public static function fetchAndChekOrdered(string $orderDataRandomKey, int $vendorId, int $spotId, array $conditions): ?array
+        {
+            if (empty($orderDataRandomKey)) return null;
+
+            $CI =& get_instance();
+            $CI->load->model('shopsession_model');
+
+            $orderData = $CI->shopsession_model->setProperty('randomKey', $orderDataRandomKey)->getArrayOrderDetails();
+
+            Jwt_helper::checkJwtArray($orderData, $conditions);
+
+            if ($orderData['vendorId'] !== $vendorId || $orderData['spotId'] !== $spotId) redirect(base_url());
+
+            return (empty($orderData['makeOrder'])) ? null : $orderData['makeOrder'];
+        }
     }

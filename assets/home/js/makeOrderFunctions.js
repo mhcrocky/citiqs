@@ -227,7 +227,7 @@ function checkoutHtmlHeader(orderContainer, randomId, element) {
     // htmlCheckout +=  '<div id="' + randomId + '" class="orderedProducts ' + element.dataset.productId + '" style="margin-bottom: 30px; padding-left:0px; position:relative; top:50px">';
     htmlCheckout +=  '<div id="' + randomId + '" class="orderedProducts ' + element.dataset.productId + '" >';
     htmlCheckout +=      '<div class="alert alert-dismissible" style="padding-left: 0px; margin-bottom: 10px;">';
-    htmlCheckout +=          '<a href="#" onclick="removeOrdered(\'' + randomId + '\')" class="close removeOrdered_' + element.dataset.productId + '" data-dismiss="alert" aria-label="close">&times;</a>';
+    htmlCheckout +=          '<a href="javascript:void(0)" onclick="removeOrdered(\'' + randomId + '\')" class="close removeOrdered_' + element.dataset.productId + '" data-dismiss="alert" aria-label="close">&times;</a>';
     htmlCheckout +=          '<h4 class="productName">' + element.dataset.productName + ' (&euro;' + element.dataset.productPrice + ')';
     htmlCheckout +=      '</div>';
     htmlCheckout +=  '</div>';
@@ -342,7 +342,7 @@ function removeOrdered(elementId) {
     let inputField = document.querySelectorAll('#' + elementId + ' [data-order-quantity-value]');
     if (inputField) {
         inputField = inputField[0];
-    }
+    }    
     document.getElementById(elementId).remove();
     // document.querySelectorAll('#' + makeOrderGlobals.shoppingCartList + ' [data-ordered-id = "' + elementId + '"]')[0].remove();
     resetTotal();
@@ -413,14 +413,19 @@ function checkout(pos) {
         alertify.error('No product(s) in order list');
         return;
     }
+    let urlPart ='checkout_order?';
+    sendOrderAjaxRequest(send, urlPart);
+    return;
+}
 
+function sendOrderAjaxRequest(send, urlPart) {
     $.ajax({
         url: globalVariables.ajax + 'setOrderSession',
         data: send,
         type: 'POST',
         success: function (response) {
             if (response && response !== '0') {
-                window.location.href = globalVariables.baseUrl + 'checkout_order?' + makeOrderGlobals.orderDataGetKey + '=' + response;
+                window.location.href =  globalVariables.baseUrl + urlPart + makeOrderGlobals.orderDataGetKey + '=' + response;
             } else {
                 alertify.error('Process failed! Check order details')
             }
@@ -429,7 +434,6 @@ function checkout(pos) {
             console.dir(err);
         }
     });
-    return;
 }
 
 function prepareSendData(pos) {

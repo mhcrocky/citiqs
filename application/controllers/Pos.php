@@ -33,6 +33,7 @@
             $this->load->model('shopspottime_model');
             $this->load->model('shopvoucher_model');
             $this->load->model('shopsession_model');
+            $this->load->model('shopposorder_model');
 
             $this->load->config('custom');
 
@@ -52,9 +53,8 @@
         public function index(): void
         {
             $vendorId = intval($_SESSION['userId']);
-            $spotId = !empty($_GET['spotid']) ? $this->input->get('spotid', true) : null;
-            $spot = $spotId ? $this->shopspot_model->fetchSpot($vendorId, intval($spotId)) : null;
-            $orderDataRandomKey = empty($_GET[$this->config->item('orderDataGetKey')]) ? '' : $this->input->get([$this->config->item('orderDataGetKey')], true);
+            $spotId = !empty($_GET['spotid']) ? intval($this->input->get('spotid', true)) : null;
+            $spot = $spotId ? $this->shopspot_model->fetchSpot($vendorId, intval($spotId)) : null;            
             $allProducts = ($spot && $this->isLocalSpotOpen($spot)) ? $this->shopproductex_model->getMainProductsOnBuyerSide($vendorId, $spot) : null;
 
             if ($allProducts) {
@@ -66,17 +66,31 @@
                     'categories'                => array_keys($allProducts['main']),
                     'vendor'                    => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData(),
                     'baseUrl'                   => base_url(),
-                    'orderDataGetKey'           => $this->config->item('orderDataGetKey'),
-                    'orderDataRandomKey'        => $orderDataRandomKey,
-                    'checkoutList'              => '' // TO DO FETCH DATA
                 ];
+                $this->getOrdered($data, $vendorId, $spotId);
             }
+
             $data['spots'] = $this->shopspot_model->fetchUserSpots($vendorId);
             $data['spotId'] = $spotId;
+            $data['spotPosOrders'] = $this->shopposorder_model->setProperty('spotId', $spotId)->fetchSpotPosOrders();
 
             $this->global['pageTitle'] = 'TIQS : POS';
             $this->loadViews('pos/pos', $this->global, $data, null, 'headerWarehouse');
             return;
+        }
+
+        private function getOrdered(array &$data, $vendorId, $spotId): void
+        {
+            $orderDataRandomKey = empty($_GET[$this->config->item('orderDataGetKey')]) ? '' : $this->input->get($this->config->item('orderDataGetKey'), true);
+            $ordered = Jwt_helper::fetchAndChekOrdered($orderDataRandomKey, $vendorId, $spotId, ['vendorId', 'spotId']);
+            $data['orderDataGetKey']    = $this->config->item('orderDataGetKey');
+            $data['orderDataRandomKey'] = $orderDataRandomKey;
+            if ($ordered) {
+                $ordered = Utility_helper::returnMakeNewOrderElements($ordered, $data['vendor'], $data['mainProducts'], $data['addons'], $data['maxRemarkLength']);
+                $data['checkoutList'] = $ordered['checkoutList'];
+            } else {
+                $data['checkoutList'] = '';
+            }
         }
 
         private function isLocalSpotOpen(array $spot): bool
@@ -90,4 +104,18 @@
             return true;
         }
 
+        public function delete(string $ranodmKey): void
+        {            
+            $this->shopsession_model->setProperty('randomKey', $ranodmKey)->setIdFromRandomKey();
+            $this
+                ->shopposorder_model
+                    ->setProperty('sessionId', intval($this->shopsession_model->id))
+                    ->setIdFromSessionId()
+                    ->setObject()
+                    ->delete();
+
+            $redirect = base_url() . 'pos?spotid=' . $this->shopposorder_model->spotId;
+            redirect($redirect);
+            return;
+        }
     }

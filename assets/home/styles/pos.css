@@ -264,6 +264,16 @@ header, footer {
 	text-decoration: none;
 }
 
+.pos_categories__button--third{
+	border-color: coral;
+	color:coral;
+}
+
+.pos_categories__button--third:hover{
+	color: white;
+	background-color: coral;
+	text-decoration: none;
+}
 
 /* pos sidebar */
 
@@ -462,4 +472,8 @@ header, footer {
 }
 #modal__checkout__list .checkProduct {
 	width: 70px
+}
+
+.keyboard-container {
+	z-index: 10000;
 }

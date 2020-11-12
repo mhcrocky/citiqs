@@ -107,7 +107,7 @@
             return $this;
         }
         
-        private function setIdFromRandomKey(): Shopsession_model
+        public function setIdFromRandomKey(): Shopsession_model
         {
             $id = $this->readImproved([
                 'what' => ['id'],

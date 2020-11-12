@@ -28,6 +28,7 @@ class Ajax extends CI_Controller
         $this->load->model('shopvendor_model');
         $this->load->model('shopvoucher_model');
         $this->load->model('shopsession_model');
+        $this->load->model('shopposorder_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -668,8 +669,20 @@ class Ajax extends CI_Controller
                 $this->shopsession_model->insertSessionData($post);
             }
         }
-        echo ($this->shopsession_model->id && $this->shopsession_model->randomKey) ? $this->shopsession_model->randomKey : '0';
-        return;
+
+        if ($this->shopsession_model->id && $this->shopsession_model->randomKey) {
+            if ($post['pos'] === '1') {
+                $post['posOrder']['sessionId'] = $this->shopsession_model->id;
+                $post['posOrder']['saveName'] = '(' . date('Y-m-d H:i:s') . ') ' . $post['posOrder']['saveName'];
+                $managePosOrder = $this->shopposorder_model->setObjectFromArray($post['posOrder'])->managePosOrder();
+                echo $managePosOrder ? $this->shopsession_model->randomKey : '0';
+            } else {
+                echo $this->shopsession_model->randomKey;
+            }            
+        } else {
+            echo '0';
+        }
+
     }
 
     private function prepareOrderData(array &$post): bool
