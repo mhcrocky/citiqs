@@ -17,10 +17,11 @@ border-radius: .25rem;
 </style>
 
 
-<div class="w-100 pr-4 mt-5">
+<div class="w-100 pr-4 mt-3">
 
-  <div class="float-right mt-5">
-  <input class="date form-control-sm" style="width: 130px;" type="text" id="datepicker" placeholder="Date">
+  <div class="float-right">
+  <input class="date form-control-sm" style="width: 130px;" type="text" id="min" placeholder="From Date">
+  <input class="date form-control-sm" style="width: 130px;" type="text" id="max" placeholder="To Date">
     <select style="width: 180px;" class="custom-select custom-select-sm form-control form-control-sm" id="serviceType">
         <option value="">Choose Service Type</option>
         <?php foreach ($service_types as $service_type): ?>
@@ -50,9 +51,7 @@ border-radius: .25rem;
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript">
-  $( function() {
-    $( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd',maxDate: '0'});
-  } );
+
   $(document).ready( function () {
       var table = $('#report').DataTable({
         processing: true,
@@ -72,12 +71,6 @@ border-radius: .25rem;
                .reduce( function (a, b) {
                    return parseFloat(a) + parseFloat(b);
                }, 0 );
-           let pageProductVatTotal = api
-               .column( 3, { page: 'current'} )
-               .data()
-               .reduce( function (a, b) {
-                   return parseFloat(a) + parseFloat(b);
-               }, 0 );
           let pageQuantityTotal = api
                .column( 4, { page: 'current'} )
                .data()
@@ -90,57 +83,47 @@ border-radius: .25rem;
                .reduce( function (a, b) {
                    return parseFloat(a) + parseFloat(b);
                }, 0 );
-          let pageExvatTotal = api
-               .column( 7, { page: 'current'} )
-               .data()
-               .reduce( function (a, b) {
-                   return parseFloat(a) + parseFloat(b);
-               }, 0 );
-          let pageVatTotal = api
-               .column( 8, { page: 'current'} )
-               .data()
-               .reduce( function (a, b) {
-                   return parseFloat(a) + parseFloat(b);
-               }, 0 );
+          let pageExvatData = api.column( 7, { page: 'current'} ).cache('search');
+          let pageExvatTotal = pageExvatData.length ? 
+            pageExvatData.reduce( function (a, b) {
+              return parseFloat(a) + parseFloat(b);
+            }) : 0;
+          let pageVatData = api.column( 8, { page: 'current'} ).cache('search');
+          let pageVatTotal = pageVatData.length ? 
+            pageVatData.reduce( function (a, b) {
+              return parseFloat(a) + parseFloat(b);
+            }) : 0;
 
            let priceTotal = api
-               .column( 2 )
-               .data()
-               .reduce( function (a, b) {
-                   return parseFloat(a) + parseFloat(b);
-               }, 0 );
-           let productVatTotal = api
-               .column( 3 )
+               .column( 2, { search: 'applied' } )
                .data()
                .reduce( function (a, b) {
                    return parseFloat(a) + parseFloat(b);
                }, 0 );
           let quantityTotal = api
-               .column( 4 )
+               .column( 4, { search: 'applied' } )
                .data()
                .reduce( function (a, b) {
                    return parseInt(a) + parseInt(b);
                }, 0 );
           let amountTotal = api
-               .column( 6 )
+               .column( 6, { search: 'applied' } )
                .data()
                .reduce( function (a, b) {
                    return parseFloat(a) + parseFloat(b);
                }, 0 );
-          let exvatTotal = api
-               .column( 7 )
-               .data()
-               .reduce( function (a, b) {
-                   return parseFloat(a) + parseFloat(b);
-               }, 0 );
-          let vatTotal = api
-               .column( 8 )
-               .data()
-               .reduce( function (a, b) {
-                   return parseFloat(a) + parseFloat(b);
-               }, 0 );
+          let exvatData = api.column( 7,{ search: 'applied' } ).cache('search');
+          let exvatTotal = exvatData.length ? 
+            exvatData.reduce( function (a, b) {
+              return parseFloat(a) + parseFloat(b);
+            }) : 0;
+          let vatData = api.column( 8, { search: 'applied' }).cache('search');
+          let vatTotal = vatData.length ? 
+            vatData.reduce( function (a, b) {
+              return parseFloat(a) + parseFloat(b);
+            }) : 0;
            $(tfoot).find('th').eq(1).html(pagePriceTotal.toFixed(2)+'('+priceTotal.toFixed(2)+')');
-           $(tfoot).find('th').eq(2).html(pageProductVatTotal.toFixed(2)+'('+productVatTotal.toFixed(2)+')');
+           $(tfoot).find('th').eq(2).html('-');
            $(tfoot).find('th').eq(3).html(pageQuantityTotal+'('+quantityTotal+')');
            $(tfoot).find('th').eq(4).html('-');
            $(tfoot).find('th').eq(5).html(pageAmountTotal.toFixed(2)+'('+amountTotal.toFixed(2)+')');
@@ -178,11 +161,19 @@ border-radius: .25rem;
         },
         {
           title: 'EXVAT',
-          data: 'EXVAT'
+          data: null,
+          "render": function (data, type, row) {
+            let exvat = parseFloat(data.EXVAT);
+            return exvat.toFixed(2);
+          }
         },
         {
           title: 'VAT',
-          data: 'VAT'
+          data: null,
+          "render": function (data, type, row) {
+            let vat = parseFloat(data.VAT);
+            return vat.toFixed(2);
+          }
         },
         {
           title: 'Date',
@@ -190,7 +181,6 @@ border-radius: .25rem;
         }
         ],
       });
-
 
       table.on( 'search.dt', function () {
         if(table['context'][0]['aiDisplay'].length == 0){
@@ -200,13 +190,30 @@ border-radius: .25rem;
         }
       });
 
-      $('#datepicker').on('change',function() {
-        var date = this.value;
-        table
-        .columns( 9 )
-        .search( date )
-        .draw();
-      });
+
+      $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var min = $('#min').datepicker({ dateFormat: 'yy-mm-dd' }).val();
+            var max = $('#max').datepicker({ dateFormat: 'yy-mm-dd' }).val();
+            var startDate = data[9];
+            if (min == '' && max == '') { return true; }
+            if (min == '' && startDate <= max) { return true;}
+            if(max == '' && startDate >= min) {return true;}
+            if (startDate <= max && startDate >= min) { return true; }
+            return false;
+        }
+        );
+
+       
+            $("#min").datepicker({dateFormat: 'yy-mm-dd',maxDate: '0', onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+            $("#max").datepicker({dateFormat: 'yy-mm-dd',maxDate: '0', onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+
+            // Event listener to the two range filtering inputs to redraw on input
+            $('#min, #max').change(function () {
+                table.draw();
+            });
+       
+
       $('#serviceType').change(function() {
         var category = this.value;
         table
@@ -216,9 +223,4 @@ border-radius: .25rem;
       });
 
 });
-
-function number_format(num){
-  let rounded_num = parseInt(num * 100) / 100;
-  return rounded_num;
-}
 </script>

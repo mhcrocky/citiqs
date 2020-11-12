@@ -14,6 +14,7 @@ class Businessreport extends BaseControllerWeb
 			redirect('login');
 		}
 
+
 	}
 
 	public function index()
@@ -22,12 +23,12 @@ class Businessreport extends BaseControllerWeb
 
 		$this->global['pageTitle'] = 'TIQS Business Reports';
 		$data['service_types'] = $this->businessreport_model->get_service_types();
-		$this->loadViews("businessreport/index", $this->global, $data, 'footerpublicbizdir', 'noheaderbizdir'); // payment screen
+		$this->loadViews("businessreport/index", $this->global, $data, 'footerbusiness', 'headerbusiness'); // payment screen
 
 	}
 
 	public function get_report(){
-		$vendor_id = $this->session->userdata("userId");
+		$vendor_id = $this->session->userdata("userId");//418;
 		$report = $this->businessreport_model->get_report($vendor_id);
 		echo json_encode($report);
 		

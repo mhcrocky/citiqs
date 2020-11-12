@@ -138,7 +138,6 @@ $route['saveLocation'] = 'Whatislostisfound/saveLocation';
 $route['register'] = 'login/register';
 $route['registerbusiness'] = 'login/registerbusiness';
 $route['loginMe'] = 'login/loginMe';
-$route['dashboard'] = 'user/index';
 $route['logout'] = 'user/logout';
 $route['userListing'] = 'user/userListing';
 $route['lostandfoundlist'] = 'user/lostandfoundlist';
@@ -337,7 +336,7 @@ $route['marketing/calculator/savecalc'] = 'Marketing/Calculator/saveCalc';
 
 $route['api/video/upload_post'] = 'Api/Video/upload_post';
 
-$route['businessreport'] = 'Businessreport/index';
+$route['dashboard'] = 'Businessreport/index';
 $route['businessreport/get_report'] = 'Businessreport/get_report';
 
 /* End of file routes.php */
