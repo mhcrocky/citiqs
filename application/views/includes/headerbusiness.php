@@ -79,12 +79,12 @@
 <body id="body">
 <div class="page-container">
 
-<!-- Sidebar -->
+<!-- Sidebar --> 
 
 <div class="sidebar-menu">
     <div class="main-menu ">
         <div class="slimScrollDiv " style="position: relative; overflow:hidden; width: auto; height: 654px;">
-        <div class="menu-inner" style="width: auto; height: 654px; overflow:hidden;">
+        <div class="menu-inner" style="width: auto; height: 654px; overflow-x: auto;">
             <nav>
                 <ul class="metismenu" id="menu">
                 <div class="sidebar-header">
@@ -95,8 +95,16 @@
 			    </div>
                 <!--<li><img class="logo-img" src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png"></li>
                 <hr>-->
-                    <li><a href="<?php echo base_url(); ?>Businessreport"><i class="ti-receipt"></i> <span>Business Report</span></a></li>
-                    <li><a href="<?php echo base_url(); ?>logout"><i class="ti-shift-left"></i> <span>Logout</span></a></li>
+                    <li><a href="<?php echo $this->baseUrl;?>Businessreport"><i class="ti-receipt"></i> <span>Business Report</span></a></li>
+                    <li><a href="<?php echo $this->baseUrl; ?>warehouse"><i class="ti-files"></i> <span>Reports</span></a></li>
+                    <li><a href="<?php echo $this->baseUrl; ?>product_categories"><i class="ti-layout-accordion-separated"></i> <span>Category</span></a></li>
+                    <li><a href="<?php echo $this->baseUrl; ?>product_types"><i class="ti-layers-alt"></i> <span>Types</span></a></li>
+                    <li><a href="<?php echo $this->baseUrl; ?>products"><i class="ti-bag"></i> <span>Products</span></a></li>
+                    <li><a href="<?php echo $this->baseUrl; ?>orders"><i class="ti-stats-up"></i> <span>Orders</span></a></li> 
+                    <li><a href="<?php echo $this->baseUrl; ?>printers"><i class="ti-printer"></i> <span>Printers</span></a></a></li>
+                    <li><a href="<?php echo $this->baseUrl; ?>spots"><i class="ti-flag-alt"></i> <span>Spots</span></a></li>
+                    <li><a href="<?php echo $this->baseUrl; ?>visitors"><i class="ti-user"></i> <span>Visitors</span></a></li>
+                    <li><a href="<?php echo $this->baseUrl; ?>logout"><i class="ti-shift-left"></i> <span>Logout</span></a></li>
                 </ul>
             </nav>
         </div><div class="slimScrollBar" style="background: rgb(0, 0, 0) none repeat scroll 0% 0%; width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 440.037px;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51) none repeat scroll 0% 0%; opacity: 0.2; z-index: 90; right: 1px;"></div></div>
