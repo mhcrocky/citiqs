@@ -338,6 +338,8 @@ $route['api/video/upload_post'] = 'Api/Video/upload_post';
 
 $route['dashboard'] = 'Businessreport/index';
 $route['businessreport/get_report'] = 'Businessreport/get_report';
+$route['businessreport/sortedWidgets'] = 'Businessreport/sortedWidgets';
+$route['businessreport/sortWidgets'] = 'Businessreport/sortWidgets';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
