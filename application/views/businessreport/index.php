@@ -6,7 +6,7 @@
   width: 100%;
   height: 32px;
   padding: .375rem .75rem;
-  font-size: 1rem;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
   color: #495057;
@@ -18,8 +18,8 @@
 </style>
 <div class="main-content-inner">
     <div class="sales-report-area mt-5 mb-5">
-                    <div class="row">
-                    <div class="col-md-3">
+                <div id="sortable" style="visibility: hidden;" class="row ui-sortable">
+                    <div class="col-md-3 ui-sortable mb-3" data-position="1" data-sort="1">
                             <div style="height:160px;" class="single-report mb-xs-30"><div style="min-height:500px;position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
                                 <div style="background: #0066ff;" class="icon"><i class="fa fa-eur"></i></div>
@@ -28,13 +28,13 @@
                                         <p>TODAY</p>
                                     </div>
                                     <div class="d-flex justify-content-between pb-2">
-                                        <h2>€ <?php echo intval($total*100)/100; ?></h2>
+                                        <h2>€ <?php echo intval($day_total['total']*100)/100; ?></h2>
                                         <span></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    <div  class="col-md-3"> 
+                    <div  class="col-md-3 ui-sortable mb-3" data-position="2" data-sort="1"> 
                             <div style="height:160px;" class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
                                 <div style="background:  #009933;" class="icon"><i class="fa fa-eur"></i></div>
@@ -43,13 +43,13 @@
                                         <p>TODAY</p>
                                     </div>
                                     <div class="d-flex justify-content-between pb-2">
-                                        <h2>€ <?php echo intval($local_total*100)/100; ?></h2>
+                                        <h2>€ <?php echo intval($day_total['local']*100)/100; ?></h2>
                                         <span></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 ui-sortable mb-3" data-position="3" data-sort="1">
                             <div  style="height:160px;"  class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
                                 <div style="background: #00ff55;" class="icon"><i class="fa fa-eur"></i></div>
@@ -58,13 +58,13 @@
                                         <p>TODAY</p>
                                     </div>
                                     <div class="d-flex justify-content-between pb-2">
-                                        <h2>€ <?php echo intval($delivery_total*100)/100; ?></h2>
+                                        <h2>€ <?php echo intval($day_total['delivery']*100)/100; ?></h2>
                                         <span></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 ui-sortable mb-3" data-position="4" data-sort="1">
                             <div  style="height:160px;"  class="single-report"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
                                     <div style="background: #ffc34d;" class="icon"><i class="fa fa-eur"></i></div>
@@ -73,13 +73,69 @@
                                         <p>TODAY</p>
                                     </div>
                                     <div class="d-flex justify-content-between pb-2">
-                                        <h2>€ <?php echo intval($pickup_total*100)/100; ?></h2>
+                                        <h2>€ <?php echo intval($day_total['pickup']*100)/100; ?></h2>
                                         <span> </span>
                                     </div>
                                 </div>
-                                <br>
-                                <br>
-                                <br>
+                            </div>
+                            <div class="col-md-3 ui-sortable mb-3" data-position="5" data-sort="1">
+                            <div style="height:160px;" class="single-report mb-xs-30"><div style="min-height:500px;position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <div class="s-report-inner pr--20 pt--30 mb-3">
+                                <div style="background: #0066ff;" class="icon"><i class="fa fa-eur"></i></div>
+                                    <div class="s-report-title d-flex justify-content-between">
+                                        <h4 class="header-title mb-0">Total</h4>
+                                        <p>LAST WEEK</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between pb-2">
+                                        <h2>€ <?php echo intval($last_week_total['total']*100)/100; ?></h2>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <div  class="col-md-3 ui-sortable mb-3" data-position="6" data-sort="1"> 
+                            <div style="height:160px;" class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <div class="s-report-inner pr--20 pt--30 mb-3">
+                                <div style="background:  #009933;" class="icon"><i class="fa fa-eur"></i></div>
+                                    <div class="s-report-title d-flex justify-content-between">
+                                        <h4 class="header-title mb-0">Local</h4>
+                                        <p>LAST WEEK</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between pb-2">
+                                        <h2>€ <?php echo intval($last_week_total['local']*100)/100; ?></h2>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 ui-sortable mb-3" data-position="7" data-sort="1">
+                            <div  style="height:160px;"  class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <div class="s-report-inner pr--20 pt--30 mb-3">
+                                <div style="background: #00ff55;" class="icon"><i class="fa fa-eur"></i></div>
+                                    <div class="s-report-title d-flex justify-content-between">
+                                        <h4 class="header-title mb-0">Delivery</h4>
+                                        <p>LAST WEEK</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between pb-2">
+                                        <h2>€ <?php echo intval($last_week_total['delivery']*100)/100; ?></h2>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 ui-sortable mb-3" data-position="8" data-sort="1">
+                            <div  style="height:160px;"  class="single-report"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <div class="s-report-inner pr--20 pt--30 mb-3">
+                                    <div style="background: #ffc34d;" class="icon"><i class="fa fa-eur"></i></div>
+                                    <div class="s-report-title d-flex justify-content-between">
+                                        <h4 class="header-title mb-0">Pick Up</h4>
+                                        <p>LAST WEEK</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between pb-2">
+                                        <h2>€ <?php echo intval($last_week_total['pickup']*100)/100; ?></h2>
+                                        <span> </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -90,8 +146,8 @@
 <div class="w-100 mt-3 mb-3 mx-auto">
 
   <div class="float-right text-center">
-  <input style="width: 330px;"  class="date form-control-sm mb-3" type="text" name="datetimes" />
-    <select style="width: 264px;" class="custom-select custom-select-sm form-control form-control-sm  mb-2 " id="serviceType">
+  <input style="width: 330px;"  class="date form-control-sm mb-2" type="text" name="datetimes" />
+    <select style="width: 264px;font-size: 14px;" class="custom-select custom-select-sm form-control form-control-sm  mb-1 " id="serviceType">
         <option value="">Choose Service Type</option>
         <?php foreach ($service_types as $service_type): ?>
         <option id="<?php echo $service_type['id']; ?>" value="<?php echo $service_type['type']; ?>"><?php echo ucfirst($service_type['type']); ?></option>
@@ -127,6 +183,36 @@
 
 
   $(document).ready( function () {
+        var sort = '';
+        $.ajax({
+            url: "<?php echo base_url(); ?>businessreport/sortedWidgets",
+            method: "GET",
+            dataType: "JSON",
+            success: function(data){
+                sort = data['sort'];
+            },
+            async:false
+        });
+        sort = sort.split(',').reverse();
+        
+        $("div[data-position]").each(function(index,value){
+            
+            for(var i = 0; i < sort.length; i++){
+                if ($(this).data('position') == sort[i]){
+                    $(this).attr( "data-sort", i )
+                }
+
+            }
+            
+        });
+
+        setTimeout(function(){ 
+            $('#sortable .col-md-3').sort(function(a, b) {
+                return $(b).data('sort') - $(a).data('sort');
+            }).appendTo('#sortable');
+        }, 0);
+        
+      $('#sortable').css('visibility', 'visible');
       var getTodayDate = new Date();
       var month = getTodayDate.getMonth()+1;
       var day = getTodayDate.getDate();
@@ -220,7 +306,7 @@
             vatData.reduce( function (a, b) {
               return parseFloat(a) + parseFloat(b);
             }) : 0;
-           $(tfoot).find('th').eq(1).html(pagePriceTotal.toFixed(2)+'('+priceTotal.toFixed(2)+')');
+           $(tfoot).find('th').eq(1).html('-');
            $(tfoot).find('th').eq(2).html('-');
            $(tfoot).find('th').eq(3).html(pageQuantityTotal+'('+quantityTotal+')');
            $(tfoot).find('th').eq(4).html('-');
@@ -302,24 +388,17 @@
           var date = full_timestamp.split(" - ");
           var min = new Date(date[0]);
           var max = new Date(date[1]);
-          console.log(min);
-            
-            var startDate = new Date(data[9]);
-            if (min == '' && max == '') { min = todayDate; }
-            if (min == '' && startDate <= max) { return true;}
-            if(max == '' && startDate >= min) {return true;}
-            if (startDate <= max && startDate >= min) { return true; }
+          var startDate = new Date(data[9]);
+          if (min == '' && max == '') { min = todayDate; }
+          if (min == '' && startDate <= max) { return true;}
+          if(max == '' && startDate >= min) {return true;}
+          if (startDate <= max && startDate >= min) { return true; }
             return false;
-        }
-        );
-
-
-           
-
-            // Event listener to the two range filtering inputs to redraw on input
-            $('input[name="datetimes"]').change(function () {
-                table.draw();
-            });
+        });
+        
+        $('input[name="datetimes"]').change(function () {
+          table.draw();
+        });
        
 
       $('#serviceType').change(function() {
@@ -331,6 +410,26 @@
       });
 
 });
+$(function () {
+        $('.row').sortable({
+            connectWith: ".row",
+            items: ".col-md-3",
+            update: function (event, ui) {
+                var myTable = $(this).index();
+                var positions = [];
+                $("div[data-position]").each(function(index,value){
+                    var data = $(this).data('position');
+                    positions.push(data);
+                });
+                positions = positions.toString();
+                $.post('<?php echo base_url(); ?>businessreport/sortWidgets', {sort: positions});
+                setTimeout(function(){
+                    
+                    //toastr["success"]("Widget positions are updated successfully!");
+                }, 0);
+            }
+        });
+    });
 var i = 0;
 function Orders_today(order_today){
   if(i==1){

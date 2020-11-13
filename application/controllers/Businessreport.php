@@ -10,11 +10,9 @@ class Businessreport extends BaseControllerWeb
 	{
 		parent::__construct();
 		$this->load->model('businessreport_model');
-		/*
 		if (empty($this->session->userdata('userId'))) {
 			redirect('login');
 		}
-		*/
 
 
 	}
@@ -24,10 +22,8 @@ class Businessreport extends BaseControllerWeb
 		$data['title'] = 'Business Reports';
 		$vendor_id = $this->session->userdata("userId");
 		$this->global['pageTitle'] = 'TIQS Business Reports';
-		$data['local_total'] = $this->businessreport_model->get_local_total($vendor_id);
-		$data['delivery_total'] = $this->businessreport_model->get_delivery_total($vendor_id);
-		$data['pickup_total'] = $this->businessreport_model->get_pickup_total($vendor_id);
-		$data['total'] = $data['local_total'] + $data['delivery_total'] + $data['pickup_total'] ;
+		$data['day_total'] = $this->businessreport_model->get_day_totals($vendor_id);
+		$data['last_week_total'] = $this->businessreport_model->get_last_week_totals($vendor_id);
 		$data['service_types'] = $this->businessreport_model->get_service_types();
 		$this->loadViews("businessreport/index", $this->global, $data, 'footerbusiness', 'headerbusiness'); // payment screen
 
@@ -42,6 +38,20 @@ class Businessreport extends BaseControllerWeb
 		echo json_encode($report);
 		
 	}
+
+	public function sortWidgets()
+    {
+        $this->load->model('user_modelpublic');
+        $userId = $this->session->userdata("userId");
+        $this->businessreport_model->sortWidgets($userId);  
+    }
+
+    public function sortedWidgets()
+    {
+        $this->load->model('user_modelpublic');
+        $userId = $this->session->userdata("userId");
+        echo json_encode($this->businessreport_model->sortedWidgets($userId));
+    }
 
 
 }
