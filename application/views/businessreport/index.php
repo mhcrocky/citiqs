@@ -22,7 +22,7 @@
                     <div class="col-md-3 ui-sortable mb-3" data-position="1" data-sort="1">
                             <div style="height:160px;" class="single-report mb-xs-30"><div style="min-height:500px;position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <div style="background: #0066ff;" class="icon"><i class="fa fa-eur"></i></div>
+                                <div style="background: #0066ff;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Total</h4>
                                         <p>TODAY</p>
@@ -37,7 +37,7 @@
                     <div  class="col-md-3 ui-sortable mb-3" data-position="2" data-sort="1"> 
                             <div style="height:160px;" class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <div style="background:  #009933;" class="icon"><i class="fa fa-eur"></i></div>
+                                <div style="background:  #009933;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Local</h4>
                                         <p>TODAY</p>
@@ -52,7 +52,7 @@
                         <div class="col-md-3 ui-sortable mb-3" data-position="3" data-sort="1">
                             <div  style="height:160px;"  class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <div style="background: #00ff55;" class="icon"><i class="fa fa-eur"></i></div>
+                                <div style="background: #00ff55;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Delivery</h4>
                                         <p>TODAY</p>
@@ -67,7 +67,7 @@
                         <div class="col-md-3 ui-sortable mb-3" data-position="4" data-sort="1">
                             <div  style="height:160px;"  class="single-report"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                    <div style="background: #ffc34d;" class="icon"><i class="fa fa-eur"></i></div>
+                                    <div style="background: #ffc34d;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Pick Up</h4>
                                         <p>TODAY</p>
@@ -81,14 +81,21 @@
                             <div class="col-md-3 ui-sortable mb-3" data-position="5" data-sort="1">
                             <div style="height:160px;" class="single-report mb-xs-30"><div style="min-height:500px;position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <div style="background: #0066ff;" class="icon"><i class="fa fa-eur"></i></div>
+                                <div style="background: #0066ff;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Total</h4>
-                                        <p>LAST WEEK</p>
+                                        <p>THIS WEEK</p>
                                     </div>
                                     <div class="d-flex justify-content-between pb-2">
                                         <h2>€ <?php echo intval($last_week_total['total']*100)/100; ?></h2>
-                                        <span></span>
+                                        <span>
+                                        <?php echo $compare['total']; ?>% 
+                                        <?php if($compare['total']>0) : ?>
+                                        <i class="fa fa-long-arrow-up text-success" aria-hidden="true"></i></span>
+                                        <?php elseif($compare['total']<0): ?>
+                                        <i class="fa fa-long-arrow-down text-danger" aria-hidden="true"></i></span>
+                                        <?php endif; ?>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -96,14 +103,21 @@
                     <div  class="col-md-3 ui-sortable mb-3" data-position="6" data-sort="1"> 
                             <div style="height:160px;" class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <div style="background:  #009933;" class="icon"><i class="fa fa-eur"></i></div>
+                                <div style="background:  #009933;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Local</h4>
-                                        <p>LAST WEEK</p>
+                                        <p>THIS WEEK</p>
                                     </div>
                                     <div class="d-flex justify-content-between pb-2">
                                         <h2>€ <?php echo intval($last_week_total['local']*100)/100; ?></h2>
-                                        <span></span>
+                                        <span>
+                                        <?php echo $compare['local']; ?>% 
+                                        <?php if($compare['local']>0) : ?>
+                                        <i class="fa fa-long-arrow-up text-success" aria-hidden="true"></i></span>
+                                        <?php elseif($compare['local']<0): ?>
+                                        <i class="fa fa-long-arrow-down text-danger" aria-hidden="true"></i></span>
+                                        <?php endif; ?>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -111,14 +125,21 @@
                         <div class="col-md-3 ui-sortable mb-3" data-position="7" data-sort="1">
                             <div  style="height:160px;"  class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <div style="background: #00ff55;" class="icon"><i class="fa fa-eur"></i></div>
+                                <div style="background: #00ff55;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Delivery</h4>
-                                        <p>LAST WEEK</p>
+                                        <p>THIS WEEK</p>
                                     </div>
                                     <div class="d-flex justify-content-between pb-2">
                                         <h2>€ <?php echo intval($last_week_total['delivery']*100)/100; ?></h2>
-                                        <span></span>
+                                        <span>
+                                        <?php echo $compare['delivery']; ?>% 
+                                        <?php if($compare['delivery']>0) : ?>
+                                        <i class="fa fa-long-arrow-up text-success" aria-hidden="true"></i></span>
+                                        <?php elseif($compare['delivery']<0): ?>
+                                        <i class="fa fa-long-arrow-down text-danger" aria-hidden="true"></i></span>
+                                        <?php endif; ?>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -126,14 +147,20 @@
                         <div class="col-md-3 ui-sortable mb-3" data-position="8" data-sort="1">
                             <div  style="height:160px;"  class="single-report"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                    <div style="background: #ffc34d;" class="icon"><i class="fa fa-eur"></i></div>
+                                    <div style="background: #ffc34d;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Pick Up</h4>
-                                        <p>LAST WEEK</p>
+                                        <p>THIS WEEK</p>
                                     </div>
                                     <div class="d-flex justify-content-between pb-2">
                                         <h2>€ <?php echo intval($last_week_total['pickup']*100)/100; ?></h2>
-                                        <span> </span>
+                                        <span>
+                                        <?php echo $compare['pickup']; ?>% 
+                                        <?php if($compare['pickup']>0) : ?>
+                                        <i class="fa fa-long-arrow-up text-success" aria-hidden="true"></i></span>
+                                        <?php elseif($compare['pickup']<0): ?>
+                                        <i class="fa fa-long-arrow-down text-danger" aria-hidden="true"></i></span>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
