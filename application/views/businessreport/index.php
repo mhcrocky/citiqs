@@ -1,18 +1,19 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <style>
 .date {
   width: 100%;
-height: 29px;
-padding: .375rem .75rem;
-font-size: 1rem;
-font-weight: 400;
-line-height: 1.5;
-color: #495057;
-background-color: #fff;
-background-clip: padding-box;
-border: 1px solid #ced4da;
-border-radius: .25rem;
+  height: 32px;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
 }
 </style>
 <div class="main-content-inner">
@@ -89,8 +90,7 @@ border-radius: .25rem;
 <div class="w-100 mt-3 mb-3 mx-auto">
 
   <div class="float-right text-center">
-  <input class="date form-control-sm mb-3" style="width: 130px;" type="text" id="min" placeholder="From Date">
-  <input class="date form-control-sm mb-3" style="width: 130px;" type="text" id="max" placeholder="To Date">
+  <input style="width: 330px;"  class="date form-control-sm mb-3" type="text" name="datetimes" />
     <select style="width: 264px;" class="custom-select custom-select-sm form-control form-control-sm  mb-2 " id="serviceType">
         <option value="">Choose Service Type</option>
         <?php foreach ($service_types as $service_type): ?>
@@ -118,12 +118,34 @@ border-radius: .25rem;
   </table>
 </div>
 </div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript">
 
+
   $(document).ready( function () {
+      var getTodayDate = new Date();
+      var month = getTodayDate.getMonth()+1;
+      var day = getTodayDate.getDate();
+      var todayDate = getTodayDate.getFullYear() + '-' +
+      (month<10 ? '0' : '') + month + '-' +
+      (day<10 ? '0' : '') + day;
+
+      $(function() {
+        $('input[name="datetimes"]').daterangepicker({
+          timePicker: true,
+          timePicker24Hour: true,
+          startDate: todayDate+' 00:00:00',
+          locale: {
+            format: 'YYYY-MM-DD HH:mm:ss'
+            }
+        });
+      });
+
+
       var table = $('#report').DataTable({
         processing: true,
         lengthMenu: [[5, 10, 20, 50, 100, 200, 500, -1], [5, 10, 20, 50, 100, 200, 500, 'All']],
@@ -274,12 +296,15 @@ border-radius: .25rem;
         }
       });
 
-
       $.fn.dataTable.ext.search.push(
         function (settings, data, dataIndex) {
-            var min = $('#min').datepicker({ dateFormat: 'yy-mm-dd' }).val();
-            var max = $('#max').datepicker({ dateFormat: 'yy-mm-dd' }).val();
-            var startDate = data[9];
+          let full_timestamp = $('input[name="datetimes"]').val();
+          var date = full_timestamp.split(" - ");
+          var min = new Date(date[0]);
+          var max = new Date(date[1]);
+          console.log(min);
+            
+            var startDate = new Date(data[9]);
             if (min == '' && max == '') { min = todayDate; }
             if (min == '' && startDate <= max) { return true;}
             if(max == '' && startDate >= min) {return true;}
@@ -288,11 +313,11 @@ border-radius: .25rem;
         }
         );
 
-            $("#min").datepicker({dateFormat: 'yy-mm-dd',maxDate: '0', onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
-            $("#max").datepicker({dateFormat: 'yy-mm-dd',maxDate: '0', onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+
+           
 
             // Event listener to the two range filtering inputs to redraw on input
-            $('#min, #max').change(function () {
+            $('input[name="datetimes"]').change(function () {
                 table.draw();
             });
        
