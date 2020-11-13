@@ -93,6 +93,7 @@
                     $this->table . '.sessionId' =>  $this->sessionId,
                 ]
             );
+            if (is_null($result)) return $this;
             $result = reset($result);
             $this->id = intval($result['id']);
             return $this;

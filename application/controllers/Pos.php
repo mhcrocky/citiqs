@@ -118,14 +118,15 @@
             return;
         }
 
-        private function getPosOrderName(string $ranodmKey): string
+        private function getPosOrderName(string $ranodmKey): ?string
         {
             $this->shopsession_model->setProperty('randomKey', $ranodmKey)->setIdFromRandomKey();
             $this
                 ->shopposorder_model
                     ->setProperty('sessionId', intval($this->shopsession_model->id))
-                    ->setIdFromSessionId()
-                    ->setObject();
+                    ->setIdFromSessionId();
+            if (!$this->shopposorder_model->id) return null;
+            $this ->shopposorder_model->setObject();
             return $this->shopposorder_model->saveName;
         }
     }
