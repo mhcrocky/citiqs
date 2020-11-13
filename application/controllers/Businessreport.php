@@ -10,11 +10,8 @@ class Businessreport extends BaseControllerWeb
 	{
 		parent::__construct();
 		$this->load->model('businessreport_model');
-		if (empty($this->session->userdata('userId'))) {
-			redirect('login');
-		}
-
-
+		$this->load->library('language', array('controller' => $this->router->class));
+		$this->isLoggedIn();
 	}
 
 	public function index()
@@ -23,7 +20,8 @@ class Businessreport extends BaseControllerWeb
 		$vendor_id = $this->session->userdata("userId");
 		$this->global['pageTitle'] = 'TIQS Business Reports';
 		$data['day_total'] = $this->businessreport_model->get_day_totals($vendor_id);
-		$data['last_week_total'] = $this->businessreport_model->get_last_week_totals($vendor_id);
+		$data['last_week_total'] = $this->businessreport_model->get_this_week_totals($vendor_id);
+		$data['compare'] = $this->businessreport_model->get_last_week_compare($vendor_id);
 		$data['service_types'] = $this->businessreport_model->get_service_types();
 		$this->loadViews("businessreport/index", $this->global, $data, 'footerbusiness', 'headerbusiness'); // payment screen
 
