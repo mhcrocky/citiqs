@@ -28,7 +28,7 @@
                                         <p>TODAY</p>
                                     </div>
                                     <div class="d-flex justify-content-between pb-2">
-                                        <h2>>€ <?php echo intval($total*100)/100; ?></h2>
+                                        <h2>€ <?php echo intval($total*100)/100; ?></h2>
                                         <span></span>
                                     </div>
                                 </div>
