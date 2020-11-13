@@ -103,7 +103,7 @@ return array(
 	'mpg'	=>	'video/mpeg',
 	'mpe'	=>	'video/mpeg',
 	'qt'	=>	'video/quicktime',
-	'mov'	=>	'video/quicktime',
+	'mov'   =>  array('video/quicktime', 'video/x-quicktime', 'video/mp4'),
 	'avi'	=>	array('video/x-msvideo', 'video/msvideo', 'video/avi', 'application/x-troff-msvideo'),
 	'movie'	=>	'video/x-sgi-movie',
 	'doc'	=>	array('application/msword', 'application/vnd.ms-office'),

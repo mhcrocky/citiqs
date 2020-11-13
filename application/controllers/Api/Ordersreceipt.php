@@ -157,14 +157,14 @@
 			$imagetextemail->annotateImage($drawemail, 475, 135, 0, "%");
 			$imagetextemail->annotateImage($drawemail, 495, 135, 0, "TOTAAL");
 
-//			$drawemail->setFontSize(18);
-//			$drawemail->setStrokeWidth(2);
-//			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-//			$imagetextemail->annotateImage($drawemail, 0, 105, 0, "ANT");
-//			$imagetextemail->annotateImage($drawemail, 40, 105, 0, "OMSCHRIJVING");
-//			$imagetextemail->annotateImage($drawemail, 395, 105, 0, "PRIJS");
-//			$imagetextemail->annotateImage($drawemail, 485, 105, 0, "%");
-//			$imagetextemail->annotateImage($drawemail, 505, 105, 0, "TOTAAL");
+			//			$drawemail->setFontSize(18);
+			//			$drawemail->setStrokeWidth(2);
+			//			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+			//			$imagetextemail->annotateImage($drawemail, 0, 105, 0, "ANT");
+			//			$imagetextemail->annotateImage($drawemail, 40, 105, 0, "OMSCHRIJVING");
+			//			$imagetextemail->annotateImage($drawemail, 395, 105, 0, "PRIJS");
+			//			$imagetextemail->annotateImage($drawemail, 485, 105, 0, "%");
+			//			$imagetextemail->annotateImage($drawemail, 505, 105, 0, "TOTAAL");
 
 			$draw->setStrokeColor('black');
             $draw->setStrokeWidth(5);
@@ -173,7 +173,7 @@
 
 			$drawemail->setStrokeColor('black');
 			$drawemail->setStrokeWidth(5);
-			$drawemail->line(0, 120, 576, 120);
+			$drawemail->line(0, 140, 576, 140);
 			$drawemail->setStrokeWidth(1);
 
 			//-------- regels --------

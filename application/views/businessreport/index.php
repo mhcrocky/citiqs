@@ -42,7 +42,7 @@ border-radius: .25rem;
                                         <p>TODAY</p>
                                     </div>
                                     <div class="d-flex justify-content-between pb-2">
-                                        <h2>€ <?php echo $local_total; ?></h2>
+                                        <h2>€ <?php echo intval($local_total*100)/100; ?></h2>
                                         <span></span>
                                     </div>
                                 </div>
@@ -57,7 +57,7 @@ border-radius: .25rem;
                                         <p>TODAY</p>
                                     </div>
                                     <div class="d-flex justify-content-between pb-2">
-                                        <h2>€ <?php echo $delivery_total; ?></h2>
+                                        <h2>€ <?php echo intval($delivery_total*100)/100; ?></h2>
                                         <span></span>
                                     </div>
                                 </div>
@@ -72,7 +72,7 @@ border-radius: .25rem;
                                         <p>TODAY</p>
                                     </div>
                                     <div class="d-flex justify-content-between pb-2">
-                                        <h2>€ <?php echo $pickup_total; ?></h2>
+                                        <h2>€ <?php echo intval($pickup_total*100)/100; ?></h2>
                                         <span> </span>
                                     </div>
                                 </div>
@@ -205,7 +205,7 @@ border-radius: .25rem;
            $(tfoot).find('th').eq(5).html(pageAmountTotal.toFixed(2)+'('+amountTotal.toFixed(2)+')');
            $(tfoot).find('th').eq(6).html(pageExvatTotal.toFixed(2)+'('+exvatTotal.toFixed(2)+')');
            $(tfoot).find('th').eq(7).html(pageVatTotal.toFixed(2)+'('+vatTotal.toFixed(2)+')');
-           Orders_today(amountTotal);
+           Orders_today(amountTotal.toFixed(2));
         },
         columns:[
         {

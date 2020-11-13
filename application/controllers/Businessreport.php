@@ -34,7 +34,10 @@ class Businessreport extends BaseControllerWeb
 
 	public function get_report(){
 		$vendor_id = $this->session->userdata("userId");//418
-		$report = $this->businessreport_model->get_report($vendor_id);
+		$pickup = $this->businessreport_model->get_pickup_report($vendor_id);
+		$delivery = $this->businessreport_model->get_delivery_report($vendor_id);
+		$local = $this->businessreport_model->get_local_report($vendor_id);
+		$report = array_merge($pickup, $delivery, $local);
 		echo json_encode($report);
 		
 	}
