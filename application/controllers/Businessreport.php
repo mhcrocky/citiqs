@@ -27,6 +27,7 @@ class Businessreport extends BaseControllerWeb
 		$data['local_total'] = $this->businessreport_model->get_local_total($vendor_id);
 		$data['delivery_total'] = $this->businessreport_model->get_delivery_total($vendor_id);
 		$data['pickup_total'] = $this->businessreport_model->get_pickup_total($vendor_id);
+		$data['total'] = $data['local_total'] + $data['delivery_total'] + $data['pickup_total'] ;
 		$data['service_types'] = $this->businessreport_model->get_service_types();
 		$this->loadViews("businessreport/index", $this->global, $data, 'footerbusiness', 'headerbusiness'); // payment screen
 

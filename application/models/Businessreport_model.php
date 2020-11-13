@@ -9,7 +9,7 @@ class Businessreport_model extends CI_Model {
 
 	public function get_local_report($vendor_id)
 	{
-		$query = $this->db->query("SELECT tbl_shop_orders.id AS order_id, date(tbl_shop_orders.updated) AS order_date, tbl_shop_products_extended.vatpercentage AS productVat,tbl_shop_products_extended.`name` AS productName,tbl_shop_products_extended.price,tbl_shop_order_extended.quantity,
+		$query = $this->db->query("SELECT tbl_shop_orders.id AS order_id, tbl_shop_orders.updated AS order_date, tbl_shop_products_extended.vatpercentage AS productVat,tbl_shop_products_extended.`name` AS productName,tbl_shop_products_extended.price,tbl_shop_order_extended.quantity,
 tbl_shop_spot_types.type AS service_type,tbl_shop_products_extended.price * tbl_shop_order_extended.quantity AS AMOUNT,
 ((tbl_shop_products_extended.price * tbl_shop_order_extended.quantity) * 100)/(tbl_shop_products_extended.vatpercentage+100) AS EXVAT,
 tbl_shop_products_extended.price * tbl_shop_order_extended.quantity-tbl_shop_products_extended.price * tbl_shop_order_extended.quantity * 100 / (tbl_shop_products_extended.vatpercentage+100) AS VAT
@@ -27,7 +27,7 @@ WHERE vendor.id = ".$vendor_id." AND tbl_shop_orders.paid = '1' AND serviceTypeI
 
 
 	public function get_delivery_report($vendor_id){
-		$query = $this->db->query("SELECT tbl_shop_orders.id AS order_id, date(tbl_shop_orders.updated) AS order_date,tbl_shop_products_extended.deliveryVatpercentage AS productVat,tbl_shop_products_extended.`name` AS productName,tbl_shop_products_extended.price,
+		$query = $this->db->query("SELECT tbl_shop_orders.id AS order_id, tbl_shop_orders.updated AS order_date,tbl_shop_products_extended.deliveryVatpercentage AS productVat,tbl_shop_products_extended.`name` AS productName,tbl_shop_products_extended.price,
 tbl_shop_order_extended.quantity,
 tbl_shop_spot_types.type AS service_type,tbl_shop_products_extended.deliveryPrice * tbl_shop_order_extended.quantity AS AMOUNT,
 ((tbl_shop_products_extended.deliveryPrice * tbl_shop_order_extended.quantity) * 100)/(tbl_shop_products_extended.deliveryVatpercentage+100)
@@ -46,7 +46,7 @@ WHERE vendor.id = '$vendor_id' AND tbl_shop_orders.paid = '1' AND serviceTypeId 
 
 
 	public function get_pickup_report($vendor_id){
-		$query = $this->db->query("SELECT tbl_shop_orders.id AS order_id, date(tbl_shop_orders.updated) AS order_date,tbl_shop_products_extended.pickupVatpercentage AS productVat,tbl_shop_products_extended.`name` AS productName,tbl_shop_products_extended.price,
+		$query = $this->db->query("SELECT tbl_shop_orders.id AS order_id, tbl_shop_orders.updated AS order_date,tbl_shop_products_extended.pickupVatpercentage AS productVat,tbl_shop_products_extended.`name` AS productName,tbl_shop_products_extended.price,
 tbl_shop_order_extended.quantity,
 tbl_shop_spot_types.type AS service_type,tbl_shop_products_extended.pickupPrice * tbl_shop_order_extended.quantity AS AMOUNT,
 ((tbl_shop_products_extended.pickupPrice * tbl_shop_order_extended.quantity) * 100)/(tbl_shop_products_extended.pickupVatpercentage+100) AS EXVAT,
