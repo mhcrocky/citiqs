@@ -342,7 +342,7 @@ function removeOrdered(elementId) {
     let inputField = document.querySelectorAll('#' + elementId + ' [data-order-quantity-value]');
     if (inputField) {
         inputField = inputField[0];
-    }    
+    }
     document.getElementById(elementId).remove();
     // document.querySelectorAll('#' + makeOrderGlobals.shoppingCartList + ' [data-ordered-id = "' + elementId + '"]')[0].remove();
     resetTotal();

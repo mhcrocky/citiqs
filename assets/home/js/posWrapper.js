@@ -49,7 +49,6 @@ function holdOrder(spotId, saveNameId) {
         }
         sendOrderAjaxRequest(send, urlPart);
     }
-    
 }
 
 resetTotal();

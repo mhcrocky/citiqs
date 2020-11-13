@@ -125,7 +125,6 @@
                                             <input
                                                 type="text"
                                                 class="form-control remarks inputFieldsMakeOrder"
-                                                rows="1"
                                                 maxlength="<?php echo $maxRemarkLength; ?>"
                                                 data-product-remark-id="<?php echo $remarkProductId; ?>"
                                                 placeholder="Allowed <?php echo $maxRemarkLength; ?> characters"
@@ -186,6 +185,7 @@
                                                                             <img
                                                                                 src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
                                                                                 alt="<?php echo $allergy; ?>"
+                                                                                class="allergies"
                                                                                 height='24px'
                                                                                 width='24px'
                                                                                 style="display:inline; margin:0px 2px 3px 0px"

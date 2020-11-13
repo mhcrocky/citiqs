@@ -88,8 +88,7 @@
             if ($ordered) {
                 $ordered = Utility_helper::returnMakeNewOrderElements($ordered, $data['vendor'], $data['mainProducts'], $data['addons'], $data['maxRemarkLength']);
                 $data['checkoutList'] = $ordered['checkoutList'];
-            } else {
-                $data['checkoutList'] = '';
+                $data['posOrderName'] = $this->getPosOrderName($orderDataRandomKey);
             }
         }
 
@@ -117,5 +116,16 @@
             $redirect = base_url() . 'pos?spotid=' . $this->shopposorder_model->spotId;
             redirect($redirect);
             return;
+        }
+
+        private function getPosOrderName(string $ranodmKey): string
+        {
+            $this->shopsession_model->setProperty('randomKey', $ranodmKey)->setIdFromRandomKey();
+            $this
+                ->shopposorder_model
+                    ->setProperty('sessionId', intval($this->shopsession_model->id))
+                    ->setIdFromSessionId()
+                    ->setObject();
+            return $this->shopposorder_model->saveName;
         }
     }
