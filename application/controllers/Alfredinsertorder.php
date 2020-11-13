@@ -34,6 +34,7 @@ class Alfredinsertorder extends BaseControllerWeb
         $this->load->model('shopspottime_model');
         $this->load->model('shopvoucher_model');
         $this->load->model('shopsession_model');
+        $this->load->model('shopposorder_model');
 
         $this->load->config('custom');
 
@@ -112,6 +113,7 @@ class Alfredinsertorder extends BaseControllerWeb
         // insert order
         $this->insertOrderInTable($post, $payStatus, $payType, $orderRandomKey);
         $this->insertOrderExtended($post);
+        $this->deletePosOrder($post, $orderRandomKey);
 
         return $this->shoporder_model->id;
     }
@@ -250,5 +252,18 @@ class Alfredinsertorder extends BaseControllerWeb
                 ->setObjectId(intval($order['voucherId']))
                 ->setVoucher()
                 ->payOrderWithVoucher(floatval($order['voucherAmount']));
+    }
+
+    private function deletePosOrder(array $post, string $ranodmKey): void
+    {
+        if ($this->shoporder_model->id && isset($post['pos']) && $post['pos'] === '1' ) {
+            $this->shopsession_model->setProperty('randomKey', $ranodmKey)->setIdFromRandomKey();
+            $this
+                ->shopposorder_model
+                    ->setProperty('sessionId', intval($this->shopsession_model->id))
+                    ->setIdFromSessionId()
+                    ->delete();
+        }
+        return ;
     }
 }
