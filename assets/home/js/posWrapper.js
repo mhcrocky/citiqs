@@ -43,6 +43,9 @@ function holdOrder(spotId, saveNameId) {
         let pos = 1;
         let urlPart ='pos?spotid=' + spotId + '&';
         let send = prepareSendData(pos);
+        if (!send) {
+            alertify.error('No product(s) in order list');
+        }
         send['posOrder'] = {
             'saveName' : saveName,
             'spotId' : spotId

@@ -145,7 +145,15 @@
 						<div class="pos-sidebar">
 							<div class="pos-checkout">
 								<div class="pos-checkout__header">
-									<h3>Checkout</h3>
+									<h3>
+										Checkout
+										<?php
+											if (!empty($posOrderName)) { 
+												$posOrderName = trim(substr($posOrderName, (strpos($posOrderName, ')') + 1)));
+											 	echo '"' . $posOrderName . '"';
+											}
+										?>
+									</h3>
 									<div class="pos-checkout-row pos-checkout-row--top pos-checkout-list" id="modal__checkout__list">
 										<?php if (isset($checkoutList)) echo $checkoutList; ?>
 									</div>
@@ -179,8 +187,8 @@
 					type="text"
 					id="posOrderName"
 					class="form-control payOrderInputFields"
-					<?php if (isset($posOrderName)) { ?>
-					value="<?php echo trim(substr($posOrderName, (strpos($posOrderName, ')') + 1))); ?>"
+					<?php if (!empty($posOrderName)) { ?>
+					value="<?php echo $posOrderName; ?>"
 					<?php }  ?>
 				/>
 				<div class="virtual-keyboard-hook" data-target-id="posOrderName" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
