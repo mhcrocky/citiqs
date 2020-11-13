@@ -156,7 +156,7 @@
                         <?php if ($pos === 0) { ?>
                         href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spotId . '&' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                         <?php } elseif ($pos === 1) { ?>
-                            href="<?php echo base_url() . 'pos?spotid=' . $spotId; ?>"
+                            href="<?php echo base_url() . 'pos?spotid=' . $spotId . '&' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                         <?php } ?>
                         style="background-color: #948b6f" class="button"
                         >
