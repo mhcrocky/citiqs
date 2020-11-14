@@ -33,7 +33,7 @@
 				<div style="text-align:left">
 					
 					<div class="contact-text-box">
-						<h2 style="font-family:caption-bold"><?= strtoupper($this->language->line('BUSINESS-100035B-' . $subscription['description'], $subscription['description'])); ?></h2>
+						<h2 style="font-family:caption-bold"><?php strtoupper($this->language->line('BUSINESS-100035B-' . $subscription['description'], $subscription['description'])); ?></h2>
 						<ul style="list-style-type: none; font-family:caption-bold; font-size: medium; margin-left: -40px" >
 							<ul style="list-style-type: none; font-family:caption-bold; font-size: medium; margin-left: -40px" >
 						<ul style="list-style-type: none; font-family:caption-bold; font-size: medium; margin-left: -40px" >
@@ -46,7 +46,7 @@
 						</ul>
 					</div>	
 					<div class="form-group has-feedback">
-						<input  type="button" onclick="sendInvoice()"  class="button button-orange" value="<?=$this->language->line("SENDINVOCIE-A1111000020","SEND INVOICE")?>"  style="border: none" />
+						<input  type="button" onclick="sendInvoice()"  class="button button-orange" value="<?php echo $this->language->line("SENDINVOCIE-A1111000020","SEND INVOICE")?>"  style="border: none" />
 					</div>
 				</div>
 			</div>
@@ -69,7 +69,7 @@
 								<div class="testimonial testimonial-layout-one">
 									<div class="testimonial-section__text-wrapper">
 										<p class="testimonial-section__text">
-											<?=
+											<?php
 												$this->language->line(
 													"SEND-AA000001",
 													"DHL BRINGS IT TO YOU.....
@@ -88,7 +88,7 @@
 								<div class="testimonial testimonial-layout-two">
 									<div class="testimonial-section__text-wrapper">
 										<p class="testimonial-section__text">
-										<?=
+										<?php
 											$this->language->line(
 												"SEND-AA000001",
 												"YOUR PERSONAL COURIER.
@@ -107,7 +107,7 @@
 								<div class="testimonial testimonial-layout-three">
 									<div class="testimonial-section__text-wrapper ">
 										<p class="testimonial-section__text">
-											<?=
+											<?php
 												$this->language->line(
 													"SEND-AA000001",
 													"YOUR PERSONAL COURIER.
@@ -126,7 +126,7 @@
 							</div>
 						</div><!-- single testimonial -->
 						<p class="text-content-light mb-35 mt-50" >
-							<?=$this->language->line("SEND-A000100","<br>LOST BY YOUR CUSTOMERS, <br/>RETRUNED BY US.")?>
+							<?php echo $this->language->line("SEND-A000100","<br>LOST BY YOUR CUSTOMERS, <br/>RETRUNED BY US.")?>
 						</p>
 						<div class="clearfix">
 						</div>

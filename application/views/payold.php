@@ -60,12 +60,12 @@
 						</select>
 					</div>
 					<div class="form-group has-feedback">
-						<input type="email" value="<?=$email;?>" class="form-control" placeholder="Email" name="email" data-toggle="tooltip" data-placement="top" title="Your e-mail address is only used by tiqs we do not share any e-mail addresses with 3rd parties!" required />
+						<input type="email" value="<?php $email;?>" class="form-control" placeholder="Email" name="email" data-toggle="tooltip" data-placement="top" title="Your e-mail address is only used by tiqs we do not share any e-mail addresses with 3rd parties!" required />
 						<span class="glyphicon glyphicon-envelope form-control-feedback" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></span>
 					</div>
 
 					<div class="form-group has-feedback">
-						<input type="email" value="<?=$email;?>" class="form-control" placeholder="Repeat email for verification" name="emailverify"  required />
+						<input type="email" value="<?php $email;?>" class="form-control" placeholder="Repeat email for verification" name="emailverify"  required />
 						<span class="glyphicon glyphicon-envelope form-control-feedback" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></span>
 					</div>
 

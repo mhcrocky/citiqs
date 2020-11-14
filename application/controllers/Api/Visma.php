@@ -238,10 +238,10 @@ class Visma extends CI_Controller
 		$order_items = $this->visma_model->get_order_products($order_ID);
 		$order = $order[0];
 
-		// echo '<pre>';
-		// print_r($order_items);
-		// print_r($order);
-		// exit;
+		echo '<pre>';
+		print_r($order_items);
+		print_r($order);
+		exit;
 
 		$data['setting'] = $this->setting;
 		$refresh_token =  $this->setting->visma_refresh_token;

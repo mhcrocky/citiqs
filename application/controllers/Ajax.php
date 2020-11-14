@@ -17,6 +17,7 @@ class Ajax extends CI_Controller
         $this->load->model('uniquecode_model');
         $this->load->model('user_subscription_model');
         $this->load->model('dhl_model');
+        $this->load->model('Bizdir_model');
         $this->load->model('floorplanareas_model');
         $this->load->model('floorplandetails_model');
         $this->load->model('shoporder_model');
@@ -26,6 +27,8 @@ class Ajax extends CI_Controller
         $this->load->model('shopproductex_model');
         $this->load->model('shopvendor_model');
         $this->load->model('shopvoucher_model');
+        $this->load->model('shopsession_model');
+        $this->load->model('shopposorder_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -648,41 +651,88 @@ class Ajax extends CI_Controller
     public function setOrderSession(): void
     {
         if (!$this->input->is_ajax_request()) return;
-        $post = $this->input->post(null, true);
+
+        $post = Utility_helper::sanitizePost();
 
         if (!empty($post['data'])) {
-            $_SESSION['order'] = [];
-            $string = 'qwertzuioplkjhgfdsamnbvcxy';
-            $count = 0;
-            foreach($post['data'] as $data) {
-                $count++;
-                $shuffled = strval($count) . '_' . str_shuffle($string);
-                $_SESSION['order'][$shuffled] = $data;
+            if (!$this->prepareOrderData($post)) {
+                echo '0';
+                return;
+            }
+            $orderDataRandomKey = trim(Utility_helper::getAndUnsetValue($post, 'orderDataRandomKey'));
+            if ($orderDataRandomKey) {
+                $this
+                    ->shopsession_model
+                        ->setProperty('randomKey', $orderDataRandomKey)
+                        ->updateSessionData($post);
+            } else {
+                $this->shopsession_model->insertSessionData($post);
             }
         }
 
-        echo !empty($_SESSION['order']) ? '1' : '0';
-        return;
+        if ($this->shopsession_model->id && $this->shopsession_model->randomKey) {
+            if ($post['pos'] === '1') {
+                $post['posOrder']['sessionId'] = $this->shopsession_model->id;
+                $post['posOrder']['saveName'] = '(' . date('Y-m-d H:i:s') . ') ' . $post['posOrder']['saveName'];
+                $managePosOrder = $this->shopposorder_model->setObjectFromArray($post['posOrder'])->managePosOrder();
+                echo $managePosOrder ? $this->shopsession_model->randomKey : '0';
+            } else {
+                echo $this->shopsession_model->randomKey;
+            }            
+        } else {
+            echo '0';
+        }
+
+    }
+
+    private function prepareOrderData(array &$post): bool
+    {
+        $post['makeOrder'] = [];
+        $string = 'qwertzuioplkjhgfdsamnbvcxy';
+        $count = 0;
+        foreach($post['data'] as $data) {
+            if (!$this->checkRemarkLength($data)) return false;
+            $count++;
+            $shuffled = strval($count) . '_' . str_shuffle($string);
+            $post['makeOrder'][$shuffled] = $data;
+        };
+        unset($post['data']);
+        return true;
+    }
+
+    private function checkRemarkLength(array $data): bool
+    {
+        foreach($data as $key => $value)  {
+            if (isset($value['remark']) && strlen($value['remark']) > $this->config->item('maxRemarkLength')) {
+                return false;
+            }
+            if (!empty($value['addons']) && !$this->checkRemarkLength($value['addons'])) return false;
+        }
+        return true;
     }
 
     public function unsetSessionOrderElement(): void
     {
         if (!$this->input->is_ajax_request()) return;
 
-        $post = $this->input->post(null, true);
-        $indexId = $post['orderSessionIndex'];
+        $post = Utility_helper::sanitizePost();
+        $orderSessionIndex = Utility_helper::getAndUnsetValue($post, 'orderSessionIndex');
+        $orderRandomKey = Utility_helper::getAndUnsetValue($post, 'orderRandomKey');
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
 
         if (!empty($post['addonExtendedId']) && !empty($post['productExtendedId'])) {
-            $addonextenedId = $post['addonExtendedId'];
-            $productExtendedId = $post['productExtendedId'];
-            unset($_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]);
-            echo '1';
+            $addonExtendedId = Utility_helper::getAndUnsetValue($post, 'addonExtendedId');
+            $productExtendedId = Utility_helper::getAndUnsetValue($post, 'productExtendedId');
+            unset($orderData['makeOrder'][$orderSessionIndex][$productExtendedId]['addons'][$addonExtendedId]);
+            $this->shopsession_model->updateSessionData($orderData);
+            echo ($this->shopsession_model->id && $this->shopsession_model->randomKey) ? '1' : '0';
             return;
         }
 
-        if (!empty($_SESSION['order'][$indexId])) {
-            unset($_SESSION['order'][$indexId]);
-            echo '1';
+        if (!empty($orderData['makeOrder'][$orderSessionIndex])) {
+            unset($orderData['makeOrder'][$orderSessionIndex]);
+            $this->shopsession_model->updateSessionData($orderData);
+            echo ($this->shopsession_model->id && $this->shopsession_model->randomKey) ? '1' : '0';
             return;
         }
 
@@ -694,29 +744,29 @@ class Ajax extends CI_Controller
     {
         if (!$this->input->is_ajax_request()) return;
 
-        $post = $this->input->post(null, true);
-
-        $indexId = $post['orderSessionIndex'];
-        $addonextenedId = $post['addonExtendedId'];
-        $productExtendedId = $post['productExtendedId'];
-        unset($post['orderSessionIndex']);
-        unset($post['addonExtendedId']);
-        unset($post['productExtendedId']);
+        $post = Utility_helper::sanitizePost();
+        $indexId = Utility_helper::getAndUnsetValue($post, 'orderSessionIndex');
+        $addonExtendedId = Utility_helper::getAndUnsetValue($post, 'addonExtendedId');
+        $productExtendedId = Utility_helper::getAndUnsetValue($post, 'productExtendedId');
+        $orderRandomKey = Utility_helper::getAndUnsetValue($post, 'orderRandomKey');
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
 
         foreach($post as $key => $value) {
-            $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId][$key] = $value;
+            $orderData['makeOrder'][$indexId][$productExtendedId]['addons'][$addonExtendedId][$key] = $value;
         }
 
         // UPDATE ONLY IF MAIN PRODUCT IS CHANGED
         if (isset($post['mainProductQuantity']) && intval($post['mainProductQuantity'])) {
             $newStep = intval($post['mainProductQuantity']);
-            $newMinQuantity = $newStep * $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['initialMinQuantity'];
-            $newMaxQuantity = $newStep * $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['initialMaxQuantity'];
-            $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['step'] = $newStep;
-            $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['minQuantity'] = $newMinQuantity;
-            $_SESSION['order'][$indexId][$productExtendedId]['addons'][$addonextenedId]['maxQuantity'] = $newMaxQuantity;
+            $newMinQuantity = $newStep * $orderData['makeOrder'][$indexId][$productExtendedId]['addons'][$addonExtendedId]['initialMin'];
+            $newMaxQuantity = $newStep * $orderData['makeOrder'][$indexId][$productExtendedId]['addons'][$addonExtendedId]['initialMax'];
+
+            $orderData['makeOrder'][$indexId][$productExtendedId]['addons'][$addonExtendedId]['step'] = $newStep;
+            $orderData['makeOrder'][$indexId][$productExtendedId]['addons'][$addonExtendedId]['minQuantity'] = $newMinQuantity;
+            $orderData['makeOrder'][$indexId][$productExtendedId]['addons'][$addonExtendedId]['maxQuantity'] = $newMaxQuantity;
         }
 
+        $this->shopsession_model->updateSessionData($orderData);
 
         return;
     }
@@ -725,18 +775,17 @@ class Ajax extends CI_Controller
     {
         if (!$this->input->is_ajax_request()) return;
         
-
-        $post = $this->input->post(null, true);
-        $indexId = $post['orderSessionIndex'];
-        $productExtendedId = $post['productExtendedId'];
-
-        unset($post['orderSessionIndex']);
-        unset($post['productExtendedId']);
+        $post = Utility_helper::sanitizePost();
+        $orderSessionIndex = Utility_helper::getAndUnsetValue($post, 'orderSessionIndex');
+        $productExtendedId = Utility_helper::getAndUnsetValue($post, 'productExtendedId');
+        $orderRandomKey = Utility_helper::getAndUnsetValue($post, 'orderRandomKey');
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
 
         foreach($post as $key => $value) {
-            $_SESSION['order'][$indexId][$productExtendedId][$key] = $value;
+            $orderData['makeOrder'][$orderSessionIndex][$productExtendedId][$key] = $value;
         }
 
+        $this->shopsession_model->updateSessionData($orderData);
         return;
     }
 
@@ -874,209 +923,158 @@ class Ajax extends CI_Controller
 		echo json_encode(array('msg' => $msg, 'status' =>$status));
     }
 
-    public function voucherPay(): void
+    private function isBlocked(array $orderData): bool
     {
-        if (!$this->input->is_ajax_request()) return;
-
         if (get_cookie('codeBlocked')) {
-            unset($_SESSION['failed']);
+            if (isset($orderData['failed'])) {
+                unset($orderData['failed']);
+                $this->shopsession_model->updateSessionData($orderData);
+            }
             echo json_encode([
                 'status' => '0',
                 'message' => 'Invalid code inserted three times. You can not use code for next 2 minutes'
             ]);
-            return;
+            return false;
         }
+        return true;
+    }
 
-        $code = $this->input->post('code', true);
-        $amount = floatval($this->input->post('amount', true));
-        $totalAmount  = floatval($this->input->post('totalAmount', true));
-        $waiterTip  = floatval($this->input->post('waiterTip', true));
+    private function checkIsVoucherExist(array $orderData, object $voucher, object $shopsession): bool
+    {
+        if (is_null($voucher->id)) {
 
-        $this
-            ->shopvoucher_model
-                ->setProperty('code', $code)
-                ->setVoucher();
-
-        if (is_null($this->shopvoucher_model->id)) {
-
-            if (!isset($_SESSION['failed'])) {
-                $_SESSION['failed'] = 0;
+            if (!isset($orderData['failed'])) {
+                $orderData['failed'] = 0;
             }
-            $_SESSION['failed']++;
-            if ($_SESSION['failed'] === 3) {
+            $orderData['failed']++;
+            $shopsession->updateSessionData($orderData);
+
+            if ($orderData['failed'] === 3) {
                 set_cookie('codeBlocked', '1', 120);
                 echo json_encode([
                     'status' => '0',
                     'message' => 'Invalid code inserted three times. You can not use code for next 2 minutes'
                 ]);
-                return;
+                return false;
             }
 
             echo json_encode([
                 'status' => '0',
                 'message' => 'Invalid code'
             ]);
-            return;
+            return false;
         }
 
-        if (isset($_SESSION['failed'])) {
-            unset($_SESSION['failed']);
+        unset($orderData['failed']);
+        $this->shopsession_model->updateSessionData($orderData);
+
+        return true;
+    }
+
+    private function checkVoucher(array $orderData, object $voucher): bool
+    {
+        $message = '';
+
+        if (intval($voucher->vendorId) !== $orderData['vendorId']) {
+            $message = 'Vendor did not create this voucher';
         }
 
-        if ($this->shopvoucher_model->expire < date('Y-m-d')) {
+        if (!$message && !$voucher->checkIsValid()) {
+            $message = 'Problem with voucher';
+            if ($voucher->expire < date('Y-m-d')) {
+                $message = 'Voucher expired';
+            } elseif ($voucher->active === '0' || $voucher->percentUsed === '1') {
+                $message = 'The voucher has already been used';
+            } elseif ($voucher->amount <= 0 && $voucher->percent === 0) {
+                $message = 'No funds on the voucher';
+            }
+        }
+
+        if (!$message && $voucher->productId) {
+            foreach($orderData['orderExtended'] as $key => $value) {
+                $this->shopproductex_model->setObjectId(array_keys($value)[0])->setObject(['productId', 'price']);
+                if ($this->shopproductex_model->productId === $voucher->productId) return true;
+            }
+            $message = 'Voucher product is not in ordered list';
+        }
+
+        if ($message) {
             echo json_encode([
                 'status' => '0',
-                'message' => 'Voucher expired'
+                'message' => $message,
             ]);
-            return;
-        };
+            return false;
+        }
 
-        if ($this->shopvoucher_model->active === '0') {
+        return true;
+    }
+
+    public function voucherPay(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $code = $this->input->post('code', true);
+        $orderRandomKey = $this->input->post($this->config->item('orderDataGetKey'), true);
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        $amount = floatval($orderData['order']['amount']);
+        $waiterTip = floatval($orderData['order']['waiterTip']);
+        $serviceFee = floatval($orderData['order']['serviceFee']);
+        $totalAmount = $amount + $waiterTip + $serviceFee;
+
+        $this->shopvoucher_model->setProperty('code', $code)->setVoucher();
+
+        if (
+            !$this->isBlocked($orderData)
+            || !$this->checkIsVoucherExist($orderData, $this->shopvoucher_model, $this->shopsession_model)
+            || !$this->checkVoucher($orderData, $this->shopvoucher_model)
+        ) return;
+
+        $this->calculateVoucherDicsount($orderData, $this->shopvoucher_model);
+
+        if ($totalAmount > $orderData['order']['voucherAmount']) {
+            $voucherDiscount = $orderData['order']['voucherAmount'];
+            $leftAmount =  $totalAmount - $orderData['order']['voucherAmount'];
             echo json_encode([
-                'status' => '0',
-                'message' => 'The voucher has already been used'
+                'status' => '2',
+                'message' => 'Select method to finish payment',
+                'voucherAmount' => number_format($voucherDiscount, 2, ',', '.'),
+                'leftAmount' => number_format($leftAmount, 2, ',', '.'),
             ]);
-            return;
-        }
-
-        if ($this->shopvoucher_model->productId) {
-            if ($_SESSION['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
-                // OLD MAKE ORDER VIEW
-                foreach ($_SESSION['order'] as $key => $productRaw) {
-                    if (isset($productRaw['mainProduct'])) {
-                        $product = $productRaw['mainProduct'][$mainKey];
-                    } else {
-                        $mainKey = $key;
-                        $product = $productRaw;
-                    }
-                    if (intval($product['productId'][0]) === $this->shopvoucher_model->productId) {
-                        $productPrice = floatval($product['price'][0]);
-                        $_SESSION['payWithVaucher'] = round($productPrice, 2);
-                        break;
-                    }
-                }
-            } else {
-                // NEW MAKE ORDER VIEW
-                foreach ($_SESSION['order'] as $key => $productRaw) {
-                    $productRaw = reset($productRaw);
-                    if (intval($productRaw['productId']) === $this->shopvoucher_model->productId) {
-                        $productPrice = floatval($productRaw['price']);
-                        $_SESSION['payWithVaucher'] = round($productPrice, 2);
-                        break;
-                    }
-                    if (isset($productRaw['addons'])) {
-                        $addons = $productRaw['addons'];
-                        foreach ($addons as $prodcutExtendedId => $details) {
-                            if (intval($details['addonProductId']) === $this->shopvoucher_model->productId) {
-                                $productPrice = floatval($details['price']);
-                                $_SESSION['payWithVaucher'] = round($productPrice, 2);
-                                break 2;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (!isset($_SESSION['payWithVaucher'])) {
-                echo json_encode([
-                    'status' => '0',
-                    'message' => 'Product from voucher is not in order list'
-                ]);
-            } else {
-                if (
-                    ($this->shopvoucher_model->amount >= $_SESSION['payWithVaucher'] || $this->shopvoucher_model->percent === 100)
-                    && $_SESSION['payWithVaucher'] === $amount
-                ) {
-
-                    if ($waiterTip) {
-                        $_SESSION['voucherId'] = $this->shopvoucher_model->id;
-                        $_SESSION['payWithVaucher'] = $amount;
-                        echo json_encode([
-                            'status' => '2',
-                            'message' => 'Select method to finish payment',
-                            'voucherAmount' => number_format($totalAmount, 2, ',', '.'),
-                            'leftAmount' => number_format($waiterTip, 2, ',', '.'),
-                        ]);
-                    } else {
-                        if (isset($_SESSION['voucherId'])) {
-                            unset($_SESSION['voucherId']);
-                        }
-                        if (isset($_SESSION['payWithVaucher'])) {
-                            unset($_SESSION['payWithVaucher']);
-                        }
-        
-                        $redirect = base_url() . 'voucherPayment' . DIRECTORY_SEPARATOR . $this->shopvoucher_model->id;
-                        echo json_encode([
-                            'status' => '1',
-                            'redirect' => $redirect
-                        ]);
-                    }
-
-                } else {
-                    $_SESSION['voucherId'] = $this->shopvoucher_model->id;
-
-                    if ($this->shopvoucher_model->amount) {
-                        $voucherDiscount = ($_SESSION['payWithVaucher'] > $this->shopvoucher_model->amount) ? $this->shopvoucher_model->amount : $_SESSION['payWithVaucher'];
-                    } else {
-                        $voucherDiscount = $this->shopvoucher_model->percent * $_SESSION['payWithVaucher'] / 100;
-                    }
-                    $leftAmount = $totalAmount - $voucherDiscount + $waiterTip;
-
-                    echo json_encode([
-                        'status' => '2',
-                        'message' => 'Select method to finish payment',
-                        'voucherAmount' => number_format($voucherDiscount, 2, ',', '.'),
-                        'leftAmount' => number_format($leftAmount, 2, ',', '.'),
-                    ]);
-                }
-            }
-            return;
-        }
-
-        if ($this->shopvoucher_model->amount >= $amount || $this->shopvoucher_model->percent === 100) {
-            if ($waiterTip) {
-                $_SESSION['voucherId'] = $this->shopvoucher_model->id;
-                $_SESSION['payWithVaucher'] = $amount;
-                echo json_encode([
-                    'status' => '2',
-                    'message' => 'Select method to finish payment',
-                    'voucherAmount' => number_format($totalAmount, 2, ',', '.'),
-                    'leftAmount' => number_format($waiterTip, 2, ',', '.'),
-                ]);
-            } else {
-                if (isset($_SESSION['voucherId'])) {
-                    unset($_SESSION['voucherId']);
-                }
-                if (isset($_SESSION['payWithVaucher'])) {
-                    unset($_SESSION['payWithVaucher']);
-                }
-
-                $redirect = base_url() . 'voucherPayment' . DIRECTORY_SEPARATOR . $this->shopvoucher_model->id;
-                echo json_encode([
-                    'status' => '1',
-                    'redirect' => $redirect
-                ]);
-            }
-
-            return;
-        };
-
-        $_SESSION['voucherId'] = $this->shopvoucher_model->id;
-
-        if ($this->shopvoucher_model->amount) {
-            $voucherDiscount = $this->shopvoucher_model->amount;
         } else {
-            $voucherDiscount = $this->shopvoucher_model->percent * $amount / 100;
+            $redirect = base_url() . 'voucherPayment?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
+            echo json_encode([
+                'status' => '1',
+                'redirect' => $redirect
+            ]);
         }
-        $leftAmount = $totalAmount - $voucherDiscount + $waiterTip;
+        return;
+    }
 
-        echo json_encode([
-            'status' => '2',
-            'message' => 'Select method to finish payment',
-            'voucherAmount' => number_format($voucherDiscount, 2, ',', '.'),
-            'leftAmount' => number_format($leftAmount, 2, ',', '.'),
-        ]);
+    private function calculateVoucherDicsount(array &$orderData, object $shopVoucher): void
+    {
+        $amount = floatval($orderData['order']['amount']);
+        $waiterTip = floatval($orderData['order']['waiterTip']);
+        $serviceFee = floatval($orderData['order']['serviceFee']);
+        $totalAmount = $amount + $waiterTip + $serviceFee;
 
+        if ($shopVoucher->productId) {
+            // price is set in checkVoucher method
+            $productPrice = $this->shopproductex_model->price;
+            if ($shopVoucher->percent) {
+                $voucherAmount = $productPrice * $shopVoucher->percent / 100;
+            } else {
+                $voucherAmount = ($shopVoucher->amount >= $productPrice) ? $productPrice : $shopVoucher->amount;
+            }
+        } else {
+            if ($shopVoucher->percent) {
+                $voucherAmount = ($shopVoucher->percent === 100) ? ($amount + $serviceFee) : $amount * $shopVoucher->percent / 100;
+            } else {
+                $voucherAmount = ($shopVoucher->amount >= $totalAmount) ? $totalAmount : $shopVoucher->amount;
+            }
+        }
+        $orderData['order']['voucherAmount'] = $voucherAmount;
+        $orderData['order']['voucherId'] = $this->shopvoucher_model->id;
+        $this->shopsession_model->updateSessionData($orderData);
         return;
     }
 
@@ -1153,6 +1151,31 @@ class Ajax extends CI_Controller
         }
     }
 
+    public function getPlaceByLocation(){
+        $location = $this->input->post('location');
+        $range = $this->input->post('range');
+        $coordinates = Google_helper::getLatLong($location);
+        $lat = $coordinates['lat'];
+        $long = $coordinates['long'];
+        $data['directories'] = $this->Bizdir_model->get_bizdir_by_location(floatval($lat),floatval($long),$range);
+        $result = $this->load->view('bizdir/place_card', $data,true);
+        if( isset($result) ) {
+            return $this->output
+			->set_content_type('application/json')
+			->set_status_header(200)
+            ->set_output(json_encode($result));
+        } else {
+            return $this->output
+			->set_content_type('application/json')
+			->set_status_header(500)
+			->set_output(json_encode(array(
+                'text' => 'Not Found',
+                'type' => 'Error 404'
+            )));
+        }
+		
+	}
+
     public function getLocation(): void
     {
         if (!$this->input->is_ajax_request()) return;
@@ -1193,5 +1216,261 @@ class Ajax extends CI_Controller
         ->set_status_header(200)
         ->set_output(json_encode($result));
         
+    }
+
+    public function submitForm(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+    
+        $post = Utility_helper::sanitizePost();
+        $vendor = $this->shopvendor_model->setProperty('vendorId', $post['vendorId'])->getVendorData();
+        $spotTypeId = intval($post['spotTypeId']);
+        $orderRandomKey = $post['orderRandomKey'];
+    
+        if ($spotTypeId === $this->config->item('deliveryType') && !$this->validateDeliveryLocation($post['user'])) {
+            $response = [
+                'status' => '0',
+                'message' => 'Order not made! Please insert delivery city, zipcode and/or address'
+            ];
+        } elseif ($spotTypeId === $this->config->item('deliveryType') && !$this->validateDeliveryDistance($post['user'], $vendor)) {
+            $response = [
+                'status' => '0',
+                'pickup' => '0'
+            ];
+            foreach ($vendor['typeData'] as $type) {
+                if (intval($type['typeId']) === $this->config->item('pickupType')) {
+                    $response['pickup'] = '1';
+                    break;
+                }
+            }
+        } elseif (!$this->checkTermsAndConditions($vendor, $post['order'])) {
+            $response = [
+                'status' => '0',
+                'message' => 'Order not made! Please confirm that you read terms and conditions and privacy policy',
+            ];
+        } elseif (isset($post['order']['remarks']) && strlen($post['order']['remarks']) > $this->config->item('maxRemarkLength')) {
+            $response = [
+                'status' => '0',
+                'message' => 'Order not made! Remark is too long',
+            ];
+        } else {
+            $this->setDeliveryCookies($post['user']);
+            $this->checkWaiterTip($post);
+            if ($this->populateSessionOrderData($post, $orderRandomKey)) {
+                $response = [
+                    'status' => '1',
+                    'message' => $this->getRedirect($vendor, $spotTypeId, $orderRandomKey)
+                ];
+            } else {
+                $response = [
+                    'status' => '0',
+                    'message' => '(7345) Order not made! Please try again'
+                ];
+            }
+        }
+    
+        echo json_encode($response);
+        return;
+    }
+    
+    
+    private function checkWaiterTip(array &$post): void
+    {
+        if (!isset($post['order']['waiterTip']) || floatval($post['order']['waiterTip']) < 0) {
+            $post['order']['waiterTip'] = 0;
+        }
+    }
+
+    private function setDeliveryCookies(array $user): void
+    {
+        if (!empty($user['city'])) {
+            set_cookie('city', $user['city'], (365 * 24 * 60 * 60));
+        }
+        if (!empty($user['zipcode'])) {
+            set_cookie('zipcode', $user['zipcode'], (365 * 24 * 60 * 60));
+        }
+        if (!empty($user['address'])) {
+            set_cookie('address', $user['address'], (365 * 24 * 60 * 60));
+        }
+    }
+
+    private function validateDeliveryLocation(array $user): bool
+    {
+        if ( empty($user['city']) || empty($user['zipcode']) || empty($user['address']) ) {
+                return false;
+        }
+        return true;
+    }
+    
+    private function validateDeliveryDistance(array $user, array $vendor): bool
+    {
+        $point = Google_helper::getLatLong($user['address'], $user['zipcode'], $user['city']);;
+        $distance = Utility_helper::getDistance($point['lat'], $point['long'], $vendor['vendorLat'], $vendor['vendorLon']);
+    
+        return ($distance > $vendor['deliveryAirDistance']) ? false : true;
+    }
+
+    private function checkTermsAndConditions(array $vendor, array $order): bool
+    {
+        if ( $vendor['termsAndConditions'] && $vendor['showTermsAndPrivacy'] === '1'
+            && (empty($order['termsAndConditions']) || empty($order['privacyPolicy']))
+        ) {
+            return false;
+        }
+        return true;
+    }
+
+    private function getRedirect(array $vendor, int $spotTypeId, string $orderRandomKey): string
+    {
+        if (
+            $vendor['requireEmail'] === '0'
+            && $vendor['requireName'] === '0'
+            && $vendor['requireMobile'] === '0'
+            && $spotTypeId === $this->config->item('local')
+        ) {
+            $redirect = 'pay_order?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
+        } else {
+            $redirect = 'buyer_details?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
+        };
+
+        return $redirect;
+    }
+
+    private function populateSessionOrderData(array $post, string $orderRandomKey): bool
+    {
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        $orderData['user'] = $post['user'];
+        $orderData['orderExtended'] = $post['orderExtended'];
+        $orderData['order'] = $post['order'];
+        $this->shopsession_model->updateSessionData($orderData);
+
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        return ($this->shopsession_model->id && $this->shopsession_model->randomKey) ? true : false;
+    }
+
+    public function submitBuyerDetails(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = Utility_helper::sanitizePost();
+        $vendor = $this->shopvendor_model->setProperty('vendorId', $post['vendorId'])->getVendorData();
+        $spotTypeId = intval($post['spotTypeId']);
+        $messages = $this->checkBuyerData($post, $vendor, $spotTypeId);
+
+        if (count($messages)) {
+            $response = [
+                'status' => '0',
+                'messages' => $messages,
+            ];
+        } else {
+            $orderRandomKey = $post['orderRandomKey'];
+            $user = $post['user'];           
+            if ($this->populateUserData($orderRandomKey, $user)) {
+                $this->setBuyerCookies($user);
+                $redirect = 'pay_order?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
+                $response = [
+                    'status' => '1',
+                    'message' => $redirect,
+                ];  
+            } else {
+                $response = [
+                    'status' => '0',
+                    'messages' => ['Order not made. Please try again'],
+                ];
+            }
+        }
+        echo json_encode($response);
+        return;
+    }
+
+    private function checkBuyerData(array &$post, array $vendor, int $spotTypeId): array
+    {
+        $messages = [];
+        // check mobile phone
+        if ($vendor['requireMobile'] === '1' || $spotTypeId !== $this->config->item('local')) {
+            if (Validate_data_helper::validateMobileNumber($post['user']['mobile'])) {
+                $post['user']['mobile'] = $post['phoneCountryCode'] . ltrim($post['user']['mobile'], '0');                
+            } else {
+                $message = 'Order not made! Mobile phone is required. Please try again';
+                array_push($messages, $message);
+            }
+        }
+
+        // check emai
+        if ($vendor['requireEmail'] === '1' || $spotTypeId !== $this->config->item('local')) {
+            if (!Validate_data_helper::validateEmail($post['user']['email'])) {
+                $message = 'Order not made! Email is required. Please try again';
+                array_push($messages, $message);
+            }
+        }
+
+        // check name
+        if ($vendor['requireName'] === '1' ) {
+            if (!Validate_data_helper::validateString($post['user']['username'])) {
+                $message = 'Order not made! Username is required. Please try again';
+                array_push($messages, $message);
+            }
+        }
+
+        return $messages;
+    }
+
+    private function setBuyerCookies(array $post): void
+    {
+        if (!empty($user['username'])) {
+            set_cookie('userName', $user['username'], (365 * 24 * 60 * 60));
+        }
+        if (!empty($user['email'])) {
+            set_cookie('email', $user['email'], (365 * 24 * 60 * 60));
+        }
+        if (!empty($user['mobile'])) {
+            set_cookie('mobile', $user['mobile'], (365 * 24 * 60 * 60));
+        }
+    }
+
+    private function populateUserData(string $orderRandomKey, array $user): bool
+    {
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        foreach ($user as $key => $value) {
+            $orderData['user'][$key] = $value;
+        }
+        $this->shopsession_model->updateSessionData($orderData);
+        return ($this->shopsession_model->id && $this->shopsession_model->randomKey) ? true : false;
+    }
+
+    public function saveDesign($id): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = Utility_helper::sanitizePost();
+        $design = serialize($post);
+        $id = intval($id);
+        $update = $this->shopvendor_model->setObjectId($id)->setProperty('design', $design)->update();
+
+        if ($update) {
+            $response = [
+                'status' => '1',
+                'message' => 'Design updated'
+            ];
+        } else {
+            $response = [
+                'status' => '0',
+                'message' => 'Design update failed'
+            ];
+        }
+        echo json_encode($response);
+    }
+
+    public function saveIrame($id): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = Utility_helper::sanitizePost();
+        $iframeSettings = serialize($post);
+        $id = intval($id);
+        // $update = $this->shopvendor_model->setObjectId($id)->setProperty('iframeSettings', $iframe)->update();
+        // var_dump($id);
+        // var_dump($iframeSettings);
+        return;
     }
 }

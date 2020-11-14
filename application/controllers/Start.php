@@ -23,9 +23,11 @@ class  Start extends BaseControllerWeb
             redirect($iframeRedirect);
             exit();
         };
-        $this->global['pageTitle'] = 'TIQS : SPOT';
-
-		$this->loadViews("start", $this->global, NULL, NULL, "headerpublic"); // payment screen
+		redirect('https://tiqs.com');
+//
+//		$this->global['pageTitle'] = 'TIQS : SPOT';
+//
+//		$this->loadViews("start", $this->global, NULL, NULL, "headerpublic"); // payment screen
 	}
 
 }

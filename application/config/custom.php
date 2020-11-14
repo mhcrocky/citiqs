@@ -195,6 +195,19 @@ $config['notActiveColor'] = '#ff4d4d';
 
 $config['defaultSalesAgentId'] = '1';
 
-$config['payNlSuccess'] = 100;
+$config['payNlSuccess'] = '100';
+$config['payNlPending'] = '50';
+$config['payNlAuthorised'] = '95';
+$config['payNlVerify'] = '85';
+$config['payNlCancel'] = '-90';
+$config['payNlDenied'] = '-63';
 
 $config['minMobileLength'] = 6;
+
+$config['orderDataGetKey'] = 'order';
+
+$config['buyershorturl'] = 'tiqs_shop_service';
+
+$config['maxRemarkLength'] = 35;
+
+$config['design'] = 'design';

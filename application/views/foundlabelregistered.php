@@ -163,30 +163,30 @@
 <!--				Claime your reward-->
 				<div class="width-650">
 					<!--        HERE THE UPLOAD ID SCREEN-->
-					<h2 style="color:#ffffff; margin-bottom: 30px"  class="heading"><?=$this->language->line("PHOTO-101010",'GET YOUR REWARD');?></h2>
+					<h2 style="color:#ffffff; margin-bottom: 30px"  class="heading"><?php echo $this->language->line("PHOTO-101010",'GET YOUR REWARD');?></h2>
 					<div >
 						<p id="UnkownAddressText" style="font-family:'caption-light'; font-size:100%; color:#ffffff;  text-align: left">
-							<?=$this->language->line("PHOTO-15550",'WE APPRECIATE YOUR EFFORT!')?>
-							<?=$this->language->line("PHOTO-15560",'
+							<?php echo $this->language->line("PHOTO-15550",'WE APPRECIATE YOUR EFFORT!')?>
+							<?php echo $this->language->line("PHOTO-15560",'
                                 <br/><br/>AS YOU HAVE REGISTERED THE ITEM AT TIQS LOST + FOUND, WE WOULD LIKE TO REWARD YOUR EFFORTS.
                                 <br/> YOU RECIEVE FROM US A FREE PACKAGE OF TIQS-TAGS STICKERS TO USE FOR YOURSELF OR AS A GIVE AWAY TO YOUR FRIENDS OR RELATIVES.
                                 BESIDES THE RECEIPT OF THIS FREE PACKAGE ON THE GIVEN PERSONAL ADDRESS, YOU ALSO GET 3 MONTHS OF FREE SMS NOTIFICATIONS!   
                                 WE REALLY APPRECIATE YOUR EFFORT AND LOVE TO BRING THE LOST ITEM BACK TO THE RIGHTFUL OWNER. 
                                 ');?>
 							<br/><br/>
-							<?=$this->language->line("PHOTO-25560",'
+							<?php echo $this->language->line("PHOTO-25560",'
                                 <br/><br/>READ IN THE FREQUENTLY ASKED QUESTIONS MORE ABOUT THE LOST + FOUND PROCEDURE
                                 ');?>
 						</p>
 					</div>
 					<div>
-						<a style="color:#ffffff" class='how-we-works-link' href="<?php echo base_url(); ?>howitworksbusiness"><?=$this->language->line('Home-002','MORE INFO HOW IT WORKS');?></a>
+						<a style="color:#ffffff" class='how-we-works-link' href="<?php echo base_url(); ?>howitworksbusiness"><?php echo $this->language->line('Home-002','MORE INFO HOW IT WORKS');?></a>
 					</div>
 					<div align="center" >
-						<a href="<?php echo base_url(); ?>check" class="button button-orange mb-35"><?=$this->language->line("PHOTO-10280",'GET YOUR REWARD');?></a>
+						<a href="<?php echo base_url(); ?>check" class="button button-orange mb-35"><?php echo $this->language->line("PHOTO-10280",'GET YOUR REWARD');?></a>
 
 					</div>
-					<p style="color:#ffffff" class="text-content mb-50"><?=$this->language->line("ITEMFOUND-1110",'lost by you, <br> returned by us');?></p>
+					<p style="color:#ffffff" class="text-content mb-50"><?php echo $this->language->line("ITEMFOUND-1110",'lost by you, <br> returned by us');?></p>
 				</div>
 			</div>
 		</div>
@@ -195,36 +195,36 @@
 		<div class="background-yellow height-75">
 			<div class="width-650">
 				<!--        HERE THE UPLOAD ID SCREEN-->
-				<h2 style="color:#ffffff; margin-bottom: 30px"  class="heading"><?=$this->language->line("PHOTO-101010",'GET YOUR REWARD');?></h2>
+				<h2 style="color:#ffffff; margin-bottom: 30px"  class="heading"><?php echo $this->language->line("PHOTO-101010",'GET YOUR REWARD');?></h2>
 				<div >
 					<p id="UnkownAddressText" style="font-family:'caption-light'; font-size:100%; color:#ffffff;  text-align: left">
-						<?=$this->language->line("PHOTO-15550",'WE APPRECIATE YOUR EFFORT!')?>
-						<?=$this->language->line("PHOTO-15560",'
+						<?php echo $this->language->line("PHOTO-15550",'WE APPRECIATE YOUR EFFORT!')?>
+						<?php echo $this->language->line("PHOTO-15560",'
                                 <br/><br/>AS YOU HAVE REGISTERED THE ITEM AT TIQS LOST + FOUND, WE WOULD LIKE TO REWARD YOUR EFFORTS.
                                 <br/> YOU RECIEVE FROM US A FREE PACKAGE OF TIQS-TAGS STICKERS TO USE FOR YOURSELF OR AS A GIVE AWAY TO YOUR FRIENDS OR RELATIVES.
                                 BESIDES THE RECEIPT OF THIS FREE PACKAGE ON THE GIVEN PERSONAL ADDRESS, YOU ALSO GET 3 MONTHS OF FREE SMS NOTIFICATIONS!   
                                 WE REALLY APPRECIATE YOUR EFFORT AND LOVE TO BRING THE LOST ITEM BACK TO THE RIGHTFUL OWNER. 
                                 ');?>
 						<br/><br/>
-						<?=$this->language->line("PHOTO-25560",'
+						<?php echo $this->language->line("PHOTO-25560",'
                                 <br/><br/>READ IN THE FREQUENTLY ASKED QUESTIONS MORE ABOUT THE LOST + FOUND PROCEDURE
                                 ');?>
 					</p>
 				</div>
 				<div>
-					<a style="color:#ffffff" class='how-we-works-link' href="<?php echo base_url(); ?>howitworksbusiness"><?=$this->language->line('Home-002','MORE INFO HOW IT WORKS');?></a>
+					<a style="color:#ffffff" class='how-we-works-link' href="<?php echo base_url(); ?>howitworksbusiness"><?php echo $this->language->line('Home-002','MORE INFO HOW IT WORKS');?></a>
 				</div>
 				<div align="center" >
-					<a href="<?php echo base_url(); ?>check" class="button button-orange mb-35"><?=$this->language->line("PHOTO-10280",'GET YOUR REWARD');?></a>
+					<a href="<?php echo base_url(); ?>check" class="button button-orange mb-35"><?php echo $this->language->line("PHOTO-10280",'GET YOUR REWARD');?></a>
 
 				</div>
-				<p style="color:#ffffff" class="text-content mb-50"><?=$this->language->line("ITEMFOUND-1110",'lost by you, <br> returned by us');?></p>
+				<p style="color:#ffffff" class="text-content mb-50"><?php echo $this->language->line("ITEMFOUND-1110",'lost by you, <br> returned by us');?></p>
 			</div>
 		</div>
 		<div class="background-apricot height-50">
 			<div class="width-650">
 				<!--        HERE THE UTILITY BILL PROOF OF CONCEPT SCREEN-->
-				<h2 class="heading mb-35"><?=$this->language->line("ITEMFOUND-1111",'UPLOAD UTILITY BILL');?></h2>
+				<h2 class="heading mb-35"><?php echo $this->language->line("ITEMFOUND-1111",'UPLOAD UTILITY BILL');?></h2>
 			</div>
 		</div>
 	</div><!-- end col half -->

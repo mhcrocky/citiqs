@@ -102,19 +102,19 @@ if ($client->getAccessToken()) {
 <div class="box">
   <div class="request">
 <?php if (isset($authUrl)): ?>
-  <a class="login" href="<?= $authUrl ?>">Connect Me!</a>
+  <a class="login" href="<?php $authUrl ?>">Connect Me!</a>
 <?php else: ?>
   <h3>Results Of Drive List:</h3>
   <?php foreach ($dr_results as $item): ?>
-    <?= $item->name ?><br />
+    <?php $item->name ?><br />
   <?php endforeach ?>
 
   <h3>Results Of YouTube Likes:</h3>
   <?php foreach ($yt_results as $item): ?>
-    <?= $item['snippet']['title'] ?><br />
+    <?php $item['snippet']['title'] ?><br />
   <?php endforeach ?>
 <?php endif ?>
   </div>
 </div>
 
-<?= pageFooter(__FILE__) ?>
+<?php pageFooter(__FILE__) ?>

@@ -83,13 +83,13 @@
                                     ?>
                                     <tr>
                                         <td>
-                                            <?= $employee->username; ?>
+                                            <?php $employee->username; ?>
                                         </td>
                                         <td>
-                                            <?= $employee->email; ?>
+                                            <?php $employee->email; ?>
                                         </td>
                                         <td>
-                                            <?= $employee->uniquenumber; ?>
+                                            <?php $employee->uniquenumber; ?>
                                         </td>
                                         <td class="text-left">
                                             <a class="btn btn-sm btn-info" href="<?php echo base_url() . 'employeeEdit/' . $employee->id; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
@@ -114,7 +114,7 @@
 
     jQuery(document).on("click", ".deleteEmployee", function () {
         var employeeid = $(this).data("employee"),
-                hitURL = "<?= base_url() . "deleteEmployee"; ?>",
+                hitURL = "<?php base_url() . "deleteEmployee"; ?>",
                 currentRow = $(this);
         var confirmation = confirm("Are you sure to delete this employee?");
         if (confirmation) {
@@ -138,7 +138,7 @@
 
     jQuery(document).on("click", ".emailEmployee", function () {
         var employeeid = $(this).data("employee"),
-                hitURL = "<?= base_url() . "emailEmployee"; ?>";
+                hitURL = "<?php base_url() . "emailEmployee"; ?>";
         var confirmation = confirm("Are you sure to send email with link to this employee?");
         if (confirmation) {
             jQuery.ajax({

@@ -15,7 +15,7 @@
 				</div>
 
 				<div class="edit-single-user-container">
-					<form class="form-inline" id="addEmployee" method="post" action="<?php echo $this->baseUrl . 'index.php/addNewEmployeeSetup'; ?>">
+					<form class="form-inline" id="addEmployee" method="post" action="<?php echo $this->baseUrl . 'addNewEmployeeSetup'; ?>">
 						<input type="text" readonly name="ownerId" required value="<?php echo $ownerId ?>" hidden />
 						<h3>Employee Details</h3>
 						<div>
@@ -83,9 +83,9 @@
 			?>
 			<div class="grid-item" <?php if (intval($employee->expiration_time) < $time){ ?>style="background-color:rgba(226, 95, 42)" <?php } ?>>
 				<div class="item-header">
-					<p class="item-description"><?= $employee->username; ?></p>
-					<p class="item-category"><?= $employee->email; ?></p>
-					<p class="item-category"><?= $employee->uniquenumber; ?></p>
+					<p class="item-description"><?php $employee->username; ?></p>
+					<p class="item-category"><?php $employee->email; ?></p>
+					<p class="item-category"><?php $employee->uniquenumber; ?></p>
 					<p class="item-category"><?php echo date('Y-m-d H:i:s', $employee->expiration_time); ?></p>
 					<!-- <p class="item-category"><? #echo date('Y-m-d H:i:s', $employee->validitytime); ?></p>
 							<p class="item-category"><? #echo date('Y-m-d H:i:s', $employee->expiration_time); ?></p>

@@ -3,14 +3,14 @@
             <div class="footer-box background-yankee">
                 <p class='footer-heading'>Business</p>
                 <a href="APIrequest"></a>
-				<a href="info_download424"><?=$this->language->line('424FOOTERSPOT-brochure1AB',"STICKERS AND PRINTING PACK QRCODE");?></a>
+				<a href="info_download424"><?php echo $this->language->line('424FOOTERSPOT-brochure1AB',"STICKERS AND PRINTING PACK QRCODE");?></a>
 
             </div>
             <div class="footer-box background-orange">
                 <p class='footer-heading'>Consumer</p>
                 <a href="<?php echo $this->baseUrl; ?>contactform">Contact</a><br>
-                <a target="_blank" href="https://www.dhl.nl/en/express/tracking.html"><?=$this->language->line('FOOTERSPOT-DHL1A',"");?></a><br>
-				<a target="_blank" href="https://locator.dhl.com/"><?=$this->language->line('FOOTERSPOT-DHL2A',"");?></a><br>
+                <a target="_blank" href="https://www.dhl.nl/en/express/tracking.html"><?php echo $this->language->line('FOOTERSPOT-DHL1A',"");?></a><br>
+				<a target="_blank" href="https://locator.dhl.com/"><?php echo $this->language->line('FOOTERSPOT-DHL2A',"");?></a><br>
 				<a href=""></a><br>
             </div>
             <div class="footer-box background-apricot">

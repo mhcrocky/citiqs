@@ -9,12 +9,12 @@
 
     <!-- styles -->
 
-    <link rel="stylesheet" href="<?= base_url() ?>assets/emaildesigner/css/colpick.css" rel="stylesheet"  type="text/css"/>
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/emaildesigner/css/colpick.css" rel="stylesheet"  type="text/css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="<?= base_url() ?>assets/emaildesigner/css/themes/default.css" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" href="<?= base_url() ?>assets/emaildesigner/css/template.editor.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="<?= base_url() ?>assets/emaildesigner/css/responsive-table.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/emaildesigner/css/themes/default.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/emaildesigner/css/template.editor.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/emaildesigner/css/responsive-table.css" rel="stylesheet"/>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
 
     <!--[if lt IE 9]>
@@ -34,9 +34,8 @@
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.2.6/plugins/colorpicker/plugin.min.js"></script>
-    <script type="text/javascript" src="<?= base_url() ?>assets/emaildesigner/js/colpick.js"></script>
-    <script type="text/javascript" src="<?= base_url() ?>assets/emaildesigner/js/template.editor.js"></script>
+    <script type="text/javascript" src="<?php echo base_url() ?>assets/emaildesigner/js/colpick.js"></script>
+    <script type="text/javascript" src="<?php echo base_url() ?>assets/emaildesigner/js/template.editor.js"></script>
 
 
 </head>
-

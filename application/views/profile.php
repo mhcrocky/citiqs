@@ -4,31 +4,46 @@
 			<div style="text-align:center">
 				<form action="<?php echo $this->baseUrl; ?>profileUpdate" method="post" id="editProfile" enctype="multipart/form-data">
 					<!--					<input type="text" value="--><?php //echo $user->id; ?><!--" name="id" id="userId" readonly hidden required />-->
-					<h2 class="heading mb-35"><?=$this->language->line("PROF-010A",'YOUR PROFILE PAGE.');?></h2>
+					<h2 class="heading mb-35"><?php echo $this->language->line("PROF-010A",'YOUR PROFILE PAGE.');?></h2>
 					<div class="">
 						<div class="flex-column align-space">
 							<div class="form-group has-feedback">
 								<p style="font-family: caption-light; padding: 10px">
-									<?=$this->language->line("PROF-V1V020A",'BUSINESS NAME');?>
+									<?php echo $this->language->line("PROF-V1V020A",'BUSINESS NAME');?>
 								</p>
 								<div class="form-group has-feedback">
-									<input  value="<?php echo $user->username; ?>" name="username" required type="text" class="form-control" id="fname" style="border-radius: 50px; border:none" placeholder="<?php echo $name; ?>" maxlength="128" />
+									<input
+										value="<?php echo $user->username; ?>"
+										name="username"
+										required
+										type="text"
+										class="form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview"
+										id="fname"
+										style="border-radius: 50px; border:none"
+										placeholder="<?php echo $name; ?>"
+										maxlength="128"
+										role="textbox"
+										autocomplete="off"
+										tabindex="-1"							
+									/>
 								</div>
+								<div class="virtual-keyboard-hook" data-target-id="fname" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
 							</div>
 							<?php if ($user->IsDropOffPoint === '1') { ?>
 								<div>
 									<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin-bottom:10px; text-align: center">
-										<?=$this->language->Line("registerbusiness-V1V1600A",'SHORTNAME');?>
+										<?php echo $this->language->Line("registerbusiness-V1V1600A",'SHORTNAME');?>
 									</p>
 								</div>
 								<div class="form-group has-feedback">
-									<input value="<?php echo $user->usershorturl; ?>" type="text" class="form-control"  required id="usershorturl" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->Line("registerbusiness-1700A",'Your shortname');?>" name="usershorturl" pattern="[a-z]{1,15}" title="<?=$this->language->Line("registerbusiness-1800A",'Only [a-z] characters allowed (no capital), no spaces, points or special characters like @#$% and max 15 length');?>" />
+									<input value="<?php echo $user->usershorturl; ?>" type="text" class="form-control"  required id="usershorturl" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php echo $this->language->Line("registerbusiness-1700A",'Your shortname');?>" name="usershorturl" pattern="[a-z]{1,15}" title="<?php echo $this->language->Line("registerbusiness-1800A",'Only [a-z] characters allowed (no capital), no spaces, points or special characters like @#$% and max 15 length');?>" />
+									<div class="virtual-keyboard-hook" data-target-id="usershorturl" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
 								</div>
 							<?php } ?>
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-V030A31",'MOBILE NUMBER (Country code + number e.g. 0031(country) 0123456789 (number) => 00310123456789)');?>
+										<?php echo $this->language->line("PROF-V030A31",'MOBILE NUMBER (Country code + number e.g. 0031(country) 0123456789 (number) => 00310123456789)');?>
 									</p>
 									<div class="form-group has-feedback">
 										<input name="mobile" value="<?php echo $user->mobile; ?>" required style="border-radius: 50px; border:none" type="text" class="form-control" id="mobile" placeholder="<?php echo $user->mobile; ?>" maxlength="20">
@@ -40,7 +55,7 @@
 									<p style="font-family: caption-light; padding: 10px">Business type</p>
 									<div class="selectWrapper mb-35">
 										<select class="selectBox" name="business_type_id" style="font-family:'caption-light';" required>
-											<option value=""><?=$this->language->Line("registerbusiness-V1V1600A1","SELECT BUSINESS TYPE");?></option>
+											<option value=""><?php echo $this->language->Line("registerbusiness-V1V1600A1","SELECT BUSINESS TYPE");?></option>
 											<?php foreach ($businessTypes as $type) { ?>
 												<option <?php if($type['id'] === $user->business_type_id) echo 'selected'; ?> value="<?php echo $type['id'] ?>">
 													<?php echo $this->language->Line(ucfirst($type['busineess_type']),ucfirst($type['busineess_type'])) ?>
@@ -51,20 +66,20 @@
 								</div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-0303021","
+										<?php echo $this->language->line("PROF-0303021","
 									VAT number
 									");?>
 									</p>
 								</div>
 								<div class="form-group has-feedback">
-									<input type="text" value="<?php echo $user->vat_number; ?>" name="vat_number" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->line("PROF-V03031","BUSINESS VAT NUMBER");?>" />
+									<input type="text" value="<?php echo $user->vat_number; ?>" name="vat_number" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php echo $this->language->line("PROF-V03031","BUSINESS VAT NUMBER");?>" />
 									<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 								</div>
 							<?php } ?>
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-V031","YOUR E-MAIL ADDRESS");?>
+										<?php echo $this->language->line("PROF-V031","YOUR E-MAIL ADDRESS");?>
 									</p>
 
 									<div class="form-group has-feedback">
@@ -75,7 +90,7 @@
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("RECEIPT-V031","E-MAIL ADDRESS FOR RECEIPT");?>
+										<?php echo $this->language->line("RECEIPT-V031","E-MAIL ADDRESS FOR RECEIPT");?>
 									</p>
 
 									<div class="form-group has-feedback">
@@ -86,7 +101,7 @@
 							<?php if ($user->IsDropOffPoint === '1') { ?>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-V10303021111","
+										<?php echo $this->language->line("PROF-V10303021111","
 									RESPONSIBLE PERSON FIRST NAME
 									"); ?>
 									</p>
@@ -97,7 +112,7 @@
 								</div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-V103030211","
+										<?php echo $this->language->line("PROF-V103030211","
 									RESPONSIBLE PERSON LAST NAME
 									"); ?>
 									</p>
@@ -110,7 +125,7 @@
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-V032","ADDRESS");?>
+										<?php echo $this->language->line("PROF-V032","ADDRESS");?>
 									</p>
 									<div class="form-group has-feedback">
 										<input style="border-radius: 50px; border:none" type="text" class="form-control" id="addres" name="address" placeholder="<?php echo $user->address; ?>" value="<?php echo $user->address; ?>" maxlength="128" />
@@ -120,7 +135,7 @@
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-V033","ADDITIONAL ADDRESS LINE");?>
+										<?php echo $this->language->line("PROF-V033","ADDITIONAL ADDRESS LINE");?>
 									</p>
 									<div class="form-group has-feedback">
 										<input style="border-radius: 50px; border:none" type="text" class="form-control" id="addressa" name="addressa" placeholder="<?php echo $user->addressa; ?>" value="<?php echo $user->addressa; ?>" maxlength="128" />
@@ -130,7 +145,7 @@
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-V034","ZIPCODE");?>
+										<?php echo $this->language->line("PROF-V034","ZIPCODE");?>
 									</p>
 									<div class="form-group">
 										<input style="border-radius: 50px; border:none" type="text" class="form-control" id="zipcode" name="zipcode" placeholder="<?php echo $user->zipcode; ?>" value="<?php echo $user->zipcode; ?>" maxlength="128" />
@@ -140,7 +155,7 @@
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-V035","CITY");?>
+										<?php echo $this->language->line("PROF-V035","CITY");?>
 									</p>
 
 									<div class="form-group has-feedback">
@@ -151,7 +166,7 @@
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-V110303021","
+										<?php echo $this->language->line("PROF-V110303021","
 										COUNTRY
 										"); ?>
 									</p>
@@ -169,7 +184,7 @@
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-V035REGNUMBER","REGISTER NUMBER");?>
+										<?php echo $this->language->line("PROF-V035REGNUMBER","REGISTER NUMBER");?>
 									</p>
 									<div class="form-group has-feedback">
 										<input style="border-radius: 50px; border:none" type="text" class="form-control" id="inszNumber" name="inszNumber" placeholder="<?php echo $user->inszNumber; ?>" value="<?php echo $user->inszNumber; ?>" maxlength="255" />
@@ -179,7 +194,7 @@
 							<div>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
-										<?=$this->language->line("PROF-BIZDIR","SHOW IN PLACES");?>
+										<?php echo $this->language->line("PROF-BIZDIR","SHOW IN PLACES");?>
 									</p>
 									<div class="form-group has-feedback">
 									<label class="radio-inline" for="bizdirYes">Yes</label>
@@ -206,7 +221,7 @@
 							</div>
 							<div class="form-group has-feedback" style="padding: 30px;">
 								<div style="text-align: center; ">
-									<input type="submit" class="button button-orange" value="<?=$this->language->line("PROF-040 ",'SAVE');?>" style="border: none" />
+									<input type="submit" class="button button-orange" value="<?php echo $this->language->line("PROF-040 ",'SAVE');?>" style="border: none" />
 								</div>
 							</div>
 						</div>
@@ -218,13 +233,17 @@
 	<?php if($this->session->userdata('dropoffpoint')==1) { ?>
 		<div class="col-half background-apricot-blue timeline-content">
 			<h2>Shop url</h2>
-			<p>
+			<a href="<?php echo base_url() . 'make_order?vendorid=' . $user->id; ?>" target='_blank' >
 				<?php echo base_url() . 'make_order?vendorid=' . $user->id; ?>
-			</p>
+			</a>
 			<h2>Booking url</h2>
-			<p>
+			<a href="<?php echo base_url() . 'check424/' . $user->id; ?>" target='_blank' >
 				<?php echo base_url() . 'check424/' . $user->id; ?>
-			</p>
+			</a>
+			<h2>Set public design</h2>
+			<a href="<?php echo base_url() . 'viewdesign'; ?>">
+				Design
+			</a>
 			<div class="background-blue timeline-content">
 				<!-- <p>Add driver mobile number (starting with country code with zero) for sending sms.</p>
 				<p>Set the number of minutes when the message will be sent to driver after the order status is changed in status "DONE"</p> -->
@@ -247,6 +266,9 @@
 							style="border-radius: 50px"
 							value="<?php echo $vendor['payNlServiceId']; ?>"
 							/>
+
+
+							
 					</div>
 					<br/>
 					<div class="form-group mb-35">
@@ -627,6 +649,52 @@
 						<label class="radio-inline" for="receiptOnlyToWaiterNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="receiptOnlyToWaiterNo" name="vendor[receiptOnlyToWaiter]" value="0" <?php if ($vendor['receiptOnlyToWaiter'] === '0') echo 'checked'; ?> />
 					</div>
+					<h4>SET MAX DELIVERY DISTANCE</h4>
+					<div class="form-group mb-35">
+						<label for="deliveryAirDistance">Add kilometars&nbsp;
+						<input
+							type="number"
+							id="deliveryAirDistance"
+							name="vendor[deliveryAirDistance]"
+							min="0"
+							step="1"
+							style="border-radius: 50px; text-align: center"
+							value="<?php echo $vendor['deliveryAirDistance']; ?>"
+							/>							
+						</label>
+					</div>
+					<!-- <h4>
+						SKIP CALENDAR DATE IF CUT TIME HAS PASSED
+						(application will skipp working day if value is set to 'no')
+					</h4>
+					<div class="form-group mb-35">
+						<label class="radio-inline" for="skipDateYes">Yes</label>
+						<input type="radio" id="skipDateYes" name="vendor[skipDate]" value="1" <?php #if ($vendor['skipDate'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="skipDateNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="skipDateNo" name="vendor[skipDate]" value="0" <?php #if ($vendor['skipDate'] === '0') echo 'checked'; ?> />
+					</div> -->
+					<h4>SET CUT TIME</h4>
+					<div class="form-group mb-35">
+						<label for="cutTime">CUT TIME&nbsp;
+						<input
+							type="time"
+							id="cutTime"
+							name="vendor[cutTime]"
+							style="border-radius: 50px; text-align: center"
+							value="<?php echo ($vendor['cutTime']) ? $vendor['cutTime'] : ''; ?>"
+							step="60"
+							/>							
+						</label>
+					</div>										
+
+					<h4>ACTIVATE POS</h4>
+					<div class="form-group mb-35">
+						<label class="radio-inline" for="activatePosYes">Yes</label>
+						<input type="radio" id="activatePosYes" name="vendor[activatePos]" value="1" <?php if ($vendor['activatePos'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="activatePosNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="activatePosNo" name="vendor[activatePos]" value="0" <?php if ($vendor['activatePos'] === '0') echo 'checked'; ?> />
+					</div>
+					
 					<br/>
 					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />
@@ -796,7 +864,7 @@
 	<div class="col-half background-orange-light height-100 align-center">
 		<div class="flex-column align-start width-650">
 			<div style="text-align:center">
-				<h2 class="heading mb-35"><?=$this->language->line("PROF-A010",'YOUR BUDDY.');?></h2>
+				<h2 class="heading mb-35"><?php echo $this->language->line("PROF-A010",'YOUR BUDDY.');?></h2>
 				<div class="flex-row align-space">
 					<div class="flex-column align-space">
 						<div class="form-group has-feedback">
@@ -871,7 +939,7 @@
 									</div>
 
 									<div class="box-footer">
-										<input type="submit" class="button button-orange" value="<?=$this->language->line("PROF-05100 ",'SUBMIT');?>" style="border: none" />
+										<input type="submit" class="button button-orange" value="<?php echo $this->language->line("PROF-05100 ",'SUBMIT');?>" style="border: none" />
 									</div>
 								</form>
 							</div>
@@ -886,7 +954,7 @@
 
 <div class="col-half background-green height-100 ">
 	<div class="flex-column align-start width-650">
-		<h2 class="heading mb-35"><?=$this->language->line("PROF-050",'PASSWORD CHANGE.');?></h2>
+		<h2 class="heading mb-35"><?php echo $this->language->line("PROF-050",'PASSWORD CHANGE.');?></h2>
 		<form action="<?php echo $this->baseUrl; ?>changePassword" method="post">
 			<div class="box-body">
 				<div class="row">
@@ -916,7 +984,7 @@
 				</div>
 			</div>
 			<div class="box-footer">
-				<input type="submit" class="button button-orange" value="<?=$this->language->line("PROF-05100 ",'SUBMIT');?>" style="border: none" />
+				<input type="submit" class="button button-orange" value="<?php echo $this->language->line("PROF-05100 ",'SUBMIT');?>" style="border: none" />
 			</div>
 		</form>
 	</div>

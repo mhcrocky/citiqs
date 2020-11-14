@@ -173,7 +173,7 @@
 
             // filter productes ny name(s)
             if (!empty($_POST)) {
-                $post = $this->input->post(null, true);
+                $post = Utility_helper::sanitizePost();
                 $whereIn = [
                     'column' => 'tbl_shop_products_extended.productId',
                     'array' => $post['names']
@@ -210,7 +210,7 @@
          */
         public function addProdcut(): void
         {
-            $data = $this->input->post(null, true);
+            $data = Utility_helper::sanitizePost();
             $userId = intval($_SESSION['userId']);
 
             //CHECK PRODUCT NAME
@@ -313,7 +313,7 @@
          */
         public function editProduct(): void
         {
-            $data = $this->input->post(null, true);
+            $data = Utility_helper::sanitizePost();
             $productId = intval($this->uri->segment(3));
             $userId = intval($_SESSION['userId']);
 
@@ -633,7 +633,8 @@
                 'localTypeId' => $this->config->item('local'),
                 'deliveryTypeId' => $this->config->item('deliveryType'),
                 'pickupTypeId' => $this->config->item('pickupType'),
-                'notActiveColor' => $this->config->item('notActiveColor')
+                'notActiveColor' => $this->config->item('notActiveColor'),
+                'activePos' => $_SESSION['activatePos'],
             ];
 
             $this->loadViews('warehouse/spots', $this->global, $data, null, 'headerWarehouse');
@@ -916,6 +917,32 @@
 				'vendorId' => $_SESSION['userId']
 			];
 			$this->loadViews('warehouse/vatreport', $this->global, $data, null, 'headerWarehouse');
-		}
+        }
+
+        // Design
+        /**
+         * Add colors to make order new view
+         */
+        public function viewdesign(): void
+        {
+            $iframeSrc = base_url() . 'make_order?vendorid=' . $_SESSION['userId'];
+            $vendorData = $this->shopvendor_model->setProperty('vendorId', $_SESSION['userId'])->getProperties(['id', 'design']);
+            $id = $vendorData['id'];
+            $design = ($vendorData['design']) ? unserialize($vendorData['design']) : null;
+
+            $data = [
+                'iframeSrc' => $iframeSrc,
+                'id' => $id,
+                'design' => $design,
+            ];
+
+            // echo '<pre>';
+            // print_r($data['design']);
+            // die();
+
+            $this->global['pageTitle'] = 'TIQS : DESIGN';
+            $this->loadViews('warehouse/design', $this->global, $data, null, 'headerDesign');
+            return;
+        }
 
     }

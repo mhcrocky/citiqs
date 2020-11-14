@@ -67,6 +67,7 @@ class Debitor_model extends CI_Model {
     public function update($data) {
 
         $this->db->set('external_id', $data['external_id']);
+        $this->db->set('external_code', $data['external_code']);
         $this->db->set('payment_type', $data['payment_type']);
         $this->db->set('accounting', $data['accounting']);
         $this->db->where('id', $data['id']);

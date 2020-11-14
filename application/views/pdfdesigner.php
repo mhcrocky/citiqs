@@ -44,14 +44,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <!-- - - - - - - - - - - - - - - - - - - - - - - -->
         <!-- third party files .js / all are necessary -->
         <!-- - - - - - - - - - - - - - - - - - - - - - - -->
-        <script src="<?= base_url(); ?>assets/pdfdesigner/libs/jquery-contextmenu/jquery.contextmenu.min.js"></script>
-        <script src="<?= base_url(); ?>assets/pdfdesigner/libs/jquery-confirm/jquery.confirm.min.js"></script>
-        <script src="<?= base_url(); ?>assets/pdfdesigner/libs/jquery-wheelcolorpicker/jquery.wheelcolorpicker-3.0.5.min.js"></script>
+        <script src="<?php base_url(); ?>assets/pdfdesigner/libs/jquery-contextmenu/jquery.contextmenu.min.js"></script>
+        <script src="<?php base_url(); ?>assets/pdfdesigner/libs/jquery-confirm/jquery.confirm.min.js"></script>
+        <script src="<?php base_url(); ?>assets/pdfdesigner/libs/jquery-wheelcolorpicker/jquery.wheelcolorpicker-3.0.5.min.js"></script>
         <!-- - - - - - - - - - - - - - - - - - - - - - - -->
         <!-- editor files / all are necessary .js -->
         <!-- - - - - - - - - - - - - - - - - - - - - - - -->
-        <script src="<?= base_url(); ?>assets/pdfdesigner/js/fpdf-designer-contextmenus.js"></script>
-        <script src="<?= base_url(); ?>assets/pdfdesigner/js/jquery.fpdf-designer.js"></script>
+        <script src="<?php base_url(); ?>assets/pdfdesigner/js/fpdf-designer-contextmenus.js"></script>
+        <script src="<?php base_url(); ?>assets/pdfdesigner/js/jquery.fpdf-designer.js"></script>
 
 
         <!-- - - - - - - - - - - - - - - - - - - - - - - -->
@@ -61,14 +61,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <!-- - - - - - - - - - - - - - - - - - - - - - - -->
         <!-- third party files .css / all are necessary -->
         <!-- - - - - - - - - - - - - - - - - - - - - - - -->
-        <link href="<?= base_url(); ?>assets/pdfdesigner/libs/jquery-contextmenu/jquery.contextmenu.min.css" rel="stylesheet">
-        <link href="<?= base_url(); ?>assets/pdfdesigner/libs/jquery-confirm/jquery.confirm.min.css" rel="stylesheet">
-        <link href="<?= base_url(); ?>assets/pdfdesigner/libs/jquery-wheelcolorpicker/jquery.wheelcolorpicker.css" rel="stylesheet">
+        <link href="<?php base_url(); ?>assets/pdfdesigner/libs/jquery-contextmenu/jquery.contextmenu.min.css" rel="stylesheet">
+        <link href="<?php base_url(); ?>assets/pdfdesigner/libs/jquery-confirm/jquery.confirm.min.css" rel="stylesheet">
+        <link href="<?php base_url(); ?>assets/pdfdesigner/libs/jquery-wheelcolorpicker/jquery.wheelcolorpicker.css" rel="stylesheet">
         <!-- - - - - - - - - - - - - - - - - - - - - - - -->
         <!-- editor files / all are necessary .css -->
         <!-- - - - - - - - - - - - - - - - - - - - - - - -->
-        <link href="<?= base_url(); ?>assets/pdfdesigner/css/fpdf-designer-style.css" rel="stylesheet">
-        <link href="<?= base_url(); ?>assets/pdfdesigner/css/ruler.css" rel="stylesheet">
+        <link href="<?php base_url(); ?>assets/pdfdesigner/css/fpdf-designer-style.css" rel="stylesheet">
+        <link href="<?php base_url(); ?>assets/pdfdesigner/css/ruler.css" rel="stylesheet">
     </head>
 
     <body>
@@ -90,7 +90,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <!-- menu -->
                         <!-- - - - - - - - - - - - - - - - - - - - - - - -->
                         <div id="fpdf_designer_elements" class="col-12 pt-1">
-                            <a href="<?= base_url(); ?>PdfDesigner/help_editor" class="btn btn-success fdpf-element">Help</a>
+                            <a href="<?php base_url(); ?>PdfDesigner/help_editor" class="btn btn-success fdpf-element">Help</a>
                             <button class="btn btn-primary fdpf-element" id="send_fpdf">Preview</button>
                             <button class="btn btn-danger fdpf-element" id="clear_fpdf">Clear</button>
                             <!--<button class="btn btn-warning fdpf-element" id="save_design">Save</button>
@@ -193,7 +193,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     $colorForDefaultClass = 'class="blue" ';
                                 }
                                     ?>
-                                <option <?= $colorForDefaultClass; ?>value="<?= $savedTemplate->templateName; ?>"><?= $savedTemplate->templateName; ?></option>
+                                <option <?php $colorForDefaultClass; ?>value="<?php $savedTemplate->templateName; ?>"><?php $savedTemplate->templateName; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -253,7 +253,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div id="fpdf_designer_quickhelp" class="col p-4">
                             <div class="output-header"><span>Quick help</span><span class="float-right"><button class="btn btn-link" id="quick_info_hide">Hide Quick help</button></span></div>
                             <div>
-                                <small><p class="text-primary"><a href="<?= base_url(); ?>PdfDesigner/help_editor">Note: For help how to use the editor, please click on the green help button or here</a></p>
+                                <small><p class="text-primary"><a href="<?php base_url(); ?>PdfDesigner/help_editor">Note: For help how to use the editor, please click on the green help button or here</a></p>
                                 </small>
                                 <h2>How to use the editor</h2>
                                 <p><strong>Info:</strong> Due to the PDF paper size this should be opened with a desktop PC. This editor is not suitable for cell phones or tablets.</p>
@@ -298,9 +298,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
     /* create editor */
     var ajaxData = null,
             fpdf_designer = $('#fpdf_designer_paper_template').fpdf_designer({
-        'ajax_url': '<?= base_url(); ?>PdfDesigner/create',
-        'save_url': '<?= base_url(); ?>PdfDesigner/save',
-        'load_url': '<?= base_url(); ?>PdfDesigner/load'
+        'ajax_url': '<?php base_url(); ?>PdfDesigner/create',
+        'save_url': '<?php base_url(); ?>PdfDesigner/save',
+        'load_url': '<?php base_url(); ?>PdfDesigner/load'
     });
 
     $('#clear_fpdf').on('click', function () {
@@ -365,7 +365,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         }
 
         if (ajaxData.status === 'created') {
-            $('.jconfirm-content').html('<a href="<?= base_url(); ?>PdfDesigner/download/' + ajaxData.file + '" target="_blank" rel="noopener">Download PDF</a>');
+            $('.jconfirm-content').html('<a href="<?php base_url(); ?>PdfDesigner/download/' + ajaxData.file + '" target="_blank" rel="noopener">Download PDF</a>');
             $('.jconfirm-buttons').show();
         } else {
             $('.jconfirm-content').html(ajaxData.message);
@@ -409,7 +409,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             if (confirm('Are you sure you want to make this template default?')) {
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url() . "PdfDesigner/makeTemplateDefault" ?>",
+                    url: "<?php base_url() . "PdfDesigner/makeTemplateDefault" ?>",
                     data: {
                         templateName: templateName
                     },
@@ -430,7 +430,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             if (confirm('Are you sure you want to delete this template?')) {
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url() . "PdfDesigner/deleteTemplate" ?>",
+                    url: "<?php base_url() . "PdfDesigner/deleteTemplate" ?>",
                     data: {
                         templateName: templateName
                     },
@@ -455,7 +455,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     function updateList() {
         $.ajax({
             type: "POST",
-            url: "<?= base_url() . "PdfDesigner/refreshList"; ?>",
+            url: "<?php base_url() . "PdfDesigner/refreshList"; ?>",
             success: function (response) {
                 $("#savedTemplates").html(response);
             },

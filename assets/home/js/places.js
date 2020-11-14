@@ -1,26 +1,63 @@
 'use strict';
- 
-function getLocation(cityId, addressId, places, myRange) {
-    let city = document.getElementById(cityId);
+
+function getPlaceByLocation(location, places, myRange) {
+    let address = document.getElementById(location);
+    let range = document.getElementById(myRange);
+   
+
+    if (address.value) { 
+        let url = "ajaxdorian/getPlaceByLocation";
+        let post = {
+            'location' : address.value,
+            'range' : range.value
+        }
+
+        
+        address.style.border = '1px solid #ced4da';        
+
+        $.ajax({
+            url: url,
+            data: post,
+            type: 'POST',
+            success: function (response) {
+                $("#places").empty();
+                $("#places").append(response);
+                $('#places .places').sort(function(a, b) {
+                    return $(a).data('distance') - $(b).data('distance');
+                }).appendTo('#places');
+                $(".places").removeClass("fade");
+                
+            },
+            error: function (err) {
+                console.dir(err);
+            }
+        });
+
+    } else {
+        address.style.border = (!address.value) ? '1px solid #f00' : '1px solid #ced4da';
+        alertify.error('City and address are required');
+    }
+}
+
+/*
+function getLocation(addressId, places, myRange) {
     let address = document.getElementById(addressId);
     let range = document.getElementById(myRange);
 
-    if (city.value && address.value) {
+    if (city.value && address.value) { 
         let url = globalVariables.ajax + 'getLocation';
         let post = {
-            'city' : city.value,
             'address' : address.value,
-            'myRange' : range.value
         }
+        console.log(globalVariables.ajax);
 
-        city.style.border = '1px solid #ced4da';
+        
         address.style.border = '1px solid #ced4da';        
 
         let params = [range.value,places];
         sendAjaxPostRequest(post, url, 'getLocation', calculateDistance, [params]);
         //, callFunction = null, functionArg = []
     } else {
-        city.style.border = (!city.value) ? '1px solid #f00' : '1px solid #ced4da';
         address.style.border = (!address.value) ? '1px solid #f00' : '1px solid #ced4da';
         alertify.error('City and address are required');
     }
@@ -49,7 +86,7 @@ function calculateDistance(params,center) {
         }
         place.style.display = "none";
         let params = [place,range];
-        sendAjaxPostRequest(post, url, 'calculateDistance', showDistance, [params]);
+        sendAjaxPostRequest(post, url, 'calculateDistance', showResult, [params]);
     }
 }
 
@@ -66,3 +103,16 @@ function showDistance(params, distance) {
     
     
 }
+
+function showResult(params, distance) {
+    let place = params[0];
+    let range = params[1];
+    if(distance>range){
+        place.style.display = "none";
+    } else {
+        place.style.display = "";
+    }
+    
+    
+}
+*/

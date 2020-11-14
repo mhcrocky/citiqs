@@ -97,19 +97,33 @@
 <?php  } elseif ($this->view === 'check424/registerVisitor') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/checkin.css">
 <?php  } elseif ($this->view === 'bizdir/index') { ?>
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/bizdirstyle.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/bizdirstyle.css">
 <?php } elseif ($this->view === 'publicorders/selectType') { ?>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/selectSpot.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/selectSpot.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/bigsquare.css">
 <?php } elseif ($this->view === 'publicorders/makeOrderNew') { ?>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/slick.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/slick-theme.css"/>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/shop-with-slider.css"/> 
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/shop-with-slider.css"/>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/order-popup.css"/>
 <?php } elseif ($this->view === 'paysuccesslink') { ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
-<?php }  elseif ($this->view === 'publicorders/buyerDetails') { ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
+<?php } elseif ($this->view === 'publicorders/buyerDetails') { ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
+<?php } elseif ($this->view === 'warehouse/design') { ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/design.css">
+<?php } elseif ($this->view === 'publicorders/closed') { ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/closed.css">
+<?php } elseif ($this->view === 'pos/pos') { ?>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/slick.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/slick-theme.css"/>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/shop-with-slider.css"/>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/order-popup.css"/>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/pos.css">
+<?php } elseif (strpos($this->view, 'paysuccesslink/') !== false) { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
 <?php } ?>

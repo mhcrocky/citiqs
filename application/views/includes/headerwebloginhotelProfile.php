@@ -22,6 +22,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/magnific-popup.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/alertify.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>alertify_default.min.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/keyboard.css" />
     <?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
     <style>
 	    #myModal {
@@ -42,6 +43,10 @@
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jquery.magnific-popup.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/alertify.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>  
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/keyboard.js"></script>
+    <script>
+
+    </script>
 </head>
 <body>
    <header class="header">

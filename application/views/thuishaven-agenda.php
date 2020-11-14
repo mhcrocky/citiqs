@@ -60,7 +60,7 @@
 										<?php echo $day->ReservationDescription?>
 									</p>
 									<p>
-										<?= $this->language->Line(date("l", strtotime($date)), date("l", strtotime($date)));?>
+										<?php echo $this->language->Line(date("l", strtotime($date)), date("l", strtotime($date)));?>
 									</p>
 
 								</div>
@@ -72,7 +72,7 @@
 							<div class="column-right">
 								<div  align="right">
 									<a href="<?php echo $this->baseUrl; ?>thuishavensales/<?php echo date("yymd", strtotime($day->ReservationDateTime)).'/'.$day->id ?>" target="_self" class="button button-<?php echo $day->Background?> mb-25" style="font-family: caption-light;font-size: small;margin-left: -10px">
-										<?= $this->language->Line("BOOKING-001A","BOEK");?>
+										<?php echo $this->language->Line("BOOKING-001A","BOEK");?>
 									</a>
 								</div>
 							</div>

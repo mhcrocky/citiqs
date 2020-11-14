@@ -1,11 +1,41 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
+<audio id="myAudio">
+	<source src="https://tiqs.com/alfred/assets/home/sound/deskbell.mp3" type="audio/mpeg">
+	Your browser does not support the audio element.
+</audio>
 <style>
     #ordersList td, #ordersList th {
         text-align: center;
     }
 </style>
+<script>
+	setInterval(function(){
+
+		location.reload();
+
+	}, 90000);
+</script>
+<script>
+
+	var x = document.getElementById("myAudio");
+
+	function playAudio() {
+		x.play();
+	}
+
+	function pauseAudio() {
+		x.pause();
+	}
+
+	// $(document).ready( function () {
+	// 	playAudio();
+	// });
+
+</script>
+
 <main class="row" style="margin:0px 20px">
-    <h1 style="margin:70px 0px 20px 0px">Order list</h1>
+
+	<h1 style="margin:70px 0px 20px 0px">Order list</h1>
     <div class="col-sm-12" style="text-align:center">
         MINUTES ADDED: <span id="val"><?php echo $vendorData['busyTime']; ?></span>
         <a

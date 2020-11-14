@@ -1,42 +1,19 @@
 
-<body class="edit">
+<?php $this->load->view('includes/email_designer_header'); ?>
+<body class="edit mx-auto mt-3">
+<div style="border: 1px solid gray !important;" class="navbar navbar-inverse navbar-layoutit mt-3">
+    <div class="navbar-header">
+        <button data-target="navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+            <span class="glyphicon-bar"></span>
+            <span class="glyphicon-bar"></span>
+            <span class="glyphicon-bar"></span>
+        </button>
 
-<div class="navbar navbar-inverse navbar-fixed-top navbar-layoutit">
-<!--        <button data-target="navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">-->
-<!--            <span class="glyphicon-bar"></span>-->
-<!--            <span class="glyphicon-bar"></span>-->
-<!--            <span class="glyphicon-bar"></span>-->
-<!--        </button>-->
-
-	<!--		<a href="--><?php //echo $this->baseUrl; ?><!--loggedin" class="nav-logo">-->
-	<!--			<img src="--><?php //echo $this->baseUrl; ?><!--assets/home/images/tiqslogonew.png" alt="">-->
-	<!--			<div></div>-->
-	<!--		</a>-->
-
-<!--</div>-->
-
-
+    </div>
     <div class="collapse navbar-collapse">
-<!--		<a href="--><?php //echo $this->baseUrl; ?><!--loggedin" class="nav-logo">-->
-<!--			<img src="--><?php //echo $this->baseUrl; ?><!--assets/home/images/tiqslogonew.png" alt="">-->
-<!--			<div></div>-->
-<!--		</a>-->
 
         <ul class="nav" id="menu-layoutit">
             <li>
-				<div class="btn-group">
-					<a href="<?php echo $this->baseUrl; ?>vatreport"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/vatdashboardnew.png" title="FINANCIAL"/></a>
-					<a href="<?php echo $this->baseUrl; ?>dayreport"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/dashboardnew.png" title="DASHBOARD"/></a>
-					<a href="<?php echo $this->baseUrl; ?>warehouse"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/reports.png" title="REPORTS"/></a>
-					<a href="<?php echo $this->baseUrl; ?>product_categories"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/category.png" title="CATEGORY"/></a>
-					<a href="<?php echo $this->baseUrl; ?>product_types"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/types.png" title="TYPES"/></a>
-					<a href="<?php echo $this->baseUrl; ?>products"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/products.png" title="PRODUCTS"/></a>
-					<a href="<?php echo $this->baseUrl; ?>orders"><img width="40px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/qrorder.png" title="ORDERS"/></a>
-					<a href="<?php echo $this->baseUrl; ?>printers"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/print.png" title="PRINTERS"/></a>
-					<a href="<?php echo $this->baseUrl; ?>spots"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/spot.png" title="SPOTS"/></a>
-					<a href="<?php echo $this->baseUrl; ?>visitors"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/person.png" title="VISITORS"/></a>
-					<a href="<?php echo $this->baseUrl; ?>loggedin"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/back.png" title="BACK"/></a>
-				</div>
                 <div class="btn-group">
                     <a class="btn btn btn-primary" href="<?php echo base_url().'emaildesigner'?>"  >Emails list</a>
                 </div>
@@ -52,9 +29,8 @@
 </div><!--/.navbar-fixed-top -->
 
 <div class="row">
-    <div class="sidebar-nav">
+    <div style="position:static;margin-bottom:10px;margin-left: 3%;" class="col-md-3 sidebar-nav">
         <!-- Nav tabs -->
-
         <div id="elements">
             <ul class="nav nav-list accordion-group">
                 <li class="rows" id="estRows">
@@ -151,7 +127,7 @@
                                 <table width="640" class="main" cellspacing="0" cellpadding="0" border="0" align="center" style="background-color:#FFFFFF;" data-type="image">
                                     <tbody>
                                     <tr>
-                                        <td align="center" style="padding:15px 50px 15px 50px;" class="image">
+                                        <td align="center" style="padding:15px 50px 15px 50px;">
                                             <img class=""  border="0"  align="one_image" style="display:block;max-width:540px" alt="" src="https://via.placeholder.com/350x150" tabindex="0">
                                         </td>
                                     </tr>
@@ -326,185 +302,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- IMG + TEXT 2 columns -->
-                    <div class="lyrow dragitem">
-                        <a href="#close" class="remove label label-danger"><i class="glyphicon-remove glyphicon"></i></a>
-                        <span class="drag label label-default hide"><i class="glyphicon glyphicon-move"></i></span>
-                        <span class="configuration"> <a href="#" class="btn btn-default btn-xs clone"><i class="fa fa-clone"></i> </a>  </span>
 
-                        <div class="preview">
-                            <div class="icon image-text-incol-2"></div>
-                            <label>Image/Text</label>
-                        </div>
-                        <div class="view">
-                            <div class="row clearfix">
-                                <table class="main" width="640" cellspacing="0" cellpadding="0" border="0" bgcolor="#FFFFFF" align="center" style="background-color:#FFFFFF;" data-type="imgtxtincol">
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <table class="main" align="center" bgcolor="#FFFFFF" border="0" cellpadding="0" cellspacing="0" width="640">
-                                                <tbody>
-                                                <tr>
-                                                    <td class="image-caption" style="padding: 0px 50px 0px 50px;">
-                                                        <table class="image-caption-column" align="left" border="0" cellpadding="0" cellspacing="0" width="255">
-                                                            <tbody>
-                                                            <tr>
-                                                                <td height="15" width="100%"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="image-caption-content image" style="font-family: Arial; font-size: 13px; color: #000000;">
-                                                                    <img src="https://via.placeholder.com/350x150" alt="" style="display: block;" height="154" align="2" border="0" width="255">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td height="15" width="100%"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="image-caption-content text" style="font-family: Arial; font-size: 13px; color: #000000; line-height: 22px;" align="left">
-                                                                    <p style="margin: 0px 0px 10px 0px;        line-height: 22px;"> Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </P>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="image-caption-bottom-gap" height="5" width="100%"></td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                        <table class="image-caption-column" align="right" border="0" cellpadding="0" cellspacing="0" width="255">
-                                                            <tbody>
-                                                            <tr>
-                                                                <td class="image-caption-top-gap" height="15" width="100%"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="image-caption-content image" style="font-family: Arial; font-size: 13px; color: #000000;">
-                                                                    <img src="https://via.placeholder.com/350x150" alt="" style="display: block;" height="154" align="2" border="0" width="255">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td height="15" width="100%"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="image-caption-content text" style="font-family: Arial; font-size: 13px; color: #000000; line-height: 22px;" align="left">
-                                                                    <p style="margin: 0px 0px 10px 0px;        line-height: 22px;">  Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td height="5" width="100%"></td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- IMG +TEXT 3 columns -->
-                    <div class="lyrow dragitem">
-                        <a href="#close" class="remove label label-danger"><i class="glyphicon-remove glyphicon"></i></a>
-                        <span class="drag label label-default hide"><i class="glyphicon glyphicon-move"></i></span>
-                        <span class="configuration"> <a href="#" class="btn btn-default btn-xs clone"><i class="fa fa-clone"></i> </a>  </span>
-
-                        <div class="preview">
-                            <div class="icon image-text-incol-3"></div>
-                            <label>Image/Text</label>
-                        </div>
-                        <div class="view">
-                            <div class="row clearfix">
-                                <table class="main" width="640" cellspacing="0" cellpadding="0" border="0" bgcolor="#FFFFFF" align="center" style="background-color:#FFFFFF;" data-type="imgtxtincol">
-                                    <tbody>
-                                    <tr>
-                                        <td class="image-caption" style="padding: 0px 50px 0px 50px;">
-                                            <table class="image-caption-container" align="left" border="0" cellpadding="0" cellspacing="0" width="350">
-                                                <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <table class="image-caption-column" align="left" border="0" cellpadding="0" cellspacing="0" width="160">
-                                                            <tbody>
-                                                            <tr>
-                                                                <td height="15" width="100%"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="image-caption-content image" style="font-family: Arial; font-size: 13px; color: #000000;">
-                                                                    <img src="https://via.placeholder.com/350x150" alt="" style="display: block;" height="154" align="2" border="0" width="160">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td height="15" width="100%"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="image-caption-content text" style="font-family: Arial; font-size: 13px; color: #000000; line-height: 22px;" align="left">
-                                                                    <p style="margin: 0px 0px 10px 0px;        line-height: 22px;">  Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="image-caption-bottom-gap" height="5" width="100%"></td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                        <table class="image-caption-column" align="right" border="0" cellpadding="0" cellspacing="0" width="160">
-                                                            <tbody>
-                                                            <tr>
-                                                                <td class="image-caption-top-gap" height="15" width="100%"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="image-caption-content image" style="font-family: Arial; font-size: 13px; color: #000000;">
-                                                                    <img src="https://via.placeholder.com/350x150" alt="" style="display: block;" height="154" align="2" border="0" width="160">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td height="15" width="100%"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="image-caption-content text" style="font-family: Arial; font-size: 13px; color: #000000; line-height: 22px;" align="left">
-                                                                    <p style="margin: 0px 0px 10px 0px;        line-height: 22px;">Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="image-caption-bottom-gap" height="5" width="100%"></td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                            <table class="image-caption-column" align="right" border="0" cellpadding="0" cellspacing="0" width="160">
-                                                <tbody>
-                                                <tr>
-                                                    <td class="image-caption-top-gap" height="15" width="100%"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="image-caption-content image" style="font-family: Arial; font-size: 13px; color: #000000;">
-                                                        <img src="https://via.placeholder.com/350x150" alt="" style="display: block;" height="154" align="2" border="0" width="160">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td height="15" width="100%"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="image-caption-content text" style="font-family: Arial; font-size: 13px; color: #000000; line-height: 22px;" align="left">
-                                                        <p style="margin: 0px 0px 10px 0px;        line-height: 22px;">Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td height="5" width="100%"></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
                     <!-- SOCIAL LINKS -->
                     <div class="lyrow dragitem">
                         <a href="#close" class="remove label label-danger"><i class="glyphicon-remove glyphicon"></i></a>
@@ -580,15 +379,16 @@
 
             <br>
             <label for="template_name">Template Name</label>
-            <input type="text" name="template_name" id="template_name" value="<?php echo isset($email_template) ? $email_template->template_name : '' ?>">
-
+            <input style="border:1px solid #ced4da;" type="text" name="template_name" id="template_name" required value="<?php echo isset($email_template) ? $email_template->template_name : '' ?>">
+            <div style="visibility: hidden;" class="required text-danger text-center" id="required">&nbsp &nbsp &nbsp This field is required</div>
         </div>
         <!-- END DROP ELEMENTS -->
         <!-- START ELEMENT -->
         <div  class="hide" id="settings">
             <form class="form-inline" id="common-settings">
-                <h4 class="text text-info">Padding</h4>
-
+                <h4 class="text-left text-info">Padding</h4>
+                <br>
+                <br>
                 <center>
                     <table>
                         <tbody>
@@ -613,7 +413,7 @@
 
             </form>
 
-            <h4  class="text text-info">Style</h4>
+            <h4 style="visibility: hidden;" class="text-center text-info">Style</h4>
             <form id="background"  class="form-inline">
                 <div class="form-group">
                     <label for="bgcolor">Background</label>
@@ -966,7 +766,7 @@
                 </div>
             </div>
 
-            <div class="text text-right" style="margin-top:5px">
+            <div style="position:static;" class="text-right mx-auto" style="margin-top:5px">
                 <a href="#" id="saveElement" class="btn btn-info">done</a>
             </div>
         </div>
@@ -977,9 +777,9 @@
 
 
 
-    <a href="#" class="btn btn-info btn-xs" id="edittamplate">Edit background</a>
-    <div id="tosave"   data-paramone="11" data-paramtwo="22" data-paramthree="33">
-
+    <a style="margin-bottom:10px;margin-left:14px;height: 25px;" href="#" class="btn btn-info btn-xs" id="edittamplate">Edit background</a>
+    <div id="tosave" class="col-md-7 table-responsive"  data-paramone="11" data-paramtwo="22" data-paramthree="33">
+    
 
         <?php
         if (!isset($template_html) OR strlen($template_html) <= 0) {  ?>
@@ -1062,7 +862,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+<div class="modal" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="min-width:120px">
             <div class="modal-header">
@@ -1074,7 +874,7 @@
                     <a class="btn btn-default btn-sm " href="#">smalltablet</a>
                     <a class="btn btn-default btn-sm " href="#">ipad</a>
                 </div>
-                <iframe id="previewFrame"  class="iphone"></iframe>
+                <iframe width="100%" id="previewFrame" class="iphone">fhfhfhfhfh</iframe>
             </div>
             <div class="modal-footer">
 
@@ -1122,6 +922,11 @@
 
 <script>
     $(document).ready(function(){
+        $('#template_name').on('keyup', function(){
+            $('#required').css('visibility', 'hidden');
+            $('#template_name').css('border', '1px solid #ced4da');
+            $('#template_name').css('border-color', '#ced4da');
+        });
 
         //html5 uploader
         $('.button').click(function(){

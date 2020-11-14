@@ -75,22 +75,22 @@
 						<input style="font-family:'caption-light'; border-radius: 50px" type="email"  name="emailverify" required value="<?php echo $email; ?>" onblur="checkEmail(this)" class="form-control" placeholder="Repeat email for verification"  />
 					</div>
 					<div class="form-group has-feedback">
-						<input type="tel" id="mobile" name="user[mobile]" disabled  class="form-control" style="display: none; font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->line("SEND-160",'Your mobile number');?>" />
+						<input type="tel" id="mobile" name="user[mobile]" disabled  class="form-control" style="display: none; font-family:'caption-light'; border-radius: 50px;" placeholder="<?php echo $this->language->line("SEND-160",'Your mobile number');?>" />
 					</div>
 					<div class="form-group has-feedback">
-						<input id="username" disabled type="text" name="user[username]" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("SEND-070",'Your full name');?>" />
+						<input id="username" disabled type="text" name="user[username]" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("SEND-070",'Your full name');?>" />
 					</div>
 					<div class="form-group has-feedback">
-						<input id="address" disabled type="text" name="user[address]" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("SEND-080",'Your address');?>" />
+						<input id="address" disabled type="text" name="user[address]" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("SEND-080",'Your address');?>" />
 					</div>
 					<div class="form-group has-feedback">
-						<input id="addressa" disabled type="text" name="user[addressa]" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("SEND-090",'Extra address line');?>" />
+						<input id="addressa" disabled type="text" name="user[addressa]" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("SEND-090",'Extra address line');?>" />
 					</div>
 					<div class="form-group has-feedback">
-						<input type="text" id="zipcode" name="user[zipcode]" disabled class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("SEND-100",'Your zipcode');?>" />
+						<input type="text" id="zipcode" name="user[zipcode]" disabled class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("SEND-100",'Your zipcode');?>" />
 					</div>
 					<div class="form-group has-feedback">
-						<input type="text" id="city" disabled  name="user[city]" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("SEND-110",'City');?>" />
+						<input type="text" id="city" disabled  name="user[city]" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("SEND-110",'City');?>" />
 					</div>
 					<div class="form-group has-feedback">
 						<select class="form-control selectBox" id="country" name="user[country]" disabled style="display: none; font-family:'caption-light';  border-radius:50px; ">

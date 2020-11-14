@@ -985,7 +985,6 @@ div.filter-sidebar ul li a {
 	width: 35px;
 	min-width: 35px;
 	text-align: right;
-	
 }
 
 .checkout-table__num-order b{
@@ -1354,7 +1353,7 @@ footer {
 		justify-content: space-between;
 	}
 	
-	.checkout-table-content__your-choice ..checkout-table__single-element{
+	.checkout-table-content__your-choice .checkout-table__single-element{
 		justify-content: space-between;
 	}
 

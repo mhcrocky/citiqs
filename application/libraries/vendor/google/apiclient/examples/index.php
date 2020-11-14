@@ -9,7 +9,7 @@
 <?php return ?>
 <?php endif ?>
 
-<?= pageHeader("PHP Library Examples"); ?>
+<?php pageHeader("PHP Library Examples"); ?>
 
 <?php if (isset($_POST['api_key'])): ?>
 <?php setApiKey($_POST['api_key']) ?>
@@ -40,4 +40,4 @@
   <li><a href="multi-api.php">An example of using multiple APIs.</a></li>
 </ul>
 
-<?= pageFooter(); ?>
+<?php pageFooter(); ?>

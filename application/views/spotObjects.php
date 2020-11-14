@@ -40,9 +40,9 @@
                     ?>
                     <div class="grid-item">
                         <div class="item-header">
-                            <p class="item-description"><?= $object['objectName']; ?></p>
-                            <p class="item-category"><?= $object['startTime']; ?></p>
-                            <p class="item-category"><?= $object['endTime']; ?></p>
+                            <p class="item-description"><?php $object['objectName']; ?></p>
+                            <p class="item-category"><?php $object['startTime']; ?></p>
+                            <p class="item-category"><?php $object['endTime']; ?></p>
                         </div><!-- end item header -->
                         <div>
                             <p style="text-align:center">

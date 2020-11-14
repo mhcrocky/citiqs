@@ -96,7 +96,7 @@ if ($client->getAccessToken()) {
 <div class="box">
 <?php if (isset($authUrl)): ?>
   <div class="request">
-    <a class='login' href='<?= $authUrl ?>'>Connect Me!</a>
+    <a class='login' href='<?php $authUrl ?>'>Connect Me!</a>
   </div>
 <?php else: ?>
   <div class="data">
@@ -106,4 +106,4 @@ if ($client->getAccessToken()) {
 <?php endif ?>
 </div>
 
-<?= pageFooter(__FILE__) ?>
+<?php pageFooter(__FILE__) ?>

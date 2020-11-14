@@ -31,7 +31,7 @@ class Emaildesigner extends BaseControllerWeb
             'emails' => $this->email_templates_model->get_emails_by_user($this->user_model->id)
         ];
 
-        $this->loadViews("email_designer_list", $this->global, $data, null, 'headerWarehouse');
+        $this->loadViews("email_designer_list", $this->global, $data, null, 'headerDesign');
     }
 
     public function edit($email_id = null)
@@ -42,7 +42,8 @@ class Emaildesigner extends BaseControllerWeb
         $this->global = [
             'user' => $this->user_model,
             'images_path' => base_url() . 'assets/user_images/' . $this->user_model->id,
-            'template_id' => $email_id
+            'template_id' => $email_id,
+            'pageTitle' => 'Email editor'
         ];
 
         $data = [];
@@ -53,7 +54,7 @@ class Emaildesigner extends BaseControllerWeb
             $data['template_html'] = read_file(FCPATH . 'assets/email_templates/' . $this->user_model->id . '/' . $email_template->template_file);
         }
 
-        $this->loadViews("email_designer", $this->global, $data, 'email_designer_footer', 'email_designer_header');
+        $this->loadViews("email_designer", $this->global, $data, 'email_designer_footer', 'headerWarehouse');
     }
 }
 

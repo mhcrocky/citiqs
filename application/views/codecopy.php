@@ -70,7 +70,7 @@
 		<div class="flex-column align-start">
 			<div align="center">
 				<h2 class="heading">
-					<?=$this->language->line("CODE-010",'VERIFICATION CODE');?>
+					<?php echo $this->language->line("CODE-010",'VERIFICATION CODE');?>
 				</h2>
 			</div>
 			<div style="font-family: caption-light; font-size: larger">
@@ -131,7 +131,7 @@
 							<div class="row">
 								<div class="form-group has-feedback" >
 									<div style="text-align: center; ">
-										<input type="submit" class="button button-orange" value="<?=$this->language->line("CODE-A240",'VERIFY THAT IT IS YOU');?>" style="border: none" />
+										<input type="submit" class="button button-orange" value="<?php echo $this->language->line("CODE-A240",'VERIFY THAT IT IS YOU');?>" style="border: none" />
 									</div>
 								</div>
 							</div>
@@ -175,12 +175,12 @@
 	<div class="col-half background-yellow">
 		<div class="background-orange-light height">
 			<div class="width-650">
-				<h2 class="heading mb-35"><?=$this->language->line("CODE-250",'<a href="https://tiqs.com/lostandfound/personaltagsinfo">GET YOUR FREE TIQS <br>PERSONAL LOST + FOUND<br>STICKERS</a>');?></h2>
+				<h2 class="heading mb-35"><?php echo $this->language->line("CODE-250",'<a href="https://tiqs.com/lostandfound/personaltagsinfo">GET YOUR FREE TIQS <br>PERSONAL LOST + FOUND<br>STICKERS</a>');?></h2>
 				<p style="font-family: caption-light; font-size: larger"> WE ARE THE WORLD LARGEST LOST AND FOUND SOLUTION, TOGETHER WE CAN CREATE THE WORLD LARGEST LOST AND FOUND COMMUNITY! GET YOUR STICKERS AND TAGS HERE, USE THEM FOR YOUR OWN ITEMS, GIVE THEM TO YOUR FRIENDS, FAMILY AND OR OTHER RELATIVES AND ACQUAINTANCES. ORDER YOUR TIQS STICKER/TAG-PACK HERE FOR FREE! </p>
 				<p style="font-family: caption-light; font-size: x-small"> (Only shipment will be charged) </p>
-				<a style="color:#ffffff" class='how-we-works-link' href="<?php echo base_url(); ?>howitworksconsumer"><?=$this->language->line("CODE-260",'MORE INFO, HOE IT WORKS');?></a>
-				<p class="text-content mb-50"><?=$this->language->line("CODE-70",'LOST BY YOU, <br> RETURNED BY US');?></p>
-				<a href="<?php echo base_url(); ?>check" class="button button-orange mb-35"><?=$this->language->line("CODE-280",'ORDER YOUR FREE STICKERS');?></a>
+				<a style="color:#ffffff" class='how-we-works-link' href="<?php echo base_url(); ?>howitworksconsumer"><?php echo $this->language->line("CODE-260",'MORE INFO, HOE IT WORKS');?></a>
+				<p class="text-content mb-50"><?php echo $this->language->line("CODE-70",'LOST BY YOU, <br> RETURNED BY US');?></p>
+				<a href="<?php echo base_url(); ?>check" class="button button-orange mb-35"><?php echo $this->language->line("CODE-280",'ORDER YOUR FREE STICKERS');?></a>
 			</div>
 			<div class="text-center mb-30 mobile-hide align="center">
 			<img border="0" src="<?php echo base_url(); ?>assets/home/images/TIQSKeys.png" alt="tiqs" width="220" height="175" />
@@ -189,7 +189,7 @@
 	</div>
 	<div class="background-yellow height-50">
 		<div class="width-650">
-			<h2 class="heading mb-35"><?=$this->language->line("CODE-251",'BECOME A TIQS AMBASSADOR.');?></h2>
+			<h2 class="heading mb-35"><?php echo $this->language->line("CODE-251",'BECOME A TIQS AMBASSADOR.');?></h2>
 			<p style="font-family: caption-light; font-size: larger">BRAND AMBASSADORS ARE ENDORSING OUR PRODUCTS AND SERVICES. THESE EFFORTS ARE BORNE OUT OF GENUINE APPRECIATION FOR THE BRAND.
 				THERE ARE NO FIXED QUALIFICATIONS. OUR BRAND AMBASSADORS ARE STUDENTS, HOUSEWIVES, OFFICE WORKERS AND/OR PROFESSIONALS. AS LONG AS THEY HAVE GENUINE APPRECIATION FOR THE BRAND AND SOLUTIONS.
 				THIS MEANS THAT OUR BRAND AMBASSADOR CAN BE. . . . . WELL, ANYONE, EVERY WHERE. </p>
@@ -198,12 +198,12 @@
 			<form action="<?php echo base_url(); ?>loginMe" method="post" class='homepage-form'>
 				<form action="<?php echo base_url(); ?>checkregister" method="post">
 					<div class="form-group has-feedback">
-						<input type="email" id="email" class="form-control" style="font-family:'caption-light'; border-radius: 50px; " placeholder="<?=$this->language->line("CODE-252",'Your e-mail');?>" id="brandemail" name="email" onfocusout="myFunctionBrand(this.value)" required />
+						<input type="email" id="email" class="form-control" style="font-family:'caption-light'; border-radius: 50px; " placeholder="<?php echo $this->language->line("CODE-252",'Your e-mail');?>" id="brandemail" name="email" onfocusout="myFunctionBrand(this.value)" required />
 					</div>
 
 					<p id="brandUnkownAddressText" style="font-family:'caption-light'; margin-bottom: 10px; display:none; font-size:100%; color:#ffffff;  text-align: left" >
-						<?=$this->language->line("CODE-290",'THANKS, FOR YOUR APPLICATION AS BRAND AMBASSADOR FOR SUPPORTING TO THE WORLD LARGEST HONEST LOST AND FOUND COMMUNITY!')?>
-						<?=$this->language->line("CODE-300",'
+						<?php echo $this->language->line("CODE-290",'THANKS, FOR YOUR APPLICATION AS BRAND AMBASSADOR FOR SUPPORTING TO THE WORLD LARGEST HONEST LOST AND FOUND COMMUNITY!')?>
+						<?php echo $this->language->line("CODE-300",'
                                 Please state your Name, home (or other physical address). 
                                 Your personal data is encrypted stored for security reasons 
                                 and we do not ask and show this information again, without login, to protect your personal data. 
@@ -214,30 +214,30 @@
 					</p>
 
 					<div class="form-group has-feedback">
-						<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("CODE-310",'Your full name');?>" id="brandname" name="name"  />
+						<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("CODE-310",'Your full name');?>" id="brandname" name="name"  />
 					</div>
 
 					<div class="form-group has-feedback">
-						<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("CODE-320",'Your address');?>" id="brandaddress" name="address"  />
+						<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("CODE-320",'Your address');?>" id="brandaddress" name="address"  />
 					</div>
 
 					<div class="form-group has-feedback">
-						<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("CODE-330",'Extra address line');?>" id="brandaddressa" name="addressa"  />
+						<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("CODE-330",'Extra address line');?>" id="brandaddressa" name="addressa"  />
 					</div>
 
 					<div class="form-group has-feedback">
-						<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("CODE-340",'Your zipcode');?>" id="brandzipcode" name="zipcode" />
+						<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("CODE-340",'Your zipcode');?>" id="brandzipcode" name="zipcode" />
 					</div>
 
 					<div class="form-group has-feedback">
-						<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("CODE-350",'City');?>" id="city" name="brandcity"  />
+						<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("CODE-350",'City');?>" id="city" name="brandcity"  />
 
 					</div>
 
 					<div class="selectWrapper" style="display: none" id="brandcountry1">
 						<select class="selectBox" id="brandcountry" name="country" style="display: none; font-family:'caption-light';" required />
 						<option value="">
-							<?=$this->language->line("CODE-360","Select your country");?>
+							<?php echo $this->language->line("CODE-360","Select your country");?>
 						</option>
 						<option value="AF">Afghanistan</option>
 						<option value="AX">Åland Islands</option>
@@ -493,7 +493,7 @@
 
 					<div class="form-group has-feedback" >
 						<div style="text-align: center; margin-bottom: 30px ">
-							<input type="submit" class="button button-orange" value="<?=$this->language->line("CODE-370",'APPLY');?>" style="border: none" />
+							<input type="submit" class="button button-orange" value="<?php echo $this->language->line("CODE-370",'APPLY');?>" style="border: none" />
 						</div>
 					</div>
 

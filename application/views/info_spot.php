@@ -54,68 +54,68 @@
 		</div>
 		<div class="mt-50 div-only-mobile" >
 			<div class="contact-text-box align-center" style="margin-left: 100px">
-				<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?=$this->language->line('INFOBUSINESS-SPOT-A0101','GET YOUR ACCOUNT');?></a>
+				<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php echo $this->language->line('INFOBUSINESS-SPOT-A0101','GET YOUR ACCOUNT');?></a>
 			</div>
 
 		</div>
 		<div class="col-half background-blue col-half-mobile height-100 contact-text">
 				<div align="left">
-					<p ><?=$this->language->line("BUSINESS-SPOT-100001",'WHY TIQS-SPOT?');?></p>
+					<p ><?php echo $this->language->line("BUSINESS-SPOT-100001",'WHY TIQS-SPOT?');?></p>
 					<div class="contact-text-box">
 						<div class="mb-35 div-no-mobile" align="right" style="margin-top: -50px">
-							<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?=$this->language->line('INFOBUSINESS-SPOT-A0101','GET YOUR ACCOUNT');?></a>
+							<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php echo $this->language->line('INFOBUSINESS-SPOT-A0101','GET YOUR ACCOUNT');?></a>
 						</div>
 						<p style="font-size: medium; font-weight: bold">
-							<?=$this->language->line("BUSINESS-SPOT-100002",'1. ABOUT SPOT')?><br>
+							<?php echo $this->language->line("BUSINESS-SPOT-100002",'1. ABOUT SPOT')?><br>
 						</p>
 						<p class="smalltext">
-							<?=$this->language->line("BUSINESS-SPOT-100003a",' Our online reservation system is a feature-rich web solution which enables you to set
+							<?php echo $this->language->line("BUSINESS-SPOT-100003a",' Our online reservation system is a feature-rich web solution which enables you to set
 							it up as per your specific needs, manage time slots and availability online,
 							handle clients data and requests, add staff to manage reservations, and more.');?>
 						</p>
 						<p style="font-size: medium; font-weight: bold">
-							<?=$this->language->line("BUSINESS-SPOT-100004",'2. STANDARDIZED WORKFLOW');?>
+							<?php echo $this->language->line("BUSINESS-SPOT-100004",'2. STANDARDIZED WORKFLOW');?>
 						</p>
 						<p class="smalltext">
-							<?=$this->language->line("BUSINESS-SPOT-100005",'Upload an interactive restaurant & table map to your website.
+							<?php echo $this->language->line("BUSINESS-SPOT-100005",'Upload an interactive restaurant & table map to your website.
 							Add your terms & conditions that each customer has to accept before booking.
 							Manage capacity and adjust booking availability accordingly.
 							Print booking schedule & details to organize your work better.
 							Add and edit your restaurant opening hours online.');?>
 						<p style="font-size: medium; font-weight: bold">
-							<?=$this->language->line("BUSINESS-SPOT-100006",'3. RESERVATION BOOKING AUTOMATION');?>
+							<?php echo $this->language->line("BUSINESS-SPOT-100006",'3. RESERVATION BOOKING AUTOMATION');?>
 						</p>
 
 						<p class="smalltext">
-							<?=$this->language->line("BUSINESS-SPOT-100007",'Set up your own customized 24/7 open online reservation booking system. 
+							<?php echo $this->language->line("BUSINESS-SPOT-100007",'Set up your own customized 24/7 open online reservation booking system. 
 							Reduce phone calls
 							and eliminate the risk of double bookings. You can choose your own booking rules and create an
 							automated booking process by editing various admin options and settings.
 						');?>
 						<p style="font-size: medium; font-weight: bold">
-							<?=$this->language->line("BUSINESS-SPOT-100003b",'4. LESS IMPACT ON THE INTERNAL PROCESS');?>
+							<?php echo $this->language->line("BUSINESS-SPOT-100003b",'4. LESS IMPACT ON THE INTERNAL PROCESS');?>
 						</p>
 						<p class="smalltext">
-							<?=$this->language->line("BUSINESS-SPOT-100008",'Set maximum reservation length for a booking.
+							<?php echo $this->language->line("BUSINESS-SPOT-100008",'Set maximum reservation length for a booking.
 						Define and charge users a booking deposit fee, if applicable.
 						Advise how many hours in advance bookings should be made.
 						Customize the reservation form to match your business model.
 						');?>
 						<p style="font-size: medium; font-weight: bold">
-							<?=$this->language->line("BUSINESS-SPOT-100009",'5. EASY ACCESS CHECK');?>
+							<?php echo $this->language->line("BUSINESS-SPOT-100009",'5. EASY ACCESS CHECK');?>
 						</p>
 						<p class="smalltext">
-							<?=$this->language->line("BUSINESS-SPOT-100010",'Our platform relieves you from the logistic handling of the reservation via our integrated and automated scanning solution.');?>
+							<?php echo $this->language->line("BUSINESS-SPOT-100010",'Our platform relieves you from the logistic handling of the reservation via our integrated and automated scanning solution.');?>
 						<p style="font-size: medium; font-weight: bold">
-							<?=$this->language->line("BUSINESS-SPOT-100011",'6. HIGHER RESERVATION PERCENTAGE');?>
+							<?php echo $this->language->line("BUSINESS-SPOT-100011",'6. HIGHER RESERVATION PERCENTAGE');?>
 						</p>
 						<p class="smalltext">
-							<?=$this->language->line("BUSINESS-SPOT-100012",'Our end-to-end tailored and time saving solution increases the percentage of your reservations thanks to its efficiency.');?>
+							<?php echo $this->language->line("BUSINESS-SPOT-100012",'Our end-to-end tailored and time saving solution increases the percentage of your reservations thanks to its efficiency.');?>
 						<p style="font-size: medium; font-weight: bold">
-							<?=$this->language->line("BUSINESS-SPOT-100013",'7. REVENUE MODEL');?>
+							<?php echo $this->language->line("BUSINESS-SPOT-100013",'7. REVENUE MODEL');?>
 						</p>
 						<p class="smalltext">
-							<?=$this->language->line("BUSINESS-SPOT-100014a","In addition to cost efficiency and time savings, Tiqs offers you more revenue with less resources. Tiqs transforms from a cost to a revenue model and creates an extra value proposition for your organisation.");?>
+							<?php echo $this->language->line("BUSINESS-SPOT-100014a","In addition to cost efficiency and time savings, Tiqs offers you more revenue with less resources. Tiqs transforms from a cost to a revenue model and creates an extra value proposition for your organisation.");?>
 						</p>
 						<p></p>
 					</div>
@@ -131,36 +131,36 @@
 			<div class="width-650 mb-50" style="min-height:600px">
 				<div align="left">
 					<div class="contact-text-box mb-50">
-						<p><?=$this->language->line("BUSINESS-SPOT-100015",'HOW?');?></p>
+						<p><?php echo $this->language->line("BUSINESS-SPOT-100015",'HOW?');?></p>
 						<div class="mb-35 div-no-mobile" align="right" style="margin-top: -50px">
-							<a href="<?php echo base_url(); ?>registerbusiness" style="background-color:#eb5d16; color: white" class="button button-orange"><?=$this->language->line('INFOBUSINESS-SPOT-A0101','GET YOUR ACCOUNT');?></a>
+							<a href="<?php echo base_url(); ?>registerbusiness" style="background-color:#eb5d16; color: white" class="button button-orange"><?php echo $this->language->line('INFOBUSINESS-SPOT-A0101','GET YOUR ACCOUNT');?></a>
 						</div>
 						<p style="font-size: medium; font-weight: bold">
-						<?=$this->language->line("BUSINESS-SPOT-100016A",'OUR SOLUTION IS MAKING THINGS SIMPLE!');?>
+						<?php echo $this->language->line("BUSINESS-SPOT-100016A",'OUR SOLUTION IS MAKING THINGS SIMPLE!');?>
 						</p>
 						<p style="font-size: medium; font-weight: bold">
-							<?=$this->language->line("BUSINESS-SPOT-100017",'A - GET YOUR COMPANY RESERVATION ONLINE');?>
+							<?php echo $this->language->line("BUSINESS-SPOT-100017",'A - GET YOUR COMPANY RESERVATION ONLINE');?>
 						<p class="smalltext">
 						<ul style="list-style-type:none; font-size: small; font-weight: lighter; margin-left: -40px">
-							<li><?=$this->language->line("BUSINESS-SPOT-100018",'1. UPLOAD YOUR FLOORPLAN');?></>
-							<li><?=$this->language->line("BUSINESS-SPOT-100019",'2. ASSIGN S.P.O.T. (Service Points Or Tables)');?>
-							<li><?=$this->language->line("BUSINESS-SPOT-100020",'3. SET YOUR PREFERENCES');?></>
+							<li><?php echo $this->language->line("BUSINESS-SPOT-100018",'1. UPLOAD YOUR FLOORPLAN');?></>
+							<li><?php echo $this->language->line("BUSINESS-SPOT-100019",'2. ASSIGN S.P.O.T. (Service Points Or Tables)');?>
+							<li><?php echo $this->language->line("BUSINESS-SPOT-100020",'3. SET YOUR PREFERENCES');?></>
 						</ul>
 						<p style="font-size: medium; font-weight: bold">
-						<?=$this->language->line("BUSINESS-SPOT-100014",'B - YOUR CUSTOMER');?>
+						<?php echo $this->language->line("BUSINESS-SPOT-100014",'B - YOUR CUSTOMER');?>
 						<p class="smalltext">
 						<ul style="list-style-type:none; font-size: small; font-weight: lighter; margin-left: -40px">
-							<li><?=$this->language->line("BUSINESS-SPOT-100021",'4. RESERVES A SPOT (SPACE ON FLOORPLAN) ON YOUR COMPANY PAGE');?></>
-							<li><?=$this->language->line("BUSINESS-SPOT-100022",'5. COMMITS TO THE RESERVATION WITH A RESERVATION PAYMENT ONLINE');?></>
-							<li><?=$this->language->line("BUSINESS-SPOT-100023",'6. AUTOMATICALLY GETS AN E-MAIL WITH THE RESERVATION AND QRCODE TO CHECK IN');?></>
+							<li><?php echo $this->language->line("BUSINESS-SPOT-100021",'4. RESERVES A SPOT (SPACE ON FLOORPLAN) ON YOUR COMPANY PAGE');?></>
+							<li><?php echo $this->language->line("BUSINESS-SPOT-100022",'5. COMMITS TO THE RESERVATION WITH A RESERVATION PAYMENT ONLINE');?></>
+							<li><?php echo $this->language->line("BUSINESS-SPOT-100023",'6. AUTOMATICALLY GETS AN E-MAIL WITH THE RESERVATION AND QRCODE TO CHECK IN');?></>
 						</ul>
 						<p style="font-size: medium; font-weight: bold;">
-							<?=$this->language->line("BUSINESS-SPOT-100024",'C - YOU');?>
+							<?php echo $this->language->line("BUSINESS-SPOT-100024",'C - YOU');?>
 						<p class="smalltext">
 						<ul style="list-style-type:none; font-size: small; font-weight: lighter; margin-left: -40px">
-							<li><?=$this->language->line("BUSINESS-SPOT-100025",'7. COLLECT THE RESREVATION FEE, MINIMAL SPENDING FEE DAILY');?></>
-							<li><?=$this->language->line("BUSINESS-SPOT-100026",'8. FULL BACK-END OVERVIEW OF RESERVATIONS');?></>
-							<li><?=$this->language->line("BUSINESS-SPOT-100027",'9. OFFLINE MANUAL RESERVATION HANDLING OPTION ');?></>
+							<li><?php echo $this->language->line("BUSINESS-SPOT-100025",'7. COLLECT THE RESREVATION FEE, MINIMAL SPENDING FEE DAILY');?></>
+							<li><?php echo $this->language->line("BUSINESS-SPOT-100026",'8. FULL BACK-END OVERVIEW OF RESERVATIONS');?></>
+							<li><?php echo $this->language->line("BUSINESS-SPOT-100027",'9. OFFLINE MANUAL RESERVATION HANDLING OPTION ');?></>
 						</ul>
 						</p>
 					</div>
@@ -189,31 +189,31 @@
 			<div class="flex-column align-start width-650" style="min-height: 700px">
 				<div align="left">
 					<div class="contact-text-box">
-						<p><?=$this->language->line("BUSINESS-SPOT-100028",'FOR WHO?');?></p>
+						<p><?php echo $this->language->line("BUSINESS-SPOT-100028",'FOR WHO?');?></p>
 						<div class="contact-text-box mb-50">
 							<div class="mb-35 div-no-mobile" align="right" style="margin-top: -50px">
-								<a href="<?php echo base_url(); ?>registerbusiness" style="background-color:#eb5d16; color: white" class="button button-orange"><?=$this->language->line('INFOBUSINESS-SPOT-A0101','GET YOUR ACCOUNT');?></a>
+								<a href="<?php echo base_url(); ?>registerbusiness" style="background-color:#eb5d16; color: white" class="button button-orange"><?php echo $this->language->line('INFOBUSINESS-SPOT-A0101','GET YOUR ACCOUNT');?></a>
 							</div>
 							<p class="smalltext">
-								<?=$this->language->line("BUSINESS-SPOT-3100016A",'OUR SOLUTION IS MAKING THINGS SIMPLE!');?>
+								<?php echo $this->language->line("BUSINESS-SPOT-3100016A",'OUR SOLUTION IS MAKING THINGS SIMPLE!');?>
 							</p>
 							<p style="font-size: medium; font-weight: bold">
-								<?=$this->language->line("BUSINESS-SPOT-3100017",'RESERVATIONS MANAGEMENT');?>
+								<?php echo $this->language->line("BUSINESS-SPOT-3100017",'RESERVATIONS MANAGEMENT');?>
 							<p class="smalltext">
 							<ul class="smalltext" style="list-style-type:none; margin-left: -40px">
-								<li><?=$this->language->line("BUSINESS-SPOT-3100018",'The reservation management system allows you to add, edit and delete bookings, manage client details and availability. 
+								<li><?php echo $this->language->line("BUSINESS-SPOT-3100018",'The reservation management system allows you to add, edit and delete bookings, manage client details and availability. 
 								');?></>
-								<li><?=$this->language->line("BUSINESS-SPOT-3100019",'Reservations schedule - See daily bookings per table and a timeline showing reserved hours.');?>
-								<li><?=$this->language->line("BUSINESS-SPOT-3100020",'Check all bookings for a selected date using an intuitive drop-down calendar.');?></>
+								<li><?php echo $this->language->line("BUSINESS-SPOT-3100019",'Reservations schedule - See daily bookings per table and a timeline showing reserved hours.');?>
+								<li><?php echo $this->language->line("BUSINESS-SPOT-3100020",'Check all bookings for a selected date using an intuitive drop-down calendar.');?></>
 							</ul>
 							<ul class="smalltext" style="list-style-type:none; margin-left: -40px">
-								<li><?=$this->language->line("BUSINESS-SPOT-3100021",'Add reservations manually - Just click on the given hour and fill in the booking details.');?></>
-								<li><?=$this->language->line("BUSINESS-SPOT-3100022",'Reservations list - See all bookings ordered by date. Check status and all booking details.');?></>
-								<li><?=$this->language->line("BUSINESS-SPOT-3100023",'Client details - Review customers name and a detailed contact information.');?></>
+								<li><?php echo $this->language->line("BUSINESS-SPOT-3100021",'Add reservations manually - Just click on the given hour and fill in the booking details.');?></>
+								<li><?php echo $this->language->line("BUSINESS-SPOT-3100022",'Reservations list - See all bookings ordered by date. Check status and all booking details.');?></>
+								<li><?php echo $this->language->line("BUSINESS-SPOT-3100023",'Client details - Review customers name and a detailed contact information.');?></>
 							</ul>
 
 							<ul class="smalltext" style="list-style-type:none;  margin-left: -40px">
-								<li><?=$this->language->line("BUSINESS-SPOT-3100025",'Collect payments using various methods available with the reservation System. 
+								<li><?php echo $this->language->line("BUSINESS-SPOT-3100025",'Collect payments using various methods available with the reservation System. 
 								Use one or all of the
 								payment options: PayPal, Authorize.Net, wire transfers, CC processing, cash or see other alternatives, with PAY.NL.
 								Set a default currency and deposit fee, if applicable.
@@ -240,7 +240,7 @@
 			<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="auto" height="100" />
 		</div>
 		<div class="div-no-mobile" style="margin-top: -95px; margin-left: 280px">
-			<h1 style="font-family:caption-bold; font-size: 60px; font-weight: bold" ><?=$this->language->line("BUSINESS-SPOT-pack1100031",'S.P.O.T.S.');?></h1>
+			<h1 style="font-family:caption-bold; font-size: 60px; font-weight: bold" ><?php echo $this->language->line("BUSINESS-SPOT-pack1100031",'S.P.O.T.S.');?></h1>
 		</div>
 	</div>
 
@@ -249,17 +249,17 @@
 		<div class="col-half background-orange-light col-half-mobile contact-text" style="margin-bottom: 0px">
 			<div style="text-align:left">
 				<div class="contact-text-box" style="margin-bottom: 0px">
-					<h2 style="font-family:caption-bold"><?=$this->language->line("BUSINESS-SPOT-1100031",'ON THE FLY PACKAGE');?></h2>
+					<h2 style="font-family:caption-bold"><?php echo $this->language->line("BUSINESS-SPOT-1100031",'ON THE FLY PACKAGE');?></h2>
 					<p style=" font-size: medium; font-weight: bold">
 						<ul style="list-style-type: disc ;  font-size: larger; margin-left: -20px ">
 							<li>
-								<?= strtoupper($this->language->line('BUSINESS-SPOT-100031-'.$subscriptions['Fly'][0]['description'], $subscriptions['Fly'][0]['description'])); ?>
+								<?php strtoupper($this->language->line('BUSINESS-SPOT-100031-'.$subscriptions['Fly'][0]['description'], $subscriptions['Fly'][0]['description'])); ?>
 							</li>
-							<li><?=$this->language->line("BUSINESS-SPOT-1100032C","NO MONTHLY SUBSCRIPTION");?></li>
+							<li><?php echo $this->language->line("BUSINESS-SPOT-1100032C","NO MONTHLY SUBSCRIPTION");?></li>
 
 						</ul>
 						<ul style="list-style-type: none; font-family:caption-bold; font-size: medium; margin-left: -40px" >
-							<li><?=$this->language->line("BUSINESS-SPOT-1100032F","PRICE = 0 EURO + transaction cost");?></li>
+							<li><?php echo $this->language->line("BUSINESS-SPOT-1100032F","PRICE = 0 EURO + transaction cost");?></li>
 						</ul>
 					</p>
 				</div>
@@ -268,14 +268,14 @@
 		<div class="col-half background-orange col-half-mobile contact-text">
 			<div style="text-align:left">
 				<div class="contact-text-box">
-					<h2 style="font-family:caption-bold"><?=$this->language->line("BUSINESS-SPOT-A100035",'BASIC SPOT PACKAGE');?></h2>
+					<h2 style="font-family:caption-bold"><?php echo $this->language->line("BUSINESS-SPOT-A100035",'BASIC SPOT PACKAGE');?></h2>
 					<p style=" font-size: medium; font-weight: bold">
 						<ul style="list-style-type: disc ;  font-size: larger; margin-left: -20px ">
 							<li>
-								<?= strtoupper($this->language->line('BUSINESS-SPOT-2100035B-' . $subscriptions['basic_spot_year'][0]['description'], $subscriptions['basic_spot_year'][0]['description'])); ?>
+								<?php strtoupper($this->language->line('BUSINESS-SPOT-2100035B-' . $subscriptions['basic_spot_year'][0]['description'], $subscriptions['basic_spot_year'][0]['description'])); ?>
 							</li>
-							<li><?=$this->language->line("BUSINESS-SPOT-2100035C","ADVANCED RESERVATION MODULE");?></li>
-							<li><?=$this->language->line("BUSINESS-SPOT-2100035D","RESERVATION MANAGEMENT, TABLE PLAN, STATISTICS,AUTOMATIC FEEDBACK,RESERVATIONS THROUGH DIFFERENT CHANNELS");?></li>
+							<li><?php echo $this->language->line("BUSINESS-SPOT-2100035C","ADVANCED RESERVATION MODULE");?></li>
+							<li><?php echo $this->language->line("BUSINESS-SPOT-2100035D","RESERVATION MANAGEMENT, TABLE PLAN, STATISTICS,AUTOMATIC FEEDBACK,RESERVATIONS THROUGH DIFFERENT CHANNELS");?></li>
 						</ul>
 						</ul>						
 					</ul>
@@ -283,8 +283,8 @@
 					</ul>
 						</ul>						
 						<ul style="list-style-type: none; font-family:caption-bold; font-size: medium; margin-left: -40px" >
-							<li><?=$this->language->line("BUSINESS-SPOT-2{$subscriptions['basic_spot_year'][0]['amount']}", 'YEARLY SUBSCRIPTION = ' . $subscriptions['basic_spot_year'][0]['amount'] . ' EURO');?></li>
-							<li><?=$this->language->line("BUSINESS-SPOT-2{$subscriptions['basic_spot_month'][0]['amount']}12", 'MONTHLY SUBSCRIPTION = ' . $subscriptions['basic_spot_month'][0]['amount'] . ' EURO');?></li>
+							<li><?php echo $this->language->line("BUSINESS-SPOT-2{$subscriptions['basic_spot_year'][0]['amount']}", 'YEARLY SUBSCRIPTION = ' . $subscriptions['basic_spot_year'][0]['amount'] . ' EURO');?></li>
+							<li><?php echo $this->language->line("BUSINESS-SPOT-2{$subscriptions['basic_spot_month'][0]['amount']}12", 'MONTHLY SUBSCRIPTION = ' . $subscriptions['basic_spot_month'][0]['amount'] . ' EURO');?></li>
 						</ul>
 					</p>
 				</div>				
@@ -294,14 +294,14 @@
 		<div class="col-half background-apricot col-half-mobile contact-text" style="margin-bottom: 0px">
 			<div style="text-align:left">
 				<div class="contact-text-box">
-					<h2 style="font-family:caption-bold"><?=$this->language->line("BUSINESS-SPOT-100033",'STANDARD PACKAGE');?></h2>
+					<h2 style="font-family:caption-bold"><?php echo $this->language->line("BUSINESS-SPOT-100033",'STANDARD PACKAGE');?></h2>
 					<p style=" font-size: medium; font-weight: bold">
 						<ul style="list-style-type: disc ; margin-left: -20px ">
 							<li>
-								<?= strtoupper($this->language->line('BUSINESS-SPOT-3100035B1-' . $subscriptions['standard_spot_year'][0]['description'], $subscriptions['standard_spot_year'][0]['description'])); ?>
+								<?php strtoupper($this->language->line('BUSINESS-SPOT-3100035B1-' . $subscriptions['standard_spot_year'][0]['description'], $subscriptions['standard_spot_year'][0]['description'])); ?>
 							</li>
-							<li><?=$this->language->line("BUSINESS-SPOT-31100033C","YOUR STANDARD TIQS HOSPITALITY RESERVATION INCLUDING LOST AND FOUND");?></li>
-							<li><?=$this->language->line("BUSINESS-SPOT-31100033D","PHONE RESERVATION SYSTEM PAYMENTS AND ADVANCES PROMOTIONS - ARRANGEMENTS GIFT CARDS ADDITIONAL RESERVATION QUESTIONS LINK WITH POS SYSTEMS");?></li>
+							<li><?php echo $this->language->line("BUSINESS-SPOT-31100033C","YOUR STANDARD TIQS HOSPITALITY RESERVATION INCLUDING LOST AND FOUND");?></li>
+							<li><?php echo $this->language->line("BUSINESS-SPOT-31100033D","PHONE RESERVATION SYSTEM PAYMENTS AND ADVANCES PROMOTIONS - ARRANGEMENTS GIFT CARDS ADDITIONAL RESERVATION QUESTIONS LINK WITH POS SYSTEMS");?></li>
 						</ul>
 					</p>
 				</div>
@@ -316,7 +316,7 @@
 					<div align="left">
 						<div class="contact-text-box">
 							<div class="" align="left" style="margin-top: 0px">
-								<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?=$this->language->line('INFOBUSINESS-SPOT-A0101','GET YOUR ACCOUNT');?></a>
+								<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php echo $this->language->line('INFOBUSINESS-SPOT-A0101','GET YOUR ACCOUNT');?></a>
 							</div>
 						</div>
 					</div>
@@ -326,7 +326,7 @@
 					<div align="left">
 						<div class="contact-text-box">
 							<div class="div-no-mobile" align="left" style="margin-top: 0px">
-								<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?=$this->language->line('INFOBUSINESS-SPOT-A0101','GET YOUR ACCOUNT');?></a>
+								<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php echo $this->language->line('INFOBUSINESS-SPOT-A0101','GET YOUR ACCOUNT');?></a>
 							</div>
 						</div>
 					</div>
@@ -336,7 +336,7 @@
 					<div align="left">
 						<div class="contact-text-box">
 							<div class="" align="left" style="margin-top: 0px">
-								<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?=$this->language->line('INFOBUSINESS-SPOT-A0101','GET YOUR ACCOUNT');?></a>
+								<a href="<?php echo base_url(); ?>registerbusiness" class="button button-orange"><?php echo $this->language->line('INFOBUSINESS-SPOT-A0101','GET YOUR ACCOUNT');?></a>
 							</div>
 						</div>
 					</div>

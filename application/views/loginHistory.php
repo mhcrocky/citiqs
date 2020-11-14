@@ -37,7 +37,7 @@
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title"><?= !empty($userInfo) ? $userInfo->name." : ".$userInfo->email : "All users" ?></h3>
+                    <h3 class="box-title"><?php !empty($userInfo) ? $userInfo->name." : ".$userInfo->email : "All users" ?></h3>
                     <div class="box-tools">
                     </div>
                 </div><!-- /.box-header -->

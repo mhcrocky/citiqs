@@ -74,14 +74,14 @@ $results = $batch->execute();
 
 <h3>Results Of Call 1:</h3>
 <?php foreach ($results['response-thoreau'] as $item): ?>
-  <?= $item['volumeInfo']['title'] ?>
+  <?php $item['volumeInfo']['title'] ?>
   <br />
 <?php endforeach ?>
 
 <h3>Results Of Call 2:</h3>
 <?php foreach ($results['response-shaw'] as $item): ?>
-  <?= $item['volumeInfo']['title'] ?>
+  <?php $item['volumeInfo']['title'] ?>
   <br />
 <?php endforeach ?>
 
-<?= pageFooter(__FILE__) ?>
+<?php pageFooter(__FILE__) ?>

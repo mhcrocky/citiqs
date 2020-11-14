@@ -23,7 +23,7 @@
         protected function setValueType(string $property,  &$value): void
         {
             $this->load->helper('validate_data_helper');
-            if (!Validate_data_helper::validateInteger($value)) return;
+            if (!Validate_data_helper::validateNumber($value)) return;
 
             if ($property === 'id' || $property === 'userId' || $property === 'numberOfCopies') {
                 $value = intval($value);
@@ -57,7 +57,7 @@
             if (isset($data['numberOfCopies']) 
                 && (!Validate_data_helper::validateInteger($data['numberOfCopies']) || intval($data['numberOfCopies']) < 1)
             ) return false;
-            if (isset($data['masterMac']) && !Validate_data_helper::validateString($data['masterMac'])) return false;
+            // if (isset($data['masterMac']) && !Validate_data_helper::validateString($data['masterMac'])) return false;
             if (isset($data['archived']) && !($data['archived'] === '1' || $data['archived'] === '0')) return false;
 
             return true;

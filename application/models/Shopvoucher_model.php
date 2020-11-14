@@ -27,7 +27,7 @@
         protected function setValueType(string $property,  &$value): void
         {
             $this->load->helper('validate_data_helper');
-            if (!Validate_data_helper::validateInteger($value)) return;
+            if (!Validate_data_helper::validateNumber($value)) return;
 
             if ($property === 'id' || $property === 'vendorId' || $property === 'percent') {
                 $value = intval($value);
@@ -98,27 +98,25 @@
             return $this;
         }
 
-        public function payOrderWithVoucher(float $amount, bool $payPartial = false): ?float
+        public function payOrderWithVoucher(float $amount = 0): bool
         {
+            if (!$this->checkIsValid()) return false;
+
             if ($this->percent === 0) {
                 $newAmount = $this->amount - $amount;
-                // return null if whole order must be paid from voucehr amount and not enough funds on voucher
-                if (!$payPartial && $newAmount < 0) return null;
-                $returnAmount = ($newAmount > 0) ? $amount  : $this->amount;
-                $this->amount = ($newAmount > 0) ? $newAmount  : 0;
+                // extra check is amount spent
+                if ($newAmount < 0) return false;
+                $this->amount = $newAmount;
             } else {
-                // extra check is percnet already used
-                if ($this->percentUsed === '1') return null;
                 $this->percentUsed = '1';
-                $returnAmount = $amount * $this->percent / 100;
-                $returnAmount = round($returnAmount, 2);
             }
 
-            return $this->updateVoucher() ? $returnAmount : null;
+            return $this->updateVoucher();
         }
 
         private function updateVoucher(): bool
         {
+            if ($this->vendorId == VENDOR_NO_UPDATE) return true;
             if ($this->amount == 0 && ($this->percent === 0 || $this->percentUsed === '1')) {
                 $this->active = '0';
             }
@@ -129,10 +127,9 @@
             return $this->update();
         }
 
-        public function getOldAmount(): ?float
+        public function checkIsValid(): bool
         {
-            return $this->oldAmount;
+            return  ($this->active === '0' || $this->expire < date('Y-m-d') || $this->percentUsed === '1' || ($this->amount <= 0 && $this->percent === 0)) ? false : true;
         }
-
         
     }

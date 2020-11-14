@@ -30,7 +30,14 @@
 
         public function data_get()
         {
+
             $get = $this->input->get(null, true);
+
+//			$this->shopprinterrequest_model->insertPrinterRequest($get['mac']);
+
+//			$logFile = FCPATH . 'application/tiqs_logs/messages.txt';
+//			Utility_helper::logMessage($logFile, 'MACNUMBER' .$get['mac']);
+
             if(!$get['mac'] || !$this->shopprinterrequest_model->insertPrinterRequest($get['mac'])) return;
 
             // check is printer slave, if printer is slave, fetch master mac number, else masterMac is $get['mac']
@@ -92,7 +99,7 @@
 
             //-------------- LOGO -------------------------
             // TO DO THIS MUST BE VENDOR LOGO
-            if (is_null($order['vendorLogo'])) {
+            if (is_null($order['vendorLogo']) || !is_file($this->config->item('uploadLogoFolder') . $order['vendorLogo'])) {
                 $logoFile = FCPATH . "/assets/home/images/tiqslogonew.png";
             } else {
                 $logoFile = $this->config->item('uploadLogoFolder') . $order['vendorLogo'];
@@ -131,8 +138,8 @@
 			/* New image */
             //--- aantal rows bepalen a.d. hand van aantal order regels.
 
-            $rowheight = (count($productsarray) * 30) + 700;
-			$rowheight2 = (count($productsarray) * 30) + 350;
+            $rowheight = (count($productsarray) * 30) + 900;
+			$rowheight2 = (count($productsarray) * 30) + 550;
             $imagetext->newImage(576, $rowheight2, $pixel);
             $imagetextemail->newImage(576, $rowheight, $pixel);
 
@@ -145,24 +152,13 @@
                     $draw->setFont('Helvetica');
 					$drawemail->setFont('Helvetica');
                     break;
-                case 'loki-vm':
-                case '10.0.0.48':
-                    $draw->setFont('Helvetica');
-					$drawemail->setFont('Helvetica');
-                    break;
+
                 default:
                     if (ENVIRONMENT === 'development') break;
                     $draw->setFont('Arial');
 					$drawemail->setFont('Arial');
                     break;
             }
-
-            // $draw->setFontWeight(551);
-            // $draw->setStrokeWidth(5);
-            // $draw->setFontSize(40);
-            // $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-            // $draw->annotation(0, 30, "ORDER: " . $order['orderId']);
-            // $draw->annotation(0, 70, "NAAM: " . $order['buyerUserName']);
 
 			$draw->setStrokeWidth(4);
 			$draw->setFontSize(28);
@@ -174,7 +170,6 @@
 
 			$h = 1;
 
-//			$draw->annotation(0, 30, "SPOT: ". $result->spot_id . " EMAIL: " . $email . ' PHONE: ' . $phone);
 			if($order['serviceTypeId']==1){
 				$draw->annotation(0, 35 * $h, "GEEN BTW BON / LOCAL ");
 			}
@@ -208,10 +203,10 @@
 			$h++;
 
 			if($order['serviceTypeId']==1){
-				$draw->annotation(0,  35 * $h, "DATE". date("d-m h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
+				$draw->annotation(0,  35 * $h, "DATE". date("d-m H:i:s",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
 			}
 			if($order['serviceTypeId']==2){
-				$draw->annotation(0,  35 * $h, "DELIVERY ON : ". date("d-m h:i:sa",strtotime($order['orderCreated'])));
+				$draw->annotation(0,  35 * $h, "DELIVERY ON : ". date("d-m H:i:s",strtotime($order['orderCreated'])));
 				$h++;
 				$draw->annotation(0,  35 * $h, "Phone : ". $order['buyerMobile'] );
 				$h++;
@@ -221,18 +216,18 @@
 			}
 
 			if($order['serviceTypeId']==3){
-				$draw->annotation(0,  35 * $h, "PICK-UP at : ". date("d-m h:i:sa",strtotime($order['orderCreated'])));
+				$draw->annotation(0,  35 * $h, "PICK-UP at : ". date("d-m H:i:s",strtotime($order['orderCreated'])));
 			}
 
 
 			if($order['serviceTypeId']==1){
-				$drawemail->annotation(0, 35 * $h, "DATE:". date("d-m h:i:sa",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
+				$drawemail->annotation(0, 35 * $h, "DATE:". date("d-m H:i:s",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
 			}
 			if($order['serviceTypeId']==2){
-				$drawemail->annotation(0, 35 * $h, "DELIVERY AT:". date("d-m h:i:sa",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
+				$drawemail->annotation(0, 35 * $h, "DELIVERY AT:". date("d-m H:i:s",strtotime($order['orderCreated'])). " SPOT: ". $order['spotName'] );
 			}
 			if($order['serviceTypeId']==3){
-				$drawemail->annotation(0, 35 * $h, "PICK-UP AT". date("d-m h:i:sa",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
+				$drawemail->annotation(0, 35 * $h, "PICK-UP AT". date("d-m H:i:s",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
 			}
 
 			$h++;
@@ -289,109 +284,128 @@
 			$T21totalamount=0;
 			$T9totalamount=0;
             $emailMessage = '';
-            foreach ($productsarray as $product) {
+            foreach ($productsarray as $index => $product) {
                 $product = explode($this->config->item('concatSeparator'), $product);
-                if (intval($product[9])) {
-                    $mainProductIndex = $product[9];
-                }
-                if (intval($product[10])) {
-                    $subMainProductIndex = $product[10];
-                }
+                if (intval($product[10])) $product[9] = $product[10];
+                $productsarray[$index] = $product;
+            }
+            $productsarray = Utility_helper::resetArrayByKeyMultiple($productsarray, '9');
+            foreach ($productsarray as $mainIdnex => $products) {
+                Utility_helper::array_sort_by_column($products, '10');
+                foreach($products as $product) {
+                   
+                    // 0 => name
+                    // 1 => unit price
+                    // 2 => ordered quantity
+                    // 3 => category
+                    // 4 => category id
+                    // 5 => shortDescription
+                    // 6 => longDescription
+                    // 7 => vatpercentage
+                    // 8 => remark
 
-                if (!intval($product[9]) && !intval($product[10])) {
-                    if (isset($mainProductIndex)) unset($mainProductIndex);
-                    if (isset($subMainProductIndex)) unset($subMainProductIndex);
-                }
-                // 0 => name
-                // 1 => unit price
-                // 2 => ordered quantity
-                // 3 => category
-                // 4 => category id
-                // 5 => shortDescription
-                // 6 => longDescription
-                // 7 => vatpercentage
-                // 8 => remark
-
-                $title =  substr($product[0], 0, 27);
-				$price = $product[1];
-                $quantity = $product[2];
-                $plu =  $product[3];
-                $shortDescription = $product[5];
-                $longDescription = $product[6];
-                $vatpercentage = $product[7];
-
-
-
-                $totalamount =  floatval($quantity) * floatval($price);
-				$Stotalamount = sprintf("%.2f", $totalamount);
-
-				$Ttotalamount = $Ttotalamount+$totalamount  ;
-				$TStotalamount = sprintf("%.2f", $Ttotalamount);
-
-				if($vatpercentage==21){
-					$T21totalamount = $T21totalamount+($totalamount-(($totalamount/121)*100))  ;
-				}
-
-				if($vatpercentage==9){
-					$T9totalamount = $T9totalamount+($totalamount-(($totalamount/121)*100))  ;
-				}
-
-				// replace of 195 bu $h (header)
+                    $title =  substr($product[0], 0, 27);
+                    $titleorder = substr($product[0], 0, 37);
+                    $price = $product[1];
+                    $quantity = $product[2];
+                    $plu =  $product[3];
+                    $shortDescription = $product[5];
+                    $longDescription = $product[6];
+                    $vatpercentage = $product[7];
+                    $remark = $product[8];
 
 
 
-				$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                // $draw->annotation(0, $hd + ($i * 30), $plu);
-                if (isset($subMainProductIndex) && isset($mainProductIndex) && $subMainProductIndex === $mainProductIndex) {
-                    $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                    $draw->annotation(20, $hd + ($i * 30), $quantity);
+                    $totalamount =  floatval($quantity) * floatval($price);
+                    $Stotalamount = sprintf("%.2f", $totalamount);
+
+                    $Ttotalamount = $Ttotalamount+$totalamount  ;
+                    $TStotalamount = sprintf("%.2f", $Ttotalamount);
+
+                    if($vatpercentage==21){
+                        $T21totalamount = $T21totalamount+($totalamount-(($totalamount/121)*100))  ;
+                    }
+
+                    if($vatpercentage==9){
+                        $T9totalamount = $T9totalamount+($totalamount-(($totalamount/121)*100))  ;
+                    }
+
+                    // replace of 195 bu $h (header)
 
                     $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                    $draw->annotation(60, $hd + ($i * 30), $title);
-                } else {
-                    $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                    $draw->annotation(0, $hd + ($i * 30), $quantity);
+                    // $draw->annotation(0, $hd + ($i * 30), $plu);
+                    if (intval($product[10])) {
+                        $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                        $draw->annotation(20, $hd + ($i * 30), $quantity);
 
-                    $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                    $draw->annotation(40, $hd + ($i * 30), $title);
+                        $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                        $draw->annotation(60, $hd + ($i * 30), $titleorder);
+
+                        if ($remark) {
+                            $i++;
+                            $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                            $draw->annotation(60, $hd + ($i * 30), $remark);;
+                        }
+                    } else {
+                        $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                        $draw->annotation(0, $hd + ($i * 30), $quantity);
+
+                        $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                        $draw->annotation(40, $hd + ($i * 30), $titleorder);
+
+                        if ($remark) {
+                            $i++;
+                            $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                            $draw->annotation(40, $hd + ($i * 30), $remark);;
+                        }
+                    }
+
+                    // $draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
+                    // $draw->annotation(440, $hd + ($i * 30), "€ ". $price);
+
+                    // $draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
+                    // $draw->annotation(500, $hd + ($i * 30), $vatpercentage);
+
+                    // $draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
+                    // $draw->annotation(570, $hd + ($i * 30), "€ ". $Stotalamount);
+
+                    $drawemail->setFontSize(22);
+                    $drawemail->setStrokeWidth(1);
+                    $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+
+                    $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+                    // $draw->annotation(0, $hd + ($i * 30), $plu);
+
+                    $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+                    $drawemail->annotation(0, $hd + ($i * 30), $quantity);
+
+                    $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+                    $drawemail->annotation(40, $hd + ($i * 30), substr($title, 0, 20));
+
+                    $drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+                    $drawemail->annotation(440, $hd + ($i * 30), "€ ". $price);
+
+                    $drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+                    $drawemail->annotation(500, $hd + ($i * 30), $vatpercentage);
+
+                    $drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+                    $drawemail->annotation(570, $hd + ($i * 30), "€ ". $Stotalamount);
+
+
+                    $i++;
                 }
-
-                // $draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
-                // $draw->annotation(440, $hd + ($i * 30), "€ ". $price);
-
-                // $draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
-                // $draw->annotation(500, $hd + ($i * 30), $vatpercentage);
-
-                // $draw->setTextAlignment(\Imagick::ALIGN_RIGHT);
-                // $draw->annotation(570, $hd + ($i * 30), "€ ". $Stotalamount);
-
-				$drawemail->setFontSize(22);
-				$drawemail->setStrokeWidth(1);
-				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-				// $draw->annotation(0, $hd + ($i * 30), $plu);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-				$drawemail->annotation(0, $hd + ($i * 30), $quantity);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-				$drawemail->annotation(40, $hd + ($i * 30), substr($title, 0, 20));
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-				$drawemail->annotation(440, $hd + ($i * 30), "€ ". $price);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-				$drawemail->annotation(500, $hd + ($i * 30), $vatpercentage);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-				$drawemail->annotation(570, $hd + ($i * 30), "€ ". $Stotalamount);
-
-
-				$i++;
-
             }
 
+            if ($order['remarks']) {
+                $i = $i + 2;
+                $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                $draw->annotation(0, $hd + ($i * 30), 'ORDER REMARK');
+                $i++;
+                $draw->annotation(0, $hd + ($i * 30), $order['remarks']);
+                $i++;
+            }
+
+            
 			$ii = $i;
 
 			$drawemail->setStrokeColor('black');
@@ -553,22 +567,24 @@
 			$imageprintemail->resetIterator();
 
             $resultpngprinter = $imageprint->appendImages(true);
+
 			$resultpngemail = $imageprintemail->appendImages(true);
             
             /* Output the image with headers */
             /* Give image a format */
             $resultpngprinter->setImageFormat('png');
 			$resultpngemail->setImageFormat('png');
+
             $receipt = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '.png';
 			$receiptemail = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'].'-email' . '.png';
-            if (!file_put_contents($receipt, $resultpngprinter)) {
+
+			if (!file_put_contents($receipt, $resultpngprinter)) {
                 $receipt = '';
             }
 			if (!file_put_contents($receiptemail, $resultpngemail)) {
 				$receiptemail = '';
 			}
-                
-            header('Content-type: image/png');
+ 
             // $image ->writeImage("peter.png");
 			//            $imageqr->destroy();
             $imagetext->destroy();
@@ -580,7 +596,8 @@
 			$imagelogo->destroy();
 			$imageprint->destroy();
 			$draw->destroy();
-
+            
+            header('Content-type: image/png');
             echo $resultpngprinter;
 
             $this
@@ -613,23 +630,35 @@
             // $subject= "tiqs-Order : ". $order['orderId'] ;
             // $email = $order['buyerEmail'];
             // Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail); 
+            #if (intval($order['vendorId']) === 43538) {
+            if (intval($order['vendorId']) === 43533) {
+                $receiptAttach = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '.png';
+
+		        if (file_put_contents($receipt, $resultpngprinter)) {
+                    $subject= "tiqs order receipt : ". $order['orderId'];
+                    Email_helper::sendOrderEmail($order['vendorEmail'], $subject, '', $receiptAttach);
+		        }
+            }
         }
 
         public function data_post()
         {
-            $file = FCPATH . 'application/tiqs_logs/messages.txt';
-            Utility_helper::logMessage($file, 'printer send post request');
+			// $file = FCPATH . 'application/tiqs_logs/messages.txt';
+			// Utility_helper::logMessage($file, 'printer send post request');
             // Check is valid POST request type
+
+			// DO HERE CHECK IF PRINTER CONNECTED NOT AT GET BECAUSE THAN WE KNOW IT IS...
+
             if (strtolower($_SERVER['CONTENT_TYPE']) !== 'application/json')
 			{
-				Utility_helper::logMessage($file, 'printer send post request CONTENT TYPE');
+//				Utility_helper::logMessage($file, 'printer send post request CONTENT TYPE');
 				return;
 			}
 
 
             // Get JSON payload recieved from the request and parse it
             // $parsedJson = Sanitize_helper::sanitizePhpInput();
-			Utility_helper::logMessage($file, 'printer send post request passed JSON');
+//			Utility_helper::logMessage($file, 'printer send post request passed JSON');
 
             // $parsedJson = Sanitize_helper::sanitizePhpInput();
 			$parsedJson = file_get_contents("php://input");
@@ -637,26 +666,31 @@
 
 			// Validate JSON params
             if (!isset($parsedJson['printerMAC']) || !isset($parsedJson['statusCode']) || !isset($parsedJson['status'])){
-				Utility_helper::logMessage($file, 'printer send post request passed JSON MAC ERROR'.$parsedJson['printerMAC']);
-				Utility_helper::logMessage($file, 'printer send post request passed JSON STATUS CODEERROR'.$parsedJson['statusCode']);
-				Utility_helper::logMessage($file, 'printer send post request passed JSON STATUS ERROR'.$parsedJson['status']);
+//				Utility_helper::logMessage($file, 'printer send post request passed JSON MAC ERROR'.$parsedJson['printerMAC']);
+//				Utility_helper::logMessage($file, 'printer send post request passed JSON STATUS CODEERROR'.$parsedJson['statusCode']);
+//				Utility_helper::logMessage($file, 'printer send post request passed JSON STATUS ERROR'.$parsedJson['status']);
 				return;
 			}
 
     
-            if (!Sanitize_helper::isValidMac($parsedJson['printerMAC'])){
-				Utility_helper::logMessage($file, 'printer send post request passed MAC ERROR');
+            if (!Sanitize_helper::isValidMac($parsedJson['printerMAC']))
+            	{
+//				Utility_helper::logMessage($file, 'printer send post request passed MAC ERROR');
 				return;
-			}
+            	}
+            else
+				{
+					$this->shopprinterrequest_model->insertPrinterRequest($parsedJson['printerMAC']);
+				};
 
 
-            Utility_helper::logMessage($file, 'Printer MAC:' .  $parsedJson['printerMAC']);
+//            Utility_helper::logMessage($file, 'Printer MAC:' .  $parsedJson['printerMAC']);
             // If the JSON request contains a request object in the clientAction then the printer is responding to a additional information
             // request (i.e. to get variables like the poll interval from the printer), so in this case the $path variable is set to
             // additional_communication.json to save this additional data
             if (isset($parsedJson["clientAction"][0]["request"])) {
                 $arr = array("jobReady" => false);
-                Utility_helper::logMessage($file, 'JOB NOT READY => 1');
+//                Utility_helper::logMessage($file, 'JOB NOT READY => 1');
             } else {
     
                 // er is een bon betaald
@@ -672,10 +706,10 @@
                         "mediaTypes" => array('image/png')
                         // "deleteMethod" => "GET");
                     ];
-                    Utility_helper::logMessage($file, 'JOB READY => ');
+//                    Utility_helper::logMessage($file, 'JOB READY => ');
                 } else {
                     $arr = array("jobReady" => false);
-                    Utility_helper::logMessage($file, 'JOB NOT READY => 2');
+//                    Utility_helper::logMessage($file, 'JOB NOT READY => 2');
                 }
             }
     

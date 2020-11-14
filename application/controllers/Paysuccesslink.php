@@ -3,6 +3,8 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 require APPPATH . '/libraries/BaseControllerWeb.php';
 
+
+
 class  Paysuccesslink extends BaseControllerWeb
 {
     /**
@@ -11,6 +13,7 @@ class  Paysuccesslink extends BaseControllerWeb
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('shoporder_model');
         $this->load->helper('url');
         $this->load->helper('utility_helper');
         $this->load->config('custom');
@@ -19,43 +22,83 @@ class  Paysuccesslink extends BaseControllerWeb
 
     public function index()
     {
+        $data = [];
+
+        $this->getOrderData($data);
         $this->global['pageTitle'] = 'TIQS : SUCCESS';
-        $baseUrl = base_url();
-
-        if (!isset($_SESSION['redirect'])) {
-            $_SESSION['redirect'] = $baseUrl . 'make_order?vendorid=' . $_SESSION['orderVendorId'] . '&spotid=' . $_SESSION['spot']['spotId'];
-        }
-
-        if (isset($_SESSION['iframe'])) {
-            unset($_SESSION['iframe']);
-            $_SESSION['iframeRedirect'] = $baseUrl . 'make_order?vendorid=' . $_SESSION['orderVendorId'];
-        }
-
-        if (
-            empty($_SESSION['orderId'])
-            || empty($_SESSION['postOrder'])
-            || empty($_SESSION['spot'])
-            || empty($_SESSION['orderStatusCode'])
-        ) {
-            $this->goBack();
-        }
-
-        $data = [
-        	'odredId' => $_SESSION['orderId'],
-            'amount' => floatval($_SESSION['postOrder']['order']['amount']),
-            'waiterTip' => floatval($_SESSION['postOrder']['order']['waiterTip']),
-            'spotName' => $_SESSION['spot']['spotName'],
-            'orderStatusCode' => $_SESSION['orderStatusCode'],
-            'successCode' => $this->config->item('payNlSuccess'),
-        ];
-
-        Utility_helper::unsetPaymentSession();
-        $this->loadViews("paysuccesslink", $this->global, $data, 'nofooter', 'noheader');
+        $this->loadViews("paysuccesslink/success", $this->global, $data, 'nofooter', 'noheader');
     }
 
-    public function goBack(): void
+    public function pending()
     {
-        $redirect = Utility_helper::getSessionValue('redirect');
-        redirect($redirect);
+        $data = [
+            'paynlInfo' => 'Payment has not been finalized and could still be paid'
+        ];
+
+        $this->getOrderData($data);
+        $this->global['pageTitle'] = 'TIQS : PENDING';
+        $this->loadViews("paysuccesslink/notPaid", $this->global, $data, 'nofooter', 'noheader');
+    }
+
+    public function authorised()
+    {
+        $data = [
+            'paynlInfo' => 'Put the payment in the "reservation" status.'
+        ];
+
+        $this->getOrderData($data);
+        $this->global['pageTitle'] = 'TIQS : AUTHORISED';
+        $this->loadViews("paysuccesslink/notPaid", $this->global, $data, 'nofooter', 'noheader');
+    }
+
+    public function verify()
+    {
+        $data = [
+            'paynlInfo' => 'Payment can be completed after manual confirmation from admin'
+        ];
+
+        $this->getOrderData($data);
+        $this->global['pageTitle'] = 'TIQS : VERIFY';
+        $this->loadViews("paysuccesslink/notPaid", $this->global, $data, 'nofooter', 'noheader');
+    }
+
+    public function cancel()
+    {
+        $data = [
+            'paynlInfo' => 'Payment was canceled by the user'
+        ];
+
+        $this->getOrderData($data);
+        $this->global['pageTitle'] = 'TIQS : CANCEL';
+        $this->loadViews("paysuccesslink/notPaid", $this->global, $data, 'nofooter', 'noheader');
+    }
+
+    public function denied()
+    {
+        $data = [
+            'paynlInfo' => 'Payment is denied'
+        ];
+
+        $this->getOrderData($data);
+        $this->global['pageTitle'] = 'TIQS : DENIED';
+        $this->loadViews("paysuccesslink/notPaid", $this->global, $data, 'nofooter', 'noheader');
+    }
+
+    private function getOrderData(array &$data): void
+    {
+        $get = Utility_helper::sanitizeGet();
+        $orderId = ( isset($get['orderid']) && is_numeric($get['orderid']) ) ? intval($get['orderid']) : null;
+        $orderRandomKey = !empty($get[$this->config->item('orderDataGetKey')]) ? $get[$this->config->item('orderDataGetKey')] : null;
+
+        if ($orderId && $orderRandomKey) {
+            $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
+            if (is_null($order) || $order[0]['orderRandomKey'] !== $get[$this->config->item('orderDataGetKey')]) {
+                redirect('places');
+            }
+            $order = reset($order);
+            $data['order'] = $order;
+            $data['orderDataGetKey'] = $this->config->item('orderDataGetKey');
+        }
+        return;
     }
 }

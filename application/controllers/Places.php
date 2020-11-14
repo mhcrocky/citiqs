@@ -24,8 +24,7 @@ class Places extends BaseControllerWeb
 
 		$category = $this->input->get("category");
 		$location = $this->input->get("location");
-
-		$data['directories'] = $this->bizdir_model->get_bizdir();
+		//$data['directories'] = $this->bizdir_model->get_bizdir(); 
 		$data['title'] = 'TIQS PLACES';
 
 		$this->global['pageTitle'] = 'TIQS PLACES';

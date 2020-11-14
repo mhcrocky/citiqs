@@ -34,13 +34,14 @@
         public $waiterTip;
         public $confirm;
         public $old_order;
+        public $orderRandomKey;
 
         private $table = 'tbl_shop_orders';
 
         protected function setValueType(string $property,  &$value): void
         {
             $this->load->helper('validate_data_helper');
-            if (!Validate_data_helper::validateInteger($value)) return;
+            if (!Validate_data_helper::validateNumber($value)) return;
 
             if ($property === 'id' || $property === 'buyerId' || $property === 'countSentMessages') {
                 $value = intval($value);
@@ -96,6 +97,7 @@
             if (isset($data['waiterTip']) && !Validate_data_helper::validateFloat($data['waiterTip'])) return false;
             if (isset($data['confirm']) && !($data['confirm'] === '0' || $data['confirm'] === '1' || $data['confirm'] === '2')) return false;
             if (isset($data['old_order']) && !Validate_data_helper::validateInteger($data['old_order'])) return false;
+            if (isset($data['orderRandomKey']) && !Validate_data_helper::validateString($data['orderRandomKey'])) return false;            
 
             return true;
         }
@@ -108,14 +110,16 @@
                     $this->table . '.amount AS orderAmount',
                     $this->table . '.paid AS orderPaidStatus',
                     $this->table . '.serviceFee AS serviceFee',
-                    $this->table . '.voucherAmount',
-                    $this->table . '.waiterTip',
+                    $this->table . '.voucherAmount AS voucherAmount',
+                    $this->table . '.waiterTip AS waiterTip',
+                    $this->table . '.paid AS orderPaidStatus',
+                    $this->table . '.orderRandomKey',
                     'buyer.id AS buyerId',
                     'buyer.email AS buyerEmail',
                     'buyer.username AS buyerUserName',
-                    // 'vendor.id AS vendorId',
-                    // 'vendor.email AS vendorEmail',
-                    // 'vendor.username AS vendorUserName',
+                    'vendor.id AS vendorId',
+                    'vendor.email AS vendorEmail',
+                    'vendor.username AS vendorUserName',
                     'tbl_shop_spots.id AS spotId',
                     'tbl_shop_spots.spotName AS spotName'
                 ],
@@ -127,11 +131,11 @@
                     ['tbl_shop_products_extended', 'tbl_shop_order_extended.productsExtendedId  = tbl_shop_products_extended.id', 'INNER'],
                     ['tbl_shop_products', 'tbl_shop_products_extended.productId  = tbl_shop_products.id', 'INNER'],
                     ['tbl_shop_categories', 'tbl_shop_products.categoryId  = tbl_shop_categories.id', 'INNER'],
-                    // [
-                    //     '(SELECT * FROM tbl_user WHERE roleid = '. $this->config->item('owner') .') vendor',
-                    //     'vendor.id  = tbl_shop_categories.userId',
-                    //     'INNER'
-                    // ],
+                    [
+                        '(SELECT * FROM tbl_user WHERE roleid = '. $this->config->item('owner') .') vendor',
+                        'vendor.id  = tbl_shop_categories.userId',
+                        'INNER'
+                    ],
                     [
                         '(SELECT * FROM tbl_user WHERE roleid = ' . $this->config->item('buyer') . ' OR roleid = ' . $this->config->item('owner') . ') buyer',
                         'buyer.id  = ' .  $this->table  . '.buyerId',
@@ -195,7 +199,9 @@
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.name,
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.price,
                                     \'' .  $concatSeparator . '\', tbl_shop_order_extended.quantity,
-                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_order_extended.remark) > 0, tbl_shop_order_extended.remark, "")
+                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_order_extended.remark) > 0, tbl_shop_order_extended.remark, ""),
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.mainPrductOrderIndex,
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.subMainPrductOrderIndex
                                     SEPARATOR "'. $concatGroupSeparator . '"
                                 ) AS orderedProductDetails,
                                 GROUP_CONCAT(
@@ -360,7 +366,8 @@
                         vendorOne.city as vendorCity,
                         vendorOne.vat_number as vendorVAT,
                         vendorOne.country as vendorCountry,
-                        vendorOne.receiptEmail as receiptEmail
+                        vendorOne.receiptEmail as receiptEmail,
+                        vendorOne.email as vendorEmail
                     FROM
                         tbl_shop_orders
                     INNER JOIN
@@ -463,7 +470,8 @@
                         vendorOne.city as vendorCity,
                         vendorOne.vat_number as vendorVAT,
                         vendorOne.country as vendorCountry,
-                        vendorOne.receiptEmail as receiptEmail
+                        vendorOne.receiptEmail as receiptEmail,
+                        vendorOne.email as vendorEmail
                     FROM 
                         tbl_shop_orders
                     INNER JOIN
@@ -775,6 +783,8 @@
                         'productQuantity' => $data[3],
                         'productPrinter' => $printerData,
                         'remark' => $data[4],
+                        'mainPrductOrderIndex' => $data[5],
+                        'subMainPrductOrderIndex' => $data[6]
                     ];
                 } else {
                     if (
@@ -788,6 +798,8 @@
                             'productQuantity' => $data[3],
                             'productPrinter' => $printerData,
                             'remark' => $data[4],
+                            'mainPrductOrderIndex' => $data[5],
+                            'subMainPrductOrderIndex' => $data[6]
                         ];
                     }
                 }
@@ -798,6 +810,17 @@
                 return !empty($data);
             });
 
+            // TO DO => TO MANY FOREACH NEED REFACTOR OR MANAGE DATA ON FRONT END !!!!!!!!!!!
+            foreach ($productDetails as $index => $data) {
+                if (intval($data['subMainPrductOrderIndex'])) {
+                    $productDetails[$index]['mainPrductOrderIndex'] = $data['subMainPrductOrderIndex'];
+                }
+            }
+            $this->load->helper('utility_helper');
+            $productDetails = Utility_helper::resetArrayByKeyMultiple($productDetails, 'mainPrductOrderIndex');
+            foreach($productDetails as $i => $data) {
+                Utility_helper::array_sort_by_column($productDetails[$i], 'subMainPrductOrderIndex');
+            }
             return $productDetails;
         }
 

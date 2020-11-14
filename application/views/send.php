@@ -39,7 +39,7 @@
 					<div id="testimonials-wrapper" class="text">
 						<div class="testimonial testimonial-layout-one">
 							<div class="testimonial-section__text-wrapper">
-								<p class="testimonial-section__text"><?=$this->language->line("SEND-AA000001","
+								<p class="testimonial-section__text"><?php echo $this->language->line("SEND-AA000001","
 									YOUR PERSONAL COURIER.
 
 									HOW IT WORKS.
@@ -57,7 +57,7 @@
 
 						<div class="testimonial testimonial-layout-two">
 							<div class="testimonial-section__text-wrapper">
-								<p class="testimonial-section__text"><?=$this->language->line("SEND-AA000001","
+								<p class="testimonial-section__text"><?php echo $this->language->line("SEND-AA000001","
 									YOUR PERSONAL COURIER.
 
 									HOW IT WORKS.
@@ -73,7 +73,7 @@
 
 						<div class="testimonial testimonial-layout-three">
 							<div class="testimonial-section__text-wrapper ">
-								<p class="testimonial-section__text"><?=$this->language->line("SEND-AA000001","
+								<p class="testimonial-section__text"><?php echo $this->language->line("SEND-AA000001","
 									YOUR PERSONAL COURIER.
 
 									HOW IT WORKS.
@@ -89,7 +89,7 @@
 					</div>
 				</div><!-- single testimonial -->
 				<p class="text-content-light mb-35 mt-50" >
-					<?=$this->language->line("SEND-A000100","
+					<?php echo $this->language->line("SEND-A000100","
 					<br>SHIPMENT HAS NEVER BEEN SO SIMPLE, <br/>FROM YOU - WITH US - TO YOUR LOVED ONES.
 					")?>
 				</p>
@@ -149,11 +149,11 @@
 	<div class="col-half background-yankee height-100">
 		<div class="flex-column align-start">
 			<div style="text-align:left">
-				<h2 class="heading mb-35"><?=$this->language->line("SEND-0395",'YOUR ADDRESS (FROM)');?></h2>				
+				<h2 class="heading mb-35"><?php echo $this->language->line("SEND-0395",'YOUR ADDRESS (FROM)');?></h2>
                 <input type="text" id="sender_IsDropOffPoint"  value="<?php echo $sender_IsDropOffPoint; ?>" readonly requried hidden />
                 <input type="text" id="sender_roleId"  value="2" readonly requried hidden />				
                 <p style="font-family:'caption-light'; font-size:100%; color: #ffffff;  text-align: center">
-					<?=$this->language->line("SEND-0390",'Your e-mail');?>
+					<?php echo $this->language->line("SEND-0390",'Your e-mail');?>
                 </p>
                 <div class="form-group has-feedback">
                     <input 
@@ -162,11 +162,11 @@
 						requried 
 						onblur="checkEmail(this, 'sender_')" 
 						class="form-control" 
-						style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->line("SEND-040",'Your e-mail');?>" />
+						style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php echo $this->language->line("SEND-040",'Your e-mail');?>" />
                 </div>
                 <div>
                     <p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  text-align: center">
-                        <?=$this->language->line("SEND-130",'Validate Your e-mail address');?>
+                        <?php echo $this->language->line("SEND-130",'Validate Your e-mail address');?>
                     </p>
                 </div>
                 <div class="form-group has-feedback">
@@ -176,26 +176,26 @@
 						requried 
 						class = "form-control" 
 						style="font-family:'caption-light'; border-radius: 50px;"
-						placeholder="<?=$this->language->line("SEND-140",'Repeat email for verification');?>"
+						placeholder="<?php echo $this->language->line("SEND-140",'Repeat email for verification');?>"
 						/>
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="tel" id="sender_mobile"  disabled  class="form-control" style="display: none; font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->line("SEND-160",'Your mobile number');?>" />
+                    <input type="tel" id="sender_mobile"  disabled  class="form-control" style="display: none; font-family:'caption-light'; border-radius: 50px;" placeholder="<?php echo $this->language->line("SEND-160",'Your mobile number');?>" />
                 </div>
 				<div class="form-group has-feedback">
-					<input id="sender_username" disabled type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("SEND-070",'Your full name');?>" />
+					<input id="sender_username" disabled type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("SEND-070",'Your full name');?>" />
 				</div>
 				<div class="form-group has-feedback">
-					<input id="sender_address" disabled type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("SEND-080",'Your address');?>" />
+					<input id="sender_address" disabled type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("SEND-080",'Your address');?>" />
 				</div>
 				<div class="form-group has-feedback">
-					<input id="sender_addressa" disabled type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("SEND-090",'Extra address line');?>" />
+					<input id="sender_addressa" disabled type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("SEND-090",'Extra address line');?>" />
 				</div>
 				<div class="form-group has-feedback">
-					<input type="text" id="sender_zipcode" disabled class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("SEND-100",'Your zipcode');?>" />
+					<input type="text" id="sender_zipcode" disabled class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("SEND-100",'Your zipcode');?>" />
 				</div>
 				<div class="form-group has-feedback">
-					<input type="text" id="sender_city" disabled class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("SEND-110",'City');?>" />
+					<input type="text" id="sender_city" disabled class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("SEND-110",'City');?>" />
 				</div>
 				<div class="form-group has-feedback">
 					<select class="form-control selectBox" id="sender_country" disabled  style="display: none; font-family:'caption-light';  border-radius:50px; ">
@@ -209,12 +209,12 @@
                     <input type="text" id="label_code" readonly requried hidden />
 					<input type="text" id="label_image" readonly requried hidden/>
 					<input type="text" id="label_imageResponseFullName" readonly requried hidden />
-					<label for="labelImage" onclick="triger('labelImage')" class="button button-orange"><?=$this->language->line("SEND-AB1100001",'MAKE AN ITEM PICTURE')?></label>
+					<label for="labelImage" onclick="triger('labelImage')" class="button button-orange"><?php echo $this->language->line("SEND-AB1100001",'MAKE AN ITEM PICTURE')?></label>
 					<input type="file" name="image" id="labelImage" style="display:none" />
                 </div>
                 <div class="form-group has-feedback" style="padding: 10px;">
                     <p style="font-family:'caption-light'; font-size:100%; color:#ffffff; text-align: center">
-                        <?=$this->language->line("SEND-A1100001",'ITEM CATEGORY')?>
+                        <?php echo $this->language->line("SEND-A1100001",'ITEM CATEGORY')?>
                     </p>
                     <select class="form-control" 
 						id="label_categoryid"						
@@ -229,7 +229,7 @@
                 </div>
                 <div class="form-group has-feedback" style="padding: 10px;">
                     <p style="font-family:'caption-light'; font-size:100%; color:#ffffff; text-align: center">
-						<?=$this->language->line("SEND-A1100002",'ITEM DESCRIPTION')?>
+						<?php echo $this->language->line("SEND-A1100002",'ITEM DESCRIPTION')?>
                     </p>
                     <input
 						type="text" id="label_descript"
@@ -238,7 +238,7 @@
                 </div>
                 <div>
                     <p style="font-family:'caption-light'; font-size:100%; color:#ffffff; text-align: center">
-						<?=$this->language->line("SEND-A1100003",'ITEM WIDTH (IN CM)')?>
+						<?php echo $this->language->line("SEND-A1100003",'ITEM WIDTH (IN CM)')?>
                     </p>
                 </div>
                 <div class="form-group has-feedback" style="padding: 10px;">
@@ -252,7 +252,7 @@
                 </div>
                 <div>
                     <p style="font-family:'caption-light'; font-size:100%; color:#ffffff; text-align: center">
-						<?=$this->language->line("SEND-A1100004",'ITEM LENGTH (IN CM)')?>
+						<?php echo $this->language->line("SEND-A1100004",'ITEM LENGTH (IN CM)')?>
                     </p>
                 </div>
                 <div class="form-group has-feedback" style="padding: 10px;">
@@ -266,7 +266,7 @@
                 </div>
                 <div>
                     <p style="font-family:'caption-light'; font-size:100%; color:#ffffff; text-align: center">
-						<?=$this->language->line("SEND-A1100005",'ITEM HEIGHT (IN CM)')?>
+						<?php echo $this->language->line("SEND-A1100005",'ITEM HEIGHT (IN CM)')?>
                     </p>
                 </div>
                 <div class="form-group has-feedback" style="padding: 10px;">
@@ -280,7 +280,7 @@
                 </div>
                 <div>
                     <p style="font-family:'caption-light'; font-size:100%; color:#ffffff; text-align: center">
-						<?=$this->language->line("SEND-A1100006",'ITEM WEIGHT (IN KG)')?>
+						<?php echo $this->language->line("SEND-A1100006",'ITEM WEIGHT (IN KG)')?>
                     </p>
                 </div>
                 <div class="form-group has-feedback" style="padding: 10px;">
@@ -300,11 +300,11 @@
     <div class="col-half background-yellow-DHL">
 		<div class=" background-orange height-40">
 			<div class="width-650">
-				<h2 class="heading mb-35"><?=$this->language->line("SEND-4395",'DELIVERY ADDRESS (TO)');?></h2>
+				<h2 class="heading mb-35"><?php echo $this->language->line("SEND-4395",'DELIVERY ADDRESS (TO)');?></h2>
                 <input type="text" id="recipient_IsDropOffPoint"  value="0" readonly requried hidden />
                 <input type="text" id="recipient_roleId"  value="2" readonly requried hidden />
                 <p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  text-align: center">
-					<?=$this->language->line("SEND-4397",'Recipient email address');?>
+					<?php echo $this->language->line("SEND-4397",'Recipient email address');?>
                 </p>
                 <div class="form-group has-feedback">
                     <input 
@@ -312,11 +312,11 @@
 						id="recipient_email"
 						onblur="checkEmail(this, 'recipient_')"
 						required
-						class="form-control" style="font-family:'caption-light'; border-radius: 50px; " placeholder="<?=$this->language->line("SEND-A11000010","RECIPIENT EMAIL ADDRESS")?>" />
+						class="form-control" style="font-family:'caption-light'; border-radius: 50px; " placeholder="<?php echo $this->language->line("SEND-A11000010","RECIPIENT EMAIL ADDRESS")?>" />
                 </div>
                 <div>
                     <p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  text-align: center">
-                        <?=$this->language->line("SEND-130",'Validate Your e-mail address');?>
+                        <?php echo $this->language->line("SEND-130",'Validate Your e-mail address');?>
                     </p>
                 </div>
                 <div class="form-group has-feedback" style="padding: 10px;">
@@ -326,7 +326,7 @@
 						required
 						class = "form-control"
 						style="font-family:'caption-light'; border-radius: 50px; "
-						placeholder="<?=$this->language->line("SEND-A1100011","VERIFY RECIPIENT EMAIL ADDRESS")?>"
+						placeholder="<?php echo $this->language->line("SEND-A1100011","VERIFY RECIPIENT EMAIL ADDRESS")?>"
 						/>
                 </div>
                 <!-- <div>
@@ -335,22 +335,22 @@
                     </p>
                 </div> -->
                 <div class="form-group has-feedback">
-                    <input type="tel" id="recipient_mobile"  disabled  class="form-control" style="display: none; font-family:'caption-light'; border-radius: 50px;" placeholder="<?=$this->language->line("SEND-A1100012","RECIPIENT MOBILE NUMBER")?>"  />
+                    <input type="tel" id="recipient_mobile"  disabled  class="form-control" style="display: none; font-family:'caption-light'; border-radius: 50px;" placeholder="<?php echo $this->language->line("SEND-A1100012","RECIPIENT MOBILE NUMBER")?>"  />
                 </div>
                 <div class="form-group has-feedback">
-                    <input id="recipient_username" disabled type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("SEND-A1100013","RECIPIENT FULL NAME")?>"  />
+                    <input id="recipient_username" disabled type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("SEND-A1100013","RECIPIENT FULL NAME")?>"  />
                 </div>
                 <div class="form-group has-feedback">
-                    <input id="recipient_address" disabled type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("SEND-A1100014","RECIPIENT ADDRESS")?>"  />
+                    <input id="recipient_address" disabled type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("SEND-A1100014","RECIPIENT ADDRESS")?>"  />
                 </div>
                 <div class="form-group has-feedback">
-                    <input id="recipient_addressa" disabled type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("SEND-A1100015",'EXTRA ADDRESS LINE');?>" />
+                    <input id="recipient_addressa" disabled type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("SEND-A1100015",'EXTRA ADDRESS LINE');?>" />
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="text" id="recipient_zipcode" disabled class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("SEND-A1100016","RECIPIENT  ZIPCODE")?>""  />
+                    <input type="text" id="recipient_zipcode" disabled class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("SEND-A1100016","RECIPIENT  ZIPCODE")?>""  />
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="text" id="recipient_city" disabled class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("SEND-A11000017","RECIPIENT CITY")?>""  />
+                    <input type="text" id="recipient_city" disabled class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("SEND-A11000017","RECIPIENT CITY")?>""  />
                 </div>
                 <div class="form-group has-feedback">
                     <select class="form-control selectBox" id="recipient_country" disabled  style="display: none; font-family:'caption-light';  border-radius:50px; ">
@@ -358,7 +358,7 @@
                     </select>
                 </div>
                 <div class="form-group has-feedback">
-                    <input  type="button" onclick="checkEmailsAndSubmit('sender_email', 'sender_emailverify', 'recipient_email', 'recipient_emailverify')" class="button button-orange" value="<?=$this->language->line("SEND-A11000020","SEND THE ITEM")?>"  style="border: none" />
+                    <input  type="button" onclick="checkEmailsAndSubmit('sender_email', 'sender_emailverify', 'recipient_email', 'recipient_emailverify')" class="button button-orange" value="<?php echo $this->language->line("SEND-A11000020","SEND THE ITEM")?>"  style="border: none" />
                 </div>
 			</div>
 		</div>
@@ -367,9 +367,9 @@
 			<div class="timeline-text">
 				<div class="timeline-heading">
 					<span class='timeline-number text-green show-mobile'>1</span>
-					<h2 style="font-weight:bold; font-family: caption-bold"><?=$this->language->line("SEND-A1100030","SEND YOUR PACKAGE WITH TIQS")?> </h2>
+					<h2 style="font-weight:bold; font-family: caption-bold"><?php echo $this->language->line("SEND-A1100030","SEND YOUR PACKAGE WITH TIQS")?> </h2>
 				</div>
-				<p class="text-content-light" style="font-size: larger"><?=$this->language->line("SEND-A1100035","LOST AND FOUND HAS A UNIQUE PACKAGE SENDING PROCESS INTEGRATED WITH DHL AND YOU CAN TAKE ADVANTAGE OF THAT!. SIMPLE SECURE AND FAST. LEARN HOW IN THE VIDEO BELOW.")?></p>
+				<p class="text-content-light" style="font-size: larger"><?php echo $this->language->line("SEND-A1100035","LOST AND FOUND HAS A UNIQUE PACKAGE SENDING PROCESS INTEGRATED WITH DHL AND YOU CAN TAKE ADVANTAGE OF THAT!. SIMPLE SECURE AND FAST. LEARN HOW IN THE VIDEO BELOW.")?></p>
 				<div class="flex-column align-space">
 					<!--					<p class="text-content-light" style="font-weight: bold">LOST BY YOUR CUSTOMER, <br>RETURNED BY US.							</p>-->
 					<div id="timeline-video-3">
@@ -377,7 +377,7 @@
 					</div><!-- time line video for third block -->
 					<div align="center" class="mt-50">
 						<!--                                href="https://tiqs.com/lostandfound/menuapp target="_blank"" -->
-						<a class="button button-orange mb-25" id="show-timeline-video-3"><?=$this->language->line("SEND-A1100040","LEARN MORE VIDEO")?></a>
+						<a class="button button-orange mb-25" id="show-timeline-video-3"><?php echo $this->language->line("SEND-A1100040","LEARN MORE VIDEO")?></a>
 					</div>
 				</div>
 			</div>

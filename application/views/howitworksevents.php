@@ -151,7 +151,7 @@
 							<div class="selectWrapper"  id="language">
 								<select class="selectBox" id="languageselect" name="country" style="background-color:#eec5a7; font-family:'caption-light';" style="border-radius: 50px; border: none" />
 								<option value="">
-									<?=$this->language->line("CONTACT-A360","Select your language");?>
+									<?php echo $this->language->line("CONTACT-A360","Select your language");?>
 								</option>
 								<option value="tenglish">English</option>
 								<option value="german">German</option>
@@ -195,7 +195,7 @@
 				<p>This video will show you how to create an account.</p>
 				<div class="flex-column align-space mb-35">
 					<div align="center">
-						<a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?=$this->language->line("HOWITORKSBUSINESS-2000",'SHOW VIDEO');?></a>
+						<a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?php echo $this->language->line("HOWITORKSBUSINESS-2000",'SHOW VIDEO');?></a>
 					</div>
 				</div>
 			</div>
@@ -204,7 +204,7 @@
 				<p>This video will show you how to create an account.</p>
 				<div class="flex-column align-space mb-35">
 					<div align="center">
-						<a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?=$this->language->line("HOWITORKSBUSINESS-2100",'SHOW VIDEO');?></a>
+						<a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?php echo $this->language->line("HOWITORKSBUSINESS-2100",'SHOW VIDEO');?></a>
 					</div>
 				</div>
 			</div>
@@ -213,7 +213,7 @@
 				<p>This video will show you how to create an account.</p>
 				<div class="flex-column align-space mb-35">
 					<div align="center">
-						<a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?=$this->language->line("HOWITORKSBUSINESS-2200",'SHOW VIDEO');?></a>
+						<a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?php echo $this->language->line("HOWITORKSBUSINESS-2200",'SHOW VIDEO');?></a>
 					</div>
 				</div>
 			</div>

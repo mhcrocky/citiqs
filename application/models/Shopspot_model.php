@@ -21,7 +21,7 @@
         protected function setValueType(string $property,  &$value): void
         {
             $this->load->helper('validate_data_helper');
-            if (!Validate_data_helper::validateInteger($value)) return;
+            if (!Validate_data_helper::validateNumber($value)) return;
 
             if ($property === 'id' || $property === 'printerId' || $property === 'spotTypeId') {
                 $value = intval($value);
@@ -156,5 +156,19 @@
         {
             $this->setObject();
             return ($this->active === '1') ? true : false;
+        }
+
+        
+        public function fetchSpot(int $vendorId, int $spotId): ?array
+        {
+            $where = [
+                'tbl_shop_printers.userId=' => $vendorId,
+                'tbl_shop_spots.active' => '1',
+                'tbl_shop_spots.id' => $spotId,
+                'tbl_shop_vendor_types.active=' => '1',
+                'tbl_shop_vendor_types.vendorId=' => $vendorId
+            ];
+            $spot = $this->fetchUserSpotsImporved($where);
+            return (!empty($spot)) ? reset($spot) : null;
         }
     }

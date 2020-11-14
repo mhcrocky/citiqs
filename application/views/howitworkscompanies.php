@@ -154,7 +154,7 @@
 				  <p>This video will show you how to create an account.</p>
                     <div class="flex-column align-space mb-35">
                         <div align="center">
-                            <a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?=$this->language->line("HOWITORKSBUSINESS-2000",'SHOW VIDEO');?></a>
+                            <a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?php echo $this->language->line("HOWITORKSBUSINESS-2000",'SHOW VIDEO');?></a>
                         </div>
                     </div>
 				</div>
@@ -163,7 +163,7 @@
                 <p>This video will show you how to create an account.</p>
                 <div class="flex-column align-space mb-35">
                     <div align="center">
-                        <a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?=$this->language->line("HOWITORKSBUSINESS-2100",'SHOW VIDEO');?></a>
+                        <a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?php echo $this->language->line("HOWITORKSBUSINESS-2100",'SHOW VIDEO');?></a>
                     </div>
                 </div>
             </div>
@@ -172,7 +172,7 @@
                 <p>This video will show you how to create an account.</p>
                 <div class="flex-column align-space mb-35">
                     <div align="center">
-                        <a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?=$this->language->line("HOWITORKSBUSINESS-2200",'SHOW VIDEO');?></a>
+                        <a href="<?php echo base_url(); ?>menuapp" target="_blank" class="button button-orange mb-25"><?php echo $this->language->line("HOWITORKSBUSINESS-2200",'SHOW VIDEO');?></a>
                     </div>
                 </div>
             </div>

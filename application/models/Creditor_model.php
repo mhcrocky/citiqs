@@ -67,6 +67,7 @@ class Creditor_model extends CI_Model {
 
         $this->db->set('external_id', $data['external_id']);
         $this->db->set('product_category_id', $data['product_category_id']);
+        $this->db->set('product_id', $data['product_id']);
         $this->db->set('accounting', $data['accounting']);
         $this->db->where('id', $data['id']);
         $this->db->where('user_ID', $data['user_ID']);

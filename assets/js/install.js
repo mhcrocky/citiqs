@@ -57,7 +57,6 @@ $('document').ready(function()
 						$("#result").html('<div class="alert alert-danger"><strong>Well done!</strong> You successfully read this important alert message.</div>');
 									};
 					}
-			  }
 			});
 				return false;
 		}

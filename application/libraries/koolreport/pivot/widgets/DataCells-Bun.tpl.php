@@ -26,7 +26,7 @@
             <?php foreach($rowIndexesBun as $r => $i) { 
                 $rowNodeInfo = $rowNodesInfo[$i]; ?>
                 <tr class='krpmRow'
-                    data-row-field=<?=$rowNodeInfo['fieldOrder']?>
+                    data-row-field=<?php $rowNodeInfo['fieldOrder']?>
                     style='display:'
                 >
                     <?php foreach ($colIndexes as $c => $j) {
@@ -50,11 +50,11 @@
 
                                     echo ' ' . Util::get($dataRowClass, $df, '');
                                 ?>' 
-                                data-data-field=<?=$di?>
-                                data-column-field=<?=$colNodeInfo['fieldOrder']?>
-                                data-row-field=<?=$rowNodeInfo['fieldOrder']?>
-                                data-row-index=<?=$r;?>
-                                data-column-index=<?=$c;?>
+                                data-data-field=<?php $di?>
+                                data-column-field=<?php $colNodeInfo['fieldOrder']?>
+                                data-row-field=<?php $rowNodeInfo['fieldOrder']?>
+                                data-row-index=<?php $r;?>
+                                data-column-index=<?php $c;?>
                                 data-row-layer=1
                                 data-column-layer=1
                                 data-page-layer=1

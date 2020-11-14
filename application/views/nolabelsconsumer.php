@@ -113,12 +113,12 @@
 		<div class="flex-column align-start">
 			<div align="left">
 				<h2 class="heading mb-35">
-					<?=$this->language->line('NOLABLESCONSUMER-A10001','HOW </a>');?>
+					<?php echo $this->language->line('NOLABLESCONSUMER-A10001','HOW </a>');?>
 				</h2>
 				<h3 class="heading mb-35">
-					<?=$this->language->line('NOLABELS-B100010','LEARN HOW IN THE STEPS ON THIS PAGE');?>
+					<?php echo $this->language->line('NOLABELS-B100010','LEARN HOW IN THE STEPS ON THIS PAGE');?>
 				</h3>
-				<p style="font-family: caption-light" class="text-content mb-35"><?=$this->language->line("Home-003",'LOST BY YOUR CUSTOMER,<br> RETURNED BY US.');?></p>
+				<p style="font-family: caption-light" class="text-content mb-35"><?php echo $this->language->line("Home-003",'LOST BY YOUR CUSTOMER,<br> RETURNED BY US.');?></p>
 
 			</div>
 			<div class="text-Left mt-50 mobile-hide" style="margin-top: 0px; margin-left: 0px">

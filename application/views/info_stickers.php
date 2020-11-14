@@ -74,7 +74,7 @@
 					</p>
 
 					<div class="mb-35">
-						<a href="<?php echo base_url(); ?>ordertags" class="button button-orange"><?=$this->language->line('TAGS-A0010','ORDER YOUR PERSONAL TIQS-TAGS');?></a>
+						<a href="<?php echo base_url(); ?>ordertags" class="button button-orange"><?php echo $this->language->line('TAGS-A0010','ORDER YOUR PERSONAL TIQS-TAGS');?></a>
 					</div>
 
 					<div class="clearfix">
@@ -154,7 +154,7 @@
 					<br>LOST BY YOU, RETURNED BY US.
 				</p>
 				<div class="mb-35" align="left">
-					<a href="<?php echo base_url(); ?>legal" class="button button-orange"><?=$this->language->line('INFODHL-A0101','GDPR AND LEGAL STATEMENTS');?></a>
+					<a href="<?php echo base_url(); ?>legal" class="button button-orange"><?php echo $this->language->line('INFODHL-A0101','GDPR AND LEGAL STATEMENTS');?></a>
 				</div>
 				<div class="mb-35" align="center" >
 					<img border="0" src="<?php echo base_url(); ?>assets/home/images/tiqslogogreen.png" alt="tiqs" width="auto" height="70" />
@@ -198,7 +198,7 @@
 								<div class="selectWrapper"  id="language">
 									<select class="selectBox" id="languageselect" name="country" style="background-color:#eec5a7; font-family:'caption-light';" required />
 									<option value="">
-										<?=$this->language->line("CONTACT-A360","Select your language");?>
+										<?php echo $this->language->line("CONTACT-A360","Select your language");?>
 									</option>
 										<option value="tenglish">English</option>
 										<option value="german">German</option>

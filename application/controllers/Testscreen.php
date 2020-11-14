@@ -24,7 +24,7 @@ class  Testscreen extends BaseControllerWeb
         	'amount' => $amount,
 			'description' =>'testscreen'
 		);
-		$this->loadViews("paysuccesslink", $this->global, $data, NULL); // payment screen
+		$this->loadViews("paysuccesslinkth", $this->global, $data, NULL); // payment screen
 //		$this->loadViews("checkLabelregisterednew", $this->global, NULL, NULL); // payment screen
 //		$this->loadViews("newregisteredhotelinfo", $this->global, NULL, NULL);
 //		$this->loadViews("nolabels", $this->global, NULL, NULL); // payment screen

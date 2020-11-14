@@ -28,30 +28,30 @@
 			</div>
 			<div style="text-align:left">
 				<p style="font-family:'caption-bold'; font-size:300%; color:#ffffff;">
-					<?=$this->language->Line("LOGIN-LL3400",'PERSONAL LOGIN.');?>
+					<?php echo $this->language->Line("LOGIN-LL3400",'PERSONAL LOGIN.');?>
 				</p>
 			</div>
 			<div class="width-650">
 				<?php include_once APPPATH . 'views/includes/sessionMessages.php' ?>
 				<form action="<?php echo base_url(); ?>loginMe" method="post">
 					<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
-						<?=$this->language->Line("registerbusiness-3500",'Use your e-mail to login');?>
+						<?php echo $this->language->Line("registerbusiness-3500",'Use your e-mail to login');?>
 					</p>
 					<div class="form-group has-feedback" style="text-align:center">
-						<input type="email" class="form-control" style="font-family:'caption-light'; border:none; border-radius: 50px; " placeholder="<?=$this->language->Line("registerbusiness-3600",'Your e-mail');?>" name="email" required />
+						<input type="email" class="form-control" style="font-family:'caption-light'; border:none; border-radius: 50px; " placeholder="<?php echo $this->language->Line("registerbusiness-3600",'Your e-mail');?>" name="email" required />
 					</div>
 					<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
-						<?=$this->language->Line("registerbusiness-3800",'Password');?>
+						<?php echo $this->language->Line("registerbusiness-3800",'Password');?>
 					</p>
 					<div class="form-group has-feedback">
-						<input type="password" class="form-control" style="font-family:'caption-light';border:none; border-radius: 50px" placeholder="<?=$this->language->Line("registerbusiness-3900",'Your Password');?>" name="password" required />
+						<input type="password" class="form-control" style="font-family:'caption-light';border:none; border-radius: 50px" placeholder="<?php echo $this->language->Line("registerbusiness-3900",'Your Password');?>" name="password" required />
 					</div>
 					<br>
 					<div style="text-align: center; margin-bottom: 10px ">
-						<input type="submit" class="button button-orange" value="<?=$this->language->Line("registerbusiness-4100",'LOGIN');?>" style="border: none" />
+						<input type="submit" class="button button-orange" value="<?php echo $this->language->Line("registerbusiness-4100",'LOGIN');?>" style="border: none" />
 					</div>
 					<div>
-						<a href="forgotPassword" ><?=$this->language->Line("registerbusiness-F4001ab","I FORGOT MY PASSWORD, CAN I GET A NEW ONE?");?></a>
+						<a href="forgotPassword" ><?php echo $this->language->Line("registerbusiness-F4001ab","I FORGOT MY PASSWORD, CAN I GET A NEW ONE?");?></a>
 					</div>
 				</form>
 			</div>
@@ -89,31 +89,33 @@
 			</div>
 			<div style="text-align:left">
 				<p style="font-family:'caption-bold'; font-size:300%; color:#ffffff;">
-					<?=$this->language->Line("LOGIN-LX103400",'BUSINESS LOGIN.');?>
+					<?php echo $this->language->Line("LOGIN-LX103400",'BUSINESS LOGIN.');?>
 				</p>
 			</div>
 			<div class="width-650">
 				<form action="<?php echo base_url(); ?>loginMe" method="post">
 					<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
-						<?=$this->language->Line("registerbusiness-3500",'Use your e-mail to login');?>
+						<?php echo $this->language->Line("registerbusiness-3500",'Use your e-mail to login');?>
 					</p>
 					<div class="form-group has-feedback" style="text-align:center">
-						<input type="email" class="form-control" style="font-family:'caption-light'; border:none; border-radius: 50px; " placeholder="<?=$this->language->Line("registerbusiness-3600",'Your e-mail');?>" name="email" required />
+						<input type="email" id="businessEmail" class="form-control" style="font-family:'caption-light'; border:none; border-radius: 50px; " placeholder="<?php echo $this->language->Line("registerbusiness-3600",'Your e-mail');?>" name="email" required />
+						<div class="virtual-keyboard-hook" data-target-id="businessEmail" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
 					</div>
 					<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
-						<?=$this->language->Line("registerbusiness-3800",'Password');?>
+						<?php echo $this->language->Line("registerbusiness-3800",'Password');?>
 					</p>
 					<div class="form-group has-feedback">
-						<input type="password" class="form-control" style="font-family:'caption-light';border:none; border-radius: 50px" placeholder="<?=$this->language->Line("registerbusiness-3900",'Your Password');?>" name="password" required />
+						<input type="password" id="businessPassword" class="form-control" style="font-family:'caption-light';border:none; border-radius: 50px" placeholder="<?php echo $this->language->Line("registerbusiness-3900",'Your Password');?>" name="password" required />
+						<div class="virtual-keyboard-hook" style="text-align:center" data-target-id="businessPassword" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
 					</div>
 
 					<br>
 					<div class="mb-35" style="text-align: center; ">
-						<input type="submit" class="button button-orange" value="<?=$this->language->Line("registerbusiness-4100",'LOGIN');?>" style="border: none" />
+						<input type="submit" class="button button-orange" value="<?php echo $this->language->Line("registerbusiness-4100",'LOGIN');?>" style="border: none" />
 					</div>
 				</form>
 				<div>
-					<a href="forgotPassword" ><?=$this->language->Line("registerbusiness-F4100A","I FORGOT MY PASSWORD");?></a>
+					<a href="forgotPassword" ><?php echo $this->language->Line("registerbusiness-F4100A","I FORGOT MY PASSWORD");?></a>
 				</div>
 			</div>
 		</div>
@@ -148,32 +150,34 @@
 			</div>
 			<div style="text-align:left;">
 				<p style="font-family:'caption-bold'; font-size:300%; color:#ffffff;">
-					<?=$this->language->Line("LOGIN-L203400",'PERSONAL LOGIN.');?>
+					<?php echo $this->language->Line("LOGIN-L203400",'PERSONAL LOGIN.');?>
 				</p>
 			</div>
 			<div class="width-650">
 				<form action="<?php echo base_url(); ?>loginMe" method="post">
 					<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
-						<?=$this->language->Line("registerbusiness-3500",'Use your e-mail to login');?>
+						<?php echo $this->language->Line("registerbusiness-3500",'Use your e-mail to login');?>
 					</p>
 					<div class="form-group has-feedback" style="text-align:center;">
-						<input type="email" class="form-control" style="font-family:'caption-light'; border:none; border-radius: 50px; " placeholder="<?=$this->language->Line("registerbusiness-3600",'Your e-mail');?>" name="email" required />
+						<input id="personEmail"type="email" class="form-control" style="font-family:'caption-light'; border:none; border-radius: 50px; " placeholder="<?php echo $this->language->Line("registerbusiness-3600",'Your e-mail');?>" name="email" required />
+						<div class="virtual-keyboard-hook" data-target-id="personEmail" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
 					</div>
 					<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
-						<?=$this->language->Line("registerbusiness-3800",'Password');?>
+						<?php echo $this->language->Line("registerbusiness-3800",'Password');?>
 					</p>
 					<div class="form-group has-feedback">
-						<input type="password" class="form-control" style="font-family:'caption-light';border:none; border-radius: 50px" placeholder="<?=$this->language->Line("registerbusiness-3900",'Your Password');?>" name="password" required />
+						<input id="personPassword" type="password" class="form-control" style="font-family:'caption-light';border:none; border-radius: 50px" placeholder="<?php echo $this->language->Line("registerbusiness-3900",'Your Password');?>" name="password" required />
+						<div class="virtual-keyboard-hook" style="text-align:center" data-target-id="personPassword" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
 					</div>
 
 					<br>
 					<div style="text-align: center; margin-bottom: 30px ">
-						<input type="submit" class="button button-orange" value="<?=$this->language->Line("registerbusiness-4100",'LOGIN');?>" style="border: none" />
+						<input type="submit" class="button button-orange" value="<?php echo $this->language->Line("registerbusiness-4100",'LOGIN');?>" style="border: none" />
 					</div>
 				</form>
 
 				<div >
-					<a style="color: orange" href="forgotPassword" ><?=$this->language->Line("registerbusiness-F4100A","I FORGOT MY PASSWORD");?></a>
+					<a style="color: orange" href="forgotPassword" ><?php echo $this->language->Line("registerbusiness-F4100A","I FORGOT MY PASSWORD");?></a>
 				</div>
 
 			</div>

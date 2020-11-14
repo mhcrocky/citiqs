@@ -57,12 +57,13 @@ class  Profile extends BaseControllerWeb
 	public function updateVendorData($id): void
 	{
 		$this->shopvendor_model->id = intval($id);
+		$post  = Utility_helper::sanitizePost();
+		$vendorTypes = empty($post) ? [] : $post['vendorTypes'];
 
-		$vendorTypes = empty($_POST['vendorTypes']) ? [] : $_POST['vendorTypes'];
+		$this->shopvendortypes_model->setProperty('vendorId', intval($post['vendorId']))->updateVendorTypes($vendorTypes);
 
-		$this->shopvendortypes_model->setProperty('vendorId', intval($_POST ['vendorId']))->updateVendorTypes($vendorTypes);
-
-		if ($this->shopvendor_model->setObjectFromArray($_POST['vendor'])->update()) {
+		if ($this->shopvendor_model->setObjectFromArray($post['vendor'])->update()) {
+			$_SESSION['activatePos'] = $post['vendor']['activatePos'];
 			$this->session->set_flashdata('success', 'Data updated');
 		} else {
 			$this->session->set_flashdata('error', 'Update data failed');

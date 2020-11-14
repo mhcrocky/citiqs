@@ -138,7 +138,6 @@ $route['saveLocation'] = 'Whatislostisfound/saveLocation';
 $route['register'] = 'login/register';
 $route['registerbusiness'] = 'login/registerbusiness';
 $route['loginMe'] = 'login/loginMe';
-$route['dashboard'] = 'user/index';
 $route['logout'] = 'user/logout';
 $route['userListing'] = 'user/userListing';
 $route['lostandfoundlist'] = 'user/lostandfoundlist';
@@ -255,6 +254,7 @@ $route['product_types']         = "warehouse/productTypes";
 $route['visitors']              = "warehouse/visitors";
 $route['dayreport']           	= "warehouse/dayreport";
 $route['vatreport']           	= "warehouse/vatreport";
+$route['viewdesign']                = "warehouse/viewdesign";
 
 // PUBLIC
 $route['make_order']                = 'publicorders/index';
@@ -263,9 +263,15 @@ $route['buyer_details']             = 'publicorders/buyer_details';
 $route['pay_order']                 = 'publicorders/pay_order';
 $route['closed/(:num)']             = 'publicorders/closed/$1';
 $route['spot_closed/(:num)']        = 'publicorders/spotClosed/$1';
-$route['insertorder/(:num)/(:any)'] = 'publicorders/insertOrder/$1/$2';
-$route['cashPayment/(:num)/(:any)'] = 'publicorders/cashPayment/$1/$2';
-$route['voucherPayment/(:num)']     = 'publicorders/voucherPayment/$1';
+
+
+// POS
+$route['pos']       = 'pos/index';
+
+//INSERT ORDER
+$route['insertorder/(:num)/(:any)'] = 'alfredinsertorder/insertOrder/$1/$2';
+$route['cashPayment/(:num)/(:any)'] = 'alfredinsertorder/cashPayment/$1/$2';
+$route['voucherPayment']     = 'alfredinsertorder/voucherPayment';
 
 // API
 $route['api/orders/print/get']  = 'Api/Orders/data';
@@ -279,7 +285,7 @@ $route['api/onesignal/data']  = 'Api/OneSignal/data';
 
 
 // ALFRED PAYMENT ENGINE
-$route['paymentengine/(:num)/(:any)'] = 'Alfredpayment/paymentEngine/$1/$2';
+$route['paymentengine/(:num)/(:any)/(:num)'] = 'Alfredpayment/paymentEngine/$1/$2/$3';
 $route['successPayment'] = 'Alfredpayment/successPayment';
 $route['exchangePay'] = 'Alfredpayment/ExchangePay';
 
@@ -287,7 +293,103 @@ $route['success'] = 'Paysuccesslink';
 $route['successth'] = 'Paysuccesslinkth';
 $route['success_reservation'] = 'Reservations/success';
 
+$route['pending']       = 'paysuccesslink/pending';
+$route['authorised']    = 'paysuccesslink/authorised';
+$route['verify']        = 'paysuccesslink/verify';
+$route['cancel']        = 'paysuccesslink/cancel';
+$route['denied']        = 'paysuccesslink/denied';
+
 $route['vendors'] = 'Api/Vendors/data';
+
+$route['order/lines'] = 'Orderlines/index';
+$route['visma/export/(:num)'] = 'Api/Visma/export_single_invoice/$1';
+$route['visma'] = 'Api/Visma/index';
+$route['visma/login'] = 'Api/Visma/login';
+$route['visma/config'] = 'Accounting/VismaSetting/index';
+$route['config_visma/app_settings'] = 'Accounting/VismaSetting/app_setting';
+
+$route['setting/visma/vat'] = 'Accounting/VismaAccountSetting/vat_rates';
+$route['setting/visma/vat/(:num)'] = 'Accounting/VismaAccountSetting/vat_rates_edit/$1';
+$route['setting/visma_vatrate/save'] = 'Accounting/VismaAccountSetting/save_visma_vat';
+$route['setting/visma_vatrate/update'] = 'Accounting/VismaAccountSetting/update_visma_vat';
+$route['setting/visma/vat_delete/(:num)'] = 'Accounting/VismaAccountSetting/delete_visma_vat/$1';
+
+$route['setting/visma/debitors'] = 'Accounting/VismaAccountSetting/debitors';
+$route['setting/visma/debitors/(:num)'] = 'Accounting/VismaAccountSetting/debitors_edit/$1';
+$route['setting/visma_debitor/save'] = 'Accounting/VismaAccountSetting/save_debitor';
+$route['setting/visma_debitor/update'] = 'Accounting/VismaAccountSetting/update_debitor';
+$route['setting/visma/debit_delete/(:num)'] = 'Accounting/VismaAccountSetting/delete_debitor/$1';
+
+
+$route['setting/visma/creditors'] = 'Accounting/VismaAccountSetting/creditors';
+$route['setting/visma/creditors/(:num)'] = 'Accounting/VismaAccountSetting/creditors_edit/$1';
+$route['setting/visma_credit/save'] = 'Accounting/VismaAccountSetting/save_credit';
+$route['setting/visma_credit/update'] = 'Accounting/VismaAccountSetting/update_credit';
+$route['setting/visma/credit_delete/(:num)'] = 'Accounting/VismaAccountSetting/delete_credit/$1';
+
+$route['marketing/selection'] = 'Marketing/Selection';
+$route['marketing/selection/allbuyers'] = 'Marketing/Selection/allbuyers';
+$route['marketing/selection/sendmessage'] = 'Marketing/Selection/sendMessage';
+
+$route['marketing/calculator'] = 'Marketing/Calculator';
+$route['marketing/calculator/savecalc'] = 'Marketing/Calculator/saveCalc';
+
+$route['api/video/upload_post'] = 'Api/Video/upload_post';
+
+$route['dashboard'] = 'Businessreport/index';
+$route['businessreport/get_report'] = 'Businessreport/get_report';
+
+$route['order/lines'] = 'Orderlines/index';
+$route['visma/export/(:num)'] = 'Api/Visma/export_single_invoice/$1';
+$route['visma'] = 'Api/Visma/index';
+$route['visma/login'] = 'Api/Visma/login';
+$route['visma/config'] = 'Accounting/VismaSetting/index';
+$route['config_visma/app_settings'] = 'Accounting/VismaSetting/app_setting';
+
+$route['setting/visma/vat'] = 'Accounting/VismaAccountSetting/vat_rates';
+$route['setting/visma/vat/(:num)'] = 'Accounting/VismaAccountSetting/vat_rates_edit/$1';
+$route['setting/visma_vatrate/save'] = 'Accounting/VismaAccountSetting/save_visma_vat';
+$route['setting/visma_vatrate/update'] = 'Accounting/VismaAccountSetting/update_visma_vat';
+$route['setting/visma/vat_delete/(:num)'] = 'Accounting/VismaAccountSetting/delete_visma_vat/$1';
+
+$route['setting/visma/debitors'] = 'Accounting/VismaAccountSetting/debitors';
+$route['setting/visma/debitors/(:num)'] = 'Accounting/VismaAccountSetting/debitors_edit/$1';
+$route['setting/visma_debitor/save'] = 'Accounting/VismaAccountSetting/save_debitor';
+$route['setting/visma_debitor/update'] = 'Accounting/VismaAccountSetting/update_debitor';
+$route['setting/visma/debit_delete/(:num)'] = 'Accounting/VismaAccountSetting/delete_debitor/$1';
+
+
+$route['setting/visma/creditors'] = 'Accounting/VismaAccountSetting/creditors';
+$route['setting/visma/creditors/(:num)'] = 'Accounting/VismaAccountSetting/creditors_edit/$1';
+$route['setting/visma_credit/save'] = 'Accounting/VismaAccountSetting/save_credit';
+$route['setting/visma_credit/update'] = 'Accounting/VismaAccountSetting/update_credit';
+$route['setting/visma/credit_delete/(:num)'] = 'Accounting/VismaAccountSetting/delete_credit/$1';
+
+// Exact
+$route['exact'] = 'Api/Exact/index';
+$route['exact/config'] = 'Accounting/ExactSetting/index';
+$route['config_exact/app_settings'] = 'Accounting/ExactSetting/app_setting';
+
+
+
+$route['setting/exact/vat'] = 'Accounting/ExactAccountSetting/vat_rates';
+$route['setting/exact/vat/(:num)'] = 'Accounting/ExactAccountSetting/vat_rates_edit/$1';
+$route['setting/exact_vatrate/save'] = 'Accounting/ExactAccountSetting/save_vat';
+$route['setting/exact_vatrate/update'] = 'Accounting/ExactAccountSetting/update_vat';
+$route['setting/exact/vat_delete/(:num)'] = 'Accounting/ExactAccountSetting/delete_vat/$1';
+
+$route['setting/exact/debitors'] = 'Accounting/ExactAccountSetting/debitors';
+$route['setting/exact/debitors/(:num)'] = 'Accounting/ExactAccountSetting/debitors_edit/$1';
+$route['setting/exact_debitor/save'] = 'Accounting/ExactAccountSetting/save_debitor';
+$route['setting/exact_debitor/update'] = 'Accounting/ExactAccountSetting/update_debitor';
+$route['setting/exact/debit_delete/(:num)'] = 'Accounting/ExactAccountSetting/delete_debitor/$1';
+
+
+$route['setting/exact/creditors'] = 'Accounting/ExactAccountSetting/creditors';
+$route['setting/exact/creditors/(:num)'] = 'Accounting/ExactAccountSetting/creditors_edit/$1';
+$route['setting/exact_credit/save'] = 'Accounting/ExactAccountSetting/save_credit';
+$route['setting/exact_credit/update'] = 'Accounting/ExactAccountSetting/update_credit';
+$route['setting/exact/credit_delete/(:num)'] = 'Accounting/ExactAccountSetting/delete_credit/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

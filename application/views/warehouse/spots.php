@@ -119,6 +119,13 @@
                                     <?php echo $spot['printerActive'] === '1' ? '<span>ACTIVE</span>' : '<span>BLOCKED</span>'; ?>
                                 </p>
                                 <p class="item-description">Spot type: <span><?php echo $spot['spotType']; ?><span></p>
+                                <?php if ($activePos === '1' && $spot['spotActive'] === '1') { ?>
+                                    <a href="<?php echo base_url() . 'pos?spotid=' . $spot['spotId'];  ?>">
+                                        <p class="item-description">
+                                            Go to POS
+                                        </p>
+                                    </a>
+                                <?php } ?>
                             </div><!-- end item header -->
                             <!-- END EDIT FOR NEW USER -->
                             <div class="grid-footer">

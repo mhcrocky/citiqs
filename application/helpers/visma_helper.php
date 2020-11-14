@@ -39,7 +39,7 @@ function apiRequest($endpoint, $access_token, $refresh_token, $user_ID, $request
 
     if (is_string($result)) {
         $result = json_decode($result);
-        if ($result->ErrorCode == '4005') {
+        if (isset($result->ErrorCode) && $result->ErrorCode == '4005') {
             $token  = refresh_token($endpoint, $refresh_token, $user_ID,"",'post');
             apiRequest($endpoint, $token->access_token, $token->refresh_token, $user_ID, $request_body);
             return ['success' => true, 'result' => $result];
@@ -80,7 +80,7 @@ function apiRequestGet($endpoint, $access_token, $refresh_token, $user_ID, $id =
     $result = json_decode($result);
     // print_r($result);
     // exit;
-    if ($result->ErrorCode == '4005') {
+    if (isset($result->ErrorCode) && $result->ErrorCode == '4005') {
         refresh_token($endpoint, $refresh_token, $user_ID, $id, 'get');
         return ['success' => false, 'message' => $result];
     }
@@ -185,7 +185,7 @@ function apiPut($endpoint, $access_token, $refresh_token, $user_ID, $request_bod
     $result = curl_exec($curl);
     if (is_string($result)) {
         $result = json_decode($result);
-        if ($result->ErrorCode == '4005') {
+        if (isset($result->ErrorCode) && $result->ErrorCode == '4005') {
             $token  = refresh_token($endpoint, $refresh_token, $user_ID, $id = "", 'post');
             apiPut($endpoint, $token->access_token, $token->refresh_token, $user_ID, $request_body);
             return ['success' => true, 'result' => $result];

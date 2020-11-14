@@ -29,7 +29,7 @@ class Report_table extends BaseControllerWeb
 		]);
 		$report->run()->exportToXLSX(array(
 			"dataStore" => array(
-				'alldata_Orders')
+				'alldata_orderlines')
 			)
 		)
 			->toBrowser("myreport.xlsx");

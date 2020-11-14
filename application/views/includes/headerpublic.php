@@ -24,6 +24,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" integrity="sha256-PZLhE6wwMbg4AB3d35ZdBF9HD/dI/y4RazA3iRDurss=" crossorigin="anonymous" />
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/keyboard.css" />
 	<?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
 
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/jspdf.min.js"></script>
@@ -39,9 +40,9 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/cookies.js"></script>
 	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>
-
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/keyboard.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/scriptonboard.js"></script>
-
+	<?php include_once FCPATH . 'application/views/includes/customJs.php'; ?>
 </head>
 
 <?php if ($this->view === 'map') {?>
@@ -52,17 +53,17 @@
 
 <?php } ?>
 <header class="header">
-	<nav class="header-nav">
+	<nav class="header-nav" style="background-color: #0d173b">
 		<a href="<?php echo base_url(); ?>start" class="nav-logo">
-			<img src="<?php echo base_url(); ?>assets/home/images/tiqslogonew.png" alt="">
+			<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="">
 		</a>
 		<div class="header-menu" id="header-menu" align="right">
-			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>home#dhl-section" id='dhl-button'></a>
-			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>found"></a>
-			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>check424"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/visitor.png" title="CHECK424"/></a>
-			<a style="color: #E25F2A" href="#" id='modal-button'><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/world.png" title="REPORTS"/></a>
-			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>registerbusiness">REGISTER</a>
-			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>login">LOGIN</a>
+			<a style="color: #FFFFFF" href="<?php echo $this->baseUrl; ?>home#dhl-section" id='dhl-button'></a>
+			<a style="color: #FFFFFF" href="<?php echo $this->baseUrl; ?>found"></a>
+			<a style="color: #FFFFFF" href="<?php echo $this->baseUrl; ?>check424"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/visitor.png" title="CHECK424"/></a>
+			<a style="color: #FFFFFF" href="#" id='modal-button'><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/world.png" title="REPORTS"/></a>
+			<a style="color: #FFFFFF" href="<?php echo $this->baseUrl; ?>registerbusiness">REGISTER</a>
+			<a style="color: #FFFFFF" href="<?php echo $this->baseUrl; ?>login">LOGIN</a>
 		</div>
 		<div class="hamburger-menu" id="hamburger-menu">
 			<div></div>

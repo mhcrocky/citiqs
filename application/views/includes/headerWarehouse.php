@@ -10,6 +10,7 @@
     <link rel="shortcut icon" href="<?php echo $this->baseUrl; ?>assets/home/images/tiqsiconlogonew.png" />
 
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/jquery-ui.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/bower_components/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/flatpickr.min.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/main-style.css">
@@ -24,10 +25,15 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/magnific-popup.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/alertify.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>alertify_default.min.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/keyboard.css" />
+    
     <?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
     <style>
 	    #myModal {
             overflow: scroll;
+        }
+        #myModal a {
+            color: #352104;
         }
     </style>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jquery.min.js"></script>
@@ -44,6 +50,7 @@
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jquery.magnific-popup.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/alertify.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/keyboard.js"></script> 
 </head>
 <body>
     <header class="header">
@@ -86,6 +93,9 @@
                 <a href="<?php echo $this->baseUrl; ?>printers"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/print.png" title="PRINTERS"/></a>
                 <a href="<?php echo $this->baseUrl; ?>spots"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/spot.png" title="SPOTS"/></a>
                 <a href="<?php echo $this->baseUrl; ?>visitors"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/person.png" title="VISITORS"/></a>
+                <?php if ($_SESSION['activatePos'] === '1') { ?>
+                    <a href="<?php echo $this->baseUrl; ?>pos">POS</a>
+                <?php } ?>
                 <a href="<?php echo $this->baseUrl; ?>loggedin"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/back.png" title="BACK"/></a>
             </div>
             <div class="hamburger-menu" id="hamburger-menu">

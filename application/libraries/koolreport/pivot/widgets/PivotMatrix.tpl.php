@@ -49,8 +49,8 @@
     } ?>
 
 </style>
-<div id="<?=$uniqueId?>" class='krPivotMatrix animated'
-        style="width:<?= $width ?>; height:<?= $height ?>; 
+<div id="<?php $uniqueId?>" class='krPivotMatrix animated'
+        style="width:<?php $width ?>; height:<?php $height ?>;
         overflow: hidden; visibility: ;
         animation-duration: 0.5s;">
     
@@ -135,7 +135,7 @@
             </tr>
             <tr class='krpmTrFooter'>
                 <td class='krpmFooter'
-                    colspan=<?= count($rowFields) + count($colIndexes) * $numDF; ?>>
+                    colspan=<?php count($rowFields) + count($colIndexes) * $numDF; ?>>
                     <span id='krpmPagination'></span>
                     <span style='margin-left:10px'>Page size: </span>
                     <select id='krpmPageSizeSelect' class="form-control krpmPageSize">
@@ -180,25 +180,25 @@
         <div class='krpmMenuItem' data-command='sort-desc-column'>Sort Column Desc
             <i class="krpmSortIcon fas fa-long-arrow-alt-right" aria-hidden="true"></i></div>
     </div>
-    <input name="koolPivotConfig" class='krpmConfig' type='hidden' value='<?= htmlspecialchars(json_encode($config), ENT_QUOTES); ?>'/>
-    <input name="koolPivotViewstate" class='krpmViewstate' type='hidden' value='<?= json_encode($viewstate); ?>'/>
-    <!-- <input name="koolPivotScope" class='krpmScope' type='hidden' value='<?= json_encode($scope); ?>'/> -->
-    <input name="koolPivotScope" class='krpmScope' type='hidden' value='<?= htmlspecialchars(json_encode($scope), ENT_QUOTES); ?>'/>
+    <input name="koolPivotConfig" class='krpmConfig' type='hidden' value='<?php htmlspecialchars(json_encode($config), ENT_QUOTES); ?>'/>
+    <input name="koolPivotViewstate" class='krpmViewstate' type='hidden' value='<?php json_encode($viewstate); ?>'/>
+    <!-- <input name="koolPivotScope" class='krpmScope' type='hidden' value='<?php json_encode($scope); ?>'/> -->
+    <input name="koolPivotScope" class='krpmScope' type='hidden' value='<?php htmlspecialchars(json_encode($scope), ENT_QUOTES); ?>'/>
     <input name="koolPivotCommand" class='krpmCommand' type='hidden' />
 </div>
 <script type='text/javascript'>
     KoolReport.widget.init(
         <?php echo json_encode($this->getResources()); ?>,
         function() {
-            var <?=$uniqueId?>_data = {
-                uniqueId: "<?=$uniqueId?>",
-                template: "<?=$this->template?>",
-                columnCollapseLevels: <?=json_encode($columnCollapseLevels);?>,
-                rowCollapseLevels: <?=json_encode($rowCollapseLevels);?>,
+            var <?php $uniqueId?>_data = {
+                uniqueId: "<?php $uniqueId?>",
+                template: "<?php $this->template?>",
+                columnCollapseLevels: <?phpjson_encode($columnCollapseLevels);?>,
+                rowCollapseLevels: <?phpjson_encode($rowCollapseLevels);?>,
                 isUpdate: <?php echo $isUpdate ? 1 : 0; ?>,
-                clientEvents: <?=json_encode($clientEvents);?>,
+                clientEvents: <?phpjson_encode($clientEvents);?>,
             };
-            <?=$uniqueId?> = KoolReport.PivotMatrix.create(<?=$uniqueId?>_data);
+            <?php $uniqueId?> = KoolReport.PivotMatrix.create(<?php $uniqueId?>_data);
             <?php $this->clientSideReady("");?>
         }
     );

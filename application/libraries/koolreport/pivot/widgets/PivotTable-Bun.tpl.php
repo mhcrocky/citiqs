@@ -50,8 +50,8 @@
     } ?>
 
 </style>
-<table id=<?=$uniqueId?> 
-    class='pivot-table table table-bordered' style='width:<?= $width ?>; visibility: hidden'>
+<table id=<?php $uniqueId?>
+    class='pivot-table table table-bordered' style='width:<?php $width ?>; visibility: hidden'>
     <tbody>
         <?php foreach ($colFields as $i => $cf) { ?>
             <tr class='pivot-column'>
@@ -59,7 +59,7 @@
                 $numCF = count($colFields);
                 $rowspan = $this->showDataHeaders ? $numCF + 1 : $numCF; ?>
                 <td class='pivot-data-field-zone'
-                    rowspan=<?= $rowspan; ?>>
+                    rowspan=<?php $rowspan; ?>>
                     <div class='pivot-data-field-content'>
                         <?php echo implode(' | ', $mappedDataFields); ?>
                     </div>
@@ -83,12 +83,12 @@
                             } 
                             echo ' ' . Util::get($nodeClass, $cf, '');
                         ?>"
-                        data-value='<?=htmlspecialchars($node[$cf]);?>'
-                        data-text='<?=htmlspecialchars($mappedNode[$cf]);?>'
-                        data-full-value='<?=htmlspecialchars(implode(" || ", $nodeFullValue));?>'
-                        data-full-text='<?=htmlspecialchars(implode(" || ", $nodeFullText));?>'
-                        data-column-field=<?= $colTotalHeader ? $i-1 : $i ?>
-                        data-column-index=<?= $c; ?>
+                        data-value='<?phphtmlspecialchars($node[$cf]);?>'
+                        data-text='<?phphtmlspecialchars($mappedNode[$cf]);?>'
+                        data-full-value='<?phphtmlspecialchars(implode(" || ", $nodeFullValue));?>'
+                        data-full-text='<?phphtmlspecialchars(implode(" || ", $nodeFullText));?>'
+                        data-column-field=<?php $colTotalHeader ? $i-1 : $i ?>
+                        data-column-index=<?php $c; ?>
                         data-num-leaf=<?php 
                             $numLeaf = $colNodeInfo[$cf]['numLeaf'];
                             echo $numLeaf;
@@ -97,16 +97,16 @@
                             $numChildren = $colNodeInfo[$cf]['numChildren'];
                             echo $numChildren;
                         ?>
-                        data-child-order=<?= $colNodeInfo[$cf]['childOrder'] ?>
-                        colspan=<?= $hideSubTotalColumns ? $numLeaf : $numChildren; ?>
-                        rowspan=<?= $colTotalHeader ? $colNodeInfo[$cf]['level'] : 1 ?>
+                        data-child-order=<?php $colNodeInfo[$cf]['childOrder'] ?>
+                        colspan=<?php $hideSubTotalColumns ? $numLeaf : $numChildren; ?>
+                        rowspan=<?php $colTotalHeader ? $colNodeInfo[$cf]['level'] : 1 ?>
                         data-layer=1
                     >
                         <div class="pivot-column-header-text">
                             <?php if ($i < count($colFields) - 1 && ! $colTotalHeader)  { ?>
                                 <i class='pivot-exp-col far fa-minus-square' data-command='collapse' aria-hidden='true'></i>
                             <?php } ?>
-                            <?= $mappedNode[$cf]; ?>
+                            <?php $mappedNode[$cf]; ?>
                         </div>
                     </td>
                 <?php }
@@ -131,13 +131,13 @@
                                     ' pivot-data-header-total';  
                             echo ' ' . Util::get($dataHeadersClass, $df, '');
                         ?>' 
-                        data-value='<?=htmlspecialchars($df);?>'
-                        data-text='<?=htmlspecialchars($mappedDH);?>'
-                        data-full-value='<?=htmlspecialchars(implode(" || ", $nodeFullValue));?>'
-                        data-full-text='<?=htmlspecialchars(implode(" || ", $nodeFullText));?>'
-                        data-data-field=<?=$di?>
-                        data-column-field=<?=$colNodeInfo['fieldOrder']?>
-                        data-column-index=<?=$c;?>
+                        data-value='<?phphtmlspecialchars($df);?>'
+                        data-text='<?phphtmlspecialchars($mappedDH);?>'
+                        data-full-value='<?phphtmlspecialchars(implode(" || ", $nodeFullValue));?>'
+                        data-full-text='<?phphtmlspecialchars(implode(" || ", $nodeFullText));?>'
+                        data-data-field=<?php $di?>
+                        data-column-field=<?php $colNodeInfo['fieldOrder']?>
+                        data-column-index=<?php $c;?>
                         data-layer=1
                     >
                         <div class="pivot-data-header-text">
@@ -171,14 +171,14 @@
                                 }
                                 echo ' ' . Util::get($nodeClass, $rf, '');
                             ?>'
-                            data-value='<?=htmlspecialchars($node[$rf]);?>'
-                            data-text='<?=htmlspecialchars($mappedNode[$rf]);?>'
-                            data-full-value='<?=htmlspecialchars(implode(" || ", $nodeFullValue));?>'
-                            data-full-text='<?=htmlspecialchars(implode(" || ", $nodeFullText));?>'
-                            data-row-field=<?= $rowTotalHeader ? $j-1 : $j?>
-                            data-row-index=<?=$r?>
-                            data-child-order=<?=$rowNodeInfo[$rf]['childOrder']?> 
-                            data-num-children=<?= $rowNodeInfo[$rf]['numChildren']; ?> 
+                            data-value='<?phphtmlspecialchars($node[$rf]);?>'
+                            data-text='<?phphtmlspecialchars($mappedNode[$rf]);?>'
+                            data-full-value='<?phphtmlspecialchars(implode(" || ", $nodeFullValue));?>'
+                            data-full-text='<?phphtmlspecialchars(implode(" || ", $nodeFullText));?>'
+                            data-row-field=<?php $rowTotalHeader ? $j-1 : $j?>
+                            data-row-index=<?php $r?>
+                            data-child-order=<?php $rowNodeInfo[$rf]['childOrder']?>
+                            data-num-children=<?php $rowNodeInfo[$rf]['numChildren']; ?>
                             data-layer=1
                         >
                             <div class="pivot-row-header-text">
@@ -187,7 +187,7 @@
                                 <?php if ($j < count($rowFields) - 1 && ! $rowTotalHeader) { ?>
                                     <i class='pivot-exp-col far fa-minus-square' data-command='collapse' aria-hidden='true'></i>
                                 <?php } ?>
-                                <?= $mappedNode[$rf]; ?>
+                                <?php $mappedNode[$rf]; ?>
                             </div>
                         </td>
                         <?php					
@@ -212,12 +212,12 @@
                                         ' pivot-data-cell-row-total';
                                 echo ' ' . Util::get($dataRowClass, $df, '');
                             ?>' 
-                            data-value='<?=Util::get($dataRow, $df, $emptyValue);?>'
-                            data-data-field=<?=$di?>
-                            data-column-field=<?=$colNodeInfo['fieldOrder']?>
-                            data-row-field=<?=$rowNodeInfo['fieldOrder']?>
-                            data-row-index=<?=$r;?>
-                            data-column-index=<?=$c;?>
+                            data-value='<?phpUtil::get($dataRow, $df, $emptyValue);?>'
+                            data-data-field=<?php $di?>
+                            data-column-field=<?php $colNodeInfo['fieldOrder']?>
+                            data-row-field=<?php $rowNodeInfo['fieldOrder']?>
+                            data-row-index=<?php $r;?>
+                            data-column-index=<?php $c;?>
                             data-layer=1>
                             <div class="pivot-data-cell-text">
                                 <?php echo Util::get($mappedDataRow, $df, $emptyValue); ?>
@@ -248,9 +248,9 @@
             rowCollapseLevels.sort(function(a,b){ return b-a;});
             var colCollapseLevels = <?php echo json_encode($colCollapseLevels); ?>;
             colCollapseLevels.sort(function(a,b){ return b-a;});
-            var <?=$uniqueId?>_data = {
-                id: "<?=$uniqueId?>",
-                template: "<?=$this->template?>",
+            var <?php $uniqueId?>_data = {
+                id: "<?php $uniqueId?>",
+                template: "<?php $this->template?>",
                 rowCollapseLevels: rowCollapseLevels,
                 colCollapseLevels: colCollapseLevels,
                 selectable: <?php echo $this->selectable ? 1 : 0; ?>,
@@ -259,7 +259,7 @@
                 dataFields: <?php echo json_encode($dataFields); ?>,
                 clientEvents: <?php echo Util::jsonEncode($this->clientEvents); ?>,
             };
-            <?=$uniqueId?> = KoolReport.PivotTable.create(<?=$uniqueId?>_data);
+            <?php $uniqueId?> = KoolReport.PivotTable.create(<?php $uniqueId?>_data);
 
             <?php $this->clientSideReady("");?>
         }

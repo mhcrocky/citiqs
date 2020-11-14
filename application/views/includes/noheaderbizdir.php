@@ -42,12 +42,16 @@
 		<script src="<?php echo $this->baseUrl; ?>assets/home/js/vanilla-picker.js"></script>
 		<script src="<?php echo $this->baseUrl; ?>assets/home/js/cookies.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+
 		<script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>
 		<script src="<?php echo $this->baseUrl; ?>assets/home/js/scriptonboard.js"></script>
 
 		<!-- <script src="<?php #echo $this->baseUrl; ?>assets/home/js/luxon.js"></script> -->
 		<script src="<?php echo $this->baseUrl; ?>assets/cdn/js/alertify.min.js"></script>
 		<script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>
+
+
 		<style>
 			.bd-placeholder-img {
 				font-size: 1.125rem;
@@ -89,18 +93,19 @@
 
 
 	<?php } ?>
+
 	<header class="header">
-		<nav class="header-nav">
+		<nav class="header-nav" style="background-color: #0d173b">
 			<a href="<?php echo base_url(); ?>start" class="nav-logo">
-				<img src="<?php echo base_url(); ?>assets/home/images/tiqslogonew.png" alt="">
+				<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="">
 			</a>
-			<div class="header-menu" id="header-menu" align="right">
-				<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>home#dhl-section" id='dhl-button'></a>
-				<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>found"></a>
-				<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>check424"><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/visitor.png" title="CHECK424"/></a>
-				<a style="color: #E25F2A" href="#" id='modal-button'><img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/world.png" title="REPORTS"/></a>
-				<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>registerbusiness">REGISTER</a>
-				<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>login">LOGIN</a>
+			<div class="header-menu" id="header-menu" align="right" style="background: #0d173b">
+<!--				<a style="color: #FFFFFF; background: #0d173b" href="--><?php //echo $this->baseUrl; ?><!--home#dhl-section" id='dhl-button'></a>-->
+<!--				<a style="color: #FFFFFF; background: #0d173b" href="--><?php //echo $this->baseUrl; ?><!--found"></a>-->
+<!--				<a style="color: #FFFFFF; background: #0d173b" href="--><?php //echo $this->baseUrl; ?><!--check424"></a>-->
+				<a style="color: #FFFFFF; background: #0d173b" href="#" id='modal-button'>SELECT LANGUAGE </a>
+				<a style="color: #FFFFFF; background: #0d173b" href="<?php echo $this->baseUrl; ?>registerbusiness"><?php echo $this->language->Line("BIZDIR-MENU001","REGISTER YOUR BUSINESS");?></a>
+				<a style="color: #FFFFFF; background: #0d173b" href="<?php echo $this->baseUrl; ?>login">LOGIN</a>
 			</div>
 			<div class="hamburger-menu" id="hamburger-menu">
 				<div></div>

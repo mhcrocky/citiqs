@@ -75,13 +75,6 @@ class Visma_model extends CI_Model
             ->update('vat_rates');
     }
 
-    // public function update_income_rates($user_ID, $vat_ID_SHA1, $income_code)
-    // {
-    //     $this->db->set('income_export', $income_code)
-    //         ->where('user_ID', (int) $user_ID)
-    //         ->where('SHA1(rate_ID)', $vat_ID_SHA1)
-    //         ->update('vat_rates');
-    // }
 
     public function get_data($user_ID)
     {
@@ -108,15 +101,6 @@ class Visma_model extends CI_Model
         return $this->db->total_queries();
     }
 
-    public function get_customer($id)
-    {
-        $this->db->select('*')
-            ->from('tbl_user')
-            ->where("id", (int) $id);
-        $q = $this->db->get();
-        return ($q->num_rows() > 0 ? $q->row() : array());
-    }
-
     public function update_visma_settings($user_ID, $data)
     {
         $this->db->set('visma_year', trim($data['visma_year']));
@@ -133,6 +117,7 @@ class Visma_model extends CI_Model
             tbl_shop_products_extended.vatpercentage AS productVat,
             tbl_shop_products_extended.`name` AS productName,
             tbl_shop_products_extended.price,
+            tbl_shop_products_extended.id,
             tbl_shop_order_extended.quantity,
             tbl_shop_categories.category,
             tbl_shop_categories.id AS cat_id,
@@ -261,5 +246,13 @@ class Visma_model extends CI_Model
         $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
         $result = $result->result();
         return $result ? $result : null;
+    }
+    public function get_products($user_ID){
+        $q = $this->db->query("SELECT px.id,px.name,px.price FROM tbl_shop_products_extended as px INNER JOIN tbl_shop_products as p ON p.id=px.productId INNER JOIN tbl_shop_categories as cat on p.categoryId=cat.id WHERE cat.userId = '$user_ID'");
+        return ($q->num_rows()  ? $q->result() : false);
+    }
+
+    public function get_services_fee($user_ID){
+
     }
 }

@@ -114,7 +114,7 @@
 		<div class="flex-column align-start">
 			<div align="left">
 				<h2 class="heading mb-35">
-					<?=$this->language->line('PAYMENTERROR-SAB100010','THANK YOU FOR YOUR PAYMENT');?>
+					<?php echo $this->language->line('PAYMENTERROR-SAB100010','THANK YOU FOR YOUR PAYMENT');?>
 				</h2>
 				<?php
 				$this->load->helper('form');
@@ -146,9 +146,9 @@
 				<?php } ?>
 				<div class="mb-35" style=" font-size: x-large">
 					<div>You successfully paid<span></div>
-					<div class="or" style="font-family: 'caption-light', caption-light; font-size: smaller"><span>- <?=$description;?></span></div>
+					<div class="or" style="font-family: 'caption-light', caption-light; font-size: smaller"><span>- <?php $description;?></span></div>
 				</div>
-				<p style="font-family: caption-light" class="text-content mb-35"><?=$this->language->line("PAYMENTERROR-A003",'LOST BY YOU,<br> RETURNED BY US.');?></p>
+				<p style="font-family: caption-light" class="text-content mb-35"><?php echo $this->language->line("PAYMENTERROR-A003",'LOST BY YOU,<br> RETURNED BY US.');?></p>
 			</div>
 			<div class="text-Left mt-50 mobile-hide" style="margin-top: 0px; margin-left: 0px">
 				<img border="0" src="<?php echo base_url(); ?>assets/home/images/lostandfounditemswhite.png" alt="tiqs" width="500" height="auto" />

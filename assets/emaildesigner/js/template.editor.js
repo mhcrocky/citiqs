@@ -1135,6 +1135,7 @@ $(document).ready(function () {
     /*settings functions*/
 
     $(document).on('click', '#saveElement', function (e) {
+        
         e.preventDefault();
         /*
          * must apply element properties
@@ -1244,13 +1245,40 @@ $(document).ready(function () {
             $(".demo .column .lyrow").find('.drag').removeClass('hide');
         }});
 
+    var clickSave = 0;
+    $('#save').on('click', function(){
+         if($('#template_name').val().length == 0){
+            $('#required').css('visibility', 'visible');
+            $('#template_name').css('border-color', '#dc3545');
+            return ; 
+        }
+        if(template_id){
+            saveTemplate();
+            return ;
+        }
 
-    $("#save").click(function () {
+        if(clickSave == 0){
+            $.post(path + 'ajaxdorian/check_template_exists', {template_name: $('#template_name').val()}, function (data) {
+                if(data == 'true'){
+                    alertify['error']('This template name already exists!');
+                    return ;
+                } else {
+                    saveTemplate();
+                }      
+            });
+        } else {
+            saveTemplate();
+        }
+        clickSave++;
+    });
+
+
+    function saveTemplate() {
         downloadLayoutSrc();
 
         var save = $('#tosave');
 
-        $.post(path + 'ajax/saveemailtemplatesource', {
+        $.post(path + 'ajaxdorian/saveemailtemplatesource', {
             html: save.html(),
             data : save.data(),
             user_id: user_id,
@@ -1260,7 +1288,7 @@ $(document).ready(function () {
             response = $.parseJSON(data)
             alertify[response.status](response.msg);
         }, 'html');
-    });
+    }
 
     $("#edit").click(function () {
         $("body").removeClass("devpreview sourcepreview");
@@ -1295,7 +1323,7 @@ $(document).ready(function () {
     $("#sourcepreview").click(function (i) {
         i.preventDefault();
         downloadLayoutSrc();
-        $.post(path + 'ajax/saveemailtemplate', {html: $('#download').val(), id: $('#tosave').data('id')}, function (data) {
+        $.post(path + 'ajaxdorian/saveemailtemplate', {html: $('#download').val(), id: $('#tosave').data('id')}, function (data) {
             $('#httphref').val(data);
             $('#previewFrame').attr('src', data);
         }, 'html');

@@ -43,6 +43,7 @@
                 'Password' => $user->password,
                 'Link_activation'=> base_url() . 'login/activate/' . $user->id . '/' . $user->code
             ]);
+
             return $responseArray['status'];
         }
 

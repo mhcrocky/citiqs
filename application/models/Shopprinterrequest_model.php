@@ -19,7 +19,7 @@
         protected function setValueType(string $property,  &$value): void
         {
             $this->load->helper('validate_data_helper');
-            if (!Validate_data_helper::validateInteger($value)) return;
+            if (!Validate_data_helper::validateNumber($value)) return;
 
             if ($property === 'id' || $property === 'printerId' || $property === 'orderId') {
                 $value = intval($value);
@@ -40,6 +40,7 @@
             $query  = 'INSERT INTO ' . $this->table . ' (printerId) ';
             $query .= 'SELECT id FROM tbl_shop_printers WHERE macNumber = "' . $macNumber . '";';
             $this->db->query($query);
+
             $this->id = $this->db->insert_id();
             return  $this->id ? true : false;
         }

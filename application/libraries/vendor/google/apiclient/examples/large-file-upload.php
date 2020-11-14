@@ -151,12 +151,12 @@ function readVideoChunk ($handle, $chunkSize)
 <div class="box">
 <?php if (isset($authUrl)): ?>
   <div class="request">
-    <a class='login' href='<?= $authUrl ?>'>Connect Me!</a>
+    <a class='login' href='<?php $authUrl ?>'>Connect Me!</a>
   </div>
 <?php elseif($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
   <div class="shortened">
     <p>Your call was successful! Check your drive for this file:</p>
-    <p><a href="https://drive.google.com/open?id=<?= $result->id ?>" target="_blank"><?= $result->name ?></a></p>
+    <p><a href="https://drive.google.com/open?id=<?php $result->id ?>" target="_blank"><?php $result->name ?></a></p>
   </div>
 <?php else: ?>
   <form method="POST">
@@ -165,4 +165,4 @@ function readVideoChunk ($handle, $chunkSize)
 <?php endif ?>
 </div>
 
-<?= pageFooter(__FILE__) ?>
+<?php pageFooter(__FILE__) ?>

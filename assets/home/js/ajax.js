@@ -184,7 +184,6 @@ var callThis = (function() {
         unsetSessionOrderElement: function(callFunction, functionArg) {
             if (this == '1') {
                 callFunction(...functionArg);
-                alertify.success('Product(s) removed from list');
             } else {
                 alertify.error('Product(s) did not remove from list');
             }
@@ -229,6 +228,17 @@ var callThis = (function() {
                 callFunction(...functionArg);
             }            
         },
+        submitForm: function(callFunction) {
+            callFunction(this);
+        },
+        submitBuyerDetails: function(callFunction) {
+            callFunction(this);
+        },
+        saveDesign: function(callFunction) {
+            callFunction(this);
+        },
+        saveIrame: function() {            
+        }
     };
     return methods;
 })();

@@ -17,6 +17,12 @@
             return substr(str_shuffle($set), 0, $range);
         }
 
+        public static function shuffleBigStringRandom(int $range): string
+        {
+            $set = '123456789abcdefghjkmnpqrstvwxy3456789abcdefghjkmnpqrstvwxyABCDEFGHJKMNPQRSTVWXY3456789abcdefghjkmnpqrstvstvwxy3456789abcdefghwxy123456789abcdefghjkmnpqrstvwxyABCDEFGHJKMNPQRSTVWXY';
+            return substr(str_shuffle($set), 0, $range);
+        }
+
         public static function changeClaimCheckoutView(string $businessTypeId): string
         {
             switch ($businessTypeId) {
@@ -132,6 +138,9 @@
             if (empty($arrays)) return [];
             $reset = [];
             foreach($arrays as $array) {
+                if (is_object($array)) {
+                    $array = (array) $array;
+                }
                 if (!isset($reset[$array[$key]])) {
                     $reset[$array[$key]] = [];
                 }
@@ -243,33 +252,14 @@
             return $reset;
         }
 
-
-        public static function unsetPaymentSession(): void
-        {
-            $CI =& get_instance();
-            $CI->load->config('custom');
-
-            if ($_SESSION['orderStatusCode'] === $CI->config->item('payNlSuccess')) {
-                unset($_SESSION['order']);
-                unset($_SESSION['orderVendorId']);
-            }
-
-            unset($_SESSION['orderId']);
-            unset($_SESSION['postOrder']);
-            unset($_SESSION['spotId']);
-            unset($_SESSION['vendor']);
-            unset($_SESSION['spot']);
-            unset($_SESSION['orderStatusCode']);
-
-            return;
-        }
-
-        public static function returnMakeNewOrderElements(?array $ordered, array $vendor, array $mainProducts, array $rawAddons): array
+        public static function returnMakeNewOrderElements(?array $ordered, array $vendor, array $mainProducts, array $rawAddons, int $maxRemarkLength): array
         {
             // $shoppingList = '';
             $checkoutList = '';
             if  (!is_null($ordered)) {
                 $count = 0;
+
+                $collectAddons = [];
                 foreach ($ordered as $product) {
                     $count++;
                     $price = 0;
@@ -288,8 +278,8 @@
                     
                     $checkoutList .= '>';
                     $checkoutList .=    '<div class="alert alert-dismissible" style="padding-left: 0px; margin-bottom: 10px;">';
-                    $checkoutList .=        '<a href="#" onclick="removeOrdered(\'' . $randomId . '\')" class="close removeOrdered_' . $product['productId'] . '" data-dismiss="alert" aria-label="close">×</a>';
-                    $checkoutList .=        '<h4>' . $product['name'] . ' (€' . $product['price'] . ')</h4>';
+                    $checkoutList .=        '<a href="javascript:void(0)" onclick="removeOrdered(\'' . $randomId . '\')" class="close removeOrdered_' . $product['productId'] . '" data-dismiss="alert" aria-label="close">×</a>';
+                    $checkoutList .=        '<h4 class="productName">' . $product['name'] . ' (€' . $product['price'] . ')</h4>';
                     $checkoutList .=    '</div>';
                     $checkoutList .=    '<div class="modal__content">';
                     $checkoutList .=        '<div class="modal__adittional">';
@@ -300,7 +290,7 @@
                         $checkoutList .=        '</div>';
                         $checkoutList .=        '<div class="modal-footer__quantity col-lg-4 col-sm-12" style="margin-bottom:3px">';
                         $checkoutList .=            '<span 
-                                                        class="modal-footer__buttons modal-footer__quantity--plus" 
+                                                        class="modal-footer__buttons modal-footer__quantity--plus priceQuantity" 
                                                         style="margin-right:5px;" 
                                                         data-type="minus"
                                                         onclick="changeProductQuayntity(this, \'addonQuantity\')">';
@@ -313,15 +303,17 @@
                                                         min="0"
                                                         step="1"
                                                         value="' . $product['quantity'] . '"
-                                                        data-name="' . $product['name'] . '"
+                                                        data-name="' . htmlspecialchars($product['name']) . '"
                                                         data-add-product-price="' . $product['price'] . '"
                                                         data-only-one="' . $product['onlyOne'] . '"
-                                                        data-category="' . $product['category'] . '"
+                                                        data-category="' . htmlspecialchars($product['category']) . '"
                                                         data-product-extended-id="' . $productExtendedId . '"
                                                         data-product-id="' . $product['productId'] . '" 
                                                         data-remark-id="' . $remarkProductId . '"                                                        
                                                         data-order-quantity-value="orderQuantityValue_' .  $product['productId'] . '"
-                                                        data-ordered="orderQuantityValue_' .  $product['productId'] . '" ';
+                                                        data-ordered="orderQuantityValue_' .  $product['productId'] . '" 
+                                                        readonly 
+                                                        oninput="reloadPageIfMinus(this)" ';
                     
                     if (!empty($product['categorySlide'])) {
                         $checkoutList .=                'data-category-slide="' . $product['categorySlide'] . '" ';
@@ -329,7 +321,7 @@
                                                         
 
                     if (!$onlyOne) {                                    
-                        $checkoutList .=                'class="form-control checkProduct" style="display:inline-block"';
+                        $checkoutList .=                'class="form-control checkProduct inputFieldsMakeOrder" style="display:inline-block"';
                     } else {
                         $checkoutList .=                'readonly hidden';
                     }
@@ -337,7 +329,7 @@
 
                     if (!$onlyOne) {
                         $checkoutList .=            '<span
-                                                        class="modal-footer__buttons modal-footer__quantity--minus"
+                                                        class="modal-footer__buttons modal-footer__quantity--minus priceQuantity"
                                                         style="margin-left:5px;"
                                                         data-type="plus"
                                                         onclick="changeProductQuayntity(this, \'addonQuantity\')"
@@ -376,14 +368,17 @@
                 
                     if ($remarkProductId !== '0') {
 
-                        $checkoutList .=        '<h6>Remark</h6>';
+                        $checkoutList .=        '<h6 class="remarkStyle">Remark</h6>';
                         $checkoutList .=            '<div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">';
-                        $checkoutList .=                '<textarea
-                                                            class="form-control"
+                        $checkoutList .=                '<input
+                                                            type="text"
+                                                            class="form-control remarks inputFieldsMakeOrder"
                                                             rows="1"
-                                                            maxlength="200"
+                                                            maxlength="' . $maxRemarkLength . '"
+                                                            placeholder="Allowed ' . $maxRemarkLength . ' characters"
                                                             data-product-remark-id="' . $remarkProductId . '"
-                                                        >' . $product['remark'] . '</textarea>
+                                                            value="' . $product['remark'] . '"
+                                                        />
                                                     </div>';
 
                     }
@@ -392,96 +387,146 @@
 
                     if (isset($product['addons'])) {
                         $checkoutList .=        '<div class="modal__adittional">';
-                        $checkoutList .=            '<h6 style="margin-top:10px">Additional</h6>';
-                        $checkoutList .=            '<div class="modal__adittional__list">';
+                        // $checkoutList .=            '<h6 style="margin-top:10px">Additional</h6>';
+                        
 
-                        $countAddons = 0;
+
+                        $collectAddons = [];
                         foreach ($product['addons'] as $addonExtendedId => $addon) {
-                            $step = floatval($addon['step']);
-                            $countAddons++;
-                            $remarkAddonId = isset($addon['remark']) ? $remarkProductId . '_' . $countAddons : '0';
+                            $addon['addonExtendedId'] = $addonExtendedId;
+                            array_push($collectAddons, $addon);
+                        }
+                        $collectAddons = Utility_helper::resetArrayByKeyMultiple($collectAddons, 'productType');
+                        $countAddons = 0;
 
-                            $checkoutList .=            '<div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">';
-                            $checkoutList .=                '<label class="form-check-label">';
-                            $checkoutList .=                    '<input type="checkbox" class="form-check-input checkAddons" onchange="toggleElement(this)" checked>&nbsp;';
-                            $checkoutList .=                    $addon['name'] . ' € ' . $addon['price'] . ' (min per unit ' . $addon['initialMinQuantity'] . ' / max  per unit ' . $addon['initialMaxQuantity'] . ')';
-                            $checkoutList .=                '</label>';
-
-                            if ($vendor['showAllergies'] === '1')  {
-                                $addon['allergies'] = unserialize($rawAddons[$addonExtendedId][0]['allergies']);
-                                if (!empty($addon['allergies']['productAllergies'])) {
-                                    $addonAllergies = $addon['allergies']['productAllergies'];
-                                    $baseUrl = base_url();
-                                    $checkoutList .= '<div>';
-                                    foreach ($addonAllergies as $allergy) {
-                             
-                                        $checkoutList .= '<img
-                                                            src="' . $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy) . '.png"
-                                                            alt="' . $allergy  . '"
-                                                            height="24px"
-                                                            width="24px"
-                                                            style="display:inline; margin:0px 2px 3px 0px"
-                                                        />';
+                        foreach ($collectAddons as $key => $elements) {
+                            $checkoutList .=        '<div class="modal__adittional__list" style="width:100%">';
+                            $checkoutList .=            '<h6 style="width:100%" class="labelsMain">' . $key . '</h6>';
+                            foreach ($elements as $addon) {
+                                $step = floatval($addon['step']);
+                                $countAddons++;
+                                $remarkAddonId = isset($addon['remark']) ? $remarkProductId . '_' . $countAddons : '0';
+                                $addonExtendedId = $addon['addonExtendedId'];                                
+                                $checkoutList .=            '<div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="width:50%; margin-bottom:3px">';
+                                $checkoutList .=                '<label class="form-check-label labelItems" style="word-wrap: break-word;">';
+                                $checkoutList .=                    '<input
+                                                                        type="checkbox"
+                                                                        class="form-check-input checkAddons inputFieldsMakeOrder"
+                                                                        onchange="toggleElement(this)" checked
+                                                                        data-addon-type-id-check="' . $addon['addonTypeId'] . '"
+                                                                    >&nbsp;';
+                                $checkoutList .=                    $addon['name'];
+                                if (floatval($addon['price']) > 0) {
+                                    $checkoutList .=                '&nbsp;&euro; ' . $addon['price'];
+                                }                                
+                                $checkoutList .=                '</label>';
+    
+                                if ($vendor['showAllergies'] === '1')  {
+                                    $addon['allergies'] = unserialize($rawAddons[$addonExtendedId][0]['allergies']);
+                                    if (!empty($addon['allergies']['productAllergies'])) {
+                                        $addonAllergies = $addon['allergies']['productAllergies'];
+                                        $baseUrl = base_url();
+                                        $checkoutList .= '<div>';
+                                        foreach ($addonAllergies as $allergy) {
+                                 
+                                            $checkoutList .= '<img
+                                                                src="' . $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy) . '.png"
+                                                                alt="' . $allergy  . '"
+                                                                height="24px"
+                                                                width="24px"
+                                                                style="display:inline; margin:0px 2px 3px 0px"
+                                                            />';
+                                        }
+                                        $checkoutList .= '</div>';
                                     }
-                                    $checkoutList .= '</div>';
+                                }
+                                $checkoutList .=            '</div>';
+                                $checkoutList .=            '<div class="modal-footer__quantity col-lg-4 col-sm-12" style="visibility: visible; margin: 0px 0px 3px 0px; padding: 0px">';
+                                $checkoutList .=                '<span 
+                                                                    class="modal-footer__buttons modal-footer__quantity--plus priceQuantity"
+                                                                    data-type="minus" ';
+                                
+                                if ($addon['initialMaxQuantity'] === '1' || $addon['isBoolean'] === '1') { 
+                                    $checkoutList .=                'style="visibility:hidden; height:0px"';
+                                } else {
+                                    $checkoutList .=                'onclick="changeAddonQuayntity(this)" style="margin-right:5px;" ';
+                                }
+
+
+                                $checkoutList .=                '>';
+
+                                                                
+                                $checkoutList .=                    ' -';
+                                $checkoutList .=                '</span>';
+                                $checkoutList .=                '<input
+                                                                    readonly 
+                                                                    oninput="reloadPageIfMinus(this)"
+                                                                    type="number"
+                                                                    min="' . $addon['minQuantity'] . '"
+                                                                    max="' . $addon['maxQuantity'] . '"
+                                                                    data-addon-price="' . $addon['price'] . '"
+                                                                    data-addon-name="' . htmlspecialchars($addon['name']) . '"
+                                                                    data-category="' . htmlspecialchars($addon['category']) . '"
+                                                                    data-product-extended-id="' . $productExtendedId . '"
+                                                                    data-addon-extended-id="' . $addonExtendedId . '"
+                                                                    data-min="' . $addon['minQuantity'] . '"
+                                                                    data-max="' . $addon['maxQuantity'] . '"
+                                                                    data-initial-min-quantity="' . $addon['initialMinQuantity'] . '"
+                                                                    data-initial-max-quantity="' . $addon['initialMaxQuantity'] . '"
+                                                                    data-remark-id="' .  $remarkAddonId . '"
+                                                                    data-is-boolean="' .  $addon['isBoolean'] . '"
+                                                                    data-product-type="' . $addon['productType'] . '"
+                                                                    data-addon-type-id="' . $addon['addonTypeId'] . '"
+                                                                    data-allowed-choices="' . $addon['allowedChoices'] . '"
+                                                                    step="' . $addon['step'] . '"
+                                                                    value="' . $addon['quantity'] . '" ';
+                                if ($addon['isBoolean'] === '1') {
+                                    $checkoutList .=                'hidden ';
+                                    $checkoutList .=                'class="addonQuantity inputFieldsMakeOrder" ';
+                                } else {
+                                    if ($addon['initialMaxQuantity'] !== '1') {
+                                        $checkoutList .=                'style="display:inline-block; border:0px; background-color: #fff;" ';
+                                        $checkoutList .=                'class="form-control addonQuantity inputFieldsMakeOrder" ';
+                                    } else {
+                                        $checkoutList .=                'style="display:inline-block; border:0px; background-color: #fff; margin-left:7px" ';
+                                        $checkoutList .=                'class="form-control addonQuantity inputFieldsMakeOrder" ';
+                                    }
+                                }
+                                $checkoutList .=                '/>';
+                                $checkoutList .=                '<span
+                                                                    class="modal-footer__buttons modal-footer__quantity--minus priceQuantity"
+                                                                    data-type="plus" ';
+                                if ($addon['initialMaxQuantity'] === '1' || $addon['isBoolean'] === '1') {
+                                    $checkoutList .=                'style="visibility:hidden; height:0px"';
+                                } else {
+                                    $checkoutList .=                'onclick="changeAddonQuayntity(this)" style="margin-right:5px;" ';
+                                }
+                                $checkoutList .=                '>';
+                                $checkoutList .=                    ' +';
+                                $checkoutList .=                '</span>';
+                                $checkoutList .=            '</div>';
+    
+                                if ($remarkAddonId !== '0') {
+                                    $checkoutList .=        '
+                                                            <div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">
+                                                                <h6 class="remarkStyle">Remark</h6>
+                                                                <div class="col-lg-12 col-sm-12" style="margin-bottom:3px">
+                                                                    <input
+                                                                        type="text"
+                                                                        class="form-control remarks inputFieldsMakeOrder"
+                                                                        rows="1"
+                                                                        maxlength="' . $maxRemarkLength . '"
+                                                                        placeholder="Allowed ' . $maxRemarkLength . ' characters"
+                                                                        data-addon-remark-id="' . $remarkAddonId . '"
+                                                                        value="' . $addon['remark'] . '"
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                            '; 
                                 }
                             }
-                            $checkoutList .=            '</div>';
-                            $checkoutList .=            '<div class="modal-footer__quantity col-lg-4 col-sm-12" style="visibility: visible; margin-bottom: 3px;">';
-                            $checkoutList .=                '<span 
-                                                                class="modal-footer__buttons modal-footer__quantity--plus"
-                                                                style="margin-right:5px;"
-                                                                data-type="minus"
-                                                                onclick="changeAddonQuayntity(this)"
-                                                            >';
-                            $checkoutList .=                    ' -';
-                            $checkoutList .=                '</span>';
-                            $checkoutList .=                '<input
-                                                                type="number"
-                                                                min="' . $addon['minQuantity'] . '"
-                                                                max="' . $addon['maxQuantity'] . '"
-                                                                data-addon-price="' . $addon['price'] . '"
-                                                                data-addon-name="' . $addon['name'] . '"
-                                                                data-category="' . $addon['category'] . '"
-                                                                data-product-extended-id="' . $productExtendedId . '"
-                                                                data-addon-extended-id="' . $addonExtendedId . '"
-                                                                data-min="' . $addon['minQuantity'] . '"
-                                                                data-max="' . $addon['maxQuantity'] . '"
-                                                                data-initial-min-quantity="' . $addon['initialMinQuantity'] . '"
-                                                                data-initial-max-quantity="' . $addon['initialMaxQuantity'] . '"
-                                                                data-remark-id="' .  $remarkAddonId . '"
-                                                                step="' . $addon['step'] . '"
-                                                                value="' . $addon['quantity'] . '"
-                                                                class="form-control addonQuantity"  
-                                                                style="display:inline-block"
-                                                            />';
-                            $checkoutList .=                '<span
-                                                                class="modal-footer__buttons modal-footer__quantity--minus"
-                                                                style="margin-left:5px;"
-                                                                data-type="plus"
-                                                                onclick="changeAddonQuayntity(this)"
-                                                            >';
-                            $checkoutList .=                    ' +';
-                            $checkoutList .=                '</span>';
-                            $checkoutList .=            '</div>';
-
-                            if ($remarkAddonId !== '0') {
-                                $checkoutList .=        '
-                                                        <div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">
-                                                            <h6>Remark</h6>
-                                                            <div class="col-lg-12 col-sm-12" style="margin-bottom:3px">
-                                                                <textarea
-                                                                    class="form-control"
-                                                                    rows="1"
-                                                                    maxlength="200"
-                                                                    data-addon-remark-id="' . $remarkAddonId . '"
-                                                                >' . $addon['remark'] . '</textarea>
-                                                            </div>
-                                                        </div>
-                                                        '; 
-                            }
+                            $checkoutList .=        '</div>';
                         }
-                        $checkoutList .=            '</div>';
                         $checkoutList .=        '</div>';                      
                     }
 
@@ -563,5 +608,22 @@
             $dist = rad2deg($dist);
             $miles = $dist * 60 * 1.1515;            
             return ($miles * 1.609344);
-          }
+        }
+
+        public static function sanitizeGet(): array
+        {
+            $CI =& get_instance();
+            $get = [];
+            foreach ($_GET as $key => $value) {
+                $get[$key] = $CI->input->get($key, true);
+            };
+            return $get;
+        }
+
+        public static function getAndUnsetValue(array &$array, string $key)
+        {
+            $value = $array[$key];
+            unset($array[$key]);
+            return $value;
+        }
     }

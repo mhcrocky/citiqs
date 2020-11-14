@@ -4,11 +4,11 @@
 			<div style="text-align:center;">
 				<h2 class="heading mb-35">
 					YOU FOUND SOMETHING?,
-					<?=$this->language->line("FOUND-010","LET'S GET THIS ITEM BACK TO THE RIGHTFUL OWNER. ");?>
+					<?php echo $this->language->line("FOUND-010","LET'S GET THIS ITEM BACK TO THE RIGHTFUL OWNER. ");?>
 				</h2>
 			</div>
 			<div style="text-align:center; margin-bottom: 30px">
-				<?=$this->language->line("FOUND-020",'TO GET THE ITEM YOU FOUND BACK TO TH RIGHTFUL OWNER WE NEED SOME INFORMATION TO MAKE THIS HAPPEN.');?>
+				<?php echo $this->language->line("FOUND-020",'TO GET THE ITEM YOU FOUND BACK TO TH RIGHTFUL OWNER WE NEED SOME INFORMATION TO MAKE THIS HAPPEN.');?>
 				<p class="text-content-light" style="font-size: 24px; padding-top: 10px" >
 					LOST AND FOUND, RETURNED WITH YOUR HELP.
 				</p>
@@ -28,11 +28,11 @@
 					<img src="<?php echo $this->baseUrl; ?>tiqsimg/StickerMockup.png" alt="tiqs" width="250" height="90" />
 					<?php if (!$code) { ?>
 						<div style="text-align:center; font-family:caption-light; padding: 10px">
-							<input type="text"  required name="code" class="form-control" placeholder="<?=$this->language->line("FOUND-01030",'Unique code from sticker or tag');?>" style="border-radius: 50px" />
+							<input type="text"  required name="code" class="form-control" placeholder="<?php echo $this->language->line("FOUND-01030",'Unique code from sticker or tag');?>" style="border-radius: 50px" />
 						</div>
 						<div style="text-align: center;">
 							<a href=" <?php echo $this->baseUrl . 'itemfound'; ?>" class="button button-orange">
-								<?=$this->language->line("FOUND-01032",'NO TAG? PLEASE MAKE A PICTURE');?>
+								<?php echo $this->language->line("FOUND-01032",'NO TAG? PLEASE MAKE A PICTURE');?>
 							</a>
 						</div>
 					<?php } else { ?>
@@ -42,7 +42,7 @@
 				<?php if(!isset($_SESSION['userId'])) { ?>
 				<div style="text-align:center; font-family:caption-light; padding: 10px">
 					<p style="font-family: caption-light">
-						<?=$this->language->line("FOUND-050",'PLEASE STATE YOUR MOBILE NUMBER AND/OR E-MAIL. (WE WILL NOT SHARE THIS INFO WITH THE OWNER UNLESS YOU CONSENT TO THIS BY CHECKING THE GDPR AND SHARE CHECKBOX BELOW. )');?>
+						<?php echo $this->language->line("FOUND-050",'PLEASE STATE YOUR MOBILE NUMBER AND/OR E-MAIL. (WE WILL NOT SHARE THIS INFO WITH THE OWNER UNLESS YOU CONSENT TO THIS BY CHECKING THE GDPR AND SHARE CHECKBOX BELOW. )');?>
 						<br>
 					</p>
 				</div>
@@ -50,30 +50,30 @@
 					<input type="tel" class="form-control" style="font-family:'caption-light'; border-radius: 50px; " placeholder="Mobile" name="mobile" required />
 				</div>
 				<div style="font-family:caption-light; padding: 10px">
-					<input type="email" id="email" name="email" required onblur="checkEmail(this)" class="form-control" style="font-family:'caption-light'; border-radius: 50px; " placeholder="<?=$this->language->line("FOUND-070",'Your e-mail');?>" />
+					<input type="email" id="email" name="email" required onblur="checkEmail(this)" class="form-control" style="font-family:'caption-light'; border-radius: 50px; " placeholder="<?php echo $this->language->line("FOUND-070",'Your e-mail');?>" />
 				</div>
 				<div style="font-family:caption-light; padding: 10px">
 					<input type="email" id="emailverify" name="emailverify" required class="form-control" style="font-family:'caption-light'; border-radius: 50px; " placeholder="Repeat email for verification" />
 				</div>
 				<div style="font-family:caption-light; padding: 10px">
 					<p id="UnkownAddressText" style="font-family:'caption-light'; display:none; text-align: center">
-						<?=$this->language->line("FOUND-080",'WHERE CAN WE LET DHL EXPRESS COLLECT THE FOUND ITEM?<br/> YOU CAN HAVE DHL EXPRESS COLLECT THE FOUND ITEM AT A GIVEN TIME AT YOUR ADDRESS,PLEASE STATE YOUR NAME, HOME OR OTHER PHYSICAL ADDRESS. WHEN YOUR NAME AND ADDRESS HAS BEEN FILED, WE DO NOT ASK (SHOW) THIS AGAIN, FOR SECURITY REASONS. CHANGE OF ADDRESS CAN BE DONE IN YOUR PERSONAL PROFILE, WHEN SECURELY LOGGED IN, YOUR CREDENTIALS HAVE BEEN SEND BY SEPARATE MAIL, TO THE GIVEN E-MAIL ACCOUNT IN THIS SCREEN.');?>
+						<?php echo $this->language->line("FOUND-080",'WHERE CAN WE LET DHL EXPRESS COLLECT THE FOUND ITEM?<br/> YOU CAN HAVE DHL EXPRESS COLLECT THE FOUND ITEM AT A GIVEN TIME AT YOUR ADDRESS,PLEASE STATE YOUR NAME, HOME OR OTHER PHYSICAL ADDRESS. WHEN YOUR NAME AND ADDRESS HAS BEEN FILED, WE DO NOT ASK (SHOW) THIS AGAIN, FOR SECURITY REASONS. CHANGE OF ADDRESS CAN BE DONE IN YOUR PERSONAL PROFILE, WHEN SECURELY LOGGED IN, YOUR CREDENTIALS HAVE BEEN SEND BY SEPARATE MAIL, TO THE GIVEN E-MAIL ACCOUNT IN THIS SCREEN.');?>
 					</p>
 				</div>
 				<div style="font-family:caption-light; padding: 10px;" id="label1">
-					<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("FOUND-090",'Name');?>" id="username" name="username" disabled />
+					<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("FOUND-090",'Name');?>" id="username" name="username" disabled />
 				</div>
 				<div style="font-family:caption-light; padding: 10px;" id="label2">
-					<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("FOUND-100",'Address');?>" id="address" name="address"  disabled />
+					<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("FOUND-100",'Address');?>" id="address" name="address"  disabled />
 				</div>
 				<div style="font-family:caption-light; padding: 10px;" id="label3">
-					<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("FOUND-110",'Extra address line');?>" id="addressa" name="addressa"  disabled />
+					<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("FOUND-110",'Extra address line');?>" id="addressa" name="addressa"  disabled />
 				</div>
 				<div style="font-family:caption-light; padding: 10px;" id="label4" >
-					<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("FOUND-120",'Zipcode');?>" id="zipcode" name="zipcode" disabled />
+					<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("FOUND-120",'Zipcode');?>" id="zipcode" name="zipcode" disabled />
 				</div>
 				<div style="font-family:caption-light; padding: 10px;" id="label5">
-					<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?=$this->language->line("FOUND-130",'City');?>" id="city" name="city" disabled />
+					<input type="text" class="form-control" style="display: none; font-family:'caption-light'; border-radius:50px; " placeholder="<?php echo $this->language->line("FOUND-130",'City');?>" id="city" name="city" disabled />
 				</div>
 				<div style="font-family:caption-light; padding: 10px;" id="label6">
 					<div class="selectWrapper" style="display: none; padding: 10px" id="country1">
@@ -84,7 +84,7 @@
 				</div>
 				<div class="login-box" style="text-align:center;">
 					<p style="font-family:'caption-light'; font-size:100%; color: #fff9df; text-align: center">
-						<?=$this->language->line("FOUND-160",'I GIVE MY CONSENT (GDPR PRIVACY) THAT THE OWNER CAN DIRECTLY CONTACT ME. ');?>
+						<?php echo $this->language->line("FOUND-160",'I GIVE MY CONSENT (GDPR PRIVACY) THAT THE OWNER CAN DIRECTLY CONTACT ME. ');?>
 					</p>
 					<div class="form-group has-feedback" style="text-align:center;">
 						<div class="onoffswitch" style="text-align:center;">
@@ -99,12 +99,12 @@
 				<?php } ?>
  				<p>
 					<br>
-					<?=$this->language->line("FOUND-170",'THE OWNER MAY HAVE SET A FINDERS FEE. AFTER THE ITEM HAS RETURNED TO THE RIGHTFUL OWNER, THE FINDERS FEE WILL BE TRANSFERRED TO YOUR BANK ACCOUNT. YOUR BANK DETAILS CAN BE SECURELY SUBMITTED IN YOUR PROFILE CREDENTIALS ARE SEND BY E-MAIL (PLEASE CHECK YOUR SPAM)');?>
+					<?php echo $this->language->line("FOUND-170",'THE OWNER MAY HAVE SET A FINDERS FEE. AFTER THE ITEM HAS RETURNED TO THE RIGHTFUL OWNER, THE FINDERS FEE WILL BE TRANSFERRED TO YOUR BANK ACCOUNT. YOUR BANK DETAILS CAN BE SECURELY SUBMITTED IN YOUR PROFILE CREDENTIALS ARE SEND BY E-MAIL (PLEASE CHECK YOUR SPAM)');?>
 					<br>
 				</p>
 				<div class="form-group has-feedback" style="padding: 30px;">
 					<div style="text-align: center; ">
-						<input type="button" onclick="checkValuesAndSubmit('foundItem', 'email', 'emailverify')"  class="button button-orange" value="<?=$this->language->line("FOUND-180",'SUBMIT FOUND ITEM');?>" style="border: none" />
+						<input type="button" onclick="checkValuesAndSubmit('foundItem', 'email', 'emailverify')"  class="button button-orange" value="<?php echo $this->language->line("FOUND-180",'SUBMIT FOUND ITEM');?>" style="border: none" />
 					</div>
 					<br>
 				</div>
