@@ -15,6 +15,15 @@
   border: 1px solid #ced4da;
   border-radius: .25rem;
 }
+
+td.details-control {
+		background: url("<?php echo base_url('assets/images/datatables/details_open.png') ?>") no-repeat center center;
+		cursor: pointer;
+	}
+
+	tr.shown td.details-control {
+		background: url("<?php echo base_url('assets/images/datatables/details_close.png') ?>") no-repeat center center;
+	}
 </style>
 <div class="main-content-inner">
     <div class="sales-report-area mt-5 mb-5">
@@ -196,6 +205,7 @@
             <th></th>
             <th></th>
             <th></th>
+            <th></th>
         </tr>
     </tfoot>
   </table>
@@ -261,6 +271,9 @@
 
       var table = $('#report').DataTable({
         processing: true,
+        colReorder: true,
+			fixedHeader: true,
+			scrollX: true,
         lengthMenu: [[5, 10, 20, 50, 100, 200, 500, -1], [5, 10, 20, 50, 100, 200, 500, 'All']],
         pageLength: 5,
         ajax: {
@@ -283,25 +296,30 @@
                    return parseFloat(a) + parseFloat(b);
                }, 0 );
           let pageQuantityTotal = api
-               .column( 4, { page: 'current'} )
+               .column( 3, { page: 'current'} )
                .data()
                .reduce( function (a, b) {
                    return parseInt(a) + parseInt(b);
                }, 0 );
-          let pageAmountTotal = api
-               .column( 6, { page: 'current'} )
-               .data()
-               .reduce( function (a, b) {
-                   return parseFloat(a) + parseFloat(b);
-               }, 0 );
-          let pageExvatData = api.column( 7, { page: 'current'} ).cache('search');
+          let pageAmountData = api.column( 5, { page: 'current'}  ).cache('search');
+          let pageAmountTotal = pageAmountData.length ? 
+          pageAmountData.reduce( function (a, b) {
+              return parseFloat(a) + parseFloat(b);
+            }) : 0;
+          let pageExvatData = api.column( 6, { page: 'current'} ).cache('search');
           let pageExvatTotal = pageExvatData.length ? 
             pageExvatData.reduce( function (a, b) {
               return parseFloat(a) + parseFloat(b);
             }) : 0;
-          let pageVatData = api.column( 8, { page: 'current'} ).cache('search');
+          let pageVatData = api.column( 7, { page: 'current'} ).cache('search');
           let pageVatTotal = pageVatData.length ? 
             pageVatData.reduce( function (a, b) {
+              return parseFloat(a) + parseFloat(b);
+            }) : 0;
+
+          let pageExvatServiceData = api.column( 8,  { page: 'current'} ).cache('search');
+          let pageExvatServiceTotal = pageExvatServiceData.length ? 
+          pageExvatServiceData.reduce( function (a, b) {
               return parseFloat(a) + parseFloat(b);
             }) : 0;
 
@@ -312,53 +330,64 @@
                    return parseFloat(a) + parseFloat(b);
                }, 0 );
           let quantityTotal = api
-               .column( 4, { search: 'applied' } )
+               .column( 3, { search: 'applied' } )
                .data()
                .reduce( function (a, b) {
                    return parseInt(a) + parseInt(b);
                }, 0 );
-          let amountTotal = api
-               .column( 6, { search: 'applied' } )
-               .data()
-               .reduce( function (a, b) {
-                   return parseFloat(a) + parseFloat(b);
-               }, 0 );
-          let exvatData = api.column( 7,{ search: 'applied' } ).cache('search');
+          let amountData = api.column( 5,{ search: 'applied' } ).cache('search');
+          let amountTotal = amountData.length ? 
+          amountData.reduce( function (a, b) {
+              return parseFloat(a) + parseFloat(b);
+            }) : 0;
+          let exvatData = api.column( 6,{ search: 'applied' } ).cache('search');
           let exvatTotal = exvatData.length ? 
             exvatData.reduce( function (a, b) {
               return parseFloat(a) + parseFloat(b);
             }) : 0;
-          let vatData = api.column( 8, { search: 'applied' }).cache('search');
+          let vatData = api.column( 7, { search: 'applied' }).cache('search');
           let vatTotal = vatData.length ? 
             vatData.reduce( function (a, b) {
               return parseFloat(a) + parseFloat(b);
             }) : 0;
+          let exvatServiceData = api.column( 8, { search: 'applied' }).cache('search');
+          let exvatServiceTotal = exvatServiceData.length ? 
+          exvatServiceData.reduce( function (a, b) {
+              return parseFloat(a) + parseFloat(b);
+            }) : 0;
            $(tfoot).find('th').eq(1).html('-');
-           $(tfoot).find('th').eq(2).html('-');
-           $(tfoot).find('th').eq(3).html(pageQuantityTotal+'('+quantityTotal+')');
-           $(tfoot).find('th').eq(4).html('-');
-           $(tfoot).find('th').eq(5).html(pageAmountTotal.toFixed(2)+'('+amountTotal.toFixed(2)+')');
-           $(tfoot).find('th').eq(6).html(pageExvatTotal.toFixed(2)+'('+exvatTotal.toFixed(2)+')');
-           $(tfoot).find('th').eq(7).html(pageVatTotal.toFixed(2)+'('+vatTotal.toFixed(2)+')');
-           Orders_today(amountTotal.toFixed(2));
+           $(tfoot).find('th').eq(2).html(pageQuantityTotal+'('+quantityTotal+')');
+           $(tfoot).find('th').eq(3).html('-');
+           $(tfoot).find('th').eq(4).html(pageAmountTotal.toFixed(2)+'('+amountTotal.toFixed(2)+')');
+           $(tfoot).find('th').eq(5).html(pageExvatTotal.toFixed(2)+'('+exvatTotal.toFixed(2)+')');
+           $(tfoot).find('th').eq(6).html(pageVatTotal.toFixed(2)+'('+vatTotal.toFixed(2)+')');
+           $(tfoot).find('th').eq(7).html(pageExvatServiceTotal.toFixed(2)+'('+exvatServiceTotal.toFixed(2)+')');
+        },
+        rowId: function(a) {
+          return 'row_id_' + a.order_id;
+        },
+        initComplete: function(settings, json) {
+				  child_data = json;
         },
         columns:[
+          {
+          title: '&nbsp',
+					className: 'details-control',
+					orderable: false,
+					data: null,
+          "render": function (data, type, row) {
+            return '';
+          }
+				},
         {
           title: 'Order ID',
           data: 'order_id'
         },
         {
-          
-          data: 'productName'
-        },
-        {
           title: 'Price',
           data: 'price'
         },
-        {
-          title: 'Product VAT',
-          data: 'productVat'
-        },
+     
         {
           title: 'Quantity',
           data: 'quantity'
@@ -369,7 +398,11 @@
         },
         {
           title: 'AMOUNT',
-          data: 'AMOUNT'
+          data: null,
+          "render": function (data, type, row) {
+            let amount = parseFloat(data.AMOUNT);
+            return amount.toFixed(2);
+          }
         },
         {
           title: 'EXVAT',
@@ -388,16 +421,78 @@
           }
         },
         {
-          title: 'Date',
-          data: 'order_date'
+          title: 'EXVATSERVICE',
+          data: null,
+          "render": function (data, type, row) {
+            let amount = parseFloat(data.AMOUNT);
+            return amount.toFixed(2);
+          }
         },
         {
-          title: 'EXVATSERVICE',
-          data: 'EXVATSERVICE'
+          title: 'Date',
+          data: 'order_date'
         }
         ],
       });
 
+function format(d) {
+			var row = '<tr>' +
+				'<td><strong>Product Name</strong></td>' +
+				'<td><strong>Product VAT</strong></td>' +
+				'<td><strong>Price</strong></td>' +
+				'<td><strong>Quantity</strong></td>' +
+				'<td><strong>Ex VAT</strong></td>' +
+				'<td><strong>VAT</strong></td>' +
+				// '<td><strong>Amount</strong></td>' +
+
+				'</tr>';
+
+			$.each(d.child, function(indexInArray, val) {
+
+				row += '<tr>' +
+					'<td>' + val.productName + '</td>' +
+					'<td>' + val.productVat + '</td>' +
+					'<td>' + round_up(val.price) + '</td>' +
+					'<td>' + val.quantity + '</td>' +
+					'<td>' + round_up(val.EXVAT) + '</td>' +
+					'<td>' + round_up(val.VAT) + '</td>' +
+					// '<td>' + val.AMOUNT + '</td>' +
+					'</tr>';
+			});
+			console.log(d);
+			if(d.export_ID==null){
+				button = '<button type="button" onclick="export_invoice('+d.order_id+')" class="btn btn-info btn-sm export-'+d.order_id+'">Export</button>';
+			}else{
+				button = '<button type="button" onclick="export_invoice('+d.order_id+')" class="btn btn-warning btn-sm export-'+d.order_id+'">Exported</button>';
+			}
+			var child_table =
+				'<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;width:100%;background:#d0a17a91;" class="table table-bordered table-hover" >' + row +
+				'<tr><td><strong>Action</strong></td><td>'+button+'</td></tr>'
+				'</table>';
+
+			return child_table;
+		}
+
+		// Add event listener for opening and closing details
+		$('#report tbody').on('click', 'td', function() {
+			var tr = $(this).closest('tr');
+			var row = table.row(tr);
+			if (row.child.isShown()) {
+				// This row is already open - close it
+				row.child.hide();
+				tr.removeClass('shown');
+				$('.DTFC_LeftHeadWrapper').show();
+				$('.DTFC_LeftBodyWrapper').show();
+			} else {
+				// Open this row
+				row.child(format(row.data())).show();
+				tr.addClass('shown');
+				$('.DTFC_LeftHeadWrapper').hide();
+				$('.DTFC_LeftBodyWrapper').hide();
+			}
+		});
+
+	
       var getTodayDate = new Date();
       var month = getTodayDate.getMonth()+1;
       var day = getTodayDate.getDate();
@@ -461,6 +556,11 @@ $(function () {
             }
         });
     });
+
+    function round_up(val){
+      val = parseFloat(val);
+      return val.toFixed(2);
+	}
 var i = 0;
 function Orders_today(order_today){
   if(i==1){
