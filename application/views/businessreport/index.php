@@ -17,6 +17,7 @@
 		border-radius: .25rem;
 	}
 
+
 	td.details-control {
 		background: url("<?php echo base_url('assets/details_open.png') ?>") no-repeat center center;
 		cursor: pointer;
