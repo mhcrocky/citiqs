@@ -96,7 +96,6 @@
                 <!--<li><img class="logo-img" src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png"></li>
                 <hr>-->
                     <li><a href="<?php echo $this->baseUrl;?>Businessreport"><i class="ti-receipt"></i> <span>Business Report</span></a></li>
-                    <li><a href="<?php echo $this->baseUrl; ?>warehouse"><i class="ti-files"></i> <span>Reports</span></a></li>
                     <li><a href="<?php echo $this->baseUrl; ?>product_categories"><i class="ti-layout-accordion-separated"></i> <span>Category</span></a></li>
                     <li><a href="<?php echo $this->baseUrl; ?>product_types"><i class="ti-layers-alt"></i> <span>Types</span></a></li>
                     <li><a href="<?php echo $this->baseUrl; ?>products"><i class="ti-bag"></i> <span>Products</span></a></li>
