@@ -16,6 +16,12 @@
   border-radius: .25rem;
 }
 
+.btn-refund {
+  background: #ff704d !important;
+  color: #fff !important;
+  border-color: #ff5c33 !important;
+}
+
 td.details-control {
 		background: url("<?php echo base_url('assets/images/datatables/details_open.png') ?>") no-repeat center center;
 		cursor: pointer;
@@ -459,11 +465,11 @@ function format(d) {
 					// '<td>' + val.AMOUNT + '</td>' +
 					'</tr>';
 			});
-			console.log(d);
+			//console.log(d);
 			if(d.export_ID==null){
-				button = '<button type="button" onclick="export_invoice('+d.order_id+')" class="btn btn-info btn-sm export-'+d.order_id+'">Export</button>';
+				button = '<button type="button" onclick="" class="btn btn-warning btn-refund btn-sm export-'+d.order_id+'">REFUND</button>';
 			}else{
-				button = '<button type="button" onclick="export_invoice('+d.order_id+')" class="btn btn-warning btn-sm export-'+d.order_id+'">Exported</button>';
+				button = '<button type="button" onclick="" class="btn btn-warning btn-refund btn-sm export-'+d.order_id+'">REFUND</button>';
 			}
 			var child_table =
 				'<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;width:100%;background:#d0a17a91;" class="table table-bordered table-hover" >' + row +
