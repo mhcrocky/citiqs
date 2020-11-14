@@ -372,10 +372,6 @@
           data: 'AMOUNT'
         },
         {
-          title: 'EXVATSERVICE',
-          data: 'EXVATSERVICE'
-        },
-        {
           title: 'EXVAT',
           data: null,
           "render": function (data, type, row) {
@@ -394,6 +390,10 @@
         {
           title: 'Date',
           data: 'order_date'
+        },
+        {
+          title: 'EXVATSERVICE',
+          data: 'EXVATSERVICE'
         }
         ],
       });
