@@ -97,12 +97,19 @@ a:active {
 	body {
 		background-color: #fbd19a;
 	}
+
+	.card-img-top{
+		object-fit: cover;
+	}
+
+
+
 </style>
 
 <main role="main" style="margin-bottom: -30px" align="center">
 	<section style="background-color:#fbd19a; " align="center" >
 		<div style="background-color:#fbd19a;" align="center">
-			<h1 style="font-family: campton-bold; padding: 50px 10px 10px 10px; margin-top: 30px;color:#27253b"><?php echo $this->language->Line("PLACES-A00002",'TIQS PICKUP & DELIVERY');?></h1>
+			<h1 style="font-family: caption-bold; padding: 50px 10px 10px 10px; margin-top: 30px;color:#27253b"><?php echo $this->language->Line("PLACES-A00002",'TIQS PICKUP & DELIVERY');?></h1>
 <!--			<h1 style="font-family: caption-bold; padding: 50px 10px 10px 10px; color:#ffffff">PICK UP & DELIVERY</h1>-->
 			<p style="font-family: campton-light;color: #27253b; margin-bottom: 0px"><?php echo $this->language->Line("PLACES-0020",'One stop shop to find everything at your favorite place');?></p>
 
