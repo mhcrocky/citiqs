@@ -1,5 +1,5 @@
 <?php
-class Orderlines_model extends CI_Model
+class AccountingReports_model extends CI_Model
 {
 
 	public function __construct()

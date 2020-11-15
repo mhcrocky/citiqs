@@ -56,10 +56,9 @@ class Services_model extends CI_Model {
             ->join('tbl_shop_vendors', 'tbl_shop_vendors.id = tbl_export_services.service_id')
             ->where('user_ID', $user_ID)
             ->where('accounting', $accounting);
-
         $q = $this->db->get();
 
-        if ($q->num_rows() == 1) {
+        if ($q->num_rows() >0) {
             return $q->result();
         }
 
@@ -69,6 +68,7 @@ class Services_model extends CI_Model {
     public function update($data) {
 
         $this->db->set('external_id', $data['external_id']);
+        $this->db->set('external_code', $data['external_code']);
         $this->db->set('service_id', $data['service_id']);
         $this->db->set('accounting', $data['accounting']);
         $this->db->where('id', $data['id']);

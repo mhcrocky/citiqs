@@ -339,7 +339,7 @@ $route['api/video/upload_post'] = 'Api/Video/upload_post';
 $route['dashboard'] = 'Businessreport/index';
 $route['businessreport/get_report'] = 'Businessreport/get_report';
 
-$route['order/lines'] = 'Orderlines/index';
+$route['accounting/reports'] = 'AccountingReports/index';
 $route['visma/export/(:num)'] = 'Api/Visma/export_single_invoice/$1';
 $route['visma'] = 'Api/Visma/index';
 $route['visma/login'] = 'Api/Visma/login';

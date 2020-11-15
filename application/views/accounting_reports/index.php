@@ -1,10 +1,5 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js">
-<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.7/css/fixedHeader.bootstrap.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.7/css/fixedHeader.bootstrap4.min.css">
-<script src="https://cdn.datatables.net/fixedheader/3.1.7/js/fixedHeader.bootstrap.min.js"></script>
-<script src="https://cdn.datatables.net/fixedheader/3.1.7/js/fixedHeader.bootstrap4.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <style>
@@ -34,7 +29,7 @@
 </style>
 <div class="main-content-inner">
 	<div class="sales-report-area mt-5 mb-5">
-		<div class="row">
+		<!-- <div class="row">
 			<div class="col-md-3">
 				<div style="height:160px;" class="single-report mb-xs-30">
 					<div style="min-height:500px;position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor">
@@ -131,7 +126,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 
 
@@ -223,7 +218,7 @@
 					data: null,
 					"render": function(data, type, row) {
 						let vat = parseFloat(data.AMOUNT);
-						return vat.toFixed(2);
+						return '€ '+vat.toFixed(2);
 					}
 				},
 				{
@@ -236,42 +231,42 @@
 					data: null,
 					"render": function(data, type, row) {
 						let serviceFee = parseFloat(data.serviceFee);
-						return serviceFee.toFixed(2);
+						return '€ '+serviceFee.toFixed(2);
 					}
 				},
 				{
 					data: null,
 					"render": function(data, type, row) {
 						let EXServiceFee = parseFloat(data.EXServiceFee);
-						return EXServiceFee.toFixed(2);
+						return '€ '+EXServiceFee.toFixed(2);
 					}
 				},
 				{
 					data: null,
 					"render": function(data, type, row) {
 						let VATSERVICE = parseFloat(data.VATSERVICE);
-						return VATSERVICE.toFixed(2);
+						return '€ '+VATSERVICE.toFixed(2);
 					}
 				},
 				{
 					data: null,
 					"render": function(data, type, row) {
 						let exvat = parseFloat(data.price);
-						return exvat.toFixed(2);
+						return '€ '+exvat.toFixed(2);
 					}
 				},
 				{
 					data: null,
 					"render": function(data, type, row) {
 						let exvat = parseFloat(data.EXVAT);
-						return exvat.toFixed(2);
+						return '€ '+exvat.toFixed(2);
 					}
 				},
 				{
 					data: null,
 					"render": function(data, type, row) {
 						let vat = parseFloat(data.VAT);
-						return vat.toFixed(2);
+						return '€ '+vat.toFixed(2);
 					}
 				},
 				{
@@ -376,11 +371,11 @@
 
 				row += '<tr>' +
 					'<td>' + val.productName + '</td>' +
-					'<td>' + val.productVat + '</td>' +
-					'<td>' + round_up(val.price) + '</td>' +
+					'<td>' + val.productVat + '%</td>' +
+					'<td>' + '€ '+round_up(val.price) + '</td>' +
 					'<td>' + val.quantity + '</td>' +
-					'<td>' + round_up(val.EXVAT) + '</td>' +
-					'<td>' + round_up(val.VAT) + '</td>' +
+					'<td>' + '€ '+round_up(val.EXVAT) + '</td>' +
+					'<td>' + '€ '+round_up(val.VAT) + '</td>' +
 					// '<td>' + val.AMOUNT + '</td>' +
 					'</tr>';
 			});

@@ -623,10 +623,11 @@ class VismaAccountSetting extends BaseControllerWeb {
 		}else{
             redirect('/visma');
         }
-        $content_data['debitor_data'] = $this->debitor_model->get_data($this->uri->segment(4));
+        $content_data['service_row'] = $this->services_model->get_data($this->uri->segment(4));
+        // print_r($content_data);
         // exit;
-        $content_data['debitors'] = $this->debitor_model->get_debitor($this->user_ID,'visma');
-        $content_data['categories'] = $this->debitor_model->get_categories($this->user_ID);
+        $content_data['services'] = $this->services_model->get_services($this->user_ID,'visma');
+        $content_data['services_type'] = $this->services_model->get_services_type($this->user_ID);
 
         $accouts_endpoint = get_api_endpoint('api_endpoint', VISMA_SANDBOX_DEBUG_MODE, 'v2/accounts/'.$setting->visma_year.'?$pagesize=1000&$orderby=Number');
         // print_r($accouts_endpoint);
@@ -645,12 +646,10 @@ class VismaAccountSetting extends BaseControllerWeb {
                 }
             }
         }
-        $services = $this->visma_model->get_services_fee($this->user_ID);
 
-        $content_data['services'] = $services;
         $content_data['external_services'] = $accounts_data;
 		$content_data['setting'] = $setting;
-		$this->global['pageTitle'] = 'TIQS : Debtors';
+		$this->global['pageTitle'] = 'TIQS : Services Fee';
 		$this->loadViews("setting/services_edit", $this->global, $content_data, NULL,'headerwebloginhotelProfile');
     }
 

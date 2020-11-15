@@ -3,13 +3,13 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 require APPPATH . '/libraries/BaseControllerWeb.php';
 
-class Orderlines extends BaseControllerWeb
+class AccountingReports extends BaseControllerWeb
 {
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('orderlines_model','orderLines');
+		$this->load->model('AccountingReports_model','accounting_reports');
 		/*
 		if (empty($this->session->userdata('userId'))) {
 			redirect('login');
@@ -23,20 +23,20 @@ class Orderlines extends BaseControllerWeb
 	{
 		$data['title'] = 'Orders';
 		$vendor_id = $this->session->userdata("userId");
-		$this->global['pageTitle'] = 'TIQS OrderLines';
-		$data['local_total'] = $this->orderLines->get_local_total($vendor_id);
-		$data['delivery_total'] = $this->orderLines->get_delivery_total($vendor_id);
-		$data['pickup_total'] = $this->orderLines->get_pickup_total($vendor_id);
-		$data['service_types'] = $this->orderLines->get_service_types();
-		$this->loadViews("orderlines/index", $this->global, $data, 'footerbusiness', 'headerbusiness'); // payment screen
+		$this->global['pageTitle'] = 'TIQS Accounting Reports';
+		$data['local_total'] = $this->accounting_reports->get_local_total($vendor_id);
+		$data['delivery_total'] = $this->accounting_reports->get_delivery_total($vendor_id);
+		$data['pickup_total'] = $this->accounting_reports->get_pickup_total($vendor_id);
+		$data['service_types'] = $this->accounting_reports->get_service_types();
+		$this->loadViews("accounting_reports/index", $this->global, $data, 'footerbusiness', 'headerbusiness'); // payment screen
 
 	}
 
 	public function get_report(){
 		$vendor_id = $this->session->userdata("userId");//418
-		$pickup = $this->orderLines->get_pickup_report($vendor_id);
-		$delivery = $this->orderLines->get_delivery_report($vendor_id);
-		$local = $this->orderLines->get_local_report($vendor_id);
+		$pickup = $this->accounting_reports->get_pickup_report($vendor_id);
+		$delivery = $this->accounting_reports->get_delivery_report($vendor_id);
+		$local = $this->accounting_reports->get_local_report($vendor_id);
 		$local = $this->group_by('order_id',$local);
 		$local = $this->table_data($local);
 

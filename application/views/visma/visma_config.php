@@ -72,6 +72,11 @@
                 <a href="<?php echo base_url(); ?>setting/visma/creditors">Sales ledger links</a>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6">
+                <a href="<?php echo base_url(); ?>setting/visma/service">Service Fee ledger links</a>
+                </div>
+            </div>
         </div>
     <!-- </div> -->
 </main>
