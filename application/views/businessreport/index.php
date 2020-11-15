@@ -93,6 +93,7 @@ td.details-control {
                                     </div>
                                 </div>
                             </div>
+                            </div>
                             <div class="col-md-3 ui-sortable mb-3" data-position="5" data-sort="1">
                             <div style="height:160px;" class="single-report mb-xs-30"><div style="min-height:500px;position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
@@ -106,9 +107,9 @@ td.details-control {
                                         <span>
                                         <?php echo $compare['total']; ?>% 
                                         <?php if($compare['total']>0) : ?>
-                                        <i class="fa fa-long-arrow-up text-success" aria-hidden="true"></i></span>
+                                        <i class="fa fa-long-arrow-up text-success" aria-hidden="true"></i>
                                         <?php elseif($compare['total']<0): ?>
-                                        <i class="fa fa-long-arrow-down text-danger" aria-hidden="true"></i></span>
+                                        <i class="fa fa-long-arrow-down text-danger" aria-hidden="true"></i>
                                         <?php endif; ?>
                                         </span>
                                     </div>
@@ -128,9 +129,9 @@ td.details-control {
                                         <span>
                                         <?php echo $compare['local']; ?>% 
                                         <?php if($compare['local']>0) : ?>
-                                        <i class="fa fa-long-arrow-up text-success" aria-hidden="true"></i></span>
+                                        <i class="fa fa-long-arrow-up text-success" aria-hidden="true"></i>
                                         <?php elseif($compare['local']<0): ?>
-                                        <i class="fa fa-long-arrow-down text-danger" aria-hidden="true"></i></span>
+                                        <i class="fa fa-long-arrow-down text-danger" aria-hidden="true"></i>
                                         <?php endif; ?>
                                         </span>
                                     </div>
@@ -150,9 +151,9 @@ td.details-control {
                                         <span>
                                         <?php echo $compare['delivery']; ?>% 
                                         <?php if($compare['delivery']>0) : ?>
-                                        <i class="fa fa-long-arrow-up text-success" aria-hidden="true"></i></span>
+                                        <i class="fa fa-long-arrow-up text-success" aria-hidden="true"></i>
                                         <?php elseif($compare['delivery']<0): ?>
-                                        <i class="fa fa-long-arrow-down text-danger" aria-hidden="true"></i></span>
+                                        <i class="fa fa-long-arrow-down text-danger" aria-hidden="true"></i>
                                         <?php endif; ?>
                                         </span>
                                     </div>
@@ -172,14 +173,76 @@ td.details-control {
                                         <span>
                                         <?php echo $compare['pickup']; ?>% 
                                         <?php if($compare['pickup']>0) : ?>
-                                        <i class="fa fa-long-arrow-up text-success" aria-hidden="true"></i></span>
+                                        <i class="fa fa-long-arrow-up text-success" aria-hidden="true"></i>
                                         <?php elseif($compare['pickup']<0): ?>
-                                        <i class="fa fa-long-arrow-down text-danger" aria-hidden="true"></i></span>
+                                        <i class="fa fa-long-arrow-down text-danger" aria-hidden="true"></i>
                                         <?php endif; ?>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-3 ui-sortable mb-3" data-position="1" data-sort="1">
+                            <div style="height:160px;" class="single-report mb-xs-30"><div style="min-height:500px;position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <div class="s-report-inner pr--20 pt--30 mb-3">
+                                <div style="background: #0066ff;" class="icon">&nbsp</div>
+                                    <div class="s-report-title d-flex justify-content-between">
+                                        <h4 class="header-title mb-0">Total</h4>
+                                        <p>TIMESTAMP</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between pb-2">
+                                        <h2 id="total"></h2>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <div  class="col-md-3 ui-sortable mb-3" data-position="2" data-sort="1"> 
+                            <div style="height:160px;" class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <div class="s-report-inner pr--20 pt--30 mb-3">
+                                <div style="background:  #009933;" class="icon">&nbsp</div>
+                                    <div class="s-report-title d-flex justify-content-between">
+                                        <h4 class="header-title mb-0">Local</h4>
+                                        <p>TIMESTAMP</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between pb-2">
+                                        <h2 id="local"></h2>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 ui-sortable mb-3" data-position="3" data-sort="1">
+                            <div  style="height:160px;"  class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <div class="s-report-inner pr--20 pt--30 mb-3">
+                                <div style="background: #00ff55;" class="icon">&nbsp</div>
+                                    <div class="s-report-title d-flex justify-content-between">
+                                        <h4 class="header-title mb-0">Delivery</h4>
+                                        <p>TIMESTAMP</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between pb-2">
+                                        <h2 id="delivery"></h2>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 ui-sortable mb-3" data-position="4" data-sort="1">
+                            <div  style="height:160px;"  class="single-report"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <div class="s-report-inner pr--20 pt--30 mb-3">
+                                    <div style="background: #ffc34d;" class="icon">&nbsp</div>
+                                    <div class="s-report-title d-flex justify-content-between">
+                                        <h4 class="header-title mb-0">Pick Up</h4>
+                                        <p>TIMESTAMP</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between pb-2">
+                                        <h2 id="pickup"></h2>
+                                        <span> </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 
@@ -566,6 +629,22 @@ function format(d) {
         });
         
         $('input[name="datetimes"]').change(function () {
+          let full_timestamp = $('input[name="datetimes"]').val();
+          var date = full_timestamp.split(" - ");
+          var min = date[0];
+          var max = date[1];
+          $.post("<?php echo base_url('businessreport/get_timestamp_totals');?>",{min:"'"+min+"'",max:"'"+max+"'"}, function(data){
+            let totals = JSON.parse(data);
+            let total = totals['total'];
+            let local = totals['local'];
+            let delivery = totals['delivery'];
+            let pickup = totals['pickup'];
+            $('#total').text( total_number(total) );
+            $('#local').text( total_number(local) );
+            $('#delivery').text( total_number(delivery) );
+            $('#pickup').text( total_number(pickup) );
+          });
+
           table.draw();
         });
        
@@ -604,11 +683,11 @@ $(function () {
       val = parseFloat(val);
       return val.toFixed(2);
 	}
-var i = 0;
-function Orders_today(order_today){
-  if(i==1){
-    $('.order_today').text('€ '+order_today);
+
+function total_number(number){
+  if(number==0){
+   return '€ '+number;
   }
-  i++;
+  return '€ '+number.toFixed(2);
 }
 </script>
