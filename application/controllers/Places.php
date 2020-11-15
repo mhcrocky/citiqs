@@ -24,7 +24,7 @@ class Places extends BaseControllerWeb
 		$category = $this->input->get("category");
 		$location = $this->input->get("location");
 		if(!empty($idplaces)){
-			$data = $this->bizdir_model->get_locations_by_param($idplaces);
+			$data = $this->bizdir_model->get_bizdir_by_defaultkey($idplaces);
 			$this->session->set_flashdata('location_data',$data);
 			redirect('places');
 		}

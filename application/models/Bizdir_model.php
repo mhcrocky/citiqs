@@ -41,10 +41,9 @@ class Bizdir_model extends CI_Model {
 		
 	}
 
-	public function get_locations_by_param($location)
+	public function get_bizdir_by_defaultkey($defaultkey)
 	{
-		$where_location = is_numeric($location) ? 'id' : 'city';
-		$this->db->where($where_location, $location);
+		$this->db->where('defaultkey', $defaultkey);
 		$query = $this->db->get('tbl_default_places');
 		return $query->row();
 		
