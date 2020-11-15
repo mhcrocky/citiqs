@@ -238,10 +238,10 @@ class Visma extends CI_Controller
 		$order_items = $this->visma_model->get_order_products($order_ID);
 		$order = $order[0];
 
-		echo '<pre>';
-		print_r($order_items);
-		print_r($order);
-		exit;
+		// echo '<pre>';
+		// print_r($order_items);
+		// print_r($order);
+		// // exit;
 
 		$data['setting'] = $this->setting;
 		$refresh_token =  $this->setting->visma_refresh_token;
@@ -265,12 +265,23 @@ class Visma extends CI_Controller
 				}
 			}
 		}
-
+		$vat_data[number_format($order->serviceFeeTax,2)][] = $order->VATSERVICE;
+		// print_r($vat_data);
+		// exit;
 		$data['orders'] = $order_items;
 
 		$payload = '';
 
 		$debit_account = $this->visma_model->get_visma_debitor($this->user_ID, $order->paymentType);
+		$service_account = $this->visma_model->get_visma_service($this->user_ID, $order->serviceId);
+		// print_r($service_account);
+		// exit;
+		if ($service_account == false) {
+			echo json_encode(['status' => 401, 'response' => $order->paymentType . ' service fee is not linked with visma service fee ledger please update the visma setting','ledger'=>$order->serviceFee]);
+			return;
+		} else {
+			$service_account = $service_account->external_id;
+		}
 
 		if ($debit_account == false) {
 			// if payment type is empty then use the 1100 banking account as default booking account
@@ -284,6 +295,10 @@ class Visma extends CI_Controller
 		} else {
 			$debit_account = $debit_account->external_id;
 		}
+		$total_amount = round($order->amount + $order->serviceFee,2);
+		$EXSERVICEVAT = round($order->serviceFee - $order->VATSERVICE,2);
+		// echo $total_amount;
+		// exit;
 		$payload = '{
 			"VoucherDate": "' . date('Y-m-d', strtotime($order->orderCreated)) . '",
 			"VoucherText": "ORDER-' . $order->orderId . ' / ' . $order->paymentType . '",
@@ -294,8 +309,14 @@ class Visma extends CI_Controller
 		$payload .= '
 				{
 					"AccountNumber": "' . $debit_account . '",
-					"DebitAmount": ' . $order->amount . ',
+					"DebitAmount": ' . $total_amount . ',
 					"CreditAmount": 0
+				},';
+		$payload .= '
+				{
+					"AccountNumber": "' . $service_account . '",
+					"DebitAmount": 0,
+					"CreditAmount": ' . $EXSERVICEVAT . '
 				},';
 		foreach ($order_items as $order_item) {
 			$sales_ledger = $this->visma_model->get_visma_creditor($this->user_ID, $order_item['cat_id']);

@@ -34,6 +34,23 @@ class Visma_model extends CI_Model
         }
     }
 
+    public function get_visma_service($id,$service_id) {
+        $this->db->select('*')
+            ->from('tbl_export_services')
+            ->where('user_ID', $id)
+            ->where('service_id', $service_id)
+            ->limit(1);
+
+        $q = $this->db->get();
+
+
+        if ($q->num_rows() == 1) {
+            return $q->row();
+        }
+
+        return false;
+    }
+
     public function get_visma_creditor($user_ID, $category_ID)
     {
         $this->db->select('*')
@@ -156,6 +173,7 @@ class Visma_model extends CI_Model
             tbl_shop_order_extended.quantity,
             tbl_shop_categories.category,
             tbl_shop_categories.id AS cat_id,
+
             tbl_shop_products_extended.price * tbl_shop_order_extended.quantity
             AS AMOUNT,
             tbl_shop_products_extended.price * tbl_shop_order_extended.quantity * 100 / (tbl_shop_products_extended.vatpercentage+100)
@@ -169,10 +187,15 @@ class Visma_model extends CI_Model
             tbl_shop_products_extended
         INNER JOIN
             tbl_shop_order_extended ON tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
+        INNER JOIN
+            tbl_shop_orders ON tbl_shop_order_extended.orderId = tbl_shop_orders.id
         LEFT JOIN
             tbl_shop_products ON tbl_shop_products_extended.productId = tbl_shop_products.id
         LEFT JOIN
             tbl_shop_categories ON tbl_shop_products.categoryId = tbl_shop_categories.id
+        INNER JOIN
+            tbl_shop_vendors ON  tbl_shop_vendors.vendorId = tbl_shop_categories.userId
+
         WHERE
             tbl_shop_order_extended.orderId = "' . $order_id . '"
         ');
@@ -193,11 +216,13 @@ class Visma_model extends CI_Model
             tbl_shop_orders.spotId,
             tbl_shop_orders.paymentType,
             tbl_shop_orders.amount,
+            tbl_shop_spot_types.type AS service_type,
             tbl_shop_orders.created AS orderCreated,
             tbl_shop_orders.expired AS orderExpired,
             tbl_shop_orders.serviceFee AS serviceFee,
             tbl_shop_orders.printStatus AS printStatus,
             tbl_shop_spots.spotName,
+            (tbl_shop_orders.serviceFee)*(tbl_shop_vendors.serviceFeeTax/100) AS VATSERVICE,
             GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
             tbl_user.username AS buyerUserName,
             tbl_user.id AS user_ID,
@@ -211,7 +236,8 @@ class Visma_model extends CI_Model
             vendorOne.city as vendorCity,
             vendorOne.vat_number as vendorVAT,
             vendorOne.country as vendorCountry,
-            tbl_shop_vendors.serviceFeeTax as serviceFeeTax
+            tbl_shop_vendors.serviceFeeTax as serviceFeeTax,
+            tbl_shop_vendors.id as serviceId
         FROM
             tbl_shop_orders
         INNER JOIN
@@ -227,6 +253,8 @@ class Visma_model extends CI_Model
         INNER JOIN
             tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
         INNER JOIN
+            tbl_shop_spot_types ON tbl_shop_orders.serviceTypeId = tbl_shop_spot_types.id
+        INNER JOIN
         (
             SELECT
                 tbl_user.*
@@ -240,7 +268,8 @@ class Visma_model extends CI_Model
             tbl_shop_orders.paid = "1"
             AND tbl_shop_orders.id = "' . $orderIdcopy . '"
         GROUP BY orderId';
-
+            // echo $query;
+            // exit;
         $result = $this->db->query($query);
         $resultqueryforlog = $this->db->last_query();
         $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
@@ -252,7 +281,4 @@ class Visma_model extends CI_Model
         return ($q->num_rows()  ? $q->result() : false);
     }
 
-    public function get_services_fee($user_ID){
-
-    }
 }

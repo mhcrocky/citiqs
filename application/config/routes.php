@@ -365,6 +365,12 @@ $route['setting/visma_credit/save'] = 'Accounting/VismaAccountSetting/save_credi
 $route['setting/visma_credit/update'] = 'Accounting/VismaAccountSetting/update_credit';
 $route['setting/visma/credit_delete/(:num)'] = 'Accounting/VismaAccountSetting/delete_credit/$1';
 
+$route['setting/visma/service'] = 'Accounting/VismaAccountSetting/service';
+$route['setting/visma/service/(:num)'] = 'Accounting/VismaAccountSetting/service_edit/$1';
+$route['setting/visma_service/save'] = 'Accounting/VismaAccountSetting/save_service';
+$route['setting/visma_service/update'] = 'Accounting/VismaAccountSetting/update_service';
+$route['setting/visma/service_delete/(:num)'] = 'Accounting/VismaAccountSetting/delete_service/$1';
+
 // Exact
 $route['exact'] = 'Api/Exact/index';
 $route['exact/config'] = 'Accounting/ExactSetting/index';

@@ -26,6 +26,7 @@ class VismaAccountSetting extends BaseControllerWeb {
 		$this->load->model('visma_model');
 		$this->load->model('vat_rates_model');
 		$this->load->model('debitor_model');
+		$this->load->model('services_model');
 		$this->load->model('creditor_model');
         $this->load->helper('visma_helper');
 		$this->load->library('language', array('controller' => $this->router->class));
@@ -569,25 +570,16 @@ class VismaAccountSetting extends BaseControllerWeb {
 
     }
 
-    public function service_charges() {
+    public function service() {
 
         $setting = $this->db->select('*')->where("user_ID", $this->user_ID)->get('tbl_export_setting')->row();
 
         if(empty($setting)){
             redirect('/visma');
         }
-        $payment_type = array(
-            'prePaid'=>'PrePaid',
-            'postPaid'=>'PostPaid',
-            'idealPayment'=>'Ideal payment',
-            'creditCardPayment'=>'Credit card payment',
-            'bancontactPayment'=>'Bancontact payment',
-            'giroPayment'=>'Giro payment',
-            'payconiqPayment'=>'Payconiq payment',
-            'pinMachinePayment'=>'Pin machine',
-            'voucherPayment'=>'Voucher',
-        );
-        $content_data['debitors'] = $this->debitor_model->get_debitor($this->user_ID,'visma');
+
+        $content_data['services'] = $this->services_model->get_services($this->user_ID,'visma');
+        $content_data['services_type'] = $this->services_model->get_services_type($this->user_ID);
         $token  = update_token($setting->visma_refresh_token, $this->user_ID);
         if($token){
 			$refresh_token =  $token->refresh_token;
@@ -607,12 +599,13 @@ class VismaAccountSetting extends BaseControllerWeb {
                 }
             }
         }
-
-        $content_data['payment_types'] = $payment_type;
-        $content_data['external_debitors'] = $accounts_data;
+        $content_data['external_services'] = $accounts_data;
+        // echo '<pre>';
+        // print_r($content_data);
+        // exit;
 		$content_data['setting'] = $this->setting;
-		$this->global['pageTitle'] = 'TIQS : Debtors';
-		$this->loadViews("setting/debitors", $this->global, $content_data, NULL,'headerwebloginhotelProfile');
+		$this->global['pageTitle'] = 'TIQS : Service Fee';
+		$this->loadViews("setting/services", $this->global, $content_data, NULL,'headerwebloginhotelProfile');
     }
 
     public function service_edit($id) {
@@ -652,23 +645,13 @@ class VismaAccountSetting extends BaseControllerWeb {
                 }
             }
         }
-        $payment_type = array(
-            'prePaid'=>'PrePaid',
-            'postPaid'=>'PostPaid',
-            'idealPayment'=>'Ideal payment',
-            'creditCardPayment'=>'Credit card payment',
-            'bancontactPayment'=>'Bancontact payment',
-            'giroPayment'=>'Giro payment',
-            'payconiqPayment'=>'Payconiq payment',
-            'pinMachinePayment'=>'Pin machine',
-            'voucherPayment'=>'Voucher',
-        );
+        $services = $this->visma_model->get_services_fee($this->user_ID);
 
-        $content_data['payment_types'] = $payment_type;
-        $content_data['external_debitors'] = $accounts_data;
+        $content_data['services'] = $services;
+        $content_data['external_services'] = $accounts_data;
 		$content_data['setting'] = $setting;
 		$this->global['pageTitle'] = 'TIQS : Debtors';
-		$this->loadViews("setting/debitors_edit", $this->global, $content_data, NULL,'headerwebloginhotelProfile');
+		$this->loadViews("setting/services_edit", $this->global, $content_data, NULL,'headerwebloginhotelProfile');
     }
 
     public function save_service() {
@@ -676,13 +659,13 @@ class VismaAccountSetting extends BaseControllerWeb {
         // exit;
         $this->form_validation->set_error_delimiters('<p>', '</p>');
         $this->form_validation->set_rules('external_id', 'External Id', 'trim|max_length[150]');
-        $this->form_validation->set_rules('payment_type', 'Payment Type', 'trim|max_length[100]');
+        $this->form_validation->set_rules('service_id', 'Service', 'trim|max_length[100]');
 
 
         if (!$this->form_validation->run()) {
             $this->session->set_flashdata('error', validation_errors());
             $this->session->set_flashdata($_POST);
-            redirect('/setting/visma/debitors');
+            redirect('/setting/visma/service');
             exit();
         }
 
@@ -690,33 +673,33 @@ class VismaAccountSetting extends BaseControllerWeb {
             'accounting' => 'visma',
             'external_id' => $this->input->post('external_id'),
             'external_code' => $this->input->post('external_id'),
-            'payment_type' => $this->input->post('payment_type'),
+            'service_id' => $this->input->post('service_id'),
             'user_ID' => $this->user_ID,
         );
 
-        $save_debitor = $this->debitor_model->save($data);
+        $save_debitor = $this->services_model->save($data);
 
 
 
         if ($save_debitor) {
-            $this->session->set_flashdata('success', 'Booking account saved');
+            $this->session->set_flashdata('success', 'Service account saved');
         } else {
-            $this->session->set_flashdata('error', 'Error in adding Booking account');
+            $this->session->set_flashdata('error', 'Error in adding Service account');
         }
 
-        redirect('/setting/visma/debitors');
+        redirect('/setting/visma/service');
     }
 
     public function update_service() {
         $this->form_validation->set_error_delimiters('<p>', '</p>');
         $this->form_validation->set_rules('external_id', 'External Id', 'trim|max_length[150]');
-        $this->form_validation->set_rules('payment_type', 'Payment Type', 'trim|max_length[100]');
+        $this->form_validation->set_rules('service_id', 'Service', 'trim|max_length[100]');
 
 
         if (!$this->form_validation->run()) {
             $this->session->set_flashdata('error', validation_errors());
             $this->session->set_flashdata($_POST);
-            redirect('/setting/visma/debitors/'.$this->input->post('id'));
+            redirect('/setting/visma/service/'.$this->input->post('id'));
 
             exit();
         }
@@ -725,29 +708,29 @@ class VismaAccountSetting extends BaseControllerWeb {
             'accounting' => 'visma',
             'external_id' => $this->input->post('external_id'),
             'external_code' => $this->input->post('external_id'),
-            'payment_type' => $this->input->post('payment_type'),
+            'service_id' => $this->input->post('service_id'),
             'user_ID' => $this->user_ID,
             'id' =>$this->input->post('id')
         );
         // print_r($data);exit;
-        if ($this->debitor_model->update($data)) {
-            $this->session->set_flashdata('success', 'Booking account updated');
+        if ($this->services_model->update($data)) {
+            $this->session->set_flashdata('success', 'Service account updated');
         } else {
-            $this->session->set_flashdata('error', 'Booking update issue');
+            $this->session->set_flashdata('error', 'Service update issue');
         }
 
-        redirect('/setting/visma/debitors/'.$this->input->post('id'));
+        redirect('/setting/visma/service/'.$this->input->post('id'));
     }
 
     function delete_service($id){
 
-        if ($this->debitor_model->delete_row($id,$this->user_ID)) {
-            $this->session->set_flashdata('success', 'Booking deleted');
+        if ($this->services_model->delete_row($id,$this->user_ID)) {
+            $this->session->set_flashdata('success', 'Service deleted');
         } else {
-            $this->session->set_flashdata('error', 'Error in deleting Booking');
+            $this->session->set_flashdata('error', 'Error in deleting Service');
         }
 
-        redirect('/setting/visma/debitors');
+        redirect('/setting/visma/service');
 
     }
 

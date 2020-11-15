@@ -1,124 +1,101 @@
 <?php
-
-
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
+if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 require APPPATH . '/libraries/BaseControllerWeb.php';
-// use DB;
-class Orderlines extends BaseControllerWeb {
 
-    /**
-     * This is default constructor of the class
-     */
-    public function __construct() {
-        parent::__construct();
-        $this->load->helper('url');
-        $this->load->helper('country_helper');
-        $this->load->helper('form');
-        $this->load->helper('google_helper');
-        $this->load->library('form_validation');
+class Orderlines extends BaseControllerWeb
+{
 
-
-
-        $this->load->library('language', array('controller' => $this->router->class));
-        $this->load->library('pagination');
-
-        $this->load->config('custom');
-
-        $this->isLoggedIn();
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->model('orderlines_model','orderLines');
+		/*
+		if (empty($this->session->userdata('userId'))) {
+			redirect('login');
+		}
+		*/
 
 
-    }
+	}
 
-    /**
-     * This function used to load the first screen of the user
-     */
-    public function index() {
-        // echo 'here';
-        // exit;
-        $this->global['pageTitle'] = 'tiqs : Invoices';
-        $result = $this->db->query('
-            SELECT
-                tbl_shop_orders.id AS orderId,
-                tbl_shop_orders.export_ID AS export_ID,
-                tbl_shop_orders.amount AS orderAmount,
-                tbl_shop_orders.paid AS orderPaidStatus,
-                tbl_shop_orders.created AS createdAt,
-                tbl_shop_categories.category AS category,
-                buyer.id AS buyerId,
-                buyer.email AS buyerEmail,
-                buyer.username AS buyerUserName,
-                vendor.username AS vendorUserName,
-                tbl_shop_order_extended.quantity AS productQuantity,
-                tbl_shop_products_extended.`name` AS productName,
-                tbl_shop_products_extended.price AS productPrice,
-                tbl_shop_products_extended.vatpercentage AS productVat,
-                tbl_shop_spots.spotName AS spotName,
-                tbl_shop_products_extended.price * tbl_shop_order_extended.quantity AS productlinetotal,
-                ((tbl_shop_products_extended.price * tbl_shop_order_extended.quantity) * 100)/(tbl_shop_products_extended.vatpercentage+100) AS EXVAT,
-                tbl_shop_orders.serviceFee AS servicefee
-            FROM
-                tbl_shop_orders
-                INNER JOIN
-                tbl_shop_order_extended
-                ON
-                    tbl_shop_orders.id = tbl_shop_order_extended.orderId
-                INNER JOIN
-                tbl_shop_products_extended
-                ON
-                    tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
-                INNER JOIN
-                tbl_shop_products
-                ON
-                    tbl_shop_products_extended.productId = tbl_shop_products.id
-                INNER JOIN
-                tbl_shop_categories
-                ON
-                    tbl_shop_products.categoryId = tbl_shop_categories.id
-                INNER JOIN
-                (
-                    SELECT
-                        *
-                    FROM
-                        tbl_user
-                    WHERE
-                        roleid = 2
-                ) AS vendor
-                ON
-                    vendor.id = tbl_shop_categories.userId
-                INNER JOIN
-                (
-                    SELECT
-                        *
-                    FROM
-                        tbl_user
-                    WHERE
-                        roleid = 6 OR
-                        roleid = 2
-                ) AS buyer
-                ON
-                    buyer.id = tbl_shop_orders.buyerId
-                INNER JOIN
-                tbl_shop_spots
-                ON
-                    tbl_shop_orders.spotId = tbl_shop_spots.id
-            WHERE
-                vendor.id = '.$this->session->userdata('userId').' AND
-                tbl_shop_orders.paid = \'1\'
-            GROUP BY
-                orderId
-            ORDER BY
-                tbl_shop_categories.category ASC
+	public function index()
+	{
+		$data['title'] = 'Orders';
+		$vendor_id = $this->session->userdata("userId");
+		$this->global['pageTitle'] = 'TIQS OrderLines';
+		$data['local_total'] = $this->orderLines->get_local_total($vendor_id);
+		$data['delivery_total'] = $this->orderLines->get_delivery_total($vendor_id);
+		$data['pickup_total'] = $this->orderLines->get_pickup_total($vendor_id);
+		$data['service_types'] = $this->orderLines->get_service_types();
+		$this->loadViews("orderlines/index", $this->global, $data, 'footerbusiness', 'headerbusiness'); // payment screen
 
-    ');
-    if($result->num_rows()){
-        $data['invoices'] = $result->result();
-    }else{
-        $data['invoices'] = [];
-    }
-    $this->loadViews("order_lines", $this->global, $data, NULL,'headerWarehouse');
-    }
+	}
+
+	public function get_report(){
+		$vendor_id = $this->session->userdata("userId");//418
+		$pickup = $this->orderLines->get_pickup_report($vendor_id);
+		$delivery = $this->orderLines->get_delivery_report($vendor_id);
+		$local = $this->orderLines->get_local_report($vendor_id);
+		$local = $this->group_by('order_id',$local);
+		$local = $this->table_data($local);
+
+		// echo '<pre>';
+		// print_r($local);
+		// exit;
+		// print_r($delivery);
+		$report = array_merge($pickup, $delivery, $local);
+		// print_r($report);
+		// exit;
+		echo json_encode(['data'=>$report]);
+
+	}
+
+	function group_by($key, $data) {
+
+		$result = array();
+
+		foreach($data as $val) {
+			if(array_key_exists($key, $val)){
+				$result[$val[$key]][] = $val;
+			}else{
+				$result[""][] = $val;
+			}
+		}
+
+		return $result;
+	}
+
+	function row_total($key,$data){
+		$sum = 0;
+		foreach ($data as $item) {
+			$sum += $item[$key];
+		}
+		return $sum;
+	}
+
+	function table_data($data){
+		$rows = [];
+		foreach($data as $key =>$val){
+			$total_price = $this->row_total('price',$val);
+			$total_quantity = $this->row_total('quantity',$val);
+			$total_AMOUNT = $this->row_total('AMOUNT',$val)+$val[0]['serviceFee'];
+			$total_EXVAT = $this->row_total('EXVAT',$val);
+			$total_VAT = $this->row_total('VAT',$val);
+			if($val[0]['export_ID']!=''){
+				$status = 'Exported';
+			}else{
+				$status = 'N/A';
+			}
+			$exservicefee = ($val[0]['serviceFee'])-($val[0]['VATSERVICE']);
+			$rows[] = ['order_id'=>$val[0]['order_id'],'order_date'=>$val[0]['order_date'],'serviceFee'=>$val[0]['serviceFee'],'serviceFeeTax'=>$val[0]['serviceFeeTax'],'EXServiceFee'=>$exservicefee,'VATSERVICE'=>$val[0]['VATSERVICE'],'export_ID'=>$val[0]['export_ID'],'status'=>$status,'service_type'=>$val[0]['service_type'],'price'=>$total_price,'quantity'=>$total_quantity,'AMOUNT'=>$total_AMOUNT,'EXVAT'=>$total_EXVAT,'VAT'=>$total_VAT,'child'=>$val];
+		}
+
+		return $rows;
+
+	}
+
+
+
+
 }
-
-?>
