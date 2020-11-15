@@ -319,13 +319,6 @@ td.details-control {
           pageServiceFeeData.reduce( function (a, b) {
               return parseFloat(a) + parseFloat(b);
             }) : 0;
-
-          let pageServiceFeeTaxData = api.column( 6,  { page: 'current'} ).cache('search');
-          let pageServiceFeeTaxTotal = pageServiceFeeTaxData.length ? 
-          pageServiceFeeTaxData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
-
           let pageVatServiceData = api.column( 7,  { page: 'current'} ).cache('search');
           let pageVatServiceTotal = pageVatServiceData.length ? 
           pageVatServiceData.reduce( function (a, b) {
@@ -362,12 +355,6 @@ td.details-control {
           let serviceFeeData = api.column( 5,  { search: 'applied' } ).cache('search');
           let serviceFeeTotal = serviceFeeData.length ? 
           serviceFeeData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
-
-          let serviceFeeTaxData = api.column( 6,  { search: 'applied' } ).cache('search');
-          let serviceFeeTaxTotal = serviceFeeTaxData.length ? 
-          serviceFeeTaxData.reduce( function (a, b) {
               return parseFloat(a) + parseFloat(b);
             }) : 0;
 
@@ -440,8 +427,8 @@ td.details-control {
           title: 'Service Fee Tax',
           data: null,
           "render": function (data, type, row) {
-            let serviceFeeTax = parseFloat(data.serviceFeeTax);
-            return serviceFeeTax.toFixed(2);
+            let serviceFeeTax = parseInt(data.serviceFeeTax)+"%";
+            return serviceFeeTax;
           }
         },
         {
