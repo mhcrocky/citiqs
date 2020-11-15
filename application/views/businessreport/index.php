@@ -385,7 +385,7 @@ td.details-control {
            $(tfoot).find('th').eq(2).html('-');
            $(tfoot).find('th').eq(3).html('-');
            $(tfoot).find('th').eq(4).html(pageServiceFeeTotal .toFixed(2)+'('+serviceFeeTotal .toFixed(2)+')');
-           $(tfoot).find('th').eq(5).html(pageServiceFeeTaxTotal .toFixed(2)+'('+serviceFeeTaxTotal .toFixed(2)+')');
+           $(tfoot).find('th').eq(5).html('-');
            $(tfoot).find('th').eq(6).html(pageVatServiceTotal.toFixed(2)+'('+vatServiceTotal.toFixed(2)+')');
            $(tfoot).find('th').eq(7).html(pageExvatServiceTotal.toFixed(2)+'('+exvatServiceTotal.toFixed(2)+')');
            $(tfoot).find('th').eq(8).html(pageAmount.toFixed(2)+'('+amount.toFixed(2)+')');
