@@ -23,6 +23,11 @@ class Places extends BaseControllerWeb
 		$this->load->library('session');
 		$category = $this->input->get("category");
 		$location = $this->input->get("location");
+		if(!empty($idplaces)){
+			$data = $this->bizdir_model->get_locations_by_param($idplaces);
+			$this->session->set_flashdata('location_data',$data);
+			redirect('places');
+		}
 		//$data['directories'] = $this->bizdir_model->get_bizdir(); 
 		$data['title'] = 'TIQS PLACES';
 		$this->global['pageTitle'] = 'TIQS PLACES';
