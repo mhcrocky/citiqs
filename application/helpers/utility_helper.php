@@ -278,7 +278,7 @@
                     
                     $checkoutList .= '>';
                     $checkoutList .=    '<div class="alert alert-dismissible" style="padding-left: 0px; margin-bottom: 10px;">';
-                    $checkoutList .=        '<a href="javascript:void(0)" onclick="removeOrdered(\'' . $randomId . '\')" class="close removeOrdered_' . $product['productId'] . '" data-dismiss="alert" aria-label="close">×</a>';
+                    $checkoutList .=        '<span onclick="removeOrdered(\'' . $randomId . '\')"><a href="javascript:void(0)"  class="close removeOrdered_' . $product['productId'] . '" data-dismiss="alert" aria-label="close">×</a></span>';
                     $checkoutList .=        '<h4 class="productName">' . $product['name'] . ' (€' . $product['price'] . ')</h4>';
                     $checkoutList .=    '</div>';
                     $checkoutList .=    '<div class="modal__content">';

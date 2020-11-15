@@ -845,12 +845,18 @@
                                                             name="productTypes[<?php echo $type['id']; ?>][showInPublic]"
                                                             value="<?php echo $type['id']; ?>"
                                                             <?php echo ($showInPublic && $checked) ? $showInPublic : ''; ?>
-                                                            />
-                                                            <?php if ($checked) { ?>
-                                                                Active status <?php echo ($showInPublic) ? '<span style="background-color: #72b19f">(ACTIVE)</span>' : '<span style="background-color: #f2622f">(BLOCKED)</span> '; ?>
-                                                            <?php } else { ?>
-                                                                Active status
-                                                            <?php } ?>
+                                                        />
+                                                        <input
+                                                            type="text"
+                                                            name="productTypes[<?php echo $type['id']; ?>][isMain]"
+                                                            value="<?php echo ($type['isMain'] === '1') ? '1' : '0'; ?>"
+                                                            reaconly required hidden
+                                                        />
+                                                        <?php if ($checked) { ?>
+                                                            Active status <?php echo ($showInPublic) ? '<span style="background-color: #72b19f">(ACTIVE)</span>' : '<span style="background-color: #f2622f">(BLOCKED)</span> '; ?>
+                                                        <?php } else { ?>
+                                                            Active status
+                                                        <?php } ?>
                                                     </label>
                                                     <?php if (in_array($localTypeId, $vendorTypes)) { ?>
                                                         <label for="price<?php echo $type['id'] . $product['productId']; ?>">Local price: </label>

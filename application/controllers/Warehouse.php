@@ -366,7 +366,9 @@
 
             // insert new product extended deatils
             $countTypes = 0;
+            $main = false;
             foreach($data['productTypes'] as $typeId => $typeValues) {
+                var_dump($typeValues);
                 if (isset($typeValues['check'])) {
                     $countTypes++;
                     $data['productExtended']['productId'] = $this->shopproduct_model->id;
@@ -389,11 +391,19 @@
                             $this->shopproductaddons_model->updateProductExtendedId($oldExtendedId, $this->shopproductex_model->id);
                         }
                     };
+
+                    if ($typeValues['isMain'] === '1') $main = true;
                 }
                 $insert = true;
             }
 
             if ($insert && $update && $countTypes > 0 ) {
+                if  ($countTypes === 1 && $main)  {
+                    $this
+                        ->shopproductaddons_model
+                        ->setProperty('addonProductId', $data['productExtended']['productId'])
+                        ->deleteAddon();                    
+                }
                 $this->session->set_flashdata('success', 'Product updated');
             } else {
                 if ($countTypes === 0) {

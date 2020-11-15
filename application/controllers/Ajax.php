@@ -598,14 +598,20 @@ class Ajax extends CI_Controller
 
     public function getAddonsList(): void
     {
-        if (!$this->input->is_ajax_request()) return;
+        #if (!$this->input->is_ajax_request()) return;
 
         $addons  = $this->shopproductex_model->getProdctesByMainType(intval($_SESSION['userId']));
         $addonsList = '';
         if (!empty($addons)) {
             foreach ($addons as $productId => $product) {
                 $product = reset($product);
-                foreach($product['productDetails'] as $details) {
+                foreach($product['productDetails'] as $details) {                    
+                    $productUpdateCycle = intval($details['productUpdateCycle']);
+                    $chekIsLast = $this
+                                    ->shopproductex_model
+                                        ->setProperty('productId', $productId)
+                                        ->isLastUpdate($productUpdateCycle);
+                    if (!$chekIsLast) continue;
                     $addonsList .=  '<div>';
                     $addonsList .=      '<label class="checkbox-inline">';
                     $addonsList .=          $details['name'] . ' (' . $details['productType']. '):&nbsp;&nbsp;';
