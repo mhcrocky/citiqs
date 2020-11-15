@@ -87,20 +87,23 @@ class Businessreport extends BaseControllerWeb
 			$total_VAT = $this->row_total('VAT',$val);
 			$total_EXVATSERVICE = $this->row_total('EXVATSERVICE',$val);
 
-			
-			
+			$exservicefee = ($val[0]['serviceFee'])-($val[0]['VATSERVICE']);
 			$rows[] = [
 				'order_id'=>$val[0]['order_id'],
 				'order_date'=>$val[0]['order_date'],
 				'serviceFee'=>$val[0]['serviceFee'],
+				'serviceFeeTax'=>$val[0]['serviceFeeTax'],
+				'EXVATSERVICE'=>$total_EXVATSERVICE,
+				'VATSERVICE'=>$val[0]['VATSERVICE'],
 				'service_type'=>$val[0]['service_type'],
 				'price'=>$total_price,
 				'quantity'=>$total_quantity,
 				'AMOUNT'=>$total_AMOUNT,
 				'EXVAT'=>$total_EXVAT,
 				'VAT'=>$total_VAT,
-				'EXVATSERVICE' => $total_EXVATSERVICE,
-				'child'=>$val];
+				'child'=>$val
+			];
+			
 		}
 
 		return $rows;
