@@ -6,7 +6,7 @@ function getPlaceByLocation(location, places, myRange) {
    
 
     if (address.value) { 
-        let url = "ajaxdorian/getPlaceByLocation";
+        let url = "Ajaxdorian/getPlaceByLocation";
         let post = {
             'location' : address.value,
             'range' : range.value

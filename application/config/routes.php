@@ -59,7 +59,8 @@ $route['translate_uri_dashes'] = FALSE;
 $route['emaildesigner/new'] = "emaildesigner/edit";
 
 $route['thuishaven'] = "thuishavensoldout";
-$route['places'] = "places";
+$route['places'] = "places/index";
+$route['places/(:any)'] = "places/index/$1";
 //$route['thuishaven'] = "thuishavenagenda/index/1";
 
 $route['thuishavensales/(:any)/(:any)'] = "thuishaven/index/$1/$2";
