@@ -11,13 +11,13 @@ class Businessreport extends BaseControllerWeb
 		parent::__construct();
 		$this->load->model('businessreport_model');
 		$this->load->library('language', array('controller' => $this->router->class));
-		//$this->isLoggedIn();
+		$this->isLoggedIn();
 	}
 
 	public function index()
 	{ 
 		$data['title'] = 'Business Reports';
-		$vendor_id = 418;//$this->session->userdata("userId");
+		$vendor_id = $this->session->userdata("userId");
 		$this->global['pageTitle'] = 'TIQS Business Reports';
 		$data['day_total'] = $this->businessreport_model->get_day_totals($vendor_id);
 		$data['last_week_total'] = $this->businessreport_model->get_this_week_totals($vendor_id);
@@ -28,7 +28,7 @@ class Businessreport extends BaseControllerWeb
 	}
 
 	public function get_report(){
-		$vendor_id = 418;//$this->session->userdata("userId");//418
+		$vendor_id = $this->session->userdata("userId");//418
 		$pickup = $this->businessreport_model->get_pickup_report($vendor_id);
 		$delivery = $this->businessreport_model->get_delivery_report($vendor_id);
 		$local = $this->businessreport_model->get_local_report($vendor_id);
@@ -40,7 +40,7 @@ class Businessreport extends BaseControllerWeb
 	}
 
 	public function get_timestamp_totals(){
-		$vendor_id = 418;//$this->session->userdata("userId");//418
+		$vendor_id = $this->session->userdata("userId");
 		$min_date = $this->input->post('min');
 		$max_date = $this->input->post('max');
 		$totals = $this->businessreport_model->get_date_range_totals($vendor_id, $min_date, $max_date);
