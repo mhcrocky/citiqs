@@ -41,6 +41,15 @@ class Bizdir_model extends CI_Model {
 		
 	}
 
+	public function get_locations_by_param($location)
+	{
+		$where_location = is_numeric($location) ? 'id' : 'city';
+		$this->db->where($where_location, $location);
+		$query = $this->db->get('tbl_default_places');
+		return $query->row();
+		
+	}
+
 	public function set_bizdir()
 	{
 		$data = array(
