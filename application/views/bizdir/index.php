@@ -231,5 +231,43 @@ $('#myRange').mousemove(function(){
 
 }).call(this);
 
+function getPlaceByUrl(location, range) {
+console.log(location);
 
-    </script>
+    let url = "Ajaxdorian/getPlaceByLocation";
+    let post = {
+        'location' : location,
+        'range' : range
+    }
+    
+
+    $.ajax({
+        url: url,
+        data: post,
+        type: 'POST',
+        success: function (response) {
+            $("#places").empty();
+            $("#places").append(response);
+            $('#places .places').sort(function(a, b) {
+                return $(a).data('distance') - $(b).data('distance');
+            }).appendTo('#places');
+            $(".places").removeClass("fade");
+            
+        },
+        error: function (err) {
+            console.dir(err);
+        }
+    });
+}
+
+</script>
+<?php if($this->session->flashdata('location_data')): ?>
+<script>
+$(document).ready(function(){
+  let location = '<?php echo $this->session->flashdata('location_data')->city; ?>';
+  let range = '<?php $this->session->flashdata('location_data')->rangekm; ?>';
+  getPlaceByUrl(location,range);
+});
+
+</script>
+<?php endif; ?>
