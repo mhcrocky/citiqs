@@ -265,7 +265,7 @@ console.log(location);
 <script>
 $(document).ready(function(){
   let location = '<?php echo $this->session->flashdata('location_data')->city; ?>';
-  let range = '<?php $this->session->flashdata('location_data')->rangekm; ?>';
+  let range = '<?php echo $this->session->flashdata('location_data')->rangekm; ?>';
   getPlaceByUrl(location,range);
 });
 
