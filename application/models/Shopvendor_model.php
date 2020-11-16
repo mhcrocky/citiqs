@@ -53,6 +53,18 @@
         public $pickupServiceFeeAmount;
         public $pickupMinimumOrderFee;
 
+        public $serviceFeePercentPos;
+        public $serviceFeeAmountPos;
+        public $minimumOrderFeePos;
+
+        public $deliveryServiceFeePercentPos;
+        public $deliveryServiceFeeAmountPos;
+        public $deliveryMinimumOrderFeePos;
+
+        public $pickupServiceFeePercentPos;
+        public $pickupServiceFeeAmountPos;
+        public $pickupMinimumOrderFeePos;
+
         public $bancontact;
         public $ideal;
         public $creditCard;
@@ -62,11 +74,6 @@
         public $payconiq;
         public $vaucher;
         public $pinMachine;
-
-
-
-
-
 
         private $table = 'tbl_shop_vendors';
 
@@ -160,6 +167,22 @@
             if (isset($data['pickupServiceFeeAmount']) && !Validate_data_helper::validateFloat($data['pickupServiceFeeAmount'])) return false;
             if (isset($data['pickupMinimumOrderFee']) && !Validate_data_helper::validateFloat($data['pickupMinimumOrderFee'])) return false;
 
+
+
+
+
+            if (isset($data['serviceFeePercentPos']) && !Validate_data_helper::validateString($data['serviceFeePercentPos'])) return false;
+            if (isset($data['serviceFeeAmountPos']) && !Validate_data_helper::validateFloat($data['serviceFeeAmountPos'])) return false;
+            if (isset($data['minimumOrderFeePos']) && !Validate_data_helper::validateFloat($data['minimumOrderFeePos'])) return false;
+
+            if (isset($data['deliveryServiceFeePercentPos']) && !Validate_data_helper::validateString($data['deliveryServiceFeePercentPos'])) return false;
+            if (isset($data['deliveryServiceFeeAmountPos']) && !Validate_data_helper::validateFloat($data['deliveryServiceFeeAmountPos'])) return false;
+            if (isset($data['deliveryMinimumOrderFeePos']) && !Validate_data_helper::validateFloat($data['deliveryMinimumOrderFeePos'])) return false;
+
+            if (isset($data['pickupServiceFeePercentPos']) && !Validate_data_helper::validateString($data['pickupServiceFeePercentPos'])) return false;
+            if (isset($data['pickupServiceFeeAmountPos']) && !Validate_data_helper::validateFloat($data['pickupServiceFeeAmountPos'])) return false;
+            if (isset($data['pickupMinimumOrderFeePos']) && !Validate_data_helper::validateFloat($data['pickupMinimumOrderFeePos'])) return false;
+
             return true;
         }
 
@@ -215,6 +238,15 @@
                     $this->table . '.pickupMinimumOrderFee',
                     $this->table . '.design',
                     $this->table . '.activatePos',
+                    $this->table . '.serviceFeePercentPos',
+                    $this->table . '.serviceFeeAmountPos',
+                    $this->table . '.minimumOrderFeePos',
+                    $this->table . '.deliveryServiceFeePercentPos',
+                    $this->table . '.deliveryServiceFeeAmountPos',
+                    $this->table . '.deliveryMinimumOrderFeePos',
+                    $this->table . '.pickupServiceFeePercentPos',
+                    $this->table . '.pickupServiceFeeAmountPos',
+                    $this->table . '.pickupMinimumOrderFeePos',
 
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
