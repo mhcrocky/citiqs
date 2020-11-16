@@ -343,5 +343,63 @@ $route['businessreport/get_timestamp_totals'] = 'Businessreport/get_timestamp_to
 $route['businessreport/sortedWidgets'] = 'Businessreport/sortedWidgets';
 $route['businessreport/sortWidgets'] = 'Businessreport/sortWidgets';
 
+$route['accounting/reports'] = 'AccountingReports/index';
+$route['visma/export/(:num)'] = 'Api/Visma/export_single_invoice/$1';
+$route['visma'] = 'Api/Visma/index';
+$route['visma/login'] = 'Api/Visma/login';
+$route['visma/config'] = 'Accounting/VismaSetting/index';
+$route['config_visma/app_settings'] = 'Accounting/VismaSetting/app_setting';
+
+$route['setting/visma/vat'] = 'Accounting/VismaAccountSetting/vat_rates';
+$route['setting/visma/vat/(:num)'] = 'Accounting/VismaAccountSetting/vat_rates_edit/$1';
+$route['setting/visma_vatrate/save'] = 'Accounting/VismaAccountSetting/save_visma_vat';
+$route['setting/visma_vatrate/update'] = 'Accounting/VismaAccountSetting/update_visma_vat';
+$route['setting/visma/vat_delete/(:num)'] = 'Accounting/VismaAccountSetting/delete_visma_vat/$1';
+
+$route['setting/visma/debitors'] = 'Accounting/VismaAccountSetting/debitors';
+$route['setting/visma/debitors/(:num)'] = 'Accounting/VismaAccountSetting/debitors_edit/$1';
+$route['setting/visma_debitor/save'] = 'Accounting/VismaAccountSetting/save_debitor';
+$route['setting/visma_debitor/update'] = 'Accounting/VismaAccountSetting/update_debitor';
+$route['setting/visma/debit_delete/(:num)'] = 'Accounting/VismaAccountSetting/delete_debitor/$1';
+
+
+$route['setting/visma/creditors'] = 'Accounting/VismaAccountSetting/creditors';
+$route['setting/visma/creditors/(:num)'] = 'Accounting/VismaAccountSetting/creditors_edit/$1';
+$route['setting/visma_credit/save'] = 'Accounting/VismaAccountSetting/save_credit';
+$route['setting/visma_credit/update'] = 'Accounting/VismaAccountSetting/update_credit';
+$route['setting/visma/credit_delete/(:num)'] = 'Accounting/VismaAccountSetting/delete_credit/$1';
+
+$route['setting/visma/service'] = 'Accounting/VismaAccountSetting/service';
+$route['setting/visma/service/(:num)'] = 'Accounting/VismaAccountSetting/service_edit/$1';
+$route['setting/visma_service/save'] = 'Accounting/VismaAccountSetting/save_service';
+$route['setting/visma_service/update'] = 'Accounting/VismaAccountSetting/update_service';
+$route['setting/visma/service_delete/(:num)'] = 'Accounting/VismaAccountSetting/delete_service/$1';
+
+// Exact
+$route['exact'] = 'Api/Exact/index';
+$route['exact/config'] = 'Accounting/ExactSetting/index';
+$route['config_exact/app_settings'] = 'Accounting/ExactSetting/app_setting';
+
+
+
+$route['setting/exact/vat'] = 'Accounting/ExactAccountSetting/vat_rates';
+$route['setting/exact/vat/(:num)'] = 'Accounting/ExactAccountSetting/vat_rates_edit/$1';
+$route['setting/exact_vatrate/save'] = 'Accounting/ExactAccountSetting/save_vat';
+$route['setting/exact_vatrate/update'] = 'Accounting/ExactAccountSetting/update_vat';
+$route['setting/exact/vat_delete/(:num)'] = 'Accounting/ExactAccountSetting/delete_vat/$1';
+
+$route['setting/exact/debitors'] = 'Accounting/ExactAccountSetting/debitors';
+$route['setting/exact/debitors/(:num)'] = 'Accounting/ExactAccountSetting/debitors_edit/$1';
+$route['setting/exact_debitor/save'] = 'Accounting/ExactAccountSetting/save_debitor';
+$route['setting/exact_debitor/update'] = 'Accounting/ExactAccountSetting/update_debitor';
+$route['setting/exact/debit_delete/(:num)'] = 'Accounting/ExactAccountSetting/delete_debitor/$1';
+
+
+$route['setting/exact/creditors'] = 'Accounting/ExactAccountSetting/creditors';
+$route['setting/exact/creditors/(:num)'] = 'Accounting/ExactAccountSetting/creditors_edit/$1';
+$route['setting/exact_credit/save'] = 'Accounting/ExactAccountSetting/save_credit';
+$route['setting/exact_credit/update'] = 'Accounting/ExactAccountSetting/update_credit';
+$route['setting/exact/credit_delete/(:num)'] = 'Accounting/ExactAccountSetting/delete_credit/$1';
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
