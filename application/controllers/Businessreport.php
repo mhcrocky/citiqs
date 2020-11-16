@@ -5,19 +5,20 @@ require APPPATH . '/libraries/BaseControllerWeb.php';
 
 class Businessreport extends BaseControllerWeb
 {
-
+	private $vendor_id;
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('businessreport_model');
 		$this->load->library('language', array('controller' => $this->router->class));
 		$this->isLoggedIn();
+		$this->vendor_id = $this->session->userdata("userId");
 	}
 
 	public function index()
 	{ 
 		$data['title'] = 'Business Reports';
-		$vendor_id = $this->session->userdata("userId");
+		$vendor_id = $this->vendor_id;
 		$this->global['pageTitle'] = 'TIQS Business Reports';
 		$data['day_total'] = $this->businessreport_model->get_day_totals($vendor_id);
 		$data['last_week_total'] = $this->businessreport_model->get_this_week_totals($vendor_id);
@@ -28,7 +29,7 @@ class Businessreport extends BaseControllerWeb
 	}
 
 	public function get_report(){
-		$vendor_id = $this->session->userdata("userId");//418
+		$vendor_id = $this->vendor_id;//418
 		$pickup = $this->businessreport_model->get_pickup_report($vendor_id);
 		$delivery = $this->businessreport_model->get_delivery_report($vendor_id);
 		$local = $this->businessreport_model->get_local_report($vendor_id);
@@ -40,7 +41,7 @@ class Businessreport extends BaseControllerWeb
 	}
 
 	public function get_timestamp_totals(){
-		$vendor_id = $this->session->userdata("userId");
+		$vendor_id = $this->vendor_id;
 		$min_date = $this->input->post('min');
 		$max_date = $this->input->post('max');
 		$totals = $this->businessreport_model->get_date_range_totals($vendor_id, $min_date, $max_date);
@@ -51,13 +52,13 @@ class Businessreport extends BaseControllerWeb
 	public function sortWidgets()
     {
     
-        $userId = $this->session->userdata("userId");
+        $userId = $this->vendor_id;
         $this->businessreport_model->sortWidgets($userId);  
     }
 
     public function sortedWidgets()
     {
-        $userId = $this->session->userdata("userId");
+        $userId = $this->vendor_id;
         echo json_encode($this->businessreport_model->sortedWidgets($userId));
 	}
 	
@@ -91,7 +92,7 @@ class Businessreport extends BaseControllerWeb
 		foreach($data as $key =>$val){
 			$total_price = $this->row_total('price',$val);
 			$total_quantity = $this->row_total('quantity',$val);
-			$total_AMOUNT = $this->row_total('AMOUNT',$val)+$val[0]['serviceFee'];
+			$total_AMOUNT = $this->row_total('AMOUNT',$val);
 			$total_EXVAT = $this->row_total('EXVAT',$val);
 			$total_VAT = $this->row_total('VAT',$val);
 			$total_EXVATSERVICE = $this->row_total('EXVATSERVICE',$val);
@@ -102,12 +103,13 @@ class Businessreport extends BaseControllerWeb
 				'order_date'=>$val[0]['order_date'],
 				'serviceFee'=>$val[0]['serviceFee'],
 				'serviceFeeTax'=>$val[0]['serviceFeeTax'],
+				'waiterTip'=>$val[0]['waiterTip'],
 				'EXVATSERVICE'=>$val[0]['EXVATSERVICE'],
 				'VATSERVICE'=>$val[0]['VATSERVICE'],
 				'service_type'=>$val[0]['service_type'],
 				'price'=>$total_price,
 				'quantity'=>$total_quantity,
-				'total_AMOUNT'=>($total_AMOUNT+$val[0]['serviceFee']),
+				'total_AMOUNT'=>($total_AMOUNT+$val[0]['serviceFee']+$val[0]['waiterTip']),
 				'AMOUNT'=>$total_AMOUNT,
 				'EXVAT'=>$total_EXVAT,
 				'VAT'=>$total_VAT,
