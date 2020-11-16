@@ -273,8 +273,8 @@
 
 
 
+						/>
 					</div>
-					<br/>
 					<div class="form-group mb-35">
 						<label for="serviceFeePercent">LOCAL SERVICE FEE PERCENTAGE</label>
 						<input
@@ -286,9 +286,16 @@
 							class="form-control"
 							style="border-radius: 50px"
 							value="<?php echo $vendor['serviceFeePercent']; ?>"
-							/>
+						/>
 					</div>
-					<br/>
+					<div class="form-group mb-35">
+						<label>POS LOCAL SERVICE FEE PERCENTAGE SAME</label>
+						<br style="display:initial"/>
+						<label class="radio-inline" for="serviceFeePercentPosYes">Yes</label>
+						<input type="radio" id="serviceFeePercentPosYes" name="vendor[serviceFeePercentPos]" value="1" <?php if ($vendor['serviceFeePercentPos'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="serviceFeePercentPosNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="serviceFeePercentPosNo" name="vendor[serviceFeePercentPos]" value="0" <?php if ($vendor['serviceFeePercentPos'] === '0') echo 'checked'; ?> />
+					</div>
 					<div class="form-group mb-35">
 						<label for="minimumOrderFee">LOCAL SERVICE FEE AMOUNT</label>
 						<input
@@ -302,7 +309,14 @@
 							value="<?php echo $vendor['minimumOrderFee']; ?>"
 							/>
 					</div>
-					<br/>
+					<div class="form-group mb-35">
+						<label>POS LOCAL SERVICE FEE AMOUNT SAME</label>
+						<br style="display:initial"/>
+						<label class="radio-inline" for="minimumOrderFeePosYes">Yes</label>
+						<input type="radio" id="minimumOrderFeePosYes" name="vendor[minimumOrderFeePos]" value="1" <?php if ($vendor['minimumOrderFeePos'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="minimumOrderFeePosNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="minimumOrderFeePosNo" name="vendor[minimumOrderFeePos]" value="0" <?php if ($vendor['minimumOrderFeePos'] === '0') echo 'checked'; ?> />
+					</div>
 					<div class="form-group mb-35">
 						<label for="serviceFeeAmount">LOCAL MAXIMUM SERVICE FEE AMOUNT</label>
 						<input
@@ -316,8 +330,14 @@
 							value="<?php echo $vendor['serviceFeeAmount']; ?>"
 							/>
 					</div>
-
-					<br/>
+					<div class="form-group mb-35">
+						<label>POS LOCAL MAXIMUM SERVICE FEE AMOUNT SAME</label>
+						<br style="display:initial"/>
+						<label class="radio-inline" for="serviceFeeAmountPosYes">Yes</label>
+						<input type="radio" id="serviceFeeAmountPosYes" name="vendor[serviceFeeAmountPos]" value="1" <?php if ($vendor['serviceFeeAmountPos'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="serviceFeeAmountPosNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="serviceFeeAmountPosNo" name="vendor[serviceFeeAmountPos]" value="0" <?php if ($vendor['serviceFeeAmountPos'] === '0') echo 'checked'; ?> />
+					</div>
 					<div class="form-group mb-35">
 						<label for="deliveryServiceFeePercent">DELIVERY SERVICE FEE PERCENTAGE</label>
 						<input
@@ -331,7 +351,14 @@
 							value="<?php echo $vendor['deliveryServiceFeePercent']; ?>"
 							/>
 					</div>
-					<br/>
+					<div class="form-group mb-35">
+						<label>POS DELIVERY SERVICE FEE PERCENTAGE SAME</label>
+						<br style="display:initial"/>
+						<label class="radio-inline" for="deliveryServiceFeePercentPosYes">Yes</label>
+						<input type="radio" id="deliveryServiceFeePercentPosYes" name="vendor[deliveryServiceFeePercentPos]" value="1" <?php if ($vendor['deliveryServiceFeePercentPos'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="deliveryServiceFeePercentPosNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="deliveryServiceFeePercentPosNo" name="vendor[deliveryServiceFeePercentPos]" value="0" <?php if ($vendor['deliveryServiceFeePercentPos'] === '0') echo 'checked'; ?> />
+					</div>
 					<div class="form-group mb-35">
 						<label for="deliveryMinimumOrderFee">DELIVERY SERVICE FEE AMOUNT</label>
 						<input
@@ -345,7 +372,14 @@
 							value="<?php echo $vendor['deliveryMinimumOrderFee']; ?>"
 							/>
 					</div>
-					<br/>
+					<div class="form-group mb-35">
+						<label>POS DELIVERY SERVICE FEE AMOUNT SAME</label>
+						<br style="display:initial"/>
+						<label class="radio-inline" for="deliveryMinimumOrderFeePosYes">Yes</label>
+						<input type="radio" id="deliveryMinimumOrderFeePosYes" name="vendor[deliveryMinimumOrderFeePos]" value="1" <?php if ($vendor['deliveryMinimumOrderFeePos'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="deliveryMinimumOrderFeePosNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="deliveryMinimumOrderFeePosNo" name="vendor[deliveryMinimumOrderFeePos]" value="0" <?php if ($vendor['deliveryMinimumOrderFeePos'] === '0') echo 'checked'; ?> />
+					</div>
 					<div class="form-group mb-35">
 						<label for="deliveryServiceFeeAmount">DELIVERY MAXIMUM SERVICE FEE AMOUNT</label>
 						<input
@@ -359,9 +393,14 @@
 							value="<?php echo $vendor['deliveryServiceFeeAmount']; ?>"
 							/>
 					</div>
-
-
-					<br/>
+					<div class="form-group mb-35">
+						<label>POS DELIVERY MAXIMUM SERVICE FEE AMOUNT SAME</label>
+						<br style="display:initial"/>
+						<label class="radio-inline" for="deliveryServiceFeeAmountPosYes">Yes</label>
+						<input type="radio" id="deliveryServiceFeeAmountPosYes" name="vendor[deliveryServiceFeeAmountPos]" value="1" <?php if ($vendor['deliveryServiceFeeAmountPos'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="deliveryServiceFeeAmountPosNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="deliveryServiceFeeAmountPosNo" name="vendor[deliveryServiceFeeAmountPos]" value="0" <?php if ($vendor['deliveryServiceFeeAmountPos'] === '0') echo 'checked'; ?> />
+					</div>
 					<div class="form-group mb-35">
 						<label for="pickupServiceFeePercent">PICKUP SERVICE FEE PERCENTAGE</label>
 						<input
@@ -375,7 +414,14 @@
 							value="<?php echo $vendor['pickupServiceFeePercent']; ?>"
 							/>
 					</div>
-					<br/>
+					<div class="form-group mb-35">
+						<label>POS PICKUP SERVICE FEE PERCENTAGE SAME</label>
+						<br style="display:initial"/>
+						<label class="radio-inline" for="pickupServiceFeePercentPosYes">Yes</label>
+						<input type="radio" id="pickupServiceFeePercentPosYes" name="vendor[pickupServiceFeePercentPos]" value="1" <?php if ($vendor['pickupServiceFeePercentPos'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="pickupServiceFeePercentPosNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="pickupServiceFeePercentPosNo" name="vendor[pickupServiceFeePercentPos]" value="0" <?php if ($vendor['pickupServiceFeePercentPos'] === '0') echo 'checked'; ?> />
+					</div>
 					<div class="form-group mb-35">
 						<label for="pickupMinimumOrderFee">PICKUP SERVICE FEE AMOUNT</label>
 						<input
@@ -389,7 +435,14 @@
 							value="<?php echo $vendor['pickupMinimumOrderFee']; ?>"
 							/>
 					</div>
-					<br/>
+					<div class="form-group mb-35">
+						<label>POS PICKUP SERVICE FEE AMOUNT SAME</label>
+						<br style="display:initial"/>
+						<label class="radio-inline" for="pickupMinimumOrderFeePosYes">Yes</label>
+						<input type="radio" id="pickupMinimumOrderFeePosYes" name="vendor[pickupMinimumOrderFeePos]" value="1" <?php if ($vendor['pickupMinimumOrderFeePos'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="pickupMinimumOrderFeePosNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="pickupMinimumOrderFeePosNo" name="vendor[pickupMinimumOrderFeePos]" value="0" <?php if ($vendor['pickupMinimumOrderFeePos'] === '0') echo 'checked'; ?> />
+					</div>
 					<div class="form-group mb-35">
 						<label for="pickupServiceFeeAmount">PICKUP MAXIMUM SERVICE FEE AMOUNT</label>
 						<input
@@ -403,7 +456,14 @@
 							value="<?php echo $vendor['pickupServiceFeeAmount']; ?>"
 							/>
 					</div>
-					<br/>
+					<div class="form-group mb-35">
+						<label>POS PICKUP MAXIMUM SERVICE FEE AMOUNT SAME</label>
+						<br style="display:initial"/>
+						<label class="radio-inline" for="pickupServiceFeeAmountPosYes">Yes</label>
+						<input type="radio" id="pickupServiceFeeAmountPosYes" name="vendor[pickupServiceFeeAmountPos]" value="1" <?php if ($vendor['pickupServiceFeeAmountPos'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="pickupServiceFeeAmountPosNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="pickupServiceFeeAmountPosNo" name="vendor[pickupServiceFeeAmountPos]" value="0" <?php if ($vendor['pickupServiceFeeAmountPos'] === '0') echo 'checked'; ?> />
+					</div>
 					<div class="form-group mb-35">
 						<label for="printTimeConstraint">PRINT ORDERS CREATED BEFORE
 						<input
