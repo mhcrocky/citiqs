@@ -62,7 +62,7 @@ class Visma extends CI_Controller
 				if (!empty($setting)) {
 					$this->visma_model->update_access_data(['visma_access_token' => $_SESSION['access_token'], 'visma_refresh_token' => $_SESSION['refresh_token'], 'user_ID' => $this->user_ID]);
 				} else {
-					$this->visma_model->insert_access_data(['visma_access_token' => $_SESSION['access_token'], 'visma_refresh_token' => $_SESSION['refresh_token'], 'user_ID' => $this->user_ID]);
+					$this->visma_model->insert_access_data(['visma_access_token' => $_SESSION['access_token'], 'visma_refresh_token' => $_SESSION['refresh_token'], 'user_ID' => $this->user_ID,'visma_option'=>1]);
 				}
 				header('Location: ' . base_url() . 'visma/config');
 			} else {

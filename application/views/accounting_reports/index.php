@@ -195,7 +195,7 @@
 			pageLength: 50,
 
 			"ajax": {
-				url: '<?php echo base_url("businessreport/get_report"); ?>',
+				url: '<?php echo base_url("accountingreport/get_report"); ?>',
 				cache: true,
 			},
 			rowId: function(a) {

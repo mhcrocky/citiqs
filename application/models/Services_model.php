@@ -32,6 +32,7 @@ class Services_model extends CI_Model {
 
     public function delete_row($id, $user_ID) {
         $this->db->where('id', $id);
+        $this->db->where('user_ID', $user_ID);
         $this->db->delete("tbl_export_services");
     }
 
