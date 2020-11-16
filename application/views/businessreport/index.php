@@ -312,7 +312,6 @@ td.details-control {
             
             for(var i = 0; i < sort.length; i++){
                 if ($(this).data('position') == sort[i]){
-                  console.log()
                     $(this).attr( "data-sort", i );
                 }
 
