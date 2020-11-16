@@ -31,8 +31,8 @@ td.details-control {
 		background: url("<?php echo base_url('assets/images/datatables/details_close.png') ?>") no-repeat center center;
 	}
 </style>
-<div class="main-content-inner">
-    <div class="sales-report-area mt-5 mb-5">
+<div style="visibility: hidden;" class="main-content-inner ui-sortable">
+    <div class="sales-report-area mt-5 mb-5 row-sort ui-sortable" data-rowposition="1" data-rowsort="1">
                 <div id="sortable" style="visibility: hidden;" class="row ui-sortable">
                     <div class="col-md-3 ui-sortable mb-3" data-position="1" data-sort="1">
                             <div style="height:160px;" class="single-report mb-xs-30"><div style="min-height:500px;position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
@@ -182,7 +182,7 @@ td.details-control {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 ui-sortable mb-3" data-position="1" data-sort="1">
+                        <div class="col-md-3 ui-sortable mb-3" data-position="9" data-sort="1">
                             <div style="height:160px;" class="single-report mb-xs-30"><div style="min-height:500px;position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
                                 <div style="background: #0066ff;" class="icon">&nbsp</div>
@@ -197,7 +197,7 @@ td.details-control {
                                 </div>
                             </div>
                         </div>
-                    <div  class="col-md-3 ui-sortable mb-3" data-position="2" data-sort="1"> 
+                    <div  class="col-md-3 ui-sortable mb-3" data-position="10" data-sort="1"> 
                             <div style="height:160px;" class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
                                 <div style="background:  #009933;" class="icon">&nbsp</div>
@@ -212,7 +212,7 @@ td.details-control {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 ui-sortable mb-3" data-position="3" data-sort="1">
+                        <div class="col-md-3 ui-sortable mb-3" data-position="11" data-sort="1">
                             <div  style="height:160px;"  class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
                                 <div style="background: #00ff55;" class="icon">&nbsp</div>
@@ -227,7 +227,7 @@ td.details-control {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 ui-sortable mb-3" data-position="4" data-sort="1">
+                        <div class="col-md-3 ui-sortable mb-3" data-position="12" data-sort="1">
                             <div  style="height:160px;"  class="single-report"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
                                     <div style="background: #ffc34d;" class="icon">&nbsp</div>
@@ -247,7 +247,7 @@ td.details-control {
                 </div>
                 
 
-
+<div style="border: 4px solid #763568;padding:25px;" class="w-100 mt-3 row-sort ui-sortable" data-rowposition="2" data-rowsort="1">
 <div class="w-100 mt-3 mb-3 mx-auto">
 
   <div class="float-right text-center">
@@ -278,9 +278,11 @@ td.details-control {
             <th></th>
             <th></th>
             <th></th>
+            <th></th>
         </tr>
     </tfoot>
   </table>
+</div>
 </div>
 </div>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -299,28 +301,46 @@ td.details-control {
             dataType: "JSON",
             success: function(data){
                 sort = data['sort'];
+                row_sort = data['row_sort'];
             },
             async:false
         });
         sort = sort.split(',').reverse();
+        row_sort = row_sort.split(',').reverse();
         
         $("div[data-position]").each(function(index,value){
             
             for(var i = 0; i < sort.length; i++){
                 if ($(this).data('position') == sort[i]){
-                    $(this).attr( "data-sort", i )
+                  console.log()
+                    $(this).attr( "data-sort", i );
                 }
 
             }
             
         });
+        $(".row-sort").each(function(index,value){
+            for(var i = 0; i < row_sort.length; i++){
+                if ($(this).data('rowposition') == row_sort[i]){
+                    $(this).attr( "data-rowsort", i );
+                }
+            }
+            
+        });
+
 
         setTimeout(function(){ 
             $('#sortable .col-md-3').sort(function(a, b) {
                 return $(b).data('sort') - $(a).data('sort');
             }).appendTo('#sortable');
         }, 0);
-        
+
+        setTimeout(function(){ 
+            $('.main-content-inner .row-sort').sort(function(a, b) {
+                return $(b).data('rowsort') - $(a).data('rowsort');
+            }).appendTo('.main-content-inner');
+        }, 0);
+      $('.main-content-inner').css('visibility', 'visible');
       $('#sortable').css('visibility', 'visible');
       var getTodayDate = new Date();
       var month = getTodayDate.getMonth()+1;
@@ -356,24 +376,12 @@ td.details-control {
         },
         footerCallback: function( tfoot, data, start, end, display ) {
            var api = this.api(), data;
+
+          //Totals For Current Page
+
           let pageAmountTotalData = api.column( 2, { page: 'current'}  ).cache('search');
           let pageAmountTotal = pageAmountTotalData.length ? 
           pageAmountTotalData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
-          let pageAmountData = api.column( 9, { page: 'current'}  ).cache('search');
-          let pageAmount = pageAmountData.length ? 
-          pageAmountData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
-          let pageExvatData = api.column( 10, { page: 'current'} ).cache('search');
-          let pageExvatTotal = pageExvatData.length ? 
-            pageExvatData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
-          let pageVatData = api.column( 11, { page: 'current'} ).cache('search');
-          let pageVatTotal = pageVatData.length ? 
-            pageVatData.reduce( function (a, b) {
               return parseFloat(a) + parseFloat(b);
             }) : 0;
 
@@ -382,6 +390,7 @@ td.details-control {
           pageServiceFeeData.reduce( function (a, b) {
               return parseFloat(a) + parseFloat(b);
             }) : 0;
+
           let pageVatServiceData = api.column( 7,  { page: 'current'} ).cache('search');
           let pageVatServiceTotal = pageVatServiceData.length ? 
           pageVatServiceData.reduce( function (a, b) {
@@ -394,22 +403,68 @@ td.details-control {
               return parseFloat(a) + parseFloat(b);
             }) : 0;
 
+          let pageWaiterTipData = api.column( 9, { page: 'current'}  ).cache('search');
+          let pageWaiterTipTotal = pageWaiterTipData.length ? 
+          pageWaiterTipData.reduce( function (a, b) {
+              return parseFloat(a) + parseFloat(b);
+            }) : 0;
+
+          let pageAmountData = api.column( 10, { page: 'current'}  ).cache('search');
+          let pageAmount = pageAmountData.length ? 
+          pageAmountData.reduce( function (a, b) {
+              return parseFloat(a) + parseFloat(b);
+            }) : 0;
+          let pageExvatData = api.column( 11, { page: 'current'} ).cache('search');
+          let pageExvatTotal = pageExvatData.length ? 
+            pageExvatData.reduce( function (a, b) {
+              return parseFloat(a) + parseFloat(b);
+            }) : 0;
+          let pageVatData = api.column( 12, { page: 'current'} ).cache('search');
+          let pageVatTotal = pageVatData.length ? 
+            pageVatData.reduce( function (a, b) {
+              return parseFloat(a) + parseFloat(b);
+            }) : 0;
+
+
+          //Totals For All Pages
+
           let amountTotalData = api.column( 2,{ search: 'applied' } ).cache('search');
           let amountTotal = amountTotalData.length ? 
           amountTotalData.reduce( function (a, b) {
               return parseFloat(a) + parseFloat(b);
             }) : 0;
-          let amountData = api.column( 9,{ search: 'applied' } ).cache('search');
+
+          let vatServiceData = api.column( 7,  { search: 'applied' } ).cache('search');
+          let vatServiceTotal = vatServiceData.length ? 
+          vatServiceData.reduce( function (a, b) {
+              return parseFloat(a) + parseFloat(b);
+            }) : 0;
+
+          let exvatServiceData = api.column( 8, { search: 'applied' }).cache('search');
+          let exvatServiceTotal = exvatServiceData.length ? 
+          exvatServiceData.reduce( function (a, b) {
+              return parseFloat(a) + parseFloat(b);
+            }) : 0;
+
+          let waiterTipData = api.column( 9,{ search: 'applied' } ).cache('search');
+          let waiterTipTotal = waiterTipData.length ? 
+          waiterTipData.reduce( function (a, b) {
+              return parseFloat(a) + parseFloat(b);
+            }) : 0;
+
+          let amountData = api.column( 10,{ search: 'applied' } ).cache('search');
           let amount = amountData.length ? 
           amountData.reduce( function (a, b) {
               return parseFloat(a) + parseFloat(b);
             }) : 0;
-          let exvatData = api.column( 10,{ search: 'applied' } ).cache('search');
+
+          let exvatData = api.column( 11,{ search: 'applied' } ).cache('search');
           let exvatTotal = exvatData.length ? 
             exvatData.reduce( function (a, b) {
               return parseFloat(a) + parseFloat(b);
             }) : 0;
-          let vatData = api.column( 11, { search: 'applied' }).cache('search');
+
+          let vatData = api.column( 12, { search: 'applied' }).cache('search');
           let vatTotal = vatData.length ? 
             vatData.reduce( function (a, b) {
               return parseFloat(a) + parseFloat(b);
@@ -421,16 +476,6 @@ td.details-control {
               return parseFloat(a) + parseFloat(b);
             }) : 0;
 
-          let vatServiceData = api.column( 7,  { search: 'applied' } ).cache('search');
-          let vatServiceTotal = vatServiceData.length ? 
-          vatServiceData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
-          let exvatServiceData = api.column( 8, { search: 'applied' }).cache('search');
-          let exvatServiceTotal = exvatServiceData.length ? 
-          exvatServiceData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
            $(tfoot).find('th').eq(1).html(pageAmountTotal.toFixed(2)+'('+amountTotal.toFixed(2)+')');
            $(tfoot).find('th').eq(2).html('-');
            $(tfoot).find('th').eq(3).html('-');
@@ -438,9 +483,10 @@ td.details-control {
            $(tfoot).find('th').eq(5).html('-');
            $(tfoot).find('th').eq(6).html(pageVatServiceTotal.toFixed(2)+'('+vatServiceTotal.toFixed(2)+')');
            $(tfoot).find('th').eq(7).html(pageExvatServiceTotal.toFixed(2)+'('+exvatServiceTotal.toFixed(2)+')');
-           $(tfoot).find('th').eq(8).html(pageAmount.toFixed(2)+'('+amount.toFixed(2)+')');
-           $(tfoot).find('th').eq(9).html(pageExvatTotal.toFixed(2)+'('+exvatTotal.toFixed(2)+')');
-           $(tfoot).find('th').eq(10).html(pageVatTotal.toFixed(2)+'('+vatTotal.toFixed(2)+')');
+           $(tfoot).find('th').eq(8).html(pageWaiterTipTotal.toFixed(2)+'('+waiterTipTotal.toFixed(2)+')');
+           $(tfoot).find('th').eq(9).html(pageAmount.toFixed(2)+'('+amount.toFixed(2)+')');
+           $(tfoot).find('th').eq(10).html(pageExvatTotal.toFixed(2)+'('+exvatTotal.toFixed(2)+')');
+           $(tfoot).find('th').eq(11).html(pageVatTotal.toFixed(2)+'('+vatTotal.toFixed(2)+')');
         },
         rowId: function(a) {
           return 'row_id_' + a.order_id;
@@ -508,6 +554,14 @@ td.details-control {
           "render": function (data, type, row) {
             let exvatService = parseFloat(data.EXVATSERVICE);
             return exvatService.toFixed(2);
+          }
+        },
+        {
+          title: 'Waiter Tip',
+          data: null,
+          "render": function (data, type, row) {
+            let waiterTip = parseFloat(data.waiterTip);
+            return waiterTip.toFixed(2);
           }
         },
         {
@@ -620,7 +674,7 @@ function format(d) {
           var date = full_timestamp.split(" - ");
           var min = new Date(date[0]);
           var max = new Date(date[1]);
-          var startDate = new Date(data[12]);
+          var startDate = new Date(data[13]);
           if (min == '' && max == '') { min = todayDate; }
           if (min == '' && startDate <= max) { return true;}
           if(max == '' && startDate >= min) {return true;}
@@ -677,7 +731,25 @@ $(function () {
                 }, 0);
             }
         });
-    });
+});
+
+$(function () {
+  $('.main-content-inner').sortable({
+    connectWith: ".main-content-inner",
+    items: ".row-sort",
+    update: function (event, ui) {
+      var myTable = $(this).index();
+      var positions = [];
+      $("div[data-rowposition]").each(function(index,value){
+        var data = $(this).data('rowposition');
+        positions.push(data);
+      });
+
+      positions = positions.toString();
+      $.post('<?php echo base_url(); ?>businessreport/sortWidgets', {row_sort: positions});
+      }
+  });
+});
 
     function round_up(val){
       val = parseFloat(val);
