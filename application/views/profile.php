@@ -24,7 +24,7 @@
 										maxlength="128"
 										role="textbox"
 										autocomplete="off"
-										tabindex="-1"							
+										tabindex="-1"
 									/>
 								</div>
 								<div class="virtual-keyboard-hook" data-target-id="fname" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
@@ -244,11 +244,15 @@
 			<a href="<?php echo base_url() . 'viewdesign'; ?>">
 				Design
 			</a>
+			<h2>Visma Accounting</h2>
+			<a href="<?php echo base_url() . 'visma/config'; ?>">
+				Visma
+			</a>
 			<div class="background-blue timeline-content">
 				<!-- <p>Add driver mobile number (starting with country code with zero) for sending sms.</p>
 				<p>Set the number of minutes when the message will be sent to driver after the order status is changed in status "DONE"</p> -->
 				<!-- <p>Add terms and conditions</p> -->
-			
+
 				<form method="post" action="<?php echo base_url() ?>profile/updateVendorData/<?php echo $vendor['id']; ?>">
 					<input type="number" name="vendorId" value="<?php echo $user->id ?>" readonly required hidden />
 					<div class="form-group mb-35">
@@ -605,7 +609,7 @@
 										}
 									?>
 									/>
-								
+
 							</label>
 						<?php } ?>
 					</div>
@@ -683,7 +687,7 @@
 							step="1"
 							style="border-radius: 50px; text-align: center"
 							value="<?php echo $vendor['minBusyTime']; ?>"
-							/>							
+							/>
 						</label>
 						<label for="maxBusyTime">&nbsp;add minutes for busy&nbsp;
 						<input
@@ -716,7 +720,7 @@
 							step="1"
 							style="border-radius: 50px; text-align: center"
 							value="<?php echo $vendor['deliveryAirDistance']; ?>"
-							/>							
+							/>
 						</label>
 					</div>
 					<!-- <h4>
@@ -739,9 +743,9 @@
 							style="border-radius: 50px; text-align: center"
 							value="<?php echo ($vendor['cutTime']) ? $vendor['cutTime'] : ''; ?>"
 							step="60"
-							/>							
+							/>
 						</label>
-					</div>										
+					</div>
 
 					<h4>ACTIVATE POS</h4>
 					<div class="form-group mb-35">
@@ -750,7 +754,7 @@
 						<label class="radio-inline" for="activatePosNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="activatePosNo" name="vendor[activatePos]" value="0" <?php if ($vendor['activatePos'] === '0') echo 'checked'; ?> />
 					</div>
-					
+
 					<br/>
 					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />
@@ -896,7 +900,7 @@
 																<i class="fa fa-times"></i>
 															</span>
 															<?php
-														}														
+														}
 													}
 												?>
 											</div>

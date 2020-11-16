@@ -46,7 +46,7 @@ switch (strtolower($_SERVER['HTTP_HOST']))
     case 'localhost':
         $base  = "http://".$_SERVER['HTTP_HOST'];
         break;
-    
+
     case '192.168.219.101':
         $base  = "http://".$_SERVER['HTTP_HOST'];
         break;
