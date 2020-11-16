@@ -97,12 +97,19 @@ a:active {
 	body {
 		background-color: #fbd19a;
 	}
+
+	.card-img-top{
+		object-fit: cover;
+	}
+
+
+
 </style>
 
 <main role="main" style="margin-bottom: -30px" align="center">
 	<section style="background-color:#fbd19a; " align="center" >
 		<div style="background-color:#fbd19a;" align="center">
-			<h1 style="font-family: campton-bold; padding: 50px 10px 10px 10px; margin-top: 30px;color:#27253b"><?php echo $this->language->Line("PLACES-A00002",'TIQS PICKUP & DELIVERY');?></h1>
+			<h1 style="font-family: caption-bold; padding: 50px 10px 10px 10px; margin-top: 30px;color:#27253b"><?php echo $this->language->Line("PLACES-A00002",'TIQS PICKUP & DELIVERY');?></h1>
 <!--			<h1 style="font-family: caption-bold; padding: 50px 10px 10px 10px; color:#ffffff">PICK UP & DELIVERY</h1>-->
 			<p style="font-family: campton-light;color: #27253b; margin-bottom: 0px"><?php echo $this->language->Line("PLACES-0020",'One stop shop to find everything at your favorite place');?></p>
 
@@ -224,5 +231,43 @@ $('#myRange').mousemove(function(){
 
 }).call(this);
 
+function getPlaceByUrl(location, range) {
+console.log(location);
 
-    </script>
+    let url = "Ajaxdorian/getPlaceByLocation";
+    let post = {
+        'location' : location,
+        'range' : range
+    }
+    
+
+    $.ajax({
+        url: url,
+        data: post,
+        type: 'POST',
+        success: function (response) {
+            $("#places").empty();
+            $("#places").append(response);
+            $('#places .places').sort(function(a, b) {
+                return $(a).data('distance') - $(b).data('distance');
+            }).appendTo('#places');
+            $(".places").removeClass("fade");
+            
+        },
+        error: function (err) {
+            console.dir(err);
+        }
+    });
+}
+
+</script>
+<?php if($this->session->flashdata('location_data')): ?>
+<script>
+$(document).ready(function(){
+  let location = '<?php echo $this->session->flashdata('location_data')->city; ?>';
+  let range = '<?php echo $this->session->flashdata('location_data')->rangekm; ?>';
+  getPlaceByUrl(location,range);
+});
+
+</script>
+<?php endif; ?>

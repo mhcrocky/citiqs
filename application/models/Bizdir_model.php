@@ -41,6 +41,14 @@ class Bizdir_model extends CI_Model {
 		
 	}
 
+	public function get_bizdir_by_defaultkey($defaultkey)
+	{
+		$this->db->where('defaultkey', $defaultkey);
+		$query = $this->db->get('tbl_default_places');
+		return $query->row();
+		
+	}
+
 	public function set_bizdir()
 	{
 		$data = array(

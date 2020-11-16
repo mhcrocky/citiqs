@@ -39,7 +39,7 @@
         ?>
 
         <div class="row d-flex justify-content-center" id="checkout">
-            <div class="col-sm-12 col-lg-9 left-side">
+            <div class="col-sm-12 col-lg-10 col-lg-offset-1">
                 <?php if (isset($workingTime)) { ?>
                     <div class="checkout-title">
                         <span><?php echo $spot['spotType']; ?>&nbsp;<?php echo $this->language->line("PAYMENT-C0010",'period and time');?> </span>
@@ -156,7 +156,7 @@
                         <?php if ($pos === 0) { ?>
                         href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spotId . '&' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                         <?php } elseif ($pos === 1) { ?>
-                            href="<?php echo base_url() . 'pos?spotid=' . $spotId; ?>"
+                            href="<?php echo base_url() . 'pos?spotid=' . $spotId . '&' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                         <?php } ?>
                         style="background-color: #948b6f" class="button"
                         >
@@ -220,9 +220,7 @@
                 <i
                     class="fa fa-info-circle" aria-hidden="true"
                     data-toggle="pickupPopover"
-
-					data-content="<?php echo $this->language->line("DELIVERY-A0010",'We will reset your order because the selected products may be not available in pick-up option or can be differently priced.');?>
-"
+					data-content="<?php echo $this->language->line("DELIVERY-A0010",'We will reset your order because the selected products may be not available in pick-up option or can be differently priced.');?>"
                 >
                 </i>
             </div>

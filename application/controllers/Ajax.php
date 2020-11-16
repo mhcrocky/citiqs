@@ -598,14 +598,20 @@ class Ajax extends CI_Controller
 
     public function getAddonsList(): void
     {
-        if (!$this->input->is_ajax_request()) return;
+        #if (!$this->input->is_ajax_request()) return;
 
         $addons  = $this->shopproductex_model->getProdctesByMainType(intval($_SESSION['userId']));
         $addonsList = '';
         if (!empty($addons)) {
             foreach ($addons as $productId => $product) {
                 $product = reset($product);
-                foreach($product['productDetails'] as $details) {
+                foreach($product['productDetails'] as $details) {                    
+                    $productUpdateCycle = intval($details['productUpdateCycle']);
+                    $chekIsLast = $this
+                                    ->shopproductex_model
+                                        ->setProperty('productId', $productId)
+                                        ->isLastUpdate($productUpdateCycle);
+                    if (!$chekIsLast) continue;
                     $addonsList .=  '<div>';
                     $addonsList .=      '<label class="checkbox-inline">';
                     $addonsList .=          $details['name'] . ' (' . $details['productType']. '):&nbsp;&nbsp;';
@@ -653,40 +659,20 @@ class Ajax extends CI_Controller
         if (!$this->input->is_ajax_request()) return;
 
         $post = Utility_helper::sanitizePost();
+        $response = '0';
 
-        if (!empty($post['data'])) {
-            if (!$this->prepareOrderData($post)) {
-                echo '0';
-                return;
-            }
-            $orderDataRandomKey = trim(Utility_helper::getAndUnsetValue($post, 'orderDataRandomKey'));
-            if ($orderDataRandomKey) {
-                $this
-                    ->shopsession_model
-                        ->setProperty('randomKey', $orderDataRandomKey)
-                        ->updateSessionData($post);
-            } else {
-                $this->shopsession_model->insertSessionData($post);
-            }
+        if ($this->prepareOrderData($post)) {
+            $this->insertSession($post, $response);
+            $this->savePosOrder($post, $response);
         }
 
-        if ($this->shopsession_model->id && $this->shopsession_model->randomKey) {
-            if ($post['pos'] === '1') {
-                $post['posOrder']['sessionId'] = $this->shopsession_model->id;
-                $post['posOrder']['saveName'] = '(' . date('Y-m-d H:i:s') . ') ' . $post['posOrder']['saveName'];
-                $managePosOrder = $this->shopposorder_model->setObjectFromArray($post['posOrder'])->managePosOrder();
-                echo $managePosOrder ? $this->shopsession_model->randomKey : '0';
-            } else {
-                echo $this->shopsession_model->randomKey;
-            }            
-        } else {
-            echo '0';
-        }
-
+        echo $response;
     }
 
     private function prepareOrderData(array &$post): bool
     {
+        if (empty($post['data'])) return false;
+
         $post['makeOrder'] = [];
         $string = 'qwertzuioplkjhgfdsamnbvcxy';
         $count = 0;
@@ -698,6 +684,37 @@ class Ajax extends CI_Controller
         };
         unset($post['data']);
         return true;
+    }
+
+    private function insertSession(array $post, string &$response): void
+    {
+        $orderDataRandomKey = trim(Utility_helper::getAndUnsetValue($post, 'orderDataRandomKey'));
+        if ($orderDataRandomKey) {
+            $this
+                ->shopsession_model
+                    ->setProperty('randomKey', $orderDataRandomKey)
+                    ->updateSessionData($post);
+        } else {
+            $this->shopsession_model->insertSessionData($post);
+        }
+
+        if ($this->shopsession_model->id && $this->shopsession_model->randomKey) {
+            $response = $this->shopsession_model->randomKey;
+        }
+    }
+
+    private function savePosOrder(array $post, string &$response): void
+    {
+        if ($post['pos'] === '1' && !empty($post['posOrder']) && $response !== '0') {
+            // save pos order
+            $post['posOrder']['sessionId'] = $this->shopsession_model->id;
+            $post['posOrder']['saveName'] = '(' . date('Y-m-d H:i:s') . ') ' . $post['posOrder']['saveName'];
+            $managePosOrder = $this->shopposorder_model->setObjectFromArray($post['posOrder'])->managePosOrder();
+            if (!$managePosOrder) {
+                $response = '0';
+            }
+        }
+        return;
     }
 
     private function checkRemarkLength(array $data): bool

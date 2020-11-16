@@ -3,7 +3,7 @@
 		<div class="row" style="margin-bottom:20px">
 			<div class="col-lg-4 col-12 form-inline">
 				<label for='selectSpot'>Select POS spot:&nbsp;&nbsp;</label>
-				<select onchange="redirectToNewLocation(this.value)"class="form-control">
+				<select onchange="redirectToNewLocation(this.value)" class="form-control">
 					<option value="">Select</option>
 					<?php foreach ($spots as $spot) { ?>
 						<?php if ($spot['spotActive'] !== '1') continue; ?>
@@ -19,7 +19,7 @@
 			<?php if ($spotPosOrders) { ?>
 				<div class="col-lg-5 col-12 form-inline">
 					<label for='selectSpot'>Select holded order:&nbsp;&nbsp;</label>
-					<select onchange="redirectToNewLocation(this.value)"class="form-control">
+					<select onchange="redirectToNewLocation(this.value)" class="form-control">
 						<option value="">Select</option>
 						<?php foreach ($spotPosOrders as $order) { ?>
 							<option
@@ -37,8 +37,8 @@
 	
 	<?php if (isset($mainProducts)) { ?>
 		<div class='pos-template'>
-			<div class="container container-large pos-container">
-				<div class="row d-flex">
+			<div style="margin:0px 30px 0px 20px">
+				<div class="row">
 					<div class="col-lg-8">
 						<div class="pos_categories" style="margin-bottom: 10px">
 							<div class="pos_categories__grid">
@@ -136,7 +136,7 @@
 						<!-- end pos main-->
 						<div class="pos_categories__footer">
 							<a href="javascript:void(0)" class='pos_categories__button pos_categories__button--secondary' onclick="cancelPosOrder('<?php echo $orderDataRandomKey; ?>')">Cancel Order</a>
-							<a href="javascript:void(0)" class='pos_categories__button pos_categories__button--primary' data-toggle="modal" data-target="#holdOrder">Hold Order</a>
+							<a href="javascript:void(0)" class='pos_categories__button pos_categories__button--primary' data-toggle="modal" data-target="#holdOrder"><?php echo $orderDataRandomKey ? 'Update' : 'Save'; ?>&nbsp;Order</a>
 							<a href="<?php echo base_url() . 'pos?spotid=' . $spotId; ?>" class='pos_categories__button pos_categories__button--third' onclick="cancelPosOrder()">New order</a>
 						</div>
 						<!-- end pos footer -->
@@ -145,9 +145,17 @@
 						<div class="pos-sidebar">
 							<div class="pos-checkout">
 								<div class="pos-checkout__header">
-									<h3>Checkout</h3>
-									<div class="pos-checkout-row pos-checkout-row--top" id="modal__checkout__list">
-										<?php echo $checkoutList; ?>
+									<h3>
+										Checkout
+										<?php
+											if (!empty($posOrderName)) { 
+												$posOrderName = trim(substr($posOrderName, (strpos($posOrderName, ')') + 1)));
+											 	echo '"' . $posOrderName . '"';
+											}
+										?>
+									</h3>
+									<div class="pos-checkout-row pos-checkout-row--top pos-checkout-list" id="modal__checkout__list">
+										<?php if (isset($checkoutList)) echo $checkoutList; ?>
 									</div>
 									<!-- end checkout row -->
 								</div>
@@ -177,15 +185,18 @@
 				<label for="codeId" class="">Save order</label>
 				<input
 					type="text"
-					id="saveOrder"
+					id="posOrderName"
 					class="form-control payOrderInputFields"
+					<?php if (!empty($posOrderName)) { ?>
+					value="<?php echo $posOrderName; ?>"
+					<?php }  ?>
 				/>
-				<div class="virtual-keyboard-hook" data-target-id="saveOrder" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
+				<div class="virtual-keyboard-hook" data-target-id="posOrderName" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
 				<br/>
 				<button
 					class="btn btn-success btn-lg"
 					style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
-					onclick="holdOrder('<?php echo $spotId; ?>', 'saveOrder')"
+					onclick="holdOrder('<?php echo $spotId; ?>', 'posOrderName')"
 				>
 					<i class="fa fa-check-circle" aria-hidden="true"></i>
 				</button>

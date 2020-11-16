@@ -74,4 +74,11 @@
             $query = 'UPDATE ' . $this->table . ' SET productExtendedId = ' . $newExtendedId . ' WHERE productExtendedId = ' . $oldExtendedId . ';';
             $this->db->query($query);
         }
+
+        public function deleteAddon(): bool
+        {
+
+            $query = 'DELETE FROM ' . $this->table . ' WHERE addonProductId = ' . $this->addonProductId . ';';
+            return $this->db->query($query);
+        }
     }

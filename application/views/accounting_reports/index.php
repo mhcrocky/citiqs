@@ -29,107 +29,6 @@
 </style>
 <div class="main-content-inner">
 	<div class="sales-report-area mt-5 mb-5">
-		<!-- <div class="row">
-			<div class="col-md-3">
-				<div style="height:160px;" class="single-report mb-xs-30">
-					<div style="min-height:500px;position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor">
-						<div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-							<div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-						</div>
-						<div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-							<div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-						</div>
-					</div>
-					<div class="s-report-inner pr--20 pt--30 mb-3">
-						<div style="background: #0066ff;" class="icon"><i class="fa fa-eur"></i></div>
-						<div class="s-report-title d-flex justify-content-between">
-							<h4 class="header-title mb-0">Total</h4>
-							<p>TODAY</p>
-						</div>
-						<div class="d-flex justify-content-between pb-2">
-							<h2 class="order_today"></h2>
-							<span></span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div style="height:160px;" class="single-report mb-xs-30">
-					<div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor">
-						<div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-							<div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-						</div>
-						<div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-							<div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-						</div>
-					</div>
-					<div class="s-report-inner pr--20 pt--30 mb-3">
-						<div style="background:  #009933;" class="icon"><i class="fa fa-eur"></i></div>
-						<div class="s-report-title d-flex justify-content-between">
-							<h4 class="header-title mb-0">Local</h4>
-							<p>TODAY</p>
-						</div>
-						<div class="d-flex justify-content-between pb-2">
-							<h2>€ <?php echo intval($local_total * 100) / 100; ?></h2>
-							<span></span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div style="height:160px;" class="single-report mb-xs-30">
-					<div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor">
-						<div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-							<div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-						</div>
-						<div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-							<div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-						</div>
-					</div>
-					<div class="s-report-inner pr--20 pt--30 mb-3">
-						<div style="background: #00ff55;" class="icon"><i class="fa fa-eur"></i></div>
-						<div class="s-report-title d-flex justify-content-between">
-							<h4 class="header-title mb-0">Delivery</h4>
-							<p>TODAY</p>
-						</div>
-						<div class="d-flex justify-content-between pb-2">
-							<h2>€ <?php echo intval($delivery_total * 100) / 100; ?></h2>
-							<span></span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div style="height:160px;" class="single-report">
-					<div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor">
-						<div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-							<div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-						</div>
-						<div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-							<div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-						</div>
-					</div>
-					<div class="s-report-inner pr--20 pt--30 mb-3">
-						<div style="background: #ffc34d;" class="icon"><i class="fa fa-eur"></i></div>
-						<div class="s-report-title d-flex justify-content-between">
-							<h4 class="header-title mb-0">Pick Up</h4>
-							<p>TODAY</p>
-						</div>
-						<div class="d-flex justify-content-between pb-2">
-							<h2>€ <?php echo intval($pickup_total * 100) / 100; ?></h2>
-							<span> </span>
-						</div>
-					</div>
-					<br>
-					<br>
-					<br>
-				</div>
-			</div>
-		</div>
-	</div> -->
-
-
-
 	<div class="w-100 mt-3 mb-3 mx-auto">
 
 		<div class="float-right text-center">
@@ -195,7 +94,7 @@
 			pageLength: 50,
 
 			"ajax": {
-				url: '<?php echo base_url("businessreport/get_report"); ?>',
+				url: '<?php echo base_url("accountingreport2/get_report"); ?>',
 				cache: true,
 			},
 			rowId: function(a) {

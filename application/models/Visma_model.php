@@ -12,7 +12,7 @@ class Visma_model extends CI_Model
     {
 
         $this->db->where("user_ID", $data['user_ID']);
-        $this->db->update('tbl_export_setting', ['visma_access_token' => $data['visma_access_token'], 'visma_refresh_token' => $data['visma_refresh_token']]);
+        $this->db->update('tbl_export_setting', ['visma_access_token' => $data['visma_access_token'], 'visma_refresh_token' => $data['visma_refresh_token'], 'visma_option' => 1]);
     }
     public function insert_access_data($data)
     {
@@ -34,7 +34,8 @@ class Visma_model extends CI_Model
         }
     }
 
-    public function get_visma_service($id,$service_id) {
+    public function get_visma_service($id, $service_id)
+    {
         $this->db->select('*')
             ->from('tbl_export_services')
             ->where('user_ID', $id)
@@ -121,6 +122,7 @@ class Visma_model extends CI_Model
     public function update_visma_settings($user_ID, $data)
     {
         $this->db->set('visma_year', trim($data['visma_year']));
+        $this->db->set('visma_option', 1);
 
         $this->db->where('user_ID', (int) $user_ID);
         $this->db->update('tbl_export_setting');
@@ -268,17 +270,17 @@ class Visma_model extends CI_Model
             tbl_shop_orders.paid = "1"
             AND tbl_shop_orders.id = "' . $orderIdcopy . '"
         GROUP BY orderId';
-            // echo $query;
-            // exit;
+        // echo $query;
+        // exit;
         $result = $this->db->query($query);
         $resultqueryforlog = $this->db->last_query();
         $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
         $result = $result->result();
         return $result ? $result : null;
     }
-    public function get_products($user_ID){
+    public function get_products($user_ID)
+    {
         $q = $this->db->query("SELECT px.id,px.name,px.price FROM tbl_shop_products_extended as px INNER JOIN tbl_shop_products as p ON p.id=px.productId INNER JOIN tbl_shop_categories as cat on p.categoryId=cat.id WHERE cat.userId = '$user_ID'");
         return ($q->num_rows()  ? $q->result() : false);
     }
-
 }

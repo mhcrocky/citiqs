@@ -695,4 +695,17 @@
 
             return empty($check) ? false : true;
         }
+
+        public function isLastUpdate(int $productUpdateCycle): bool
+        {
+            $max = $this->readImproved([
+                'what' => ['max(updateCycle) AS max'],
+                'where' => [
+                    'productId' => $this->productId,
+                ]
+            ]);
+            $max = reset($max)['max'];
+            $max = intval($max);
+            return $max === $productUpdateCycle ? true : false;
+        }
     }

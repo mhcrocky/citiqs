@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 require APPPATH . '/libraries/BaseControllerWeb.php';
@@ -14,8 +16,12 @@ class  Paysuccesslink extends BaseControllerWeb
     {
         parent::__construct();
         $this->load->model('shoporder_model');
+        $this->load->model('shopposorder_model');
+        $this->load->model('shopsession_model');
+
         $this->load->helper('url');
         $this->load->helper('utility_helper');
+
         $this->load->config('custom');
         $this->load->library('language', array('controller' => $this->router->class));
     }
@@ -98,7 +104,16 @@ class  Paysuccesslink extends BaseControllerWeb
             $order = reset($order);
             $data['order'] = $order;
             $data['orderDataGetKey'] = $this->config->item('orderDataGetKey');
+            $this->chekckIsPosOrder($data, $order['orderRandomKey']);
         }
         return;
+    }
+
+    private function chekckIsPosOrder(array &$data, string $ranodmKey): void
+    {
+        $orderData = $this->shopsession_model->setProperty('randomKey', $ranodmKey)->getArrayOrderDetails();
+        if (!empty($orderData['pos'])) {
+            $data['pos'] = $orderData['pos'];
+        }
     }
 }

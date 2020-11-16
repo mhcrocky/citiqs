@@ -8,7 +8,7 @@
     defined('VISMA_client_id')      OR define('VISMA_client_id', 'reviewmedia');
     defined('VISMA_flow')      OR define('VISMA_flow', 'Code Flow');
     defined('VISMA_secret')      OR define('VISMA_secret', '4305mXa84olnp335EHQIprH57Zf5OS212x1v1N7BqTxZeeMY58VUlV52nj5yY21');
-    defined('VISMA_redirect')      OR define('VISMA_redirect', 'http://localhost/tiqs_alfred/visma');
+    defined('VISMA_redirect')      OR define('VISMA_redirect', 'http://localhost/alfred/visma');
     defined('VISMA_scope')      OR define('VISMA_scope', 'offline_access ea:api ea:sales ea:accounting ea:purchase');
     defined('VISMA_SANDBOX_DEBUG_MODE')      OR define('VISMA_SANDBOX_DEBUG_MODE', TRUE);
 

@@ -53,6 +53,10 @@ class Ajaxdorian extends CI_Controller
     public function getPlaceByLocation(){
         $location = $this->input->post('location');
         $range = $this->input->post('range');
+
+//        var_dump($location);
+//        die();
+
         set_cookie('location', $location, (365 * 24 * 60 * 60));
         set_cookie('range', $range, (365 * 24 * 60 * 60));
         $coordinates = Google_helper::getLatLong($location);

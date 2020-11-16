@@ -1,5 +1,5 @@
 <div class="row d-flex justify-content-center">
-    <div class='col-sm-12 col-lg-9'>
+    <div class='col-sm-12 col-lg-10 col-lg-offset-1'>
         <div class="checkout-table">
             <div id="headlineYourOrder" class="checkout-table__header">
                 <h3 class='mb-0' style="text-align:center"><?php echo $this->language->line("PAYMENT-HD0010",'YOUR ORDER');?> </h3>

@@ -4,7 +4,7 @@
         <input type="text" name="vendorId" value="<?php echo $vendor['vendorId']; ?>" redonly hidden requried />
         <input type="text" name="spotTypeId" value="<?php echo $spot['spotTypeId']; ?>" redonly hidden requried />
         <div class="row d-flex justify-content-center" id="checkout">
-            <div class="col-sm-12 col-lg-9 left-side">
+            <div class="col-sm-12 col-lg-10 col-lg-offset-1">
                 <div id="yourDetails" class="checkout-title">
                     <span>Your details</span>
                 </div>

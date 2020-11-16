@@ -59,7 +59,8 @@ $route['translate_uri_dashes'] = FALSE;
 $route['emaildesigner/new'] = "emaildesigner/edit";
 
 $route['thuishaven'] = "thuishavensoldout";
-$route['places'] = "places";
+$route['places'] = "places/index";
+$route['places/(:any)'] = "places/index/$1";
 //$route['thuishaven'] = "thuishavenagenda/index/1";
 
 $route['thuishavensales/(:any)/(:any)'] = "thuishaven/index/$1/$2";
@@ -339,7 +340,25 @@ $route['api/video/upload_post'] = 'Api/Video/upload_post';
 $route['dashboard'] = 'Businessreport/index';
 $route['businessreport/get_report'] = 'Businessreport/get_report';
 
-$route['accounting/reports'] = 'AccountingReports/index';
+$route['businessreport/get_timestamp_totals'] = 'Businessreport/get_timestamp_totals';
+$route['businessreport/sortedWidgets'] = 'Businessreport/sortedWidgets';
+$route['businessreport/sortWidgets'] = 'Businessreport/sortWidgets';
+
+$route['accounting/report'] = 'AccountingReports/index';
+$route['accountingreport/get_report'] = 'AccountingReports/get_report';
+$route['accountingreport/get_timestamp_totals'] = 'AccountingReports/get_timestamp_totals';
+$route['accountingreport/sortedWidgets'] = 'AccountingReports/sortedWidgets';
+$route['accountingreport/sortWidgets'] = 'AccountingReports/sortWidgets';
+
+
+$route['accounting2/report'] = 'AccountingReports2/index';
+$route['accountingreport2/get_report'] = 'AccountingReports2/get_report';
+$route['accountingreport2/get_timestamp_totals'] = 'AccountingReports2/get_timestamp_totals';
+$route['accountingreport2/sortedWidgets'] = 'AccountingReports2/sortedWidgets';
+$route['accountingreport2/sortWidgets'] = 'AccountingReports2/sortWidgets';
+
+
+
 $route['visma/export/(:num)'] = 'Api/Visma/export_single_invoice/$1';
 $route['visma'] = 'Api/Visma/index';
 $route['visma/login'] = 'Api/Visma/login';
