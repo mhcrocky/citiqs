@@ -247,7 +247,7 @@ td.details-control {
                 </div>
                 
 
-<div style="border: 4px solid #763568;padding:25px;" class="w-100 mt-3 row-sort ui-sortable" data-rowposition="2" data-rowsort="1">
+<div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable" data-rowposition="2" data-rowsort="1">
 <div class="w-100 mt-3 mb-3 mx-auto">
 
   <div class="float-right text-center">
