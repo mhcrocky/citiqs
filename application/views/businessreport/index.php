@@ -475,17 +475,17 @@ td.details-control {
               return parseFloat(a) + parseFloat(b);
             }) : 0;
 
-           $(tfoot).find('th').eq(1).html(pageAmountTotal.toFixed(2)+'('+amountTotal.toFixed(2)+')');
+           $(tfoot).find('th').eq(1).html(round_up(pageAmountTotal)+'('+round_up(amountTotal)+')');
            $(tfoot).find('th').eq(2).html('-');
            $(tfoot).find('th').eq(3).html('-');
-           $(tfoot).find('th').eq(4).html(pageServiceFeeTotal .toFixed(2)+'('+serviceFeeTotal .toFixed(2)+')');
+           $(tfoot).find('th').eq(4).html(round_up(pageServiceFeeTotal)+'('+round_up(serviceFeeTotal)+')');
            $(tfoot).find('th').eq(5).html('-');
-           $(tfoot).find('th').eq(6).html(pageVatServiceTotal.toFixed(2)+'('+vatServiceTotal.toFixed(2)+')');
-           $(tfoot).find('th').eq(7).html(pageExvatServiceTotal.toFixed(2)+'('+exvatServiceTotal.toFixed(2)+')');
-           $(tfoot).find('th').eq(8).html(pageWaiterTipTotal.toFixed(2)+'('+waiterTipTotal.toFixed(2)+')');
-           $(tfoot).find('th').eq(9).html(pageAmount.toFixed(2)+'('+amount.toFixed(2)+')');
-           $(tfoot).find('th').eq(10).html(pageExvatTotal.toFixed(2)+'('+exvatTotal.toFixed(2)+')');
-           $(tfoot).find('th').eq(11).html(pageVatTotal.toFixed(2)+'('+vatTotal.toFixed(2)+')');
+           $(tfoot).find('th').eq(6).html(round_up(pageVatServiceTotal)+'('+round_up(vatServiceTotal)+')');
+           $(tfoot).find('th').eq(7).html(round_up(pageExvatServiceTotal)+'('+round_up(exvatServiceTotal)+')');
+           $(tfoot).find('th').eq(8).html(round_up(pageWaiterTipTotal)+'('+round_up(waiterTipTotal)+')');
+           $(tfoot).find('th').eq(9).html(round_up(pageAmount)+'('+round_up(amount)+')');
+           $(tfoot).find('th').eq(10).html(round_up(pageExvatTotal)+'('+round_up(exvatTotal)+')');
+           $(tfoot).find('th').eq(11).html(round_up(pageVatTotal)+'('+round_up(vatTotal)+')');
         },
         rowId: function(a) {
           return 'row_id_' + a.order_id;
@@ -618,7 +618,7 @@ function format(d) {
 					// '<td>' + val.AMOUNT + '</td>' +
 					'</tr>';
 			});
-			//console.log(d);
+      
 			if(d.export_ID==null){
 				button = '<button type="button" onclick="" class="btn btn-warning btn-refund btn-sm export-'+d.order_id+'">REFUND</button>';
 			}else{
@@ -705,7 +705,7 @@ function format(d) {
       $('#serviceType').change(function() {
         var category = this.value;
         table
-        .columns( 5 )
+        .columns( 4 )
         .search( category )
         .draw();
       });
