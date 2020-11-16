@@ -52,7 +52,7 @@ if ($setting->exact_option == 1) {
     <div class="col-lg-6 col-sm-12">
         <div class="card" style="background-color:#138575">
             <div class="card-body setting-card-body pb-0">
-                <a href="<?php echo base_url('setting/.' . $accounting . './creditors'); ?>" type="button" class="btn btn-success setting-btn" data-card-widget="collapse" data-toggle="tooltip" title="Add">Add</a>
+                <a href="<?php echo base_url('setting/' . $accounting . '/creditors'); ?>" type="button" class="btn btn-success setting-btn" data-card-widget="collapse" data-toggle="tooltip" title="Add">Add</a>
                 <p class="lead text-white setting-lead">Setting</p>
             </div>
         </div>
