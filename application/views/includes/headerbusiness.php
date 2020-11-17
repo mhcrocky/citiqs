@@ -123,7 +123,7 @@
 			    </div>
                 <!--<li><img class="logo-img" src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png"></li>
                 <hr>-->
-                    <li><a href="<?php echo $this->baseUrl;?>Businessreport"><i class="ti-receipt"></i> <span>Business Report</span></a></li>
+                    <li><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-receipt"></i> <span>Business Report</span></a></li>
                     <li><a href="<?php echo $this->baseUrl; ?>product_categories"><i class="ti-layout-accordion-separated"></i> <span>Category</span></a></li>
                     <li><a href="<?php echo $this->baseUrl; ?>product_types"><i class="ti-layers-alt"></i> <span>Types</span></a></li>
                     <li><a href="<?php echo $this->baseUrl; ?>products"><i class="ti-bag"></i> <span>Products</span></a></li>
@@ -131,6 +131,9 @@
                     <li><a href="<?php echo $this->baseUrl; ?>printers"><i class="ti-printer"></i> <span>Printers</span></a></li>
                     <li><a href="<?php echo $this->baseUrl; ?>spots"><i class="ti-flag-alt"></i> <span>Spots</span></a></li>
                     <li><a href="<?php echo $this->baseUrl; ?>visitors"><i class="ti-user"></i> <span>Visitors</span></a></li>
+                    <li><a href="<?php echo $this->baseUrl; ?>profile"><i class="ti-stamp"></i> <span>Profile</span></a></li>
+                    <li><a href="<?php echo $this->baseUrl; ?>visma/config"><i class="ti-credit-card"></i> <span>Visma Accounting</span></a></li>
+                    <li><a href="<?php echo $this->baseUrl; ?>emaildesigner"><i class="ti-email"></i> <span>Email Designer</span></a></li>
                     <li><a href="<?php echo $this->baseUrl; ?>logout"><i class="ti-shift-left"></i> <span>Logout</span></a></li>
                 </ul>
             </nav>
