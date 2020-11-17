@@ -1,5 +1,12 @@
-<main class="container checkoutOrderBody" style="text-align:left; margin-bottom:20px; width:100vw; height:100vh">
-    <form id="goOrder" method="post" onsubmit="return submitForm">
+
+<main
+    <?php if ($pos) { ?>
+        class="col-lg-4"        
+    <?php } else { ?>
+        class="container checkoutOrderBody" style="text-align:left; margin-bottom:20px; width:100vw; height:100vh"
+    <?php } ?>
+>
+    <form id="goOrder" method="post" onsubmit="return submitForm()">
         <input type="text" name="orderRandomKey" value="<?php echo $orderRandomKey; ?>" required readonly hidden />
         <input type="text" name="vendorId" value="<?php echo $vendor['vendorId']; ?>" required readonly hidden />
         <input type="text" name="spotId" value="<?php echo $spot['spotId']; ?>" required readonly hidden />
@@ -28,7 +35,6 @@
                 hidden
             />
         <?php } ?>
-
         <?php
             if ($vendor['preferredView'] === $oldMakeOrderView) {
                 include_once FCPATH . 'application/views/publicorders/includes/checkout/checkoutOrderFirstVresion.php';
@@ -161,7 +167,7 @@
                         style="background-color: #948b6f" class="button"
                         >
                         <i class="fa fa-arrow-left"></i>
-                        Back to list
+                        <?php echo ($pos) ? $this->language->line("PAYMENT-9101230",'Back') : $this->language->line("PAYMENT-9100",'Back to list'); ?>
                     </a>
                     <a
                         id="checkoutContinue"

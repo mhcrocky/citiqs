@@ -114,6 +114,14 @@ class  Paysuccesslink extends BaseControllerWeb
         $orderData = $this->shopsession_model->setProperty('randomKey', $ranodmKey)->getArrayOrderDetails();
         if (!empty($orderData['pos'])) {
             $data['pos'] = $orderData['pos'];
+            $data['spotId'] = $orderData['spotId'];
+            $data['orderRandomKey'] = $ranodmKey;
+            if ($data['order']['orderPaidStatus'] === '1') {
+                Utility_helper::redirectToPos($data, $this->config->item('posSuccessLink'));
+            } else {
+                Utility_helper::redirectToPos($data, $this->config->item('posPaymentFailedLink'));
+            }
+            
         }
     }
 }

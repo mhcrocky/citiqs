@@ -118,11 +118,31 @@
 <?php } elseif ($this->view === 'publicorders/closed') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/closed.css">
 <?php } elseif ($this->view === 'pos/pos') { ?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/bootstrap3.min.css" />  
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    
 <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/slick.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/slick-theme.css"/>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/shop-with-slider.css"/>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/order-popup.css"/>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
+
+<!-- <link rel="stylesheet" href="<?php #echo base_url(); ?>assets/home/styles/payorder_custom.css" />  -->
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_theme.css" />
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_select2.min.css" />
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_style.min.css" />
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_customTwo.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/pos.css">
+<style>
+    /* fix problem with prePaid and posPaid modal */
+    .modal-backdrop {
+        position: unset
+    }
+    body {
+        background-color: #fff;
+    }
+</style>
 <?php } elseif (strpos($this->view, 'paysuccesslink/') !== false) { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">

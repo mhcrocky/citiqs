@@ -285,6 +285,7 @@
             $this->setOrderData($data, $orderData);
             $this->setDelayTime($data);
             $this->setFeeValues($data);
+            Utility_helper::redirectToPos($data, $this->config->item('posCheckoutOrder'));
 
             $this->global['pageTitle'] = 'TIQS : CHECKOUT';
             $this->global[$this->config->item('design')] = (!empty($data['vendor']['design'])) ? unserialize($data['vendor']['design']) : null;
@@ -337,16 +338,18 @@
 
         private function setFeeValues(array &$data): void
         {
-            $spotTypeId = intval($data['spot']['spotTypeId']);
             if ($data['pos']) {
-                $this->setPosSideFee($data, $spotTypeId);
+                $this->setPosSideFee($data);
             } else {
-                $this->setBuyerSideFee($data, $spotTypeId);
+                $this->setBuyerSideFee($data);
             }
+            return;
         }
 
-        private function setBuyerSideFee(array &$data, int $spotTypeId): void
+        private function setBuyerSideFee(array &$data): void
         {
+            $spotTypeId = intval($data['spot']['spotTypeId']);
+
             if ($spotTypeId === $this->config->item('local')) {
                 $data['serviceFeePercent'] = $data['vendor']['serviceFeePercent'];
                 $data['serviceFeeAmount'] = $data['vendor']['serviceFeeAmount'];
@@ -363,8 +366,10 @@
             return;
         }
 
-        private function setPosSideFee(array &$data, int $spotTypeId): void
+        private function setPosSideFee(array &$data): void
         {
+            $spotTypeId = intval($data['spot']['spotTypeId']);
+
             if ($spotTypeId === $this->config->item('local')) {
                 $data['serviceFeePercent'] = $data['vendor']['serviceFeePercentPos'] === '1' ? $data['vendor']['serviceFeePercent'] : 0.0;
                 $data['serviceFeeAmount'] = $data['vendor']['serviceFeeAmountPos'] === '1' ? $data['vendor']['serviceFeeAmount'] : 0.0;
@@ -395,6 +400,7 @@
             $data = [];
             $data['vendor'] = $this->shopvendor_model->setProperty('vendorId', $orderData['vendorId'])->getVendorData();
             $data['spot'] = $this->shopspot_model->fetchSpot($orderData['vendorId'], $orderData['spotId']);
+            $data['spotId'] = $orderData['spotId'];
             $data['username'] = get_cookie('userName');
             $data['email'] = get_cookie('email');
             $data['mobile'] = get_cookie('mobile');
@@ -405,7 +411,10 @@
             $data['local'] = $this->config->item('local');
             $data['orderRandomKey'] = $orderRandomKey;
             $data['orderDataGetKey'] = $this->config->item('orderDataGetKey');
+            $data['pos'] = intval($orderData['pos']);
+            $data['colLength'] = $data['pos'] ? '12' : '6';
 
+            Utility_helper::redirectToPos($data, $this->config->item('posBuyerDetails'));
             $this->global['pageTitle'] = 'TIQS : BUYER DETAILS';
             $this->global[$this->config->item('design')] = (!empty($data['vendor']['design'])) ? unserialize($data['vendor']['design']) : null;
             $this->loadViews('publicorders/buyerDetails', $this->global, $data, null, 'headerWarehousePublic');
@@ -421,7 +430,7 @@
             $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
 
             Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder', 'user', 'orderExtended', 'order']);
-            
+
             $vendor = $this->shopvendor_model->setProperty('vendorId', $orderData['vendorId'])->getVendorData();
             $spot = $this->shopspot_model->fetchSpot($orderData['vendorId'], $orderData['spotId']);
             $spotTypeId = intval($spot['spotTypeId']);
@@ -450,8 +459,11 @@
                 'orderRandomKey'        => $orderRandomKey,
                 'orderDataGetKey'       => $this->config->item('orderDataGetKey'),
                 'orderRandomKey'        => $orderRandomKey,
+                'pos'                   => intval($orderData['pos']),
+                'spotId'                => $orderData['spotId'],
             ];
 
+            Utility_helper::redirectToPos($data, $this->config->item('posPay'));
             $this->global['pageTitle'] = 'TIQS : PAY';
             $this->global[$this->config->item('design')] = (!empty($data['vendor']['design'])) ? unserialize($data['vendor']['design']) : null;
             $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');

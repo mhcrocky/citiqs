@@ -1,8 +1,14 @@
-<div class='checkout-message' style='margin-top: 100px; margin-bottom: 100px;'>
+<div 
+    <?php if ($pos) { ?>
+        class='col-lg-4'
+    <?php } else { ?>
+        class='checkout-message' style='margin-top: 100px; margin-bottom: 100px;'
+    <?php } ?>
+>
 	<img src="http://localhost:8080/alfred/alfred/assets/images/defaultProductsImages/coca-cola.png" alt="">
 	<h2>CONFIRMATION</h2>
 	<div class="checkout-message__content">
-		<h3>You Order was</h3>
+		<h3><?php if (!$pos) echo 'Your'; ?>&nbsp;Order was</h3>
         <p class='order-status order-status--true'>successful</p>
         <?php if (isset($order)) { ?>
             <div class='checkout-message__details'>
@@ -27,7 +33,7 @@
                     style="background-color: #948b6f"
                     class="button"
                 >
-                    Back to POS<i class="fa fa-arrow-right"></i>
+                    Back<i class="fa fa-arrow-left"></i>
                 </a>
             <?php } else { ?>
                 <a

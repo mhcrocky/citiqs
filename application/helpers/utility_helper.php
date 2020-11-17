@@ -626,4 +626,16 @@
             unset($array[$key]);
             return $value;
         }
+
+        public static function redirectToPos(array $data, string $sessionKey): void
+        {
+            $CI =& get_instance();
+            if ($data['pos']) {
+                $_SESSION[$sessionKey] = $data;
+                $redirect = base_url() . 'pos?spotid=' . $data['spotId'] . '&' . $CI->config->item('orderDataGetKey') . '=' . $data['orderRandomKey'];
+                redirect($redirect);
+                exit();
+            }
+            return;
+        }
     }
