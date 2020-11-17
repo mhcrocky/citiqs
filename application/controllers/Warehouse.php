@@ -780,7 +780,7 @@
                 'productTypes' => $this->shopprodutctype_model->fetchProductTypes($vendorId),
                 'main' => $this->shopprodutctype_model->checkMain($vendorId),
             ];
-            $this->loadViews('warehouse/productTypes', $this->global, $data, null, 'headerWarehouse');
+            $this->loadViews('warehouse/productTypes', $this->global, $data, 'footerbusiness', 'headerbusiness');
         }
 
         /**
