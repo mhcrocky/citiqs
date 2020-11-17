@@ -1,5 +1,5 @@
 <div 
-    <?php if ($pos) { ?>
+    <?php if (isset($pos) && $pos === 1) { ?>
         class='col-lg-4'
     <?php } else { ?>
         class='checkout-message' style='margin-top: 100px; margin-bottom: 100px;'
@@ -27,7 +27,7 @@
 	</div>
 	<div class="checkout-btns">
         <?php if (isset($order)) { ?>
-            <?php if (isset($pos) && $pos === '1') { ?>
+            <?php if (isset($pos) && $pos === 1) { ?>
                 <a
                     href="<?php echo base_url() . 'pos?spotid=' . $order['spotId']; ?>"
                     style="background-color: #948b6f"

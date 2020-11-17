@@ -28,9 +28,9 @@
 	<div class="checkout-btns">
         <?php if (isset($order)) { ?>
 
-            <?php if (isset($pos) && $pos === '1') { ?>
+            <?php if (isset($pos) && $pos === 1) { ?>
                 <a
-                    href="<?php echo base_url() . 'pos?spotid=' . $order['spotId']; ?>"
+                    href="<?php echo base_url() . 'pos?spotid=' . $order['spotId'] . '&' . $orderDataGetKey . '=' . $order['orderRandomKey']; ?>"
                     style="background-color: #948b6f"
                     class="button"
                 >
