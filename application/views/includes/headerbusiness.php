@@ -74,6 +74,12 @@
         }
         #menu li a:hover {
             text-decoration: none;
+            color: #fff !important;
+            background: #354794;
+        }
+        .collapse li a:hover {
+            text-decoration: none;
+            background: #354794;
         }
         #report_length label .form-control{
             width: 65px;
@@ -124,16 +130,44 @@
                 <!--<li><img class="logo-img" src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png"></li>
                 <hr>-->
                     <li><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-receipt"></i> <span>Business Report</span></a></li>
-                    <li><a href="<?php echo $this->baseUrl; ?>product_categories"><i class="ti-layout-accordion-separated"></i> <span>Category</span></a></li>
-                    <li><a href="<?php echo $this->baseUrl; ?>product_types"><i class="ti-layers-alt"></i> <span>Types</span></a></li>
-                    <li><a href="<?php echo $this->baseUrl; ?>products"><i class="ti-bag"></i> <span>Products</span></a></li>
                     <li><a href="<?php echo $this->baseUrl; ?>orders"><i class="ti-stats-up"></i> <span>Orders</span></a></li> 
-                    <li><a href="<?php echo $this->baseUrl; ?>printers"><i class="ti-printer"></i> <span>Printers</span></a></li>
-                    <li><a href="<?php echo $this->baseUrl; ?>spots"><i class="ti-flag-alt"></i> <span>Spots</span></a></li>
-                    <li><a href="<?php echo $this->baseUrl; ?>visitors"><i class="ti-user"></i> <span>Visitors</span></a></li>
-                    <li><a href="<?php echo $this->baseUrl; ?>profile"><i class="ti-stamp"></i> <span>Profile</span></a></li>
                     <li><a href="<?php echo $this->baseUrl; ?>visma/config"><i class="ti-credit-card"></i> <span>Visma Accounting</span></a></li>
-                    <li><a href="<?php echo $this->baseUrl; ?>emaildesigner"><i class="ti-email"></i> <span>Email Designer</span></a></li>
+                    <li>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-ink-pen"></i><span>Design</span></a>
+                        <ul class="collapse">
+                            <li><a href="<?php echo $this->baseUrl; ?>emaildesigner"><i class="ti-email"></i> <span>Email</span></a></li>
+                            <li><a href="#"><i class="ti-shopping-cart"></i> <span>Store</span></a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i><span>Settings</span></a>
+                        <ul class="collapse">
+                            <li><a href="<?php echo $this->baseUrl; ?>profile"><i class="ti-stamp"></i> <span>Profile</span></a></li>
+                            <li><a href="#"><i class="ti-package"></i> <span>Tiqsbox</span></a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-bag"></i><span>Products</span></a>
+                        <ul class="collapse">
+                            <li><a href="<?php echo $this->baseUrl; ?>product_categories"><i class="ti-layout-accordion-separated"></i> <span>Category</span></a></li>
+                            <li><a href="<?php echo $this->baseUrl; ?>product_types"><i class="ti-layers-alt"></i> <span>Product Types</span></a></li>
+                            <li><a href="<?php echo $this->baseUrl; ?>products"><i class="ti-bag"></i> <span>Products</span></a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-desktop"></i><span>Orderscreen Settings</span></a>
+                        <ul class="collapse">
+                            <li><a href="<?php echo $this->baseUrl; ?>printers"><i class="ti-printer"></i> <span>Printers</span></a></li>
+                            <li><a href="<?php echo $this->baseUrl; ?>spots"><i class="ti-flag-alt"></i> <span>Spots</span></a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-shopping-cart-full"></i><span>Marketing</span></a>
+                        <ul class="collapse">
+                            <li><a href="<?php echo $this->baseUrl; ?>visitors"><i class="ti-user"></i> <span>Visitors</span></a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#"><i class="ti-bar-chart"></i> <span>POS</span></a></li>
                     <li><a href="<?php echo $this->baseUrl; ?>logout"><i class="ti-shift-left"></i> <span>Logout</span></a></li>
                 </ul>
             </nav>
