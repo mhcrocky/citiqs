@@ -79,7 +79,7 @@
          */
         public function productCategories(): void
         {
-            $this->global['pageTitle'] = 'TIQS : CATEGOIRES';
+            $this->global['pageTitle'] = 'TIQS : CATEGORIES';
 
             $where = [
                 'userId'    => intval($_SESSION['userId']),
@@ -95,7 +95,7 @@
                 'categories' => $this->shopcategory_model->fetch($where),
             ];
 
-            $this->loadViews('warehouse/productCategories', $this->global, $data, null, 'headerWarehouse');
+            $this->loadViews('warehouse/productCategories', $this->global, $data, 'footerbusiness', 'headerbusiness');
             return;
         }
 
@@ -780,7 +780,7 @@
                 'productTypes' => $this->shopprodutctype_model->fetchProductTypes($vendorId),
                 'main' => $this->shopprodutctype_model->checkMain($vendorId),
             ];
-            $this->loadViews('warehouse/productTypes', $this->global, $data, null, 'headerWarehouse');
+            $this->loadViews('warehouse/productTypes', $this->global, $data, 'footerbusiness', 'headerbusiness');
         }
 
         /**
