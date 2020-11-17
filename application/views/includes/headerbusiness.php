@@ -5,19 +5,24 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title><?php echo $pageTitle ? $pageTitle : 'TIQS | LOST AND FOUND'; ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/png" href="<?php echo base_url(); ?>assets/home/images/tiqsiconlogonew.png">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/business_dashboard/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/main-style.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/font-awesome-4.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/themify-icons.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/metisMenu.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/slicknav.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/tiqscss.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>tiqscss/clstylesheet.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>tiqscss/cbstylesheet.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/cookie.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>tiqscss/tiqsballoontip.css" />
+    <link rel="shortcut icon" type="image/png" href="<?php echo $this->baseUrl; ?>assets/home/images/tiqsiconlogonew.png">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl;?>assets/css/business_dashboard/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/main-style.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/font-awesome-4.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/metisMenu.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/slicknav.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/main-style.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/grid.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/tiqscss.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>tiqscss/clstylesheet.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>tiqscss/cbstylesheet.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>tiqscss/tiqsballoontip.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/magnific-popup.min.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/alertify.min.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/alertify_default.min.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/keyboard.css" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" />
     <!-- amchart css -->
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
@@ -26,11 +31,18 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/business_dashboard/default-css.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/business_dashboard/styles.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/business_dashboard/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.css"/>
+
+    <?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
+    <?php include_once FCPATH . 'application/views/includes/jsGlobalVariables.php'; ?>
 
     
     <style>
 	    #myModal {
             overflow: scroll;
+        }     
+        #myModal a {
+            color: #352104;
         }
         .logo-img {
             height: 55px;
@@ -69,8 +81,24 @@
 
     </style>
     <!-- modernizr css -->
-    <script src="<?php echo base_url(); ?>assets/js/business_dashboard/jquery-2.2.4.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/modernizr-2.8.3.min.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/js/business_dashboard/jquery-2.2.4.min.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/js/modernizr-2.8.3.min.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/flatpickr.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jquery.magnific-popup.min.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/alertify.min.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/keyboard.js"></script> 
+    <script src="<?php echo $this->baseUrl; ?>assets/dist/js/tooltipster.bundle.min.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/vanilla-picker.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/cookies.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/html5shiv.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/products.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/products.js"></script> 
+
 
 <style type="text/css">/* Chart.js */
 @-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style><style type="text/css" data-author="zingchart">
@@ -100,7 +128,7 @@
                     <li><a href="<?php echo $this->baseUrl; ?>product_types"><i class="ti-layers-alt"></i> <span>Types</span></a></li>
                     <li><a href="<?php echo $this->baseUrl; ?>products"><i class="ti-bag"></i> <span>Products</span></a></li>
                     <li><a href="<?php echo $this->baseUrl; ?>orders"><i class="ti-stats-up"></i> <span>Orders</span></a></li> 
-                    <li><a href="<?php echo $this->baseUrl; ?>printers"><i class="ti-printer"></i> <span>Printers</span></a></a></li>
+                    <li><a href="<?php echo $this->baseUrl; ?>printers"><i class="ti-printer"></i> <span>Printers</span></a></li>
                     <li><a href="<?php echo $this->baseUrl; ?>spots"><i class="ti-flag-alt"></i> <span>Spots</span></a></li>
                     <li><a href="<?php echo $this->baseUrl; ?>visitors"><i class="ti-user"></i> <span>Visitors</span></a></li>
                     <li><a href="<?php echo $this->baseUrl; ?>logout"><i class="ti-shift-left"></i> <span>Logout</span></a></li>
