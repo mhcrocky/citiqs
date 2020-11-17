@@ -5,20 +5,22 @@
 		cursor: grab;
 	}
 </style>
-<div class="main-wrapper theme-editor-wrapper">
-	<div class="grid-wrapper">
-		<div class="grid-list">
-			<div class="item-editor theme-editor" id='add-category'>
-				<div class="theme-editor-header d-flex justify-content-between" >
-					<div>
-						<img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogonew.png" alt="">
-					</div>
-					<div class="theme-editor-header-buttons">
-						<input type="button" class="grid-button button theme-editor-header-button" onclick="submitForm('addCategory')" value="Submit" />
-						<button class="grid-button-cancel button theme-editor-header-button" onclick="toogleElementClass('add-category', 'display')">Cancel</button>
-					</div>
-				</div>
-				<div style="width:100%;">
+
+<!-- Add Category Modal -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+	    <div>
+		    <img class="img-fluid" style="max-width: 120px;" src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogonew.png" alt="">
+		</div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	  <div class="item-editor" id='add-category'>
+				<div class="d-flex justify-content-center" style="width:100%;">
 					<form class="form-inline" id="addCategory" method="post" action="<?php echo $this->baseUrl . 'warehouse/addCategory'; ?>">
                         <legend>Add category</legend>
 						<input type="text" readonly name="userId" required value="<?php echo $userId ?>" hidden />
@@ -57,11 +59,27 @@
 					</form>
 				</div>
 			</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" style="width: 100px;" class="grid-button-cancel button theme-editor-header-button" data-dismiss="modal">Cancel</button>
+        <input type="button" style="width: 100px;" class="grid-button button theme-editor-header-button" onclick="submitForm('addCategory')" value="Submit" />
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Add Category Modal -->
+
+
+
+<div style="margin-top: 0 !important;background: #f3d0b1 !important;" class="main-wrapper theme-editor-wrapper">
+	<div style="background: #f3d0b1 !important;" class="grid-wrapper">
+		<div class="grid-list">
+			
 			<div class="grid-list-header row">
-				<div class="col-lg-4 col-md-4 col-sm-12 grid-header-heading">
-					<h2>Categories</h2>
+				<div class="col-lg-3 col-md-3 col-sm-12 grid-header-heading text-center">
+					<h3><b>Categories</b></h3>
 				</div>
-				<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="col-lg-7 col-md-7 col-sm-12">
 					<div class="form-group">
 						<label for="filterCategories">Filter categories:</label>
 						<label class="radio-inline">
@@ -98,7 +116,8 @@
 				</div>
 
 				<div class="col-lg-4 col-md-4 col-sm-12 search-container">
-					<button class="btn button-security my-2 my-sm-0 button grid-button" onclick="toogleElementClass('add-category', 'display')">Add category</button>
+				<button type="button" class="btn button-security my-2 my-sm-0 button grid-button"  data-toggle="modal" data-target="#addCategoryModal">Add category</button>
+				<!--<button class="btn button-security my-2 my-sm-0 button grid-button" onclick="toogleElementClass('add-category', 'display')">Add category</button>-->
 				</div>
 			</div><!-- end grid header -->
 			<!-- SINGLE GIRD ITEM -->
@@ -118,7 +137,7 @@
 						</div><!-- end item header -->
 						<div class="grid-footer">
 							<div class="iconWrapper">
-								<span class="fa-stack fa-2x edit-icon btn-edit-item" onclick="toogleAllElementClasses('editCategoryCategoryId<?php echo $category['categoryId']; ?>', 'display')">
+								<span class="fa-stack fa-2x edit-icon btn-edit-item" onclick="editCategory('<?php echo $category['categoryId']; ?>')">
 									<i class="far fa-edit"></i>
 								</span>
 							</div>
@@ -140,74 +159,88 @@
 								</div>
 							<?php } ?>
 						</div>
-						<!-- ITEM EDITOR -->
-						<div class="item-editor theme-editor" id="editCategoryCategoryId<?php echo  $category['categoryId']; ?>">
-							<div class="theme-editor-header d-flex justify-content-between">
-								<div class="theme-editor-header-buttons">
-									<input type="button" onclick="submitForm('editCategory<?php echo $category['categoryId']; ?>')" class="grid-button button theme-editor-header-button" value="Submit" />
-									<button class="grid-button-cancel button theme-editor-header-button" onclick="toogleElementClass('editCategoryCategoryId<?php echo  $category['categoryId']; ?>', 'display')">Cancel</button>
-								</div>
-							</div>
-							<div style="width:100%">
-								<form class="form-inline" id="editCategory<?php echo $category['categoryId']; ?>" method="post" action="<?php echo $this->baseUrl . 'warehouse/editCategory/' . $category['categoryId']; ?>">
-									<input type="text" name="userId" value="<?php echo $userId; ?>" readonly required hidden />
-									<input
-										type="number"
-										id="sortNumber<?php echo $category['categoryId']; ?>"
-										readonly
-										name="sortNumber"
-										required
-										value="<?php echo $category['sortNumber']; ?>"
-										hidden
-										/>
-									<legend style="text-align:left">Category "<?php echo $category['category']; ?>" details</legend>
-									<div class="col-lg-4 col-sm-12 form-group">
-										<label style="background-color:#fff" for="category<?php echo $category['categoryId']; ?>">Name</label>
-										<input type="text" class="form-control" id="category<?php echo $category['categoryId']; ?>" name="category" required value="<?php echo $category['category']; ?>" />
-									</div>
-									<div class="col-lg-4 col-sm-12 form-group">
-										<label style="background-color:#fff" for="driverNumber<?php echo $category['categoryId']; ?>">Driver SMS number: </label>
-										<input
-											type="text"
-											class="form-control"
-											id="driverNumber<?php echo $category['categoryId']; ?>"
-											name="driverNumber"
-											value="<?php echo strval($category['driverNumber']); ?>"
-											/>
-									</div>
-									<div class="col-lg-4 col-sm-12 form-group">
-										<label style="background-color:#fff" for="delayTime<?php echo $category['categoryId']; ?>">Delay time in minutes: </label>
-										<input
-											type="number"
-											min="0"
-											step="1"
-											class="form-control"
-											id="delayTime<?php echo $category['categoryId']; ?>"
-											name="delayTime"
-											value="<?php echo ($category['delayTime']) ? strval($category['delayTime']) : '0'; ?>"
-											/>
-									</div>
-									<div class="col-lg-4 col-sm-12 form-group">
-										<span style="background-color:#fff" >Send SMS to a driver:&nbsp;&nbsp;&nbsp;</span>
-										<label class="radio-inline" style="background-color:#fff" for="sendSmsYes<?php echo $category['categoryId']; ?>">Yes</label>
-										<input type="radio" id="sendSmsYes<?php echo $category['categoryId']; ?>" name="sendSms" value="1" <?php if ($category['sendSms'] === '1') echo 'checked'; ?>>
-										<label class="radio-inline" style="background-color:#fff" for="sendSmsNo<?php echo $category['categoryId']; ?>">&nbsp;&nbsp;&nbsp;No</label>
-										<input type="radio" id="sendSmsNo<?php echo $category['categoryId']; ?>" name="sendSms" value="0" <?php if ($category['sendSms'] === '0') echo 'checked'; ?>>
-									</div>
-									<div class="col-lg-4 col-sm-12 form-group">
-										<label style="background-color:#fff" for="driverSmsMessage<?php echo $category['categoryId']; ?>">SMS message for driver: </label>
-										<input
-											type="text"
-											class="form-control"
-											id="driverSmsMessage<?php echo $category['categoryId']; ?>"
-											value="<?php echo $category['driverSmsMessage']; ?>"
-											name="driverSmsMessage"
-											/>
-									</div>
-								</form>
-							</div>
+<button id="btn-<?php echo $category['categoryId']; ?>" style="display:none;" type="button" class="btn button-security my-2 my-sm-0 button grid-button" data-toggle="modal" data-target="#editCategoryModal<?php echo $category['categoryId']; ?>">Edit category</button>
+<!-- Edit Category Modal -->
+<div class="modal fade" id="editCategoryModal<?php echo $category['categoryId']; ?>" tabindex="-1" role="dialog" aria-labelledby="editCategoryModal<?php echo $category['categoryId']; ?>Title" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+	  <legend style="text-align:left">Category "<?php echo $category['category']; ?>" details</legend>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	        <div class="item-editor" id="editCategoryCategoryId<?php echo  $category['categoryId']; ?>">
+				<div style="width:100%">
+					<form class="form-inline" id="editCategory<?php echo $category['categoryId']; ?>" method="post" action="<?php echo $this->baseUrl . 'warehouse/editCategory/' . $category['categoryId']; ?>">
+						<input type="text" name="userId" value="<?php echo $userId; ?>" readonly required hidden />
+						<input
+							type="number"
+							id="sortNumber<?php echo $category['categoryId']; ?>"
+							readonly
+							name="sortNumber"
+							required
+							value="<?php echo $category['sortNumber']; ?>"
+							hidden
+							/>
+									
+						<div class="col-lg-4 col-sm-12 form-group">
+							<label style="background-color:#fff" for="category<?php echo $category['categoryId']; ?>">Name</label>
+							<input type="text" class="form-control" id="category<?php echo $category['categoryId']; ?>" name="category" required value="<?php echo $category['category']; ?>" />
 						</div>
-						<!-- END EDIT FOR NEW USER -->
+						<div class="col-lg-4 col-sm-12 form-group">
+							<label style="background-color:#fff" for="driverNumber<?php echo $category['categoryId']; ?>">Driver SMS number: </label>
+								<input
+									type="text"
+									class="form-control"
+									id="driverNumber<?php echo $category['categoryId']; ?>"
+									name="driverNumber"
+									value="<?php echo strval($category['driverNumber']); ?>"
+									/>
+						</div>
+						<div class="col-lg-4 col-sm-12 form-group">
+							<label style="background-color:#fff" for="delayTime<?php echo $category['categoryId']; ?>">Delay time in minutes: </label>
+							<input
+								type="number"
+								min="0"
+								step="1"
+								class="form-control"
+								id="delayTime<?php echo $category['categoryId']; ?>"
+								name="delayTime"
+								value="<?php echo ($category['delayTime']) ? strval($category['delayTime']) : '0'; ?>"
+								/>
+						</div>
+						<div class="col-lg-4 col-sm-12 form-group">
+							<span style="background-color:#fff" >Send SMS to a driver:&nbsp;&nbsp;&nbsp;</span>
+							<label class="radio-inline" style="background-color:#fff" for="sendSmsYes<?php echo $category['categoryId']; ?>">Yes</label>
+							<input type="radio" id="sendSmsYes<?php echo $category['categoryId']; ?>" name="sendSms" value="1" <?php if ($category['sendSms'] === '1') echo 'checked'; ?>>
+							<label class="radio-inline" style="background-color:#fff" for="sendSmsNo<?php echo $category['categoryId']; ?>">&nbsp;&nbsp;&nbsp;No</label>
+							<input type="radio" id="sendSmsNo<?php echo $category['categoryId']; ?>" name="sendSms" value="0" <?php if ($category['sendSms'] === '0') echo 'checked'; ?>>
+						</div>
+						<div class="col-lg-4 col-sm-12 form-group">
+							<label style="background-color:#fff" for="driverSmsMessage<?php echo $category['categoryId']; ?>">SMS message for driver: </label>
+							<input
+								type="text"
+								class="form-control"
+								id="driverSmsMessage<?php echo $category['categoryId']; ?>"
+								value="<?php echo $category['driverSmsMessage']; ?>"
+								name="driverSmsMessage"
+								/>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" style="width: 100px;margin-right: 7px;" class="grid-button-cancel button theme-editor-header-button" data-dismiss="modal">Cancel</button>
+			<input type="button" style="width: 100px;" class="grid-button button theme-editor-header-button" onclick="submitForm('editCategory<?php echo $category['categoryId']; ?>')" value="Submit" />
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Edit Category Modal -->
+
 					</div>
 				<?php } ?>
 				</div>
@@ -217,3 +250,9 @@
 		<!-- end grid list -->
 	</div>
 </div>
+
+<script>
+function editCategory(categoryId){
+	$('#btn-'+categoryId).click();
+}
+</script>
