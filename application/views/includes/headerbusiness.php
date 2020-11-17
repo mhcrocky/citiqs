@@ -134,6 +134,7 @@
                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-shopping-cart-full"></i><span>Marketing</span></a>
                         <ul class="collapse">
                             <li><a href="<?php echo $this->baseUrl; ?>visitors"><i class="ti-user"></i> <span>Visitors</span></a></li>
+                            <li><a href="<?php echo $this->baseUrl; ?>marketing/selection"><i class="ti-pencil-alt"></i> <span>Messaging</span></a></li>
                         </ul>
                     </li>
                     <li>
