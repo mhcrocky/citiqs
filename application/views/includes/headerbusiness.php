@@ -159,7 +159,7 @@
                             <li><a href="<?php echo $this->baseUrl; ?>printers"><i class="ti-printer"></i> <span>Printers</span></a></li>
                             <li><a href="<?php echo $this->baseUrl; ?>spots"><i class="ti-flag-alt"></i> <span>Spots</span></a></li>
                             <li><a href="<?php echo $this->baseUrl; ?>visma/config"><i class="ti-credit-card"></i> <span>Visma Accounting</span></a></li>
-                            <li><a href="#"><i class="ti-package"></i> <span>Tiqsbox</span></a></li>
+                            <li><a href="http://localhost/tiqsbox/index.php/Admin"><i class="ti-package"></i> <span>Tiqsbox</span></a></li>
                         </ul>
                     </li>
                     <li><a href="<?php echo $this->baseUrl; ?>logout"><i class="ti-shift-left"></i> <span>Logout</span></a></li>
