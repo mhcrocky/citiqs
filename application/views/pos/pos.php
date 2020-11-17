@@ -1,6 +1,6 @@
-<main style="margin:30px 0px">
+<main style="height: 100vh;">
 	<div class="container">
-		<div class="row" style="margin-bottom:20px">
+		<div class="row">
 			<div class="col-lg-4 col-12 form-inline">
 				<label for='selectSpot'>Select POS spot:&nbsp;&nbsp;</label>
 				<select onchange="redirectToNewLocation(this.value)" class="form-control">
