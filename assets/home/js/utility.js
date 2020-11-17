@@ -34,5 +34,9 @@ function redirectToNewLocation(location) {
         newLocation = globalVariables['baseUrl'] + newLocation
         window.location.href = newLocation;
     }
-    
+}
+
+function alertifyMessage(element) {
+    alertify[element.dataset.messageType](element.dataset.message)
+
 }

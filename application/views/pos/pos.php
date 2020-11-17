@@ -93,11 +93,13 @@
 													<?php $productDetails = reset($product['productDetails']); ?>
 													<div
 														class="pos-item"
-														<?php #if ($product['addons'] || $productDetails['addRemark'] === '1') { ?>
-                                                            data-toggle="modal" data-target="#single-item-details-modal<?php echo $product['productId']; ?>"
-                                                        <?php #} else { ?>
-                                                            
-                                                        <?php #} ?>
+														<?php if (!$posCheckoutOrder && !$posBuyerDetails && !$posPay && !$posSuccessLink && !$posPaymentFailedLink) { ?>
+															onclick="triggerModalClick('modal_buuton_<?php echo 'single-item-details-modal' . $product['productId']; ?>_<?php echo $productDetails['productExtendedId']?>')"
+                                                        <?php } else { ?>
+															onclick="alertifyMessage(this)"
+															data-message='You can not add product in this stage. Go back to add'
+															data-message-type='error'
+														<?php } ?>
 													>
 														<?php if ($vendor['showProductsImages'] === '1') { ?>
 															<div class='pos-item__image'>

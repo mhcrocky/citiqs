@@ -112,8 +112,8 @@ class  Paysuccesslink extends BaseControllerWeb
     private function chekckIsPosOrder(array &$data, string $ranodmKey): void
     {
         $orderData = $this->shopsession_model->setProperty('randomKey', $ranodmKey)->getArrayOrderDetails();
-        if (!empty($orderData['pos'])) {
-            $data['pos'] = $orderData['pos'];
+        $data['pos'] = intval($orderData['pos']);
+        if ($data['pos']) {            
             $data['spotId'] = $orderData['spotId'];
             $data['orderRandomKey'] = $ranodmKey;
             if ($data['order']['orderPaidStatus'] === '1') {
