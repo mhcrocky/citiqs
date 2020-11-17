@@ -1,16 +1,57 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 <link type="text/css" href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css" rel="stylesheet" />
 <style>
-    thead{
-      background: #BEBEBE;
-    }
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: rgba(0, 0, 0, 0.001);
+}
+#buyers_length label select {
+  display: inline-block;
+  width: 75px;
+  height: 32px;
+  padding: .375rem 1.75rem .375rem .75rem;
+  line-height: 1.5;color: #495057;
+  vertical-align: middle;
+  background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E") no-repeat right .75rem center;
+  background-size: auto;
+  background-size: 8px 10px;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+table td, table tr, table th,tbody {
+border: 1px solid rgba(0, 0, 0, 0.09);
+}
+tbody {
+  border-top: 1px solid rgba(0, 0, 0, 0.09);
+}
+thead {
+  border: 5px solid red !important;
+}
+table.dataTable thead .sorting {
+  background-image: url('') !important;
+}
+table.dataTable thead .sorting_asc {
+  background-image: url('') !important;
+}
+table.dataTable thead .sorting_desc {
+  background-image: url('') !important;
+}
 </style>
 <div class="main-wrapper">
 
 	<div class="container">
 
-<table id="buyers" class="display table-responsive" cellspacing="0" width="100%">
-
+<table id="buyers" class="table table-striped table-bordered table-responsive" cellspacing="0" width="100%">
+<tfoot>
+</tfoot>
 </table>
 
 <hr>
