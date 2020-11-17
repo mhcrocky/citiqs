@@ -1,7 +1,10 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.css">
 <link type="text/css" href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css" rel="stylesheet" />
-
-<hr><br>
+<style>
+    thead{
+      background: #BEBEBE;
+    }
+</style>
 <div class="main-wrapper">
 
 	<div class="container">
@@ -16,7 +19,7 @@
 </p>
 <hr>
 
-<div class="modal" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
+<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
   <div class="modal-dialog" >
     <div class="modal-content">
       <div class="modal-header">
@@ -42,7 +45,7 @@
   </div>
 </div>
 
-<div class="modal" id="userMessageModal" tabindex="-1" role="dialog" aria-labelledby="userMessageModalLabel" aria-hidden="true">
+<div class="modal fade" id="userMessageModal" tabindex="-1" role="dialog" aria-labelledby="userMessageModalLabel" aria-hidden="true">
   <div class="modal-dialog" >
     <div class="modal-content">
       <div class="modal-header">
@@ -156,7 +159,7 @@
          var buyerMobile = $('#mobile-'+rowId).val();
          var buyerOneSignalId = $('#onesignal-'+rowId).val();
          var message = $('textarea#message-text').val();
-         alert('HERE 1');
+         //alert('HERE 1');
          $.ajax({
            type: "get",
            url: "<?php echo base_url('Marketing/Selection/sendMessage/'); ?>",
