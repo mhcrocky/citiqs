@@ -167,6 +167,7 @@
                             <li><a href="<?php echo $this->baseUrl; ?>visitors"><i class="ti-user"></i> <span>Visitors</span></a></li>
                         </ul>
                     </li>
+                    <li><a href="#"><i class="ti-bar-chart"></i> <span>POS</span></a></li>
                     <li><a href="<?php echo $this->baseUrl; ?>logout"><i class="ti-shift-left"></i> <span>Logout</span></a></li>
                 </ul>
             </nav>
