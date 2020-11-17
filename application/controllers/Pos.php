@@ -68,6 +68,11 @@
                     'baseUrl'                   => base_url(),
                 ];
                 $this->getOrdered($data, $vendorId, $spotId);
+                $this->isCheckout($data);
+                $this->isBuyerDetails($data);
+                $this->isPay($data);
+                $this->isPosSuccessLink($data);
+                $this->isPosPaymentFailedLink($data);
             }
 
             $data['spots'] = $this->shopspot_model->fetchUserSpots($vendorId);
@@ -103,17 +108,14 @@
             return true;
         }
 
-        public function delete(string $ranodmKey): void
+        public function delete(string $ranodmKey, string $spotId): void
         {            
             $this->shopsession_model->setProperty('randomKey', $ranodmKey)->setIdFromRandomKey();
-            $this
-                ->shopposorder_model
-                    ->setProperty('sessionId', intval($this->shopsession_model->id))
-                    ->setIdFromSessionId()
-                    ->setObject()
-                    ->delete();
-
-            $redirect = base_url() . 'pos?spotid=' . $this->shopposorder_model->spotId;
+            $this->shopposorder_model->setProperty('sessionId', intval($this->shopsession_model->id))->setIdFromSessionId();
+            if ($this->shopposorder_model->id) {
+                $this->shopposorder_model->delete();
+            }
+            $redirect = base_url() . 'pos?spotid=' . $spotId;
             redirect($redirect);
             return;
         }
@@ -128,5 +130,51 @@
             if (!$this->shopposorder_model->id) return null;
             $this ->shopposorder_model->setObject();
             return $this->shopposorder_model->saveName;
+        }
+
+        private function isCheckout(array &$data): void
+        {
+            $sessionKey = $this->config->item('posCheckoutOrder');
+            $this->useSessionData($data, $sessionKey);
+        }
+
+        private function isBuyerDetails(array &$data): void
+        {
+            $sessionKey = $this->config->item('posBuyerDetails');
+            $this->useSessionData($data, $sessionKey);
+        }
+
+        private function isPay(array &$data): void
+        {
+            $sessionKey = $this->config->item('posPay');
+            $this->useSessionData($data, $sessionKey);
+        }
+
+        private function isPosSuccessLink(array &$data): void
+        {
+            $sessionKey = $this->config->item('posSuccessLink');
+            $this->useSessionData($data, $sessionKey);
+        }
+
+        private function isPosPaymentFailedLink(array &$data): void
+        {
+            $sessionKey = $this->config->item('posPaymentFailedLink');
+            $this->useSessionData($data, $sessionKey, false);
+  
+        }
+
+        private function useSessionData(array &$data, string $sessionKey, bool $check = true): void
+        {
+            if (isset($_SESSION[$sessionKey])) {
+                $data[$sessionKey] = 1;
+                foreach($_SESSION[$sessionKey] as $key => $value) {
+                    if (isset($data[$key]) && $check) continue;
+                    $data[$key] = $value;
+                }
+                unset($_SESSION[$sessionKey]);
+            } else {
+                $data[$sessionKey] = 0;
+            }
+            return;
         }
     }

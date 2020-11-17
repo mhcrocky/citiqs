@@ -21,12 +21,12 @@
 					<label for='selectSpot'>Select holded order:&nbsp;&nbsp;</label>
 					<select onchange="redirectToNewLocation(this.value)" class="form-control">
 						<option value="">Select</option>
-						<?php foreach ($spotPosOrders as $order) { ?>
+						<?php foreach ($spotPosOrders as $saveOrder) { ?>
 							<option
-								value="pos?spotid=<?php echo $order['spotId'] . '&' . $orderDataGetKey . '=' . $order['randomKey']; ?>"
-								<?php if ($order['randomKey'] === $orderDataRandomKey) echo 'selected'; ?>
+								value="pos?spotid=<?php echo $saveOrder['spotId'] . '&' . $orderDataGetKey . '=' . $saveOrder['randomKey']; ?>"
+								<?php if ($saveOrder['randomKey'] === $orderDataRandomKey) echo 'selected'; ?>
 							>
-								<?php echo $order['saveName']; ?>
+								<?php echo $saveOrder['saveName']; ?>
 							</option>
 						<?php } ?>
 					</select>
@@ -93,11 +93,13 @@
 													<?php $productDetails = reset($product['productDetails']); ?>
 													<div
 														class="pos-item"
-														<?php #if ($product['addons'] || $productDetails['addRemark'] === '1') { ?>
-                                                            data-toggle="modal" data-target="#single-item-details-modal<?php echo $product['productId']; ?>"
-                                                        <?php #} else { ?>
-                                                            
-                                                        <?php #} ?>
+														<?php if (!$posCheckoutOrder && !$posBuyerDetails && !$posPay && !$posSuccessLink && !$posPaymentFailedLink) { ?>
+															onclick="triggerModalClick('modal_buuton_<?php echo 'single-item-details-modal' . $product['productId']; ?>_<?php echo $productDetails['productExtendedId']?>')"
+                                                        <?php } else { ?>
+															onclick="alertifyMessage(this)"
+															data-message='You can not add product in this stage. Go back to add'
+															data-message-type='error'
+														<?php } ?>
 													>
 														<?php if ($vendor['showProductsImages'] === '1') { ?>
 															<div class='pos-item__image'>
@@ -136,34 +138,29 @@
 						<!-- end pos main-->
 						<div class="pos_categories__footer">
 							<a href="javascript:void(0)" class='pos_categories__button pos_categories__button--secondary' onclick="cancelPosOrder('<?php echo $orderDataRandomKey; ?>')">Cancel Order</a>
+							<?php if ( !$posCheckoutOrder && !$posBuyerDetails && !$posPay && !$posSuccessLink && !$posPaymentFailedLink ) { ?>
 							<a href="javascript:void(0)" class='pos_categories__button pos_categories__button--primary' data-toggle="modal" data-target="#holdOrder"><?php echo $orderDataRandomKey ? 'Update' : 'Save'; ?>&nbsp;Order</a>
+							<?php } ?>
 							<a href="<?php echo base_url() . 'pos?spotid=' . $spotId; ?>" class='pos_categories__button pos_categories__button--third' onclick="cancelPosOrder()">New order</a>
 						</div>
 						<!-- end pos footer -->
 					</div>
-					<div class="col-lg-4" id="posCheckoutId">
-						<div class="pos-sidebar">
-							<div class="pos-checkout">
-								<div class="pos-checkout__header">
-									<h3>
-										Checkout
-										<?php
-											if (!empty($posOrderName)) { 
-												$posOrderName = trim(substr($posOrderName, (strpos($posOrderName, ')') + 1)));
-											 	echo '"' . $posOrderName . '"';
-											}
-										?>
-									</h3>
-									<div class="pos-checkout-row pos-checkout-row--top pos-checkout-list" id="modal__checkout__list">
-										<?php if (isset($checkoutList)) echo $checkoutList; ?>
-									</div>
-									<!-- end checkout row -->
-								</div>
-								<!-- end checout list -->
-							</div>
-						</div>
-						<a href="javascript:void(0)" class='pos-checkout__button' onclick="checkout(1)">Pay (<span class="totalPrice">0</span>&nbsp;&euro;)</a>
-					</div>
+					<!-- start pos sidebar -->
+					<?php
+						if ($posCheckoutOrder) {
+							include_once FCPATH . 'application/views/publicorders/checkoutOrder.php';
+						} elseif ($posBuyerDetails) {
+							include_once FCPATH . 'application/views/publicorders/buyerDetails.php';
+						} elseif ($posPay) {
+							include_once FCPATH . 'application/views/publicorders/includes/pay/payMethods.php';
+						} elseif($posSuccessLink) {
+							include_once FCPATH . 'application/views/paysuccesslink/success.php';
+						} elseif ($posPaymentFailedLink) {
+							include_once FCPATH . 'application/views/paysuccesslink/notPaid.php';
+						} else {
+							include_once FCPATH . 'application/views/pos/includes/posMakeOrder.php';
+						}
+					?>
 					<!-- end pos sidebar -->
 				</div>
 				<!-- end row item grid -->
@@ -172,7 +169,6 @@
 	<?php } ?>
 </main>
 <?php if (isset($mainProducts)) { ?>
-
 	<?php include_once FCPATH . 'application/views/publicorders/includes/modals/makeOrderPos/productModals.php'; ?>
 <?php } ?>
 <?php include_once FCPATH . 'application/views/publicorders/includes/makeOrderGlobalsJs.php'; ?>
@@ -222,7 +218,7 @@
 				<button
 					class="btn btn-success btn-lg"
 					style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
-					onclick="deleteOrder('<?php echo $orderDataRandomKey; ?>')"
+					onclick="deleteOrder('<?php echo $spotId; ?>', '<?php echo $orderDataRandomKey; ?>')"
 				>
 					<i class="fa fa-check-circle" aria-hidden="true"></i>
 				</button>

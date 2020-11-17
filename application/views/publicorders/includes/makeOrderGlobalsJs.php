@@ -13,8 +13,8 @@
             'orderDataRandomKey' : '<?php echo $orderDataRandomKey; ?>',
             'orderDataGetKey' : '<?php echo $orderDataGetKey; ?>',
             'logoImageId' : 'vendorLogo',
-            'activeClass' : 'pos_categories__single-item--active', //POS
-            'posCheckoutId': 'posCheckoutId',
+            'activeClass' : 'pos_categories__single-item--active', // POS
+            'posMakeOrderId': 'posMakeOrderId',  // POS
             'spanQuantityIdPrefix' : 'orderQuantityValue_'
         }
 

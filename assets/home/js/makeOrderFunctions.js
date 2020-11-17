@@ -72,7 +72,7 @@ function changeProductQuayntity(element, className) {
     let ancestor = '#' + makeOrderGlobals.checkoutModal;
     let isOrdered = element.closest(ancestor);
     if (!isOrdered) {
-        ancestor = '#' + makeOrderGlobals.posCheckoutId;
+        ancestor = '#' + makeOrderGlobals.posMakeOrderId;
         isOrdered = element.closest(ancestor);
     }
 
@@ -112,7 +112,7 @@ function isProductOrdered(containerId, inputField) {
 function changeAddonInputAttributes(element, quantity, className, isOrdered) {
     if (!element.parentElement.parentElement.nextElementSibling) return;
     let ancestorBuyer = '#' + makeOrderGlobals.checkoutModal;
-    let ancestorPos = '#' + makeOrderGlobals.posCheckoutId;
+    let ancestorPos = '#' + makeOrderGlobals.posMakeOrderId;
     let classParent = element.parentElement.parentElement.nextElementSibling;
     let addonInputs = classParent.getElementsByClassName(className);
     let addonInputsLength = addonInputs.length;
@@ -190,7 +190,7 @@ function isOrdered(element) {
     let isOrdered = element.closest(ancestor);
 
     if (!isOrdered) {
-        ancestor = '#' + makeOrderGlobals.posCheckoutId;
+        ancestor = '#' + makeOrderGlobals.posMakeOrderId;
         isOrdered = element.closest(ancestor);
     }
 

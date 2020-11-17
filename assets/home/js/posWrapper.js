@@ -21,7 +21,7 @@ function posTriggerModalClick(modalButtonId) {
     triggerModalClick(modalButtonId);
 }
 
-function cancelPosOrder(orderDataRandomKey) {
+function cancelPosOrder(orderDataRandomKey,) {
     if (orderDataRandomKey) {
         $('#confirmCancel').modal('show');
     } else {
@@ -30,8 +30,8 @@ function cancelPosOrder(orderDataRandomKey) {
     }
 }
 
-function deleteOrder(orderDataRandomKey) {
-    window.location.href =  globalVariables.baseUrl + 'pos/delete/' + orderDataRandomKey;
+function deleteOrder(spotId, orderDataRandomKey) {
+    window.location.href =  globalVariables.baseUrl + 'pos/delete/' + orderDataRandomKey + '/' +  spotId;
 }
 
 

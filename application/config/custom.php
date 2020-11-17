@@ -211,3 +211,10 @@ $config['buyershorturl'] = 'tiqs_shop_service';
 $config['maxRemarkLength'] = 35;
 
 $config['design'] = 'design';
+
+// POS SESSION KEYS
+$config['posCheckoutOrder'] = 'posCheckoutOrder';
+$config['posBuyerDetails'] = 'posBuyerDetails';
+$config['posPay'] = 'posPay';
+$config['posSuccessLink'] = 'posSuccessLink';
+$config['posPaymentFailedLink'] = 'posPaymentFailedLink';
