@@ -378,6 +378,16 @@ class User_model extends CI_Model
     }
 
 
+    function getUserInfoByShortUrl($name)
+    {
+        $this->db->from('tbl_user');
+        $this->db->where('isDeleted', 0);
+        // $this->db->where('roleId =', 2);
+        $this->db->where('usershorturl', $name);
+        $query = $this->db->get();
+        return $query->row();
+    }
+
     function getUserInfoByHash($hash)
     {
         $this->db->select('id as userId');
