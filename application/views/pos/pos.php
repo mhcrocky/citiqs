@@ -104,7 +104,7 @@
 													<div
 														class="pos-item"
 														<?php if (!$posCheckoutOrder && !$posBuyerDetails && !$posPay && !$posSuccessLink && !$posPaymentFailedLink) { ?>
-															onclick="triggerModalClick('modal_buuton_<?php echo 'single-item-details-modal' . $product['productId']; ?>_<?php echo $productDetails['productExtendedId']?>')"
+															onclick="posTriggerModalClick('modal_buuton_<?php echo 'single-item-details-modal' . $product['productId']; ?>_<?php echo $productDetails['productExtendedId']?>')"
                                                         <?php } else { ?>
 															onclick="alertifyMessage(this)"
 															data-message='You can not add product in this stage. Go back to add'

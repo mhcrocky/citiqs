@@ -43,10 +43,7 @@
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jquery.magnific-popup.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/alertify.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>  
-    <script src="<?php echo $this->baseUrl; ?>assets/home/js/keyboard.js"></script>
-    <script>
-
-    </script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/createKeyBoard.js"></script>
 </head>
 <body>
    <header class="header">

@@ -252,7 +252,7 @@
             return $reset;
         }
 
-        public static function returnMakeNewOrderElements(?array $ordered, array $vendor, array $mainProducts, array $rawAddons, int $maxRemarkLength): array
+        public static function returnMakeNewOrderElements(?array $ordered, array $vendor, array $mainProducts, array $rawAddons, int $maxRemarkLength, bool $isPos = false): array
         {
             // $shoppingList = '';
             $checkoutList = '';
@@ -374,13 +374,24 @@
                                                             type="text"
                                                             class="form-control remarks inputFieldsMakeOrder"
                                                             rows="1"
+                                                            id ="' . $count . '_' .$remarkProductId . '"
                                                             maxlength="' . $maxRemarkLength . '"
                                                             placeholder="Allowed ' . $maxRemarkLength . ' characters"
                                                             data-product-remark-id="' . $remarkProductId . '"
                                                             value="' . $product['remark'] . '"
-                                                        />
-                                                    </div>';
+                                                        />';
 
+                        if ($isPos) {
+                            $checkoutList .=            '<div
+                                                            class="virtual-keyboard-hook"
+                                                            data-target-id="' . $count . '_' .$remarkProductId . '"
+                                                            data-keyboard-mapping="qwerty"
+                                                            style="text-align: center; font-size: 20px;"
+                                                        >
+                                                            <i class="fa fa-keyboard-o" aria-hidden="true"></i>
+                                                        </div>';
+                        }
+                        $checkoutList .=            '</div>';
                     }
 
                     $checkoutList .=        '</div>';
@@ -513,14 +524,27 @@
                                                                 <div class="col-lg-12 col-sm-12" style="margin-bottom:3px">
                                                                     <input
                                                                         type="text"
+                                                                        id="' . $count . '_' .$remarkAddonId . '"
                                                                         class="form-control remarks inputFieldsMakeOrder"
                                                                         rows="1"
                                                                         maxlength="' . $maxRemarkLength . '"
                                                                         placeholder="Allowed ' . $maxRemarkLength . ' characters"
                                                                         data-addon-remark-id="' . $remarkAddonId . '"
                                                                         value="' . $addon['remark'] . '"
-                                                                    />
-                                                                </div>
+                                                                    />';
+                                    if ($isPos) {
+                                        $checkoutList .=            '<div
+                                                                        class="virtual-keyboard-hook"
+                                                                        data-target-id="' . $count . '_' .$remarkAddonId . '"
+                                                                        data-keyboard-mapping="qwerty"
+                                                                        style="text-align: center; font-size: 20px;"
+                                                                    >
+                                                                        <i class="fa fa-keyboard-o" aria-hidden="true"></i>
+                                                                    </div>';
+                                    }
+
+
+                                    $checkoutList .=            '</div>
                                                             </div>
                                                             '; 
                                 }
