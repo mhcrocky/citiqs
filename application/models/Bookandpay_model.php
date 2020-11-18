@@ -508,4 +508,88 @@ class Bookandpay_model extends CI_Model
 		return $this->db->delete('tbl_bookandpay', $where);
 	}
 
+	/*
+	 * Added functions from booking2020(bookandpay_model)
+	 * author : Dorian Rina
+	 * since : 18 November 2020
+	 */
+
+	function getBookingCountByTimeSlot($customer,$timeSlotId, $spotId, $fromtime)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_bookandpay');
+		$this->db->where('timeslot', $timeSlotId);
+		$this->db->where('SpotId', $spotId);
+		$this->db->where('timefrom', $fromtime);
+		$this->db->where('customer', $customer);
+
+        $query = $this->db->get();
+
+        if($query) {
+            return $query->num_rows();
+        }
+
+        return 0;
+	}
+	
+	function getBookingCountBySpot($customer, $spotId, $timeSlotId, $fromtime)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_bookandpay');
+		$this->db->where('timeslot', $timeSlotId);
+		$this->db->where('SpotId', $spotId);
+		$this->db->where('timefrom', $fromtime);
+		$this->db->where('customer', $customer);
+
+        $query = $this->db->get();
+
+        if($query) {
+            return $query->num_rows();
+        }
+
+        return 0;
+	}
+
+	public function getReservationsByIds($reservationIds)
+	{
+		$this->db->from('tbl_bookandpay');
+		$this->db->where_in('reservationId', $reservationIds);
+		$query = $this->db->get();
+
+//				$testquery = $this->db->last_query();
+//				var_dump($testquery);
+//				die();
+        $result = $query->result();
+		return $result;
+	}
+
+	function getBookingByTimeSlot($customer, $eventDate, $timeSlot)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_bookandpay');
+        $this->db->where('reservationset', 1);
+        $this->db->where('customer', $customer);
+        $this->db->where('timeslot', $timeSlot);
+
+        $this->db->where('eventdate', date("yy-m-d", strtotime($eventDate)));
+        $query = $this->db->get();
+
+        if($query) {
+            return $query->result();
+        }
+
+        return false;
+	}
+
+	public function getUserSlCode($id)
+	{
+		$this->db->select('sl_code');
+		$this->db->from('tbl_user');
+		$this->db->where('id', $id);
+		$query = $this->db->get();
+
+        $result = $query->row();
+		return $result->sl_code;
+	}
+
 }
