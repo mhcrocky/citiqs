@@ -78,6 +78,7 @@
             $data['spots'] = $this->shopspot_model->fetchUserSpots($vendorId);
             $data['spotId'] = $spotId;
             $data['spotPosOrders'] = $this->shopposorder_model->setProperty('spotId', $spotId)->fetchSpotPosOrders();
+            $data['isPos'] = 1;
 
             $this->global['pageTitle'] = 'TIQS : POS';
             $this->loadViews('pos/pos', $this->global, $data, null, 'headerWarehouse');
@@ -91,7 +92,7 @@
             $data['orderDataGetKey']    = $this->config->item('orderDataGetKey');
             $data['orderDataRandomKey'] = $orderDataRandomKey;
             if ($ordered) {
-                $ordered = Utility_helper::returnMakeNewOrderElements($ordered, $data['vendor'], $data['mainProducts'], $data['addons'], $data['maxRemarkLength']);
+                $ordered = Utility_helper::returnMakeNewOrderElements($ordered, $data['vendor'], $data['mainProducts'], $data['addons'], $data['maxRemarkLength'], true);
                 $data['checkoutList'] = $ordered['checkoutList'];
                 $data['posOrderName'] = $this->getPosOrderName($orderDataRandomKey);
             }

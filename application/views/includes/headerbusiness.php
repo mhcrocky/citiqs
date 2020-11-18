@@ -95,7 +95,7 @@
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jquery.magnific-popup.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/alertify.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>
-    <script src="<?php echo $this->baseUrl; ?>assets/home/js/keyboard.js"></script> 
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/createKeyBoard.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/dist/js/tooltipster.bundle.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/vanilla-picker.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/cookies.js"></script>

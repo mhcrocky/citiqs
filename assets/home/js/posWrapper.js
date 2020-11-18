@@ -54,5 +54,52 @@ function holdOrder(spotId, saveNameId) {
     }
 }
 
+function posTriggerModalClick(modalButtonId) {
+    triggerModalClick(modalButtonId);
+    // setRemarkIds();
+}
+
+function setRemarkIds() {
+    let container = document.getElementById(makeOrderGlobals.posMakeOrderId);
+    let remarks = container.getElementsByClassName('remarks');
+    let remarksLenght = remarks.length;
+    let i;
+    for (i = 0; i < remarksLenght; i++) {
+        let remark = remarks[i];
+        let remarkId = i + '_';
+        if (!remark.id) {
+            if (remark.dataset.productRemarkId) {
+                remarkId += remark.dataset.productRemarkId;
+            }
+            if (remark.dataset.addonRemarkId) {
+                remarkId = remark.dataset.addonRemarkId;
+            }
+            remark.id = remarkId;
+            $(keyboardHtml(remarkId)).insertAfter(remark)
+        }
+    }
+}
+
+function keyboardHtml(targetId) {    
+    let keyboard =
+        `<div
+            class="virtual-keyboard-hook"
+            data-target-id="${targetId}"
+            data-keyboard-mapping="qwerty"
+            style="text-align: center; font-size: 20px;"
+        >
+            <i class="fa fa-keyboard-o" aria-hidden="true"></i>
+        </div>`;
+    return keyboard;
+}
+
+$(document).ready(function(){
+    let sumbitFormButton = document.getElementById(makeOrderGlobals.checkoutContinueButton);
+    if (sumbitFormButton) {
+        sumbitFormButton.click();
+    }
+});
+
+
 resetTotal();
 countOrdered('countOrdered');

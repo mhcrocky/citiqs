@@ -3,7 +3,7 @@
     <?php if ($vendor['prePaid'] === '1') { ?>
         <!-- Modal -->
         <div id="prePaid" class="modal" role="dialog">
-            <div class="modal-dialog modal-sm modalPayOrder">
+            <div class="modal-dialog modal-sm modalPayOrder" style="text-align:center">
                 <!-- Modal content-->
                 <div class="modal-content modalPayOrder">
                     <div class="modal-body modalPayOrder">
@@ -37,7 +37,7 @@
             <div class="modal-dialog modal-sm">
                 <!-- Modal content-->
                 <div class="modal-content modalPayOrder">
-                    <div class="modal-body modalPayOrder">
+                    <div class="modal-body modalPayOrder" style="text-align:center">
                         <button
                             class="btn btn-success btn-lg modalPayOrderButton"
                             style="border-radius:50%; margin-right:5%; font-size:24px"
@@ -69,7 +69,7 @@
         <div class="modal-dialog modal-sm">
             <!-- Modal content-->
             <div class="modal-content modalPayOrder">
-                <div class="modal-body modalPayOrder">
+                <div class="modal-body modalPayOrder" style="text-align:center">
                     <label for="codeId" class="payOrderInputFieldsLabel">Insert code from voucher</label>
                     <input
                         type="text"

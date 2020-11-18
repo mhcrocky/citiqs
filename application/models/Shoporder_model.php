@@ -726,6 +726,7 @@
                 'what'  => [
                     'tbl_shop_orders.id as orderId',
                     'tbl_shop_orders.updated AS orderUpdate',
+                    'tbl_shop_orders.created AS orderCreated',
                     'tbl_shop_orders.spotId AS spotId',
                     'tbl_user.username AS vendorName',
                     'tbl_shop_categories.driverNumber AS driverNumber',
@@ -739,7 +740,7 @@
                     // automatically sending means that the order should also be set to done automatically.
                     // because 8 minutes is the preparation time and otherwise it is cold.
 
-                    $this->table . '.printStatus' => '1',
+                    // $this->table . '.printStatus' => '1',
                     $this->table . '.sendSmsDriver' => '0',
                     'tbl_shop_categories.sendSms' => '1'
                 ],

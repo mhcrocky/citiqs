@@ -29,6 +29,16 @@
                                 required
                                 data-name="Name"
                             />
+                            <?php if ($pos) { ?>
+                                <div
+                                    class="virtual-keyboard-hook"
+                                    data-target-id="firstNameInput"
+                                    data-keyboard-mapping="qwerty"
+                                    style="text-align: center; font-size: 20px;"
+                                >
+                                    <i class="fa fa-keyboard-o" aria-hidden="true"></i>
+                                </div>
+                            <?php } ?>
                         </div>
                     <?php } ?>
                     <?php if ($vendor['requireEmail'] === '1' || intval($spot['spotTypeId']) !== $local) { ?>
@@ -45,6 +55,16 @@
                                 oninput="checkUserNewsLetter(this.id)"
                                 data-name="Email"
                             />
+                            <?php if ($pos) { ?>
+                                <div
+                                    class="virtual-keyboard-hook"
+                                    data-target-id="emailAddressInput"
+                                    data-keyboard-mapping="qwerty"
+                                    style="text-align: center; font-size: 20px;"
+                                >
+                                    <i class="fa fa-keyboard-o" aria-hidden="true"></i>
+                                </div>
+                            <?php } ?>
                         </div>
                     <?php } ?>
                     <!-- <div class="form-group col-sm-6" style="display:none">
@@ -98,6 +118,16 @@
                                     required
                                     data-name="Mobile"
                                 />
+                                <?php if ($pos) { ?>
+                                    <div
+                                        class="virtual-keyboard-hook"
+                                        data-target-id="phoneInput"
+                                        data-keyboard-mapping="qwerty"
+                                        style="text-align: center; font-size: 20px;"
+                                    >
+                                        <i class="fa fa-keyboard-o" aria-hidden="true"></i>
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
                     <?php } ?>

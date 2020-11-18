@@ -75,6 +75,16 @@
                         maxlength="<?php echo $maxRemarkLength; ?>"
                         placeholder="Allowed <?php echo $maxRemarkLength; ?> characters"
                     />
+                    <?php if ($pos) { ?>
+                        <div
+                            class="virtual-keyboard-hook"
+                            data-target-id="notesInput"
+                            data-keyboard-mapping="qwerty"
+                            style="text-align: center; font-size: 20px;"
+                        >
+                            <i class="fa fa-keyboard-o" aria-hidden="true"></i>
+                        </div>
+                    <?php } ?>
                 </div>
             <?php } ?>
             <?php

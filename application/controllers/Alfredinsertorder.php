@@ -62,13 +62,7 @@ class Alfredinsertorder extends BaseControllerWeb
 
         if (!$payType) redirect(base_url());
 
-        if (!empty($orderData['order']['voucherId']) && !empty($orderData['order']['voucherAmount']) && !$this->payingWithVoucher($orderData['order'])) {
-            Jwt_helper::unsetVoucherData($orderData, $orderRandomKey);
-            $redirect  = 'make_order?vendorid=' . $orderData['vendorId'] . '&spotid=' . $orderData['spotId'];
-            $redirect .= '&' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
-            $this->session->set_flashdata('error', '(1082) Order not made! Voucher is not valid');
-            return;
-        }
+        $this->voucherPaymentFailed($orderData);
 
         $orderId = $this->insertOrderProcess($orderData, $this->config->item('orderNotPaid'), $payType, $orderRandomKey);
         
@@ -83,6 +77,7 @@ class Alfredinsertorder extends BaseControllerWeb
         }
 
         redirect($redirect);
+        exit();
     }
 
     private function getPayType(string $payNlPaymentTypeId): ?string
@@ -214,6 +209,7 @@ class Alfredinsertorder extends BaseControllerWeb
 
         Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder', 'user', 'orderExtended', 'order']);
 
+        $this->voucherPaymentFailed($orderData);
         $orderId = $this->insertOrderProcess($orderData, $payStatus, $payType, $orderRandomKey);
         if ($orderData['vendorId'] === 1162 || $orderData['vendorId'] === 5655) {
             $redirect = base_url() . 'successth';
@@ -265,5 +261,18 @@ class Alfredinsertorder extends BaseControllerWeb
                     ->delete();
         }
         return ;
+    }
+
+    private function voucherPaymentFailed(array $orderData): void
+    {
+        if (!empty($orderData['order']['voucherId']) && !empty($orderData['order']['voucherAmount']) && !$this->payingWithVoucher($orderData['order'])) {
+            Jwt_helper::unsetVoucherData($orderData, $orderRandomKey);
+            $redirect  = 'make_order?vendorid=' . $orderData['vendorId'] . '&spotid=' . $orderData['spotId'];
+            $redirect .= '&' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
+            $this->session->set_flashdata('error', '(1082) Order not made! Voucher is not valid');
+            redirect($redirect);
+            exit();
+        }
+        return;
     }
 }

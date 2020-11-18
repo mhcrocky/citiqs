@@ -167,7 +167,7 @@
                                                                 data-addon-type-id-check="<?php echo $addon['productTypeId']; ?>"
                                                                 onchange="toggleElement(this)"
                                                             />
-                                                            <?php echo $addon['name']; ?>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $addon['name']; ?>
                                                             <?php if (floatval($addon['price']) > 0) { ?>
                                                                 &euro;&nbsp;<?php echo $addon['price']; ?>
                                                             <?php } ?>
