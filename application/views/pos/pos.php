@@ -5,13 +5,13 @@
 				<label for='selectSpot'>Select POS spot:&nbsp;&nbsp;</label>
 				<select onchange="redirectToNewLocation(this.value)" class="form-control">
 					<option value="">Select</option>
-					<?php foreach ($spots as $spot) { ?>
-						<?php if ($spot['spotActive'] !== '1') continue; ?>
+					<?php foreach ($spots as $spotOption) { ?>
+						<?php if ($spotOption['spotActive'] !== '1') continue; ?>
 						<option
-							value="pos?spotid=<?php echo $spot['spotId']; ?>"
-							<?php if (intval($spot['spotId']) === $spotId) echo 'selected'; ?>
+							value="pos?spotid=<?php echo $spotOption['spotId']; ?>"
+							<?php if (intval($spotOption['spotId']) === $spotId) echo 'selected'; ?>
 						>
-							<?php echo $spot['spotName']; ?>
+							<?php echo $spotOption['spotName']; ?>
 						</option>
 					<?php } ?>
 				</select>
