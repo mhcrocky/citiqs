@@ -45,7 +45,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>
-    <script src="<?php echo $this->baseUrl; ?>assets/home/js/keyboard.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/createKeyBoard.js"></script>
     <?php include_once FCPATH . 'application/views/includes/customDesign.php'; ?>
 </head>
 

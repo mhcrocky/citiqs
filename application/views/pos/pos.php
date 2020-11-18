@@ -15,6 +15,16 @@
 						</option>
 					<?php } ?>
 				</select>
+				<?php if (!isset($mainProducts)) { ?>
+					<div class="pos-main__add-item">
+						<a href="<?php echo base_url() . 'orders'; ?>">
+							<button class='pos-main__add-new-button' style="color:#000">
+								<i class="fa fa-hand-o-left" aria-hidden="true"></i>
+								BACK
+							</button>
+						</a>
+					</div>
+				<?php } ?>
 			</div>
 			<?php if ($spotPosOrders) { ?>
 				<div class="col-lg-5 col-12 form-inline">
@@ -94,7 +104,7 @@
 													<div
 														class="pos-item"
 														<?php if (!$posCheckoutOrder && !$posBuyerDetails && !$posPay && !$posSuccessLink && !$posPaymentFailedLink) { ?>
-															onclick="triggerModalClick('modal_buuton_<?php echo 'single-item-details-modal' . $product['productId']; ?>_<?php echo $productDetails['productExtendedId']?>')"
+															onclick="posTriggerModalClick('modal_buuton_<?php echo 'single-item-details-modal' . $product['productId']; ?>_<?php echo $productDetails['productExtendedId']?>')"
                                                         <?php } else { ?>
 															onclick="alertifyMessage(this)"
 															data-message='You can not add product in this stage. Go back to add'
@@ -170,66 +180,66 @@
 </main>
 <?php if (isset($mainProducts)) { ?>
 	<?php include_once FCPATH . 'application/views/publicorders/includes/modals/makeOrderPos/productModals.php'; ?>
+	<?php include_once FCPATH . 'application/views/publicorders/includes/makeOrderGlobalsJs.php'; ?>
+
+	<div id="holdOrder" class="modal" role="dialog">
+		<div class="modal-dialog modal-sm">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-body" style="text-align:center">
+					<label for="codeId" class="">Save order</label>
+					<input
+						type="text"
+						id="posOrderName"
+						class="form-control payOrderInputFields"
+						<?php if (!empty($posOrderName)) { ?>
+						value="<?php echo $posOrderName; ?>"
+						<?php }  ?>
+					/>
+					<div class="virtual-keyboard-hook" data-target-id="posOrderName" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
+					<br/>
+					<button
+						class="btn btn-success btn-lg"
+						style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
+						onclick="holdOrder('<?php echo $spotId; ?>', 'posOrderName')"
+					>
+						<i class="fa fa-check-circle" aria-hidden="true"></i>
+					</button>
+					<button
+						class="btn btn-danger btn-lg closeModal"
+						style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
+						data-dismiss="modal"
+					>
+						<i class="fa fa-times" aria-hidden="true"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="confirmCancel" class="modal" role="dialog">
+		<div class="modal-dialog modal-sm">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-body" style="text-align:center">
+					<label for="codeId" class="">This order will be removed. Are you sure?</label>
+					<br/>
+					<button
+						class="btn btn-success btn-lg"
+						style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
+						onclick="deleteOrder('<?php echo $spotId; ?>', '<?php echo $orderDataRandomKey; ?>')"
+					>
+						<i class="fa fa-check-circle" aria-hidden="true"></i>
+					</button>
+					<button
+						class="btn btn-danger btn-lg closeModal"
+						style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
+						data-dismiss="modal"
+					>
+						<i class="fa fa-times" aria-hidden="true"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 <?php } ?>
-<?php include_once FCPATH . 'application/views/publicorders/includes/makeOrderGlobalsJs.php'; ?>
-
-<div id="holdOrder" class="modal" role="dialog">
-	<div class="modal-dialog modal-sm">
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-body" style="text-align:center">
-				<label for="codeId" class="">Save order</label>
-				<input
-					type="text"
-					id="posOrderName"
-					class="form-control payOrderInputFields"
-					<?php if (!empty($posOrderName)) { ?>
-					value="<?php echo $posOrderName; ?>"
-					<?php }  ?>
-				/>
-				<div class="virtual-keyboard-hook" data-target-id="posOrderName" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
-				<br/>
-				<button
-					class="btn btn-success btn-lg"
-					style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
-					onclick="holdOrder('<?php echo $spotId; ?>', 'posOrderName')"
-				>
-					<i class="fa fa-check-circle" aria-hidden="true"></i>
-				</button>
-				<button
-					class="btn btn-danger btn-lg closeModal"
-					style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
-					data-dismiss="modal"
-				>
-					<i class="fa fa-times" aria-hidden="true"></i>
-				</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div id="confirmCancel" class="modal" role="dialog">
-	<div class="modal-dialog modal-sm">
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-body" style="text-align:center">
-				<label for="codeId" class="">This order will be removed. Are you sure?</label>
-				<br/>
-				<button
-					class="btn btn-success btn-lg"
-					style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
-					onclick="deleteOrder('<?php echo $spotId; ?>', '<?php echo $orderDataRandomKey; ?>')"
-				>
-					<i class="fa fa-check-circle" aria-hidden="true"></i>
-				</button>
-				<button
-					class="btn btn-danger btn-lg closeModal"
-					style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
-					data-dismiss="modal"
-				>
-					<i class="fa fa-times" aria-hidden="true"></i>
-				</button>
-			</div>
-		</div>
-	</div>
-</div>
