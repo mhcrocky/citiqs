@@ -78,31 +78,31 @@
             </div>
             <div class="content-container clearfix" id="paymentMethodsContainer">
                 <div id="paymentContainer" class="payment-container methods">
-                    <?php if ($vendor['ideal'] === '1') { ?>
+                    <?php if ($vendor['ideal'] === '1' && !$pos) { ?>
                         <a href="javascript:void(0)" onclick="toogleElements('idealBanks', 'paymentMethodsContainer', 'hidden')" class="paymentMethod method-card" >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/ideal.png" alt="iDEAL">
                             <span>iDEAL</span>
                         </a>
                     <?php } ?>
-                    <?php if ($vendor['creditCard'] === '1') { ?>
+                    <?php if ($vendor['creditCard'] === '1' && !$pos) { ?>
                         <a href="<?php echo base_url(); ?>insertorder/<?php echo $creditCardPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/creditcard.png" alt="Creditcard">
                             <span>Creditcard</span>
                         </a>
                     <?php } ?>
-                    <?php if ($vendor['payconiq'] === '1') { ?>
+                    <?php if ($vendor['payconiq'] === '1' && !$pos) { ?>
                         <a href="<?php echo base_url(); ?>insertorder/<?php echo $payconiqPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/payconiq.png" alt="Payconiq">
                             <span>Payconiq</span>
                         </a>
                     <?php } ?>
-                    <?php if ($vendor['bancontact'] === '1') { ?>
+                    <?php if ($vendor['bancontact'] === '1' && !$pos) { ?>
                         <a href="<?php echo base_url(); ?>insertorder/<?php echo $bancontactPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/bancontact.png" alt="bancontact">
                             <span>Bancontact</span>
                         </a>
                     <?php } ?>
-                    <?php if ($vendor['giro'] === '1') { ?>
+                    <?php if ($vendor['giro'] === '1' && !$pos) { ?>
                         <a href="javascript:void(0)" onclick="toogleElements('giroBanks', 'paymentMethodsContainer', 'hidden')" class="paymentMethod method-card" >
                             <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/giropay(1).png" alt="bancontact">
                             <span data-trans="" data-trn-key="Bancontact">Giropay</span>
@@ -149,7 +149,7 @@
             </div>
 
             
-            <?php if ($vendor['ideal'] === '1') { ?>
+            <?php if ($vendor['ideal'] === '1' && !$pos) { ?>
                 <div class="method method-ideal hidden"  id="idealBanks">
                     <div class="title hidden"><span data-trans="" data-trn-key="Kies een bank"><?php echo $this->language->line("PAYMENT-030",'Choose your bank');?></span>
                     </div>                                        
@@ -214,7 +214,7 @@
                 </div>
             <?php } ?>
 
-            <?php if ($vendor['giro'] === '1') { ?>
+            <?php if ($vendor['giro'] === '1' && !$pos) { ?>
                 <div class="method method-ideal hidden"  id="giroBanks">
                     <div class="title hidden"><span data-trans="" data-trn-key="Kies een bank"><?php echo $this->language->line("PAYMENT-030",'Choose your bank');?></span>
                     </div>
