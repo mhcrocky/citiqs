@@ -419,5 +419,15 @@ $route['setting/exact_credit/save'] = 'Accounting/ExactAccountSetting/save_credi
 $route['setting/exact_credit/update'] = 'Accounting/ExactAccountSetting/update_credit';
 $route['setting/exact/credit_delete/(:num)'] = 'Accounting/ExactAccountSetting/delete_credit/$1';
 
+$route['booking_agenda/reserved'] = "booking_agenda/reserved";
+$route['booking_agenda/payment_proceed'] = "booking_agenda/payment_proceed";
+$route['booking_agenda/select_payment_type'] = "booking_agenda/select_payment_type";
+$route['booking_agenda/pay'] = "booking_agenda/pay";
+$route['booking_agenda/delete_reservation/(:num)'] = "booking_agenda/delete_reservation/$1";
+$route['booking_agenda/get_agenda/(:any)'] = "booking_agenda/get_agenda/$1";
+$route['booking_agenda/get_agenda/spots/(:num)/(:num)'] = "booking_agenda/get_agenda/spots/$1/$1";
+$route['booking_agenda/getAllAgenda/(:any)'] = "booking_agenda/getAllAgenda/$1";
+$route['booking_agenda/(:any)'] = "booking_agenda/index/$1";
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
