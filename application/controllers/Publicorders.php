@@ -440,6 +440,8 @@
             // if $orderData['voucherId'] and $orderData['payWithVaucher'] unset on refresh page
             Jwt_helper::unsetVoucherData($orderData, $orderRandomKey);
 
+            $pos = intval($orderData['pos']);
+
             $data = [
                 'vendor'                => $vendor,
                 'spot'                  => $spot,
@@ -455,11 +457,11 @@
 				'localType'             => $this->config->item('local'),
                 'oldMakeOrderView'      => $this->config->item('oldMakeOrderView'),
                 'newMakeOrderView'      => $this->config->item('newMakeOrderView'),
-                'redirect'              => $this->getRedirect($vendor, $spotTypeId, $orderRandomKey),
+                'redirect'              => $this->getRedirect($vendor, $spotTypeId, $orderRandomKey, $pos, intval($orderData['spotId'])),
                 'orderRandomKey'        => $orderRandomKey,
                 'orderDataGetKey'       => $this->config->item('orderDataGetKey'),
                 'orderRandomKey'        => $orderRandomKey,
-                'pos'                   => intval($orderData['pos']),
+                'pos'                   => $pos,
                 'spotId'                => $orderData['spotId'],
             ];
 
@@ -469,18 +471,22 @@
             $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
 
-        private function getRedirect(array $vendor, int $spotTypeId, string $orderRandomKey): string
+        private function getRedirect(array $vendor, int $spotTypeId, string $orderRandomKey, int $pos, int $spotId): string
         {
-            if (
-                $vendor['requireEmail'] === '0'
-                && $vendor['requireName'] === '0'
-                && $vendor['requireMobile'] === '0'
-                && $spotTypeId === $this->config->item('local')
-            ) {
-                $redirect = 'checkout_order?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
+            if ($pos) {
+                $redirect = 'pos?spotid=' . $spotId . '&' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
             } else {
-                $redirect = 'buyer_details?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
-            };
+                if (
+                    $vendor['requireEmail'] === '0'
+                    && $vendor['requireName'] === '0'
+                    && $vendor['requireMobile'] === '0'
+                    && $spotTypeId === $this->config->item('local')
+                ) {
+                    $redirect = 'checkout_order?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
+                } else {
+                    $redirect = 'buyer_details?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
+                };
+            }            
     
             return $redirect;
         }

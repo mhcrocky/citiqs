@@ -1,7 +1,7 @@
 
 <main
     <?php if ($pos) { ?>
-        class="col-lg-4"        
+        style="display:none"
     <?php } else { ?>
         class="container checkoutOrderBody" style="text-align:left; margin-bottom:20px; width:100vw; height:100vh"
     <?php } ?>

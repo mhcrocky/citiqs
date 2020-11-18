@@ -59,9 +59,6 @@ function posTriggerModalClick(modalButtonId) {
     // setRemarkIds();
 }
 
-resetTotal();
-countOrdered('countOrdered');
-
 function setRemarkIds() {
     let container = document.getElementById(makeOrderGlobals.posMakeOrderId);
     let remarks = container.getElementsByClassName('remarks');
@@ -71,7 +68,6 @@ function setRemarkIds() {
         let remark = remarks[i];
         let remarkId = i + '_';
         if (!remark.id) {
-            
             if (remark.dataset.productRemarkId) {
                 remarkId += remark.dataset.productRemarkId;
             }
@@ -84,8 +80,7 @@ function setRemarkIds() {
     }
 }
 
-function keyboardHtml(targetId) {
-    
+function keyboardHtml(targetId) {    
     let keyboard =
         `<div
             class="virtual-keyboard-hook"
@@ -97,3 +92,14 @@ function keyboardHtml(targetId) {
         </div>`;
     return keyboard;
 }
+
+$(document).ready(function(){
+    let sumbitFormButton = document.getElementById(makeOrderGlobals.checkoutContinueButton);
+    if (sumbitFormButton) {
+        sumbitFormButton.click();
+    }
+});
+
+
+resetTotal();
+countOrdered('countOrdered');

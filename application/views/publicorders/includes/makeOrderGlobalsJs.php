@@ -15,7 +15,8 @@
             'logoImageId' : 'vendorLogo',
             'activeClass' : 'pos_categories__single-item--active', // POS
             'posMakeOrderId': 'posMakeOrderId',  // POS
-            'spanQuantityIdPrefix' : 'orderQuantityValue_'
+            'spanQuantityIdPrefix' : 'orderQuantityValue_',
+            'checkoutContinueButton' : 'checkoutContinue'
         }
 
         <?php if (!empty($returnCategorySlide)) { ?>

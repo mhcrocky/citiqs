@@ -103,7 +103,7 @@
 													<?php $productDetails = reset($product['productDetails']); ?>
 													<div
 														class="pos-item"
-														<?php if (!$posCheckoutOrder && !$posBuyerDetails && !$posPay && !$posSuccessLink && !$posPaymentFailedLink) { ?>
+														<?php if (!$posPay && !$posSuccessLink && !$posPaymentFailedLink) { ?>
 															onclick="posTriggerModalClick('modal_buuton_<?php echo 'single-item-details-modal' . $product['productId']; ?>_<?php echo $productDetails['productExtendedId']?>')"
                                                         <?php } else { ?>
 															onclick="alertifyMessage(this)"
@@ -148,7 +148,7 @@
 						<!-- end pos main-->
 						<div class="pos_categories__footer">
 							<a href="javascript:void(0)" class='pos_categories__button pos_categories__button--secondary' onclick="cancelPosOrder('<?php echo $orderDataRandomKey; ?>')">Cancel Order</a>
-							<?php if ( !$posCheckoutOrder && !$posBuyerDetails && !$posPay && !$posSuccessLink && !$posPaymentFailedLink ) { ?>
+							<?php if (!$posPay && !$posSuccessLink && !$posPaymentFailedLink ) { ?>
 							<a href="javascript:void(0)" class='pos_categories__button pos_categories__button--primary' data-toggle="modal" data-target="#holdOrder"><?php echo $orderDataRandomKey ? 'Update' : 'Save'; ?>&nbsp;Order</a>
 							<?php } ?>
 							<a href="<?php echo base_url() . 'pos?spotid=' . $spotId; ?>" class='pos_categories__button pos_categories__button--third' onclick="cancelPosOrder()">New order</a>
@@ -157,7 +157,7 @@
 					</div>
 					<!-- start pos sidebar -->
 					<?php
-						if ($posCheckoutOrder) {
+						if (!empty($posCheckoutOrder)) {
 							include_once FCPATH . 'application/views/publicorders/checkoutOrder.php';
 						} elseif ($posBuyerDetails) {
 							include_once FCPATH . 'application/views/publicorders/buyerDetails.php';
