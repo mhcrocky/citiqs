@@ -724,7 +724,7 @@
                     if (
                         ($order['delayTime'] || intval($order['delayTime']) === 0)
                         && $order['driverNumber']
-                        && (strtotime($order['orderUpdate']) < strtotime(date('Y-m-d H:i:s', strtotime('-' . $order['delayTime'] . ' minutes'))))
+                        && (strtotime($order['orderCreated']) < strtotime(date('Y-m-d H:i:s', strtotime('-' . $order['delayTime'] . ' minutes'))))
                     ) {
                         $message  = $order['driverSmsMessage'] . ' ';
                         $message .= 'Order id is "' . $order['orderId'] . '" ';
