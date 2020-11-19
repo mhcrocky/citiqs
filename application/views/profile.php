@@ -269,10 +269,6 @@
 							class="form-control"
 							style="border-radius: 50px"
 							value="<?php echo $vendor['payNlServiceId']; ?>"
-							/>
-
-
-
 						/>
 					</div>
 					<div class="form-group mb-35">
