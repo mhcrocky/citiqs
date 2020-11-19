@@ -340,6 +340,7 @@ $route['api/video/upload_post'] = 'Api/Video/upload_post';
 $route['dashboard'] = 'Businessreport/index';
 $route['businessreport/get_report'] = 'Businessreport/get_report';
 $route['businessreport/get_timestamp_totals'] = 'Businessreport/get_timestamp_totals';
+$route['businessreport/get_timestamp_orders'] = 'Businessreport/get_timestamp_orders';
 $route['businessreport/sortedWidgets'] = 'Businessreport/sortedWidgets';
 $route['businessreport/sortWidgets'] = 'Businessreport/sortWidgets';
 
