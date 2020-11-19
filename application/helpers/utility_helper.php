@@ -229,20 +229,23 @@
             array_multisort($sort_col, $dir, $arr);
         }
 
-        public static function convertDayToDate(array $arrays, string $key): array
+        public static function convertDayToDate(array $arrays, string $key, string $nonWorkFrom, string $nonWorkTo): array
         {
             if (empty($arrays)) return [];
             $reset = [];
             $today = date('D');
             $now = now();
             $time = date('H:i:s', $now);
+            $isClosedPeriod = ($nonWorkFrom && $nonWorkTo && date('Y-m-d') >= $nonWorkFrom && date('Y-m-d') <= $nonWorkTo);
+            $counter = 0;
             foreach($arrays as $array) {
+                $strToTime = strtotime(date('Y-m-d H:i:s'));
                 if ($array['day'] === $today && $array['timeTo'] <= $time) {
-                    $date = date('Y-m-d', strtotime('+7days', strtotime(date('Y-m-d H:i:s'))));
+                    $date = date('Y-m-d', strtotime('+7days', $strToTime));
                 } else {
-                    $date = date('Y-m-d', strtotime($array[$key], strtotime(date('Y-m-d H:i:s'))));
+                    $date = date('Y-m-d', strtotime($array[$key], $strToTime));
                 }
-
+                if ($nonWorkFrom && $nonWorkTo && $date >= $nonWorkFrom && $date <= $nonWorkTo) continue;
                 if (!isset($reset[$date])) {
                     $reset[$date] = [];
                 }
