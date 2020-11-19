@@ -24,6 +24,9 @@ class Businessreport extends BaseControllerWeb
 		$data['last_week_total'] = $this->businessreport_model->get_this_week_totals($vendor_id);
 		$data['compare'] = $this->businessreport_model->get_last_week_compare($vendor_id);
 		$data['service_types'] = $this->businessreport_model->get_service_types();
+		$data['day_orders'] = $this->businessreport_model->get_day_orders($vendor_id);
+		$data['week_orders'] = $this->businessreport_model->get_this_week_orders($vendor_id);
+		$data['last_week_orders'] = $this->businessreport_model->get_last_week_orders($vendor_id);
 		$this->loadViews("businessreport/index", $this->global, $data, 'footerbusiness', 'headerbusiness'); // payment screen
 
 	}
@@ -123,6 +126,13 @@ class Businessreport extends BaseControllerWeb
 
 	}
 
+	public function get_timestamp_orders(){
+		$vendor_id = $this->vendor_id;
+		$min_date = $this->input->post('min');
+		$max_date = $this->input->post('max');
+		$orders = $this->businessreport_model->get_date_range_orders($vendor_id, $min_date, $max_date);
+		echo json_encode($orders);
+	}
 
 
 }
