@@ -399,7 +399,7 @@
                         ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     INNER JOIN
                         tbl_shop_vendors ON tbl_shop_vendors.vendorId = vendorOne.id
-                    INNER JOIN
+                    LEFT JOIN
                         tbl_shop_orders_paynl ON tbl_shop_orders_paynl.orderId = tbl_shop_orders.id
                     WHERE
                         tbl_shop_orders.paid = "1"
@@ -520,7 +520,7 @@
                         ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     INNER JOIN
                         tbl_shop_vendors ON tbl_shop_vendors.vendorId = vendorOne.id
-                    INNER JOIN
+                    LEFT JOIN
                         tbl_shop_orders_paynl ON tbl_shop_orders_paynl.orderId = tbl_shop_orders.id
                     WHERE
                         tbl_shop_orders.paid = "1"
@@ -550,7 +550,8 @@
 
                 LIMIT 1;
             ';
-            // echo $query;die();
+
+//            echo $query;die();
             $result = $this->db->query($query);
             $result = $result->result_array();
 
