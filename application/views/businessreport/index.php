@@ -350,6 +350,10 @@ td.details-control {
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script> 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+
 <script type="text/javascript">
 
 
@@ -428,6 +432,13 @@ td.details-control {
         scroller: true,
         lengthMenu: [[5, 10, 20, 50, 100, 200, 500, -1], [5, 10, 20, 50, 100, 200, 500, 'All']],
         pageLength: 5,
+        dom: 'Blfrtip',
+        buttons: [  {
+            extend: 'excelHtml5',
+            autoFilter: true,
+            footer: true,
+            sheetName: 'Exported data'
+        } ],
         ajax: {
           type: 'get',
           url: '<?php echo base_url("businessreport/get_report"); ?>',
@@ -546,6 +557,8 @@ td.details-control {
            $(tfoot).find('th').eq(9).html(round_up(pageAmount)+'('+round_up(amount)+')');
            $(tfoot).find('th').eq(10).html(round_up(pageExvatTotal)+'('+round_up(exvatTotal)+')');
            $(tfoot).find('th').eq(11).html(round_up(pageVatTotal)+'('+round_up(vatTotal)+')');
+           $('.buttons-excel').addClass('btn').addClass('btn-success').addClass('mb-3');
+           $('.buttons-excel').text('Export as Excel');
         },
         rowId: function(a) {
           return 'row_id_' + a.order_id;
@@ -719,6 +732,7 @@ function format(d) {
       (month<10 ? '0' : '') + month + '-' +
       (day<10 ? '0' : '') + day;
 
+      /*
       table.on( 'search.dt', function () {
         if(table['context'][0]['aiDisplay'].length == 0){
           $('#report_length').hide();
@@ -726,6 +740,7 @@ function format(d) {
           $('#report_length').show();
         }
       });
+      */
 
       $.fn.dataTable.ext.search.push(
         function (settings, data, dataIndex) {

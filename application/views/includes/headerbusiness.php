@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="<?php echo $this->baseUrl; ?>assets/home/images/tiqsiconlogonew.png">
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl;?>assets/css/business_dashboard/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl;?>assets/css/css/customer_style.css">
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/main-style.css">
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/font-awesome-4.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/themify-icons.css">
@@ -24,14 +25,17 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/alertify_default.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/keyboard.css" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" />
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/bower_components/bootstrap-colorselector/bootstrap-colorselector.min.css"/>
     <!-- amchart css -->
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
     <!-- others css -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/business_dashboard/typography.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/business_dashboard/default-css.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/business_dashboard/styles.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/business_dashboard/responsive.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/css/business_dashboard/typography.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/css/business_dashboard/default-css.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/css/business_dashboard/styles.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/css/business_dashboard/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.css"/>
+
 
     <?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
     <?php include_once FCPATH . 'application/views/includes/jsGlobalVariables.php'; ?>
@@ -88,8 +92,9 @@
     </style>
     <!-- modernizr css -->
     <script src="<?php echo $this->baseUrl; ?>assets/js/business_dashboard/jquery-2.2.4.min.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/js/popper.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"  type="text/javascript"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/js/modernizr-2.8.3.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/flatpickr.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jquery.magnific-popup.min.js"></script>
@@ -103,7 +108,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/products.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js"></script>
-    <script src="<?php echo $this->baseUrl; ?>assets/home/js/products.js"></script> 
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/products.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/bower_components/bootstrap-colorselector/bootstrap-colorselector.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vuejs-datepicker"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.umd.min.js"></script>
+    <?php if (isset($js) AND is_array($js)) {
+        foreach ($js as $jsLink) { ?>
+            <script src="<?php echo $jsLink ?>"></script>
+        <?php }
+    }?> 
 
 
 <style type="text/css">/* Chart.js */
@@ -130,6 +145,7 @@
                     <li><a href="<?php echo $this->baseUrl; ?>orders"><i class="ti-stats-up"></i> <span>Orders</span></a></li>
                     <li><a href="<?php echo $this->baseUrl; ?>pos"><i class="ti-bar-chart"></i> <span>POS</span></a></li>
                     <li><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-receipt"></i> <span>Business Report</span></a></li>
+                    <li><a href="<?php echo $this->baseUrl;?>customer_panel/agenda"><i class="ti-agenda"></i> <span>Agenda</span></a></li>
                     <li>
                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-shopping-cart-full"></i><span>Marketing</span></a>
                         <ul class="collapse">

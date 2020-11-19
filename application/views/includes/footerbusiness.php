@@ -8,12 +8,11 @@
 </div>
 
     <!-- bootstrap 4 js -->
-    <script src="<?php echo base_url(); ?>assets/js/popper.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/owl.carousel.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/metisMenu.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/jquery.slimscroll.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/jquery.slicknav.min.js"></script>
+   
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
     <!-- start highcharts js -->
@@ -28,6 +27,8 @@
     <!-- others plugins -->
     <script src="<?php echo base_url(); ?>assets/js/business_dashboard/plugins.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/business_dashboard/scripts.js"></script>
+    <script src="<?php echo base_url(); ?>assets/home/js/ajax.js"></script>
+
 
 
 </html>
