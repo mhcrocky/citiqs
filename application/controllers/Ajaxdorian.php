@@ -29,6 +29,10 @@ class Ajaxdorian extends CI_Controller
         $this->load->model('shopvoucher_model');
         $this->load->model('shopsession_model');
         $this->load->model('email_templates_model');
+        $this->load->model('email_templates_model');
+        $this->load->model('bookandpayagendabooking_model');
+        $this->load->model('bookandpayspot_model');
+        $this->load->model('bookandpaytimeslots_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -38,8 +42,7 @@ class Ajaxdorian extends CI_Controller
         $this->load->helper('perfex_helper');
         $this->load->helper('curl_helper');
         $this->load->helper('dhl_helper');
-        $this->load->helper('validate_data_helper');
-
+        
         
 
         $this->load->library('session');
@@ -184,5 +187,152 @@ class Ajaxdorian extends CI_Controller
 			$status = 'error';
 		}
 		echo json_encode(array('msg' => $msg, 'status' =>$status));
+    }
+
+    public function saveAgenda () {
+        //if (!$this->input->is_ajax_request()) return;
+
+        $agendData = [
+            'ReservationDescription' => $this->input->post('ReservationDescription'),
+            'ReservationDateTime' => date("Y-m-d H:i:s", strtotime($this->input->post('ReservationDateTime'))),
+            'Background' => $this->input->post('Background'),
+            'Customer' => $this->session->userdata('userId'),
+            'email_id' => $this->input->post('email_id'),
+            'online' => intval($this->input->post('online'))
+        ];
+
+        $agenda_id = $this->input->post('id');
+
+        if ($agenda_id) {
+            $this->bookandpayagendabooking_model->updateAgenda($agendData, $agenda_id);
+        } else {
+            $agenda_id = $this->bookandpayagendabooking_model->addAgenda($agendData);
+        }
+
+        if ($agenda_id) {
+            $agenda = $this->bookandpayagendabooking_model->getBookingAgendaById($agenda_id);
+            $msg = 'Agenda saved!';
+            $status = 'success';
+            $data = $agenda;
+        } else {
+            $msg = 'Something goes wrong!';
+            $status = 'error';
+        }
+        echo json_encode(array('msg' => $msg, 'status' =>$status, 'data' => $data));
+    }
+
+    public function deleteAgenda () {
+        //if (!$this->input->is_ajax_request()) return;
+        $agenda_id = $this->input->post('agenda_id');
+
+        if ($this->bookandpayagendabooking_model->deleteAgenda($agenda_id)) {
+            $msg = 'Agenda deleted!';
+            $status = 'success';
+        } else {
+            $msg = 'Something goes wrong!';
+            $status = 'error';
+        }
+        echo json_encode(array('msg' => $msg, 'status' =>$status));
+    }
+
+    public function saveAgendaSpot () {
+        //if (!$this->input->is_ajax_request()) return;
+        $spotData = [
+            'descript' => $this->input->post('descript'),
+            'soldoutdescript' => $this->input->post('soldoutdescript'),
+            'pricingdescript' => $this->input->post('pricingdescript'),
+            'feedescript' => $this->input->post('feedescript'),
+            'available_items' => $this->input->post('available_items'),
+            'numberofpersons' => $this->input->post('numberofpersons'),
+            'sort_order' => $this->input->post('sort_order'),
+            'price' => $this->input->post('price'),
+            'image' => $this->input->post('image'),
+            'agenda_id' => $this->input->post('agenda_id'),
+            'email_id' => $this->input->post('email_id'),
+        ];
+
+        $spot_id = $this->input->post('id');
+
+        if ($spot_id) {
+            $this->bookandpayspot_model->updateSpot($spotData, $spot_id);
+        } else {
+            $spot_id = $this->bookandpayspot_model->addSpot($spotData);
+        };
+
+        $spot = $this->bookandpayspot_model->getSpot($spot_id);
+
+        $data = '';
+
+        if ($spot) {
+            $msg = 'Spot saved!';
+            $status = 'success';
+            $data = $spot;
+        } else {
+            $msg = 'Something goes wrong!';
+            $status = 'error';
+        }
+        echo json_encode(array('msg' => $msg, 'status' =>$status, 'data' => $data));
+    }
+
+    public function deleteSpot () {
+        //if (!$this->input->is_ajax_request()) return;
+        $spot_id = $this->input->post('id');
+
+        if ($this->bookandpayspot_model->deleteSpot($spot_id)) {
+            $msg = 'Spot deleted!';
+            $status = 'success';
+        } else {
+            $msg = 'Something goes wrong!';
+            $status = 'error';
+        }
+        echo json_encode(array('msg' => $msg, 'status' =>$status));
+    }
+
+    public function saveTimeSLot () {
+        //if (!$this->input->is_ajax_request()) return;
+        $spotData = [
+            'timeslotdescript' => $this->input->post('timeslotdescript'),
+            'available_items' => $this->input->post('available_items'),
+            'fromtime' => date("H:i:s", strtotime($this->input->post('fromtime'))),
+            'totime' => date("H:i:s", strtotime($this->input->post('totime'))),
+            'price' => $this->input->post('price'),
+            'spot_id' => $this->input->post('spot_id'),
+            'email_id' => $this->input->post('email_id')
+        ];
+
+        $timeslot_id = $this->input->post('id');
+
+        if ($timeslot_id) {
+            $this->bookandpaytimeslots_model->updateTimeSLot($spotData, $timeslot_id);
+        } else {
+            $timeslot_id = $this->bookandpaytimeslots_model->addTimeSLot($spotData);
+        };
+
+        $timeslot = $this->bookandpaytimeslots_model->getTimeSLot($timeslot_id);
+        $data = '';
+
+        if ($timeslot) {
+            $msg = 'Time Slot saved!';
+            $status = 'success';
+            $data = $timeslot;
+        } else {
+            $msg = 'Something goes wrong!';
+            $status = 'error';
+        }
+        echo json_encode(array('msg' => $msg, 'status' =>$status, 'data' => $data));
+    }
+
+    public function deleteTimeSlot () {
+        //if (!$this->input->is_ajax_request()) return;
+        $spot_id = $this->input->post('id');
+
+        if ($this->bookandpaytimeslots_model->deleteTimeSLot($spot_id)) {
+            $msg = 'Time Slot deleted!';
+            $status = 'success';
+        } else {
+            $msg = 'Something goes wrong!';
+            $status = 'error';
+        }
+        echo json_encode(array('msg' => $msg, 'status' =>$status));
     }
 }
