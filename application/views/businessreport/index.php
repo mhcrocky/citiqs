@@ -242,6 +242,66 @@ td.details-control {
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-3 ui-sortable mb-3" data-position="13" data-sort="1">
+                            <div style="height:160px;" class="single-report mb-xs-30"><div style="min-height:500px;position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <div class="s-report-inner pr--20 pt--30 mb-3">
+                                <div style="background: #0066ff;" class="icon">&nbsp</div>
+                                    <div class="s-report-title d-flex justify-content-between">
+                                        <h4 class="header-title mb-0">Orders</h4>
+                                        <p>TODAY</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between pb-2">
+                                        <h2><?php echo $day_orders; ?></h2>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <div  class="col-md-3 ui-sortable mb-3" data-position="14" data-sort="1"> 
+                            <div style="height:160px;" class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <div class="s-report-inner pr--20 pt--30 mb-3">
+                                <div style="background:  #009933;" class="icon">&nbsp</div>
+                                    <div class="s-report-title d-flex justify-content-between">
+                                        <h4 class="header-title mb-0">Orders</h4>
+                                        <p>WEEK</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between pb-2">
+                                        <h2><?php echo $week_orders; ?></h2>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 ui-sortable mb-3" data-position="15" data-sort="1">
+                            <div  style="height:160px;"  class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <div class="s-report-inner pr--20 pt--30 mb-3">
+                                <div style="background: #00ff55;" class="icon">&nbsp</div>
+                                    <div class="s-report-title d-flex justify-content-between">
+                                        <h4 class="header-title mb-0">Orders</h4>
+                                        <p>LAST WEEK</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between pb-2">
+                                        <h2><?php echo $last_week_orders; ?></h2>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 ui-sortable mb-3" data-position="16" data-sort="1">
+                            <div  style="height:160px;"  class="single-report"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <div class="s-report-inner pr--20 pt--30 mb-3">
+                                    <div style="background: #ffc34d;" class="icon">&nbsp</div>
+                                    <div class="s-report-title d-flex justify-content-between">
+                                        <h4 class="header-title mb-0">Orders</h4>
+                                        <p>TIMESTAMP</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between pb-2">
+                                        <h2 id="orders"></h2>
+                                        <span> </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
@@ -696,6 +756,11 @@ function format(d) {
             $('#local').text( total_number(local) );
             $('#delivery').text( total_number(delivery) );
             $('#pickup').text( total_number(pickup) );
+          });
+
+          $.post("<?php echo base_url('businessreport/get_timestamp_orders');?>",{min:"'"+min+"'",max:"'"+max+"'"}, function(data){
+            let orders = JSON.parse(data);
+            $('#orders').text( orders );
           });
 
           table.draw();
