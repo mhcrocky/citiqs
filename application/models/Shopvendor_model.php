@@ -40,6 +40,8 @@
         public $skipDate;
         public $design;
         public $activatePos;
+        public $nonWorkFrom;
+        public $nonWorkTo;
 
         public $serviceFeePercent;
         public $serviceFeeAmount;
@@ -158,6 +160,8 @@
             if (isset($data['skipDate']) && !($data['skipDate'] === '1' || $data['skipDate'] === '0')) return false;
             if (isset($data['design']) && !Validate_data_helper::validateString($data['design'])) return false;
             if (isset($data['activatePos']) && !($data['activatePos'] === '1' || $data['activatePos'] === '0')) return false;
+            if (isset($data['nonWorkFrom']) && !Validate_data_helper::validateDate($data['nonWorkFrom'])) return false;
+            if (isset($data['nonWorkTo']) && !Validate_data_helper::validateDate($data['nonWorkTo'])) return false;
 
             if (isset($data['deliveryServiceFeePercent']) && !Validate_data_helper::validateString($data['deliveryServiceFeePercent'])) return false;
             if (isset($data['deliveryServiceFeeAmount']) && !Validate_data_helper::validateFloat($data['deliveryServiceFeeAmount'])) return false;
@@ -247,6 +251,8 @@
                     $this->table . '.pickupServiceFeePercentPos',
                     $this->table . '.pickupServiceFeeAmountPos',
                     $this->table . '.pickupMinimumOrderFeePos',
+                    $this->table . '.nonWorkFrom',
+                    $this->table . '.nonWorkTo',
 
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',

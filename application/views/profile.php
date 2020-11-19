@@ -813,6 +813,8 @@
 					</form>
 				<?php } ?>
 				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#timeModal" style="margin-top:20px">Set working time</button>
+				<br style="display:initial"/>
+				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#nonWorkingPeriod" style="margin-top:20px">Set non-working period</button>
 				<!--TIME MODAL -->
 				<div class="modal" id="timeModal" role="dialog">
 					<div class="modal-dialog">
@@ -911,6 +913,54 @@
 										</div>
 									</div>
 									<?php } ?>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									<input type="submit" class="btn btn-primary" value="Submit" />
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!--NON WORKING PERIOD -->
+				<div class="modal" id="nonWorkingPeriod" role="dialog">
+					<div class="modal-dialog">
+						<!-- Modal content-->
+						<form method="post" action="<?php echo base_url() ?>profile/setNonWorkingTime/<?php echo $vendor['id']; ?>">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h4 class="modal-title">
+										Set a non-working period
+									</h4>
+								</div>
+								<div class="modal-body">								
+									<div class="col-sm-12">
+										<label for="nonWorkFrom" style="color:#000">From: 
+											<input
+												type="date"
+												id="nonWorkFrom"
+												name="nonWorkFrom"
+												class="form-control"
+												requried
+												value="<?php if ($vendor['nonWorkFrom']) echo $vendor['nonWorkFrom']?>"
+												min="<?php echo date('Y-m-d'); ?>"
+											/>
+										</label>
+									</div>
+									<div class="col-sm-12">
+										<label for="nonWorkTo" style="color:#000">To: 
+											<input
+												type="date"
+												id="nonWorkTo"
+												name="nonWorkTo"
+												class="form-control"
+												requried
+												value="<?php if ($vendor['nonWorkTo']) echo $vendor['nonWorkTo']?>"
+												min="<?php echo date('Y-m-d'); ?>"
+											/>
+										</label>
+									</div>
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -1104,4 +1154,11 @@
 		return "<?php echo base_url('index.php/ajax/users/'); ?>";
 	}
 	var baseURL = "<?php echo $this->baseUrl; ?>"
+		// date time picker
+	$(document).ready(function(){
+		// $('.timePickers').datetimepicker({
+		// 	timepicker: false,
+		// 	format: 'yy-m-d'
+		// });
+	});
 </script>

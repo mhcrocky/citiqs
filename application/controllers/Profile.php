@@ -47,6 +47,8 @@ class  Profile extends BaseControllerWeb
 			'workingTime' => $this->shopvendortime_model->setProperty('vendorId', $this->userId)->fetchWorkingTime(),
 			'dayOfWeeks' => $this->config->item('weekDays'),
 		];
+		// var_dump($data['vendor']);
+		// die();
 		if ($data['workingTime']) {
 			$data['workingTime'] = Utility_helper::resetArrayByKeyMultiple($data['workingTime'], 'day');
 		}
@@ -158,4 +160,36 @@ class  Profile extends BaseControllerWeb
 		return;
 	}
 
+	public function setNonWorkingTime($id): void
+	{
+		$post = Utility_helper::sanitizePost();
+
+		if (!$post['nonWorkFrom'] || !$post['nonWorkTo']) {
+			$this->session->set_flashdata('error', 'Date from and date to are required');
+		} elseif ($post['nonWorkFrom'] < date('Y-m-d')) {
+
+			$this->session->set_flashdata('error', 'Date from can not be before today');
+		} elseif ($post['nonWorkFrom'] > $post['nonWorkTo']) {
+			$this->session->set_flashdata('error', 'Date to can not be before date from');
+		} else {
+			var_dump($post);
+
+			$update = $this
+						->shopvendor_model
+							->setObjectId(intval($id))
+							->setProperty('nonWorkFrom', $post['nonWorkFrom'])
+							->setProperty('nonWorkTo', $post['nonWorkTo'])
+							->update();
+			if ($update) {
+				$this->session->set_flashdata('success', 'Non working period set');
+			} else {
+				$this->session->set_flashdata('error', 'Non working period did not set');
+			}
+			
+		}
+
+
+		#die();
+		redirect('profile');
+	}
 }
