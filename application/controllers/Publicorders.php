@@ -316,7 +316,7 @@
             if (intval($data['spot']['spotTypeId']) !== $this->config->item('local')) {
                 $workingTime = $this->shopspottime_model->setProperty('spotId', $data['spotId'])->fetchWorkingTime();
                 if ($workingTime) {
-                    $data['workingTime'] = Utility_helper::convertDayToDate($workingTime, 'day');
+                    $data['workingTime'] = Utility_helper::convertDayToDate($workingTime, 'day', $data['vendor']['nonWorkFrom'], $data['vendor']['nonWorkTo']);
                     $data['spotType'] = (intval($data['spot']) === $this->config->item('deliveryType')) ? 'delivery' : 'pickup';
 
                     if ($data['vendor']['preferredView'] === $this->config->item('oldMakeOrderView')) {
