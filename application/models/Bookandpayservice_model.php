@@ -7,16 +7,17 @@
  * @version : 1.1
  * @since : 15 November 2016
  */
-class Bookandpay_model extends CI_Model
+class Bookandpayservice_model extends CI_Model
 {
 
 	public $uploadFolder = FCPATH . 'uploads/LabelImages';
 
 
-	function newbooking($labelInfo)
+	function newbookingservice($labelInfo)
 	{
-//		var_dump($labelInfo);
-//		die();
+
+		var_dump($labelInfo);
+		die();
 
 		try
 		{
@@ -62,6 +63,8 @@ class Bookandpay_model extends CI_Model
 			return null;
 		}
 	}
+
+	
 
 	function newvoucher($reservationId)
 	{
@@ -165,6 +168,21 @@ class Bookandpay_model extends CI_Model
 		return $result;
 	}
 
+	public function getReservationByOrderID($email,$eventdate,$reservationId,$transactionid)
+	{
+		$this->db->from('tbl_bookandpay');
+		$this->db->where('email', $email);
+		$this->db->where('reservationId', $reservationId);
+		$this->db->where('eventdate', $eventdate);
+		$query = $this->db->get();
+		$result = $query->row();
+//				$testquery = $this->db->last_query();
+//				var_dump($testquery);
+//				die();
+		return $result;
+	}
+
+
 	function editbookandpay($labelInfo, $reservationId)
 	{
 		try {
@@ -189,7 +207,7 @@ class Bookandpay_model extends CI_Model
 		$this->db->where('reservationset', 1);
 		$this->db->where('timeslot !=', 0 );
 		$this->db->where('customer', $customer );
-		$this->db->where('eventdate', $eventdate );
+		$this->db->where('eventdate', date("yy.m.d", strtotime($eventdate)) );
 		$num_results = $this->db->count_all_results();
 //				$testquery = $this->db->last_query();
 //				var_dump($testquery);
@@ -205,9 +223,9 @@ class Bookandpay_model extends CI_Model
 		$this->db->where('reservationset', 1);
 		$this->db->where('timeslot !=', 0 );
 		$this->db->where('customer', $customer );
-		$this->db->where('eventdate', $eventdate );
+		$this->db->where('eventdate', date("yy.m.d", strtotime($eventdate)) );
 		$num_results = $this->db->count_all_results();
-//				$testquery = $this->db->last_query();
+				$testquery = $this->db->last_query();
 //				var_dump($testquery);
 //				var_dump($num_results);
 //				die();
@@ -222,7 +240,7 @@ class Bookandpay_model extends CI_Model
 		$this->db->where('reservationset', 1);
 		$this->db->where('timeslot', $timeslot);
 		$this->db->where('customer', $customer );
-		$this->db->where('eventdate', $eventdate );
+		$this->db->where('eventdate', date("yy.m.d", strtotime($eventdate)) );
 		$num_results = $this->db->count_all_results();
 //				$testquery = $this->db->last_query();
 //				var_dump($testquery);
@@ -503,93 +521,9 @@ class Bookandpay_model extends CI_Model
 	{
 		$where = [
 			'tbl_bookandpay.paid=' => '0',
-			'tbl_bookandpay.reservationtime<' => date('Y-m-d H:i:s', strtotime("-10 minutes", strtotime(date('Y-m-d H:i:s')))),
+			'tbl_bookandpay.reservationtime<' => date('Y-m-d H:i:s', strtotime("-15 minutes", strtotime(date('Y-m-d H:i:s')))),
 		];
 		return $this->db->delete('tbl_bookandpay', $where);
-	}
-
-	/*
-	 * Added functions from booking2020(bookandpay_model)
-	 * author : Dorian Rina
-	 * since : 18 November 2020
-	 */
-
-	function getBookingCountByTimeSlot($customer,$timeSlotId, $spotId, $fromtime)
-    {
-        $this->db->select('*');
-        $this->db->from('tbl_bookandpay');
-		$this->db->where('timeslot', $timeSlotId);
-		$this->db->where('SpotId', $spotId);
-		$this->db->where('timefrom', $fromtime);
-		$this->db->where('customer', $customer);
-
-        $query = $this->db->get();
-
-        if($query) {
-            return $query->num_rows();
-        }
-
-        return 0;
-	}
-	
-	function getBookingCountBySpot($customer, $spotId, $timeSlotId, $fromtime)
-    {
-        $this->db->select('*');
-        $this->db->from('tbl_bookandpay');
-		$this->db->where('timeslot', $timeSlotId);
-		$this->db->where('SpotId', $spotId);
-		$this->db->where('timefrom', $fromtime);
-		$this->db->where('customer', $customer);
-
-        $query = $this->db->get();
-
-        if($query) {
-            return $query->num_rows();
-        }
-
-        return 0;
-	}
-
-	public function getReservationsByIds($reservationIds)
-	{
-		$this->db->from('tbl_bookandpay');
-		$this->db->where_in('reservationId', $reservationIds);
-		$query = $this->db->get();
-
-//				$testquery = $this->db->last_query();
-//				var_dump($testquery);
-//				die();
-        $result = $query->result();
-		return $result;
-	}
-
-	function getBookingByTimeSlot($customer, $eventDate, $timeSlot)
-    {
-        $this->db->select('*');
-        $this->db->from('tbl_bookandpay');
-        $this->db->where('reservationset', 1);
-        $this->db->where('customer', $customer);
-        $this->db->where('timeslot', $timeSlot);
-
-        $this->db->where('eventdate', date("yy-m-d", strtotime($eventDate)));
-        $query = $this->db->get();
-
-        if($query) {
-            return $query->result();
-        }
-
-        return false;
-	}
-
-	public function getUserSlCode($id)
-	{
-		$this->db->select('sl_code');
-		$this->db->from('tbl_user');
-		$this->db->where('id', $id);
-		$query = $this->db->get();
-
-        $result = $query->row();
-		return $result->sl_code;
 	}
 
 }

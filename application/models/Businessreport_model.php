@@ -144,6 +144,78 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 	}
 
 
+	public function get_day_orders($vendor_id)
+	{
+		$date = date('Y-m-d');
+		$query = $this->db->query("SELECT tbl_shop_orders.id
+FROM tbl_shop_orders INNER JOIN tbl_shop_order_extended ON tbl_shop_orders.id = tbl_shop_order_extended.orderId
+INNER JOIN tbl_shop_products_extended ON tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
+INNER JOIN tbl_shop_products ON  tbl_shop_products_extended.productId = tbl_shop_products.id
+INNER JOIN tbl_shop_categories ON  tbl_shop_products.categoryId = tbl_shop_categories.id 
+INNER JOIN (SELECT * FROM tbl_user WHERE roleid = 2) AS vendor ON vendor.id = tbl_shop_categories.userId
+INNER JOIN (SELECT * FROM tbl_user  WHERE roleid = 6 OR roleid = 2) AS buyer ON buyer.id = tbl_shop_orders.buyerId
+INNER JOIN tbl_shop_spots ON tbl_shop_orders.spotId = tbl_shop_spots.id
+INNER JOIN tbl_shop_spot_types ON tbl_shop_orders.serviceTypeId = tbl_shop_spot_types.id
+WHERE vendor.id = ".$vendor_id." AND tbl_shop_orders.paid = '1' AND DATE(tbl_shop_orders.created) = '$date' 
+GROUP BY tbl_shop_orders.id");
+		$result = $query->result_array();
+		return count($result);
+	}
+
+	public function get_this_week_orders($vendor_id)
+	{
+		$query = $this->db->query("SELECT tbl_shop_orders.id
+FROM tbl_shop_orders INNER JOIN tbl_shop_order_extended ON tbl_shop_orders.id = tbl_shop_order_extended.orderId
+INNER JOIN tbl_shop_products_extended ON tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
+INNER JOIN tbl_shop_products ON  tbl_shop_products_extended.productId = tbl_shop_products.id
+INNER JOIN tbl_shop_categories ON  tbl_shop_products.categoryId = tbl_shop_categories.id 
+INNER JOIN (SELECT * FROM tbl_user WHERE roleid = 2) AS vendor ON vendor.id = tbl_shop_categories.userId
+INNER JOIN (SELECT * FROM tbl_user  WHERE roleid = 6 OR roleid = 2) AS buyer ON buyer.id = tbl_shop_orders.buyerId
+INNER JOIN tbl_shop_spots ON tbl_shop_orders.spotId = tbl_shop_spots.id
+INNER JOIN tbl_shop_spot_types ON tbl_shop_orders.serviceTypeId = tbl_shop_spot_types.id
+WHERE vendor.id = ".$vendor_id." AND tbl_shop_orders.paid = '1' AND tbl_shop_orders.created > DATE_SUB(now(), INTERVAL 7 DAY)
+GROUP BY tbl_shop_orders.id");
+		$result = $query->result_array();
+		return count($result);
+	}
+
+	public function get_last_week_orders($vendor_id)
+	{
+		$query = $this->db->query("SELECT tbl_shop_orders.id
+FROM tbl_shop_orders INNER JOIN tbl_shop_order_extended ON tbl_shop_orders.id = tbl_shop_order_extended.orderId
+INNER JOIN tbl_shop_products_extended ON tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
+INNER JOIN tbl_shop_products ON  tbl_shop_products_extended.productId = tbl_shop_products.id
+INNER JOIN tbl_shop_categories ON  tbl_shop_products.categoryId = tbl_shop_categories.id 
+INNER JOIN (SELECT * FROM tbl_user WHERE roleid = 2) AS vendor ON vendor.id = tbl_shop_categories.userId
+INNER JOIN (SELECT * FROM tbl_user  WHERE roleid = 6 OR roleid = 2) AS buyer ON buyer.id = tbl_shop_orders.buyerId
+INNER JOIN tbl_shop_spots ON tbl_shop_orders.spotId = tbl_shop_spots.id
+INNER JOIN tbl_shop_spot_types ON tbl_shop_orders.serviceTypeId = tbl_shop_spot_types.id
+WHERE vendor.id = ".$vendor_id." AND tbl_shop_orders.paid = '1' 
+AND tbl_shop_orders.created > DATE_SUB(now(), INTERVAL 14 DAY) AND tbl_shop_orders.created <= DATE_SUB(now(), INTERVAL 7 DAY)
+GROUP BY tbl_shop_orders.id");
+		$result = $query->result_array();
+		return count($result);
+	}
+
+	public function get_date_range_orders($vendor_id, $min_date, $max_date)
+	{
+		$query = $this->db->query("SELECT tbl_shop_orders.id
+FROM tbl_shop_orders INNER JOIN tbl_shop_order_extended ON tbl_shop_orders.id = tbl_shop_order_extended.orderId 
+INNER JOIN tbl_shop_products_extended ON tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
+INNER JOIN tbl_shop_products ON  tbl_shop_products_extended.productId = tbl_shop_products.id
+INNER JOIN tbl_shop_categories ON  tbl_shop_products.categoryId = tbl_shop_categories.id 
+INNER JOIN (SELECT * FROM tbl_user WHERE roleid = 2) AS vendor ON vendor.id = tbl_shop_categories.userId
+INNER JOIN (SELECT * FROM tbl_user  WHERE roleid = 6 OR roleid = 2) AS buyer ON buyer.id = tbl_shop_orders.buyerId
+INNER JOIN tbl_shop_spots ON tbl_shop_orders.spotId = tbl_shop_spots.id
+INNER JOIN tbl_shop_spot_types ON tbl_shop_orders.serviceTypeId = tbl_shop_spot_types.id
+WHERE vendor.id = ".$vendor_id." AND tbl_shop_orders.paid = '1'
+AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_date
+GROUP BY tbl_shop_orders.id");
+		$result = $query->result_array();
+		return count($result);
+	}
+
+
 	public function get_date_range_totals($vendor_id, $min_date, $max_date){
 		$local_results = $this->date_range_total($vendor_id, $min_date, $max_date, 'local');
 		$delivery_results = $this->date_range_total($vendor_id, $min_date, $max_date, 'delivery');
