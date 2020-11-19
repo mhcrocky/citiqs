@@ -6,16 +6,20 @@
 		</div><!-- /.login-logo -->
 		<h1 id="closedContainerH1" style="text-align:center"><?php echo $vendor['vendorName'] ?></h1>
 		<div class="selectWrapper mb-35">
-			<h2 class="closedContainerFontColor">We are closed now</h2>
-            <?php if ($workingTime) { ?>
-                <h2 class="closedContainerFontColor" style="margin-top:20px">Working time</h2>
-                <?php foreach ($workingTime as $day => $times) { ?>
-                    <h3 class="closedContainerFontColor"><?php echo $day ?><h3>
-                    <?php foreach ($times as $time) { ?>
-                    <p class="closedContainerFontColor">From: <?php echo $time['timeFrom']; ?> To:  <?php echo $time['timeTo']; ?></p>
-                    <?php } ?>
-                <?php } ?>
-            <?php } ?>
+			<?php  if ($isClosedPeriod) { ?>
+                <h2 class="closedContainerFontColor">We are closed from '<?php echo $vendor['nonWorkFrom']; ?>' to '<?php echo $vendor['nonWorkTo']; ?>'</h2>
+			<?php } else { ?>				
+				<?php if ($workingTime) { ?>
+					<h2 class="closedContainerFontColor">We are closed now</h2>
+					<h2 class="closedContainerFontColor" style="margin-top:20px">Working time</h2>
+					<?php foreach ($workingTime as $day => $times) { ?>
+						<h3 class="closedContainerFontColor"><?php echo $day ?><h3>
+						<?php foreach ($times as $time) { ?>
+							<p class="closedContainerFontColor">From: <?php echo $time['timeFrom']; ?> To:  <?php echo $time['timeTo']; ?></p>
+						<?php } ?>
+					<?php } ?>
+				<?php } ?>
+			<?php } ?>
 		</div>
 	</div>
 </div>

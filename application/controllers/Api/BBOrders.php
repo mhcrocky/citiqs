@@ -725,7 +725,8 @@
 //        	}
         	//it will not proceed when FDM have an issue
 			$order = $this->shoporder_model->fetchOrdersForPrint($get['mac'], 'tbl_shop_order_extended.printed = "0" ');
-			
+//			var_dump($order);
+//
 //			die("");
             if (!$order) return;
             $order = reset($order);
@@ -1191,8 +1192,10 @@
                 "PayAmount"             =>  (float)$TStotalamount,
                 "ForeignCurrencyAmount" =>  0,
                 "ForeignCurrencyISO"    =>  "",
-                "Reference"             =>  $order['payNlTransactionId'], //PAYNL TRANSACTION ID !!! DONE !!!
+                "Reference"             =>  $order['orderId'], //PAYNL TRANSACTION ID !!! DONE !!!
             );
+
+			// isset($order['payNlTransactionId'])?$order['payNlTransactionId']:$order['orderId']
             
 			// $imagetextemail->annotateImage($drawemail, 440, 165 + ($i * 30), 0, "BTW 21 % ");
 			// $drawemail->annotation(570, 165 + ($i * 30), "€ ". $T21Stotalamount);
@@ -1739,7 +1742,7 @@
                 "PayAmount"             =>  (float)$TStotalamount,
                 "ForeignCurrencyAmount" =>  0,
                 "ForeignCurrencyISO"    =>  "",
-                "Reference"             =>  $order['payNlTransactionId'], //PAYNL TRANSACTION ID !!! DONE !!!
+                "Reference"             =>  $order['orderId'], //PAYNL TRANSACTION ID !!! DONE !!!
             );
             $jsonoutput['TransactionDateTime']    =   gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
             $jsonoutput['TransactionNumber']      =   (int)(("1000").(100000+$order['orderId']) );

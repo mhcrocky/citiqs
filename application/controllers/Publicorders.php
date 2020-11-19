@@ -51,6 +51,8 @@
 
             $this->global[$this->config->item('design')] = (!empty($vendor['design'])) ? unserialize($vendor['design']) : null;
 
+            $this->isVendorClosed($vendor);
+
             if ($spotId && $vendor) {
                 $orderDataRandomKey = empty($get[$this->config->item('orderDataGetKey')]) ? '' : $get[$this->config->item('orderDataGetKey')];
                 $this->checkSpot($spotId, $vendor, $orderDataRandomKey);
@@ -121,7 +123,7 @@
                     'spots' => []
                 ];
                 $this->loadViews('publicorders/selectType', $this->global, $data, null, 'headerWarehousePublic');
-            } elseif ($typeId) {
+            } if ($typeId) {
                 $this->checkVendorCredentials($vendor, $typeId);
                 $this->loadSelectSpotView($vendor, $typeId);
             } elseif (count($types[1]) === 1) {
@@ -233,14 +235,20 @@
 
         public function closed($vendorId): void
         {
-            if ($this->shopvendortime_model->setProperty('vendorId', $vendorId)->isOpen()) {
+            $vendor = $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData();
+            $isClosedPeriod = ($vendor['nonWorkFrom'] && $vendor['nonWorkTo'] && date('Y-m-d') >= $vendor['nonWorkFrom'] && date('Y-m-d') <= $vendor['nonWorkTo']);
+            $isOpenTime = $this->shopvendortime_model->setProperty('vendorId', $vendorId)->isOpen();
+            
+            if ($isOpenTime && !$isClosedPeriod) {
                 $redirect = 'make_order?vendorid=' . $vendorId;
                 redirect($redirect);
                 return;
             };
 
             $data = [
-                'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData()
+                'vendor' => $vendor,
+                'isClosedPeriod' => $isClosedPeriod,
+                'isOpenTime' => $isOpenTime,
             ];
             $workingTime = $this->shopvendortime_model->setProperty('vendorId', $vendorId)->fetchWorkingTime();
             $data['workingTime'] = $workingTime ? Utility_helper::resetArrayByKeyMultiple($workingTime, 'day') : null;
@@ -516,4 +524,16 @@
             return;
         }
 
+        private function isVendorClosed(array $vendor): void
+        {
+            if (
+                $vendor['nonWorkFrom']
+                && $vendor['nonWorkTo']
+                && date('Y-m-d') >= $vendor['nonWorkFrom']
+                && date('Y-m-d') <= $vendor['nonWorkTo']
+            ) {
+                redirect('closed/' . $vendor['vendorId']);                
+            }
+            return;
+        }
     }
