@@ -37,7 +37,6 @@ class  Customer_panel extends BaseControllerWeb
 
         $this->global['css'] = [
             base_url().'assets/bower_components/bootstrap-colorselector/bootstrap-colorselector.min.css',
-            base_url().'assets/customer_panel/css/style.css',
             'https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.css'
         ];
 
@@ -63,7 +62,6 @@ class  Customer_panel extends BaseControllerWeb
         ];
 
         $this->global['css'] = [
-            base_url().'assets/customer_panel/css/style.css',
             'https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.css'
         ];
 
@@ -97,7 +95,6 @@ class  Customer_panel extends BaseControllerWeb
         ];
 
         $this->global['css'] = [
-            base_url().'assets/customer_panel/css/style.css',
             'https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.css',
             'https://unpkg.com/pc-bootstrap4-datetimepicker@4.17.50/build/css/bootstrap-datetimepicker.min.css'
         ];
