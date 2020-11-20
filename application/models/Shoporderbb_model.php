@@ -335,6 +335,7 @@
                         vendorOne.vat_number as vendorVAT,
                         vendorOne.country as vendorCountry,
                         vendorOne.receiptEmail as receiptEmail,
+                        vendorOne.email as vendorEmail,
                         tbl_shop_vendors.serviceFeeTax as serviceFeeTax,
                         tbl_shop_orders.serviceFee AS serviceFee,
                         tbl_shop_orders_paynl.transactionId AS payNlTransactionId
@@ -444,6 +445,7 @@
                         vendorOne.vat_number as vendorVAT,
                         vendorOne.country as vendorCountry,
                         vendorOne.receiptEmail as receiptEmail,
+                        vendorOne.email as vendorEmail,
                         tbl_shop_vendors.serviceFeeTax as serviceFeeTax,
                         tbl_shop_orders.serviceFee AS serviceFee,
                         tbl_shop_orders_paynl.transactionId AS payNlTransactionId
