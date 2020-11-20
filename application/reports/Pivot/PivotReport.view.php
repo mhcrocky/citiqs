@@ -1,5 +1,5 @@
 <?php
-	include APPPATH . '/libraries/reservations_vendor/autoload.php';
+	include APPPATH .'/libraries/reservations_vendor/autoload.php';
     use \koolreport\pivot\widgets\PivotTable;
     use \koolreport\widgets\koolphp\Table;
     use \koolreport\inputs\Select2;

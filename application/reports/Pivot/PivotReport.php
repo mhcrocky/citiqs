@@ -1,5 +1,5 @@
 <?php
-include APPPATH . '/libraries/reservations_vendor/autoload.php';
+include APPPATH .'/libraries/reservations_vendor/autoload.php';
 // use \koolreport\codeigniter\Friendship;
 use \koolreport\pivot\processes\Pivot;
 use \koolreport\pivot\processes\PivotExtract;

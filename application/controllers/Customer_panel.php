@@ -1,7 +1,7 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-include APPPATH . '/libraries/reservations_vendor/autoload.php';
+include APPPATH .'/libraries/reservations_vendor/autoload.php';
 
 use \koolreport\drilldown\DrillDown;
 use \koolreport\widgets\google\ColumnChart;
@@ -281,7 +281,7 @@ class  Customer_panel extends BaseControllerWeb
 
     public function booking_tickets()
     {
-        $data['pageTitle'] = 'Dashboard';
+        $data['pageTitle'] = 'Booking & Tickets';
         $this->load->model('Bookandpayagenda_model');
         $data['bookings_graphs'] = DrillDown::create(array(
             "name" => "saleDrillDown",
