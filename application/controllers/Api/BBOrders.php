@@ -94,10 +94,9 @@
             $jsonoutput['vendorId']=$order['vendorId'];
             $jsonoutput['lastNumber']=$this->fodfdm_model->getlastRecieptCount($order['vendorId']);
 
-            $this->ProductLines=null;
-            $this->PaymentLines=null;
-
-            $receiptemailBasepath=$this->VatnoVatdata($order,1);
+            // $this->ProductLines=null;
+            // $this->PaymentLines=null;
+            // $receiptemailBasepath=$this->VatnoVatdata($order,1);
             
 
 
