@@ -495,7 +495,7 @@ class  Customer_panel extends BaseControllerWeb
             
         ), true);
 
-        $this->loadViews('dashboard/index', $data, 'dashboard', 'footerbusiness', 'headerbusiness' );    
+        $this->loadViews('customer_panel/bookings_tickets', $data, 'dashboard', 'footerbusiness', 'headerbusiness' );    
     }
 }
 
