@@ -1,0 +1,13 @@
+{
+    "name": "koolreport/excel",
+    "version":"7.2.0",
+    "description": "Allow KoolReport to connect to Excel and export to excel file",
+    "keywords": ["PHP","Reporting Tools","Data Report","Charts","Exporting","Microsoft Excel","XLS","Export to Excel"],
+    "homepage": "https://www.koolreport.com",
+    "type": "library",
+    "license": "https://www.koolreport.com/license#mit-license",
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.10",
+        "box/spout": "^3.0"
+    }
+}

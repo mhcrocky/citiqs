@@ -1,0 +1,11 @@
+{
+    "name": "koolreport/inputs",
+    "version":"5.2.0",
+    "description": "Allow adding inputs into reports",
+    "keywords": ["PHP","Reporting Tools","Data Report","Report input"],
+    "homepage": "https://www.koolreport.com",
+    "type": "library",
+    "license": "https://www.koolreport.com/license#regular-license",
+    "require": {
+    }
+}

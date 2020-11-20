@@ -115,7 +115,7 @@
                     </div>
                 </div>
                 <br>
-                    <div style="margin-right:3%;" class="form-group text-left">
+                    <div style="margin-right:3%;" class="form-group text-right">
                         <button style="width:170px;text-center;" class="btn btn-primary">Submit</button>
                     </div>
                 

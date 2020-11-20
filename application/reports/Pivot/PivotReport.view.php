@@ -1,8 +1,9 @@
 <?php
-	include("./vendor/autoload.php");
+	include APPPATH . '/libraries/reservations_vendor/autoload.php';
     use \koolreport\pivot\widgets\PivotTable;
     use \koolreport\widgets\koolphp\Table;
-	use \koolreport\inputs\Select2;
+    use \koolreport\inputs\Select2;
+    
 ?>
 <!-- <link rel="shortcut icon" href="/spot/vendor/examples/assets/images/bar.png">
 <title>Pivot Table By Yeas Months vs Customers Categories - KoolReport Examples &amp; Demonstration</title>
@@ -183,13 +184,13 @@ $allcolumnarray=    array(
                 </div>
                 
             </div>
-            <div class="row">
-                <div class="form-group">
+            
+                <div class="form-group text-center">
                     <button class="btn btn-primary">Submit</button>
                     <button type="submit" class="btn btn-primary" formaction="<?php echo base_url()?>customer_panel/pivot_export?q=1">Download Excel</button>
                     <button type="button" onClick="printData()" class="btn btn-primary" >Print</button>
                 </div>
-            </div>
+            
         </div>
     </form>
 	<div>

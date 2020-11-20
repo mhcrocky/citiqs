@@ -1,0 +1,30 @@
+{
+    "sEmptyTable":      "Geen data beschikbaar",
+    "sInfo":            "_START_ tot _END_ van _TOTAL_ rijen",
+    "sInfoEmpty":       "0 tot 0 van 0 rijen",
+    "sInfoFiltered":    "(gefiltert tot _MAX_ rijen)",
+    "sInfoPostFix":     "",
+    "sInfoThousands":   ".",
+    "sLengthMenu":      "_MENU_ rijen tonen",
+    "sLoadingRecords":  "Wordt geladen...",
+    "sProcessing":      "Even geduld a.u.b. ...",
+    "sSearch":          "Zoeken",
+    "sZeroRecords":     "Geen resultaten.",
+    "oPaginate": {
+        "sFirst":       "Eerste",
+        "sPrevious":    "Terug",
+        "sNext":        "Volgende",
+        "sLast":        "Laatste"
+    },
+    "oAria": {
+        "sSortAscending":  ": Activeren, om de kolom oplopend te sorteren",
+        "sSortDescending": ": Activeren, om de kolom aflopend te sorteren"
+    },
+    "select": {
+            "rows": {
+                "_": "%d rijen geselecteerd",
+                "0": "Om te selecteren op een rij klikken",
+                "1": "1 rij geselecteerd"
+            }
+    }
+}

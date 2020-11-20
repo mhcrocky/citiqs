@@ -1,12 +1,12 @@
 <?php
-include("./vendor/autoload.php");
-
+include APPPATH . '/libraries/reservations_vendor/autoload.php';
 // use \koolreport\codeigniter\Friendship;
 use \koolreport\pivot\processes\Pivot;
 use \koolreport\pivot\processes\PivotExtract;
 use \koolreport\processes\Filter;
 use \koolreport\processes\ColumnMeta;
 use \koolreport\widgets\koolphp\Table;
+
 
 class PivotReport extends \koolreport\KoolReport
 {

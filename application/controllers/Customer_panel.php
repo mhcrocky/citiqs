@@ -1,11 +1,12 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-include("./vendor/autoload.php");
+include APPPATH . '/libraries/reservations_vendor/autoload.php';
 
 use \koolreport\drilldown\DrillDown;
 use \koolreport\widgets\google\ColumnChart;
 use idcheckio\Configuration;
+
 
 require APPPATH . "/reports/Pivot/ReservationsReport.php";
 require APPPATH."/reports/Pivot/PivotReport.php";
@@ -280,7 +281,7 @@ class  Customer_panel extends BaseControllerWeb
 
     public function booking_tickets()
     {
-        $data['pageTitle'] = 'Booking & Tickets';
+        $data['pageTitle'] = 'Dashboard';
         $this->load->model('Bookandpayagenda_model');
         $data['bookings_graphs'] = DrillDown::create(array(
             "name" => "saleDrillDown",
@@ -494,7 +495,7 @@ class  Customer_panel extends BaseControllerWeb
             
         ), true);
 
-        $this->loadViews('customer_panel/bookings_tickets', $data, 'dashboard', 'footerbusiness', 'headerbusiness' );    
+        $this->loadViews('dashboard/index', $data, 'dashboard', 'footerbusiness', 'headerbusiness' );    
     }
 }
 

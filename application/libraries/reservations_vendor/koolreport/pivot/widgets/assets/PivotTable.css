@@ -1,0 +1,102 @@
+.pivot-exp-col {
+    cursor: pointer;
+}
+
+.pivot-table {
+    /* overflow: auto; */
+    background-color: #fff;
+    overflow: hidden;
+}
+.pivot-table table {
+    margin: 0;
+    width: 100%;
+}
+
+.pivot-row {
+    white-space: nowrap;
+}
+.pivotFieldDrop {
+    padding-left: 5px;
+    /* border: 2px solid white; */
+    /* display: inline-block */
+}
+.pivotField {
+    padding: 2px 5px;
+    /* border: 1px solid gray;
+    border-radius: 4px; */
+    white-space: nowrap;
+    cursor: default;
+
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    border-color: #ccc;
+    color: #333;
+    background-color: #fff;
+}
+
+.dataField {
+    color: #fff !important;
+    background: linear-gradient(#0079A0, #006087);
+}
+.dataField:hover {
+    background: linear-gradient(#0079A0, #0079A0);
+}
+.labelField {
+    background: linear-gradient(#FFFFFF, #E5E5E5);
+}
+.labelField:hover {
+    background: linear-gradient(#FFFFFF, #FFFFFF);
+}
+
+.pivot-column-header,
+.pivot-row-header {
+    /* font-weight: bold; */
+    /* background: linear-gradient(#EFEFEF, #E5E5E5); */
+}
+.fieldZone{
+    background: linear-gradient(#EEEEEE, #DDDDDD);
+}
+
+.pagination {
+    margin: 0;
+    vertical-align: middle;
+}
+
+select.pageSize {
+    vertical-align: middle;
+    display:inline;
+}
+
+.footer {
+    color: #777;
+}
+
+* { 
+    -moz-box-sizing: border-box; 
+    -webkit-box-sizing: border-box; 
+    box-sizing: border-box; 
+}
+
+.columnHeaderZone, .rowHeaderZone, .dataZone {
+    padding: 0 !important;
+}
+
+.pivot-indent {
+    width: 30px;
+    display: inline-block;
+}
+
+.pivot-data-cell {
+    text-align: right;
+}
+
+.pivot-row-header.pivot-row-selected,
+.pivot-column-header.pivot-column-selected,
+.pivot-data-header.pivot-column-selected,
+.pivot-data-cell.pivot-row-selected.pivot-column-selected {
+    background-color: lightgreen;
+}
+
+.pivot-table .chart-panel {
+    padding: 0 !important;
+}
