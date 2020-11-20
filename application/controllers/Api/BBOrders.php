@@ -1087,13 +1087,8 @@
 					$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 					$drawemail->annotation(0, 165 + ($i * 30), $quantity);
 
-<<<<<<< HEAD
 					$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 					$drawemail->annotation(40, 165 + ($i * 30), $title);
-=======
-				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-				$drawemail->annotation(40, 165 + ($i * 30), substr($title, 0, 20));
->>>>>>> master
 
 					$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
 					$drawemail->annotation(440, 165 + ($i * 30), "€ ". $price);
@@ -1105,7 +1100,6 @@
 					$drawemail->annotation(570, 165 + ($i * 30), "€ ". $Stotalamount);
 
 
-<<<<<<< HEAD
 					$i++;
 					$price=(float)$price;
 					$quantity=(int)$quantity;
@@ -1114,23 +1108,6 @@
 			}
 
 			
-=======
-				$i++;
-                $price=(float)$price;
-                $quantity=(int)$quantity;
-                
-            }
-            if ($order['remarks']) {
-                $i = $i + 2;
-                $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                $draw->annotation(0, $hd + ($i * 30), 'ORDER REMARK');
-                $i++;
-                $draw->annotation(0, $hd + ($i * 30), $order['remarks']);
-                $i++;
-            }
-
-            
->>>>>>> master
 			$ii = $i;
 
 			$drawemail->setStrokeColor('black');
