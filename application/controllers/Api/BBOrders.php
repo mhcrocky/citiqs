@@ -103,8 +103,7 @@
 
             $jsonoutput['ProductLines1']=$this->ProductLines;
             $jsonoutput['PaymentLines1']=$this->PaymentLines;
-            $jsonoutput['image1']=$receiptemailBasepath;
-
+			$jsonoutput['image1']=$jsonoutput['image'];//$receiptemailBasepath;
 
 
 
