@@ -4,7 +4,7 @@
     defined('BASEPATH') OR exit('No direct script access allowed');
 
     require APPPATH . 'libraries/REST_Controller.php';
-
+	
     class BBOrders extends REST_Controller
     {
         private $jsonoutput=array();
@@ -718,16 +718,14 @@
             if(!$get['mac']) return;
 
 
-//            //Check FDM Status
-//            $FDMStatusByMac=$this->fodfdm_model->getFDMstatusByMac($get['mac']);
-//        	if(!empty($FDMStatusByMac) && $FDMStatusByMac->FDM_active==1){
-//        		return "";
-//        	}
+			//            //Check FDM Status
+			//            $FDMStatusByMac=$this->fodfdm_model->getFDMstatusByMac($get['mac']);
+			//        	if(!empty($FDMStatusByMac) && $FDMStatusByMac->FDM_active==1){
+			//        		return "";
+			//        	}
         	//it will not proceed when FDM have an issue
 			$order = $this->shoporder_model->fetchOrdersForPrint($get['mac'], 'tbl_shop_order_extended.printed = "0" ');
-//			var_dump($order);
-//
-//			die("");
+
             if (!$order) return;
             $order = reset($order);
             $receiptemailBasepath=$this->VatnoVatdata($order,0);
@@ -854,7 +852,7 @@
             }
 
 
-//			$draw->annotation(0, 30, "GEEN BTW BON");
+			//			$draw->annotation(0, 30, "GEEN BTW BON");
 
 			$draw->setStrokeWidth(2);
 			$draw->setFontSize(28);
@@ -897,10 +895,10 @@
 
 			$h++;
 
-			if($order['serviceTypeId']==1){
+			if ($order['serviceTypeId']==1) {
 				$draw->annotation(0,  35 * $h, "DATE". date("d-m H:i:s",strtotime($order['orderCreated'])). " spot: ". $order['spotName'] );
 			}
-			if($order['serviceTypeId']==2){
+			if ($order['serviceTypeId']==2) {
 				$draw->annotation(0,  35 * $h, "DELIVERY ON : ". date("d-m H:i:s",strtotime($order['orderCreated'])));
 				$h++;
 				$draw->annotation(0,  35 * $h, "Phone : ". $order['buyerMobile'] );
@@ -977,137 +975,170 @@
 			// $T21totalamount=0;
 			// $T9totalamount=0;
             $emailMessage = '';
-            $productVats = [];
-
-            foreach ($productsarray as $product) {
-
+			$productVats = [];
+			foreach ($productsarray as $index => $product) {
                 $product = explode($this->config->item('concatSeparator'), $product);
-                // 0 => name
-                // 1 => unit price
-                // 2 => ordered quantity
-                // 3 => category
-                // 4 => category id
-                // 5 => shortDescription
-                // 6 => longDescription
-                // 7 => vatpercentage
-                // 8 => productId
-
-                $title = $product[0];
-                $price = $product[1];
-                $quantity = $product[2];
-                $plu =  $product[3]; //????????????????
-                $shortDescription = $product[5];
-                $longDescription = $product[6];
-                $vatpercentage = $product[7];
-                if($vatzeroflag==1){
-                	$vatpercentage=0;
-                }
-                
-
-
-
-                $totalamount =  floatval($quantity) * floatval($price);
-				$Stotalamount = sprintf("%.2f", $totalamount);
-
-				$Ttotalamount = $Ttotalamount+$totalamount  ;
-				$TStotalamount = sprintf("%.2f", $Ttotalamount);
-
-				// if($vatpercentage==21){
-				// 	$T21totalamount = $T21totalamount+($totalamount-(($totalamount/121)*100))  ;
-				// }
-
-				// if($vatpercentage==9){
-				// 	$T9totalamount = $T9totalamount+($totalamount-(($totalamount/121)*100))  ;
-                // }
-                
-                if (!isset($productVats[$vatpercentage])) {
-                    $productVats[$vatpercentage] = 0;
-                }
-
-                $productVats[$vatpercentage] += $totalamount - $totalamount / (100 + intval($vatpercentage)) * 100;
-
-				$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-				// $draw->annotation(0, $hd + ($i * 30), $plu);
-				if (isset($subMainProductIndex) && isset($mainProductIndex) && $subMainProductIndex === $mainProductIndex) {
-					$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-					$draw->annotation(20, $hd + ($i * 30), $quantity);
-
-					$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-					$draw->annotation(60, $hd + ($i * 30), $title);
-				} else {
-					$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-					$draw->annotation(0, $hd + ($i * 30), $quantity);
-
-					$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-					$draw->annotation(40, $hd + ($i * 30), $title);
-				}
-
-				$drawemail->setFontSize(18);
-				$drawemail->setStrokeWidth(1);
-				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-				// $draw->annotation(0, 165 + ($i * 30), $plu);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-				$drawemail->annotation(0, 165 + ($i * 30), $quantity);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-				$drawemail->annotation(40, 165 + ($i * 30), $title);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-				$drawemail->annotation(440, 165 + ($i * 30), "€ ". $price);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-				$drawemail->annotation(500, 165 + ($i * 30), (string)$vatpercentage);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-				$drawemail->annotation(570, 165 + ($i * 30), "€ ". $Stotalamount);
-
-
-				$i++;
-
-				//
-
-                // $emailMessage .= '<p>';
-                // $emailMessage .=    '<tr>';
-                // $emailMessage .=        '<td>' . $quantity . '</td>';
-                // $emailMessage .=        '<td>' . $title . '</td>';
-                // $emailMessage .=        '<td>EURO ' . $price . '</td>';
-                // $emailMessage .=    '</tr>';
-                // $emailMessage .= '</p>';
-
-                //added by Nadeem
-                //set json product price and etc
-                $price=(float)$price;
-                $quantity=(int)$quantity;
-                $this->ProductLines[]=  array(
-                    "ProductGroupId"    =>  "PRGR".$product[4], // only categoryId !!! DONE
-                    "ProductGroupName"  =>  $product[3], // categoryName !!! DONE
-                    "ProductId"         =>  "PROD".$product[8], // productId !!! DONE
-                    "ProductName"       =>  $title,
-                    "Quantity"          =>  $quantity,
-                    "QuantityUnit"      =>  "P",
-                    "SellingPrice"      =>  (float)($price*$quantity),
-                    "VatRateId"         =>  $this->returnVatGrade($vatpercentage),//"B",
-                    "DiscountLines"     =>array(
-                        // array(
-                        // "DiscountId"        =>  "DISC002",
-                        // "DiscountName"      =>  "Prod. discount10%",
-                        // "DiscountType"      =>  "PRODUCTDISCOUNT",z`
-                        // "DiscountGrouping"  =>  0,
-                        // "DiscountAmount"    =>  1.19
-                        // ),
-                        // array(
-                        // "DiscountId"        =>  "DISC001",
-                        // "DiscountName"      =>  "Receipt. discount10%",
-                        // "DiscountType"      =>  "RECEIPTDISCOUNT",
-                        // "DiscountGrouping"  =>  0,
-                        // "DiscountAmount"    =>  1.07
-                        // ),
-                    ),
-                );
+                if (intval($product[11])) $product[10] = $product[11];
+                $productsarray[$index] = $product;
             }
+			$productsarray = Utility_helper::resetArrayByKeyMultiple($productsarray, '10');
+            foreach ($productsarray as $mainIdnex => $products) {
+                Utility_helper::array_sort_by_column($products, '11');
+				foreach ($products as $product) {
+
+					// 0 => name
+					// 1 => unit price
+					// 2 => ordered quantity
+					// 3 => category
+					// 4 => category id
+					// 5 => shortDescription
+					// 6 => longDescription
+					// 7 => vatpercentage
+					// 8 => productId
+
+					$title = $product[0];
+					$titleorder = substr($product[0], 0, 37);
+					$price = $product[1];
+					$quantity = $product[2];
+					$plu =  $product[3]; //????????????????
+					$shortDescription = $product[5];
+					$longDescription = $product[6];
+					$vatpercentage = $product[7];
+					if($vatzeroflag==1){
+						$vatpercentage=0;
+					}
+					$remark = $product[9];
+
+					$totalamount =  floatval($quantity) * floatval($price);
+					$Stotalamount = sprintf("%.2f", $totalamount);
+
+					$Ttotalamount = $Ttotalamount+$totalamount  ;
+					$TStotalamount = sprintf("%.2f", $Ttotalamount);
+
+					// if($vatpercentage==21){
+					// 	$T21totalamount = $T21totalamount+($totalamount-(($totalamount/121)*100))  ;
+					// }
+
+					// if($vatpercentage==9){
+					// 	$T9totalamount = $T9totalamount+($totalamount-(($totalamount/121)*100))  ;
+					// }
+					
+					if (!isset($productVats[$vatpercentage])) {
+						$productVats[$vatpercentage] = 0;
+					}
+
+					$productVats[$vatpercentage] += $totalamount - $totalamount / (100 + intval($vatpercentage)) * 100;
+
+					$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+					// $draw->annotation(0, $hd + ($i * 30), $plu);
+					// if (isset($subMainProductIndex) && isset($mainProductIndex) && $subMainProductIndex === $mainProductIndex) {
+					// 	$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+					// 	$draw->annotation(20, $hd + ($i * 30), $quantity);
+
+					// 	$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+					// 	$draw->annotation(60, $hd + ($i * 30), $title);
+					// } else {
+					// 	$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+					// 	$draw->annotation(0, $hd + ($i * 30), $quantity);
+
+					// 	$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+					// 	$draw->annotation(40, $hd + ($i * 30), $title);
+					// }
+
+
+
+                    if (intval($product[11])) {
+                        $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                        $draw->annotation(20, $hd + ($i * 30), $quantity);
+
+                        $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                        $draw->annotation(60, $hd + ($i * 30), $titleorder);
+
+                        if ($remark) {
+                            $i++;
+                            $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                            $draw->annotation(60, $hd + ($i * 30), $remark);;
+                        }
+                    } else {
+                        $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                        $draw->annotation(0, $hd + ($i * 30), $quantity);
+
+                        $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                        $draw->annotation(40, $hd + ($i * 30), $titleorder);
+
+                        if ($remark) {
+                            $i++;
+                            $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                            $draw->annotation(40, $hd + ($i * 30), $remark);;
+                        }
+                    }
+					$drawemail->setFontSize(18);
+					$drawemail->setStrokeWidth(1);
+					$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+
+					$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+					// $draw->annotation(0, 165 + ($i * 30), $plu);
+
+					$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+					$drawemail->annotation(0, 165 + ($i * 30), $quantity);
+
+					$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+					$drawemail->annotation(40, 165 + ($i * 30), $title);
+
+					$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+					$drawemail->annotation(440, 165 + ($i * 30), "€ ". $price);
+
+					$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+					$drawemail->annotation(500, 165 + ($i * 30), (string)$vatpercentage);
+
+					$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+					$drawemail->annotation(570, 165 + ($i * 30), "€ ". $Stotalamount);
+
+
+					$i++;
+
+					//
+
+					// $emailMessage .= '<p>';
+					// $emailMessage .=    '<tr>';
+					// $emailMessage .=        '<td>' . $quantity . '</td>';
+					// $emailMessage .=        '<td>' . $title . '</td>';
+					// $emailMessage .=        '<td>EURO ' . $price . '</td>';
+					// $emailMessage .=    '</tr>';
+					// $emailMessage .= '</p>';
+
+					//added by Nadeem
+					//set json product price and etc
+					$price=(float)$price;
+					$quantity=(int)$quantity;
+					$this->ProductLines[]=  array(
+						"ProductGroupId"    =>  "PRGR".$product[4], // only categoryId !!! DONE
+						"ProductGroupName"  =>  $product[3], // categoryName !!! DONE
+						"ProductId"         =>  "PROD".$product[8], // productId !!! DONE
+						"ProductName"       =>  $title,
+						"Quantity"          =>  $quantity,
+						"QuantityUnit"      =>  "P",
+						"SellingPrice"      =>  (float)($price*$quantity),
+						"VatRateId"         =>  $this->returnVatGrade($vatpercentage),//"B",
+						"DiscountLines"     =>array(
+							// array(
+							// "DiscountId"        =>  "DISC002",
+							// "DiscountName"      =>  "Prod. discount10%",
+							// "DiscountType"      =>  "PRODUCTDISCOUNT",z`
+							// "DiscountGrouping"  =>  0,
+							// "DiscountAmount"    =>  1.19
+							// ),
+							// array(
+							// "DiscountId"        =>  "DISC001",
+							// "DiscountName"      =>  "Receipt. discount10%",
+							// "DiscountType"      =>  "RECEIPTDISCOUNT",
+							// "DiscountGrouping"  =>  0,
+							// "DiscountAmount"    =>  1.07
+							// ),
+						),
+					);
+				}
+			}
 
 			$ii = $i;
 
@@ -1392,10 +1423,10 @@
 
 
             //Check FDM Status 
-//            $FDMStatusByMac=$this->fodfdm_model->getFDMstatusByMac($get['mac']);
-//        	if(!empty($FDMStatusByMac) && $FDMStatusByMac->FDM_active==1){
-//        		return "";
-//        	}
+			// $FDMStatusByMac=$this->fodfdm_model->getFDMstatusByMac($get['mac']);
+			// if(!empty($FDMStatusByMac) && $FDMStatusByMac->FDM_active==1){
+			// 	return "";
+			// }
         	//it will not proceed when FDM have an issue
 
             // $order = $this->shoporder_model->fetchOrdersForPrint($get['mac']);
@@ -1477,7 +1508,7 @@
             }
 
 
-//			$draw->annotation(0, 30, "GEEN BTW BON");
+			//			$draw->annotation(0, 30, "GEEN BTW BON");
 
 			$draw->setStrokeWidth(2);
 			$draw->setFontSize(28);
@@ -1599,96 +1630,130 @@
 			// $T21totalamount=0;
 			// $T9totalamount=0;
             $emailMessage = '';
-            $productVats = [];
-
-            foreach ($productsarray as $product) {
-
+			$productVats = [];
+			foreach ($productsarray as $index => $product) {
                 $product = explode($this->config->item('concatSeparator'), $product);
-                // 0 => name
-                // 1 => unit price
-                // 2 => ordered quantity
-                // 3 => category
-                // 4 => category id
-                // 5 => shortDescription
-                // 6 => longDescription
-                // 7 => vatpercentage
-                // 8 => productId
-
-                $title = $product[0];
-                $price = $product[1];
-                $quantity = $product[2];
-                $plu =  $product[3]; //????????????????
-                $shortDescription = $product[5];
-                $longDescription = $product[6];
-                $vatpercentage = $product[7];
-
-
-
-                $totalamount =  floatval($quantity) * floatval($price);
-				$Stotalamount = sprintf("%.2f", $totalamount);
-
-				$Ttotalamount = $Ttotalamount+$totalamount  ;
-				$TStotalamount = sprintf("%.2f", $Ttotalamount);
-
-				// if($vatpercentage==21){
-				// 	$T21totalamount = $T21totalamount+($totalamount-(($totalamount/121)*100))  ;
-				// }
-
-				// if($vatpercentage==9){
-				// 	$T9totalamount = $T9totalamount+($totalamount-(($totalamount/121)*100))  ;
-                // }
-                
-                if (!isset($productVats[$vatpercentage])) {
-                    $productVats[$vatpercentage] = 0;
-                }
-
-                $productVats[$vatpercentage] += $totalamount - $totalamount / (100 + intval($vatpercentage)) * 100;
-
-				$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-				// $draw->annotation(0, $hd + ($i * 30), $plu);
-				if (isset($subMainProductIndex) && isset($mainProductIndex) && $subMainProductIndex === $mainProductIndex) {
-					$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-					$draw->annotation(20, $hd + ($i * 30), $quantity);
-
-					$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-					$draw->annotation(60, $hd + ($i * 30), $title);
-				} else {
-					$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-					$draw->annotation(0, $hd + ($i * 30), $quantity);
-
-					$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-					$draw->annotation(40, $hd + ($i * 30), $title);
-				}
-
-				$drawemail->setFontSize(18);
-				$drawemail->setStrokeWidth(1);
-				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-				// $draw->annotation(0, 165 + ($i * 30), $plu);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-				$drawemail->annotation(0, 165 + ($i * 30), $quantity);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-				$drawemail->annotation(40, 165 + ($i * 30), $title);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-				$drawemail->annotation(440, 165 + ($i * 30), "€ ". $price);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-				$drawemail->annotation(500, 165 + ($i * 30), $vatpercentage);
-
-				$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-				$drawemail->annotation(570, 165 + ($i * 30), "€ ". $Stotalamount);
-
-
-				$i++;
-                $price=(float)$price;
-                $quantity=(int)$quantity;
-                
+                if (intval($product[11])) $product[10] = $product[11];
+                $productsarray[$index] = $product;
             }
+			$productsarray = Utility_helper::resetArrayByKeyMultiple($productsarray, '10');
 
+			foreach ($productsarray as $mainIdnex => $products) {
+                Utility_helper::array_sort_by_column($products, '11');
+				foreach ($products as $product) {
+					// 0 => name
+					// 1 => unit price
+					// 2 => ordered quantity
+					// 3 => category
+					// 4 => category id
+					// 5 => shortDescription
+					// 6 => longDescription
+					// 7 => vatpercentage
+					// 8 => productId
+
+					$title = $product[0];
+					$titleorder = substr($product[0], 0, 37);
+					$price = $product[1];
+					$quantity = $product[2];
+					$plu =  $product[3]; //????????????????
+					$shortDescription = $product[5];
+					$longDescription = $product[6];
+					$vatpercentage = $product[7];
+					$remark = $product[9];
+
+
+					$totalamount =  floatval($quantity) * floatval($price);
+					$Stotalamount = sprintf("%.2f", $totalamount);
+
+					$Ttotalamount = $Ttotalamount+$totalamount  ;
+					$TStotalamount = sprintf("%.2f", $Ttotalamount);
+
+					// if($vatpercentage==21){
+					// 	$T21totalamount = $T21totalamount+($totalamount-(($totalamount/121)*100))  ;
+					// }
+
+					// if($vatpercentage==9){
+					// 	$T9totalamount = $T9totalamount+($totalamount-(($totalamount/121)*100))  ;
+					// }
+					
+					if (!isset($productVats[$vatpercentage])) {
+						$productVats[$vatpercentage] = 0;
+					}
+
+					$productVats[$vatpercentage] += $totalamount - $totalamount / (100 + intval($vatpercentage)) * 100;
+
+					$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+					// $draw->annotation(0, $hd + ($i * 30), $plu);
+					// if (isset($subMainProductIndex) && isset($mainProductIndex) && $subMainProductIndex === $mainProductIndex) {
+					// 	$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+					// 	$draw->annotation(20, $hd + ($i * 30), $quantity);
+
+					// 	$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+					// 	$draw->annotation(60, $hd + ($i * 30), $title);
+					// } else {
+					// 	$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+					// 	$draw->annotation(0, $hd + ($i * 30), $quantity);
+
+					// 	$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+					// 	$draw->annotation(40, $hd + ($i * 30), $title);
+					// }
+					if (intval($product[11])) {
+                        $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                        $draw->annotation(20, $hd + ($i * 30), $quantity);
+
+                        $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                        $draw->annotation(60, $hd + ($i * 30), $titleorder);
+
+                        if ($remark) {
+                            $i++;
+                            $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                            $draw->annotation(60, $hd + ($i * 30), $remark);;
+                        }
+                    } else {
+                        $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                        $draw->annotation(0, $hd + ($i * 30), $quantity);
+
+                        $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                        $draw->annotation(40, $hd + ($i * 30), $titleorder);
+
+                        if ($remark) {
+                            $i++;
+                            $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                            $draw->annotation(40, $hd + ($i * 30), $remark);;
+                        }
+                    }
+
+					$drawemail->setFontSize(18);
+					$drawemail->setStrokeWidth(1);
+					$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+
+					$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+					// $draw->annotation(0, 165 + ($i * 30), $plu);
+
+					$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+					$drawemail->annotation(0, 165 + ($i * 30), $quantity);
+
+					$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+					$drawemail->annotation(40, 165 + ($i * 30), $title);
+
+					$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+					$drawemail->annotation(440, 165 + ($i * 30), "€ ". $price);
+
+					$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+					$drawemail->annotation(500, 165 + ($i * 30), $vatpercentage);
+
+					$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+					$drawemail->annotation(570, 165 + ($i * 30), "€ ". $Stotalamount);
+
+
+					$i++;
+					$price=(float)$price;
+					$quantity=(int)$quantity;
+					
+				}
+			}
+
+			
 			$ii = $i;
 
 			$drawemail->setStrokeColor('black');
