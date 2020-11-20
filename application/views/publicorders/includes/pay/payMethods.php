@@ -104,7 +104,7 @@
                     <?php } ?>
                     <?php if ($vendor['giro'] === '1' && !$pos) { ?>
                         <a href="javascript:void(0)" onclick="toogleElements('giroBanks', 'paymentMethodsContainer', 'hidden')" class="paymentMethod method-card" >
-                            <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/giropay(1).png" alt="bancontact">
+                            <img src="https://tiqs.com/alfred/assets/home/imgs/extra/giropay(1).png" alt="bancontact">
                             <span data-trans="" data-trn-key="Bancontact">Giropay</span>
                         </a>
                     <?php } ?>
