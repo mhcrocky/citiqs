@@ -430,9 +430,15 @@ $route['booking_agenda/get_agenda/spots/(:num)/(:num)'] = "Booking_agenda/get_ag
 $route['booking_agenda/getAllAgenda/(:any)'] = "Booking_agenda/getAllAgenda/$1";
 $route['booking_agenda/(:any)'] = "Booking_agenda/index/$1";
 
+$route['customer_panel'] = "Customer_panel/index/";
 $route['customer_panel/agenda'] = "Customer_panel/agenda";
 $route['customer_panel/spots/(:num)'] = "Customer_panel/spots/$1";
 $route['customer_panel/time_slots/(:num)'] = "Customer_panel/time_slots/$1";
+$route['customer_panel/reservations_report'] = "Customer_panel/reservations";
+$route['customer_panel/reservations_report/export'] = "Customer_panel/reservations_export";
+$route['customer_panel/report'] = "Customer_panel/report";
+$route['customer_panel/pivot'] = "Customer_panel/pivot";
+$route['customer_panel/pivot_export']="Customer_panel/pivot_export";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

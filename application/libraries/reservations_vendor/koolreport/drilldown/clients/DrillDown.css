@@ -1,0 +1,25 @@
+div.drilldown level-title,
+div.drilldown level-params
+{
+    display:none;
+}
+
+div.drilldown div.drilldown-level
+{
+    padding:15px;
+}
+div.drilldown div.drilldown-body
+{
+    padding:0px 1px 0px 1px;
+}
+
+div.drilldown span.drilldown-title
+{
+    font-size:16px;
+    font-weight: bold;
+}
+
+div.drilldown span.drilldown-clevel-title
+{
+    font-weight: bold;
+}

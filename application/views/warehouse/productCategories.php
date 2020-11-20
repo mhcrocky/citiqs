@@ -1,4 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/cdn/css/jquery-ui.min.css" />
+<script src="<?php echo base_url(); ?>assets/cdn/js/jquery-ui.min.js"></script>
 <style>
 	.listCategories:hover {
 		cursor: -webkit-grab;
@@ -250,7 +252,9 @@
 		<!-- end grid list -->
 	</div>
 </div>
-
+<script src="<?php echo base_url(); ?>assets/home/js/utility.js"></script>
+<script src="<?php echo base_url(); ?>assets/home/js/productCategories.js"></script>
+<script src="<?php echo base_url(); ?>assets/home/js/ajax.js"></script>
 <script>
 function editCategory(categoryId){
 	$('#btn-'+categoryId).click();

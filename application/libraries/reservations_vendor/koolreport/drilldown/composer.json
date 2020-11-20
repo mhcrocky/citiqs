@@ -1,0 +1,11 @@
+{
+    "name": "koolreport/drilldown",
+    "version":"3.1.0",
+    "description": "Create drill-down and drill-though report",
+    "keywords": ["PHP","Reporting Tools","Data Report","Drill Down Report","Drill Through Repeort"],
+    "homepage": "https://www.koolreport.com",
+    "type": "library",
+    "license": "https://www.koolphp.net/license-agreement",
+    "require": {
+    }
+}

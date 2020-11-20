@@ -1,0 +1,11 @@
+{
+    "name": "koolreport/chartjs",
+    "version":"2.5.0",
+    "description": "Provide beautiful charts for your report",
+    "keywords": ["PHP","Reporting Tools","Data Report","ChartJs"],
+    "homepage": "https://www.koolreport.com",
+    "type": "library",
+    "license": "https://www.koolreport.com/license#regular-license",
+    "require": {
+    }
+}
