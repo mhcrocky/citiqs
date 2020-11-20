@@ -198,7 +198,8 @@
 					$drawemail->setFont('Helvetica');
                     break;
 
-                default:
+				default:
+					if (ENVIRONMENT === 'development') break;
                     $draw->setFont('Arial');
 					$drawemail->setFont('Arial');
                     break;
@@ -338,9 +339,8 @@
             foreach ($productsarray as $mainIdnex => $products) {
                 Utility_helper::array_sort_by_column($products, '11');
 				foreach ($products as $product) {
-
 					// 0 => name
-					// 1 => unit price
+					// 1 => unit local price
 					// 2 => ordered quantity
 					// 3 => category
 					// 4 => category id
@@ -348,20 +348,34 @@
 					// 6 => longDescription
 					// 7 => vatpercentage
 					// 8 => productId
-
+					// 9 => product remark
+					// 10 => mainPrductOrderIndex
+					// 11 => subMainPrductOrderIndex
+					// 12 => deliveryPrice
+					// 13 => deliveryVatpercentage
+					// 14 => pickupPrice
+					// 15 => pickupVatpercentage
+					
+					$orderType = intval($order['serviceTypeId']);
 					$title = $product[0];
 					$titleorder = substr($product[0], 0, 37);
-					$price = $product[1];
+					$price = $this->getProductPrice($product, $orderType);
 					$quantity = $product[2];
 					$plu =  $product[3]; //????????????????
 					$shortDescription = $product[5];
 					$longDescription = $product[6];
-					$vatpercentage = $product[7];
+					$vatpercentage = $this->getProductVatpercantage($product, $orderType);
 					if($vatzeroflag==1){
 						$vatpercentage=0;
 					}
 					$remark = $product[9];
 
+
+					// var_dump($product);
+					// var_dump($order['serviceTypeId']);
+					// var_dump($vatpercentage);
+					// var_dump($price);
+					// die();
 					$totalamount =  floatval($quantity) * floatval($price);
 					$Stotalamount = sprintf("%.2f", $totalamount);
 
@@ -854,7 +868,8 @@
 					$drawemail->setFont('Helvetica');
                     break;
 
-                default:
+				default:
+					if (ENVIRONMENT === 'development') break;
                     $draw->setFont('Arial');
 					$drawemail->setFont('Arial');
                     break;
@@ -1305,6 +1320,29 @@
 
             header('Content-type: image/png');
             echo $resultpngprinter;
-        }
+		}
+
+		private function getProductPrice(array $product, int $orderType ): float
+		{
+			if ($orderType === $this->config->item('local')) {
+				return floatval($product[1]);
+			} elseif ($orderType === $this->config->item('deliveryType')) {
+				return floatval($product[12]);
+			} elseif ($orderType === $this->config->item('pickupType')) {
+				return floatval($product[14]);
+			}
+		}
+
+		private function getProductVatpercantage(array $product, int $orderType ): float
+		{
+			if ($orderType === $this->config->item('local')) {
+				return floatval($product[7]);
+			} elseif ($orderType === $this->config->item('deliveryType')) {
+				return floatval($product[13]);
+			} elseif ($orderType === $this->config->item('pickupType')) {
+				return floatval($product[15]);
+			}
+		}
     }
 
+					
