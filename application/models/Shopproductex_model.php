@@ -104,7 +104,7 @@
           
         }
 
-        public function getAllUserProducts(int $userId, $whereIn = []): ?array
+        public function getAllUserProducts(int $userId): ?array
         {
 
             $this->db->select("tbl_shop_products.id,tbl_shop_products_extended.name,category,orderNo");
@@ -123,6 +123,20 @@
                 $products[] = $result;
             }
             return $products;
+          
+        }
+
+        public function getProductCategories(int $userId): ?array
+        {
+            $this->db->select("category");
+            $this->db->from('tbl_shop_products');
+            $this->db->join($this->table, $this->table.'.productId = tbl_shop_products.id', 'left');
+            $this->db->join('tbl_shop_categories', 'tbl_shop_products.categoryId = tbl_shop_categories.id', 'left');
+            $this->db->join('tbl_shop_product_printers', 'tbl_shop_products.id = tbl_shop_product_printers.productId', 'left');
+            $this->db->where('userId', $userId);
+            $this->db->group_by('category');
+            $query = $this->db->get();
+            return $query->result_array();
           
         }
 
@@ -148,7 +162,7 @@
                     ],
                 'conditions' => [
                         'GROUP_BY' => [$this->table. '.productId'],
-                        'ORDER_BY' => ['tbl_shop_categories.sortNumber ASC, tbl_shop_products.orderNo DESC'],
+                        'ORDER_BY' => ['tbl_shop_categories.sortNumber ASC, tbl_shop_products.orderNo ASC'],
                     ]
             ];
             
