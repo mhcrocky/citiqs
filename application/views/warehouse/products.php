@@ -3,44 +3,20 @@
 <script>
     var productGloabls = {};
 </script>
-<div class="main-wrapper theme-editor-wrapper">
-	<div class="grid-wrapper">
-        <?php if (is_null($categories) || is_null($printers) || is_null($productTypes) || is_null($userSpots)) { ?>
-            <p style="margin-left:15px;"> No categories, product types, printers  and / or spots.
-                <?php if (is_null($categories)) { ?>
-                    <a href="<?php echo $this->baseUrl . 'product_categories'; ?>">
-                        Add category  
-                    </a>
-                <?php } ?>
-                <?php if (is_null($productTypes)) { ?>
-                    <a href="<?php echo $this->baseUrl . 'product_types'; ?>">
-                        Add product type(s)  
-                    </a>
-                <?php } ?>
-                <?php if (is_null($printers)) { ?>
-                <a href="<?php echo $this->baseUrl . 'printers'; ?>">
-                    Add printer
-                </a>
-                <?php } ?>
-                <?php if (is_null($userSpots)) { ?>
-                <a href="<?php echo $this->baseUrl . 'spots'; ?>">
-                    Add spot
-                </a>
-                <?php } ?>
-            </p>
-        <?php } else { ?>
-            <div class="grid-list">
-                <!-- FILTER AND ADD NEW -->
-                <div class="item-editor theme-editor addEditForm" id='add-product'>
-                    <div class="theme-editor-header d-flex justify-content-between" >
-                        <div>
-                            <img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogonew.png" alt="">
-                        </div>
-                        <div class="theme-editor-header-buttons">
-                            <input type="button" class="grid-button button theme-editor-header-button" onclick="submitForm('addProdcut')" value="Submit" />
-                            <button class="grid-button-cancel button theme-editor-header-button" onclick="toogleElementClass('add-product', 'display')">Cancel</button>
-                        </div>
-                    </div>
+
+<!-- ADD Modal -->
+<div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addProductModalTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- FILTER AND ADD NEW -->
+        <div class="item-editor addEditForm" id='add-product'>
                     <div style="width:100%;">
                         <form
                             id="addProdcut"
@@ -225,6 +201,42 @@
                         </form>
                     </div>
                 </div>
+      </div>
+      <div class="modal-footer">
+        <input style="width: 100px;" type="button" class="grid-button button theme-editor-header-button" onclick="submitForm('addProdcut')" value="Submit" />
+        <button style="width: 100px;" type="button" class="grid-button-cancel button theme-editor-header-button" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="margin-top: 0" class="main-wrapper theme-editor-wrapper">
+	<div class="grid-wrapper"  style="background: #f3d0b1 !important;">
+        <?php if (is_null($categories) || is_null($printers) || is_null($productTypes) || is_null($userSpots)) { ?>
+            <p style="margin-left:15px;"> No categories, product types, printers  and / or spots.
+                <?php if (is_null($categories)) { ?>
+                    <a href="<?php echo $this->baseUrl . 'product_categories'; ?>">
+                        Add category  
+                    </a>
+                <?php } ?>
+                <?php if (is_null($productTypes)) { ?>
+                    <a href="<?php echo $this->baseUrl . 'product_types'; ?>">
+                        Add product type(s)  
+                    </a>
+                <?php } ?>
+                <?php if (is_null($printers)) { ?>
+                <a href="<?php echo $this->baseUrl . 'printers'; ?>">
+                    Add printer
+                </a>
+                <?php } ?>
+                <?php if (is_null($userSpots)) { ?>
+                <a href="<?php echo $this->baseUrl . 'spots'; ?>">
+                    Add spot
+                </a>
+                <?php } ?>
+            </p>
+        <?php } else { ?>
+            <div class="grid-list">
+                
                 <div class="grid-list-header row">
                     <div class="col-lg-4 col-md-4 col-sm-12 grid-header-heading">
                         <h2>Products</h2>
@@ -244,14 +256,18 @@
                                     
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <input type="submit" value="Filter" />
-                                    <a href="<?php echo base_url(); ?>products">Show all</a>
+                                    <input class="btn btn-primary" type="submit" value="Filter" />
+                                    <a class="btn btn-secondary" href="<?php echo base_url(); ?>products">Show all</a>
                                 </div>
                             </form>
+                            
                         </div>
                     <?php } ?>
                     <div class="col-lg-4 col-md-4 col-sm-12 search-container">
-                        <button class="btn button-security my-2 my-sm-0 button grid-button" onclick="toogleElementClass('add-product', 'display')">Add product</button>
+                        <button type="button" class="btn button-security my-2 my-sm-0 button grid-button" data-toggle="modal" data-target="#addProductModal">Add product</button>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 search-container ml-auto">
+                        <a class="btn button-security bg-primary my-2 my-sm-0 button grid-button text-light" style="text-decoration:none;" href="<?php echo base_url('productsorder');?>">Sort</a>
                     </div>
                 </div>
                 
@@ -282,7 +298,7 @@
                                 if ($details['showInPublic'] === '1') {
                                     $string .= ' <span style="background-color: #72b19f">(ACTIVE)</span> ';
                                 } else {
-                                    $string .= ' <span style="background-color: #f2622f">(BLOCKED)</span> ';
+                                    $string .= ' <span style="background-color: #ff0000">(BLOCKED)</span> ';
                                 }
 
                                 $productDetailsString .= '<dd>' . $string . '</dd>';
@@ -292,7 +308,7 @@
                         ?>
                             <div
                                 class="grid-item"
-                                style="background-color:<?php echo $product['productActive'] === '1' ? '#72b19f' : '#f2622f'; ?>"
+                                style="background-color:<?php echo $product['productActive'] === '1' ? '#72b19f' : '#ff0000'; ?>"
                                 id="<?php echo 'product_' . str_replace('\'', ' ', $details['name']) . '_' . $details['productExtendedId']; ?>"
                                 >
                                 <div class="item-header" style="width:100%">
@@ -340,7 +356,7 @@
                                 <?php } ?>
                                 <div class="grid-footer">
                                     <div class="iconWrapper">
-                                        <span class="fa-stack fa-2x edit-icon btn-edit-item" onclick="toogleAllElementClasses('editProductProductId<?php echo $product['productId']; ?>', 'display')" title="Click to edit" >
+                                        <span class="fa-stack fa-2x edit-icon btn-edit-item" onclick="editProduct('<?php echo $product['productId']; ?>', 'display')" title="Click to edit" >
                                             <i class="far fa-edit"></i>
                                         </span>
                                     </div>
@@ -618,14 +634,24 @@
                                         </div>
                                     </div>
                                 <?php } ?>
-                                <!-- ITEM EDITOR -->                                
-                                <div class="item-editor theme-editor addEditForm" id="editProductProductId<?php echo  $product['productId']; ?>">
-                                    <div class="theme-editor-header d-flex justify-content-between">
-                                        <div class="theme-editor-header-buttons">
-                                            <input type="button" onclick="submitForm('editProduct<?php echo $product['productId']; ?>')" class="grid-button button theme-editor-header-button" value="Submit" />
-                                            <button class="grid-button-cancel button theme-editor-header-button" onclick="toogleElementClass('editProductProductId<?php echo  $product['productId']; ?>', 'display')">Cancel</button>
-                                        </div>
-                                    </div>
+                                <button style="display:none;" id="btn-<?php echo  $product['productId']; ?>" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editProductProductId<?php echo  $product['productId']; ?>">
+                                Edit
+                                </button>
+
+<!-- Modal -->
+<div class="modal fade"  id="editProductProductId<?php echo  $product['productId']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      <h4 style="text-align:left;">Edit product "<?php echo $details['name']; ?>"</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <!-- ITEM EDITOR -->                                
+       <div class="item-editor addEditForm">
+                                
                                     <div style="width:100%">
                                         <form id="editProduct<?php echo $product['productId']; ?>" method="post" action="<?php echo $this->baseUrl . 'warehouse/editProduct/' . $product['productId']; ?>"  class="form-inline"  enctype="multipart/form-data">
                                             <input type="text" name="productExtended[productId]" value="<?php echo $product['productId']; ?>" readonly required hidden />
@@ -634,8 +660,6 @@
                                                 name="productExtended[updateCycle]"
                                                 value="<?php echo (intval($details['productUpdateCycle']) + 1); ?>"
                                                 readonly required hidden />
-
-                                            <h3 style="text-align:left;">Edit product "<?php echo $details['name']; ?>"</h3>
                                             
                                             <legend style="text-align:left;">Product basic data</legend>
                                             <div class="col-lg-4 col-sm-12">
@@ -919,6 +943,18 @@
                                         </form>
                                     </div>
                                 </div>
+      </div>
+      <div class="modal-footer">
+      <input style="width: 100px;" type="button" onclick="submitForm('editProduct<?php echo $product['productId']; ?>')" class="grid-button button theme-editor-header-button" value="Submit" />
+      <button style="width: 100px;" class="grid-button-cancel button theme-editor-header-button" type="button" class="btn btn-primary">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+                                
                                 <!-- END EDIT -->
 
                             </div>
@@ -934,6 +970,15 @@
 		<!-- end grid list -->
 	</div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script src="http://127.0.0.1/alfred/alfred/assets/js/jquery.datetimepicker.full.min.js"></script>
+<script src="http://127.0.0.1/alfred/alfred/assets/home/js/edit-grid-item.js"></script>
+<script src="http://127.0.0.1/alfred/alfred/assets/home/js/products.js"></script>
+<script>
+function editProduct(productId){
+    $('#btn-'+productId).click();
+}
+</script>
 <?php if (!empty($productNames)) { ?>
     <script>
         $(document).ready(function() {

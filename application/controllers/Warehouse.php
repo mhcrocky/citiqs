@@ -199,7 +199,39 @@
                 'pickupTypeId' => $this->config->item('pickupType'),
             ];
 
-            $this->loadViews('warehouse/products', $this->global, $data, null, 'headerWarehouse');
+            $this->loadViews('warehouse/products', $this->global, $data, 'footerbusiness', 'headerbusiness');
+            return;
+        }
+
+        // PRODUCTS
+        /**
+         * Return json data for datatables
+         *
+         * @return void
+         */
+        public function getProducts(): void
+        {
+            $userId = intval($_SESSION['userId']);
+            $products = $this->shopproductex_model->getAllUserProducts($userId);
+            echo json_encode($products);
+            return;
+        }
+
+        public function updateProductOrderNo()
+        {
+            $products = $this->input->post('products');
+            foreach($products as $product){
+                $this->shopproductex_model->updateProductOrderNo($product[0],$product[1]);
+            }
+            
+        }
+
+        public function productsOrder(): void
+        {
+            $this->global['pageTitle'] = 'TIQS : PRODUCTS SORT';
+            $userId = intval($_SESSION['userId']);
+            $data['categories'] = $this->shopproductex_model->getProductCategories($userId);
+            $this->loadViews('warehouse/productsOrder', $this->global, $data, 'footerbusiness', 'headerbusiness');
             return;
         }
 

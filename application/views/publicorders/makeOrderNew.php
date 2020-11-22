@@ -186,7 +186,8 @@
     <div class='bottom-bar footer'>
         <div class="container">
             <div class="row">
-                <div class="col-12 col-md-6 text-center text-left-md">
+<!--				<div class="col-12 col-md-6 text-center text-left-md">-->
+                <div class="col-12 text-center text-left-md">
                     <div class="totalButton">
                         <?php if (
                                 $vendor['requireReservation'] === '1'
@@ -201,8 +202,9 @@
                         <!-- <button class='button-main button-secondary' onclick="focusCheckOutModal('modal__checkout__list')">Order List</button> -->
                     </div>
                 </div>
-                <div class="col-12 col-md-6 text-center text-right-md">
-                    <button class='button-main button-secondary bottom-bar__checkout payButton' onclick="checkout(0)">PAY</button>
+<!--				<div class="col-12 col-md-6 text-center text-right-md">-->
+                <div class="col-12 text-center text-right-md">
+                    <button class='button-main button-secondary bottom-bar__checkout payButton' onclick="checkout(0)" style="width:100%">PAY</button>
                 </div>
             </div>
         </div>

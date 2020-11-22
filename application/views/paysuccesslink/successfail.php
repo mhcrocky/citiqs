@@ -8,7 +8,7 @@
 	<h2>CONFIRMATION</h2>
 	<div class="checkout-message__content">
 		<h3><?php if (!$pos) echo 'Your'; ?>&nbsp;Order was</h3>
-        <p class='order-status order-status--true'>successful</p>
+        <p class='order-status order-status--true'>not processed</p>
         <?php if (isset($order)) { ?>
             <div class='checkout-message__details'>
                 <h3>spot: table<span class='checkout-message__spot'></span>&nbsp;<?php echo $order['spotName']; ?></h3>
@@ -22,7 +22,7 @@
                 <?php } ?>
             </div>
         <?php } ?>
-		<h3 class='order-status order-status--true'>Please be patiente we are now working on that</h3>
+		<h3 class='order-status order-status--true'>An inactive payment methode was chosen, please select another payment type </h3>
 	</div>
 	<div class="checkout-btns">
         <?php if (isset($order)) { ?>
