@@ -125,4 +125,18 @@
             return $this->db->affected_rows() ? true : false;
         }
 
+        public function getProperty(string $property)
+        {
+            $result = $this->readImproved([
+                'what'  => [$property],
+                'where' => [
+                    'id' => $this->id,
+                ]
+            ]);
+            if (!empty($result)) {
+                return $result[0][$property];
+            }
+            return null;
+        }
+
     }
