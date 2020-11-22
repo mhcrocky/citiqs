@@ -212,23 +212,26 @@
         public function getProducts(): void
         {
             $userId = intval($_SESSION['userId']);
-            $where = [];
-            $products = $this->shopproductex_model->getAllUserProducts($userId, $where);
+            $products = $this->shopproductex_model->getAllUserProducts($userId);
             echo json_encode($products);
             return;
         }
 
         public function updateProductOrderNo()
         {
-            $productId = $this->input->post('productId');
-            $orderNo = $this->input->post('orderNo');
-            $this->shopproductex_model->updateProductOrderNo($productId,$orderNo);
+            $products = $this->input->post('products');
+            foreach($products as $product){
+                $this->shopproductex_model->updateProductOrderNo($product[0],$product[1]);
+            }
+            
         }
 
         public function productsOrder(): void
         {
             $this->global['pageTitle'] = 'TIQS : PRODUCTS SORT';
-            $this->loadViews('warehouse/productsOrder', $this->global, '', 'footerbusiness', 'headerbusiness');
+            $userId = intval($_SESSION['userId']);
+            $data['categories'] = $this->shopproductex_model->getProductCategories($userId);
+            $this->loadViews('warehouse/productsOrder', $this->global, $data, 'footerbusiness', 'headerbusiness');
             return;
         }
 
