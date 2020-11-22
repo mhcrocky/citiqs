@@ -56,8 +56,32 @@ class Alfredpayment extends BaseControllerWeb
             redirect($result->transaction->paymentURL);
             exit();
         }
-        redirect('success');        
-        exit();
+        $this->failedRedirect($orderId, $result);
+        return;
+    }
+
+    private function failedRedirect(int $orderId, object $result): void
+    {
+        $orderRandomKey = $this->shoporder_model->setObjectId($orderId)->getProperty('orderRandomKey');
+        if ($orderRandomKey) {
+            $message = $this->returnErrMessage($result->request->errorId);
+            $this->session->set_flashdata('error', $message);
+            $redirect = base_url() . 'pay_order?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
+        } else {
+            $redirect = base_url();
+        }
+        redirect($redirect);
+        exit;
+    }
+
+    private function returnErrMessage(string $payNlErrorId): string
+    {
+        if ($payNlErrorId === $this->config->item('paymentTypeErr')) {
+            $message = 'Payment error! Please choose another method';
+        } else {
+            $message = 'Payment error!  Please try again';
+        }
+        return $message;
     }
 
 	public function ExchangePay():void

@@ -156,6 +156,7 @@ $config['typeColors'] = [
 //cash payment types
 $config['prePaid'] = 'prePaid';
 $config['postPaid'] = 'postPaid';
+
 //paynl payment types
 $config['idealPayment'] = 'ideal payment';
 $config['creditCardPayment'] = 'credit card payment';
@@ -164,6 +165,9 @@ $config['giroPayment'] = 'giro payment';
 $config['payconiqPayment'] = 'payconiq payment';
 $config['pinMachinePayment'] = 'pin machine';
 $config['voucherPayment'] = 'voucher';
+
+//paynl errorId
+$config['paymentTypeErr'] = 'PAY-405';
 
 // PRODUCT IMAGES FOLDER
 $config['uploadProductImageFolder']    = FCPATH . 'assets/images/productImages' . DIRECTORY_SEPARATOR;
