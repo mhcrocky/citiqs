@@ -138,7 +138,7 @@
                 <ul class="metismenu" id="menu">
                 <div class="sidebar-header">
                     <div class="profile">
-                        <div class="profile-name text-center"><img class="logo-img" src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png"></div>
+                        <div class="profile-name text-center"><img class="logo-img" src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogowhite.png"></div>
 					    
 				    </div>
 			    </div>
@@ -174,7 +174,7 @@
                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-ink-pen"></i><span>Design</span></a>
                         <ul class="collapse">
                             <li><a href="<?php echo $this->baseUrl; ?>emaildesigner"><i class="ti-email"></i> <span>Email</span></a></li>
-                            <li><a href="#"><i class="ti-shopping-cart"></i> <span>Store</span></a></li>
+                            <li><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span>Store</span></a></li>
                         </ul>
                     </li>
                     <li>
