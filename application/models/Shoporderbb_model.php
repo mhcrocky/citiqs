@@ -361,7 +361,11 @@
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.productId,
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_order_extended.remark) > 0, tbl_shop_order_extended.remark, ""),
                                     \'' .  $concatSeparator . '\', tbl_shop_order_extended.mainPrductOrderIndex,
-                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.subMainPrductOrderIndex
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.subMainPrductOrderIndex,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.deliveryPrice,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.deliveryVatpercentage,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.pickupPrice,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.pickupVatpercentage
                                     SEPARATOR "' . $this->config->item('contactGroupSeparator') . '"
                                 ) AS products
                             FROM
@@ -475,7 +479,11 @@
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.productId,
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_order_extended.remark) > 0, tbl_shop_order_extended.remark, ""),
                                     \'' .  $concatSeparator . '\', tbl_shop_order_extended.mainPrductOrderIndex,
-                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.subMainPrductOrderIndex
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.subMainPrductOrderIndex,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.deliveryPrice,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.deliveryVatpercentage,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.pickupPrice,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.pickupVatpercentage
                                     SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"
                                 ) AS products
                             FROM
@@ -553,7 +561,7 @@
                 LIMIT 1;
             ';
 
-//            echo $query;die();
+            // echo $query;die();
             $result = $this->db->query($query);
             $result = $result->result_array();
 
