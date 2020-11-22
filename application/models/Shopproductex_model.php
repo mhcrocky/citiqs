@@ -87,8 +87,6 @@
 
         public function getUserProducts(int $userId, int $limit, int $offset, $whereIn = []): ?array
         {
-            $this->load->config('custom');
-
             $filter = [
                 'where' => [
                     'tbl_shop_categories.userId=' => $userId,
@@ -104,6 +102,35 @@
             $resetBy = 'productId';
             return $this->filterProducts($userId, $filter, $resetBy, false);
           
+        }
+
+        public function getAllUserProducts(int $userId, $whereIn = []): ?array
+        {
+
+            $this->db->select("tbl_shop_products.id,tbl_shop_products_extended.name,category,orderNo");
+            $this->db->from('tbl_shop_products');
+            $this->db->join($this->table, $this->table.'.productId = tbl_shop_products.id', 'left');
+            $this->db->join('tbl_shop_categories', 'tbl_shop_products.categoryId = tbl_shop_categories.id', 'left');
+            $this->db->join('tbl_shop_product_printers', 'tbl_shop_products.id = tbl_shop_product_printers.productId', 'left');
+            $this->db->where('userId', $userId);
+            $this->db->group_by($this->table. '.productId');
+            $this->db->order_by('orderNo');
+            $query = $this->db->get();
+            $results = $query->result_array();
+            $products = [];
+            foreach($results as $key => $result){
+                $result['position'] = $key + 1;
+                $products[] = $result;
+            }
+            return $products;
+          
+        }
+
+        public function updateProductOrderNo($productId,$orderNo)
+        {
+            $this->db->set('orderNo', $orderNo);
+            $this->db->where('id', $productId);
+            $this->db->update('tbl_shop_products');
         }
 
         public function getUserProductsPublic(int $userId): ?array
