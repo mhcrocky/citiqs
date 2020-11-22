@@ -56,7 +56,10 @@ class Alfredpayment extends BaseControllerWeb
             redirect($result->transaction->paymentURL);
             exit();
         }
-        redirect('success');        
+        // when we have a payment methode set and not set in pay we have i think and issue here
+		var_dump($result);
+        die();
+		redirect($result->transaction->paymentURL);
         exit();
     }
 

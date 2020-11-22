@@ -1419,6 +1419,50 @@ footer {
 }
 
 
+@media only screen and (max-width: 410px){
+
+	.checkout-table__single-element{
+		padding: 15px 7px;
+	}
+
+	.checkout-table__product-details{
+		width: 100%;
+	}
+
+	.checkout-table__price{
+		padding: 1px 5px;
+		justify-content: center;
+		margin-right: 10px;
+	}
+
+	.checkout-table__quantity .makeOrder{
+		width: 25px;
+		height: 25px;
+		min-width: 25px;
+		min-height: 25px;
+	}
+
+	.checkout-table__numbers{
+		margin-top: 0;
+	}
+
+	.checkout-table__numbers i{
+		font-size: 13px;
+	}
+
+	.checkout-table__trash i{
+		font-size: 18px;
+		margin-left: 12px;
+	}
+
+	.checkout-table__numbers{
+		width: 100% !important;
+		justify-content: flex-end;
+		margin-top: 10px;
+	}
+
+}
+
 
 
 

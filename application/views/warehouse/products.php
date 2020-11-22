@@ -298,7 +298,7 @@
                                 if ($details['showInPublic'] === '1') {
                                     $string .= ' <span style="background-color: #72b19f">(ACTIVE)</span> ';
                                 } else {
-                                    $string .= ' <span style="background-color: #f2622f">(BLOCKED)</span> ';
+                                    $string .= ' <span style="background-color: #ff0000">(BLOCKED)</span> ';
                                 }
 
                                 $productDetailsString .= '<dd>' . $string . '</dd>';
@@ -308,7 +308,7 @@
                         ?>
                             <div
                                 class="grid-item"
-                                style="background-color:<?php echo $product['productActive'] === '1' ? '#72b19f' : '#f2622f'; ?>"
+                                style="background-color:<?php echo $product['productActive'] === '1' ? '#72b19f' : '#ff0000'; ?>"
                                 id="<?php echo 'product_' . str_replace('\'', ' ', $details['name']) . '_' . $details['productExtendedId']; ?>"
                                 >
                                 <div class="item-header" style="width:100%">

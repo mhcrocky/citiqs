@@ -68,7 +68,7 @@
 				<p>No printers.</p>
             <?php } else { ?>
                 <?php foreach ($printers as $printer) { ?>
-					<div class="grid-item" style="background-color:<?php echo $printer['active'] === '1' ? '#72b19f' : '#f2622f'; ?>">
+					<div class="grid-item" style="background-color:<?php echo $printer['active'] === '1' ? '#72b19f' : '#ff0000'; ?>">
 						<div class="item-header" style="width:100%">
 							<p class="item-description" style="white-space: initial;">Name: <?php echo $printer['printer']; ?></p>
                             <p class="item-description" style="white-space: initial;">MAC number: <?php echo $printer['macNumber']; ?></p>
