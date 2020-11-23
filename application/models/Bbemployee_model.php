@@ -17,10 +17,10 @@ Class Bbemployee_model extends CI_Model
 		}
 		// return $printerDetails;
 	}
-	function getemployee($userId){
-		$this->db->where('ownerId',$userId);
-		$this->db->from("tbl_employee");
-		return $this->db->get()->row();
+	public function getemployee($userId): ?object
+	{
+		$this->load->model('employee_model');
+		return $this->employee_model->setProperty('ownerId', $userId)->getEmployeeForBB();
 	}
 	function updateemployeenext($id,$next){
 		$this->db->where("id",$id);

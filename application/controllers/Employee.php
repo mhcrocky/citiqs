@@ -121,7 +121,7 @@ class Employee extends BaseControllerWeb {
             echo(json_encode(array('status' => 0)));
         } else {
             $employee = reset($employee);            
-            if (!Email_helper::sendEmployeeEmail($employee)) {
+            if (!Email_helper::sendBlackBoxEmail($employee)) {
                 echo(json_encode(array('status' => 0)));
             } else {
                 echo(json_encode(array('status' => 1)));

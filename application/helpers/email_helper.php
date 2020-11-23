@@ -76,6 +76,14 @@
             return self::sendEmail($employee->email, $subject, $message);
         }
 
+        public static function sendBlackBoxEmail(object $employee): bool
+        {
+            $link = base_url() . "inandout/" . $employee->uniquenumber . "/" . $employee->ownerId;
+            $message = '<p>This is your personal <a href="' . $link .'" target="_blank">link</a></p>';
+            $subject = 'our personal registration link';
+            return self::sendOrderEmail($employee->email, $subject, $message);
+        }
+
         public static function sendTicketEmail(string $email, string $url): bool
         {
             $subject = 'Personal collection ticket document';
@@ -147,10 +155,10 @@
             $CI->email->to($email);
             $CI->email->subject($subject);
             $CI->email->message($message);
-            if ($attachment) {
-                $CI->email->attach($attachment);
-                unlink($attachment);
-            }
+//            if ($attachment) {
+//                $CI->email->attach($attachment);
+//                unlink($attachment);
+//            }
             return $CI->email->send();
         }
     }

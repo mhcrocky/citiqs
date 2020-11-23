@@ -222,3 +222,7 @@ $config['posBuyerDetails'] = 'posBuyerDetails';
 $config['posPay'] = 'posPay';
 $config['posSuccessLink'] = 'posSuccessLink';
 $config['posPaymentFailedLink'] = 'posPaymentFailedLink';
+
+
+$config['employeeIn'] = 'in';
+$config['employeeOut'] = 'out';

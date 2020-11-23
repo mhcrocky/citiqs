@@ -12,13 +12,14 @@ class BBEmployee extends REST_Controller
 	{
 		parent::__construct();
 		$this->load->model('bbemployee_model');
+		$this->load->model('shopemployee_model');
 		$this->load->config('custom');
 		$this->load->library('language', array('controller' => $this->router->class));
 	}
 	public function data_get()
 	{
 		$macNumber	=	$this->input->get('mac');
-		$employeedetail=$this->bbemployee_model->getEmployeeByMac($macNumber);
+		$employeedetail = $this->bbemployee_model->getEmployeeByMac($macNumber);
 		if(empty($employeedetail)){
 			return ;
 		}
@@ -26,9 +27,11 @@ class BBEmployee extends REST_Controller
 		$price=0.01;
 		$quantity=1;
 		$vatpercentage=0;
+		$registration = 'registration ' . $employeedetail->action . ' ' . date('Y-m-d H:i:s');
+		
 		$this->ProductLines[]=	array(
 			"ProductGroupId"	=>	"employee",	// only categoryId !!! DONE
-			"ProductGroupName"	=>	"registration",		// categoryName !!! DONE
+			"ProductGroupName"	=>	$registration,		// categoryName !!! DONE
 			"ProductId"			=>	"INSZ0".$employeedetail->id,	// productId !!! DONE
 			"ProductName"		=>	$employeedetail->username,
 			"Quantity"			=>	$quantity,
@@ -66,7 +69,9 @@ class BBEmployee extends REST_Controller
 		$jsonoutput['TransactionDateTime']	=	gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
 		$jsonoutput['TransactionNumber']	=	(int)( ("2000").(200000+$nextemployee));
 		$jsonoutput['ordernumberr']			=	$nextemployee;
-		$this->bbemployee_model->updateemployeenext($employeedetail->id,$nextemployee);
+		
+		$this->employee_model->setObjectId(intval($employeedetail->id))->setProperty('next', $nextemployee)->update();
+		$this->shopemployee_model->setObjectId(intval($employeedetail->inOutId))->setProperty('processed', '1')->update();
 		// ------------------ QRCode creation --------------------------
 
 		// $imageqr = new Imagick();

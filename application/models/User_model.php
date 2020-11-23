@@ -849,6 +849,31 @@ class User_model extends CI_Model
         }
         return $this;
     }
+
+	public function manageAndSetOneSignalId($onesignalid): string
+	{
+		return '';
+
+		if (!$this->isDuplicate($user['email'])) {
+			$password = Utility_helper::shuffleString(12);
+			$user['password'] = getHashedPassword($password);
+			$user['code'] = Utility_helper::shuffleString(5);
+			$user['createdDtm'] = date('Y-m-d H:i:s');
+			$this->getGeoCoordinates($user);
+			$this->insertUser($user);
+			$this->setUniqueValue($user['email'])->setWhereCondtition()->setUser();
+			// must return non hashed password for activation link
+			$this->password = $password;
+			$this->created = true;
+
+		} else {
+			// update user - maybe it was register as finder and now is claimer or user insert new mobile
+			$this->updated = true;
+			$this->setUniqueValue($user['email'])->setWhereCondtition()->updateUser($user)->setUser();
+		}
+
+		return $this;
+	}
     
     public function insertAndSetHotel(array $hotel): object
     {

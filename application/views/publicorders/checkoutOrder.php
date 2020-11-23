@@ -44,11 +44,11 @@
             include_once FCPATH . 'application/views/publicorders/includes/checkout/checkoutOrderTip.php';
         ?>
 
-        <div class="row d-flex justify-content-center" id="checkout">
+        <div class="row d-flex justify-content-center checkoutOrderBody" id="checkout">
             <div class="col-sm-12 col-lg-10 col-lg-offset-1">
                 <?php if (isset($workingTime)) { ?>
                     <div class="checkout-title">
-                        <span><?php echo $spot['spotType']; ?>&nbsp;<?php echo $this->language->line("PAYMENT-C0010",'period and time');?> </span>
+                        <span id="deliveryPeriodAndTime"><?php echo $spot['spotType']; ?>&nbsp;<?php echo $this->language->line("PAYMENT-C0010",'period and time');?> </span>
                     </div>
                     <div class="row">                        
                         <?php if (intval($spot['spotTypeId']) === $this->config->item('deliveryType')) { ?>

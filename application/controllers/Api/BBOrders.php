@@ -412,7 +412,9 @@
 
 
 
-                    if (intval($product[11])) {
+                    if (intval($product[11])) { // addon
+						$draw->setStrokeColor('black');
+						$draw->setStrokeWidth(1);
                         $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
                         $draw->annotation(20, $hd + ($i * 30), $quantity);
 
@@ -425,6 +427,8 @@
                             $draw->annotation(60, $hd + ($i * 30), $remark);;
                         }
                     } else {
+						$draw->setStrokeColor('black');
+						$draw->setStrokeWidth(3);
                         $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
                         $draw->annotation(0, $hd + ($i * 30), $quantity);
 
@@ -1343,4 +1347,3 @@
 		}
     }
 
-					
