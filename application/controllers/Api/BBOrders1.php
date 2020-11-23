@@ -312,7 +312,7 @@
             $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
             $imagetextemail->annotateImage($drawemail, 0, 165, 0, "ANT");
             $imagetextemail->annotateImage($drawemail, 48, 165, 0, "OMSCHRIJVING");
-            $imagetextemail->annotateImage($drawemail, 380, 165, 0, "PRIJS");
+            $imagetextemail->annotateImage($drawemail, 380, 165, 0, "EX PRIJS");
             $imagetextemail->annotateImage($drawemail, 475, 165, 0, "%");
             $imagetextemail->annotateImage($drawemail, 495, 165, 0, "TOTAAL");
             $h++;
