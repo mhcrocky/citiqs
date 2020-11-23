@@ -11,7 +11,7 @@
       </div>
       <div class="modal-body">
         <!-- ITEM EDITOR FOR NEW USER -->
-			<div class="item-editor" id='add-new-user'>
+			<div class="item-editor">
 
 
 <div class="edit-single-user-container">
@@ -114,7 +114,7 @@
 				</div><!-- end item header -->
 				<div class="grid-footer">
 					<div class="iconWrapper">
-						<span class="fa-stack fa-2x edit-icon btn-edit-item" onclick="toogleElementClass('editEmployeeId<?php echo $employee->id; ?>', 'display')">
+						<span class="fa-stack fa-2x edit-icon btn-edit-item" onclick="editEmployee('<?php echo $employee->id; ?>')">
 							<i class="far fa-edit"></i>
 						</span>
 					</div>
@@ -137,7 +137,7 @@
                         </span>
 					</div>
 				</div>
-				<button style="display: none" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editEmployee<?php echo $employee->id; ?>Modal">Edit</button>
+				<button style="display: none" type="button" id="editEmployee<?php echo $employee->id; ?>" class="btn btn-primary" data-toggle="modal" data-target="#editEmployee<?php echo $employee->id; ?>Modal">Edit</button>
 				<!-- Edit Modal -->
 <div class="modal fade" id="editEmployee<?php echo $employee->id; ?>Modal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md" role="document">
@@ -206,4 +206,9 @@
 		<!-- end grid list -->
 	</div>
 </div>
+<script>
 
+function editEmployee(employeeId){
+	$('#editEmployee'+employeeId).click();
+}
+</script>
