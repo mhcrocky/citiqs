@@ -1,8 +1,56 @@
 <?php
+declare(strict_types=1);
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Employee_model extends CI_Model {
+require_once APPPATH . 'interfaces/InterfaceCrud_model.php';
+require_once APPPATH . 'interfaces/InterfaceValidate_model.php';
+require_once APPPATH . 'abstract/AbstractSet_model.php';
+
+class Employee_model extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
+{
+    public $id;
+    public $username;
+    public $email;
+    public $uniquenumber;
+    public $ownerId;
+    public $validitytime;
+    public $expiration_time;
+    public $expiration_time_value;
+    public $expiration_time_type;
+    public $next;
+
+
+    private $table = 'tbl_employee';
+
+    protected function setValueType(string $property,  &$value): void
+    {
+        $this->load->helper('validate_data_helper');
+        if (!Validate_data_helper::validateNumber($value)) return;
+
+        if ($property === 'id' || $property === 'ownerId') {
+            $value = intval($value);
+        }
+
+        return;
+    }
+
+    protected function getThisTable(): string
+    {
+        return $this->table;
+    }
+    public function insertValidate(array $data): bool
+    {
+        // TO DO SET CONDITIONS
+        return $this->updateValidate($data);
+    }
+
+    public function updateValidate(array $data): bool
+    {
+        // TO DO SET CONDITIONS
+        return true;
+    }
+
 
     public function getOwnerEmployees($ownerId) {
         $this->db->from('tbl_employee');
@@ -67,5 +115,44 @@ class Employee_model extends CI_Model {
         $this->db->from('tbl_employee');
         $query = $this->db->get();
         return $query->result();
+    }
+
+    public function getEmployeeForBB()
+    {
+
+        $result = $this->readImproved([
+            'what' => [
+                $this->table . '.id',
+                $this->table . '.username',
+                $this->table . '.email',
+                $this->table . '.uniquenumber',
+                $this->table . '.ownerId',
+                $this->table . '.validitytime',
+                $this->table . '.expiration_time',
+                $this->table . '.expiration_time_value',
+                $this->table . '.expiration_time_type',
+                $this->table . '.next',
+                'tbl_employee_inout.id AS inOutId',
+                'tbl_employee_inout.inOutEmployee AS action',
+            ],
+            'where' => [
+                $this->table . '.ownerId=' => $this->ownerId,
+                'tbl_employee_inout.processed=' => '0'
+            ],
+            'joins' => [
+                ['tbl_employee_inout', 'tbl_employee_inout.employeeId = ' .  $this->table . '.id', 'INNER'],
+            ],
+            'conditions' => [
+                'ORDER_BY' => ['tbl_employee_inout.id ASC'],
+                'LIMIT' => ['1'],
+            ]
+        ]);
+
+        if (empty($result)) return null;
+
+        $result = reset($result);
+        $result = (object) $result;
+
+        return $result;
     }
 }
