@@ -24,15 +24,15 @@ class BBEmployee extends REST_Controller
 			return ;
 		}
 		$nextemployee=$employeedetail->next+1;
-		$price=0.01;
+		$price=0.00;
 		$quantity=1;
 		$vatpercentage=0;
-		$registration = 'registration ' . $employeedetail->action . ' ' . date('Y-m-d H:i:s');
+		$registration = 'registration ' . $employeedetail->action;// . ' ' . $employeedetail->inOutDateTime;
 		
 		$this->ProductLines[]=	array(
 			"ProductGroupId"	=>	"employee",	// only categoryId !!! DONE
 			"ProductGroupName"	=>	$registration,		// categoryName !!! DONE
-			"ProductId"			=>	"INSZ0".$employeedetail->id,	// productId !!! DONE
+			"ProductId"			=>	$employeedetail->INSZnumber,	// productId !!! DONE
 			"ProductName"		=>	$employeedetail->username,
 			"Quantity"			=>	$quantity,
 			"QuantityUnit"		=>	"P",
@@ -57,14 +57,14 @@ class BBEmployee extends REST_Controller
 		);
 		$TStotalamount=$price*$quantity;
 		$this->PaymentLines[]=array(
-			"PaymentId"				=>	$nextemployee, //ONLY ORDER ID WITHOUT PAY TESTING VERSION DONE
+			"PaymentId"				=>	"INSZ0".($employeedetail->id).($nextemployee),
 			"PaymentName"			=>	$employeedetail->username,
 			"PaymentType"			=>	"EFT",
 			"Quantity"				=>	1,
 			"PayAmount"				=>	(float)$TStotalamount,
 			"ForeignCurrencyAmount"	=>	0,
 			"ForeignCurrencyISO"	=>	"",
-			"Reference"				=>	"Employee in", //PAYNL TRANSACTION ID !!! DONE !!!
+			"Reference"				=>	"Employee " . $employeedetail->action, //PAYNL TRANSACTION ID !!! DONE !!!
 			);
 		$jsonoutput['TransactionDateTime']	=	gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
 		$jsonoutput['TransactionNumber']	=	(int)( ("2000").(200000+$nextemployee));

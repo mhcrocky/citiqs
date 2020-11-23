@@ -133,8 +133,10 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
                 $this->table . '.expiration_time_value',
                 $this->table . '.expiration_time_type',
                 $this->table . '.next',
+                $this->table . '.INSZnumber',
                 'tbl_employee_inout.id AS inOutId',
                 'tbl_employee_inout.inOutEmployee AS action',
+                'tbl_employee_inout.inOutDateTime'
             ],
             'where' => [
                 $this->table . '.ownerId=' => $this->ownerId,

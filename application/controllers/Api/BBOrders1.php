@@ -83,7 +83,10 @@
             $order = reset($order);
             $receiptemailBasepath=$this->VatnoVatdata($order,0);
             
-            $jsonoutput['TransactionDateTime']    =   date("Y-d-mTG:i:sz",strtotime($order['orderCreated']));//gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
+            $jsonoutput['TransactionDateTime']    =   date("c",strtotime($order['orderCreated']));//gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
+            $ordercreatedtime=strtotime($order['orderCreated']);
+            // echo date("c",($time-10));
+            $jsonoutput['TransactionDateTime_Emp']=   date("c",($ordercreatedtime-10));//this is for when emp
             $jsonoutput['TransactionNumber']      =   (int)(("1000").(100000+$order['orderId']) );
             $jsonoutput['ordernumberr']           =   $order['orderId'];
 
@@ -309,7 +312,7 @@
             $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
             $imagetextemail->annotateImage($drawemail, 0, 165, 0, "ANT");
             $imagetextemail->annotateImage($drawemail, 48, 165, 0, "OMSCHRIJVING");
-            $imagetextemail->annotateImage($drawemail, 380, 165, 0, "PRIJS");
+            $imagetextemail->annotateImage($drawemail, 380, 165, 0, "EX PRIJS");
             $imagetextemail->annotateImage($drawemail, 475, 165, 0, "%");
             $imagetextemail->annotateImage($drawemail, 495, 165, 0, "TOTAAL");
             $h++;
@@ -363,6 +366,11 @@
                     $shortDescription = $product[5];
                     $longDescription = $product[6];
                     $vatpercentage = $this->getProductVatpercantage($product, $orderType);
+
+                    //small fix to remove vat from price//24nov2020
+                    $pricewithoutvat=$price/(1+($vatpercentage/100));
+                    $pricewithoutvat=sprintf("%.2f",$pricewithoutvat);
+                    //end small fix to remove vat from price//24nov2020
                     if($vatzeroflag==1){
                         $vatpercentage=0;
                     }
@@ -455,7 +463,8 @@
                     $drawemail->annotation(40, 165 + ($i * 30), $title);
 
                     $drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-                    $drawemail->annotation(440, 165 + ($i * 30), "€ ". $price);
+                    // $drawemail->annotation(440, 165 + ($i * 30), "€ ". $price);
+                    $drawemail->annotation(440, 165 + ($i * 30), "€ ". $pricewithoutvat);
 
                     $drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
                     $drawemail->annotation(500, 165 + ($i * 30), (string)$vatpercentage);
