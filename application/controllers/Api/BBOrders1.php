@@ -368,6 +368,7 @@
                     $vatpercentage = $this->getProductVatpercantage($product, $orderType);
 
                     //small fix to remove vat from price//24nov2020
+                    $pricewithvat=$price;
                     $price=$price/(1+($vatpercentage/100));
                     //end small fix to remove vat from price//24nov2020
                     if($vatzeroflag==1){
@@ -485,7 +486,7 @@
 
                     //added by Nadeem
                     //set json product price and etc
-                    $price=(float)$price;
+                    $price=(float)$pricewithvat;
                     $quantity=(int)$quantity;
                     $this->ProductLines[]=  array(
                         "ProductGroupId"    =>  "PRGR".$product[4], // only categoryId !!! DONE
