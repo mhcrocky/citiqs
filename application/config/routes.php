@@ -443,5 +443,8 @@ $route['customer_panel/report'] = "Customer_panel/report";
 $route['customer_panel/pivot'] = "Customer_panel/pivot";
 $route['customer_panel/pivot_export']="Customer_panel/pivot_export";
 
+$route['inandout/(:any)/(:num)'] = "Blackbox/index/$1/$2";
+$route['in/(:any)/(:num)'] = "Blackbox/actionIn/$1/$2";
+$route['out/(:any)/(:num)'] = "Blackbox/actionOut/$1/$2";
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

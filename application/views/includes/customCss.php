@@ -146,4 +146,6 @@
 <?php } elseif (strpos($this->view, 'paysuccesslink/') !== false) { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
+<?php }  elseif ($this->view  === 'blackbox/login') { ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/blackbox.css">
 <?php } ?>
