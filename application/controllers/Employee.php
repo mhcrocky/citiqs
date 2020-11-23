@@ -28,7 +28,7 @@ class Employee extends BaseControllerWeb {
             'time' => time(),
         ];
         $this->global['pageTitle'] = 'TIQS : ACCESS';
-        $this->loadViews("employeenew", $this->global, $data, NULL);
+        $this->loadViews("employeenew", $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
 
     public function addNewEmployee() {
