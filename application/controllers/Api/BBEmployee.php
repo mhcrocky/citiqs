@@ -24,10 +24,10 @@ class BBEmployee extends REST_Controller
 			return ;
 		}
 		$nextemployee=$employeedetail->next+1;
-		$price=0.01;
+		$price=0.1;
 		$quantity=1;
 		$vatpercentage=0;
-		$registration = 'registration ' . $employeedetail->action . ' ' . $employeedetail->inOutDateTime;
+		$registration = 'registration ' . $employeedetail->action;// . ' ' . $employeedetail->inOutDateTime;
 		
 		$this->ProductLines[]=	array(
 			"ProductGroupId"	=>	"employee",	// only categoryId !!! DONE
@@ -57,7 +57,7 @@ class BBEmployee extends REST_Controller
 		);
 		$TStotalamount=$price*$quantity;
 		$this->PaymentLines[]=array(
-			"PaymentId"				=>	$nextemployee, //ONLY ORDER ID WITHOUT PAY TESTING VERSION DONE
+			"PaymentId"				=>	"INSZ0".$employeedetail->id.$nextemployee, 
 			"PaymentName"			=>	$employeedetail->username,
 			"PaymentType"			=>	"EFT",
 			"Quantity"				=>	1,
