@@ -27,12 +27,12 @@ class BBEmployee extends REST_Controller
 		$price=0.01;
 		$quantity=1;
 		$vatpercentage=0;
-		$registration = 'registration ' . $employeedetail->action . ' ' . date('Y-m-d H:i:s');
+		$registration = 'registration ' . $employeedetail->action . ' ' . $employeedetail->inOutDateTime;
 		
 		$this->ProductLines[]=	array(
 			"ProductGroupId"	=>	"employee",	// only categoryId !!! DONE
 			"ProductGroupName"	=>	$registration,		// categoryName !!! DONE
-			"ProductId"			=>	"INSZ0".$employeedetail->id,	// productId !!! DONE
+			"ProductId"			=>	$employeedetail->INSZnumber,	// productId !!! DONE
 			"ProductName"		=>	$employeedetail->username,
 			"Quantity"			=>	$quantity,
 			"QuantityUnit"		=>	"P",
@@ -64,7 +64,7 @@ class BBEmployee extends REST_Controller
 			"PayAmount"				=>	(float)$TStotalamount,
 			"ForeignCurrencyAmount"	=>	0,
 			"ForeignCurrencyISO"	=>	"",
-			"Reference"				=>	"Employee in", //PAYNL TRANSACTION ID !!! DONE !!!
+			"Reference"				=>	"Employee " . $employeedetail->action, //PAYNL TRANSACTION ID !!! DONE !!!
 			);
 		$jsonoutput['TransactionDateTime']	=	gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
 		$jsonoutput['TransactionNumber']	=	(int)( ("2000").(200000+$nextemployee));
