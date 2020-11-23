@@ -11,7 +11,7 @@
       </div>
       <div class="modal-body">
         <!-- ITEM EDITOR FOR NEW USER -->
-			<div class="item-editor" id='add-new-user'>
+			<div class="item-editor">
 
 
 <div class="edit-single-user-container">
@@ -38,6 +38,10 @@
 				<option value="days">Days</option>
 				<option value="months">Months</option>
 			</select>
+		</div>
+		<div>
+			<label for="INSZnumber">INSZ number</label>
+			<input type="number" step="1" min="1" class="form-control" id="INSZnumber" name="INSZnumber" />
 		</div>
 	</form>
 </div>
@@ -99,10 +103,10 @@
 			?>
 			<div class="grid-item" <?php if (intval($employee->expiration_time) < $time){ ?>style="background-color:rgba(226, 95, 42)" <?php } ?>>
 				<div class="item-header">
-					<p class="item-description"><?php $employee->username; ?></p>
-					<p class="item-category"><?php $employee->email; ?></p>
-					<p class="item-category"><?php $employee->uniquenumber; ?></p>
-					<p class="item-category"><?php echo date('Y-m-d H:i:s', $employee->expiration_time); ?></p>
+					<p class="item-description"><?php echo $employee->username; ?></p>
+					<p class="item-category"><?php echo $employee->email; ?></p>
+					<p class="item-category"><?php echo $employee->uniquenumber; ?></p>
+					<!-- <p class="item-category"><?php #echo date('Y-m-d H:i:s', $employee->expiration_time); ?></p> -->
 					<!-- <p class="item-category"><? #echo date('Y-m-d H:i:s', $employee->validitytime); ?></p>
 							<p class="item-category"><? #echo date('Y-m-d H:i:s', $employee->expiration_time); ?></p>
 							<p class="item-category"><? #echo $employee->expiration_time_value; ?></p>
@@ -110,7 +114,7 @@
 				</div><!-- end item header -->
 				<div class="grid-footer">
 					<div class="iconWrapper">
-						<span class="fa-stack fa-2x edit-icon btn-edit-item" onclick="toogleElementClass('editEmployeeId<?php echo $employee->id; ?>', 'display')">
+						<span class="fa-stack fa-2x edit-icon btn-edit-item" onclick="editEmployee('<?php echo $employee->id; ?>')">
 							<i class="far fa-edit"></i>
 						</span>
 					</div>
@@ -133,7 +137,7 @@
                         </span>
 					</div>
 				</div>
-				<button style="display: none" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editEmployee<?php echo $employee->id; ?>Modal">Edit</button>
+				<button style="display: none" type="button" id="editEmployee<?php echo $employee->id; ?>" class="btn btn-primary" data-toggle="modal" data-target="#editEmployee<?php echo $employee->id; ?>Modal">Edit</button>
 				<!-- Edit Modal -->
 <div class="modal fade" id="editEmployee<?php echo $employee->id; ?>Modal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md" role="document">
@@ -202,4 +206,9 @@
 		<!-- end grid list -->
 	</div>
 </div>
+<script>
 
+function editEmployee(employeeId){
+	$('#editEmployee'+employeeId).click();
+}
+</script>

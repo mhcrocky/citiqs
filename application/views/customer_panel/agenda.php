@@ -1,5 +1,5 @@
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.0/css/mdb.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/css/bootstrap-multiselect.min.css" integrity="sha512-wHTuOcR1pyFeyXVkwg3fhfK46QulKXkLq1kxcEEpjnAPv63B/R49bBqkJHLvoGFq6lvAEKlln2rE1JfIPeQ+iw==" crossorigin="anonymous" />
 <div id="vue_app">
     <div class="main-wrapper" style="text-align: center; display: block;">
         <div class="row container-fluid height-100">
@@ -127,8 +127,8 @@
                         </div>
                         <div class="form-group">
                             <label for="online">Get Spots and Timeslots from:</label>
-                            <select class="mdb-select md-form" multiple>
-                                <option value="" disabled selected>---</option>
+                            <select id="copy" class="mdb-select md-form" multiple>
+                                
                                 <option  v-for="agenda in agendas" :key="agenda.id" :value="agenda.id">{{ dateFormat(agenda.ReservationDateTime) }}</option>
                             </select>
                         </div>
@@ -161,11 +161,13 @@
     </div>
 </div>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.0/js/mdb.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js" integrity="sha512-ljeReA8Eplz6P7m1hwWa+XdPmhawNmo9I0/qyZANCCFvZ845anQE+35TuZl9+velym0TKanM2DXVLxSJLLpQWw==" crossorigin="anonymous"></script>
 <script>
-$(document).ready(function() {
-$('.mdb-select').materialSelect();
-});
+    $(document).ready(function() {
+        $('#copy').multiselect({
+            disableIfEmpty: true
+        });
+    });
     var app = new Vue({
         el: '#vue_app',
 
