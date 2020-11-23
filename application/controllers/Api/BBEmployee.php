@@ -57,7 +57,7 @@ class BBEmployee extends REST_Controller
 		);
 		$TStotalamount=$price*$quantity;
 		$this->PaymentLines[]=array(
-			"PaymentId"				=>	"INSZ0".$employeedetail->id.$nextemployee, 
+			"PaymentId"				=>	"INSZ0".($employeedetail->id).($nextemployee),
 			"PaymentName"			=>	$employeedetail->username,
 			"PaymentType"			=>	"EFT",
 			"Quantity"				=>	1,
