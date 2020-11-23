@@ -366,6 +366,10 @@
                     $shortDescription = $product[5];
                     $longDescription = $product[6];
                     $vatpercentage = $this->getProductVatpercantage($product, $orderType);
+
+                    //small fix to remove vat from price//24nov2020
+                    $price=$price/(1+($vatpercentage/100));
+                    //end small fix to remove vat from price//24nov2020
                     if($vatzeroflag==1){
                         $vatpercentage=0;
                     }
