@@ -19,6 +19,7 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
     public $expiration_time_value;
     public $expiration_time_type;
     public $next;
+    public $INSZnumber;
 
 
     private $table = 'tbl_employee';
