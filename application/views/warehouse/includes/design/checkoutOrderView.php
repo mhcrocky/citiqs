@@ -306,6 +306,25 @@
     </div>
     <div class="form-group col-sm-12">
         <label style="display:block;">
+            Delivery/pikup time headline:
+            <input
+                type="color"
+                class="form-control"
+                name="checkoutOrder[id][deliveryPeriodAndTime][color]"
+                data-css-selector="id"
+                data-css-selector-value="deliveryPeriodAndTime"
+                data-css-property="color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['checkoutOrder']['id']['deliveryPeriodAndTime']['color']) ) { ?>
+                value = "<?php echo $design['checkoutOrder']['id']['deliveryPeriodAndTime']['color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
             Back button background color:
             <input
                 type="color"
