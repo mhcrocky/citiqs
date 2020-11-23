@@ -1,53 +1,66 @@
-<div class="main-wrapper theme-editor-wrapper">
-	<div class="grid-wrapper">
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/employeenew.css">
+<!-- Add Modal -->
+<div class="modal fade" id="addNewModal" tabindex="-1" role="dialog" aria-labelledby="addNewModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addNewModalLabel">Add New Employee</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- ITEM EDITOR FOR NEW USER -->
+			<div class="item-editor" id='add-new-user'>
+
+
+<div class="edit-single-user-container">
+	<form class="form-inline" id="addEmployee" method="post" action="<?php echo $this->baseUrl . 'addNewEmployeeSetup'; ?>">
+		<input type="text" readonly name="ownerId" required value="<?php echo $ownerId ?>" hidden />
+		<div>
+			<label for="username">Name</label>
+			<input type="text" class="form-control" id="username" name="username" required />
+		</div>
+		<div>
+			<label for="email">Email</label>
+			<input type="text" class="form-control" id="email" name="email" required />
+		</div>
+		<div>
+			<label for="expiration_time_value">Expiration time value</label>
+			<input type="number" step="1" min="1" class="form-control" id="expiration_time_value" name="expiration_time_value" required />
+		</div>
+		<div>
+			<label for="expiration_time_type">Expiration time type</label>
+			<select class="form-control" id="expiration_time_type" name="expiration_time_type" required>
+				<option value="">Select</option>
+				<option value="minutes">Minutes</option>
+				<option value="hours">Hours</option>
+				<option value="days">Days</option>
+				<option value="months">Months</option>
+			</select>
+		</div>
+	</form>
+</div>
+</div>
+      </div>
+      <div class="modal-footer">
+		<input style="width: 100px;" type="button" class="grid-button button theme-editor-header-button" onclick="submitForm('addEmployee')" value="Submit" />
+        <button style="width: 100px;" type="button" class="grid-button-cancel button theme-editor-header-button" data-dismiss="modal">Cancel</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div style="margin-top:0;" class="main-wrapper theme-editor-wrapper">
+	<div style="background: #f3d0b1 !important;" class="grid-wrapper">
 		<div class="grid-list">
-			<!-- ITEM EDITOR FOR NEW USER -->
-			<div class="item-editor theme-editor" id='add-new-user'>
-
-				<div class="theme-editor-header d-flex justify-content-between" >
-					<div>
-						<img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogonew.png" alt="">
-					</div>
-					<div class="theme-editor-header-buttons">
-						<input type="button" class="grid-button button theme-editor-header-button" onclick="submitForm('addEmployee')" value="Submit" />
-						<button class="grid-button-cancel button theme-editor-header-button" onclick="toogleElementClass('add-new-user', 'display')">Cancel</button>
-					</div>
-				</div>
-
-				<div class="edit-single-user-container">
-					<form class="form-inline" id="addEmployee" method="post" action="<?php echo $this->baseUrl . 'addNewEmployeeSetup'; ?>">
-						<input type="text" readonly name="ownerId" required value="<?php echo $ownerId ?>" hidden />
-						<h3>Employee Details</h3>
-						<div>
-							<label for="username">Name</label>
-							<input type="text" class="form-control" id="username" name="username" required />
-						</div>
-						<div>
-							<label for="email">Email</label>
-							<input type="text" class="form-control" id="email" name="email" required />
-						</div>
-						<div>
-							<label for="expiration_time_value">Expiration time value</label>
-							<input type="number" step="1" min="1" class="form-control" id="expiration_time_value" name="expiration_time_value" required />
-						</div>
-						<div>
-							<label for="expiration_time_type">Expiration time type</label>
-							<select class="form-control" id="expiration_time_type" name="expiration_time_type" required>
-								<option value="">Select</option>
-								<option value="minutes">Minutes</option>
-								<option value="hours">Hours</option>
-								<option value="days">Days</option>
-								<option value="months">Months</option>
-							</select>
-						</div>
-					</form>
-				</div>
-			</div>
+			
 			<div class="grid-list-header row">
-				<div class="col-lg-4 col-md-4 col-sm-12 grid-header-heading">
-					<h2>Filter Options</h2>
-				</div><!-- end col 4 -->
-				<div class="col-lg-4 col-md-4 col-sm-12 date-picker-column">
+			<div class="col-lg-2 col-md-2 col-sm-12 search-container">
+				    <h4>Filter Options</h4>
+				</div>
+				
+				<div class="col-lg-3 col-md-3 col-sm-12 date-picker-column">
 					<div>
 						<!-- From:-->
 						<div class='date-picker-content'>
@@ -62,16 +75,19 @@
 					</div>
 				</div><!-- end date picker -->
 
-				<div class="col-lg-4 col-md-4 col-sm-12 search-container">
+				<div class="col-lg-3 col-md-3 col-sm-12 search-container">
 					<!--                    Search by name:-->
-					<form class="form-inline">
+					<form>
 						<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success my-2 my-sm-0 button grid-button" type="submit">Search</button>
-					</form>
+						
 				</div>
 
-				<div class="col-lg-4 col-md-4 col-sm-12 search-container">
-					<button class="btn button-security my-2 my-sm-0 button grid-button" onclick="toogleElementClass('add-new-user', 'display')">Add new</button>
+				<div class="col-lg-2 col-md-2 col-sm-12 search-container">
+				<button class="btn btn-outline-success my-2 my-sm-0 button grid-button" type="submit">Search</button>
+					</form>
+					</div>
+					<div class="col-lg-2 col-md-2 col-sm-12 search-container">
+				    <button type="button" class="btn button-security my-2 my-sm-0 button grid-button" data-toggle="modal" data-target="#addNewModal">Add new</button>
 				</div>
 			</div><!-- end grid header -->
 			<!-- SINGLE GIRD ITEM -->
@@ -117,21 +133,22 @@
                         </span>
 					</div>
 				</div>
-
-				<!-- ITEM EDITOR -->
-				<div class="item-editor theme-editor" id="editEmployeeId<?php echo $employee->id; ?>">
-					<div class="theme-editor-header d-flex justify-content-between">
-						<div>
-							<img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogonew.png" alt="">
-						</div>
-						<div class="theme-editor-header-buttons">
-							<input type="button" onclick="submitForm('editEmployee<?php echo $employee->id; ?>')" class="grid-button button theme-editor-header-button" value="Submit" />
-							<button class="grid-button-cancel button theme-editor-header-button" onclick="toogleElementClass('editEmployeeId<?php echo $employee->id; ?>', 'display')">Cancel</button>
-						</div>
-					</div>
+				<button style="display: none" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editEmployee<?php echo $employee->id; ?>Modal">Edit</button>
+				<!-- Edit Modal -->
+<div class="modal fade" id="editEmployee<?php echo $employee->id; ?>Modal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Employee Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- ITEM EDITOR -->
+				<div class="item-editor" id="editEmployeeId<?php echo $employee->id; ?>">
 					<div class="edit-single-user-container">
 						<form class="form-inline" id="editEmployee<?php echo $employee->id; ?>" method="post" action="<?php echo $this->baseUrl . 'index.php/employeeEdit/' . $employee->id; ?>" >
-							<h3>Employee Details</h3>
 							<div>
 								<label for="username<?php echo $employee->id; ?>">Name</label>
 								<input type="text" class="form-control" id="username<?php echo $employee->id; ?>" name="username" required value="<?php echo $employee->username; ?>" />
@@ -165,6 +182,15 @@
 						</form>
 					</div>
 				</div>
+      </div>
+      <div class="modal-footer">
+	    <input style="width: 100px;" type="button" onclick="submitForm('editEmployee<?php echo $employee->id; ?>')" class="grid-button button theme-editor-header-button" value="Submit" />
+        <button style="width: 100px;" type="button" class="grid-button-cancel button theme-editor-header-button" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+				
 				<!-- END EDIT FOR NEW USER -->
 			</div>
 			<!-- END SINGLE GRID ITEM -->
@@ -176,3 +202,4 @@
 		<!-- end grid list -->
 	</div>
 </div>
+
