@@ -111,6 +111,68 @@ class   Bookandpayagendabooking_model extends CI_Model
 		}
 		return $newData;
 	}
+
+	
+	function copy_from_agenda($agendas,$agenda_id){
+		$oldagendas = explode(',', $agendas);
+		$this->db->select('*');
+		$this->db->from('tbl_bookandpayspot');
+		foreach($oldagendas as $key => $agenda){
+			if($key == 0){
+				$this->db->where('agenda_id',$agenda);
+			} else {
+				$this->db->or_where('agenda_id',$agenda);
+			}
+		}
+		
+		$query = $this->db->get();
+		$results = $query->result_array();
+		$insertData = [];
+		$spot_ids = [];
+		foreach ($results as $result) {
+			$insertData = [
+					"agenda_id" => $agenda_id,
+					"email_id" => $result['email_id'],
+					"numberofpersons" => $result['numberofpersons'],
+					"sort_order" => $result['sort_order'],
+					"price" => $result['price'],
+					"descript" => $result['descript'],
+					"soldoutdescript" => $result['soldoutdescript'],
+					"pricingdescript" => $result['pricingdescript'],
+					"feedescript" => $result['feedescript'],
+					"available_items" => $result['available_items'],
+					"image" => $result['image'],
+				];
+			$this->db->insert('tbl_bookandpayspot', $insertData);
+			$this->copy_timeslots($result['id'],$this->db->insert_id());
+		}
+		
+		
+	}
+
+	function copy_timeslots($oldSpot,$spot_id){
+		$this->db->select('*');
+		$this->db->from('tbl_bookandpaytimeslots');
+		$this->db->where('spot_id',$oldSpot);
+		
+		$query = $this->db->get();
+		$results = $query->result_array();
+		$insertData = [];
+		$spot_ids = [];
+		foreach ($results as $result) {
+			$insertData = [
+					"email_id" => $result['email_id'],
+					"spot_id" => $spot_id,
+					"timeslotdescript" => $result['timeslotdescript'],
+					"available_items" => $result['available_items'],
+					"fromtime" => $result['fromtime'],
+					"totime" => $result['totime'],
+					"price" => $result['price']
+				];
+		}
+		return $this->db->insert('tbl_bookandpaytimeslots', $insertData);
+	}
+
 	function get_timeslotMax_bydate($eventdate){
 		$sql = "SELECT 
 		sum(tbl_bookandpaytimeslots.available_items) as timeslot_max
