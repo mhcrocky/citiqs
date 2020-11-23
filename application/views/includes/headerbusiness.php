@@ -181,8 +181,9 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i><span id="settings">Settings</span></a>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i><span>Settings</span></a>
                         <ul class="collapse">
+                            <li><a href="<?php echo $this->baseUrl; ?>employee"><i class="ti-user"></i> <span>Employee</span></a></li>
                             <li><a href="<?php echo $this->baseUrl; ?>profile"><i class="ti-stamp"></i> <span>Profile</span></a></li>
                             <li><a href="<?php echo $this->baseUrl; ?>printers"><i class="ti-printer"></i> <span>Printers</span></a></li>
                             <li><a href="<?php echo $this->baseUrl; ?>spots"><i class="ti-flag-alt"></i> <span>Spots</span></a></li>
@@ -250,10 +251,6 @@
 			{scrollTop: $("#dhl-section").offset().top},
 			'slow'
 		);
-	});
-
-    $("#settings").on("click",function() {
-		window.location.href ="<?php echo base_url('employee'); ?>";
 	});
 
 	$("#who-button").click(function() {
