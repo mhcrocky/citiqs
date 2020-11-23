@@ -368,8 +368,8 @@
                     $vatpercentage = $this->getProductVatpercantage($product, $orderType);
 
                     //small fix to remove vat from price//24nov2020
-                    $pricewithvat=$price;
-                    $price=$price/(1+($vatpercentage/100));
+                    $pricewithoutvat=$price/(1+($vatpercentage/100));
+                    $pricewithoutvat=sprintf("%.2f",$pricewithoutvat);
                     //end small fix to remove vat from price//24nov2020
                     if($vatzeroflag==1){
                         $vatpercentage=0;
@@ -463,7 +463,8 @@
                     $drawemail->annotation(40, 165 + ($i * 30), $title);
 
                     $drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-                    $drawemail->annotation(440, 165 + ($i * 30), "€ ". $price);
+                    // $drawemail->annotation(440, 165 + ($i * 30), "€ ". $price);
+                    $drawemail->annotation(440, 165 + ($i * 30), "€ ". $pricewithoutvat);
 
                     $drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
                     $drawemail->annotation(500, 165 + ($i * 30), (string)$vatpercentage);
@@ -486,7 +487,7 @@
 
                     //added by Nadeem
                     //set json product price and etc
-                    $price=(float)$pricewithvat;
+                    $price=(float)$price;
                     $quantity=(int)$quantity;
                     $this->ProductLines[]=  array(
                         "ProductGroupId"    =>  "PRGR".$product[4], // only categoryId !!! DONE
