@@ -191,7 +191,6 @@ class Ajaxdorian extends CI_Controller
 
     public function saveAgenda () {
         //if (!$this->input->is_ajax_request()) return;
-
         $agendData = [
             'ReservationDescription' => $this->input->post('ReservationDescription'),
             'ReservationDateTime' => date("Y-m-d H:i:s", strtotime($this->input->post('ReservationDateTime'))),
@@ -207,6 +206,10 @@ class Ajaxdorian extends CI_Controller
             $this->bookandpayagendabooking_model->updateAgenda($agendData, $agenda_id);
         } else {
             $agenda_id = $this->bookandpayagendabooking_model->addAgenda($agendData);
+            if(!empty($this->input->post('agendas'))){
+                $agendas = $this->input->post('agendas');
+                $this->bookandpayagendabooking_model->copy_from_agenda($agendas,$agenda_id);
+            }
         }
 
         if ($agenda_id) {
