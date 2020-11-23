@@ -587,12 +587,13 @@ class Orderscopy extends REST_Controller
 		$resultpngemail->setImageFormat('png');
 		$receipt = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '.png';
 		$receiptemail = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'].'-email' . '.png';
-		if (!file_put_contents($receipt, $resultpngprinter)) {
-			$receipt = '';
-		}
-		if (!file_put_contents($receiptemail, $resultpngemail)) {
-			$receiptemail = '';
-		}
+		// this already done in orders
+				if (!file_put_contents($receipt, $resultpngprinter)) {
+					$receipt = '';
+				}
+				if (!file_put_contents($receiptemail, $resultpngemail)) {
+					$receiptemail = '';
+				}
 
 		// $image ->writeImage("peter.png");
 		//            $imageqr->destroy();

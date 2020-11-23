@@ -38,6 +38,8 @@
                             <div class="shop__items selectedSpotBackground">
                                 <div class="shop__item-list-heading" id='<?php echo $category; ?>'>
                                     <h2 class="categoryName"><?php echo $category; ?></h2>
+<!--									we have the line with the link to the menu -->
+									<span onclick="goToSlide(0)">BACK TO MENU</span>
                                 </div>
                                 <div class="shop__item-list selectedSpotBackground">
                                     <?php foreach ($products as $product) { ?>
