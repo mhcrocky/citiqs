@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/main-style.css">
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/font-awesome-4.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/metisMenu.css">
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/owl.carousel.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/slicknav.min.css">
@@ -96,7 +97,7 @@
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"  type="text/javascript"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/js/modernizr-2.8.3.min.js"></script>
-    <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/flatpickr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jquery.magnific-popup.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/alertify.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>
@@ -109,6 +110,8 @@
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/products.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/products.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/utility.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/employeenew.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/bower_components/bootstrap-colorselector/bootstrap-colorselector.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vuejs-datepicker"></script>
@@ -178,7 +181,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i><span>Settings</span></a>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i><span id="settings">Settings</span></a>
                         <ul class="collapse">
                             <li><a href="<?php echo $this->baseUrl; ?>profile"><i class="ti-stamp"></i> <span>Profile</span></a></li>
                             <li><a href="<?php echo $this->baseUrl; ?>printers"><i class="ti-printer"></i> <span>Printers</span></a></li>
@@ -247,6 +250,10 @@
 			{scrollTop: $("#dhl-section").offset().top},
 			'slow'
 		);
+	});
+
+    $("#settings").on("click",function() {
+		window.location.href ="<?php echo base_url('employee'); ?>";
 	});
 
 	$("#who-button").click(function() {
