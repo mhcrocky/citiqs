@@ -32,7 +32,7 @@ class BBEmployee extends REST_Controller
 		$this->ProductLines[]=	array(
 			"ProductGroupId"	=>	"employee",	// only categoryId !!! DONE
 			"ProductGroupName"	=>	$registration,		// categoryName !!! DONE
-			"ProductId"			=>	$employeedetail->INSZnumber,	// productId !!! DONE
+			"ProductId"			=>	"inz045",//$employeedetail->INSZnumber,	// productId !!! DONE
 			"ProductName"		=>	$employeedetail->username,
 			"Quantity"			=>	$quantity,
 			"QuantityUnit"		=>	"P",
