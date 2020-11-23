@@ -24,7 +24,7 @@ class BBEmployee extends REST_Controller
 			return ;
 		}
 		$nextemployee=$employeedetail->next+1;
-		$price=0.1;
+		$price=0.01;
 		$quantity=1;
 		$vatpercentage=0;
 		$registration = 'registration ' . $employeedetail->action;// . ' ' . $employeedetail->inOutDateTime;
