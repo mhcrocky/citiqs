@@ -45,16 +45,7 @@
 //				var_dump($user['email']);
 //				die();
 
-//				CHECK ONE SIGNAL ID
-//                if ($this->user_model->checkOneSignalId($user['oneSignalId'])) {
-//                    echo json_encode([
-//                        'status' => '0',
-//                        'message' => 'already updated, pass',
-//                    ]);
-//                    return;
-//                };
-//
-                $this->user_model->manageAndSetOneSignalId($data);
+                $this->user_model->manageAndSetOneSignalId($onesignalid);
 
                 if ($this->user_model->id) {
                     $message = isset($this->user_model->created) ? 'User created' : 'User updated';

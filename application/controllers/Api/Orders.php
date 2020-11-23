@@ -28,6 +28,11 @@
             $this->load->library('language', array('controller' => $this->router->class));
         }
 
+		public function index_delete()
+		{
+			return;
+		}
+
         public function data_get()
         {
 
@@ -334,7 +339,9 @@
 
                     $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
                     // $draw->annotation(0, $hd + ($i * 30), $plu);
-                    if (intval($product[10])) {
+                    if (intval($product[10])) { // addon
+						$draw->setStrokeColor('black');
+						$draw->setStrokeWidth(1);
                         $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
                         $draw->annotation(20, $hd + ($i * 30), $quantity);
 
@@ -347,6 +354,8 @@
                             $draw->annotation(60, $hd + ($i * 30), $remark);;
                         }
                     } else {
+						$draw->setStrokeColor('black');
+						$draw->setStrokeWidth(3);
                         $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
                         $draw->annotation(0, $hd + ($i * 30), $quantity);
 
@@ -567,7 +576,6 @@
 			$imageprintemail->resetIterator();
 
             $resultpngprinter = $imageprint->appendImages(true);
-
 			$resultpngemail = $imageprintemail->appendImages(true);
             
             /* Output the image with headers */
@@ -578,11 +586,21 @@
             $receipt = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '.png';
 			$receiptemail = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'].'-email' . '.png';
 
-			if (!file_put_contents($receipt, $resultpngprinter)) {
-                $receipt = '';
+			if (file_put_contents($receipt, $resultpngprinter)) {
+				$logFile = FCPATH . 'application/tiqs_logs/write-error.txt';
+				Utility_helper::logMessage($logFile, 'file order written to server: ' .$receipt);
             }
-			if (!file_put_contents($receiptemail, $resultpngemail)) {
-				$receiptemail = '';
+			if (file_put_contents($receiptemail, $resultpngemail)) {
+				$logFile = FCPATH . 'application/tiqs_logs/write-error.txt';
+				Utility_helper::logMessage($logFile, 'file receipt written to server: ' .$receiptemail);
+			}
+
+			if (intval($order['vendorId']) === 43533) {
+				$order['vendorEmail']='support@tiqs.com';
+				$subject = 'Order : ' . $order['orderId'];
+				Email_helper::sendOrderEmail($order['vendorEmail'], $subject, '', $receipt);
+				$subject = 'Receipt : ' . $order['orderId'];
+				Email_helper::sendOrderEmail($order['vendorEmail'], $subject, '', $receiptemail);
 			}
  
             // $image ->writeImage("peter.png");
@@ -631,14 +649,7 @@
             // $email = $order['buyerEmail'];
             // Email_helper::sendOrderEmail($email, $subject, $emailMessage, $receiptemail); 
             #if (intval($order['vendorId']) === 43538) {
-            if (intval($order['vendorId']) === 43533) {
-                $receiptAttach = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '.png';
 
-		        if (file_put_contents($receipt, $resultpngprinter)) {
-                    $subject= "tiqs order receipt : ". $order['orderId'];
-                    Email_helper::sendOrderEmail($order['vendorEmail'], $subject, '', $receiptAttach);
-		        }
-            }
         }
 
         public function data_post()
