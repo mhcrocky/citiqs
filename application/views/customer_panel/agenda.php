@@ -1,4 +1,5 @@
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.0/css/mdb.min.css" rel="stylesheet">
 <div id="vue_app">
     <div class="main-wrapper" style="text-align: center; display: block;">
         <div class="row container-fluid height-100">
@@ -124,6 +125,13 @@
                                 <option value="0">Offline</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="online">Get Spots and Timeslots from:</label>
+                            <select class="mdb-select md-form" multiple>
+                                <option value="" disabled selected>---</option>
+                                <option  v-for="agenda in agendas" :key="agenda.id" :value="agenda.id">{{ dateFormat(agenda.ReservationDateTime) }}</option>
+                            </select>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -153,8 +161,11 @@
     </div>
 </div>
 
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.0/js/mdb.min.js"></script>
 <script>
+$(document).ready(function() {
+$('.mdb-select').materialSelect();
+});
     var app = new Vue({
         el: '#vue_app',
 
