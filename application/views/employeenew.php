@@ -39,6 +39,10 @@
 				<option value="months">Months</option>
 			</select>
 		</div>
+		<div>
+			<label for="INSZnumber">INSZ number</label>
+			<input type="number" step="1" min="1" class="form-control" id="INSZnumber" name="INSZnumber" />
+		</div>
 	</form>
 </div>
 </div>
@@ -99,10 +103,10 @@
 			?>
 			<div class="grid-item" <?php if (intval($employee->expiration_time) < $time){ ?>style="background-color:rgba(226, 95, 42)" <?php } ?>>
 				<div class="item-header">
-					<p class="item-description"><?php $employee->username; ?></p>
-					<p class="item-category"><?php $employee->email; ?></p>
-					<p class="item-category"><?php $employee->uniquenumber; ?></p>
-					<p class="item-category"><?php echo date('Y-m-d H:i:s', $employee->expiration_time); ?></p>
+					<p class="item-description"><?php echo $employee->username; ?></p>
+					<p class="item-category"><?php echo $employee->email; ?></p>
+					<p class="item-category"><?php echo $employee->uniquenumber; ?></p>
+					<!-- <p class="item-category"><?php #echo date('Y-m-d H:i:s', $employee->expiration_time); ?></p> -->
 					<!-- <p class="item-category"><? #echo date('Y-m-d H:i:s', $employee->validitytime); ?></p>
 							<p class="item-category"><? #echo date('Y-m-d H:i:s', $employee->expiration_time); ?></p>
 							<p class="item-category"><? #echo $employee->expiration_time_value; ?></p>
