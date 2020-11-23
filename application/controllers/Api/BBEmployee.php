@@ -27,7 +27,7 @@ class BBEmployee extends REST_Controller
 		$price=0.01;
 		$quantity=1;
 		$vatpercentage=0;
-		$registration = 'registration ' . $employeedetail->action . ' ' . date('Y-m-d H:i:s');
+		$registration = 'registration ' . $employeedetail->action;// . ' ' . date('Y-m-d H:i:s');
 		
 		$this->ProductLines[]=	array(
 			"ProductGroupId"	=>	"employee",	// only categoryId !!! DONE

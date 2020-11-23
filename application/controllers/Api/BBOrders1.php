@@ -83,7 +83,7 @@
             $order = reset($order);
             $receiptemailBasepath=$this->VatnoVatdata($order,0);
             
-            $jsonoutput['TransactionDateTime']    =   date("Y-d-mTG:i:sz",strtotime($order['orderCreated']));//gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
+            $jsonoutput['TransactionDateTime']    =   date("c",strtotime($order['orderCreated']));//gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
             $jsonoutput['TransactionNumber']      =   (int)(("1000").(100000+$order['orderId']) );
             $jsonoutput['ordernumberr']           =   $order['orderId'];
 
