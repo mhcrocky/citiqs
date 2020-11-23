@@ -1,5 +1,9 @@
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/css/bootstrap-multiselect.min.css" integrity="sha512-wHTuOcR1pyFeyXVkwg3fhfK46QulKXkLq1kxcEEpjnAPv63B/R49bBqkJHLvoGFq6lvAEKlln2rE1JfIPeQ+iw==" crossorigin="anonymous" />
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+.multiselect-container.dropdown-menu.show {
+    width: 100%;
+}
+</style>
 <div id="vue_app">
     <div class="main-wrapper" style="text-align: center; display: block;">
         <div class="row container-fluid height-100">
@@ -127,9 +131,8 @@
                         </div>
                         <div class="form-group">
                             <label for="online">Get Spots and Timeslots from:</label>
-                            <select id="copy" class="mdb-select md-form" multiple>
-                                
-                                <option  v-for="agenda in agendas" :key="agenda.id" :value="agenda.id">{{ dateFormat(agenda.ReservationDateTime) }}</option>
+                            <select style="width: 100%;" id="agendas" class="form-control js-spots-basic-multiple" name="SpotsTimeslots[]" multiple="multiple">
+                                <option v-for="agenda in agendas" :key="agenda.id" :value="agenda.id">{{ agenda.ReservationDescription }} - {{ dateFormat(agenda.ReservationDateTime) }}</option>
                             </select>
                         </div>
                     </form>
@@ -161,13 +164,12 @@
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js" integrity="sha512-ljeReA8Eplz6P7m1hwWa+XdPmhawNmo9I0/qyZANCCFvZ845anQE+35TuZl9+velym0TKanM2DXVLxSJLLpQWw==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
 <script>
-    $(document).ready(function() {
-        $('#copy').multiselect({
-            disableIfEmpty: true
-        });
-    });
+$(document).ready(function() {
+    $('.js-spots-basic-multiple').select2();
+});
     var app = new Vue({
         el: '#vue_app',
 
@@ -245,6 +247,7 @@
                 formData.append("online", this.agendaModalData.online);
                 formData.append("Background", this.agendaModalData.Background);
                 formData.append("email_id", this.agendaModalData.email_id);
+                formData.append("agendas", $('#agendas').val());
 
 
                 axios.post(this.baseURL + 'ajaxdorian/saveAgenda', formData
@@ -259,7 +262,7 @@
                         this.agendas.push(response.data.data);
                     }
 
-                    $('#add_agenda_modal').modal('hide')
+                    $('#add_agenda_modal').modal('hide');
 
                 })
                     .catch(error => {
