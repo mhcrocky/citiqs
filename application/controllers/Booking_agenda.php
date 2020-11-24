@@ -254,6 +254,10 @@ class Booking_agenda extends BaseControllerWeb
                 $this->session->set_userdata('selectedTimeSlot', $selectedTimeSlot);
             }
 
+            if($spot->price == 0){
+                redirect('booking_agenda/select_payment_type');
+            }
+
             if(AVAILABLE_TO_BOOK_EXTRA_TIME == true && HOW_MANY_SLOTS_CAN_BE_BOOKED > 1){
                 redirect('booking_agenda/reserved');
             } else {
