@@ -99,6 +99,7 @@
                                 <?php echo $termsAndConditions; ?>
                                 id="termsAndConditions"
                                 class="inputFieldCheckout"
+                                <?php if ($pos) echo 'checked'; ?>
                             />
                             I read and accept the
                             <a href="<?php echo $return; ?>">
@@ -114,6 +115,7 @@
                                 <?php echo $privacyPolicy; ?>
                                 id="privacyPolicy"
                                 class="inputFieldCheckout"
+                                <?php if ($pos) echo 'checked'; ?>
                             />
                             I took notice of <a href="<?php echo $return; ?>">Privacy policy</a>
                         </label>
