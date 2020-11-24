@@ -578,7 +578,7 @@
             return $result ? $result : null;
         }
 
-		public function fetchOrdersForPrintcopy(string $orderIdcopy): ?array
+		public function fetchOrdersForPrintcopy(string $where = ''): ?array
 		{
 			$this->load->config('custom');
 			$concatSeparator = $this->config->item('concatSeparator');
@@ -650,7 +650,7 @@
                             LEFT JOIN
                                 tbl_shop_categories ON tbl_shop_products.categoryId = tbl_shop_categories.id
                             WHERE
-                                tbl_shop_order_extended.orderId = "' . $orderIdcopy . '"
+                                tbl_shop_order_extended.orderId = "' . $this->id . '"
                             GROUP BY
                                 tbl_shop_order_extended.orderId
                         ) productData ON productData.orderId = tbl_shop_orders.id
@@ -673,11 +673,13 @@
                     INNER JOIN
                         tbl_shop_vendors ON tbl_shop_vendors.vendorId = vendorOne.id
                     WHERE
-                        tbl_shop_orders.paid = "1"
-                        AND tbl_shop_orders.id = "' . $orderIdcopy . '"
+                        tbl_shop_orders.id = "' . $this->id . '" 
+                        ' . $where . '
                     GROUP BY
                         orderId
-                     ';
+
+
+                    ;';
 			$result = $this->db->query($query);
 			$resultqueryforlog = $this->db->last_query();
 			$logFile = FCPATH . 'application/tiqs_logs/messages.txt';
