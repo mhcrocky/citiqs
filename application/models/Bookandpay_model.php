@@ -591,5 +591,23 @@ class Bookandpay_model extends CI_Model
         $result = $query->row();
 		return $result->sl_code;
 	}
+	
+	public function getReservationById($id)
+	{
+		$this->db->from('tbl_bookandpay');
+		$this->db->where('id', $id);
+		$query = $this->db->get();
+
+        $result = $query->row();
+		return $result;
+	}
+
+	public function deleteReservation($id): bool
+	{
+		$where = [
+			'tbl_bookandpay.id=' => $id
+		];
+		return $this->db->delete('tbl_bookandpay', $where);
+	}
 
 }
