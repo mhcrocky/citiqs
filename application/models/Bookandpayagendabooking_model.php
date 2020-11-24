@@ -1034,5 +1034,17 @@ class   Bookandpayagendabooking_model extends CI_Model
 		];
 		return $this->db->delete('tbl_bookandpay', $where);
 	}
+	
+	public function updateTermsofuse ($body) {
+		$data = ['body' => $body];
+        $this->db->where('id', 1);
+		return $this->db->update('tbl_termsofuse', $data);
+	}
+
+	public function getTermsofuse () {
+        $this->db->where('id', 1);
+		$query = $this->db->get('tbl_termsofuse');
+		return $query->row();
+	}
 
 }

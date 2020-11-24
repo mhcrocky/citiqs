@@ -154,6 +154,7 @@
                             <li><a href="<?php echo $this->baseUrl; ?>customer_panel/reservations_report"><i class="ti-write"></i> <span>Reservations Report</span></a></li>
                             <li><a href="<?php echo $this->baseUrl; ?>customer_panel/report"><i class="ti-clipboard"></i> <span>Report</span></a></li>
                             <li><a href="<?php echo $this->baseUrl; ?>customer_panel/pivot"><i class="ti-bar-chart"></i> <span>Pivot</span></a></li>
+                            <li><a href="<?php echo $this->baseUrl; ?>customer_panel/settings"><i class="ti-settings"></i> <span>Settings</span></a></li>
                         </ul>
                     </li>
                     <li>

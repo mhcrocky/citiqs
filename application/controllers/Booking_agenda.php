@@ -358,7 +358,7 @@ class Booking_agenda extends BaseControllerWeb
         $data['logoUrl'] = $logoUrl;
 
         $this->global['pageTitle'] = 'TIQS : BOOKINGS'; 
-
+        $data['termsofuse'] = $this->bookandpayagendabooking_model->getTermsofuse();
         $this->loadViews("bookings/final", $this->global, $data, 'bookingfooter', 'bookingheader'); // payment screen
     }
 

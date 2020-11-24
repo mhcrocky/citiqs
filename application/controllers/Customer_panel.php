@@ -497,5 +497,12 @@ class  Customer_panel extends BaseControllerWeb
 
         $this->loadViews('customer_panel/bookings_tickets', $data, 'dashboard', 'footerbusiness', 'headerbusiness' );    
     }
+
+    function settings()
+    {
+        $this->global['pageTitle'] = 'Reservations Report';
+        $data['termsofuse'] = $this->bookandpayagendabooking_model->getTermsofuse();
+        $this->loadViews('customer_panel/settings', $this->global,  $data, 'footerbusiness', 'headerbusiness' ); 
+    }
 }
 

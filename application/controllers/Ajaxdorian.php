@@ -238,6 +238,19 @@ class Ajaxdorian extends CI_Controller
         echo json_encode(array('msg' => $msg, 'status' =>$status));
     }
 
+    public function saveTermsofuse () {
+        $body = $this->input->post('content');
+        if ($this->bookandpayagendabooking_model->updateTermsofuse($body)) {
+            $msg = 'Terms of use updated successfully!';
+            $status = 'success';
+        } else {
+            $msg = 'Something went wrong!';
+            $status = 'error';
+        }
+        echo json_encode(array('msg' => $msg, 'status' =>$status));
+    }
+
+
     public function saveAgendaSpot () {
         //if (!$this->input->is_ajax_request()) return;
         $spotData = [
