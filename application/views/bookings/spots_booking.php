@@ -77,8 +77,15 @@ p.p-title {
                                 <p class="text-content mb-50" style="text-transform: uppercase"><?php echo $spot['data']->descript; ?></p>
                             </div>
                             <div align="center">
+                            <?php if($spot['data']->price != 0): ?>
                                 <p class="text-content" style="text-transform: uppercase"><?php echo $spot['data']->pricingdescript; ?> € <?php echo number_format($spot['data']->price, 2); ?></p>
                                 <p class="text-content mb-50" style="font-family: caption-light;font-size: small"><?php echo $spot['data']->feedescript; ?> € <?php echo number_format(($bookingfee*$spot['data']->numberofpersons), 2, ",","."); ?></p>
+                            <?php else: ?>
+                            <div align="center">
+                                <p class="text-content" style="text-transform: uppercase">&nbsp</p>
+                                <p class="text-content mb-50" style="font-family: caption-light;font-size: small">&nbsp</p>
+                            </div>
+                            <?php endif; ?>
                             </div>
                             <div class="form-group has-feedback mt-35">
                                 <div style="text-align: center; ">
@@ -136,13 +143,20 @@ p.p-title {
                             <div align="center">
                                 <p class="text-content mb-50" style="text-transform: uppercase"><?php echo $spot['data']->descript; ?></p>
                             </div>
+                            <?php if($spot['data']->price != 0): ?>
                             <div align="center">
                                 <p class="text-content" style="text-transform: uppercase"><?php echo $spot['data']->pricingdescript; ?> € <?php echo number_format($spot['data']->price, 2); ?></p>
                                 <p class="text-content mb-50" style="font-family: caption-light;font-size: small"><?php echo $spot['data']->feedescript; ?> € <?php echo number_format(($bookingfee*$spot['data']->numberofpersons), 2, ",","."); ?></p>
                             </div>
+                            <?php else: ?>
+                            <div align="center">
+                                <p class="text-content" style="text-transform: uppercase">&nbsp</p>
+                                <p class="text-content mb-50" style="font-family: caption-light;font-size: small">&nbsp</p>
+                            </div>
+                            <?php endif; ?>
                             <div class="form-group has-feedback mt-35">
                                 <div style="text-align: center; ">
-                                    <a href="<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot['data']->id; ?>" class="button button-orange mb-25"><?= ($this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME")) ? $this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME") : 'Next'; ?> </a>
+                                    <a href="<?php echo $this->baseUrl; ?>booking_agenda/time_slots/<?php echo $spot['data']->id; ?>" class="button button-orange mb-25"><?= ($this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME")) ? $this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME") : 'Next'; ?> </a>
                                 </div>
                             </div>
                         <?php else: ?>
