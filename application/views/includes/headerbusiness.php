@@ -107,9 +107,7 @@
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/cookies.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/html5shiv.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="<?php echo $this->baseUrl; ?>assets/home/js/products.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js"></script>
-    <script src="<?php echo $this->baseUrl; ?>assets/home/js/products.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/utility.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/employeenew.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/bower_components/bootstrap-colorselector/bootstrap-colorselector.min.js"></script>
