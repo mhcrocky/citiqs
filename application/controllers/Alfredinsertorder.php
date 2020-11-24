@@ -19,6 +19,7 @@ class Alfredinsertorder extends BaseControllerWeb
         $this->load->helper('country_helper');
         $this->load->helper('date');
         $this->load->helper('jwt_helper');
+        $this->load->helper('orderprint_helper');
 
         $this->load->model('user_subscription_model');
         $this->load->model('shopcategory_model');
@@ -105,14 +106,20 @@ class Alfredinsertorder extends BaseControllerWeb
         $this->user_model->manageAndSetBuyer($post['user']);
         if (!$this->user_model->id) return null;
 
-        // insert order
         $this->insertOrderInTable($post, $payStatus, $payType, $orderRandomKey);
         $this->insertOrderExtended($post);
         $this->deletePosOrder($post, $orderRandomKey);
+        $this->saveOrderImage(); // OPTIMIZE THREAD ... ASYNC
 
         return $this->shoporder_model->id;
     }
 
+    private function saveOrderImage(): void
+    {
+        $orderForImage = $this->shoporder_model->fetchOrdersForPrintcopy();
+        $orderForImage = reset($orderForImage);
+        Orderprint_helper::saveOrderImage($orderForImage);
+    }
     private function insertOrderInTable(array $post, string $payStatus, string $payType, string $orderRandomKey): void
     {
         $spot = $this->shopspot_model->fetchSpot($post['vendorId'], $post['spotId']);
