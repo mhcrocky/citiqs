@@ -5,7 +5,12 @@
 			<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="250" height="auto" />
 		</div><!-- /.login-logo -->
 		<?php } ?>
+
+
+		<!-- EMXAMPLE HOW TO ADD CSS PROPETY TO ELEMENT IN DESIGN -->
 		<h1 style="text-align:center" id="selectTypeH1"><?php echo $vendor['vendorName'] ?></h1>
+
+
 		<div class="selectWrapper mb-35">
 			<?php if (!empty($activeTypes)) { ?>
 			<div class="middle">
