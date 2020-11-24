@@ -56,14 +56,17 @@
                                     No
                                 </td>
                                 <td class="td_action text-center">
-                                    <span class="span_action" @click="editAgenda(agenda)">
+                                    <span title="Edit Agenda" class="span_action" @click="editAgenda(agenda)">
                                         <i class="fa fa-pencil" aria-hidden="true"></i>
                                     </span>
-                                    <span class="span_action " @click="deleteConfirmAgenda(agenda)">
+                                    <span title="Delete Agenda" class="span_action " @click="deleteConfirmAgenda(agenda)">
                                         <i class="fa fa-trash" aria-hidden="true"></i>
                                     </span>
                                     <span class="span_action" @click="goToSpots(agenda)">
                                         <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                    </span>
+                                    <span title="Copy Agenda" class="span_action" @click="copyAgenda(agenda)">
+                                        <i class="fa fa-copy" aria-hidden="true"></i>
                                     </span>
                                 </td>
                             </tr>
@@ -140,6 +143,71 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" @click="saveAgenda">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="copy_agenda_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add agenda</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="ReservationDescription">Reservation Description</label>
+                            <input type="text" name="reservationDescription"
+                                   v-model="agendaModalData.ReservationDescription" class="form-control"
+                                   id="ReservationDescription" placeholder="Reservation Description">
+                        </div>
+                        <div class="form-group">
+                            <label for="ReservationDate">Reservation Date</label>
+                            <datepicker
+                                    :format="format"
+                                    :disabled-dates="disabledDates"
+                                    v-model="agendaModalData.ReservationDateTime"
+                                    placeholder="Reservation Date"
+                                    input-class="form-control">
+                            </datepicker>
+                        </div>
+                        <div class="form-group">
+                            <label for="background_color">Background Color</label>
+                            <select class="form-control" id="background_color" name="background_color"
+                                    v-model="agendaModalData.Background">
+                                <option value="blue-light" data-color="#4682B4">Blue Light</option>
+                                <option value="yellow" data-color="#F9A602">Yellow</option>
+                                <option value="purple-light" data-color="#af69ee">Purple Light</option>
+                                <option value="green" data-color="#72B19F">Green</option>
+                                <option value="orange" data-color="#E25F2A">Orange</option>
+                                <option value="blue" data-color="#131e3a">Blue</option>
+                                <option value="orange-light" data-color="#ff7162">Orange Light</option>
+                                <option value="yankee" data-color="#446087">Yankee</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="descript">Email Template</label>
+                            <search-select :options="emailsOptions"
+                                           v-model="agendaModalData.email_id"
+                                           placeholder="Select Email Template"></search-select>
+                        </div>
+                        <div class="form-group">
+                            <label for="online">Status</label>
+                            <select class="form-control" id="online" name="online"
+                                    v-model="agendaModalData.online">
+                                <option value="" disabled selected>Select agenda status</option>
+                                <option value="1">Online</option>
+                                <option value="0">Offline</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" @click="saveCopyAgenda">Save</button>
                 </div>
             </div>
         </div>
@@ -222,6 +290,15 @@ $(document).ready(function() {
                 $('#background_color').val(this.agendaModalData.Background).trigger('change');
                 $('#add_agenda_modal').modal('show');
             },
+            copyAgenda(agenda) {
+                
+                this.agendaModalData = Object.assign({}, agenda);
+                this.agendaModalData.ReservationDescription = '';
+                this.agendaModalData.ReservationDateTime = '';
+                $('#background_color').val(this.agendaModalData.Background).trigger('change');
+                $('#ReservationDescription').val(' ');
+                $('#copy_agenda_modal').modal('show');
+            },
             goToSpots(agenda) {
                 location.href = this.baseURL + 'customer_panel/spots/' + agenda.id
             },
@@ -263,6 +340,29 @@ $(document).ready(function() {
                     }
 
                     $('#add_agenda_modal').modal('hide');
+
+                })
+                    .catch(error => {
+                        console.log(error)
+                    });
+            },
+            saveCopyAgenda() {
+                let formData = new FormData();
+                formData.append("ReservationDescription", this.agendaModalData.ReservationDescription);
+                formData.append("ReservationDateTime", this.dateFormat(this.agendaModalData.ReservationDateTime));
+                formData.append("online", this.agendaModalData.online);
+                formData.append("Background", this.agendaModalData.Background);
+                formData.append("email_id", this.agendaModalData.email_id);
+                formData.append("agendas", this.agendaModalData.id);
+
+
+                axios.post(this.baseURL + 'ajaxdorian/saveAgenda', formData
+                ).then((response) => {
+                    if (this.method == 'create') {
+                        this.agendas.push(response.data.data);
+                    }
+
+                    $('#copy_agenda_modal').modal('hide');
 
                 })
                     .catch(error => {

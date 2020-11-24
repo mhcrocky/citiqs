@@ -254,7 +254,17 @@ class Booking_agenda extends BaseControllerWeb
                 $this->session->set_userdata('selectedTimeSlot', $selectedTimeSlot);
             }
 
-            redirect('booking_agenda/reserved');
+            if($spot->price == 0){
+                redirect('booking_agenda/select_payment_type');
+            }
+
+            if(AVAILABLE_TO_BOOK_EXTRA_TIME == true && HOW_MANY_SLOTS_CAN_BE_BOOKED > 1){
+                redirect('booking_agenda/reserved');
+            } else {
+                redirect('booking_agenda/pay');
+            }
+
+            
         }
 
         $data['count'] = $resultcount;
@@ -340,7 +350,8 @@ class Booking_agenda extends BaseControllerWeb
 
         $logoUrl = 'assets/user_images/no_logo.png';
         if ($customer['logo']) {
-            $logoUrl = 'assets/emaildesigner/images/' . $customer['logo'];
+        	// needs to change...
+            $logoUrl = 'assets/images/vendorLogos/' . $customer['logo'];
         }
 
         $data['reservations'] = $reservations;
@@ -453,7 +464,7 @@ class Booking_agenda extends BaseControllerWeb
 
         $orderExchangeUrl = base_url() . '/booking/ExchangePay';
 
-        $arrArguments['statsData']['promotorId'] = '0000001';
+        $arrArguments['statsData']['promotorId'] = $customer['id'];
         $arrArguments['enduser']['emailAddress'] = $buyerInfo['email'];
         $arrArguments['saleData']['invoiceDate'] = date('d-m-Y');
         $arrArguments['saleData']['deliveryDate'] = date('d-m-Y');

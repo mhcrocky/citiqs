@@ -61,7 +61,7 @@
                 <div class="pricing-block-footer" style="height: 200px">
                     <button data-brackets-id="2918" type="submit"
                             class="button button-orange">
-                            <?php echo ($this->language->Line("FINAL-0017", "PAY")) ? $this->language->Line("FINAL-0017", "PAY") : "PAY"; ?>
+                            <?php echo ($this->language->Line("FINAL-0017", "BOOK NOW")) ? $this->language->Line("FINAL-0017", "BOOK NOW") : "BOOK NOW"; ?>
                     </button>
                 </div>
             </div><!-- end pricing block -->
