@@ -575,11 +575,14 @@
                                                             ?>
                                                         </h4>
                                                     </div>
+                                                    <div class="modal-body">
                                                     <div
-                                                        class="modal-body addOns"
+                                                        class="addOns"
                                                         data-addons=<?php echo implode(",", $addonsHtmlData); ?>
                                                         data-product-id = <?php echo $product['productId']; ?>
                                                         >
+                                                        
+                                                    </div>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -970,10 +973,9 @@
 		<!-- end grid list -->
 	</div>
 </div>
+<script src="<?php echo $this->baseUrl; ?>assets/home/js/products.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-<script src="http://127.0.0.1/alfred/alfred/assets/js/jquery.datetimepicker.full.min.js"></script>
-<script src="http://127.0.0.1/alfred/alfred/assets/home/js/edit-grid-item.js"></script>
-<script src="http://127.0.0.1/alfred/alfred/assets/home/js/products.js"></script>
+<script src="<?php echo $this->baseUrl; ?>assets/js/jquery.datetimepicker.full.min.js"></script>
 <script>
 function editProduct(productId){
     $('#btn-'+productId).click();
