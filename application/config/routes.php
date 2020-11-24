@@ -442,6 +442,7 @@ $route['customer_panel/reservations_report/export'] = "Customer_panel/reservatio
 $route['customer_panel/report'] = "Customer_panel/report";
 $route['customer_panel/pivot'] = "Customer_panel/pivot";
 $route['customer_panel/pivot_export']="Customer_panel/pivot_export";
+$route['customer_panel/settings']="Customer_panel/settings";
 
 $route['inandout/(:any)/(:num)'] = "Blackbox/index/$1/$2";
 $route['in/(:any)/(:num)'] = "Blackbox/actionIn/$1/$2";
