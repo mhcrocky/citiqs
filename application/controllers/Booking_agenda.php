@@ -346,7 +346,8 @@ class Booking_agenda extends BaseControllerWeb
 
         $logoUrl = 'assets/user_images/no_logo.png';
         if ($customer['logo']) {
-            $logoUrl = 'assets/emaildesigner/images/' . $customer['logo'];
+        	// needs to change...
+            $logoUrl = 'assets/images/vendorLogos/' . $customer['logo'];
         }
 
         $data['reservations'] = $reservations;
@@ -459,7 +460,7 @@ class Booking_agenda extends BaseControllerWeb
 
         $orderExchangeUrl = base_url() . '/booking/ExchangePay';
 
-        $arrArguments['statsData']['promotorId'] = '0000001';
+        $arrArguments['statsData']['promotorId'] = $customer['id'];
         $arrArguments['enduser']['emailAddress'] = $buyerInfo['email'];
         $arrArguments['saleData']['invoiceDate'] = date('d-m-Y');
         $arrArguments['saleData']['deliveryDate'] = date('d-m-Y');

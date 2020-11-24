@@ -196,7 +196,11 @@
                 'fourontable.png',
                 'eighttable.png',
                 'sunbed.png',
-                'terracereservation.png'
+                'terracereservation.png',
+				'crocery.png',
+				'bakery.png',
+				'shopping_lady.png',
+				'shopping_people.png'
             ],
             deleteSpotTemp: null
 
