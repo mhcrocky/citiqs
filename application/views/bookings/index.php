@@ -38,9 +38,9 @@
 
                 <div class="timeline-block background-<?php echo $day->Background?>" height-25 >
 
-                    <div style="font-size: large; color:white" align="center">
+                    <div class="row" style="font-size: large; color:white" align="center">
 
-                        <div class="column-left">
+                        <div class="col-md-4 column-left bg-danger">
 
                             <div align="center">
                                 <p>
@@ -49,7 +49,7 @@
                             </div>
                         </div>
 
-                        <div class="column-center" align="left">
+                        <div class="col-md-8 column-center" align="left">
                             <div>
                                 <p>
                                     <img src="<?php echo base_url() . 'assets/images/vendorLogos/'. $logoUrl; ?>" alt="tiqs" width="150" height="auto" />
