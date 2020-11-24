@@ -59,6 +59,10 @@
 						<div>
 							<img src="<?php echo $this->baseUrl; ?>assets/home/images/paymentcheckout.png" alt="tiqs" width="150" height="auto" />
 						</div>
+						<?php else: ?>
+							<a href="<?php echo $this->baseUrl; ?>booking_agenda/pay" type="button" class="button button-orange">
+							    <?php echo ($this->language->Line("NEXT_TIME_SLOT-0003", "NEXT")) ? $this->language->Line("NEXT_TIME_SLOT-0003", "NEXT") : "NEXT"; ?>
+							</a>
 						<?php endif; ?>
 					</div>
 				</div><!-- end pricing block body -->
