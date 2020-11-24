@@ -23,14 +23,14 @@ class Booking_agenda extends BaseControllerWeb
     {
 
         if (!$shortUrl) {
-            redirect();
+            redirect('https://tiqs.com/places');
         }
 
         $customer = $this->user_model->getUserInfoByShortUrl($shortUrl);
         
 
         if (!$customer) {
-            redirect();
+			redirect('https://tiqs.com/places');
         }
 
         $this->session->unset_userdata('reservations');
@@ -49,7 +49,7 @@ class Booking_agenda extends BaseControllerWeb
 
         $logoUrl = 'assets/user_images/no_logo.png';
         if ($customer->logo) {
-            $logoUrl = 'assets/emaildesigner/images/' . $customer->logo;
+			$logoUrl = 'assets/images/vendorLogos/' . $customer->logo;
         }
 
         $data['logoUrl'] = $logoUrl;
@@ -288,7 +288,7 @@ class Booking_agenda extends BaseControllerWeb
 
         $logoUrl = 'assets/user_images/no_logo.png';
         if ($customer['logo']) {
-            $logoUrl = 'assets/emaildesigner/images/' . $customer['logo'];
+			$logoUrl = 'assets/images/vendorLogos/' . $customer->logo;
         }
 
         $allTimeSlots = $this->bookandpaytimeslots_model->getTimeSlotsByCustomerAndSpot($customer['id'], $selectedTimeSlot->spot_id);

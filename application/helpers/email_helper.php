@@ -155,10 +155,10 @@
             $CI->email->to($email);
             $CI->email->subject($subject);
             $CI->email->message($message);
-//            if ($attachment) {
-//                $CI->email->attach($attachment);
-//                unlink($attachment);
-//            }
+            if ($attachment) {
+                $CI->email->attach($attachment);
+                //unlink($attachment);
+            }
             return $CI->email->send();
         }
     }
