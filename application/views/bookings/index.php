@@ -52,7 +52,7 @@
                         <div class="col-md-8 column-center" align="left">
                             <div>
                                 <p>
-                                    <img src="<?php echo base_url() . 'assets/images/vendorLogos/'. $logoUrl; ?>" alt="tiqs" width="150" height="auto" />
+                                    <img src="<?php echo base_url() . $logoUrl; ?>" alt="tiqs" width="150" height="auto" />
                                 </p>
                             </div>
                             <div style="padding-left: 12px">
