@@ -40,16 +40,20 @@
 
                     <div class="row" style="font-size: large; color:white" align="center">
 
-                        <div class="col-md-4 column-left bg-danger">
+                        <div style="margin-right: 10px;" class="col-md-4 column-left">
 
-                            <div align="center">
+                            
                                 <p>
                                     <img src="<?php echo $this->baseUrl; ?>assets/home/images/<?php echo $dayOfWeek?>.png" alt="tiqs" width="150" height="auto" />
                                 </p>
-                            </div>
+                                
+                                <a href="<?php echo $this->baseUrl; ?>booking_agenda/spots/<?php echo date("yymd", strtotime($day->ReservationDateTime)).'/'.$day->id ?>" target="_self" class="button button-<?php echo $day->Background?> mb-25" style="font-family: caption-light;font-size: small;margin-left:20px;">
+                                    <?= $this->language->Line("BOOKING-001A","BOEK");?>
+                                </a>
                         </div>
+                        
 
-                        <div class="col-md-8 column-center" align="left">
+                        <div class="col-md-8 column-center  ml-auto text-left">
                             <div>
                                 <p>
                                     <img src="<?php echo base_url() . $logoUrl; ?>" alt="tiqs" width="150" height="auto" />
@@ -69,13 +73,7 @@
                             </p>
                         </div>
 
-                        <div class="column-right">
-                            <div  align="right">
-                                <a href="<?php echo $this->baseUrl; ?>booking_agenda/spots/<?php echo date("yymd", strtotime($day->ReservationDateTime)).'/'.$day->id ?>" target="_self" class="button button-<?php echo $day->Background?> mb-25" style="font-family: caption-light;font-size: small;margin-left: -10px">
-                                    <?= $this->language->Line("BOOKING-001A","BOEK");?>
-                                </a>
-                            </div>
-                        </div>
+                       
 
                     </div>
 
