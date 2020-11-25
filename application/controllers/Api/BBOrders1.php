@@ -49,7 +49,7 @@
             if ($vatPercent === 21) return 'A';
             if ($vatPercent === 12) return 'B';
             if ($vatPercent === 6) return 'C';
-            if (!$vatPercent === 0) return 'D';
+            if ($vatPercent === 0) return 'D';
             return 'D';
         }
 
@@ -197,7 +197,7 @@
 
         private function setPaymentLines(int $orderId, float $orderAmount): void
         {
-            $this->paymentLines = [
+            $this->paymentLines = [[
                 'PaymentId'             =>  (string)$orderId, //ONLY ORDER ID WITHOUT PAY TESTING VERSION DONE
                 'PaymentName'           =>  'Alfred',
                 'PaymentType'           =>  'EFT',
@@ -205,8 +205,8 @@
                 'PayAmount'             =>  $orderAmount,
                 'ForeignCurrencyAmount' =>  0,
                 'ForeignCurrencyISO'    =>  '',
-                'Reference'             =>  (string)$orderId, // PAYNL TRANSACTION ID !!! DONE !!!
-            ];
+                'Reference'             =>  (string)("Order id:".$orderId), // PAYNL TRANSACTION ID !!! DONE !!!
+            ]];
         }
 
 
