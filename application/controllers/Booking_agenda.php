@@ -255,7 +255,7 @@ class Booking_agenda extends BaseControllerWeb
             }
 
             if($spot->price == 0){
-                redirect('booking_agenda/payment_proceed');
+                redirect('booking_agenda/pay');
             }
 
             if(AVAILABLE_TO_BOOK_EXTRA_TIME == true && HOW_MANY_SLOTS_CAN_BE_BOOKED > 1){
@@ -483,6 +483,7 @@ class Booking_agenda extends BaseControllerWeb
 
         if($data['finalbedrag'] == 0){
             $this->emailReservation($buyerInfo['email'], $reservationIds);
+            redirect('booking/successbooking');
         } else {
             redirect('/booking_agenda/select_payment_type');
         }
@@ -688,12 +689,11 @@ class Booking_agenda extends BaseControllerWeb
 						}
 						if($emailId) {
 //                            $emailTemplate = $this->email_templates_model->get_emails_by_id($emailId->email_id);
-							$emailTemplate = $this->email_templates_model->get_emails_by_id($emailId);
-
+                            $emailTemplate = $this->email_templates_model->get_emails_by_id($emailId);
 							$qrlink = $SERVERFILEPATH . $file_name1;
 
 							if($emailTemplate) {
-								$mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/' . $emailTemplate->template_file);
+								$mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/'.$emailTemplate->template_file);
 								$mailtemplate = str_replace('[customer]', $customer, $mailtemplate);
 								$mailtemplate = str_replace('[eventdate]', date('d.m.yy', strtotime($eventdate)), $mailtemplate);
 								$mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
@@ -727,9 +727,10 @@ class Booking_agenda extends BaseControllerWeb
 								$datachange['mailsend'] = 1;
 								$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
 								if($this->sendEmail($email, $subject, $mailtemplate)) {
-									$this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
+                                    $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
+                                    
                                 }
-                                redirect('booking_agenda/successbooking');
+                               
                                 
 							}
 						}
@@ -763,13 +764,6 @@ class Booking_agenda extends BaseControllerWeb
 		$CI->email->subject($subject);
 		$CI->email->message($message);
 		return $CI->email->send();
-    }
-    
-    public function successBooking(){
-        $data = array();
-		$this->global['pageTitle'] = 'TIQS : THANKS';
-		$this->session->sess_destroy();
-        $this->loadViews("thuishavensuccess", $this->global, $data, 'nofooter', "noheader");
     }
 
 }

@@ -602,7 +602,7 @@ class Booking extends BaseControllerWeb
 							$qrlink = $SERVERFILEPATH . $file_name1;
 
 							if($emailTemplate) {
-								$mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/' . $emailTemplate->template_file);
+								$mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/'.$emailTemplate->template_file);
 								$mailtemplate = str_replace('[customer]', $customer, $mailtemplate);
 								$mailtemplate = str_replace('[eventdate]', date('d.m.yy', strtotime($eventdate)), $mailtemplate);
 								$mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
@@ -707,11 +707,19 @@ class Booking extends BaseControllerWeb
 		$redirect = base_url() . 'pay424' . DIRECTORY_SEPARATOR . $data['subscriptionid'] . DIRECTORY_SEPARATOR . urlencode($data['user']['email']);
 		redirect($redirect);
 	}
-	
+
 	public function cronDeleteReservations()
 	{
 		$this->bookandpay_model->cronDeleteReservations();
 	}
+
+	public function successBooking(){
+        $data = array();
+		$this->global['pageTitle'] = 'TIQS : THANKS';
+		$this->session->sess_destroy();
+        $this->loadViews("thuishavensuccess", $this->global, $data, 'nofooter', "noheader");
+    
+    }
 
 
 	public function sendEmail($email, $subject, $message)
