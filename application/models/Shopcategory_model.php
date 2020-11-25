@@ -19,6 +19,7 @@
         public $sortNumber;
         public $driverSmsMessage;
         public $archived;
+        public $private;
 
         private $table = 'tbl_shop_categories';
 
@@ -57,6 +58,7 @@
             if (isset($data['delayTime']) && !Validate_data_helper::validateInteger($data['delayTime'])) return false;
             if (isset($data['sortNumber']) && !Validate_data_helper::validateInteger($data['sortNumber'])) return false;
             if (isset($data['archived']) && !($data['archived'] === '1' || $data['archived'] === '0')) return false;
+            if (isset($data['private']) && !($data['private'] === '1' || $data['private'] === '0')) return false;
 
             return true;
         }
@@ -74,6 +76,7 @@
                     $this->table . '.delayTime',
                     $this->table . '.sortNumber',
                     $this->table . '.driverSmsMessage',
+                    $this->table . '.private',
                 ],
                 $where,
                 [],
