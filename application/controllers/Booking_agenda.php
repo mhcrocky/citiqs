@@ -1,6 +1,7 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
+require APPPATH . '/libraries/phpqrcode/qrlib.php';
 require APPPATH . '/libraries/BaseControllerWeb.php';
 
 class Booking_agenda extends BaseControllerWeb
@@ -16,6 +17,8 @@ class Booking_agenda extends BaseControllerWeb
         $this->load->model('bookandpayspot_model');
         $this->load->model('bookandpayagendabooking_model');
         $this->load->model('bookandpaytimeslots_model');
+        $this->load->model('sendreservation_model');
+        $this->load->model('email_templates_model');
         $this->load->library('language', array('controller' => $this->router->class)); 
     }
 
@@ -585,9 +588,6 @@ class Booking_agenda extends BaseControllerWeb
 
     public function emailReservation($email,$reservationIds)
 	{
-        require APPPATH . '/libraries/phpqrcode/qrlib.php';
-        $this->load->model('sendreservation_model');
-        $this->load->model('email_templates_model');
         $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
         $eventdate = '2020-11-27';
         foreach ($reservations as $key => $reservation) {
@@ -665,15 +665,7 @@ class Booking_agenda extends BaseControllerWeb
 						$spot = $this->bookandpayspot_model->getSpot($spotId);
 						$agenda = $this->bookandpayagendabooking_model->getBookingAgendaById($spot->agenda_id);
 
-						$emailId = false;
-
-						if($timeSlot && $timeSlot->email_id != 0) {
-							$emailId = $timeSlot->email_id;
-						} elseif ($spot && $spot->email_id != 0) {
-							$emailId = $spot->email_id;
-						} elseif ($agenda && $agenda->email_id != 0) {
-							$emailId = $agenda->email_id;
-						}
+						$emailId = $agenda->email_id;
 
 //                        var_dump($emailId);
 						switch (strtolower($_SERVER['HTTP_HOST'])) {
