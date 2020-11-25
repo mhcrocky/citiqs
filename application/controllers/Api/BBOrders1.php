@@ -43,13 +43,13 @@
             $this->fodfdm_model->updatelastRecieptCount($vendorId);
         }
 
-        private function returnVatGrade(int $vatPercent): string
+        private function returnVatGrade(int $vatPercent)
         {
             // retunr a or b or or d
             if ($vatPercent === 21) return 'A';
             if ($vatPercent === 12) return 'B';
             if ($vatPercent === 6) return 'C';
-            if (!$vatPercent === 0) return 'D';
+            if ($vatPercent === 0) return 'D';
             return 'D';
         }
 
@@ -87,13 +87,26 @@
             $orderId = intval($order['orderId']);
             $orderAmount = floatval($order['orderAmount']);
             $serviceFee = floatval($order['serviceFee']);
+            $serviceFeeTax = intval($order['serviceFeeTax']);
             $transactionNumber = intval( ('1000') . (100000 + $order['orderId']) );
             $products = explode($this->config->item('contactGroupSeparator'), $order['products']);
             $orderTypeId = intval($order['spotTypeId']);
-
-            $this->setPaymentLines($orderId, $orderAmount);
+            $ordertotalamount   =   $orderAmount+($serviceFee>0?$serviceFee:0);
+            $this->setPaymentLines($orderId, $ordertotalamount);
             $this->setProductLines($products, $this->config->item('concatSeparator'), $orderTypeId);
-
+            
+            if($serviceFee>0){
+                $this->productLines[]=array(
+                    'ProductGroupId'    =>  'fee01', // only categoryId !!! DONE
+                    'ProductGroupName'  =>  'fee', // categoryName !!! DONE
+                    'ProductId'         =>  'fee001', // productId !!! DONE
+                    'ProductName'       =>  'servicefee',
+                    'Quantity'          =>  1,
+                    'QuantityUnit'      =>  'P',
+                    'SellingPrice'      =>  $serviceFee,
+                    'VatRateId'         =>  $this->returnVatGrade($serviceFeeTax),
+                );
+            }
             // $jsonoutput['TransactionDateTime'] = date("c",strtotime($order['orderCreated'])); //gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
             // $jsonoutput['TransactionDateTime_Emp'] = date("c", ($ordercreatedtime-10)); //this is for when emp
             // $jsonoutput['TransactionNumber'] = (int)(("1000").(100000+$order['orderId']) );
@@ -117,9 +130,9 @@
                 'vendorId'          => $order['vendorId'],
                 'lastNumber'        => $this->fodfdm_model->getlastRecieptCount($order['vendorId']),
                 'ProductLines'      => $this->productLines,
-                'ProductLines1'     => $this->productLines,
-                'PaymentLines1'     => $this->paymentLines,
                 'PaymentLines'      => $this->paymentLines,
+                // 'ProductLines1'     => $this->productLines,
+                // 'PaymentLines1'     => $this->paymentLines,
             ];
 
             $this->shoporder_model->setObjectId($orderId)->setProperty('bbOrderPrint', '1')->update();
@@ -192,7 +205,7 @@
                 'PayAmount'             =>  $orderAmount,
                 'ForeignCurrencyAmount' =>  0,
                 'ForeignCurrencyISO'    =>  '',
-                'Reference'             =>  $orderId, // PAYNL TRANSACTION ID !!! DONE !!!
+                'Reference'             =>  (string)("Order id:".$orderId), // PAYNL TRANSACTION ID !!! DONE !!!
             ];
         }
 
