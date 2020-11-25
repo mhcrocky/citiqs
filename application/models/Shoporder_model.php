@@ -500,7 +500,8 @@
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage,
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_order_extended.remark) > 0, tbl_shop_order_extended.remark, ""),
                                     \'' .  $concatSeparator . '\', tbl_shop_order_extended.mainPrductOrderIndex,
-                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.subMainPrductOrderIndex
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.subMainPrductOrderIndex,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.productId
                                     SEPARATOR "'. $this->config->item('contactGroupSeparator') . '"
                                 ) AS products
                             FROM
@@ -644,7 +645,8 @@
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.deliveryPrice,
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.deliveryVatpercentage,
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.pickupPrice,
-                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.pickupVatpercentage
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.pickupVatpercentage,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.productId
                                     SEPARATOR "' . $this->config->item('contactGroupSeparator') . '"
                                 ) AS products
                             FROM

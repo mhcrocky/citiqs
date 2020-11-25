@@ -38,11 +38,11 @@
             return;
         }
 
-
         public function updatelastRecieptCount_get($vendorId): void
         {
             $this->fodfdm_model->updatelastRecieptCount($vendorId);
         }
+
         private function returnVatGrade(int $vatPercent): string
         {
             // retunr a or b or or d
@@ -90,9 +90,10 @@
             $orderAmountNoTip = floatval($order['orderAmountNoTip']);
             $transactionNumber = intval( ('1000') . (100000 + $order['orderId']) );
             $products = explode($this->config->item('contactGroupSeparator'), $order['products']);
+            $orderTypeId = intval($order['spotTypeId']);
 
             $this->setPaymentLines($orderId, $orderAmountNoTip);
-            $this->setProductLines($products, $this->config->item('concatSeparator'));
+            $this->setProductLines($products, $this->config->item('concatSeparator'), $orderTypeId);
 
             // $jsonoutput['TransactionDateTime'] = date("c",strtotime($order['orderCreated'])); //gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
             // $jsonoutput['TransactionDateTime_Emp'] = date("c", ($ordercreatedtime-10)); //this is for when emp
@@ -128,11 +129,11 @@
             echo json_encode($jsonoutput);
         }
 
-        private function setProductLines(array $products, string $separator): void
+        private function setProductLines(array $products, string $separator, int $orderType): void
         {
-            $this->productLines = array_map(function($productString) use($separator) {
+            $this->productLines = array_map(function($productString) use($separator, $orderType) {
                 $product = explode($separator, $productString);
-                // 0 => tbl_shop_products_extended.name
+                // 0 => tbl_shop_products_extended.name    
                 // 1 => tbl_shop_products_extended.price
                 // 2 => tbl_shop_order_extended.quantity
                 // 3 => tbl_shop_categories.category
@@ -140,20 +141,24 @@
                 // 5 => tbl_shop_products_extended.shortDescription
                 // 6 => tbl_shop_products_extended.longDescription
                 // 7 => tbl_shop_products_extended.vatpercentage
-                // 8 => tbl_shop_order_extended.remark
-                // 9 => tbl_shop_order_extended.mainPrductOrderIndex
-                // 10 => tbl_shop_order_extended.subMainPrductOrderIndex
-                // 11 => tbl_shop_products_extended.productId
+                // 8 => tbl_shop_products_extended.deliveryPrice
+                // 9 => tbl_shop_products_extended.deliveryVatpercentage
+                // 10 => tbl_shop_products_extended.pickupPrice
+                // 11 => tbl_shop_products_extended.pickupVatpercentage
+                // 12 => tbl_shop_products_extended.productId
 
-                $price = floatval($product[1] * $product[2]);
-                $vatpercentage = intval($product[7]);
+                $quantity = floatval($product[2]);
+                $vatpercentage = $this->getProductVatpercantage($product, $orderType);
+                $productPrice = $this->getProductPrice($product, $orderType);
+                $price = $quantity * $productPrice;
+                
 
                 return  [
                     'ProductGroupId'    =>  'PRGR' . $product[4], // only categoryId !!! DONE
                     'ProductGroupName'  =>  $product[3], // categoryName !!! DONE
-                    'ProductId'         =>  'PROD' . $product[11], // productId !!! DONE
+                    'ProductId'         =>  'PROD' . $product[12], // productId !!! DONE
                     'ProductName'       =>  $product[0],
-                    'Quantity'          =>  intval($product[2]),
+                    'Quantity'          =>  $quantity,
                     'QuantityUnit'      =>  'P',
                     'SellingPrice'      =>  $price,
                     'VatRateId'         =>  $this->returnVatGrade($vatpercentage), //"B",
@@ -195,12 +200,8 @@
 
         public function getdraw_get()
         {
-            $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
-            Utility_helper::logMessage($logFile, 'printer getdraw conected get');
             $get = $this->input->get(null, true);
-            Utility_helper::logMessage($logFile, 'printer MAC '. $get['mac'] );
             if(!$get['mac']) return;
-
 
             //Check FDM Status 
             // $FDMStatusByMac=$this->fodfdm_model->getFDMstatusByMac($get['mac']);
@@ -740,20 +741,20 @@
             if ($orderType === $this->config->item('local')) {
                 return floatval($product[1]);
             } elseif ($orderType === $this->config->item('deliveryType')) {
-                return floatval($product[12]);
+                return floatval($product[8]);
             } elseif ($orderType === $this->config->item('pickupType')) {
-                return floatval($product[14]);
+                return floatval($product[10]);
             }
         }
 
-        private function getProductVatpercantage(array $product, int $orderType ): float
+        private function getProductVatpercantage(array $product, int $orderType ): int
         {
             if ($orderType === $this->config->item('local')) {
-                return floatval($product[7]);
+                return intval($product[7]);
             } elseif ($orderType === $this->config->item('deliveryType')) {
-                return floatval($product[13]);
+                return intval($product[9]);
             } elseif ($orderType === $this->config->item('pickupType')) {
-                return floatval($product[15]);
+                return intval($product[11]);
             }
         }
     }
