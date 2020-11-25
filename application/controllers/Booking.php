@@ -431,11 +431,7 @@ class Booking extends BaseControllerWeb
 		$this->load->model('bookandpaytimeslots_model');
 
 		$transactionid = $this->input->get('order_id');
-		$paymentData = $this->session->userdata('payment_data');
 
-		if($paymentData != 0 ){
-
-		
 		$payData['format'] = 'array_serialize';
 		$payData['tokenid'] = 'AT-0051-0895';
 		$payData['token'] = '35c1bce89516c74ce7f8475d66c31dd59937d72a';
@@ -509,12 +505,6 @@ class Booking extends BaseControllerWeb
 			$email = $result->email;
 			$eventdate = $result->eventdate;
 
-		} else {
-			$data['paid'] = '1';
-			$data['TransactionID'] = $transactionid;
-
-			$this->bookandpay_model->editbookandpay($data, $reservationId);
-		}
 			$result = $this->sendreservation_model->locatereservationbymailsend($email, $eventdate);
 
 
@@ -717,7 +707,7 @@ class Booking extends BaseControllerWeb
 		$redirect = base_url() . 'pay424' . DIRECTORY_SEPARATOR . $data['subscriptionid'] . DIRECTORY_SEPARATOR . urlencode($data['user']['email']);
 		redirect($redirect);
 	}
-
+	
 	public function cronDeleteReservations()
 	{
 		$this->bookandpay_model->cronDeleteReservations();

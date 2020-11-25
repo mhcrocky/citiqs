@@ -255,11 +255,6 @@ class Booking_agenda extends BaseControllerWeb
             }
 
             if($spot->price == 0){
-                $data['mobilephone'] = '';
-                $data['email'] = '';
-                $data['name'] = '';
-
-            $this->session->set_userdata('buyer_info', $data);
                 redirect('booking_agenda/payment_proceed');
             }
 
@@ -486,7 +481,12 @@ class Booking_agenda extends BaseControllerWeb
             'final_amountfee' => $data['finalbedragfee'],
         ]);
 
-        redirect('/booking_agenda/select_payment_type');
+        if($data['finalbedrag'] == 0){
+            $this->emailReservation($buyerInfo['email'], $reservationIds);
+        } else {
+            redirect('/booking_agenda/select_payment_type');
+        }
+        
     }
 
     public function select_payment_type()
@@ -581,6 +581,195 @@ class Booking_agenda extends BaseControllerWeb
 
         echo json_encode($allAgenda);
         
+    }
+
+    public function emailReservation($email,$reservationIds)
+	{
+        require APPPATH . '/libraries/phpqrcode/qrlib.php';
+        $this->load->model('sendreservation_model');
+        $this->load->model('email_templates_model');
+        $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
+        $eventdate = '2020-11-27';
+        foreach ($reservations as $key => $reservation) {
+            $eventdated = $reservation->eventdate;
+            
+            
+        }
+        $data['paid'] = '1';
+        $this->bookandpay_model->editbookandpay($data, $reservationIds[0]);
+        $result = $this->sendreservation_model->locatereservationbymailsend($email, $eventdate);
+    
+        $TransactionId='empty';
+
+			foreach ($result as $record) {
+				$customer = $record->customer;
+				$eventid = $record->eventid;
+				$eventdate = $record->eventdate;
+				$reservationId = $record->reservationId;
+				$spotId = $record->SpotId;
+				$price = $record->price;
+				$Spotlabel = $record->Spotlabel;
+				$numberofpersons = $record->numberofpersons;
+				$name = $record->name;
+				$email = $record->email;
+				$mobile = $record->mobilephone;
+				$reservationset = $record->reservationset;
+				$fromtime = $record->timefrom;
+				$totime = $record->timeto;
+				$paid = $record->paid;
+				$timeSlotId = $record->timeslot;
+				$TransactionId = $record->TransactionID;
+				$voucher = $record->voucher;
+
+				if ($timeSlotId != 0) {
+					if ($paid == 1) {
+
+						$qrtext = $reservationId;
+
+						switch (strtolower($_SERVER['HTTP_HOST'])) {
+							case 'tiqs.com':
+								$file = '/home/tiqs/domains/tiqs.com/public_html/spot/uploads/thuishaven/qrcodes/';
+								break;
+							case '127.0.0.1':
+								$file = 'C:/wamp64/www/tiqs/booking2020/uploads/qrcodes/';
+								break;
+							default:
+								break;
+						}
+
+						$SERVERFILEPATH = $file;
+						$text = $qrtext;
+						$folder = $SERVERFILEPATH;
+						$file_name1 = $qrtext . ".png";
+						$file_name = $folder . $file_name1;
+
+						QRcode::png($text, $file_name);
+						switch (strtolower($_SERVER['HTTP_HOST'])) {
+							case 'tiqs.com':
+								$SERVERFILEPATH = 'https://tiqs.com/spot/uploads/thuishaven/qrcodes/';
+								break;
+							case '127.0.0.1':
+								$SERVERFILEPATH = 'http://127.0.0.1/spot/uploads/thuishaven/qrcodes/';
+								break;
+							default:
+								break;
+						}
+
+
+//                        $file_name = $file . '/' . $reservationId . ".png";
+//                        $webUrl = site_url($webUrl . '/' . $reservationId . ".png");
+//
+//                        QRcode::png($reservationId, $file_name);
+
+						$timeSlot = $this->bookandpaytimeslots_model->getTimeSlot($timeSlotId);
+						$spot = $this->bookandpayspot_model->getSpot($spotId);
+						$agenda = $this->bookandpayagendabooking_model->getBookingAgendaById($spot->agenda_id);
+
+						$emailId = false;
+
+						if($timeSlot && $timeSlot->email_id != 0) {
+							$emailId = $timeSlot->email_id;
+						} elseif ($spot && $spot->email_id != 0) {
+							$emailId = $spot->email_id;
+						} elseif ($agenda && $agenda->email_id != 0) {
+							$emailId = $agenda->email_id;
+						}
+
+//                        var_dump($emailId);
+						switch (strtolower($_SERVER['HTTP_HOST'])) {
+							case 'tiqs.com':
+								$SERVERFILEPATH = 'https://tiqs.com/spot/uploads/thuishaven/qrcodes/';
+								break;
+							case '127.0.0.1':
+								$SERVERFILEPATH = 'http://127.0.0.1/spot/uploads/thuishaven/qrcodes/';
+								break;
+							default:
+								break;
+						}
+						if($emailId) {
+//                            $emailTemplate = $this->email_templates_model->get_emails_by_id($emailId->email_id);
+							$emailTemplate = $this->email_templates_model->get_emails_by_id($emailId);
+
+							$qrlink = $SERVERFILEPATH . $file_name1;
+
+							if($emailTemplate) {
+								$mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/' . $emailTemplate->template_file);
+								$mailtemplate = str_replace('[customer]', $customer, $mailtemplate);
+								$mailtemplate = str_replace('[eventdate]', date('d.m.yy', strtotime($eventdate)), $mailtemplate);
+								$mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
+								$mailtemplate = str_replace('[SpotId]', $spotId, $mailtemplate);
+								$mailtemplate = str_replace('[price]', $price, $mailtemplate);
+								$mailtemplate = str_replace('[spotlabel]', $Spotlabel, $mailtemplate);
+								$mailtemplate = str_replace('[numberofpersons]', $numberofpersons, $mailtemplate);
+								$mailtemplate = str_replace('[name]', $name, $mailtemplate);
+								$mailtemplate = str_replace('[email]', $email, $mailtemplate);
+								$mailtemplate = str_replace('[mobile]', $mobile, $mailtemplate);
+								$mailtemplate = str_replace('[fromtime]', $fromtime, $mailtemplate);
+								$mailtemplate = str_replace('[totime]', $totime, $mailtemplate);
+								$mailtemplate = str_replace('[timeslot]', $timeSlotId, $mailtemplate);
+								$mailtemplate = str_replace('[TransactionId]', $TransactionId, $mailtemplate);
+								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
+//                                $mailtemplate = str_replace('[QRlink]', "<img src='$webUrl'>", $mailtemplate);
+//								$mailtemplate = str_replace('[QRlink]', $webUrl, $mailtemplate);
+//                                $subject = 'Your tiqs reservation(s)';
+								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
+								$mailtemplate = str_replace('Image', '', $mailtemplate);
+								$mailtemplate = str_replace('Text', '', $mailtemplate);
+								$subject = 'Your tiqs reservation(s)';
+//                                include(APPPATH . 'libraries/simple_html_dom.php');
+//
+//                                $html = str_get_html($mailtemplate);
+//
+//                                foreach($html->find('img.qr-code-image') as $e) {
+//                                    $e->src = $webUrl;
+//                                }
+
+								$datachange['mailsend'] = 1;
+								$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
+								if($this->sendEmail($email, $subject, $mailtemplate)) {
+									$this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
+                                }
+                                redirect('booking_agenda/successbooking');
+                                
+							}
+						}
+					}
+				}
+            }
+        }
+
+    public function sendEmail($email, $subject, $message)
+	{
+		$configemail = array(
+			'protocol' => PROTOCOL,
+			'smtp_host' => SMTP_HOST,
+			'smtp_port' => SMTP_PORT,
+			'smtp_user' => SMTP_USER, // change it to yours
+			'smtp_pass' => SMTP_PASS, // change it to yours
+			'mailtype' => 'html',
+			'charset' => 'iso-8859-1',
+			'smtp_crypto' => 'tls',
+			'wordwrap' => TRUE,
+			'newline' => "\r\n"
+		);
+
+		$config = $configemail;
+		$CI =& get_instance();
+		$CI->load->library('email', $config);
+		$CI->email->set_header('X-SES-CONFIGURATION-SET', 'ConfigSet');
+		$CI->email->set_newline("\r\n");
+		$CI->email->from('support@tiqs.com');
+		$CI->email->to($email);
+		$CI->email->subject($subject);
+		$CI->email->message($message);
+		return $CI->email->send();
+    }
+    
+    public function successBooking(){
+        $data = array();
+		$this->global['pageTitle'] = 'TIQS : THANKS';
+		$this->session->sess_destroy();
+        $this->loadViews("thuishavensuccess", $this->global, $data, 'nofooter', "noheader");
     }
 
 }

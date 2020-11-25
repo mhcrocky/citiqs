@@ -432,6 +432,7 @@ $route['booking_agenda/get_agenda/(:any)'] = "Booking_agenda/get_agenda/$1";
 $route['booking_agenda/get_agenda/spots/(:num)/(:num)'] = "Booking_agenda/get_agenda/spots/$1/$1";
 $route['booking_agenda/getAllAgenda/(:any)'] = "Booking_agenda/getAllAgenda/$1";
 $route['booking_agenda/(:any)'] = "Booking_agenda/index/$1";
+$route['booking_agenda/successbooking'] = "Booking_agenda/successBooking";
 
 $route['customer_panel'] = "Customer_panel/index/";
 $route['customer_panel/agenda'] = "Customer_panel/agenda";
