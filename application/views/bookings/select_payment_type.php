@@ -156,8 +156,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										</tbody>
 									</table>
 								</div>
-
 								<div class="bar">
+								
 									<div class="bar-title"><span data-trans="" data-trn-key="Kies een betaalmethode">Kies een
                         betaalmethode</span></div>
 									<span class="bar-title-original hidden"><span data-trans=""

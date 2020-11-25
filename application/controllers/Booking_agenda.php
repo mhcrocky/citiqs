@@ -255,7 +255,12 @@ class Booking_agenda extends BaseControllerWeb
             }
 
             if($spot->price == 0){
-                redirect('booking_agenda/select_payment_type');
+                $data['mobilephone'] = '';
+                $data['email'] = '';
+                $data['name'] = '';
+
+            $this->session->set_userdata('buyer_info', $data);
+                redirect('booking_agenda/payment_proceed');
             }
 
             if(AVAILABLE_TO_BOOK_EXTRA_TIME == true && HOW_MANY_SLOTS_CAN_BE_BOOKED > 1){
@@ -518,7 +523,7 @@ class Booking_agenda extends BaseControllerWeb
         
 
         $reservationIds = $this->session->userdata('reservations');
-        var_dump($reservationIds);
+        //var_dump($reservationIds);
         
         foreach ($reservationIds as $key=>$item) {
             if($item == $reservation->reservationId) {
