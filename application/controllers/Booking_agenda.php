@@ -483,7 +483,6 @@ class Booking_agenda extends BaseControllerWeb
 
         if($data['finalbedrag'] == 0){
             $this->emailReservation($buyerInfo['email'], $reservationIds);
-            redirect('booking/successbooking');
         } else {
             redirect('/booking_agenda/select_payment_type');
         }
@@ -728,7 +727,7 @@ class Booking_agenda extends BaseControllerWeb
 								$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
 								if($this->sendEmail($email, $subject, $mailtemplate)) {
                                     $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
-                                    
+                                    redirect('booking/successbooking');
                                 }
                                
                                 
