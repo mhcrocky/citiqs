@@ -186,7 +186,7 @@
         private function setPaymentLines(int $orderId, float $orderAmount): void
         {
             $this->paymentLines = [
-                'PaymentId'             =>  $orderId, //ONLY ORDER ID WITHOUT PAY TESTING VERSION DONE
+                'PaymentId'             =>  (string)$orderId, //ONLY ORDER ID WITHOUT PAY TESTING VERSION DONE
                 'PaymentName'           =>  'Alfred',
                 'PaymentType'           =>  'EFT',
                 'Quantity'              =>  1,
