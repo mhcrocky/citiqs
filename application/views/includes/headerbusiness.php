@@ -36,8 +36,6 @@
     <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/css/business_dashboard/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.css"/>
-
-
     <?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
     <?php include_once FCPATH . 'application/views/includes/jsGlobalVariables.php'; ?>
 
@@ -115,11 +113,15 @@
     <script src="https://unpkg.com/vuejs-datepicker"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.umd.min.js"></script>
-    <?php if (isset($js) AND is_array($js)) {
-        foreach ($js as $jsLink) { ?>
-            <script src="<?php echo $jsLink ?>"></script>
-        <?php }
-    }?> 
+    <?php
+        if (isset($js) AND is_array($js)) { // ???????????  MOVE TO FOOTER IF USER CUSTOM SCRIPTS ???????????????
+            foreach ($js as $jsLink) { 
+            ?>
+                <script src="<?php echo $jsLink ?>"></script>
+            <?php
+            }
+        }
+    ?> 
 
 
 <style type="text/css">/* Chart.js */
