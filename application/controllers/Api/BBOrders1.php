@@ -61,8 +61,6 @@
             $jsonarray=array('message' => 'FDM Status st to ' . $flag);
         }
 
-
-
         public function data2_get(){
 			$logFile = FCPATH . 'application/tiqs_logs/messages.txt';
 			Utility_helper::logMessage($logFile, 'printer conected get');
@@ -208,7 +206,7 @@
             echo file_get_contents($url);
         }
 
-        private function getProductPrice(array $product, int $orderType ): float
+        private function getProductPrice(array $product, int $orderType): float
         {
             if ($orderType === $this->config->item('local')) {
                 return floatval($product[1]);
@@ -219,7 +217,7 @@
             }
         }
 
-        private function getProductVatpercantage(array $product, int $orderType ): int
+        private function getProductVatpercantage(array $product, int $orderType): int
         {
             if ($orderType === $this->config->item('local')) {
                 return intval($product[7]);

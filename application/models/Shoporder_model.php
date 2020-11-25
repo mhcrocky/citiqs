@@ -592,7 +592,6 @@
 				'
                     SELECT
                         tbl_shop_orders.id AS orderId,
-                        SUM(tbl_shop_orders.amount + tbl_shop_orders.serviceFee) AS orderAmountNoTip,
                         tbl_shop_orders.amount AS orderAmount, 
                         tbl_shop_orders.waiterTip AS waiterTip,
                         tbl_shop_orders.spotId,
