@@ -182,6 +182,21 @@ class Sendreservation_model extends CI_Model
 		return $result;
 	}
 
+	public function zeroreservationbymailsend($email,$eventdate)
+	{
+		$this->db->from('tbl_bookandpay');
+		$this->db->where('email', $email);
+		$this->db->where('eventdate', date('yy-m-d', strtotime($eventdate)));
+		$this->db->where('customer', 1);
+		$this->db->where('mailsend',0);
+		$query = $this->db->get();
+		$result = $query->result();
+//		$testquery = $this->db->last_query();
+//		var_dump($testquery);
+//		die();
+		return $result;
+	}
+
 	function editbookandpaymailsend($labelInfo, $reservationId)
 	{
 		try {

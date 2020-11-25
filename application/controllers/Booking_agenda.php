@@ -597,9 +597,9 @@ class Booking_agenda extends BaseControllerWeb
         }
         $data['paid'] = '1';
         $this->bookandpay_model->editbookandpay($data, $reservationIds[0]);
-        $result = $this->sendreservation_model->locatereservationbymailsend($email, $eventdate);
-        var_dump($email);
-        var_dump($eventdate);
+        $result = $this->sendreservation_model->zeroreservationbymailsend($email, $eventdate);
+        //var_dump($email);
+        //var_dump($result);
         $TransactionId='empty';
 
 			foreach ($result as $record) {
@@ -679,11 +679,11 @@ class Booking_agenda extends BaseControllerWeb
 							default:
 								break;
                         }
-                        var_dump($agenda->email_id);
+                        
 						if($emailId) {
 //                            $emailTemplate = $this->email_templates_model->get_emails_by_id($emailId->email_id);
                             $emailTemplate = $this->email_templates_model->get_emails_by_id($emailId);
-                            var_dump($emailTemplate);
+                            
 							$qrlink = $SERVERFILEPATH . $file_name1;
 
 							if($emailTemplate) {
