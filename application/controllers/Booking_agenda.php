@@ -589,9 +589,9 @@ class Booking_agenda extends BaseControllerWeb
     public function emailReservation($email,$reservationIds)
 	{
         $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
-        $eventdate = '2020-11-27';
+        $eventdate = '';
         foreach ($reservations as $key => $reservation) {
-            $eventdated = $reservation->eventdate;
+            $eventdate = $reservation->eventdate;
             
             
         }
