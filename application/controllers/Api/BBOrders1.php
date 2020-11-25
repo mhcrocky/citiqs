@@ -87,12 +87,13 @@
             $receiptemailBasepath = base_url() . $orderRelativePath;
             $ordercreatedtime = strtotime($order['orderCreated']);
             $orderId = intval($order['orderId']);
-            $orderAmountNoTip = floatval($order['orderAmountNoTip']);
+            $orderAmount = floatval($order['orderAmount']);
+            $serviceFee = floatval($order['serviceFee']);
             $transactionNumber = intval( ('1000') . (100000 + $order['orderId']) );
             $products = explode($this->config->item('contactGroupSeparator'), $order['products']);
             $orderTypeId = intval($order['spotTypeId']);
 
-            $this->setPaymentLines($orderId, $orderAmountNoTip);
+            $this->setPaymentLines($orderId, $orderAmount);
             $this->setProductLines($products, $this->config->item('concatSeparator'), $orderTypeId);
 
             // $jsonoutput['TransactionDateTime'] = date("c",strtotime($order['orderCreated'])); //gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
