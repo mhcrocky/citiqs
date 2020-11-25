@@ -597,9 +597,9 @@ class Booking_agenda extends BaseControllerWeb
         }
         $data['paid'] = '1';
         $this->bookandpay_model->editbookandpay($data, $reservationIds[0]);
-        $result = $this->sendreservation_model->zeroreservationbymailsend($email, $eventdate);
+        $result = $this->sendreservation_model->getReservationByMailandEventDate($email, $eventdate);
         //var_dump($email);
-        //var_dump($result);
+
         $TransactionId='empty';
 
 			foreach ($result as $record) {
@@ -625,11 +625,12 @@ class Booking_agenda extends BaseControllerWeb
 				if ($timeSlotId != 0) {
 					if ($paid == 1) {
 
+
 						$qrtext = $reservationId;
 
 						switch (strtolower($_SERVER['HTTP_HOST'])) {
 							case 'tiqs.com':
-								$file = '/home/tiqs/domains/tiqs.com/public_html/spot/uploads/thuishaven/qrcodes/';
+								$file = '/home/tiqs/domains/tiqs.com/public_html/alfred/uploads/qrcodes/';
 								break;
 							case '127.0.0.1':
 								$file = 'C:/wamp64/www/tiqs/booking2020/uploads/qrcodes/';
@@ -647,7 +648,7 @@ class Booking_agenda extends BaseControllerWeb
 						QRcode::png($text, $file_name);
 						switch (strtolower($_SERVER['HTTP_HOST'])) {
 							case 'tiqs.com':
-								$SERVERFILEPATH = 'https://tiqs.com/spot/uploads/thuishaven/qrcodes/';
+								$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
 								break;
 							case '127.0.0.1':
 								$SERVERFILEPATH = 'http://127.0.0.1/spot/uploads/thuishaven/qrcodes/';
@@ -671,7 +672,7 @@ class Booking_agenda extends BaseControllerWeb
 //                        var_dump($emailId);
 						switch (strtolower($_SERVER['HTTP_HOST'])) {
 							case 'tiqs.com':
-								$SERVERFILEPATH = 'https://tiqs.com/spot/uploads/thuishaven/qrcodes/';
+								$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
 								break;
 							case '127.0.0.1':
 								$SERVERFILEPATH = 'http://127.0.0.1/spot/uploads/thuishaven/qrcodes/';
@@ -681,6 +682,7 @@ class Booking_agenda extends BaseControllerWeb
                         }
                         
 						if($emailId) {
+							var_dump($emailId);
 //                            $emailTemplate = $this->email_templates_model->get_emails_by_id($emailId->email_id);
                             $emailTemplate = $this->email_templates_model->get_emails_by_id($emailId);
                             

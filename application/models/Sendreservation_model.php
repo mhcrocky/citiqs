@@ -172,7 +172,7 @@ class Sendreservation_model extends CI_Model
 		$this->db->where('email', $email);
 		$this->db->where('eventdate', date('yy-m-d', strtotime($eventdate)));
 		$this->db->where('paid', 1);
-		$this->db->where('customer', 1);
+//		$this->db->where('customer', 1);
 		$this->db->where('mailsend',0);
 		$query = $this->db->get();
 		$result = $query->result();
