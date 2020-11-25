@@ -9,7 +9,9 @@
         {
             $CI =& get_instance();
             $CI->load->config('custom');
+            $CI->load->model('shopvendorfod_model');
 
+            $isFod = $CI->shopvendorfod_model->isFodVendor(intval($order['vendorId']));
             $spotTypeId = intval($order['spotTypeId']);
             $productsarray = explode($CI->config->item('contactGroupSeparator'), $order['products']);
             $imageprint = new Imagick();
@@ -175,9 +177,10 @@
             	$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
             	$drawemail->annotation(40, $startPoint + ($i * 30), substr($title, 0, 13));
             	$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-            	$drawemail->annotation(415, $startPoint + ($i * 30), "€ ". number_format($exVatPrijs, 2, '.', ','));
+            	$drawemail->annotation(380, $startPoint + ($i * 30), "€ ". number_format($exVatPrijs, 2, '.', ','));
             	$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-            	$drawemail->annotation(485, $startPoint + ($i * 30), $vatpercentage);
+                #$drawemail->annotation(485, $startPoint + ($i * 30), $vatpercentage);
+                $drawemail->annotation(485, $startPoint + ($i * 30), self::printVatString(intval($vatpercentage), $isFod));
             	$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
             	$drawemail->annotation(570, $startPoint + ($i * 30), "€ ". $Stotalamount);
 
@@ -217,9 +220,10 @@
             $drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
 
             foreach ($productVats as $vat => $amount) {
+                $vatString = $isFod ? ' VAT ' . self::returnVatGrade(intval($vat)) . '(' . $vat .' %) ' : ' VAT ' . strval($vat) .' % ';
             	$amount = number_format($amount, 2);
             	$amount = sprintf("%.2f", $amount);
-            	$imagetextemail->annotateImage($drawemail, 440, $startPoint + ($i * 30), 0, ' VAT ' . strval($vat) .' % ');
+            	$imagetextemail->annotateImage($drawemail, 440, $startPoint + ($i * 30), 0, ' VAT ' . self::printVatString(intval($vat), $isFod));
             	$drawemail->annotation(570, $startPoint + ($i * 30), "€ ". $amount);
             	$i++;
             }
@@ -323,7 +327,7 @@
             $drawemail->annotation(
             	570,
             	$startPoint + ($i * 30),
-            	'Terrasfee VAT   ' .  $order['serviceFeeTax'] . ' % ' .  sprintf("%.2f", $serviceFeeTaxAmount)
+            	'Terrasfee  VAT ' .  self::printVatString(intval($order['serviceFeeTax']), $isFod)  .  sprintf("%.2f", $serviceFeeTaxAmount)
             );
 
             $i++;
@@ -343,6 +347,29 @@
             $imagelogo->destroy();
             $imageprint->destroy();
 
+            var_dump($imgRelativePath);
+            die();
             return $imgRelativePath;
-        }           
+        }
+
+        public static function printVatString(int $vatPercent, bool $isFod): string
+        {
+            $vatString = strval($vatPercent) .' % ';
+            if ($isFod) {
+                $vatString =  self::returnVatGrade($vatPercent) . ' (' . $vatPercent .' %) ' ;
+            }
+            return $vatString;
+
+            
+        }
+
+        public static function returnVatGrade(int $vatPercent)
+        {
+            // retunr a or b or or d
+            if ($vatPercent === 21) return 'A';
+            if ($vatPercent === 12) return 'B';
+            if ($vatPercent === 6) return 'C';
+            if ($vatPercent === 0) return 'D';
+            return 'D';
+        }
     }

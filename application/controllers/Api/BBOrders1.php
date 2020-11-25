@@ -43,16 +43,6 @@
             $this->fodfdm_model->updatelastRecieptCount($vendorId);
         }
 
-        private function returnVatGrade(int $vatPercent)
-        {
-            // retunr a or b or or d
-            if ($vatPercent === 21) return 'A';
-            if ($vatPercent === 12) return 'B';
-            if ($vatPercent === 6) return 'C';
-            if ($vatPercent === 0) return 'D';
-            return 'D';
-        }
-
         public function fdmStatus_get(): void
         {
             $macNumber  =   $this->input->get('mac');
@@ -104,7 +94,7 @@
                     'Quantity'          =>  1,
                     'QuantityUnit'      =>  'P',
                     'SellingPrice'      =>  $serviceFee,
-                    'VatRateId'         =>  $this->returnVatGrade($serviceFeeTax),
+                    'VatRateId'         =>  Orderprint_helper::returnVatGrade($serviceFeeTax),
                 );
             }
             // $jsonoutput['TransactionDateTime'] = date("c",strtotime($order['orderCreated'])); //gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
@@ -173,7 +163,7 @@
                     'Quantity'          =>  $quantity,
                     'QuantityUnit'      =>  'P',
                     'SellingPrice'      =>  $price,
-                    'VatRateId'         =>  $this->returnVatGrade($vatpercentage), //"B",
+                    'VatRateId'         =>  Orderprint_helper::returnVatGrade($vatpercentage), //"B",
                     'DiscountLines'     => [
                         // array(
                         // "DiscountId"        =>  "DISC002",
