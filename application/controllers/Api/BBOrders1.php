@@ -197,7 +197,7 @@
 
         private function setPaymentLines(int $orderId, float $orderAmount): void
         {
-            $this->paymentLines = [
+            $this->paymentLines = [[
                 'PaymentId'             =>  (string)$orderId, //ONLY ORDER ID WITHOUT PAY TESTING VERSION DONE
                 'PaymentName'           =>  'Alfred',
                 'PaymentType'           =>  'EFT',
@@ -206,7 +206,7 @@
                 'ForeignCurrencyAmount' =>  0,
                 'ForeignCurrencyISO'    =>  '',
                 'Reference'             =>  (string)("Order id:".$orderId), // PAYNL TRANSACTION ID !!! DONE !!!
-            ];
+            ]];
         }
 
 
