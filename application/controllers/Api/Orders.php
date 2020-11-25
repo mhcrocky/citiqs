@@ -583,17 +583,12 @@
             $resultpngprinter->setImageFormat('png');
 			$resultpngemail->setImageFormat('png');
 
-            $receipt = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '.png';
-			$receiptemail = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'].'-email' . '.png';
+            $receipt = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '_' . $order['printerId'] .'.png';
 
-			if (file_put_contents($receipt, $resultpngprinter)) {
+			if (file_put_contents($receipt, $resultpngprinter) && ENVIRONMENT !== 'development') {
 				$logFile = FCPATH . 'application/tiqs_logs/write-error.txt';
 				Utility_helper::logMessage($logFile, 'file order written to server: ' .$receipt);
             }
-			if (file_put_contents($receiptemail, $resultpngemail)) {
-				$logFile = FCPATH . 'application/tiqs_logs/write-error.txt';
-				Utility_helper::logMessage($logFile, 'file receipt written to server: ' .$receiptemail);
-			}
 
 			if (intval($order['vendorId']) === 43533) {
 				$order['vendorEmail']='support@tiqs.com';
