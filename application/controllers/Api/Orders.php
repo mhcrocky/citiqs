@@ -583,7 +583,7 @@
             $resultpngprinter->setImageFormat('png');
 			$resultpngemail->setImageFormat('png');
 
-            $receipt = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '.png';
+            $receipt = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '_' . $order['printerId'] .'.png';
 
 			if (file_put_contents($receipt, $resultpngprinter) && ENVIRONMENT !== 'development') {
 				$logFile = FCPATH . 'application/tiqs_logs/write-error.txt';
