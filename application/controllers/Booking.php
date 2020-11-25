@@ -624,6 +624,7 @@ class Booking extends BaseControllerWeb
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
 								$mailtemplate = str_replace('Image', '', $mailtemplate);
 								$mailtemplate = str_replace('Text', '', $mailtemplate);
+								$mailtemplate = str_replace('Title', '', $mailtemplate);
 								$subject = 'Your tiqs reservation(s)';
 //                                include(APPPATH . 'libraries/simple_html_dom.php');
 //
