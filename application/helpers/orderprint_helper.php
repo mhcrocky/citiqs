@@ -336,8 +336,7 @@
             $imgRelativePath = 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'].'-email' . '.png';
             $imgFullPath = FCPATH . $imgRelativePath;
 
-            
-            var_dump(file_put_contents($imgFullPath, $resultpngemail));
+            file_put_contents($imgFullPath, $resultpngemail);
 
             $imagetextemail->destroy();
             $imageprintemail->destroy();

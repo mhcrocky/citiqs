@@ -35,6 +35,7 @@
         public $confirm;
         public $old_order;
         public $orderRandomKey;
+        public $bbOrderPrint;
 
         private $table = 'tbl_shop_orders';
 
@@ -97,7 +98,8 @@
             if (isset($data['waiterTip']) && !Validate_data_helper::validateFloat($data['waiterTip'])) return false;
             if (isset($data['confirm']) && !($data['confirm'] === '0' || $data['confirm'] === '1' || $data['confirm'] === '2')) return false;
             if (isset($data['old_order']) && !Validate_data_helper::validateInteger($data['old_order'])) return false;
-            if (isset($data['orderRandomKey']) && !Validate_data_helper::validateString($data['orderRandomKey'])) return false;            
+            if (isset($data['orderRandomKey']) && !Validate_data_helper::validateString($data['orderRandomKey'])) return false;
+            if (isset($data['bbOrderPrint']) && !($data['bbOrderPrint'] === '1' || $data['bbOrderPrint'] === '0')) return false;
 
             return true;
         }
@@ -389,7 +391,8 @@
                                     \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage,
                                     \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_order_extended.remark) > 0, tbl_shop_order_extended.remark, ""),
                                     \'' .  $concatSeparator . '\', tbl_shop_order_extended.mainPrductOrderIndex,
-                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.subMainPrductOrderIndex
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.subMainPrductOrderIndex,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.productId
                                     SEPARATOR "' . $this->config->item('contactGroupSeparator') . '"
                                 ) AS products
                             FROM
@@ -588,6 +591,9 @@
 				'
                     SELECT
                         tbl_shop_orders.id AS orderId,
+                        SUM(tbl_shop_orders.amount + tbl_shop_orders.serviceFee) AS orderAmountNoTip,
+                        tbl_shop_orders.amount AS orderAmount, 
+                        tbl_shop_orders.waiterTip AS waiterTip,
                         tbl_shop_orders.spotId,
                         tbl_shop_orders.created AS orderCreated,
                         tbl_shop_orders.expired AS orderExpired,
@@ -953,5 +959,34 @@
             $productPreparationTime = intval($minutes[1]['minutes']);
 
             return $categoryDelay >= $productPreparationTime ? $categoryDelay : $productPreparationTime;
+        }
+
+        public function fetchBBOrderForPrint(string $printerMac): ?array
+        {
+            $orderId = $this->readImproved([
+                'what' => [$this->table . '.id AS orderId'],
+                'where' => [
+                    $this->table . '.bbOrderPrint' => '0',
+                    'tbl_shop_printers.macNumber' => $printerMac
+                ],
+                'joins' => [
+                    ['tbl_shop_spots', 'tbl_shop_spots.id = ' . $this->table . '.spotId', 'INNER'],
+                    ['tbl_shop_printers', 'tbl_shop_printers.id = tbl_shop_spots.printerId', 'INNER'],
+                    ['tbl_user', 'tbl_user.id = tbl_shop_printers.userId', 'INNER'],
+                    ['tbl_shop_vendor_FOD', 'tbl_shop_vendor_FOD.vendorId = tbl_user.id', 'INNER'],
+                ],
+                'conditions' => [
+                    'ORDER_BY' => [$this->table . '.id ASC'],
+                    'LIMIT' => ['1']
+                ]
+            ]);
+
+            if (empty($orderId)) return null;
+
+            $this->id = $orderId[0]['orderId'];
+            $order = $this->fetchOrdersForPrintcopy();
+            $order = reset($order);
+
+            return $order;
         }
     }
