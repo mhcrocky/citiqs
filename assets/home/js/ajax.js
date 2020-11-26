@@ -238,6 +238,10 @@ var callThis = (function() {
             callFunction(this);
         },
         saveIrame: function() {            
+        },
+        generateCategoryKey: function(callFunction, functionArg) {
+            functionArg.push(this);
+            callFunction(...functionArg);
         }
     };
     return methods;

@@ -28,3 +28,24 @@ function updateCategoriesOrder(listCategories) {
 
     sendAjaxPostRequest(post, url, 'updateCategoriesOrder');
 }
+
+function generateCategoryKey(venodrId, className) {
+    let post = {
+        'venodrId' : venodrId
+    }
+    let url = globalVariables.ajax + 'generateCategoryKey';
+    sendAjaxPostRequest(post, url, 'generateCategoryKey', displayOpenKey, [className]);
+}
+
+function displayOpenKey(className, response) {
+
+    let elements = document.getElementsByClassName(className);
+    let elementsLength = elements.length;
+    let i;
+    for (i = 0; i < elementsLength; i++) {
+        let element = elements[i];
+        element.innerHTML = 'Category key: ' + response.key;
+    }
+    alertify.success('Key created');
+    return;
+}

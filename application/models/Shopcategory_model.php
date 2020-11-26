@@ -20,6 +20,7 @@
         public $driverSmsMessage;
         public $archived;
         public $private;
+        public $openKey;
 
         private $table = 'tbl_shop_categories';
 
@@ -59,6 +60,7 @@
             if (isset($data['sortNumber']) && !Validate_data_helper::validateInteger($data['sortNumber'])) return false;
             if (isset($data['archived']) && !($data['archived'] === '1' || $data['archived'] === '0')) return false;
             if (isset($data['private']) && !($data['private'] === '1' || $data['private'] === '0')) return false;
+            if (isset($data['openKey']) && !Validate_data_helper::validateString($data['openKey'])) return false;
 
             return true;
         }
@@ -77,6 +79,7 @@
                     $this->table . '.sortNumber',
                     $this->table . '.driverSmsMessage',
                     $this->table . '.private',
+                    $this->table . '.openKey'
                 ],
                 $where,
                 [],
@@ -95,4 +98,32 @@
 
             return $count ? true : false;
         }
+
+
+        private function isFreekKey(string $openKey): bool
+        {
+            $check = $this->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    'openKey' => $openKey,
+                    'userId !=' => $this->userId
+                ]
+            ]);
+            return is_null($check);
+        }
+
+        public function createOpenKey(): string
+        {
+            $this->load->helper('utility_helper');
+
+            $openKey = Utility_helper::shuffleString(8);
+            if (!$this->isFreekKey($openKey)) {
+                return $this->createOpenKey();
+            }
+            $query = 'UPDATE ' . $this->table . ' SET openKey = "' . $openKey . '" WHERE userId = ' . $this->userId . ';';
+            $this->db->query($query);
+
+            return $this->db->affected_rows() ? $openKey : $this->createOpenKey();
+        }
+
     }
