@@ -114,6 +114,17 @@ class Bookandpayagenda_model extends CI_Model
 		}
 	}
 
+	public function getBookingAgendaById($id)
+	{
+		$this->db->select('tbl_bookandpayagenda.*, tbl_email_templates.template_name');
+		$this->db->from('tbl_bookandpayagenda');
+		$this->db->join('tbl_email_templates', 'tbl_email_templates.id = tbl_bookandpayagenda.email_id', 'left');
+		$this->db->where('tbl_bookandpayagenda.id', $id);
+		$query = $this->db->get();
+		$result = $query->row();
+		return $result;
+	}
+
 	public function getReservationId($reservationId)
 	{
 		$this->db->from('tbl_bookandpay');

@@ -482,7 +482,7 @@ class Booking extends BaseControllerWeb
 
 			switch (strtolower($_SERVER['HTTP_HOST'])) {
 				case 'tiqs.com':
-					$file = '/home/tiqs/domains/tiqs.com/public_html/spot/uploads/qrcodes/'.$customerId;
+					$file = '/home/tiqs/domains/tiqs.com/public_html/alfred/uploads/qrcodes/'.$customerId;
 					$webUrl = 'uploads/qrcodes/'.$customerId;
 					break;
 				case 'tiqs.lc':
@@ -501,13 +501,11 @@ class Booking extends BaseControllerWeb
 				mkdir($file, 0777, true);
 			}
 //			var_dump($result);
+//			die();
 
 			$email = $result->email;
 			$eventdate = $result->eventdate;
-
 			$result = $this->sendreservation_model->locatereservationbymailsend($email, $eventdate);
-
-
 			$TransactionId='empty';
 
 			foreach ($result as $record) {
@@ -537,7 +535,7 @@ class Booking extends BaseControllerWeb
 
 						switch (strtolower($_SERVER['HTTP_HOST'])) {
 							case 'tiqs.com':
-								$file = '/home/tiqs/domains/tiqs.com/public_html/spot/uploads/thuishaven/qrcodes/';
+								$file = '/home/tiqs/domains/tiqs.com/public_html/alfred/uploads/qrcodes/';
 								break;
 							case '127.0.0.1':
 								$file = 'C:/wamp64/www/tiqs/booking2020/uploads/qrcodes/';
@@ -555,7 +553,7 @@ class Booking extends BaseControllerWeb
 						QRcode::png($text, $file_name);
 						switch (strtolower($_SERVER['HTTP_HOST'])) {
 							case 'tiqs.com':
-								$SERVERFILEPATH = 'https://tiqs.com/spot/uploads/thuishaven/qrcodes/';
+								$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
 								break;
 							case '127.0.0.1':
 								$SERVERFILEPATH = 'http://127.0.0.1/spot/uploads/thuishaven/qrcodes/';
@@ -570,11 +568,18 @@ class Booking extends BaseControllerWeb
 //
 //                        QRcode::png($reservationId, $file_name);
 
+
+
 						$timeSlot = $this->bookandpaytimeslots_model->getTimeSlot($timeSlotId);
 						$spot = $this->bookandpayspot_model->getSpot($spotId);
 						$agenda = $this->bookandpayagenda_model->getBookingAgendaById($spot->agenda_id);
 
+//						var_dump($timeSlotId);
+//						var_dump($agenda);
+//						var_dump($spotId);
+//						die();
 						$emailId = false;
+
 
 						if($timeSlot && $timeSlot->email_id != 0) {
 							$emailId = $timeSlot->email_id;
@@ -587,7 +592,7 @@ class Booking extends BaseControllerWeb
 //                        var_dump($emailId);
 						switch (strtolower($_SERVER['HTTP_HOST'])) {
 							case 'tiqs.com':
-								$SERVERFILEPATH = 'https://tiqs.com/spot/uploads/thuishaven/qrcodes/';
+								$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
 								break;
 							case '127.0.0.1':
 								$SERVERFILEPATH = 'http://127.0.0.1/spot/uploads/thuishaven/qrcodes/';
@@ -595,6 +600,9 @@ class Booking extends BaseControllerWeb
 							default:
 								break;
 						}
+
+
+
 						if($emailId) {
 //                            $emailTemplate = $this->email_templates_model->get_emails_by_id($emailId->email_id);
 							$emailTemplate = $this->email_templates_model->get_emails_by_id($emailId);

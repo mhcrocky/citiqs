@@ -53,7 +53,7 @@
                     <div class="row">                        
                         <?php if (intval($spot['spotTypeId']) === $this->config->item('deliveryType')) { ?>
                             <div class="form-group col-sm-6">
-                                <label class="labelColorCheckout" for="city"><?php echo $this->language->line("PAYMENT-C0020",'City');?><sup>*</sup></label>
+                                <label class="labelColorCheckout" for="city"><?php echo $this->language->line("PAYMENT-C0020CITY",'City');?><sup>*</sup></label>
                                 <input
                                     type="teyt"
                                     id="city"
@@ -66,7 +66,7 @@
                                 />
                             </div>
                             <div class="form-group col-sm-6">
-                                <label class="labelColorCheckout" for="zipcode"><?php echo $this->language->line("PAYMENT-C0020",'Zipcode');?><sup>*</sup></label>
+                                <label class="labelColorCheckout" for="zipcode"><?php echo $this->language->line("PAYMENT-C0020ZIP",'Zipcode');?><sup>*</sup></label>
                                 <input
                                     type="text"
                                     id="zipcode"
@@ -86,7 +86,7 @@
                                     class="form-control inputFieldCheckout"
                                     name="user[address]"
                                     value="<?php echo $address; ?>"
-                                    placeholder="<?php echo $this->language->line("PAYMENT-C0020",'Address');?>"
+                                    placeholder="<?php echo $this->language->line("PAYMENT-C0020ADDRESS",'Address');?>"
                                     required
                                     data-name='Address'
                                 />
