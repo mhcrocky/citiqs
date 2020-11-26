@@ -37,7 +37,6 @@ class Agenda_booking extends BaseControllerWeb
         }
 
         $this->session->unset_userdata('reservations');
-        $this->session->unset_userdata('date');
         $this->session->unset_userdata('spotDescript');
         $this->session->unset_userdata('spotPrice');
         $this->session->unset_userdata('timeslot');
@@ -61,6 +60,7 @@ class Agenda_booking extends BaseControllerWeb
 
         $data['logoUrl'] = $logoUrl;
         $data['pageTitle'] = 'TIQS: Thuishaven';
+        $this->session->set_userdata('shortUrl', $shortUrl);
         $data['shortUrl'] = $shortUrl;
         $this->loadViews('new_bookings/index', $data, '', 'newbookingfooter', 'newbookingheader');
         
@@ -234,6 +234,7 @@ class Agenda_booking extends BaseControllerWeb
             $selectedTimeSlot = $this->bookandpaytimeslots_model->getTimeSlot($this->input->post('selected_time_slot_id'));
             $timeslot_sess = date("H:i", strtotime($selectedTimeSlot->fromtime)).' - '.date("H:i", strtotime($selectedTimeSlot->totime));
             $this->session->set_userdata('timeslot', $timeslot_sess);
+            $this->session->set_userdata('spotId', $spot->id);
             $newBooking = [
                 'customer' => $customer['id'],
                 'eventid' => $eventId,

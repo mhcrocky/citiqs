@@ -1,10 +1,16 @@
 <!-- end booking form inputs -->
 <div class="booking-form__result w-100">
 			<h4 class="mb-3">Booking Info </h4>
-			<p>Event Date: <span id="selected-date"><?php echo $this->session->userdata('date'); ?></span></p>
+			<p>Event Date: <span id="selected-date">
+			<?php $shorturl = $this->session->userdata('shortUrl');
+			 if(base_url("agenda_booking/$shorturl") != current_url()): ?>
+			    <?php echo $this->session->userdata('date'); ?>
+			<?php endif; ?>
+			</span></p>
 			<p>SPOT Description: <span id="spot"><?php echo $this->session->userdata('spotDescript'); ?></span></p>
 			<p>SPOT Price: <span id="price"><?php echo $this->session->userdata('spotPrice'); ?></span></p>
 			<p>Time Slot: <span id="selected-time"><?php echo $this->session->userdata('timeslot'); ?></span></p>
+			<p>Personal Info: <span id="personal-info"></span></p>
 		</div>
 		<!-- end booking form results -->
 	</div>
@@ -12,7 +18,6 @@
 
 
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="<?php echo base_url(); ?>assets/js/toastr.min.js"></script>

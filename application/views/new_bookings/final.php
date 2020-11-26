@@ -23,3 +23,9 @@
         </div>
       </form>
 	</div>
+<script>
+$('input').on('change', function(){
+		let info = $('#username').val() + ', ' + $('#email').val() + ', '+ $('#mobile').val();
+		$('#personal-info').text(info);
+	});
+</script>
