@@ -1,0 +1,176 @@
+body{
+	font-family: 'Montserrat', sans-serif;
+}
+
+.booking-form{
+	max-width: 500px;
+}
+
+/* booking form header */
+
+.booking-form__header{
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+.booking-form__header div{
+	flex: 1 0 25%;
+	padding: 10px;
+    align-items: center;
+    display: flex;
+	height: 100%;
+	background-color: #e8612f;
+}
+
+.booking-form__header div:hover{
+	cursor: pointer;
+	background-color: #e8612f;
+}
+
+.booking-form__header p{
+	color: white;
+	margin-bottom: 0;
+	font-size: 14px;
+}
+
+.booking-form__person-link{
+	border-left: 1px solid #fff;
+	border-right: 1px solid #fff;
+}
+
+.booking-form__time-link{
+	border-right: 1px solid #fff;
+}
+
+/* step */
+
+.step{
+	padding: 20px;
+	display: none !important;
+	flex-wrap: wrap;
+}
+
+.step.active{
+	display: flex !important;
+}
+
+.step h3{
+	width: 100%;
+	font-weight: 400;
+	font-size: 24px;
+	margin-bottom: 30px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid gray;
+}
+
+/* date input */
+
+#date-input td{
+	padding: 10px;
+}
+
+#date-input .dow{
+	padding-top: 10px;
+}
+
+#date-input .datepicker table tr td.active.active{
+	background-color: coral;
+	background: coral;
+}
+
+#date-input .disabled.day{
+	color: #e2e2e2;
+}
+
+/* person input */
+
+#person-input,
+#time-input{
+	display: flex;
+}
+
+#person-input .form-check,
+#time-input .form-check{
+	margin-right: 15px;
+	margin-bottom: 15px;
+	padding-left: 0;
+}
+
+#person-input .form-check-label,
+#time-input .form-check-label{
+	width: 50px;
+	height: 50px;
+	border: 1px solid #8080803b;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#person-input .form-check-label:hover,
+#time-input .form-check-label:hover{
+	background-color: #c7c7c73b;
+	cursor: pointer;
+}
+
+#person-input .form-check-input,
+#time-input .form-check-input{
+	position: absolute;
+	opacity: 0;
+	appearance: none;
+    -moz-appearance: none;
+	-webkit-appearance: none;
+}
+
+#person-input .form-check-input:checked + .form-check-label,
+#time-input .form-check-input:checked + .form-check-label{
+	font-weight: 600;
+	color: white;
+	background-color: coral;
+}
+
+/* time input */
+
+#time-input .form-check-label{
+	width: 60px;
+}
+
+/* booking result */
+
+.booking-form__result {
+	margin-top: 40px;
+	background-color: #f3f3f3;
+	padding: 20px;
+}
+
+.booking-form__result p{
+	color: gray;
+}
+
+.booking-form__result span{
+	font-weight: 600;
+	color: black;
+}
+
+/* button submit */
+
+#button-submit{
+	background-color: coral;
+	color: white;
+	border-color: coral;
+}
+
+/* go back button */
+
+.go-back-wrapper{
+	margin-top: 20px;
+}
+
+.go-back-button{
+	color: coral;
+	font-weight: 600;
+	display: inline-block;
+	cursor: pointer;
+}
