@@ -7,10 +7,13 @@
 
     class Jwt_helper
     {
+        public static $EXPIRATION_TIME_IN_MINUTES = 60;
 
         public static function encode(array $payLoadArray): string
         {
             $payLoadString = JWT::encode($payLoadArray, JWT_KEY);
+
+            // TO DO SET NEW TIME;
 
             return $payLoadString;
         }
@@ -69,7 +72,7 @@
             return;
         }
 
-        public static function fetchAndChekOrdered(string $orderDataRandomKey, int $vendorId, int $spotId, array $conditions): ?array
+        public static function fetch(string $orderDataRandomKey, int $vendorId, int $spotId, array $conditions): ?array
         {
             if (empty($orderDataRandomKey)) return null;
 
@@ -82,6 +85,6 @@
 
             if ($orderData['vendorId'] !== $vendorId || $orderData['spotId'] !== $spotId) redirect(base_url());
 
-            return (empty($orderData['makeOrder'])) ? null : $orderData['makeOrder'];
+            return $orderData;
         }
     }

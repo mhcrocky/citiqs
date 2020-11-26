@@ -242,6 +242,9 @@ var callThis = (function() {
         generateCategoryKey: function(callFunction, functionArg) {
             functionArg.push(this);
             callFunction(...functionArg);
+        },
+        checkCategoryCode: function(callFunction) {
+            callFunction(this);
         }
     };
     return methods;

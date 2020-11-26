@@ -497,6 +497,7 @@
                     'tbl_shop_products.preparationTime AS preparationTime',
                     'tbl_shop_categories.category',
                     'tbl_shop_categories.id AS categoryId',
+                    'tbl_shop_categories.private AS privateCategory',
                     'tblShopAddons.addons AS addons'
                 ],
                 'where' => [

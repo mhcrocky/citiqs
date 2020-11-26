@@ -517,6 +517,9 @@ function prepareSendData(pos) {
         'orderDataRandomKey' : makeOrderGlobals.orderDataRandomKey,
         'pos' : pos,
     }
+    if (makeOrderGlobals.openCategory) {
+        send['openCategory'] = makeOrderGlobals.openCategory;
+    }
     return send;
 }
 
@@ -627,4 +630,29 @@ function setMinToZero(newOrdered) {
 function goToSlide(index) {
     let slider = $('.items-slider');
     slider[0].slick.slickGoTo(parseInt(index));
+}
+
+function checkCategoryCode(openKey, categoryId, categoryIndex)  {
+    let url = globalVariables.ajax + 'checkCategoryCode';
+    let post = {
+        'openKey' : openKey,
+        'categoryId' : categoryId,
+        'categoryIndex' : categoryIndex,
+        'vendorId' : makeOrderGlobals.vendorId,
+        'spotId' : makeOrderGlobals.spotId,
+    }
+
+    sendAjaxPostRequest(post, url, 'checkCategoryCode', redirectToUnlcokCategory);
+}
+
+function redirectToUnlcokCategory(data) {
+    console.dir(data);
+    // redirectToNewLocation(url); orderDataGetKey
+    let url = globalVariables.baseUrl + 'make_order';
+    url += '?vendorid=' + data['vendorId'];
+    url += '&spotid=' + data['spotId'];
+    url += '&category=' + data['categoryIndex'];
+    url += '&' + makeOrderGlobals.orderDataGetKey + '=' + data['randomKey'];
+
+    window.location.href =  url;
 }

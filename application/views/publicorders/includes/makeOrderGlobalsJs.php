@@ -22,6 +22,9 @@
         <?php if (!empty($returnCategorySlide)) { ?>
             globals['categorySlide'] = '<?php echo $returnCategorySlide; ?>';
         <?php } ?>
+        <?php if (!empty($openCategory)) { ?>
+            globals['openCategory'] = '<?php echo $openCategory; ?>';
+        <?php } ?>
 
         Object.freeze(globals);
         return globals;

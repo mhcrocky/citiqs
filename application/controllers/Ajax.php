@@ -1503,4 +1503,30 @@ class Ajax extends CI_Controller
             'key' => $openKey
         ]);
     }
+
+    public function checkCategoryCode(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = Utility_helper::sanitizePost();
+        $categoryId = intval($post['categoryId']);
+        $check = $this->shopcategory_model->setObjectId($categoryId)->setProperty('openKey', $post['openKey'])->checkOpenKey();
+
+        if ($check) {
+            // TO DO UPDATE IF EXISTS
+            $jwt = [
+                'vendorId' => $post['vendorId'],
+                'spotId' => $post['spotId'],
+                'openCategory' => $categoryId
+            ];
+
+            $this->shopsession_model->insertSessionData($jwt);
+            if (!$this->shopsession_model->orderData) return;
+
+            $post['randomKey'] = $this->shopsession_model->randomKey;
+            echo json_encode($post);
+        }
+
+        return;
+    }
 }

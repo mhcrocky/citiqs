@@ -34,116 +34,143 @@
                                 <!-- end item list -->
                             </div>
                         <?php } ?>
-                        <?php foreach ($mainProducts as $category => $products) { ?>
-                            <div class="shop__items selectedSpotBackground">
-                                <div class="shop__item-list-heading" id='<?php echo $category; ?>'>
-                                    <h2 class="categoryName"><?php echo $category; ?></h2>
-<!--									we have the line with the link to the menu -->
-									<span onclick="goToSlide(0)">BACK TO MENU</span>
-                                </div>
-                                <div class="shop__item-list selectedSpotBackground">
-                                    <?php foreach ($products as $product) { ?>
-                                        <?php
-                                            $productDetails = reset($product['productDetails']);
-                                        ?>
-                                        <div class="shop__single-item">
-                                            <div class="shop__single-item__info">
-                                                <!-- wrapped long description and title -->
-                                                <div>
-                                                    <strong class='shop__single-item__info--title productName'><?php echo $productDetails['name']; ?></strong>
-                                                    <?php if ($productDetails['longDescription'] && $productDetails['longDescription'] !== 'NA') { ?>
-                                                        <i
-                                                            style="width: 15px"
-                                                            class="fa fa-info-circle infoCircle"
-                                                            aria-hidden="true"
-                                                            data-toggle="popover"
-                                                            data-trigger="hover"
-                                                            data-placement="bottom"
-                                                            data-content="<?php echo $productDetails['longDescription']; ?>"
-                                                        ></i>
-                                                    <?php } ?>
-                                                </div>
-                                                <?php if (trim($productDetails['name']) !== trim($productDetails['shortDescription']) ) { ?>
-                                                    <p class='shop__single-item__info--description productDescription'><?php echo $productDetails['shortDescription']; ?></p>
-                                                <?php } ?>
+                        <?php
+                            $count = 0;
+                            foreach ($mainProducts as $category => $products) {
+                                $count++;
+                            ?>
+                                <div class="shop__items selectedSpotBackground">
+                                    <div class="shop__item-list-heading" id='<?php echo $category; ?>'>
+                                        <h2 class="categoryName"><?php echo $category; ?></h2>
+                                        <!--we have the line with the link to the menu -->
+                                        <span onclick="goToSlide(0)">BACK TO MENU</span>
+                                    </div>
+                                    <div class="shop__item-list selectedSpotBackground">
+                                            <?php foreach ($products as $product) { ?>
                                                 <?php
-                                                    $baseUrl = base_url();
-                                                    if ($vendor['showAllergies'] === '1')  {
-                                                        $product['allergies'] = unserialize($product['allergies']);
-                                                        if (!empty($product['allergies']['productAllergies'])) {
-                                                            $productAllergies = $product['allergies']['productAllergies'];
-                                                            echo '<div class="shop__single-item__alergies">';
-                                                            foreach ($productAllergies as $allergy) {
-                                                                ?>
-                                                                    <img
-                                                                        src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
-                                                                        alt="<?php echo $allergy; ?>"
-                                                                        height='24px'
-                                                                        width='24px'
-                                                                        style="display:inline; margin:5px 2px"
-                                                                    />
-                                                                <?php
-                                                            }
-                                                            echo '</div>';
-                                                        }
+                                                    if ($product['privateCategory'] === '1' && !$openCategory) {
+                                                        // openCategory (if open) is category id
+                                                        // for next update when every category need to have private key
+                                                ?>
+                                                        <div style="width:100%; margin-bottom: 5px">
+                                                            <h2 style="text-align:center">PRIVATE CATEGORY</h2>
+                                                            <div class="col-lg-4 col-lg-offset-4 col-sm-12">
+                                                                <input
+                                                                    type="text"
+                                                                    class="form-control"
+                                                                    placeholder="Insert key to unlock"
+                                                                    oninput="checkCategoryCode(this.value, '<?php echo $product['categoryId']; ?>','<?php echo $count; ?>')"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                <?php
+                                                        break;
                                                     }
                                                 ?>
-                                            </div>
-                                            <?php if ($vendor['showProductsImages'] === '1') { ?>
-                                                <div class="shop__single-item__image">
-                                                    <img
-                                                        <?php if ($product['productImage'] && file_exists($uploadProductImageFolder . $product['productImage'])) { ?>
-                                                            src="<?php echo base_url() . 'assets/images/productImages/' . $product['productImage']; ?>"
-                                                        <?php } else { ?>
-                                                            src="<?php echo base_url() . 'assets/images/defaultProductsImages/' . $vendor['defaultProductsImage']; ?>"
+                                                <?php
+                                                    $productDetails = reset($product['productDetails']);
+                                                ?>
+                                                <div class="shop__single-item">
+                                                    <div class="shop__single-item__info">
+                                                        <!-- wrapped long description and title -->
+                                                        <div>
+                                                            <strong class='shop__single-item__info--title productName'><?php echo $productDetails['name']; ?></strong>
+                                                            <?php if ($productDetails['longDescription'] && $productDetails['longDescription'] !== 'NA') { ?>
+                                                                <i
+                                                                    style="width: 15px"
+                                                                    class="fa fa-info-circle infoCircle"
+                                                                    aria-hidden="true"
+                                                                    data-toggle="popover"
+                                                                    data-trigger="hover"
+                                                                    data-placement="bottom"
+                                                                    data-content="<?php echo $productDetails['longDescription']; ?>"
+                                                                ></i>
+                                                            <?php } ?>
+                                                        </div>
+                                                        <?php if (trim($productDetails['name']) !== trim($productDetails['shortDescription']) ) { ?>
+                                                            <p class='shop__single-item__info--description productDescription'><?php echo $productDetails['shortDescription']; ?></p>
                                                         <?php } ?>
-                                                        alt="<?php echo $productDetails['name']; ?>"
-                                                    />
+                                                        <?php
+                                                            $baseUrl = base_url();
+                                                            if ($vendor['showAllergies'] === '1')  {
+                                                                $product['allergies'] = unserialize($product['allergies']);
+                                                                if (!empty($product['allergies']['productAllergies'])) {
+                                                                    $productAllergies = $product['allergies']['productAllergies'];
+                                                                    echo '<div class="shop__single-item__alergies">';
+                                                                    foreach ($productAllergies as $allergy) {
+                                                                        ?>
+                                                                            <img
+                                                                                src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
+                                                                                alt="<?php echo $allergy; ?>"
+                                                                                height='24px'
+                                                                                width='24px'
+                                                                                style="display:inline; margin:5px 2px"
+                                                                            />
+                                                                        <?php
+                                                                    }
+                                                                    echo '</div>';
+                                                                }
+                                                            }
+                                                        ?>
+                                                    </div>
+                                                    <?php if ($vendor['showProductsImages'] === '1') { ?>
+                                                        <div class="shop__single-item__image">
+                                                            <img
+                                                                <?php if ($product['productImage'] && file_exists($uploadProductImageFolder . $product['productImage'])) { ?>
+                                                                    src="<?php echo base_url() . 'assets/images/productImages/' . $product['productImage']; ?>"
+                                                                <?php } else { ?>
+                                                                    src="<?php echo base_url() . 'assets/images/defaultProductsImages/' . $vendor['defaultProductsImage']; ?>"
+                                                                <?php } ?>
+                                                                alt="<?php echo $productDetails['name']; ?>"
+                                                            />
+                                                        </div>
+                                                    <?php } ?>
+                                                    <!-- ADDED DIV FOR + PRICE - -->
+                                                    <div class='shop__single-item__cart-wrapper'>
+                                                        <div class="shop__single-item__price priceQuantity">
+                                                            <span><?php echo $productDetails['price']; ?></span>
+                                                        </div>
+                                                        <div class="shop__single-item__quanitity-buttons">
+                                                            <div
+                                                                class="shop__single-item__add-to-cart priceQuantity"
+                                                                <?php if ($product['addons'] || $productDetails['addRemark'] === '1') { ?>
+                                                                    onclick="focusOnOrderItems('<?php echo $product['productId']; ?>')"
+                                                                <?php } else { ?>
+                                                                    onclick="trigerRemoveOrderedClick('removeOrdered_<?php echo $product['productId']; ?>')"
+                                                                <?php } ?>
+                                                                >
+                                                                <span style="font-size:16px; vertical-align: middle; text-align:center">
+                                                                    <i class="fa fa-minus priceQuantity" aria-hidden="true"></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="shop__single-item__quiantity">
+                                                                <div class="shop__single-item__add-to-cart priceQuantity">
+                                                                    <span id="orderQuantityValue_<?php echo $product['productId']; ?>" class="countOrdered priceQuantity" style="font-size:14px;">0</span>
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                class="shop__single-item__add-to-cart priceQuantity"
+                                                                <?php if ($product['addons'] || $productDetails['addRemark'] === '1') { ?>
+                                                                    data-toggle="modal" data-target="#single-item-details-modal<?php echo $product['productId']; ?>"
+                                                                <?php } else { ?>
+                                                                    onclick="triggerModalClick('modal_buuton_<?php echo 'single-item-details-modal' . $product['productId']; ?>_<?php echo $productDetails['productExtendedId']?>')"
+                                                                <?php } ?>
+                                                                >
+                                                                <span style="font-size:16px; vertical-align: middle; text-align:center">
+                                                                    <i class="fa fa-plus priceQuantity" aria-hidden="true"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <!-- end quantity buttons -->
+                                                    </div>
                                                 </div>
                                             <?php } ?>
-                                            <!-- ADDED DIV FOR + PRICE - -->
-                                            <div class='shop__single-item__cart-wrapper'>
-                                                <div class="shop__single-item__price priceQuantity">
-                                                    <span><?php echo $productDetails['price']; ?></span>
-                                                </div>
-                                                <div class="shop__single-item__quanitity-buttons">
-                                                    <div
-                                                        class="shop__single-item__add-to-cart priceQuantity"
-                                                        <?php if ($product['addons'] || $productDetails['addRemark'] === '1') { ?>
-                                                            onclick="focusOnOrderItems('<?php echo $product['productId']; ?>')"
-                                                        <?php } else { ?>
-                                                            onclick="trigerRemoveOrderedClick('removeOrdered_<?php echo $product['productId']; ?>')"
-                                                        <?php } ?>
-                                                        >
-                                                        <span style="font-size:16px; vertical-align: middle; text-align:center">
-                                                            <i class="fa fa-minus priceQuantity" aria-hidden="true"></i>
-                                                        </span>
-                                                    </div>
-                                                    <div class="shop__single-item__quiantity">
-                                                        <div class="shop__single-item__add-to-cart priceQuantity">
-                                                            <span id="orderQuantityValue_<?php echo $product['productId']; ?>" class="countOrdered priceQuantity" style="font-size:14px;">0</span>
-                                                        </div>
-                                                    </div>
-                                                    <div
-                                                        class="shop__single-item__add-to-cart priceQuantity"
-                                                        <?php if ($product['addons'] || $productDetails['addRemark'] === '1') { ?>
-                                                            data-toggle="modal" data-target="#single-item-details-modal<?php echo $product['productId']; ?>"
-                                                        <?php } else { ?>
-                                                            onclick="triggerModalClick('modal_buuton_<?php echo 'single-item-details-modal' . $product['productId']; ?>_<?php echo $productDetails['productExtendedId']?>')"
-                                                        <?php } ?>
-                                                        >
-                                                        <span style="font-size:16px; vertical-align: middle; text-align:center">
-                                                            <i class="fa fa-plus priceQuantity" aria-hidden="true"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <!-- end quantity buttons -->
-                                            </div>
-                                        </div>
-                                    <?php } ?>
+                                        
+                                    </div>
                                 </div>
-                            </div>
-                        <?php } ?>
+                            <?php
+                            }
+                        ?>
                         <?php if (isset($termsAndConditions) && $termsAndConditions) { ?>
                             <div class="shop__items selectedSpotBackground">
                                 <div class="shop__item-list-heading">
