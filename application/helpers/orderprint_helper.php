@@ -347,8 +347,8 @@
             $imagelogo->destroy();
             $imageprint->destroy();
 
-            var_dump($imgRelativePath);
-            die();
+            //var_dump($imgRelativePath);
+            //die();
             return $imgRelativePath;
         }
 
