@@ -660,7 +660,7 @@ class Bookingpay extends BaseControllerWeb
 			$data = array();
             $this->global['pageTitle'] = 'TIQS : THANKS';
             $this->session->sess_destroy();
-			$this->loadViews("thuishavensuccess", $this->global, $data, 'bookingfooter', "bookingheader");
+			$this->loadViews("bookingsuccess", $this->global, $data, 'bookingfooter', "bookingheader");
 
 		} elseif ($statuscode <0) {
 			$data = array();

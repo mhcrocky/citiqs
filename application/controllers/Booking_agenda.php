@@ -56,7 +56,7 @@ class Booking_agenda extends BaseControllerWeb
         }
 
         $data['logoUrl'] = $logoUrl;
-        $data['pageTitle'] = 'TIQS: Thuishaven';
+        $data['pageTitle'] = 'TIQS: RESERVATIONS & BOOKINGS';
         $data['shortUrl'] = $shortUrl;
         $this->loadViews('bookings/index', $data, '', 'bookingfooter', 'bookingheader');
         

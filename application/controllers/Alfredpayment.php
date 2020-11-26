@@ -12,6 +12,7 @@ class Alfredpayment extends BaseControllerWeb
     public function __construct() {
         parent::__construct();
         
+
         $this->load->model('shoporder_model');
         $this->load->model('shoporderpaynl_model');
         $this->load->model('shopvendor_model');

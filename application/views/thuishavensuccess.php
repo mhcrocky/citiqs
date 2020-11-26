@@ -113,7 +113,7 @@
 	<div class="col-half background-green height-100">
 		<div class="flex-column align-start">
 			<div class="timeline-heading">
-				<h2 style="font-weight:bold; font-family: caption-bold">JE BETALING IS GELUKT</h2>
+				<h2 style="font-weight:bold; font-family: caption-bold">RESERVERING SUCCESVOL AFGEROND E-MAIL VERSTUURD</h2>
 			</div>
 			<div class="" align="center" >
 				<img border="0" src="<?php echo base_url(); ?>assets/home/images/donation.png" alt="tiqs" width="275" height="auto" />
@@ -128,20 +128,19 @@
 	<div class="col-half background-blue timeline-content">
 		<div class="timeline-block background-orange">
 			<div class="timeline-text">
-<!--				<div class="mt-50" align="center" >-->
-<!--					<img border="0" src="--><?php //echo base_url(); ?><!--assets/home/images/staysafewhite.png" alt="tiqs" width="75" height="auto" />-->
-<!--				</div>-->
+				<!--				<div class="mt-50" align="center" >-->
+				<!--					<img border="0" src="--><?php //echo base_url(); ?><!--assets/home/images/staysafewhite.png" alt="tiqs" width="75" height="auto" />-->
+				<!--				</div>-->
 				<div class="timeline-heading">
 					<h2 style="font-weight:bold; font-family: caption-bold">TIME TO RELAX ... </h2>
 				</div>
-				<p class="text-content-light" style="font-size: larger">ENJOY ...</p>
 			</div>
 		</div>
 
 		<div class="timeline-block background-orange-light">
 			<div class="timeline-text">
 				<div class="mt-50" align="center" >
-					<img border="0" src="<?php echo base_url(); ?>assets/home/images/radio.png" alt="tiqs" width="275" height="auto" />
+					<img border="0" src="<?php echo base_url(); ?>assets/home/images/iphone12tiqs.png" alt="tiqs" width="150" height="auto" />
 				</div>
 				<div class='timeline-heading'>
 					<h2 style="font-weight:bold; font-family: caption-bold">ENJOY OUR MUSIC ...</h2>

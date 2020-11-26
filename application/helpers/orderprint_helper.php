@@ -348,7 +348,7 @@
             $imageprint->destroy();
 
             var_dump($imgRelativePath);
-            die();
+//            die();
             return $imgRelativePath;
         }
 

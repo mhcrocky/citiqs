@@ -660,7 +660,7 @@ class Booking extends BaseControllerWeb
 			$data = array();
 			$this->global['pageTitle'] = 'TIQS : THANKS';
 			$this->session->sess_destroy();
-			$this->loadViews("thuishavensuccess", $this->global, $data, 'nofooter', "noheader");
+			$this->loadViews("bookingsuccess", $this->global, $data, 'nofooter', "noheader");
 
 		} elseif ($statuscode <0) {
 			$data = array();
@@ -717,7 +717,7 @@ class Booking extends BaseControllerWeb
         $data = array();
 		$this->global['pageTitle'] = 'TIQS : THANKS';
 		$this->session->sess_destroy();
-        $this->loadViews("thuishavensuccess", $this->global, $data, 'nofooter', "noheader");
+        $this->loadViews("bookingsuccess", $this->global, $data, 'nofooter', "noheader");
     
     }
 

@@ -6,7 +6,7 @@ use SpryngApiHttpPhp\Exception\InvalidRequestException;
 
 class NotificationVendor
 {
-	function sendMessage($oneSignalId,$message){
+	function sendVendorMessage($oneSignalId,$message){
 //		die('line number 10 notification');
 
 		$content = array(
