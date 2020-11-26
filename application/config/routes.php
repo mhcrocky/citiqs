@@ -435,6 +435,16 @@ $route['booking_agenda/(:any)'] = "Booking_agenda/index/$1";
 $route['booking/successbooking'] = "Booking/successBooking";
 
 
+$route['agenda_booking/reserved'] = "Agenda_booking/reserved";
+$route['agenda_booking/payment_proceed'] = "Agenda_booking/payment_proceed";
+$route['agenda_booking/select_payment_type'] = "Agenda_booking/select_payment_type";
+$route['agenda_booking/pay'] = "Agenda_booking/pay";
+$route['agenda_booking/delete_reservation/(:num)'] = "Agenda_booking/delete_reservation/$1";
+$route['agenda_booking/get_agenda/(:any)'] = "Agenda_booking/get_agenda/$1";
+$route['agenda_booking/get_agenda/spots/(:num)/(:num)'] = "Agenda_booking/get_agenda/spots/$1/$1";
+$route['agenda_booking/getAllAgenda/(:any)'] = "Agenda_booking/getAllAgenda/$1";
+$route['agenda_booking/(:any)'] = "Agenda_booking/index/$1";
+
 $route['customer_panel'] = "Customer_panel/index/";
 $route['customer_panel/agenda'] = "Customer_panel/agenda";
 $route['customer_panel/spots/(:num)'] = "Customer_panel/spots/$1";
