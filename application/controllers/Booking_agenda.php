@@ -465,7 +465,7 @@ class Booking_agenda extends BaseControllerWeb
         $strUrl = 'http://' . $payData['tokenid'] . ':' . $payData['token'] . '@' . $payData['gateway'] . '/' . $payData['version'] . '/' . $payData['namespace'] . '/' .
             $payData['function'] . '/' . $payData['format'] . '?';
 
-        $orderExchangeUrl = base_url() . '/booking/ExchangePay';
+        $orderExchangeUrl = base_url() . 'booking/ExchangePay';
 
         $arrArguments['statsData']['promotorId'] = $customer['id'];
         $arrArguments['enduser']['emailAddress'] = $buyerInfo['email'];
@@ -710,7 +710,8 @@ class Booking_agenda extends BaseControllerWeb
 //                                $subject = 'Your tiqs reservation(s)';
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
 								$mailtemplate = str_replace('Image', '', $mailtemplate);
-								$mailtemplate = str_replace('Text', '', $mailtemplate);
+                                $mailtemplate = str_replace('Text', '', $mailtemplate);
+                                $mailtemplate = str_replace('Title', '', $mailtemplate);
 								$subject = 'Your tiqs reservation(s)';
 //                                include(APPPATH . 'libraries/simple_html_dom.php');
 //
