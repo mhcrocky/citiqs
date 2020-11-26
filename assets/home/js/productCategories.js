@@ -46,5 +46,6 @@ function displayOpenKey(className, response) {
         let element = elements[i];
         element.innerHTML = 'Category key: ' + response.key;
     }
+    alertify.success('Key created');
     return;
 }
