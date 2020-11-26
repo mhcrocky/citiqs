@@ -1490,4 +1490,17 @@ class Ajax extends CI_Controller
         // var_dump($iframeSettings);
         return;
     }
+
+
+    public function generateCategoryKey(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = Utility_helper::sanitizePost();
+        $userId = intval($post['venodrId']);
+        $openKey = $this->shopcategory_model->setProperty('userId', $userId)->createOpenKey();
+        echo json_encode([
+            'key' => $openKey
+        ]);
+    }
 }

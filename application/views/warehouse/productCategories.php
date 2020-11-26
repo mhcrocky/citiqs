@@ -21,7 +21,7 @@
         </button>
       </div>
       <div class="modal-body">
-	  <div class="item-editor" id='add-category'>
+	  		<div class="item-editor" id='add-category'>
 				<div class="d-flex justify-content-center" style="width:100%;">
 					<form class="form-inline" id="addCategory" method="post" action="<?php echo $this->baseUrl . 'warehouse/addCategory'; ?>">
                         <legend>Add category</legend>
@@ -125,7 +125,9 @@
 				</div>
 
 				<div class="col-lg-4 col-md-4 col-sm-12 search-container">
-				<button type="button" class="btn button-security my-2 my-sm-0 button grid-button"  data-toggle="modal" data-target="#addCategoryModal">Add category</button>
+				<button type="button" class="btn button-security my-2 my-sm-0 button grid-button" data-toggle="modal" data-target="#addCategoryModal">Add category</button>
+				<br style="display:initial" />
+				<button type="button" class="btn button-security my-2 my-sm-0 button grid-button" onclick="generateCategoryKey('<?php echo $userId; ?>', 'openKey')">New open key</button>
 				<!--<button class="btn button-security my-2 my-sm-0 button grid-button" onclick="toogleElementClass('add-category', 'display')">Add category</button>-->
 				</div>
 			</div><!-- end grid header -->
@@ -144,6 +146,11 @@
 							<p class="item-category" style="white-space: initial;">Minutes to delay: <?php echo $category['delayTime']; ?></p>
 							<p class="item-category" style="white-space: initial;">Message to driver: <?php echo $category['driverSmsMessage']; ?></p>
 							<p class="item-category" style="white-space: initial;">Private: <?php echo $category['private'] === '1' ? 'Yes' : 'No'; ?></p>
+							<p class="item-category openKey" style="white-space: initial;">
+								<?php if ($category['openKey']) { ?>
+									Category key: <?php echo $category['openKey']; ?>
+								<?php } ?>
+							</p>
 						</div><!-- end item header -->
 						<div class="grid-footer">
 							<div class="iconWrapper">
