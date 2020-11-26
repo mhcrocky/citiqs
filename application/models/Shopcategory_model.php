@@ -126,4 +126,16 @@
             return $this->db->affected_rows() ? $openKey : $this->createOpenKey();
         }
 
+        public function checkOpenKey()
+        {
+            $check = $this->readImproved([
+                'what'  => ['id'],
+                'where' => [
+                    'id'        => $this->id,
+                    'openKey'   => $this->openKey
+                ]
+            ]);
+
+            return !is_null($check);
+        }
     }
