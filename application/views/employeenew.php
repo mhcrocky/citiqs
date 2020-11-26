@@ -183,6 +183,11 @@
 									<option <?php if ($employee->expiration_time_type === 'months') echo 'selected'; ?> value="months">Months</option>
 								</select>
 							</div>
+							<div>
+								<label for="INSZnumber<?php echo $employee->id; ?>">INSZ number</label>
+								<input type="text" class="form-control" id="username<?php echo $employee->id; ?>" id="INSZnumber" name="INSZnumber" /> />
+
+							</div>
 						</form>
 					</div>
 				</div>

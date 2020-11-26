@@ -119,9 +119,9 @@
 				<h2 style="font-weight:bold; font-family: caption-bold">E-MAIL VERSTUURD</h2>
 			</div>
 
-			<div class="" align="center" >
-				<img border="0" src="<?php echo base_url(); ?>assets/home/images/donation.png" alt="tiqs" width="275" height="auto" />
-			</div>
+<!--			<div class="" align="center" >-->
+<!--				<img border="0" src="--><?php //echo base_url(); ?><!--assets/home/images/donation.png" alt="tiqs" width="275" height="auto" />-->
+<!--			</div>-->
 			<div class="mt-50" align="center" >
 				<img border="0" src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="275" height="auto" />
 			</div>
@@ -144,10 +144,10 @@
 		<div class="timeline-block background-orange-light">
 			<div class="timeline-text">
 				<div class="mt-50" align="center" >
-					<img border="0" src="<?php echo base_url(); ?>assets/home/images/iphone12tiqs.png" alt="tiqs" width="150" height="auto" />
+					<img border="0" src="<?php echo base_url(); ?>radio/image/bestthingsinlifewaitingfor.png" alt="tiqs" width="250" height="auto" />
 				</div>
 				<div class='timeline-heading'>
-					<h2 style="font-weight:bold; font-family: caption-bold">ENJOY OUR MUSIC ...</h2>
+					<h2 style="font-weight:bold; font-family: caption-bold">ENJOY OUR MUSIC</h2>
 				</div>
 				<p class="text-content-light" style="font-size: larger">ENJOY SOME MUSIC, LISTEN TO TIQS LOST AND FOUND RADIO</p>
 				<div class="flex-column align-space">
