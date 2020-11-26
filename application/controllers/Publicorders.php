@@ -183,8 +183,9 @@
         {
             $vendorId = $vendor['vendorId'];
             $spotId = intval($spot['spotId']);
-            $ordered = Jwt_helper::fetchAndChekOrdered($orderDataRandomKey, $vendorId, $spotId, ['vendorId', 'spotId']);
-
+            $storedData = Jwt_helper::fetch($orderDataRandomKey, $vendorId, $spotId, ['vendorId', 'spotId']);
+            $ordered = (empty($storedData['makeOrder'])) ? null : $storedData['makeOrder'];
+            $openCategory = (empty($storedData['openCategory'])) ? 0 : $storedData['openCategory'];
             if ($vendor['preferredView'] === $this->config->item('oldMakeOrderView')) {
                 $data['categoryProducts'] = $this->shopproductex_model->getUserProductsPublic($vendorId);
                 $data['ordered'] =  $ordered;
@@ -196,6 +197,7 @@
                     $data['addons'] = $allProducts['addons'];
                     $data['returnCategorySlide'] = isset($_GET['category']) ? $_GET['category'] : null;
                     $data['maxRemarkLength'] = $this->config->item('maxRemarkLength');
+                    $data['openCategory'] = $openCategory;
 
                     if ($ordered) {
                         $ordered = Utility_helper::returnMakeNewOrderElements($ordered, $data['vendor'], $data['mainProducts'], $data['addons'], $data['maxRemarkLength']);
