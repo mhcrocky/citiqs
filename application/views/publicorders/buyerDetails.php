@@ -146,7 +146,17 @@
                     <?php } ?>
                 </div>
                 <div class="checkout-btns">
-                    <a id="backButton" href="<?php echo base_url() . 'checkout_order?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" style="background-color: #948b6f" class="button">
+                    <a
+                        id="backButton"
+                        <?php if ($pos === 0) { ?>
+                            href="<?php echo base_url() . 'checkout_order?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        <?php } else { ?>
+                            href="<?php echo base_url() . 'pos?spotid=' . $spotId . '&' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        <?php } ?>
+                        
+                        style="background-color: #948b6f"
+                        class="button"
+                    >
                         <i class="fa fa-arrow-left"></i>
 						<?php echo ($pos) ? $this->language->line("PAYMENT-9101230",'Back') : $this->language->line("PAYMENT-9100",'Back to list');?>
                     </a>

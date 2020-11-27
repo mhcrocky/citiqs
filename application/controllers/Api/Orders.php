@@ -54,7 +54,14 @@
 
             if (!$order) return;
             $order = reset($order);
-
+            $orderExtendedIds = explode(',', $order['orderExtendedIds']);
+            foreach ($orderExtendedIds as $id) {
+                $this
+                    ->shoporderex_model
+                    ->setObjectId(intval($id))
+                    ->setObjectFromArray(['printed' => '2'])
+                    ->update();
+            }
             //ORDER REMARK FOR PRINITING
             // Order remak order[remarks] property
             if ($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid')) {
@@ -75,21 +82,18 @@
                 if ($order['paidStatus'] === '0') return;
             }
             // UPDATE ORDER EXTENDED PRINT STATUS ON TWO
-            $orderExtendedIds = explode(',', $order['orderExtendedIds']);
-            foreach ($orderExtendedIds as $id) {
-                $this
-                    ->shoporderex_model
-                    ->setObjectId(intval($id))
-                    ->setObjectFromArray(['printed' => '2'])
-                    ->update();
-            }
+            // $orderExtendedIds = explode(',', $order['orderExtendedIds']);
+            // foreach ($orderExtendedIds as $id) {
+            //     $this
+            //         ->shoporderex_model
+            //         ->setObjectId(intval($id))
+            //         ->setObjectFromArray(['printed' => '2'])
+            //         ->update();
+            // }
 
-            $this
-                ->shopprinterrequest_model
-                    ->setObjectFromArray(['orderId' => $order['orderId']])
-                    ->update();
+            $this->shopprinterrequest_model->setObjectFromArray(['orderId' => $order['orderId']])->update();
 
-                    //check order time
+            //check order time
             $printTimeConstraint = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->getPrintTimeConstraint();
 
             // order expiration settings
