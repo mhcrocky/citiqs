@@ -213,15 +213,18 @@
 				<div class="header-area">
 					<div class="row align-items-center">
 						<!-- nav and search button -->
-						<div class="col-md-6 col-sm-8 clearfix">
+						<div class="col-md-12 col-sm-12 clearfix">
 							<div class="nav-btn pull-left">
 								<span></span>
 								<span></span>
 								<span></span>
 							</div>
-							<div class="search-box pull-left">
+                            <div class="pull-left">
+								<p style="weight: 100; font-size: 100%;padding-top:10px;color: #000;"><?php echo $this->session->userdata('userId');?> <?php echo $this->session->userdata('name');?></p>
+							</div>
+							<div style="min-width: 300px;" class="search-box pull-right">
 								<form action="#">
-									<input style="background: white;font-size:14px !important;font-family: inherit !important;" type="text" name="search" placeholder="Search..." required="">
+									<input style="min-width: 300px;background: white;font-size:14px !important;font-family: inherit !important;" type="text" name="search" placeholder="Search..." required="">
 									<i class="ti-search"></i>
 								</form>
 							</div>
