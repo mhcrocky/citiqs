@@ -91,8 +91,8 @@
             $ordered = Jwt_helper::fetch($orderDataRandomKey, $vendorId, $spotId, ['vendorId', 'spotId']);
             $data['orderDataGetKey']    = $this->config->item('orderDataGetKey');
             $data['orderDataRandomKey'] = $orderDataRandomKey;
-            if ($ordered) {
-                $ordered = Utility_helper::returnMakeNewOrderElements($ordered, $data['vendor'], $data['mainProducts'], $data['addons'], $data['maxRemarkLength'], true);
+            if ($ordered['makeOrder']) {
+                $ordered = Utility_helper::returnMakeNewOrderElements($ordered['makeOrder'], $data['vendor'], $data['mainProducts'], $data['addons'], $data['maxRemarkLength'], true);
                 $data['checkoutList'] = $ordered['checkoutList'];
                 $data['posOrderName'] = $this->getPosOrderName($orderDataRandomKey);
             }
