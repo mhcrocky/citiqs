@@ -186,6 +186,7 @@
             $storedData = Jwt_helper::fetch($orderDataRandomKey, $vendorId, $spotId, ['vendorId', 'spotId']);
             $ordered = (empty($storedData['makeOrder'])) ? null : $storedData['makeOrder'];
             $openCategory = (empty($storedData['openCategory'])) ? 0 : $storedData['openCategory'];
+
             if ($vendor['preferredView'] === $this->config->item('oldMakeOrderView')) {
                 $data['categoryProducts'] = $this->shopproductex_model->getUserProductsPublic($vendorId);
                 $data['ordered'] =  $ordered;

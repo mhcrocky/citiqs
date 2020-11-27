@@ -7,7 +7,6 @@
 
     class Jwt_helper
     {
-        public static $EXPIRATION_TIME_IN_MINUTES = 60;
 
         public static function encode(array $payLoadArray): string
         {
@@ -43,7 +42,7 @@
         {
             foreach ($keys as $key) {
                 if (empty($jwtArray[$key])) {
-                    $redirect = empty($jwtArray['vendorId']) ? base_url() : 'make_order?vendorid=' . $jwtArray['vendorId'];
+                    $redirect = empty($jwtArray['vendorId']) ? base_url() . 'places' : 'make_order?vendorid=' . $jwtArray['vendorId'];
                     redirect($redirect);
                     exit();
                 }
@@ -78,7 +77,6 @@
 
             $CI =& get_instance();
             $CI->load->model('shopsession_model');
-
             $orderData = $CI->shopsession_model->setProperty('randomKey', $orderDataRandomKey)->getArrayOrderDetails();
 
             Jwt_helper::checkJwtArray($orderData, $conditions);
