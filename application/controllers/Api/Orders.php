@@ -52,6 +52,15 @@
             // fetch order
             $order = $this->shoporder_model->fetchOrdersForPrint($masterMac);
 
+            $orderExtendedIds = explode(',', $order['orderExtendedIds']);
+            foreach ($orderExtendedIds as $id) {
+                $this
+                    ->shoporderex_model
+                    ->setObjectId(intval($id))
+                    ->setObjectFromArray(['printed' => '2'])
+                    ->update();
+            }
+
             if (!$order) return;
             $order = reset($order);
 
@@ -75,14 +84,14 @@
                 if ($order['paidStatus'] === '0') return;
             }
             // UPDATE ORDER EXTENDED PRINT STATUS ON TWO
-            $orderExtendedIds = explode(',', $order['orderExtendedIds']);
-            foreach ($orderExtendedIds as $id) {
-                $this
-                    ->shoporderex_model
-                    ->setObjectId(intval($id))
-                    ->setObjectFromArray(['printed' => '2'])
-                    ->update();
-            }
+//            $orderExtendedIds = explode(',', $order['orderExtendedIds']);
+//            foreach ($orderExtendedIds as $id) {
+//                $this
+//                    ->shoporderex_model
+//                    ->setObjectId(intval($id))
+//                    ->setObjectFromArray(['printed' => '2'])
+//                    ->update();
+//            }
 
             $this
                 ->shopprinterrequest_model
