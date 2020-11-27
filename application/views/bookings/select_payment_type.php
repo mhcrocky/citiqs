@@ -491,7 +491,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class="footer">
 
-									<a href="<?php echo base_url('agenda_booking/pay') ?>" class="btn-cancel">
+									<a href="<?php echo base_url('booking_agenda/pay') ?>" class="btn-cancel">
 										<i class="fa fa-arrow-left"></i>
 										<span data-trans="" data-trn-key="Annuleren">Annuleren</span>
 									</a>
