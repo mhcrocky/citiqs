@@ -52,17 +52,9 @@
             // fetch order
             $order = $this->shoporder_model->fetchOrdersForPrint($masterMac);
 
-            $orderExtendedIds = explode(',', $order['orderExtendedIds']);
-            foreach ($orderExtendedIds as $id) {
-                $this
-                    ->shoporderex_model
-                    ->setObjectId(intval($id))
-                    ->setObjectFromArray(['printed' => '2'])
-                    ->update();
-            }
-
             if (!$order) return;
             $order = reset($order);
+
             $orderExtendedIds = explode(',', $order['orderExtendedIds']);
             foreach ($orderExtendedIds as $id) {
                 $this
