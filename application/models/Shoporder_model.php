@@ -594,6 +594,7 @@
                         tbl_shop_orders.id AS orderId,
                         tbl_shop_orders.amount AS orderAmount, 
                         tbl_shop_orders.waiterTip AS waiterTip,
+                        tbl_shop_orders.paid AS paidStatus,
                         tbl_shop_orders.spotId,
                         tbl_shop_orders.created AS orderCreated,
                         tbl_shop_orders.expired AS orderExpired,
