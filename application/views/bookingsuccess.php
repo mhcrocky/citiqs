@@ -144,7 +144,7 @@
 		<div class="timeline-block background-orange-light">
 			<div class="timeline-text">
 				<div class="mt-50" align="center" >
-					<img border="0" src="<?php echo base_url(); ?>radio/image/bestthingsinlifewaitingfor.png" alt="tiqs" width="250" height="auto" />
+					<img border="0" src="<?php echo base_url(); ?>../radio/image/bestthingsinlifewaitingfor.png" alt="tiqs" width="250" height="auto" />
 				</div>
 				<div class='timeline-heading'>
 					<h2 style="font-weight:bold; font-family: caption-bold">ENJOY OUR MUSIC</h2>
@@ -186,6 +186,13 @@
 			</div>
 		</div><!-- end timeline block -->
 	</div>
+	<div class="col-half background-green height-100">
+		<div class="flex-column align-start">
+			<div class="mt-50" align="center" >
+				<img border="0" src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="275" height="auto" />
+			</div>
+		</div>
+	</div><!-- end col half -->
 	<!-- time-line -->
 	<!-- end col half -->
 </div>
