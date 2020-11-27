@@ -71,7 +71,7 @@ class BBOrders extends REST_Controller
 		if (!file_exists((FCPATH . $orderRelativePath))) {
 			Orderprint_helper::saveOrderImage($order);
 		}
-		if($order['paidStatus']!='1'){
+		if($order['paidStatus']!=='1'){
 			return;
 		}
 
