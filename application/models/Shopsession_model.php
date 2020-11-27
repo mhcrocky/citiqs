@@ -14,6 +14,8 @@
         public $orderData;
 
         private $table = 'tbl_shop_sessions';
+        private $expirationTimeInMinutes = 60;
+        private $checkTime;
 
         protected function setValueType(string $property,  &$value): void
         {
@@ -78,18 +80,21 @@
         public function getArrayOrderDetails(): array
         {
             $this->load->helper('jwt_helper');
+            $this->setCheckTime();
+
             $orderData = $this->readImproved([
                 'what' => ['orderData'],
                 'where' => [
-                    $this->table . '.randomKey' => $this->randomKey
+                    $this->table . '.randomKey' => $this->randomKey,
+                    $this->table . '.updated>'   => $this->checkTime,
                 ]
             ]);
 
             if (is_null($orderData)) return [];
 
-            $orderData = Jwt_helper::decode($orderData[0]['orderData']);
+            $orderData = reset($orderData);
+            $orderData = Jwt_helper::decode($orderData['orderData']);
             $orderData = json_decode(json_encode($orderData), true);
-
             $orderData['vendorId'] = intval($orderData['vendorId']);
             $orderData['spotId'] = intval($orderData['spotId']);
 
@@ -120,8 +125,17 @@
                 $this->id = $id[0]['id'];
             }
             
-            return $this;
+            return $this;            
+        }
 
-            
+        public function setExpirationTimeInMinutes(int $minutes): void
+        {
+            $this->expirationTimeInMinutes = $minutes;
+        }
+
+        private function setCheckTime(): void
+        {
+            $this->checkTime =  date('Y-m-d H:i:s', strtotime('-' . $this->expirationTimeInMinutes . ' minutes', strtotime(date('Y-m-d H:i:s'))));
+            return;
         }
     }

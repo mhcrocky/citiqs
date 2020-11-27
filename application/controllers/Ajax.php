@@ -736,6 +736,7 @@ class Ajax extends CI_Controller
         $orderSessionIndex = Utility_helper::getAndUnsetValue($post, 'orderSessionIndex');
         $orderRandomKey = Utility_helper::getAndUnsetValue($post, 'orderRandomKey');
         $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        if (empty($orderData)) return;
 
         if (!empty($post['addonExtendedId']) && !empty($post['productExtendedId'])) {
             $addonExtendedId = Utility_helper::getAndUnsetValue($post, 'addonExtendedId');
@@ -767,6 +768,7 @@ class Ajax extends CI_Controller
         $productExtendedId = Utility_helper::getAndUnsetValue($post, 'productExtendedId');
         $orderRandomKey = Utility_helper::getAndUnsetValue($post, 'orderRandomKey');
         $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        if (empty($orderData)) return;
 
         foreach($post as $key => $value) {
             $orderData['makeOrder'][$indexId][$productExtendedId]['addons'][$addonExtendedId][$key] = $value;
@@ -797,6 +799,7 @@ class Ajax extends CI_Controller
         $productExtendedId = Utility_helper::getAndUnsetValue($post, 'productExtendedId');
         $orderRandomKey = Utility_helper::getAndUnsetValue($post, 'orderRandomKey');
         $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        if (empty($orderData)) return;
 
         foreach($post as $key => $value) {
             $orderData['makeOrder'][$orderSessionIndex][$productExtendedId][$key] = $value;
@@ -1033,6 +1036,8 @@ class Ajax extends CI_Controller
         $code = $this->input->post('code', true);
         $orderRandomKey = $this->input->post($this->config->item('orderDataGetKey'), true);
         $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        if (empty($orderData)) return;
+
         $amount = floatval($orderData['order']['amount']);
         $waiterTip = floatval($orderData['order']['waiterTip']);
         $serviceFee = floatval($orderData['order']['serviceFee']);

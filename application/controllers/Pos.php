@@ -88,11 +88,11 @@
         private function getOrdered(array &$data, $vendorId, $spotId): void
         {
             $orderDataRandomKey = empty($_GET[$this->config->item('orderDataGetKey')]) ? '' : $this->input->get($this->config->item('orderDataGetKey'), true);
-            $ordered = Jwt_helper::fetchAndChekOrdered($orderDataRandomKey, $vendorId, $spotId, ['vendorId', 'spotId']);
+            $ordered = Jwt_helper::fetch($orderDataRandomKey, $vendorId, $spotId, ['vendorId', 'spotId']);
             $data['orderDataGetKey']    = $this->config->item('orderDataGetKey');
             $data['orderDataRandomKey'] = $orderDataRandomKey;
-            if ($ordered) {
-                $ordered = Utility_helper::returnMakeNewOrderElements($ordered, $data['vendor'], $data['mainProducts'], $data['addons'], $data['maxRemarkLength'], true);
+            if ($ordered['makeOrder']) {
+                $ordered = Utility_helper::returnMakeNewOrderElements($ordered['makeOrder'], $data['vendor'], $data['mainProducts'], $data['addons'], $data['maxRemarkLength'], true);
                 $data['checkoutList'] = $ordered['checkoutList'];
                 $data['posOrderName'] = $this->getPosOrderName($orderDataRandomKey);
             }
