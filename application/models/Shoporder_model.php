@@ -597,6 +597,7 @@
                         tbl_shop_orders.spotId,
                         tbl_shop_orders.created AS orderCreated,
                         tbl_shop_orders.expired AS orderExpired,
+                        tbl_shop_orders.paid AS paidStatus,
                         tbl_shop_orders.serviceFee AS serviceFee,
                         tbl_shop_orders.printStatus AS printStatus,
                         tbl_shop_orders.paymentType AS paymentType,
