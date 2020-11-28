@@ -83,14 +83,14 @@
                 if ($order['paidStatus'] === '0') return;
             }
             // UPDATE ORDER EXTENDED PRINT STATUS ON TWO
-            // $orderExtendedIds = explode(',', $order['orderExtendedIds']);
-            // foreach ($orderExtendedIds as $id) {
-            //     $this
-            //         ->shoporderex_model
-            //         ->setObjectId(intval($id))
-            //         ->setObjectFromArray(['printed' => '2'])
-            //         ->update();
-            // }
+//             $orderExtendedIds = explode(',', $order['orderExtendedIds']);
+//             foreach ($orderExtendedIds as $id) {
+//                 $this
+//                     ->shoporderex_model
+//                     ->setObjectId(intval($id))
+//                     ->setObjectFromArray(['printed' => '2'])
+//                     ->update();
+//             }
 
             $this->shopprinterrequest_model->setObjectFromArray(['orderId' => $order['orderId']])->update();
 
@@ -595,13 +595,13 @@
 				Utility_helper::logMessage($logFile, 'file order written to server: ' .$receipt);
             }
 
-			if (intval($order['vendorId']) === 43533) {
-				$order['vendorEmail']='support@tiqs.com';
-				$subject = 'Order : ' . $order['orderId'];
-				Email_helper::sendOrderEmail($order['vendorEmail'], $subject, '', $receipt);
-				$subject = 'Receipt : ' . $order['orderId'];
-				Email_helper::sendOrderEmail($order['vendorEmail'], $subject, '', $receiptemail);
-			}
+			//			if (intval($order['vendorId']) === 43533) {
+			//				$order['vendorEmail']='support@tiqs.com';
+			//				$subject = 'Order : ' . $order['orderId'];
+			//				Email_helper::sendOrderEmail($order['vendorEmail'], $subject, '', $receipt);
+			//				$subject = 'Receipt : ' . $order['orderId'];
+			//				Email_helper::sendOrderEmail($order['vendorEmail'], $subject, '', $receiptemail);
+			//			}
  
             // $image ->writeImage("peter.png");
 			//            $imageqr->destroy();
