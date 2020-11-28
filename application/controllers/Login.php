@@ -124,6 +124,7 @@ class Login extends BaseControllerWeb
 						'role' => $result->roleId,
 						'roleText' => $result->role,
 						'name' => $result->name,
+						'userShortUrl' => $result->usershorturl,
 						'lastLogin' => $lastlogin > 'createdDtm',
 						'isLoggedIn' => TRUE,
 						'lat' => $result->lat,
