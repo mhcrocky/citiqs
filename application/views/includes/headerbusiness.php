@@ -149,6 +149,17 @@
                     <li><a href="<?php echo $this->baseUrl; ?>pos"><i class="ti-bar-chart"></i> <span>POS</span></a></li>
                     <li><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-receipt"></i> <span>Business Report</span></a></li>
                     <li>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-share"></i><span>GO TO</span></a>
+                        <ul class="collapse">
+                            <li><a href="<?php echo $this->baseUrl . 'make_order?vendorid=' . $this->session->userdata('userId'); ?>"><i class="ti-shopping-cart-full"></i> <span>Shop</span></a></li>
+                            <li><a href="<?php echo $this->baseUrl . 'check424/' . $this->session->userdata('userId'); ?>"><i class="ti-book"></i> <span>Booking</span></a></li>
+                            <li><a href="<?php echo $this->baseUrl. 'agenda_booking/' . $this->session->userdata('userShortUrl'); ?>"><i class="ti-agenda"></i> <span>Agenda Booking</span></a></li>
+                            <li><a href="<?php echo $this->baseUrl. 'booking_agenda/' . $this->session->userdata('userShortUrl'); ?>"><i class="ti-clipboard"></i> <span>Booking Agenda</span></a></li>
+                            <li><a href="<?php echo $this->baseUrl. 'viewdesign'; ?>"><i class="ti-ink-pen"></i> <span>Design</span></a></li>
+                            <li><a href="<?php echo $this->baseUrl. 'visma/config'; ?>"><i class="ti-credit-card"></i> <span>Visma Accounting</span></a></li>
+                        </ul>
+                    </li>
+                    <li>
                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span>Reservations</span></a>
                         <ul class="collapse">
                             <li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Bookings & Tickets</span></a></li>
@@ -157,6 +168,14 @@
                             <li><a href="<?php echo $this->baseUrl; ?>customer_panel/report"><i class="ti-clipboard"></i> <span>Report</span></a></li>
                             <li><a href="<?php echo $this->baseUrl; ?>customer_panel/pivot"><i class="ti-bar-chart"></i> <span>Pivot</span></a></li>
                             <li><a href="<?php echo $this->baseUrl; ?>customer_panel/settings"><i class="ti-settings"></i> <span>Settings</span></a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-stamp"></i><span>Profile</span></a>
+                        <ul class="collapse">
+                            <li><a href="#"><i class="ti-location-pin"></i> <span>Address</span></a></li>
+                            <li><a href="#"><i class="ti-receipt"></i> <span>Payment Settings</span></a></li>
+                            <li><a href="#"><i class="ti-shopping-cart"></i> <span>Shop Settings</span></a></li>
                         </ul>
                     </li>
                     <li>
