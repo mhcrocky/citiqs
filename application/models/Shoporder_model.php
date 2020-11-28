@@ -969,6 +969,7 @@
                 'what' => [$this->table . '.id AS orderId'],
                 'where' => [
                     $this->table . '.bbOrderPrint' => '0',
+                    $this->table . '.paid' => '1',
                     'tbl_shop_printers.macNumber' => $printerMac
                 ],
                 'joins' => [
@@ -986,7 +987,9 @@
             if (empty($orderId)) return null;
 
             $this->id = $orderId[0]['orderId'];
-            $order = $this->fetchOrdersForPrintcopy();
+            $where = ' AND ' .  $this->table . ' .paid = "1" ';
+            $order = $this->fetchOrdersForPrintcopy($where);
+            if (!$order) return null;
             $order = reset($order);
 
             return $order;

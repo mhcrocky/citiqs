@@ -53,7 +53,7 @@ class BBOrders extends REST_Controller
 
 	public function data2_get(){
 		$logFile = FCPATH . 'application/tiqs_logs/messages.txt';
-		Utility_helper::logMessage($logFile, 'printer conected get');
+		Utility_helper::logMessage($logFile, 'request from tiqsbox');
 		$get = Utility_helper::sanitizeGet();
 		if(!$get['mac']) return;
 		Utility_helper::logMessage($logFile, 'printer MAC '. $get['mac'] );
@@ -66,14 +66,12 @@ class BBOrders extends REST_Controller
 		// it will not proceed when FDM have an issue
 
 		$order = $this->shoporder_model->fetchBBOrderForPrint($get['mac']);
+		Utility_helper::logMessage($logFile, serialize ( $order ) );
 		if (!$order) return;
 		$orderRelativePath = 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '-email.png';
 		if (!file_exists((FCPATH . $orderRelativePath))) {
 			Orderprint_helper::saveOrderImage($order);
 		}
-		 if($order['paidStatus']=="0"){
-		 	return;
-		 }
 
 		$receiptemailBasepath = base_url() . $orderRelativePath;
 		$ordercreatedtime = strtotime($order['orderCreated']);
