@@ -240,6 +240,14 @@
 			<a href="<?php echo base_url() . 'check424/' . $user->id; ?>" target='_blank' >
 				<?php echo base_url() . 'check424/' . $user->id; ?>
 			</a>
+			<h2>Agenda Booking url</h2>
+			<a href="<?php echo base_url() . 'agenda_booking/' . $user->username; ?>" target='_blank' >
+				<?php echo base_url() . 'agenda_booking/' . $user->username; ?>
+			</a>
+			<h2>Booking Agenda url</h2>
+			<a href="<?php echo base_url() . 'booking_agenda/' . $user->username; ?>" target='_blank' >
+				<?php echo base_url() . 'booking_agenda/' . $user->username; ?>
+			</a>
 			<h2>Set public design</h2>
 			<a href="<?php echo base_url() . 'viewdesign'; ?>">
 				Design
