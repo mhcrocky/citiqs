@@ -986,7 +986,8 @@
             if (empty($orderId)) return null;
 
             $this->id = $orderId[0]['orderId'];
-            $order = $this->fetchOrdersForPrintcopy();
+            $where = ' AND ' .  $this->table . ' .paid = "1" ';
+            $order = $this->fetchOrdersForPrintcopy($where);
             $order = reset($order);
 
             return $order;

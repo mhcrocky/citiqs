@@ -71,9 +71,6 @@ class BBOrders extends REST_Controller
 		if (!file_exists((FCPATH . $orderRelativePath))) {
 			Orderprint_helper::saveOrderImage($order);
 		}
-		 if($order['paidStatus']=="0"){
-		 	return;
-		 }
 
 		$receiptemailBasepath = base_url() . $orderRelativePath;
 		$ordercreatedtime = strtotime($order['orderCreated']);
