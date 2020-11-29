@@ -1,23 +1,26 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
-<div class="main-wrapper theme-editor-wrapper">
-	<div class="grid-wrapper">
+
+<div style="margin-top: 0;" class="main-wrapper theme-editor-wrapper">
+	<div style="background: none;" class="grid-wrapper">
 		<div class="grid-list">
             <?php if (is_null($printers)) { ?> 
 				<p>No printers. <a href="<?php echo $this->baseUrl . 'printers'; ?>">Add printer</a></p>
             <?php } else { ?>
-                <div class="item-editor theme-editor" id='add-spot'>
-                    <div class="theme-editor-header d-flex justify-content-between" >
-                        <div>
-                            <img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogonew.png" alt="">
-                        </div>
-                        <div class="theme-editor-header-buttons">
-                            <input type="button" class="grid-button button theme-editor-header-button" onclick="submitForm('addSpot')" value="Submit" />
-                            <button class="grid-button-cancel button theme-editor-header-button" onclick="toogleElementClass('add-spot', 'display')">Cancel</button>
-                        </div>
-                    </div>
+                <!-- Add Spot Modal -->
+<div class="modal fade" id="addSpotModal" tabindex="-1" role="dialog" aria-labelledby="addSpotModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      <legend>Add spot</legend>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+                <div class="item-editor">
                     <div class="edit-single-user-container">
                         <form class="form-inline" id="addSpot" method="post" action="<?php echo $this->baseUrl . 'warehouse/addSpot'; ?>">
-                            <legend>Add spot</legend>
+                            
                             <input type="text" readonly name="active" required value="1" hidden />
                             <div>
                                 <label for="addPrinterId">Spot printer: </label>
@@ -49,6 +52,15 @@
                         </form>
                     </div>
                 </div>
+      </div>
+      <div class="modal-footer">
+        <input style="width:100px;" type="button" class="grid-button button theme-editor-header-button" onclick="submitForm('addSpot')" value="Submit" />
+        <button style="width:100px;" type="button" class="grid-button-cancel button theme-editor-header-button" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
                 <div class="grid-list-header row">
                     <div class="col-lg-4 col-md-4 col-sm-12 grid-header-heading">
                         <h2>Spots</h2>
@@ -68,9 +80,9 @@
                     <?php } ?>
 
                     <div class="col-lg-4 col-md-4 col-sm-12 search-container">
-                        <button
+                        <button type="button"
                             class="btn button-security my-2 my-sm-0 button grid-button"
-                            onclick="toogleElementClass('add-spot', 'display')">Add spot
+                            data-toggle="modal" data-target="#addSpotModal">Add spot
                         </button>
                         <div class="col-lg-4 col-md-4 col-sm-12 grid-header-heading">
                             <p>
@@ -130,7 +142,7 @@
                             <!-- END EDIT FOR NEW USER -->
                             <div class="grid-footer">
                                 <div class="iconWrapper">
-                                    <span class="fa-stack fa-2x edit-icon btn-edit-item" onclick="toogleAllElementClasses('editSpotSpotId<?php echo $spot['spotId']; ?>', 'display')">
+                                    <span class="fa-stack fa-2x edit-icon btn-edit-item" onclick="editSpot('<?php echo $spot['spotId']; ?>')">
                                         <i class="far fa-edit"></i>
                                     </span>
                                 </div>
@@ -157,16 +169,19 @@
                                     </div>
                                 <?php } ?>
                             </div>
-                            <!-- ITEM EDITOR -->
-                            <div class="item-editor theme-editor" id="editSpotSpotId<?php echo  $spot['spotId']; ?>">
-                                <div class="theme-editor-header d-flex justify-content-between">
-                                    <div class="theme-editor-header-buttons">
-                                        <input type="button" onclick="submitForm('editSpot<?php echo $spot['spotId']; ?>')" class="grid-button button theme-editor-header-button" value="Submit" />
-                                        <button
-                                            class="grid-button-cancel button theme-editor-header-button"
-                                            onclick="toogleElementClass('editSpotSpotId<?php echo  $spot['spotId']; ?>', 'display')">Cancel</button>
-                                    </div>
-                                </div>
+                            
+                            <button id="btn-<?php echo  $spot['spotId']; ?>" style="display:none" type="button" data-toggle="modal" data-target="#editSpotSpotId<?php echo  $spot['spotId']; ?>">Edit</button>
+                            <!-- Edit Spot Modal -->
+                            <div class="modal fade" id="editSpotSpotId<?php echo  $spot['spotId']; ?>" tabindex="-1" role="dialog" aria-labelledby="editSpotModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-md" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <legend>Edit Spot</legend>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        </div>
+                                        <div class="modal-body">
+
+                               <div class="item-editor">
                                 <div class="edit-single-user-container">
                                     <form
                                         class="form-inline"
@@ -174,7 +189,7 @@
                                         method="post"
                                         action="<?php echo $this->baseUrl . 'warehouse/editSpot/' . $spot['spotId']; ?>"
                                         >
-                                        <h3>Spot details</h3>
+                                   
                                         <div>
                                             <label for="spotName<?php echo $spot['spotId']; ?>">Name:</label>
                                             <input
@@ -217,6 +232,15 @@
                                     </form>
                                 </div>
                             </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input style="width:100px;" type="button" onclick="submitForm('editSpot<?php echo $spot['spotId']; ?>')" class="grid-button button theme-editor-header-button" value="Submit" />
+                                            <button style="width:100px;" type="button" class="grid-button-cancel button theme-editor-header-button" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
                         <?php
@@ -398,3 +422,10 @@
         });
     </script>
 <?php } ?>
+
+<script src="<?php echo base_url(); ?>assets/home/js/spot.js"></script>
+<script>
+function editSpot(spotId){
+    $("#btn-"+spotId).click();
+}
+</script>
