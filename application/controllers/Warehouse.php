@@ -679,7 +679,7 @@
                 'activePos' => $_SESSION['activatePos'],
             ];
 
-            $this->loadViews('warehouse/spots', $this->global, $data, null, 'headerWarehouse');
+            $this->loadViews('warehouse/spots', $this->global, $data, 'footerbusiness', 'headerbusiness');
         }
 
         /**
