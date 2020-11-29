@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
-<main class="container" style="margin-top:20px">
+<main class="w-100 container" style="margin-top:20px">
 
     
         <ul class="nav nav-tabs" role="tablist">
@@ -12,7 +12,7 @@
         </ul>
         <div class="tab-content">
 
-            <div id="design" class="container tab-pane active" style="background-color:#fff">
+            <div id="design" class="container tab-pane active" style="background: none;">
                 <div class="row">
                     <h3 class="col-lg-12" style="margin:15px 0px">Set buyer view style</h3>
                     <div class="col-lg-6">            
@@ -36,7 +36,7 @@
                     </div>
                 </div>
             </div>        
-            <div id="iframeSettings" class="container tab-pane" style="background-color:#fff">            
+            <div id="iframeSettings" class="container tab-pane" style="background: none;">            
                 <?php include_once FCPATH . 'application/views/warehouse/includes/design/iframeSettings.php'; ?>
             </div>
         </div>
