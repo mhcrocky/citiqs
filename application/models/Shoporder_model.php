@@ -969,6 +969,7 @@
                 'what' => [$this->table . '.id AS orderId'],
                 'where' => [
                     $this->table . '.bbOrderPrint' => '0',
+					$this->table . '.paid' => '1',
                     'tbl_shop_printers.macNumber' => $printerMac
                 ],
                 'joins' => [
