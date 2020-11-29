@@ -31,7 +31,7 @@ class Emaildesigner extends BaseControllerWeb
             'emails' => $this->email_templates_model->get_emails_by_user($this->user_model->id)
         ];
 
-        $this->loadViews("email_designer_list", $this->global, $data, null, 'headerDesign');
+        $this->loadViews("email_designer_list", $this->global, $data, "footerbusiness", "headerbusiness");
     }
 
     public function edit($email_id = null)
