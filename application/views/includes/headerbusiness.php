@@ -113,6 +113,7 @@
     <script src="https://unpkg.com/vuejs-datepicker"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
     <?php
         if (isset($js) AND is_array($js)) { // ???????????  MOVE TO FOOTER IF USER CUSTOM SCRIPTS ???????????????
             foreach ($js as $jsLink) { 
@@ -232,18 +233,18 @@
 				<div class="header-area">
 					<div class="row align-items-center">
 						<!-- nav and search button -->
-						<div class="col-md-12 col-sm-12 clearfix">
+						<div id="collapse-item" class="col-md-12 col-sm-12 clearfix">
 							<div class="nav-btn pull-left">
 								<span></span>
 								<span></span>
 								<span></span>
 							</div>
-                            <div class="pull-left">
+                            <div id="user-title" class="pull-left">
 								<p style="weight: 100; font-size: 100%;padding-top:10px;color: #000;"><?php echo $this->session->userdata('userId');?> <?php echo $this->session->userdata('name');?></p>
 							</div>
-							<div style="min-width: 300px;" class="search-box pull-right">
+							<div id="search-box" class="search-box pull-right">
 								<form action="#">
-									<input style="min-width: 300px;background: white;font-size:14px !important;font-family: inherit !important;" type="text" name="search" placeholder="Search..." required="">
+									<input style="background: white;font-size:14px !important;font-family: inherit !important;" type="text" name="search" placeholder="Search..." required="">
 									<i class="ti-search"></i>
 								</form>
 							</div>
@@ -303,5 +304,29 @@
 			'slow'
 		);
 	});
+
+    var myInterval = setInterval(function () {
+        let header = $(".header-area").width();
+        let collapse = 45;
+        let title = $("#user-title").width();
+        let search_box = header - (collapse+title);
+        if(search_box < 240){
+            $("#search-box").css('width',search_box);
+            $("#search-box input").css('width',search_box);
+        }
+        clearInterval(myInterval);
+     }, 1);
+    $( window ).resize(function() {
+        let header = $(".header-area").width();
+        let collapse = 45;
+        let title = $("#user-title").width();
+        let search_box = header - (collapse+title);
+        console.log(search_box);
+        if(search_box < 240){
+            $("#search-box").css('width',search_box);
+            $("#search-box input").css('width',search_box);
+        }
+
+    });
 </script>
 
