@@ -1,3 +1,8 @@
+<?php
+$CI =& get_instance();
+$CI->load->model('user_modelpublic');
+$userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata('userId'))->usershorturl;
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -145,21 +150,19 @@
                         <div class="profile-name text-center"><img class="logo-img" src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogowhite.png"></div>
 					    
 				    </div>
-			    </div>
-                    <li><a href="<?php echo $this->baseUrl; ?>orders"><i class="ti-stats-up"></i> <span>Orders</span></a></li>
-                    <li><a href="<?php echo $this->baseUrl; ?>pos"><i class="ti-bar-chart"></i> <span>POS</span></a></li>
-                    <li><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-receipt"></i> <span>Business Report</span></a></li>
+                </div>
                     <li>
                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-share"></i><span>GO TO</span></a>
                         <ul class="collapse">
                             <li><a href="<?php echo $this->baseUrl . 'make_order?vendorid=' . $this->session->userdata('userId'); ?>"><i class="ti-shopping-cart-full"></i> <span>Shop</span></a></li>
                             <li><a href="<?php echo $this->baseUrl . 'check424/' . $this->session->userdata('userId'); ?>"><i class="ti-book"></i> <span>Booking</span></a></li>
-                            <li><a href="<?php echo $this->baseUrl. 'agenda_booking/' . $this->session->userdata('userShortUrl'); ?>"><i class="ti-agenda"></i> <span>Agenda Booking</span></a></li>
-                            <li><a href="<?php echo $this->baseUrl. 'booking_agenda/' . $this->session->userdata('userShortUrl'); ?>"><i class="ti-clipboard"></i> <span>Booking Agenda</span></a></li>
-                            <li><a href="<?php echo $this->baseUrl. 'viewdesign'; ?>"><i class="ti-ink-pen"></i> <span>Design</span></a></li>
-                            <li><a href="<?php echo $this->baseUrl. 'visma/config'; ?>"><i class="ti-credit-card"></i> <span>Visma Accounting</span></a></li>
+                            <li><a href="<?php echo $this->baseUrl. 'agenda_booking/' . $userShortUrl; ?>"><i class="ti-agenda"></i> <span>Agenda Booking</span></a></li>
+                            <li><a href="<?php echo $this->baseUrl. 'booking_agenda/' . $userShortUrl; ?>"><i class="ti-clipboard"></i> <span>Booking Agenda</span></a></li>
                         </ul>
                     </li>
+                    <li><a href="<?php echo $this->baseUrl; ?>orders"><i class="ti-stats-up"></i> <span>Orders</span></a></li>
+                    <li><a href="<?php echo $this->baseUrl; ?>pos"><i class="ti-bar-chart"></i> <span>POS</span></a></li>
+                    <li><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-receipt"></i> <span>Business Report</span></a></li>
                     <li>
                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span>Reservations</span></a>
                         <ul class="collapse">
