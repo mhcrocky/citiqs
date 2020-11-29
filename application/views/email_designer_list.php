@@ -1,9 +1,9 @@
-<div class="content-wrapper">
+<div style="margin-top: 20px !important;" class="content-wrapper">
     <section class="content">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                <div class="col-xs-12" style="text-align:left; margin-top: 90px; margin-bottom: 20px;">
+                <div class="col-xs-12" style="text-align:left; margin-bottom: 20px;">
                     <a href="<?php echo base_url('emaildesigner/new'); ?>" class="btn btn-primary" role="button">Add New Template</a>
                 </div>
                     <table class="table table-striped" style="margin-top: 100px;">
