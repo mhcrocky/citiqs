@@ -387,7 +387,7 @@ class User_modelpublic extends CI_Model
      */
     function getUserInfoById($userId)
     {
-        $this->db->select('BaseTbl.id as userId, BaseTbl.email, BaseTbl.username as name, BaseTbl.mobile, BaseTbl.address, BaseTbl.addressa, payedwithoutlabels, BaseTbl.zipcode, BaseTbl.city, BaseTbl.country, BaseTbl.lfaddress, BaseTbl.lfaddressa, BaseTbl.lfzipcode, BaseTbl.lfcity, BaseTbl.lfcountry , BaseTbl.roleId, Roles.role, BaseTbl.lfbuddy, BaseTbl.lfbmobile, BaseTbl.lfbemail');
+        $this->db->select('BaseTbl.id as userId, BaseTbl.email, BaseTbl.usershorturl, BaseTbl.username as name, BaseTbl.mobile, BaseTbl.address, BaseTbl.addressa, payedwithoutlabels, BaseTbl.zipcode, BaseTbl.city, BaseTbl.country, BaseTbl.lfaddress, BaseTbl.lfaddressa, BaseTbl.lfzipcode, BaseTbl.lfcity, BaseTbl.lfcountry , BaseTbl.roleId, Roles.role, BaseTbl.lfbuddy, BaseTbl.lfbmobile, BaseTbl.lfbemail');
         $this->db->from('tbl_user as BaseTbl');
         $this->db->join('tbl_roles as Roles','Roles.roleId = BaseTbl.roleId');
         $this->db->where('BaseTbl.id', $userId);
