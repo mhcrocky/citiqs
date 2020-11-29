@@ -983,7 +983,7 @@
             // die();
 
             $this->global['pageTitle'] = 'TIQS : DESIGN';
-            $this->loadViews('warehouse/design', $this->global, $data, null, 'headerDesign');
+            $this->loadViews('warehouse/design', $this->global, $data, 'footerbusiness', 'headerbusiness');
             return;
         }
 
