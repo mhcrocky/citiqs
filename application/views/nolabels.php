@@ -1,4 +1,4 @@
-<div class="main-wrapper">
+<div style="margin-top: 0;" class="main-wrapper">
 	<div class="col-half background-apricot-blue height-100">
 		<div class="flex-column align-start">
 			<div class="mt-50" style="text-align:left; margin-left: -30px">
@@ -19,7 +19,7 @@
 
 
 	<div class="col-half background-yankee timeline-content">
-
+	<!--
 		<div class="timeline-block background-blue" style="display:none">
 			<span class='timeline-number text-light-blue hide-mobile'><img src="<?php echo base_url(); ?>assets/home/images/tiqsiconlogonew.png" alt="tiqs" width="18" height="20" /></span>
 			<div class="timeline-text">
@@ -42,7 +42,6 @@
 
 					<div class="flex-column align-space">
 						<div style="text-align:center">
-							<!-- href="https://tiqs.com/lostandfound/menuapp target="_blank"" -->
 							<a onclick="changeLimits()" id="limitButton" disabled class="button button-orange mb-25"><?php echo $this->language->line('NOLABELS-vPB1881A',"SET TIME");?></a>
 						</div>
 						<div class="mb-35" style="text-align:right" >
@@ -54,7 +53,6 @@
 
 					<p></p>
 					<div style="text-align:center">
-						<!-- href="https://tiqs.com/lostandfound/menuapp target="_blank"" -->
 						<a onclick="saveBusyTime('slide', '<?php echo $vendor['id']; ?>')" id="limitButton" disabled class="button button-orange mb-25"><?php echo $this->language->line('NOLABELS-vPB18811jKJA',"CONFIRM TIME");?></a>
 					</div>
 
@@ -62,7 +60,8 @@
 
 				</div>
 			</div>
-		</div><!-- end timeline block -->
+		</div>-->
+		<!-- end timeline block -->
 
 		<div class="timeline-block background-yankee">
 			<span class='timeline-number text-light-blue hide-mobile'>1</span>
@@ -93,7 +92,7 @@
 
 				<div class='timeline-heading'>
 					<span class='timeline-number text-light-blue show-mobile'>2</span>
-					<h2 style="font-weight:bold; font-family: caption-bold"><?php echo $this->language->line('ALFRED-VB1000101UA','GO TO SHOP SETTINGS');?></h2>
+					<h2 style="font-weight:bold; margin-top: 15px; font-family: caption-bold"><?php echo $this->language->line('ALFRED-VB1000101UA','GO TO SHOP SETTINGS');?></h2>
 				</div>
 				<p style="font-family:caption-light; font-size: medium; font-weight: bold">
 					<ul style="list-style-type: disc ; font-family:caption-light; font-size: larger; margin-left: -20px ">
@@ -115,7 +114,7 @@
 
 				<div class='timeline-heading'>
 					<span class='timeline-number text-light-blue show-mobile'>3</span>
-					<h2 style="font-weight:bold; font-family: caption-bold"><?php echo $this->language->line('ALFRED-NL0010A','MY DESIGNS');?></h2>
+					<h2 style="font-weight:bold; margin-top: 17px; font-family: caption-bold"><?php echo $this->language->line('ALFRED-NL0010A','MY DESIGNS');?></h2>
 				</div>
 				<p style="font-family:caption-light; font-size: medium; font-weight: bold">
 				<ul style="list-style-type: disc ; font-family:caption-light; font-size: larger; margin-left: -20px ">
