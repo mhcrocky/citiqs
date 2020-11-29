@@ -1,4 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
+<script src="<?php echo base_url(); ?>assets/home/js/design.js"></script>
 <main class="w-100 container" style="margin-top:20px">
 
     
