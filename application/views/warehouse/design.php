@@ -18,7 +18,7 @@
 }
 </style>
 <script src="<?php echo base_url(); ?>assets/home/js/design.js"></script>
-<main class="w-100 container" style="margin-top:20px">
+<main class="main-content w-100 container" style="margin-top:20px">
 
     
         <ul class="nav nav-tabs" role="tablist">

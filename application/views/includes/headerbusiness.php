@@ -92,6 +92,9 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
         #report_length label .form-control{
             width: 65px;
         }
+        #body {
+            background: #f3d0b1;
+        }
 
     </style>
     <!-- modernizr css -->
