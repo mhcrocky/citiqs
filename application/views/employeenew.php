@@ -103,9 +103,10 @@
 			?>
 			<div class="grid-item" <?php if (intval($employee->expiration_time) < $time){ ?>style="background-color:rgba(226, 95, 42)" <?php } ?>>
 				<div class="item-header">
-					<p class="item-description"><?php echo $employee->username; ?></p>
-					<p class="item-category"><?php echo $employee->email; ?></p>
-					<p class="item-category"><?php echo $employee->uniquenumber; ?></p>
+					<p class="item-description">Name: <?php echo $employee->username; ?></p>
+					<p class="item-category">Email: <?php echo $employee->email; ?></p>
+					<p class="item-category">INSZ number: <?php echo $employee->INSZnumber; ?></p>
+					<p class="item-category">Unique Number: <?php echo $employee->uniquenumber; ?></p>
 					<!-- <p class="item-category"><?php #echo date('Y-m-d H:i:s', $employee->expiration_time); ?></p> -->
 					<!-- <p class="item-category"><? #echo date('Y-m-d H:i:s', $employee->validitytime); ?></p>
 							<p class="item-category"><? #echo date('Y-m-d H:i:s', $employee->expiration_time); ?></p>
@@ -182,6 +183,16 @@
 									<option <?php if ($employee->expiration_time_type === 'days') echo 'selected'; ?> value="days">Days</option>
 									<option <?php if ($employee->expiration_time_type === 'months') echo 'selected'; ?> value="months">Months</option>
 								</select>
+							</div>
+							<div>
+							    <label for="INSZnumber">INSZ number</label>
+			                    <input
+									type="text"
+									class="form-control"
+									value="<?php echo $employee->INSZnumber; ?>"
+									id="INSZnumber<?php echo $employee->id; ?>"
+									name="INSZnumber"
+								/>
 							</div>
 						</form>
 					</div>
