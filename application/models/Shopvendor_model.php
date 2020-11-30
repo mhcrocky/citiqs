@@ -262,6 +262,8 @@
                     'tbl_user.receiptEmail AS receiptEmail',
                     'tbl_user.lat AS vendorLat',
                     'tbl_user.lng AS vendorLon',
+                    'tbl_user.oneSignalId AS oneSignalId',
+
                     'GROUP_CONCAT(
                         CONCAT(
                             tbl_shop_vendor_types.id,
