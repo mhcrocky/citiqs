@@ -63,12 +63,12 @@
 		</div>-->
 		<!-- end timeline block -->
 
-		<div class="timeline-block background-yankee">
+		<div style="padding-left: 40px;" class="timeline-block background-yankee">
 			<span class='timeline-number text-light-blue hide-mobile'>1</span>
 			<div class="timeline-text">
 				<div class="timeline-heading">
 					<span class='timeline-number text-light-blue show-mobile'>1</span>
-					<h2 style="font-weight:bold; font-family: caption-bold"><?php echo $this->language->line('ALFRED-A1010101','GO TO PROFILE');?></h2>
+					<h2 style="font-weight:bold; margin-top: 17px;  font-family: caption-bold"><?php echo $this->language->line('ALFRED-A1010101','GO TO PROFILE');?></h2>
 				</div>
 				<p style="font-family:caption-light; font-size: medium; font-weight: bold">
 					<ul style="list-style-type: disc ; font-family:caption-light; font-size: larger; margin-left: -20px ">
@@ -86,7 +86,7 @@
 			</div>
 		</div><!-- end timeline block -->
 
-		<div class="timeline-block background-blue">
+		<div style="padding-left: 40px;" class="timeline-block background-blue">
 			<span class='timeline-number text-light-blue hide-mobile'>2</span>
 			<div class="timeline-text">
 
@@ -108,13 +108,13 @@
 			</div>
 		</div><!-- end timeline block -->
 
-		<div class="timeline-block background-apricot-blue">
-			<span class='timeline-number text-light-blue'>3</span>
+		<div style="padding-left: 40px;" class="timeline-block background-apricot-blue">
+		    <span class='timeline-number text-light-blue hide-mobile'>3</span>
 			<div class="timeline-text">
 
 				<div class='timeline-heading'>
-					<span class='timeline-number text-light-blue show-mobile'>3</span>
-					<h2 style="font-weight:bold; margin-top: 17px; font-family: caption-bold"><?php echo $this->language->line('ALFRED-NL0010A','MY DESIGNS');?></h2>
+				    <span class='timeline-number text-light-blue show-mobile'>3</span>
+					<h2 style="font-weight:bold; margin-top: 17px;  font-family: caption-bold"><?php echo $this->language->line('ALFRED-NL0010A','MY DESIGNS');?></h2>
 				</div>
 				<p style="font-family:caption-light; font-size: medium; font-weight: bold">
 				<ul style="list-style-type: disc ; font-family:caption-light; font-size: larger; margin-left: -20px ">
