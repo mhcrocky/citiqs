@@ -103,9 +103,10 @@
 			?>
 			<div class="grid-item" <?php if (intval($employee->expiration_time) < $time){ ?>style="background-color:rgba(226, 95, 42)" <?php } ?>>
 				<div class="item-header">
-					<p class="item-description"><?php echo $employee->username; ?></p>
-					<p class="item-category"><?php echo $employee->email; ?></p>
-					<p class="item-category"><?php echo $employee->uniquenumber; ?></p>
+					<p class="item-description">Name: <?php echo $employee->username; ?></p>
+					<p class="item-category">Email: <?php echo $employee->email; ?></p>
+					<p class="item-category">INSZ number: <?php echo $employee->INSZnumber; ?></p>
+					<p class="item-category">Unique number: <?php echo $employee->uniquenumber; ?></p>
 					<!-- <p class="item-category"><?php #echo date('Y-m-d H:i:s', $employee->expiration_time); ?></p> -->
 					<!-- <p class="item-category"><? #echo date('Y-m-d H:i:s', $employee->validitytime); ?></p>
 							<p class="item-category"><? #echo date('Y-m-d H:i:s', $employee->expiration_time); ?></p>
