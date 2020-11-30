@@ -13,6 +13,9 @@ class BBEmployee extends REST_Controller
 		parent::__construct();
 		$this->load->model('bbemployee_model');
 		$this->load->model('shopemployee_model');
+
+		$this->load->helper('utility_helper');
+
 		$this->load->config('custom');
 		$this->load->library('language', array('controller' => $this->router->class));
 	}
