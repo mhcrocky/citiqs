@@ -36,7 +36,13 @@
                     <h3 class="col-lg-12" style="margin:15px 0px">Set buyer view style</h3>
                     <div class="col-lg-6">            
                         <form method="post" id="<?php echo $id; ?>" onsubmit="return saveDesign(this)">
-                            
+                            <?php 
+                                include_once FCPATH . 'application/views/bookings/design/shortUrl.php';
+                                include_once FCPATH . 'application/views/bookings/design/spots.php';
+                                include_once FCPATH . 'application/views/bookings/design/timeslots.php';
+                                include_once FCPATH . 'application/views/bookings/design/nextTimeslots.php';
+                                include_once FCPATH . 'application/views/bookings/design/payment.php';
+                            ?>
                             <input type="submit" class="btn btn-primary" value="submit" />
                         </form>
                     </div>
@@ -48,7 +54,7 @@
                 </div>
             </div>        
             <div id="iframeSettings" class="container tab-pane" style="background: none;">            
-                <?php include_once FCPATH . 'application/views/warehouse/includes/design/iframeSettings.php'; ?>
+                <?php include_once FCPATH . 'application/views/bookings/design/iframeSettings.php'; ?>
             </div>
         </div>
         
@@ -70,17 +76,17 @@
             'buyerDetailsView' : 'buyerDetailsView',
             'payOrderView' : 'payOrderView',
             'checkUrl' : function (url) {
-                            if (url.includes('make_order?vendorid=') && !url.includes('&typeid=') && !url.includes('&spotid=')) {
-                                return this['selectTypeView']
+                            if (url.includes('<?php echo $userShortUrl; ?>') && !url.includes('spots') && !url.includes('&spotid=')) {
+                                return this['shortUrl']
                             }
                             if (url.includes('closed')) {
                                 console.dir(url);
                                 return this['closed']
                             }
-                            if (url.includes('make_order?vendorid=') && url.includes('&typeid=') && !url.includes('&spotid=')) {
+                            if (url.includes('spots')) {
                                 return this['selectSpotView']
                             }
-                            if (url.includes('make_order?vendorid=') && !url.includes('&typeid=') && url.includes('&spotid=')) {
+                            if (url.includes('time_slot')) {
                                 return this['selectedSpotView']
                             }
                             if (url.includes('checkout_order?order=')) {
