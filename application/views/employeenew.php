@@ -103,10 +103,9 @@
 			?>
 			<div class="grid-item" <?php if (intval($employee->expiration_time) < $time){ ?>style="background-color:rgba(226, 95, 42)" <?php } ?>>
 				<div class="item-header">
-					<p class="item-description">Name: <?php echo $employee->username; ?></p>
-					<p class="item-category">Email: <?php echo $employee->email; ?></p>
-					<p class="item-category">INSZ number: <?php echo $employee->INSZnumber; ?></p>
-					<p class="item-category">Unique number: <?php echo $employee->uniquenumber; ?></p>
+					<p class="item-description"><?php echo $employee->username; ?></p>
+					<p class="item-category"><?php echo $employee->email; ?></p>
+					<p class="item-category"><?php echo $employee->uniquenumber; ?></p>
 					<!-- <p class="item-category"><?php #echo date('Y-m-d H:i:s', $employee->expiration_time); ?></p> -->
 					<!-- <p class="item-category"><? #echo date('Y-m-d H:i:s', $employee->validitytime); ?></p>
 							<p class="item-category"><? #echo date('Y-m-d H:i:s', $employee->expiration_time); ?></p>
@@ -138,7 +137,7 @@
                         </span>
 					</div>
 				</div>
-				<button style="display: none" type="button" id="editEmployee<?php echo $employee->id; ?>" class="btn btn-primary" data-toggle="modal" data-target="#editEmployee<?php echo $employee->id; ?>Modal">Edit</button>
+				<button style="display: none" type="button" id="editModalEmployee<?php echo $employee->id; ?>" class="btn btn-primary" data-toggle="modal" data-target="#editEmployee<?php echo $employee->id; ?>Modal">Edit</button>
 				<!-- Edit Modal -->
 <div class="modal fade" id="editEmployee<?php echo $employee->id; ?>Modal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md" role="document">
@@ -153,7 +152,7 @@
         <!-- ITEM EDITOR -->
 				<div class="item-editor" id="editEmployeeId<?php echo $employee->id; ?>">
 					<div class="edit-single-user-container">
-						<form class="form-inline" id="editEmployeeForm<?php echo $employee->id; ?>" method="post" action="<?php echo $this->baseUrl . 'index.php/employeeEdit/' . $employee->id; ?>" >
+						<form class="form-inline" id="editEmployee<?php echo $employee->id; ?>" method="post" action="<?php echo $this->baseUrl . 'index.php/employeeEdit/' . $employee->id; ?>" >
 							<div>
 								<label for="username<?php echo $employee->id; ?>">Name</label>
 								<input type="text" class="form-control" id="username<?php echo $employee->id; ?>" name="username" required value="<?php echo $employee->username; ?>" />
@@ -184,22 +183,12 @@
 									<option <?php if ($employee->expiration_time_type === 'months') echo 'selected'; ?> value="months">Months</option>
 								</select>
 							</div>
-							<div>
-								<label for="INSZnumber<?php echo $employee->id; ?>">INSZ number</label>
-								<input
-									type="text"
-									class="form-control"
-									value="<?php echo $employee->INSZnumber; ?>"
-									id="INSZnumber<?php echo $employee->id; ?>"
-									name="INSZnumber"
-								/>
-							</div>
 						</form>
 					</div>
 				</div>
       </div>
       <div class="modal-footer">
-	    <input style="width: 100px;" type="button" onclick="submitForm('editEmployeeForm<?php echo $employee->id; ?>')" class="grid-button button theme-editor-header-button" value="Submit" />
+	    <input style="width: 100px;" type="button" onclick="submitForm('editEmployee<?php echo $employee->id; ?>')" class="grid-button button theme-editor-header-button" value="Submit" />
         <button style="width: 100px;" type="button" class="grid-button-cancel button theme-editor-header-button" data-dismiss="modal">Cancel</button>
       </div>
     </div>
@@ -220,6 +209,6 @@
 <script>
 
 function editEmployee(employeeId){
-	$('#editEmployee'+employeeId).click();
+	$('#editModalEmployee'+employeeId).click();
 }
 </script>
