@@ -237,7 +237,7 @@ class BBOrders extends REST_Controller
             $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
             Utility_helper::logMessage($logFile, 'ordernumber ' .$orderId);
 
-            $order = $this->shoporder_model->fetchOrdersForPrintcopy($orderId);
+            $order = $this->shoporder_model->getorderinformation($orderId);
             if (!$order) return;
             $order = reset($order);
 

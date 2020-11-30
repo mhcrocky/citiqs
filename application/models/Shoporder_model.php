@@ -1000,4 +1000,13 @@
 
             return $order;
         }
+        function getorderinformation($orderid){
+            if (empty($orderId)) return null;
+            $this->id = $orderId;
+            $order = $this->fetchOrdersForPrintcopy();
+            if (!$order) return null;
+            $order = reset($order);
+
+            return $order;
+        }
     }
