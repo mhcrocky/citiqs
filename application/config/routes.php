@@ -431,6 +431,7 @@ $route['booking_agenda/delete_reservation/(:num)'] = "Booking_agenda/delete_rese
 $route['booking_agenda/get_agenda/(:any)'] = "Booking_agenda/get_agenda/$1";
 $route['booking_agenda/get_agenda/spots/(:num)/(:num)'] = "Booking_agenda/get_agenda/spots/$1/$1";
 $route['booking_agenda/getAllAgenda/(:any)'] = "Booking_agenda/getAllAgenda/$1";
+$route['booking_agenda/design'] = "Booking_agenda/design";
 $route['booking_agenda/(:any)'] = "Booking_agenda/index/$1";
 $route['booking/successbooking'] = "Booking/successBooking";
 
