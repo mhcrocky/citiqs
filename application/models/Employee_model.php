@@ -69,6 +69,7 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
 	}
 
     public function addNewEmployee($employee) {
+        unset($employee['INSZnumber']);
         $this->db->trans_start();
         $this->db->insert('tbl_employee', $employee);
         $insert_id = $this->db->insert_id();
@@ -85,6 +86,7 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
     }
 
     public function updateEmployee($employee, $employeeId) {
+        unset($employee['INSZnumber']);
         $this->db->trans_start();
         $this->db->where("id", $employeeId);
         $this->db->update('tbl_employee', $employee);
