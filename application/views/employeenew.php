@@ -48,7 +48,7 @@
 </div>
       </div>
       <div class="modal-footer">
-		<input style="width: 100px;" type="button" class="grid-button button theme-editor-header-button" onclick="submitForm('addEmployee')" value="Submit" />
+		<input id="addEmployeeSubmit" style="width: 100px;" type="button" class="grid-button button theme-editor-header-button" onclick="submitForm('addEmployee')" value="Submit" />
         <button style="width: 100px;" type="button" class="grid-button-cancel button theme-editor-header-button" data-dismiss="modal">Cancel</button>
 
       </div>
@@ -222,4 +222,8 @@
 function editEmployee(employeeId){
 	$('#editModalEmployee'+employeeId).click();
 }
+
+$("#addEmployee").on("submit", function(){
+	$("#addEmployeeSubmit").prop('disabled', true);
+});
 </script>
