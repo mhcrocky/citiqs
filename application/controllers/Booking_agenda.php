@@ -776,7 +776,7 @@ class Booking_agenda extends BaseControllerWeb
 
 
         $this->global['pageTitle'] = 'TIQS : DESIGN';
-        $this->loadViews('setting/booking_agenda_design', $this->global, $data, 'footerbusiness', 'headerbusiness');
+        $this->loadViews('bookings/booking_agenda_design', $this->global, $data, 'footerbusiness', 'headerbusiness');
         return;
         }
 }
