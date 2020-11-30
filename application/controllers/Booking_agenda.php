@@ -766,11 +766,12 @@ class Booking_agenda extends BaseControllerWeb
     public function design()
     {
         $this->load->model('user_modelpublic');
-        $userShortUrl = $this->user_modelpublic->getUserInfoById($this->session->userdata('userId'))->usershorturl;
-        $iframeSrc = base_url() . 'booking_agenda/' . $userShortUrl;
+        $user = $this->user_modelpublic->getUserInfoById($this->session->userdata('userId'));
+        $iframeSrc = base_url() . 'booking_agenda/' . $user->usershorturl;
         $data = [
                 'iframeSrc' => $iframeSrc,
-                'id' => '',
+                'id' => $user->userId,
+                'userShortUrl' => $user->usershorturl,
                 'design' => '',
             ];
 
