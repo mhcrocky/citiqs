@@ -33,7 +33,7 @@
             $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
 //            Utility_helper::logMessage($logFile, 'ordernumber ' .$orderId);
 
-            $order = $this->shoporder_model->fetchOrdersForPrintcopy($orderId);
+            $order = $this->shoporder_model->setObjectId(intval($orderId))->fetchOrdersForPrintcopy();
             if (!$order) return;
             $order = reset($order);
             if ($order['printStatus'] === '0') return;

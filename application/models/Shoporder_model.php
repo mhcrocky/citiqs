@@ -659,7 +659,7 @@
                             LEFT JOIN
                                 tbl_shop_categories ON tbl_shop_products.categoryId = tbl_shop_categories.id
                             WHERE
-                                tbl_shop_order_extended.orderId = "' . $this->id . '"
+                                tbl_shop_order_extended.orderId = ' . $this->id . '
                             GROUP BY
                                 tbl_shop_order_extended.orderId
                         ) productData ON productData.orderId = tbl_shop_orders.id
@@ -682,12 +682,10 @@
                     INNER JOIN
                         tbl_shop_vendors ON tbl_shop_vendors.vendorId = vendorOne.id
                     WHERE
-                        tbl_shop_orders.id = "' . $this->id . '" 
+                        tbl_shop_orders.id = ' . $this->id . ' 
                         ' . $where . '
                     GROUP BY
                         orderId
-
-
                     ;';
 			$result = $this->db->query($query);
 			$resultqueryforlog = $this->db->last_query();
