@@ -4,25 +4,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 use SpryngApiHttpPhp\Client;
 use SpryngApiHttpPhp\Exception\InvalidRequestException;
 
-class NotificationVendor
+class Notificationvendor
 {
-	function sendVendorMessage($oneSignalId,$message){
+
+//	function sendVendorMessage($oneSignalId,$message){
+	function sendVendorMessage(){
 //		die('line number 10 notification');
+		$message='you have a new order';
 
 		$content = array(
 			"en" => $message
 		);
+//
+//		$fields = array(
+//			'app_id' => "8da54730-aa66-4a7f-8989-320413d88d09",
+//			'include_player_ids' => array($oneSignalId),
+//			'data' => array("foo" => "bar"),
+//			'contents' => $content
+//		);
+
 
 		$fields = array(
-			'app_id' => "6d22c65f-7e13-45b8-b5ce-5ef190468fea",
-			'include_player_ids' => array($oneSignalId),
-			'data' => array("foo" => "bar"),
-			'contents' => $content
+			'app_id' => "8da54730-aa66-4a7f-8989-320413d88d09",
+			'include_player_ids' => array("860d0e99-db07-440e-a644-3f6217d2523a"),
+			'data' =>array("OrderId"=>"112969"),
+			'contents' => array("en"=>"New order")
 		);
 
+		// {"app_id":"","include_player_ids":["860d0e99-db07-440e-a644-3f6217d2523a"],"data":{"OrderId":"112969"},"contents":{"en":"New order"},"launchUrl":null}
 		// 74e6564a-e015-40b4-ac6d-03c8f7d6b793
 
-//		var_dump($fields);
+		var_dump($fields);
 //		die();
 
 		$fields = json_encode($fields);

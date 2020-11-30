@@ -7,7 +7,7 @@ class Shoporder_model_mobile extends CI_Model {
 	public function returnOrders($userId) {
 
 		$sql="SELECT tbl_shop_orders.id AS orderId,
-					vendor.id AS VendorId,
+					vendor.id AS VendorId
 					
 						FROM
 						   `tbl_shop_orders` 
