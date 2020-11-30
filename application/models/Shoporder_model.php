@@ -122,6 +122,7 @@
                     'vendor.id AS vendorId',
                     'vendor.email AS vendorEmail',
                     'vendor.username AS vendorUserName',
+                    'vendor.oneSignalId AS vendorOneSignalId',
                     'tbl_shop_spots.id AS spotId',
                     'tbl_shop_spots.spotName AS spotName'
                 ],
@@ -726,6 +727,13 @@
                 $file = FCPATH . 'application/tiqs_logs/messages.txt';
                 $message = 'Record "tbl_shop_orders.id = ' . $this->id . '" status not updated to paid';
                 Utility_helper::logMessage($file, $message);
+            } else {
+                $this->load->library('notificationvendor');
+                $order = $this->fetchOne();
+                $order = reset($order);
+                if ($order['vendorOneSignalId']) {
+                    $this->notificationvendor->sendVendorMessage($order['vendorOneSignalId'], $this->id);
+                }
             }
         }
 

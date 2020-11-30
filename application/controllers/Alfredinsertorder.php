@@ -41,6 +41,7 @@ class Alfredinsertorder extends BaseControllerWeb
 
         $this->load->library('language', array('controller' => $this->router->class));
         $this->load->library('session');
+        $this->load->library('notificationvendor');
     }
 
     public function index()
@@ -109,8 +110,11 @@ class Alfredinsertorder extends BaseControllerWeb
         $this->insertOrderInTable($post, $payStatus, $payType, $orderRandomKey);
         $this->insertOrderExtended($post);
         $this->deletePosOrder($post, $orderRandomKey);
-        $this->saveOrderImage(); // OPTIMIZE THREAD ... ASYNC
+        $this->saveOrderImage(); // OPTIMIZE THREAD ... ASYNC       
 
+        if ($payStatus === $this->config->item('orderPaid') && $this->vendorOneSignalId) {
+            $this->notificationvendor->sendVendorMessage($this->vendorOneSignalId, $this->shoporder_model->id);
+        }
         return $this->shoporder_model->id;
     }
 
@@ -141,6 +145,7 @@ class Alfredinsertorder extends BaseControllerWeb
     private function insertOrderExtended($post): void
     {
         $vendor = $this->shopvendor_model->setProperty('vendorId', $post['vendorId'])->getVendorData();
+        $this->vendorOneSignalId = $vendor['oneSignalId'];
 
         // insert order details
         if ($vendor['preferredView'] === $this->config->item('oldMakeOrderView')) {
