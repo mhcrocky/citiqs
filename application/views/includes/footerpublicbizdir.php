@@ -20,15 +20,34 @@
 			<a target="_blank" href="https://tiqs.com/branding">Brand Identity</a>
 		</div>
 		<div class="footer-box background-green">
-			<p class='footer-heading'>Legal</p>
+			<p class='footer-heading' style="color: white">Legal</p>
 			<a class="link" href="<?php echo $this->baseUrl; ?>legal">Terms and Conditions <br>Privacy Policy <br> Cookie statement</a><br>
 		</div>
+	</div>
+
+	<main role="main" style="background-image: url('https://tiqs.com/alfred/assets/home/images/backgroundshop.png');  background-repeat: no-repeat;
+  		background-size: 100% 100%;"
+		align="center" >
+		<section  align="center" style="padding-top: 150px; padding-bottom: 150px" >
+			<div  align="center" >
+				<h1 style="font-family: caption-bold;color: #ffffff; margin-bottom: 0px"><?php echo $this->language->Line("PLACES-ABCD0020",'YOUR ONE STOP FAVORITE STREET ONLINE-PICKUP AND DELIVERY SHOPPING');?></h1>
+				<!--			<div class="mb-35" align="center">-->
+				<!--						<img src="--><?php //echo $this->baseUrl; ?><!--assets/home/images/tiqslocation.png" alt="tiqs" width=250 height="auto" align="center" />-->
+				<!--			</div>-->
+
+		</section>
+
+	</main>
+
 	</div>
 	<div id="myCookieConsent">
 		<a id="cookieButton">ACCEPT</a>
 		<div>THIS WEBSITE USES COOKIES. <a href="<?php echo $this->baseUrl; ?>legal">MORE INFO HOW WE USE COOKIES</a>
 		</div>
 	</div>
+
+
+
 
 <!-- LANGUAGE VIEW -->
 <?php

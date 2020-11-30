@@ -17,10 +17,9 @@
   top: 50%;
   margin: 0 auto;
   text-align: center;
-  background: #FFF;
   border-radius: 5px;
   padding: 35px 40px 30px 40px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
   margin-bottom:25px;
 }
 
@@ -33,7 +32,6 @@
   outline: none;
 }
 .ui-slider .slider-range-inverse {
-  background: #CCC;
   position: absolute;
   right: 0;
 }
@@ -44,14 +42,13 @@
   width: 28px;
   height: 28px;
   cursor: pointer;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
-  background: #FFF;
+  box-shadow: 0 3px 8px rgba(255, 255, 255, 0.4);
   top: -7px;
   border-radius: 50%;
   border-width: 0;
 }
 .ui-slider .ui-slider-handle:active {
-  box-shadow: 0 3px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 3px 20px rgba(255, 255, 255, 0.5);
 }
 .ui-slider .ui-slider-handle .dot {
   width: 18px;
@@ -95,7 +92,6 @@ a:active {
 
 <style>
 	body {
-		background-color: #fbd19a;
 	}
 
 	.card-img-top{
@@ -106,22 +102,21 @@ a:active {
 
 </style>
 
-<main role="main" style="margin-bottom: -30px" align="center">
-	<section style="background-color:#fbd19a; " align="center" >
-		<div style="background-color:#fbd19a;" align="center">
-			<h1 style="font-family: caption-bold; padding: 50px 10px 10px 10px; margin-top: 30px;color:#27253b"><?php echo $this->language->Line("PLACES-A00002",'TIQS PICKUP & DELIVERY');?></h1>
-<!--			<h1 style="font-family: caption-bold; padding: 50px 10px 10px 10px; color:#ffffff">PICK UP & DELIVERY</h1>-->
-			<p style="font-family: campton-light;color: #27253b; margin-bottom: 0px"><?php echo $this->language->Line("PLACES-0020",'One stop shop to find everything at your favorite place');?></p>
-
-			<div class="mb-35" align="center">
-						<img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslocation.png" alt="tiqs" width=250 height="auto" align="center" />
-			</div>
-			<div class="container" style="background-color: #fbd19a; margin-top: 10px" align="center">
+<main role="main" style="background-image: url('https://tiqs.com/alfred/assets/home/images/backgroundshop.png');  background-repeat: no-repeat;
+  background-size: 100% 100%;" align="center" >
+	<section  align="center" style="padding-top: 150px" >
+		<div  align="center" >
+			<h1 style="font-family: caption-bold;color: #ffffff; margin-bottom: 0px"><?php echo $this->language->Line("PLACES-ABCD0020",'YOUR ONE STOP FAVORITE STREET ONLINE-PICKUP AND DELIVERY SHOPPING');?></h1>
+<!--			<div class="mb-35" align="center">-->
+<!--						<img src="--><?php //echo $this->baseUrl; ?><!--assets/home/images/tiqslocation.png" alt="tiqs" width=250 height="auto" align="center" />-->
+<!--			</div>-->
+			<div class="container" style="margin-top: 10px;"
+				 align="center">
 
 			<div  style="margin-bottom:20px" align="center" >
 
 				<div style="text-align: center" align="center">
-					<h3 style="color: #003152; font-family: caption-bold;text-align:center"><?php echo $this->language->Line("PLACES-A0030",'Order online near your location');?></h3>
+					<h3 style="color: #fcffff; font-family: caption-bold;text-align:center"><?php echo $this->language->Line("PLACES-ABC0030",'SEARCH NEARBY');?></h3>
 
 					<div class="form-group">
 
@@ -149,7 +144,7 @@ a:active {
 					-->
 					<div class="form-group">
 						<!-- <label for="cityId">City:&nbsp;</label> -->
-						<p><?php echo $this->language->Line("PLACES-0010",'ENTER RANGE');?></p>
+						<p style="color: white"><?php echo $this->language->Line("PLACES-0010",'ENTER RANGE');?></p>
 
 					</div>
 
@@ -157,7 +152,7 @@ a:active {
 						<!-- <label for="addressId">Address:&nbsp;</label> -->
 
 						<div id="js-slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="slider-range-inverse" style="width: 51%;"></div><div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="width: 49%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 49%;"><span class="dot"><span class="handle-track" style="width: 1000px; left: -490px;"></span></span></span></span></div>
-						<span style="padding: 20px" id="rangeValue">1 km</span>
+						<span style="color: white"; id="rangeValue">1 km</span>
 
 						<input type="hidden" id="myRange" value="1">
 

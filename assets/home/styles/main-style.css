@@ -1649,7 +1649,6 @@ p.smalltext {
 /* footer */
 
 footer{
-	background-color: #DA3978;
 	color: #fff;
 	font-family: 'campiton-bold', sans-serif;
 }
@@ -1661,6 +1660,38 @@ footer{
 	flex-wrap: wrap;
 }
 
+.footer-box100{
+	width: 100%;
+}
+
+.footer-box100 a{
+	margin-top: 0;
+	margin-bottom: 7px;
+	font-size: 14px;
+	font-family: 'campton-light', sans-serif;
+	display: inline-block;
+}
+
+.footer-box100 a:hover{
+	/*text-decoration: underline;*/
+	color: #acfbfc;
+}
+
+.footer-box100 p:last-child{
+	margin-bottom: 0;
+}
+
+.footer-box100 .footer-heading{
+	font-weight: bold;
+	font-size: 20px;
+	margin-bottom: 30px;
+	font-family: 'caption-bold', sans-serif;
+}
+
+.footer-box100 a{
+	color: #fff;
+	text-decoration: none;
+}
 .footer-box{
 	width: 25%;
 	padding: 50px 30px 65px;
