@@ -16,7 +16,6 @@ class BBOrders extends REST_Controller
 	{
 		parent::__construct();
 		$this->load->model('shopprinters_model');
-		$this->load->model('shoporderbb_model');
 		$this->load->model('shoporder_model');
 		$this->load->model('shoporderex_model');
 		$this->load->model('shopvendor_model');
@@ -231,50 +230,49 @@ class BBOrders extends REST_Controller
 			return intval($product[11]);
 		}
 	}
-	public function emailed_post($orderId)
-        {
-            $emailMessage = '';
-            $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
-            Utility_helper::logMessage($logFile, 'ordernumber ' .$orderId);
 
-            $order = $this->shoporder_model->getorderinformation($orderId);
-            if (!$order) return;
-            $order = reset($order);
+	public function emailed_post($orderId): void
+	{
+		$emailMessage = '';
+		$logFile = FCPATH . 'application/tiqs_logs/messages.txt';
 
-            if ($order['printStatus'] === '0' && empty($order['paymentType'])) return;
+		Utility_helper::logMessage($logFile, 'ordernumber ' .$orderId);
 
-            Utility_helper::logMessage($logFile, 'order vendor'.$order['vendorId']);
-            
+		$orderId = intval($orderId);
+		$order = $this->shoporder_model->getorderinformation($orderId);
+
+		if ($order['printStatus'] === '0' && empty($order['paymentType'])) return;
+
+		Utility_helper::logMessage($logFile, 'order vendor'.$order['vendorId']);
 
 
-            if (isset($_FILES['image']['name']) && !empty($_FILES['image']['name'])) {
-                // $image = time().'-'.$_FILES["image"]['name'];
-                $file_name=$order['orderId'].'-email' . '.png';
-                $config = array(
-                    'upload_path' => FCPATH . 'receipts' . DIRECTORY_SEPARATOR,
-                    'allowed_types' => "gif|jpg|png|jpeg|JPEG|JPG|PNG|GIF",
-                    'overwrite' => TRUE,
-                    'max_size' => "99999999999",
-                    'file_name' => $file_name
-                    );
-                $this->load->library('upload', $config); 
-                
-                if($this->upload->do_upload('image'))
-                {
-                    $receiptemail = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $file_name;
-                    // $res['msg']="Image has been uploaded!";
-                }else{ $receiptemail = '';}
-                
-            }
+		if (isset($_FILES['image']['name']) && !empty($_FILES['image']['name'])) {
+			// $image = time().'-'.$_FILES["image"]['name'];
+			$file_name = $order['orderId'] . '-email-bb' . '.png';
+			$config = array(
+				'upload_path' => FCPATH . 'receipts' . DIRECTORY_SEPARATOR,
+				'allowed_types' => "gif|jpg|png|jpeg|JPEG|JPG|PNG|GIF",
+				'overwrite' => TRUE,
+				'max_size' => "99999999999",
+				'file_name' => $file_name
+				);
+			$this->load->library('upload', $config); 
+			
+			if($this->upload->do_upload('image')) {
+				$receiptemail = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $file_name;
+				// $res['msg']="Image has been uploaded!";
+			} else {
+				$receiptemail = '';
+			}
+			
+		}
 
-            if (!empty($order['paymentType'])) { echo $resultpngemail;}
-            if ($order['printStatus'] === '1'){
-                // SEND EMAIL
-                $subject=   "tiqs-Order : ". $order['orderId'] ;
-                $email =    $order['buyerEmail'];
-                Email_helper::sendOrderEmail( $email, $subject, $emailMessage, $receiptemail);
-                redirect('https://tiqs.com/spot/sendok' );
-            }///
-        }
+		if ($order['printStatus'] === '1' && file_exists($receiptemail)) {
+			// SEND EMAIL
+			$subject =   "tiqs-Order : ". $order['orderId'] ;
+			$email =    $order['buyerEmail'];
+			Email_helper::sendOrderEmail( $email, $subject, $emailMessage, $receiptemail);
+			redirect('https://tiqs.com/spot/sendok' );
+		}
+	}
 }
-

@@ -1000,10 +1000,13 @@
 
             return $order;
         }
-        function getorderinformation($orderid){
+        
+        public function getorderinformation(int $orderid): ?array
+        {
             if (empty($orderId)) return null;
             $this->id = $orderId;
-            $order = $this->fetchOrdersForPrintcopy();
+            $where = ' AND ' .  $this->table . ' .paid = "1" ';
+            $order = $this->fetchOrdersForPrintcopy($where);
             if (!$order) return null;
             $order = reset($order);
 
