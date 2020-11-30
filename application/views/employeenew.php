@@ -153,7 +153,7 @@
         <!-- ITEM EDITOR -->
 				<div class="item-editor" id="editEmployeeId<?php echo $employee->id; ?>">
 					<div class="edit-single-user-container">
-						<form class="form-inline" id="editEmployee<?php echo $employee->id; ?>" method="post" action="<?php echo $this->baseUrl . 'index.php/employeeEdit/' . $employee->id; ?>" >
+						<form class="form-inline" id="editEmployeeForm<?php echo $employee->id; ?>" method="post" action="<?php echo $this->baseUrl . 'index.php/employeeEdit/' . $employee->id; ?>" >
 							<div>
 								<label for="username<?php echo $employee->id; ?>">Name</label>
 								<input type="text" class="form-control" id="username<?php echo $employee->id; ?>" name="username" required value="<?php echo $employee->username; ?>" />
@@ -199,7 +199,7 @@
 				</div>
       </div>
       <div class="modal-footer">
-	    <input style="width: 100px;" type="button" onclick="submitForm('editEmployee<?php echo $employee->id; ?>')" class="grid-button button theme-editor-header-button" value="Submit" />
+	    <input style="width: 100px;" type="button" onclick="submitForm('editEmployeeForm<?php echo $employee->id; ?>')" class="grid-button button theme-editor-header-button" value="Submit" />
         <button style="width: 100px;" type="button" class="grid-button-cancel button theme-editor-header-button" data-dismiss="modal">Cancel</button>
       </div>
     </div>
