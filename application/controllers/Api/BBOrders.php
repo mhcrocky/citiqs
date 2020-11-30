@@ -233,6 +233,7 @@ class BBOrders extends REST_Controller
 
 	public function emailed_post($orderId): void
 	{
+		return ;
 		$emailMessage = '';
 		$logFile = FCPATH . 'application/tiqs_logs/messages.txt';
 
@@ -240,8 +241,6 @@ class BBOrders extends REST_Controller
 
 		$orderId = intval($orderId);
 		$order = $this->shoporder_model->getorderinformation($orderId);
-
-		if ($order['printStatus'] === '0' && empty($order['paymentType'])) return;
 
 		Utility_helper::logMessage($logFile, 'order vendor'.$order['vendorId']);
 
@@ -267,7 +266,7 @@ class BBOrders extends REST_Controller
 			
 		}
 
-		if ($order['printStatus'] === '1' && file_exists($receiptemail)) {
+		if (file_exists($receiptemail)) {
 			// SEND EMAIL
 			$subject =   "tiqs-Order : ". $order['orderId'] ;
 			$email =    $order['buyerEmail'];
