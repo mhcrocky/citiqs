@@ -40,7 +40,7 @@
 							</div>
 							<div>
 								<label for="INSZnumber">INSZ number</label>
-								<input type="number" step="1" min="1" class="form-control" id="INSZnumber" name="INSZnumber" />
+								<input type="text" step="1" min="1" class="form-control" id="INSZnumber" name="INSZnumber" />
 							</div>
 							<input style="width: 100px;" type="submit" class="grid-button button theme-editor-header-button" value="Submit" />
 							<button style="width: 100px;" type="button" class="grid-button-cancel button theme-editor-header-button" data-dismiss="modal">Cancel</button>
