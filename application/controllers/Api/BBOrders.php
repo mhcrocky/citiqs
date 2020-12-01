@@ -11,7 +11,7 @@ class BBOrders extends REST_Controller
 	private $productLines = array();
 	private $paymentLines = array();
 	private $drawreciept = null;
-
+	private $order=array();
 	public function __construct()
 	{
 		parent::__construct();
@@ -67,6 +67,7 @@ class BBOrders extends REST_Controller
 		$order = $this->shoporder_model->fetchBBOrderForPrint($get['mac']);
 		Utility_helper::logMessage($logFile, serialize ( $order ) );
 		if (!$order) return;
+		$this->order=$order;
 		$orderRelativePath = 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '-email.png';
 		if (!file_exists((FCPATH . $orderRelativePath))) {
 			Orderprint_helper::saveOrderImage($order);
@@ -189,7 +190,7 @@ class BBOrders extends REST_Controller
 	{
 		$this->paymentLines = [[
 			'PaymentId'             =>  (string)$orderId, //ONLY ORDER ID WITHOUT PAY TESTING VERSION DONE
-			'PaymentName'           =>  'Alfred',
+			'PaymentName'           =>  $this->setpaymenttypes(),//'Alfred',
 			'PaymentType'           =>  'EFT',
 			'Quantity'              =>  1,
 			'PayAmount'             =>  $orderAmount,
@@ -197,6 +198,12 @@ class BBOrders extends REST_Controller
 			'ForeignCurrencyISO'    =>  '',
 			'Reference'             =>  (string)("Order id:".$orderId), // PAYNL TRANSACTION ID !!! DONE !!!
 		]];
+	}
+	private function setpaymenttypes(){
+		if($this->order['paymentType']=='1'){
+			return "pay at the waiter";
+		}
+		return $this->order['paymentType'];
 	}
 
 
