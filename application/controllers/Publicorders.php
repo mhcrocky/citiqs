@@ -232,18 +232,22 @@
 
         public function spotClosed($spotId): void
         {
+            $spotId = intval($spotId);
+            $spot =  $this->shopspot_model->setObjectId($spotId)->setObject();
+            $vendorId = $this->shopprinters_model->setObjectid($spot->printerId)->getProperty('userId');
+
             if ($this->shopspottime_model->setProperty('spotId', $spotId)->isOpen()) {
-                $redirect = 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'] . '&spotid=' . $spotId;
+                $redirect = 'make_order?vendorid=' . $vendorId . '&spotid=' . $spotId;
                 redirect($redirect);
                 return;
             };
 
             $this->global['pageTitle'] = 'TIQS : CLOSED';
 
-            $spotId = intval($spotId);
+            
             $data = [
-                'vendor' => $this->shopvendor_model->setProperty('vendorId', $_SESSION['vendor']['vendorId'])->getVendorData(),
-                'spot' => $this->shopspot_model->setObjectId($spotId)->setObject()
+                'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData(),
+                'spot' => $spot,
             ];
 
             $workingTime = $this->shopspottime_model->setProperty('spotId', $spotId)->fetchWorkingTime();
