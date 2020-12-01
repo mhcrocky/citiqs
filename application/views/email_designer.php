@@ -1,5 +1,6 @@
 
 <?php $this->load->view('includes/email_designer_header'); ?>
+
 <body class="edit mx-auto mt-3">
 <div style="border: 1px solid gray !important;" class="navbar navbar-inverse navbar-layoutit mt-3">
     <div class="navbar-header">
@@ -593,10 +594,11 @@
                     <!--<a href="#" class="btn btn-default form-control" id="editimage"><i class="fa fa-image"></i>&nbsp;Edit image</a> -->
                 </div>
             </div>
-
+            
             <form id="editor" style="margin-top:5px">
-                <div class="panel panel-body panel-default html5editor" id="html5editor"></div>
+                
             </form>
+            
             <form id="editorlite" style="margin-top:5px">
                 <div class="panel panel-body panel-default html5editorlite" id="html5editorlite"></div>
             </form>
@@ -922,12 +924,6 @@
 
 <script>
     $(document).ready(function(){
-        $('#template_name').on('keyup', function(){
-            $('#required').css('visibility', 'hidden');
-            $('#template_name').css('border', '1px solid #ced4da');
-            $('#template_name').css('border-color', '#ced4da');
-        });
-
         //html5 uploader
         $('.button').click(function(){
             var formx = document.getElementById('form-id');

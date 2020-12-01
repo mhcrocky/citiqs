@@ -734,11 +734,46 @@ function handleButtons(obj) {
 
 function storeValues(obj, fontcolor, text, fontsize, fontfamily, background) {
     // tinyMCE.activeEditor.setContent(text);
-    var theeditor = tinyMCE.get('html5editor');
-    var editorlite = tinyMCE.get('html5editorlite');
+    //var theeditor = tinyMCE.get('html5editor');
+    //var editorlite = tinyMCE.get('html5editorlite');
+    if(text != ''){
+        $('#editor').empty();
+    $('#editor').append('<div class="panel panel-body panel-default html5editor" id="html5editor"></div>');
+    ClassicEditor
+        .create( document.querySelector( '#html5editor' ) )
+        .then( editor => {
+            editor.setData(text);
+            editor.model.document.on( 'change:data', () => {
+                $('#' + $('#path').val()).find($('#selector').val()).html(editor.getData())
+            } );
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
+    }
+    $('p').on('click', function(e){
+        var textValue = $(this).html();
+        console.log(textValue);
 
-    theeditor.setContent(text);
-    editorlite.setContent(text);
+    $('#editor').empty();
+    $('#editor').append('<div class="panel panel-body panel-default html5editor" id="html5editor"></div>');
+    ClassicEditor
+        .create( document.querySelector( '#html5editor' ) )
+        .then( editor => {
+            editor.setData(textValue);
+            editor.model.document.on( 'change:data', () => {
+                //$(this).empty()
+                //$('#' + $('#path').val()).find($('#selector').val()).eq(0).empty();
+                $(this).html(editor.getData());
+                //$('#' + $('#path').val()).find($('#selector').val()).html(editor.getData());
+            } );
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
+    });
+    
+    
 
 
     $('#bgcolor').css('backgroundColor', background);
@@ -881,48 +916,6 @@ function getIndex(itm, list) {
 
 $(document).ready(function () {
 
-
-
-    tinymce.init({
-        menubar: false,
-        force_br_newlines: false,
-        force_p_newlines: false,
-        forced_root_block: '',
-        selector: "#html5editor",
-        plugins: [
-            "advlist autolink lists link charmap anchor",
-            "visualblocks code ",
-            "insertdatetime  table contextmenu paste textcolor colorpicker"
-        ],
-        toolbar: "styleselect | bold italic forecolor backcolor  alignleft | aligncenter alignright alignjustify | bullist numlist outdent indent link",
-        setup: function (editor) {
-            editor.on('keyup', function (e) {
-                $('#' + $('#path').val()).find($('#selector').val()).html(tinyMCE.get('html5editor').getContent());
-            }),
-                    editor.on('change', function (e) {
-                        $('#' + $('#path').val()).find($('#selector').val()).html(tinyMCE.get('html5editor').getContent());
-                    });
-        }
-    });
-
-    tinymce.init({
-        menubar: false,
-        force_br_newlines: false,
-        force_p_newlines: false,
-        forced_handleObjectsroot_block: '',
-        selector: "#html5editorlite",
-        plugins: [
-        ],
-        toolbar: "alignleft aligncenter alignright alignjustify",
-        setup: function (editor) {
-            editor.on('keyup', function (e) {
-                $('#' + $('#path').val()).find($('#selector').val()).html(tinyMCE.get('html5editorlite').getContent());
-            }),
-                    editor.on('change', function (e) {
-                        $('#' + $('#path').val()).find($('#selector').val()).html(tinyMCE.get('html5editorlite').getContent());
-                    });
-        }
-    });
                  /*
     var featherEditor = new Aviary.Feather({
         apiKey: '*cf5d8b90e5ef44de9abacb415ed29b3d',
