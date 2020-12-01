@@ -61,17 +61,19 @@ class BBEmployee extends REST_Controller
 		$TStotalamount=$price*$quantity;
 		$this->PaymentLines[]=array(
 			"PaymentId"				=>	"STAF".($employeedetail->id).($nextemployee),
-			"PaymentName"			=>	$employeedetail->username,
+			"PaymentName"			=>	"Employee " . $employeedetail->action,
 			"PaymentType"			=>	"EFT",
 			"Quantity"				=>	1,
 			"PayAmount"				=>	(float)$TStotalamount,
 			"ForeignCurrencyAmount"	=>	0,
 			"ForeignCurrencyISO"	=>	"",
-			"Reference"				=>	"Employee " . $employeedetail->action, //PAYNL TRANSACTION ID !!! DONE !!!
+			"Reference"				=>	"INSZ: " . $employeedetail->INSZnumber, //PAYNL TRANSACTION ID !!! DONE !!!
 			);
 		$jsonoutput['TransactionDateTime']	=	gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
 		$jsonoutput['TransactionNumber']	=	(int)( ("2000").(200000+$nextemployee));
 		$jsonoutput['ordernumberr']			=	$nextemployee;
+		$jsonoutput['OperatorId']			=	$employeedetail->INSZnumber;
+		$jsonoutput['OperatorName']			=	$employeedetail->username;
 		
 		$this->employee_model->setObjectId(intval($employeedetail->id))->setProperty('next', $nextemployee)->update();
 		$this->shopemployee_model->setObjectId(intval($employeedetail->inOutId))->setProperty('processed', '1')->update();
