@@ -151,7 +151,7 @@
             emails: JSON.parse('<?php echo json_encode($emails); ?>'),
             baseURL: "<?php echo base_url(); ?>",
             timeOptions: {
-                format: 'h:mm:ss a',
+                format: 'HH:mm:ss',
                 useCurrent: false,
                 showClear: true,
                 showClose: true,

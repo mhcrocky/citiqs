@@ -133,7 +133,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="online">Get Spots and Timeslots from:</label>
+                            <label for="online">Copy from:</label>
                             <select style="width: 100%;" id="agendas" class="form-control js-spots-basic-multiple" name="SpotsTimeslots[]" multiple="multiple">
                                 <option v-for="agenda in agendas" :key="agenda.id" :value="agenda.id">{{ agenda.ReservationDescription }} - {{ dateFormat(agenda.ReservationDateTime) }}</option>
                             </select>
@@ -402,7 +402,7 @@ $(document).ready(function() {
         computed: {
             disabledDates() {
                 var date = new Date();
-                date.setDate(date.getDate() + 1);
+                date.setDate(date.getDate());
                 return {
                     to: new Date(date.getFullYear(), date.getMonth(), date.getDate())
                 }

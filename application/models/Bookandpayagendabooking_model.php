@@ -483,6 +483,7 @@ class   Bookandpayagendabooking_model extends CI_Model
         $this->db->join('tbl_email_templates', 'tbl_email_templates.id = tbl_bookandpayagenda.email_id', 'left');
 		$this->db->where('Customer', $customer);
 		$this->db->where('ReservationDateTime >=', date("Y-m-d") );
+		$this->db->where('online', 1);
 		$this->db->order_by('ReservationDateTime', 'ASC');
 		$query = $this->db->get();
 

@@ -116,7 +116,7 @@ class  Customer_panel extends BaseControllerWeb
             redirect('customer_panel/agenda');
         }
 
-        $spots = $this->bookandpayspot_model->getSpotsByCustomer($this->user_model->id);
+        $spots = $this->bookandpayspot_model->getSpotsById($spotId);
         $data = [
             'user' => $this->user_model,
             'timeslots' => $this->bookandpaytimeslots_model->getTimeSlotsByCustomer($this->user_model->id, $spotId),

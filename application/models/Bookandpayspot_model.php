@@ -53,6 +53,23 @@ class Bookandpayspot_model extends CI_Model
         return false;
     }
 
+    public function getSpotsById($spot_id)
+    {
+        $this->db->select('tbl_bookandpayspot.*, tbl_bookandpayagenda.ReservationDateTime, tbl_bookandpayagenda.Background as background, tbl_email_templates.template_name ');
+        $this->db->from('tbl_bookandpayspot');
+        $this->db->join('tbl_bookandpayagenda', 'tbl_bookandpayagenda.id = tbl_bookandpayspot.agenda_id', 'left');
+        $this->db->join('tbl_email_templates', 'tbl_email_templates.id = tbl_bookandpayspot.email_id', 'left');
+        $this->db->where('tbl_bookandpayspot.id', $spot_id);
+
+        $query = $this->db->get();
+
+        if ($query) {
+            return $query->result();
+        }
+
+        return false;
+    }
+
     public function getMaxPersonsPerDay($customer_id)
     {
         $this->db->select('SUM(tbl_bookandpayspot.numberofpersons) AS max_persons_per_day');
@@ -100,7 +117,7 @@ class Bookandpayspot_model extends CI_Model
         }
 
         return false;
-    }
+    } 
 
     public function getAgendaBySpotId($spot_id)
     {
