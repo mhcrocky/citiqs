@@ -17,6 +17,8 @@
         public $numberOfCopies;
         public $masterMac;
         public $archived;
+        public $isFod;
+        public $isFodHardLock;
 
         private $table = 'tbl_shop_printers';
 
@@ -59,6 +61,8 @@
             ) return false;
             // if (isset($data['masterMac']) && !Validate_data_helper::validateString($data['masterMac'])) return false;
             if (isset($data['archived']) && !($data['archived'] === '1' || $data['archived'] === '0')) return false;
+            if (isset($data['isFod']) && !($data['isFod'] === '1' || $data['isFod'] === '0')) return false;
+            if (isset($data['isFodHardLock']) && !($data['isFodHardLock'] === '1' || $data['isFodHardLock'] === '0')) return false;
 
             return true;
         }
@@ -70,6 +74,8 @@
                     $this->table . '.id AS printerId',
                     $this->table . '.printer AS printer',
                     $this->table . '.active AS printerActive',
+                    $this->table . '.isFod AS isFod',
+                    $this->table . '.isFodHardLock AS isFodHardLock',
                 ],
                 [
                     'tbl_shop_product_printers.productId=' => $productId,

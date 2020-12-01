@@ -1,7 +1,53 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+declare(strict_types=1);
 
-class Fodfdm_model extends CI_Model {
+require_once APPPATH . 'interfaces/InterfaceCrud_model.php';
+require_once APPPATH . 'interfaces/InterfaceValidate_model.php';
+require_once APPPATH . 'abstract/AbstractSet_model.php';
+
+if (!defined('BASEPATH')) exit('No direct script access allowed');
+
+class Fodfdm_model extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
+{
+
+	public $id;
+	public $printer_id;
+	public $FDM_active;
+	private $table = 'tbl_fdm_printer_status';
+
+	protected function setValueType(string $property,  &$value): void
+	{
+		$this->load->helper('validate_data_helper');
+		if (!Validate_data_helper::validateNumber($value)) return;
+
+		if ($property === 'id' || $property === 'printer_id') {
+			$value = intval($value);
+		}
+
+		return;
+	}
+
+	protected function getThisTable(): string
+	{
+		return $this->table;
+	}
+
+	public function insertValidate(array $data): bool
+	{
+		if (isset($data['printer_id']) && isset($data['FDM_active'])) {
+			return $this->updateValidate($data);
+		}
+		return false;
+	}
+
+	public function updateValidate(array $data): bool
+	{
+		if (!count($data)) return false;
+		if (isset($data['printer_id']) && !Validate_data_helper::validateInteger($data['printer_id'])) return false;
+		if (isset($data['FDM_active']) && !($data['showInPublic'] === 1 || $data['showInPublic'] === 0)) return false;
+
+		return true;
+	}
 
 	function getlastRecieptCount($vendorId){
 		$this->db->where('vendorId',$vendorId);
@@ -14,6 +60,7 @@ class Fodfdm_model extends CI_Model {
 			return 0;
 		}
 	}
+
 	function updatelastRecieptCount($vendorId){
 		$this->db->where('vendorId',$vendorId);
 		$this->db->set('lastNumber', 'lastNumber+1', FALSE);
@@ -31,6 +78,7 @@ class Fodfdm_model extends CI_Model {
 			);
 		}
 	}
+
 	function insert_update_tbl_fdm_printer_status($data){
 		$this->db->where('printer_id',$data['printer_id']);
 		$fdmPrintStatus=$this->db->get("tbl_fdm_printer_status")->row();
@@ -43,6 +91,7 @@ class Fodfdm_model extends CI_Model {
 			$this->db->insert("tbl_fdm_printer_status",$data);
 		}
 	}
+
 	function getFDMstatusByMac($macNumber){
 		$this->db->where('tbl_shop_printers.macNumber',$macNumber);
 		$this->db->where('tbl_shop_printers.active','1');
@@ -52,5 +101,23 @@ class Fodfdm_model extends CI_Model {
 		$printerDetails =	$this->db->get()->row();
 		// print_r($this->db->last_query());
 		return $printerDetails;
+	}
+
+	public function isActive(): ?bool
+	{
+		$activeStatus = $this->readImproved([
+			'what'	=> [$this->table . '.FDM_active'],
+			'where'	=> [
+				$this->table. '.printer_id' => $this->printer_id,
+			],
+			'conditions' => [
+				'ORDER_BY' => [$this->table . '.id ASC'],
+				'LIMIT' => ['1']
+			]
+		]);
+		$activeStatus = intval($activeStatus[0]['FDM_active']);
+
+		// if activeStatus is 0 everything is OK, else we have an error => set up in tiqs box
+		return !$activeStatus;
 	}
 }

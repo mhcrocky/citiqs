@@ -148,4 +148,6 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
 <?php }  elseif ($this->view  === 'blackbox/login') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/blackbox.css">
+<?php } elseif ($this->view === 'publicorders/temporarilyClosed') { ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/temporarilyClosed.css">
 <?php } ?>
