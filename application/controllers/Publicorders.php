@@ -33,6 +33,8 @@
             $this->load->model('shopspottime_model');
             $this->load->model('shopvoucher_model');
             $this->load->model('shopsession_model');
+            $this->load->model('fodfdm_model');
+            $this->load->model('shopprinters_model');
 
             $this->load->config('custom');
 
@@ -70,7 +72,6 @@
         {
             $vendorId = intval($vendor['vendorId']);
             $spot = $this->shopspot_model->fetchSpot($vendorId, $spotId);
-
             if ($spot) {
                 $this->loadSpotView($spot, $vendor, $orderDataRandomKey);
                 return;
@@ -86,9 +87,11 @@
             $spotId = intval($spot['spotId']);
             $spotTypeId = intval($spot['spotTypeId']);
             $time = time();
+            $spotPrinterId = intval($spot['spotPrinterId']);
 
             $this->checkVendorCredentials($vendor, $spotTypeId);
             $this->isLocalSpotOpen($spotTypeId, $spotId);
+            $this->isFodLocked($spotPrinterId);
 
             $this->global['pageTitle'] = 'TIQS : ORDERING';
 
@@ -179,6 +182,19 @@
             };
         }
 
+        private function isFodLocked(int $spotPrinterId): void
+        {
+            $isHardLock = $this->shopprinters_model->setObjectId($spotPrinterId)->getProperty('isFodHardLock');
+            if (!intval($isHardLock)) return;
+
+            $isAactive = $this->fodfdm_model->setProperty('printer_id', $spotPrinterId)->isActive();
+            if ($isAactive) return;
+
+            $vendorId = $this->shopprinters_model->setObjectId($spotPrinterId)->getProperty('userId');
+            $redirect = base_url() . 'temporarily_closed' . DIRECTORY_SEPARATOR . $vendorId;
+            redirect($redirect);
+        }
+        
         private function getPreferedView(array &$data, array $spot, array $vendor, string $orderDataRandomKey): string
         {
             $vendorId = $vendor['vendorId'];
@@ -216,24 +232,38 @@
 
         public function spotClosed($spotId): void
         {
+            $spotId = intval($spotId);
+            $spot =  $this->shopspot_model->setObjectId($spotId)->setObject();
+            $vendorId = $this->shopprinters_model->setObjectid($spot->printerId)->getProperty('userId');
+
             if ($this->shopspottime_model->setProperty('spotId', $spotId)->isOpen()) {
-                $redirect = 'make_order?vendorid=' . $_SESSION['vendor']['vendorId'] . '&spotid=' . $spotId;
+                $redirect = 'make_order?vendorid=' . $vendorId . '&spotid=' . $spotId;
                 redirect($redirect);
                 return;
             };
 
             $this->global['pageTitle'] = 'TIQS : CLOSED';
 
-            $spotId = intval($spotId);
+            
             $data = [
-                'vendor' => $this->shopvendor_model->setProperty('vendorId', $_SESSION['vendor']['vendorId'])->getVendorData(),
-                'spot' => $this->shopspot_model->setObjectId($spotId)->setObject()
+                'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData(),
+                'spot' => $spot,
             ];
 
             $workingTime = $this->shopspottime_model->setProperty('spotId', $spotId)->fetchWorkingTime();
             $data['workingTime'] = $workingTime ? Utility_helper::resetArrayByKeyMultiple($workingTime, 'day') : null;
 
             $this->loadViews('publicorders/spotClosed', $this->global, $data, null, 'headerWarehousePublic');
+        }
+
+        public function temporarilyClosed($vendorId): void
+        {
+            $data = [
+                'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData()
+            ];
+
+            $this->global['pageTitle'] = 'TIQS : CLOSED';
+            $this->loadViews('publicorders/temporarilyClosed', $this->global, $data, null, 'headerWarehousePublic');
         }
 
         public function closed($vendorId): void

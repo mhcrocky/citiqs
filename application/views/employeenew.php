@@ -1,59 +1,57 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/employeenew.css">
 <!-- Add Modal -->
 <div class="modal fade" id="addNewModal" tabindex="-1" role="dialog" aria-labelledby="addNewModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addNewModalLabel">Add New Employee</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- ITEM EDITOR FOR NEW USER -->
-			<div class="item-editor">
-
-
-<div class="edit-single-user-container">
-	<form class="form-inline" id="addEmployee" method="post" action="<?php echo $this->baseUrl . 'addNewEmployeeSetup'; ?>">
-		<input type="text" readonly name="ownerId" required value="<?php echo $ownerId ?>" hidden />
-		<div>
-			<label for="username">Name</label>
-			<input type="text" class="form-control" id="username" name="username" required />
-		</div>
-		<div>
-			<label for="email">Email</label>
-			<input type="text" class="form-control" id="email" name="email" required />
-		</div>
-		<div>
-			<label for="expiration_time_value">Expiration time value</label>
-			<input type="number" step="1" min="1" class="form-control" id="expiration_time_value" name="expiration_time_value" required />
-		</div>
-		<div>
-			<label for="expiration_time_type">Expiration time type</label>
-			<select class="form-control" id="expiration_time_type" name="expiration_time_type" required>
-				<option value="">Select</option>
-				<option value="minutes">Minutes</option>
-				<option value="hours">Hours</option>
-				<option value="days">Days</option>
-				<option value="months">Months</option>
-			</select>
-		</div>
-		<div>
-			<label for="INSZnumber">INSZ number</label>
-			<input type="number" step="1" min="1" class="form-control" id="INSZnumber" name="INSZnumber" />
-		</div>
-	</form>
-</div>
-</div>
-      </div>
-      <div class="modal-footer">
-		<input id="addEmployeeSubmit" style="width: 100px;" type="button" class="grid-button button theme-editor-header-button" onclick="submitForm('addEmployee')" value="Submit" />
-        <button style="width: 100px;" type="button" class="grid-button-cancel button theme-editor-header-button" data-dismiss="modal">Cancel</button>
-
-      </div>
-    </div>
-  </div>
+  	<div class="modal-dialog modal-md" role="document">
+    	<div class="modal-content">			
+			<div class="modal-header">
+				<h5 class="modal-title" id="addNewModalLabel">Add New Employee</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			
+			<div class="modal-body">
+				<!-- ITEM EDITOR FOR NEW USER -->
+				<div class="item-editor">
+					<div class="edit-single-user-container">
+						<form method="post" action="<?php echo $this->baseUrl . 'addNewEmployeeSetup'; ?>">
+							<input type="text" name="ownerId" value="<?php echo $ownerId ?>" hidden required readonly />
+							<div>
+								<label for="username">Name</label>
+								<input type="text" class="form-control" id="username" name="username" required />
+							</div>
+							<div>
+								<label for="email">Email</label>
+								<input type="text" class="form-control" id="email" name="email" required />
+							</div>
+							<div>
+								<label for="expiration_time_value">Expiration time value</label>
+								<input type="number" step="1" min="1" class="form-control" id="expiration_time_value" name="expiration_time_value" required />
+							</div>
+							<div>
+								<label for="expiration_time_type">Expiration time type</label>
+								<select class="form-control" id="expiration_time_type" name="expiration_time_type" required>
+									<option value="">Select</option>
+									<option value="minutes">Minutes</option>
+									<option value="hours">Hours</option>
+									<option value="days">Days</option>
+									<option value="months">Months</option>
+								</select>
+							</div>
+							<div>
+								<label for="INSZnumber">INSZ number</label>
+								<input type="text" step="1" min="1" class="form-control" id="INSZnumber" name="INSZnumber" />
+							</div>
+							<input style="width: 100px;" type="submit" class="grid-button button theme-editor-header-button" value="Submit" />
+							<button style="width: 100px;" type="button" class="grid-button-cancel button theme-editor-header-button" data-dismiss="modal">Cancel</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer"></div>
+				
+    	</div>
+  	</div>
 </div>
 <div style="margin-top:0;" class="main-wrapper theme-editor-wrapper">
 	<div style="background: #f3d0b1 !important;" class="grid-wrapper">
@@ -62,8 +60,7 @@
 			<div class="grid-list-header row">
 			<div class="col-lg-2 col-md-2 col-sm-12 search-container">
 				    <h4>Filter Options</h4>
-				</div>
-				
+				</div>				
 				<div class="col-lg-3 col-md-3 col-sm-12 date-picker-column">
 					<div>
 						<!-- From:-->
@@ -83,14 +80,12 @@
 					<!--                    Search by name:-->
 					<form>
 						<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-						
+					</form>	
 				</div>
-
 				<div class="col-lg-2 col-md-2 col-sm-12 search-container">
-				<button class="btn btn-outline-success my-2 my-sm-0 button grid-button" type="submit">Search</button>
-					</form>
-					</div>
-					<div class="col-lg-2 col-md-2 col-sm-12 search-container">
+					<button class="btn btn-outline-success my-2 my-sm-0 button grid-button" type="submit">Search</button>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-12 search-container">
 				    <button type="button" class="btn button-security my-2 my-sm-0 button grid-button" data-toggle="modal" data-target="#addNewModal">Add new</button>
 				</div>
 			</div><!-- end grid header -->
@@ -144,7 +139,7 @@
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Employee Details</h5>
+        <h5 class="modal-title">Edit Employee Details</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -204,8 +199,7 @@
       </div>
     </div>
   </div>
-</div>
-				
+</div>	
 				<!-- END EDIT FOR NEW USER -->
 			</div>
 			<!-- END SINGLE GRID ITEM -->
@@ -222,8 +216,4 @@
 function editEmployee(employeeId){
 	$('#editModalEmployee'+employeeId).click();
 }
-
-$("#addEmployee").on("submit", function(){
-	$("#addEmployeeSubmit").prop('disabled', true);
-});
 </script>
