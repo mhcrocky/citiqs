@@ -120,6 +120,7 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
 
     public function getEmployeeForBB()
     {
+        // get for bb
 
         $result = $this->readImproved([
             'what' => [
