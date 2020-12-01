@@ -72,7 +72,8 @@ class BBEmployee extends REST_Controller
 		$jsonoutput['TransactionDateTime']	=	gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
 		$jsonoutput['TransactionNumber']	=	(int)( ("2000").(200000+$nextemployee));
 		$jsonoutput['ordernumberr']			=	$nextemployee;
-		$jsonoutput['INSZnumber']			=	$employeedetail->INSZnumber;
+		$jsonoutput['OperatorId']			=	$employeedetail->INSZnumber;
+		$jsonoutput['OperatorName']			=	$employeedetail->username;
 		
 		$this->employee_model->setObjectId(intval($employeedetail->id))->setProperty('next', $nextemployee)->update();
 		$this->shopemployee_model->setObjectId(intval($employeedetail->inOutId))->setProperty('processed', '1')->update();
