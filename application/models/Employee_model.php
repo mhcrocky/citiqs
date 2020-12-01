@@ -97,7 +97,7 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
         $this->db->where('id', $employeeid);
         $this->db->delete('tbl_employee');
         $affected_rows = $this->db->affected_rows();
-        return $affected_rows;
+        return ($affected_rows > 0) ? $affected_rows : 0;
     }
 
     public function getEmployeeIdByEmail($email, $ownerId) {

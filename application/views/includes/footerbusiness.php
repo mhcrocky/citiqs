@@ -29,7 +29,6 @@
     <script src="<?php echo base_url(); ?>assets/js/business_dashboard/scripts.js"></script>
 
     <!-- custom users scripts -->
-    <script src="<?php echo base_url(); ?>assets/home/js/ajax.js"></script>
     <?php include_once FCPATH . 'application/views/includes/customJs.php'; ?>
     <?php include_once FCPATH . 'application/views/includes/alertifySessionMessage.php'; ?>
 </html>
