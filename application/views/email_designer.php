@@ -50,8 +50,8 @@
                                     <tbody>
                                     <tr>
                                         <td align="left" class="title" style="padding:5px 50px 5px 50px">
-                                            <h1 style="font-family:Arial"> Enter your Title here! </h1>
-                                            <h4>Your Subtitle</h4>
+                                            <h1 style="font-family:Arial" onclick="maintitle(this)"> Enter your Title here! </h1>
+                                            <h4 onclick="subtitle(this)">Your Subtitle</h4>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -600,7 +600,7 @@
             </form>
             
             <form id="editorlite" style="margin-top:5px">
-                <div class="panel panel-body panel-default html5editorlite" id="html5editorlite"></div>
+                
             </form>
 
             <div id="social-links">

@@ -744,16 +744,18 @@ function storeValues(obj, fontcolor, text, fontsize, fontfamily, background) {
         .then( editor => {
             editor.setData(text);
             editor.model.document.on( 'change:data', () => {
-                $('#' + $('#path').val()).find($('#selector').val()).html(editor.getData())
+                $('#' + $('#path').val()).find($('#selector').val()).html(editor.getData());
             } );
         } )
         .catch( error => {
             console.error( error );
         } );
+
     }
+
+
     $('p').on('click', function(e){
         var textValue = $(this).html();
-        console.log(textValue);
 
     $('#editor').empty();
     $('#editor').append('<div class="panel panel-body panel-default html5editor" id="html5editor"></div>');
@@ -771,8 +773,8 @@ function storeValues(obj, fontcolor, text, fontsize, fontfamily, background) {
         .catch( error => {
             console.error( error );
         } );
+
     });
-    
     
 
 
@@ -821,6 +823,52 @@ function configurationElm(e, t) {
         $(clone).insertAfter(t);
         handleObjects();
     });
+
+}
+
+
+function subtitle(el) {
+
+    var textValue = $(el).html();
+    console.log(el);
+    $('#editorlite').empty();
+    $('#editorlite').append('<div class="panel panel-body panel-default html5editor" id="html5editorlite"></div>');
+    ClassicEditor
+        .create( document.querySelector( '#html5editorlite' ) )
+        .then( editor => {
+            editor.setData(textValue);
+            editor.model.document.on( 'change:data', () => {
+                //$(this).empty()
+                //$('#' + $('#path').val()).find($('#selector').val()).eq(0).empty();
+                $(el).html(editor.getData());
+                //$('#' + $('#path').val()).find($('#selector').val()).html(editor.getData());
+            } );
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
+
+}
+
+function maintitle(el) {
+
+    var textValue = $(el).html();
+    $('#editorlite').empty();
+    $('#editorlite').append('<div class="panel panel-body panel-default html5editor" id="html5editorlite"></div>');
+    ClassicEditor
+        .create( document.querySelector( '#html5editorlite' ) )
+        .then( editor => {
+            editor.setData(textValue);
+            editor.model.document.on( 'change:data', () => {
+                //$(this).empty()
+                //$('#' + $('#path').val()).find($('#selector').val()).eq(0).empty();
+                $(el).html(editor.getData());
+                //$('#' + $('#path').val()).find($('#selector').val()).html(editor.getData());
+            } );
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
 
 }
 
