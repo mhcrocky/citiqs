@@ -712,6 +712,7 @@ class Booking_agenda extends BaseControllerWeb
 								$mailtemplate = str_replace('Image', '', $mailtemplate);
                                 $mailtemplate = str_replace('Text', '', $mailtemplate);
                                 $mailtemplate = str_replace('Title', '', $mailtemplate);
+                                $mailtemplate = str_replace('QR Code', '', $mailtemplate);
 								$subject = 'Your tiqs reservation(s)';
 //                                include(APPPATH . 'libraries/simple_html_dom.php');
 //
