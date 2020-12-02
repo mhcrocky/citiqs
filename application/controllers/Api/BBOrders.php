@@ -20,6 +20,7 @@ class BBOrders extends REST_Controller
 		$this->load->model('shoporderex_model');
 		$this->load->model('shopvendor_model');
 		$this->load->model('fodfdm_model');
+		$this->load->model('shopvendorfod_model');
 
 		$this->load->helper('utility_helper');
 		$this->load->helper('validate_data_helper');
@@ -42,6 +43,7 @@ class BBOrders extends REST_Controller
 		$this->fodfdm_model->updatelastRecieptCount($vendorId);
 	}
 
+	// MAYBE WE WILL HAVE A PROBLEMS BECAUSE IN ALFRED TWO USERS CAN HAVE SAM MAC NUMBER
 	public function fdmStatus_get(): void
 	{
 		$macNumber  =   $this->input->get('mac');
@@ -64,11 +66,21 @@ class BBOrders extends REST_Controller
 		// }
 		// it will not proceed when FDM have an issue
 
+
+		// this function will insert vendor in tbl_vendor_fodnumber table
+		// THIS IS NOT BEST WAY TO DO THIS BECAUSE WE ARE USING PRINTER MAC NUMBER TO FETCH VENDOR ID
+		// IN ALFRED WE CAN HAVE TWO VENDORS THAT USE SAME ID
+		// WE CAN NOT BE 100 % SURE THAT WE INSERT RIGHT VENDOR ID
+		// MY OPINION IS THAT BEST WHY THAT WE HANDLE THIS ON BB SIDE, BB SEND REQUEST FOR INSERT TO ALFRED
+		// OR WE CAN DO THIS IN VENDOR PROFILE (JUST LIKE FOR POS)
+		if (!$this->insertVendorAsBBUser($get['mac'])) return false;
+
+		// fetch order
 		$order = $this->shoporder_model->fetchBBOrderForPrint($get['mac']);
 
 		// this function will do update printer isFod  status in tbl_shop_printer on overy request
 		// after some time (when all printers are updated) we can do update only once, first time when printer send request
-		$this->updatePrinterFodStatus(intval($order['vendorId']), $get['mac'], '1');
+		if (!$this->updatePrinterFodStatus(intval($order['vendorId']), $get['mac'], '1')) return;
 
 
 		Utility_helper::logMessage($logFile, serialize ( $order ) );
@@ -104,18 +116,6 @@ class BBOrders extends REST_Controller
 				'VatRateId'         =>  Orderprint_helper::returnVatGrade($serviceFeeTax),
 			);
 		}
-		// $jsonoutput['TransactionDateTime'] = date("c",strtotime($order['orderCreated'])); //gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
-		// $jsonoutput['TransactionDateTime_Emp'] = date("c", ($ordercreatedtime-10)); //this is for when emp
-		// $jsonoutput['TransactionNumber'] = (int)(("1000").(100000+$order['orderId']) );
-		// $jsonoutput['ordernumberr'] = $order['orderId'];
-		// $jsonoutput['ProductLines'] = $this->ProductLines;
-		// $jsonoutput['PaymentLines'] = $this->PaymentLines;
-		// $jsonoutput['image'] = $receiptemailBasepath;
-		// $jsonoutput['vendorId'] = $order['vendorId'];
-		// $jsonoutput['lastNumber'] = $this->fodfdm_model->getlastRecieptCount($order['vendorId']);
-		// $jsonoutput['ProductLines1'] = $this->ProductLines;
-		// $jsonoutput['PaymentLines1'] = $this->PaymentLines;
-		// $jsonoutput['image1'] =$jsonoutput['image'];//$receiptemailBasepath;
 
 		$jsonoutput =  [
 			'TransactionDateTime' => date("c", $ordercreatedtime), //gmdate(DATE_ATOM); //"2020-08-08T12:40:54";
@@ -288,13 +288,27 @@ class BBOrders extends REST_Controller
 		}
 	}
 
-	private function updatePrinterFodStatus(int $vendorId, string $macNumber, string $newStatus): void
+	private function updatePrinterFodStatus(int $vendorId, string $macNumber, string $newStatus): bool
 	{
 		$where = [
 			'userId' => $vendorId,
 			'macNumber' => $macNumber
 		];
 
-		$this->shopprinters_model->updateIsFod($where, $newStatus);
+		return $this->shopprinters_model->updateIsFod($where, $newStatus);
+	}
+
+	private function insertVendorAsBBUser(string $macNumber): bool
+	{
+		$vendorId = $this->shopprinters_model->setProperty('macNumber', $macNumber)->fetchUserIdFromMac();
+
+		if (is_null($vendorId)) return false;
+		if ($this->shopvendorfod_model->isFodVendor($vendorId)) return true;
+
+		$insert = [
+			'vendorId' => $vendorId,
+			'lastNumber' => '0'
+		];
+		return $this->shopvendorfod_model->setObjectFromArray($insert)->create();
 	}
 }

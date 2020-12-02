@@ -14,7 +14,7 @@
         public $vendorId;
         public $lastNumber;
 
-        private $table = 'tbl_shop_vendor_FOD';
+        private $table = 'tbl_vendor_fodnumber';
 
         protected function setValueType(string $property,  &$value): void
         {

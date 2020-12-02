@@ -148,4 +148,24 @@
 
             return $this->setProperty('isFod', $newStatus)->customUpdate($whereCond);
         }
+
+        public function fetchUserIdFromMac(): ?int
+        {
+            $userId = $this->readImproved([
+                'what' => ['userId'],
+                'where' => [
+                    'macNumber' => $this->macNumber
+                ],
+                'conditions' => [
+                    'ORDER_BY' => [$this->table . '.id ASC'],
+                    'LIMIT' => ['1']
+                ]
+            ]);
+
+            if (is_null($userId)) return false;
+
+            $userId = intval($userId[0]['userId']);
+
+            return $userId;
+        }
     }
