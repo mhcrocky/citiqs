@@ -78,13 +78,12 @@ class BBOrders extends REST_Controller
 		// fetch order
 		$order = $this->shoporder_model->fetchBBOrderForPrint($get['mac']);
 
-		// this function will do update printer isFod  status in tbl_shop_printer on overy request
-		// after some time (when all printers are updated) we can do update only once, first time when printer send request
-		if (!$this->updatePrinterFodStatus(intval($order['vendorId']), $get['mac'], '1')) return;
-
-
 		Utility_helper::logMessage($logFile, serialize ( $order ) );
 		if (!$order) return;
+		// this function will do update printer isFod  status in tbl_shop_printer on overy request
+		// after some time (when all printers are updated) we can do update only once, first time when printer send request
+		$this->updatePrinterFodStatus(intval($order['vendorId']), $get['mac'], '1');
+
 		$this->order=$order;
 		$orderRelativePath = 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '-email.png';
 		if (!file_exists((FCPATH . $orderRelativePath))) {
