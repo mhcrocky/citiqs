@@ -76,6 +76,10 @@
 								<?php echo $printer['active'] === '1' ? '<span>ACTIVE</span>' : '<span>BLOCKED</span>'; ?>
 							</p>
 							<p class="item-description" style="white-space: initial;">Number of copies: <?php echo $printer['numberOfCopies']; ?></p>
+							<?php if ($printer['isFod'] === '1') { ?>
+							<p class="item-description" style="white-space: initial;">FOD PRINTER</p>
+							<p class="item-description" style="white-space: initial;">Hard lock: <?php echo ($printer['isFodHardLock'] === '1') ? 'Yes' : 'No'; ?></p>
+							<?php } ?>
 							<?php if (!is_null($printer['master']) && $printer['masterMac'] !== '0') { ?>
 							<p class="item-description" style="white-space: initial;">SLAVE PRINTER</p>
 							<p class="item-description" style="white-space: initial;">Master is: <?php echo $printer['master']; ?></p>
@@ -157,6 +161,29 @@
 											?>
 										</select>
 									</div>
+									<?php if ($printer['isFod'] === '1') { ?>
+										<div>
+											<label>Is hard lock:</label>
+											<label>
+												Yes:&nbsp;&nbsp;
+												<input
+													type="radio"
+													value="1"
+													name="isFodHardLock"
+													<?php if ($printer['isFodHardLock'] === '1') echo 'checked'; ?>
+												/>
+											</label>
+											<label>
+												No:&nbsp;&nbsp;
+												<input
+													type="radio"
+													value="0"
+													name="isFodHardLock"
+													<?php if ($printer['isFodHardLock'] === '0') echo 'checked'; ?>
+												/>
+											</label>
+										</div>
+									<?php } ?>
 								</form>
 							</div>
 						</div>

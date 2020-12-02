@@ -982,7 +982,7 @@
                     ['tbl_shop_spots', 'tbl_shop_spots.id = ' . $this->table . '.spotId', 'INNER'],
                     ['tbl_shop_printers', 'tbl_shop_printers.id = tbl_shop_spots.printerId', 'INNER'],
                     ['tbl_user', 'tbl_user.id = tbl_shop_printers.userId', 'INNER'],
-                    ['tbl_shop_vendor_FOD', 'tbl_shop_vendor_FOD.vendorId = tbl_user.id', 'INNER'],
+                    ['tbl_vendor_fodnumber', 'tbl_vendor_fodnumber.vendorId = tbl_user.id', 'INNER'],
                 ],
                 'conditions' => [
                     'ORDER_BY' => [$this->table . '.id ASC'],

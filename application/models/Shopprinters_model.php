@@ -134,4 +134,38 @@
             $macNumber = $masterMac[0]['masterMac'];
             return $macNumber === '0' ? $this->macNumber : $macNumber;
         }
+
+
+        public function updateIsFod(array $where, string $newStatus): bool
+        {
+            if (!($newStatus === '1' || $newStatus === '0')) return false;
+            $whereCond = [];
+
+            foreach ($where as $key => $value) {
+                $key = $this->table . '.' . $key;
+                $whereCond[$key] = $value;
+            }
+
+            return $this->setProperty('isFod', $newStatus)->customUpdate($whereCond);
+        }
+
+        public function fetchUserIdFromMac(): ?int
+        {
+            $userId = $this->readImproved([
+                'what' => ['userId'],
+                'where' => [
+                    'macNumber' => $this->macNumber
+                ],
+                'conditions' => [
+                    'ORDER_BY' => [$this->table . '.id ASC'],
+                    'LIMIT' => ['1']
+                ]
+            ]);
+
+            if (is_null($userId)) return false;
+
+            $userId = intval($userId[0]['userId']);
+
+            return $userId;
+        }
     }

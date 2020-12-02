@@ -117,6 +117,19 @@
             return $this->db->update($this->getThisTable(), $data, $where);
         }
 
+        public function customUpdate(array $where): bool
+        {
+            $data = $this->getDataArrayForDatabaseUpdate();
+
+            if (!$data || !$this->updateValidate($data)) return false;
+
+            $this->db->update($this->getThisTable(), $data, $where);
+
+            $affectedRows = $this->db->affected_rows();
+
+            return $affectedRows > 0 ? true : false;
+        }
+
         public function delete(): bool
         {
             $where = [
