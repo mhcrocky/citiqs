@@ -134,4 +134,18 @@
             $macNumber = $masterMac[0]['masterMac'];
             return $macNumber === '0' ? $this->macNumber : $macNumber;
         }
+
+
+        public function updateIsFod(array $where, string $newStatus): bool
+        {
+            if (!($newStatus === '1' || $newStatus === '0')) return false;
+            $whereCond = [];
+
+            foreach ($where as $key => $value) {
+                $key = $this->table . '.' . $key;
+                $whereCond[$key] = $value;
+            }
+
+            return $this->setProperty('isFod', $newStatus)->customUpdate($whereCond);
+        }
     }

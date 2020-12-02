@@ -65,6 +65,12 @@ class BBOrders extends REST_Controller
 		// it will not proceed when FDM have an issue
 
 		$order = $this->shoporder_model->fetchBBOrderForPrint($get['mac']);
+
+		// this function will do update printer isFod  status in tbl_shop_printer on overy request
+		// after some time (when all printers are updated) we can do update only once, first time when printer send request
+		$this->updatePrinterFodStatus(intval($order['vendorId']), $get['mac'], '1');
+
+
 		Utility_helper::logMessage($logFile, serialize ( $order ) );
 		if (!$order) return;
 		$this->order=$order;
@@ -280,5 +286,15 @@ class BBOrders extends REST_Controller
 			Email_helper::sendOrderEmail( $email, $subject, $emailMessage, $receiptemail);
 			redirect('https://tiqs.com/spot/sendok' );
 		}
+	}
+
+	private function updatePrinterFodStatus(int $vendorId, string $macNumber, string $newStatus): void
+	{
+		$where = [
+			'userId' => $vendorId,
+			'macNumber' => $macNumber
+		];
+
+		$this->shopprinters_model->updateIsFod($where, $newStatus);
 	}
 }
