@@ -87,7 +87,8 @@ class Ajaxdorian extends CI_Controller
     public function saveEmailTemplate  () {
         if (!$this->input->is_ajax_request()) return;
         $user_id = $this->input->post('user_id');
-		$html = $this->input->post('html');
+        $html = $this->input->post('html');
+        $html = str_replace(base_url() . 'assets/images/qrcode_preview.png',"[QRlink]",$html);
         $dir = FCPATH.'assets/email_templates/'.$user_id;
 		if (!is_dir($dir)) {
 			mkdir($dir, 0777, TRUE);
@@ -110,7 +111,8 @@ class Ajaxdorian extends CI_Controller
 		if (!$this->input->is_ajax_request()) return;
 
 		$user_id = $this->input->post('user_id');
-		$html = $this->input->post('html');
+        $html = $this->input->post('html');
+        $html = str_replace(base_url() . 'assets/images/qrcode_preview.png',"[QRlink]",$html);
 
 		$dir = FCPATH.'assets/email_templates/'.$user_id;
 		if (!is_dir($dir)) {
@@ -350,5 +352,84 @@ class Ajaxdorian extends CI_Controller
             $status = 'error';
         }
         echo json_encode(array('msg' => $msg, 'status' =>$status));
+    }
+
+    public function testingemail()
+	{
+        $email = $this->input->post('email');
+        $mailtemplate = $this->input->post('html');
+        $customer = $this->session->userdata('userId');
+		$eventid = 1;
+		$reservationId = 1;
+		$spotId = 1;
+		$price = 60;
+		$Spotlabel = 1;
+		$numberofpersons = 4;
+		$name = 'Test';
+		$mobile = '0123456789';
+		$reservationset = '1';
+        $fromtime = '09:00 AM';
+		$totime = '01:00 PM';
+        $paid = 1;
+        $timeSlotId = 1;
+        $voucher = "TESTVOUCHER";
+        $TransactionId = "TESTTRANSACTIONID";
+        $qrlink = "";
+                        
+		$mailtemplate = str_replace('[customer]', $customer, $mailtemplate);
+		$mailtemplate = str_replace('[eventdate]', date('d.m.yy'), $mailtemplate);
+		$mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
+		$mailtemplate = str_replace('[SpotId]', $spotId, $mailtemplate);
+		$mailtemplate = str_replace('[price]', $price, $mailtemplate);
+		$mailtemplate = str_replace('[spotlabel]', $Spotlabel, $mailtemplate);
+		$mailtemplate = str_replace('[numberofpersons]', $numberofpersons, $mailtemplate);
+		$mailtemplate = str_replace('[name]', $name, $mailtemplate);
+		$mailtemplate = str_replace('[email]', $email, $mailtemplate);
+		$mailtemplate = str_replace('[mobile]', $mobile, $mailtemplate);
+		$mailtemplate = str_replace('[fromtime]', $fromtime, $mailtemplate);
+		$mailtemplate = str_replace('[totime]', $totime, $mailtemplate);
+		$mailtemplate = str_replace('[timeslot]', $timeSlotId, $mailtemplate);
+		$mailtemplate = str_replace('[TransactionId]', $TransactionId, $mailtemplate);
+        $mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
+        $mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
+		$mailtemplate = str_replace('Image', '', $mailtemplate);
+        $mailtemplate = str_replace('Text', '', $mailtemplate);
+        $mailtemplate = str_replace('Title', '', $mailtemplate);
+        $mailtemplate = str_replace('QR Code', '', $mailtemplate);
+        $subject = 'Your test email';
+        $this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
+        if($this->sendEmail($email, $subject, $mailtemplate)) {
+            echo 'success';
+        }
+                               
+                                
+
+    }
+
+    public function sendEmail($email, $subject, $message)
+	{
+		$configemail = array(
+			'protocol' => PROTOCOL,
+			'smtp_host' => SMTP_HOST,
+			'smtp_port' => SMTP_PORT,
+			'smtp_user' => SMTP_USER, // change it to yours
+			'smtp_pass' => SMTP_PASS, // change it to yours
+			'mailtype' => 'html',
+			'charset' => 'iso-8859-1',
+			'smtp_crypto' => 'tls',
+			'wordwrap' => TRUE,
+			'newline' => "\r\n"
+		);
+
+		$config = $configemail;
+		$CI =& get_instance();
+		$CI->load->library('email', $config);
+		$CI->email->set_header('X-SES-CONFIGURATION-SET', 'ConfigSet');
+		$CI->email->set_newline("\r\n");
+		$CI->email->from('support@tiqs.com');
+		$CI->email->to($email);
+		$CI->email->subject($subject);
+		$CI->email->message($message);
+		return $CI->email->send();
     }
 }
