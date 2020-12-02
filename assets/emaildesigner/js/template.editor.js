@@ -1317,8 +1317,7 @@ $(document).ready(function () {
     function saveTemplate() {
         downloadLayoutSrc();
 
-        var save = $('#tosave');
-
+        var save = $('#tosave'); 
         $.post(path + 'ajaxdorian/saveemailtemplatesource', {
             html: save.html(),
             data : save.data(),
