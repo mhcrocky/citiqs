@@ -43,7 +43,7 @@
                             style="border-radius:50%; margin-right:5%; font-size:24px"
                             <?php
                                 $cashRedirect  = base_url() . 'cashPayment/' . $this->config->item('orderPaid');
-                                $cashRedirect .= '/' . $this->config->item('orderPaid');
+                                $cashRedirect .= '/' . $this->config->item('postPaid');
                                 $cashRedirect .= '?' . $orderDataGetKey . '=' . $orderRandomKey;
                             ?>
                             onclick="redirect('<?php echo $cashRedirect; ?>')"
