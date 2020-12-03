@@ -885,11 +885,14 @@ function removeElm() {
     $(".demo").delegate(".remove", "click", function (e) {
         if(confirm('are you sure?')){
           //conta elem con lyrow
-              if($('#tosave .lyrow').length>3){
+              if($('#tosave .lyrow').length>2){
                 e.preventDefault();
                 $(this).parent().remove();
                 showElements();
-              }else alert('you cannot remove all elements');
+              }else{
+                
+                alert('you cannot remove all elements');
+              }
         }
     })
 }
