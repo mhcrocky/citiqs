@@ -374,7 +374,7 @@ class Ajaxdorian extends CI_Controller
         $timeSlotId = 1;
         $voucher = "TESTVOUCHER";
         $TransactionId = "TESTTRANSACTIONID";
-        $qrlink = "";
+        $qrlink = base_url()."assets/images/qrcode_preview.png";
                         
 		$mailtemplate = str_replace('[customer]', $customer, $mailtemplate);
 		$mailtemplate = str_replace('[eventdate]', date('d.m.yy'), $mailtemplate);
