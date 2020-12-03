@@ -1,51 +1,54 @@
 <main style="height: 100vh;">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-4 col-12 form-inline">
-				<label for='selectSpot'>Select POS spot:&nbsp;&nbsp;</label>
-				<select onchange="redirectToNewLocation(this.value)" class="form-control">
-					<option value="">Select</option>
-					<?php foreach ($spots as $spotOption) { ?>
-						<?php if ($spotOption['spotActive'] !== '1') continue; ?>
-						<option
-							value="pos?spotid=<?php echo $spotOption['spotId']; ?>"
-							<?php if (intval($spotOption['spotId']) === $spotId) echo 'selected'; ?>
-						>
-							<?php echo $spotOption['spotName']; ?>
-						</option>
-					<?php } ?>
-				</select>
-				<?php if (!isset($mainProducts)) { ?>
-					<div class="pos-main__add-item">
-						<a href="<?php echo base_url() . 'orders'; ?>">
-							<button class='pos-main__add-new-button' style="color:#000">
-								<i class="fa fa-hand-o-left" aria-hidden="true"></i>
-								BACK
-							</button>
-						</a>
-					</div>
-				<?php } ?>
-			</div>
-			<?php if ($spotPosOrders) { ?>
-				<div class="col-lg-5 col-12 form-inline">
-					<label for='selectSpot'>Select holded order:&nbsp;&nbsp;</label>
+				<div class="col-lg-4 col-12 form-inline">
+					<label for='selectSpot'>Select POS spot:&nbsp;&nbsp;</label>
 					<select onchange="redirectToNewLocation(this.value)" class="form-control">
 						<option value="">Select</option>
-						<?php foreach ($spotPosOrders as $saveOrder) { ?>
+						<?php foreach ($spots as $spotOption) { ?>
+							<?php if ($spotOption['spotActive'] !== '1') continue; ?>
 							<option
-								value="pos?spotid=<?php echo $saveOrder['spotId'] . '&' . $orderDataGetKey . '=' . $saveOrder['randomKey']; ?>"
-								<?php if ($saveOrder['randomKey'] === $orderDataRandomKey) echo 'selected'; ?>
+								value="pos?spotid=<?php echo $spotOption['spotId']; ?>"
+								<?php if (intval($spotOption['spotId']) === $spotId) echo 'selected'; ?>
 							>
-								<?php echo $saveOrder['saveName']; ?>
+								<?php echo $spotOption['spotName']; ?>
 							</option>
 						<?php } ?>
 					</select>
+					<?php if (!isset($mainProducts) && $fodIsActive) { ?>
+						<div class="pos-main__add-item">
+							<a href="<?php echo base_url() . 'orders'; ?>">
+								<button class='pos-main__add-new-button' style="color:#000">
+									<i class="fa fa-hand-o-left" aria-hidden="true"></i>
+									BACK
+								</button>
+							</a>
+						</div>
+					<?php } ?>
+					<?php if (!$fodIsActive) { ?>
+						<h1>FOD is not active</h1>
+					<?php } ?>
 				</div>
-			<?php } ?>
+				<?php if ($spotPosOrders) { ?>
+					<div class="col-lg-5 col-12 form-inline">
+						<label for='selectSpot'>Select holded order:&nbsp;&nbsp;</label>
+						<select onchange="redirectToNewLocation(this.value)" class="form-control">
+							<option value="">Select</option>
+							<?php foreach ($spotPosOrders as $saveOrder) { ?>
+								<option
+									value="pos?spotid=<?php echo $saveOrder['spotId'] . '&' . $orderDataGetKey . '=' . $saveOrder['randomKey']; ?>"
+									<?php if ($saveOrder['randomKey'] === $orderDataRandomKey) echo 'selected'; ?>
+								>
+									<?php echo $saveOrder['saveName']; ?>
+								</option>
+							<?php } ?>
+						</select>
+					</div>
+				<?php } ?>
 		</div>
 	</div>
 	
-	<?php if (isset($mainProducts)) { ?>
+	<?php if (isset($mainProducts) && $fodIsActive) { ?>
 		<div class='pos-template'>
 			<div style="margin:0px 30px 0px 20px">
 				<div class="row">
@@ -178,7 +181,7 @@
 		</div>
 	<?php } ?>
 </main>
-<?php if (isset($mainProducts)) { ?>
+<?php if (isset($mainProducts) && $fodIsActive) { ?>
 	<?php include_once FCPATH . 'application/views/publicorders/includes/modals/makeOrderPos/productModals.php'; ?>
 	<?php include_once FCPATH . 'application/views/publicorders/includes/makeOrderGlobalsJs.php'; ?>
 

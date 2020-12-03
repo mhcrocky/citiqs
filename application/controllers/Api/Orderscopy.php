@@ -15,6 +15,7 @@ class Orderscopy extends REST_Controller
 		$this->load->model('shoporder_model');
 		$this->load->model('shoporderex_model');
 		$this->load->model('shopvendor_model');
+		$this->load->model('shopvendorfod_model');
 
 		$this->load->helper('utility_helper');
 		$this->load->helper('validate_data_helper');
@@ -73,6 +74,10 @@ class Orderscopy extends REST_Controller
 				$email = $order['buyerEmail'];
 			}
 		}
+
+		// CKECK IS VENDOR FOD USER, IN THIS CASE EMAIL IS NOTE SEND
+		$vendorId = intval($order['vendorId']);
+		if ($this->shopvendorfod_model->isFodVendor($vendorId)) return;
 
 		// SEND EMAIL
 		$sendEmail = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->sendEmailWithReceipt();

@@ -54,9 +54,23 @@
             $result = $this->readImproved([
                 'what' => ['id'],
                 'where' => [
+                    $this->table. '.vendorId' => $venodrId,
+                    $this->table. '.lastNumber>' => 0,
+                ]
+            ]);
+            return !is_null($result);
+        }
+
+        // TO DO UPDATE AFTER GET FLAG IS VENDOR
+        public function isBBVendor(int $venodrId): bool
+        {
+            $result = $this->readImproved([
+                'what' => ['id'],
+                'where' => [
                     $this->table. '.vendorId' => $venodrId
                 ]
             ]);
             return !is_null($result);
         }
-	}
+
+    }

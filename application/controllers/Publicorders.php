@@ -18,6 +18,7 @@
             $this->load->helper('country_helper');
             $this->load->helper('date');
             $this->load->helper('jwt_helper');
+            $this->load->helper('fod_helper');
 
             $this->load->model('user_subscription_model');
             $this->load->model('shopcategory_model');
@@ -91,8 +92,8 @@
 
             $this->checkVendorCredentials($vendor, $spotTypeId);
             $this->isLocalSpotOpen($spotTypeId, $spotId);
-            $this->isFodLocked($spotPrinterId);
-
+            // $this->isFodLocked($spotPrinterId);
+            $this->isFodActive($vendor['vendorId'], $spotId);
             $this->global['pageTitle'] = 'TIQS : ORDERING';
 
             $data = [
@@ -193,6 +194,14 @@
             $vendorId = $this->shopprinters_model->setObjectId($spotPrinterId)->getProperty('userId');
             $redirect = base_url() . 'temporarily_closed' . DIRECTORY_SEPARATOR . $vendorId;
             redirect($redirect);
+        }
+
+        private function isFodActive(int $vendorId, int $spotId): void
+        {
+            if (!Fod_helper::isFodActive($vendorId, $spotId)) {
+                $redirect = base_url() . $this->config->item('fodInActive') . DIRECTORY_SEPARATOR . $vendorId;
+                redirect($redirect);
+            }
         }
         
         private function getPreferedView(array &$data, array $spot, array $vendor, string $orderDataRandomKey): string
@@ -300,6 +309,7 @@
             if (empty($orderRandomKey)) redirect(base_url());
 
             $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+            $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
 
             Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder']);
 
@@ -435,6 +445,7 @@
             if (empty($orderRandomKey)) redirect(base_url());
 
             $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+            $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
 
             Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder', 'user', 'orderExtended', 'order']);
 
@@ -469,6 +480,8 @@
             if (empty($orderRandomKey)) redirect(base_url());
 
             $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+            $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
+
 
             Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder', 'user', 'orderExtended', 'order']);
 

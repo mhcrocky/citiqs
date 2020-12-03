@@ -226,3 +226,5 @@ $config['posPaymentFailedLink'] = 'posPaymentFailedLink';
 
 $config['employeeIn'] = 'in';
 $config['employeeOut'] = 'out';
+
+$config['fodInActive'] = 'temporarily_closed';

@@ -171,4 +171,10 @@
             $spot = $this->fetchUserSpotsImporved($where);
             return (!empty($spot)) ? reset($spot) : null;
         }
+
+        public function getSpotPrinterId(): int
+        {
+            $printerId = $this->getProperty('printerId');
+            return intval($printerId);
+        }
     }
