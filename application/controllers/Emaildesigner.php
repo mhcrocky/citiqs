@@ -54,7 +54,7 @@ class Emaildesigner extends BaseControllerWeb
             $data['template_html'] = read_file(FCPATH . 'assets/email_templates/' . $this->user_model->id . '/' . $email_template->template_file);
         }
 
-        $this->loadViews("email_designer", $this->global, $data, 'email_designer_footer', 'headerWarehouse');
+        $this->loadViews("email_designer", $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
 }
 
