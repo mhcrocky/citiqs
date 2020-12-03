@@ -125,7 +125,7 @@
                         </div>
                         <div class="view">
                             <div class="row clearfix">
-                                <table width="640" class="main" cellspacing="0" cellpadding="0" border="0" align="center" style="background-color:#FFFFFF;" data-type="image">
+                                <table width="640" class="main" cellspacing="0" cellpadding="0" border="0" align="center" style="background-color:#FFFFFF;margin-right: auto !important;margin-left: auto !important;" data-type="image">
                                     <tbody>
                                     <tr>
                                         <td align="center" style="padding:15px 50px 15px 50px;">
@@ -188,7 +188,7 @@
                                 <table class="main" width="640" cellspacing="0" cellpadding="0" border="0" bgcolor="#FFFFFF" align="center" style="background-color:#FFFFFF;" data-type="imgtxt">
                                     <tbody>
                                     <tr>
-                                        <td class="image-text" align="left" style="padding: 15px 50px 10px 50px; font-family: Arial; font-size: 13px; color: #000000; line-height: 22px;">
+                                        <td class="image-text" align="left" style="padding: 15px 50px 10px 50px; font-family: Arial; font-size: 13px; color: #000000; line-height: 22px;>
                                             <table class="image-in-table" width="190" align="left">
                                                 <tbody>
                                                 <tr>
@@ -367,8 +367,8 @@
                                 <table width="640" class="main" cellspacing="0" cellpadding="0" border="0" align="center" style="background-color:#FFFFFF;" data-type="qr-code-type">
                                     <tbody>
                                     <tr>
-                                        <td align="center" style="padding:15px 50px 15px 50px;">
-                                            <img class="qr-code-image"  border="0"  align="one_image" style="display:block;max-width:350px" alt="" src="[QRlink]" tabindex="0">
+                                        <td align="center" style="padding:15px 50px 15px 50px;background-image: url('<?php echo base_url(); ?>assets/images/qrcode_border.png');background-repeat: no-repeat;background-position: center; ">
+                                            <img class="qr-code-image"  border="0"  align="one_image" style="display:block;max-width:350px;padding:50px;" alt="" src="[QRlink]" tabindex="0">
                                         </td>
                                     </tr>
                                     </tbody>
@@ -385,8 +385,10 @@
             <div style="visibility: hidden;" class="required text-danger text-center" id="required">&nbsp &nbsp &nbsp This field is required</div>
             <div class="w-100 mt-3">
                 <h4><b>Test Email</b></h4>
-                <input style="border:1px solid #ced4da;min-width:200px;height:35px;" type="email" name="email" id="email" placeholder="Send to Email" required>
-                <button style="height:35px;" class="btn btn-primary mr-auto" onclick="sendEmail()">Send</button>
+                <input style="border:1px solid #ced4da;width:100%;height:35px;" type="email" name="email" id="email" placeholder="Send to Email" required>
+                <div class="w-100 text-right mt-1">
+                    <button style="height:35px;" class="btn btn-primary mr-auto" onclick="sendEmail()">Send</button>
+                </div>
             </div>
         </div>
         <!-- END DROP ELEMENTS -->
@@ -463,7 +465,7 @@
             <div class="form-group" style="margin-top:5px;">
                 <label for="fontstyle">Copy Proprietary Words</label>
                 <input type="hidden" id="hiddentext" value="[customer]">
-                <select id="wordSelect" onchange="wordSelect()" style="margin-bottom:2px;" class="form-control">
+                <select style="height: 35px;" id="wordSelect" onchange="wordSelect()" class="form-control">
                     <option value="[customer]">[customer]</option>
                     <option value="[eventdate]">[eventdate]</option>
                     <option value="[reservationId]">[reservationId]</option>
@@ -478,9 +480,10 @@
                     <option value="[timeslot]">[timeslot]</option>
                     <option value="[TransactionId]">[TransactionId]</option>
                     <option value="[voucher]">[voucher]</option>
+                    <option value="[QRlink]">[QRlink]</option>
                     <option value="[logo]">[logo]</option>
                 </select>
-                <div class="w-100 text-right">
+                <div class="w-100 text-right mt-1">
                     <button id="button-copyWord" onclick="copyWord(this)" class="btn btn-secondary">Copy</button>
                 </div>
 
@@ -802,7 +805,7 @@
                 </div>
             </div>
 
-            <div style="position:static;" class="text-right mx-auto" style="margin-top:5px">
+            <div style="position:static;" class="text-right mx-auto mt-1" style="margin-top:5px">
                 <a href="#" id="saveElement" class="btn btn-info">done</a>
             </div>
         </div>
@@ -1021,7 +1024,9 @@
     function sendEmail(){
         let email = $("#email").val();
         let html = $("#tosave").html();
-        $.post("<?php echo base_url(); ?>ajaxdorian/testingemail", {email: email, html: html});
+        $.post("<?php echo base_url(); ?>ajaxdorian/testingemail", {email: email, html: html}, function(data) {
+            alertify['success']('Email sent successfully!');
+        });
     }
 
     function copyWord(el){
