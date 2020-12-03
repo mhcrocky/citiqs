@@ -20,6 +20,7 @@ class Alfredinsertorder extends BaseControllerWeb
         $this->load->helper('date');
         $this->load->helper('jwt_helper');
         $this->load->helper('orderprint_helper');
+        $this->load->helper('fod_helper');
 
         $this->load->model('user_subscription_model');
         $this->load->model('shopcategory_model');
@@ -57,6 +58,7 @@ class Alfredinsertorder extends BaseControllerWeb
         if (empty($orderRandomKey)) redirect(base_url());
 
         $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
 
         Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder', 'user', 'orderExtended', 'order']);
 
@@ -218,6 +220,7 @@ class Alfredinsertorder extends BaseControllerWeb
         if (empty($orderRandomKey)) redirect(base_url());
 
         $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
 
         Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder', 'user', 'orderExtended', 'order']);
 
@@ -239,6 +242,8 @@ class Alfredinsertorder extends BaseControllerWeb
         if (empty($orderRandomKey)) redirect(base_url());
 
         $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
+
 
         Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder', 'user', 'orderExtended', 'order']);
 
@@ -286,5 +291,13 @@ class Alfredinsertorder extends BaseControllerWeb
             exit();
         }
         return;
+    }
+
+    private function isFodActive(int $vendorId, int $spotId): void
+    {
+        if (!Fod_helper::isFodActive($vendorId, $spotId)) {
+            $redirect = base_url() . $this->config->item('fodInActive') . DIRECTORY_SEPARATOR . $vendorId;
+            redirect($redirect);
+        }
     }
 }

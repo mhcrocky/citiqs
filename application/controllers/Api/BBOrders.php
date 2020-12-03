@@ -297,12 +297,13 @@ class BBOrders extends REST_Controller
 		return $this->shopprinters_model->updateIsFod($where, $newStatus);
 	}
 
+	// TO DO UPDATE AFTER VENODR ID  AND FLAG IS FOD
 	private function insertVendorAsBBUser(string $macNumber): bool
 	{
 		$vendorId = $this->shopprinters_model->setProperty('macNumber', $macNumber)->fetchUserIdFromMac();
 
 		if (is_null($vendorId)) return false;
-		if ($this->shopvendorfod_model->isFodVendor($vendorId)) return true;
+		if ($this->shopvendorfod_model->isBBVendor($vendorId)) return true;
 
 		$insert = [
 			'vendorId' => $vendorId,

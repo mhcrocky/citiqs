@@ -115,9 +115,10 @@ class Fodfdm_model extends AbstractSet_model implements InterfaceCrud_model, Int
 				'LIMIT' => ['1']
 			]
 		]);
+		if (is_null($activeStatus)) return null;
 		$activeStatus = intval($activeStatus[0]['FDM_active']);
 
-		// if activeStatus is 0 everything is OK, else we have an error => set up in tiqs box
+		// if activeStatus is 0 everything is OK, else we have an error => updated from black box
 		return !$activeStatus;
 	}
 }

@@ -18,6 +18,7 @@
             $this->load->helper('country_helper');
             $this->load->helper('date');
             $this->load->helper('jwt_helper');
+            $this->load->helper('fod_helper');
 
             $this->load->model('user_subscription_model');
             $this->load->model('shopcategory_model');
@@ -57,7 +58,11 @@
             $spot = $spotId ? $this->shopspot_model->fetchSpot($vendorId, intval($spotId)) : null;            
             $allProducts = ($spot && $this->isLocalSpotOpen($spot)) ? $this->shopproductex_model->getMainProductsOnBuyerSide($vendorId, $spot) : null;
 
-            if ($allProducts) {
+            $isFodActive = $spotId ? Fod_helper::isFodActive($vendorId, $spotId) : true;
+            
+
+
+            if ($allProducts && $isFodActive) {
                 $data = [
                     'uploadProductImageFolder'  => $this->config->item('uploadProductImageFolder'),
                     'mainProducts'              => $allProducts['main'],
@@ -79,7 +84,7 @@
             $data['spotId'] = $spotId;
             $data['spotPosOrders'] = $this->shopposorder_model->setProperty('spotId', $spotId)->fetchSpotPosOrders();
             $data['isPos'] = 1;
-
+            $data['fodIsActive'] = $isFodActive;
             $this->global['pageTitle'] = 'TIQS : POS';
             $this->loadViews('pos/pos', $this->global, $data, null, 'headerWarehouse');
             return;
@@ -178,4 +183,6 @@
             }
             return;
         }
+
+       
     }
