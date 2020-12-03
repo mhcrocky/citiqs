@@ -155,18 +155,18 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
                                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-share"></i><span>GO TO</span></a>
                                         <ul class="collapse">
                                             <li>
-                                                <a href="<?php echo $this->baseUrl . 'make_order?vendorid=' . $this->session->userdata('userId'); ?>">
+                                                <a href="<?php echo $this->baseUrl . 'make_order?vendorid=' . $this->session->userdata('userId'); ?>" target="_blank">
                                                     <i class="ti-shopping-cart-full"></i> <span>Shop</span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="<?php echo $this->baseUrl . 'check424/' . $this->session->userdata('userId'); ?>">
+                                                <a href="<?php echo $this->baseUrl . 'check424/' . $this->session->userdata('userId'); ?>" target="_blank">
                                                     <i class="ti-book"></i>
                                                     <span>Booking</span>
                                                 </a>
                                             </li>
-                                            <li><a href="<?php echo $this->baseUrl. 'agenda_booking/' . $userShortUrl; ?>"><i class="ti-agenda"></i> <span>Agenda Booking</span></a></li>
-                                            <li><a href="<?php echo $this->baseUrl. 'booking_agenda/' . $userShortUrl; ?>"><i class="ti-clipboard"></i> <span>Booking Agenda</span></a></li>
+                                            <li><a href="<?php echo $this->baseUrl. 'agenda_booking/' . $userShortUrl; ?>" target="_blank"><i class="ti-agenda"></i> <span>Agenda Booking</span></a></li>
+                                            <li><a href="<?php echo $this->baseUrl. 'booking_agenda/' . $userShortUrl; ?>" target="_blank"><i class="ti-clipboard"></i> <span>Booking Agenda</span></a></li>
                                         </ul>
                                     </li>
                                     <li><a href="<?php echo $this->baseUrl; ?>orders"><i class="ti-stats-up"></i> <span>Orders</span></a></li>

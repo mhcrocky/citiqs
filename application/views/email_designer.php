@@ -154,7 +154,7 @@
                                     <tbody>
                                     <tr>
                                         <td style="padding: 15px 50px 15px 50px;" class="buttons-full-width">
-                                            <table width="" cellspacing="0" cellpadding="0" border="0" align="center" class="button">
+                                            <table style="margin-right: auto !important;margin-left: auto !important;" width="" cellspacing="0" cellpadding="0" border="0" align="center" class="button">
                                                 <tbody>
                                                 <tr>
                                                     <td style="padding: 10px 10px 10px 10px;" class="button" >
@@ -358,7 +358,8 @@
                         <span class="configuration"> <a href="#" class="btn btn-default btn-xs clone"><i class="fa fa-clone"></i> </a>  </span>
 
                         <div class="preview">
-                            <div class="icon"></div>
+                            <div class="icon"><i style="font-size:50px;color:#BEBEBE;" class="fa fa-qrcode" aria-hidden="true"></i>
+</div>
                             <label>QR Code</label>
                         </div>
                         <div class="view">
@@ -366,8 +367,8 @@
                                 <table width="640" class="main" cellspacing="0" cellpadding="0" border="0" align="center" style="background-color:#FFFFFF;" data-type="qr-code-type">
                                     <tbody>
                                     <tr>
-                                        <td align="center" style="padding:15px 50px 15px 50px;" class="image">
-                                            <img class="qr-code-image"  border="0"  align="one_image" style="display:block;max-width:540px" alt="" src="<?php echo $this->baseUrl . 'assets/images/qrcode_preview.png'; ?>" tabindex="0">
+                                        <td align="center" style="padding:15px 50px 15px 50px;">
+                                            <img class="qr-code-image"  border="0"  align="one_image" style="display:block;max-width:350px" alt="" src="[QRlink]" tabindex="0">
                                         </td>
                                     </tr>
                                     </tbody>
@@ -382,6 +383,11 @@
             <label for="template_name">Template Name</label>
             <input style="border:1px solid #ced4da;" type="text" name="template_name" id="template_name" required value="<?php echo isset($email_template) ? $email_template->template_name : '' ?>">
             <div style="visibility: hidden;" class="required text-danger text-center" id="required">&nbsp &nbsp &nbsp This field is required</div>
+            <div class="w-100 mt-3">
+                <h4><b>Test Email</b></h4>
+                <input style="border:1px solid #ced4da;min-width:200px;height:35px;" type="email" name="email" id="email" placeholder="Send to Email" required>
+                <button style="height:35px;" class="btn btn-primary mr-auto" onclick="sendEmail()">Send</button>
+            </div>
         </div>
         <!-- END DROP ELEMENTS -->
         <!-- START ELEMENT -->
@@ -452,6 +458,34 @@
 
                 </div>
             </form>
+
+           
+            <div class="form-group" style="margin-top:5px;">
+                <label for="fontstyle">Copy Proprietary Words</label>
+                <input type="hidden" id="hiddentext" value="[customer]">
+                <select id="wordSelect" onchange="wordSelect()" style="margin-bottom:2px;" class="form-control">
+                    <option value="[customer]">[customer]</option>
+                    <option value="[eventdate]">[eventdate]</option>
+                    <option value="[reservationId]">[reservationId]</option>
+                    <option value="[spotId]">[spotId]</option>
+                    <option value="[price]">[price]</option>
+                    <option value="[spotlabel]">[spotlabel]</option>
+                    <option value="[name]">[name]</option>
+                    <option value="[email]">[email]</option>
+                    <option value="[mobile]">[mobile]</option>
+                    <option value="[fromtime]">[fromtime]</option>
+                    <option value="[totime]">[totime]</option>
+                    <option value="[timeslot]">[timeslot]</option>
+                    <option value="[TransactionId]">[TransactionId]</option>
+                    <option value="[voucher]">[voucher]</option>
+                    <option value="[logo]">[logo]</option>
+                </select>
+                <div class="w-100 text-right">
+                    <button id="button-copyWord" onclick="copyWord(this)" class="btn btn-secondary">Copy</button>
+                </div>
+
+            </div>
+           
 
             <div class="hide" id='font-style'>
                 <div id="mainfontproperties" >
@@ -639,7 +673,7 @@
             <div id="buttons" style="max-width: 400px">
                 <div class="form-group">
                     <select class="form-control">
-                        <option value="center">Align buttons to Center</option>
+                        <option value="middle">Align buttons to Center</option>
                         <option value="left">Align buttons to Left</option>
                         <option value="right">Align buttons to Right</option>
                     </select>
@@ -924,6 +958,8 @@
 
 <script>
     $(document).ready(function(){
+        let qrlink = "<?php echo $this->baseUrl . 'assets/images/qrcode_preview.png'; ?>";
+        $('.qr-code-image').attr('src', qrlink);
         //html5 uploader
         $('.button').click(function(){
             var formx = document.getElementById('form-id');
@@ -981,6 +1017,29 @@
             $('progress').attr({value:e.loaded,max:e.total});
         }
     }
+
+    function sendEmail(){
+        let email = $("#email").val();
+        let html = $("#tosave").html();
+        $.post("<?php echo base_url(); ?>ajaxdorian/testingemail", {email: email, html: html});
+    }
+
+    function copyWord(el){
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($("#hiddentext").val()).select();
+        document.execCommand("copy");
+        $(el).text('Copied');
+        $temp.remove();
+        
+    }
+
+    function wordSelect(){
+        var text = $('#wordSelect option:selected').val();
+        $('#hiddentext').val(text);
+        $('#button-copyWord').text('Copy');
+    }
+
 
     function inserisci(elemento){
         var link = $(elemento);
