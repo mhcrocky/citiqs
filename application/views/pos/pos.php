@@ -24,7 +24,8 @@
 								</button>
 							</a>
 						</div>
-					<?php } else { ?>
+					<?php } ?>
+					<?php if (!$fodIsActive) { ?>
 						<h1>FOD is not active</h1>
 					<?php } ?>
 				</div>
