@@ -485,6 +485,7 @@
                 </select>
                 <div class="w-100 text-right mt-1">
                     <button id="button-copyWord" onclick="copyWord(this)" class="btn btn-secondary">Copy</button>
+                    <button onclick="paste()" class="btn btn-secondary">Paste</button>
                 </div>
 
             </div>
@@ -1028,11 +1029,26 @@
             alertify['success']('Email sent successfully!');
         });
     }
+    function paste() {
+        var dT = null;
+        try{ dT = new DataTransfer();} catch(e){}
+        var evt = new ClipboardEvent('paste', {clipboardData: dT});
+        evt.clipboardData.setData('text/plain', $("#copytext").val());
+        document.onpaste = function(e){
+            console.log('onpaste: ', e.clipboardData.getData('text/plain'));
+        };
+        document.dispatchEvent(evt);
+        console.log($('.ck.ck-content').html());
+    }
+
+
 
     function copyWord(el){
         var $temp = $("<input>");
         $("body").append($temp);
         $temp.val($("#hiddentext").val()).select();
+        $("body").append("<input type='hidden' id='copytext'>");
+        $("#copytext").val($("#hiddentext").val());
         document.execCommand("copy");
         $(el).text('Copied');
         $temp.remove();
