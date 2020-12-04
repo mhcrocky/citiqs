@@ -131,7 +131,9 @@ class BBOrders extends REST_Controller
 			// 'PaymentLines1'     => $this->paymentLines,
 		];
 
-		$this->shoporder_model->setObjectId($orderId)->setProperty('bbOrderPrint', '1')->update();
+		if (empty($get['ps'])) {
+			$this->shoporder_model->setObjectId($orderId)->setProperty('bbOrderPrint', '1')->update();
+		}
 
 		// header('Content-type: image/png');
 		echo json_encode($jsonoutput);

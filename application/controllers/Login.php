@@ -229,10 +229,10 @@ class Login extends BaseControllerWeb
 			}
 			$this->global['pageTitle'] = 'TIQS : REGISTER';
 			$this->loadViews("forgotPassword", $this->global, NULL, NULL);
-//			$this->load->view('forgotPassword');
+			// $this->load->view('forgotPassword');
 		} else {
 			redirect('/loggedin');
-			//redirect('/dashboard');
+			// redirect('/dashboard');
 		}
 	}
 
@@ -318,14 +318,29 @@ class Login extends BaseControllerWeb
 		}
 	}
 
+	private function insertShopAndPerfexUser($userId): void
+	{
+		// fetch user object
+		$this->user_model->setUniqueValue($userId)->setWhereCondtition()->setUser();
+
+		// insert shoplclient
+		$this->shopvendor_model->setObjectFromArray(['vendorId' => $this->user_model->id])->create();
+
+		// insert vendor working times
+		$this->shopvendortime_model->setProperty('vendorId', $this->user_model->id)->insertVendorTime();
+
+		// insert user in perfex crm		
+		Perfex_helper::apiCustomer($this->user_model);
+
+	}
+
 	function activate($userId, $code)
 	{
 		$logincred=$this->login_model->activateaccount($userId, $code);
-
-
 		$is_correct = $this->login_model->checkactivateaccount($userId, $code);
 
 		if ($is_correct == 1) {
+			$this->insertShopAndPerfexUser($userId);
 			$status = 'success';
 			$message = 'Verified your account successfully, you can login now with your credentials.';
 			// vincent wants to login automatically
@@ -341,7 +356,6 @@ class Login extends BaseControllerWeb
 			$this->loadViews("code", $this->global, NULL, NULL, "headerpublic");
 
 		}
-
 	}
 
 	/**
@@ -622,7 +636,7 @@ class Login extends BaseControllerWeb
 			'businessTypes' => $this->businesstype_model->getAll(),
 			'countries' => Country_helper::getCountries(),
 		];
-		$this->loadViews("registerbusiness", $this->global, $data, NULL, "headerpubliclogin");
+		$this->loadViews("registerbusiness", $this->global, $data, 'footerweb', 'headerpubliclogin');
 	}
 
 	public function google()
@@ -852,7 +866,7 @@ class Login extends BaseControllerWeb
 		$this->form_validation->set_rules('city', 'City', 'trim|required|max_length[128]');
 		$this->form_validation->set_rules('country', 'Country', 'trim|required|max_length[128]');
 
-		$hotel = $this->input->post(null, true);
+		$hotel = Utility_helper::sanitizePost();
 		$this->user_model->setUniqueValue($hotel['email'])->setWhereCondtition()->setUser();
 
 		// when user already exists...
@@ -881,7 +895,7 @@ class Login extends BaseControllerWeb
 			foreach($hotel as $key => $value) {
 				set_cookie($key, $value, (60 * 60));
 			}
-			$this->session->set_flashdata('error 20101', 'Process failed! Data given not valid');
+			$this->session->set_flashdata('error', '20101 Process failed! Data given not valid');
 			redirect('/registerbusiness');
 		}
 
@@ -890,19 +904,9 @@ class Login extends BaseControllerWeb
 		$hotel['objectName'] = $hotel['username'];
 		$hotel['zipCode'] = $hotel['zipcode'];
 
-		Perfex_helper::apiCustomer($this->user_model);
-
-		// insert shoplclient
-		$shopClient = [
-			'vendorId' => $this->user_model->id
-		];
-		$this->shopvendor_model->setObjectFromArray($shopClient)->create();
-
-		// insert vendor working times
-		$this->shopvendortime_model->setProperty('vendorId', $this->user_model->id)->insertVendorTime();
-
 		$this->session->set_flashdata('success', $this->language->Line("registerbusiness-F1002A","Account created Successfully. In your given email we have send your activation link/code and credentials"));
 
-		redirect('https://tiqs.com/alfred/login');
+		$redirect = base_url() . 'login';
+		redirect($redirect);
 	}
 }
