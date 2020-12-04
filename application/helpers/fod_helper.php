@@ -8,7 +8,7 @@
 
         public static function isFodActive(int $venodrId, int $spotId): bool
         {
-            return true;
+            // return true;
             $CI =& get_instance();
             $CI->load->model('shopvendorfod_model');
 
