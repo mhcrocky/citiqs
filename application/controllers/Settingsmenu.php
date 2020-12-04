@@ -63,8 +63,7 @@ class  Settingsmenu extends BaseControllerWeb
         $this->load->helper('delete_unsaved_floorplans_helper');
         delete_unsaved_floorplans();
 	    $data = [];
-		if ($this->user_subscription_model->getLastSubscriptionId($this->userId)) {
-			$this->floorplandetails_model->spot_object_id = $objectId;
+		$this->floorplandetails_model->spot_object_id = $objectId;
 			$data = [
 				'floorPlans' => $this->floorplandetails_model->fetch(),
 				'subscripitonPaid' => 1,
@@ -74,15 +73,9 @@ class  Settingsmenu extends BaseControllerWeb
                 $data['floorPlans'] = Utility_helper::resetArrayByKeyMultiple($data['floorPlans'], 'id');
 			}
 			if ($data['object']) {
+				
 				$data['object'] = reset($data['object']);
 			}
-		} else {
-			$data['subscripitonPaid'] = 0;
-		}
-		// var_dump($data['object']);
-		// var_dump($data['floorPlans']);
-		// die();
-
 		$this->global['pageTitle'] = 'TIQS : FLOOR PLANS';
 		$this->loadViews('objectFloorPlans', $this->global, $data, 'footerbusiness', 'headerbusiness'); // Menu profilepage
 	}
