@@ -852,7 +852,7 @@ class Login extends BaseControllerWeb
 		$this->form_validation->set_rules('city', 'City', 'trim|required|max_length[128]');
 		$this->form_validation->set_rules('country', 'Country', 'trim|required|max_length[128]');
 
-		$hotel = $this->input->post(null, true);
+		$hotel = Utility_helper::sanitizePost();
 		$this->user_model->setUniqueValue($hotel['email'])->setWhereCondtition()->setUser();
 
 		// when user already exists...
@@ -903,6 +903,7 @@ class Login extends BaseControllerWeb
 
 		$this->session->set_flashdata('success', $this->language->Line("registerbusiness-F1002A","Account created Successfully. In your given email we have send your activation link/code and credentials"));
 
-		redirect('https://tiqs.com/alfred/login');
+		$redirect = base_url() . 'login';
+		redirect($redirect);
 	}
 }

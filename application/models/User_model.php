@@ -814,6 +814,9 @@ class User_model extends CI_Model
     public function insertUser(array $user): bool
     {
 
+        if ($user['lat'] === '0' && $user['lng'] === '0') {
+            return false;
+        }
         $this->db->insert('tbl_user', $user);
         $this->id = $this->db->insert_id();
         return $this->id ? true : false;
@@ -890,7 +893,7 @@ class User_model extends CI_Model
 
     public function sendActivationLink(): bool
     {
-        if ($this->active === '0') {
+        if ($this->id && $this->active === '0') {
             // in $this must be set password (not hashed)
             return Email_helper::sendUserActivationEmail($this);
         }
