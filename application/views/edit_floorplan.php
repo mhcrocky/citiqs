@@ -1,6 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<div class="container-fluid">
-	<div class="row create_floor">
+<div style="margin-top: 3%;" class="main-content-inner text-center">
+<div style="background: rgba(255,255,255,.2);padding: 25px;">
+	<div  class="row create_floor">
 		<div class="col-md-12 mt-2" >
 			<div class="form-group" style="margin-top:70px !important">
 				<label for="floor_plan_name">Floor plan name</label>
@@ -31,9 +32,9 @@
 		</div>
 
 	</div>
-    <div class="row">
+    <div class="row images-category">
         <div class="col-md-3">
-            <div class="form-group">
+            <div class="form-group mb-0">
                 <label for="area_type">Images category</label>
                 <select class="form-control" id="images_category">
                     <?php foreach ($floorplan_images as $key => $category) {?>
@@ -54,23 +55,24 @@
                 </div>
             </div>
         <?php } ?>
-        <div class="col-md-3 mt-3">
+        <div class="col-md-3">
             <button type="button" id="add_image" class="btn btn-outline-success">Add image</button>
         </div>
     </div>
 	<div class="row mh-100 mb-5 canvas_row" id="canvas_row">
-		<div class="col-md-12 mh-100" id="floor_image">
+		<div class="col-md-12 mh-100 p-2" id="floor_image">
 			<canvas id="canvas" width="200" height="200"></canvas>
 		</div>
 	</div>
 
 	<div class="row">
-		<h1>Areas info</h1>
+		<h1>&nbsp &nbsp Areas info</h1>
 		<pre>
 			<?php if (isset($areas)) {var_dump($areas);} ; ?>
 		</pre>
 	</div>
 </div>
+						</div>
 <div class="modal" id="area_options" tabindex="-1" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
