@@ -34,17 +34,11 @@
         
         public static function sendUserActivationEmail(object $user): bool
         {
-            $config = self::getSandyConfig();
-            $sendy = new \SendyPHP\SendyPHP($config);
-            $responseArray = $sendy->subscribe([
-                'name' => $user->username,
-                'email' => $user->email,
-                'Code' => $user->code,
-                'Password' => $user->password,
-                'Link_activation'=> base_url() . 'login/activate/' . $user->id . '/' . $user->code
-            ]);
 
-            return $responseArray['status'];
+            $link = base_url() . 'login/activate/' . $user->id . '/' . $user->code;
+            $message = '<p>Click on <a href="' . $link .'" target="_blank">link</a> to activate your account</p>';
+            $subject = 'Activation link';
+            return self::sendEmail($user->email, $subject, $message);
         }
 
         public static function sendItemFoundEmail($label): bool
