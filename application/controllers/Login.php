@@ -229,10 +229,10 @@ class Login extends BaseControllerWeb
 			}
 			$this->global['pageTitle'] = 'TIQS : REGISTER';
 			$this->loadViews("forgotPassword", $this->global, NULL, NULL);
-//			$this->load->view('forgotPassword');
+			// $this->load->view('forgotPassword');
 		} else {
 			redirect('/loggedin');
-			//redirect('/dashboard');
+			// redirect('/dashboard');
 		}
 	}
 
@@ -318,14 +318,29 @@ class Login extends BaseControllerWeb
 		}
 	}
 
+	private function insertShopAndPerfexUser($userId): void
+	{
+		// fetch user object
+		$this->user_model->setUniqueValue($userId)->setWhereCondtition()->setUser();
+
+		// insert shoplclient
+		$this->shopvendor_model->setObjectFromArray(['vendorId' => $this->user_model->id])->create();
+
+		// insert vendor working times
+		$this->shopvendortime_model->setProperty('vendorId', $this->user_model->id)->insertVendorTime();
+
+		// insert user in perfex crm		
+		Perfex_helper::apiCustomer($this->user_model);
+
+	}
+
 	function activate($userId, $code)
 	{
 		$logincred=$this->login_model->activateaccount($userId, $code);
-
-
 		$is_correct = $this->login_model->checkactivateaccount($userId, $code);
 
 		if ($is_correct == 1) {
+			$this->insertShopAndPerfexUser($userId);
 			$status = 'success';
 			$message = 'Verified your account successfully, you can login now with your credentials.';
 			// vincent wants to login automatically
@@ -341,7 +356,6 @@ class Login extends BaseControllerWeb
 			$this->loadViews("code", $this->global, NULL, NULL, "headerpublic");
 
 		}
-
 	}
 
 	/**
@@ -889,17 +903,6 @@ class Login extends BaseControllerWeb
 		$hotel['objectTypeId'] = $hotel['business_type_id'];
 		$hotel['objectName'] = $hotel['username'];
 		$hotel['zipCode'] = $hotel['zipcode'];
-
-		Perfex_helper::apiCustomer($this->user_model);
-
-		// insert shoplclient
-		$shopClient = [
-			'vendorId' => $this->user_model->id
-		];
-		$this->shopvendor_model->setObjectFromArray($shopClient)->create();
-
-		// insert vendor working times
-		$this->shopvendortime_model->setProperty('vendorId', $this->user_model->id)->insertVendorTime();
 
 		$this->session->set_flashdata('success', $this->language->Line("registerbusiness-F1002A","Account created Successfully. In your given email we have send your activation link/code and credentials"));
 
