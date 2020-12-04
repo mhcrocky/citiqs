@@ -622,7 +622,7 @@ class Login extends BaseControllerWeb
 			'businessTypes' => $this->businesstype_model->getAll(),
 			'countries' => Country_helper::getCountries(),
 		];
-		$this->loadViews("registerbusiness", $this->global, $data, NULL, "headerpubliclogin");
+		$this->loadViews("registerbusiness", $this->global, $data, 'footerweb', 'headerpubliclogin');
 	}
 
 	public function google()
@@ -881,7 +881,7 @@ class Login extends BaseControllerWeb
 			foreach($hotel as $key => $value) {
 				set_cookie($key, $value, (60 * 60));
 			}
-			$this->session->set_flashdata('error 20101', 'Process failed! Data given not valid');
+			$this->session->set_flashdata('error', '20101 Process failed! Data given not valid');
 			redirect('/registerbusiness');
 		}
 

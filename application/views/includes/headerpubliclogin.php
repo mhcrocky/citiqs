@@ -56,7 +56,7 @@
 		<a href="<?php echo base_url(); ?>start" class="nav-logo">
 			<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="">
 		</a>
-		<div class="header-menu" id="header-menu" align="right" style="background: #0d173b">
+		<div class="header-menu" id="header-menu" style="text-align:right; background: #0d173b">
 			<a style="color: #FFFFFF; background: #0d173b" href="<?php echo $this->baseUrl; ?>home#dhl-section" id='dhl-button'></a>
 			<a style="color: #FFFFFF; background: #0d173b" href="<?php echo $this->baseUrl; ?>found"></a>
 			<a style="color: #FFFFFF; background: #0d173b" href="<?php echo $this->baseUrl; ?>check424"></a>

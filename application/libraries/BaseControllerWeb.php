@@ -130,13 +130,12 @@ class BaseControllerWeb extends CI_Controller
         $this->load->view($viewName, $pageinfo);
 
         if($Headermenu!='none') {
-        	if($footerInfo == NULL){
+        	if(is_null($footerInfo)){
         		$footerInfo = "footerweb";
-			}
-
+            }
 			$this->load->view('includes/'.$footerInfo, $pageinfo);
-		}
-//        $this->tiqstats($viewName);
+        }
+        // $this->tiqstats($viewName);
     }
 
     private function setSessionDefaultLang(): void

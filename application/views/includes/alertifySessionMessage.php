@@ -1,22 +1,21 @@
-<script>
+
 <?php
-    $fail =  $this->session->flashdata('fail');
+    $fail =  $this->session->flashdata('fail');  
     if($fail) {
 ?>
-    alertify.error('<?php echo $fail; ?>');
+    <script>alertify.error('<?php echo $fail; ?>');</script>
 <?php 
     }
     $error = $this->session->flashdata('error');
     if($error) {
 ?>
-    alertify.error('<?php echo $error; ?>');
+    <script>alertify.error('<?php echo $error; ?>');</script>
 <?php
     }
     $success = $this->session->flashdata('success');
     if($success){
 ?>
-    alertify.success('<?php echo $success; ?>');
+    <script>alertify.success('<?php echo $success; ?>');</script>
 <?php 
     }
 ?>
-</script>
