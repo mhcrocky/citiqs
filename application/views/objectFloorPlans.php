@@ -1,7 +1,8 @@
-<div class="main-wrapper theme-editor-wrapper">
+<div style="marginn-top:0;" class="main-wrapper theme-editor-wrapper">
 
     
     <?php
+
         if ($object['startDate'] && $object['endDate'] && $object['startTime'] && $object['endTime'] && $object['workingDays'] ) {
         $workingTime  = 'This object is open from ' . $object['startDate'] . ' to ' . $object['endDate'] . ', ';
         $workingTime .= 'from ' . $object['startTime'] . ' to ' . $object['endTime'] . ' ';
@@ -11,7 +12,7 @@
         }
         $workingTime .= '.';
     ?>
-    <div class="grid-wrapper">
+    <div style="background: none !important;" class="grid-wrapper">
         <div class="grid-list">
             <div class="grid-list-header row">
                 <div class="col-lg-4 col-md-4 col-sm-12 grid-header-heading">
