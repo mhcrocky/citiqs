@@ -8,6 +8,7 @@ class  Settingsmenu extends BaseControllerWeb
     /**
      * This is default constructor of the class
      */
+	protected $userId;
     public function __construct()
     {
         parent::__construct();
@@ -26,6 +27,7 @@ class  Settingsmenu extends BaseControllerWeb
 		$this->load->library('form_validation');
 		$this->load->config('custom');
 		$this->isLoggedIn();
+		$this->userId = $this->session->userdata('userId');
     }
 
     public function index(): void
@@ -33,13 +35,9 @@ class  Settingsmenu extends BaseControllerWeb
         $this->load->helper('delete_unsaved_floorplans_helper');
         delete_unsaved_floorplans();
 		$data = [];
-
-		if ($this->user_subscription_model->getLastSubscriptionId($this->userId)) {
-			$data['objects'] =	$this->objectspot_model->fetch(intval($_SESSION['userId']));
-		};
-
+		$data['objects'] =	$this->objectspot_model->fetch(intval($_SESSION['userId']));
 		$this->global['pageTitle'] = 'TIQS : OBJECTS';
-		$this->loadViews('spotObjects', $this->global, $data, NULL, 'headerwebloginhotelSettings');
+		$this->loadViews('spotObjects', $this->global, $data, 'footerbusiness', 'headerbusiness');
 		return;
 	}
 
@@ -47,11 +45,7 @@ class  Settingsmenu extends BaseControllerWeb
 	{
 		$data = $this->input->post(null, true);
 		$data['workingDays'] = serialize($data['workingDays']);
-		$update = $this
-			->objectspot_model
-			->setObjectId(intval($objectId))
-			->setObjectFromArray($data)
-			->update();
+		$update = $this->objectspot_model->updateSpotObject($objectId, $data);
 
 		if ($update) {
 			$this->session->set_flashdata('success', 'Update success! Please check working time and time slots on floor plan(s) and adjust them to new working time.');
@@ -90,7 +84,7 @@ class  Settingsmenu extends BaseControllerWeb
 		// die();
 
 		$this->global['pageTitle'] = 'TIQS : FLOOR PLANS';
-		$this->loadViews('objectFloorPlans', $this->global, $data, NULL, 'headerwebloginhotelSettings'); // Menu profilepage
+		$this->loadViews('objectFloorPlans', $this->global, $data, 'footerbusiness', 'headerbusiness'); // Menu profilepage
 	}
 
 	public function edit_floorplan($objectId, $planId = null)
@@ -128,7 +122,7 @@ class  Settingsmenu extends BaseControllerWeb
         $data['floorplan_images_path'] = $this->config->item('floorPlansImagesPath');
         $data['floorplan_images']  = $floorplan_images;
         $data['objectId'] = $objectId;
-		$this->loadViews('edit_floorplan', $this->global, $data, NULL, 'headerwebloginhotelSettings'); // Menu profilepage
+		$this->loadViews('edit_floorplan', $this->global, $data, 'footerbusiness', 'headerbusiness'); // Menu profilepage
 	}
 
 	public function show_floorplan ($objectId, $planId = null)
@@ -199,5 +193,19 @@ class  Settingsmenu extends BaseControllerWeb
 		}
 		redirect($redirect);
 		return;
+	}
+
+	public function saveSpotObject(){
+		$data = [
+			'userId' => $this->userId,
+			'objectTypeId' => $this->input->post('objectType'),
+			'objectName' => $this->input->post('name'),
+			'country' => $this->input->post('country'),
+			'city' => $this->input->post('city'),
+			'zipCode' => $this->input->post('zipcode'),
+			'address' => $this->input->post('address')
+		];
+
+		$this->objectspot_model->saveSpotObject($data);
 	}
 }

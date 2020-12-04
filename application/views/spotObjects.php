@@ -1,5 +1,5 @@
-<div class="main-wrapper theme-editor-wrapper">
-    <div class="grid-wrapper">
+<div style="margin-top: 0" class="main-wrapper theme-editor-wrapper">
+    <div style="background: none !important;" class="grid-wrapper">
         <div class="grid-list">
             <div class="grid-list-header row">
                 <div class="col-lg-4 col-md-4 col-sm-12 grid-header-heading">
@@ -40,9 +40,9 @@
                     ?>
                     <div class="grid-item">
                         <div class="item-header">
-                            <p class="item-description"><?php $object['objectName']; ?></p>
-                            <p class="item-category"><?php $object['startTime']; ?></p>
-                            <p class="item-category"><?php $object['endTime']; ?></p>
+                            <p class="item-description"><?php echo $object['objectName']; ?></p>
+                            <p class="item-category"><?php echo $object['startTime']; ?></p>
+                            <p class="item-category"><?php echo $object['endTime']; ?></p>
                         </div><!-- end item header -->
                         <div>
                             <p style="text-align:center">
@@ -70,7 +70,7 @@
                                 </div>
                             </div>
                             <div class="edit-single-user-container">
-                                <form id="manageObjectForm<?php echo $object['id']; ?>" class="form-inline" action="<?php echo $this->baseUrl . 'index.php/settingsmenu/editSpotObject/' . $object['id']; ?>" method="post">
+                                <form id="manageObjectForm<?php echo $object['id']; ?>" class="form-inline" action="<?php echo $this->baseUrl . 'settingsmenu/editSpotObject/' . $object['id']; ?>" method="post">
                                     <h3>Working time</h3>
                                     <div class="checkbox">
                                         <label class="checkbox-inline" style="margin-left:10px">
