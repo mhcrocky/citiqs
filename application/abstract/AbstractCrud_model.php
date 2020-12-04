@@ -41,7 +41,7 @@
         public function create(): bool
         {
             $data = $this->getDataArrayForDatabase();
-            if (!$data || !$this->insertValidate($data)) return false;
+            if (!$data) return false;
             $this->db->insert($this->getThisTable(), $data);
             $this->id  = $this->db->insert_id();
             return $this->id > 0 ? true : false;
@@ -112,7 +112,7 @@
         public function update(): bool
         {
             $data = $this->getDataArrayForDatabaseUpdate();
-            if (!$data || !$this->updateValidate($data)) return false;
+            if (!$data) return false;
             $where = ' id = ' . $this->id;
             return $this->db->update($this->getThisTable(), $data, $where);
         }
