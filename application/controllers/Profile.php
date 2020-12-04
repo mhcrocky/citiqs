@@ -45,7 +45,7 @@ class  Profile extends BaseControllerWeb
 			'countries' => Country_helper::getCountries(),
 			'action' => 'profileUpdate',
 			'businessTypes' => $this->businesstype_model->getAll(),
-			'vendor' =>	'',//$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData(),
+			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData(),
 			'workingTime' => $this->shopvendortime_model->setProperty('vendorId', $this->userId)->fetchWorkingTime(),
 			'dayOfWeeks' => $this->config->item('weekDays'),
 		];
