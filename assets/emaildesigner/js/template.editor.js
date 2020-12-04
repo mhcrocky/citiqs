@@ -826,7 +826,6 @@ function configurationElm(e, t) {
 
 }
 
-
 function subtitle(el) {
 
     var textValue = $(el).html();
@@ -842,6 +841,10 @@ function subtitle(el) {
                 //$('#' + $('#path').val()).find($('#selector').val()).eq(0).empty();
                 $(el).html(editor.getData());
                 //$('#' + $('#path').val()).find($('#selector').val()).html(editor.getData());
+            } );
+            editor.model.change( writer => {
+                const insertPosition = editor.model.document.selection.getFirstPosition();
+                writer.insertText( 'foo', insertPosition );
             } );
         } )
         .catch( error => {
@@ -864,6 +867,10 @@ function maintitle(el) {
                 //$('#' + $('#path').val()).find($('#selector').val()).eq(0).empty();
                 $(el).html(editor.getData());
                 //$('#' + $('#path').val()).find($('#selector').val()).html(editor.getData());
+            } );
+            editor.model.change( writer => {
+                const insertPosition = editor.model.document.selection.getFirstPosition();
+                writer.insertText( 'foo', insertPosition );
             } );
         } )
         .catch( error => {
