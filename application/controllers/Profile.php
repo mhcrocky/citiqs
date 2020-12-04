@@ -8,6 +8,7 @@ class  Profile extends BaseControllerWeb
 	/**
 	 * This is default constructor of the class
 	 */
+	protected $userId;
 	public function __construct()
 	{
 		parent::__construct();
@@ -28,6 +29,7 @@ class  Profile extends BaseControllerWeb
 		$this->load->library('language', array('controller' => $this->router->class));
 
 		$this->isLoggedIn();
+		$this->userId = $this->session->userdata('userId');
 	}
 
 	public function index()
@@ -43,7 +45,7 @@ class  Profile extends BaseControllerWeb
 			'countries' => Country_helper::getCountries(),
 			'action' => 'profileUpdate',
 			'businessTypes' => $this->businesstype_model->getAll(),
-			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData(),
+			'vendor' =>	'',//$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData(),
 			'workingTime' => $this->shopvendortime_model->setProperty('vendorId', $this->userId)->fetchWorkingTime(),
 			'dayOfWeeks' => $this->config->item('weekDays'),
 		];

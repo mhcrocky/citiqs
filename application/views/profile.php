@@ -54,7 +54,7 @@
 								<div>
 									<p style="font-family: caption-light; padding: 10px">Business type</p>
 									<div class="selectWrapper mb-35">
-										<select class="selectBox" name="business_type_id" style="font-family:'caption-light';" required>
+										<select class="selectBox" id="business_type" name="business_type_id" style="font-family:'caption-light';" required>
 											<option value=""><?php echo $this->language->Line("registerbusiness-V1V1600A1","SELECT BUSINESS TYPE");?></option>
 											<?php foreach ($businessTypes as $type) { ?>
 												<option <?php if($type['id'] === $user->business_type_id) echo 'selected'; ?> value="<?php echo $type['id'] ?>">
@@ -171,7 +171,7 @@
 										"); ?>
 									</p>
 									<div class="form-group has-feedback selectWrapper mb-35">
-										<select class="selectBox" name="country" style="font-family:'caption-light';" required>
+										<select class="selectBox" name="country" id="country" style="font-family:'caption-light';" required>
 											<?php foreach ($countries as $code => $country) { ?>
 												<option value="<?php echo $code; ?>" <?php if ($code === $user->country) echo 'selected'; ?> >
 													<?php echo $this->language->line($country,$country); ?>
@@ -221,7 +221,7 @@
 							</div>
 							<div class="form-group has-feedback" style="padding: 30px;">
 								<div style="text-align: center; ">
-									<input type="submit" class="button button-orange" value="<?php echo $this->language->line("PROF-040 ",'SAVE');?>" style="border: none" />
+									<input type="submit" class="button button-orange" onclick="saveSpotObject()" value="<?php echo $this->language->line("PROF-040 ",'SAVE');?>" style="border: none" />
 								</div>
 							</div>
 						</div>
@@ -1158,6 +1158,24 @@
 		return "<?php echo base_url('index.php/ajax/users/'); ?>";
 	}
 	var baseURL = "<?php echo $this->baseUrl; ?>"
+
+	function saveSpotObject() {
+		let name = $("#fname").val();
+		let city = $("#city").val();
+		let objectType = $("#business_type option:selected").val();
+		let country = $("#country option:selected").val();
+		let zipcode = $("#zipcode").val();
+		let address = $("#addres").val();
+		let data = {
+			name: name,
+			city: city,
+			country: country,
+			objectType: objectType,
+			zipcode: zipcode,
+			address: address
+		};
+		$.post('<?php base_url(); ?>settingsmenu/savespotobject',data);
+	}
 		// date time picker
 	$(document).ready(function(){
 		// $('.timePickers').datetimepicker({

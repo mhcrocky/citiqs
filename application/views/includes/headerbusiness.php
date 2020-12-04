@@ -119,6 +119,8 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.umd.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+        <script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js" ></script>
+        <script src="<?php echo $this->baseUrl; ?>assets/home/js/objectFloorPlans.js" ></script>
         <?php
             if (isset($js) AND is_array($js)) { // ???????????  MOVE TO FOOTER IF USER CUSTOM SCRIPTS ???????????????
                 foreach ($js as $jsLink) { 

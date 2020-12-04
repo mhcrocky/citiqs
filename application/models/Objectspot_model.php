@@ -24,6 +24,11 @@
 
         private $table = 'tbl_spot_objects';
 
+        public function __construct(){
+            parent::__construct();
+            $this->load->database();
+        }
+
         protected function setValueType(string $property,  &$value): void
         {
             if ($property === 'id' || $property === 'userId' || $property === 'objectTypeId') {
@@ -41,6 +46,12 @@
         {
             $object = $this->prepareObjectFromUser($user);
             return $this->setObjectFromArray($object)->create();
+        }
+
+        public function updateSpotObject($objectId, $data)
+        {
+            $this->db->where('id',$objectId);
+            return $this->db->update($this->table,$data);
         }
 
         public function getUsersObjects(int $userId): ?array
@@ -80,5 +91,15 @@
                 }, $objects);
             }
             return $objects;
+        }
+
+        public function saveSpotObject($data){
+            $spotObjectExists = $this->db->select('*')->from($this->table)->where('userId',$data['userId'])->get();
+            if($spotObjectExists->num_rows() > 0){
+                 $this->db->where('userId', $data['userId']);
+                 return $this->db->update($this->table,$data);
+            }
+            
+            return $this->db->insert($this->table, $data);
         }
     }
