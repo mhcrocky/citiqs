@@ -199,6 +199,28 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
                                                 </ul>
                                             </li>
                                         </ul>
+                                    </li> 
+                                    <li>
+                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-bookmark-alt"></i><span>Floorplan</span></a>
+                                        <ul class="collapse">
+                                            <li><a href="<?php echo $this->baseUrl;?>settingsmenu"><i class="ti-settings"></i> <span>Settings</span></a></li>
+                                            <li>
+                                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Settings</span></a>
+                                                <ul class="collapse">
+                                                    <li>
+                                                        <a href="<?php echo $this->baseUrl; ?>customer_panel/settings">
+                                                            <i class="ti-shopping-cart-full"></i> 
+                                                            <span>General</span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="<?php echo $this->baseUrl. 'booking_agenda/design'; ?>"
+                                                            ><i class="ti-clipboard"></i> <span>Booking Agenda</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
                                     </li>                        
                                     <li>
                                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-stamp"></i><span>Profile</span></a>
