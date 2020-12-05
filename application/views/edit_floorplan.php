@@ -1,4 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/floorplan/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/floorplan/assets/css/main.css">
 <div style="margin-top: 3%;" class="main-content-inner text-center">
 <div style="background: rgba(255,255,255,.2);padding: 25px;">
 	<div  class="row create_floor">
