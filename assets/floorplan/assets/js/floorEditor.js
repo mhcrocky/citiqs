@@ -130,6 +130,7 @@ class FloorEditor extends Floorplan {
 		this.img_src = BASE_URL + 'uploads/floorPlans/' + upload_data.result.file;
 		this.floorplanID = upload_data.result.floorplanID;
 		this.imageUploaded = true;
+		console.log('this.img_src', this.img_src);
 
 		$("<img/>")
 			.attr("src", this.img_src)
@@ -142,7 +143,7 @@ class FloorEditor extends Floorplan {
 						originY: 'top'
 					});
 					this.bgImage = img;
-					this.scaleAndPositionCanvas(img);
+					this.scaleAndPositionCanvas();
 				});
 				this.canvas.setDimensions({
 					width: this.canvasOriginalWidth,
