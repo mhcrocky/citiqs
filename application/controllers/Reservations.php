@@ -25,12 +25,24 @@ class  Reservations extends BaseControllerWeb
 		$this->load->config('custom');
 	}
 
-	public function index()
+	public function index($spotId = false)
 	{
 		$this->global['pageTitle'] = 'TIQS : RESERVATIONS';
+		$criteria = ['tbl_spot_objects.id>'=>0];
+
+		if($spotId) {
+            $criteria['id'] = $spotId;
+        }
+
 		$data = [
-			'objects' => $this->objectspot_model->read(['tbl_spot_objects.*'],['tbl_spot_objects.id>'=>0])
+			'objects' => $this->objectspot_model->read(['tbl_spot_objects.*'],$criteria)
 		];
+
+		if($spotId && $data['objects'] && count($data['objects']) == 0) {
+		    redirect('reservations');
+        }
+
+        $this->global['page'] = 'reservations_index';
 
 		if (!empty($_GET)) {
 			$get = $this->input->get(null, true);
@@ -38,23 +50,28 @@ class  Reservations extends BaseControllerWeb
 			$to = (isset($get['date']) && isset($get['end'])) ? $get['date'] . ' ' . $get['end'] . ':00' : null;
 
 			$data['floorplans'] = $this->floorplandetails_model->read(['*'], ['spot_object_id' => $get['object']]);
-			foreach($data['floorplans'] as $key => $floorplan) {
-				$data['floorplans'][$key]['areas'] = $this->reservation_model->getReservations($floorplan['id'], $get['persons'], $from, $to);
-				$data['floorplans'][$key]['timeSlots'] = $this->floorpalspottimes_model->read(
-					[
-						'tbl_floorplan_time_slots.id AS slotId',
-						'tbl_floorplan_time_slots.timeFrom AS slotTimeFrom',
-						'tbl_floorplan_time_slots.timeTo AS slotTimeTo',
-						'tbl_floorplan_time_slots.price AS slotPrice'
-					],
-					['tbl_floorplan_time_slots.floorPlanId=' => $floorplan['id']]
-				);
-				for ($i = 0; $i < count($data['floorplans'][$key]['areas']); $i++) {
-					$data['floorplans'][$key]['areas'][$i]['timeslots'] = $data['floorplans'][$key]['timeSlots'];
-				}
-			}
+
+			if($data['floorplans']) {
+                foreach($data['floorplans'] as $key => $floorplan) {
+                    $data['floorplans'][$key]['areas'] = $this->reservation_model->getReservations($floorplan['id'], $get['persons'], $from, $to);
+                    $data['floorplans'][$key]['timeSlots'] = $this->floorpalspottimes_model->read(
+                        [
+                            'tbl_floorplan_time_slots.id AS slotId',
+                            'tbl_floorplan_time_slots.timeFrom AS slotTimeFrom',
+                            'tbl_floorplan_time_slots.timeTo AS slotTimeTo',
+                            'tbl_floorplan_time_slots.price AS slotPrice'
+                        ],
+                        ['tbl_floorplan_time_slots.floorPlanId=' => $floorplan['id']]
+                    );
+                    for ($i = 0; $i < count($data['floorplans'][$key]['areas']); $i++) {
+                        $data['floorplans'][$key]['areas'][$i]['timeslots'] = $data['floorplans'][$key]['timeSlots'];
+                    }
+                }
+            }
 			$data['get'] = $get;
 		}
+        $data['spotId'] = $spotId;
+
 		$this->loadViews('reservations', $this->global, $data, NULL, 'headerwebloginhotelSettings_new'); // Menu profilepage
 	}
 
