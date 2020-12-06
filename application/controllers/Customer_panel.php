@@ -86,7 +86,8 @@ class  Customer_panel extends BaseControllerWeb
             'user' => $this->user_model,
             'agendas' => $this->bookandpayagendabooking_model->getbookingagenda($this->user_model->id),
             'spots' => $this->bookandpayspot_model->getSpotsByCustomer($this->user_model->id, $agendaId),
-            'emails' => $emails
+            'emails' => $emails,
+            'spotsLabel' => $this->bookandpayspot_model->getSpotsLabel($this->user_model->id)
         ];
 		$this->global['pageTitle'] = 'TIQS : BOOKING2020';
         $this->loadViews("customer_panel/spots", $this->global, $data, 'footerbusiness', 'headerbusiness');

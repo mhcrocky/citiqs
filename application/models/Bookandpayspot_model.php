@@ -140,4 +140,21 @@ class Bookandpayspot_model extends CI_Model
         $this->db->delete('tbl_bookandpayspot');
         return $this->db->affected_rows();
     }
+
+    public function getSpotsLabel($userId)
+    {
+        $this->db->select('tbl_floorplan_areas.id,tbl_floorplan_areas.area_label,tbl_floorplan_areas.area_count');
+        $this->db->from('tbl_floorplan_areas');
+        $this->db->join('tbl_floorplan_details', 'tbl_floorplan_details.id = tbl_floorplan_areas.floorplanID', 'left');
+        $this->db->join('tbl_spot_objects', 'tbl_spot_objects.id = tbl_floorplan_details.spot_object_id', 'left');
+        $this->db->where('tbl_spot_objects.userId', $userId);
+
+        $query = $this->db->get();
+
+        if ($query) {
+            return $query->result();
+        }
+
+        return false;
+    }
 }

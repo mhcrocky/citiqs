@@ -117,9 +117,17 @@
                                    id="feedescript" placeholder="Fee Description">
                         </div>
                         <div class="form-group">
+                            <label for="spotLabel">Spot Label</label>
+                            <select @change="selectSpotLabel()" class="form-control" id="spotLabelId" name="spotLabelId"
+                                    v-model="spotModalData.spotLabelId">
+                                <option value="0" data-available="none" selected>None</option>
+                                <option v-for="spotLabel in spotsLabel" :value="spotLabel.id" :data-available="spotLabel.area_count" :key="spotLabel.id">{{spotLabel.area_label}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="available_items">Available for booking</label>
                             <input type="text" name="available_items"
-                                   v-model="spotModalData.available_items" class="form-control"
+                                   v-model.lazy="spotModalData.available_items" class="form-control"
                                    id="available_items" placeholder="Available for booking">
                         </div>
                         <div class="form-group">
@@ -167,6 +175,8 @@
 
 
 <script>
+
+
     var app = new Vue({
         el: '#vue_app',
 
@@ -174,6 +184,7 @@
             spots: JSON.parse('<?php echo json_encode($spots);?>'),
             agendas: JSON.parse('<?php echo json_encode($agendas);?>'),
             emails: JSON.parse('<?php echo json_encode($emails); ?>'),
+            spotsLabel: JSON.parse('<?php echo json_encode($spotsLabel); ?>'),
             baseURL: "<?php echo base_url(); ?>",
             method: 'create',
             spotModalData: {
@@ -187,7 +198,8 @@
                 image: '',
                 background: 'blue-light',
                 agenda_id: null,
-                email_id: null
+                email_id: null,
+                spotLabelId: null
             },
             test: '',
             spot_images: [
@@ -225,10 +237,22 @@
                     image: '',
                     background: 'blue-light',
                     agenda_id: null,
-                    email_id: null
+                    email_id: null,
+                    spotLabelId: null
                 }
                 this.method = 'create';
                 $('#add_spot_modal').modal('show');
+            },
+            selectSpotLabel(){
+                let available = $("#spotLabelId option:selected").data( "available" );
+                let id = $("#spotLabelId option:selected").val();
+                if($.isNumeric(available)){
+                    $( "#available_items" ).prop( "disabled", true );
+                    this.spotModalData.available_items = available;
+                } else {
+                    $( "#available_items" ).prop( "disabled", false );
+                    this.spotModalData.available_items = '';
+                }
             },
             editSpot (spot) {
                 this.method = 'edit';
@@ -264,6 +288,7 @@
                 formData.append("image", this.spotModalData.image);
                 formData.append("agenda_id", this.spotModalData.agenda_id);
                 formData.append("email_id", this.spotModalData.email_id);
+                formData.append("spotLabelId", this.spotModalData.spotLabelId);
                 if (this.spotModalData.id) {
                     formData.append("id", this.spotModalData.id);
                 }
