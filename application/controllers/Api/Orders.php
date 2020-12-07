@@ -57,7 +57,7 @@
 
             $order = reset($order);
             $vendorId = intval($order['vendorId']);
-            $fodUser  = $this->shopvendorfod_model->isFodVendor($vendorId);
+            $bbUser  = $this->shopvendorfod_model->isBBVendor($vendorId);
             $orderExtendedIds = explode(',', $order['orderExtendedIds']);
 
             foreach ($orderExtendedIds as $id) {
@@ -71,7 +71,7 @@
             // Order remak order[remarks] property
 
 
-            if (!$fodUser && ($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid')) ) {
+            if (!$bbUser && ($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid')) ) {
                 if ($order['waiterReceipt'] === '0') {
                     // one reeipt for waiter
                     header('Content-type: image/png');
@@ -647,7 +647,7 @@
             if (
                 $this->shoporder_model->updatePrintedStatus()
                 && !($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid'))
-                && !$fodUser
+                && !$bbUser
             ) {
                 file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
             }
