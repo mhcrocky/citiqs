@@ -93,11 +93,13 @@ class BBOrders extends REST_Controller
 		$transactionNumber = intval( ('1000') . (100000 + $order['orderId']) );
 		$products = explode($this->config->item('contactGroupSeparator'), $order['products']);
 		$orderTypeId = intval($order['spotTypeId']);
-		$ordertotalamount   =   $orderAmount+($serviceFee>0?$serviceFee:0);
-		$this->setPaymentLines($orderId, $ordertotalamount);
+		$orderPaymentName = $this->getPaymentName($order['paymentType']);
+		$ordertotalamount   =   $orderAmount + ( $serviceFee > 0 ? $serviceFee : 0 );
+
+		$this->setPaymentLines($orderId, $ordertotalamount, $orderPaymentName);
 		$this->setProductLines($products, $this->config->item('concatSeparator'), $orderTypeId);
 
-		if($serviceFee>0){
+		if ($serviceFee>0) {
 			$this->productLines[]=array(
 				'ProductGroupId'    =>  'fee01', // only categoryId !!! DONE
 				'ProductGroupName'  =>  'fee', // categoryName !!! DONE
@@ -187,24 +189,33 @@ class BBOrders extends REST_Controller
 
 	}
 
-	private function setPaymentLines(int $orderId, float $orderAmount): void
+	private function setPaymentLines(int $orderId, float $orderAmount, string $paymentName): void
 	{
-		$this->paymentLines = [[
-			'PaymentId'             =>  (string)$orderId, //ONLY ORDER ID WITHOUT PAY TESTING VERSION DONE
-			'PaymentName'           =>  $this->setpaymenttypes(),//'Alfred',
-			'PaymentType'           =>  'EFT',
-			'Quantity'              =>  1,
-			'PayAmount'             =>  $orderAmount,
-			'ForeignCurrencyAmount' =>  0,
-			'ForeignCurrencyISO'    =>  '',
-			'Reference'             =>  (string)("Order id:".$orderId), // PAYNL TRANSACTION ID !!! DONE !!!
-		]];
+		$this->paymentLines = [
+			[
+				'PaymentId'             =>  (string) $orderId,
+				'PaymentName'           =>  $paymentName,
+				'PaymentType'           =>  'EFT',
+				'Quantity'              =>  1,
+				'PayAmount'             =>  $orderAmount,
+				'ForeignCurrencyAmount' =>  0,
+				'ForeignCurrencyISO'    =>  '',
+				'Reference'             =>  (string) ("Order id:" . $orderId),
+			]
+		];
 	}
-	private function setpaymenttypes(){// TO DO CHANGE
-		if($this->order['paymentType']=='1'){
+
+	private function getPaymentName(string $paymentName): string
+	{
+		if (
+			$paymentName === '1'
+			|| $paymentName === $this->config->item('prePaid')
+			|| $paymentName ===  $this->config->item('postPaid')
+		) {
 			return "pay at the waiter";
 		}
-		return $this->order['paymentType'];
+
+		return $paymentName;
 	}
 
 	public function getdraw_get()
