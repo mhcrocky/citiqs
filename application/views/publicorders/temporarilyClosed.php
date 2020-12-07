@@ -6,7 +6,8 @@
             </div><!-- /.login-logo -->
 		<h1 style="text-align:center"><?php echo $vendor['vendorName'] ?></h1>
 		<div class="selectWrapper mb-35">
-			<h2>We are temporarily closed</h2>            
+			<h2>We are temporarily closed</h2>
+			<p>Registration error. Please contact staff</p>
 		</div>
 	</div>
 </div>
