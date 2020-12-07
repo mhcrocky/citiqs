@@ -969,20 +969,19 @@
             return $categoryDelay >= $productPreparationTime ? $categoryDelay : $productPreparationTime;
         }
 
-        public function fetchBBOrderForPrint(string $printerMac): ?array
+        public function fetchBBOrderForPrint(string $printerMac, int $vendorId): ?array
         {
             $orderId = $this->readImproved([
                 'what' => [$this->table . '.id AS orderId'],
                 'where' => [
                     $this->table . '.bbOrderPrint' => '0',
 					$this->table . '.paid' => '1',
-                    'tbl_shop_printers.macNumber' => $printerMac
+                    'tbl_shop_printers.macNumber' => $printerMac,
+                    'tbl_shop_printers.userId' => $vendorId,
                 ],
                 'joins' => [
                     ['tbl_shop_spots', 'tbl_shop_spots.id = ' . $this->table . '.spotId', 'INNER'],
-                    ['tbl_shop_printers', 'tbl_shop_printers.id = tbl_shop_spots.printerId', 'INNER'],
-                    ['tbl_user', 'tbl_user.id = tbl_shop_printers.userId', 'INNER'],
-                    ['tbl_vendor_fodnumber', 'tbl_vendor_fodnumber.vendorId = tbl_user.id', 'INNER'],
+                    ['tbl_shop_printers', 'tbl_shop_printers.id = tbl_shop_spots.printerId', 'INNER']
                 ],
                 'conditions' => [
                     'ORDER_BY' => [$this->table . '.id ASC'],

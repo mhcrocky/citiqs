@@ -52,38 +52,29 @@ class BBOrders extends REST_Controller
 		$jsonarray=array('message' => 'FDM Status st to ' . $flag);
 	}
 
-	public function data2_get(){
+	public function data2_get(): void
+	{
 		$logFile = FCPATH . 'application/tiqs_logs/messages.txt';
 		Utility_helper::logMessage($logFile, 'request from tiqsbox');
 		$get = Utility_helper::sanitizeGet();
-		if(!$get['mac']) return;
-		Utility_helper::logMessage($logFile, 'printer MAC '. $get['mac'] );
+		if(!$get['mac'] || !$get['vendorId'] || !$get['boxenable']) return;
 
-		// Check FDM Status
-		// $FDMStatusByMac=$this->fodfdm_model->getFDMstatusByMac($get['mac']);
-		// if(!empty($FDMStatusByMac) && $FDMStatusByMac->FDM_active==1){
-		//     return "";
-		// }
-		// it will not proceed when FDM have an issue
+		$mac = $get['mac'];
+		$vendorId = intval($get['vendorId']);
+		$isFodUser = $get['boxenable'] === '1' ? true : false;
 
+		Utility_helper::logMessage($logFile, 'printer MAC '. $mac );
 
-		// this function will insert vendor in tbl_vendor_fodnumber table
-		// THIS IS NOT BEST WAY TO DO THIS BECAUSE WE ARE USING PRINTER MAC NUMBER TO FETCH VENDOR ID
-		// IN ALFRED WE CAN HAVE TWO VENDORS THAT USE SAME ID
-		// WE CAN NOT BE 100 % SURE THAT WE INSERT RIGHT VENDOR ID
-		// MY OPINION IS THAT BEST WHY THAT WE HANDLE THIS ON BB SIDE, BB SEND REQUEST FOR INSERT TO ALFRED
-		// OR WE CAN DO THIS IN VENDOR PROFILE (JUST LIKE FOR POS)
-		if (!$this->insertVendorAsBBUser($get['mac'])) return false;
+		if (!$this->insertVendorAsBBUser($vendorId, $isFodUser)) return;
 
 		// fetch order
-		$order = $this->shoporder_model->fetchBBOrderForPrint($get['mac']);
+		$order = $this->shoporder_model->fetchBBOrderForPrint($mac, $vendorId);
 
 		Utility_helper::logMessage($logFile, serialize ( $order ) );
 		if (!$order) return;
 		// this function will do update printer isFod  status in tbl_shop_printer on overy request
 		// after some time (when all printers are updated) we can do update only once, first time when printer send request
-		$this->updatePrinterFodStatus(intval($order['vendorId']), $get['mac'], '1');
-
+		$this->updatePrinterFodStatus(intval($order['vendorId']), $mac, '1');
 		$this->order=$order;
 		$orderRelativePath = 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '-email.png';
 		if (!file_exists((FCPATH . $orderRelativePath))) {
@@ -213,7 +204,6 @@ class BBOrders extends REST_Controller
 		return $this->order['paymentType'];
 	}
 
-
 	public function getdraw_get()
 	{
 		$get = Utility_helper::sanitizeGet();
@@ -300,17 +290,8 @@ class BBOrders extends REST_Controller
 	}
 
 	// TO DO UPDATE AFTER VENODR ID  AND FLAG IS FOD
-	private function insertVendorAsBBUser(string $macNumber): bool
+	private function insertVendorAsBBUser(int $vendorId, bool $isFodUser): bool
 	{
-		$vendorId = $this->shopprinters_model->setProperty('macNumber', $macNumber)->fetchUserIdFromMac();
-
-		if (is_null($vendorId)) return false;
-		if ($this->shopvendorfod_model->isBBVendor($vendorId)) return true;
-
-		$insert = [
-			'vendorId' => $vendorId,
-			'lastNumber' => '0'
-		];
-		return $this->shopvendorfod_model->setObjectFromArray($insert)->create();
+		return $this->shopvendorfod_model->insertOnUpdate($vendorId, $isFodUser);
 	}
 }
