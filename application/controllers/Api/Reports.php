@@ -35,10 +35,10 @@ class Reports extends REST_Controller
     
     public function xreport_get(): void
     {
-        $mac = $
-        var_dump($mac);
+        // $mac = $
+        // var_dump($mac);
 
-        die();
+        // die();
     }
 }
 
