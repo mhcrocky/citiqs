@@ -57,7 +57,11 @@ class BBOrders extends REST_Controller
 		$logFile = FCPATH . 'application/tiqs_logs/messages.txt';
 		Utility_helper::logMessage($logFile, 'request from tiqsbox');
 		$get = Utility_helper::sanitizeGet();
-		if(!$get['mac'] || !$get['vendorId'] || !$get['boxenable']) return;
+		if(!$get['mac'] || !$get['vendorId'] || !$get['boxenable']) {
+			Utility_helper::logMessage($logFile, 'something is missing');
+			return;
+		}
+		
 
 		$mac = $get['mac'];
 		$vendorId = intval($get['vendorId']);
@@ -197,7 +201,7 @@ class BBOrders extends REST_Controller
 			'Reference'             =>  (string)("Order id:".$orderId), // PAYNL TRANSACTION ID !!! DONE !!!
 		]];
 	}
-	private function setpaymenttypes(){
+	private function setpaymenttypes(){// TO DO CHANGE
 		if($this->order['paymentType']=='1'){
 			return "pay at the waiter";
 		}
