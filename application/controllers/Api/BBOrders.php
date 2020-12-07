@@ -61,7 +61,6 @@ class BBOrders extends REST_Controller
 			Utility_helper::logMessage($logFile, 'something is missing');
 			return;
 		}
-		
 
 		$mac = $get['mac'];
 		$vendorId = intval($get['vendorId']);

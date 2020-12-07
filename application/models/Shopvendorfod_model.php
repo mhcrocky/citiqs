@@ -74,6 +74,17 @@
             return !is_null($result);
         }
 
+        public function isBBVendor(int $venodrId): bool
+        {
+            $result = $this->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    $this->table. '.vendorId' => $venodrId
+                ]
+            ]);
+            return !is_null($result);
+        }
+
         public function insertOnUpdate(int $vendorId, bool $isFodUser): bool
         {
             $isFod = $isFodUser ? '1' : '0';
@@ -83,6 +94,6 @@
 
             $this->db->query($query);
 
-            return $this->isFodVendor($vendorId);
+            return $this->isBBVendor($vendorId);
         }
     }
