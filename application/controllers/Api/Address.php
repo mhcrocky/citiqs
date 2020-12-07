@@ -171,7 +171,7 @@
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 
 //			$draw->annotation(0, 30, "SPOT: ". $result->spot_id . " EMAIL: " . $email . ' PHONE: ' . $phone);
-			$draw->annotation(0, 30, "GEEN BTW BON / ");
+			$draw->annotation(0, 30, "GEEN GELDIG BTW TICKET/ ");
 
 			$draw->setStrokeWidth(2);
 			$draw->setFontSize(28);

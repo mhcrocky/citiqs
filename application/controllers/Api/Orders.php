@@ -170,7 +170,7 @@
                     break;
             }
 
-			$draw->setStrokeWidth(4);
+			$draw->setStrokeWidth(2);
 			$draw->setFontSize(28);
 			$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
 
@@ -180,21 +180,26 @@
 
 			$h = 1;
 
+			$draw->setStrokeColor('black');
+			$draw->setStrokeWidth(1);
+			$draw->setFontSize(30);
+			$draw->setStrokeWidth(3);
+
 			if($order['serviceTypeId']==1){
-				$draw->annotation(0, 35 * $h, "GEEN BTW BON / LOCAL ");
+				$draw->annotation(0, 35 * $h, "DIT IS GEEN GELDIG BTW TICKET");
 			}
 			if($order['serviceTypeId']==2){
-				$draw->annotation(0, 35 * $h, "GEEN BTW BON / DELIVERY ");
+				$draw->annotation(0, 35 * $h, "DIT IS GEEN GELDIG BTW TICKET");
 			}
 			if($order['serviceTypeId']==3){
-				$draw->annotation(0, 35 * $h, "GEEN BTW BON / PICKUP ");
+				$draw->annotation(0, 35 * $h, "DIT IS GEEN GELDIG BTW TICKET");
 			}
 
-			$draw->setStrokeWidth(4);
+			$draw->setStrokeWidth(2);
 			$draw->setFontSize(28);
 			$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
 
-			$drawemail->setStrokeWidth(4);
+			$drawemail->setStrokeWidth(2);
 			$drawemail->setFontSize(28);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 
