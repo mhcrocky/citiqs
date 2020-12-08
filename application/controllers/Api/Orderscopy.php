@@ -75,10 +75,6 @@ class Orderscopy extends REST_Controller
 			}
 		}
 
-		// CKECK IS VENDOR FOD USER, IN THIS CASE EMAIL IS NOTE SEND
-		$vendorId = intval($order['vendorId']);
-		if ($this->shopvendorfod_model->isFodVendor($vendorId)) return;
-
 		// SEND EMAIL
 		$sendEmail = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->sendEmailWithReceipt();
 		if (!empty($email) && $sendEmail) {

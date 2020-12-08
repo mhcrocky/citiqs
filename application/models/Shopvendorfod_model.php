@@ -13,6 +13,7 @@
 		public $id;
         public $vendorId;
         public $lastNumber;
+        public $isFodUser;
 
         private $table = 'tbl_vendor_fodnumber';
 
@@ -44,8 +45,8 @@
         {
             if (!count($data)) return false;
             if (isset($data['vendorId']) && !Validate_data_helper::validateInteger($data['vendorId'])) return false;
-            if (isset($data['lastNumber']) && !Validate_data_helper::validateInteger($data['lastNumber'])) return false;
-
+            if (isset($data['lastNumber']) && !Validate_data_helper::validateInteger($data['lastNumber'])) return false;            
+            if (isset($data['isFodUser']) && !($data['isFodUser'] === '1' || $data['isFodUser'] === '0')) return false;
             return true;
         }
 
@@ -55,13 +56,24 @@
                 'what' => ['id'],
                 'where' => [
                     $this->table. '.vendorId' => $venodrId,
-                    $this->table. '.lastNumber>' => 0,
+                    $this->table. '.isFodUser=' => '1'
                 ]
             ]);
             return !is_null($result);
         }
 
-        // TO DO UPDATE AFTER GET FLAG IS VENDOR
+        public function isOnlyBBVendor(int $venodrId): bool
+        {
+            $result = $this->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    $this->table. '.vendorId' => $venodrId,
+                    $this->table. '.isFodUser=' => '0'
+                ]
+            ]);
+            return !is_null($result);
+        }
+
         public function isBBVendor(int $venodrId): bool
         {
             $result = $this->readImproved([
@@ -73,4 +85,15 @@
             return !is_null($result);
         }
 
+        public function insertOnUpdate(int $vendorId, bool $isFodUser): bool
+        {
+            $isFod = $isFodUser ? '1' : '0';
+            $query  = 'INSERT INTO ' . $this->table . ' (vendorId, isFodUser) ';
+            $query .= 'VALUES (' . $vendorId . ' , "' . $isFod . '") ';
+            $query .= 'ON DUPLICATE KEY UPDATE isFodUser = "' . $isFod . '";';
+
+            $this->db->query($query);
+
+            return $this->isBBVendor($vendorId);
+        }
     }

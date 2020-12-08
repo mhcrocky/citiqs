@@ -17,6 +17,7 @@
             $this->load->model('shopvendor_model');
             $this->load->model('shopprinterrequest_model');
             $this->load->model('shopprinters_model');
+            $this->load->model('shopvendorfod_model');
 
             $this->load->helper('utility_helper');
             $this->load->helper('validate_data_helper');
@@ -38,10 +39,10 @@
 
             $get = $this->input->get(null, true);
 
-//			$this->shopprinterrequest_model->insertPrinterRequest($get['mac']);
+			// $this->shopprinterrequest_model->insertPrinterRequest($get['mac']);
 
-//			$logFile = FCPATH . 'application/tiqs_logs/messages.txt';
-//			Utility_helper::logMessage($logFile, 'MACNUMBER' .$get['mac']);
+			// $logFile = FCPATH . 'application/tiqs_logs/messages.txt';
+			// Utility_helper::logMessage($logFile, 'MACNUMBER' .$get['mac']);
 
             if(!$get['mac'] || !$this->shopprinterrequest_model->insertPrinterRequest($get['mac'])) return;
 
@@ -53,9 +54,12 @@
             $order = $this->shoporder_model->fetchOrdersForPrint($masterMac);
 
             if (!$order) return;
-            $order = reset($order);
 
+            $order = reset($order);
+            $vendorId = intval($order['vendorId']);
+            $bbUser  = $this->shopvendorfod_model->isBBVendor($vendorId);
             $orderExtendedIds = explode(',', $order['orderExtendedIds']);
+
             foreach ($orderExtendedIds as $id) {
                 $this
                     ->shoporderex_model
@@ -63,9 +67,11 @@
                     ->setObjectFromArray(['printed' => '2'])
                     ->update();
             }
-            //ORDER REMARK FOR PRINITING
+            // ORDER REMARK FOR PRINITING
             // Order remak order[remarks] property
-            if ($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid')) {
+
+
+            if (!$bbUser && ($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid')) ) {
                 if ($order['waiterReceipt'] === '0') {
                     // one reeipt for waiter
                     header('Content-type: image/png');
@@ -83,14 +89,14 @@
                 if ($order['paidStatus'] === '0') return;
             }
             // UPDATE ORDER EXTENDED PRINT STATUS ON TWO
-//             $orderExtendedIds = explode(',', $order['orderExtendedIds']);
-//             foreach ($orderExtendedIds as $id) {
-//                 $this
-//                     ->shoporderex_model
-//                     ->setObjectId(intval($id))
-//                     ->setObjectFromArray(['printed' => '2'])
-//                     ->update();
-//             }
+            // $orderExtendedIds = explode(',', $order['orderExtendedIds']);
+            // foreach ($orderExtendedIds as $id) {
+            //     $this
+            //         ->shoporderex_model
+            //         ->setObjectId(intval($id))
+            //         ->setObjectFromArray(['printed' => '2'])
+            //         ->update();
+            // }
 
             $this->shopprinterrequest_model->setObjectFromArray(['orderId' => $order['orderId']])->update();
 
@@ -170,7 +176,7 @@
                     break;
             }
 
-			$draw->setStrokeWidth(4);
+			$draw->setStrokeWidth(2);
 			$draw->setFontSize(28);
 			$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
 
@@ -180,21 +186,26 @@
 
 			$h = 1;
 
+			$draw->setStrokeColor('black');
+			$draw->setStrokeWidth(1);
+			$draw->setFontSize(30);
+			$draw->setStrokeWidth(3);
+
 			if($order['serviceTypeId']==1){
-				$draw->annotation(0, 35 * $h, "GEEN BTW BON / LOCAL ");
+				$draw->annotation(0, 35 * $h, "DIT IS GEEN GELDIG BTW TICKET");
 			}
 			if($order['serviceTypeId']==2){
-				$draw->annotation(0, 35 * $h, "GEEN BTW BON / DELIVERY ");
+				$draw->annotation(0, 35 * $h, "DIT IS GEEN GELDIG BTW TICKET");
 			}
 			if($order['serviceTypeId']==3){
-				$draw->annotation(0, 35 * $h, "GEEN BTW BON / PICKUP ");
+				$draw->annotation(0, 35 * $h, "DIT IS GEEN GELDIG BTW TICKET");
 			}
 
-			$draw->setStrokeWidth(4);
+			$draw->setStrokeWidth(2);
 			$draw->setFontSize(28);
 			$draw->setTextAlignment(\Imagick::ALIGN_LEFT);
 
-			$drawemail->setStrokeWidth(4);
+			$drawemail->setStrokeWidth(2);
 			$drawemail->setFontSize(28);
 			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 
@@ -636,6 +647,7 @@
             if (
                 $this->shoporder_model->updatePrintedStatus()
                 && !($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid'))
+                && !$bbUser
             ) {
                 file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
             }

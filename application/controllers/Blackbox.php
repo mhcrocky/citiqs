@@ -36,8 +36,7 @@ class Blackbox extends BaseControllerWeb
     {
         $employee = $this->getEmployee($uniqueNumber, intval($ownerId), $this->config->item('employeeIn'));
 
-        $employee ? $this->insertEmployee($employee) : $this->session->set_flashdata('error', 'Invalid data');
-
+        $employee ? $this->insertEmployee($employee) : $this->session->set_flashdata('error', 'Invalid data! Please check link expiration time');
         $redirect = base_url() . 'inandout' . DIRECTORY_SEPARATOR . $uniqueNumber . DIRECTORY_SEPARATOR . $ownerId;
         redirect($redirect);
     }

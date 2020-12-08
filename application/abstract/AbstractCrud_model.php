@@ -102,7 +102,8 @@
 
             $querylogging=1;
             if ($querylogging === 1) {
-				$file = FCPATH . 'application/tiqs_logs/querylogging.txt';
+                $file = FCPATH . 'application/tiqs_logs/querylogging.txt';
+                $this->load->helper('utility_helper');
 				Utility_helper::logMessage($file, $this->db->last_query());
 			}
 
@@ -151,6 +152,12 @@
                 return $result[0][$property];
             }
             return null;
+        }
+
+        public function customDelete(array $where): bool
+        {
+            $this->db->delete($this->getThisTable(), $where);
+            return $this->db->affected_rows() ? true : false;
         }
 
     }

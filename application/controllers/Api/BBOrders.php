@@ -52,38 +52,32 @@ class BBOrders extends REST_Controller
 		$jsonarray=array('message' => 'FDM Status st to ' . $flag);
 	}
 
-	public function data2_get(){
+	public function data2_get(): void
+	{
 		$logFile = FCPATH . 'application/tiqs_logs/messages.txt';
 		Utility_helper::logMessage($logFile, 'request from tiqsbox');
 		$get = Utility_helper::sanitizeGet();
-		if(!$get['mac']) return;
-		Utility_helper::logMessage($logFile, 'printer MAC '. $get['mac'] );
+		if(!$get['mac'] || !$get['vendorId'] || !isset($get['boxenable'])) {
+			Utility_helper::logMessage($logFile, 'something is missing');
+			return;
+		}
 
-		// Check FDM Status
-		// $FDMStatusByMac=$this->fodfdm_model->getFDMstatusByMac($get['mac']);
-		// if(!empty($FDMStatusByMac) && $FDMStatusByMac->FDM_active==1){
-		//     return "";
-		// }
-		// it will not proceed when FDM have an issue
+		$mac = $get['mac'];
+		$vendorId = intval($get['vendorId']);
+		$isFodUser = $get['boxenable'] === '1' ? true : false;
 
+		Utility_helper::logMessage($logFile, 'printer MAC '. $mac );
 
-		// this function will insert vendor in tbl_vendor_fodnumber table
-		// THIS IS NOT BEST WAY TO DO THIS BECAUSE WE ARE USING PRINTER MAC NUMBER TO FETCH VENDOR ID
-		// IN ALFRED WE CAN HAVE TWO VENDORS THAT USE SAME ID
-		// WE CAN NOT BE 100 % SURE THAT WE INSERT RIGHT VENDOR ID
-		// MY OPINION IS THAT BEST WHY THAT WE HANDLE THIS ON BB SIDE, BB SEND REQUEST FOR INSERT TO ALFRED
-		// OR WE CAN DO THIS IN VENDOR PROFILE (JUST LIKE FOR POS)
-		if (!$this->insertVendorAsBBUser($get['mac'])) return false;
+		if (!$this->insertVendorAsBBUser($vendorId, $isFodUser)) return;
 
 		// fetch order
-		$order = $this->shoporder_model->fetchBBOrderForPrint($get['mac']);
+		$order = $this->shoporder_model->fetchBBOrderForPrint($mac, $vendorId);
 
 		Utility_helper::logMessage($logFile, serialize ( $order ) );
 		if (!$order) return;
 		// this function will do update printer isFod  status in tbl_shop_printer on overy request
 		// after some time (when all printers are updated) we can do update only once, first time when printer send request
-		$this->updatePrinterFodStatus(intval($order['vendorId']), $get['mac'], '1');
-
+		$this->updatePrinterFodStatus(intval($order['vendorId']), $mac, '1');
 		$this->order=$order;
 		$orderRelativePath = 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '-email.png';
 		if (!file_exists((FCPATH . $orderRelativePath))) {
@@ -99,11 +93,13 @@ class BBOrders extends REST_Controller
 		$transactionNumber = intval( ('1000') . (100000 + $order['orderId']) );
 		$products = explode($this->config->item('contactGroupSeparator'), $order['products']);
 		$orderTypeId = intval($order['spotTypeId']);
-		$ordertotalamount   =   $orderAmount+($serviceFee>0?$serviceFee:0);
-		$this->setPaymentLines($orderId, $ordertotalamount);
+		$orderPaymentName = $this->getPaymentName($order['paymentType']);
+		$ordertotalamount   =   $orderAmount + ( $serviceFee > 0 ? $serviceFee : 0 );
+
+		$this->setPaymentLines($orderId, $ordertotalamount, $orderPaymentName);
 		$this->setProductLines($products, $this->config->item('concatSeparator'), $orderTypeId);
 
-		if($serviceFee>0){
+		if ($serviceFee>0) {
 			$this->productLines[]=array(
 				'ProductGroupId'    =>  'fee01', // only categoryId !!! DONE
 				'ProductGroupName'  =>  'fee', // categoryName !!! DONE
@@ -193,26 +189,34 @@ class BBOrders extends REST_Controller
 
 	}
 
-	private function setPaymentLines(int $orderId, float $orderAmount): void
+	private function setPaymentLines(int $orderId, float $orderAmount, string $paymentName): void
 	{
-		$this->paymentLines = [[
-			'PaymentId'             =>  (string)$orderId, //ONLY ORDER ID WITHOUT PAY TESTING VERSION DONE
-			'PaymentName'           =>  $this->setpaymenttypes(),//'Alfred',
-			'PaymentType'           =>  'EFT',
-			'Quantity'              =>  1,
-			'PayAmount'             =>  $orderAmount,
-			'ForeignCurrencyAmount' =>  0,
-			'ForeignCurrencyISO'    =>  '',
-			'Reference'             =>  (string)("Order id:".$orderId), // PAYNL TRANSACTION ID !!! DONE !!!
-		]];
-	}
-	private function setpaymenttypes(){
-		if($this->order['paymentType']=='1'){
-			return "pay at the waiter";
-		}
-		return $this->order['paymentType'];
+		$this->paymentLines = [
+			[
+				'PaymentId'             =>  (string) $orderId,
+				'PaymentName'           =>  $paymentName,
+				'PaymentType'           =>  'EFT',
+				'Quantity'              =>  1,
+				'PayAmount'             =>  $orderAmount,
+				'ForeignCurrencyAmount' =>  0,
+				'ForeignCurrencyISO'    =>  '',
+				'Reference'             =>  (string) ("Order id:" . $orderId),
+			]
+		];
 	}
 
+	private function getPaymentName(string $paymentName): string
+	{
+		if (
+			$paymentName === '1'
+			|| $paymentName === $this->config->item('prePaid')
+			|| $paymentName ===  $this->config->item('postPaid')
+		) {
+			return "pay at the waiter";
+		}
+
+		return $paymentName;
+	}
 
 	public function getdraw_get()
 	{
@@ -300,17 +304,8 @@ class BBOrders extends REST_Controller
 	}
 
 	// TO DO UPDATE AFTER VENODR ID  AND FLAG IS FOD
-	private function insertVendorAsBBUser(string $macNumber): bool
+	private function insertVendorAsBBUser(int $vendorId, bool $isFodUser): bool
 	{
-		$vendorId = $this->shopprinters_model->setProperty('macNumber', $macNumber)->fetchUserIdFromMac();
-
-		if (is_null($vendorId)) return false;
-		if ($this->shopvendorfod_model->isBBVendor($vendorId)) return true;
-
-		$insert = [
-			'vendorId' => $vendorId,
-			'lastNumber' => '0'
-		];
-		return $this->shopvendorfod_model->setObjectFromArray($insert)->create();
+		return $this->shopvendorfod_model->insertOnUpdate($vendorId, $isFodUser);
 	}
 }

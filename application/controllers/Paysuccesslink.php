@@ -18,6 +18,7 @@ class  Paysuccesslink extends BaseControllerWeb
         $this->load->model('shoporder_model');
         $this->load->model('shopposorder_model');
         $this->load->model('shopsession_model');
+        $this->load->model('shopvendorfod_model');
 
         $this->load->helper('url');
         $this->load->helper('utility_helper');
@@ -117,6 +118,10 @@ class  Paysuccesslink extends BaseControllerWeb
             $data['spotId'] = $orderData['spotId'];
             $data['orderRandomKey'] = $ranodmKey;
             if ($data['order']['orderPaidStatus'] === '1') {
+                if ($this->shopvendorfod_model->isOnlyBBVendor($orderData['vendorId'])) {
+                    $data['justPrintLink'] = 'http://localhost/tiqsbox/index.php/Cron/justprint/' . $data['order']['orderId'];
+                    // file_get_contents($justPrintLink);
+                }
                 Utility_helper::redirectToPos($data, $this->config->item('posSuccessLink'));
             } else {
                 Utility_helper::redirectToPos($data, $this->config->item('posPaymentFailedLink'));
