@@ -11,11 +11,13 @@
                 <div class="col-lg-10 col-md-10 col-sm-12">
                     <!--Search by name:-->
                     <form class="form-inline" method="get" action="<?php echo base_url() ?>reservations">
+                   
                         <div class="form-group">
                             <label for="object">Select object: </label>
                             <select class="form-control" id="object" name="object" required>
                                 <option value="">Select</option>
-                                <?php foreach ($objects as $object) { ?>
+                                <?php
+                                 foreach ($objects as $object) { ?>
                                     <?php
                                     $selected = '';
                                     if (isset($get['object']) && $get['object'] == $object['id']) {
@@ -27,6 +29,7 @@
                                 <?php } ?>
                             </select>
                         </div>
+                       
                         <div class="form-group">
                             <label for="date">Date: </label>
                             <input
@@ -78,7 +81,7 @@
             </div>
         </div>
         <div>
-            <?php
+            <?php 
             if (isset($floorplans) && !empty($floorplans)) {
                 foreach ($floorplans as $floorplan) {
                     if (empty($floorplan['timeSlots'])) continue;

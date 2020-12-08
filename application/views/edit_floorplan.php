@@ -69,9 +69,6 @@
 
 	<div class="row">
 		<h1>&nbsp &nbsp Areas info</h1>
-		<pre>
-			<?php if (isset($areas)) {var_dump($areas);} ; ?>
-		</pre>
 	</div>
 </div>
 						</div>

@@ -25,8 +25,11 @@ class  Reservations extends BaseControllerWeb
 		$this->load->config('custom');
 	}
 
-	public function index($spotId = false)
+	public function index($vendorId = false, $spotId = false)
 	{
+		if(!isset($vendorId)){
+			redirect('https://tiqs.com/presence/sites/home');
+		}
 		$this->global['pageTitle'] = 'TIQS : RESERVATIONS';
 		$criteria = ['tbl_spot_objects.id>'=>0];
 
@@ -45,11 +48,13 @@ class  Reservations extends BaseControllerWeb
         $this->global['page'] = 'reservations_index';
 
 		if (!empty($_GET)) {
+			echo "true";
 			$get = $this->input->get(null, true);
 			$from = (isset($get['date']) && isset($get['start'])) ? $get['date'] . ' ' . $get['start'] . ':00' : null;
 			$to = (isset($get['date']) && isset($get['end'])) ? $get['date'] . ' ' . $get['end'] . ':00' : null;
 
 			$data['floorplans'] = $this->floorplandetails_model->read(['*'], ['spot_object_id' => $get['object']]);
+			//var_dump($this->floorplandetails_model->read(['*'], ['spot_object_id' => $get['object']]));
 
 			if($data['floorplans']) {
                 foreach($data['floorplans'] as $key => $floorplan) {
