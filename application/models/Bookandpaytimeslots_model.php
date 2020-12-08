@@ -85,5 +85,24 @@ class Bookandpaytimeslots_model extends CI_Model
         $this->db->delete('tbl_bookandpaytimeslots');
         return $this->db->affected_rows();
     }
+
+    public function getPlanId($spotId)
+    {
+        $this->db->select('tbl_floorplan_details.id');
+        $this->db->from('tbl_bookandpayspot');
+        $this->db->join('tbl_floorplan_details', 'tbl_floorplan_details.id = tbl_bookandpayspot.spotLabelId', 'left');
+        $this->db->join('tbl_floorplan_areas', 'tbl_floorplan_areas.floorplanID = tbl_floorplan_details.id', 'left');
+        
+        $this->db->where('tbl_bookandpayspot.id', $spotId);
+
+        $query = $this->db->get();
+        $result = $query->row();
+
+        if (!empty($result)) {
+            return $result->id;
+        }
+
+        return $query->result();
+    }
     
 }
