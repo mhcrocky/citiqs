@@ -47,5 +47,17 @@
                 Back<i class="fa fa-arrow-right"></i>
             </a>
         <?php } ?>
+        <?php if (isset($justPrintLink)) { ?>
+            <a
+                href="<?php echo $justPrintLink; ?>"
+                style="background-color: #948b6f"
+                class="button"
+                target='_blank'
+            >
+                PRINT<i class="fa fa-print"></i>
+            </a>
+        <?php } ?>
+
+        
 	</div>
 </div>
