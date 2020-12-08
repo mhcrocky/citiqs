@@ -276,6 +276,36 @@ class Booking_agenda extends BaseControllerWeb
         $data['eventDate'] = $eventDate;
         
         $this->global['pageTitle'] = 'TIQS : BOOKINGS';
+        $this->load->config('custom');
+        $this->load->helper('directory');
+        $this->load->model('floorplandetails_model');
+        $this->load->model('floorplanareas_model');
+        $planId = $this->bookandpaytimeslots_model->getPlanId($spotId);
+		if ($planId) {
+			$data['floorplan'] = $this->floorplandetails_model->get_floorplan($planId);
+			$data['areas'] = $this->floorplanareas_model->get_floorplan_areas($planId);
+        }
+
+		//Get all files from dir
+        $floorplan_images = directory_map(FCPATH . $this->config->item('floorPlansImagesPath'), FALSE);
+
+		//Remove '/' from category name, remove index.html
+        foreach ($floorplan_images as $category => $val) {
+            $new_cat_name = str_replace(DIRECTORY_SEPARATOR, '',$category);
+            $floorplan_images[$new_cat_name] = $floorplan_images[$category];
+            unset($floorplan_images[$category]);
+            if (isset($floorplan_images[$new_cat_name]) AND is_array($floorplan_images[$new_cat_name])) {
+                foreach ($floorplan_images[$new_cat_name] as $key => $file) {
+                    if ($file == 'index.html') {
+                        unset($floorplan_images[$new_cat_name][$key]);
+                    }
+
+                }
+            }
+        }
+
+        $data['floorplan_images_path'] = $this->config->item('floorPlansImagesPath');
+        $data['floorplan_images']  = $floorplan_images;
 
         $this->loadViews("bookings/timeslot_booking", $this->global, $data, 'bookingfooter', 'bookingheader');
     }
