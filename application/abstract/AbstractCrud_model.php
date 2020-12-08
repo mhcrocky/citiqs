@@ -154,4 +154,10 @@
             return null;
         }
 
+        public function customDelete(array $where): bool
+        {
+            $this->db->delete($this->getThisTable(), $where);
+            return $this->db->affected_rows() ? true : false;
+        }
+
     }
