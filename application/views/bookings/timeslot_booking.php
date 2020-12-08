@@ -166,9 +166,67 @@
         </div>
     </div>
     <div class="col-half  background-yankee timeline-content">
-
+        <div class="row mh-100 mb-5 canvas_row" id="canvas_row">
+		    <div class="col-md-12 mh-100 p-2 mt-5" id="floor_image">
+			    <canvas id="canvas" width="200" height="200"></canvas>
+                <img style="visibility: hidden;" src="<?php echo base_url().'uploads/floorPlans/'.$floorplan->file_name; ?>" >
+		    </div>
+        </div>
     </div>
 </div>
 </body>
 
+<script >
+	const BASE_URL = '<?php echo base_url(); ?>';
+    const FLOOR_IMAGES_PATH = '<?php echo str_replace('\\', '/', $floorplan_images_path);?>';
+</script>
+<script src="<?php echo base_url(); ?>assets/floorplan/assets/js/popper.min.js"></script>
+<script src="<?php echo $this->baseUrl; ?>assets/home/js/objectFloorPlans.js" ></script>
+<script src="<?php echo base_url(); ?>assets/floorplan/assets/js/fabric_v4.0.0-beta.8.js"></script>
+<script src="<?php echo base_url(); ?>assets/floorplan/assets/js/floorplan.js"></script>
+<script src="<?php echo base_url(); ?>assets/floorplan/assets/js/floorEditor.js"></script>
+<script>
 
+	var floorplan;
+	$(document).ready(function () {
+
+		floorplan = new FloorEditor({
+            floorElementID: 'canvas',
+            imgEl: $('#floor_image'),
+            <?php if ($floorplan_images) { ?>
+                objectsImages: $.parseJSON('<?php echo json_encode($floorplan_images); ?>'),
+            <?php } ?>
+
+			<?php if (isset($floorplan) AND $floorplan) { ?>
+				floorplanID: <?php echo $floorplan->id; ?>,
+                imageUploaded: <?php echo $floorplan->file_name ? 'true' : 'false'; ?>,
+				floor_name: '<?php echo $floorplan->floor_name; ?>',
+				areas: $.parseJSON('<?php echo json_encode($areas); ?>'),
+				canvasJSON: '<?php echo $floorplan->canvas;?>'
+			<?php } ?>
+        });
+
+		fabric.Object.prototype.transparentCorners = true;
+		fabric.Object.prototype.cornerColor = 'red';
+		fabric.Object.prototype.cornerStyle = 'circle';
+
+		fabric.Object.prototype.controls.deleteControl = new fabric.Control({
+			position: {x: 0.5, y: -0.5},
+			offsetY: -8,
+			offsetX: 8,
+			cursorStyle: 'pointer',
+			mouseUpHandler: (eventData, target) => {
+                floorplan.deleteObject(eventData, target);
+                console.log(floorplan);
+			},
+			render: floorplan.renderIcon(floorplan.deleteImg),
+			cornerSize: 24
+        });
+        $(window).resize(function () {
+            floorplan.scaleAndPositionCanvas();
+	    });
+
+
+	});
+
+</script>
