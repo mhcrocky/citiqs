@@ -127,9 +127,9 @@ p.p-title {
             <?php foreach($spots as $key=>$spot): ?>
                 <?php if($count % 2 != 0): ?>
                     <div class="<?php echo $backgroundColors[$backgroundCount]; ?> height-40">
-                    <div style="text-align: left">
-                        <a style="visibility:hidden;" href="#top"><i class="fa fa-arrow-circle-left" style="font-size:48px; color:white"></i></a>
-                    </div>
+                        <div style="text-align: left">
+                            <a style="visibility:hidden;" href="#top"><i class="fa fa-arrow-circle-left" style="font-size:48px; color:white"></i></a>
+                        </div>
                         <div class="width-650"></div>
                         <div align="center">
                             <p class="text-content mb-50"><?php echo date("d.m.yy", strtotime($eventDate)) ?></p>
