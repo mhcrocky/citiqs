@@ -119,8 +119,8 @@ class  Paysuccesslink extends BaseControllerWeb
             $data['orderRandomKey'] = $ranodmKey;
             if ($data['order']['orderPaidStatus'] === '1') {
                 if ($this->shopvendorfod_model->isOnlyBBVendor($orderData['vendorId'])) {
-                    $justPrintLink = 'http://localhost/tiqsbox/index.php/Cron/justprint/' . $data['order']['orderId'];
-                    file_get_contents($justPrintLink);
+                    $data['justPrintLink'] = 'http://localhost/tiqsbox/index.php/Cron/justprint/' . $data['order']['orderId'];
+                    // file_get_contents($justPrintLink);
                 }
                 Utility_helper::redirectToPos($data, $this->config->item('posSuccessLink'));
             } else {
