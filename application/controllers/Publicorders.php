@@ -329,14 +329,13 @@
                 'orderDataGetKey'   => $this->config->item('orderDataGetKey'),
                 'maxRemarkLength'   => $this->config->item('maxRemarkLength'),
                 'pickupTypeId'      => $this->config->item('pickupType'),
-                'pos'               => intval($orderData['pos']),
+
             ];
 
             $this->checkVendorCredentials( $data['vendor'], intval($data['spot']['spotTypeId']) );
             $this->setOrderData($data, $orderData);
             $this->setDelayTime($data);
-            $this->setFeeValues($data);
-            Utility_helper::redirectToPos($data, $this->config->item('posCheckoutOrder'));
+            $this->setBuyerSideFee($data);
 
             $this->global['pageTitle'] = 'TIQS : CHECKOUT';
             $this->global[$this->config->item('design')] = (!empty($data['vendor']['design'])) ? unserialize($data['vendor']['design']) : null;
@@ -387,16 +386,6 @@
             }
         }
 
-        private function setFeeValues(array &$data): void
-        {
-            if ($data['pos']) {
-                $this->setPosSideFee($data);
-            } else {
-                $this->setBuyerSideFee($data);
-            }
-            return;
-        }
-
         private function setBuyerSideFee(array &$data): void
         {
             $spotTypeId = intval($data['spot']['spotTypeId']);
@@ -417,25 +406,6 @@
             return;
         }
 
-        private function setPosSideFee(array &$data): void
-        {
-            $spotTypeId = intval($data['spot']['spotTypeId']);
-
-            if ($spotTypeId === $this->config->item('local')) {
-                $data['serviceFeePercent'] = $data['vendor']['serviceFeePercentPos'] === '1' ? $data['vendor']['serviceFeePercent'] : 0.0;
-                $data['serviceFeeAmount'] = $data['vendor']['serviceFeeAmountPos'] === '1' ? $data['vendor']['serviceFeeAmount'] : 0.0;
-                $data['minimumOrderFee'] =  $data['vendor']['minimumOrderFeePos'] === '1' ? $data['vendor']['minimumOrderFee'] : 0.0;
-            } elseif ($spotTypeId === $this->config->item('deliveryType')) {
-                $data['serviceFeePercent'] = $data['vendor']['deliveryServiceFeePercentPos'] === '1' ? $data['vendor']['deliveryServiceFeePercent'] : 0.0;
-                $data['serviceFeeAmount'] = $data['vendor']['deliveryServiceFeeAmountPos'] === '1' ? $data['vendor']['deliveryServiceFeeAmount'] : 0.0;
-                $data['minimumOrderFee'] = $data['vendor']['deliveryMinimumOrderFeePos'] === '1' ? $data['vendor']['deliveryMinimumOrderFee'] : 0.0;
-            } elseif ($spotTypeId === $this->config->item('pickupType')) {
-                $data['serviceFeePercent'] = $data['vendor']['pickupServiceFeePercentPos'] === '1' ? $data['vendor']['pickupServiceFeePercent'] : 0.0;
-                $data['serviceFeeAmount'] = $data['vendor']['pickupServiceFeeAmountPos'] === '1' ? $data['vendor']['pickupServiceFeeAmount'] : 0.0;
-                $data['minimumOrderFee'] = $data['vendor']['pickupMinimumOrderFeePos'] === '1' ? $data['vendor']['pickupMinimumOrderFee'] : 0.0;
-            }
-            return;
-        }
 
         // BUYER DATA
         public function buyer_details(): void
@@ -463,10 +433,7 @@
             $data['local'] = $this->config->item('local');
             $data['orderRandomKey'] = $orderRandomKey;
             $data['orderDataGetKey'] = $this->config->item('orderDataGetKey');
-            $data['pos'] = intval($orderData['pos']);
-            $data['colLength'] = $data['pos'] ? '12' : '6';
 
-            Utility_helper::redirectToPos($data, $this->config->item('posBuyerDetails'));
             $this->global['pageTitle'] = 'TIQS : BUYER DETAILS';
             $this->global[$this->config->item('design')] = (!empty($data['vendor']['design'])) ? unserialize($data['vendor']['design']) : null;
             $this->loadViews('publicorders/buyerDetails', $this->global, $data, null, 'headerWarehousePublic');
@@ -494,8 +461,6 @@
             // if $orderData['voucherId'] and $orderData['payWithVaucher'] unset on refresh page
             Jwt_helper::unsetVoucherData($orderData, $orderRandomKey);
 
-            $pos = intval($orderData['pos']);
-
             $data = [
                 'vendor'                => $vendor,
                 'spot'                  => $spot,
@@ -511,36 +476,30 @@
 				'localType'             => $this->config->item('local'),
                 'oldMakeOrderView'      => $this->config->item('oldMakeOrderView'),
                 'newMakeOrderView'      => $this->config->item('newMakeOrderView'),
-                'redirect'              => $this->getRedirect($vendor, $spotTypeId, $orderRandomKey, $pos, intval($orderData['spotId'])),
+                'redirect'              => $this->getRedirect($vendor, $spotTypeId, $orderRandomKey, intval($orderData['spotId'])),
                 'orderRandomKey'        => $orderRandomKey,
                 'orderDataGetKey'       => $this->config->item('orderDataGetKey'),
                 'orderRandomKey'        => $orderRandomKey,
-                'pos'                   => $pos,
                 'spotId'                => $orderData['spotId'],
             ];
 
-            Utility_helper::redirectToPos($data, $this->config->item('posPay'));
             $this->global['pageTitle'] = 'TIQS : PAY';
             $this->global[$this->config->item('design')] = (!empty($data['vendor']['design'])) ? unserialize($data['vendor']['design']) : null;
             $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
 
-        private function getRedirect(array $vendor, int $spotTypeId, string $orderRandomKey, int $pos, int $spotId): string
+        private function getRedirect(array $vendor, int $spotTypeId, string $orderRandomKey, int $spotId): string
         {
-            if ($pos) {
-                $redirect = 'pos?spotid=' . $spotId . '&' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
+            if (
+                $vendor['requireEmail'] === '0'
+                && $vendor['requireName'] === '0'
+                && $vendor['requireMobile'] === '0'
+                && $spotTypeId === $this->config->item('local')
+            ) {
+                $redirect = 'checkout_order?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
             } else {
-                if (
-                    $vendor['requireEmail'] === '0'
-                    && $vendor['requireName'] === '0'
-                    && $vendor['requireMobile'] === '0'
-                    && $spotTypeId === $this->config->item('local')
-                ) {
-                    $redirect = 'checkout_order?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
-                } else {
-                    $redirect = 'buyer_details?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
-                };
-            }            
+                $redirect = 'buyer_details?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
+            };       
     
             return $redirect;
         }

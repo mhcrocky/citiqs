@@ -1,9 +1,6 @@
 <main
-    <?php if ($pos) { ?>
-        class="col-lg-4"        
-    <?php } else { ?>
-        class="container" style="text-align:left; margin-bottom:20px; width:100vw; height:100vh" id="buyerDetailsContainer"
-    <?php } ?>
+    class="container"
+    style="text-align:left; margin-bottom:20px; width:100vw; height:100vh" id="buyerDetailsContainer"
  >
     <form id="goBuyerDetails" method="post" onsubmit="return submitBuyerDetails()">
         <input type="text" name="orderRandomKey" value="<?php echo $orderRandomKey; ?>" redonly hidden requried />
@@ -13,12 +10,12 @@
             <div class="col-sm-12 col-lg-10 col-lg-offset-1">
                 <div id="yourDetails" class="checkout-title">
                     <span>
-                        <?php echo $pos ? 'Buyer' : 'Your'; ?>&nbsp;details
+                        Your&nbsp;details
                     </span>
                 </div>
                 <div class="row">
                     <?php if ($vendor['requireName'] === '1') { ?>
-                        <div class="form-group col-sm-<?php echo $colLength; ?>">
+                        <div class="form-group col-sm-12">
                             <label class="labelColorBuyer" for="firstNameInput"><?php echo $this->language->line("PAYMENT-805",'Name');?> (<sup>*</sup>)</label>
                             <input
                                 id="firstNameInput"
@@ -29,20 +26,10 @@
                                 required
                                 data-name="Name"
                             />
-                            <?php if ($pos) { ?>
-                                <div
-                                    class="virtual-keyboard-hook"
-                                    data-target-id="firstNameInput"
-                                    data-keyboard-mapping="qwerty"
-                                    style="text-align: center; font-size: 20px;"
-                                >
-                                    <i class="fa fa-keyboard-o" aria-hidden="true"></i>
-                                </div>
-                            <?php } ?>
                         </div>
                     <?php } ?>
                     <?php if ($vendor['requireEmail'] === '1' || intval($spot['spotTypeId']) !== $local) { ?>
-                        <div class="form-group col-sm-<?php echo $colLength; ?>">
+                        <div class="form-group col-sm-12">
                             <label class="labelColorBuyer" for="emailAddressInput"><?php echo $this->language->line("PAYMENT-810",'Email address');?>  <sup>*</sup></label>
                             <input
                                 type="email"
@@ -55,16 +42,6 @@
                                 oninput="checkUserNewsLetter(this.id)"
                                 data-name="Email"
                             />
-                            <?php if ($pos) { ?>
-                                <div
-                                    class="virtual-keyboard-hook"
-                                    data-target-id="emailAddressInput"
-                                    data-keyboard-mapping="qwerty"
-                                    style="text-align: center; font-size: 20px;"
-                                >
-                                    <i class="fa fa-keyboard-o" aria-hidden="true"></i>
-                                </div>
-                            <?php } ?>
                         </div>
                     <?php } ?>
                     <!-- <div class="form-group col-sm-6" style="display:none">
@@ -88,7 +65,7 @@
                         </select>
                     </div> -->
                     <?php if ($vendor['requireMobile'] === '1' || intval($spot['spotTypeId']) !== $local ) { ?>
-                        <div class="form-group col-sm-<?php echo $colLength; ?>">
+                        <div class="form-group col-sm-6">
                             <label class="labelColorBuyer" for="phoneInput"><?php echo $this->language->line("PAYMENT-I0010",'Phone');?><sup>*</sup></label>
                             <div>
                                 <select class="form-control inputFieldsBuyer" style="width:22% !important; display:inline-block !important" name="phoneCountryCode" style="text-align:center">
@@ -118,16 +95,6 @@
                                     required
                                     data-name="Mobile"
                                 />
-                                <?php if ($pos) { ?>
-                                    <div
-                                        class="virtual-keyboard-hook"
-                                        data-target-id="phoneInput"
-                                        data-keyboard-mapping="qwerty"
-                                        style="text-align: center; font-size: 20px;"
-                                    >
-                                        <i class="fa fa-keyboard-o" aria-hidden="true"></i>
-                                    </div>
-                                <?php } ?>
                             </div>
                         </div>
                     <?php } ?>
@@ -148,17 +115,12 @@
                 <div class="checkout-btns">
                     <a
                         id="backButton"
-                        <?php if ($pos === 0) { ?>
-                            href="<?php echo base_url() . 'checkout_order?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
-                        <?php } else { ?>
-                            href="<?php echo base_url() . 'pos?spotid=' . $spotId . '&' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
-                        <?php } ?>
-                        
+                        href="<?php echo base_url() . 'checkout_order?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                         style="background-color: #948b6f"
                         class="button"
                     >
                         <i class="fa fa-arrow-left"></i>
-						<?php echo ($pos) ? $this->language->line("PAYMENT-9101230",'Back') : $this->language->line("PAYMENT-9100",'Back to list');?>
+						<?php echo $this->language->line("PAYMENT-9100",'Back to list');?>
                     </a>
                     <a id="payButton" href="javascript:void(0);" style="background-color: #349171" class="button" onclick="submitBuyerDetails();">
 						<?php echo $this->language->line("PAYMENT-9110",'Pay');?>

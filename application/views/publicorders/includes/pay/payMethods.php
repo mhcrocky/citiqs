@@ -1,12 +1,4 @@
-<div 
-    
-    <?php if ($pos) { ?>
-        class="col-lg-4"        
-    <?php } else { ?>
-        class="col-md-12 payOrderBackgroundColor"
-    <?php } ?>
-
->
+<div class="col-md-12 payOrderBackgroundColor">
     <div id="area-container" class="payOrderBackgroundColor">
         <div class="page-containe payOrderBackgroundColorr">
             <div id="payHeader" class="heading pay-header payOrderBackgroundColor">
@@ -78,31 +70,31 @@
             </div>
             <div class="content-container clearfix" id="paymentMethodsContainer">
                 <div id="paymentContainer" class="payment-container methods">
-                    <?php if ($vendor['ideal'] === '1' && !$pos) { ?>
+                    <?php if ($vendor['ideal'] === '1') { ?>
                         <a href="javascript:void(0)" onclick="toogleElements('idealBanks', 'paymentMethodsContainer', 'hidden')" class="paymentMethod method-card" >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/ideal.png" alt="iDEAL">
                             <span>iDEAL</span>
                         </a>
                     <?php } ?>
-                    <?php if ($vendor['creditCard'] === '1' && !$pos) { ?>
+                    <?php if ($vendor['creditCard'] === '1') { ?>
                         <a href="<?php echo base_url(); ?>onlinepayment/<?php echo $creditCardPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/creditcard.png" alt="Creditcard">
                             <span>Creditcard</span>
                         </a>
                     <?php } ?>
-                    <?php if ($vendor['payconiq'] === '1' && !$pos) { ?>
+                    <?php if ($vendor['payconiq'] === '1') { ?>
                         <a href="<?php echo base_url(); ?>onlinepayment/<?php echo $payconiqPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/payconiq.png" alt="Payconiq">
                             <span>Payconiq</span>
                         </a>
                     <?php } ?>
-                    <?php if ($vendor['bancontact'] === '1' && !$pos) { ?>
+                    <?php if ($vendor['bancontact'] === '1') { ?>
                         <a href="<?php echo base_url(); ?>onlinepayment/<?php echo $bancontactPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/bancontact.png" alt="bancontact">
                             <span>Bancontact</span>
                         </a>
                     <?php } ?>
-                    <?php if ($vendor['giro'] === '1' && !$pos) { ?>
+                    <?php if ($vendor['giro'] === '1') { ?>
                         <a href="javascript:void(0)" onclick="toogleElements('giroBanks', 'paymentMethodsContainer', 'hidden')" class="paymentMethod method-card" >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/giropay(1).png" alt="bancontact">
                             <span data-trans="" data-trn-key="Bancontact">Giropay</span>
@@ -149,7 +141,7 @@
             </div>
 
             
-            <?php if ($vendor['ideal'] === '1' && !$pos) { ?>
+            <?php if ($vendor['ideal'] === '1') { ?>
                 <div class="method method-ideal hidden"  id="idealBanks">
                     <div class="title hidden"><span data-trans="" data-trn-key="Kies een bank"><?php echo $this->language->line("PAYMENT-030",'Choose your bank');?></span>
                     </div>                                        
@@ -214,7 +206,7 @@
                 </div>
             <?php } ?>
 
-            <?php if ($vendor['giro'] === '1' && !$pos) { ?>
+            <?php if ($vendor['giro'] === '1') { ?>
                 <div class="method method-ideal hidden"  id="giroBanks">
                     <div class="title hidden"><span data-trans="" data-trn-key="Kies een bank"><?php echo $this->language->line("PAYMENT-030",'Choose your bank');?></span>
                     </div>
