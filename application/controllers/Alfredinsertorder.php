@@ -51,7 +51,7 @@ class Alfredinsertorder extends BaseControllerWeb
     }
     
 
-    public function insertOrder($payNlPaymentTypeId, $paymentOptionSubId): void
+    public function onlinePayment($payNlPaymentTypeId, $paymentOptionSubId): void
     {
         $orderRandomKey = $this->input->get($this->config->item('orderDataGetKey'), true);
 
@@ -69,17 +69,61 @@ class Alfredinsertorder extends BaseControllerWeb
         $this->voucherPaymentFailed($orderData);
 
         $orderId = $this->insertOrderProcess($orderData, $this->config->item('orderNotPaid'), $payType, $orderRandomKey);
-        
-        if (is_null($orderId)) {
-            $redirect  = 'make_order?vendorid=' . $orderData['vendorId'] . '&spotid=' . $orderData['spotId'];
-            $redirect .= '&' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
-            $this->session->set_flashdata('error', '(1010) Order not made! Please try again');
-        } else {
-            $redirect  = 'paymentengine' . DIRECTORY_SEPARATOR . $payNlPaymentTypeId  . DIRECTORY_SEPARATOR . $paymentOptionSubId;
-            $redirect .= DIRECTORY_SEPARATOR . $orderId;
-            $redirect .= '?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
-        }
 
+        $redirect  = 'paymentengine' . DIRECTORY_SEPARATOR . $payNlPaymentTypeId  . DIRECTORY_SEPARATOR . $paymentOptionSubId;
+        $redirect .= DIRECTORY_SEPARATOR . $orderId;
+        $redirect .= '?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
+
+        redirect($redirect);
+        exit();
+    }
+
+    public function cashPayment($payStatus, $payType): void
+    {
+        $orderRandomKey = $this->input->get($this->config->item('orderDataGetKey'), true);
+
+        if (empty($orderRandomKey)) redirect(base_url());
+
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
+
+        Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder', 'user', 'orderExtended', 'order']);
+
+        $this->voucherPaymentFailed($orderData);
+
+        $orderId = $this->insertOrderProcess($orderData, $payStatus, $payType, $orderRandomKey);
+
+        $this->cashVoucerRedirect($orderData['vendorId'], $orderId, $orderRandomKey);
+
+        return;
+    }
+
+    public function voucherPayment(): void
+    {
+        $orderRandomKey = $this->input->get($this->config->item('orderDataGetKey'), true);
+
+        if (empty($orderRandomKey)) redirect(base_url());
+
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
+
+
+        Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder', 'user', 'orderExtended', 'order']);
+
+        $payStatus = $this->payingWithVoucher($orderData['order']) ? $this->config->item('orderPaid') : $this->config->item('orderNotPaid');
+        $orderId = $this->insertOrderProcess($orderData, $payStatus, $this->config->item('voucherPayment'), $orderRandomKey);
+
+        $this->cashVoucerRedirect($orderData['vendorId'], $orderId, $orderRandomKey);
+        return;
+    }
+
+    private function cashVoucerRedirect(int $vendorId, int $orderId, string $orderRandomKey): void
+    {
+        if ($vendorId === 1162 || $vendorId === 5655) {
+            $redirect = base_url() . 'successth';
+        } else {
+            $redirect = base_url() . 'success?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey . '&orderid=' . $orderId;
+        }
         redirect($redirect);
         exit();
     }
@@ -126,6 +170,7 @@ class Alfredinsertorder extends BaseControllerWeb
         $orderForImage = reset($orderForImage);
         Orderprint_helper::saveOrderImage($orderForImage);
     }
+
     private function insertOrderInTable(array $post, string $payStatus, string $payType, string $orderRandomKey): void
     {
         $spot = $this->shopspot_model->fetchSpot($post['vendorId'], $post['spotId']);
@@ -141,7 +186,14 @@ class Alfredinsertorder extends BaseControllerWeb
             $post['order']['created'] = $orderDate[0] . ' ' . $post['order']['time'];
         }
 
-        $this->shoporder_model->setObjectFromArray($post['order'])->create();
+        if (!$this->shoporder_model->setObjectFromArray($post['order'])->create()) {
+            $redirect  = 'make_order?vendorid=' . $post['vendorId'] . '&spotid=' . $post['spotId'];
+            $redirect .= '&' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
+            $this->session->set_flashdata('error', '(1010) Order not made! Please try again');
+            redirect($redirect);
+            exit();
+        }
+        return;
     }
 
     private function insertOrderExtended($post): void
@@ -210,52 +262,6 @@ class Alfredinsertorder extends BaseControllerWeb
                 }
             }
         }
-        return;
-    }
-
-    public function cashPayment($payStatus, $payType): void
-    {
-        $orderRandomKey = $this->input->get($this->config->item('orderDataGetKey'), true);
-
-        if (empty($orderRandomKey)) redirect(base_url());
-
-        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
-        $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
-
-        Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder', 'user', 'orderExtended', 'order']);
-
-        $this->voucherPaymentFailed($orderData);
-        $orderId = $this->insertOrderProcess($orderData, $payStatus, $payType, $orderRandomKey);
-        if ($orderData['vendorId'] === 1162 || $orderData['vendorId'] === 5655) {
-            $redirect = base_url() . 'successth';
-        } else {
-            $redirect = base_url() . 'success?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey . '&orderid=' . $orderId;
-        }
-        redirect($redirect);
-        return;
-    }
-
-    public function voucherPayment(): void
-    {
-        $orderRandomKey = $this->input->get($this->config->item('orderDataGetKey'), true);
-
-        if (empty($orderRandomKey)) redirect(base_url());
-
-        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
-        $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
-
-
-        Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder', 'user', 'orderExtended', 'order']);
-
-        $payStatus = $this->payingWithVoucher($orderData['order']) ? $this->config->item('orderPaid') : $this->config->item('orderNotPaid');
-        $orderId = $this->insertOrderProcess($orderData, $payStatus, $this->config->item('voucherPayment'), $orderRandomKey);
-        
-        if ($orderData['vendorId'] === 1162 || $orderData['vendorId'] === 5655) {
-            $redirect = base_url() . 'successth';
-        } else {
-            $redirect = base_url() . 'success?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey . '&orderid=' . $orderId;
-        }
-        redirect($redirect);
         return;
     }
 
