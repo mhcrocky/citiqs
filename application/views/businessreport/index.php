@@ -342,6 +342,9 @@ td.details-control {
         </tr>
     </tfoot>
   </table>
+  <div id="tbl_data">
+      
+  </div>
 </div>
 </div>
 </div>
@@ -353,6 +356,7 @@ td.details-control {
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script> 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.table2excel.js"></script>
 
 <script type="text/javascript">
 
@@ -438,6 +442,87 @@ td.details-control {
             autoFilter: true,
             footer: true,
             sheetName: 'Exported data'
+        },
+        {
+          text: 'Export All Table as Excel',
+          className: "btn btn-primary mb-3 ml-1",
+          action: function ( e, dt, node, config ) {
+            let tbl_datas = table.rows({ search: 'applied'}).data();
+        var html = '<table>';
+        html += '<thead>';
+        html += '<tr>';
+        html += '<th>Order ID</th>';
+        html += '<th>Total Amount</th>';
+        html += '<th>Quantity</th>';
+        html += '<th>Service Type</th>';
+        html += '<th>Service Fee</th>';
+        html += '<th>Service Fee Tax</th>';
+        html += '<th>Service VAT</th>';
+        html += '<th>Service EXVAT</th>';
+        html += '<th>Waiter Tip</th>';
+        html += '<th>AMOUNT</th>';
+        html += '<th>EXVAT</th>';
+        html += '<th>VAT</th>';
+        html += '<th>Date</th>';
+        html += '</tr>';
+        html += '</thead>';
+        $.each(tbl_datas, function( index, tbl_data ) {
+          //console.log( index );
+          html += '<tbody>';
+          html += '<tr>';
+          $.each(tbl_data, function( index, value ) {
+            if(index != 'child'){
+              html += '<td>' + value + '</td>';
+            } else {
+              html += '</tr>';
+              html += '<tr>';
+                html += '<th colspan="3">Product Name</th>';
+                html += '<th colspan="2">Product VAT</th>';
+                html += '<th colspan="2">Price</th>';
+                html += '<th colspan="2">Quantity</th>';
+                html += '<th colspan="2">EXVAT</th>';
+                html += '<th colspan="2">VAT</th>';
+                html += '</tr>';
+              $.each(value, function( index, val ) {
+                let len = value.length - 1;
+                
+                
+                //console.log(Object.keys(val).map(i => val[i]));
+                var array_values = Object.keys(val).map(i => val[i]);
+                //console.log(array_values.length);
+                for(var i = 0; i <= 1; i++){
+                  html += '<tr>';
+                  html += '<td colspan="3">' + array_values[3] + '</td>';
+                  html += '<td colspan="2">' + array_values[2] + '</td>';
+                  html += '<td colspan="2">' + array_values[4] + '</td>';
+                  html += '<td colspan="2">' + array_values[5] + '</td>';
+                  html += '<td colspan="2">' + array_values[11] + '</td>';
+                  html += '<td colspan="2">' + array_values[14] + '</td>';
+                  if(len != index){
+                  html += '</tr>';
+                }
+                }
+                
+                
+              });
+            }
+          });
+          html += '</tr>';
+          html += '</tbody>';
+        });
+        html += '</table>';
+        
+        $(html).table2excel({
+							exclude: ".noExl",
+							name: "Excel Document Name",
+							filename: "TIQS Business Reports Full.xls",
+							fileext: ".xls",
+							exclude_img: true,
+							exclude_links: true,
+							exclude_inputs: true
+						});
+
+          }
         } ],
         ajax: {
           type: 'get',
@@ -532,7 +617,7 @@ td.details-control {
           let exvatTotal = exvatData.length ? 
             exvatData.reduce( function (a, b) {
               return parseFloat(a) + parseFloat(b);
-            }) : 0;
+            }) : 0; 
 
           let vatData = api.column( 12, { search: 'applied' }).cache('search');
           let vatTotal = vatData.length ? 
@@ -559,6 +644,7 @@ td.details-control {
            $(tfoot).find('th').eq(11).html(round_up(pageVatTotal)+'('+round_up(vatTotal)+')');
            $('.buttons-excel').addClass('btn').addClass('btn-success').addClass('mb-3');
            $('.buttons-excel').text('Export as Excel');
+          
         },
         rowId: function(a) {
           return 'row_id_' + a.order_id;
