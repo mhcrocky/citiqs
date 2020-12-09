@@ -54,7 +54,7 @@ class Businessreport extends BaseControllerWeb
 	}
 
 	public function sortWidgets()
-    {
+    { 
     
         $userId = $this->vendor_id;
         $this->businessreport_model->sortWidgets($userId);  
@@ -104,19 +104,19 @@ class Businessreport extends BaseControllerWeb
 			$exservicefee = ($val[0]['serviceFee'])-($val[0]['VATSERVICE']);
 			$rows[] = [
 				'order_id'=>$val[0]['order_id'],
-				'order_date'=>$val[0]['order_date'],
+				'total_AMOUNT'=>($total_AMOUNT+$val[0]['serviceFee']+$val[0]['waiterTip']),
+				'quantity'=>$total_quantity,
+				'service_type'=>$val[0]['service_type'],
 				'serviceFee'=>$val[0]['serviceFee'],
 				'serviceFeeTax'=>$val[0]['serviceFeeTax'],
-				'waiterTip'=>$val[0]['waiterTip'],
-				'EXVATSERVICE'=>$val[0]['EXVATSERVICE'],
 				'VATSERVICE'=>$val[0]['VATSERVICE'],
-				'service_type'=>$val[0]['service_type'],
-				'price'=>$total_price,
-				'quantity'=>$total_quantity,
-				'total_AMOUNT'=>($total_AMOUNT+$val[0]['serviceFee']+$val[0]['waiterTip']),
+				'EXVATSERVICE'=>$val[0]['EXVATSERVICE'],
+				'waiterTip'=>$val[0]['waiterTip'],
 				'AMOUNT'=>$total_AMOUNT,
 				'EXVAT'=>$total_EXVAT,
 				'VAT'=>$total_VAT,
+				'order_date'=>$val[0]['order_date'],
+				//'price'=>$total_price,
 				'child'=>$val
 			];
 			
