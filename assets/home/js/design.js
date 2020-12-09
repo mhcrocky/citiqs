@@ -125,15 +125,27 @@ function copyToClipboard(id) {
     alert(copyText.value);
 }
 
-function changeIframe(widthId, heightId, iframeId) {
-    let newIframe = ''
-    let width   = document.getElementById(widthId);
-    let height  = document.getElementById(heightId);
+function changeIframe(widthId, heightId, iframeId, selectedSpotId, categorySortNumberId, categoryConatinerId) {
     let iframe  = document.getElementById(iframeId);
+    let iframeSrc = designGlobals.iframe;
+    let newIframe = '';
+    let width   = document.getElementById(widthId).value;
+    let height  = document.getElementById(heightId).value;
+    let spotId =  document.getElementById(selectedSpotId).value;
+    let categoryConatiner = document.getElementById(categoryConatinerId);
+    
+
+    if (spotId) {
+        categoryConatiner.style.display = 'inline-block';
+        let categorySortNumber = document.getElementById(categorySortNumberId).value;
+        iframeSrc = iframeSrc  + spotId + categorySortNumber;
+    } else {
+        categoryConatiner.style.display = 'none';
+    }
 
     newIframe += '<iframe frameborder="0" ';
-    newIframe += 'style="width:' + width.value + 'px; height:' + height.value + 'px;" ';
-    newIframe += 'src="' + designGlobals.iframe + '"></iframe>';
+    newIframe += 'style="width:' + width + 'px; height:' + height + 'px;" ';
+    newIframe += 'src="' + iframeSrc + '"></iframe>';
 
     iframe.value = newIframe;
 

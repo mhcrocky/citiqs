@@ -57,6 +57,7 @@
             $spotId = !empty($_GET['spotid']) ? intval($this->input->get('spotid', true)) : null;
             $spot = $spotId ? $this->shopspot_model->fetchSpot($vendorId, intval($spotId)) : null;            
             $allProducts = ($spot && $this->isLocalSpotOpen($spot)) ? $this->shopproductex_model->getMainProductsOnBuyerSide($vendorId, $spot) : null;
+            $localTypeId = $this->config->item('local');
 
             $isFodActive = $spotId ? Fod_helper::isFodActive($vendorId, $spotId) : true;
             
@@ -80,7 +81,7 @@
                 $this->isPosPaymentFailedLink($data);
             }
 
-            $data['spots'] = $this->shopspot_model->fetchUserSpots($vendorId);
+            $data['spots'] = $this->shopspot_model->fetchUserSpotsByType($vendorId, $localTypeId);
             $data['spotId'] = $spotId;
             $data['spotPosOrders'] = $this->shopposorder_model->setProperty('spotId', $spotId)->fetchSpotPosOrders();
             $data['isPos'] = 1;

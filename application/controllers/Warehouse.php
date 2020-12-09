@@ -967,20 +967,25 @@
          */
         public function viewdesign(): void
         {
-            $iframeSrc = base_url() . 'make_order?vendorid=' . $_SESSION['userId'];
-            $vendorData = $this->shopvendor_model->setProperty('vendorId', $_SESSION['userId'])->getProperties(['id', 'design']);
+            $userId = intval($_SESSION['userId']);
+            $iframeSrc = base_url() . 'make_order?vendorid=' . $userId;
+            $vendorData = $this->shopvendor_model->setProperty('vendorId', $userId)->getProperties(['id', 'design']);
             $id = $vendorData['id'];
             $design = ($vendorData['design']) ? unserialize($vendorData['design']) : null;
+            $spots = Utility_helper::resetArrayByKeyMultiple($this->shopspot_model->fetchUserActiveSpots($userId), 'spotType');
+            $categories = $this
+                            ->shopcategory_model
+                                ->setProperty('userId', $userId)
+                                ->setProperty('active', '1')
+                                ->fetcUserCategories();
 
             $data = [
                 'iframeSrc' => $iframeSrc,
                 'id' => $id,
                 'design' => $design,
+                'spots' => $spots,
+                'categories' => $categories,
             ];
-
-            // echo '<pre>';
-            // print_r($data['design']);
-            // die();
 
             $this->global['pageTitle'] = 'TIQS : DESIGN';
             $this->loadViews('warehouse/design', $this->global, $data, 'footerbusiness', 'headerbusiness');

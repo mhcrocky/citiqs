@@ -88,6 +88,17 @@
             );
         }
 
+        public function fetcUserCategories(): ?array
+        {
+            $where = [];
+            foreach ($this as $key => $value) {
+                if (!is_null($value) && $key !== 'table') {
+                    $where[$this->table . '.' . $key] = $value;
+                }
+            }
+            return $this->fetch($where);
+        }
+
         public function checkIsInserted(array $data): bool
         {
             $where = ['userId=' => $data['userId'],'category=' => $data['category']];
