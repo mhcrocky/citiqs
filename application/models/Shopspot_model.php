@@ -84,6 +84,33 @@
             );
         }
 
+        public function fetchUserActiveSpots(int $userId): ?array
+        {
+            return $this->read(
+                [
+                    $this->table . '.id AS spotId',
+                    $this->table . '.printerId AS spotPrinterId',
+                    $this->table . '.spotName AS spotName',
+                    $this->table . '.active AS spotActive',
+                    $this->table . '.spotTypeId AS spotTypeId',
+                    'tbl_shop_printers.printer AS printer',
+                    'tbl_shop_printers.active AS printerActive',
+                    'tbl_shop_spot_types.type AS spotType'
+                ],
+                [
+                    'tbl_shop_printers.userId=' => $userId,
+                    $this->table . '.archived' => '0',
+                    $this->table . '.active' => '1',
+                ],
+                [
+                    ['tbl_shop_printers', $this->table . '.printerId = tbl_shop_printers.id', 'INNER'],
+                    ['tbl_shop_spot_types', $this->table . '.spotTypeId = tbl_shop_spot_types.id', 'INNER']
+                ],
+                'order_by',
+                [$this->table . '.spotName', 'ASC']
+            );
+        }
+
         public function checkSpottName(array $where): bool
         {
             $count = $this->readImproved(
