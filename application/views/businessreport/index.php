@@ -452,62 +452,40 @@ td.details-control {
         html += '<thead>';
         html += '<tr>';
         html += '<th>Order ID</th>';
-        html += '<th>Total Amount</th>';
+        html += '<th>Product Name</th>';
+        html += '<th>Product VAT</th>';
+        html += '<th>Price</th>';
         html += '<th>Quantity</th>';
-        html += '<th>Service Type</th>';
-        html += '<th>Service Fee</th>';
-        html += '<th>Service Fee Tax</th>';
-        html += '<th>Service VAT</th>';
-        html += '<th>Service EXVAT</th>';
-        html += '<th>Waiter Tip</th>';
-        html += '<th>AMOUNT</th>';
         html += '<th>EXVAT</th>';
         html += '<th>VAT</th>';
-        html += '<th>Date</th>';
         html += '</tr>';
         html += '</thead>';
         $.each(tbl_datas, function( index, tbl_data ) {
           //console.log( index );
           html += '<tbody>';
-          html += '<tr>';
           $.each(tbl_data, function( index, value ) {
             if(index != 'child'){
-              html += '<td>' + value + '</td>';
             } else {
-              html += '</tr>';
-              html += '<tr>';
-                html += '<th colspan="3">Product Name</th>';
-                html += '<th colspan="2">Product VAT</th>';
-                html += '<th colspan="2">Price</th>';
-                html += '<th colspan="2">Quantity</th>';
-                html += '<th colspan="2">EXVAT</th>';
-                html += '<th colspan="2">VAT</th>';
-                html += '</tr>';
               $.each(value, function( index, val ) {
                 let len = value.length - 1;
+                html += '<tr>';
+                  html += '<td>' + val.order_id + '</td>';
+                  html += '<td>' + val.productName + '</td>' ;
+                  html += '<td>' + parseInt(val.productVat) + '%</td>' ;
+                  html += '<td>' + round_up(val.price) + '</td>' ;
+                  html += '<td>' + val.quantity + '</td>' ;
+                  html += '<td>' + round_up(val.EXVAT) + '</td>' ;
+                  html += '<td>' + round_up(val.VAT) + '</td>';
+                html += '</tr>';
                 
-                
-                //console.log(Object.keys(val).map(i => val[i]));
+                console.log(val);
                 var array_values = Object.keys(val).map(i => val[i]);
                 //console.log(array_values.length);
-                for(var i = 0; i <= 1; i++){
-                  html += '<tr>';
-                  html += '<td colspan="3">' + array_values[3] + '</td>';
-                  html += '<td colspan="2">' + array_values[2] + '</td>';
-                  html += '<td colspan="2">' + array_values[4] + '</td>';
-                  html += '<td colspan="2">' + array_values[5] + '</td>';
-                  html += '<td colspan="2">' + array_values[11] + '</td>';
-                  html += '<td colspan="2">' + array_values[14] + '</td>';
-                  if(len != index){
-                  html += '</tr>';
-                }
-                }
                 
                 
               });
             }
           });
-          html += '</tr>';
           html += '</tbody>';
         });
         html += '</table>';
