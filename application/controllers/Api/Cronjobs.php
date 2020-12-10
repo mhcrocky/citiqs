@@ -27,6 +27,9 @@
         
         public function cleanPrinterRequests_get(): void
         {
+//        	$text = 'peter';
+//        	var_dump($text);
+//        	die();
             $where = [
                 'conected<' => date('Y-m-d H:i:s', strtotime ( '-1 day' , strtotime(date('Y-m-d H:i:s'))) )
             ];
