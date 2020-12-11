@@ -25,15 +25,19 @@ function cancelPosOrder(orderDataRandomKey,) {
     if (orderDataRandomKey) {
         $('#confirmCancel').modal('show');
     } else {
-        document.getElementById(makeOrderGlobals.modalCheckoutList).innerHTML = '';
-        resetTotal();
+        resetPosOrder();
     }
+}
+
+function resetPosOrder() {
+    document.getElementById(makeOrderGlobals.modalCheckoutList).innerHTML = '';
+    countOrderedToZero('countOrdered');
+    resetTotal();
 }
 
 function deleteOrder(spotId, orderDataRandomKey) {
     window.location.href =  globalVariables.baseUrl + 'pos/delete/' + orderDataRandomKey + '/' +  spotId;
 }
-
 
 function holdOrder(spotId, saveNameId) {
     let saveName = document.getElementById(saveNameId).value;
@@ -228,6 +232,7 @@ function getOrderExtedned(orderedProducts, orderedProductsLength) {
 
 function manageResponse(data) {
     let orderId = data['orderId'];
+    resetPosOrder();
     showOrderId(orderId);
     sednNotification(orderId);
     printOrder(orderId);
@@ -262,6 +267,14 @@ function getServiceFee(orderAmount) {
     return serviceFee;
 }
 
+function countOrderedToZero(countOrdered) {
+    let elements =  document.getElementsByClassName(countOrdered);
+    let elementsLength  = elements.length;
+    let i;
+    for (i = 0; i < elementsLength; i++) {
+        elements[i].innerHTML = '0';
+    }
+}
 $(document).ready(function(){
     if (typeof makeOrderGlobals === 'undefined') return;
     let sumbitFormButton = document.getElementById(makeOrderGlobals.checkoutContinueButton);

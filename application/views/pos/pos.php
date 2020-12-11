@@ -239,6 +239,5 @@
 			<?php } ?>
 			return globals;
 		}());
-		console.dir(posGlobals);
 	</script>
 <?php } ?>
