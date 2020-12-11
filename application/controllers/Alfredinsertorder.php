@@ -196,7 +196,7 @@ class Alfredinsertorder extends BaseControllerWeb
         $this->saveOrderImage($orderId); // OPTIMIZE THREAD ... ASYNC 
         $this->sendNotifictaion($post, $orderId, $payStatus);
 
-        return $this->shoporder_model->id;
+        return $orderId;
     }
 
     private function saveOrderImage(int $orderId): void
