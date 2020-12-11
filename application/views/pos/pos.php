@@ -36,7 +36,7 @@
 							<option value="">Select</option>
 							<?php foreach ($spotPosOrders as $saveOrder) { ?>
 								<option
-									id='<?php echo $orderDataRandomKey; ?>'
+									id='<?php echo $saveOrder['randomKey']; ?>'
 									value="pos?spotid=<?php echo $saveOrder['spotId'] . '&' . $orderDataGetKey . '=' . $saveOrder['randomKey']; ?>"
 									<?php
 										if ($saveOrder['randomKey'] === $orderDataRandomKey) {

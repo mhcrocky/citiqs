@@ -287,7 +287,8 @@ function countOrderedToZero(countOrdered) {
 
 function removeSavedOrder(orderRandomKey) {
     if (!orderRandomKey) return;
-    document.getElementById(orderRandomKey).remove();
+    let optionItem = document.getElementById(orderRandomKey);    
+    if (optionItem) optionItem.remove();
     document.getElementById('saveHoldOrder').innerHTML = 'Save order'
 }
 
