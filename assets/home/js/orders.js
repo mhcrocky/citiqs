@@ -269,14 +269,15 @@ function fetchOrders() {
     let post = {
         paid: '1'
     }
-    let selectedStatus = document.getElementById('orderStatus').value;
-    let selectedPrinter = document.getElementById('selectedPrinter').value;
+    let selectedStatus = document.getElementById('orderStatus');
+    let selectedPrinter = document.getElementById('selectedPrinter');
 
-    if (selectedStatus) {
-        post['orderStatus'] = selectedStatus;
+    if (selectedStatus && selectedStatus.value) {
+        post['orderStatus'] = selectedStatus.value;
     }
-    if (selectedPrinter) {
-        post['selectedPrinter'] = selectedPrinter;
+    if (selectedPrinter && selectedPrinter.value) {
+        selectedPrinter = selectedPrinter.value;
+        post['selectedPrinter'] = selectedPrinter.value;
     }
 
     sendAjaxPostRequest(post, url, 'fetchOrders', populateTable);

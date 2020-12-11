@@ -822,6 +822,16 @@ class User_model extends CI_Model
         return $this->id ? true : false;
     }
 
+    public function insertBuyer(array $user): bool
+    {
+        // if ($user['lat'] === '0' && $user['lng'] === '0') {
+        //     return false;
+        // }
+        $this->db->insert('tbl_user', $user);
+        $this->id = $this->db->insert_id();
+        return $this->id ? true : false;
+    }
+
     public function updateUser(array $data, array $where = null)
     {
         $filter = (!$where && isset($this->where)) ? $this->where : $where;
@@ -945,7 +955,7 @@ class User_model extends CI_Model
             $buyer['code'] = Utility_helper::shuffleString(5);
             $buyer['createdDtm'] = date('Y-m-d H:i:s');
             $this->getGeoCoordinates($buyer);
-            $this->insertUser($buyer);
+            $this->insertBuyer($buyer);
 
             // must return non hashed password for activation link
             $this->password = $password;

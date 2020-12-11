@@ -43,11 +43,4 @@
         <?php } ?>        
 	</div>
 </div>
-<?php if (isset($justPrintLink)) { ?>
-    <script>
-        $.get("<?php echo $justPrintLink; ?>", function(data, status) {
-            console.dir(data);
-            console.dir(status);
-        });
-    </script>
-<?php } ?>
+

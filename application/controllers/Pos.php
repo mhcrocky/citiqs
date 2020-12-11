@@ -72,6 +72,9 @@
                     'categories'                => array_keys($allProducts['main']),
                     'vendor'                    => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData(),
                     'baseUrl'                   => base_url(),
+                    'buyerRoleId'               => $this->config->item('buyer'),
+                    'salesagent'                => $this->config->item('tiqsId'),
+                    'buyershorturl'             => $this->config->item('buyershorturl'),
                 ];
                 $this->getOrdered($data, $vendorId, $spotId);
                 $this->isCheckout($data);
@@ -185,5 +188,25 @@
             return;
         }
 
+        private function setPosSideFee(array &$data): void
+        {
+            $spotTypeId = intval($data['spot']['spotTypeId']);
+
+            if ($spotTypeId === $this->config->item('local')) {
+                $data['serviceFeePercent'] = $data['vendor']['serviceFeePercentPos'] === '1' ? $data['vendor']['serviceFeePercent'] : 0.0;
+                $data['serviceFeeAmount'] = $data['vendor']['serviceFeeAmountPos'] === '1' ? $data['vendor']['serviceFeeAmount'] : 0.0;
+                $data['minimumOrderFee'] =  $data['vendor']['minimumOrderFeePos'] === '1' ? $data['vendor']['minimumOrderFee'] : 0.0;
+            }
+            // elseif ($spotTypeId === $this->config->item('deliveryType')) {
+            //     $data['serviceFeePercent'] = $data['vendor']['deliveryServiceFeePercentPos'] === '1' ? $data['vendor']['deliveryServiceFeePercent'] : 0.0;
+            //     $data['serviceFeeAmount'] = $data['vendor']['deliveryServiceFeeAmountPos'] === '1' ? $data['vendor']['deliveryServiceFeeAmount'] : 0.0;
+            //     $data['minimumOrderFee'] = $data['vendor']['deliveryMinimumOrderFeePos'] === '1' ? $data['vendor']['deliveryMinimumOrderFee'] : 0.0;
+            // } elseif ($spotTypeId === $this->config->item('pickupType')) {
+            //     $data['serviceFeePercent'] = $data['vendor']['pickupServiceFeePercentPos'] === '1' ? $data['vendor']['pickupServiceFeePercent'] : 0.0;
+            //     $data['serviceFeeAmount'] = $data['vendor']['pickupServiceFeeAmountPos'] === '1' ? $data['vendor']['pickupServiceFeeAmount'] : 0.0;
+            //     $data['minimumOrderFee'] = $data['vendor']['pickupMinimumOrderFeePos'] === '1' ? $data['vendor']['pickupMinimumOrderFee'] : 0.0;
+            // }
+            return;
+        }
        
     }
