@@ -232,9 +232,11 @@
 			globals = {
 				'serviceFeePercent' : serviceFeePercent,
 				'serviceFeeAmount' : serviceFeeAmount,
-				'minimumOrderFee' : minimumOrderFee,
-				'venodrOneSignalId' : '<?php echo $vendor['oneSignalId']; ?>',
+				'minimumOrderFee' : minimumOrderFee
 			}
+			<?php if (!empty($vendor['oneSignalId'])) { ?>
+				globals['venodrOneSignalId'] = '<?php echo $vendor['oneSignalId']; ?>';
+			<?php } ?>
 			return globals;
 		}());
 		console.dir(posGlobals);

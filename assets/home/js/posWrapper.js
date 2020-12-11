@@ -133,11 +133,11 @@ function posPayment() {
     }
 
     let url = globalVariables.baseUrl + 'Alfredinsertorder/posPayment'
-    sendAjaxPostRequest(post, url, 'posPayment', showOrderId);
+    sendAjaxPostRequest(post, url, 'posPayment', manageResponse);
     return;
 }
 
-function getOrderExtedned(orderedProducts,orderedProductsLength) {
+function getOrderExtedned(orderedProducts, orderedProductsLength) {
     let orderExtended = [];
     let orderAmount = 0;
     let i;
@@ -226,16 +226,32 @@ function getOrderExtedned(orderedProducts,orderedProductsLength) {
     return returnData;
 }
 
-function showOrderId(data) {
-    let responseContainer = document.getElementById(makeOrderGlobals.posResponse);
-    let orderContainer = document.getElementById(makeOrderGlobals.posMakeOrderId);
-    let justPrint = 'http://localhost/tiqsbox/index.php/Cron/justprint/' + data['orderId']
-    let html = '<p>Order is done. Order id is: ' + data['orderId'] + '</p>';
+function manageResponse(data) {
+    let orderId = data['orderId'];
+    showOrderId(orderId);
+    sednNotification(orderId);
+    printOrder(orderId);
+}
 
-    $.get(justPrint, function(data, status) {});
+function showOrderId(orderId) {
+    let responseContainer = document.getElementById(makeOrderGlobals.posResponse);
+    let orderContainer = document.getElementById(makeOrderGlobals.posMakeOrderId);    
+    let html = '<p>Order is done. Order id is: ' + orderId + '</p>';
+
     orderContainer.style.display = 'none';
     responseContainer.style.display = 'block';
     responseContainer.innerHTML = html;
+}
+
+function sednNotification(orderId) {
+    if (!posGlobals.venodrOneSignalId) return
+    let url = globalVariables.baseUrl + 'Alfredinsertorder/posSendNoticication/' + orderId + '/' + posGlobals.venodrOneSignalId;
+    $.get(url, function(data, status) {});
+}
+
+function printOrder(orderId) {
+    let justPrint = 'http://localhost/tiqsbox/index.php/Cron/justprint/' + orderId;
+    $.get(justPrint, function(data, status) {});
 }
 
 function getServiceFee(orderAmount) {
