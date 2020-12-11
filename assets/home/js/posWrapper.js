@@ -137,6 +137,9 @@ function posPayment() {
     }
 
     let url = globalVariables.baseUrl + 'Alfredinsertorder/posPayment'
+    if (makeOrderGlobals['orderDataRandomKey']) {
+        url += '/' + makeOrderGlobals['orderDataRandomKey'];
+    }
     sendAjaxPostRequest(post, url, 'posPayment', manageResponse);
     return;
 }
@@ -237,6 +240,7 @@ function manageResponse(data) {
         return;
     }
     resetPosOrder();
+    removeSavedOrder(data['orderRandomKey']);
     showOrderId(orderId);
     sednNotification(orderId);
     printOrder(orderId);
@@ -280,6 +284,13 @@ function countOrderedToZero(countOrdered) {
         elements[i].innerHTML = '0';
     }
 }
+
+function removeSavedOrder(orderRandomKey) {
+    if (!orderRandomKey) return;
+    document.getElementById(orderRandomKey).remove();
+    document.getElementById('saveHoldOrder').innerHTML = 'Save order'
+}
+
 $(document).ready(function(){
     if (typeof makeOrderGlobals === 'undefined') return;
     let sumbitFormButton = document.getElementById(makeOrderGlobals.checkoutContinueButton);

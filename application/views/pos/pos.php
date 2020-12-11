@@ -36,8 +36,14 @@
 							<option value="">Select</option>
 							<?php foreach ($spotPosOrders as $saveOrder) { ?>
 								<option
+									id='<?php echo $orderDataRandomKey; ?>'
 									value="pos?spotid=<?php echo $saveOrder['spotId'] . '&' . $orderDataGetKey . '=' . $saveOrder['randomKey']; ?>"
-									<?php if ($saveOrder['randomKey'] === $orderDataRandomKey) echo 'selected'; ?>
+									<?php
+										if ($saveOrder['randomKey'] === $orderDataRandomKey) {
+											$selected = 'selected';
+											echo $selected;
+										}
+									?>
 								>
 									<?php echo $saveOrder['saveName']; ?>
 								</option>
@@ -144,7 +150,15 @@
 						<!-- end pos main-->
 						<div class="pos_categories__footer">
 							<a href="javascript:void(0)" class='pos_categories__button pos_categories__button--secondary' onclick="cancelPosOrder('<?php echo $orderDataRandomKey; ?>')">Cancel Order</a>
-							<a href="javascript:void(0)" class='pos_categories__button pos_categories__button--primary' data-toggle="modal" data-target="#holdOrder"><?php echo $orderDataRandomKey ? 'Update' : 'Save'; ?>&nbsp;Order</a>
+							<a
+								href="javascript:void(0)"
+								id="saveHoldOrder"
+								class='pos_categories__button pos_categories__button--primary'
+								data-toggle="modal"
+								data-target="#holdOrder"
+							>
+								<?php echo ($orderDataRandomKey && isset($selected)) ? 'Update' : 'Save'; ?>&nbsp;Order
+							</a>
 							<a href="<?php echo base_url() . 'pos?spotid=' . $spotId; ?>" class='pos_categories__button pos_categories__button--third' onclick="cancelPosOrder()">New order</a>
 						</div>
 						<!-- end pos footer -->
@@ -237,6 +251,11 @@
 			<?php if (!empty($vendor['oneSignalId'])) { ?>
 				globals['venodrOneSignalId'] = '<?php echo $vendor['oneSignalId']; ?>';
 			<?php } ?>
+			<?php if (!empty($vendor['orderDataRandomKey'])) { ?>
+				globals['orderDataRandomKey'] = '<?php echo $vendor['orderDataRandomKey']; ?>';
+			<?php } else { ?>
+				globals['orderDataRandomKey'] = '';
+			<?php } ?>			
 			return globals;
 		}());
 	</script>

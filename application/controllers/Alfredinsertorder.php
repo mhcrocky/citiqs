@@ -123,19 +123,24 @@ class Alfredinsertorder extends BaseControllerWeb
     public function posPayment(string $orderRandomKey = ''): void
     {
         $post = Utility_helper::sanitizePost();
-
         $post['vendorId'] = intval($post['vendorId']);
         $post['spotId'] = intval($post['spotId']);
-
         $payStatus = $this->config->item('orderPaid');
         $payType =  $this->config->item('postPaid');
 
         $this->isFodActive($post['vendorId'], $post['spotId']);
-        $this->deletePosOrder($post, $orderRandomKey);
+
+        $orderId = $this->insertOrderProcess($post, $payStatus, $payType,  $orderRandomKey);
+
+        if ($orderId) {
+            $this->deletePosOrder($post, $orderRandomKey);
+        }
+        
         // $this->voucherPaymentFailed($post, $orderRandomKey);
 
         echo json_encode([
-            'orderId' => $this->insertOrderProcess($post, $payStatus, $payType,  $orderRandomKey)
+            'orderId' => $orderId,
+            'orderRandomKey' => $orderRandomKey,
         ]);        
     }
 
@@ -310,7 +315,7 @@ class Alfredinsertorder extends BaseControllerWeb
     private function deletePosOrder(array $post, string $ranodmKey): void
     {
         if (!$ranodmKey) return;
-        if ($this->shoporder_model->id && isset($post['pos']) && $post['pos'] === '1' && $ranodmKey) {
+        if (isset($post['pos']) && $post['pos'] === '1' && $ranodmKey) {
             $this->shopsession_model->setProperty('randomKey', $ranodmKey)->setIdFromRandomKey();
             $this
                 ->shopposorder_model
