@@ -105,28 +105,7 @@ class  Paysuccesslink extends BaseControllerWeb
             $order = reset($order);
             $data['order'] = $order;
             $data['orderDataGetKey'] = $this->config->item('orderDataGetKey');
-            $this->chekckIsPosOrder($data, $order['orderRandomKey']);
         }
         return;
-    }
-
-    private function chekckIsPosOrder(array &$data, string $ranodmKey): void
-    {
-        $orderData = $this->shopsession_model->setProperty('randomKey', $ranodmKey)->getArrayOrderDetails();
-        $data['pos'] = intval($orderData['pos']);
-        if ($data['pos']) {            
-            $data['spotId'] = $orderData['spotId'];
-            $data['orderRandomKey'] = $ranodmKey;
-            if ($data['order']['orderPaidStatus'] === '1') {
-                if ($this->shopvendorfod_model->isOnlyBBVendor($orderData['vendorId'])) {
-                    $data['justPrintLink'] = 'http://localhost/tiqsbox/index.php/Cron/justprint/' . $data['order']['orderId'];
-                    // file_get_contents($justPrintLink);
-                }
-                Utility_helper::redirectToPos($data, $this->config->item('posSuccessLink'));
-            } else {
-                Utility_helper::redirectToPos($data, $this->config->item('posPaymentFailedLink'));
-            }
-            
-        }
     }
 }

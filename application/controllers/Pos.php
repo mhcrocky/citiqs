@@ -55,13 +55,11 @@
         {
             $vendorId = intval($_SESSION['userId']);
             $spotId = !empty($_GET['spotid']) ? intval($this->input->get('spotid', true)) : null;
-            $spot = $spotId ? $this->shopspot_model->fetchSpot($vendorId, intval($spotId)) : null;            
+            $spot = $spotId ? $this->shopspot_model->fetchSpot($vendorId, intval($spotId)) : null;
             $allProducts = ($spot && $this->isLocalSpotOpen($spot)) ? $this->shopproductex_model->getMainProductsOnBuyerSide($vendorId, $spot) : null;
             $localTypeId = $this->config->item('local');
 
             $isFodActive = $spotId ? Fod_helper::isFodActive($vendorId, $spotId) : true;
-            
-
 
             if ($allProducts && $isFodActive) {
                 $data = [
@@ -72,13 +70,12 @@
                     'categories'                => array_keys($allProducts['main']),
                     'vendor'                    => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData(),
                     'baseUrl'                   => base_url(),
+                    'buyerRoleId'               => $this->config->item('buyer'),
+                    'salesagent'                => $this->config->item('tiqsId'),
+                    'buyershorturl'             => $this->config->item('buyershorturl'),
                 ];
                 $this->getOrdered($data, $vendorId, $spotId);
-                $this->isCheckout($data);
-                $this->isBuyerDetails($data);
-                $this->isPay($data);
-                $this->isPosSuccessLink($data);
-                $this->isPosPaymentFailedLink($data);
+                $this->setPosSideFee($data);
             }
 
             $data['spots'] = $this->shopspot_model->fetchUserSpotsByType($vendorId, $localTypeId);
@@ -86,6 +83,7 @@
             $data['spotPosOrders'] = $this->shopposorder_model->setProperty('spotId', $spotId)->fetchSpotPosOrders();
             $data['isPos'] = 1;
             $data['fodIsActive'] = $isFodActive;
+
             $this->global['pageTitle'] = 'TIQS : POS';
             $this->loadViews('pos/pos', $this->global, $data, null, 'headerWarehouse');
             return;
@@ -139,51 +137,11 @@
             return $this->shopposorder_model->saveName;
         }
 
-        private function isCheckout(array &$data): void
+        private function setPosSideFee(array &$data): void
         {
-            $sessionKey = $this->config->item('posCheckoutOrder');
-            $this->useSessionData($data, $sessionKey);
-        }
-
-        private function isBuyerDetails(array &$data): void
-        {
-            $sessionKey = $this->config->item('posBuyerDetails');
-            $this->useSessionData($data, $sessionKey);
-        }
-
-        private function isPay(array &$data): void
-        {
-            $sessionKey = $this->config->item('posPay');
-            $this->useSessionData($data, $sessionKey);
-        }
-
-        private function isPosSuccessLink(array &$data): void
-        {
-            $sessionKey = $this->config->item('posSuccessLink');
-            $this->useSessionData($data, $sessionKey);
-        }
-
-        private function isPosPaymentFailedLink(array &$data): void
-        {
-            $sessionKey = $this->config->item('posPaymentFailedLink');
-            $this->useSessionData($data, $sessionKey, false);
-  
-        }
-
-        private function useSessionData(array &$data, string $sessionKey, bool $check = true): void
-        {
-            if (isset($_SESSION[$sessionKey])) {
-                $data[$sessionKey] = 1;
-                foreach($_SESSION[$sessionKey] as $key => $value) {
-                    if (isset($data[$key]) && $check) continue;
-                    $data[$key] = $value;
-                }
-                unset($_SESSION[$sessionKey]);
-            } else {
-                $data[$sessionKey] = 0;
-            }
+            $data['serviceFeePercent'] = $data['vendor']['serviceFeePercentPos'] === '1' ? $data['vendor']['serviceFeePercent'] : 0.0;
+            $data['serviceFeeAmount'] = $data['vendor']['serviceFeeAmountPos'] === '1' ? $data['vendor']['serviceFeeAmount'] : 0.0;
+            $data['minimumOrderFee'] =  $data['vendor']['minimumOrderFeePos'] === '1' ? $data['vendor']['minimumOrderFee'] : 0.0;
             return;
         }
-
-       
     }

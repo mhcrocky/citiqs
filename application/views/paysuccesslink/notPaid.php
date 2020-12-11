@@ -1,14 +1,8 @@
-<div
-    <?php if ($pos) { ?>
-        class='col-lg-4'
-    <?php } else { ?>
-        class='checkout-message' style='margin-top: 100px; margin-bottom: 100px;'
-    <?php } ?>
->
+<div class='checkout-message' style='margin-top: 100px; margin-bottom: 100px;'>
 	<img src="http://localhost:8080/alfred/alfred/assets/images/defaultProductsImages/coca-cola.png" alt="">
 	<h2>CONFIRMATION</h2>
 	<div class="checkout-message__content">
-		<h3><?php if (!$pos) echo 'Your'; ?>&nbsp;Order was</h3>
+		<h3>Your&nbsp;Order was</h3>
         <p class='order-status order-status--false'>not successful</p>
         <?php if (isset($order)) { ?>
             <div class='checkout-message__details'>
@@ -27,24 +21,13 @@
 	</div>
 	<div class="checkout-btns">
         <?php if (isset($order)) { ?>
-
-            <?php if (isset($pos) && $pos === 1) { ?>
-                <a
-                    href="<?php echo base_url() . 'pos?spotid=' . $order['spotId'] . '&' . $orderDataGetKey . '=' . $order['orderRandomKey']; ?>"
-                    style="background-color: #948b6f"
-                    class="button"
-                >
-                    Back<i class="fa fa-arrow-left"></i>
-                </a>
-            <?php } else { ?>
-                <a
-                    href="<?php echo base_url() . 'make_order?vendorid=' . $order['vendorId'] . '&spotid=' . $order['spotId'] . '&' . $orderDataGetKey . '=' . $order['orderRandomKey']; ?>"
-                    style="background-color: #948b6f"
-                    class="button"
-                >
-                    Try again<i class="fa fa-arrow-right"></i>
-                </a>
-            <?php } ?>
+            <a
+                href="<?php echo base_url() . 'make_order?vendorid=' . $order['vendorId'] . '&spotid=' . $order['spotId'] . '&' . $orderDataGetKey . '=' . $order['orderRandomKey']; ?>"
+                style="background-color: #948b6f"
+                class="button"
+            >
+                Try again<i class="fa fa-arrow-right"></i>
+            </a>
         <?php } else { ?>
             <a href="<?php echo base_url() . 'places'; ?>" style="background-color: #948b6f" class="button">
                 Back<i class="fa fa-arrow-right"></i>

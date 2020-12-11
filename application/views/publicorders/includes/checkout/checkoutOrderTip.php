@@ -75,16 +75,6 @@
                         maxlength="<?php echo $maxRemarkLength; ?>"
                         placeholder="Allowed <?php echo $maxRemarkLength; ?> characters"
                     />
-                    <?php if ($pos) { ?>
-                        <div
-                            class="virtual-keyboard-hook"
-                            data-target-id="notesInput"
-                            data-keyboard-mapping="qwerty"
-                            style="text-align: center; font-size: 20px;"
-                        >
-                            <i class="fa fa-keyboard-o" aria-hidden="true"></i>
-                        </div>
-                    <?php } ?>
                 </div>
             <?php } ?>
             <?php
@@ -99,7 +89,6 @@
                                 <?php echo $termsAndConditions; ?>
                                 id="termsAndConditions"
                                 class="inputFieldCheckout"
-                                <?php if ($pos) echo 'checked'; ?>
                             />
                             I read and accept the
                             <a href="<?php echo $return; ?>">
@@ -115,7 +104,6 @@
                                 <?php echo $privacyPolicy; ?>
                                 id="privacyPolicy"
                                 class="inputFieldCheckout"
-                                <?php if ($pos) echo 'checked'; ?>
                             />
                             I took notice of <a href="<?php echo $return; ?>">Privacy policy</a>
                         </label>

@@ -3,9 +3,7 @@
         <div class="checkout-table">
             <div id="headlineYourOrder" class="checkout-table__header">
                 <h3 class='mb-0' style="text-align:center">
-                    <?php 
-                        echo $pos ? $this->language->line("PAYMENT-HD001282",'ORDER') : $this->language->line("PAYMENT-HD0010",'YOUR ORDER');
-                    ?>
+                    <?php  $this->language->line("PAYMENT-HD0010",'YOUR ORDER'); ?>
                 </h3>
             </div>
             <!--            <div class="checkout-table__single-element checkout-table__single-element--header">-->
@@ -28,13 +26,7 @@
                         <!-- end checkout table header -->
 
 
-            <div
-                <?php if ($pos) { ?>
-                    style="display:none "
-                <?php } else  { ?>
-                    class="checkout-table-content"
-                <?php } ?>
-            >
+            <div class="checkout-table-content">
                 <?php
                     $countInputs = 0;
                     $count = 0;

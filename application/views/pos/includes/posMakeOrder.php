@@ -1,4 +1,4 @@
-<div class="col-lg-4" id="posMakeOrderId">
+<div class="col-lg-4" id="posMakeOrderId">    
     <div class="pos-sidebar">
         <div class="pos-checkout">
             <div class="pos-checkout__header">
@@ -19,5 +19,7 @@
             <!-- end checout list -->
         </div>
     </div>
-    <a href="javascript:void(0)" class='pos-checkout__button' onclick="checkout(1)">Pay (<span class="totalPrice">0</span>&nbsp;&euro;)</a>
+    <a href="javascript:void(0)" class='pos-checkout__button' onclick="posPayment()">Pay (<span class="totalPrice">0</span>&nbsp;&euro;)</a>
 </div>
+
+<div class="col-lg-4" id="posResponse" style="dipslay:none; padding-top:40px"></div>

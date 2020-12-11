@@ -106,14 +106,7 @@
 													<?php $productDetails = reset($product['productDetails']); ?>
 													<div
 														class="pos-item"
-														<?php if (!$posPay && !$posSuccessLink && !$posPaymentFailedLink) { ?>
-															onclick="posTriggerModalClick('modal_buuton_<?php echo 'single-item-details-modal' . $product['productId']; ?>_<?php echo $productDetails['productExtendedId']?>')"
-                                                        <?php } else { ?>
-															onclick="alertifyMessage(this)"
-															data-message='You can not add product in this stage. Go back to add'
-															data-message-type='error'
-														<?php } ?>
-													>
+														onclick="posTriggerModalClick('modal_buuton_<?php echo 'single-item-details-modal' . $product['productId']; ?>_<?php echo $productDetails['productExtendedId']?>')"													>
 														<?php if ($vendor['showProductsImages'] === '1') { ?>
 															<div class='pos-item__image'>
 																<img
@@ -151,29 +144,13 @@
 						<!-- end pos main-->
 						<div class="pos_categories__footer">
 							<a href="javascript:void(0)" class='pos_categories__button pos_categories__button--secondary' onclick="cancelPosOrder('<?php echo $orderDataRandomKey; ?>')">Cancel Order</a>
-							<?php if (!$posPay && !$posSuccessLink && !$posPaymentFailedLink ) { ?>
 							<a href="javascript:void(0)" class='pos_categories__button pos_categories__button--primary' data-toggle="modal" data-target="#holdOrder"><?php echo $orderDataRandomKey ? 'Update' : 'Save'; ?>&nbsp;Order</a>
-							<?php } ?>
 							<a href="<?php echo base_url() . 'pos?spotid=' . $spotId; ?>" class='pos_categories__button pos_categories__button--third' onclick="cancelPosOrder()">New order</a>
 						</div>
 						<!-- end pos footer -->
 					</div>
 					<!-- start pos sidebar -->
-					<?php
-						if (!empty($posCheckoutOrder)) {
-							include_once FCPATH . 'application/views/publicorders/checkoutOrder.php';
-						} elseif ($posBuyerDetails) {
-							include_once FCPATH . 'application/views/publicorders/buyerDetails.php';
-						} elseif ($posPay) {
-							include_once FCPATH . 'application/views/publicorders/includes/pay/payMethods.php';
-						} elseif($posSuccessLink) {
-							include_once FCPATH . 'application/views/paysuccesslink/success.php';
-						} elseif ($posPaymentFailedLink) {
-							include_once FCPATH . 'application/views/paysuccesslink/notPaid.php';
-						} else {
-							include_once FCPATH . 'application/views/pos/includes/posMakeOrder.php';
-						}
-					?>
+					<?php include_once FCPATH . 'application/views/pos/includes/posMakeOrder.php'; ?>
 					<!-- end pos sidebar -->
 				</div>
 				<!-- end row item grid -->
@@ -245,4 +222,22 @@
 			</div>
 		</div>
 	</div>
+
+	<script>
+		var posGlobals =(function(){
+			let globals = new Map();
+			let serviceFeePercent = parseFloat('<?php echo $serviceFeePercent; ?>');
+			let serviceFeeAmount = parseFloat('<?php echo $serviceFeeAmount; ?>');
+			let minimumOrderFee = parseFloat('<?php echo $minimumOrderFee; ?>');
+			globals = {
+				'serviceFeePercent' : serviceFeePercent,
+				'serviceFeeAmount' : serviceFeeAmount,
+				'minimumOrderFee' : minimumOrderFee
+			}
+			<?php if (!empty($vendor['oneSignalId'])) { ?>
+				globals['venodrOneSignalId'] = '<?php echo $vendor['oneSignalId']; ?>';
+			<?php } ?>
+			return globals;
+		}());
+	</script>
 <?php } ?>
