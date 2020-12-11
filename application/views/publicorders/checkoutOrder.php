@@ -1,10 +1,7 @@
 
 <main
-    <?php if ($pos) { ?>
-        style="display:none"
-    <?php } else { ?>
-        class="container checkoutOrderBody" style="text-align:left; margin-bottom:20px; width:100vw; height:100vh"
-    <?php } ?>
+    class="container checkoutOrderBody"
+    style="text-align:left; margin-bottom:20px; width:100vw; height:100vh"
 >
     <form id="goOrder" method="post" onsubmit="return submitForm()">
         <input type="text" name="orderRandomKey" value="<?php echo $orderRandomKey; ?>" required readonly hidden />
@@ -158,16 +155,12 @@
                 <?php } ?>
                 <div class="checkout-btns">
                     <a
-                        id="checkoutBack"
-                        <?php if ($pos === 0) { ?>
-                        href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spotId . '&' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
-                        <?php } elseif ($pos === 1) { ?>
-                            href="<?php echo base_url() . 'pos?spotid=' . $spotId . '&' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
-                        <?php } ?>
+                        id="checkoutBack"                        
+                        href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spotId . '&' . $orderDataGetKey . '=' . $orderRandomKey; ?>"                        
                         style="background-color: #948b6f" class="button"
                         >
                         <i class="fa fa-arrow-left"></i>
-                        <?php echo ($pos) ? $this->language->line("PAYMENT-9101230",'Back') : $this->language->line("PAYMENT-9100",'Back to list'); ?>
+                        <?php echo $this->language->line("PAYMENT-9100",'Back to list'); ?>
                     </a>
                     <a
                         id="checkoutContinue"

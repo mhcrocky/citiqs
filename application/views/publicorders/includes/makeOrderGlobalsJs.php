@@ -15,8 +15,10 @@
             'logoImageId' : 'vendorLogo',
             'activeClass' : 'pos_categories__single-item--active', // POS
             'posMakeOrderId': 'posMakeOrderId',  // POS
+            'posResponse': 'posResponse',  // POS            
             'spanQuantityIdPrefix' : 'orderQuantityValue_',
-            'checkoutContinueButton' : 'checkoutContinue'
+            'checkoutContinueButton' : 'checkoutContinue',
+
         }
 
         <?php if (!empty($returnCategorySlide)) { ?>
@@ -25,7 +27,20 @@
         <?php if (!empty($openCategory)) { ?>
             globals['openCategory'] = '<?php echo $openCategory; ?>';
         <?php } ?>
-
+        <?php if (!empty($buyerRoleId)) { ?>
+            globals['buyerRoleId'] = '<?php echo $buyerRoleId; ?>';
+        <?php } ?>
+        <?php if (!empty($salesagent)) { ?>
+            globals['salesagent'] = '<?php echo $salesagent; ?>';
+        <?php } ?>
+        <?php if (!empty($buyershorturl)) { ?>
+            globals['buyershorturl'] = '<?php echo $buyershorturl; ?>';
+        <?php } ?>
+        <?php if (!empty($vendor['oneSignalId'])) { ?>
+            globals['oneSignalId'] = '<?php echo $vendor['oneSignalId']; ?>';
+        <?php } else { ?>
+            globals['oneSignalId'] = '';
+        <?php } ?>
         Object.freeze(globals);
         return globals;
     }());

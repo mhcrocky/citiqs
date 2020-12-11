@@ -588,6 +588,7 @@ function trigerRemoveOrderedClick(className) {
 }
 
 function countOrdered(countOrdered) {
+    if (typeof makeOrderGlobals === 'undefined') return;
     let orderedProducts = document.getElementsByClassName(makeOrderGlobals.orderedProducts);
     if (orderedProducts && orderedProducts.length) {
         let searchOrdered =  document.getElementsByClassName(countOrdered);

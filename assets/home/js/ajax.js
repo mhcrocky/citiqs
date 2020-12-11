@@ -245,7 +245,12 @@ var callThis = (function() {
         },
         checkCategoryCode: function(callFunction) {
             callFunction(this);
-        }
+        },
+        posPayment: function(callFunction, functionArg) {
+            if (this) {
+                callFunction(this);
+            }
+        },
     };
     return methods;
 })();
