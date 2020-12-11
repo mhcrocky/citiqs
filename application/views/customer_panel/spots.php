@@ -184,7 +184,7 @@
             spots: JSON.parse('<?php echo json_encode($spots);?>'),
             agendas: JSON.parse('<?php echo json_encode($agendas);?>'),
             emails: JSON.parse('<?php echo json_encode($emails); ?>'),
-            spotsLabel: JSON.parse('<?php echo json_encode($spotsLabel); ?>'),
+            spotsLabel: JSON.parse(`<?php echo json_encode($spotsLabel); ?>`),
             baseURL: "<?php echo base_url(); ?>",
             method: 'create',
             spotModalData: {
