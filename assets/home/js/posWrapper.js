@@ -124,7 +124,7 @@ function posPayment() {
         },
         'order' : {
             'waiterTip' : 0,
-            'serviceFee' : 0,
+            'serviceFee' : getServiceFee(data['orderAmount']),
             'amount' : data['orderAmount'],
             'remarks' : '',
             'spotId' : makeOrderGlobals.spotId
@@ -216,10 +216,14 @@ function getOrderExtedned(orderedProducts,orderedProductsLength) {
             }
         }
     }
-    return {
+
+    let returnData = new Map()
+    returnData = {
         'orderAmount' : orderAmount,
         'orderExtended' : orderExtended
-    };
+    }
+
+    return returnData;
 }
 
 function showOrderId(data) {
@@ -234,6 +238,14 @@ function showOrderId(data) {
     responseContainer.innerHTML = html;
 }
 
+function getServiceFee(orderAmount) {
+    let serviceFee = orderAmount * posGlobals.serviceFeePercent / 100 + posGlobals.minimumOrderFee;
+    if (serviceFee > posGlobals.serviceFeeAmount) {
+        serviceFee = posGlobals.serviceFeeAmount;
+    }
+    return serviceFee;
+}
+
 $(document).ready(function(){
     if (typeof makeOrderGlobals === 'undefined') return;
     let sumbitFormButton = document.getElementById(makeOrderGlobals.checkoutContinueButton);
@@ -241,6 +253,7 @@ $(document).ready(function(){
         sumbitFormButton.click();
     }
 });
+
 
 resetTotal();
 countOrdered('countOrdered');
