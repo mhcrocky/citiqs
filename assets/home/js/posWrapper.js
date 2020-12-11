@@ -232,10 +232,15 @@ function getOrderExtedned(orderedProducts, orderedProductsLength) {
 
 function manageResponse(data) {
     let orderId = data['orderId'];
+    if (!parseInt(orderId)) {
+        alertify.error('Order not made');
+        return;
+    }
     resetPosOrder();
     showOrderId(orderId);
     sednNotification(orderId);
     printOrder(orderId);
+    return;
 }
 
 function showOrderId(orderId) {
