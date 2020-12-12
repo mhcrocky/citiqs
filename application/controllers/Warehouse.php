@@ -560,7 +560,7 @@
                 'userId' => $userId,
             ];
 
-            $this->loadViews('warehouse/orders', $this->global, $data, null, 'headerWarehouse');
+            $this->loadViews('warehouse/orders', $this->global, $data, 'footerbusiness', 'headerbusiness');//null, 'headerWarehouse');
         }
 
         //PRINTERS
