@@ -54,6 +54,25 @@
   </form>
 
   <?php if(isset($diff_order_ids)): ?>
+  <table style="display:none" id="tbl_data">
+  <thead>
+    <tr>
+      <th colspan="2">Missing on database</th>
+    </tr>
+    <tr>
+      <th>Order ID</th>
+      <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach($diff_order_ids as $key => $diff_order_id): ?>
+    <tr>
+      <td><?php echo $diff_order_id; ?></td>
+      <td><?php echo $prices[$key]; ?></td>
+    </tr>
+    <?php endforeach; ?>
+    </tbody>
+  </table>
       <div class="col col-md-12">
         <?php foreach($diff_order_ids as $diff_order_id): ?>
            <p>Order ID: <?php echo $diff_order_id;?> is missing on database</p>
@@ -63,6 +82,24 @@
   <table id="report" class="table table-striped table-bordered" cellspacing="0" width="100%">
   </table>
 </div>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.table2excel.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  if($("#tbl_data").html()){
+    let html = '<table>'+ $("#tbl_data").html() + '</table>';
+    $(html).table2excel({
+      exclude: ".noExl",
+			name: "Excel Document Name",
+			filename: "Missing on database.xls",
+			fileext: ".xls",
+			exclude_img: true,
+			exclude_links: true,
+			exclude_inputs: true
+		});
+    
+  }
+});
+</script>
   
   
   
