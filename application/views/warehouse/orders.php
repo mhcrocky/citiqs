@@ -102,7 +102,7 @@
         </p>
     </div>
     <div class="table-responsive col-sm-12" style="margin-top:20px">
-        <table id="ordersList" class="display table table-hover table-striped" style="width:100%">
+        <table id="ordersList" class="table table-striped table-bordered" style="width:100%">
             <thead>
                 <tr>
                     <th>Order ID</th>
