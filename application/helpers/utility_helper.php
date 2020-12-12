@@ -229,7 +229,7 @@
             array_multisort($sort_col, $dir, $arr);
         }
 
-        public static function convertDayToDate(array $arrays, string $key, string $nonWorkFrom, string $nonWorkTo): array
+        public static function convertDayToDate(array $arrays, string $key, string $nonWorkFrom = '2000-01-01', string $nonWorkTo = '2000-02-01'): array
         {
             if (empty($arrays)) return [];
             $reset = [];
