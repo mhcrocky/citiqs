@@ -33,25 +33,39 @@ class Comparison extends BaseControllerWeb
 				$file_name = $upload_data['file_name'];
 				$start_row = 2;
 				$i = 1;
-				$col = 16;
 				$csv_order_id = [];
+				$prices = [];
 				$file = fopen(FCPATH."assets/csv/".$file_name,"r");
-				while (($row = fgetcsv($file)) !== FALSE) {
+				while (($row = fgets($file)) !== FALSE) {
+					if($i == 1){
+						$headers = explode(';',$row);
+						//var_dump($headers);
+						foreach($headers as $key => $header){
+							if($header == "OMZET_TOTAAL"){
+								$price_col = $key;
+							}
+							if($header == "EXTRA1"){
+								$col = $key;
+							}
+						}
+					}
 					if($i >= $start_row) {
-						$explode_row = explode(';',$row[0]);
-						$csv_order_id[] = $explode_row[$col];
+						$explode_row = explode(';',$row);
+						if(is_numeric($explode_row[$col])){
+							$csv_order_id[] = $explode_row[$col];
+							$prices[] = $explode_row[$price_col];	
+						}
 					}
 					$i++;
 				}
 				fclose($file);
-				//var_dump($csv_order_id);
 				$db_order_id = $this->comparison_model->getOrderId($this->vendor_id);
-				
 				$diff  = array_diff($csv_order_id, $db_order_id);
 				$data['diff_order_ids'] = $diff;
+				$data['prices'] = $prices;
 				unlink(FCPATH."assets/csv/".$file_name);
 				$this->loadViews("compare_file", $this->global, $data, 'footerbusiness', 'headerbusiness');
-				//redirect('/Businessreport/compare');
+				
 			}
 		} else {
 			$this->loadViews("compare_file", $this->global, $data, 'footerbusiness', 'headerbusiness');
