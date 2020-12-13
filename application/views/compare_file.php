@@ -134,8 +134,8 @@
       <td>&nbsp</td>
       <td>&nbsp</td>
       <td>&nbsp</td>
-      <td><?php echo $diff_order_id; ?></td>
-      <td><?php echo $csv_prices[$diff_order_id]; ?></td>
+      <td><?php echo num_format($diff_order_id); ?></td>
+      <td><?php echo num_format($csv_prices[$diff_order_id]); ?></td>
       <td>&nbsp</td>
     </tr>
     <?php endfor; ?>
