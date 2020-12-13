@@ -56,10 +56,10 @@ class Comparison extends BaseControllerWeb
 							$csv_order_id[] = $explode_row[$col];
 
 							if(strpos($explode_row[$price_col], ',') !== false){
-								$prices[$order_id] = floatval(str_replace(",", ".", $explode_row[$price_col]));
+								$prices[$order_id] = abs(floatval(str_replace(",", ".", $explode_row[$price_col])));
 							} else
 							{
-								$prices[$order_id] = intval($explode_row[$price_col]);
+								$prices[$order_id] = abs(intval($explode_row[$price_col]));
 							}
 								
 						}
