@@ -52,17 +52,37 @@ class Comparison extends BaseControllerWeb
 					if($i >= $start_row) {
 						$explode_row = explode(';',$row);
 						if(is_numeric($explode_row[$col])){
+							$order_id = $explode_row[$col];
 							$csv_order_id[] = $explode_row[$col];
-							$prices[] = $explode_row[$price_col];	
+
+							if(strpos($explode_row[$price_col], ',') !== false){
+								$prices[$order_id] = str_replace(",", ".", $explode_row[$price_col]);
+							} else
+							{
+								$prices[$order_id] = $explode_row[$price_col];
+							}
+								
 						}
 					}
 					$i++;
 				}
 				fclose($file);
-				$db_order_id = $this->comparison_model->getOrderId($this->vendor_id);
+				$db_order_id = $this->comparison_model->getOrderId();
 				$diff  = array_diff($csv_order_id, $db_order_id);
+
+				$db_price = $this->comparison_model->getPriceByOrderId();
+				$order_ids = array_diff($csv_order_id, $diff);
+				$new_prices = [];
+
+				foreach($order_ids as $order_id){
+					$new_prices[$order_id] = $db_price[$order_id];
+				}
+
 				$data['diff_order_ids'] = $diff;
+				$data['order_ids'] = $order_ids;
 				$data['prices'] = $prices;
+				$data['new_prices'] = $new_prices;
+				
 				unlink(FCPATH."assets/csv/".$file_name);
 				$this->loadViews("compare_file", $this->global, $data, 'footerbusiness', 'headerbusiness');
 				
