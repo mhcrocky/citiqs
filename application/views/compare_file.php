@@ -57,14 +57,14 @@
   <table style="display:none" id="tbl_data">
   <thead>
     <tr>
-      <th colspan="2"><b style="text-align: center;">Missing on database</b></th>
+      <th colspan="2"><b>Missing on database</b></th>
       <th>&nbsp</th>
       <th>&nbsp</th>
       <th>&nbsp</td>
       <th>&nbsp</th>
       <th>&nbsp</th>
       <th>&nbsp</th>
-      <th colspan="3"><b style="text-align: center;">Found on database</b></th>
+      <th colspan="3"><b>Found on database</b></th>
     </tr>
     <tr>
       <th><b>Order ID</b></th>
@@ -82,14 +82,23 @@
     </tr>
     </thead>
     <tbody>
-    <?php foreach($diff_order_ids as $diff_order_id): ?>
+   <?php  
+      $count = (count($diff_order_ids) >= count($order_ids)) ? count($diff_order_ids) : count($order_ids);
+      for($i=0; $i<$count; $i++):
+    ?>
     <tr>
+    <?php if(count($diff_order_ids) > $i):
+          $diff_order_id = $diff_order_ids[$i];
+    ?>
       <td><?php echo $diff_order_id; ?></td>
-      <td><?php echo $prices[$diff_order_id]; ?></td>
-      <?php $prices[$diff_order_id] = 0; ?>
-    <?php endforeach; ?>
-    <?php foreach($order_ids as $key => $order_id): ?>
-      <?php if($key >= count($diff_order_ids) ): ?>
+      <td><?php echo num_format($prices[$diff_order_id]); ?></td>
+      <?php unset($prices[$diff_order_id]); ?>
+    <?php endif; ?>
+
+    <?php if(count($order_ids) > $i): 
+       $order_id = $order_ids[$i];
+       ?>
+      <?php if($i >= count($diff_order_ids) ): ?>
         <td>&nbsp</td>
         <td>&nbsp</td>
       <?php endif; ?>
@@ -100,16 +109,17 @@
       <td>&nbsp</td>
       <td>&nbsp</td>
       <td><?php echo $order_id; ?></td>
-      <td><?php echo $prices[$order_id]; ?></td>
-      <td><?php echo $new_prices[$order_id]; ?></td>
+      <td><?php echo num_format($prices[$order_id]); ?></td>
+      <td><?php echo num_format($new_prices[$order_id]); ?></td>
       <td>
       <?php
         $diff = $prices[$order_id] - $new_prices[$order_id]; 
-        echo $diff;
+        echo num_format($diff);
         ?>
       </td>
+    <?php endif; ?>
     </tr>
-    <?php endforeach; ?>
+      <?php endfor; ?>
     </tbody>
     <tfoot>
     <tr>
@@ -122,9 +132,20 @@
       <td>&nbsp</td>
       <td>&nbsp</td>
       <td><b>Total:</b></td>
-      <td><?php echo array_sum(array_values($prices));?></td>
-      <td><?php echo array_sum(array_values($new_prices));?></td>
-      <td><?php echo (array_sum(array_values($prices)) - array_sum(array_values($new_prices)));?></td>
+      <?php 
+        $total_csv_prices = 0;
+        $total_db_prices = 0;//array_sum(array_values($new_prices));
+        $prices_values = array_values($prices);
+        $new_prices_values = array_values($new_prices);
+        for($i=0; $i<count($prices_values); $i++){
+          $total_csv_prices = $total_csv_prices + $prices_values[$i];
+          $total_db_prices = $total_db_prices + $new_prices_values[$i];
+        }
+        $total_diff = $total_csv_prices - $total_db_prices;
+      ?>
+      <td><?php echo num_format($total_csv_prices);?></td>
+      <td><?php echo num_format($total_db_prices);?></td>
+      <td><?php echo num_format($total_diff);?></td>
     </tr>
     </tfoot>
   </table>
@@ -136,6 +157,16 @@
   <?php endif; ?>
   
 </div>
+<?php 
+function num_format($num){
+  if(strpos($num, '.') !== false){
+    $num = intval($num*100);
+    $num = $num/100;
+    $num = number_format($num , 2 , "," , "");
+  }
+  return $num;
+}
+?>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.table2excel.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -157,7 +188,7 @@ $(document).ready(function() {
     $(html).table2excel({
       exclude: ".noExl",
 			name: "Excel Document Name",
-			filename: "Missing on database.xls",
+			filename: "Difference between CSV file and DB.xls",
 			fileext: ".xls",
 			exclude_img: true,
 			exclude_links: true,
