@@ -64,7 +64,7 @@
       <th>&nbsp</th>
       <th>&nbsp</th>
       <th>&nbsp</th>
-      <th colspan="3"><b>Found on database</b></th>
+      <th colspan="4"><b>Comparison between CSV and DB</b></th>
     </tr>
     <tr>
       <th><b>Order ID</b></th>
@@ -76,14 +76,15 @@
       <th>&nbsp</th>
       <th>&nbsp</th>
       <th><b>Order ID</b></th>
-      <th><b>Old Price</b></th>
-      <th><b>New Price</b></th>
+      <th><b>CSV Price</b></th>
+      <th><b>DB Price</b></th>
       <th><b>Difference</b></th>
     </tr>
     </thead>
     <tbody>
    <?php  
       $count = (count($diff_order_ids) >= count($order_ids)) ? count($diff_order_ids) : count($order_ids);
+      $csv_prices = $prices;
       for($i=0; $i<$count; $i++):
     ?>
     <tr>
@@ -93,6 +94,7 @@
       <td><?php echo $diff_order_id; ?></td>
       <td><?php echo num_format($prices[$diff_order_id]); ?></td>
       <?php unset($prices[$diff_order_id]); ?>
+      
     <?php endif; ?>
 
     <?php if(count($order_ids) > $i): 
@@ -119,7 +121,24 @@
       </td>
     <?php endif; ?>
     </tr>
-      <?php endfor; ?>
+    <?php endfor; ?>
+    <?php for($i=0; $i < count($diff_order_ids); $i++): 
+          $diff_order_id = $diff_order_ids[$i];
+    ?>
+      <tr>
+      <td>&nbsp</td>
+      <td>&nbsp</td>
+      <td>&nbsp</td>
+      <td>&nbsp</td>
+      <td>&nbsp</td>
+      <td>&nbsp</td>
+      <td>&nbsp</td>
+      <td>&nbsp</td>
+      <td><?php echo $diff_order_id; ?></td>
+      <td><?php echo $csv_prices[$diff_order_id]; ?></td>
+      <td>&nbsp</td>
+    </tr>
+    <?php endfor; ?>
     </tbody>
     <tfoot>
     <tr>
@@ -137,13 +156,14 @@
         $total_db_prices = 0;//array_sum(array_values($new_prices));
         $prices_values = array_values($prices);
         $new_prices_values = array_values($new_prices);
-        for($i=0; $i<count($prices_values); $i++){
+        for($i=0; $i<count($new_prices_values); $i++){
           $total_csv_prices = $total_csv_prices + $prices_values[$i];
           $total_db_prices = $total_db_prices + $new_prices_values[$i];
         }
+
         $total_diff = $total_csv_prices - $total_db_prices;
       ?>
-      <td><?php echo num_format($total_csv_prices);?></td>
+      <td><?php echo num_format(array_sum($csv_prices)); ?> (<?php echo num_format($total_csv_prices);?>)</td>
       <td><?php echo num_format($total_db_prices);?></td>
       <td><?php echo num_format($total_diff);?></td>
     </tr>
