@@ -167,8 +167,8 @@ $(document).ready(function() {
     $(html).table2excel({
       exclude: ".noExl",
 			name: "Excel Document Name",
-			filename: "Difference between CSV file and DB.xlsx",
-			fileext: ".xlsx",
+			filename: "Difference between CSV file and DB.xls",
+			fileext: ".xls",
 			exclude_img: true,
 			exclude_links: true,
 			exclude_inputs: true
