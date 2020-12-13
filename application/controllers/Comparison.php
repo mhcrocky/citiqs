@@ -56,10 +56,10 @@ class Comparison extends BaseControllerWeb
 							$csv_order_id[] = $explode_row[$col];
 
 							if(strpos($explode_row[$price_col], ',') !== false){
-								$prices[$order_id] = str_replace(",", ".", $explode_row[$price_col]);
+								$prices[$order_id] = floatval(str_replace(",", ".", $explode_row[$price_col]));
 							} else
 							{
-								$prices[$order_id] = $explode_row[$price_col];
+								$prices[$order_id] = intval($explode_row[$price_col]);
 							}
 								
 						}
@@ -78,8 +78,8 @@ class Comparison extends BaseControllerWeb
 					$new_prices[$order_id] = $db_price[$order_id];
 				}
 
-				$data['diff_order_ids'] = $diff;
-				$data['order_ids'] = $order_ids;
+				$data['diff_order_ids'] = array_values($diff);
+				$data['order_ids'] = array_values($order_ids);
 				$data['prices'] = $prices;
 				$data['new_prices'] = $new_prices;
 				
