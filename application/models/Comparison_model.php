@@ -42,6 +42,7 @@ class Comparison_model extends CI_Model {
         $this->db->join('tbl_shop_categories', 'tbl_shop_categories.id = tbl_shop_products.categoryId', 'left');
 		$this->db->where('tbl_shop_categories.userId', '1162');
 		$this->db->where('tbl_shop_orders.old_order is NOT NULL', NULL, FALSE);
+		$this->db->group_by('tbl_shop_orders.old_order');
 		$query = $this->db->get();
         if ($query) {
 			$results = $query->result_array();
