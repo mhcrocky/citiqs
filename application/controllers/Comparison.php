@@ -36,10 +36,12 @@ class Comparison extends BaseControllerWeb
 				$csv_orders = [];
 				$file = fopen(FCPATH."assets/csv/".$file_name,"r");
 				$key = 0;
+				$order_ids = [];
+				$amounts = [];
 				while (($row = fgets($file)) !== FALSE) {
 					if($i == 1){
 						$headers = explode(';',$row);
-						//var_dump($headers);
+						
 						foreach($headers as $key => $header){
 							if($header == "OMZET_TOTAAL"){
 								$price_col = $key;
@@ -53,8 +55,15 @@ class Comparison extends BaseControllerWeb
 						$explode_row = explode(';',$row);
 						if(is_numeric($explode_row[$col])){
 							$order_id = $explode_row[$col];
-							$csv_orders[$key]['order_id'] = $order_id;
-							$csv_orders[$key]['price'] = floatval(str_replace(",", ".", $explode_row[$price_col]));
+							$price = floatval(str_replace(",", ".", $explode_row[$price_col]));
+							if( !in_array($order_id, array_values($order_ids)) ){
+								$csv_orders[$key]['order_id'] = $order_id;
+								$order_ids[] = $order_id;
+								$amounts[$order_id] = $price ;
+							} else {
+								$amounts[$order_id] = $amounts[$order_id] + $price;
+							}
+							
 							
 						}
 								
@@ -83,17 +92,22 @@ class Comparison extends BaseControllerWeb
 				*/
 				$db_orders = $this->comparison_model->getPriceByOrderId();
 				$orders = [];
-				//var_dump($csv_orders);
-	
+				$duplicate_values = array_count_values($order_ids);
+				
 				foreach($csv_orders as $key => $csv_order){
-					$order = $this->arrayDiff($db_orders, $csv_order['order_id'], $csv_order['price']);
+					$order_id = $csv_order['order_id'];
+					$price = $amounts[$order_id];
+					$csv_orders[$key]['price'] = $price;
+					$order = $this->arrayDiff($db_orders, $order_id, $price);
+
 						if(count($order) > 0){
 							$orders[] = $order;
 							unset($csv_orders[$key]);
 						}
 				}
-				
+
 				unlink(FCPATH."assets/csv/".$file_name);
+
 				$data['csv_orders'] = $csv_orders;
 				$data['db_orders'] = array_map("unserialize", array_unique(array_map("serialize", $orders)));
 				$this->loadViews("compare_file", $this->global, $data, 'footerbusiness', 'headerbusiness');
@@ -109,22 +123,16 @@ class Comparison extends BaseControllerWeb
 	{
 		$order = [];
 		foreach($db_orders as $key => $db_order){
-			if( $order_id == $db_order['order_id'] && $price == $db_order['price'] )
+			if( $order_id == $db_order['order_id'] )
 			{
 				$order['order_id'] = $db_order['order_id'];
 				$order['csv_price'] = $price;
 				$order['db_price'] = $db_order['price'];
 				return $order;
-			} else if( $order_id == $db_order['order_id'] )
-			{
-				$order['order_id'] = $db_order['order_id'];
-				$order['csv_price'] = $price;
-				$order['db_price'] = $db_order['price'];
-				return $order;
-								
 			}
 		}
 		return $order;
+
 	}
 
 
