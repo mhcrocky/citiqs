@@ -859,7 +859,7 @@ class Login extends BaseControllerWeb
 		$this->form_validation->set_rules('password', 'Password', 'required|max_length[20]');
 		$this->form_validation->set_rules('cpassword', 'Confirm Password', 'trim|required|matches[password]|max_length[20]');
 		$this->form_validation->set_rules('roleId','Role','trim|required|numeric');
-		$this->form_validation->set_rules('mobile', 'Mobile Number', 'required|min_length[10]');
+		$this->form_validation->set_rules('mobile', 'Mobile Number', 'required|min_length[6]');
 		$this->form_validation->set_rules('business_type_id', 'Business type id', 'required|numeric');
 		$this->form_validation->set_rules('address', 'Address', 'trim|required|max_length[128]');
 		$this->form_validation->set_rules('zipcode', 'Zipcode', 'trim|required|max_length[128]');
