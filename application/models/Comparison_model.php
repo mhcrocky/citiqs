@@ -41,22 +41,21 @@ class Comparison_model extends CI_Model {
 		$this->db->join('tbl_shop_products', 'tbl_shop_products.id = tbl_shop_products_extended.productId', 'left');
         $this->db->join('tbl_shop_categories', 'tbl_shop_categories.id = tbl_shop_products.categoryId', 'left');
 		$this->db->where('tbl_shop_categories.userId', '1162');
-		$this->db->group_by('tbl_shop_orders.old_order');
-
+		$this->db->where('tbl_shop_orders.old_order is NOT NULL', NULL, FALSE);
 		$query = $this->db->get();
         if ($query) {
 			$results = $query->result_array();
-			$prices = [];
-			foreach($results as $result){
-				$order_id = $result['old_order'];
-				$prices[$order_id] = $result['amount'] + $result['serviceFee'];
-				if(strpos($prices[$order_id], '.') !== false){
-					$prices[$order_id] = floatval($prices[$order_id]);
+			$orders = [];
+			foreach($results as $key => $result){
+				$orders[$key]['order_id'] = $result['old_order'];
+				$price = $result['amount'] + $result['serviceFee'];
+				if(strpos($price, '.') !== false){
+					$orders[$key]['price'] = floatval($price);
 				} else {
-					$prices[$order_id] = intval($prices[$order_id]);
+					$orders[$key]['price'] = intval($price);
 				}
 			}
-			return $prices;
+			return $orders;
         }
 
 		return false;
