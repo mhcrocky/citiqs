@@ -15,6 +15,9 @@
 							</option>
 						<?php } ?>
 					</select>
+					<div class="pos-main__add-item" style="margin-left:10px">
+						<a href="<?php echo base_url() . 'pos/posLogOutAction'; ?>">LOGOUT</a>
+					</div>
 					<?php if (!isset($mainProducts) && $fodIsActive) { ?>
 						<div class="pos-main__add-item">
 							<a href="<?php echo base_url() . 'orders'; ?>">

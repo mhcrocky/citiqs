@@ -271,6 +271,7 @@ $route['temporarily_closed/(:num)']        = 'publicorders/temporarilyClosed/$1'
 
 // POS
 $route['pos']       = 'pos/index';
+$route['pos_login']       = 'pos/posLogin';
 
 //INSERT ORDER
 $route['onlinepayment/(:num)/(:any)'] = 'alfredinsertorder/onlinePayment/$1/$2';

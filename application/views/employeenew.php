@@ -102,7 +102,7 @@
 					<p class="item-category">Email: <?php echo $employee->email; ?></p>
 					<p class="item-category">INSZ number: <?php echo $employee->INSZnumber; ?></p>
 					<p class="item-category">Unique Number: <?php echo $employee->uniquenumber; ?></p>
-					<!-- <p class="item-category"><?php #echo date('Y-m-d H:i:s', $employee->expiration_time); ?></p> -->
+					<p class="item-category">Valid to: <?php echo date('Y-m-d H:i:s', $employee->expiration_time); ?></p>
 					<!-- <p class="item-category"><? #echo date('Y-m-d H:i:s', $employee->validitytime); ?></p>
 							<p class="item-category"><? #echo date('Y-m-d H:i:s', $employee->expiration_time); ?></p>
 							<p class="item-category"><? #echo $employee->expiration_time_value; ?></p>

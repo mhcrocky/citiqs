@@ -35,6 +35,8 @@
             $this->load->model('shopvoucher_model');
             $this->load->model('shopsession_model');
             $this->load->model('shopposorder_model');
+            $this->load->model('employee_model');
+            $this->load->model('shopemployee_model');
 
             $this->load->config('custom');
 
@@ -45,14 +47,24 @@
             $this->checkIsPosActive();
         }
 
-        private function checkIsPosActive() {            
+        private function checkIsPosActive(): void
+        {
             if ($_SESSION['activatePos'] !== '1') {
                 redirect('loggedin');
             }
         }
 
+        private function checkIsPosEmployee(): void
+        {
+            if (empty($_SESSION['posEmployeeId'])) {
+                redirect('pos_login');
+            }
+        }
+
         public function index(): void
         {
+            $this->checkIsPosEmployee();
+
             $vendorId = intval($_SESSION['userId']);
             $spotId = !empty($_GET['spotid']) ? intval($this->input->get('spotid', true)) : null;
             $spot = $spotId ? $this->shopspot_model->fetchSpot($vendorId, intval($spotId)) : null;
@@ -114,7 +126,8 @@
         }
 
         public function delete(string $ranodmKey, string $spotId): void
-        {            
+        {
+            $this->checkIsPosEmployee();
             $this->shopsession_model->setProperty('randomKey', $ranodmKey)->setIdFromRandomKey();
             $this->shopposorder_model->setProperty('sessionId', intval($this->shopsession_model->id))->setIdFromSessionId();
             if ($this->shopposorder_model->id) {
@@ -143,5 +156,62 @@
             $data['serviceFeeAmount'] = $data['vendor']['serviceFeeAmountPos'] === '1' ? $data['vendor']['serviceFeeAmount'] : 0.0;
             $data['minimumOrderFee'] =  $data['vendor']['minimumOrderFeePos'] === '1' ? $data['vendor']['minimumOrderFee'] : 0.0;
             return;
+        }
+
+        public function posLogin(): void
+        {
+            if (!empty($_SESSION['posEmployeeId'])) {
+                redirect('pos');
+            }
+            $ownerId = intval($this->session->userdata("userId"));
+            $data = [
+                'employees' => $this->employee_model->setProperty('ownerId', $ownerId)->getActiveEmployeeForBB($ownerId),
+            ];
+
+            $this->global['pageTitle'] = 'TIQS : POS LOGIN';
+            $this->loadViews('pos/pos_login', $this->global, $data, null, 'headerWarehouse');
+            return;
+        }
+
+        public function posLoginAction(): void
+        {
+            $employee = Utility_helper::sanitizePost();
+
+            if (empty($employee)) {
+                $this->session->set_flashdata('error', 'Select employee');
+                redirect('pos_login');
+            }
+
+            $employee['inOutEmployee'] = $this->config->item('employeeIn');
+            $employee['inOutDateTime'] = date('Y-m-d H:i:s');
+            $employee['processed'] = '0';
+
+            $insert = $this->shopemployee_model->setObjectFromArray($employee)->create();
+            if (!$insert) {
+                $this->session->set_flashdata('error', 'Check in failed. Please try again');
+                redirect('pos_login');
+            }
+
+            $_SESSION['posEmployeeId'] = $employee['employeeId'];
+            redirect('pos');
+        }
+
+        public function posLogOutAction(): void
+        {
+            $employee = [
+                'employeeId' => $_SESSION['posEmployeeId'],
+                'inOutEmployee' => $this->config->item('employeeOut'),
+                'inOutDateTime' => date('Y-m-d H:i:s'),
+                'processed' => '0'
+            ];
+
+            $insert = $this->shopemployee_model->setObjectFromArray($employee)->create();
+            if ($insert) {
+                unset($_SESSION['posEmployeeId']);
+                redirect('pos_login');
+            }
+
+            $this->session->set_flashdata('error', 'Logout failed. Please try again');
+            redirect('pos');
         }
     }

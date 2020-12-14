@@ -40,6 +40,7 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
     {
         return $this->table;
     }
+
     public function insertValidate(array $data): bool
     {
         // TO DO SET CONDITIONS
@@ -51,7 +52,6 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
         // TO DO SET CONDITIONS
         return true;
     }
-
 
     public function getOwnerEmployees($ownerId) {
         $this->db->from('tbl_employee');
@@ -156,6 +156,28 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
 
         $result = reset($result);
         $result = (object) $result;
+
+        return $result;
+    }
+
+    public function getActiveEmployeeForBB()
+    {
+        $result = $this->readImproved([
+            'what' => [
+                $this->table . '.id',
+                $this->table . '.username',
+                $this->table . '.email'
+            ],
+            'where' => [
+                $this->table . '.ownerId=' => $this->ownerId,
+                $this->table . '.expiration_time > ' => time(),
+            ],
+            'joins' => [
+                ['tbl_vendor_fodnumber', 'tbl_vendor_fodnumber.vendorId = ' .  $this->table . '.ownerId', 'INNER'],
+            ]
+        ]);
+
+        if (empty($result)) return null;
 
         return $result;
     }
