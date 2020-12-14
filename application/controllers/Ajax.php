@@ -1534,4 +1534,12 @@ class Ajax extends CI_Controller
 
         return;
     }
+
+    public function checkIfsUserExists(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+        $email = $this->input->post('email', true);
+        echo $this->user_model->isDuplicate($email) ? 1 : 0;
+        return;
+    }
 }

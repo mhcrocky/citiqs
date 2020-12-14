@@ -5,7 +5,12 @@
 				<p style="font-family:'caption-bold'; font-size:300%; color:#ffffff;">
 				<h2 class="heading"> <?php echo $this->language->Line("spot-registerbusiness-A1100",'REGISTER BUSINESS ACCOUNT.');?></h2>
 				<?php include_once APPPATH . 'views/includes/sessionMessages.php' ?>
-				<form action="<?php echo $this->baseUrl; ?>login/registerbusinessAction" method="post">
+				<form
+					id="registerBusinessForm"
+					action="<?php echo $this->baseUrl; ?>login/registerbusinessAction"
+					method="post"
+					onsubmit="return registerNewBusiness('registerBusinessForm', 'password', 'repeatPassword')"
+				>
 					<input type="text" name="IsDropOffPoint" value ='<?php echo $isDropOffPoint; ?>' readonly hidden required />
 					<input type="text" name="roleId" value ='<?php echo $roleId; ?>' readonly hidden required />
 					<input type="text" name="istype" value ='<?php echo $istype; ?>' readonly hidden required />
@@ -22,10 +27,13 @@
 							type="text"
 							name="username"
 							value="<?php echo get_cookie('username'); ?>"
-							required
 							class="form-control"
 							style="font-family:'caption-light'; border-radius: 50px;"
 							placeholder="<?php echo $this->language->Line("spot-registerbusiness-1300",'Hotel/(air)BnB/Event/Club-name/Bar');?>"
+							data-form-check="1"
+							data-error-message='Username is required'
+							data-min-length="1"
+							onblur='alertifyErrMessage(this)'
 						/>
 						<span class="glyphicon glyphicon-user form-control-feedback"></span>
 					</div>
@@ -44,12 +52,14 @@
 							class="form-control"
 							name="usershorturl"
 							value="<?php echo get_cookie('usershorturl'); ?>"
-							required
 							id="usershorturl"
 							style="font-family:'caption-light'; border-radius: 50px;"
 							placeholder="<?php echo $this->language->Line("spot-registerbusiness-1700",'Your shortname');?>"
-							name="usershorturl"
 							pattern="[A-Za-z0-9]{1,20}" title="<?php echo $this->language->Line("spot-registerbusiness-1800",'Only characters allowed, no spaces, points or special characters like @#$% and max 20 length');?>"
+							data-form-check="1"
+							data-error-message='Shortname is required and can contain only alphabetic characters and digits'
+							data-min-length="1"
+							onblur='alertifyErrMessage(this)'
 						/>
 						<span class="glyphicon glyphicon-user form-control-feedback"></span>
 					</div>
@@ -60,7 +70,15 @@
 					</div>
 
 					<div class="selectWrapper mb-35">
-						<select class="selectBox" name="business_type_id" style="font-family:'caption-light';" required>
+						<select
+							class="selectBox"
+							name="business_type_id"
+							style="font-family:'caption-light';"
+							data-form-check="1"
+							data-error-message='Please select business type'
+							data-min-length="1"
+							onblur='alertifyErrMessage(this)'
+						>
 						<option value=""><?php echo $this->language->Line("spot-registerbusiness-A200101A","Select business type");?></option>
 						<?php foreach ($businessTypes as $type) { ?>
 						<option
@@ -85,67 +103,128 @@
 							class="form-control"
 							style="font-family:'caption-light'; border-radius: 50px;"
 							placeholder="<?php echo $this->language->Line("spot-registerbusiness-20120","Business VAT number");?>"
+							data-form-check="1"
+							data-error-message='Business VAT number is required'
+							data-min-length="1"
+							onblur='alertifyErrMessage(this)'
 						/>
 						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 					</div>
 					<div>
 						<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center">
 							<?php echo $this->language->Line("spot-registerbusiness-1900",'Company e-mail');?>
-							<br/>
-							<br/>
 						</p>
 					</div>
 					<div class="form-group has-feedback">
-						<input type="email" name="email" value="<?php echo get_cookie('email'); ?>" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php echo $this->language->Line("spot-registerbusiness-2000","email");?>" />
+						<input
+							type="email"
+							name="email"
+							value="<?php echo get_cookie('email'); ?>"
+							class="form-control"
+							style="font-family:'caption-light'; border-radius: 50px;"
+							placeholder="<?php echo $this->language->Line("spot-registerbusiness-2000","email");?>"
+							data-form-check="1"
+							data-error-message='Email is required'
+							data-min-length="1"
+							onblur='alertifyErrMessage(this)'
+							oninput='checkIfsUserExists(this)'
+						/>
 						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 					</div>
 					<div>
 						<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center"><?php echo $this->language->Line("spot-registerbusiness-A2001A","
 							Responsible person first name
 							");?>
-							<br/>
-							<br/>
 						</p>
 					</div>
 					<div class="form-group has-feedback">
-						<input type="text" name="first_name" value="<?php echo get_cookie('first_name'); ?>" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?php echo $this->language->Line("spot-registerbusiness-A20011A","First name");?> />
+						<input
+							type="text"
+							name="first_name"
+							value="<?php echo get_cookie('first_name'); ?>"
+							class="form-control"
+							style="font-family:'caption-light'; border-radius: 50px;"
+							placeholder="<?php echo $this->language->Line("spot-registerbusiness-A20011A","First name");?>"
+							data-form-check="1"
+							data-error-message='First name is required'
+							data-min-length="1"
+							onblur='alertifyErrMessage(this)'
+						/>
 						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 					</div>
 					<div>
 						<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center"><?php echo $this->language->Line("spot-registerbusiness-A20012A","
 							Responsible person last name
 							");?>
-							<br/>
-							<br/>
 						</p>
 					</div>
 					<div class="form-group has-feedback">
-						<input type="text" name="second_name" value="<?php echo get_cookie('second_name'); ?>" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?php echo $this->language->Line("spot-registerbusiness-A2001A","Last name");?> />
+						<input
+							type="text"
+							name="second_name"
+							value="<?php echo get_cookie('second_name'); ?>"
+							class="form-control"
+							style="font-family:'caption-light'; border-radius: 50px;"
+							placeholder="<?php echo $this->language->Line("spot-registerbusiness-A2001A","Last name");?>"
+							data-form-check="1"
+							data-error-message='Last name is required'
+							data-min-length="1"
+							onblur='alertifyErrMessage(this)'
+						/>
 						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 					</div>
 					<div>
 						<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center">
 							<?php echo $this->language->Line("spot-registerbusiness-2100",'Company phone number');?>
-							<br/>
-							<br/>
 						</p>
 					</div>
 					<div class="form-group has-feedback">
-						<input name="mobile" value="<?php echo get_cookie('mobile'); ?>" type="tel" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php echo $this->language->Line("spot-registerbusiness-2200","Phone number");?>" required />
+						<input
+							name="mobile"
+							value="<?php echo get_cookie('mobile'); ?>"
+							type="tel"
+							class="form-control"
+							style="font-family:'caption-light'; border-radius: 50px;"
+							placeholder="<?php echo $this->language->Line("spot-registerbusiness-2200","Phone number");?>"
+							data-form-check="1"
+							data-error-message='Mobile phone is required and must have at least 6 digits'
+							data-min-length="6"
+							onblur='alertifyErrMessage(this)'
+						/>
 						<span class="glyphicon glyphicon-phone form-control-feedback"></span>
 					</div>
 					<div>
 						<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center">
 							<?php echo $this->language->Line("spot-registerbusiness-2300",'Choose a good unique password');?>
-							<br/>
-							<br/>
 						</p>
 					</div>
 					<div class="form-group has-feedback">
-						<input type="password" name="password"  required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php echo $this->language->Line("spot-registerbusiness-2400","Password");?>" />
+						<input
+							type="password"
+							name="password"
+							id="password"
+							class="form-control"
+							style="font-family:'caption-light'; border-radius: 50px;"
+							placeholder="<?php echo $this->language->Line("spot-registerbusiness-2400","Password");?>"
+							data-form-check="1"
+							data-error-message='Password is required'
+							data-min-length="1"
+							onblur='alertifyErrMessage(this)'
+						/>
 					</div>
 					<div class="form-group has-feedback">
-						<input type="password" name="cpassword" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php echo $this->language->Line("spot-registerbusiness-2500"," Confirm Password ");?>" />
+						<input
+							type="password"
+							name="cpassword"
+							id="repeatPassword"
+							class="form-control"
+							style="font-family:'caption-light'; border-radius: 50px;"
+							placeholder="<?php echo $this->language->Line("spot-registerbusiness-2500"," Confirm Password ");?>"
+							data-form-check="1"
+							data-error-message='Repeat password is required'
+							data-min-length="1"
+							onblur='alertifyErrMessage(this)'
+						/>
 					</div>
 					<div>
 					<!-- <p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center">-->
@@ -156,23 +235,70 @@
 					<!-- </p>-->
 					</div>
 					<div class="form-group has-feedback">
-						<input type="text" name="address" value="<?php echo get_cookie('address'); ?>" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?php echo $this->language->Line("spot-registerbusiness-2800","Address");?> />
+						<input
+							type="text"
+							name="address"
+							value="<?php echo get_cookie('address'); ?>"
+							class="form-control" style="font-family:'caption-light'; border-radius: 50px;"
+							placeholder="<?php echo $this->language->Line("spot-registerbusiness-2800","Address");?>"
+							data-form-check="1"
+							data-error-message='Address is required'
+							data-min-length="1"
+							onblur='alertifyErrMessage(this)'
+						/>
 						<span class="glyphicon glyphicon-home form-control-feedback"></span>
 					</div>
 					<div class="form-group has-feedback">
-						<input name="addressa"  type="text" value="<?php echo get_cookie('addressa'); ?>" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php echo $this->language->Line("spot-registerbusiness-2900"," Additional address line ");?>" />
+						<input
+							name="addressa"
+							type="text"
+							value="<?php echo get_cookie('addressa'); ?>"
+							class="form-control"
+							style="font-family:'caption-light'; border-radius: 50px;"
+							placeholder="<?php echo $this->language->Line("spot-registerbusiness-2900"," Additional address line ");?>"
+						/>
 						<span class="glyphicon glyphicon-home form-control-feedback"></span>
 					</div>
 					<div class="form-group has-feedback">
-						<input type="text" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?php echo $this->language->Line("spot-registerbusiness-3000","Zipcode");?> name="zipcode"  value="<?php echo get_cookie('zipcode'); ?>" required />
+						<input
+							type="text"
+							class="form-control"
+							style="font-family:'caption-light'; border-radius: 50px;"
+							placeholder="<?php echo $this->language->Line("spot-registerbusiness-3000","Zipcode");?>"
+							name="zipcode"
+							value="<?php echo get_cookie('zipcode'); ?>"
+							data-form-check="1"
+							data-error-message='Zipcode is required'
+							data-min-length="1"
+							onblur='alertifyErrMessage(this)'
+						/>
 						<span class="glyphicon glyphicon-home form-control-feedback"></span>
 					</div>
 					<div class="form-group has-feedback">
-						<input type="text" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder=<?php echo $this->language->Line("spot-registerbusiness-3100","City");?> name="city" required  value="<?php echo get_cookie('city'); ?>" />
+						<input
+							type="text"
+							class="form-control"
+							style="font-family:'caption-light'; border-radius: 50px;"
+							placeholder="<?php echo $this->language->Line("spot-registerbusiness-3100","City");?>"
+							name="city"
+							value="<?php echo get_cookie('city'); ?>"
+							data-form-check="1"
+							data-error-message='City is required'
+							data-min-length="1"
+							onblur='alertifyErrMessage(this)'
+						/>
 						<span class="glyphicon glyphicon-home form-control-feedback"></span>
 					</div>
 					<div class="selectWrapper mb-35">
-						<select class="selectBox" name="country" style="font-family:'caption-light';" required>
+						<select
+							class="selectBox"
+							name="country"
+							style="font-family:'caption-light';"
+							data-form-check="1"
+							data-error-message='Please select country'
+							data-min-length="1"
+							onblur='alertifyErrMessage(this)'
+						>
 							<option value="">
 								<?php echo $this->language->Line("CountrySelect-A2001A","Select country");?>
 							</option>
@@ -202,7 +328,13 @@
 						<?php if ($this->baseUrl === "http://127.0.0.1/lostandfound/")  {?>
 						<div class="form-group align-center mb-35 mt-50" >
 							<p>
-								<input type="submit" id="capsubmit" class="button button-orange" value="<?php echo $this->language->Line("spot-registerbusiness-3300",'REGISTER ACCOUNT');?>" style="border: none" />
+								<input
+									onclick="registerNewBusiness('registerBusinessForm', 'password', 'repeatPassword')"
+									id="capsubmit"
+									class="button button-orange"
+									value="<?php echo $this->language->Line("spot-registerbusiness-3300",'REGISTER ACCOUNT');?>"
+									style="border: none"
+								/>
 							</p>
 						</div>
 						<?php } ?>
@@ -210,14 +342,26 @@
 						<?php if ($this->baseUrl !== "http://127.0.0.1/lostandfound/")  {?>
 						<div class="form-group align-center mb-35 mt-50" >
 						<p>
-							<input type="submit" id="capsubmit" class="button button-orange" value="<?php echo $this->language->Line("spot-registerbusiness-3300",'REGISTER ACCOUNT');?>" style="border: none" />
+							<input
+								onclick="registerNewBusiness('registerBusinessForm', 'password', 'repeatPassword')"
+								id="capsubmit"
+								class="button button-orange"
+								value="<?php echo $this->language->Line("spot-registerbusiness-3300",'REGISTER ACCOUNT');?>"
+								style="border: none"
+							/>
 						</p>
 						</div>
 						<?php }?>
 					<?php } else { ?>
 						<div class="form-group align-center mb-35 mt-50" >
 							<p>
-								<input type="submit" id="capsubmit" class="button button-orange" value="<?php echo $this->language->Line("spot-registerbusiness-3300",'REGISTER ACCOUNT');?>" style="border: none" />
+								<input
+									onclick="registerNewBusiness('registerBusinessForm', 'password', 'repeatPassword')"
+									id="capsubmit"
+									class="button button-orange"
+									value="<?php echo $this->language->Line("spot-registerbusiness-3300",'REGISTER ACCOUNT');?>"
+									style="border: none"
+								/>
 							</p>
 						</div>
 					<?php }?>

@@ -37,5 +37,31 @@ function redirectToNewLocation(location) {
 
 function alertifyMessage(element) {
     alertify[element.dataset.messageType](element.dataset.message)
+}
 
+function alertifyErrMessage(element) {
+    let inputValue = element.value.trim();
+    let minLength = parseInt(element.dataset.minLength);
+    if (inputValue.length < minLength) {
+        let errMessage = element.dataset.errorMessage;
+        alertify.error(errMessage);
+        element.style.border = '1px solid #f00'
+        return 1;
+    } else {
+        element.style.border = 'initial'
+        return 0;
+    }   
+}
+
+function validateFormData(form) {
+    let inputs = form.querySelectorAll('[data-form-check]')
+    let inputsLength = inputs.length;
+
+    let countErrors = 0;
+
+    for (i = 0; i < inputsLength; i++) {
+        let input = inputs[i];
+        countErrors += alertifyErrMessage(input);
+    }
+    return countErrors ? false : true;
 }
