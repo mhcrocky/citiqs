@@ -1437,10 +1437,10 @@ class Ajax extends CI_Controller
         return $messages;
     }
 
-    private function setBuyerCookies(array $post): void
+    private function setBuyerCookies(array $user): void
     {
         if (!empty($user['username'])) {
-            set_cookie('userName', $user['username'], (365 * 24 * 60 * 60));
+            set_cookie('username', $user['username'], (365 * 24 * 60 * 60));
         }
         if (!empty($user['email'])) {
             set_cookie('email', $user['email'], (365 * 24 * 60 * 60));

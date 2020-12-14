@@ -423,9 +423,9 @@
             $data['vendor'] = $this->shopvendor_model->setProperty('vendorId', $orderData['vendorId'])->getVendorData();
             $data['spot'] = $this->shopspot_model->fetchSpot($orderData['vendorId'], $orderData['spotId']);
             $data['spotId'] = $orderData['spotId'];
-            $data['username'] = get_cookie('userName');
-            $data['email'] = get_cookie('email');
-            $data['mobile'] = get_cookie('mobile');
+            $data['username'] = !empty($orderData['user']['username']) ? $orderData['user']['username'] : get_cookie('username');
+            $data['email'] = !empty($orderData['user']['email']) ? $orderData['user']['email'] : get_cookie('email');
+            $data['mobile'] = !empty($orderData['user']['mobile']) ? $orderData['user']['mobile'] : get_cookie('mobile');
             $data['userCountry'] = isset($orderData['user']['country']) ? $orderData['user']['country'] : '';
             $data['phoneCountryCode'] = isset($orderData['phoneCountryCode']) ? $orderData['phoneCountryCode'] : '';
             $data['countryCodes'] = Country_helper::getCountryPhoneCodes();
