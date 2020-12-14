@@ -16,6 +16,14 @@
                 <div class="form-group">
                     <input type="submit" value="CHECK IN" class="btn btn-primary" />
                 </div>
+                <div>
+                    <a href="<?php echo base_url() . 'orders'; ?>">
+                        <button class='pos-main__add-new-button' style="color:#000">
+                            <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+                            BACK
+                        </button>
+                    </a>
+                </div>
             </form>
         </div>
     </div>
