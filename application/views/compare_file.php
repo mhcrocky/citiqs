@@ -144,8 +144,6 @@
 <?php 
 function num_format($num){
   if(strpos($num, '.') !== false){
-    $num = intval($num*100);
-    $num = $num/100;
     $num = number_format($num , 2 , "," , "");
   }
   return $num;
