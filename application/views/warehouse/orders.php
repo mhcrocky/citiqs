@@ -55,7 +55,7 @@
         </a>
         <div style="margin-top:10px">
             <input
-                style="background-color: #fff"
+                style="background-color: #fbce97"
                 id="slide"
                 type="range"
                 min="<?php echo $vendorData['minBusyTime']; ?>"
