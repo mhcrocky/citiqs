@@ -116,16 +116,7 @@
       <td><b>Total:</b></td>
       <?php 
 
-        /*
-        $prices_values = array_values($prices);
-        $new_prices_values = array_values($new_prices);
-        for($i=0; $i<count($new_prices_values); $i++){
-          $total_csv_prices = $total_csv_prices + $prices_values[$i];
-          $total_db_prices = $total_db_prices + $new_prices_values[$i];
-        }
-        */
-
-        $total_diff = $total_csv_amount - $total_db_amount;
+        $total_diff = ($total_csv_amount+$total_csv_amount_2) - $total_db_amount;
       ?>
       <td><span>€ </span><?php echo num_format($total_csv_amount+$total_csv_amount_2); ?> (<span>€ </span><?php echo num_format($total_csv_amount);?>)</td>
       <td><span>€ </span><?php echo num_format($total_db_amount);?></td>
