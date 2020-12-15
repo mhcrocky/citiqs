@@ -229,7 +229,7 @@
             array_multisort($sort_col, $dir, $arr);
         }
 
-        public static function convertDayToDate(array $arrays, string $key, ?string $nonWorkFrom, ?string $nonWorkTo): array
+        public static function convertDayToDate(array $arrays, string $key, ?string $nonWorkFrom, ?string $nonWorkTo, int $pickupDeliveryWeeks): array
         {
             if (empty($arrays)) return [];
             $reset = [];
@@ -249,6 +249,14 @@
                     $reset[$date] = [];
                 }
                 array_push($reset[$date], $array);
+                if ($pickupDeliveryWeeks > 1) {
+                    for ($i = 1; $i < $pickupDeliveryWeeks; $i++) {
+                        $plusDays = '+' . (7 * $i) . 'days';
+                        $newDate = date('Y-m-d', strtotime($plusDays, strtotime($date)));
+                        $reset[$newDate] = [];
+                        array_push($reset[$newDate], $array);
+                    }
+                }
             }
             ksort($reset);
             return $reset;

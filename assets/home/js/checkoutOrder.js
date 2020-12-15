@@ -195,7 +195,7 @@ function buyerSelectTime(value, containerDivId, inputElementId) {
 function returnTimePicker(elementId, times) {
     $('#' + elementId).timepicker({
         'timeFormat' : 'HH:mm',
-        'interval': 10,
+        'interval': checkoutOrdedGlobals.periodMinutes,
         'minTime': times[1],
         'maxTime': times[2],
         'startTime': times[1],

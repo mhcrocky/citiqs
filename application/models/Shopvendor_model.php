@@ -42,6 +42,8 @@
         public $activatePos;
         public $nonWorkFrom;
         public $nonWorkTo;
+        public $pickupDeliveryWeeks;
+        public $pickupDeliveryMinutes;
 
         public $serviceFeePercent;
         public $serviceFeeAmount;
@@ -92,12 +94,16 @@
                 || $property === 'minBusyTime'
                 || $property === 'maxBusyTime'
                 || $property === 'deliveryAirDistance'
+                || $property === 'pickupDeliveryWeeks'
+                || $property === 'pickupDeliveryMinutes'
+
             ) {
                 $value = intval($value);
             }
             if (
                 $property === 'serviceFeePercent'
                 || $property === 'serviceFeeAmount'
+                || $property === 'minimumOrderFee'
             ) {
                 $value = floatval($value);
             }
@@ -156,12 +162,14 @@
             if (isset($data['minBusyTime']) && !Validate_data_helper::validateInteger($data['minBusyTime'])) return false;
             if (isset($data['maxBusyTime']) && !Validate_data_helper::validateInteger($data['maxBusyTime'])) return false;
             if (isset($data['receiptOnlyToWaiter']) && !($data['receiptOnlyToWaiter'] === '1' || $data['receiptOnlyToWaiter'] === '0')) return false;
-            if (isset($data['deliveryAirDistance']) && !Validate_data_helper::validateInteger($data['deliveryAirDistance'])) return false;   
+            if (isset($data['deliveryAirDistance']) && !Validate_data_helper::validateInteger($data['deliveryAirDistance'])) return false;
             if (isset($data['skipDate']) && !($data['skipDate'] === '1' || $data['skipDate'] === '0')) return false;
             if (isset($data['design']) && !Validate_data_helper::validateString($data['design'])) return false;
             if (isset($data['activatePos']) && !($data['activatePos'] === '1' || $data['activatePos'] === '0')) return false;
             if (isset($data['nonWorkFrom']) && !Validate_data_helper::validateDate($data['nonWorkFrom'])) return false;
             if (isset($data['nonWorkTo']) && !Validate_data_helper::validateDate($data['nonWorkTo'])) return false;
+            if (isset($data['pickupDeliveryWeeks']) && !Validate_data_helper::validateInteger($data['pickupDeliveryWeeks'])) return false;
+            if (isset($data['pickupDeliveryMinutes']) && !Validate_data_helper::validateInteger($data['pickupDeliveryMinutes'])) return false;
 
             if (isset($data['deliveryServiceFeePercent']) && !Validate_data_helper::validateString($data['deliveryServiceFeePercent'])) return false;
             if (isset($data['deliveryServiceFeeAmount']) && !Validate_data_helper::validateFloat($data['deliveryServiceFeeAmount'])) return false;
@@ -170,9 +178,6 @@
             if (isset($data['pickupServiceFeePercent']) && !Validate_data_helper::validateString($data['pickupServiceFeePercent'])) return false;
             if (isset($data['pickupServiceFeeAmount']) && !Validate_data_helper::validateFloat($data['pickupServiceFeeAmount'])) return false;
             if (isset($data['pickupMinimumOrderFee']) && !Validate_data_helper::validateFloat($data['pickupMinimumOrderFee'])) return false;
-
-
-
 
 
             if (isset($data['serviceFeePercentPos']) && !Validate_data_helper::validateString($data['serviceFeePercentPos'])) return false;
@@ -253,6 +258,8 @@
                     $this->table . '.pickupMinimumOrderFeePos',
                     $this->table . '.nonWorkFrom',
                     $this->table . '.nonWorkTo',
+                    $this->table . '.pickupDeliveryWeeks',
+                    $this->table . '.pickupDeliveryMinutes',
 
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
@@ -312,6 +319,8 @@
             $result['vendorLat'] = floatval($result['vendorLat']);
             $result['vendorLon'] = floatval($result['vendorLon']);
             $result['deliveryAirDistance'] = floatval($result['deliveryAirDistance']);
+            $result['pickupDeliveryWeeks'] = intval($result['pickupDeliveryWeeks']);
+            $result['pickupDeliveryMinutes'] = intval($result['pickupDeliveryMinutes']);
 
             $result['deliveryServiceFeePercent'] = floatval($result['deliveryServiceFeePercent']);
             $result['deliveryServiceFeeAmount'] = floatval($result['deliveryServiceFeeAmount']);
