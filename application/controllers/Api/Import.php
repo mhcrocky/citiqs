@@ -103,7 +103,7 @@
                         $executeQuery .= '(csvFile, paymentType, transactionId, created, oldId, amount) ';
                         $executeQuery .= 'VALUES  ';
                         $executeQuery .= $query;
-                        $executeQuery = rtrim($query, ',');
+                        $executeQuery = rtrim($executeQuery, ',');
                         $executeQuery .= ';';
                         $this->db->query($executeQuery);
                     }
