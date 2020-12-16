@@ -194,55 +194,61 @@
 
         public function setVendorCategoryId(): Shopimport_model
         {
-            $this->load->model('shopcategory_model');
+            // COMMENTED FIRST IMPORT FROM SHOP
+            // $this->load->model('shopcategory_model');
 
-            $insert = [
-                'category' => 'IMPORTED CATEGORY',
-                'userId' => $this->vendorId,
-                'archived' => '1',
-                'active' => '0',
-            ];
+            // $insert = [
+            //     'category' => 'IMPORTED CATEGORY',
+            //     'userId' => $this->vendorId,
+            //     'archived' => '1',
+            //     'active' => '0',
+            // ];
 
-            $this->shopcategory_model->setObjectFromArray($insert)->create();
-            $this->categoryId =  $this->shopcategory_model->id;
+            // $this->shopcategory_model->setObjectFromArray($insert)->create();
+            // $this->categoryId =  $this->shopcategory_model->id;
+            $this->categoryId = 295; // id already inserted on first import
 
             return $this;
         }
 
         public function setVendorPrinterId(): Shopimport_model
         {
-            $this->load->model('shopprinters_model');
+            // COMMENTED FIRST IMPORT FROM SHOP
+            // $this->load->model('shopprinters_model');
 
-            $printerMac = 'IMPORTED PRINTER ' . $this->vendorId;
-            $insert = [
-                'printer' => 'IMPORTED PRINTER',
-                'userId' => $this->vendorId,
-                'macNumber' => $printerMac,
-                'archived' => '1',
-                'active' => '0',
-            ];
+            // $printerMac = 'IMPORTED PRINTER ' . $this->vendorId;
+            // $insert = [
+            //     'printer' => 'IMPORTED PRINTER',
+            //     'userId' => $this->vendorId,
+            //     'macNumber' => $printerMac,
+            //     'archived' => '1',
+            //     'active' => '0',
+            // ];
 
-            $this->shopprinters_model->setObjectFromArray($insert)->create();
-            $this->printerId =  $this->shopprinters_model->id;
+            // $this->shopprinters_model->setObjectFromArray($insert)->create();
+            // $this->printerId = $this->shopprinters_model->id;
+            $this->printerId = 72; // id already inserted on first import
 
             return $this;
         }
 
         public function setVendorSpotId(): Shopimport_model
         {
-            $this->load->model('shopspot_model');
-            $this->load->config('custom');
+            // COMMENTED FIRST IMPORT FROM SHOP
+            // $this->load->model('shopspot_model');
+            // $this->load->config('custom');
 
-            $insert = [
-                'printerId' => $this->printerId,
-                'spotName' => 'IMPORT SPOT',
-                'active' => '0',
-                'spotTypeId' => $this->config->item('local'),
-                'archived' => '1',
-            ];
+            // $insert = [
+            //     'printerId' => $this->printerId,
+            //     'spotName' => 'IMPORT SPOT',
+            //     'active' => '0',
+            //     'spotTypeId' => $this->config->item('local'),
+            //     'archived' => '1',
+            // ];
 
-            $this->shopspot_model->setObjectFromArray($insert)->create();
-            $this->spotId =  $this->shopspot_model->id;
+            // $this->shopspot_model->setObjectFromArray($insert)->create();
+            // $this->spotId =  $this->shopspot_model->id;
+            $this->spotId = 1229; // id already inserted on first import
 
             return $this;
         }
@@ -271,18 +277,60 @@
             return $result->result_array();
         }
 
+        private function fetchOrder(string $orderTransactionId, int $orderNumber): ?array
+        {
+            $query = 
+                "SELECT
+                    orders.id AS id,
+                    orders.order_id AS orderNumber,
+                    orders.products as orderProduct,
+                    orders.date AS orderTimestamp,
+                    orders.transactionid AS orderTransactionId,
+                    orders.spot_id AS orderSpotId,
+                    orders_clients.first_name AS clientFirtsName,
+                    orders_clients.last_name AS clientLastName,
+                    orders_clients.email AS clientEmail,
+                    orders_clients.phone AS clientPhone
+                FROM
+                    orders
+                LEFT JOIN
+                    orders_clients ON orders.id = orders_clients.for_id
+                WHERE 
+                    orders.processed = 1 AND orders.confirmed = 1 ";
+
+            $executeQuery  = $query;
+            $executeQuery .= ' AND orders.transactionid = "' . $orderTransactionId . '" AND orders.order_id = ' . $orderNumber . ' ';
+            $executeQuery .= ' ORDER BY orders.id ASC LIMIT 1;';
+
+            $result = $this->connection->query($executeQuery);
+            $result = $result->result_array();
+
+            if (empty($result)) {
+                $executeQuery  = $query;
+                $executeQuery .= ' AND orders.transactionid != "' . $orderTransactionId . '" AND orders.order_id = ' . $orderNumber . ' ';
+                $executeQuery .= ' ORDER BY orders.id ASC LIMIT 1;';
+    
+                $result = $this->connection->query($executeQuery);
+                $result = $result->result_array();
+            }
+
+            return $result;
+        }
+
         private function manageClient(array $data)
         {
+            $clientEmail = empty($data['clientEmail']) ? 'old_shop_buyer@tiqs.com' : $data['clientEmail'];
+            $clientPhone = empty($data['clientPhone']) ? '1234567890' : $data['clientPhone'];
             $user = [
-                'email' => $data['clientEmail'],
+                'email' => $clientEmail,
                 'country' => '',
-                'mobile' => $data['clientPhone'],
+                'mobile' => $clientPhone,
                 'roleid' => '6',
                 'usershorturl' => 'tiqs_shop_service',
                 'salesagent' => '6'
             ];
             
-            if (is_null($data['clientFirtsName']) && is_null($data['clientLastName'])) {
+            if (empty($data['clientFirtsName']) && empty($data['clientLastName'])) {
                 $user['username'] = 'Anonymous';
             } else {
                 $user['username'] = strval($data['clientFirtsName']) . ' ' . strval($data['clientLastName']);
@@ -299,8 +347,6 @@
 
             return $this;
         }
-
-
 
         private function getProductExtendedId(array $product) 
         {
@@ -392,5 +438,114 @@
 
             return $this->readImproved($filter) ? true : false;
         }
+
+        private function fetchPaynlOrders(): array
+        {
+            $this->load->model('shoppaynlcsv_model');
+            return $this->shoppaynlcsv_model->fetchForCalculation();
+        }
+
+        private function insertInAlfred(array $shopOrder, float $paynlAmount): bool
+        {
+            // insert client
+            $this->manageClient($shopOrder);
+            if (!$this->user_model->id) return false;
+
+            // insert product and product extended
+            $products = unserialize($shopOrder['orderProduct']);                
+            $alfredOrderExtendedId = [];
+            $money = 0;
+
+            foreach($products as $product) {
+                $productExtendedId = $this->getProductExtendedId($product);
+                $alfredOrderExtendedId[$productExtendedId] = [
+                    'quantity' =>  $product['product_quantity']
+                ];
+                $money = $money + floatval($product['product_info']['price']) * intval($product['product_quantity']);
+            }
+
+            // insert order
+            $dateTime = date('Y-m-d H:i:s', intval($shopOrder['orderTimestamp']));
+            $serviceFee = $money * $this->vendor['serviceFeePercent'] / 100;
+
+            if ($serviceFee > $this->vendor['serviceFeeAmount']) {
+                $serviceFee = $this->vendor['serviceFeeAmount'];
+            }
+
+            $serviceFee = round($serviceFee, 2);
+
+
+            $alfredOrder = [
+                'buyerId'       => $this->user_model->id,
+                'amount'        => $money,
+                'serviceFee'    => $serviceFee,
+                'paid'          => '1',
+                'created'       => $dateTime,
+                'updated'       => $dateTime,
+                'orderStatus'   => 'finished',
+                'sendSms'       => '1',
+                'printStatus'   => '1',
+                'spotId'        => $this->spotId,
+                'transactionId' => $shopOrder['orderTransactionId'],
+                'old_order'     => $shopOrder['orderNumber'],
+            ];
+
+            $this->load->model('shoporder_model');
+            $this->shoporder_model->setObjectFromArray($alfredOrder)->create();
+            if (!$this->shoporder_model->id) return false;
+
+            // insert order extended
+            $this->load->model('shoporderex_model');
+
+            // insert order details
+            foreach ($alfredOrderExtendedId as $id => $details) {
+                $details['productsExtendedId'] = intval($id);
+                $details['orderId'] = $this->shoporder_model->id;
+                if (!$this->shoporderex_model->setObjectFromArray($details)->create()) {
+                    $this->shoporderex_model->orderId = $details['orderId'];
+                    $this->shoporderex_model->deleteOrderDetails();
+                    $this->shoporder_model->delete();
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public function importNew(): bool
+        {
+            if (!$this->vendor || !$this->mainProductTypeId || !$this->categoryId || !$this->printerId || !$this->spotId ) {
+                die('Required values are not set!');
+            }
+
+            $paynlOrder = $this->fetchPaynlOrders();
+            foreach($paynlOrder as $data) {                
+                $oldId = intval($data['oldId']);
+                $shopOrder = $this->fetchOrder($data['transactionId'], $oldId);
+
+                if (!$shopOrder) {
+                    echo 'Order not found! ';
+                    echo 'Transaction id: ' . $data['transactionId'] . ' Order number: ' . $data['oldId'];
+                } else {
+                    $amount = floatval($data['amount']);
+                    $shopOrder = reset($shopOrder);
+                    if ($this->insertInAlfred($shopOrder, $amount)) {
+                        $this->load->model('shoppaynlcsv_model');
+                        $csvId = intval($data['id']);
+                        $this
+                            ->shoppaynlcsv_model
+                                ->setObjectId($csvId)
+                                ->setProperty('calculated', '1')
+                                ->update();
+                        
+                    } else {
+                        echo 'IMPORT FAILED! ';
+                        echo 'Transaction id: ' . $data['transactionId'] . ' Order number: ' . $data['oldId'];
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
     }
-   
