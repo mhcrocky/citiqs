@@ -125,7 +125,7 @@
                     <?php
                     }
                 } else {
-                    echo '<p>No object(s). Please add spot <a href="' . base_url() .'profile">object</a></p>';
+                    echo '<p>No object(s). Please add spot <a href="' . base_url() .'address">object</a></p>';
                 }
 
             ?>
