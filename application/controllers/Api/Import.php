@@ -74,10 +74,9 @@
                 if (strpos($file, '.csv') !== false)  {
                     $path = $folder . $file;                
                     $contents = file($path);
-                    $query  = 'INSERT INTO tbl_shop_paynl_csv ';
-                    $query .= '(csvFile, paymentType, transactionId, created, oldId, amount) ';
-                    $query .= 'VALUES  ';
+                    $query = '';
                     foreach($contents as $line) {
+                        
                         if (strpos($line, 'STATSID') === false) {
                             $data = str_getcsv($line, ';');
                             if (is_numeric($data[16])) {
@@ -99,9 +98,17 @@
                             }                            
                         }
                     }
-                    $query = rtrim($query, ',');
-                    $query .= ';';
-                    $this->db->query($query);
+                    if ($query) {
+                        $executeQuery  = 'INSERT INTO tbl_shop_paynl_csv ';
+                        $executeQuery .= '(csvFile, paymentType, transactionId, created, oldId, amount) ';
+                        $executeQuery .= 'VALUES  ';
+                        $executeQuery .= $query;
+                        $executeQuery = rtrim($query, ',');
+                        $executeQuery .= ';';
+                        $this->db->query($executeQuery);
+                    }
+
+                    
                 }
             }
 
