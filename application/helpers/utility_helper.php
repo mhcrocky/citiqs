@@ -253,6 +253,7 @@
                     for ($i = 1; $i < $pickupDeliveryWeeks; $i++) {
                         $plusDays = '+' . (7 * $i) . 'days';
                         $newDate = date('Y-m-d', strtotime($plusDays, strtotime($date)));
+                        if ($nonWorkFrom && $nonWorkTo && $newDate >= $nonWorkFrom && $newDate <= $nonWorkTo) continue;
                         $reset[$newDate] = [];
                         array_push($reset[$newDate], $array);
                     }
