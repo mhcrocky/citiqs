@@ -55,8 +55,26 @@ class  Profile extends BaseControllerWeb
 			$data['workingTime'] = Utility_helper::resetArrayByKeyMultiple($data['workingTime'], 'day');
 		}
 
-		$this->loadViews("profile", $this->global, $data, NULL, 'headerwebloginhotelProfile'); // Menu profilepage
+		$this->loadViews("profile/index", $this->global, $data, NULL, 'headerwebloginhotelProfile'); // Menu profilepage
 	}
+
+
+	public function address()
+	{
+		$this->global['pageTitle'] = 'TIQS: Address';
+		$this->user_model->setUniqueValue($this->userId)->setWhereCondtition()->setUser();
+		$subscriptionWhat = ['id', 'short_description', 'description', 'ROUND(amount, 2) AS amount', 'active', 'tiqssendcom', 'backOfficeItemId', 'type'];
+		$data = [
+			'user' => $this->user_model,
+			'countries' => Country_helper::getCountries(),
+			'action' => 'profileUpdate',
+			'businessTypes' => $this->businesstype_model->getAll(),
+			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData(),
+		];
+
+		$this->loadViews("profile/address", $this->global, $data, NULL, 'headerwebloginhotelProfile'); // Menu profilepage
+	}
+
 
 	public function updateVendorData($id): void
 	{
