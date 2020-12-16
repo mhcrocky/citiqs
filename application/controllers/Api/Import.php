@@ -66,18 +66,17 @@
         public function csv_get()
         {
             $folder = FCPATH . 'assets/paynlCsv/';
-            var_dump($folder);
-            die();
+
             $files = scandir($folder);
             $count = 0;
-            $query  = 'INSERT INTO tbl_shop_paynl_csv ';
-            $query .= '(csvFile, paymentType, transactionId, created, oldId, amount) ';
-            $query .= 'VALUES  ';
             
             foreach ($files as $file) {
                 if (strpos($file, '.csv') !== false)  {
                     $path = $folder . $file;                
                     $contents = file($path);
+                    $query  = 'INSERT INTO tbl_shop_paynl_csv ';
+                    $query .= '(csvFile, paymentType, transactionId, created, oldId, amount) ';
+                    $query .= 'VALUES  ';
                     foreach($contents as $line) {
                         if (strpos($line, 'STATSID') === false) {
                             $data = str_getcsv($line, ';');
@@ -100,11 +99,12 @@
                             }                            
                         }
                     }
+                    $query = rtrim($query, ',');
+                    $query .= ';';
+                    $this->db->query($query);
                 }
             }
-            $query = rtrim($query, ',');
-            $query .= ';';
-            $this->db->query($query);
+
             $this->shoppaynlcsv_model->updateStorno();
             var_dump($count);
         }
