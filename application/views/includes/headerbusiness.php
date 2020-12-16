@@ -211,9 +211,9 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
                                     <li>
                                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-stamp"></i><span>Your Profile</span></a>
                                         <ul class="collapse">
-                                            <li><a href="$this->baseUrl; ?>profile"><i class="ti-location-pin"></i> <span>Address</span></a></li>
-                                            <li><a href="$this->baseUrl; ?>profile"><i class="ti-receipt"></i> <span>Payment Settings</span></a></li>
-                                            <li><a href="$this->baseUrl; ?>profile"><i class="ti-shopping-cart"></i> <span>Shop Settings</span></a></li>
+                                            <li><a href="<?php echo $this->baseUrl; ?>address"><i class="ti-location-pin"></i> <span>Address</span></a></li>
+                                            <li><a href="<?php echo $this->baseUrl; ?>profile"><i class="ti-receipt"></i> <span>Payment Settings</span></a></li>
+                                            <li><a href="<?php echo $this->baseUrl; ?>profile"><i class="ti-shopping-cart"></i> <span>Shop Settings</span></a></li>
                                         </ul>
                                     </li>
                                     <li>
@@ -371,7 +371,6 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
         let collapse = 45;
         let title = $("#user-title").width();
         let search_box = header - (collapse+title);
-        console.log(search_box);
         if(search_box < 240){
             $("#search-box").css('width',search_box);
             $("#search-box input").css('width',search_box);
