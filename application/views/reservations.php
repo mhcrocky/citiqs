@@ -10,26 +10,35 @@
                 </div>
                 <div class="col-lg-10 col-md-10 col-sm-12">
                     <!--Search by name:-->
-                    <form class="form-inline" method="get" action="<?php echo base_url() ?>reservations">
+                    <form class="form-inline" method="post" action="<?php echo base_url() ?>reservations/<?php echo $vendorId; ?>">
                    
-                        <div class="form-group">
+                        <div style="display: none;" class="form-group">
                             <label for="object">Select object: </label>
                             <select class="form-control" id="object" name="object" required>
                                 <option value="">Select</option>
                                 <?php
+                                $not_null = 0;
                                  foreach ($objects as $object) { ?>
                                     <?php
                                     $selected = '';
-                                    if (isset($get['object']) && $get['object'] == $object['id']) {
+                                    
+                                    if ($object['userId'] == $vendorId) {
                                         $selected = 'selected';
+                                        $change_val = &$not_null;
+                                        $change_val = 1;
+                                       
                                     }
+                                  
                                     ?>
+                                    
                                     <option <?php echo $selected; ?>
                                             value="<?php echo $object['id'] ?>"><?php echo $object['objectName'] ?></option>
                                 <?php } ?>
                             </select>
                         </div>
-                       
+                       <?php if($not_null == '0'): ?>
+                           <strong>Sorry, we didn't find any object for this vendor! </strong>
+                       <?php exit(); endif; ?>
                         <div class="form-group">
                             <label for="date">Date: </label>
                             <input
@@ -81,10 +90,11 @@
             </div>
         </div>
         <div>
+        <?php //var_dump($floorplans); ?>
             <?php 
             if (isset($floorplans) && !empty($floorplans)) {
                 foreach ($floorplans as $floorplan) {
-                    if (empty($floorplan['timeSlots'])) continue;
+                    
                     ?>
                     <div class="row mb-5 canvas_row" style="margin-top:50px" id="canvas_row_<?php echo $floorplan['id']; ?>">
                         <div class="col-md-12 mh-100 " id="floor_image_<?php echo $floorplan['id']; ?>">
@@ -92,7 +102,7 @@
                             <canvas id="canvas_<?php echo $floorplan['id']; ?>" width="200" height="800"></canvas>
                         </div>
                     </div>
-                    <div class="row">
+                    <div id="row_<?php echo $floorplan['id']; ?>" class="row">
                         <button type="button" class="btn btn-outline-primary"
                                 id="zoomIn_<?php echo $floorplan['id']; ?>">Zoom In
                         </button>
@@ -167,10 +177,11 @@
             alertify.error('Please select period');
         }
     }
+
     <?php
     foreach($floorplans as $floorplan) {
-    if (empty($floorplan['timeSlots'])) continue;
     ?>
+
     $(document).ready(function () {
 
         floorplan_<?php echo $floorplan['id'];?> = new FloorShow({
@@ -236,3 +247,4 @@
 
 
 </script>
+ 

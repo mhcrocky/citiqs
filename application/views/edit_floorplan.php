@@ -64,7 +64,6 @@
 	<div class="row mh-100 mb-5 canvas_row" id="canvas_row">
 		<div class="col-md-12 mh-100 p-2" id="floor_image">
 			<canvas id="canvas" width="200" height="200"></canvas>
-			<img style="visibility: hidden;" width="250" src="<?php echo base_url().'uploads/floorplans/'.$floorplan->file_name; ?>">
 		</div>
 	</div>
 
@@ -143,7 +142,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> 
 
 <script src="<?php echo base_url(); ?>assets/floorplan/assets/js/jquery-3.5.1.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/floorplan/assets/js/popper.min.js"></script>
