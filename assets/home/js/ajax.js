@@ -251,6 +251,9 @@ var callThis = (function() {
                 callFunction(this);
             }
         },
+        checkIfsUserExists:  function(callFunction) {
+            callFunction(this);
+        },
     };
     return methods;
 })();

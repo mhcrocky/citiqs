@@ -45,3 +45,51 @@ function removeShowFromElements(collection) {
 		elements[i].classList.remove('show');
 	}
 }
+
+function checkIfsUserExists(element) {
+	let email = element.value;
+
+    if (!email) {
+		alertifyErrMessage(element)
+	};
+    if (email.includes('@')) {
+        let emailParts = email.split('@');
+        if (!emailParts[1].includes('.')) return;
+        let post = {
+            'email' : email
+        }
+        let url = globalVariables.ajax + 'checkIfsUserExists';
+        sendAjaxPostRequest(post, url, 'checkIfsUserExists', alertUserExists);
+    }
+}
+
+function alertUserExists(response)  {
+	if (parseInt(response) === 1) {
+		alertify.error('User with this email already exists. Reset your password or check your email to activate account');
+	}
+}
+function registerNewBusiness(formId, passwordId, repeatPasswordId) {
+    let password = document.getElementById(passwordId).value.trim();
+    let repeatPassword = document.getElementById(repeatPasswordId).value.trim();
+
+    if (!password) {
+        alertify.error('Password is requreid');
+        return false;
+    }
+    if (!repeatPassword) {
+        alertify.error('Repeat password is requreid');
+        return false;
+    }
+    if (password !== repeatPassword) {
+        alertify.error('Password and repeat password do not match');
+        return false;
+    }
+
+	let form = document.getElementById(formId);
+
+    if (validateFormData(form)) {
+        form.submit();
+    } else {
+        return false;
+    }
+}

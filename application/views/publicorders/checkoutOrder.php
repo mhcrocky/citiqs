@@ -264,10 +264,9 @@
             'addressId': 'address',
             'privacyPolicy' : 'privacyPolicy',
             'termsAndConditions' : 'termsAndConditions',
-            
+            'periodMinutes' : parseInt('<?php echo $vendor['pickupDeliveryMinutes']; ?>'),
         }
         Object.freeze(globals);
         return globals;
     }());
-    
 </script>

@@ -876,6 +876,11 @@ class Login extends BaseControllerWeb
 			} else {
 				$this->session->set_flashdata('error', $this->language->Line("registerbusiness-F1001231A","We already know you. Please activate your account. Check your email for activation link"));
 			}
+			unset($hotel['password']);
+			unset($hotel['cpassword']);
+			foreach($hotel as $key => $value) {
+				set_cookie($key, $value, (60 * 60));
+			}
 			redirect('/registerbusiness');
 			exit();
 		}

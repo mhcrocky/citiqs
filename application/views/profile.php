@@ -754,7 +754,6 @@
 							/>
 						</label>
 					</div>
-
 					<h4>ACTIVATE POS</h4>
 					<div class="form-group mb-35">
 						<label class="radio-inline" for="activatePosYes">Yes</label>
@@ -763,6 +762,33 @@
 						<input type="radio" id="activatePosNo" name="vendor[activatePos]" value="0" <?php if ($vendor['activatePos'] === '0') echo 'checked'; ?> />
 					</div>
 
+					<h4>SET NUMBER OF WEEKS AHEAD FOR PICKUP/DELIVERY PERIOD AND TIME INTERVAL</h4>
+					<div class="form-group mb-35">
+						<label for="minBusyTime">Show pickup/delivery date for next&nbsp;
+							<input
+								type="number"
+								id="pickupDeliveryWeeks"
+								name="vendor[pickupDeliveryWeeks]"
+								min="1"
+								step="1"
+								style="border-radius: 50px; text-align: center"
+								value="<?php echo $vendor['pickupDeliveryWeeks']; ?>"
+							/>
+							weeks
+						</label>
+						<label for="maxBusyTime">&nbsp;Period time every&nbsp;
+						<input
+							type="number"
+							id="pickupDeliveryMinutes"
+							name="vendor[pickupDeliveryMinutes]"
+							min="1"
+							step="1"
+							style="border-radius: 50px; text-align: center"
+							value="<?php echo $vendor['pickupDeliveryMinutes']; ?>"
+							/>
+							&nbsp; minutes.
+						</label>
+					</div>
 					<br/>
 					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />

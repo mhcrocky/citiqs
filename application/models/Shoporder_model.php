@@ -274,6 +274,7 @@
                     $this->table . '.orderStatus AS orderStatus',
                     $this->table . '.sendSms AS sendSms',
                     $this->table . '.created AS createdAt',
+                    $this->table . '.serviceFee AS serviceFee',
 
                     // category
                     'tbl_shop_categories.id AS categoryId',
