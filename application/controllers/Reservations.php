@@ -27,7 +27,7 @@ class  Reservations extends BaseControllerWeb
 
 	public function index($vendorId = false, $spotId = false)
 	{
-		if(!isset($vendorId)){
+		if(!$vendorId){
 			redirect('https://tiqs.com/presence/sites/home');
 		}
 		$this->global['pageTitle'] = 'TIQS : RESERVATIONS';
@@ -40,6 +40,7 @@ class  Reservations extends BaseControllerWeb
 		$data = [
 			'objects' => $this->objectspot_model->read(['tbl_spot_objects.*'],$criteria)
 		];
+		//var_dump($this->objectspot_model->read(['tbl_spot_objects.*'],$criteria));exit();
 
 		if($spotId && $data['objects'] && count($data['objects']) == 0) {
 		    redirect('reservations');
@@ -47,14 +48,13 @@ class  Reservations extends BaseControllerWeb
 
         $this->global['page'] = 'reservations_index';
 
-		if (!empty($_GET)) {
-			echo "true";
-			$get = $this->input->get(null, true);
+		if (!empty($_POST)) {
+			$get = $this->input->post(null, true);
 			$from = (isset($get['date']) && isset($get['start'])) ? $get['date'] . ' ' . $get['start'] . ':00' : null;
 			$to = (isset($get['date']) && isset($get['end'])) ? $get['date'] . ' ' . $get['end'] . ':00' : null;
 
 			$data['floorplans'] = $this->floorplandetails_model->read(['*'], ['spot_object_id' => $get['object']]);
-			//var_dump($this->floorplandetails_model->read(['*'], ['spot_object_id' => $get['object']]));
+
 
 			if($data['floorplans']) {
                 foreach($data['floorplans'] as $key => $floorplan) {
@@ -75,7 +75,8 @@ class  Reservations extends BaseControllerWeb
             }
 			$data['get'] = $get;
 		}
-        $data['spotId'] = $spotId;
+		$data['spotId'] = $spotId;
+		$data['vendorId'] = $vendorId;
 
 		$this->loadViews('reservations', $this->global, $data, NULL, 'headerwebloginhotelSettings_new'); // Menu profilepage
 	}
