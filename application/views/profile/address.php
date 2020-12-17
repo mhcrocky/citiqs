@@ -1,10 +1,19 @@
+<style>
+.footer-area p {
+    color: #676666 !important;
+    margin-bottom: 0 !important;
+}
+p,label{
+	color: #000 !important;
+}
+</style>
 <div class="main-wrapper" style="text-align:center">
-	<div class="w-100 background-blue height-100">
-		<div class="flex-column align-start width-650 mx-auto mt-4">
-			<div style="text-align:center">
+	<div class="w-100 height-100">
+		<div class="flex-column align-start width-650 mx-auto">
+			<div style="text-align:center;">
 				<form action="<?php echo $this->baseUrl; ?>profileUpdate" method="post" id="editProfile" enctype="multipart/form-data">
 					<!--					<input type="text" value="--><?php //echo $user->id; ?><!--" name="id" id="userId" readonly hidden required />-->
-					<h2 class="heading mb-35"><?php echo $this->language->line("PROF-010A",'YOUR PROFILE PAGE.');?></h2>
+					<!-- <h2 class="heading mb-35"><?php echo $this->language->line("PROF-010A",'YOUR PROFILE PAGE.');?></h2> -->
 					<div class="">
 						<div class="flex-column align-space">
 							<div class="form-group has-feedback">
@@ -54,7 +63,7 @@
 								<div>
 									<p style="font-family: caption-light; padding: 10px">Business type</p>
 									<div class="selectWrapper mb-35">
-										<select class="selectBox" id="business_type" name="business_type_id" style="font-family:'caption-light';" required>
+										<select class="selectBox form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview" id="business_type" name="business_type_id" style="font-family:'caption-light';border-radius: 25px;" required>
 											<option value=""><?php echo $this->language->Line("registerbusiness-V1V1600A1","SELECT BUSINESS TYPE");?></option>
 											<?php foreach ($businessTypes as $type) { ?>
 												<option <?php if($type['id'] === $user->business_type_id) echo 'selected'; ?> value="<?php echo $type['id'] ?>">
@@ -171,7 +180,7 @@
 										"); ?>
 									</p>
 									<div class="form-group has-feedback selectWrapper mb-35">
-										<select class="selectBox" name="country" id="country" style="font-family:'caption-light';" required>
+										<select class="selectBox form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview" name="country" id="country" style="font-family:'caption-light';border-radius: 25px;" required>
 											<?php foreach ($countries as $code => $country) { ?>
 												<option value="<?php echo $code; ?>" <?php if ($code === $user->country) echo 'selected'; ?> >
 													<?php echo $this->language->line($country,$country); ?>
@@ -216,9 +225,39 @@
 								<br>
 							<?php } ?>
 							<div class="form-group has-feedback" style="margin-top:10px">
-								<input type="file" name="placeImage" class="form-control" accept="image/png" />
+								<input type="file" name="placeImage" class="form-control" accept="image/png" style="border-radius: 25px;" />
 								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 							</div>
+							<!--
+							<div class="form-group has-feedback">
+							    <p style="font-family: caption-light; padding: 10px">
+								    <?php echo 'PASSWORD';?>
+							    </p>
+								<input
+									type="hidden"
+									value="<?php echo $user->password; ?>"
+									name="oldpassword"
+								/>
+							    <div class="input-group">
+							        <input 
+									  style="height: 45px;border-top-left-radius: 25px;border-bottom-left-radius: 25px;"
+									  type="password"
+									  class="form-control pwd" 
+									  name="password"
+									  id="password"
+									  maxlength="128"
+									  role="textbox"
+									  autocomplete="off"
+									  tabindex="-1"
+									  placeholder="New Password (Optional)"
+									/>
+							        <span class="input-group-btn">
+							            <button class="btn btn-default reveal form-control" style="border-top-right-radius: 25px;border-bottom-right-radius: 25px;margin-left: -3px;height: 45px;width: 60px;" type="button">Show</button>
+							        </span>          
+							    </div>
+							</div>
+							-->
+							
 							<div class="form-group has-feedback" style="padding: 30px;">
 								<div style="text-align: center; ">
 									<input type="submit" class="button button-orange" onclick="saveSpotObject()" value="<?php echo $this->language->line("PROF-040 ",'SAVE');?>" style="border: none" />
@@ -230,6 +269,7 @@
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 
 <script>
@@ -257,6 +297,16 @@
 	}
 		// date time picker
 	$(document).ready(function(){
+		$(".reveal").on('click',function() {
+    var $pwd = $(".pwd");
+    if ($pwd.attr('type') === 'password') {
+        $pwd.attr('type', 'text');
+		$(this).text('Hide');
+    } else {
+        $pwd.attr('type', 'password');
+		$(this).text('Show');
+    }
+});
 		// $('.timePickers').datetimepicker({
 		// 	timepicker: false,
 		// 	format: 'yy-m-d'

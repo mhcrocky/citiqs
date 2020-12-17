@@ -72,7 +72,20 @@ class  Profile extends BaseControllerWeb
 			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData(),
 		];
 
-		$this->loadViews("profile/address", $this->global, $data, NULL, 'headerwebloginhotelProfile'); // Menu profilepage
+		$this->loadViews("profile/address", $this->global, $data, 'footerbusiness', 'headerbusiness'); // Menu profilepage
+	}
+
+
+	public function changePassword()
+	{
+		$this->global['pageTitle'] = 'TIQS: CHANGE PASSWORD';
+		$this->user_model->setUniqueValue($this->userId)->setWhereCondtition()->setUser();
+		$subscriptionWhat = ['id', 'short_description', 'description', 'ROUND(amount, 2) AS amount', 'active', 'tiqssendcom', 'backOfficeItemId', 'type'];
+		$data = [
+			'user' => $this->user_model
+		];
+
+		$this->loadViews("profile/changepassword", $this->global, $data, 'footerbusiness', 'headerbusiness'); // Menu profilepage
 	}
 
 

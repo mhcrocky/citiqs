@@ -420,10 +420,11 @@ class User_model extends CI_Model
      * @param int $userId : This is user id
      * @return bool
      */
-    function editUser($userInfo, $userId): bool
+    function editUser($userInfo, $userId)
     {
         $this->db->where('id', $userId);
         $this->db->update('tbl_user', $userInfo);
+        return $this->db->error();
 		$effectedrows =$this->db->affected_rows();
         return ($effectedrows > 0) ? true : false;
     }

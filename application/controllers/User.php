@@ -1073,10 +1073,10 @@ class User extends BaseControllerWeb {
             $data = $this->input->post(null, true);
             if ($this->user_model->checkInszNumber($data['inszNumber'], $this->userId)) {
                 $this->session->set_flashdata('error', 'Profile update failed. Register number "' . $data['inszNumber'] . '" is already in use by another user');
-                redirect('profile');
+                redirect('address');
                 exit();
             }
-
+ 
             $this->uploadPlaceImage($data);
 
             $geoCoordinates = (Google_helper::getLatLong($data['address'], $data['zipcode'], $data['city'], $data['country']));
@@ -1092,7 +1092,7 @@ class User extends BaseControllerWeb {
         } else {
             $this->session->set_flashdata('error', 'Profile update failed! Check your data');
         }
-        redirect('profile');
+        redirect('address');
     }
 
     private function uploadPlaceImage(array &$data): void
@@ -1219,8 +1219,8 @@ class User extends BaseControllerWeb {
             $resultPas = $this->user_model->matchOldPassword($this->userId, $oldPassword);
 
             if (empty($resultPas)) {
-                $this->session->set_flashdata('nomatch', 'Your old password is not correct');
-                redirect('profile/');
+                $this->session->set_flashdata('error', 'Your old password is not correct');
+                redirect('changepassword');
             } else {
                 $usersData = array('password' => getHashedPassword($newPassword), 'updatedBy' => $this->userId,
                     'updatedDtm' => date('Y-m-d H:i:s'));
@@ -1233,7 +1233,7 @@ class User extends BaseControllerWeb {
                     $this->session->set_flashdata('error', 'Password updation failed');
                 }
 
-                redirect('profile/');
+                redirect('changepassword');
             }
         }
     }
