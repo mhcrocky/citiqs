@@ -89,19 +89,79 @@ class  Profile extends BaseControllerWeb
 	}
 
 
+	public function paymentsettings()
+	{
+		$active="details";
+		$this->global['pageTitle'] = 'TIQS: PAYMENT SETTINGS';
+		$this->user_model->setUniqueValue($this->userId)->setWhereCondtition()->setUser();
+
+		$subscriptionWhat = ['id', 'short_description', 'description', 'ROUND(amount, 2) AS amount', 'active', 'tiqssendcom', 'backOfficeItemId', 'type'];
+		$data = [
+			'user' => $this->user_model,
+			'active' => $active,
+			'action' => 'profileUpdate',
+			'businessTypes' => $this->businesstype_model->getAll(),
+			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData(),
+			'workingTime' => $this->shopvendortime_model->setProperty('vendorId', $this->userId)->fetchWorkingTime()
+		];
+		// var_dump($data['vendor']);
+		// die();
+		if ($data['workingTime']) {
+			$data['workingTime'] = Utility_helper::resetArrayByKeyMultiple($data['workingTime'], 'day');
+		}
+
+		$this->loadViews("profile/paymentsettings", $this->global, $data, 'footerbusiness', 'headerbusiness'); // Menu profilepage
+	}
+
+
+	public function shopsettings()
+	{
+		$active="details";
+		$this->global['pageTitle'] = 'TIQS: SHOP SETTINGS';
+		$this->user_model->setUniqueValue($this->userId)->setWhereCondtition()->setUser();
+
+		$subscriptionWhat = ['id', 'short_description', 'description', 'ROUND(amount, 2) AS amount', 'active', 'tiqssendcom', 'backOfficeItemId', 'type'];
+		$data = [
+			'user' => $this->user_model,
+			'active' => $active,
+			'action' => 'profileUpdate',
+			'businessTypes' => $this->businesstype_model->getAll(),
+			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData(),
+			'workingTime' => $this->shopvendortime_model->setProperty('vendorId', $this->userId)->fetchWorkingTime()
+		];
+		// var_dump($data['vendor']);
+		// die();
+		if ($data['workingTime']) {
+			$data['workingTime'] = Utility_helper::resetArrayByKeyMultiple($data['workingTime'], 'day');
+		}
+
+		$this->loadViews("profile/shopsettings", $this->global, $data, 'footerbusiness', 'headerbusiness'); // Menu profilepage
+	}
+
+
 	public function updateVendorData($id): void
 	{
 		$this->shopvendor_model->id = intval($id);
 		$post  = Utility_helper::sanitizePost();
-		$vendorTypes = empty($post) ? [] : $post['vendorTypes'];
+		if(isset($post['vendorTypes'])){
+			$vendorTypes = empty($post) ? [] : $post['vendorTypes'];
+			$this->shopvendortypes_model->setProperty('vendorId', intval($post['vendorId']))->updateVendorTypes($vendorTypes);
+		}
 
-		$this->shopvendortypes_model->setProperty('vendorId', intval($post['vendorId']))->updateVendorTypes($vendorTypes);
-
-		if ($this->shopvendor_model->setObjectFromArray($post['vendor'])->update()) {
-			$_SESSION['activatePos'] = $post['vendor']['activatePos'];
-			$this->session->set_flashdata('success', 'Data updated');
-		} else {
-			$this->session->set_flashdata('error', 'Update data failed');
+		//
+		if(isset($post['vendor'])){
+			if ($this->shopvendor_model->setObjectFromArray($post['vendor'])->update()) {
+				$_SESSION['activatePos'] = $post['vendor']['activatePos'];
+				$this->session->set_flashdata('success', 'Data updated');
+			} else {
+				$this->session->set_flashdata('error', 'Update data failed');
+			}
+		}
+		
+		if(isset($post['paymentsettings'])){
+			redirect('paymentsettings');
+		} else if(isset($post['shopsettings'])){
+			redirect('shopsettings');
 		}
 
 		redirect('profile');
