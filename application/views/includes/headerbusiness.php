@@ -215,6 +215,9 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
                                             <li><a href="<?php echo $this->baseUrl; ?>changepassword"><i class="ti-flickr"></i> <span>Change Password</span></a></li>
                                             <li><a href="<?php echo $this->baseUrl; ?>paymentsettings"><i class="ti-receipt"></i> <span>Payment Settings</span></a></li>
                                             <li><a href="<?php echo $this->baseUrl; ?>shopsettings"><i class="ti-shopping-cart"></i> <span>Shop Settings</span></a></li>
+                                            <li><a href="<?php echo $this->baseUrl; ?>logo"><i class="ti-image"></i> <span>Logo</span></a></li>
+                                            <li><a href="<?php echo $this->baseUrl; ?>termsofuse"><i class="ti-align-justify"></i> <span>Terms of Use</span></a></li>
+                                            <li><a href="<?php echo $this->baseUrl; ?>openandclose"><i class="ti-time"></i> <span>Open and Close</span></a></li>
                                         </ul>
                                     </li>
                                     <li>
