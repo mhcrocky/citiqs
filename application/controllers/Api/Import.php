@@ -63,6 +63,28 @@
             die();
         }
 
+        public function importnotfound_get(): void
+        {
+            $data = $this->input->get(null, true);
+
+            $import = $this
+                        ->shopimport_model
+                        ->setProperty('vendorId', $data['vendorid'])
+                        ->setShopVendor()
+                        ->setDatabaseCredantations($data)
+                        ->setConnection()
+                        ->setMainProductTypeId()
+                        ->setVendorCategoryId()
+                        ->setVendorPrinterId()
+                        ->setVendorSpotId()
+                        ->importFromArray();
+
+            echo ($import) ? 'Import succes' : 'Import failed';
+
+            die();
+        }
+        
+
         public function csv_get()
         {
             $folder = FCPATH . 'assets/paynlCsv/';

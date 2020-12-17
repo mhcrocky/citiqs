@@ -350,6 +350,10 @@
 
         private function getProductExtendedId(array $product) 
         {
+            $this->load->model('shopproduct_model');
+            $this->load->model('shopproductex_model');
+            $this->load->model('shopproducttime_model');
+
             $oldProductName = 'old_' . $product['product_info']['title'];
             $query = 
 
@@ -365,12 +369,13 @@
                 tbl_shop_categories.userId = ' . $this->vendorId . '
                 AND tbl_shop_categories.id = ' . $this->categoryId . '
                 AND tbl_shop_products_extended.name = "' . $oldProductName . '";';
+
             $result = $this->db->query($query);
             $result = $result->result_array();
 
             if (empty($result)) {
                 // insert product
-                $this->load->model('shopproduct_model');
+
                 $this->shopproduct_model->setObjectFromArray([
                     'categoryId' => $this->categoryId,
                     'active' => '0',
@@ -381,7 +386,7 @@
                 ])->create();
 
                 // insert product ex
-                $this->load->model('shopproductex_model');
+
                 $porductExtended = [
                     'productId'         => $this->shopproduct_model->id,
                     'name'              => $oldProductName,
@@ -396,7 +401,7 @@
                 $this->shopproductex_model->setObjectFromArray($porductExtended)->create();
 
                 // insert times
-                $this->load->model('shopproducttime_model');
+
                 // $this->shopproducttime_model->insertProductTimes($this->shopproduct_model->id);
                 return $this->shopproductex_model->id;
             } else {
@@ -445,7 +450,7 @@
             return $this->shoppaynlcsv_model->fetchForCalculation();
         }
 
-        private function insertInAlfred(array $shopOrder, float $paynlAmount): bool
+        private function insertInAlfred(array $shopOrder): bool
         {
             // insert client
             $this->manageClient($shopOrder);
@@ -527,9 +532,8 @@
                     echo 'Order not found! ';
                     echo 'Transaction id: ' . $data['transactionId'] . ' Order number: ' . $data['oldId'];
                 } else {
-                    $amount = floatval($data['amount']);
                     $shopOrder = reset($shopOrder);
-                    if ($this->insertInAlfred($shopOrder, $amount)) {
+                    if ($this->insertInAlfred($shopOrder)) {
                         $this->load->model('shoppaynlcsv_model');
                         $csvId = intval($data['id']);
                         $this
@@ -548,4 +552,70 @@
             return true;
         }
 
+        public function importFromArray(): bool
+        {
+            if (!$this->vendor || !$this->mainProductTypeId || !$this->categoryId || !$this->printerId || !$this->spotId ) {
+                die('Required values are not set!');
+            }
+
+            $paynlOrder = $this->fetchPaynlOrders();
+            $notFoundOrders = [1823, 1844, 2049, 2494, 2606, 2868, 3102, 3183, 3479, 3527, 3530, 3619, 4037, 4247, 4580, 4637, 5008, 5293, 5340, 5602, 5609, 6088];
+            
+            
+            foreach($paynlOrder as $data) {                
+                $oldId = intval($data['oldId']);
+                if (!in_array($oldId, $notFoundOrders)) continue;
+
+                $shopOrder = $this->fetchOrderByOrderId($oldId);
+
+                if (!$shopOrder) {
+                    echo 'Order not found! ';
+                    echo 'Transaction id: ' . $data['transactionId'] . ' Order number: ' . $data['oldId'];
+                } else {
+                    $shopOrder = reset($shopOrder);
+                    if ($this->insertInAlfred($shopOrder)) {
+                        $this->load->model('shoppaynlcsv_model');
+                        $csvId = intval($data['id']);
+                        $this
+                            ->shoppaynlcsv_model
+                                ->setObjectId($csvId)
+                                ->setProperty('calculated', '1')
+                                ->update();
+                        
+                    } else {
+                        echo 'IMPORT FAILED! ';
+                        echo 'Transaction id: ' . $data['transactionId'] . ' Order number: ' . $data['oldId'];
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private function fetchOrderByOrderId(int $orderNumber): ?array
+        {
+            $query = 
+                "SELECT
+                    orders.id AS id,
+                    orders.order_id AS orderNumber,
+                    orders.products as orderProduct,
+                    orders.date AS orderTimestamp,
+                    orders.transactionid AS orderTransactionId,
+                    orders.spot_id AS orderSpotId,
+                    orders_clients.first_name AS clientFirtsName,
+                    orders_clients.last_name AS clientLastName,
+                    orders_clients.email AS clientEmail,
+                    orders_clients.phone AS clientPhone
+                FROM
+                    orders
+                LEFT JOIN
+                    orders_clients ON orders.id = orders_clients.for_id
+                WHERE 
+                    
+                    orders.order_id = " . $orderNumber . ";";
+                    #orders.processed = 1 AND orders.confirmed = 1  AND 
+
+            $result = $this->connection->query($query);
+            return $result->result_array();
+        }
     }
