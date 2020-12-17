@@ -70,8 +70,9 @@
             $files = scandir($folder);
             $count = 0;
             
-            foreach ($files as $file) {
-                if (strpos($file, '.csv') !== false)  {
+            // foreach ($files as $file) {
+            //     if (strpos($file, '.csv') !== false)  {
+                    $file = '01.csv';
                     $path = $folder . $file;                
                     $contents = file($path);
                     $query = '';
@@ -109,8 +110,8 @@
                     }
 
                     
-                }
-            }
+            //     }
+            // }
 
             $this->shoppaynlcsv_model->updateStorno();
             var_dump($count);
