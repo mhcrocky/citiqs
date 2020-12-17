@@ -2,22 +2,21 @@
 	<div class="container">
 		<div class="row">
 				<div class="col-lg-4 col-12 form-inline">
-					<label for='selectSpot'>Select POS spot:&nbsp;&nbsp;</label>
-					<select onchange="redirectToNewLocation(this.value)" class="form-control">
-						<option value="">Select</option>
-						<?php foreach ($spots as $spotOption) { ?>
-							<?php if ($spotOption['spotActive'] !== '1') continue; ?>
-							<option
-								value="pos?spotid=<?php echo $spotOption['spotId']; ?>"
-								<?php if (intval($spotOption['spotId']) === $spotId) echo 'selected'; ?>
-							>
-								<?php echo $spotOption['spotName']; ?>
-							</option>
-						<?php } ?>
-					</select>
-					<div class="pos-main__add-item" style="margin-left:10px">
-						<a href="<?php echo base_url() . 'pos/posLogOutAction'; ?>">LOGOUT</a>
-					</div>
+					<?php if (!empty($spots) && count($spots) > 1 && $fodIsActive) { ?>
+						<label for='selectSpot'>Select POS spot:&nbsp;&nbsp;</label>
+						<select onchange="redirectToNewLocation(this.value)" class="form-control">
+							<option value="">Select</option>
+							<?php foreach ($spots as $spotOption) { ?>
+								<?php if ($spotOption['spotActive'] !== '1') continue; ?>
+								<option
+									value="pos?spotid=<?php echo $spotOption['spotId']; ?>"
+									<?php if (intval($spotOption['spotId']) === $spotId) echo 'selected'; ?>
+								>
+									<?php echo $spotOption['spotName']; ?>
+								</option>
+							<?php } ?>
+						</select>
+					<?php } ?>
 					<?php if (!isset($mainProducts) && $fodIsActive) { ?>
 						<div class="pos-main__add-item">
 							<a href="<?php echo base_url() . 'orders'; ?>">
@@ -32,7 +31,7 @@
 						<h1>FOD is not active</h1>
 					<?php } ?>
 				</div>
-				<?php if ($spotPosOrders) { ?>
+				<?php if ($spotPosOrders  && $fodIsActive) { ?>
 					<div class="col-lg-5 col-12 form-inline">
 						<label for='selectSpot'>Select holded order:&nbsp;&nbsp;</label>
 						<select onchange="redirectToNewLocation(this.value)" class="form-control">
@@ -42,7 +41,7 @@
 									id='<?php echo $saveOrder['randomKey']; ?>'
 									value="pos?spotid=<?php echo $saveOrder['spotId'] . '&' . $orderDataGetKey . '=' . $saveOrder['randomKey']; ?>"
 									<?php
-										if ($saveOrder['randomKey'] === $orderDataRandomKey) {
+										if (!empty($orderDataRandomKey) && $saveOrder['randomKey'] === $orderDataRandomKey) {
 											$selected = 'selected';
 											echo $selected;
 										}
