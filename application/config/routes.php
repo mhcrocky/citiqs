@@ -469,6 +469,9 @@ $route['address'] = "profile/address";
 $route['changepassword'] = "profile/changepassword";
 $route['paymentsettings'] = "profile/paymentsettings";
 $route['shopsettings'] = "profile/shopsettings";
+$route['logo'] = "profile/logo";
+$route['termsofuse'] = "profile/termsofuse";
+$route['openandclose'] = "profile/openandclose";
 
 $route['inandout/(:any)/(:num)'] = "Blackbox/index/$1/$2";
 $route['in/(:any)/(:num)'] = "Blackbox/actionIn/$1/$2";
