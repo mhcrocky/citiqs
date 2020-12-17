@@ -1073,10 +1073,10 @@ class User extends BaseControllerWeb {
             $data = $this->input->post(null, true);
             if ($this->user_model->checkInszNumber($data['inszNumber'], $this->userId)) {
                 $this->session->set_flashdata('error', 'Profile update failed. Register number "' . $data['inszNumber'] . '" is already in use by another user');
-                redirect('profile');
+                redirect('address');
                 exit();
             }
-
+ 
             $this->uploadPlaceImage($data);
 
             $geoCoordinates = (Google_helper::getLatLong($data['address'], $data['zipcode'], $data['city'], $data['country']));
@@ -1092,7 +1092,7 @@ class User extends BaseControllerWeb {
         } else {
             $this->session->set_flashdata('error', 'Profile update failed! Check your data');
         }
-        redirect('profile');
+        redirect('address');
     }
 
     private function uploadPlaceImage(array &$data): void
