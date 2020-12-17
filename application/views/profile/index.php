@@ -865,45 +865,6 @@
 </div>
 <?php } ?>
 
-<div class="col-half background-green height-100 ">
-	<div class="flex-column align-start width-650">
-		<h2 class="heading mb-35"><?php echo $this->language->line("PROF-050",'PASSWORD CHANGE.');?></h2>
-		<form action="<?php echo $this->baseUrl; ?>changePassword" method="post">
-			<div class="box-body">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="form-group">
-							<label for="inputOldPassword">Old Password</label>
-							<input style="border-radius: 50px" type="password" class="form-control" id="inputOldPassword" placeholder="Old password" name="oldPassword" maxlength="20" required>
-						</div>
-					</div>
-				</div>
-				<hr>
-				<div class="row">
-					<div class="col-md-12">
-						<div class="form-group">
-							<label for="inputPassword1">New Password</label>
-							<input style="border-radius: 50px" type="password" class="form-control" id="inputPassword1" placeholder="New password" name="newPassword" maxlength="20" required>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<div class="form-group">
-							<label for="inputPassword2">Confirm New Password</label>
-							<input style="border-radius: 50px" type="password" class="form-control" id="inputPassword2" placeholder="Confirm new password" name="cNewPassword" maxlength="20" required>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="box-footer">
-				<input type="submit" class="button button-orange" value="<?php echo $this->language->line("PROF-05100 ",'SUBMIT');?>" style="border: none" />
-			</div>
-		</form>
-	</div>
-</div>
-
-
 <div class="col-md-4">
 	<?php
 	$this->load->helper('form');

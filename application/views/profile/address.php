@@ -228,6 +228,7 @@ p,label{
 								<input type="file" name="placeImage" class="form-control" accept="image/png" style="border-radius: 25px;" />
 								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 							</div>
+							<!--
 							<div class="form-group has-feedback">
 							    <p style="font-family: caption-light; padding: 10px">
 								    <?php echo 'PASSWORD';?>
@@ -255,6 +256,7 @@ p,label{
 							        </span>          
 							    </div>
 							</div>
+							-->
 							
 							<div class="form-group has-feedback" style="padding: 30px;">
 								<div style="text-align: center; ">
