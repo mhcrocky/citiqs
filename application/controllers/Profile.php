@@ -101,14 +101,8 @@ class  Profile extends BaseControllerWeb
 			'active' => $active,
 			'action' => 'profileUpdate',
 			'businessTypes' => $this->businesstype_model->getAll(),
-			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData(),
-			'workingTime' => $this->shopvendortime_model->setProperty('vendorId', $this->userId)->fetchWorkingTime()
+			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData()
 		];
-		// var_dump($data['vendor']);
-		// die();
-		if ($data['workingTime']) {
-			$data['workingTime'] = Utility_helper::resetArrayByKeyMultiple($data['workingTime'], 'day');
-		}
 
 		$this->loadViews("profile/paymentsettings", $this->global, $data, 'footerbusiness', 'headerbusiness'); // Menu profilepage
 	}
@@ -126,16 +120,63 @@ class  Profile extends BaseControllerWeb
 			'active' => $active,
 			'action' => 'profileUpdate',
 			'businessTypes' => $this->businesstype_model->getAll(),
-			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData(),
-			'workingTime' => $this->shopvendortime_model->setProperty('vendorId', $this->userId)->fetchWorkingTime()
+			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData()
 		];
-		// var_dump($data['vendor']);
-		// die();
+
+		$this->loadViews("profile/shopsettings", $this->global, $data, 'footerbusiness', 'headerbusiness'); // Menu profilepage
+	}
+
+
+	public function logo()
+	{
+		$this->global['pageTitle'] = 'TIQS: LOGO';
+		$this->user_model->setUniqueValue($this->userId)->setWhereCondtition()->setUser();
+
+		$subscriptionWhat = ['id', 'short_description', 'description', 'ROUND(amount, 2) AS amount', 'active', 'tiqssendcom', 'backOfficeItemId', 'type'];
+		$data = [
+			'user' => $this->user_model,
+			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData()
+		];
+	
+
+		$this->loadViews("profile/logo", $this->global, $data, 'footerbusiness', 'headerbusiness'); // Menu profilepage
+	}
+
+
+	public function termsofuse()
+	{
+		$this->global['pageTitle'] = 'TIQS: TERMS OF USE';
+		$this->user_model->setUniqueValue($this->userId)->setWhereCondtition()->setUser();
+
+		$subscriptionWhat = ['id', 'short_description', 'description', 'ROUND(amount, 2) AS amount', 'active', 'tiqssendcom', 'backOfficeItemId', 'type'];
+		$data = [
+			'user' => $this->user_model,
+			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData()
+		];
+
+		$this->loadViews("profile/termsofuse", $this->global, $data, 'footerbusiness', 'headerbusiness'); // Menu profilepage
+	}
+
+
+	public function openandclose()
+	{
+		$this->global['pageTitle'] = 'TIQS: OPEN AND CLOSE';
+		$this->user_model->setUniqueValue($this->userId)->setWhereCondtition()->setUser();
+
+		$subscriptionWhat = ['id', 'short_description', 'description', 'ROUND(amount, 2) AS amount', 'active', 'tiqssendcom', 'backOfficeItemId', 'type'];
+		$data = [
+			'user' => $this->user_model,
+			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData(),
+			'workingTime' => $this->shopvendortime_model->setProperty('vendorId', $this->userId)->fetchWorkingTime(),
+			'dayOfWeeks' => $this->config->item('weekDays'),
+		];
+		
+		
 		if ($data['workingTime']) {
 			$data['workingTime'] = Utility_helper::resetArrayByKeyMultiple($data['workingTime'], 'day');
 		}
 
-		$this->loadViews("profile/shopsettings", $this->global, $data, 'footerbusiness', 'headerbusiness'); // Menu profilepage
+		$this->loadViews("profile/openandclose", $this->global, $data, 'footerbusiness', 'headerbusiness'); // Menu profilepage
 	}
 
 
@@ -164,7 +205,7 @@ class  Profile extends BaseControllerWeb
 			redirect('shopsettings');
 		}
 
-		redirect('profile');
+		redirect('termsofuse');
 		exit();
 	}
 
@@ -186,7 +227,7 @@ class  Profile extends BaseControllerWeb
 		} else {
 			$this->session->set_flashdata('error', 'Upload logo failed');
 		}
-		redirect('profile');
+		redirect('logo');
 		exit();
     }
 	public function uploadDefaultProductsImage($id): void
@@ -209,7 +250,7 @@ class  Profile extends BaseControllerWeb
 		} else {
 			$this->session->set_flashdata('error', 'Upload of default product image failed');
 		}
-		redirect('profile');
+		redirect('logo');
 		exit();
 	}
 
@@ -249,7 +290,7 @@ class  Profile extends BaseControllerWeb
 		}
 
 		$this->session->set_flashdata('success', 'Time updated');
-		redirect('profile');
+		redirect('openandclose');
 		return;
 	}
 
@@ -283,6 +324,6 @@ class  Profile extends BaseControllerWeb
 
 
 		#die();
-		redirect('profile');
+		redirect('openandclose');
 	}
 }
