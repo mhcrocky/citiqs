@@ -65,21 +65,18 @@
 
         public function csv_get()
         {
-            $folder = '/home/jila/Downloads/csv/';
+            $folder = FCPATH . 'assets/paynlCsv/';
+
             $files = scandir($folder);
             $count = 0;
-            $query  = 'INSERT INTO tbl_shop_paynl_csv ';
-            $query .= '(csvFile, paymentType, transactionId, created, oldId, amount) ';
-            $query .= 'VALUES  ';
             
-            // foreach ($files as $file) {
-            //     if (strpos($file, '.csv') !== false)  {
-                    // $file = $folder . $file;
-                    $document = '02.csv';
-                    $file = $folder . $document;
-                    
-                    $contents = file($file);
+            foreach ($files as $file) {
+                if (strpos($file, '.csv') !== false)  {
+                    $path = $folder . $file;                
+                    $contents = file($path);
+                    $query = '';
                     foreach($contents as $line) {
+                        
                         if (strpos($line, 'STATSID') === false) {
                             $data = str_getcsv($line, ';');
                             if (is_numeric($data[16])) {
@@ -88,10 +85,10 @@
                                 $transactionId = $data[14];
                                 $created = $data[1];
                                 $oldId = $data[16];
-
                                 $amount = floatval(str_replace(',', '.', $data[26]));
+
                                 $query .= '(';
-                                $query .= '"' . $document . '",';
+                                $query .= '"' . $file . '",';
                                 $query .= '"' . $paymentType . '",';
                                 $query .= '"' . $transactionId . '",';
                                 $query .= '"' . $created . '",';
@@ -101,45 +98,55 @@
                             }                            
                         }
                     }
-            //     }
-            // }
-            $query = rtrim($query, ',');
-            $query .= ';';
-            $this->db->query($query);
+                    if ($query) {
+                        $executeQuery  = 'INSERT INTO tbl_shop_paynl_csv ';
+                        $executeQuery .= '(csvFile, paymentType, transactionId, created, oldId, amount) ';
+                        $executeQuery .= 'VALUES  ';
+                        $executeQuery .= $query;
+                        $executeQuery = rtrim($executeQuery, ',');
+                        $executeQuery .= ';';
+                        $this->db->query($executeQuery);
+                    }
+
+                    
+                }
+            }
+
+            $this->shoppaynlcsv_model->updateStorno();
             var_dump($count);
         }
 
-        public function csvslow_get()
-        {
-            $folder = '/home/jila/Downloads/csv/';
-            // $files = scandir($folder);
+        // public function csvslow_get()
+        // {
+        //     $folder = FCPATH . '/assets/paynlCsv/';
+        //     // $files = scandir($folder);
             
-            // foreach ($files as $file) {
-            //     if (strpos($file, '.csv') !== false)  {
-                    // $file = $folder . $file;
-                    $document = '01.csv';
-                    $file = $folder . $document;
+        //     foreach ($files as $file) {
+        //         if (strpos($file, '.csv') !== false)  {
+        //             $file = $folder . $file;
+        //             $document = '01.csv';
+        //             $file = $folder . $document;
                     
-                    $contents = file($file);
-                    foreach($contents as $line) {
-                        if (strpos($line, 'STATSID') === false) {
-                            $data = str_getcsv($line, ';');
-                            if (is_numeric($data[16])) {
-                                $insert = [
-                                    'csvFile' => $document,
-                                    'paymentType' => $data[11],
-                                    'transactionId' => $data[14],
-                                    'created' => $data[1],
-                                    'oldId' => $data[16],
-                                    'amount' => floatval(str_replace(',', '.', $data[26])),
-                                ];
-                                $this->shoppaynlcsv_model->setObjectFromArray($insert)->create();
-                            }
-                        }
-                    }
-            //     }
-            // }
+        //             $contents = file($file);
+        //             foreach($contents as $line) {
+        //                 if (strpos($line, 'STATSID') === false) {
+        //                     $data = str_getcsv($line, ';');
+        //                     if (is_numeric($data[16])) {
+        //                         $insert = [
+        //                             'csvFile' => $document,
+        //                             'paymentType' => $data[11],
+        //                             'transactionId' => $data[14],
+        //                             'created' => $data[1],
+        //                             'oldId' => $data[16],
+        //                             'amount' => floatval(str_replace(',', '.', $data[26])),
+        //                         ];
+        //                         $this->shoppaynlcsv_model->setObjectFromArray($insert)->create();
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
 
-            $this->shoppaynlcsv_model->updateStorno();
-        }
+        //     $this->shoppaynlcsv_model->updateStorno();
+        // }
     }
