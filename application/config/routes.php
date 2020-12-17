@@ -467,6 +467,8 @@ $route['reservations/(:num)']="reservations/index/$1";
 
 $route['address'] = "profile/address";
 $route['changepassword'] = "profile/changepassword";
+$route['paymentsettings'] = "profile/paymentsettings";
+$route['shopsettings'] = "profile/shopsettings";
 
 $route['inandout/(:any)/(:num)'] = "Blackbox/index/$1/$2";
 $route['in/(:any)/(:num)'] = "Blackbox/actionIn/$1/$2";
