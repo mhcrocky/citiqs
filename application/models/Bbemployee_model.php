@@ -11,7 +11,9 @@ Class Bbemployee_model extends CI_Model
 		$this->db->join('tbl_fdm_printer_status', 'tbl_shop_printers.id = tbl_fdm_printer_status.printer_id');
 		
 		$printerDetails =	$this->db->get()->row();
-		// print_r($this->db->last_query());
+//		print_r($this->db->last_query());
+//		var_dump($macNumber);
+//		die();
 		if(isset($printerDetails->userId) && $printerDetails->userId!=0){
 			return $this->getemployee($printerDetails->userId);
 		}

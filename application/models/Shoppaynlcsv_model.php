@@ -104,7 +104,7 @@
                 'where' => [
                     $this->table . '.calculated = ' => '0',
                     $this->table . '.storno = ' => '0',
-                    $this->table . '.csvFile = ' => '01.csv'                    
+                    $this->table . '.csvFile = ' => '02.csv'
                 ],
                 'conditions' => [
                     'ORDER_BY' => [$this->table . '.id ASC']

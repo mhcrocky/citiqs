@@ -224,7 +224,7 @@ $config['posSuccessLink'] = 'posSuccessLink';
 $config['posPaymentFailedLink'] = 'posPaymentFailedLink';
 
 
-$config['employeeIn'] = 'in';
-$config['employeeOut'] = 'out';
+$config['employeeIn'] = 'IN';
+$config['employeeOut'] = 'UIT';
 
 $config['fodInActive'] = 'temporarily_closed';
