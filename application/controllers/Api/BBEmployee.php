@@ -24,7 +24,7 @@ class BBEmployee extends REST_Controller
 		$macNumber	=	$this->input->get('mac');
 		$employeedetail = $this->bbemployee_model->getEmployeeByMac($macNumber);
 		if (empty($employeedetail)) {
-			echo 0;
+			echo "";
 			return;
 		}
 		$nextemployee=$employeedetail->next+1;
