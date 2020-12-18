@@ -192,14 +192,14 @@
             if ($isAactive) return;
 
             $vendorId = $this->shopprinters_model->setObjectId($spotPrinterId)->getProperty('userId');
-            $redirect = base_url() . 'temporarily_closed' . DIRECTORY_SEPARATOR . $vendorId;
+            $redirect = base_url() . $this->config->item('fodInActive') . DIRECTORY_SEPARATOR . $vendorId;
             redirect($redirect);
         }
 
         private function isFodActive(int $vendorId, int $spotId): void
         {
             if (!Fod_helper::isFodActive($vendorId, $spotId)) {
-                $redirect = base_url() . $this->config->item('fodInActive') . DIRECTORY_SEPARATOR . $vendorId;
+                $redirect = base_url() . $this->config->item('fodInActive') . DIRECTORY_SEPARATOR . $vendorId . DIRECTORY_SEPARATOR . $spotId;                
                 redirect($redirect);
             }
         }
@@ -265,10 +265,16 @@
             $this->loadViews('publicorders/spotClosed', $this->global, $data, null, 'headerWarehousePublic');
         }
 
-        public function temporarilyClosed($vendorId): void
+        public function temporarilyClosed($vendorId, $spotId): void
         {
+            if (Fod_helper::isFodActive(intval($vendorId), intval($spotId))) {
+                $redirect = base_url() . 'make_order?vendorid=' . $vendorId . '&spotid=' . $spotId;
+                redirect($redirect);
+            }
+
             $data = [
-                'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData()
+                'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData(),
+                'spotId' => $spotId,
             ];
 
             $this->global['pageTitle'] = 'TIQS : CLOSED';

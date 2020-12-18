@@ -9,5 +9,13 @@
 			<h2>We are temporarily closed</h2>
 			<p>Registration error. Please contact staff</p>
 		</div>
+		<div>
+			<a
+				href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spotId; ?>"
+				class="button"
+			>
+				TRY AGAIN
+			</a>
+		</div>
 	</div>
 </div>
