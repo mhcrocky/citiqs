@@ -138,7 +138,6 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
     </head>
     <body id="body">
         <div class="page-container">
-
             <!-- Sidebar -->
             <div class="sidebar-menu">
                 <div class="main-menu ">
@@ -154,30 +153,90 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
                                 </div>
                                 <ul class="metismenu" id="menu">
 									<li><a href="<?php echo $this->baseUrl; ?>orders"><i class="ti-stats-up"></i><span>Orders</span></a></li>
-									<li><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-receipt"></i><span>Business Report</span></a></li>
-                                    <li>
-                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-share"></i><span>Your links</span></a>
-                                        <ul class="collapse">
-                                            <li>
-                                                <a href="<?php echo $this->baseUrl . 'make_order?vendorid=' . $this->session->userdata('userId'); ?>" target="_blank">
-                                                    <i class="ti-shopping-cart-full"></i> <span>Store</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="<?php echo $this->baseUrl . 'check424/' . $this->session->userdata('userId'); ?>" target="_blank">
-                                                    <i class="ti-book"></i>
-                                                    <span>Registration</span>
-                                                </a>
-                                            </li>
-                                            <li><a href="<?php echo $this->baseUrl. 'agenda_booking/' . $userShortUrl; ?>" target="_blank"><i class="ti-agenda"></i> <span>Agenda reservations</span></a></li>
-                                            <li><a href="<?php echo $this->baseUrl. 'booking_agenda/' . $userShortUrl; ?>" target="_blank"><i class="ti-clipboard"></i> <span>Reservation Agenda</span></a></li>
-                                        </ul>
-                                    </li>
+									<li><a href="<?php echo $this->baseUrl; ?>pos"><i class="ti-bar-chart"></i><span>POS</span></a></li>
+									<li><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-receipt"></i><span>Dashboard</span></a></li>
+									<li>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-shopping-cart-full"></i><span>Marketing</span></a>
+										<ul class="collapse">
+											<li><a href="<?php echo $this->baseUrl; ?>visitors"><i class="ti-user"></i> <span>Visitors</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>marketing/selection"><i class="ti-pencil-alt"></i> <span>Notification Messaging</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>visitors"><i class="ti-user"></i> <span>RSVP Pre-register</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>marketing/selection"><i class="ti-pencil-alt"></i> <span>E-mail Campaigns</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>visitors"><i class="ti-user"></i> <span>Loyalty</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>marketing/selection"><i class="ti-pencil-alt"></i><span>Interest targeting</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>marketing/selection"><i class="ti-pencil-alt"></i><span>Visit targeting</span></a></li>
+											<li>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Vouchers</span></a>
+												<ul class="collapse">
+													<li>
+														<a href="<?php echo $this->baseUrl; ?>customer_panel/settings">
+															<i class="ti-shopping-cart-full"></i>
+															<span>Add/design vouchers</span>
+														</a>
+													</li>
+													<li>
+														<a href="<?php echo $this->baseUrl. 'booking_agenda/design'; ?>"
+														><i class="ti-clipboard"></i> <span>Voucher statistics</span>
+														</a>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
 
-                                    <li><a href="<?php echo $this->baseUrl; ?>pos"><i class="ti-bar-chart"></i> <span>POS</span></a></li>
+									<li>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-shopping-cart-full"></i><span>Finance</span></a>
+										<ul class="collapse">
+											<li><a href="<?php echo $this->baseUrl; ?>dashboard"><i class="ti-user"></i> <span>Reports</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>dashboard"><i class="ti-pencil-alt"></i> <span>Transactions</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>dashboard"><i class="ti-user"></i> <span>Invoices</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>dashboard"><i class="ti-pencil-alt"></i> <span>Payment links</span></a></li>
+											<li>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Settings</span></a>
+												<ul class="collapse">
+													<li>
+														<a href="<?php echo $this->baseUrl; ?>customer_panel/settings">
+															<i class="ti-shopping-cart-full"></i>
+															<span>PSP keycode</span>
+														</a>
+													</li>
+													<li>
+														<a href="<?php echo $this->baseUrl. 'booking_agenda/design'; ?>"
+														><i class="ti-clipboard"></i> <span>Payment plan</span>
+														</a>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									<li>
+
+									<li>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span>The QR Store</span></a>
+										<ul class="collapse">
+											<li>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-bag"></i><span>Products</span></a>
+												<ul class="collapse">
+													<li><a href="<?php echo $this->baseUrl; ?>product_categories"><i class="ti-layout-accordion-separated"></i> <span>Category</span></a></li>
+													<li><a href="<?php echo $this->baseUrl; ?>product_types"><i class="ti-layers-alt"></i> <span>Product Types</span></a></li>
+													<li><a href="<?php echo $this->baseUrl; ?>products"><i class="ti-bag"></i> <span>Products</span></a></li>
+												</ul>
+											</li>
+											<li><a href="<?php echo $this->baseUrl; ?>printers"><i class="ti-printer"></i><span>Printers</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>spots"><i class="ti-flag-alt"></i><span>Spots</span></a></li>
+											<li>
+												<li>
+													<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ink-pen"></i><span>Design</span></a>
+													<ul class="collapse">
+														<li><a href="<?php echo $this->baseUrl; ?>emaildesigner"><i class="ti-email"></i> <span>Email</span></a></li>
+														<li><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span>Store</span></a></li>
+													</ul>
+												</li>
+											</li>
+										</ul>
+									</li>
 
                                     <li>
-                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span>Reservations</span></a>
+                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span>Reservations & Seatings</span></a>
                                         <ul class="collapse">
                                             <li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Statistics</span></a></li>
                                             <li><a href="<?php echo $this->baseUrl;?>customer_panel/agenda"><i class="ti-agenda"></i> <span>Make your reservations</span></a></li>
@@ -201,17 +260,132 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
                                                 </ul>
                                             </li>
                                         </ul>
-                                    </li> 
-                                    <li>
+                                    </li>
+
+									<li>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ticket"></i><span>Event ticketing & Seating</span></a>
+										<ul class="collapse">
+											<li><a href="<?php echo $this->baseUrl;?>customer_panel/agenda"><i class="ti-agenda"></i> <span>Create your event</span></a></li>
+											<li>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Your event statistics</span></a>
+												<ul class="collapse">
+													<li>
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Event main Statistics</span></a></li>
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Detail sales statistics</a></li>
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Detail event reports</a></li>
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Detail buyer reports</a></li>
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Grand partner insights</a></li>
+													<li><a href="<?php echo $this->baseUrl; ?>customer_panel/reservations_report"><i class="ti-write"></i> <span>Reservations Report</span></a></li>
+													<li><a href="<?php echo $this->baseUrl; ?>customer_panel/report"><i class="ti-clipboard"></i> <span>Report</span></a></li>
+													<li><a href="<?php echo $this->baseUrl; ?>customer_panel/pivot"><i class="ti-bar-chart"></i> <span>Export</span></a></li>
+													</li>
+												</ul>
+											</li>
+
+											<li>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Your Events</span></a>
+												<ul class="collapse">
+													<li>
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Your Events</span></a></li>
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Shop settings</a></li>
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>RSVP/Guest lists</a></li>
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>3rd party</a></li>
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Discount codes</a></li>
+													<li><a href="<?php echo $this->baseUrl; ?>customer_panel/reservations_report"><i class="ti-write"></i> <span>Secure ticket box</span></a></li>
+													<li><a href="<?php echo $this->baseUrl; ?>customer_panel/report"><i class="ti-clipboard"></i> <span>Create barcodes</span></a></li>
+													</li>
+												</ul>
+											</li>
+
+											<li>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>POS</span></a>
+												<ul class="collapse">
+													<li>
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>POS entrance settings</a></li>
+													</li>
+												</ul>
+											</li>
+											<li>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Entrance</span></a>
+												<ul class="collapse">
+													<li>
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Scanning results</a></li>
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Scanning details</a></li>
+													</li>
+												</ul>
+											</li>
+											<li>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Scanners</span></a>
+												<ul class="collapse">
+													<li>
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Scanner settings</span></a></li>
+													</li>
+												</ul>
+											</li>
+
+											<li>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Event fans</span></a>
+												<ul class="collapse">
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/agenda"><i class="ti-agenda"></i> <span>Rewards</span></a></li>
+													<li>
+															<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Requests</span></a></li>
+															<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Teams</a></li>
+															<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Statistics</a></li>
+															<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Assigned to events</a></li>
+															<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>invite by mail template</a></li>
+															<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>invite from fan-base</a></li>
+															</li>
+													</li>
+												</ul>
+											<li>
+											<li>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Event proppers</span></a>
+												<ul class="collapse">
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/agenda"><i class="ti-agenda"></i> <span>Rewards</span></a></li>
+													<li>
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Requests</span></a></li>
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Teams</a></li>
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Statistics</a></li>
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Assigned to events</a></li>
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>invite by mail template</a></li>
+													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>invite from fan-base</a></li>
+													</li>
+													</li>
+												</ul>
+											<li>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Settings</span></a>
+												<ul class="collapse">
+													<li>
+														<a href="<?php echo $this->baseUrl; ?>customer_panel/settings">
+															<i class="ti-shopping-cart-full"></i>
+															<span>Terms and conditions</span>
+														</a>
+													</li>
+													<li>
+														<a href="<?php echo $this->baseUrl. 'booking_agenda/design'; ?>"
+														><i class="ti-clipboard"></i> <span>Design Agenda reservations</span>
+														</a>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+									<li>
                                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-bookmark-alt"></i><span>Floorplan</span></a>
                                         <ul class="collapse">
                                             <li><a href="<?php echo $this->baseUrl;?>settingsmenu"><i class="ti-settings"></i> <span>Make your floorplans</span></a></li>
                                         </ul>
-                                    </li>                        
-                                    <li>
+                                    </li>
+									<li>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-user"></i><span>Users</span></a>
+										<ul class="collapse">
+											<li><a href="<?php echo $this->baseUrl;?>employee"><i class="ti-user"></i> <span>Employee's</span></a></li>
+										</ul>
+									</li>
+									<li>
                                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-stamp"></i><span>Your Profile</span></a>
                                         <ul class="collapse">
-                                            <li><a href="<?php echo $this->baseUrl; ?>address"><i class="ti-location-pin"></i> <span>Address</span></a></li>
+										    <li><a href="<?php echo $this->baseUrl; ?>address"><i class="ti-location-pin"></i> <span>Address</span></a></li>
                                             <li><a href="<?php echo $this->baseUrl; ?>changepassword"><i class="ti-flickr"></i> <span>Change Password</span></a></li>
                                             <li><a href="<?php echo $this->baseUrl; ?>paymentsettings"><i class="ti-receipt"></i> <span>Payment Settings</span></a></li>
                                             <li><a href="<?php echo $this->baseUrl; ?>shopsettings"><i class="ti-shopping-cart"></i> <span>Shop Settings</span></a></li>
@@ -220,39 +394,49 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
                                             <li><a href="<?php echo $this->baseUrl; ?>openandclose"><i class="ti-time"></i> <span>Open and Close</span></a></li>
                                         </ul>
                                     </li>
+									<li>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span>Online integration</span></a>
+										<ul class="collapse">
+											<li>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-bag"></i><span>iframes</span></a>
+												<ul class="collapse">
+													<li><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span>Store</span></a></li>
+													<li><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span>Agenda</span></a></li>
+													<li><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span>Reservations</span></a></li>
+													<li><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span>ticketshop</span></a></li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+
                                     <li>
-                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-shopping-cart-full"></i><span>Marketing</span></a>
+                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i><span>Connect</span></a>
                                         <ul class="collapse">
-                                            <li><a href="<?php echo $this->baseUrl; ?>visitors"><i class="ti-user"></i> <span>Visitors</span></a></li>
-                                            <li><a href="<?php echo $this->baseUrl; ?>marketing/selection"><i class="ti-pencil-alt"></i> <span>Messaging</span></a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-bag"></i><span>Products</span></a>
-                                        <ul class="collapse">
-                                            <li><a href="<?php echo $this->baseUrl; ?>product_categories"><i class="ti-layout-accordion-separated"></i> <span>Category</span></a></li>
-                                            <li><a href="<?php echo $this->baseUrl; ?>product_types"><i class="ti-layers-alt"></i> <span>Product Types</span></a></li>
-                                            <li><a href="<?php echo $this->baseUrl; ?>products"><i class="ti-bag"></i> <span>Products</span></a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-ink-pen"></i><span>Design</span></a>
-                                        <ul class="collapse">
-                                            <li><a href="<?php echo $this->baseUrl; ?>emaildesigner"><i class="ti-email"></i> <span>Email</span></a></li>
-                                            <li><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span>Store</span></a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i><span>Settings</span></a>
-                                        <ul class="collapse">
-                                            <li><a href="<?php echo $this->baseUrl; ?>employee"><i class="ti-user"></i> <span>Employee</span></a></li>
-                                            <li><a href="<?php echo $this->baseUrl; ?>profile"><i class="ti-stamp"></i> <span>Profile</span></a></li>
-                                            <li><a href="<?php echo $this->baseUrl; ?>printers"><i class="ti-printer"></i> <span>Printers</span></a></li>
-                                            <li><a href="<?php echo $this->baseUrl; ?>spots"><i class="ti-flag-alt"></i> <span>Spots</span></a></li>
-                                            <li><a href="<?php echo $this->baseUrl; ?>visma/config"><i class="ti-credit-card"></i> <span>Visma Accounting</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>visma/config"><i class="ti-credit-card"></i> <span>Visma Accounting</span></a></li>
                                             <li><a href="http://localhost/tiqsbox/index.php/Admin"><i class="ti-package"></i> <span>Tiqsbox</span></a></li>
                                         </ul>
                                     </li>
+									<li>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-share"></i><span>Your links</span></a>
+										<ul class="collapse">
+											<li>
+												<a href="<?php echo $this->baseUrl . 'make_order?vendorid=' . $this->session->userdata('userId'); ?>" target="_blank">
+													<i class="ti-shopping-cart-full"></i> <span>Store</span>
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo $this->baseUrl . 'check424/' . $this->session->userdata('userId'); ?>" target="_blank">
+													<i class="ti-book"></i>
+													<span>Registration</span>
+												</a>
+											</li>
+											<li><a href="<?php echo $this->baseUrl. 'agenda_booking/' . $userShortUrl; ?>" target="_blank"><i class="ti-agenda"></i> <span>Agenda reservations</span></a></li>
+											<li><a href="<?php echo $this->baseUrl. 'booking_agenda/' . $userShortUrl; ?>" target="_blank"><i class="ti-clipboard"></i> <span>Reservation Agenda</span></a></li>
+										</ul>
+									</li>
+
+
+
                                     <li><a href="<?php echo $this->baseUrl; ?>logout"><i class="ti-shift-left"></i> <span>Logout</span></a></li>
                                 </ul>
                             </nav>
