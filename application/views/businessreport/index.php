@@ -480,7 +480,7 @@ td.details-control {
                 html += '<tr>';
                   html += '<td>' + val.order_id + '</td>';
                   html += '<td>' + val.productName + '</td>' ;
-                  html += '<td>' + num_pertentage(val.productVat) + '</td>' ;
+                  html += '<td>' + num_percentage(val.productVat) + '</td>' ;
                   html += '<td>' + round_up(val.price) + '</td>' ;
                   html += '<td>' + val.quantity + '</td>' ;
                   html += '<td>' + round_up(val.EXVAT) + '</td>' ;
@@ -499,15 +499,25 @@ td.details-control {
           
         });
         html += '<tfoot>';
+        var totalExvat = 0;
+        var totalVat = 0;
         for (var key in productsVat) {
         //console.log("key " + key + " has value " + productsVat[key][0]);
         html += '<tr>' +
-					'<td class="text-right" colspan="5"><b>Total for ' + num_pertentage(key) + '</b></td>' +
+					'<td class="text-right" colspan="5"><b>Total for ' + num_percentage(key) + '</b></td>' +
 					'<td>' + productsVat[key][0].toFixed(2) + '</td>' +
           '<td>' + productsVat[key][1].toFixed(2) + '</td>' +
 					// '<td>' + val.AMOUNT + '</td>' +
 			    '</tr>';
+          totalExvat = totalExvat + parseFloat(productsVat[key][0]);
+          totalVat = totalVat + parseFloat(productsVat[key][1]);
         }
+        html += '<tr>' +
+					'<td class="text-right" colspan="5"><b>Total</b></td>' +
+					'<td>' + totalExvat.toFixed(2) + '</td>' +
+          '<td>' + totalVat.toFixed(2) + '</td>' +
+					// '<td>' + val.AMOUNT + '</td>' +
+			    '</tr>';
         html += '</tfoot>';
         html += '</table>';
         
@@ -779,7 +789,7 @@ function format(d) {
       
 				row += '<tr>' +
 					'<td>' + val.productName + '</td>' +
-					'<td>' + num_pertentage(val.productVat) + '</td>' +
+					'<td>' + num_percentage(val.productVat) + '</td>' +
 					'<td>' + round_up(val.price) + '</td>' +
 					'<td>' + val.quantity + '</td>' +
 					'<td>' + round_up(val.EXVAT) + '</td>' +
@@ -791,7 +801,7 @@ function format(d) {
       for (var key in productsVat) {
         console.log("key " + key + " has value " + productsVat[key][0]);
         row += '<tr>' +
-					'<td class="text-right" colspan="4"><b>Total for ' + num_pertentage(key) + '</b></td>' +
+					'<td class="text-right" colspan="4"><b>Total for ' + num_percentage(key) + '</b></td>' +
 					'<td>' + productsVat[key][0].toFixed(2) + '</td>' +
           '<td>' + productsVat[key][1].toFixed(2) + '</td>' +
 					// '<td>' + val.AMOUNT + '</td>' +
@@ -957,7 +967,7 @@ function total_number(number){
   return '€ '+number.toFixed(2);
 }
 
-function num_pertentage(number){
+function num_percentage(number){
   number = parseInt(number*100);
   number = number/100;
   return number + "%";
