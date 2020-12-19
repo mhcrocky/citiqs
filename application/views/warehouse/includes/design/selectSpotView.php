@@ -4,7 +4,7 @@
         <label style="display:block;">
             Background color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="selectSpot[id][selectSpotContainer][background-color]"
                 data-css-selector="id"
@@ -23,7 +23,7 @@
         <label style="display:block;">
             Headline backgorund color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="selectSpot[id][selectSpotH1][background-color]"
                 data-css-selector="id"
@@ -42,7 +42,7 @@
         <label style="display:block;">
             Headline font color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="selectSpot[id][selectSpotH1][color]"
                 data-css-selector="id"
@@ -61,7 +61,7 @@
         <label style="display:block;">
             Label font color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="selectSpot[id][labelColor][color]"
                 data-css-selector="id"
@@ -80,7 +80,7 @@
         <label style="display:block;">
             Products list font color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="selectSpot[id][productList][color]"
                 data-css-selector="id"
@@ -100,7 +100,7 @@
         <label style="display:block;">
             Products list border color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="selectSpot[class][bordersColor][border-color]"
                 data-css-selector="class"
@@ -119,7 +119,7 @@
         <label style="display:block;">
             Confirm button backgorund color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="selectSpot[id][confirmButton][background-color]"
                 data-css-selector="id"
@@ -138,7 +138,7 @@
         <label style="display:block;">
             Confirm button font color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="selectSpot[id][confirmButton][color]"
                 data-css-selector="id"

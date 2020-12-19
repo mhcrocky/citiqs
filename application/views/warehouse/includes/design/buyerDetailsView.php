@@ -4,7 +4,7 @@
         <label style="display:block;">
             Background color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="buyerDetails[id][buyerDetailsContainer][background-color]"
                 data-css-selector="id"
@@ -23,7 +23,7 @@
         <label style="display:block;">
             Your details background color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="buyerDetails[id][yourDetails][background-color]"
                 data-css-selector="id"
@@ -42,7 +42,7 @@
         <label style="display:block;">
             Your details font color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="buyerDetails[id][yourDetails][color]"
                 data-css-selector="id"
@@ -61,7 +61,7 @@
         <label style="display:block;">
             Labels font color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="buyerDetails[class][labelColorBuyer][color]"
                 data-css-selector="class"
@@ -80,7 +80,7 @@
         <label style="display:block;">
             Input fields background color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="buyerDetails[class][inputFieldsBuyer][background-color]"
                 data-css-selector="class"
@@ -99,7 +99,7 @@
         <label style="display:block;">
             Input fields border color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="buyerDetails[class][inputFieldsBuyer][border-color]"
                 data-css-selector="class"
@@ -118,7 +118,7 @@
         <label style="display:block;">
             Input fields font color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="buyerDetails[class][inputFieldsBuyer][color]"
                 data-css-selector="class"
@@ -137,7 +137,7 @@
         <label style="display:block;">
             Back button background color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="buyerDetails[id][backButton][background-color]"
                 data-css-selector="id"
@@ -156,7 +156,7 @@
         <label style="display:block;">
             Back button font color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="buyerDetails[id][backButton][color]"
                 data-css-selector="id"
@@ -175,7 +175,7 @@
         <label style="display:block;">
             Pay button background color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="buyerDetails[id][payButton][background-color]"
                 data-css-selector="id"
@@ -194,7 +194,7 @@
         <label style="display:block;">
             Pay button font color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="buyerDetails[id][payButton][color]"
                 data-css-selector="id"

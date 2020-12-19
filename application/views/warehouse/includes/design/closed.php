@@ -4,7 +4,7 @@
         <label style="display:block;">
             Background color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="closed[id][closedContainer][background-color]"
                 data-css-selector="id"
@@ -23,7 +23,7 @@
         <label style="display:block;">
             Headline background color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="closed[id][closedContainerH1][background-color]"
                 data-css-selector="id"
@@ -42,7 +42,7 @@
         <label style="display:block;">
             Headline font color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="closed[id][closedContainerH1][color]"
                 data-css-selector="id"
@@ -61,7 +61,7 @@
         <label style="display:block;">
             Font color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="closed[class][closedContainerFontColor][color]"
                 data-css-selector="class"

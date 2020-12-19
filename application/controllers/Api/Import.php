@@ -56,7 +56,7 @@
                         ->setVendorCategoryId()
                         ->setVendorPrinterId()
                         ->setVendorSpotId()
-                        ->updateOrders()
+                        // ->updateOrders()
                         ->importNew();
 
             echo 'Import finished';
