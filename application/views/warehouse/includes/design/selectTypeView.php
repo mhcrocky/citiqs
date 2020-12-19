@@ -4,9 +4,9 @@
         <label style="display:block;">
             Background color:
             <input
-                type="color"
                 class="form-control"
                 name="selectType[id][selectTypeBody][background-color]"
+                data-jscolor=""
                 data-css-selector="id"
                 data-css-selector-value="selectTypeBody"
                 data-css-property="background-color"
@@ -23,7 +23,7 @@
         <label style="display:block;"l>
             Headline backgorund color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="selectType[id][selectTypeH1][background-color]"
                 data-css-selector="id"
@@ -42,7 +42,7 @@
         <label style="display:block;">
             Headline font color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="selectType[id][selectTypeH1][color]"
                 data-css-selector="id"
@@ -131,7 +131,7 @@
         <label style="display:block;">
             Types background color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="selectType[class][selectTypeLabels][background-color]"
                 data-css-selector="class"
