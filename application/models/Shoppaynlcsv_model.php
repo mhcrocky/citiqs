@@ -92,19 +92,20 @@
             return $this->db->query($query);
         }
 
-        public function fetchForCalculation(): array
+        public function fetchForCalculation(): ?array
         {
             return $this->readImproved([
                 'what' => [
                     $this->table . '.id AS id',
                     $this->table . '.oldId AS oldId',
                     $this->table . '.transactionId AS transactionId',
+                    $this->table . '.created AS created',
                     $this->table . '.amount AS amount'
                 ],
                 'where' => [
                     $this->table . '.calculated = ' => '0',
                     $this->table . '.storno = ' => '0',
-                    $this->table . '.csvFile = ' => '02.csv'
+                    $this->table . '.csvFile = ' => '01.csv' // TO DO CHANGE FOR NEXT CSV FILE
                 ],
                 'conditions' => [
                     'ORDER_BY' => [$this->table . '.id ASC']
