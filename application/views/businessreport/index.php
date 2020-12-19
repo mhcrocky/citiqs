@@ -460,26 +460,35 @@ td.details-control {
         html += '<th>VAT</th>';
         html += '</tr>';
         html += '</thead>';
+        var productsVat = [];
         $.each(tbl_datas, function( index, tbl_data ) {
-          //console.log( index );
+
           html += '<tbody>';
           $.each(tbl_data, function( index, value ) {
             if(index != 'child'){
             } else {
               $.each(value, function( index, val ) {
                 let len = value.length - 1;
+                if(productsVat[String(val.productVat)] !== undefined){
+                  productsVat[String(val.productVat)][0] = parseFloat(productsVat[String(val.productVat)][0]) + parseFloat(val.EXVAT);
+                  productsVat[String(val.productVat)][1] = parseFloat(productsVat[String(val.productVat)][1]) + parseFloat(val.VAT);
+                } else {
+                  productsVat[String(val.productVat)] = [];
+                  productsVat[String(val.productVat)][0] = parseFloat(val.EXVAT);
+                  productsVat[String(val.productVat)][1] = parseFloat(val.VAT);
+                }
                 html += '<tr>';
                   html += '<td>' + val.order_id + '</td>';
                   html += '<td>' + val.productName + '</td>' ;
-                  html += '<td>' + parseInt(val.productVat) + '%</td>' ;
+                  html += '<td>' + num_pertentage(val.productVat) + '</td>' ;
                   html += '<td>' + round_up(val.price) + '</td>' ;
                   html += '<td>' + val.quantity + '</td>' ;
                   html += '<td>' + round_up(val.EXVAT) + '</td>' ;
                   html += '<td>' + round_up(val.VAT) + '</td>';
                 html += '</tr>';
                 
-                console.log(val);
-                var array_values = Object.keys(val).map(i => val[i]);
+                //console.log(val);
+                //var array_values = Object.keys(val).map(i => val[i]);
                 //console.log(array_values.length);
                 
                 
@@ -487,7 +496,19 @@ td.details-control {
             }
           });
           html += '</tbody>';
+          
         });
+        html += '<tfoot>';
+        for (var key in productsVat) {
+        //console.log("key " + key + " has value " + productsVat[key][0]);
+        html += '<tr>' +
+					'<td class="text-right" colspan="5"><b>Total for ' + num_pertentage(key) + '</b></td>' +
+					'<td>' + productsVat[key][0].toFixed(2) + '</td>' +
+          '<td>' + productsVat[key][1].toFixed(2) + '</td>' +
+					// '<td>' + val.AMOUNT + '</td>' +
+			    '</tr>';
+        }
+        html += '</tfoot>';
         html += '</table>';
         
         $(html).table2excel({
@@ -742,12 +763,23 @@ function format(d) {
 				// '<td><strong>Amount</strong></td>' +
 
 				'</tr>';
-
+      var productsVat = [];
 			$.each(d.child, function(indexInArray, val) {
+        //console.log(indexInArray);
+        
+        if(productsVat[String(val.productVat)] !== undefined){
+          productsVat[String(val.productVat)][0] = parseFloat(productsVat[String(val.productVat)][0]) + parseFloat(val.EXVAT);
+          productsVat[String(val.productVat)][1] = parseFloat(productsVat[String(val.productVat)][1]) + parseFloat(val.VAT);
+        } else {
+          productsVat[String(val.productVat)] = [];
+          productsVat[String(val.productVat)][0] = parseFloat(val.EXVAT);
+          productsVat[String(val.productVat)][1] = parseFloat(val.VAT);
 
+        }
+      
 				row += '<tr>' +
 					'<td>' + val.productName + '</td>' +
-					'<td>' + val.productVat + '</td>' +
+					'<td>' + num_pertentage(val.productVat) + '</td>' +
 					'<td>' + round_up(val.price) + '</td>' +
 					'<td>' + val.quantity + '</td>' +
 					'<td>' + round_up(val.EXVAT) + '</td>' +
@@ -755,6 +787,25 @@ function format(d) {
 					// '<td>' + val.AMOUNT + '</td>' +
 					'</tr>';
 			});
+
+      for (var key in productsVat) {
+        console.log("key " + key + " has value " + productsVat[key][0]);
+        row += '<tr>' +
+					'<td class="text-right" colspan="4"><b>Total for ' + num_pertentage(key) + '</b></td>' +
+					'<td>' + productsVat[key][0].toFixed(2) + '</td>' +
+          '<td>' + productsVat[key][1].toFixed(2) + '</td>' +
+					// '<td>' + val.AMOUNT + '</td>' +
+			'</tr>';
+      }
+      $.each(productsVat, function(index, val) {
+        console.log(index);
+      row += '<tr>' +
+					'<td colspan="2">' + index + '</td>' +
+					'<td colspan="4">' + val + '</td>' +
+					// '<td>' + val.AMOUNT + '</td>' +
+			'</tr>';
+      });
+      console.log(productsVat);
       
 			if(d.export_ID==null){
 				button = '<button type="button" onclick="" class="btn btn-warning btn-refund btn-sm export-'+d.order_id+'">REFUND</button>';
@@ -904,5 +955,11 @@ function total_number(number){
    return '€ '+number;
   }
   return '€ '+number.toFixed(2);
+}
+
+function num_pertentage(number){
+  number = parseInt(number*100);
+  number = number/100;
+  return number + "%";
 }
 </script>
