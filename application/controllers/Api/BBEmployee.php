@@ -23,52 +23,53 @@ class BBEmployee extends REST_Controller
 	{
 		$macNumber	=	$this->input->get('mac');
 		$employeedetail = $this->bbemployee_model->getEmployeeByMac($macNumber);
-		if(empty($employeedetail)){
-			return ;
+		if (empty($employeedetail)) {
+			echo "";
+			return;
 		}
 		$nextemployee=$employeedetail->next+1;
 		$price=0.00;
 		$quantity=1;
 		$vatpercentage=0;
 		$registration = 'registration ' . $employeedetail->action;// . ' ' . $employeedetail->inOutDateTime;
-		
+
 		$this->ProductLines[]=	array(
 			"ProductGroupId"	=>	"employee",	// only categoryId !!! DONE
 			"ProductGroupName"	=>	$registration,		// categoryName !!! DONE
-			"ProductId"			=>	$employeedetail->INSZnumber,	// productId !!! DONE
-			"ProductName"		=>	$employeedetail->username,
+			"ProductId"			=>	"ARBEID " . $employeedetail->action, // "in-uit",  // $employeedetail->INSZnumber,	// productId !!! DONE
+			"ProductName"		=>	"ARBEID " . $employeedetail->action,
 			"Quantity"			=>	$quantity,
 			"QuantityUnit"		=>	"P",
 			"SellingPrice"		=>	(float)($price*$quantity),
 			"VatRateId"			=>	$this->returnVatGrade($vatpercentage),//"B",
 			"DiscountLines"		=>	array(
-			// array(
-			// 	"DiscountId"        =>  "DISC002",
-			// 	"DiscountName"      =>  "Prod. discount10%",
-			// 	"DiscountType"      =>  "PRODUCTDISCOUNT",z`
-			// 	"DiscountGrouping"  =>  0,
-			// 	"DiscountAmount"    =>  1.19
-			// ),
-			// array(
-			// 	"DiscountId"        =>  "DISC001",
-			// 	"DiscountName"      =>  "Receipt. discount10%",
-			// 	"DiscountType"      =>  "RECEIPTDISCOUNT",
-			// 	"DiscountGrouping"  =>  0,
-			// 	"DiscountAmount"    =>  1.07
-			// ),
+				// array(
+				// 	"DiscountId"        =>  "DISC002",
+				// 	"DiscountName"      =>  "Prod. discount10%",
+				// 	"DiscountType"      =>  "PRODUCTDISCOUNT",z`
+				// 	"DiscountGrouping"  =>  0,
+				// 	"DiscountAmount"    =>  1.19
+				// ),
+				// array(
+				// 	"DiscountId"        =>  "DISC001",
+				// 	"DiscountName"      =>  "Receipt. discount10%",
+				// 	"DiscountType"      =>  "RECEIPTDISCOUNT",
+				// 	"DiscountGrouping"  =>  0,
+				// 	"DiscountAmount"    =>  1.07
+				// ),
 			),
 		);
 		$TStotalamount=$price*$quantity;
 		$this->PaymentLines[]=array(
 			"PaymentId"				=>	"STAF".($employeedetail->id).($nextemployee),
-			"PaymentName"			=>	"Employee " . $employeedetail->action,
+			"PaymentName"			=>	$employeedetail->username, //"Employee " . $employeedetail->action,
 			"PaymentType"			=>	"EFT",
 			"Quantity"				=>	1,
 			"PayAmount"				=>	(float)$TStotalamount,
 			"ForeignCurrencyAmount"	=>	0,
 			"ForeignCurrencyISO"	=>	"",
-			"Reference"				=>	"INSZ: " . $employeedetail->INSZnumber, //PAYNL TRANSACTION ID !!! DONE !!!
-			);
+			"Reference"				=>	 "INSZ: ". $employeedetail->INSZnumber, //PAYNL TRANSACTION ID !!! DONE !!!
+		);
 		$jsonoutput['TransactionDateTime']	=	gmdate(DATE_ATOM);//"2020-08-08T12:40:54";
 		$jsonoutput['TransactionNumber']	=	(int)( ("2000").(200000+$nextemployee));
 		$jsonoutput['ordernumberr']			=	$nextemployee;

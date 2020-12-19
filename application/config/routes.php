@@ -267,7 +267,7 @@ $route['buyer_details']             = 'publicorders/buyer_details';
 $route['pay_order']                 = 'publicorders/pay_order';
 $route['closed/(:num)']             = 'publicorders/closed/$1';
 $route['spot_closed/(:num)']        = 'publicorders/spotClosed/$1';
-$route['temporarily_closed/(:num)']        = 'publicorders/temporarilyClosed/$1';
+$route['temporarily_closed/(:num)/(:num)'] = 'publicorders/temporarilyClosed/$1/$2';
 
 // POS
 $route['pos']       = 'pos/index';
