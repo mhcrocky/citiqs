@@ -345,7 +345,11 @@ td.details-control {
   <div id="tbl_data">
       
   </div>
+
 </div>
+<table style="display: none;" id="total-percentage" class="table table-striped table-bordered mt-3" cellspacing="0" width="100%">
+
+</table>
 </div>
 </div>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -499,8 +503,6 @@ td.details-control {
           
         });
         html += '<tfoot>';
-        var totalExvat = 0;
-        var totalVat = 0;
         for (var key in productsVat) {
         //console.log("key " + key + " has value " + productsVat[key][0]);
         html += '<tr>' +
@@ -509,15 +511,7 @@ td.details-control {
           '<td>' + productsVat[key][1].toFixed(2) + '</td>' +
 					// '<td>' + val.AMOUNT + '</td>' +
 			    '</tr>';
-          totalExvat = totalExvat + parseFloat(productsVat[key][0]);
-          totalVat = totalVat + parseFloat(productsVat[key][1]);
         }
-        html += '<tr>' +
-					'<td class="text-right" colspan="5"><b>Total</b></td>' +
-					'<td>' + totalExvat.toFixed(2) + '</td>' +
-          '<td>' + totalVat.toFixed(2) + '</td>' +
-					// '<td>' + val.AMOUNT + '</td>' +
-			    '</tr>';
         html += '</tfoot>';
         html += '</table>';
         
@@ -540,7 +534,6 @@ td.details-control {
         },
         footerCallback: function( tfoot, data, start, end, display ) {
            var api = this.api(), data;
-
           //Totals For Current Page
 
           let pageAmountTotalData = api.column( 2, { page: 'current'}  ).cache('search');
@@ -762,6 +755,8 @@ td.details-control {
         ],
       });
 
+
+
 function format(d) {
 			var row = '<tr>' +
 				'<td><strong>Product Name</strong></td>' +
@@ -857,15 +852,59 @@ function format(d) {
       (month<10 ? '0' : '') + month + '-' +
       (day<10 ? '0' : '') + day;
 
-      /*
+    
       table.on( 'search.dt', function () {
         if(table['context'][0]['aiDisplay'].length == 0){
-          $('#report_length').hide();
+          //console.log(table.rows({ search: 'applied'}).data());
+          //$('#report_length').hide();
+          $("#total-percentage").hide();
         } else {
-          $('#report_length').show();
+          //$('#report_length').show();
+        let tbl_datas = table.rows({ search: 'applied'}).data();
+        var productsVat = [];
+        var html = '';
+        $.each(tbl_datas, function( index, tbl_data ) {
+
+          $.each(tbl_data, function( index, value ) {
+            if(index != 'child'){
+            } else {
+              $.each(value, function( index, val ) {
+                let len = value.length - 1;
+                if(productsVat[String(val.productVat)] !== undefined){
+                  productsVat[String(val.productVat)][0] = parseFloat(productsVat[String(val.productVat)][0]) + parseFloat(val.EXVAT);
+                  productsVat[String(val.productVat)][1] = parseFloat(productsVat[String(val.productVat)][1]) + parseFloat(val.VAT);
+                } else {
+                  productsVat[String(val.productVat)] = [];
+                  productsVat[String(val.productVat)][0] = parseFloat(val.EXVAT);
+                  productsVat[String(val.productVat)][1] = parseFloat(val.VAT);
+                }
+                
+                
+              });
+            }
+          });
+          
+        });
+        var totalExvat = 0;
+        var totalVat = 0;
+        for (var key in productsVat) {
+        //console.log("key " + key + " has value " + productsVat[key][0]);
+        html += '<tr id="tr-totals">' +
+					'<td class="text-right" colspan="5"><b>Total for ' + num_percentage(key) + '</b></td>' +
+					'<td>' + productsVat[key][0].toFixed(2) + '</td>' +
+          '<td>' + productsVat[key][1].toFixed(2) + '</td>' +
+					// '<td>' + val.AMOUNT + '</td>' +
+			    '</tr>';
+          totalExvat = totalExvat + parseFloat(productsVat[key][0]);
+          totalVat = totalVat + parseFloat(productsVat[key][1]);
+        }
+        $("#total-percentage").show();
+        $("#total-percentage").empty();
+        $("#total-percentage").html(html);
+
         }
       });
-      */
+      
 
       $.fn.dataTable.ext.search.push(
         function (settings, data, dataIndex) {
