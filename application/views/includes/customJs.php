@@ -105,6 +105,7 @@
 <?php } elseif ($this->view === 'bizdir/index') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/places.js"></script>
 <?php } elseif ($this->view === 'warehouse/design') { ?>
+	<script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jscolor.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/design.js"></script>
 <?php } elseif ($this->view === 'pos/pos') { ?>	
 	<script src="<?php echo base_url() ?>assets/home/js/makeOrderFunctions.js"></script>

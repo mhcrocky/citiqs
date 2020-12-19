@@ -4,7 +4,7 @@
         <label style="display:block;">
             Page background color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="payOrder[class][payOrderBackgroundColor][background-color]"
                 data-css-selector="class"
@@ -23,7 +23,7 @@
         <label style="display:block;">
             Header background color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="payOrder[id][payHeader][background-color]"
                 data-css-selector="id"
@@ -42,7 +42,7 @@
         <label style="display:block;">
             Choose pament method background color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="payOrder[id][choosePaymentMethod][background-color]"
                 data-css-selector="id"
@@ -61,7 +61,7 @@
         <label style="display:block;">
             Choose payment method font color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="payOrder[id][choosePaymentMethod][color]"
                 data-css-selector="id"
@@ -80,7 +80,7 @@
         <label style="display:block;">
             Payment methods background color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="payOrder[id][paymentContainer][background-color]"
                 data-css-selector="id"
@@ -99,7 +99,7 @@
         <label style="display:block;">
             Voucher respone background color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="payOrder[class][voucher][background-color]"
                 data-css-selector="class"
@@ -118,7 +118,7 @@
         <label style="display:block;">
             Voucher respone font color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="payOrder[class][voucher][color]"
                 data-css-selector="class"
@@ -137,7 +137,7 @@
         <label style="display:block;">
             Footer background color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="payOrder[id][payFooter][background-color]"
                 data-css-selector="id"
@@ -156,7 +156,7 @@
         <label style="display:block;">
             Footer font color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="payOrder[id][backLink][color]"
                 data-css-selector="id"
@@ -175,7 +175,7 @@
         <label style="display:block;">
             Pre paid, post paid vocuher popup background color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="payOrder[class][modalPayOrder][background-color]"
                 data-css-selector="class"
@@ -194,7 +194,7 @@
         <label style="display:block;">
             Pre paid, post paid vocuher popup button background color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="payOrder[class][modalPayOrderButton][background-color]"
                 data-css-selector="class"
@@ -213,7 +213,7 @@
         <label style="display:block;">
             Pre paid, post paid vocuher popup button font color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="payOrder[class][modalPayOrderButton][color]"
                 data-css-selector="class"
@@ -232,7 +232,7 @@
         <label style="display:block;">
             Input fields label font color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="payOrder[class][payOrderInputFieldsLabel][color]"
                 data-css-selector="class"
@@ -251,7 +251,7 @@
         <label style="display:block;">
             Input fields background color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="payOrder[class][payOrderInputFields][background-color]"
                 data-css-selector="class"
@@ -270,7 +270,7 @@
         <label style="display:block;">
             Input fields font color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="payOrder[class][payOrderInputFields][color]"
                 data-css-selector="class"
@@ -289,7 +289,7 @@
         <label style="display:block;">
             Input fields border color:
             <input
-                type="color"
+                data-jscolor=""
                 class="form-control"
                 name="payOrder[class][payOrderInputFields][border-color]"
                 data-css-selector="class"
