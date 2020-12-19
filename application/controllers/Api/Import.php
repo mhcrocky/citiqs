@@ -56,34 +56,11 @@
                         ->setVendorCategoryId()
                         ->setVendorPrinterId()
                         ->setVendorSpotId()
+                        ->updateOrders()
                         ->importNew();
 
-            echo ($import) ? 'Import succes' : 'Import failed';
-
-            die();
+            echo 'Import finished';
         }
-
-        public function importnotfound_get(): void
-        {
-            $data = $this->input->get(null, true);
-
-            $import = $this
-                        ->shopimport_model
-                        ->setProperty('vendorId', $data['vendorid'])
-                        ->setShopVendor()
-                        ->setDatabaseCredantations($data)
-                        ->setConnection()
-                        ->setMainProductTypeId()
-                        ->setVendorCategoryId()
-                        ->setVendorPrinterId()
-                        ->setVendorSpotId()
-                        ->importFromArray();
-
-            echo ($import) ? 'Import succes' : 'Import failed';
-
-            die();
-        }
-        
 
         public function csv_get()
         {
@@ -138,38 +115,4 @@
             $this->shoppaynlcsv_model->updateStorno();
             var_dump($count);
         }
-
-        // public function csvslow_get()
-        // {
-        //     $folder = FCPATH . '/assets/paynlCsv/';
-        //     // $files = scandir($folder);
-            
-        //     foreach ($files as $file) {
-        //         if (strpos($file, '.csv') !== false)  {
-        //             $file = $folder . $file;
-        //             $document = '01.csv';
-        //             $file = $folder . $document;
-                    
-        //             $contents = file($file);
-        //             foreach($contents as $line) {
-        //                 if (strpos($line, 'STATSID') === false) {
-        //                     $data = str_getcsv($line, ';');
-        //                     if (is_numeric($data[16])) {
-        //                         $insert = [
-        //                             'csvFile' => $document,
-        //                             'paymentType' => $data[11],
-        //                             'transactionId' => $data[14],
-        //                             'created' => $data[1],
-        //                             'oldId' => $data[16],
-        //                             'amount' => floatval(str_replace(',', '.', $data[26])),
-        //                         ];
-        //                         $this->shoppaynlcsv_model->setObjectFromArray($insert)->create();
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-
-        //     $this->shoppaynlcsv_model->updateStorno();
-        // }
     }
