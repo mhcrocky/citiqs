@@ -528,15 +528,22 @@
             return true;
         }
 
-        private function isOrderInserted(string $transactionId): bool
+        private function isOrderInserted(string $transactionId, float $paynlAmount): bool
         {
             $this->load->model('shoporder_model');
             $find = $this->shoporder_model->readImproved([
-                'what' => ['id'],
+                'what' => ['id', 'amount', 'serviceFee'],
                 'where' => [
                     'transactionId' => $transactionId
                 ]
             ]);
+            if ($find) {
+                $alfredTotal = floatval($find['amount']) + floatval($find['serviceFee']);
+                if ($alfredTotal !== $paynlAmount) {
+                    var_dump($alfredTotal);
+                    var_dump($paynlAmount);
+                }
+            }
             return !is_null($find);
         }
 
@@ -605,9 +612,9 @@
 
             foreach($paynlOrders as $data) {
                 $transactionId = $data['transactionId'];
-                if ($this->isOrderInserted($transactionId)) continue; 
-                $oldId = intval($data['oldId']);
                 $totalAmount = floatval($data['amount']);
+                $oldId = intval($data['oldId']);
+                if ($this->isOrderInserted($transactionId, $totalAmount)) continue; 
                 $shopOrder = $this->fetchOrder($transactionId, $oldId, $totalAmount);
                 $import = empty($shopOrder) ? $this->insertInAlfredFromPaynlCsv($data) : $this->insertInAlfredFromShop($shopOrder);
                 $this->updatePaynlCsv($import, $data);
