@@ -538,6 +538,7 @@
                 ]
             ]);
             if ($find) {
+                $find = reset($find);
                 $alfredTotal = floatval($find['amount']) + floatval($find['serviceFee']);
                 if ($alfredTotal !== $paynlAmount) {
                     var_dump($alfredTotal);
