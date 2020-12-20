@@ -1,7 +1,12 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
+include(APPPATH . '/libraries/koolreport/core/autoload.php');
 
 require APPPATH . '/libraries/BaseControllerWeb.php';
+
+use \koolreport\drilldown\DrillDown;
+use \koolreport\widgets\google\ColumnChart;
+
 
 class Businessreport extends BaseControllerWeb
 {
@@ -132,6 +137,58 @@ class Businessreport extends BaseControllerWeb
 		$max_date = $this->input->post('max');
 		$orders = $this->businessreport_model->get_date_range_orders($vendor_id, $min_date, $max_date);
 		echo json_encode($orders);
+	}
+
+	public function get_graphs(){
+		$vendor_id = $this->vendor_id;
+		$data['title'] = 'Business Reports';
+		$data['graphs'] = DrillDown::create(array(
+            "name" => "saleDrillDown",
+            "title" => " ",
+            "levels" => array(
+                array(
+                    "title" => "Business Report",
+                    "content" => function ($params, $scope) {
+                        ColumnChart::create(array(
+                            "dataSource" => ($this->businessreport_model->get_report($this->session->userdata('userId'), $this->input->post('min'), $this->input->post('max'))), 
+                            "columns" => array(
+                                "date" => array(
+                                    "type" => "string",
+                                    "label" => "Date",
+								),
+								"local" => array(
+                                    "label" => "Local",
+                                ),
+                                "pickup" => array(
+                                    "label" => "Pickup",
+                                ),
+								"delivery" => array(
+									"label" => "Delivery",
+						)
+                            ),
+                            "clientEvents" => array(
+                                "itemSelect" => "function(params){
+                                    saleDrillDown.next({date:params.selectedRow[1]});
+                                }",
+                            )
+                        ));
+                    }
+                ),
+
+ 
+
+            ),
+           
+		), true);
+		$result = $this->load->view('businessreport/get_graphs', $data,true);
+		echo json_encode($result);
+
+	}
+
+	public function graphs() {
+		$this->global['pageTitle'] = 'TIQS: Business Report Graphs';
+		$data = '';
+		$this->loadViews("businessreport/graphs", $this->global, $data, 'footerbusiness', 'headerbusiness');
 	}
 
 
