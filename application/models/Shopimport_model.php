@@ -528,8 +528,21 @@
             return true;
         }
 
+        private function isOrderInserted($paynlCsv): bool
+        {
+            $this->load->model('shoporder_model');
+            $find = $this->shoporder_model->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    'transactionId' => $paynlCsv['transactionId']
+                ]
+            ]);
+            return !is_null($find);
+        }
+
         private function insertInAlfredFromPaynlCsv(array $paynlCsv): bool
         {
+            if ($this->isOrderInserted($paynlCsv)) return true;            
             $transactionId = $paynlCsv['transactionId'];
             $totalAmount = floatval($paynlCsv['amount']);
             $amount = $totalAmount  / (1 + $this->vendor['serviceFeePercent'] / 100);
