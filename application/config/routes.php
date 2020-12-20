@@ -350,10 +350,8 @@ $route['businessreport/get_timestamp_totals'] = 'Businessreport/get_timestamp_to
 $route['businessreport/get_timestamp_orders'] = 'Businessreport/get_timestamp_orders';
 $route['businessreport/sortedWidgets'] = 'Businessreport/sortedWidgets';
 $route['businessreport/sortWidgets'] = 'Businessreport/sortWidgets';
-
-$route['businessreport/get_timestamp_totals'] = 'Businessreport/get_timestamp_totals';
-$route['businessreport/sortedWidgets'] = 'Businessreport/sortedWidgets';
-$route['businessreport/sortWidgets'] = 'Businessreport/sortWidgets';
+$route['businessreport/get_graphs'] = 'Businessreport/get_graphs';
+$route['businessreport/graphs'] = 'Businessreport/graphs';
 
 $route['accounting/report'] = 'AccountingReports/index';
 $route['accountingreport/get_report'] = 'AccountingReports/get_report';

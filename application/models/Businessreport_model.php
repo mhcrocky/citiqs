@@ -367,7 +367,22 @@ GROUP BY tbl_shop_orders.id");
 		}
 		$data = ['sort'=>'','row_sort'=>''];
 		return $data;
-    }
+	}
+	
+	function get_report($vendor_id,$min_date, $max_date){
+		$data = $this->get_date_range_totals($vendor_id, $min_date, $max_date);
+		$min_date = str_replace("-","/",$min_date);
+		$min_date = str_replace("'","",$min_date);
+		$max_date = str_replace("-","/",$max_date);
+		$max_date = str_replace("'","",$max_date);
+		$newData[0] = [
+			"date" => $min_date . ' - ' . $max_date,
+			"pickup" => $data["pickup"],
+			"delivery" => $data["delivery"],
+			"local" => $data["local"]
+		];
+		return $newData;
+	}
 
 
 }
