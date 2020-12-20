@@ -578,7 +578,7 @@
                 'printers' => $this->shopprinters_model->setProperty('userId', $userId)->fetchPrinters()
             ];
 
-            $this->loadViews('warehouse/printers', $this->global, $data, null, 'headerWarehouse');
+            $this->loadViews('warehouse/printers', $this->global, $data, 'footerbusiness', 'headerbusiness');
         }
 
         /**
