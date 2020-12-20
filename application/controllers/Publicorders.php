@@ -315,9 +315,8 @@
             if (empty($orderRandomKey)) redirect(base_url());
 
             $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
-            $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
-
             Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder']);
+            $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
 
             $data = [
                 'orderRandomKey'    => $orderRandomKey,
@@ -421,9 +420,8 @@
             if (empty($orderRandomKey)) redirect(base_url());
 
             $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
-            $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
-
             Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder', 'user', 'orderExtended', 'order']);
+            $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
 
             $data = [];
             $data['vendor'] = $this->shopvendor_model->setProperty('vendorId', $orderData['vendorId'])->getVendorData();
@@ -453,10 +451,8 @@
             if (empty($orderRandomKey)) redirect(base_url());
 
             $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
-            $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
-
-
             Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder', 'user', 'orderExtended', 'order']);
+            $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
 
             $vendor = $this->shopvendor_model->setProperty('vendorId', $orderData['vendorId'])->getVendorData();
             $spot = $this->shopspot_model->fetchSpot($orderData['vendorId'], $orderData['spotId']);
