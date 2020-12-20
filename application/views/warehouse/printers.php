@@ -1,20 +1,20 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
-<div class="main-wrapper theme-editor-wrapper">
-	<div class="grid-wrapper">
-		<div class="grid-list">
-			<div class="item-editor theme-editor" id='add-printer'>
-				<div class="theme-editor-header d-flex justify-content-between" >
-					<div>
-						<img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogonew.png" alt="">
-					</div>
-					<div class="theme-editor-header-buttons">
-						<input type="button" class="grid-button button theme-editor-header-button" onclick="submitForm('addPrinter')" value="Submit" />
-						<button class="grid-button-cancel button theme-editor-header-button" onclick="toogleElementClass('add-printer', 'display')">Cancel</button>
-					</div>
-				</div>
+
+<!-- Add Printer Modal -->
+<div class="modal fade" id="addPrinterModal" tabindex="-1" role="dialog" aria-labelledby="addPrinterModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+	  <legend>Add printer</legend>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	        <div class="item-editor" id='add-printer'>
+
 				<div class="edit-single-user-container">
 					<form class="form-inline" id="addPrinter" method="post" action="<?php echo $this->baseUrl . 'warehouse/addPrinter'; ?>">
-                        <legend>Add printer</legend>
 						<input type="text" readonly name="userId" required value="<?php echo $userId ?>" hidden />
                         <input type="text" readonly name="active" required value="1" hidden />
 						<div>
@@ -47,9 +47,20 @@
 					</form>
 				</div>
 			</div>
+      </div>
+      <div class="modal-footer">
+	    <input style="width: 100px;" type="button" class="grid-button button theme-editor-header-button" onclick="submitForm('addPrinter')" value="Submit" />
+		<button style="width: 100px;" class="grid-button-cancel button theme-editor-header-button"  data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 0;" class="main-wrapper theme-editor-wrapper">
+	<div style="background: none;" class="grid-wrapper">
+		<div class="grid-list">
 			<div class="grid-list-header row">
 				<div class="col-lg-4 col-md-4 col-sm-12 grid-header-heading">
-					<h2>Printers</h2>
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12">
 					<!-- <div class="form-group">
@@ -60,7 +71,7 @@
 				<div class="col-lg-4 col-md-4 col-sm-12 search-container">
 					<button
                         class="btn button-security my-2 my-sm-0 button grid-button"
-                        onclick="toogleElementClass('add-printer', 'display')">Add printer</button>
+						data-toggle="modal" data-target="#addPrinterModal">Add printer</button>
 				</div>
 			</div><!-- end grid header -->
 			<!-- SINGLE GIRD ITEM -->
@@ -87,7 +98,7 @@
 						</div><!-- end item header -->
 						<div class="grid-footer">
 							<div class="iconWrapper">
-								<span class="fa-stack fa-2x edit-icon btn-edit-item" onclick="toogleAllElementClasses('editPrinterPrinterId<?php echo $printer['id']; ?>', 'display')">
+								<span class="fa-stack fa-2x edit-icon btn-edit-item" onclick="editPrinter('<?php echo $printer['id']; ?>')">
 									<i class="far fa-edit"></i>
 								</span>
 							</div>
@@ -109,16 +120,21 @@
 								</div>
 							<?php } ?>
 						</div>
-
+						<button id="btn-<?php echo  $printer['id']; ?>" style="display: none;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editPrinterId<?php echo  $printer['id']; ?>">Edit</button>
 						<!-- ITEM EDITOR -->
-						<div class="item-editor theme-editor" id="editPrinterPrinterId<?php echo  $printer['id']; ?>">
+						<div class="modal fade" id="editPrinterId<?php echo  $printer['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="editPrinterPrinterId<?php echo  $printer['id']; ?>ModalLabel" aria-hidden="true">
+						    <div class="modal-dialog" role="document">
+							    <div class="modal-content">
+								    <div class="modal-header">
+									    <h3>Printer details</h3>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+
+									<div class="item-editor" id="editPrinterPrinterId<?php echo  $printer['id']; ?>">
 							<div class="theme-editor-header d-flex justify-content-between">
-								<div class="theme-editor-header-buttons">
-									<input type="button" onclick="submitForm('editPrinter<?php echo $printer['id']; ?>')" class="grid-button button theme-editor-header-button" value="Submit" />
-									<button
-                                        class="grid-button-cancel button theme-editor-header-button"
-                                        onclick="toogleElementClass('editPrinterPrinterId<?php echo  $printer['id']; ?>', 'display')">Cancel</button>
-								</div>
 							</div>
 							<div class="edit-single-user-container">
 								<form
@@ -128,7 +144,6 @@
                                     action="<?php echo $this->baseUrl . 'warehouse/editPrinter/' . $printer['id']; ?>"
                                     >
 									<input type="text" name="userId" value="<?php echo $userId; ?>" readonly required hidden />
-									<h3>Printer details</h3>
 									<div>
 										<label for="printer<?php echo $printer['id']; ?>">Name:</label>
 										<input type="text" class="form-control" id="printer<?php echo $printer['id']; ?>" name="printer" required value="<?php echo $printer['printer']; ?>" />
@@ -187,6 +202,17 @@
 								</form>
 							</div>
 						</div>
+
+									</div>
+                                    <div class="modal-footer">
+									    <input style="width: 100px;" type="button" onclick="submitForm('editPrinter<?php echo $printer['id']; ?>')" class="grid-button button theme-editor-header-button" value="Submit" />
+									    <button style="width: 100px;" class="grid-button-cancel button theme-editor-header-button" data-dismiss="modal">Cancel</button>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
 						<!-- END EDIT FOR NEW USER -->
 					</div>
                 <?php } ?>
@@ -196,3 +222,9 @@
 		<!-- end grid list -->
 	</div>
 </div>
+<script>
+function editPrinter(id){
+	$("#btn-"+id).click();
+	return ;
+}
+</script>
