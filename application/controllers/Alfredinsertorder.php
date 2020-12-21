@@ -58,9 +58,8 @@ class Alfredinsertorder extends BaseControllerWeb
         if (empty($orderRandomKey)) redirect(base_url());
 
         $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
-        $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
-
         Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'user', 'orderExtended', 'order']);
+        $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
 
         $payType = $this->getPayType($payNlPaymentTypeId);
 
@@ -89,9 +88,8 @@ class Alfredinsertorder extends BaseControllerWeb
         if (empty($orderRandomKey)) redirect(base_url());
 
         $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
-        $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
-
         Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'makeOrder', 'user', 'orderExtended', 'order']);
+        $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
 
         $this->voucherPaymentFailed($orderData, $orderRandomKey);
 
@@ -109,9 +107,8 @@ class Alfredinsertorder extends BaseControllerWeb
         if (empty($orderRandomKey)) redirect(base_url());
 
         $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
-        $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
-
         Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'user', 'orderExtended', 'order']);
+        $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
 
         $payStatus = $this->payingWithVoucher($orderData['order']) ? $this->config->item('orderPaid') : $this->config->item('orderNotPaid');
         $orderId = $this->insertOrderProcess($orderData, $payStatus, $this->config->item('voucherPayment'), $orderRandomKey);
