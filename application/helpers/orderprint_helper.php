@@ -34,6 +34,7 @@
             self::printVatAndTotal($drawemail, $startPoint, $i, $productVats);
             self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
             self::printVendorData($drawemail, $startPoint, $i, $order);
+			self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
 
             return self::saveImageAndDestroyObjects($imagetextemail, $imageprintemail, $drawemail, $order);
         }
@@ -213,8 +214,8 @@
 
         public static function drawEmailSettings(object &$imagetextemail, object &$drawemail, object $pixel, int $countProductArray): void
         {
-            $rowheight = ($countProductArray * 30) + 1000;
-            $imagetextemail->newImage(576, $rowheight, $pixel);
+            $rowheight = ($countProductArray * 30) + 750;
+            $imagetextemail->newImage(600, $rowheight, $pixel);
 
             /* Black text */
             $drawemail->setFillColor('black');
@@ -297,8 +298,9 @@
 
         public static function populateVatArray(array &$productVats, float $productTotal, int $vatpercentage)
         {
-            $productVats[$vatpercentage]['baseAmount'] += $productTotal;
-            $productVats[$vatpercentage]['vatAmount'] += $productTotal * $vatpercentage / 100;
+            $productVats[$vatpercentage]['baseAmount'] += ($productTotal * 100) / ($vatpercentage + 100);
+            $exAmount = ($productTotal * 100) / ($vatpercentage + 100);
+            $productVats[$vatpercentage]['vatAmount'] += $productTotal - $exAmount;
         }
 
         public static function printVatAndTotal(object &$drawemail, int $startPoint, int &$i, array $productVats): void

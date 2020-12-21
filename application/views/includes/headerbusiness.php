@@ -152,19 +152,41 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
                                     </div>
                                 </div>
                                 <ul class="metismenu" id="menu">
-									<li><a href="<?php echo $this->baseUrl; ?>orders"><i class="ti-stats-up"></i><span>Orders</span></a></li>
-									<li><a href="<?php echo $this->baseUrl; ?>pos"><i class="ti-bar-chart"></i><span>POS</span></a></li>
 									<li><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-receipt"></i><span>Dashboard</span></a></li>
 									<li>
 										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-shopping-cart-full"></i><span>Marketing</span></a>
 										<ul class="collapse">
-											<li><a href="<?php echo $this->baseUrl; ?>visitors"><i class="ti-user"></i> <span>Visitors</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>dashboard"><i class="ti-pencil-alt"></i><span>Targeting</span></a></li>
 											<li><a href="<?php echo $this->baseUrl; ?>marketing/selection"><i class="ti-pencil-alt"></i> <span>Notification Messaging</span></a></li>
-											<li><a href="<?php echo $this->baseUrl; ?>visitors"><i class="ti-user"></i> <span>RSVP Pre-register</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>dashboard"><i class="ti-user"></i> <span>RSVP Pre-register</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>dashboard"><i class="ti-pencil-alt"></i> <span>E-mail Campaigns</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>dashboard"><i class="ti-pencil-alt"></i><span>Interest targeting</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>dashboard"><i class="ti-user"></i> <span>Visitors</span></a></li>
+											<li>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Vouchers</span></a>
+												<ul class="collapse">
+													<li>
+														<a href="<?php echo $this->baseUrl; ?>customer_panel/settings">
+															<i class="ti-shopping-cart-full"></i>
+															<span>Add/design vouchers</span>
+														</a>
+													</li>
+													<li>
+														<a href="<?php echo $this->baseUrl. 'booking_agenda/design'; ?>"
+														><i class="ti-clipboard"></i> <span>Voucher statistics</span>
+														</a>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-shopping-cart-full"></i><span>Loyalty</span></a>
+										<ul class="collapse">
+											<li><a href="<?php echo $this->baseUrl; ?>visitors"><i class="ti-user"></i> <span>Dashboard</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>visitors"><i class="ti-user"></i> <span>Settings</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>marketing/selection"><i class="ti-pencil-alt"></i> <span>Notification Messaging</span></a></li>
 											<li><a href="<?php echo $this->baseUrl; ?>marketing/selection"><i class="ti-pencil-alt"></i> <span>E-mail Campaigns</span></a></li>
-											<li><a href="<?php echo $this->baseUrl; ?>visitors"><i class="ti-user"></i> <span>Loyalty</span></a></li>
-											<li><a href="<?php echo $this->baseUrl; ?>marketing/selection"><i class="ti-pencil-alt"></i><span>Interest targeting</span></a></li>
-											<li><a href="<?php echo $this->baseUrl; ?>marketing/selection"><i class="ti-pencil-alt"></i><span>Visit targeting</span></a></li>
 											<li>
 												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Vouchers</span></a>
 												<ul class="collapse">
@@ -214,6 +236,12 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
 										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span>The QR Store</span></a>
 										<ul class="collapse">
 											<li>
+												<li><a href="<?php echo $this->baseUrl; ?>orders"><i class="ti-stats-up"></i><span>Orders</span></a></li>
+												<li><a href="<?php echo $this->baseUrl; ?>pos"><i class="ti-bar-chart"></i><span>POS</span></a></li>
+											</li>
+
+											<li>
+											<li>
 												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-bag"></i><span>Products</span></a>
 												<ul class="collapse">
 													<li><a href="<?php echo $this->baseUrl; ?>product_categories"><i class="ti-layout-accordion-separated"></i> <span>Category</span></a></li>
@@ -221,8 +249,7 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
 													<li><a href="<?php echo $this->baseUrl; ?>products"><i class="ti-bag"></i> <span>Products</span></a></li>
 												</ul>
 											</li>
-											<li><a href="<?php echo $this->baseUrl; ?>printers"><i class="ti-printer"></i><span>Printers</span></a></li>
-											<li><a href="<?php echo $this->baseUrl; ?>spots"><i class="ti-flag-alt"></i><span>Spots</span></a></li>
+
 											<li>
 												<li>
 													<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ink-pen"></i><span>Design</span></a>
@@ -232,11 +259,26 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
 													</ul>
 												</li>
 											</li>
+											<li>
+											<li>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ink-pen"></i><span>Printers & spots</span></a>
+												<ul class="collapse">
+													<li><a href="<?php echo $this->baseUrl; ?>printers"><i class="ti-printer"></i><span>Printers</span></a></li>
+													<li><a href="<?php echo $this->baseUrl; ?>spots"><i class="ti-flag-alt"></i><span>Spots</span></a></li>
+												</ul>
+											</li>
+											</li>
 										</ul>
 									</li>
 
-                                    <li>
-                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span>Reservations & Seatings</span></a>
+									<li>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i><span>Lost & Found</span></a>
+										<ul class="collapse">
+										</ul>
+									</li>
+
+									<li>
+                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span>Reservations</span></a>
                                         <ul class="collapse">
                                             <li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Statistics</span></a></li>
                                             <li><a href="<?php echo $this->baseUrl;?>customer_panel/agenda"><i class="ti-agenda"></i> <span>Make your reservations</span></a></li>
@@ -434,8 +476,6 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
 											<li><a href="<?php echo $this->baseUrl. 'booking_agenda/' . $userShortUrl; ?>" target="_blank"><i class="ti-clipboard"></i> <span>Reservation Agenda</span></a></li>
 										</ul>
 									</li>
-
-
 
                                     <li><a href="<?php echo $this->baseUrl; ?>logout"><i class="ti-shift-left"></i> <span>Logout</span></a></li>
                                 </ul>

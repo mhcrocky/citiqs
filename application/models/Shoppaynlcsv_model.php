@@ -105,7 +105,7 @@
                 'where' => [
                     $this->table . '.calculated = ' => '0',
                     $this->table . '.storno = ' => '0',
-                    $this->table . '.csvFile = ' => '09.csv' // TO DO CHANGE FOR NEXT CSV FILE
+                    $this->table . '.csvFile = ' => '01.csv' // TO DO CHANGE FOR NEXT CSV FILE
                 ],
                 'conditions' => [
                     'ORDER_BY' => [$this->table . '.id ASC']
