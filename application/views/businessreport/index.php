@@ -15,6 +15,9 @@
   border: 1px solid #ced4da;
   border-radius: .25rem;
 }
+.hidden {
+  display: none;
+}
 
 .btn-refund {
   background: #ff704d !important;
@@ -305,9 +308,27 @@ td.details-control {
 
                     </div>
                 </div>
-                
 
 <div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable" data-rowposition="2" data-rowsort="1">
+<div style="margin: auto;width: 100%;display: flex;justify-content: center;" >
+<div class="mt-4 ml-auto">
+  <input style="width: 330px;" id="datetime" class="date form-control form-control-sm mb-2" type="text" />
+</div>
+<div class="mt-4 ml-auto">
+  <select style="width: 100px;" class=" form-control form-control-sm mb-2 mr-1" name="group_by" id="group_by">
+    <option value="total" selected>Total</option>
+    <option value="month">Month</option>
+    <option value="quarter">Quarter</option>
+    <option value="week">Week</option>
+    <option value="day">Day</option>
+    <option value="hour">Hour</option>
+  </select>
+</div>
+</div>
+<div id="graphs"></div>
+</div>             
+
+<div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable" data-rowposition="3" data-rowsort="1">
 <div class="w-100 mt-3 mb-3 mx-auto">
 
   <div class="float-right text-center">
@@ -363,7 +384,49 @@ td.details-control {
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.table2excel.js"></script>
 
 <script type="text/javascript">
+$(function() {
+    var getTodayDate = new Date();
+      var month = getTodayDate.getMonth()+1;
+      var day = getTodayDate.getDate();
+      var todayDate = getTodayDate.getFullYear() + '-' +
+      (month<10 ? '0' : '') + month + '-' +
+      (day<10 ? '0' : '') + day;
+        $('#datetime').daterangepicker({
+          timePicker: true,
+          timePicker24Hour: true,
+          startDate: todayDate+' 00:00:00',
+          locale: {
+            format: 'YYYY-MM-DD HH:mm:ss'
+            }
+        },
+        function(start, end, label) {
+        let min_fulldate = start._d;
+        let min_month = min_fulldate.getMonth()+1;
+        let min_day = min_fulldate.getDate();
+        let min_year = min_fulldate.getFullYear();
+        var min_time = addZero(min_fulldate.getHours()) + ':' + addZero(min_fulldate.getMinutes()) + ':' + addZero(min_fulldate.getSeconds());
+        
+        let max_fulldate = end._d;
+        let max_month = max_fulldate.getMonth()+1;
+        let max_day = max_fulldate.getDate();
+        let max_year = max_fulldate.getFullYear();
+        var max_time = addZero(max_fulldate.getHours()) + ':' + addZero(max_fulldate.getMinutes()) + ':' + addZero(max_fulldate.getSeconds());
 
+        var min = min_year + '-' + min_month + '-' + min_day + ' ' + min_time;
+        var max = max_year + '-' + max_month + '-' + max_day + ' ' + max_time;
+        var selected = $('#group_by option:selected').val();
+
+        $.ajax({
+            method: "POST",
+            url: "<?php echo base_url() ;?>businessreport/get_graphs",
+            data: {min:"'"+min+"'",max:"'"+max+"'",selected: selected},
+            success: function(data){
+                $("#graphs").html(JSON.parse(data.replaceAll("btnBack", "fade")));
+                //$(".panel-heading").hide();
+            }
+        });
+    });
+  });
 
   $(document).ready( function () {
         var sort = '';
@@ -430,6 +493,36 @@ td.details-control {
             }
         });
       });
+
+      let full_timestamp = $('#datetime').val();
+      var selected = $('#group_by option:selected').val();
+      var date = full_timestamp.split(" - ");
+      var min = date[0];
+      var max = date[1];
+      $.ajax({
+        method: "POST",
+        url: "<?php echo base_url() ;?>businessreport/get_graphs",
+        data: {min:"'"+min+"'",max:"'"+max+"'",selected:selected},
+        success: function(data){
+          $("#graphs").html(JSON.parse(data.replaceAll("btnBack", "hidden")));
+          }
+        });
+        
+        $('select#group_by').on('change', function() {
+          let full_timestamp = $('#datetime').val();
+          var selected = this.value;
+          var date = full_timestamp.split(" - ");
+          var min = date[0];
+          var max = date[1];
+          $.ajax({
+            method: "POST",
+            url: "<?php echo base_url() ;?>businessreport/get_graphs",
+            data: {min:"'"+min+"'",max:"'"+max+"'",selected:selected},
+            success: function(data){
+              $("#graphs").html(JSON.parse(data.replaceAll("btnBack", "hidden")));
+            }
+          });
+        });
 
 
       var table = $('#report').DataTable({
@@ -1010,5 +1103,12 @@ function num_percentage(number){
   number = parseInt(number*100);
   number = number/100;
   return number + "%";
+}
+
+function addZero(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
 }
 </script>
