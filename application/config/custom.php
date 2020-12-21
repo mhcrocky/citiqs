@@ -228,3 +228,9 @@ $config['employeeIn'] = 'IN';
 $config['employeeOut'] = 'UIT';
 
 $config['fodInActive'] = 'temporarily_closed';
+
+
+$config['taxA'] = 21;
+$config['taxB'] = 12;
+$config['taxC'] = 6;
+$config['taxD'] = 0;
