@@ -30,7 +30,8 @@
             self::printImageLogo($imageprintemail, $logoFile);
             self::printOrderHeader($CI, $imagetextemail, $drawemail, $order, $spotTypeId);
             self::printProductLines($CI, $drawemail, $productsarray, $spotTypeId, $i, $startPoint, $productVats, $order, $isFod);
-            self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);           
+            self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
+            self::printVatAndTotal($drawemail, $startPoint, $i, $productVats);
             self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
             self::printVendorData($drawemail, $startPoint, $i, $order);
 
@@ -48,7 +49,7 @@
             return isset($vatPercentArray[$vatpercentage]) ? $vatPercentArray[$vatpercentage]['grade'] : 'D';
         }
 
-        public static function createProductLine(&$drawemail, $startPoint, int $i, string $quantity, string $title,string $lineAmount, int $vatpercentage, bool $isFod): void
+        public static function createProductLine(&$drawemail, $startPoint, int $i, int $quantity, string $title, string $lineAmount, int $vatpercentage, bool $isFod): void
         {
             $drawemail->setFontSize(24);
             $drawemail->setStrokeWidth(1);
@@ -75,24 +76,28 @@
 
         public static function getVatsArray(): array
         {
+
+            $CI =& get_instance();
+            $CI->load->config('custom');
+            
             return [
-                0 => [
-                    'grade' => 'D',
+                $CI->config->item('taxA') => [
+                    'grade' => 'A',
                     'vatAmount' => 0,
                     'baseAmount' => 0,
                 ],
-                6 => [
-                    'grade' => 'C',
-                    'vatAmount' => 0,
-                    'baseAmount' => 0,
-                ],
-                12 => [
+                $CI->config->item('taxB') => [
                     'grade' => 'B',
                     'vatAmount' => 0,
                     'baseAmount' => 0,
                 ],
-                21 => [
-                    'grade' => 'A',
+                $CI->config->item('taxC') => [
+                    'grade' => 'C',
+                    'vatAmount' => 0,
+                    'baseAmount' => 0,
+                ],
+                $CI->config->item('taxD') => [
+                    'grade' => 'D',
                     'vatAmount' => 0,
                     'baseAmount' => 0,
                 ]
@@ -244,7 +249,8 @@
             array $order,
             bool $isFod
         ): void
-        {            
+        {
+            $i++;        
             foreach ($productsarray as $product) {
 
                 $product = explode($CI->config->item('concatSeparator'), $product);
@@ -262,75 +268,94 @@
                 // 11 => pickupVatpercentage
 
                 $title = substr($product[0], 0, 20);
-                $quantity = $product[2];
+                $quantity = intval($product[2]);
                 $plu =  $product[3];
 
                 // SET PRICE AND VATPERCENTAGE
                 if ($spotTypeId === $CI->config->item('local')) {
-                    $price = $product[1];
+                    $price = floatval($product[1]);
                     $vatpercentage = intval($product[7]);
                 } elseif ($spotTypeId === $CI->config->item('deliveryType')) {
-                    $price = $product[8];
+                    $price = floatval($product[8]);
                     $vatpercentage = intval($product[9]);
                 } elseif ($spotTypeId === $CI->config->item('pickupType')) {
-                    $price = $product[10];
+                    $price = floatval($product[10]);
                     $vatpercentage = intval($product[11]);
                 }
 
-                $productTotal =  floatval($quantity) * floatval($price);
+                $productTotal =  $quantity * $price;
+                self::populateVatArray($productVats, $productTotal, $vatpercentage);
+
                 $productTotal =  number_format($productTotal, 2, '.', ',');
-            
-
-                //$productVats[$vatpercentage] += $totalamount - $totalamount / (100 + intval($vatpercentage)) * 100;
-                // $exVatPrijs = ($price * 100 / (100 + intval($vatpercentage)));
-                // $exVatPrijs = round($exVatPrijs, 2);
-                // $productVats[$vatpercentage] += ($price - $exVatPrijs);
-
                 self::createProductLine($drawemail, $startPoint, $i, $quantity, $title, $productTotal, $vatpercentage, $isFod);
                 $i++;
             }
             // Service fee line
-            self::createProductLine($drawemail, $startPoint, $i, '1', 'servicefee', $order['serviceFee'], 21, $isFod);
+            self::createProductLine($drawemail, $startPoint, $i, 1, 'servicefee', $order['serviceFee'], $CI->config->item('taxA'), $isFod);
+            self::populateVatArray($productVats, floatval($order['serviceFee']), $CI->config->item('taxA'));
+        }
+
+        public static function populateVatArray(array &$productVats, float $productTotal, int $vatpercentage)
+        {
+            $productVats[$vatpercentage]['baseAmount'] += $productTotal;
+            $productVats[$vatpercentage]['vatAmount'] += $productTotal * $vatpercentage / 100;
+        }
+
+        public static function printVatAndTotal(object &$drawemail, int $startPoint, int &$i, array $productVats): void
+        {
+            $i++;
+            $drawemail->setFontSize(24);
+            $drawemail->setStrokeWidth(1);
+
+            $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+            $drawemail->annotation(0, $startPoint + ($i * 30), '');
+            $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+            $drawemail->annotation(150, $startPoint + ($i * 30), ' Basis (MvH) ');
+            $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+            $drawemail->annotation(360, $startPoint + ($i * 30), ' BTW ');
+            $drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+            $drawemail->annotation(560, $startPoint + ($i * 30), ' Totaal ');
+
+            $baseAmountTotal = 0;
+            $vatTotal = 0;
+            $overAllTotal = 0;
+
+            foreach ($productVats as $percent => $data) {
+                $i++;
+
+                $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+                $drawemail->annotation(0, $startPoint + ($i * 30), $data['grade'] . ' ' . $percent . ' %');
+
+                $baseAmount = round($data['baseAmount'], 2);
+                $baseAmountTotal += $baseAmount;
+                $baseAmountString = $baseAmount ? number_format($baseAmount, 2, '.', ',') : '';
+
+                $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+                $drawemail->annotation(150, $startPoint + ($i * 30),  $baseAmountString);
+
+                $vatAmount = round($data['vatAmount'], 2);
+                $vatTotal += $vatAmount;
+                $vatAmountString = $vatAmount ? number_format($vatAmount, 2, '.', ',') : '';
+
+                $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+                $drawemail->annotation(360, $startPoint + ($i * 30),  strval($vatAmountString) );
+
+                $totalAmount = $baseAmount + $vatAmount;
+                $overAllTotal += $totalAmount;
+                $totalString = $totalAmount ? number_format($totalAmount, 2, '.', ',') : '';
+
+                $drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+                $drawemail->annotation(560, $startPoint + ($i * 30),  $totalString);
+            }
+            $i++;
+            
+            $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+            $drawemail->annotation(0, $startPoint + ($i * 30), 'Totaal');
+            $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+            $drawemail->annotation(150, $startPoint + ($i * 30), number_format($baseAmountTotal, 2, '.', ','));
+            $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+            $drawemail->annotation(360, $startPoint + ($i * 30), number_format($vatTotal, 2, '.', ','));
+            $drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+            $drawemail->annotation(560, $startPoint + ($i * 30), number_format($overAllTotal, 2, '.', ','));
         }
     }
-        // foreach ($productVats as $vat => $amount) {
-        //     $vatString = $isFod ? ' VAT ' . self::returnVatGrade(intval($vat)) . '(' . $vat .' %) ' : ' VAT ' . strval($vat) .' % ';
-        // 	$amount = number_format($amount, 2);
-        // 	$amount = sprintf("%.2f", $amount);
-        // 	$imagetextemail->annotateImage($drawemail, 440, $startPoint + ($i * 30), 0, ' VAT ' . self::printVatString(intval($vat), $isFod));
-        // 	$drawemail->annotation(570, $startPoint + ($i * 30), "€ ". $amount);
-        // 	$i++;
-        // }
-        
-
-        // --------------------- and final amount !
-
-        // $drawemail->setStrokeWidth(3);
-        // $drawemail->setFontSize(28);
-        // $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-        // $drawemail->annotation(0, $startPoint + ($i * 30), 'TOTAAL');
-        // if ($order['paymentType'] === $CI->config->item('prePaid') || $order['paymentType'] === $CI->config->item('postPaid')) {
-        // 	$drawemail->annotation(0, 30, 'SERVICE BY WAITER');
-        // }
-        // $totalamt = floatval($order['serviceFee']+$TStotalamount);
-        // $drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-        // $drawemail->annotation(570, $startPoint + ($i * 30), '€ ' . sprintf("%.2f", $totalamt));
-        // $drawemail->setStrokeWidth(2);
-        // $drawemail->setFontSize(28);
-        // $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-
-        // $i++;
-        // $i++;
-
-        // if ($order['voucherAmount'] != 0) {
-        // 	$drawemail->setStrokeWidth(3);
-        // 	$drawemail->setFontSize(28);
-        // 	$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-        // 	$drawemail->annotation(0, $startPoint + ($i * 30), 'TOTAAL - VOUCHER');
-        // 	$totalamt = $totalamt - floatval($order['voucherAmount']);
-        // 	$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-        // 	$drawemail->annotation(570, $startPoint + ($i * 30), '€ ' . sprintf("%.2f", $totalamt));
-        // 	$drawemail->setStrokeWidth(2);
-        // 	$drawemail->setFontSize(28);
-        // 	$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-        // }
