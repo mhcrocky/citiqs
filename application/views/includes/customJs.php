@@ -117,4 +117,8 @@
 	<?php if (!empty($posPay)) { ?>	
 		<script src="<?php echo base_url() ?>assets/home/js/payOrder.js"></script>
 	<?php }	?>
+<?php } elseif ($this->view === 'profile/openandclose') { ?>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/editUser.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/profile.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/found.js"></script>
 <?php } ?>
