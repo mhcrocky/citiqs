@@ -1,3 +1,8 @@
+<?php 
+    $this->config->load('custom', true);  
+    $custom = $this->config->item('custom'); 
+    $colors = $custom['typeColors'];
+?>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
@@ -23,6 +28,10 @@
   background: #ff704d !important;
   color: #fff !important;
   border-color: #ff5c33 !important;
+}
+
+.single-report {
+  border-radius: 20px !important;
 }
 
 td.details-control {
@@ -55,7 +64,7 @@ td.details-control {
                     <div  class="col-md-3 ui-sortable mb-3" data-position="2" data-sort="1"> 
                             <div style="height:160px;" class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <div style="background:  #009933;" class="icon">&nbsp</div>
+                                <div style="background:  <?php echo $colors['local']; ?>;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Local</h4>
                                         <p>TODAY</p>
@@ -70,7 +79,7 @@ td.details-control {
                         <div class="col-md-3 ui-sortable mb-3" data-position="3" data-sort="1">
                             <div  style="height:160px;"  class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <div style="background: #00ff55;" class="icon">&nbsp</div>
+                                <div style="background: <?php echo $colors['delivery']; ?>;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Delivery</h4>
                                         <p>TODAY</p>
@@ -85,7 +94,7 @@ td.details-control {
                         <div class="col-md-3 ui-sortable mb-3" data-position="4" data-sort="1">
                             <div  style="height:160px;"  class="single-report"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                    <div style="background: #ffc34d;" class="icon">&nbsp</div>
+                                    <div style="background: <?php echo $colors['pickup']; ?>;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Pick Up</h4>
                                         <p>TODAY</p>
@@ -122,7 +131,7 @@ td.details-control {
                     <div  class="col-md-3 ui-sortable mb-3" data-position="6" data-sort="1"> 
                             <div style="height:160px;" class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <div style="background:  #009933;" class="icon">&nbsp</div>
+                                <div style="background:  <?php echo $colors['local']; ?>;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Local</h4>
                                         <p>THIS WEEK</p>
@@ -144,7 +153,7 @@ td.details-control {
                         <div class="col-md-3 ui-sortable mb-3" data-position="7" data-sort="1">
                             <div  style="height:160px;"  class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <div style="background: #00ff55;" class="icon">&nbsp</div>
+                                <div style="background: <?php echo $colors['delivery']; ?>;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Delivery</h4>
                                         <p>THIS WEEK</p>
@@ -166,7 +175,7 @@ td.details-control {
                         <div class="col-md-3 ui-sortable mb-3" data-position="8" data-sort="1">
                             <div  style="height:160px;"  class="single-report"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                    <div style="background: #ffc34d;" class="icon">&nbsp</div>
+                                    <div style="background: <?php echo $colors['pickup']; ?>;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Pick Up</h4>
                                         <p>THIS WEEK</p>
@@ -203,7 +212,7 @@ td.details-control {
                     <div  class="col-md-3 ui-sortable mb-3" data-position="10" data-sort="1"> 
                             <div style="height:160px;" class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <div style="background:  #009933;" class="icon">&nbsp</div>
+                                <div style="background:  <?php echo $colors['local']; ?>;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Local</h4>
                                         <p>TIMESTAMP</p>
@@ -218,7 +227,7 @@ td.details-control {
                         <div class="col-md-3 ui-sortable mb-3" data-position="11" data-sort="1">
                             <div  style="height:160px;"  class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <div style="background: #00ff55;" class="icon">&nbsp</div>
+                                <div style="background: <?php echo $colors['delivery']; ?>;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Delivery</h4>
                                         <p>TIMESTAMP</p>
@@ -233,7 +242,7 @@ td.details-control {
                         <div class="col-md-3 ui-sortable mb-3" data-position="12" data-sort="1">
                             <div  style="height:160px;"  class="single-report"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                    <div style="background: #ffc34d;" class="icon">&nbsp</div>
+                                    <div style="background: <?php echo $colors['pickup']; ?>;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Pick Up</h4>
                                         <p>TIMESTAMP</p>
@@ -263,7 +272,7 @@ td.details-control {
                     <div  class="col-md-3 ui-sortable mb-3" data-position="14" data-sort="1"> 
                             <div style="height:160px;" class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <div style="background:  #009933;" class="icon">&nbsp</div>
+                                <div style="background:  <?php echo $colors['local']; ?>;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Orders</h4>
                                         <p>WEEK</p>
@@ -278,7 +287,7 @@ td.details-control {
                         <div class="col-md-3 ui-sortable mb-3" data-position="15" data-sort="1">
                             <div  style="height:160px;"  class="single-report mb-xs-30"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <div style="background: #00ff55;" class="icon">&nbsp</div>
+                                <div style="background: <?php echo $colors['delivery']; ?>;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Orders</h4>
                                         <p>LAST WEEK</p>
@@ -293,7 +302,7 @@ td.details-control {
                         <div class="col-md-3 ui-sortable mb-3" data-position="16" data-sort="1">
                             <div  style="height:160px;"  class="single-report"><div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                    <div style="background: #ffc34d;" class="icon">&nbsp</div>
+                                    <div style="background: <?php echo $colors['pickup']; ?>;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Orders</h4>
                                         <p>TIMESTAMP</p>
@@ -308,25 +317,27 @@ td.details-control {
 
                     </div>
                 </div>
+              </div>
 
-<div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable" data-rowposition="2" data-rowsort="1">
-<div style="margin: auto;width: 100%;display: flex;justify-content: center;" >
-<div class="mt-4 ml-auto">
-  <input style="width: 330px;" id="datetime" class="date form-control form-control-sm mb-2" type="text" />
+<div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable mx-auto" data-rowposition="2" data-rowsort="1">
+  <div style="row margin: auto;width: 100%;display: flex;justify-content: center;" >
+    <div style="width: 330px;" class="mt-4 ml-auto ml-1">
+      <input style="min-width: 252px;width: 100%;" id="datetime" class="date form-control form-control-sm mb-2" type="text" />
+    </div>
+    <div class="mt-4 col-md-2 ml-auto mr-1">
+      <select style="min-width: 85px;" class=" custom-select custom-select-sm form-control form-control-sm" name="group_by" id="group_by">
+        <option value="total" selected>Total</option>
+        <option value="month">Month</option>
+        <option value="quarter">Quarter</option>
+        <option value="week">Week</option>
+        <option value="day">Day</option>
+        <option value="hour">Hour</option>
+      </select>
+    </div>
+  </div>
+  <div id="graphs"></div>
+ 
 </div>
-<div class="mt-4 ml-auto">
-  <select style="width: 100px;" class=" form-control form-control-sm mb-2 mr-1" name="group_by" id="group_by">
-    <option value="total" selected>Total</option>
-    <option value="month">Month</option>
-    <option value="quarter">Quarter</option>
-    <option value="week">Week</option>
-    <option value="day">Day</option>
-    <option value="hour">Hour</option>
-  </select>
-</div>
-</div>
-<div id="graphs"></div>
-</div>             
 
 <div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable" data-rowposition="3" data-rowsort="1">
 <div class="w-100 mt-3 mb-3 mx-auto">
@@ -397,7 +408,15 @@ $(function() {
           startDate: todayDate+' 00:00:00',
           locale: {
             format: 'YYYY-MM-DD HH:mm:ss'
-            }
+          },
+          ranges: {
+           'Today': [moment(), moment()],
+           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+           'This Month': [moment().startOf('month'), moment().endOf('month')],
+           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+           }
         },
         function(start, end, label) {
         let min_fulldate = start._d;
@@ -490,7 +509,15 @@ $(function() {
           startDate: todayDate+' 00:00:00',
           locale: {
             format: 'YYYY-MM-DD HH:mm:ss'
-            }
+          },
+          ranges: {
+           'Today': [moment(), moment()],
+           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+           'This Month': [moment().startOf('month'), moment().endOf('month')],
+           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+           }
         });
       });
 
