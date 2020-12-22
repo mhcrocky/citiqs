@@ -38,7 +38,6 @@
         public $deliveryAirDistance;
         public $cutTime;
         public $skipDate;
-        public $design;
         public $activatePos;
         public $nonWorkFrom;
         public $nonWorkTo;
@@ -164,7 +163,6 @@
             if (isset($data['receiptOnlyToWaiter']) && !($data['receiptOnlyToWaiter'] === '1' || $data['receiptOnlyToWaiter'] === '0')) return false;
             if (isset($data['deliveryAirDistance']) && !Validate_data_helper::validateInteger($data['deliveryAirDistance'])) return false;
             if (isset($data['skipDate']) && !($data['skipDate'] === '1' || $data['skipDate'] === '0')) return false;
-            if (isset($data['design']) && !Validate_data_helper::validateString($data['design'])) return false;
             if (isset($data['activatePos']) && !($data['activatePos'] === '1' || $data['activatePos'] === '0')) return false;
             if (isset($data['nonWorkFrom']) && !Validate_data_helper::validateDate($data['nonWorkFrom'])) return false;
             if (isset($data['nonWorkTo']) && !Validate_data_helper::validateDate($data['nonWorkTo'])) return false;
@@ -245,7 +243,6 @@
                     $this->table . '.pickupServiceFeePercent',
                     $this->table . '.pickupServiceFeeAmount',
                     $this->table . '.pickupMinimumOrderFee',
-                    $this->table . '.design',
                     $this->table . '.activatePos',
                     $this->table . '.serviceFeePercentPos',
                     $this->table . '.serviceFeeAmountPos',
@@ -270,6 +267,7 @@
                     'tbl_user.lat AS vendorLat',
                     'tbl_user.lng AS vendorLon',
                     'tbl_user.oneSignalId AS oneSignalId',
+                    'vendorTemplates.templateValue AS design',
 
                     'GROUP_CONCAT(
                         CONCAT(
@@ -287,6 +285,18 @@
                     ['tbl_user', 'tbl_user.id = ' . $this->table .'.vendorId' , 'INNER'],
                     ['tbl_shop_vendor_types', 'tbl_shop_vendor_types.vendorId = ' . $this->table .'.vendorId' , 'LEFT'],
                     ['tbl_shop_spot_types', 'tbl_shop_spot_types.id = tbl_shop_vendor_types.typeId' , 'LEFT'],
+                    [
+                        '(
+                            SELECT
+                                tbl_shop_vendor_templates.vendorId,
+                                tbl_shop_vendor_templates.templateValue
+                            FROM
+                                tbl_shop_vendor_templates
+                            WHERE
+                                tbl_shop_vendor_templates.active = "1"
+                                AND tbl_shop_vendor_templates.vendorId =  ' . $this->vendorId . '
+                        ) vendorTemplates', 'vendorTemplates.vendorId = ' . $this->table .'.vendorId' , 'LEFT'
+                    ]
                 ],
                 'conditons' => [
                     'group_by' =>  $this->table .'.vendorId'
@@ -445,25 +455,6 @@
 
             return $result === '1' ? true : false;
         }
-
-        // public function updateVendor(string $property): ?string
-        // {
-        //     if ($this->id) {
-        //         $where = ['id=' => $this->id];
-        //     } elseif ($this->vendorId) {
-        //         $where = ['vendorId=' => $this->vendorId];
-        //     } else {
-        //         return null;
-        //     }
-
-        //     $result = $this->readImproved([
-        //         'what' => [$property],
-        //         'where' => $where
-        //     ]);
-
-        //     if (empty($result)) return null;
-        //     return $result[0][$property];
-        // }
 
         public function getProperties(array $properties): ?array
         {
