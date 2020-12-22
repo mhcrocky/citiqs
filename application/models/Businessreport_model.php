@@ -126,7 +126,7 @@ WHERE vendor.id = ".$vendor_id." AND tbl_shop_orders.paid = '1' AND tbl_shop_spo
 	}
 
 
-	public function date_range_total($vendor_id, $min_date, $max_date, $order_type)
+	public function date_range_total($vendor_id, $min_date, $max_date, $order_type, $sql='')
 	{
 		$query = $this->db->query("SELECT tbl_shop_spot_types.type, tbl_shop_products_extended.price * tbl_shop_order_extended.quantity AS AMOUNT,
 tbl_shop_products_extended.deliveryPrice * tbl_shop_order_extended.quantity AS deliveryAMOUNT,tbl_shop_products_extended.pickupPrice * tbl_shop_order_extended.quantity AS pickupAMOUNT
@@ -139,7 +139,7 @@ INNER JOIN (SELECT * FROM tbl_user  WHERE roleid = 6 OR roleid = 2) AS buyer ON 
 INNER JOIN tbl_shop_spots ON tbl_shop_orders.spotId = tbl_shop_spots.id
 INNER JOIN tbl_shop_spot_types ON tbl_shop_orders.serviceTypeId = tbl_shop_spot_types.id
 WHERE vendor.id = ".$vendor_id." AND tbl_shop_orders.paid = '1' AND tbl_shop_spot_types.type = '$order_type' 
-AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_date");
+AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_date $sql");
 		return $query->result_array();
 	}
 
@@ -215,7 +215,7 @@ GROUP BY tbl_shop_orders.id");
 		return count($result);
 	}
 
-	public function date_range_report_of_week($vendor_id, $min_date, $max_date, $order_type)
+	public function date_range_report_of_week($vendor_id, $min_date, $max_date, $order_type, $sql='')
 	{
 		$query = $this->db->query("SELECT DATE_FORMAT(tbl_shop_orders.created ,'%a') AS day_of_week, tbl_shop_spot_types.type, COALESCE(sum(tbl_shop_products_extended.price * tbl_shop_order_extended.quantity),0) AS AMOUNT,
 COALESCE(sum(tbl_shop_products_extended.deliveryPrice * tbl_shop_order_extended.quantity),0) AS deliveryAMOUNT,COALESCE(sum(tbl_shop_products_extended.pickupPrice * tbl_shop_order_extended.quantity),0) AS pickupAMOUNT
@@ -228,11 +228,11 @@ INNER JOIN (SELECT * FROM tbl_user  WHERE roleid = 6 OR roleid = 2) AS buyer ON 
 INNER JOIN tbl_shop_spots ON tbl_shop_orders.spotId = tbl_shop_spots.id
 INNER JOIN tbl_shop_spot_types ON tbl_shop_orders.serviceTypeId = tbl_shop_spot_types.id
 WHERE vendor.id = ".$vendor_id." AND tbl_shop_orders.paid = '1' AND tbl_shop_spot_types.type = '$order_type' 
-AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_date GROUP BY day_of_week ORDER BY day_of_week");
+AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_date $sql GROUP BY day_of_week ORDER BY day_of_week");
 		return $query->result_array();
 	}
 
-	public function date_range_report_of_month($vendor_id, $min_date, $max_date, $order_type)
+	public function date_range_report_of_month($vendor_id, $min_date, $max_date, $order_type, $sql='')
 	{
 		$query = $this->db->query("SELECT DATE_FORMAT(tbl_shop_orders.created, '%M') AS month, tbl_shop_spot_types.type, sum(tbl_shop_products_extended.price * tbl_shop_order_extended.quantity) AS AMOUNT,
 sum(tbl_shop_products_extended.deliveryPrice * tbl_shop_order_extended.quantity) AS deliveryAMOUNT,sum(tbl_shop_products_extended.pickupPrice * tbl_shop_order_extended.quantity) AS pickupAMOUNT
@@ -245,11 +245,11 @@ INNER JOIN (SELECT * FROM tbl_user  WHERE roleid = 6 OR roleid = 2) AS buyer ON 
 INNER JOIN tbl_shop_spots ON tbl_shop_orders.spotId = tbl_shop_spots.id
 INNER JOIN tbl_shop_spot_types ON tbl_shop_orders.serviceTypeId = tbl_shop_spot_types.id
 WHERE vendor.id = ".$vendor_id." AND tbl_shop_orders.paid = '1' AND tbl_shop_spot_types.type = '$order_type' 
-AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_date GROUP BY month ORDER BY tbl_shop_orders.created");
+AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_date $sql GROUP BY month ORDER BY tbl_shop_orders.created");
 		return $query->result_array();
 	}
 
-	public function date_range_report_of_quarter($vendor_id, $min_date, $max_date, $order_type)
+	public function date_range_report_of_quarter($vendor_id, $min_date, $max_date, $order_type, $sql='')
 	{
 		$query = $this->db->query("SELECT year(created) as year, quarter(created) as quarter, tbl_shop_spot_types.type, sum(tbl_shop_products_extended.price * tbl_shop_order_extended.quantity) AS AMOUNT,
 sum(tbl_shop_products_extended.deliveryPrice * tbl_shop_order_extended.quantity) AS deliveryAMOUNT,sum(tbl_shop_products_extended.pickupPrice * tbl_shop_order_extended.quantity) AS pickupAMOUNT
@@ -262,11 +262,11 @@ INNER JOIN (SELECT * FROM tbl_user  WHERE roleid = 6 OR roleid = 2) AS buyer ON 
 INNER JOIN tbl_shop_spots ON tbl_shop_orders.spotId = tbl_shop_spots.id
 INNER JOIN tbl_shop_spot_types ON tbl_shop_orders.serviceTypeId = tbl_shop_spot_types.id
 WHERE vendor.id = ".$vendor_id." AND tbl_shop_orders.paid = '1' AND tbl_shop_spot_types.type = '$order_type' 
-AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_date GROUP BY year, quarter ORDER BY  year, quarter");
+AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_date $sql GROUP BY year, quarter ORDER BY  year, quarter");
 		return $query->result_array();
 	}
 
-	public function date_range_report_of_day($vendor_id, $min_date, $max_date, $order_type)
+	public function date_range_report_of_day($vendor_id, $min_date, $max_date, $order_type, $sql='')
 	{
 		$query = $this->db->query("SELECT DATE(tbl_shop_orders.created) AS day_date, tbl_shop_spot_types.type, sum(tbl_shop_products_extended.price * tbl_shop_order_extended.quantity) AS AMOUNT,
 sum(tbl_shop_products_extended.deliveryPrice * tbl_shop_order_extended.quantity) AS deliveryAMOUNT,sum(tbl_shop_products_extended.pickupPrice * tbl_shop_order_extended.quantity) AS pickupAMOUNT
@@ -279,11 +279,11 @@ INNER JOIN (SELECT * FROM tbl_user  WHERE roleid = 6 OR roleid = 2) AS buyer ON 
 INNER JOIN tbl_shop_spots ON tbl_shop_orders.spotId = tbl_shop_spots.id
 INNER JOIN tbl_shop_spot_types ON tbl_shop_orders.serviceTypeId = tbl_shop_spot_types.id
 WHERE vendor.id = ".$vendor_id." AND tbl_shop_orders.paid = '1' AND tbl_shop_spot_types.type = '$order_type' 
-AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_date GROUP BY day_date");
+AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_date $sql GROUP BY day_date");
 		return $query->result_array();
 	}
 
-	public function date_range_report_of_hour($vendor_id, $min_date, $max_date, $order_type)
+	public function date_range_report_of_hour($vendor_id, $min_date, $max_date, $order_type, $sql='')
 	{
 		$query = $this->db->query("SELECT DATE_FORMAT(tbl_shop_orders.created, '%H:00') AS hour, tbl_shop_spot_types.type, sum(tbl_shop_products_extended.price * tbl_shop_order_extended.quantity) AS AMOUNT,
 sum(tbl_shop_products_extended.deliveryPrice * tbl_shop_order_extended.quantity) AS deliveryAMOUNT,sum(tbl_shop_products_extended.pickupPrice * tbl_shop_order_extended.quantity) AS pickupAMOUNT
@@ -296,14 +296,14 @@ INNER JOIN (SELECT * FROM tbl_user  WHERE roleid = 6 OR roleid = 2) AS buyer ON 
 INNER JOIN tbl_shop_spots ON tbl_shop_orders.spotId = tbl_shop_spots.id
 INNER JOIN tbl_shop_spot_types ON tbl_shop_orders.serviceTypeId = tbl_shop_spot_types.id
 WHERE vendor.id = ".$vendor_id." AND tbl_shop_orders.paid = '1' AND tbl_shop_spot_types.type = '$order_type' 
-AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_date GROUP BY hour ORDER BY hour");
+AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_date ".$query." GROUP BY hour ORDER BY hour");
 		return $query->result_array();
 	}
 
-	public function get_date_range_totals($vendor_id, $min_date, $max_date){
-		$local_results = $this->date_range_total($vendor_id, $min_date, $max_date, 'local');
-		$delivery_results = $this->date_range_total($vendor_id, $min_date, $max_date, 'delivery');
-		$pickup_results = $this->date_range_total($vendor_id, $min_date, $max_date, 'pickup');
+	public function get_date_range_totals($vendor_id, $min_date, $max_date, $sql=''){
+		$local_results = $this->date_range_total($vendor_id, $min_date, $max_date, 'local', $sql);
+		$delivery_results = $this->date_range_total($vendor_id, $min_date, $max_date, 'delivery', $sql);
+		$pickup_results = $this->date_range_total($vendor_id, $min_date, $max_date, 'pickup', $sql);
 		$local_total = 0;
 		$delivery_total = 0;
 		$pickup_total = 0;
@@ -453,8 +453,8 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 		return $data;
 	}
 	
-	function get_total_report($vendor_id,$min_date, $max_date){
-		$data = $this->get_date_range_totals($vendor_id, $min_date, $max_date);
+	function get_total_report($vendor_id,$min_date, $max_date, $query=''){
+		$data = $this->get_date_range_totals($vendor_id, $min_date, $max_date, $query);
 		$min_date = str_replace("-","/",$min_date);
 		$min_date = str_replace("'","",$min_date);
 		$max_date = str_replace("-","/",$max_date);
@@ -468,10 +468,10 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 		return $newData;
 	}
 
-	function get_week_report($vendor_id,$min_date, $max_date){
-		$local_results = $this->date_range_report_of_week($vendor_id, $min_date, $max_date, 'local');
-		$delivery_results = $this->date_range_report_of_week($vendor_id, $min_date, $max_date, 'delivery');
-		$pickup_results = $this->date_range_report_of_week($vendor_id, $min_date, $max_date, 'pickup');
+	function get_week_report($vendor_id,$min_date, $max_date, $sql=''){
+		$local_results = $this->date_range_report_of_week($vendor_id, $min_date, $max_date, 'local', $sql);
+		$delivery_results = $this->date_range_report_of_week($vendor_id, $min_date, $max_date, 'delivery', $sql);
+		$pickup_results = $this->date_range_report_of_week($vendor_id, $min_date, $max_date, 'pickup', $sql);
 		$local = [];
 		$delivery = [];
 		$pickup = [];
@@ -501,10 +501,10 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 		return $newData;
 	}
 
-	function get_month_report($vendor_id,$min_date, $max_date){
-		$local_results = $this->date_range_report_of_month($vendor_id, $min_date, $max_date, 'local');
-		$delivery_results = $this->date_range_report_of_month($vendor_id, $min_date, $max_date, 'delivery');
-		$pickup_results = $this->date_range_report_of_month($vendor_id, $min_date, $max_date, 'pickup');
+	function get_month_report($vendor_id,$min_date, $max_date, $sql=''){
+		$local_results = $this->date_range_report_of_month($vendor_id, $min_date, $max_date, 'local', $sql);
+		$delivery_results = $this->date_range_report_of_month($vendor_id, $min_date, $max_date, 'delivery', $sql);
+		$pickup_results = $this->date_range_report_of_month($vendor_id, $min_date, $max_date, 'pickup', $sql);
 		$local = [];
 		$delivery = [];
 		$pickup = [];
@@ -541,10 +541,10 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 		return $newData;
 	}
 
-	function get_hour_report($vendor_id,$min_date, $max_date){
-		$local_results = $this->date_range_report_of_hour($vendor_id, $min_date, $max_date, 'local');
-		$delivery_results = $this->date_range_report_of_hour($vendor_id, $min_date, $max_date, 'delivery');
-		$pickup_results = $this->date_range_report_of_hour($vendor_id, $min_date, $max_date, 'pickup');
+	function get_hour_report($vendor_id,$min_date, $max_date, $sql=''){
+		$local_results = $this->date_range_report_of_hour($vendor_id, $min_date, $max_date, 'local', $sql);
+		$delivery_results = $this->date_range_report_of_hour($vendor_id, $min_date, $max_date, 'delivery', $sql);
+		$pickup_results = $this->date_range_report_of_hour($vendor_id, $min_date, $max_date, 'pickup', $sql);
 		$local = [];
 		$delivery = [];
 		$pickup = [];
@@ -594,10 +594,10 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 		return $newData;
 	}
 
-	function get_quarter_report($vendor_id,$min_date, $max_date){
-		$local_results = $this->date_range_report_of_quarter($vendor_id, $min_date, $max_date, 'local');
-		$delivery_results = $this->date_range_report_of_quarter($vendor_id, $min_date, $max_date, 'delivery');
-		$pickup_results = $this->date_range_report_of_quarter($vendor_id, $min_date, $max_date, 'pickup');
+	function get_quarter_report($vendor_id,$min_date, $max_date, $sql=''){
+		$local_results = $this->date_range_report_of_quarter($vendor_id, $min_date, $max_date, 'local', $sql);
+		$delivery_results = $this->date_range_report_of_quarter($vendor_id, $min_date, $max_date, 'delivery', $sql);
+		$pickup_results = $this->date_range_report_of_quarter($vendor_id, $min_date, $max_date, 'pickup', $sql);
 		$local = [];
 		$delivery = [];
 		$pickup = [];
@@ -638,10 +638,10 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 		return $newData;
 	}
 
-	function get_day_report($vendor_id,$min_date, $max_date){
-		$local_results = $this->date_range_report_of_day($vendor_id, $min_date, $max_date, 'local');
-		$delivery_results = $this->date_range_report_of_day($vendor_id, $min_date, $max_date, 'delivery');
-		$pickup_results = $this->date_range_report_of_day($vendor_id, $min_date, $max_date, 'pickup');
+	function get_day_report($vendor_id,$min_date, $max_date, $sql=''){
+		$local_results = $this->date_range_report_of_day($vendor_id, $min_date, $max_date, 'local', $sql);
+		$delivery_results = $this->date_range_report_of_day($vendor_id, $min_date, $max_date, 'delivery', $sql);
+		$pickup_results = $this->date_range_report_of_day($vendor_id, $min_date, $max_date, 'pickup', $sql);
 		$local = [];
 		$delivery = [];
 		$pickup = [];
@@ -680,13 +680,13 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 		return $newData;
 	}
 
-	public function get_report_of($vendor_id,$min_date, $max_date, $selected){
-		if($selected == 'month') {return $this->get_month_report($vendor_id,$min_date, $max_date);}
-		else if($selected == 'day') {return $this->get_day_report($vendor_id,$min_date, $max_date);}
-		else if($selected == 'quarter') {return $this->get_quarter_report($vendor_id,$min_date, $max_date);}
-		else if($selected == 'hour') {return $this->get_hour_report($vendor_id,$min_date, $max_date);}
-		else if($selected == 'week') {return $this->get_week_report($vendor_id,$min_date, $max_date);}
-		else {return $this->get_total_report($vendor_id,$min_date, $max_date);}
+	public function get_report_of($vendor_id,$min_date, $max_date, $selected, $sql=''){
+		if($selected == 'month') {return $this->get_month_report($vendor_id,$min_date, $max_date, $sql);}
+		else if($selected == 'day') {return $this->get_day_report($vendor_id,$min_date, $max_date, $sql);}
+		else if($selected == 'quarter') {return $this->get_quarter_report($vendor_id,$min_date, $max_date, $sql);}
+		else if($selected == 'hour') {return $this->get_hour_report($vendor_id,$min_date, $max_date, $sql);}
+		else if($selected == 'week') {return $this->get_week_report($vendor_id,$min_date, $max_date, $sql);}
+		else {return $this->get_total_report($vendor_id,$min_date, $max_date, $sql);}
 
 	}
 

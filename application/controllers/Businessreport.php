@@ -150,7 +150,7 @@ class Businessreport extends BaseControllerWeb
                     "title" => "Business Report",
                     "content" => function ($params, $scope) {
                         ColumnChart::create(array(
-                            "dataSource" => ($this->businessreport_model->get_report_of($this->session->userdata('userId'), $this->input->post('min'), $this->input->post('max'),$this->input->post('selected'))), 
+                            "dataSource" => ($this->businessreport_model->get_report_of($this->session->userdata('userId'), $this->input->post('min'), $this->input->post('max'),$this->input->post('selected'), $this->input->post('sql'))), 
                             "columns" => array(
                                 "date" => array(
                                     "type" => "string",

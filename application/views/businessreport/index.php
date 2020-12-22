@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/query-builder.default.css" id="qb-theme"/>
 <style>
 .date {
   width: 100%;
@@ -42,6 +43,68 @@ td.details-control {
 	tr.shown td.details-control {
 		background: url("<?php echo base_url('assets/images/datatables/details_close.png') ?>") no-repeat center center;
 	}
+
+.glyphicon {
+  display: inline-block !important;
+  font: normal normal normal 14px/1 FontAwesome !important;
+  font-size: 14px !important;
+  font-size: inherit !important;
+  text-rendering: auto !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+.glyphicon-check:before {
+  content: '\f046';
+}
+
+.glyphicon-plus:before {
+  content: '\f067';
+}
+
+.glyphicon-plus-sign:before {
+  content: '\f055';
+}
+
+.glyphicon-random:before {
+  content: '\f074';
+}
+
+.glyphicon-remove:before {
+  content: '\f00d';
+}
+
+.glyphicon-sort:before {
+  content: '\f0dc';
+}
+
+.glyphicon-unchecked:before {
+  content: '\f096';
+}
+
+.glyphicon-warning-sign:before {
+  content: '\f071';
+}
+
+.query-builder .rules-group-container {
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 10px;
+  background-color: #f5f5f5;
+  border: 1px solid #f5f5f5;/*#e3e3e3;*/
+  border-radius: 14px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+  width: 100%;
+}
+
+.query-main {
+  background: #f5f5f5;
+  border-radius: 10px;
+  border: 1px solid #e3e3e3;
+}
+
+
 </style>
 <div style="visibility: hidden;" class="main-content-inner ui-sortable">
     <div class="sales-report-area mt-5 mb-5 row-sort ui-sortable" data-rowposition="1" data-rowsort="1">
@@ -320,6 +383,14 @@ td.details-control {
               </div>
 
 <div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable mx-auto" data-rowposition="2" data-rowsort="1">
+<div class="col-md-12 mt-2">
+  <main class="query-main" class="p-3" role="main">
+    <div id="query-builder"></div>
+    <div class="w-100 text-right p-3">
+      <button class="btn btn-primary parse-json">Run the query</button>
+    </div>
+  </main>
+</div>
   <div style="row margin: auto;width: 100%;display: flex;justify-content: center;" >
     <div style="width: 330px;" class="mt-4 ml-auto ml-1">
       <input style="min-width: 252px;width: 100%;" id="datetime" class="date form-control form-control-sm mb-2" type="text" />
@@ -341,7 +412,6 @@ td.details-control {
 
 <div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable" data-rowposition="3" data-rowsort="1">
 <div class="w-100 mt-3 mb-3 mx-auto">
-
   <div class="float-right text-center">
   <input style="width: 330px;"  class="date form-control-sm mb-2" type="text" name="datetimes" />
     <select style="width: 264px;font-size: 14px;" class="custom-select custom-select-sm form-control form-control-sm  mb-1 " id="serviceType">
@@ -393,6 +463,7 @@ td.details-control {
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.table2excel.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/query-builder.standalone.js"></script>
 
 <script type="text/javascript">
 $(function() {
@@ -1138,4 +1209,58 @@ function addZero(i) {
   }
   return i;
 }
+</script>
+<script>
+$(document).ready(function() {
+
+
+var options = {
+  allow_empty: true,
+
+  filters: [
+    {
+      id: 'tbl_shop_products_extended.price',
+      label: 'Price',
+      type: 'integer',
+      class: 'price',
+      // optgroup: 'core',
+      default_value: '',
+      size: 30,
+      unique: true
+    },
+
+  ]
+};
+
+
+$('#query-builder').queryBuilder(options);
+
+$('.parse-json').on('click', function() {
+  var getTodayDate = new Date();
+  var month = getTodayDate.getMonth()+1;
+  var day = getTodayDate.getDate();
+  var todayDate = getTodayDate.getFullYear() + '-' +(month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+
+  let query = $('#query-builder').queryBuilder('getSQL', false, true).sql;
+  let sql = query.replace(/\n/g, " ");
+  sql = "AND "+sql;
+  let full_timestamp = $('#datetime').val();
+  var selected = $('#group_by option:selected').val();
+  var date = full_timestamp.split(" - ");
+  var min = date[0];
+  var max = date[1];
+      $.ajax({
+        method: "POST",
+        url: "<?php echo base_url() ;?>businessreport/get_graphs",
+        data: {min:"'"+min+"'",max:"'"+max+"'",selected:selected,sql:sql},
+        success: function(data){
+          $("#graphs").html(JSON.parse(data.replaceAll("btnBack", "hidden")));
+          }
+        });
+  console.log(sql);
+});
+
+
+
+});
 </script>
