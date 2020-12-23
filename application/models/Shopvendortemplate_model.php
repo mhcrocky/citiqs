@@ -71,4 +71,141 @@
 
             return $design;
         }
+
+        public function getDefaultDesignData(): ?array
+        {
+            $design = $this->readImproved([
+                'what' => ['*'],
+                'where' => [
+                    $this->table . '.vendorId' => $this->defaultVendorId,
+                    $this->table . '.active' => '1',
+                ]
+            ]);
+
+            if (!$design) return null;
+
+            $design = reset($design);
+            $design['templateValue'] = unserialize($design['templateValue']);
+
+            return $design;
+        }
+
+        public function getAllDefaultDesigns(): ?array
+        {
+            $design = $this->readImproved([
+                'what' => ['*'],
+                'where' => [
+                    $this->table . '.vendorId' => $this->defaultVendorId
+                ]
+            ]);
+
+            return $design;
+        }
+
+        public function getVendorDesigns(): ?array
+        {
+            $design = $this->readImproved([
+                'what' => ['*'],
+                'where' => [
+                    $this->table . '.vendorId' => $this->vendorId
+                ]
+            ]);
+
+            return $design;
+        }
+
+        public function getVendorActiveDesign(): ?array
+        {
+            $design = $this->readImproved([
+                'what' => ['*'],
+                'where' => [
+                    $this->table . '.vendorId' => $this->vendorId,
+                    $this->table . '.active' => '1',
+                ]
+            ]);
+
+            if (is_null($design)) return null;
+
+            $design = reset($design);
+            $design['templateValue'] = unserialize($design['templateValue']);
+
+            return $design;
+        }
+
+
+        public function checkIsNameExists(): bool
+        {
+            $where = [
+                $this->table . '.vendorId' => $this->vendorId,
+                $this->table . '.templateName' => $this->templateName,
+            ];
+
+            if ($this->id) {
+                $where['id !='] = $this->id;
+            }
+            $templateName = $this->readImproved([
+                'what' => ['id'],
+                'where' => $where,
+            ]);
+            return !is_null($templateName);
+        }
+
+        public function isActiveExists(): bool
+        {
+
+            $where = [
+                $this->table . '.vendorId' => $this->vendorId,
+                $this->table . '.active' => '1',
+            ];
+
+            if ($this->id) {
+                $where['id !='] = $this->id;
+            }
+
+            $active = $this->readImproved([
+                'what' => ['id'],
+                'where' => $where
+            ]);
+            return !is_null($active);
+        }
+
+        public function deactivateActive(): bool
+        {
+
+            $where = [
+                $this->table . '.vendorId' => $this->vendorId,
+                $this->table . '.active' => '1',
+            ];
+
+            if ($this->id) {
+                $where['id !='] = $this->id;
+            }
+
+            $active = $this->readImproved([
+                'what' => ['id'],
+                'where' => $where
+            ]);
+
+            if (is_null($active)) return true;
+            $query = 'UPDATE ' . $this->table . ' SET active = "0" WHERE id = ' . $active[0]['id'] . ';';
+            $this->db->query($query);
+            return ($this->db->affected_rows() > 0) ? true : false;
+
+        }
+
+        public function getDesign(): array
+        {
+            $design = $this->readImproved([
+                'what' => ['*'],
+                'where' => [
+                    $this->table . '.id' => $this->id,
+                ]
+            ]);
+
+            $design = reset($design);
+
+
+            $design['templateValue'] = unserialize($design['templateValue']);
+            return $design;
+        }
     }

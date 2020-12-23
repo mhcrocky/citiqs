@@ -11,7 +11,6 @@ function styleELements(element) {
         for (i = 0; i < iframeElementsLength; i++) {
             let iframeElement = iframeElements[i];
             if (selector === '.slick-arrow') {
-                console.dir($('iframe').contents().find('head')[0]);
                 let head = $('iframe').contents().find('head')[0];
                 $(head).append('<style>.slick-arrow:before{color:' + value +' !important}</style>');
             } else {
@@ -86,16 +85,27 @@ function iframeURLChange(iframe, callback) {
 }
 
 function saveDesign(form) {
-    let url = globalVariables.ajax + 'saveDesign/' + form.id;
+    let url = (form.id !== 'undefined') ? globalVariables.ajax + 'saveDesign/' + form.id : globalVariables.ajax + 'saveDesign/';
     sendFormAjaxRequest(form, url, 'saveDesign', alertifyMessage)
     return false;
 }
 
 function alertifyMessage(response) {
     if (response.status === '1') { 
-        alertify.success(response.message);
+        if (!response.designId) {
+            alertify.success(response.message);
+        } else {
+            let newLocation = 'viewdesign?designid=' + response.designId;
+            redirectToNewLocation(newLocation);
+        }
     } else if (response.status === '0') { 
-        alertify.error(response.message);
+        let i = 0;
+        let messages = response.message;
+        let messagesLength = messages.length;
+        for (i = 0; i < messagesLength; i++) {
+            alertify.error(messages[i]);
+        }
+        
     }
 }
 
@@ -165,11 +175,13 @@ function saveIrame(width, height, iframe) {
 
 $(document).ready(function(){
     let iframe = document.getElementById(designGlobals.iframeId);
-    iframeURLChange(iframe, function (newURL) {
-        showViewSettings(designGlobals.checkUrl(newURL));
-    });
-
-    iframe.onload = function () {
-        setDesign();
-    }
+    if (iframe) {
+        iframeURLChange(iframe, function (newURL) {
+            showViewSettings(designGlobals.checkUrl(newURL));
+        });
+    
+        iframe.onload = function () {
+            setDesign();
+        }
+    }    
 })

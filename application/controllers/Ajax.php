@@ -29,6 +29,7 @@ class Ajax extends CI_Controller
         $this->load->model('shopvoucher_model');
         $this->load->model('shopsession_model');
         $this->load->model('shopposorder_model');
+        $this->load->model('shopvendortemplate_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -1460,16 +1461,97 @@ class Ajax extends CI_Controller
         return ($this->shopsession_model->id && $this->shopsession_model->randomKey) ? true : false;
     }
 
-    public function saveDesign($id): void
+    public function saveDesign($id = null): void
     {
         if (!$this->input->is_ajax_request()) return;
 
         $post = Utility_helper::sanitizePost();
-        $design = serialize($post);
-        $id = intval($id);
-        $update = $this->shopvendor_model->setObjectId($id)->setProperty('design', $design)->update();
+        $input = [
+            'vendorId' => Utility_helper::getAndUnsetValue($post, 'vendorId'),
+            'active' => Utility_helper::getAndUnsetValue($post, 'active'),
+            'templateName' => Utility_helper::getAndUnsetValue($post, 'templateName'),
+            'templateValue' => serialize($post),
+        ];
+        $response = [];
 
-        if ($update) {
+        $this->shopvendortemplate_model->setObjectFromArray($input);
+
+        if ($id) {
+            $this->shopvendortemplate_model->id = intval($id);
+        }
+
+        // validation methods
+        $this->checkDesignTemplateName($response);
+        $this->checkTemplateName($response);
+        $this->deactivateActive($response);
+
+        // crud
+        if (!$response) {
+            is_null($this->shopvendortemplate_model->id) ? $this->createDesignTemplate($response) : $this->updateDesingTemplate($response);
+        }
+
+        echo json_encode($response);
+    }
+
+    private function checkDesignTemplateName(array &$response): void
+    {
+        if (!$this->shopvendortemplate_model->templateName) {
+            $response = [
+                'status' => '0',
+                'message' => ['Template name is requried field.']
+            ];
+        }
+        return;
+    }
+
+    private function checkTemplateName(array &$response): void
+    {
+        if ($this->shopvendortemplate_model->checkIsNameExists()) {
+            $response = [
+                'status' => '0',
+                'message' => ['Template with this name already exists.']
+            ];
+        }
+        return;
+    }
+    private function deactivateActive(array &$response): void
+    {
+        if ($this->shopvendortemplate_model->active === '1' && !$this->shopvendortemplate_model->deactivateActive()) {
+            if ((isset($response['message']))) {
+                $messages = $response['message'];
+                array_push($messages, 'Only one template can be active.');
+            } else {
+                $messages = ['Only one template can be active.'];
+            }
+            $response = [
+                'status' => '0',
+                'message' => $messages 
+            ];
+        }
+        return;
+    }
+
+    private function createDesignTemplate(array &$response): void
+    {
+        if ($this->shopvendortemplate_model->create()) {
+            $response = [
+                'status' => '1',
+                'message' => 'Design created',
+                'designId' => $this->shopvendortemplate_model->id,
+            ];
+        } else {
+            $response = [
+                'status' => '0',
+                'message' => ['Design create failed']
+            ];
+        }
+        return;
+    }
+        
+
+    public function updateDesingTemplate(array &$response): void
+    {
+        if ($this->shopvendortemplate_model->update()) {
             $response = [
                 'status' => '1',
                 'message' => 'Design updated'
@@ -1480,9 +1562,10 @@ class Ajax extends CI_Controller
                 'message' => 'Design update failed'
             ];
         }
-        echo json_encode($response);
+        return;
     }
 
+        
     public function saveIrame($id): void
     {
         if (!$this->input->is_ajax_request()) return;
@@ -1543,3 +1626,4 @@ class Ajax extends CI_Controller
         return;
     }
 }
+
