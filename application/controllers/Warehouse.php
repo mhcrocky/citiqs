@@ -33,6 +33,7 @@
             $this->load->model('shopspottime_model');
             $this->load->model('shopvendor_model');
             $this->load->model('shopvendortypes_model');
+            $this->load->model('shopvendortemplate_model');
 
             $this->load->library('language', array('controller' => $this->router->class));
             $this->load->library('session');
@@ -968,27 +969,47 @@
         public function viewdesign(): void
         {
             $userId = intval($_SESSION['userId']);
-            $iframeSrc = base_url() . 'make_order?vendorid=' . $userId;
-            $vendorData = $this->shopvendor_model->setProperty('vendorId', $userId)->getProperties(['id', 'design']);
-            $id = $vendorData['id'];
-            $design = ($vendorData['design']) ? unserialize($vendorData['design']) : null;
-            $spots = Utility_helper::resetArrayByKeyMultiple($this->shopspot_model->fetchUserActiveSpots($userId), 'spotType');
-            $categories = $this
-                            ->shopcategory_model
-                                ->setProperty('userId', $userId)
-                                ->setProperty('active', '1')
-                                ->fetcUserCategories();
+            $designId = intval($this->input->get('designid', true));
+            $defaultDesignId = intval($this->input->get('defaultdesignid', true));
 
             $data = [
-                'iframeSrc' => $iframeSrc,
-                'id' => $id,
-                'design' => $design,
-                'spots' => $spots,
-                'categories' => $categories,
+                'id' => intval($this->shopvendor_model->setProperty('vendorId', $userId)->getProperty('id')),// this is row id in tbl_shop_vendors, we need to update iframe
+                'vendorId' => $userId,
+                'iframeSrc' => base_url() . 'make_order?vendorid=' . $userId,
+                'spots' => Utility_helper::resetArrayByKeyMultiple($this->shopspot_model->fetchUserActiveSpots($userId), 'spotType'),
+                'categories' => $this->shopcategory_model->setProperty('userId', $userId)->setProperty('active', '1')->fetcUserCategories(),
+                'allDefaultDesigns' => $this->shopvendortemplate_model->getAllDefaultDesigns(),
+                'allVendorDesigns'=> $this->shopvendortemplate_model->setProperty('vendorId', $userId)->getVendorDesigns(),
+                'designId' => $designId,
+                'defaultDesignId' => $defaultDesignId,
             ];
+            $this->setDesign($designId, $defaultDesignId, $data);
 
             $this->global['pageTitle'] = 'TIQS : DESIGN';
             $this->loadViews('warehouse/design', $this->global, $data, 'footerbusiness', 'headerbusiness');
+            return;
+        }
+
+        private function setDesign(int $designId, int $defaultDesignId, array &$data): void
+        {
+            if ($designId) {
+                $this->shopvendortemplate_model->setObjectId($designId);
+            }
+
+            if (!$designId && $defaultDesignId) {
+                $this->shopvendortemplate_model->setObjectId($defaultDesignId);
+            }
+
+            if ($this->shopvendortemplate_model->id) {
+                $designData = $this->shopvendortemplate_model->getDesign();
+                unset($this->shopvendortemplate_model->id);
+
+                $data['design'] = $designData['templateValue'];
+                $data['designName'] = $designData['templateName'];
+                $data['designActive'] = $designData['active'];
+                $data['designVendorId'] = intval($designData['vendorId']);
+            }
+
             return;
         }
 

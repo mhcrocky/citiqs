@@ -31,7 +31,7 @@
             />
             &nbsp;px
         </label>
-        <label for="categorySortNumberId" style="margin-right:30px">
+        <label for="selectedSpotId" style="margin-right:30px">
             Spots:&nbsp;&nbsp;
             <select
                 id="selectedSpotId"
@@ -69,7 +69,8 @@
                 class="form-control"
                 id="iframeId"
                 readonly
-                rows="2"
+                rows="4"
+                style="height:60px"
             ><?php
                     #$iframe  = htmlentities('<script src="' . base_url() . 'assets/js/iframeResizer.js"></script>');
                     $iframe = htmlentities('<iframe frameborder="0" style="width:400px; height:600px;" src="' . $iframeSrc . '"></iframe>');

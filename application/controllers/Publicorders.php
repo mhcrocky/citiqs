@@ -36,6 +36,7 @@
             $this->load->model('shopsession_model');
             $this->load->model('fodfdm_model');
             $this->load->model('shopprinters_model');
+            $this->load->model('shopvendortemplate_model');
 
             $this->load->config('custom');
 
@@ -52,8 +53,7 @@
             $spotId = empty($get['spotid']) ? 0 : intval($get['spotid']);
             $vendor = $this->shopvendor_model->setProperty('vendorId', $get['vendorid'])->getVendorData();
 
-            $this->global[$this->config->item('design')] = (!empty($vendor['design'])) ? unserialize($vendor['design']) : null;
-
+            $this->setGlobalDesign($vendor['design']);
             $this->isVendorClosed($vendor);
 
             if ($spotId && $vendor) {
@@ -250,9 +250,6 @@
                 redirect($redirect);
                 return;
             };
-
-            $this->global['pageTitle'] = 'TIQS : CLOSED';
-
             
             $data = [
                 'vendor' => $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData(),
@@ -262,6 +259,8 @@
             $workingTime = $this->shopspottime_model->setProperty('spotId', $spotId)->fetchWorkingTime();
             $data['workingTime'] = $workingTime ? Utility_helper::resetArrayByKeyMultiple($workingTime, 'day') : null;
 
+            $this->global['pageTitle'] = 'TIQS : CLOSED';
+            $this->setGlobalDesign($vendor['design']);
             $this->loadViews('publicorders/spotClosed', $this->global, $data, null, 'headerWarehousePublic');
         }
 
@@ -278,6 +277,7 @@
             ];
 
             $this->global['pageTitle'] = 'TIQS : CLOSED';
+            $this->setGlobalDesign($vendor['design']);
             $this->loadViews('publicorders/temporarilyClosed', $this->global, $data, null, 'headerWarehousePublic');
         }
 
@@ -302,8 +302,7 @@
             $data['workingTime'] = $workingTime ? Utility_helper::resetArrayByKeyMultiple($workingTime, 'day') : null;
 
             $this->global['pageTitle'] = 'TIQS : CLOSED';
-            $this->global[$this->config->item('design')] = (!empty($data['vendor']['design'])) ? unserialize($data['vendor']['design']) : null;
-
+            $this->setGlobalDesign($vendor['design']);
             $this->loadViews('publicorders/closed', $this->global, $data, null, 'headerWarehousePublic');
         }
         // CHECKOUT ORDER
@@ -343,7 +342,7 @@
             $this->setBuyerSideFee($data);
 
             $this->global['pageTitle'] = 'TIQS : CHECKOUT';
-            $this->global[$this->config->item('design')] = (!empty($data['vendor']['design'])) ? unserialize($data['vendor']['design']) : null;
+            $this->setGlobalDesign($vendor['design']);
             $this->loadViews('publicorders/checkoutOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
 
@@ -439,7 +438,7 @@
             $data['orderDataGetKey'] = $this->config->item('orderDataGetKey');
 
             $this->global['pageTitle'] = 'TIQS : BUYER DETAILS';
-            $this->global[$this->config->item('design')] = (!empty($data['vendor']['design'])) ? unserialize($data['vendor']['design']) : null;
+            $this->setGlobalDesign($vendor['design']);
             $this->loadViews('publicorders/buyerDetails', $this->global, $data, null, 'headerWarehousePublic');
         }
 
@@ -486,7 +485,7 @@
             ];
 
             $this->global['pageTitle'] = 'TIQS : PAY';
-            $this->global[$this->config->item('design')] = (!empty($data['vendor']['design'])) ? unserialize($data['vendor']['design']) : null;
+            $this->setGlobalDesign($vendor['design']);
             $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
 
@@ -542,5 +541,14 @@
                 redirect('closed/' . $vendor['vendorId']);                
             }
             return;
+        }
+
+        private function setGlobalDesign(?string $design): void
+        {
+            if ((!empty($design))) {
+                $this->global[$this->config->item('design')] = unserialize($design);
+            } else {
+                $this->global[$this->config->item('design')] = $this->shopvendortemplate_model->getDefaultDesign();
+            }
         }
     }
