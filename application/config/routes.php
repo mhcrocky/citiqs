@@ -352,6 +352,7 @@ $route['businessreport/sortedWidgets'] = 'Businessreport/sortedWidgets';
 $route['businessreport/sortWidgets'] = 'Businessreport/sortWidgets';
 $route['businessreport/get_graphs'] = 'Businessreport/get_graphs';
 $route['businessreport/graphs'] = 'Businessreport/graphs';
+$route['businessreports'] = 'Businessreport/reports';
 
 $route['accounting/report'] = 'AccountingReports/index';
 $route['accountingreport/get_report'] = 'AccountingReports/get_report';
