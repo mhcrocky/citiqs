@@ -1,0 +1,90 @@
+svg {
+	border-radius: 10px;
+  }
+  .date {
+	width: 100%;
+	height: 32px;
+	padding: .375rem .75rem;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #495057;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid #ced4da;
+	border-radius: .25rem;
+  }
+  .hidden {
+	display: none;
+  }
+  
+  .btn-refund {
+	background: #ff704d !important;
+	color: #fff !important;
+	border-color: #ff5c33 !important;
+  }
+  
+  .single-report {
+	border-radius: 20px !important;
+  }
+  
+  .glyphicon {
+	display: inline-block !important;
+	font: normal normal normal 14px/1 FontAwesome !important;
+	font-size: 14px !important;
+	font-size: inherit !important;
+	text-rendering: auto !important;
+	-webkit-font-smoothing: antialiased !important;
+	-moz-osx-font-smoothing: grayscale !important;
+  }
+  
+  .glyphicon-check:before {
+	content: '\f046';
+  }
+  
+  .glyphicon-plus:before {
+	content: '\f067';
+  }
+  
+  .glyphicon-plus-sign:before {
+	content: '\f055';
+  }
+  
+  .glyphicon-random:before {
+	content: '\f074';
+  }
+  
+  .glyphicon-remove:before {
+	content: '\f00d';
+  }
+  
+  .glyphicon-sort:before {
+	content: '\f0dc';
+  }
+  
+  .glyphicon-unchecked:before {
+	content: '\f096';
+  }
+  
+  .glyphicon-warning-sign:before {
+	content: '\f071';
+  }
+  
+  .query-builder .rules-group-container {
+	min-height: 20px;
+	padding: 19px;
+	margin-bottom: 10px;
+	background-color: #f5f5f5;
+	border: 1px solid #f5f5f5;/*#e3e3e3;*/
+	border-radius: 14px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+	width: 100%;
+  }
+  
+  .query-main {
+	background: #f5f5f5;
+	border-radius: 10px;
+	border: 1px solid #e3e3e3;
+  }
+  
