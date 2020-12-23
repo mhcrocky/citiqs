@@ -168,4 +168,20 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/temporarilyClosed.css">
 <?php  } elseif ($this->view === 'pos/pos_login') { ?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/posLogin.css">
+<?php  } elseif ($this->view === 'businessreport/index' || $this->view === 'businessreport/reports') { ?>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/query-builder.default.css" id="qb-theme"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/dashboard.css">
+    <style>
+        td.details-control {
+		  background: url("<?php echo base_url('assets/images/datatables/details_open.png') ?>") no-repeat center center;
+		  cursor: pointer;
+	    }
+  
+	    tr.shown td.details-control {
+		  background: url("<?php echo base_url('assets/images/datatables/details_close.png') ?>") no-repeat center center;
+        }
+    </style>
 <?php } ?>
