@@ -70,6 +70,14 @@ svg {
 	content: '\f071';
   }
   
+  .rule-value-container .form-control {
+	  height: 40px;
+  }
+
+  .rule-operator-container .form-control,.rule-filter-container .form-control,.group-actions {
+	margin-bottom: 5px;
+   }
+
   .query-builder .rules-group-container {
 	min-height: 20px;
 	padding: 19px;
