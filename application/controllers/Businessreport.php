@@ -40,9 +40,10 @@ class Businessreport extends BaseControllerWeb
 	public function get_report(){
 		ini_set('memory_limit','1024M');
 		$vendor_id = $this->vendor_id;//418
-		$pickup = $this->businessreport_model->get_pickup_report($vendor_id);
-		$delivery = $this->businessreport_model->get_delivery_report($vendor_id);
-		$local = $this->businessreport_model->get_local_report($vendor_id);
+		$sql = $this->input->post('sql');
+		$pickup = $this->businessreport_model->get_pickup_report($vendor_id, $sql);
+		$delivery = $this->businessreport_model->get_delivery_report($vendor_id, $sql);
+		$local = $this->businessreport_model->get_local_report($vendor_id, $sql);
 		$report = array_merge($pickup, $delivery, $local);
 		$report = $this->group_by('order_id',$report);
 		$report = $this->table_data($report);
