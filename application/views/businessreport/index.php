@@ -8,6 +8,9 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/query-builder.default.css" id="qb-theme"/>
 <style>
+svg {
+  border-radius: 10px;
+}
 .date {
   width: 100%;
   height: 32px;
@@ -112,7 +115,7 @@ td.details-control {
                     <div class="col-md-3 ui-sortable mb-3" data-position="1" data-sort="1">
                             <div style="height:160px;" class="single-report mb-xs-30"><div style="min-height:500px;position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <div style="background: #0066ff;" class="icon">&nbsp</div>
+                                <div style="background: #496083;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Total</h4>
                                         <p>TODAY</p>
@@ -172,7 +175,7 @@ td.details-control {
                             <div class="col-md-3 ui-sortable mb-3" data-position="5" data-sort="1">
                             <div style="height:160px;" class="single-report mb-xs-30"><div style="min-height:500px;position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <div style="background: #0066ff;" class="icon">&nbsp</div>
+                                <div style="background: #496083;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Total</h4>
                                         <p>THIS WEEK</p>
@@ -260,7 +263,7 @@ td.details-control {
                         <div class="col-md-3 ui-sortable mb-3" data-position="9" data-sort="1">
                             <div style="height:160px;" class="single-report mb-xs-30"><div style="min-height:500px;position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <div style="background: #0066ff;" class="icon">&nbsp</div>
+                                <div style="background: #496083;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Total</h4>
                                         <p>TIMESTAMP</p>
@@ -320,7 +323,7 @@ td.details-control {
                         <div class="col-md-3 ui-sortable mb-3" data-position="13" data-sort="1">
                             <div style="height:160px;" class="single-report mb-xs-30"><div style="min-height:500px;position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <div style="background: #0066ff;" class="icon">&nbsp</div>
+                                <div style="background: #496083;" class="icon">&nbsp</div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Orders</h4>
                                         <p>TODAY</p>
@@ -383,14 +386,6 @@ td.details-control {
               </div>
 
 <div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable mx-auto" data-rowposition="2" data-rowsort="1">
-<div class="col-md-12 mt-2">
-  <main class="query-main" class="p-3" role="main">
-    <div id="query-builder"></div>
-    <div class="w-100 text-right p-3">
-      <button class="btn btn-primary parse-json">Run the query</button>
-    </div>
-  </main>
-</div>
   <div style="row margin: auto;width: 100%;display: flex;justify-content: center;" >
     <div style="width: 330px;" class="mt-4 ml-auto ml-1">
       <input style="min-width: 252px;width: 100%;" id="datetime" class="date form-control form-control-sm mb-2" type="text" />
@@ -412,6 +407,14 @@ td.details-control {
 
 <div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable" data-rowposition="3" data-rowsort="1">
 <div class="w-100 mt-3 mb-3 mx-auto">
+<div class="col-md-12 mt-2 mb-4">
+  <main class="query-main" class="p-3" role="main">
+    <div id="query-builder"></div>
+    <div class="w-100 text-right p-3">
+      <button class="btn btn-primary parse-json">Run the query</button>
+    </div>
+  </main>
+</div>
   <div class="float-right text-center">
   <input style="width: 330px;"  class="date form-control-sm mb-2" type="text" name="datetimes" />
     <select style="width: 264px;font-size: 14px;" class="custom-select custom-select-sm form-control form-control-sm  mb-1 " id="serviceType">
@@ -519,6 +522,37 @@ $(function() {
   });
 
   $(document).ready( function () {
+    var options = {
+      allow_empty: true,
+      filters: [
+        {
+          id: 'tbl_shop_products_extended.price',
+          label: 'Price',
+          type: 'integer',
+          class: 'price',
+          // optgroup: 'core',
+          default_value: '',
+          size: 30,
+          unique: true
+        },
+      ]
+    };
+    $('#query-builder').queryBuilder(options);
+    var sql;
+    $('.parse-json').on('click', function() {
+      window.myValue = "test";
+      let query = $('#query-builder').queryBuilder('getSQL', false, true).sql;
+      sql = query.replace(/\n/g, " ");
+      sql = "AND "+sql;
+      table.ajax.reload();
+      table.clear().draw();
+
+});
+//setInterval(function(){ table.ajax.reload(); }, 3000);
+
+    
+
+        var test = 'true';
         var sort = '';
         $.ajax({
             url: "<?php echo base_url(); ?>businessreport/sortedWidgets",
@@ -721,6 +755,13 @@ $(function() {
         ajax: {
           type: 'get',
           url: '<?php echo base_url("businessreport/get_report"); ?>',
+          data: function(data) {
+          let query = $('#query-builder').queryBuilder('getSQL', false, true).sql;
+          sql = query.replace(/\n/g, " ");
+          sql = "AND "+sql;
+          data.sql = sql;
+          $('.has-error').removeClass('has-error');
+          },
           dataSrc: '',
         },
         footerCallback: function( tfoot, data, start, end, display ) {
@@ -1209,58 +1250,4 @@ function addZero(i) {
   }
   return i;
 }
-</script>
-<script>
-$(document).ready(function() {
-
-
-var options = {
-  allow_empty: true,
-
-  filters: [
-    {
-      id: 'tbl_shop_products_extended.price',
-      label: 'Price',
-      type: 'integer',
-      class: 'price',
-      // optgroup: 'core',
-      default_value: '',
-      size: 30,
-      unique: true
-    },
-
-  ]
-};
-
-
-$('#query-builder').queryBuilder(options);
-
-$('.parse-json').on('click', function() {
-  var getTodayDate = new Date();
-  var month = getTodayDate.getMonth()+1;
-  var day = getTodayDate.getDate();
-  var todayDate = getTodayDate.getFullYear() + '-' +(month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
-
-  let query = $('#query-builder').queryBuilder('getSQL', false, true).sql;
-  let sql = query.replace(/\n/g, " ");
-  sql = "AND "+sql;
-  let full_timestamp = $('#datetime').val();
-  var selected = $('#group_by option:selected').val();
-  var date = full_timestamp.split(" - ");
-  var min = date[0];
-  var max = date[1];
-      $.ajax({
-        method: "POST",
-        url: "<?php echo base_url() ;?>businessreport/get_graphs",
-        data: {min:"'"+min+"'",max:"'"+max+"'",selected:selected,sql:sql},
-        success: function(data){
-          $("#graphs").html(JSON.parse(data.replaceAll("btnBack", "hidden")));
-          }
-        });
-  console.log(sql);
-});
-
-
-
-});
 </script>
