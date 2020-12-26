@@ -260,7 +260,7 @@
             $data['workingTime'] = $workingTime ? Utility_helper::resetArrayByKeyMultiple($workingTime, 'day') : null;
 
             $this->global['pageTitle'] = 'TIQS : CLOSED';
-            $this->setGlobalDesign($vendor['design']);
+            $this->setGlobalDesign($data['vendor']['design']);
             $this->loadViews('publicorders/spotClosed', $this->global, $data, null, 'headerWarehousePublic');
         }
 
@@ -277,7 +277,7 @@
             ];
 
             $this->global['pageTitle'] = 'TIQS : CLOSED';
-            $this->setGlobalDesign($vendor['design']);
+            $this->setGlobalDesign($data['vendor']['design']);
             $this->loadViews('publicorders/temporarilyClosed', $this->global, $data, null, 'headerWarehousePublic');
         }
 
@@ -302,7 +302,7 @@
             $data['workingTime'] = $workingTime ? Utility_helper::resetArrayByKeyMultiple($workingTime, 'day') : null;
 
             $this->global['pageTitle'] = 'TIQS : CLOSED';
-            $this->setGlobalDesign($vendor['design']);
+            $this->setGlobalDesign($data['vendor']['design']);
             $this->loadViews('publicorders/closed', $this->global, $data, null, 'headerWarehousePublic');
         }
         // CHECKOUT ORDER
@@ -342,7 +342,7 @@
             $this->setBuyerSideFee($data);
 
             $this->global['pageTitle'] = 'TIQS : CHECKOUT';
-            $this->setGlobalDesign($vendor['design']);
+            $this->setGlobalDesign($data['vendor']['design']);
             $this->loadViews('publicorders/checkoutOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
 
@@ -438,7 +438,7 @@
             $data['orderDataGetKey'] = $this->config->item('orderDataGetKey');
 
             $this->global['pageTitle'] = 'TIQS : BUYER DETAILS';
-            $this->setGlobalDesign($vendor['design']);
+            $this->setGlobalDesign($data['vendor']['design']);
             $this->loadViews('publicorders/buyerDetails', $this->global, $data, null, 'headerWarehousePublic');
         }
 
@@ -485,7 +485,7 @@
             ];
 
             $this->global['pageTitle'] = 'TIQS : PAY';
-            $this->setGlobalDesign($vendor['design']);
+            $this->setGlobalDesign($data['vendor']['design']);
             $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
 
