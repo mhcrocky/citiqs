@@ -295,7 +295,7 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="<?php echo $this->baseUrl. 'booking_agenda/design'; ?>"
+                                                        <a href="<?php echo $this->baseUrl. 'agenda_booking/design'; ?>"
                                                             ><i class="ti-clipboard"></i> <span>Design Agenda reservations</span>
                                                         </a>
                                                     </li>
@@ -404,7 +404,7 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
 														</a>
 													</li>
 													<li>
-														<a href="<?php echo $this->baseUrl. 'booking_agenda/design'; ?>"
+														<a href="<?php echo $this->baseUrl. 'agenda_booking/design'; ?>"
 														><i class="ti-clipboard"></i> <span>Design Agenda reservations</span>
 														</a>
 													</li>

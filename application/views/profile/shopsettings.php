@@ -54,7 +54,7 @@
 									class="form-check-input"
 									value="<?php echo $type['id']; ?>"
 									name="vendorTypes[<?php echo $type['id']; ?>]"
-									style="width:8px; height: 8px"
+									style="width:24px; height: 24px"
 									<?php
 										if ($type['active'] === '1') {
 											echo 'checked';
