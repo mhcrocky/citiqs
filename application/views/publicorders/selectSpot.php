@@ -1,4 +1,4 @@
-<div class="main-wrapper-nh" style="text-align:center; width:100vw: height:100vh">
+<main class="main-wrapper-nh" style="text-align:center; width:100vw: height:100vh">
 	<div id="selectSpotContainer" class="col-half background-apricot-blue height">
 		<div class="width-650" style="padding-top:0px"></div>
 		<?php if (!empty($_SESSION['iframe'])) { ?>
@@ -123,7 +123,7 @@
 			</div>
 		</div>
 	</div><!-- end col half -->
-</div>
+</main>
 <?php if (!empty($noSpots)) { ?>
 	<script>
 		$('#selectSpots').html('<p>No available spots</p>');

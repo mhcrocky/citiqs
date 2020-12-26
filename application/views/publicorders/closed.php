@@ -1,4 +1,4 @@
-<div class="main-wrapper-nh" style="text-align:center; width:100vw: height:100vh">
+<main class="main-wrapper-nh" style="text-align:center; width:100vw: height:100vh">
 	<div class="col-half background-apricot-blue height" id="closedContainer">
 		<div class="width-650"></div>
 		<div class="form-group has-feedback">
@@ -22,4 +22,4 @@
 			<?php } ?>
 		</div>
 	</div>
-</div>
+</main>
