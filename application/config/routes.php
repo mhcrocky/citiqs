@@ -434,7 +434,6 @@ $route['booking_agenda/delete_reservation/(:num)'] = "Booking_agenda/delete_rese
 $route['booking_agenda/get_agenda/(:any)'] = "Booking_agenda/get_agenda/$1";
 $route['booking_agenda/get_agenda/spots/(:num)/(:num)'] = "Booking_agenda/get_agenda/spots/$1/$1";
 $route['booking_agenda/getAllAgenda/(:any)'] = "Booking_agenda/getAllAgenda/$1";
-$route['booking_agenda/design'] = "Booking_agenda/design";
 $route['booking_agenda/(:any)'] = "Booking_agenda/index/$1";
 $route['booking/successbooking'] = "Booking/successBooking";
 
@@ -447,6 +446,8 @@ $route['agenda_booking/delete_reservation/(:num)'] = "Agenda_booking/delete_rese
 $route['agenda_booking/get_agenda/(:any)'] = "Agenda_booking/get_agenda/$1";
 $route['agenda_booking/get_agenda/spots/(:num)/(:num)'] = "Agenda_booking/get_agenda/spots/$1/$1";
 $route['agenda_booking/getAllAgenda/(:any)'] = "Agenda_booking/getAllAgenda/$1";
+$route['agenda_booking/design'] = "Agenda_booking/design";
+$route['agenda_booking/savedesign'] = "Agenda_booking/saveDesign";
 $route['agenda_booking/(:any)'] = "Agenda_booking/index/$1";
 
 $route['customer_panel'] = "Customer_panel/index/";
