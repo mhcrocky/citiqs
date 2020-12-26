@@ -14,10 +14,10 @@
         </div>
     </div>
     <div class="col-md-6">
-        <select class="form-control">
+        <select id="device" class="form-control">
             <?php foreach($devices as $device): ?>
-            <option onclick="screen(<?php echo $device['width']; ?>,<?php echo $device['height']; ?>)"
-                value="<?php echo $device['id']; ?>"><?php echo $device['device']; ?></option>
+            <option
+                value="<?php echo $device['width']."x".$device['height']; ?>"><?php echo $device['device']; ?></option>
             <?php endforeach; ?>
         </select>
         <div id="views">
@@ -142,6 +142,16 @@
 </div>
 
 <script>
+
+$(document).ready(function() {
+    $('#device').on('change', function() {
+        let device = $("#device option:selected").val();
+        let px = device.split('x');
+        console.log(px);
+        screen(px[0], px[1]);
+    });
+})
+
 function screen(width, height) {
     $("#iframeWidth").val(width);
     $("#iframeHeight").val(height);
