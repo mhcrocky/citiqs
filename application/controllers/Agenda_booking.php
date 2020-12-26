@@ -786,10 +786,12 @@ class Agenda_booking extends BaseControllerWeb
         $user = $this->user_modelpublic->getUserInfoById($this->session->userdata('userId'));
         $iframeSrc = base_url() . 'agenda_booking/' . $user->usershorturl;
         $design = $this->bookandpayagendabooking_model->get_agenda_booking_design($this->session->userdata('userId'));
+        $devices = $this->bookandpayagendabooking_model->get_devices();
         $data = [
                 'iframeSrc' => $iframeSrc,
                 'id' => $user->userId,
                 'userShortUrl' => $user->usershorturl,
+                'devices' => $devices,
                 'design' => unserialize($design[0]['design']),
             ];
 
@@ -805,6 +807,7 @@ class Agenda_booking extends BaseControllerWeb
             'vendor_id' => $this->session->userdata('userId'),
             'design' => serialize($this->input->post(null,true)),
         ];
+
         $this->bookandpayagendabooking_model->save_agenda_booking_design($this->session->userdata('userId'),$data);
         redirect('agenda_booking/design');
     }

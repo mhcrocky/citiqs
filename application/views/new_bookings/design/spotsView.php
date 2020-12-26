@@ -3,9 +3,9 @@
     <div class="form-group col-sm-12">
         <label style="display:block;">
         Card Background color:
-            <input type="color"
+            <input 
                 data-jscolor=""
-                class="form-control"
+                class="form-control jscolor"
                 name="selectShortUrl[id][card][background-color]"
                 data-css-selector="id"
                 data-css-selector-value="card"
@@ -22,9 +22,9 @@
     <div class="form-group col-sm-12">
         <label style="display:block;">
         Spot Data color:
-            <input type="color"
+            <input 
                 data-jscolor=""
-                class="form-control"
+                class="form-control jscolor"
                 name="selectShortUrl[class][spot-data][color]"
                 data-css-selector="class"
                 data-css-selector-value="spot-data"
@@ -41,9 +41,9 @@
     <div class="form-group col-sm-12">
         <label style="display:block;">
         Spot Title color:
-            <input type="color"
+            <input 
                 data-jscolor=""
-                class="form-control"
+                class="form-control jscolor"
                 name="selectShortUrl[id][spot-title][color]"
                 data-css-selector="id"
                 data-css-selector-value="spot-title"
@@ -60,9 +60,9 @@
     <div class="form-group col-sm-12">
         <label style="display:block;">
         Choose Time color:
-            <input type="color"
+            <input 
                 data-jscolor=""
-                class="form-control"
+                class="form-control jscolor"
                 name="selectShortUrl[id][choose-time][color]"
                 data-css-selector="id"
                 data-css-selector-value="choose-time"

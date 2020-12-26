@@ -216,8 +216,14 @@ class   Bookandpayagendabooking_model extends CI_Model
 		->where('vendor_id',$vendor_id);
 		$query = $this->db->get();
 		return $query->result_array();
-	
-}
+	}
+
+	function get_devices(){
+		$this->db->select('*')
+		->from('tbl_devices_hw');
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 
 	function get_scannedIn($customer,$eventdate = false,$spot_id = false,$timeslot = false){
 		$sql="SELECT id,timefrom,timeto FROM tbl_bookandpay 

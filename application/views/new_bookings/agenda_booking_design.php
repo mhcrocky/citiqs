@@ -258,4 +258,5 @@ var designGlobals = (function() {
 }());
 console.log(designGlobals.showClass);
 </script>
+<script src="<?php echo base_url(); ?>assets/cdn/js/jscolor.js"></script>
 <script src="<?php echo base_url(); ?>assets/home/js/agenda_booking_design.js"></script>
