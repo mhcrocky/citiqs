@@ -19,6 +19,7 @@ class Agenda_booking extends BaseControllerWeb
         $this->load->model('bookandpaytimeslots_model');
         $this->load->model('sendreservation_model');
         $this->load->model('email_templates_model');
+        $this->load->helper('utility_helper');
         $this->load->library('language', array('controller' => $this->router->class)); 
     }
 
@@ -776,6 +777,36 @@ class Agenda_booking extends BaseControllerWeb
 		$CI->email->subject($subject);
 		$CI->email->message($message);
 		return $CI->email->send();
+    }
+
+    public function design()
+    {
+        $this->load->model('user_modelpublic');
+        if(null === $this->session->userdata('userId')) return;
+        $user = $this->user_modelpublic->getUserInfoById($this->session->userdata('userId'));
+        $iframeSrc = base_url() . 'agenda_booking/' . $user->usershorturl;
+        $design = $this->bookandpayagendabooking_model->get_agenda_booking_design($this->session->userdata('userId'));
+        $data = [
+                'iframeSrc' => $iframeSrc,
+                'id' => $user->userId,
+                'userShortUrl' => $user->usershorturl,
+                'design' => unserialize($design[0]['design']),
+            ];
+
+
+        $this->global['pageTitle'] = 'TIQS : DESIGN';
+        $this->loadViews('new_bookings/agenda_booking_design', $this->global, $data, 'footerbusiness', 'headerbusiness');
+        return;
+    }
+
+    public function saveDesign()
+    {
+        $data = [
+            'vendor_id' => $this->session->userdata('userId'),
+            'design' => serialize($this->input->post(null,true)),
+        ];
+        $this->bookandpayagendabooking_model->save_agenda_booking_design($this->session->userdata('userId'),$data);
+        redirect('agenda_booking/design');
     }
 
 }

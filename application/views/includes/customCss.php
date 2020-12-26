@@ -113,7 +113,7 @@
 <?php } elseif ($this->view === 'publicorders/buyerDetails') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
-<?php } elseif ($this->view === 'warehouse/design') { ?>
+<?php } elseif ($this->view === 'warehouse/design' || $this->view === 'booking/design') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/design.css">
 <style>
     .form-control {
@@ -168,7 +168,7 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/temporarilyClosed.css">
 <?php  } elseif ($this->view === 'pos/pos_login') { ?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/posLogin.css">
-<?php  } elseif ($this->view === 'businessreport/index' || $this->view === 'businessreport/reports') { ?>
+<?php  } elseif ($this->view === 'businessreport/index' || $this->view === 'businessreport/reports' || $this->view === 'marketing/reports') { ?>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
@@ -179,8 +179,8 @@
 		  background: url("<?php echo base_url('assets/images/datatables/details_open.png') ?>") no-repeat center center;
 		  cursor: pointer;
 	    }
-  
-	    tr.shown td.details-control {
+        
+        tr.shown td.details-control {
 		  background: url("<?php echo base_url('assets/images/datatables/details_close.png') ?>") no-repeat center center;
         }
     </style>

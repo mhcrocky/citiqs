@@ -196,6 +196,29 @@ class   Bookandpayagendabooking_model extends CI_Model
 
 	}
 
+	function save_agenda_booking_design($vendor_id,$data){
+		$count = count($this->get_agenda_booking_design($vendor_id));
+		if($count == 0){
+			return $this->db->insert('tbl_agenda_booking_design', $data);
+		} else {
+			$this->db->set('design', $data['design']);
+			$this->db->where('vendor_id', $vendor_id);
+			return $this->db->update('tbl_agenda_booking_design');
+		}
+			
+		
+	}
+
+	function get_agenda_booking_design($vendor_id){
+
+		$this->db->select('design')
+		->from('tbl_agenda_booking_design')
+		->where('vendor_id',$vendor_id);
+		$query = $this->db->get();
+		return $query->result_array();
+	
+}
+
 	function get_scannedIn($customer,$eventdate = false,$spot_id = false,$timeslot = false){
 		$sql="SELECT id,timefrom,timeto FROM tbl_bookandpay 
 		WHERE paid=1 AND numberin=1 AND customer=$customer";

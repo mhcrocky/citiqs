@@ -16,6 +16,10 @@ body{
 	margin-bottom: 10px;
 }
 
+.booking-active{
+	background: #b32400 !important;
+}
+
 .booking-form__header div{
 	flex: 1 0 25%;
 	padding: 10px;

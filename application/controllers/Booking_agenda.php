@@ -794,21 +794,4 @@ class Booking_agenda extends BaseControllerWeb
 		return $CI->email->send();
     }
 
-    public function design()
-    {
-        $this->load->model('user_modelpublic');
-        $user = $this->user_modelpublic->getUserInfoById($this->session->userdata('userId'));
-        $iframeSrc = base_url() . 'booking_agenda/' . $user->usershorturl;
-        $data = [
-                'iframeSrc' => $iframeSrc,
-                'id' => $user->userId,
-                'userShortUrl' => $user->usershorturl,
-                'design' => '',
-            ];
-
-
-        $this->global['pageTitle'] = 'TIQS : DESIGN';
-        $this->loadViews('bookings/booking_agenda_design', $this->global, $data, 'footerbusiness', 'headerbusiness');
-        return;
-        }
 }

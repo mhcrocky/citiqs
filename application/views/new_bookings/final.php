@@ -1,8 +1,4 @@
-<style>
-    #personal-active {
-        background: #b32400 !important;
-    }
-</style>
+
 	<div class="col-12 step step-4 active">
       <form id="checkItem" class="w-100" action="<?php echo $this->baseUrl; ?>agenda_booking/pay" method="post">
 		<div class="form-group w-100">

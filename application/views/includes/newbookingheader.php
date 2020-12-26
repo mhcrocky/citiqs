@@ -12,32 +12,58 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600&amp;display=swap" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<style>
+	<?php
+	$CI =& get_instance(); 
+	$CI->load->model('bookandpayagendabooking_model');
+	$customer = $CI->session->userdata('customer')['id'];
+	$design = $CI->bookandpayagendabooking_model->get_agenda_booking_design($customer);
+	if(isset($design[0]['design'])){
+		$design = unserialize($design[0]['design'])['selectShortUrl'];
+		
+		$design_ids = $design['id'];
+		foreach($design_ids as $key => $design_id){
+			echo '#'. $key . '{';
+			echo array_keys($design_id)[0].':';
+			echo array_values($design_id)[0].'!important } ';
+		}
+
+		$design_classes = $design['class'];
+		foreach($design_classes as $key => $design_class){
+			echo '.'. $key . '{';
+			echo array_keys($design_class)[0].':';
+			echo array_values($design_class)[0].'!important } ';
+		}
+	}
+
+	 ?>
+	 </style>
 
 </head>
-<body>
+<body id="body">
 
 
 	<div class="container booking-form">
-		<div class="row">
+		<div id="booking-form__header" class="row">
 			<div class="booking-form__header">
-				<div id="date-active">
+				<div class="elem " id="agenda-active">
 				    <a style="text-decoration:none;color:#fff;font-size:14px;" href="<?php echo base_url(); ?>agenda_booking/spots/<?php echo $this->session->userdata('shortUrl'); ?>">Event Date</a>
 				</div>
-				<div id="spot-active">
+				<div class="elem" id="spot-active">
 				<?php if($this->session->userdata('eventId')): ?>
 					<a style="text-decoration:none;color:#fff;font-size:14px;" href="<?php echo base_url(); ?>agenda_booking/spots/<?php echo $this->session->userdata('eventDate'); ?>/<?php echo $this->session->userdata('eventId'); ?>">SPOT</a>
 				<?php else: ?>
 					<p>SPOT</p>
 				<?php endif; ?>
 				</div>
-				<div id="timeslot-active">
+				<div class="elem" id="timeslot-active">
 				<?php if($this->session->userdata('spotId')): ?>
 					<a style="text-decoration:none;color:#fff;font-size:14px;" href="<?php echo base_url(); ?>agenda_booking/time_slots/<?php echo $this->session->userdata('spotId'); ?>">Time Slot</a>
 				<?php else: ?>
 					<p>Time Slot</p>
 				<?php endif; ?>
 				</div>
-				<div id="personal-active">
+				<div class="elem" id="personal-active">
 				<?php if($this->session->userdata('timeslotId')): ?>
 					<a style="text-decoration:none;color:#fff;font-size:14px;" href="<?php echo base_url(); ?>agenda_booking/pay">Personal Info</a>
 				<?php else: ?>

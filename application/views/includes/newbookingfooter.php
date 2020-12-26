@@ -1,16 +1,16 @@
 <!-- end booking form inputs -->
-<div class="booking-form__result w-100">
-			<h4 class="mb-3">Booking Info </h4>
-			<p>Event Date: <span id="selected-date">
+<div id="booking-footer" class="booking-form__result w-100">
+			<h4 id="footer-title" class="mb-3">Booking Info </h4>
+			<p class="booking-info">Event Date: <span id="selected-date">
 			<?php $shorturl = $this->session->userdata('shortUrl');
 			 if(base_url("agenda_booking/$shorturl") != current_url()): ?>
 			    <?php echo $this->session->userdata('date'); ?>
 			<?php endif; ?>
 			</span></p>
-			<p>SPOT Description: <span id="spot"><?php echo $this->session->userdata('spotDescript'); ?></span></p>
-			<p>SPOT Price: <span id="price"><?php echo $this->session->userdata('spotPrice'); ?></span></p>
-			<p>Time Slot: <span id="selected-time"><?php echo $this->session->userdata('timeslot'); ?></span></p>
-			<p>Personal Info: <span id="personal-info"></span></p>
+			<p class="booking-info">SPOT Description: <span id="spot"><?php echo $this->session->userdata('spotDescript'); ?></span></p>
+			<p class="booking-info">SPOT Price: <span id="price"><?php echo $this->session->userdata('spotPrice'); ?></span></p>
+			<p class="booking-info">Time Slot: <span id="selected-time"><?php echo $this->session->userdata('timeslot'); ?></span></p>
+			<p class="booking-info">Personal Info: <span id="personal-info"></span></p>
 		</div>
 		<!-- end booking form results -->
 	</div>
@@ -25,6 +25,24 @@
 
 <!-- datepicker -->
 <script>
+$(document).ready(function(){
+	
+	var url = '<?php echo current_url(); ?>';
+	
+	if (url.includes('spots')) {
+		$("#spot-active").addClass('booking-active');
+		console.log('spots');
+	} else if(url.includes('timeslot')) {
+		$("#timeslot-active").addClass('booking-active');
+	} else if(url.includes('time')) {
+		$("#timeslot-active").addClass('booking-active');
+	} else if(url.includes('pay')) {
+		$("#personal-active").addClass('booking-active');
+	} else {
+		$("#agenda-active").addClass('booking-active');
+	}
+
+});
 	
 	/* disable previous dates */
 	var todayDate = new Date();
@@ -43,7 +61,7 @@
         let dd = d[1];
         let yy = d[2];
         let date = yy + '-' + mm + '-' + dd;
-		$.post('<?php echo base_url(); ?>agenda_booking/get_agenda/<?php echo $shortUrl; ?>',{date:date},function(data){
+		$.post('<?php echo base_url(); ?>agenda_booking/get_agenda/<?php echo isset($shortUrl) ? $shortUrl : ''; ?>',{date:date},function(data){
             data = JSON.parse(data);
             if(typeof data[0] === 'undefined'){
               toastr.options = {
