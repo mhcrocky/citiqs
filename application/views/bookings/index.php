@@ -81,7 +81,7 @@
             <?php } ?>
         <?php } ?>
     </div>
-    <div class="col-half  background-yankee timeline-content" >
+    <div id="time" class="col-half  background-yankee timeline-content" >
         <form id="checkItem" action="<?php echo $this->baseUrl; ?>sendreservation/sendreservation" method="post" enctype="multipart/form-data"  >
             <div class="login-box background-yankee mt-50 " style="margin-left: 30px; margin-right: 30px">
                 <h2 style="font-family: caption-bold"><?php echo $this->language->Line("AGENDA-BOOKING-0001", "EMAIL NOT RECEIVED, SEND IT AGAIN"); ?></h2>

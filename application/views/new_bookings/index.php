@@ -6,7 +6,7 @@
 		<div class="row">
 			<form action="" class="w-100">
 				<div class="col-12 step step-1 active">
-					<h3>Choose a Date</h3>
+					<h3 id="title">Choose a Date</h3>
 					<div class="date-input" id="date-input">
                     </div>
 

@@ -3,12 +3,9 @@
     #time-input .form-check-label {
         width: 110px;
     }
-    #timeslot-active {
-        background: #b32400 !important;
-    }
 </style>
     <div class="col-12 step step-3 active" id="time-input">
-        <h3>Please Choose a Time Slot</h3>
+        <h3 id="title">Please Choose a Time Slot</h3>
         <?php foreach ($timeSlots as $key => $timeSlot): ?>
         <form id="form-<?php echo $timeSlot['id']; ?>" action="<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot->id; ?>" method="post" enctype="multipart/form-data">
             <?php if($timeSlot['status'] != "soldout"): ?>

@@ -1,12 +1,7 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/css/card-style.css">
-<style>
-    #spot-active {
-        background: #b32400 !important;
-    }
-</style>
 <?php $backgroundColors = ['background-blue-light', 'background-blue', 'background-orange-light', 'background-purple-light', 'background-orange']; ?>
     <div class="col-12 step step-2 active" id="person-input">
-        <h3>Choose an available SPOT:</h3>
+        <h3 id="title">Choose an available SPOT:</h3>
         <?php 
         $last = $this->uri->total_segments();
         $agenda_id = $this->uri->segment($last);
@@ -42,20 +37,20 @@
 
 
 
-                    <div class="col-lg-6 col-xs-12 text-center">
-					<div class="box" onClick="window.location.replace('<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot["data"]->id; ?>')">
+                    <div class="col-lg-12 col-xs-12 text-center">
+					<div id="card" class="box" onClick="window.location.replace('<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot["data"]->id; ?>')">
                         <img style="filter: invert(70%);" width="auto" height="50px" src="<?php echo $this->baseUrl; ?>assets/home/images/<?php echo $spot['data']->image; ?>" >
 						<div class="box-title">
-							<h3><?php echo $spot['data']->descript; ?></h3>
+							<h3 id="spot-title"><?php echo $spot['data']->descript; ?></h3>
 						</div>
                         <div class="box-text">
-							<span><?php echo date("d.m.yy", strtotime($eventDate)) ?></span>
+							<span class="spot-data"><?php echo date("d.m.yy", strtotime($eventDate)) ?></span>
 						</div>
 						<div class="box-text">
-							<span><?php echo $spot['data']->pricingdescript; ?> € <?php echo number_format($spot['data']->price, 2); ?></span>
+							<span class="spot-data"><?php echo $spot['data']->pricingdescript; ?> € <?php echo number_format($spot['data']->price, 2); ?></span>
 						</div>
 						<div class="box-btn">
-                        <a href="<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot['data']->id; ?>" class="button button-orange mb-25"><?= ($this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME")) ? $this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME") : 'Next'; ?></a>
+                        <a id="choose-time" href="<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot['data']->id; ?>" class="button button-orange mb-25"><?= ($this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME")) ? $this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME") : 'Next'; ?></a>
                     </div>
 					 </div>
 				</div>
