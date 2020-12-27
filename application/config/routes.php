@@ -465,6 +465,9 @@ $route['settingsmenu/savespotobject']="Settingsmenu/saveSpotObject";
 
 $route['reservations/(:num)']="reservations/index/$1";
 
+$route['invoices'] = 'Marketing/index';
+$route['marketing/get_marketing_data'] = 'Marketing/get_marketing_data';
+
 $route['address'] = "profile/address";
 $route['changepassword'] = "profile/changepassword";
 $route['paymentsettings'] = "profile/paymentsettings";
