@@ -158,8 +158,11 @@ $(document).ready( function () {
     },*/
     columns:[
     {
-      title: 'Number',
-      data: 'number'
+      title: 'Invoice Number',
+      data: null,
+      "render": function (data, type, row) {
+        return data.prefix + '000' + data.number;
+      }
     },
     {
       title: 'Subtotal',
@@ -187,7 +190,7 @@ $(document).ready( function () {
     },
     {
       title: 'Invoice Date',
-      data: 'datecreated'
+      data: 'date'
     },
     {
       title: 'Total',
