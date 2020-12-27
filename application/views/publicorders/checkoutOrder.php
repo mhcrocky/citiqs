@@ -1,5 +1,6 @@
 
 <main
+    id="orderCheckoutView"
     class="container checkoutOrderBody"
     style="text-align:left; margin-bottom:20px; width:100vw; height:100vh"
 >

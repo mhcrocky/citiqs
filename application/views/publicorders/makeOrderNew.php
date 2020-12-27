@@ -1,4 +1,4 @@
-<div class="container shop-container selectedSpotBackground" style="width:100%">
+<main class="container shop-container selectedSpotBackground" style="width:100%"  id="makeOrderView">
     <div class="row selectedSpotBackground">
         <?php if (!empty($mainProducts)) { ?>        	
 			    <?php if ($vendor['logo']) { ?>
@@ -207,7 +207,7 @@
             No available products
         <?php } ?>
     </div>
-</div>
+</main>
 <!-- end shop container -->
 
 <?php if (!empty($mainProducts)) { ?>

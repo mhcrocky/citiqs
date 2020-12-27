@@ -1,4 +1,4 @@
-<div class="main-wrapper-nh" style="text-align:center">
+<main class="main-wrapper-nh" style="text-align:center">
 	<div class="background-apricot-blue height-100" id="selectTypeBody" style="width:100vw; height:100vh">
 		<?php if (empty($_SESSION['iframe'])) { ?>
 		<div class="form-group has-feedback" >
@@ -73,4 +73,4 @@
 <!--		</div>-->
 <!--	</div>-->
 
-</div>
+</main>

@@ -1,4 +1,4 @@
-<div id="wrapper" class="payOrderBackgroundColor">
+<main id="wrapper" class="payOrderBackgroundColor">
     <div id="content" class="payOrderBackgroundColor">
         <div class="container payOrderBackgroundColor" id="shopping-cart">
             <div class="container payOrderBackgroundColor" id="page-wrapper">
@@ -10,4 +10,4 @@
             </div>
         </div>
     </div>
-</div>
+</main>
