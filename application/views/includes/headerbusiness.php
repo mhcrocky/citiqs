@@ -211,7 +211,7 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
 										<ul class="collapse">
 											<li><a href="<?php echo $this->baseUrl; ?>businessreports"><i class="ti-user"></i> <span>Reports</span></a></li>
 											<li><a href="<?php echo $this->baseUrl; ?>dashboard"><i class="ti-pencil-alt"></i> <span>Transactions</span></a></li>
-											<li><a href="<?php echo $this->baseUrl; ?>dashboard"><i class="ti-user"></i> <span>Invoices</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>invoices"><i class="ti-user"></i> <span>Invoices</span></a></li>
 											<li><a href="<?php echo $this->baseUrl; ?>dashboard"><i class="ti-pencil-alt"></i> <span>Payment links</span></a></li>
 											<li>
 												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Settings</span></a>
