@@ -1,20 +1,22 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
-<main class="main-content w-100 container" style="margin-top:20px">    
+<main class="main-content w-100 container" style="margin-top:20px; border-width: 0px">
     <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#design">Design</a>
+            <a style="border-radius: 50px" class="nav-link active" data-toggle="tab" href="#design">Design</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#iframeSettings">Iframe</a>
+            <a style="border-radius: 50px" class="nav-link" data-toggle="tab" href="#iframeSettings">Iframe</a>
         </li>
     </ul>
-    <div class="tab-content">
+
+    <div class="tab-content" style="border-radius: 50px; margin-left: -10px">
         <div id="design" class="container tab-pane active" style="background: none;">                    
             <div class="row"> 
                 <div class="col-lg-6">
+
                     <label for="defaultdesignid">Create your own design from default template(s)</label>
-                    <select onchange="redirectToNewLocation(this.value)" class="form-control" id="defaultdesignid">
-                        <option value="">Select default template</option>
+                    <select style="border-radius: 50px" onchange="redirectToNewLocation(this.value)" class="form-control" id="defaultdesignid">
+                        <option  value="">Select default template</option>
                         <?php foreach ($allDefaultDesigns as $defaultDesign) { ?>
                             <option
                                 value="<?php echo 'viewdesign?defaultdesignid=' . $defaultDesign['id']; ?>"
@@ -24,9 +26,10 @@
                             </option>
                         <?php } ?>
                     </select>
-                    <?php if (!empty($allVendorDesigns)) { ?>
+
+					<?php if (!empty($allVendorDesigns)) { ?>
                         <label for="designid">Custom templates</label>
-                        <select onchange="redirectToNewLocation(this.value)" class="form-control" id="designid">
+                        <select style="border-radius: 50px;" onchange="redirectToNewLocation(this.value)" class="form-control" id="designid">
                             <option value="">Select custom template</option>
                             <?php foreach ($allVendorDesigns as $vendorDesign) { ?>
                                 <option
@@ -38,22 +41,29 @@
                             <?php } ?>
                         </select>
                     <?php } ?>
-                    <?php if (!empty($design)) { ?>
-                        <form
+
+					<?php if (!empty($design)) { ?>
+
+						<form
+
                             method="post"
                             onsubmit="return saveDesign(this)"
                             <?php if (!empty($designId)) { ?>
                                 id = <?php echo $designId; ?>
                             <?php } ?>
                             style="margin-top:20px"
-                        >
+
+                    	    >
+
                             <input type="number" name="vendorId" required hidden readonly value="<?php echo $vendorId; ?>" />
+
                             <div class="form-group col-sm-12">
                                 <label style="display:block;">
                                     Selected design name:
-                                    <input type="text" class="form-control" name="templateName" value="<?php echo $designName; ?>" />
+                                    <input style="border-radius: 50px" type="text" class="form-control" name="templateName" value="<?php echo $designName; ?>" />
                                 </label>
                             </div>
+
                             <div class="form-group col-sm-12">
                                 <label class="radio-inline">
                                     <input
@@ -64,6 +74,7 @@
                                     >
                                     Active
                                 </label>
+
                                 <label class="radio-inline">
                                     <input
                                         type="radio"
@@ -87,16 +98,16 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <select id="device" class="form-control">
+                                <select style="border-radius: 50px" id="device" class="form-control">
                                     <?php foreach($devices as $device): ?>
                                     <option
                                         value="<?php echo $device['width']."x".$device['height']; ?>"><?php echo $device['device']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                                 <div id="views">
-                                    <button onclick="return false" value="3">View 1 - Front</button>
-                                    <button onclick="return false" value="1">View 2 - Laying</button>
-                                    <button onclick="return false" value="2">View 3 - Side</button>
+                                    <button style="border-radius: 50px" onclick="return false" value="3">View 1 - Front</button>
+                                    <button style="border-radius: 50px" onclick="return false" value="1">View 2 - Laying</button>
+                                    <button style="border-radius: 50px" onclick="return false" value="2">View 3 - Side</button>
                                 </div>
                             </div>
                         </div>

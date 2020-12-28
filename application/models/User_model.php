@@ -1004,9 +1004,13 @@ class User_model extends CI_Model
         $this->db->from('tbl_user');
         $this->db->where('tbl_user.oneSignalId', $oneSignalId);
         $result = $this->db->get();
-        $result = $result->row();
 
-        return $result ? true : false;
+		if (empty($result)) {
+			return false;
+		}
+		else{
+			return true;
+		}
     }
 
     public function getDistanceBetweenUsers(int $firstId, int $secondId): ?array
