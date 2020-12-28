@@ -83,7 +83,7 @@ $(document).ready( function () {
           };
           $.ajax({
             type: "POST",
-            url: globalVariables.baseUrl + "marketing/targeting/save_results",
+            url: globalVariables.baseUrl + "marketing/targeting/save_result",
             data: data,
             success: function(data){
               console.log(data);
