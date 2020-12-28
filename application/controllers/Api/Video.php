@@ -86,45 +86,6 @@ class Video extends REST_Controller
         }
 
 
-        /*
-
-        $valid_formats = array("mp4", "avi", "wmv", "3gp", "mov", "mobi");
-        $filename = $_FILES['file']['name'];
-        if (strlen($filename) > 0)
-        {
-            list($txt, $ext) = explode(".", strtolower($filename));
-            if (!in_array($ext, $valid_formats))
-            {
-                $data['status'] = "0";
-                $data['message'] = "Invalid movie format";
-                $this->response($data, 200);
-            }
-        }
-        else
-        {
-            $data['status'] = "0";
-            $data['message'] = "Invalid movie filename";
-            $this->response($data, 200);
-            return;
-        }
-
-        $vendor = $this->security->xss_clean($this->input->post('vendor'));
-
-       	$path = $uploaddir . $vendor . "-" ;
-        // $uploadfile = $uploaddir . basename($_FILES['file']['name']);
-        // if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile))
-
-        if(move_uploaded_file($_FILES['file']['tmp_name'], $path . $_FILES['file']['name']))
-        {
-
-        }
-        else
-        {
-            $data['status'] =  "0";
-            $data['message'] = "video not uploaded, try again";
-        }
-        $this->response($data, 200);
-        */
     }
 
 }
