@@ -115,8 +115,8 @@
                 </div>
                 <div class="col-lg-6">
                     <?php if (!empty($design)) { ?>
-                        <div id="wrapper">
-                            <div class="phone view_3" id="phone_1" style="margin:auto; width:80%;">
+                        <div id="wrapper" style="position:fixed; top:3%">
+                            <div class="phone view_1" id="phone_1" style="margin:auto; width:80%;">
                                 <iframe id="iframe" src="<?php echo $iframeSrc; ?>" width="420px" height="650px"></iframe>
                             </div>
                         </div>
