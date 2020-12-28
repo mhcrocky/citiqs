@@ -171,7 +171,32 @@ function saveIrame(width, height, iframe) {
     }    
     sendAjaxPostRequest(post, url, 'saveIrame');
 }
-// https://tiqs.com/alfred/places
+
+function updateView(view) {
+    if (view) {
+        designGlobals.phone.className = "phone view_" + view;
+    }
+}
+
+/*Controls*/
+function updateIframe() {
+    let iframeWidthValue = document.getElementById(designGlobals.iframeWidthId).value;
+    let iframeHeightValue = document.getElementById(designGlobals.iframeHeightId).value;
+
+    designGlobals.phone.style.width = iframeWidthValue + 'px';
+    designGlobals.phone.style.height = iframeHeightValue + 'px';
+
+    /*Idea by /u/aerosole*/
+    document.getElementById("wrapper").style.perspective = (
+        document.getElementById("iframePerspective").checked ? "1000px" : "none"
+    );
+}
+
+function screen(width, height) {
+    $('#' + designGlobals.iframeWidthId).val(width);
+    $('#' + designGlobals.iframeHeightId).val(height);
+    updateIframe();
+}
 
 $(document).ready(function(){
     let iframe = document.getElementById(designGlobals.iframeId);
@@ -183,5 +208,22 @@ $(document).ready(function(){
         iframe.onload = function () {
             setDesign();
         }
-    }    
+    }
+
+    $('#device').on('change', function() {
+        let device = $("#device option:selected").val();
+        let px = device.split('x');
+        screen(px[0], px[1]);
+    });
 })
+
+/*Events*/
+document.getElementById("controls").addEventListener("change", function() {
+    updateIframe();
+});
+
+document.getElementById("views").addEventListener("click", function(evt) {
+    updateView(evt.target.value);
+});
+
+updateIframe();
