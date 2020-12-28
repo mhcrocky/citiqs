@@ -199,6 +199,21 @@ function screen(width, height) {
     updateIframe();
 }
 
+function uploadViewBgImage(element) {
+    let formData = new FormData();
+    if (typeof element.files[0] !== 'undefined') {
+        formData.append('bgImage', element.files[0]);
+        let url = globalVariables.ajax + 'uploadViewBgImage';
+        sendFormDataAjaxRequest(formData, url, 'uploadViewBgImage');
+    }    
+    return false;
+}
+
+function triggerIdClick(id) {
+    $('#' + id).trigger('click');
+}
+
+
 $(document).ready(function(){
     let iframe = document.getElementById(designGlobals.iframeId);
     if (iframe) {
