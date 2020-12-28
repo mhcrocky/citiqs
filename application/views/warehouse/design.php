@@ -77,15 +77,6 @@
                             <div class="row" id="controls">
                             <div class="col-md-6">
                                 <div>
-                                    <input type="hidden" id="iframeURL" value="<?php echo $iframeSrc; ?>" />
-                                </div>
-                                <div>
-                                    <input type="number" id="iframeWidth" value="414" hidden readonly required />
-                                </div>
-                                <div>
-                                    <input type="number" id="iframeHeight" value="896" hidden readonly required />
-                                </div>
-                                <div>
                                     <input style="display: none;" type="checkbox" id="iframePerspective" checked="true" />
                                 </div>
                             </div>
@@ -147,8 +138,8 @@
             'checkoutOrderView' : 'checkoutOrderView',
             'buyerDetailsView' : 'buyerDetailsView',
             'payOrderView' : 'payOrderView',
-            'iframeWidthId' : 'iframeWidth',
-            'iframeHeightId' : 'iframeHeight',
+            'iframeWidth' : '414',
+            'iframeHeight' : '896',
             'phone' : document.getElementById('phone_1'),
             'checkUrl' : function (url) {
                             if (url.includes('make_order?vendorid=') && !url.includes('&typeid=') && !url.includes('&spotid=')) {

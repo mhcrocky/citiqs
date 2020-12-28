@@ -18,8 +18,9 @@ function styleELements(element) {
             }
         }
     }
-
 }
+
+
 
 function getJquerySelector(selector, selectorValue) {
     let jQuerySelector;
@@ -180,8 +181,8 @@ function updateView(view) {
 
 /*Controls*/
 function updateIframe() {
-    let iframeWidthValue = document.getElementById(designGlobals.iframeWidthId).value;
-    let iframeHeightValue = document.getElementById(designGlobals.iframeHeightId).value;
+    let iframeWidthValue = designGlobals.iframeWidth;
+    let iframeHeightValue = designGlobals.iframeHeight;
 
     designGlobals.phone.style.width = iframeWidthValue + 'px';
     designGlobals.phone.style.height = iframeHeightValue + 'px';
