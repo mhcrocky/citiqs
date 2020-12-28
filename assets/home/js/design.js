@@ -181,8 +181,8 @@ function updateView(view) {
 
 /*Controls*/
 function updateIframe() {
-    let iframeWidthValue = designGlobals.iframeWidth;
-    let iframeHeightValue = designGlobals.iframeHeight;
+    let iframeWidthValue = document.getElementById(designGlobals.iframeWidthDeviceId).value;
+    let iframeHeightValue = document.getElementById(designGlobals.iframeHeightDeviceId).value;
 
     designGlobals.phone.style.width = iframeWidthValue + 'px';
     designGlobals.phone.style.height = iframeHeightValue + 'px';
@@ -194,8 +194,8 @@ function updateIframe() {
 }
 
 function screen(width, height) {
-    $('#' + designGlobals.iframeWidthId).val(width);
-    $('#' + designGlobals.iframeHeightId).val(height);
+    $('#' + designGlobals.iframeWidthDeviceId).val(width);
+    $('#' + designGlobals.iframeHeightDeviceId).val(height);
     updateIframe();
 }
 

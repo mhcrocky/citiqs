@@ -77,6 +77,12 @@
                             <div class="row" id="controls">
                             <div class="col-md-6">
                                 <div>
+                                    <input type="number" id="iframeWidthDevice" value="414" hidden readonly required />
+                                </div>
+                                <div>
+                                    <input type="number" id="iframeHeightDevice" value="896" hidden readonly required />
+                                </div>
+                                <div>
                                     <input style="display: none;" type="checkbox" id="iframePerspective" checked="true" />
                                 </div>
                             </div>
@@ -138,8 +144,8 @@
             'checkoutOrderView' : 'checkoutOrderView',
             'buyerDetailsView' : 'buyerDetailsView',
             'payOrderView' : 'payOrderView',
-            'iframeWidth' : '414',
-            'iframeHeight' : '896',
+            'iframeWidthDeviceId' : 'iframeWidthDevice',
+            'iframeHeightDeviceId' : 'iframeHeightDevice',
             'phone' : document.getElementById('phone_1'),
             'checkUrl' : function (url) {
                             if (url.includes('make_order?vendorid=') && !url.includes('&typeid=') && !url.includes('&spotid=')) {
