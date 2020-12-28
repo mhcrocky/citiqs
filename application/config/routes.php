@@ -341,6 +341,8 @@ $route['marketing/selection/sendmessage'] = 'Marketing/Selection/sendMessage';
 
 $route['marketing/calculator'] = 'Marketing/Calculator';
 $route['marketing/calculator/savecalc'] = 'Marketing/Calculator/saveCalc';
+$route['marketing/targeting'] = 'Marketing/Targeting';
+$route['marketing/targeting/save_result'] = 'Marketing/Targeting/save_result';
 
 $route['api/video/upload_post'] = 'Api/Video/upload_post';
 
