@@ -50,6 +50,11 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/timeline-page.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/nolabaels.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/sliderstyle.css">
+<?php } elseif ($this->view === 'nolabelsconsumer') { ?>
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/hotel-page.css">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/timeline-page.css">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/nolabaels.css">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/sliderstyle.css">
 <?php } elseif ($this->view === 'publicorders/makeOrder') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
 <!-- swipe slider -->
@@ -114,23 +119,9 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
 <?php } elseif ($this->view === 'warehouse/design' || $this->view === 'booking/design') { ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/devices.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/design.css">
-<style>
-    .form-control {
-        display: block;
-        width: 100%;
-        height: calc(1.5em + .75rem + 2px);
-        padding: .375rem .75rem;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.5;
-        color: #495057;
-        background-color: #fff;
-        background-clip: padding-box;
-        border: 1px solid #ced4da;
-        border-radius: .25rem;
-    }
-</style>
+
 <?php } elseif ($this->view === 'publicorders/closed') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/closed.css">
 <?php } elseif ($this->view === 'pos/pos') { ?>

@@ -1,225 +1,141 @@
-<html>
-<head>
-		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/hotel-page.css">
-		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/timeline-page.css">
-
-		<style>
-
-			.width-650{
-				margin: 0 auto;
-			}
-
-			.manual-content .heading{
-				text-align: center;
-				color: #fff;
-			}
-
-			.faq-page{
-				display: flex;
-				flex-direction: column;
-			}
-
-			.faq-page{
-				margin: 0 auto;
-			}
-
-			.faq-login{
-				flex-grow:1;
-			}
-
-			.panel {
-				padding: 0 18px;
-				background-color: transparent !important;
-				color: #fff !important;
-				border:   1px solid transparent !important;
-				box-shadow: none !Important;
-			}
-			.panel p{
-				margin: 18px 0;
-				font-family: 'caption-light', sans-serif;
-			}
-
-			.svg-overflow svg{
-				overflow: visible;
-			}
-
-			.background-yankee .active, .background-yankee .accordion:hover {
-				background-color: #18386663;
-			}
-
-			.background-green .active, .background-green .accordion:hover {
-				background-color: #66a694;
-			}
-
-
-		</style>
-
-	</head>
-
-	<script>
-
-		function capenable() {
-			document.getElementById("capsubmit").style.display = "block";
-		}
-
-		function capdisable() {
-			document.getElementById("capsubmit").style.display = "none";
-		}
-
-
-	</script>
-	<script src='https://www.google.com/recaptcha/api.js' async defer ></script>
-
-</head>
-
-<style type="text/css">
-	input[type="checkbox"] {
-	zoom: 3;
-}
-
-@media screen and (max-width: 680px) {
-.columns .column {
-		flex-basis: 100%;
-		margin: 0 0 5px 0;
-	}
-}
-.selectWrapper {
-	border-radius: 50px;
-	overflow: hidden;
-	background: #eec5a7;
-	border: 0px solid #ffffff;
-	padding: 5px;
-	margin: 0px;
-}
-
-.selectBox {
-	background: #eec5a7;
-	width: 100%;
-	height: 25px;
-	border: 0px;
-	outline: none;
-	padding: 0px;
-	margin: 0px;
-}
-</style>
-
-<body>
-<!-- end header -->
-
-<script src='https://www.google.com/recaptcha/api.js' async defer ></script>
-
-<div class="main-wrapper">
-	<div class="col-half background-yellow height-100">
+<div style="margin-top: 0;" class="main-wrapper">
+	<div class="col-half background-apricot-blue height-100">
 		<div class="flex-column align-start">
-			<div align="left">
-				<h2 class="heading mb-35">
-					<?php echo $this->language->line('NOLABLESCONSUMER-A10001','HOW </a>');?>
-				</h2>
-				<h3 class="heading mb-35">
-					<?php echo $this->language->line('NOLABELS-B100010','LEARN HOW IN THE STEPS ON THIS PAGE');?>
+			<div class="mt-50" style="text-align:left; margin-left: -30px">
+				<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="300" height="auto" />
+			</div>
+			<div style="text-align:left; margin-top: 30px">
+				<h1 class="heading" style="font-size: 400%; margin-bottom: 20px">
+					<?php echo $this->language->line('ALFRED-VA10001A','ALFRED</a>');?>
+				</h1>
+				<h3 class="heading">
+					<?php echo $this->language->line('ALFRED-VB100010','THE DIGITAL BUTLER');?>
 				</h3>
-				<p style="font-family: caption-light" class="text-content mb-35"><?php echo $this->language->line("Home-003",'LOST BY YOUR CUSTOMER,<br> RETURNED BY US.');?></p>
+			</div>
 
-			</div>
-			<div class="text-Left mt-50 mobile-hide" style="margin-top: 0px; margin-left: 0px">
-				<img border="0" src="<?php echo base_url(); ?>assets/home/images/lostandfounditemswhite.png" alt="tiqs" width="500" height="auto" />
-			</div>
-			<div class="mt-50" align="center" >
-				<img border="0" src="<?php echo base_url(); ?>assets/home/images/tiqsiconlogonew.png" alt="tiqs" width="75" height="auto" />
-			</div>
-			<div class="mt-50" align="center" >
-				<img border="0" src="<?php echo base_url(); ?>assets/home/images/DHL_express.png" alt="tiqs" width="250" height="auto" />
-			</div>
 		</div>
 	</div><!-- end col half -->
 
-	<div class="col-half background-apricot timeline-content">
-		<div class="timeline-block background-yellow">
-			<span class='timeline-number text-orange hide-mobile'>1</span>
+
+
+	<div class="col-half background-yankee timeline-content">
+		<!--
+		<div class="timeline-block background-blue" style="display:none">
+			<span class='timeline-number text-light-blue hide-mobile'><img src="<?php echo base_url(); ?>assets/home/images/tiqsiconlogonew.png" alt="tiqs" width="18" height="20" /></span>
 			<div class="timeline-text">
 				<div class="timeline-heading">
-					<span class='timeline-number text-green show-mobile'>1</span>
-					<h2 style="font-weight:bold; font-family: caption-bold">REGISTER LOST AND FOUND ITEMS</h2>
+					<span class='timeline-number text-light-blue show-mobile'></span>
+					<h2 style="font-weight:bold; font-family: caption-bold"><?php echo $this->language->line('ALFRED-ABCE1010101','TO GO BUSY TIME');?></h2>
 				</div>
-				<p class="text-content-light" style="font-size: larger">YOUR LOST AND FOUND PROCESS, GIVE LIMITED ACCESS TO YOU STAFF FOR LOST AND FOUND ITEM REGISTRATION, CONNECT TIQS LOST AND FOUND TO YOUR HOSPITALITY SYSTEM.</p>
+				<div>
+					<p style="font-family:caption-light; font-size: medium; font-weight: bold">
+					<ul style="list-style-type: disc ; font-family:caption-light; font-size: larger; margin-left: -20px;margin-bottom: 30px ">
+						<div>
+							<label for="min">Minutes for slow </label>
+							<input style="border-radius: 50px; text-align: center" type="number" id="min" onkeydown="checkPostiveInteger(event)" oninput="checkValidLimits()" placeholder="   min">
+						</div>
+						<div>
+							<label for="max">add minutes for busy</label>
+							<input style="border-radius: 50px; text-align: center" type="number" id="max" onkeydown="checkPostiveInteger(event)" oninput="checkValidLimits()" placeholder="   max">
+						</div>
+					</ul>
+
+					<div class="flex-column align-space">
+						<div style="text-align:center">
+							<a onclick="changeLimits()" id="limitButton" disabled class="button button-orange mb-25"><?php echo $this->language->line('NOLABELS-vPB1881A',"SET TIME");?></a>
+						</div>
+						<div class="mb-35" style="text-align:right" >
+							MINUTES ADDED
+
+						<span id="val"><?php echo $vendor['busyTime']; ?></span>
+						</div>
+						<input style="background-color: #1a2226" id="slide" type="range" min="0" max="100" value="<?php echo $vendor['busyTime']; ?>" oninput="displayValue(event)"/>
+
+					<p></p>
+					<div style="text-align:center">
+						<a onclick="saveBusyTime('slide', '<?php echo $vendor['id']; ?>')" id="limitButton" disabled class="button button-orange mb-25"><?php echo $this->language->line('NOLABELS-vPB18811jKJA',"CONFIRM TIME");?></a>
+					</div>
+
+				</div>
+
+				</div>
+			</div>
+		</div>-->
+		<!-- end timeline block -->
+
+		<div style="padding-left: 40px;" class="timeline-block background-yankee">
+			<span class='timeline-number text-light-blue hide-mobile'>1</span>
+			<div class="timeline-text">
+				<div class="timeline-heading">
+					<span class='timeline-number text-light-blue show-mobile'>1</span>
+					<h2 style="font-weight:bold; margin-top: 17px;  font-family: caption-bold"><?php echo $this->language->line('ALFRED-A1010101','GO TO PROFILE');?></h2>
+				</div>
+				<p style="font-family:caption-light; font-size: medium; font-weight: bold">
+				<ul style="list-style-type: disc ; font-family:caption-light; font-size: larger; margin-left: -20px ">
+					<li><?php echo $this->language->line('ALFRED-VB10001112',"COMPLETE YOUR PROFILE DETAILS");?></>
+					<li><?php echo $this->language->line('ALFRED-VB10001113',"COMPLETE YOUR FINANCIAL DETAILS");?></>
+				</ul>
+				<p></p>
+
 				<div class="flex-column align-space">
-<!--					<p class="text-content-light" style="font-weight: bold">LOST BY YOUR CUSTOMER, <br>RETURNED BY US.							</p>-->
-					<div id="timeline-video-3">
-						<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/357256299" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen=""></iframe></div>
-					</div><!-- time line video for third block -->
-					<div align="center">
-						<!--                                href="https://tiqs.com/lostandfound/menuapp target="_blank"" -->
-						<a class="button button-orange mb-25" id="show-timeline-video-3">LEARN MORE VIDEO</a>
+					<div style="text-align:center">
+						<!-- href="https://tiqs.com/lostandfound/menuapp target="_blank"" -->
+						<a href="profile" target="_self" class="button button-orange mb-25"><?php echo $this->language->line('NOLABELS-vB1000131A',"GO TO PROFILE");?></a>
 					</div>
 				</div>
 			</div>
 		</div><!-- end timeline block -->
 
-		<div class="timeline-block background-orange-light">
-			<span class='timeline-number text-orange hide-mobile'>2</span>
+		<div style="padding-left: 40px;" class="timeline-block background-blue">
+			<span class='timeline-number text-light-blue hide-mobile'>2</span>
 			<div class="timeline-text">
+
 				<div class='timeline-heading'>
-					<span class='timeline-number text-blue show-mobile'>2</span>
-					<h2 style="font-weight:bold; font-family: caption-bold">MAKE LOST AND FOUND ITEMS VISIBLE ON YOUR WEBSITE</h2>
+					<span class='timeline-number text-light-blue show-mobile'>2</span>
+					<h2 style="font-weight:bold; margin-top: 15px; font-family: caption-bold"><?php echo $this->language->line('ALFRED-VB1000101UA','GO TO SHOP SETTINGS');?></h2>
 				</div>
-				<p class="text-content-light" style="font-size: larger">FULLY INTEGRATE LOST AND FOUND IN YOUR CORPORATE WEBSITE, OR USE OUR STANDARD LINK. </p>
+				<p style="font-family:caption-light; font-size: medium; font-weight: bold">
+				<ul style="list-style-type: disc ; font-family:caption-light; font-size: larger; margin-left: -20px ">
+					<li><?php echo $this->language->line('ALFRED-VB10001111A',"MANAGE YOUR SHOP SETTINGS");?></>
+				</ul>
+				<p></p>
 				<div class="flex-column align-space">
-<!--					<p class="text-content-light" style="font-weight: bold">LOST BY YOUR CUSTOMER, <br>RETURNED BY US.</p>-->
-					<div id="timeline-video-4">
-						<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/357256299" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen=""></iframe></div>
-					</div><!-- time line video for fourth block -->
-					<div align="center">
-						<!--                                href="https://tiqs.com/lostandfound/menuapp target="_blank"" -->
-						<a class="button button-orange mb-25" id="show-timeline-video-4">LEARN MORE VIDEO</a>
+					<div style="text-align:center">
+						<!-- <a class="button button-orange mb-25" id="show-timeline-video-4">LEARN MORE VIDEO</a> -->
+						<a href="orders" target="_self" class="button button-orange mb-25"><?php echo $this->language->line('ALFRED-vB100011131B',"GO TO SETTINGS");?></a>
 					</div>
 				</div>
 			</div>
 		</div><!-- end timeline block -->
 
-		<div class="timeline-block background-green-environment">
-			<span class='timeline-number text-orange hide-mobile'>3</span>
+		<div style="padding-left: 40px;" class="timeline-block background-apricot-blue">
+			<span class='timeline-number text-light-blue hide-mobile'>3</span>
 			<div class="timeline-text">
-				<div class="timeline-heading">
-					<span class='timeline-number text-apricot show-mobile'>3</span>
-					<h2 style="font-weight:bold; font-family: caption-bold">ORDER EXTRA LOST AND FOUND TIQS-BAGS</h2>
+
+				<div class='timeline-heading'>
+					<span class='timeline-number text-light-blue show-mobile'>3</span>
+					<h2 style="font-weight:bold; margin-top: 17px;  font-family: caption-bold"><?php echo $this->language->line('ALFRED-NL0010A','MY DESIGNS');?></h2>
 				</div>
-				<p class="text-content-light" style="font-size: larger">ORDER MORE LOST AND FOUND BAGS ONLINE</p>
-				<!--<span class="cd-date">Feb 18</span>-->
+				<p style="font-family:caption-light; font-size: medium; font-weight: bold">
+				<ul style="list-style-type: disc ; font-family:caption-light; font-size: larger; margin-left: -20px ">
+					<li><?php echo $this->language->line('ALFRED-NL0020A',"E-mail templates, iFrame template (colors, fonts, size), Settings landing pages (Succes payments), ");?></>
+				</ul>
+				<p></p>
 				<div class="flex-column align-space">
-					<div align="center">
-						<a href="" target="_blank" class="button button-orange mb-25">LEARN MORE VIDEO</a>
+					<div style="text-align:center">
+						<!-- <a class="button button-orange mb-25" id="show-timeline-video-4">LEARN MORE VIDEO</a> -->
+						<a href="emaildesigner" target="_self" class="button button-orange mb-25"><?php echo $this->language->line('ALFRED-NL0030A',"GO TO SETTINGS");?></a>
 					</div>
 				</div>
 			</div>
 		</div><!-- end timeline block -->
 
-		<div class="timeline-block background-apricot timeblock-last">
-			<span class='timeline-number text-orange hide-mobile'>4</span>
-			<div class="timeline-text">
-				<div class="timeline-heading">
-					<span class='timeline-number text-blue show-mobile'>4</span>
-					<h2 style="font-weight:bold; font-family: caption-bold">FREQUENTLY ASKED QUESTIONS</h2>
-				</div>
-				<p class="text-content-light" style="font-size: larger">MOST QUESTIONS AND ANSWERS IN ONE PAGE.</p>
-				<!--<span class="cd-date">Feb 18</span>-->
-				<div class="flex-column align-space">
-					<div align="center">
-						<a href="" target="_blank" class="button button-orange mb-25">LEARN MORE VIDEO</a>
-					</div>
-				</div>
-			</div>
-		</div><!-- end timeline block -->
 	</div>
 	<!-- time-line -->
-<!-- end col half -->
+	<!-- end col half -->
 </div>
 <!-- end main wrapper -->
-<script src="<?php echo base_url(); ?>assets/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
-</body>
-
-<script type="text/javascript">
+<script>
 	// modal script
 	// Get the modal
 	var modal = document.getElementById("myModal");
@@ -230,15 +146,22 @@
 	// Get the <span> element that closes the modal
 	var span = document.getElementsByClassName("close")[0];
 
-	// When the user clicks on the button, open the modal
-	btn.onclick = function() {
-		modal.style.display = "block";
+	if (btn) {
+		// When the user clicks on the button, open the modal
+		btn.onclick = function() {
+			if (modal) {
+				modal.style.display = "block";
+			}
+		}
 	}
 
-	// When the user clicks on <span> (x), close the modal
-	span.onclick = function() {
-		modal.style.display = "none";
+	if (span) {
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+			modal.style.display = "none";
+		}
 	}
+
 
 	// When the user clicks anywhere outside of the modal, close it
 	window.onclick = function(event) {
@@ -246,10 +169,6 @@
 			modal.style.display = "none";
 		}
 	}
-
-</script>
-
-<script>
 
 	var acc = document.getElementsByClassName("accordion");
 	var i;
@@ -271,10 +190,6 @@
 		});
 	}
 
-</script>
-
-<script>
-
 	$('#show-timeline-video-2').click(function(){
 		console.log('da');
 		$('#timeline-video-2').toggleClass('show');
@@ -291,8 +206,6 @@
 	})
 
 </script>
-
-</html>
 <?php
 if(isset($_SESSION['error'])){
 	unset($_SESSION['error']);

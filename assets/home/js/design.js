@@ -18,8 +18,9 @@ function styleELements(element) {
             }
         }
     }
-
 }
+
+
 
 function getJquerySelector(selector, selectorValue) {
     let jQuerySelector;
@@ -171,7 +172,47 @@ function saveIrame(width, height, iframe) {
     }    
     sendAjaxPostRequest(post, url, 'saveIrame');
 }
-// https://tiqs.com/alfred/places
+
+function updateView(view) {
+    if (view) {
+        designGlobals.phone.className = "phone view_" + view;
+    }
+}
+
+/*Controls*/
+function updateIframe() {
+    let iframeWidthValue = document.getElementById(designGlobals.iframeWidthDeviceId).value;
+    let iframeHeightValue = document.getElementById(designGlobals.iframeHeightDeviceId).value;
+
+    designGlobals.phone.style.width = iframeWidthValue + 'px';
+    designGlobals.phone.style.height = iframeHeightValue + 'px';
+
+    /*Idea by /u/aerosole*/
+    document.getElementById("wrapper").style.perspective = (
+        document.getElementById("iframePerspective").checked ? "1000px" : "none"
+    );
+}
+
+function screen(width, height) {
+    $('#' + designGlobals.iframeWidthDeviceId).val(width);
+    $('#' + designGlobals.iframeHeightDeviceId).val(height);
+    updateIframe();
+}
+
+function uploadViewBgImage(element) {
+    let formData = new FormData();
+    if (typeof element.files[0] !== 'undefined') {
+        formData.append('bgImage', element.files[0]);
+        let url = globalVariables.ajax + 'uploadViewBgImage';
+        sendFormDataAjaxRequest(formData, url, 'uploadViewBgImage');
+    }    
+    return false;
+}
+
+function triggerIdClick(id) {
+    $('#' + id).trigger('click');
+}
+
 
 $(document).ready(function(){
     let iframe = document.getElementById(designGlobals.iframeId);
@@ -183,5 +224,22 @@ $(document).ready(function(){
         iframe.onload = function () {
             setDesign();
         }
-    }    
+    }
+
+    $('#device').on('change', function() {
+        let device = $("#device option:selected").val();
+        let px = device.split('x');
+        screen(px[0], px[1]);
+    });
 })
+
+/*Events*/
+document.getElementById("controls").addEventListener("change", function() {
+    updateIframe();
+});
+
+document.getElementById("views").addEventListener("click", function(evt) {
+    updateView(evt.target.value);
+});
+
+updateIframe();

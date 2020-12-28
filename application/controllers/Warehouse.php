@@ -34,6 +34,7 @@
             $this->load->model('shopvendor_model');
             $this->load->model('shopvendortypes_model');
             $this->load->model('shopvendortemplate_model');
+            $this->load->model('bookandpayagendabooking_model');
 
             $this->load->library('language', array('controller' => $this->router->class));
             $this->load->library('session');
@@ -982,6 +983,7 @@
                 'allVendorDesigns'=> $this->shopvendortemplate_model->setProperty('vendorId', $userId)->getVendorDesigns(),
                 'designId' => $designId,
                 'defaultDesignId' => $defaultDesignId,
+                'devices' => $this->bookandpayagendabooking_model->get_devices(),
             ];
             $this->setDesign($designId, $defaultDesignId, $data);
 

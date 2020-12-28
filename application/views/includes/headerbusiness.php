@@ -305,7 +305,7 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
                                     </li>
 
 									<li>
-										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ticket"></i><span>Event ticketing & Seating</span></a>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ticket"></i><span>e-ticketing & Seating</span></a>
 										<ul class="collapse">
 											<li><a href="<?php echo $this->baseUrl;?>customer_panel/agenda"><i class="ti-agenda"></i> <span>Create your event</span></a></li>
 											<li>
