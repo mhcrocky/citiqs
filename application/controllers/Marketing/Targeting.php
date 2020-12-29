@@ -20,6 +20,7 @@ class Targeting extends BaseControllerWeb
 	{ 
 		$data['title'] = 'Targeting';
 		$vendor_id = $this->vendor_id;
+		$data['queries'] = $this->targeting_model->get_queries();
 		$this->global['pageTitle'] = 'TIQS: Targeting';
 		$this->loadViews("marketing/targeting", $this->global, $data, 'footerbusiness', 'headerbusiness'); // payment screen
 
@@ -28,10 +29,11 @@ class Targeting extends BaseControllerWeb
 	public function get_report(){
 		ini_set('memory_limit','1024M');
 		$vendor_id = $this->vendor_id;//418
-		$sql = $this->input->post('sql');
-		$pickup = $this->targeting_model->get_pickup_report($vendor_id, $sql);
-		$delivery = $this->targeting_model->get_delivery_report($vendor_id, $sql);
-		$local = $this->targeting_model->get_local_report($vendor_id, $sql);
+		$sql1 = ($this->input->post('sql1') == 'AND ()') ? "" : $this->input->post('sql1');
+		$sql2 = ($this->input->post('sql2') == 'undefined') ? "" : $this->input->post('sql2');
+		$pickup = $this->targeting_model->get_pickup_report($vendor_id, $sql1, $sql2);
+		$delivery = $this->targeting_model->get_delivery_report($vendor_id, $sql1, $sql2);
+		$local = $this->targeting_model->get_local_report($vendor_id, $sql1, $sql2);
 		$report = array_merge($pickup, $delivery, $local);
 		$report = $this->group_by('order_id',$report);
 		$report = $this->table_data($report);
@@ -101,30 +103,15 @@ class Targeting extends BaseControllerWeb
 
 	}
 
-	public function get_timestamp_orders(){
-		$vendor_id = $this->vendor_id;
-		$min_date = $this->input->post('min');
-		$max_date = $this->input->post('max');
-		$orders = $this->targeting_model->get_date_range_orders($vendor_id, $min_date, $max_date);
-		echo json_encode($orders);
-	}
-
 	public function save_results(){
 		$results = $this->input->post('results');
-		$data = [];
-		foreach($results as $result){
-			$data[] = (array) $result;
-		}
-		var_dump($data);
-		//return $this->targeting_model->save_results($results);
+		return $this->targeting_model->save_results($results);
 	}
 
-	public function save_result(){
-		$data = $this->input->post(null,true);
-
-		return $this->targeting_model->save_results($data);
+	public function save_query(){
+		$query = $this->input->post(null,true);
+		return $this->targeting_model->save_query($query);
 	}
-
 	
 
 }
