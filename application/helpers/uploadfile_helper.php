@@ -76,7 +76,7 @@
         public static function getFileExtension(string $file): string
         {
             $pieces = explode('.', $file);
-            return $pieces[count($pieces) - 1];
+            return strtolower($pieces[count($pieces) - 1]);
         }
 
         public static function changeImageName(string $old, string $new): bool
@@ -201,5 +201,13 @@
                 imagedestroy($image);
                 chmod($imageSrc, 0644);
             }
+        }
+
+        public static function unlinkFile(string $file): bool
+        {
+            if (is_file($file)) {
+                return unlink($file);
+            }
+            return true;
         }
     }

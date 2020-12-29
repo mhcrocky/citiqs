@@ -20,8 +20,6 @@ function styleELements(element) {
     }
 }
 
-
-
 function getJquerySelector(selector, selectorValue) {
     let jQuerySelector;
     if (selector === 'class') {
@@ -95,6 +93,8 @@ function alertifyMessage(response) {
     if (response.status === '1') { 
         if (!response.designId) {
             alertify.success(response.message);
+            let bgImageEl = document.getElementById('bgImage');
+            bgImageEl.setAttribute('value', response.bgImage);
         } else {
             let newLocation = 'viewdesign?designid=' + response.designId;
             redirectToNewLocation(newLocation);
@@ -204,15 +204,95 @@ function uploadViewBgImage(element) {
     if (typeof element.files[0] !== 'undefined') {
         formData.append('bgImage', element.files[0]);
         let url = globalVariables.ajax + 'uploadViewBgImage';
-        sendFormDataAjaxRequest(formData, url, 'uploadViewBgImage');
-    }    
+        sendFormDataAjaxRequest(formData, url, 'uploadViewBgImage', manageUploadReponse);
+    }
     return false;
+}
+
+function manageUploadReponse(response) {
+    if (response.status === '1') {
+        let bgImage = document.getElementById('bgImage');
+        let removeImage = document.getElementById('removeImage');
+        let removeBgImageButton = document.getElementById('removeBgImageButton');
+        bgImage.setAttribute('value', response.message);
+        removeImage.setAttribute('value', '0');
+        removeBgImageButton.style.display = 'initial';
+        showBgImage(response.message);
+    } else if (response.status === '0') {
+        alertify.error(response.message);
+    }
 }
 
 function triggerIdClick(id) {
     $('#' + id).trigger('click');
 }
 
+function removeBgImage(element, bgImageId, removeImageId) {
+    let bgImageInput = document.getElementById(bgImageId);
+    let removeImage = document.getElementById(removeImageId);
+    bgImageInput.setAttribute('value', '');
+    removeImage.setAttribute('value', '1');
+    element.style.display = 'none';
+    removeBgImageFromIframe();
+}
+
+
+function showBgImage(image) {
+    let selector = getJquerySelector('class', designGlobals.designBackgroundImageClass);
+    let iframeElements = $('iframe').contents().find(selector);
+    if (iframeElements) {
+        let iframeElementsLength = iframeElements.length;
+        let i;
+        for (i = 0; i < iframeElementsLength; i++) {
+            let iframeElement = iframeElements[i];
+            let imgSrc = globalVariables.baseUrl + 'assets/images/backGroundImages/' + image;
+            iframeElement.style.backgroundImage = '';
+            iframeElement.style.backgroundImage = 'url("' + imgSrc + '")';
+            iframeElement.style.backgroundPosition = 'center center';
+            iframeElement.style.backgroundSize = 'cover';
+        }
+    }
+}
+
+function checkForBgImage() {
+    let bgImage = document.getElementById('bgImage').value;
+    if (bgImage) {
+        showBgImage(bgImage);
+    } else {
+        removeBgImageFromIframe();
+    }
+}
+function removeBgImageFromIframe() {
+
+    let selector = getJquerySelector('class', designGlobals.designBackgroundImageClass);
+    let iframeElements = $('iframe').contents().find(selector);
+    if (iframeElements) {
+        let iframeElementsLength = iframeElements.length;
+        let styles = ($('iframe').contents().find('style'));
+        let stylesLength = styles.length;
+        let i;
+        let breakLoop = false;
+        for (i = 0; i < iframeElementsLength; i++) {
+            let iframeElement = iframeElements[i];
+            iframeElement.style.backgroundImage = '';
+            iframeElement.style.setProperty('backgroundImage', 'none', 'important');
+        }
+
+        for (i = 0; i < stylesLength; i++) {            
+            let style = styles[i];
+            let rules = style.sheet.rules;
+            let rule;
+            for (rule in rules) {
+                if (rules[rule]['selectorText'] === ('.' + designGlobals.designBackgroundImageClass)) {
+                    rules[rule].style.backgroundImage = 'none' ;
+                    breakLoop = true;
+                    break;
+                }
+                if (breakLoop) break;
+            }
+        }
+    }
+}
 
 $(document).ready(function(){
     let iframe = document.getElementById(designGlobals.iframeId);
@@ -223,6 +303,7 @@ $(document).ready(function(){
     
         iframe.onload = function () {
             setDesign();
+            checkForBgImage();
         }
     }
 
@@ -243,3 +324,27 @@ document.getElementById("views").addEventListener("click", function(evt) {
 });
 
 updateIframe();
+
+
+// var myPicker = new JSColor('.colorInput');
+//
+// // let's set a single option
+// myPicker.option('position', 'right');
+//
+// // and let's set multiple options at once
+// myPicker.option({
+// 	'format': 'hex',
+// 	'width': 250,
+// 	'previewSize': 80,
+// 	'alphaChannel' :true,
+//
+// });
+
+jscolor.presets.default = {
+	format :'rgba',
+	height: 181,              // make the picker box a little bigger
+	position: 'right',        // position the picker to the right of the target
+	previewPosition: 'right', // display color preview on the right side
+	previewSize: 40,          // make color preview bigger
+	alphaChannel :true,
+};

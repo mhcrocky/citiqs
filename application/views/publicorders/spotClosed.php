@@ -1,4 +1,4 @@
-<div class="main-wrapper-nh" style="text-align:center; width:100vw: height:100vh" id="spotClosed">
+<div class="main-wrapper-nh designBackgroundImage" style="text-align:center; width:100vw: height:100vh" id="spotClosed">
 	<div class="col-half background-apricot-blue height">
 		<div class="width-650"></div>
 				<div class="form-group has-feedback">

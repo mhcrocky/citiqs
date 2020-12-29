@@ -40,8 +40,7 @@ class Ajax extends CI_Controller
         $this->load->helper('curl_helper');
         $this->load->helper('dhl_helper');
         $this->load->helper('validate_data_helper');
-
-        
+        $this->load->helper('uploadfile_helper');
 
         $this->load->library('session');
         $this->load->library('language', array('controller' => $this->router->class));
@@ -1466,6 +1465,25 @@ class Ajax extends CI_Controller
         if (!$this->input->is_ajax_request()) return;
 
         $post = Utility_helper::sanitizePost();
+        $removeImage = Utility_helper::getAndUnsetValue($post, 'removeImage');
+
+        if (!empty($post['bgImage']) && strpos($post['bgImage'], $this->config->item('_temp'))) {
+            $oldName = $this->config->item('backGroundImages') . $post['bgImage'];
+            $post['bgImage'] = $post['vendorId'] . '.' . Uploadfile_helper::getFileExtension($oldName);
+            $newImageName = $this->config->item('backGroundImages') . $post['bgImage'];
+            rename($oldName, $newImageName);
+        }
+
+        if (intval($removeImage)) {
+            $imgExtensions = ['png', 'jpg', 'gif', 'jpeg'];
+            foreach($imgExtensions as $ext) {
+                $img = $this->config->item('backGroundImages') . $post['vendorId'] . '.' . $ext;
+                $tempImg = $this->config->item('backGroundImages') . $post['vendorId'] . $this->config->item('_temp') . '.' . $ext;
+                Uploadfile_helper::unlinkFile($img);
+                Uploadfile_helper::unlinkFile($tempImg);
+            }
+        }
+
         $input = [
             'vendorId' => Utility_helper::getAndUnsetValue($post, 'vendorId'),
             'active' => Utility_helper::getAndUnsetValue($post, 'active'),
@@ -1488,6 +1506,11 @@ class Ajax extends CI_Controller
         // crud
         if (!$response) {
             is_null($this->shopvendortemplate_model->id) ? $this->createDesignTemplate($response) : $this->updateDesingTemplate($response);
+        }
+
+        //check for image upoad
+        if (isset($newImageName)) {
+            $response['bgImage'] = $post['bgImage'];
         }
 
         echo json_encode($response);
@@ -1514,6 +1537,7 @@ class Ajax extends CI_Controller
         }
         return;
     }
+
     private function deactivateActive(array &$response): void
     {
         if ($this->shopvendortemplate_model->active === '1' && !$this->shopvendortemplate_model->deactivateActive()) {
@@ -1547,7 +1571,6 @@ class Ajax extends CI_Controller
         }
         return;
     }
-        
 
     public function updateDesingTemplate(array &$response): void
     {
@@ -1564,8 +1587,7 @@ class Ajax extends CI_Controller
         }
         return;
     }
-
-        
+       
     public function saveIrame($id): void
     {
         if (!$this->input->is_ajax_request()) return;
@@ -1578,7 +1600,6 @@ class Ajax extends CI_Controller
         // var_dump($iframeSettings);
         return;
     }
-
 
     public function generateCategoryKey(): void
     {
@@ -1625,5 +1646,51 @@ class Ajax extends CI_Controller
         echo $this->user_model->isDuplicate($email) ? 1 : 0;
         return;
     }
-}
 
+    public function uploadViewBgImage(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+        $folder = $this->config->item('backGroundImages');
+        $bgImage = $_SESSION['userId'] . $this->config->item('_temp') . '.'. Uploadfile_helper::getFileExtension($_FILES['bgImage']['name']);
+        $checkBgImage = $folder . $bgImage;
+		$constraints = [
+			'allowed_types'=> 'gif|jpg|png|jpeg'
+        ];
+        $_FILES['bgImage']['name'] = $bgImage;
+
+		if (Uploadfile_helper::unlinkFile($checkBgImage) && Uploadfile_helper::uploadFiles($folder, $constraints)) {
+            $respone = [
+                'status' => '1',
+                'message' => $bgImage
+            ];
+		} else {
+            $respone = [
+                'status' => '0',
+                'message' => 'Image upload failed'
+            ];
+        }
+
+        echo json_encode($respone);
+        return;
+    }
+    
+    // public function removeBgImage(): void
+    // {
+    //     if (!$this->input->is_ajax_request()) return;
+    //     $image = $this->config->item('backGroundImages') . $this->input->post('image', true);
+    //     if (Uploadfile_helper::unlinkFile($image)) {
+    //         $respone = [
+    //             'status' => '1',
+    //         ];
+	// 	} else {
+    //         $respone = [
+    //             'status' => '0',
+    //             'message' => 'Image did not remove'
+    //         ];
+    //     }
+
+    //     echo json_encode($respone);
+    //     return;
+    // }
+
+}

@@ -36,27 +36,67 @@
                                     value="<?php echo 'viewdesign?designid=' . $vendorDesign['id']; ?>"
                                     <?php if ($designId === intval($vendorDesign['id'])) echo 'selected'; ?>
                                 >
-                                    <?php echo $vendorDesign['templateName']; ?>
+                                    <?php
+                                        echo $vendorDesign['templateName'];
+                                        if ($vendorDesign['active'] === '1') echo '&nbsp;(active)';
+                                    ?>
                                 </option>
                             <?php } ?>
                         </select>
                     <?php } ?>
-
-					<?php if (!empty($design)) { ?>
-
-						<form
-
+                    <?php if (!empty($design)) { ?>
+                        <div style="margin-top:20px">
+                            <input
+                                type="button"
+                                id="triggerButton"
+                                class="btn btn-primary"
+                                onclick="triggerIdClick('backGroundImage')" value="Upload background image"
+                            />
+                            <input type="file" id="backGroundImage" onchange="uploadViewBgImage(this)" hidden />
+                            
+                            <input
+                                type="button"
+                                id="removeBgImageButton"
+                                class="btn btn-danger"
+                                onclick="removeBgImage(this, 'bgImage', 'removeImage')" value="Remove background image"
+                                <?php if (empty($design['bgImage'])) { ?>
+                                    style="display:none"
+                                <?php } ?>
+                            />
+                            
+                        </div>
+                        <form
                             method="post"
                             onsubmit="return saveDesign(this)"
                             <?php if (!empty($designId)) { ?>
                                 id = <?php echo $designId; ?>
                             <?php } ?>
                             style="margin-top:20px"
-
-                    	    >
+                    	>
 
                             <input type="number" name="vendorId" required hidden readonly value="<?php echo $vendorId; ?>" />
-
+                            <input
+                                type="text"
+                                id="bgImage"
+                                name="bgImage"
+                                hidden
+                                <?php if (!empty($design['bgImage'])) { ?>
+                                    value = "<?php echo $design['bgImage']; ?>"
+                                    data-value="1"
+                                <?php } ?>
+                            />                            
+                            <input
+                                type="text"
+                                id="removeImage"
+                                name="removeImage"
+                                hidden readonly
+                                value = "0"
+                                <?php if (!empty($design['bgImage'])) { ?>
+                                    value = "<?php echo $design['bgImage']; ?>"
+                                <?php } else { ?>
+                                    value = "0"
+                                <?php } ?>
+                            />
                             <div class="form-group col-sm-12">
                                 <label style="display:block;">
                                     Selected design name:
@@ -158,6 +198,7 @@
             'iframeWidthDeviceId' : 'iframeWidthDevice',
             'iframeHeightDeviceId' : 'iframeHeightDevice',
             'phone' : document.getElementById('phone_1'),
+            'designBackgroundImageClass' : 'designBackgroundImage',
             'checkUrl' : function (url) {
                             if (url.includes('make_order?vendorid=') && !url.includes('&typeid=') && !url.includes('&spotid=')) {
                                 return this['selectTypeView']

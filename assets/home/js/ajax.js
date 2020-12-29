@@ -254,6 +254,13 @@ var callThis = (function() {
         checkIfsUserExists:  function(callFunction) {
             callFunction(this);
         },
+        uploadViewBgImage: function(callFunction) {
+            callFunction(this);
+        },
+        removeBgImage: function(callFunction, functionArg) {
+            functionArg.push(this);
+            callFunction(...functionArg);
+        },
     };
     return methods;
 })();

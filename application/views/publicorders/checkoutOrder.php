@@ -4,7 +4,7 @@
     class="container checkoutOrderBody"
     style="text-align:left; margin-bottom:20px; width:100vw; height:100vh"
 >
-    <form id="goOrder" method="post" onsubmit="return submitForm()">
+    <form id="goOrder" method="post" class="designBackgroundImage" onsubmit="return submitForm()">
         <input type="text" name="orderRandomKey" value="<?php echo $orderRandomKey; ?>" required readonly hidden />
         <input type="text" name="vendorId" value="<?php echo $vendor['vendorId']; ?>" required readonly hidden />
         <input type="text" name="spotId" value="<?php echo $spot['spotId']; ?>" required readonly hidden />

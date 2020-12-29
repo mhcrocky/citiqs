@@ -1,5 +1,5 @@
 <main
-    class="container"
+    class="container designBackgroundImage"
     style="text-align:left; margin-bottom:20px; width:100vw; height:100vh" id="buyerDetailsContainer"
  >
     <form id="goBuyerDetails" method="post" onsubmit="return submitBuyerDetails()">

@@ -4,8 +4,10 @@
         <label style="display:block;">
             Background color:
             <input
-                data-jscolor=""
-                class="form-control"
+
+                class="form-control colorInput"
+				style="border-radius: 50px"
+				data-jscolor=""
                 name="makeOrderNew[class][selectedSpotBackground][background-color]"
                 data-css-selector="class"
                 data-css-selector-value="selectedSpotBackground"
