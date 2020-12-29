@@ -18,9 +18,9 @@ class Targeting extends BaseControllerWeb
 
 	public function index()
 	{ 
-		$data['title'] = 'Financial Reports';
+		$data['title'] = 'Targeting';
 		$vendor_id = $this->vendor_id;
-		$this->global['pageTitle'] = 'TIQS: Financial Reports';
+		$this->global['pageTitle'] = 'TIQS: Targeting';
 		$this->loadViews("marketing/targeting", $this->global, $data, 'footerbusiness', 'headerbusiness'); // payment screen
 
 	}
