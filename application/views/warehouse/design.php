@@ -36,7 +36,10 @@
                                     value="<?php echo 'viewdesign?designid=' . $vendorDesign['id']; ?>"
                                     <?php if ($designId === intval($vendorDesign['id'])) echo 'selected'; ?>
                                 >
-                                    <?php echo $vendorDesign['templateName']; ?>
+                                    <?php
+                                        echo $vendorDesign['templateName'];
+                                        if ($vendorDesign['active'] === '1') echo '&nbsp;(active)';
+                                    ?>
                                 </option>
                             <?php } ?>
                         </select>
