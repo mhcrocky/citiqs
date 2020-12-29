@@ -156,7 +156,7 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
 									<li>
 										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-shopping-cart-full"></i><span>Marketing</span></a>
 										<ul class="collapse">
-											<li><a href="<?php echo $this->baseUrl; ?>dashboard"><i class="ti-pencil-alt"></i><span>Targeting</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>marketing/targeting"><i class="ti-pencil-alt"></i><span>Targeting</span></a></li>
 											<li><a href="<?php echo $this->baseUrl; ?>marketing/selection"><i class="ti-pencil-alt"></i> <span>Notification Messaging</span></a></li>
 											<li><a href="<?php echo $this->baseUrl; ?>dashboard"><i class="ti-user"></i> <span>RSVP Pre-register</span></a></li>
 											<li><a href="<?php echo $this->baseUrl; ?>dashboard"><i class="ti-pencil-alt"></i> <span>E-mail Campaigns</span></a></li>

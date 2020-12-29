@@ -44,15 +44,19 @@
 //				die();
 
                 //CHECK ONE SIGNAL ID
-                if ($this->user_model->checkOneSignalId($user['oneSignalId'])) {
+
+				if (!$this->user_model->checkOneSignalId($user['oneSignalId'])) {
                     echo json_encode([
                         'status' => '0',
-                        'message' => 'User with this one signal id already exist',
+                        'message' => 'User with this one signal id already exist'
                     ]);
                     return;
                 };
 
 				//	$user['email']=set in POST.
+				// Find user...
+
+
 
                 // INSERT USER
                 $user['roleId'] = $this->config->item('buyer');
