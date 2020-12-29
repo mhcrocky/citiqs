@@ -864,6 +864,28 @@ class User_model extends CI_Model
         return $this;
     }
 
+	public function manageAndSetUserOneSignal(array $user): object
+	{
+		if (!$this->isDuplicate($user['email'])) {
+			$password = Utility_helper::shuffleString(12);
+			$user['password'] = getHashedPassword($password);
+			$user['code'] = Utility_helper::shuffleString(5);
+			$user['createdDtm'] = date('Y-m-d H:i:s');
+			$this->getGeoCoordinates($user);
+			$this->insertUser($user);
+			$this->setUniqueValue($user['email'])->setWhereCondtition()->setUser();
+			// must return non hashed password for activation link
+			$this->password = $password;
+			$this->created = true;
+
+		} else {
+			// update user - maybe it was register as finder and now is claimer or user insert new mobile
+			$this->updated = true;
+			$this->setUniqueValue($user['email'])->setWhereCondtition()->updateUser($user)->setUser();
+		}
+		return $this;
+	}
+
 	public function manageAndSetOneSignalId($onesignalid): string
 	{
 		return '';
@@ -998,18 +1020,22 @@ class User_model extends CI_Model
         return verifyHashedPassword($userPassword, $password);
     }
 
-    public function checkOneSignalId($oneSignalId) : bool
+    public function checkOneSignalId($oneSignalId)
     {
+//    	var_dump($oneSignalId);
         $this->db->select('id');
         $this->db->from('tbl_user');
         $this->db->where('tbl_user.oneSignalId', $oneSignalId);
-        $result = $this->db->get();
+        $result = $this->db->get()->result_array();
+//        var_dump($oneSignalId);
+//		var_dump($result);
 
 		if (empty($result)) {
-			return false;
+			$result = 0;
+			return $result;
 		}
 		else{
-			return true;
+			return reset($result);
 		}
     }
 
