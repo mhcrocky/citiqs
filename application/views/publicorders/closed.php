@@ -1,5 +1,8 @@
 <main class="main-wrapper-nh" style="text-align:center; width:100vw: height:100vh">
-	<div class="col-half background-apricot-blue height" id="closedContainer">
+	<div
+		class="col-half background-apricot-blue height designBackgroundImage"
+		id="closedContainer"
+	>
 		<div class="width-650"></div>
 		<div class="form-group has-feedback">
 			<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="350" height="" />

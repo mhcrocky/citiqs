@@ -1,4 +1,4 @@
-<main id="wrapper" class="payOrderBackgroundColor">
+<main id="wrapper" class="payOrderBackgroundColor designBackgroundImage">
     <div id="content" class="payOrderBackgroundColor">
         <div class="container payOrderBackgroundColor" id="shopping-cart">
             <div class="container payOrderBackgroundColor" id="page-wrapper">

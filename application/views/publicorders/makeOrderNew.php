@@ -1,4 +1,4 @@
-<main class="container shop-container selectedSpotBackground" style="width:100%"  id="makeOrderView">
+<main class="container shop-container selectedSpotBackground designBackgroundImage" style="width:100%"  id="makeOrderView">
     <div class="row selectedSpotBackground">
         <?php if (!empty($mainProducts)) { ?>        	
 			    <?php if ($vendor['logo']) { ?>

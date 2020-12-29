@@ -140,7 +140,7 @@ $config['timeTo'] = '23:59:59';
 $config['uploadLogoFolder']    = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'vendorLogos' . DIRECTORY_SEPARATOR;
 $config['defaultProductsImages'] = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'defaultProductsImages' . DIRECTORY_SEPARATOR;
 $config['placeImages'] = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'placeImages' . DIRECTORY_SEPARATOR;
-
+$config['backGroundImages']    = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'backGroundImages' . DIRECTORY_SEPARATOR;
 //spot types
 $config['local'] = 1;
 $config['deliveryType'] = 2;
@@ -234,3 +234,5 @@ $config['taxA'] = 21;
 $config['taxB'] = 12;
 $config['taxC'] = 6;
 $config['taxD'] = 0;
+
+$config['_temp'] = '_temp';

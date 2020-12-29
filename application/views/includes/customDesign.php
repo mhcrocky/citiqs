@@ -14,23 +14,16 @@
                 $css .= '}';
             }
         }
+         if (!empty($design['bgImage'])) { 
+            $css .=
+                '.designBackgroundImage {
+                    background-image: url("' . base_url() . 'assets/images/backGroundImages/' . $design['bgImage'] . '");
+                    background-size: cover;
+                    background-position: center center;
+                }';
+         }
+
         echo '<style>' . $css . '</style>';
     }
     #$design['bgImage'] = '1190_1598545539.png';
 ?>
-<?php if (!empty($design['bgImage'])) { ?>
-    <style>
-        #selectTypeBody,
-        #selectSpotContainer,
-        #makeOrderView,
-        #goOrder,
-        #buyerDetailsContainer,
-        #closedContainer,
-        #spotClosed,
-        .payOrderBackgroundColor:first-child {
-            background-image: url("<?php echo base_url(); ?>assets/images/backGroundImages/<?php echo $design['bgImage']; ?>");
-            background-size: cover;
-            background-position: center center;
-        }
-    </style>
-<?php } ?>
