@@ -10,6 +10,21 @@
             <?php endforeach;?>
         </select>
     </div>
+    <div class="w-100 mt-5 mx-auto">
+        <div class="col-md-12 mt-5 pt-5 mb-2">
+            <main class="query-main" class="p-3 mt-5" role="main">
+                <div class="w-100 text-right p-3 mt-1">
+                    <button class="btn btn-success" data-toggle="modal" data-target="#descriptModal"><i style="font-size: 12px;" class="ti-plus"></i> Add descript</button>
+                </div>
+                <div id="query-builder"></div>
+                <div class="w-100 text-right p-3">
+                    <button class="btn btn-primary parse-json">Run the query</button> 
+                    <button id="saveResults" class="btn btn-primary ml-2">Save Results</button>
+                </div>
+            </main>
+        </div>
+
+    </div>
 </div>
 <div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable">
     <div class="w-100 mt-3 table-responsive">
@@ -18,6 +33,8 @@
             <tfoot>
                 <tr>
                     <th colspan="2" style="text-align:center">Total:</th>
+                    <th></th>
+                    <th></th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -44,21 +61,7 @@
     </table>
 </div>
 </div>
-<div class="w-100 mt-3 mb-3 mx-auto">
-        <div class="col-md-12 mb-4">
-            <main class="query-main" class="p-3" role="main">
-                <div class="w-100 text-right p-3">
-                    <button class="btn btn-success" data-toggle="modal" data-target="#descriptModal"><i style="font-size: 12px;" class="ti-plus"></i> Add descript</button>
-                </div>
-                <div id="query-builder"></div>
-                <div class="w-100 text-right p-3">
-                    <button class="btn btn-primary parse-json">Run the query</button> 
-                    <button id="saveResults" class="btn btn-primary ml-2">Save</button>
-                </div>
-            </main>
-        </div>
 
-    </div>
 
 <!-- Modal -->
 <div class="modal fade" id="descriptModal" tabindex="-1" role="dialog" aria-labelledby="descriptModalLabel" aria-hidden="true">
