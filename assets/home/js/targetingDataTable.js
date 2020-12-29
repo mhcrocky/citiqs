@@ -66,30 +66,38 @@ $(document).ready( function () {
       };
       
       $('#query-builder').queryBuilder(options);
+      $('#query').queryBuilder(options);
+      console.log($('#query'));
       var sql;
       $('.parse-json').on('click', function() {
         table.ajax.reload();
         table.clear().draw();
       });
+      $('input[type=radio][name=query]').change(function() {
+        table.ajax.reload();
+        table.clear().draw();
+    });
       $('#saveResults').on('click', function() {
         let tbl_datas = table.rows({ search: 'applied'}).data();
        
         var description = $("#description").val();
+        var data = [];
         $.each(tbl_datas, function( index, tbl_data ) {
-          var data = {
+          data[index] = {
             vendor_id: tbl_data.vendor_id,
             description: description,
             user_id:tbl_data.user_id,
           };
-          $.ajax({
-            type: "POST",
-            url: globalVariables.baseUrl + "marketing/targeting/save_result",
-            data: data,
-            success: function(data){
-              console.log(data);
-            }
-          });
+          
           //results[index] = d;
+        });
+        $.ajax({
+          type: "POST",
+          url: globalVariables.baseUrl + "marketing/targeting/save_results",
+          data: {results: data},
+          success: function(data){
+            console.log(data);
+          }
         });
         
        
@@ -219,12 +227,16 @@ $(document).ready( function () {
           url: globalVariables.baseUrl + "marketing/targeting/get_report",
           data: function(data) {
             let query = $('#query-builder').queryBuilder('getSQL', false, true).sql;
-            sql = query.replace(/\n/g, " ");
-            sql = "AND ("+sql+")";
+            var sql1 = query.replace(/\n/g, " ");
+            sql1 = "AND ("+sql1+")";
+            var sql2 = $("input[name='query']:checked").val();
             if(query == ""){
-              data.sql = "";
+              data.sql1 = "";
+              data.sql1 = sql1;
+              data.sql2 = sql2;
             } else {
-              data.sql = sql;
+              data.sql1 = sql1;
+              data.sql2 = sql2;
             }
             $('.has-error').removeClass('has-error');
           },
@@ -625,27 +637,6 @@ function format(d) {
         });
         
         $('input[name="datetimes"]').change(function () {
-          let full_timestamp = $('input[name="datetimes"]').val();
-          var date = full_timestamp.split(" - ");
-          var min = date[0];
-          var max = date[1];
-          $.post(globalVariables.baseUrl +'businessreport/get_timestamp_totals',{min:"'"+min+"'",max:"'"+max+"'"}, function(data){
-            let totals = JSON.parse(data);
-            let total = totals['total'];
-            let local = totals['local'];
-            let delivery = totals['delivery'];
-            let pickup = totals['pickup'];
-            $('#total').text( total_number(total) );
-            $('#local').text( total_number(local) );
-            $('#delivery').text( total_number(delivery) );
-            $('#pickup').text( total_number(pickup) );
-          });
-
-          $.post(globalVariables.baseUrl +'businessreport/get_timestamp_orders',{min:"'"+min+"'",max:"'"+max+"'"}, function(data){
-            let orders = JSON.parse(data);
-            $('#orders').text( orders );
-          });
-
           table.draw();
         });
        
