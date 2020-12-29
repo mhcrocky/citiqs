@@ -194,7 +194,7 @@ function saveQuery() {
         url: '<?php echo base_url(); ?>marketing/targeting/save_query',
         data: data,
         success: function() {
-            alert('true');
+            //alert('true');
         }
     });
 
