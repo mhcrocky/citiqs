@@ -344,6 +344,7 @@ $route['marketing/calculator/savecalc'] = 'Marketing/Calculator/saveCalc';
 $route['marketing/targeting'] = 'Marketing/Targeting';
 $route['marketing/targeting/get_report'] = 'Marketing/Targeting/get_report';
 $route['marketing/targeting/save_result'] = 'Marketing/Targeting/save_result';
+$route['marketing/targeting/save_query'] = 'Marketing/Targeting/save_query';
 
 $route['api/video/upload_post'] = 'Api/Video/upload_post';
 
