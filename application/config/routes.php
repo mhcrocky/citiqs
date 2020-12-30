@@ -345,6 +345,8 @@ $route['marketing/targeting'] = 'Marketing/Targeting';
 $route['marketing/targeting/get_report'] = 'Marketing/Targeting/get_report';
 $route['marketing/targeting/save_result'] = 'Marketing/Targeting/save_result';
 $route['marketing/targeting/save_query'] = 'Marketing/Targeting/save_query';
+$route['marketing/targeting/edit_query'] = 'Marketing/Targeting/edit_query';
+$route['marketing/targeting/delete_query'] = 'Marketing/Targeting/delete_query';
 
 $route['api/video/upload_post'] = 'Api/Video/upload_post';
 
