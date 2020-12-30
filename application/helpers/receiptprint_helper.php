@@ -31,6 +31,13 @@
 
             $i = 0;
             $hd = $h * 35;
+
+            foreach ($productsarray as $index => $product) {
+                $product = explode($CI->config->item('concatSeparator'), $product);
+                if (intval($product[10])) $product[9] = $product[10];
+                $productsarray[$index] = $product;
+            }
+            $productsarray = Utility_helper::resetArrayByKeyMultiple($productsarray, '9');
             
             self::printPrinterProducts($CI, $imagetext, $productsarray, $i, $hd);
 
@@ -62,12 +69,7 @@
         {
             $receiptMain = new ImagickDraw();
             $receiptMain->setFontSize(30);
-            foreach ($productsarray as $index => $product) {
-                $product = explode($CI->config->item('concatSeparator'), $product);
-                if (intval($product[10])) $product[9] = $product[10];
-                $productsarray[$index] = $product;
-            }
-            $productsarray = Utility_helper::resetArrayByKeyMultiple($productsarray, '9');
+
             foreach ($productsarray as $mainIdnex => $products) {
                 Utility_helper::array_sort_by_column($products, '10');
                 foreach($products as $product) {
@@ -156,19 +158,21 @@
             $pixel->destroy();
         }
 
-        public static function printReceiptHeader(object $CI, object &$draw, object &$imagetext, int &$h, array $order, int $serviceTypeId): void
+        public static function printReceiptHeader(object $CI, object &$draw, object &$imagetext, int &$h, array $order, int $serviceTypeId, bool $isMobile = false): void
         {
             $draw->setStrokeColor('black');
             $draw->setStrokeWidth(1);
             $draw->setFontSize(30);
             $draw->setStrokeWidth(3);
 
-            if ($serviceTypeId === $CI->config->item('local')) {
-                $draw->annotation(0, 35 * $h, "DIT IS GEEN GELDIG BTW TICKET");
-            } elseif ($serviceTypeId === $CI->config->item('deliveryType')) {
-                $draw->annotation(0, 35 * $h, "DIT IS GEEN GELDIG BTW TICKET");
-            } elseif ($order['serviceTypeId'] === $CI->config->item('pickupType')) {
-                $draw->annotation(0, 35 * $h, "DIT IS GEEN GELDIG BTW TICKET");
+            if (!$isMobile) {
+                if ($serviceTypeId === $CI->config->item('local')) {
+                    $draw->annotation(0, 35 * $h, "DIT IS GEEN GELDIG BTW TICKET");
+                } elseif ($serviceTypeId === $CI->config->item('deliveryType')) {
+                    $draw->annotation(0, 35 * $h, "DIT IS GEEN GELDIG BTW TICKET");
+                } elseif ($order['serviceTypeId'] === $CI->config->item('pickupType')) {
+                    $draw->annotation(0, 35 * $h, "DIT IS GEEN GELDIG BTW TICKET");
+                }
             }
 
             $draw->setStrokeWidth(2);
@@ -193,16 +197,17 @@
                 $draw->annotation(0,  35 * $h, "PICK-UP at : ". date("d-m H:i:s",strtotime($order['orderCreated'])));
             }
 
-            $h++;
-            $h++;
-
             $draw->setStrokeWidth(1);
             $draw->setFontSize(30);
             $draw->setStrokeWidth(3);
 
             $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-            $imagetext->annotateImage($draw, 0,35 * $h, 0, "#");
-            $imagetext->annotateImage($draw, 40,35 * $h, 0, "OMSCHRIJVING");
+            if (!$isMobile) {
+                $h++;
+                $h++;
+                $imagetext->annotateImage($draw, 0,35 * $h, 0, "#");
+                $imagetext->annotateImage($draw, 40,35 * $h, 0, "OMSCHRIJVING");
+            }            
             if ($order['paidStatus'] === $CI->config->item('orderCashPaying')) {
                 $imagetext->annotateImage($draw, 295, 35 * $h, 0, "CASH PAYMENT");
             }
@@ -226,5 +231,72 @@
                 $draw->annotation(0, $hd + ($i * 30), $orderRemarks);
                 $i++;
             }
+        }
+
+        public static function printAllReceipts (int $orderId): void
+        {
+            $CI =& get_instance();
+            $CI->load->config('custom');
+            $CI->load->model('shoporder_model');
+            $CI->load->helper('print_helper');
+
+            $imageprint = new Imagick();
+            $imagetext = new Imagick();
+            $draw = new ImagickDraw();
+
+            $order = $CI->shoporder_model->setObjectId($orderId)->fetchOrdersForMobileReceipt();
+            $logoFile = (is_null($order['vendorLogo'])) ? FCPATH . "/assets/home/images/tiqslogonew.png" : $CI->config->item('uploadLogoFolder') . $order['vendorLogo'];
+            $productsarray = explode($CI->config->item('contactGroupSeparator'), $order['products']);
+            $countProducts = count($productsarray);
+            $serviceTypeId = intval($order['serviceTypeId']);
+            $spotPrinter = $order['spotPrinter'];
+
+            self::imageTextAndDrawSettings($imagetext, $draw, $countProducts);
+
+            $h = 1;
+
+            self::printReceiptHeader($CI, $draw, $imagetext, $h, $order, $serviceTypeId, true);
+
+            $i = 0;
+            $hd = $h * 35;
+
+            foreach ($productsarray as $index => $product) {
+                $product = explode($CI->config->item('concatSeparator'), $product);
+                if (intval($product[10])) $product[9] = $product[10];
+                $productsarray[$index] = $product;
+            }
+            $productsarray = Utility_helper::resetArrayByKeyMultiple($productsarray, '12');
+            $productsarray = array_map(function($el) {
+                return Utility_helper::resetArrayByKeyMultiple($el, '9');
+            }, $productsarray);
+
+            foreach ($productsarray as $data) {
+                $i++;
+                $printer = empty($data[0][0][13]) ? $spotPrinter : $data[0][0][13];
+                $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+                $draw->annotation(0, $hd + ($i * 30), 'PRINTER: ' . $printer);
+                $i++;
+                self::printPrinterProducts($CI, $imagetext, $data, $i, $hd);
+            }
+
+            self::printOrderRemarks($draw, $i, $order['remarks']);
+
+            $imagetext->drawImage($draw);
+            $imageprint->addImage($imagetext);
+            $imageprint->resetIterator();
+            $resultpngprinter = $imageprint->appendImages(true);
+            $resultpngprinter->setImageFormat('png');
+
+            $receipt = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '-mobile.png';
+			if (file_put_contents($receipt, $resultpngprinter) ) {
+                if (ENVIRONMENT !== 'development') {
+                    $logFile = FCPATH . 'application/tiqs_logs/write-error.txt';
+                    Utility_helper::logMessage($logFile, 'file order written to server: ' .$receipt);
+                }
+            }
+
+            $imageprint->destroy();
+            $imagetext->destroy();
+            $draw->destroy();
         }
     }

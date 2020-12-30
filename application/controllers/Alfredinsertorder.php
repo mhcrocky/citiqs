@@ -21,6 +21,7 @@ class Alfredinsertorder extends BaseControllerWeb
         $this->load->helper('jwt_helper');
         $this->load->helper('orderprint_helper');
         $this->load->helper('fod_helper');
+        $this->load->helper('receiptprint_helper');
 
         $this->load->model('user_subscription_model');
         $this->load->model('shopcategory_model');
@@ -207,6 +208,7 @@ class Alfredinsertorder extends BaseControllerWeb
 
         $orderForImage = $this->shoporder_model->setObjectId($orderId)->fetchOrdersForPrintcopy();
         $orderForImage = reset($orderForImage);
+        Receiptprint_helper::printAllReceipts($orderId);
         Orderprint_helper::saveOrderImage($orderForImage);
     }
 

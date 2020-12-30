@@ -229,9 +229,4 @@
             $this->shoporderex_model->updateTwoToZero();
         }
 
-
-        public function mobile_get(): vodi
-        {
-            die();
-        }
     }
