@@ -20,7 +20,7 @@ class Targeting extends BaseControllerWeb
 	{ 
 		$data['title'] = 'Targeting';
 		$vendor_id = $this->vendor_id;
-		$data['queries'] = $this->targeting_model->get_queries();
+		$data['queries'] = $this->targeting_model->get_queries($vendor_id);
 		$this->global['pageTitle'] = 'TIQS: Targeting';
 		$this->loadViews("marketing/targeting", $this->global, $data, 'footerbusiness', 'headerbusiness'); // payment screen
 
@@ -109,8 +109,25 @@ class Targeting extends BaseControllerWeb
 	}
 
 	public function save_query(){
-		$query = $this->input->post(null,true);
-		return $this->targeting_model->save_query($query);
+		$data = $this->input->post(null,true);
+		$data['vendor_id'] = $this->vendor_id;
+		return $this->targeting_model->save_query($data);
+	}
+
+	public function edit_query(){
+		$data = $this->input->post(null,true);
+		$id = $data['id'];
+		unset($data['id']);
+		$this->targeting_model->update_query($id, $data);
+		return ;
+	}
+
+	public function delete_query(){
+		$data = $this->input->post(null,true);
+		$id = $data['id'];
+		unset($data['id']);
+		$this->targeting_model->delete_query($id);
+		return ;
 	}
 	
 

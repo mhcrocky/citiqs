@@ -78,8 +78,8 @@ WHERE vendor.id = '$vendor_id' AND tbl_shop_orders.paid = '1' AND serviceTypeId 
       return $query->result_array();
 	}
 
-	public function get_queries(){
-		$this->db->select('*')->from('tbl_queries');
+	public function get_queries($vendor_id){
+		$this->db->select('*')->from('tbl_queries')->where('vendor_id',$vendor_id);
 		$query = $this->db->get();
 		return $query->result_array();
 	}
@@ -90,6 +90,16 @@ WHERE vendor.id = '$vendor_id' AND tbl_shop_orders.paid = '1' AND serviceTypeId 
 
 	public function save_query($data){
 		return $this->db->insert('tbl_queries', $data); 
+	}
+
+	public function update_query($id, $data){
+		$this->db->where('id', $id);
+		return $this->db->update('tbl_queries', $data); 
+	}
+
+	public function delete_query($id){
+		$this->db->where('id', $id);
+		return $this->db->delete('tbl_queries'); 
 	}
 
 
