@@ -26,6 +26,7 @@
             Category name background color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][categoryName][background-color]"
                 data-css-selector="class"
@@ -45,6 +46,7 @@
             Category name font color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][categoryName][color]"
                 data-css-selector="class"
@@ -64,6 +66,7 @@
             Menu items font color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][menuColor][color]"
                 data-css-selector="class"
@@ -83,6 +86,7 @@
             Product name font color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][productName][color]"
                 data-css-selector="class"
@@ -102,6 +106,7 @@
             Product description font color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][productDescription][color]"
                 data-css-selector="class"
@@ -121,6 +126,7 @@
             Product category font color (popup):
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][productCategory][color]"
                 data-css-selector="class"
@@ -140,6 +146,7 @@
             Remark label font color (popup):
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][remarkStyle][color]"
                 data-css-selector="class"
@@ -159,6 +166,7 @@
             Labels font color (popup):
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][labelsMain][color]"
                 data-css-selector="class"
@@ -178,6 +186,7 @@
             Label items font color (popup):
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][labelItems][color]"
                 data-css-selector="class"
@@ -197,6 +206,7 @@
             Price, quantity, plus and minus background color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][priceQuantity][background-color]"
                 data-css-selector="class"
@@ -216,6 +226,7 @@
             Price, quantity, plus and minus font color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][priceQuantity][color]"
                 data-css-selector="class"
@@ -235,6 +246,7 @@
             Footer background color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][footer][background-color]"
                 data-css-selector="class"
@@ -254,6 +266,7 @@
             Total button background color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][totalButton][background-color]"
                 data-css-selector="class"
@@ -273,6 +286,7 @@
             Total button font color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][totalButton][color]"
                 data-css-selector="class"
@@ -292,6 +306,7 @@
             Pay button background color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][payButton][background-color]"
                 data-css-selector="class"
@@ -311,6 +326,7 @@
             Pay button font color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][payButton][color]"
                 data-css-selector="class"
@@ -330,6 +346,7 @@
             Add product button font color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][addProductOnList][color]"
                 data-css-selector="class"
@@ -349,6 +366,7 @@
             Add product button background color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][addProductOnList][background-color]"
                 data-css-selector="class"
@@ -368,6 +386,7 @@
             Add product button font color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][addProductOnList][color]"
                 data-css-selector="class"
@@ -387,6 +406,7 @@
             Input field color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][inputFieldsMakeOrder][color]"
                 data-css-selector="class"
@@ -406,6 +426,7 @@
             Input field border color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][inputFieldsMakeOrder][border-color]"
                 data-css-selector="class"
@@ -425,6 +446,7 @@
             Input field background color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][inputFieldsMakeOrder][background-color]"
                 data-css-selector="class"
@@ -444,6 +466,7 @@
             Arrows color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][slick-arrow:before][color]"
                 data-css-selector="class"
@@ -463,6 +486,7 @@
             Info circle color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="makeOrderNew[class][infoCircle][color]"
                 data-css-selector="class"

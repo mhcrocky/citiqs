@@ -283,7 +283,7 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
 									<li>
                                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span>Reservations</span></a>
                                         <ul class="collapse">
-                                            <li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Statistics</span></a></li>
+                                            <li><a href="<?php echo $this->baseUrl;?>events/add"><i class="ti-ticket"></i> <span>Statistics</span></a></li>
                                             <li><a href="<?php echo $this->baseUrl;?>customer_panel/agenda"><i class="ti-agenda"></i> <span>Make your reservations</span></a></li>
                                             <li><a href="<?php echo $this->baseUrl; ?>customer_panel/reservations_report"><i class="ti-write"></i> <span>Reservations Report</span></a></li>
                                             <li><a href="<?php echo $this->baseUrl; ?>customer_panel/report"><i class="ti-clipboard"></i> <span>Report</span></a></li>
