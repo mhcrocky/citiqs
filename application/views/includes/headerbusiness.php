@@ -95,6 +95,9 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
             #body {
                 background: #f3d0b1;
             }
+            .dash-active {
+                background: rgba(0,0,0, .1) !important; 
+            }
 
         </style>
         <!-- modernizr css -->
@@ -606,4 +609,5 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
 
     });
 </script>
+
 
