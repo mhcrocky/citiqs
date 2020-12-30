@@ -11,6 +11,7 @@
             $CI =& get_instance();
             $CI->load->config('custom');
             $CI->load->model('shopvendorfod_model');
+            $CI->load->helper('print_helper');
 
             $isFod = $CI->shopvendorfod_model->isFodVendor(intval($order['vendorId']));
             $i = 0;
@@ -27,7 +28,7 @@
 
             self::drawEmailSettings($imagetextemail, $drawemail, $pixel, count($productsarray));
 
-            self::printImageLogo($imageprintemail, $logoFile);
+            Print_helper::printImageLogo($imageprintemail, $logoFile);
             self::printOrderHeader($CI, $imagetextemail, $drawemail, $order, $spotTypeId);
             self::printProductLines($CI, $drawemail, $productsarray, $spotTypeId, $i, $startPoint, $productVats, $order, $isFod);
             self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
@@ -360,4 +361,6 @@
             $drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
             $drawemail->annotation(560, $startPoint + ($i * 30), number_format($overAllTotal, 2, '.', ','));
         }
+
+
     }
