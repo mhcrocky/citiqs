@@ -1,4 +1,21 @@
 $(document).ready( function () {
+  //Collapse of Saved Query
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "block";
+        }
+    });
+  }
+  //End Collapse
+
+  //Query Builder
       var options = {
         allow_empty: true,
         filters: [
@@ -103,7 +120,10 @@ $(document).ready( function () {
        
       });
 
-    
+      //End Query Builder
+
+
+      //DateTime Picker
       var getTodayDate = new Date();
       var month = getTodayDate.getMonth()+1;
       var day = getTodayDate.getDate();
@@ -134,6 +154,10 @@ $(document).ready( function () {
         });
       });
 
+      //End DateTime Picker
+
+
+      //Targeting Datatable
       var table = $('#report').DataTable({
         processing: true,
         colReorder: true,
@@ -672,4 +696,142 @@ function addZero(i) {
     i = "0" + i;
   }
   return i;
+}
+
+function editModal(id) {
+  var options = {
+      allow_empty: true,
+      filters: [{
+              id: 'tbl_shop_products_extended.price',
+              label: 'Price',
+              type: 'integer',
+              class: 'price',
+              // optgroup: 'core',
+              default_value: '',
+              size: 30,
+              unique: true
+          },
+          {
+              id: 'AMOUNT',
+              label: 'Amount',
+              type: 'integer',
+              class: 'amount',
+              // optgroup: 'core',
+              default_value: '',
+              size: 30,
+              unique: true
+          },
+          {
+              id: 'tbl_shop_orders.old_order',
+              label: 'Old Order',
+              type: 'integer',
+              class: 'old_order',
+              // optgroup: 'core',
+              default_value: '',
+              size: 30,
+              unique: true
+          },
+          {
+              id: 'tbl_shop_orders.waiterTip',
+              label: 'WaiterTip',
+              type: 'integer',
+              class: 'waitertip',
+              // optgroup: 'core',
+              default_value: '',
+              size: 30,
+              unique: true
+          },
+          {
+              id: 'tbl_shop_orders.serviceFee',
+              label: 'ServiceFee',
+              type: 'integer',
+              class: 'servicefee',
+              // optgroup: 'core',
+              default_value: '',
+              size: 30,
+              unique: true
+          },
+          {
+              id: 'tbl_shop_order_extended.quantity',
+              label: 'Quantity',
+              type: 'integer',
+              class: 'quantity',
+              // optgroup: 'core',
+              default_value: '',
+              size: 30,
+              unique: true
+          },
+      ]
+  };
+
+  $('#query' + id).queryBuilder(options);
+
+}
+
+function editQuery(id) {
+  var query_text = $("#query-text" + id).val();
+  var query = $('#query').queryBuilder('getSQL', false, true).sql;
+  var sql;
+  var data;
+  if (query == "") {
+      data = {
+          id: id,
+          query: query_text,
+      };
+  } else {
+      sql = query.replace(/\n/g, " ");
+      sql = "AND (" + sql + ")";
+      data = {
+          id: id,
+          query: query_text,
+          value: sql
+      };
+  }
+
+  $.ajax({
+      type: 'post',
+      url: globalVariables.baseUrl + 'marketing/targeting/edit_query',
+      data: data,
+      success: function() {
+        $("#label"+id).text(query_text);
+      }
+  });
+
+}
+
+function saveQuery() {
+  var query_text = $("#query-text").val();
+  var query = $('#query').queryBuilder('getSQL', false, true).sql;
+  sql = query.replace(/\n/g, " ");
+  sql = "AND (" + sql + ")";
+  var data = {
+      query: query_text,
+      value: sql
+  };
+  $.ajax({
+      type: 'post',
+      url: globalVariables.baseUrl + 'marketing/targeting/save_query',
+      data: data,
+      success: function() {
+          location.reload();
+      }
+  });
+
+}
+
+function deleteQuery(id) {
+  if (window.confirm("Are you sure?")) {
+      var data = {
+          id: id
+      };
+      $.ajax({
+          type: 'post',
+          url: globalVariables.baseUrl + 'marketing/targeting/delete_query',
+          data: data,
+          success: function() {
+              $("#inputGroup"+id).fadeOut();
+          }
+      });
+      //location.reload();
+  }
 }
