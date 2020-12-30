@@ -143,10 +143,10 @@ code {
         <select style="width: 264px;font-size: 14px;"
             class="custom-select custom-select-sm form-control form-control-sm  mb-1 " id="serviceType">
             <option value="">Choose Service Type</option>
-            <?php foreach ($service_types as $service_type): ?>
-            <option id="<?php echo $service_type['id']; ?>" value="<?php echo $service_type['type']; ?>">
-                <?php echo ucfirst($service_type['type']); ?></option>
-            <?php endforeach;?>
+            <option value="local">Local</option>
+            <option value="delivery">Delivery</option>
+            <option value="pickup">Pickup</option>
+
         </select>
     </div>
     <div class="w-100 mt-5 mx-auto">
@@ -171,10 +171,13 @@ code {
                             value="<?php echo htmlspecialchars_decode($query['value']); ?>">
                         <label style="padding-left: 30px;padding-right: 70px;"
                             for="radio<?php echo $query['id']; ?>"><?php echo $query['query']; ?>
-                        <div class="text-right p-3">
-                            <button class="btn btn-secondary ml-2" onclick="editModal(<?php echo $query['id']; ?>)" data-toggle="modal" data-target="#editQueryModal<?php echo $query['id']; ?>">Edit</button>
-                            <button class="btn btn-danger ml-2" onclick="deleteQuery(<?php echo $query['id']; ?>)" >Delete</button>
-                        </div>
+                            <div class="text-right p-3">
+                                <button class="btn btn-secondary ml-2" onclick="editModal(<?php echo $query['id']; ?>)"
+                                    data-toggle="modal"
+                                    data-target="#editQueryModal<?php echo $query['id']; ?>">Edit</button>
+                                <button class="btn btn-danger ml-2"
+                                    onclick="deleteQuery(<?php echo $query['id']; ?>)">Delete</button>
+                            </div>
                     </div>
                     <!-- Edit query -->
                     <div class="modal fade" id="editQueryModal<?php echo $query['id']; ?>" tabindex="-1" role="dialog"
@@ -182,7 +185,8 @@ code {
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="editQueryModal<?php echo $query['id']; ?>Label">Edit query</h5>
+                                    <h5 class="modal-title" id="editQueryModal<?php echo $query['id']; ?>Label">Edit
+                                        query</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -199,7 +203,8 @@ code {
                                     </main>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" onclick="editQuery(<?php echo $query['id']; ?>)"
+                                    <button type="button" class="btn btn-primary"
+                                        onclick="editQuery(<?php echo $query['id']; ?>)"
                                         data-dismiss="modal">Save</button>
                                 </div>
                             </div>
@@ -243,7 +248,7 @@ code {
                     <th></th>
                     <th></th>
                     <th></th>
-                   
+
                 </tr>
             </tfoot>
         </table>
@@ -338,80 +343,79 @@ for (i = 0; i < coll.length; i++) {
 function editModal(id) {
     var options = {
         allow_empty: true,
-        filters: [
-          {
-            id: 'tbl_shop_products_extended.price',
-            label: 'Price',
-            type: 'integer',
-            class: 'price',
-            // optgroup: 'core',
-            default_value: '',
-            size: 30,
-            unique: true
-          },
-          {
-            id: 'AMOUNT',
-            label: 'Amount',
-            type: 'integer',
-            class: 'amount',
-            // optgroup: 'core',
-            default_value: '',
-            size: 30,
-            unique: true
-          },
-          {
-            id: 'tbl_shop_orders.old_order',
-            label: 'Old Order',
-            type: 'integer',
-            class: 'old_order',
-            // optgroup: 'core',
-            default_value: '',
-            size: 30,
-            unique: true
-          },
-          {
-            id: 'tbl_shop_orders.waiterTip',
-            label: 'WaiterTip',
-            type: 'integer',
-            class: 'waitertip',
-            // optgroup: 'core',
-            default_value: '',
-            size: 30,
-            unique: true
-          },
-          {
-            id: 'tbl_shop_orders.serviceFee',
-            label: 'ServiceFee',
-            type: 'integer',
-            class: 'servicefee',
-            // optgroup: 'core',
-            default_value: '',
-            size: 30,
-            unique: true
-          },
-          {
-            id: 'tbl_shop_order_extended.quantity',
-            label: 'Quantity',
-            type: 'integer',
-            class: 'quantity',
-            // optgroup: 'core',
-            default_value: '',
-            size: 30,
-            unique: true
-          },
+        filters: [{
+                id: 'tbl_shop_products_extended.price',
+                label: 'Price',
+                type: 'integer',
+                class: 'price',
+                // optgroup: 'core',
+                default_value: '',
+                size: 30,
+                unique: true
+            },
+            {
+                id: 'AMOUNT',
+                label: 'Amount',
+                type: 'integer',
+                class: 'amount',
+                // optgroup: 'core',
+                default_value: '',
+                size: 30,
+                unique: true
+            },
+            {
+                id: 'tbl_shop_orders.old_order',
+                label: 'Old Order',
+                type: 'integer',
+                class: 'old_order',
+                // optgroup: 'core',
+                default_value: '',
+                size: 30,
+                unique: true
+            },
+            {
+                id: 'tbl_shop_orders.waiterTip',
+                label: 'WaiterTip',
+                type: 'integer',
+                class: 'waitertip',
+                // optgroup: 'core',
+                default_value: '',
+                size: 30,
+                unique: true
+            },
+            {
+                id: 'tbl_shop_orders.serviceFee',
+                label: 'ServiceFee',
+                type: 'integer',
+                class: 'servicefee',
+                // optgroup: 'core',
+                default_value: '',
+                size: 30,
+                unique: true
+            },
+            {
+                id: 'tbl_shop_order_extended.quantity',
+                label: 'Quantity',
+                type: 'integer',
+                class: 'quantity',
+                // optgroup: 'core',
+                default_value: '',
+                size: 30,
+                unique: true
+            },
         ]
-      };
-      
-      $('#query'+id).queryBuilder(options);
+    };
+
+    $('#query' + id).queryBuilder(options);
 
 }
 
 function editQuery(id) {
-    var query_text = $("#query-text"+id).val();
+    var query_text = $("#query-text" + id).val();
     var query = $('#query').queryBuilder('getSQL', false, true).sql;
     var sql;
     var data;
-    if(query == ""){
+    if (query == "") {
         data = {
             id: id,
             query: query_text,
@@ -457,22 +461,23 @@ function saveQuery() {
 
 }
 
-function deleteQuery(id){
+function deleteQuery(id) {
     if (window.confirm("Are you sure?")) {
         var data = {
-        id: id
-    };
-    $.ajax({
-        type: 'post',
-        url: '<?php echo base_url(); ?>marketing/targeting/delete_query',
-        data: data,
-        success: function() {
-            location.reload();
-        }
-    });
+            id: id
+        };
+        $.ajax({
+            type: 'post',
+            url: '<?php echo base_url(); ?>marketing/targeting/delete_query',
+            data: data,
+            success: function() {
+                location.reload();
+            }
+        });
         //location.reload();
     }
 }
+
 function deleteQuer(id) {
     var data = {
         id: id
