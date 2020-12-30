@@ -5,6 +5,7 @@
             Background color:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[class][checkoutOrderBody][background-color]"
                 data-css-selector="class"
@@ -24,6 +25,7 @@
             Headline background color:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[id][headlineYourOrder][background-color]"
                 data-css-selector="id"
@@ -43,6 +45,7 @@
             Headline font color:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[id][headlineYourOrder][color]"
                 data-css-selector="id"
@@ -62,6 +65,7 @@
             Quantity and price background color:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[class][markedButtons][background-color]"
                 data-css-selector="class"
@@ -81,6 +85,7 @@
             Quantity and price font color:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[class][markedButtons][color]"
                 data-css-selector="class"
@@ -100,6 +105,7 @@
             Product name font color:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[class][productName][color]"
                 data-css-selector="class"
@@ -119,6 +125,7 @@
             Category name font color:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[class][categoryName][color]"
                 data-css-selector="class"
@@ -138,6 +145,7 @@
             Trash icon color:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[class][trashIcon][color]"
                 data-css-selector="class"
@@ -157,6 +165,7 @@
             Edit icon color:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[class][editIcon][color]"
                 data-css-selector="class"
@@ -176,6 +185,7 @@
             Plus and minus background color:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[class][plusAndMinus][background-color]"
                 data-css-selector="class"
@@ -195,6 +205,7 @@
             Plus and minus font color:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[class][plusAndMinusColor][color]"
                 data-css-selector="class"
@@ -214,6 +225,7 @@
             Border color:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[class][borderColor][border-color]"
                 data-css-selector="class"
@@ -233,6 +245,7 @@
             Labels font color:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[class][labelColorCheckout][color]"
                 data-css-selector="class"
@@ -252,6 +265,7 @@
             Input field font color:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[class][inputFieldCheckout][color]"
                 data-css-selector="class"
@@ -271,6 +285,7 @@
             Input field border color:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[class][inputFieldCheckout][border-color]"
                 data-css-selector="class"
@@ -290,6 +305,7 @@
             Input field background color:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[class][inputFieldCheckout][background-color]"
                 data-css-selector="class"
@@ -309,6 +325,7 @@
             Delivery/pikup time headline:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[id][deliveryPeriodAndTime][color]"
                 data-css-selector="id"
@@ -328,6 +345,7 @@
             Back button background color:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[id][checkoutBack][background-color]"
                 data-css-selector="id"
@@ -347,6 +365,7 @@
             Back button font color:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[id][checkoutBack][color]"
                 data-css-selector="id"
@@ -366,6 +385,7 @@
             Continue button background color:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[id][checkoutContinue][background-color]"
                 data-css-selector="id"
@@ -385,6 +405,7 @@
             Continue button font color:
             <input
                 data-jscolor=""
+style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[id][checkoutContinue][color]"
                 data-css-selector="id"

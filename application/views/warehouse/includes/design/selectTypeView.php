@@ -7,7 +7,6 @@
                 class="form-control colorInput"
                 name="selectType[id][selectTypeBody][background-color]"
                 data-jscolor=""
-
                 data-css-selector="id"
                 data-css-selector-value="selectTypeBody"
                 data-css-property="background-color"

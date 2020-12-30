@@ -1,12 +1,15 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 <main class="main-content w-100 container" style="margin-top:20px; border-width: 0px">
-    <ul class="nav nav-tabs" role="tablist">
+    <ul class="nav nav-tabs" style="border-bottom: none" role="tablist">
         <li class="nav-item">
             <a style="border-radius: 50px" class="nav-link active" data-toggle="tab" href="#design">Design</a>
         </li>
         <li class="nav-item">
             <a style="border-radius: 50px" class="nav-link" data-toggle="tab" href="#iframeSettings">Iframe</a>
         </li>
+		<li class="nav-item">
+			<a style="border-radius: 50px" class="nav-link" data-toggle="tab" href="#analytics">Analytics</a>
+		</li>
     </ul>
 
     <div class="tab-content" style="border-radius: 50px; margin-left: -10px">

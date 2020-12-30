@@ -51,7 +51,7 @@
          */
         public function index(): void
         {
-            $this->global['pageTitle'] = 'TIQS : WAREHOSUE';
+            $this->global['pageTitle'] = 'TIQS : WAREHOUSE';
 
             $data = [];
             $userId = intval($_SESSION['userId']);

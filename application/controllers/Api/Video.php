@@ -49,7 +49,7 @@ class Video extends REST_Controller
 		}
 
         $config['upload_path']   = $uploaddir;
-        $config['allowed_types'] = 'mp4|3gp|mov|wmv|flv|avi|qt|mkv|webm';
+        $config['allowed_types'] = 'mp4|3gp|mov|wmv|flv|avi|qt|mkv|webm|jpg|jpeg';
         $config['max_size']      = '102400'; // 102400 100mb
         $post_video              = $_FILES['userfile']['name'];
         $video_name_array          = explode(".", $post_video);
