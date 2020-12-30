@@ -34,24 +34,28 @@
 
 		public function data_post(): void
 		{
+//			var_dump($_POST);
+
 			$header = getallheaders();
 			$key = $header['X-Api-Key'];
 
             if ($this->api_model->userAuthentication($key)) {
                 $user = $this->input->post(null, true);
 
-//				var_dump($user['email']);
-//				die();
+
+
 
                 //CHECK ONE SIGNAL ID
+				$rresult = $this->user_model->checkOneSignalId($user['oneSignalId']);
 
-				if (!$this->user_model->checkOneSignalId($user['oneSignalId'])) {
+				if ($rresult!=0) {
                     echo json_encode([
-                        'status' => '0',
-                        'message' => 'User with this one signal id already exist'
+                        'status' => '1',
+                        'message' => 'User with this one signal id already exist',
+						'userid' => $rresult['id']
                     ]);
                     return;
-                };
+                }
 
 				//	$user['email']=set in POST.
 				// Find user...
@@ -63,7 +67,7 @@
                 $user['salesagent'] = $this->config->item('defaultSalesAgentId');
                 $user['usershorturl'] = 'api one signal';
 
-                $this->user_model->manageAndSetUser($user);
+                $this->user_model->manageAndSetUserOneSignal($user);
 
                 if ($this->user_model->id) {
                     $message = isset($this->user_model->created) ? 'User created' : 'User updated';

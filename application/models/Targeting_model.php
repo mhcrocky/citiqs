@@ -7,7 +7,7 @@ class Targeting_model extends CI_Model {
 		$this->load->helper('utility_helper');
 	}
 
-	public function get_local_report($vendor_id, $sql='')
+	public function get_local_report($vendor_id, $sql1='', $sql2='')
 	{
 		$query = $this->db->query("SELECT tbl_shop_orders.id AS order_id, tbl_shop_orders.created AS order_date, tbl_shop_products_extended.vatpercentage AS productVat,tbl_shop_products_extended.`name` AS productName,tbl_shop_products_extended.price,
 tbl_shop_order_extended.quantity,tbl_shop_orders.waiterTip,tbl_user.username, tbl_user.email, tbl_shop_orders.buyerId,tbl_shop_categories.userId,
@@ -26,12 +26,13 @@ INNER JOIN (SELECT * FROM tbl_user WHERE roleid = 2) AS vendor ON vendor.id = tb
 INNER JOIN (SELECT * FROM tbl_user  WHERE roleid = 6 OR roleid = 2) AS buyer ON buyer.id = tbl_shop_orders.buyerId
 INNER JOIN tbl_shop_spots ON tbl_shop_orders.spotId = tbl_shop_spots.id
 INNER JOIN tbl_shop_spot_types ON tbl_shop_orders.serviceTypeId = tbl_shop_spot_types.id
-WHERE vendor.id = '$vendor_id' AND tbl_shop_orders.paid = '1' AND serviceTypeId = '1' $sql");
+WHERE vendor.id = '$vendor_id' AND tbl_shop_orders.paid = '1' AND serviceTypeId = '1' $sql1 $sql2");
 		return $query->result_array();
 	}
 
 
-	public function get_delivery_report($vendor_id, $sql=''){
+	public function get_delivery_report($vendor_id, $sql1='', $sql2='')
+	{
 		$query = $this->db->query("SELECT tbl_shop_orders.id AS order_id, tbl_shop_orders.created AS order_date,tbl_shop_products_extended.deliveryVatpercentage AS productVat,tbl_shop_products_extended.`name` AS productName,tbl_shop_products_extended.deliveryPrice AS price,
 tbl_shop_order_extended.quantity,tbl_shop_orders.waiterTip,tbl_user.username, tbl_user.email, tbl_shop_orders.buyerId,tbl_shop_categories.userId,
 tbl_shop_spot_types.type AS service_type,tbl_shop_products_extended.deliveryPrice * tbl_shop_order_extended.quantity AS AMOUNT,
@@ -49,12 +50,13 @@ INNER JOIN (SELECT * FROM tbl_user WHERE roleid = 2) AS vendor ON vendor.id = tb
 INNER JOIN (SELECT * FROM tbl_user WHERE roleid = 6 OR roleid = 2) AS buyer ON buyer.id = tbl_shop_orders.buyerId
 INNER JOIN tbl_shop_spots ON tbl_shop_orders.spotId = tbl_shop_spots.id
 INNER JOIN tbl_shop_spot_types ON tbl_shop_orders.serviceTypeId = tbl_shop_spot_types.id
-WHERE vendor.id = '$vendor_id' AND tbl_shop_orders.paid = '1' AND serviceTypeId = '2' $sql");
+WHERE vendor.id = '$vendor_id' AND tbl_shop_orders.paid = '1' AND serviceTypeId = '2' $sql1 $sql2");
       return $query->result_array();
 	}
 
 
-	public function get_pickup_report($vendor_id, $sql=''){
+	public function get_pickup_report($vendor_id, $sql1='', $sql2='')
+	{
 		$query = $this->db->query("SELECT tbl_shop_orders.id AS order_id, tbl_shop_orders.created AS order_date,tbl_shop_products_extended.pickupVatpercentage AS productVat,tbl_shop_products_extended.`name` AS productName,tbl_shop_products_extended.pickupPrice AS price,
 tbl_shop_order_extended.quantity, tbl_shop_orders.waiterTip, tbl_user.username, tbl_user.email, tbl_shop_orders.buyerId,tbl_shop_categories.userId,
 tbl_shop_spot_types.type AS service_type,tbl_shop_products_extended.pickupPrice * tbl_shop_order_extended.quantity AS AMOUNT,
@@ -72,12 +74,32 @@ INNER JOIN (SELECT * FROM tbl_user WHERE roleid = 2) AS vendor ON vendor.id = tb
 INNER JOIN (SELECT * FROM tbl_user WHERE roleid = 6 OR roleid = 2) AS buyer ON buyer.id = tbl_shop_orders.buyerId
 INNER JOIN tbl_shop_spots ON tbl_shop_orders.spotId = tbl_shop_spots.id
 INNER JOIN tbl_shop_spot_types ON tbl_shop_orders.serviceTypeId = tbl_shop_spot_types.id
-WHERE vendor.id = '$vendor_id' AND tbl_shop_orders.paid = '1' AND serviceTypeId = '3' $sql");
+WHERE vendor.id = '$vendor_id' AND tbl_shop_orders.paid = '1' AND serviceTypeId = '3' $sql1 $sql2");
       return $query->result_array();
 	}
 
+	public function get_queries($vendor_id){
+		$this->db->select('*')->from('tbl_queries')->where('vendor_id',$vendor_id);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
 	public function save_results($data){
-		return $this->db->insert('tbl_target_result', $data); 
+		return $this->db->insert_batch('tbl_target_result', $data); 
+	}
+
+	public function save_query($data){
+		return $this->db->insert('tbl_queries', $data); 
+	}
+
+	public function update_query($id, $data){
+		$this->db->where('id', $id);
+		return $this->db->update('tbl_queries', $data); 
+	}
+
+	public function delete_query($id){
+		$this->db->where('id', $id);
+		return $this->db->delete('tbl_queries'); 
 	}
 
 
