@@ -71,4 +71,14 @@
             $query .= 'WHERE printed = "2" AND orderId IN (SELECT id FROM tbl_shop_orders WHERE created > "' . $date . '");';
             $this->db->query($query);
         }
+
+        public function updatePrintStatus(array $orderExtendedIds, string $printStatus): void
+        {
+            foreach ($orderExtendedIds as $id) {
+                $this
+                    ->setObjectId(intval($id))
+                    ->setObjectFromArray(['printed' => $printStatus])
+                    ->update();
+            }
+        }
     }
