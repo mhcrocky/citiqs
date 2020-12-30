@@ -1012,4 +1012,119 @@
 
             return $order;
         }
+
+        public function fetchOrdersForMobileReceipt(): ?array
+        {
+            $this->load->config('custom');
+            $concatSeparator = $this->config->item('concatSeparator');
+            $concatGroupSeparator = $this->config->item('contactGroupSeparator');
+            $dateConstraint = date('Y-m-d H:i:s', strtotime('-24 hours', time()));
+            $query =
+                '
+                    SELECT
+                        tbl_shop_orders.id AS orderId,
+                        tbl_shop_orders.spotId,
+                        tbl_shop_orders.created AS orderCreated,
+                        tbl_shop_orders.expired AS orderExpired,
+                        tbl_shop_orders.paid AS paidStatus,
+                        tbl_shop_orders.paymentType AS paymentType,
+                        tbl_shop_orders.waiterReceipt AS waiterReceipt,
+                        tbl_shop_orders.customerReceipt AS customerReceipt,
+                        tbl_shop_orders.serviceTypeId AS serviceTypeId,
+                        tbl_shop_orders.remarks,
+                        tbl_shop_spots.spotName,
+                        tbl_shop_spots.printerId AS spotPrinterId,
+                        tbl_shop_printers.printer AS spotPrinter,
+                        GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
+                        tbl_user.username AS buyerUserName,
+                        tbl_user.email AS buyerEmail,
+                        tbl_user.mobile AS buyerMobile,
+                        tbl_user.city AS buyerCity,
+                        tbl_user.zipcode AS buyerZipcode,
+                        tbl_user.address AS buyerAddress,
+                        productData.products,
+                        vendorOne.logo AS vendorLogo,
+                        vendorOne.id as vendorId,
+                        vendorOne.username as vendorName,
+                        vendorOne.address as vendorAddress,
+                        vendorOne.zipcode as vendorZipcode,
+                        vendorOne.city as vendorCity,
+                        vendorOne.vat_number as vendorVAT,
+                        vendorOne.country as vendorCountry,
+                        vendorOne.receiptEmail as receiptEmail,
+                        vendorOne.email as vendorEmail
+                    FROM
+                        tbl_shop_orders
+                    INNER JOIN
+                        tbl_shop_spots ON tbl_shop_spots.id = tbl_shop_orders.spotId
+                    INNER JOIN
+                        tbl_user ON tbl_user.id = tbl_shop_orders.buyerId
+                    INNER JOIN
+                        (
+                            SELECT
+                                tbl_shop_order_extended.orderId,
+                                GROUP_CONCAT(
+                                    tbl_shop_products_extended.name,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.price,
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.quantity,
+                                    \'' .  $concatSeparator . '\', tbl_shop_categories.category,
+                                    \'' .  $concatSeparator . '\', tbl_shop_categories.id,
+                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.shortDescription) > 0, tbl_shop_products_extended.shortDescription, ""), 
+                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_products_extended.longDescription) > 0, tbl_shop_products_extended.longDescription, ""),
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.vatpercentage,
+                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_order_extended.remark) > 0, tbl_shop_order_extended.remark, ""),
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.mainPrductOrderIndex,
+                                    \'' .  $concatSeparator . '\', tbl_shop_order_extended.subMainPrductOrderIndex,
+                                    \'' .  $concatSeparator . '\', tbl_shop_products_extended.productId,
+                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_product_printers.printerId ) > 0, tbl_shop_product_printers.printerId, tbl_shop_spots.printerId),
+                                    \'' .  $concatSeparator . '\', IF (LENGTH(tbl_shop_printers.printer) > 0, tbl_shop_printers.printer, "")
+                                    SEPARATOR "' . $this->config->item('contactGroupSeparator') . '"
+                                ) AS products
+                            FROM
+                                tbl_shop_products_extended
+                            INNER JOIN
+                                tbl_shop_order_extended ON tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
+                            INNER JOIN
+                                tbl_shop_orders ON tbl_shop_orders.id = tbl_shop_order_extended.orderId
+                            INNER JOIN
+                                tbl_shop_spots ON tbl_shop_spots.id = tbl_shop_orders.spotId
+                            LEFT JOIN
+                                tbl_shop_products ON tbl_shop_products_extended.productId = tbl_shop_products.id
+                            LEFT JOIN
+                                tbl_shop_categories ON tbl_shop_products.categoryId = tbl_shop_categories.id
+                            LEFT JOIN
+                                tbl_shop_product_printers ON tbl_shop_product_printers.productId = tbl_shop_products.id
+                            LEFT JOIN
+                                tbl_shop_printers ON tbl_shop_printers.id = tbl_shop_product_printers.printerId
+                            WHERE
+                                tbl_shop_order_extended.orderId = ' . $this->id . '
+                            GROUP BY
+                                tbl_shop_order_extended.orderId
+                            ORDER BY
+                                tbl_shop_order_extended.id ASC
+                        ) productData ON productData.orderId = tbl_shop_orders.id
+                    INNER JOIN
+                        tbl_shop_order_extended ON tbl_shop_order_extended.orderId = tbl_shop_orders.id
+                    INNER JOIN
+                        tbl_shop_products_extended ON tbl_shop_products_extended.id = tbl_shop_order_extended.productsExtendedId
+                    INNER JOIN
+                        tbl_shop_printers ON tbl_shop_printers.id = tbl_shop_spots.printerId
+                    INNER JOIN
+                        (
+                            SELECT
+                                tbl_user.*
+                            FROM
+                                tbl_user
+                            WHERE tbl_user.roleid = ' . $this->config->item('owner') . '
+                        ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
+                    WHERE
+                        tbl_shop_orders.id  =  ' . $this->id . '
+                    GROUP BY
+                        orderId;
+                ';
+            $result = $this->db->query($query);
+            $result = $result->result_array();
+
+            return $result ? reset($result) : null;
+        }
     }
