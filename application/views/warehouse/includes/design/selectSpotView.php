@@ -5,6 +5,7 @@
             Background color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="selectSpot[id][selectSpotContainer][background-color]"
                 data-css-selector="id"
@@ -24,6 +25,7 @@
             Headline backgorund color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="selectSpot[id][selectSpotH1][background-color]"
                 data-css-selector="id"
@@ -43,6 +45,7 @@
             Headline font color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="selectSpot[id][selectSpotH1][color]"
                 data-css-selector="id"
@@ -62,6 +65,7 @@
             Label font color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="selectSpot[id][labelColor][color]"
                 data-css-selector="id"
@@ -81,6 +85,7 @@
             Products list font color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="selectSpot[id][productList][color]"
                 data-css-selector="id"
@@ -101,6 +106,7 @@
             Products list border color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="selectSpot[class][bordersColor][border-color]"
                 data-css-selector="class"
@@ -120,6 +126,7 @@
             Confirm button backgorund color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="selectSpot[id][confirmButton][background-color]"
                 data-css-selector="id"
@@ -139,6 +146,7 @@
             Confirm button font color:
             <input
                 data-jscolor=""
+				style="border-radius: 50px"
                 class="form-control"
                 name="selectSpot[id][confirmButton][color]"
                 data-css-selector="id"

@@ -342,9 +342,12 @@ updateIframe();
 
 jscolor.presets.default = {
 	format :'rgba',
-	height: 181,              // make the picker box a little bigger
-	position: 'right',        // position the picker to the right of the target
-	previewPosition: 'right', // display color preview on the right side
-	previewSize: 40,          // make color preview bigger
+	height: 181,
+	position: 'bottom',        // position the picker to the right of the target
+	previewPosition: 'left', // display color preview on the right side
+	previewSize: 80,
 	alphaChannel :true,
+	borderRadius : 20,
+	borderWidth : 3
+
 };

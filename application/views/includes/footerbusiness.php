@@ -6,23 +6,41 @@
     </div>
 </footer>
 </div>
+<script>
+$(document).ready(function() {
 
-    <!-- bootstrap 4 js -->
-    <script src="<?php echo base_url(); ?>assets/js/owl.carousel.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/metisMenu.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/jquery.slimscroll.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/jquery.slicknav.min.js"></script>
-   
+    var current_url = "<?php echo base_url(uri_string()); ?>";
+    $('li a').each(function(index, element) {
+        if ($(element).attr("href") == current_url) {
+            $(element).addClass("dash-active");
+            $(element).closest("ul").addClass("dash-active").addClass("in");
+            $('.dash-active.in').parent("li").closest("ul").addClass("dash-active").addClass("in");
+        }
 
-    <!-- all line chart activation -->
-    <script src="<?php echo base_url(); ?>assets/js/business_dashboard/line-chart.js"></script>
-    <!-- all pie chart -->
-    <script src="<?php echo base_url(); ?>assets/js/business_dashboard/pie-chart.js"></script>
-    <!-- others plugins -->
-    <script src="<?php echo base_url(); ?>assets/js/business_dashboard/plugins.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/business_dashboard/scripts.js"></script>
+    });
 
-    <!-- custom users scripts -->
-    <?php include_once FCPATH . 'application/views/includes/customJs.php'; ?>
-    <?php include_once FCPATH . 'application/views/includes/alertifySessionMessage.php'; ?>
+
+
+});
+
+</script>
+<!-- bootstrap 4 js -->
+<script src="<?php echo base_url(); ?>assets/js/owl.carousel.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/metisMenu.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jquery.slimscroll.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jquery.slicknav.min.js"></script>
+
+
+<!-- all line chart activation -->
+<script src="<?php echo base_url(); ?>assets/js/business_dashboard/line-chart.js"></script>
+<!-- all pie chart -->
+<script src="<?php echo base_url(); ?>assets/js/business_dashboard/pie-chart.js"></script>
+<!-- others plugins -->
+<script src="<?php echo base_url(); ?>assets/js/business_dashboard/plugins.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/business_dashboard/scripts.js"></script>
+
+<!-- custom users scripts -->
+<?php include_once FCPATH . 'application/views/includes/customJs.php'; ?>
+<?php include_once FCPATH . 'application/views/includes/alertifySessionMessage.php'; ?>
+
 </html>

@@ -167,7 +167,7 @@ code {
                 <div class="content form">
                     <?php foreach($queries as $query): ?>
                     <div class="inputGroup">
-                        <input id="radio<?php echo $query['id']; ?>" name="radio" type="radio"
+                        <input id="radio<?php echo $query['id']; ?>" name="query" type="radio"
                             value="<?php echo htmlspecialchars_decode($query['value']); ?>">
                         <label style="padding-left: 30px;padding-right: 70px;"
                             for="radio<?php echo $query['id']; ?>"><?php echo $query['query']; ?>
