@@ -463,7 +463,8 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 			"date" => $min_date . ' - ' . $max_date,
 			"pickup" => $data["pickup"],
 			"delivery" => $data["delivery"],
-			"local" => $data["local"]
+			"local" => $data["local"],
+			"invoice" => 0
 		];
 		return $newData;
 	}
@@ -495,7 +496,8 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 				"date" => $weekday,
 				"pickup" => isset($pickup[$weekday]) ? floatval($pickup[$weekday]) : 0,
 				"delivery" => isset($delivery[$weekday]) ? floatval($delivery[$weekday]) : 0,
-				"local" => isset($local[$weekday]) ? floatval($local[$weekday]) : 0
+				"local" => isset($local[$weekday]) ? floatval($local[$weekday]) : 0,
+				"invoice" => 0
 			];
 		}
 		return $newData;
@@ -510,6 +512,35 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 		$pickup = [];
 		$newData = [];
 		$months_data = [];
+		$context = stream_context_create([
+            "http" => [
+                "header" => "authtoken:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoidGlxc3dlYiIsIm5hbWUiOiJ0aXFzd2ViIiwicGFzc3dvcmQiOm51bGwsIkFQSV9USU1FIjoxNTgyNTQ2NTc1fQ.q7ssJqcwsXhuNVDyspGYh_KV7_JsbwS8vq2TT9R-MGk"
+                ]
+        ]);
+        $data = file_get_contents("http://tiqs.com/backoffice/admin/api/invoice/data/".$vendor_id, false, $context );
+        $results = json_decode($data);
+		$invoice = [];
+		$min = explode(" ", $min_date)[0];
+		$min = str_replace("'", "", $min);
+		$max = explode(" ", $max_date)[0];
+		$max = str_replace("'", "", $max);
+        foreach($results as $result){
+
+            if(strtotime(date($result->date)) >= strtotime(date($min)) && strtotime(date($result->date)) <= strtotime(date($max)) ){
+				$arr_date = explode("-", $result->date);
+                $month = $arr_date[1] - 1;
+                if(isset($date[$month])){
+                    $invoice[$month] = $date[$month] + $result->total;
+                } else {
+                    $invoice[$month] = $result->total;
+				}
+				
+                
+            }
+
+		}
+		//var_dump($results);
+		
 		$months = ['January','February','March','April','May','June','July','August', 'September', 'October', 'November','December'];
 		foreach($local_results as $local_result){
 			$months_data[] = $local_result['month'];
@@ -528,14 +559,15 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 		}
 
 		$diff = array_diff($months,$months_data);
-		
+
 		foreach($months as $key => $month){
 			
 			$newData[$key] = [
 				"date" => $month,
 				"pickup" => isset($pickup[$month]) ? floatval($pickup[$month]) : 0,
 				"delivery" => isset($delivery[$month]) ? floatval($delivery[$month]) : 0,
-				"local" => isset($local[$month]) ? floatval($local[$month]) : 0
+				"local" => isset($local[$month]) ? floatval($local[$month]) : 0,
+				"invoice" => isset($invoice[$key]) ? floatval($invoice[$key]) : 0
 			];
 		}
 		return $newData;
@@ -588,7 +620,8 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 				"date" => $hour. ' - ' . $hours[$key+1],
 				"pickup" => isset($pickup[$hour]) ? floatval($pickup[$hour]) : 0,
 				"delivery" => isset($delivery[$hour]) ? floatval($delivery[$hour]) : 0,
-				"local" => isset($local[$hour]) ? floatval($local[$hour]) : 0
+				"local" => isset($local[$hour]) ? floatval($local[$hour]) : 0,
+				"invoice" => 0
 			];
 		}
 		return $newData;
@@ -632,7 +665,8 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 				"date" => 'Q'.$quarter,
 				"pickup" => isset($pickup[$quarter]) ? floatval($pickup[$quarter]) : 0,
 				"delivery" => isset($delivery[$quarter]) ? floatval($delivery[$quarter]) : 0,
-				"local" => isset($local[$quarter]) ? floatval($local[$quarter]) : 0
+				"local" => isset($local[$quarter]) ? floatval($local[$quarter]) : 0,
+				"invoice" => 0
 			];
 		}
 		return $newData;
@@ -687,7 +721,7 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 		else if($selected == 'hour') {return $this->get_hour_report($vendor_id,$min_date, $max_date, $sql);}
 		else if($selected == 'week') {return $this->get_week_report($vendor_id,$min_date, $max_date, $sql);}
 		else {return $this->get_total_report($vendor_id,$min_date, $max_date, $sql);}
-
+		
 	}
 
 }

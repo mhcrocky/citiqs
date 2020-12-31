@@ -174,6 +174,9 @@ class Businessreport extends BaseControllerWeb
                                 ),
 								"delivery" => array(
 									"label" => "Delivery",
+								),
+								"invoice" => array(
+									"label" => "Invoices"
 								)
 							),
 							"class"=>array(
@@ -181,9 +184,17 @@ class Businessreport extends BaseControllerWeb
 							),
                             "clientEvents" => array(
                                 "itemSelect" => "function(params){
-                                    saleDrillDown.next({date:params.selectedRow[1]});
+									console.log(params);
+								
+									
                                 }",
-                            )
+							),
+							"colorScheme"=>array(
+								"#3366cc",
+								"#dc3912",
+								"#ff9900",
+								"#6600cc"
+							)
                         ));
                     }
                 ),
