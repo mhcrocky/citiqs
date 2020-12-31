@@ -19,7 +19,12 @@
             <!-- end checout list -->
         </div>
     </div>
-    <a href="javascript:void(0)" class='pos-checkout__button' onclick="posPayment()">Pay (<span class="totalPrice">0</span>&nbsp;&euro;)</a>
+    <a
+        href="javascript:void(0)"
+        class='pos-checkout__button'
+        onclick="posPayment(this)"
+        data-locked="0"
+    >Pay (<span class="totalPrice">0</span>&nbsp;&euro;)</a>
 </div>
 
 <div class="col-lg-4" id="posResponse" style="dipslay:none; padding-top:40px"></div>

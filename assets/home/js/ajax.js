@@ -248,8 +248,9 @@ var callThis = (function() {
         },
         posPayment: function(callFunction, functionArg) {
             if (this) {
-                callFunction(this);
+                functionArg.push(this);
             }
+            callFunction(...functionArg);
         },
         checkIfsUserExists:  function(callFunction) {
             callFunction(this);
