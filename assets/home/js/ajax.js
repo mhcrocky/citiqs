@@ -248,8 +248,9 @@ var callThis = (function() {
         },
         posPayment: function(callFunction, functionArg) {
             if (this) {
-                callFunction(this);
+                functionArg.push(this);
             }
+            callFunction(...functionArg);
         },
         checkIfsUserExists:  function(callFunction) {
             callFunction(this);
@@ -260,6 +261,9 @@ var callThis = (function() {
         removeBgImage: function(callFunction, functionArg) {
             functionArg.push(this);
             callFunction(...functionArg);
+        },
+        saveAnalytics:  function(callFunction) {
+            callFunction(this);
         },
     };
     return methods;

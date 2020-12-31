@@ -972,9 +972,9 @@
             $userId = intval($_SESSION['userId']);
             $designId = intval($this->input->get('designid', true));
             $defaultDesignId = intval($this->input->get('defaultdesignid', true));
-
+            $id = intval($this->shopvendor_model->setProperty('vendorId', $userId)->getProperty('id')); // this is row id in tbl_shop_vendors, we need to update iframe
             $data = [
-                'id' => intval($this->shopvendor_model->setProperty('vendorId', $userId)->getProperty('id')),// this is row id in tbl_shop_vendors, we need to update iframe
+                'id' => $id,
                 'vendorId' => $userId,
                 'iframeSrc' => base_url() . 'make_order?vendorid=' . $userId,
                 'spots' => Utility_helper::resetArrayByKeyMultiple($this->shopspot_model->fetchUserActiveSpots($userId), 'spotType'),
@@ -984,6 +984,7 @@
                 'designId' => $designId,
                 'defaultDesignId' => $defaultDesignId,
                 'devices' => $this->bookandpayagendabooking_model->get_devices(),
+                'analytics' => $this->shopvendor_model->setObjectId($id)->getVendorAnalytics()
             ];
             $this->setDesign($designId, $defaultDesignId, $data);
 

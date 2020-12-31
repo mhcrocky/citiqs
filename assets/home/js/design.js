@@ -294,6 +294,20 @@ function removeBgImageFromIframe() {
     }
 }
 
+function saveAnalytics(form) {
+    let url = globalVariables.ajax + 'saveAnalytics/' + form.id;
+    sendFormAjaxRequest(form, url, 'saveAnalytics', alertifyAnalyticsMessage)
+    return false;
+}
+
+function alertifyAnalyticsMessage(response) {
+    if (response.status === '1') {
+        alertify.success(response.message);
+    } else if (response.status === '0') { 
+        alertify.error(esponse.message);
+    }
+}
+
 $(document).ready(function(){
     let iframe = document.getElementById(designGlobals.iframeId);
     if (iframe) {
@@ -324,21 +338,6 @@ document.getElementById("views").addEventListener("click", function(evt) {
 });
 
 updateIframe();
-
-
-// var myPicker = new JSColor('.colorInput');
-//
-// // let's set a single option
-// myPicker.option('position', 'right');
-//
-// // and let's set multiple options at once
-// myPicker.option({
-// 	'format': 'hex',
-// 	'width': 250,
-// 	'previewSize': 80,
-// 	'alphaChannel' :true,
-//
-// });
 
 jscolor.presets.default = {
 	format :'rgba',

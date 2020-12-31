@@ -101,7 +101,14 @@ function keyboardHtml(targetId) {
     return keyboard;
 }
 
-function posPayment() {
+function posPayment(element) {
+    let locked = parseInt(element.dataset.locked);
+    if (locked) {
+        return;
+    }
+
+    element.setAttribute('data-locked', '1');
+
     let orderedProducts = document.getElementsByClassName(makeOrderGlobals.orderedProducts);
     let orderedProductsLength = orderedProducts.length;
 
@@ -140,7 +147,7 @@ function posPayment() {
     if (makeOrderGlobals['orderDataRandomKey']) {
         url += '/' + makeOrderGlobals['orderDataRandomKey'];
     }
-    sendAjaxPostRequest(post, url, 'posPayment', manageResponse);
+    sendAjaxPostRequest(post, url, 'posPayment', manageResponse, [element]);
     return;
 }
 
@@ -233,8 +240,9 @@ function getOrderExtedned(orderedProducts, orderedProductsLength) {
     return returnData;
 }
 
-function manageResponse(data) {
+function manageResponse(element, data) {
     let orderId = data['orderId'];
+    unlockPos(element)
     if (!parseInt(orderId)) {
         alertify.error('Order not made');
         return;
@@ -245,6 +253,10 @@ function manageResponse(data) {
     sednNotification(orderId);
     printOrder(orderId);
     return;
+}
+
+function unlockPos(element) {
+    element.setAttribute('data-locked', '0');
 }
 
 function showOrderId(orderId) {

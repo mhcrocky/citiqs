@@ -54,6 +54,7 @@
             $vendor = $this->shopvendor_model->setProperty('vendorId', $get['vendorid'])->getVendorData();
 
             $this->setGlobalDesign($vendor['design']);
+            $this->setGlobalVendor($vendor);
             $this->isVendorClosed($vendor);
 
             if ($spotId && $vendor) {
@@ -261,6 +262,7 @@
 
             $this->global['pageTitle'] = 'TIQS : CLOSED';
             $this->setGlobalDesign($data['vendor']['design']);
+            $this->setGlobalVendor($data['vendor']);
             $this->loadViews('publicorders/spotClosed', $this->global, $data, null, 'headerWarehousePublic');
         }
 
@@ -278,6 +280,7 @@
 
             $this->global['pageTitle'] = 'TIQS : CLOSED';
             $this->setGlobalDesign($data['vendor']['design']);
+            $this->setGlobalVendor($data['vendor']);
             $this->loadViews('publicorders/temporarilyClosed', $this->global, $data, null, 'headerWarehousePublic');
         }
 
@@ -303,6 +306,7 @@
 
             $this->global['pageTitle'] = 'TIQS : CLOSED';
             $this->setGlobalDesign($data['vendor']['design']);
+            $this->setGlobalVendor($data['vendor']);
             $this->loadViews('publicorders/closed', $this->global, $data, null, 'headerWarehousePublic');
         }
         // CHECKOUT ORDER
@@ -343,6 +347,7 @@
 
             $this->global['pageTitle'] = 'TIQS : CHECKOUT';
             $this->setGlobalDesign($data['vendor']['design']);
+            $this->setGlobalVendor($data['vendor']);
             $this->loadViews('publicorders/checkoutOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
 
@@ -439,6 +444,7 @@
 
             $this->global['pageTitle'] = 'TIQS : BUYER DETAILS';
             $this->setGlobalDesign($data['vendor']['design']);
+            $this->setGlobalVendor($data['vendor']);
             $this->loadViews('publicorders/buyerDetails', $this->global, $data, null, 'headerWarehousePublic');
         }
 
@@ -486,6 +492,7 @@
 
             $this->global['pageTitle'] = 'TIQS : PAY';
             $this->setGlobalDesign($data['vendor']['design']);
+            $this->setGlobalVendor($data['vendor']);
             $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
         }
 
@@ -550,5 +557,10 @@
             } else {
                 $this->global[$this->config->item('design')] = $this->shopvendortemplate_model->getDefaultDesign();
             }
+        }
+
+        private function setGlobalVendor(array $vendor): void
+        {
+            $this->global['vendor'] = $vendor;
         }
     }
