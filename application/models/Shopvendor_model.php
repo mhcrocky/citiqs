@@ -43,6 +43,11 @@
         public $nonWorkTo;
         public $pickupDeliveryWeeks;
         public $pickupDeliveryMinutes;
+        public $googleAnalyticsCode;
+        public $googleAdwordsConversionId;
+        public $googleAdwordsConversionLabel;
+        public $googleTagManagerCode;
+        public $facebookPixelId;
 
         public $serviceFeePercent;
         public $serviceFeeAmount;
@@ -190,6 +195,12 @@
             if (isset($data['pickupServiceFeeAmountPos']) && !Validate_data_helper::validateFloat($data['pickupServiceFeeAmountPos'])) return false;
             if (isset($data['pickupMinimumOrderFeePos']) && !Validate_data_helper::validateFloat($data['pickupMinimumOrderFeePos'])) return false;
 
+            if (isset($data['googleAnalyticsCode']) && !Validate_data_helper::validateString($data['googleAnalyticsCode'])) return false;
+            if (isset($data['googleAdwordsConversionId']) && !Validate_data_helper::validateString($data['googleAdwordsConversionId'])) return false;
+            if (isset($data['googleAdwordsConversionLabel']) && !Validate_data_helper::validateString($data['googleAdwordsConversionLabel'])) return false;
+            if (isset($data['googleTagManagerCode']) && !Validate_data_helper::validateString($data['googleTagManagerCode'])) return false;
+            if (isset($data['facebookPixelId']) && !Validate_data_helper::validateString($data['facebookPixelId'])) return false;
+
             return true;
         }
 
@@ -257,7 +268,11 @@
                     $this->table . '.nonWorkTo',
                     $this->table . '.pickupDeliveryWeeks',
                     $this->table . '.pickupDeliveryMinutes',
-
+                    $this->table . '.googleAnalyticsCode',
+                    $this->table . '.googleAdwordsConversionId',
+                    $this->table . '.googleAdwordsConversionLabel',
+                    $this->table . '.googleTagManagerCode',
+                    $this->table . '.facebookPixelId',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',
@@ -473,6 +488,17 @@
 
             if (empty($result)) return null;
             return $result[0];
+        }
+
+        public function getVendorAnalytics(): array
+        {
+            $result =   $this->readImproved([
+                            'what' => ['googleAnalyticsCode', 'googleAdwordsConversionId', 'googleAdwordsConversionLabel', 'googleTagManagerCode', 'facebookPixelId'],
+                            'where' => [
+                                $this->table . '.id' => $this->id,
+                            ]
+                        ]);
+            return reset($result);
         }
 
     }

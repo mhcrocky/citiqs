@@ -1674,23 +1674,28 @@ class Ajax extends CI_Controller
         return;
     }
     
-    // public function removeBgImage(): void
-    // {
-    //     if (!$this->input->is_ajax_request()) return;
-    //     $image = $this->config->item('backGroundImages') . $this->input->post('image', true);
-    //     if (Uploadfile_helper::unlinkFile($image)) {
-    //         $respone = [
-    //             'status' => '1',
-    //         ];
-	// 	} else {
-    //         $respone = [
-    //             'status' => '0',
-    //             'message' => 'Image did not remove'
-    //         ];
-    //     }
+    public function saveAnalytics($id): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+        $post = Utility_helper::sanitizePost();
+        $id = intval($id);
 
-    //     echo json_encode($respone);
-    //     return;
-    // }
+        $update = $this->shopvendor_model->setObjectId($id)->setObjectFromArray($post)->update();
+        if ($update) {
+            $response = [
+                'status' => '1',
+                'message' => 'Success'
+            ];
+        } else {
+            $response = [
+                'status' => '0',
+                'message' => 'Error! Please try again'
+            ];
+        }
+
+        echo json_encode($response);
+
+        return;
+    }
 
 }

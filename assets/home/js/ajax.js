@@ -261,6 +261,9 @@ var callThis = (function() {
             functionArg.push(this);
             callFunction(...functionArg);
         },
+        saveAnalytics:  function(callFunction) {
+            callFunction(this);
+        },
     };
     return methods;
 })();
