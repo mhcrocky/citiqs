@@ -170,7 +170,7 @@
                     $draw->annotation(0, 35 * $h, "DIT IS GEEN GELDIG BTW TICKET");
                 } elseif ($serviceTypeId === $CI->config->item('deliveryType')) {
                     $draw->annotation(0, 35 * $h, "DIT IS GEEN GELDIG BTW TICKET");
-                } elseif ($order['serviceTypeId'] === $CI->config->item('pickupType')) {
+                } elseif ($serviceTypeId === $CI->config->item('pickupType')) {
                     $draw->annotation(0, 35 * $h, "DIT IS GEEN GELDIG BTW TICKET");
                 }
             }
@@ -193,7 +193,7 @@
                 $draw->annotation(0,  35 * $h, "Address: ". $order['buyerAddress'] );
                 $h++;
                 $draw->annotation(0,  35 * $h, $order['buyerZipcode']. " " . $order['buyerCity'] );
-            } elseif ($order['serviceTypeId'] === $CI->config->item('pickupType')) {
+            } elseif ($serviceTypeId === $CI->config->item('pickupType')) {
                 $draw->annotation(0,  35 * $h, "PICK-UP at : ". date("d-m H:i:s",strtotime($order['orderCreated'])));
             }
 
