@@ -7,7 +7,8 @@ class Shoporder_model_mobile extends CI_Model {
 	public function returnOrders($userId) {
 
 		$sql="SELECT tbl_shop_orders.id AS orderId,
-					vendor.id AS VendorId
+					vendor.id AS VendorId,
+       				tbl_shop_orders.pStatus AS pStatus
 					
 						FROM
 						   `tbl_shop_orders` 
@@ -49,10 +50,10 @@ class Shoporder_model_mobile extends CI_Model {
 							  ON `tbl_shop_orders`.`spotId` = `tbl_shop_spots`.`id` 
 						WHERE vendor.id = ".$this->db->escape($userId)." AND
 									tbl_shop_orders.paid = ".$this->db->escape('1')." AND
-									date(tbl_shop_orders.created) >= date('2020/11/29')
+									date(tbl_shop_orders.created) >= date('2020/12/28')
 						GROUP BY
-							 tbl_shop_orders.id ASC
-							LIMIT 5";
+							 tbl_shop_orders.id DESC
+							";
 		$query = $this->db->query($sql);
 		$result= $query->num_rows();
 
@@ -98,6 +99,14 @@ class Shoporder_model_mobile extends CI_Model {
 		$this->db->select('*')
 			->from('tbl_shop_orders')
 			->where(array('buyerId' => $buyerId,'serviceTypeId' => 2));
+		$result = $this->db->get();
+		return $result->result_array();
+	}
+
+	public function getOrder($orderId){
+		$this->db->select('*')
+			->from('tbl_shop_orders')
+			->where(array('id' => $orderId));
 		$result = $this->db->get();
 		return $result->result_array();
 	}

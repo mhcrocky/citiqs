@@ -63,13 +63,13 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
                 background: #efd1ba !important;
             }
             .main-content {
-            background: #f3d0b1 !important;
+            background: #efd1ba !important;
             }
             .main-menu,.sidebar-header {
                 background:#496083 !important;
             }
             .footer-area {
-                background: #efd1ba !important; 
+                background: #cacaca !important;
             }
             .card, .card-title {
                 font-size: medium !important;
@@ -93,11 +93,16 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
                 width: 65px;
             }
             #body {
-                background: #f3d0b1;
+                background: #ffffff;
             }
             .dash-active {
                 background: rgba(0,0,0, .1) !important; 
             }
+
+			.table {
+			background-color: whitesmoke;
+			}
+
 
         </style>
         <!-- modernizr css -->
@@ -139,7 +144,7 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
         <style data-author="zingchart">
         </style>
     </head>
-    <body id="body">
+    <body id="body" style="background-color: #efd1ba">
         <div class="page-container">
             <!-- Sidebar -->
             <div class="sidebar-menu">
@@ -236,7 +241,7 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
 									<li>
 
 									<li>
-										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span>The QR Store</span></a>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span>Store & POS</span></a>
 										<ul class="collapse">
 											<li>
 												<li><a href="<?php echo $this->baseUrl; ?>orders"><i class="ti-stats-up"></i><span>Orders</span></a></li>
@@ -253,15 +258,7 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
 												</ul>
 											</li>
 
-											<li>
-												<li>
-													<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ink-pen"></i><span>Design</span></a>
-													<ul class="collapse">
-														<li><a href="<?php echo $this->baseUrl; ?>emaildesigner"><i class="ti-email"></i> <span>Email</span></a></li>
-														<li><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span>Store</span></a></li>
-													</ul>
-												</li>
-											</li>
+
 											<li>
 											<li>
 												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ink-pen"></i><span>Printers & spots</span></a>
@@ -269,6 +266,15 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
 													<li><a href="<?php echo $this->baseUrl; ?>printers"><i class="ti-printer"></i><span>Printers</span></a></li>
 													<li><a href="<?php echo $this->baseUrl; ?>spots"><i class="ti-flag-alt"></i><span>Spots</span></a></li>
 												</ul>
+											</li>
+											<li>
+											<li>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ink-pen"></i><span>Design</span></a>
+												<ul class="collapse">
+													<li><a href="<?php echo $this->baseUrl; ?>emaildesigner"><i class="ti-email"></i> <span>Email</span></a></li>
+													<li><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span>Store</span></a></li>
+												</ul>
+											</li>
 											</li>
 											</li>
 										</ul>
@@ -439,20 +445,20 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
                                             <li><a href="<?php echo $this->baseUrl; ?>openandclose"><i class="ti-time"></i> <span>Open and Close</span></a></li>
                                         </ul>
                                     </li>
-									<li>
-										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span>Online integration</span></a>
-										<ul class="collapse">
-											<li>
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-bag"></i><span>iframes</span></a>
-												<ul class="collapse">
-													<li><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span>Store</span></a></li>
-													<li><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span>Agenda</span></a></li>
-													<li><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span>Reservations</span></a></li>
-													<li><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span>ticketshop</span></a></li>
-												</ul>
-											</li>
-										</ul>
-									</li>
+<!--									<li>-->
+<!--										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span>Online integration</span></a>-->
+<!--										<ul class="collapse">-->
+<!--											<li>-->
+<!--												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-bag"></i><span>iframes</span></a>-->
+<!--												<ul class="collapse">-->
+<!--													<li><a href="--><?php //echo $this->baseUrl; ?><!--viewdesign"><i class="ti-shopping-cart"></i> <span>Store</span></a></li>-->
+<!--													<li><a href="--><?php //echo $this->baseUrl; ?><!--viewdesign"><i class="ti-shopping-cart"></i> <span>Agenda</span></a></li>-->
+<!--													<li><a href="--><?php //echo $this->baseUrl; ?><!--viewdesign"><i class="ti-shopping-cart"></i> <span>Reservations</span></a></li>-->
+<!--													<li><a href="--><?php //echo $this->baseUrl; ?><!--viewdesign"><i class="ti-shopping-cart"></i> <span>ticketshop</span></a></li>-->
+<!--												</ul>-->
+<!--											</li>-->
+<!--										</ul>-->
+<!--									</li>-->
 
                                     <li>
                                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i><span>Connect</span></a>

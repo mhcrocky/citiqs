@@ -2073,6 +2073,7 @@ input.input-material ~ label.is-invalid ~ label {
 .table-striped tbody tr {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
+	background-color: white;
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
