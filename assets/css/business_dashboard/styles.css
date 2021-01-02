@@ -1477,28 +1477,28 @@ table.dbkit-table tr td {
     opacity: 0;
 }
 
-@-webkit-keyframes "pulse" {
-    0% {
-        -webkit-transform: scale(0);
-        opacity: 0.0;
-    }
-    25% {
-        -webkit-transform: scale(0);
-        opacity: 0.1;
-    }
-    50% {
-        -webkit-transform: scale(0.1);
-        opacity: 0.3;
-    }
-    75% {
-        -webkit-transform: scale(0.5);
-        opacity: 0.5;
-    }
-    100% {
-        -webkit-transform: scale(1);
-        opacity: 0.0;
-    }
-}
+/*@-webkit-keyframes "pulse" {*/
+/*    0% {*/
+/*        -webkit-transform: scale(0);*/
+/*        opacity: 0.0;*/
+/*    }*/
+/*    25% {*/
+/*        -webkit-transform: scale(0);*/
+/*        opacity: 0.1;*/
+/*    }*/
+/*    50% {*/
+/*        -webkit-transform: scale(0.1);*/
+/*        opacity: 0.3;*/
+/*    }*/
+/*    75% {*/
+/*        -webkit-transform: scale(0.5);*/
+/*        opacity: 0.5;*/
+/*    }*/
+/*    100% {*/
+/*        -webkit-transform: scale(1);*/
+/*        opacity: 0.0;*/
+/*    }*/
+/*}*/
 
 .testimonial-carousel {
     margin: 60px 0 28px;
@@ -2479,11 +2479,11 @@ table.dataTable thead td {
 
 /* login-s3 */
 
-.login-bg {
-    background: url(../images/bg/singin-bg.jpg) center/cover no-repeat;
-    position: relative;
-    z-index: 1;
-}
+/*.login-bg {*/
+/*    background: url(../images/bg/singin-bg.jpg) center/cover no-repeat;*/
+/*    position: relative;*/
+/*    z-index: 1;*/
+/*}*/
 
 .login-bg:before {
     content: '';

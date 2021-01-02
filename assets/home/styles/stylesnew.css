@@ -1,7 +1,11 @@
 /* footer */
 
+table{
+	background-color: whitesmoke;
+}
+
 footer{
-	background-color: #DA3978;
+	background-color: #da3978;
 	color: #fff;
 	font-family: 'campiton-bold', sans-serif;
 }
@@ -167,6 +171,7 @@ body{
     align-items: stretch;
     /*min-height: calc(100vh - 71px);*/
 	margin-top: 71px;
+	background-color: #efd1ba;
 }
 
 .col-half{

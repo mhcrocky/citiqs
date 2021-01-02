@@ -80,9 +80,14 @@ class Mobilevendor extends REST_Controller
 
 		// do yourstuff
 
+		$this->db->set('pStatus', 1);
+		$this->db->where('id', $orderId);
+		$this->db->update('tbl_shop_orders');
+
 		$message = [
 			'status' => '0',
-			'message' => 'order accepted'
+			'message' => 'order accepted',
+			'pStatus' => '1'
 		];
 
 		$this->set_response($message, 200); // CREATED (201) being the HTTP response code
@@ -136,9 +141,14 @@ class Mobilevendor extends REST_Controller
 
 		// do yourstuff
 
+		$this->db->set('pStatus', 3);
+		$this->db->where('id', $orderId);
+		$this->db->update('tbl_shop_orders');
+
 		$message = [
 			'status' => '0',
-			'message' => 'order ready send'
+			'message' => 'order ready send',
+			'pStatus' => '2'
 		];
 
 		$this->set_response($message, 200); // CREATED (201) being the HTTP response code
@@ -192,9 +202,15 @@ class Mobilevendor extends REST_Controller
 
 		// do yourstuff
 
+		$this->db->set('pStatus', 4);
+		$this->db->where('id', $orderId);
+		$this->db->update('tbl_shop_orders');
+
 		$message = [
 			'status' => '0',
-			'message' => 'order refused'
+			'message' => 'order refused',
+			'pStatus' => '4'
+
 		];
 
 		$this->set_response($message, 200); // CREATED (201) being the HTTP response code
@@ -247,10 +263,15 @@ class Mobilevendor extends REST_Controller
 		$orderId = $this->security->xss_clean($this->input->post('orderId'));
 
 		// do yourstuff
+		$this->db->set('pStatus', 2);
+		$this->db->where('id', $orderId);
+		$this->db->update('tbl_shop_orders');
 
 		$message = [
 			'status' => '0',
-			'message' => 'order ready send'
+			'message' => 'order ready send',
+			'pStatus' => '2'
+
 		];
 
 		$this->set_response($message, 200); // CREATED (201) being the HTTP response code
