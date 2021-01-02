@@ -372,7 +372,7 @@ $(document).ready( function () {
           title: 'Service Fee Tax',
           data: null,
           "render": function (data, type, row) {
-            let serviceFeeTax = parseInt(data.serviceFeeTax)+"%";
+            let serviceFeeTax = num_percentage(data.serviceFeeTax);
             return serviceFeeTax;
           }
         },
@@ -641,9 +641,7 @@ function total_number(number){
 }
 
 function num_percentage(number){
-  number = parseInt(number*100);
-  number = number/100;
-  return number + "%";
+  return num_format(number) + "%";
 }
 
 function addZero(i) {
@@ -651,4 +649,17 @@ function addZero(i) {
     i = "0" + i;
   }
   return i;
+}
+
+function num_format(num){
+  var num1 = parseInt(num);
+  var num2 = parseFloat(num) - parseFloat(num1);
+  if(num2 == '0'){
+      num2 = '00';
+  } else {
+      num2 = Math.round(num2 * 100);
+  }
+  
+  var full_num = addZero(num1) + "." + num2;
+  return full_num;
 }
