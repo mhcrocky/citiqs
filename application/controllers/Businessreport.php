@@ -184,7 +184,7 @@ class Businessreport extends BaseControllerWeb
 							),
                             "clientEvents" => array(
                                 "itemSelect" => "function(params){
-									console.log(params);
+									//console.log(params);
 								
 									
                                 }",
