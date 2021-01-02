@@ -29,7 +29,6 @@ class Businessreport extends BaseControllerWeb
 		$data['day_total'] = $this->businessreport_model->get_day_totals($vendor_id);
 		$data['last_week_total'] = $this->businessreport_model->get_this_week_totals($vendor_id);
 		$data['compare'] = $this->businessreport_model->get_last_week_compare($vendor_id);
-		$data['service_types'] = $this->businessreport_model->get_service_types();
 		$data['day_orders'] = $this->businessreport_model->get_day_orders($vendor_id);
 		$data['week_orders'] = $this->businessreport_model->get_this_week_orders($vendor_id);
 		$data['last_week_orders'] = $this->businessreport_model->get_last_week_orders($vendor_id);
@@ -40,8 +39,8 @@ class Businessreport extends BaseControllerWeb
 	public function reports()
 	{ 
 		$data['title'] = 'Financial Reports';
-		$vendor_id = $this->vendor_id;
 		$this->global['pageTitle'] = 'TIQS: Financial Reports';
+		$data['service_types'] = $this->businessreport_model->get_service_types();
 		$this->loadViews("businessreport/reports", $this->global, $data, 'footerbusiness', 'headerbusiness'); // payment screen
 
 	}
