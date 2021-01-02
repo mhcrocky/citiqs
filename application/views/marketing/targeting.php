@@ -1,3 +1,19 @@
+<style>
+tr:nth-of-type(even) {
+    background-color: #fffff2 !important;
+}
+
+tr:nth-of-type(odd) {
+    background-color: #f2f2f2 !important;
+}
+
+.table-striped thead tr:nth-of-type(odd) {
+    background-color: #fffff2 !important;
+}
+.table-striped tfoot tr:nth-of-type(odd) {
+    background-color: #fffff2 !important;
+}
+</style>
 <div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable">
     <div class="float-right text-center pl-3">
         <input style="width: 330px;" class="date form-control-sm mb-2" type="text" name="datetimes" />

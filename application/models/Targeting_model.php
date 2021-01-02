@@ -79,7 +79,8 @@ WHERE vendor.id = '$vendor_id' AND tbl_shop_orders.paid = '1' AND serviceTypeId 
 	}
 
 	public function get_queries($vendor_id){
-		$this->db->select('*')->from('tbl_queries')->where('vendor_id',$vendor_id);
+		$this->db->select('*')->from('tbl_queries');
+		$this->db->where('vendor_id', $vendor_id);
 		$query = $this->db->get();
 		return $query->result_array();
 	}
