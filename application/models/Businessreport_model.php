@@ -296,7 +296,7 @@ INNER JOIN (SELECT * FROM tbl_user  WHERE roleid = 6 OR roleid = 2) AS buyer ON 
 INNER JOIN tbl_shop_spots ON tbl_shop_orders.spotId = tbl_shop_spots.id
 INNER JOIN tbl_shop_spot_types ON tbl_shop_orders.serviceTypeId = tbl_shop_spot_types.id
 WHERE vendor.id = ".$vendor_id." AND tbl_shop_orders.paid = '1' AND tbl_shop_spot_types.type = '$order_type' 
-AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_date ".$query." GROUP BY hour ORDER BY hour");
+AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_date $sql GROUP BY hour ORDER BY hour");
 		return $query->result_array();
 	}
 
@@ -529,8 +529,8 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
             if(strtotime(date($result->date)) >= strtotime(date($min)) && strtotime(date($result->date)) <= strtotime(date($max)) ){
 				$arr_date = explode("-", $result->date);
                 $month = $arr_date[1] - 1;
-                if(isset($date[$month])){
-                    $invoice[$month] = $date[$month] + $result->total;
+                if(isset($invoice[$month])){
+                    $invoice[$month] = $invoice[$month] + $result->total;
                 } else {
                     $invoice[$month] = $result->total;
 				}
@@ -681,6 +681,36 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 		$pickup = [];
 		$newData = [];
 		$days = [];
+		/*
+		$context = stream_context_create([
+            "http" => [
+                "header" => "authtoken:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoidGlxc3dlYiIsIm5hbWUiOiJ0aXFzd2ViIiwicGFzc3dvcmQiOm51bGwsIkFQSV9USU1FIjoxNTgyNTQ2NTc1fQ.q7ssJqcwsXhuNVDyspGYh_KV7_JsbwS8vq2TT9R-MGk"
+                ]
+        ]);
+        $data = file_get_contents("http://tiqs.com/backoffice/admin/api/invoice/data/".$vendor_id, false, $context );
+        $results = json_decode($data);
+		$invoice = [];
+		$min = explode(" ", $min_date)[0];
+		$min = str_replace("'", "", $min);
+		$max = explode(" ", $max_date)[0];
+		$max = str_replace("'", "", $max);
+        foreach($results as $result){
+
+            if(strtotime(date($result->date)) >= strtotime(date($min)) && strtotime(date($result->date)) <= strtotime(date($max)) ){
+				$days[] = $result->date;
+				$day = $result->date;
+                if(isset($invoice[$day])){
+                    $invoice[$day] = $invoice[$day] + $result->total;
+                } else {
+                    $invoice[$day] = $result->total;
+				}
+				
+                
+            }
+
+		}
+		*/
+
 		foreach($local_results as $local_result){
 			$days[] = $local_result['day_date'];
 			$day = $local_result['day_date'];
@@ -708,7 +738,9 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 				"date" => $day,
 				"pickup" => isset($pickup[$day]) ? floatval($pickup[$day]) : 0,
 				"delivery" => isset($delivery[$day]) ? floatval($delivery[$day]) : 0,
-				"local" => isset($local[$day]) ? floatval($local[$day]) : 0
+				"local" => isset($local[$day]) ? floatval($local[$day]) : 0,
+				"invoice" => 0 //isset($invoice[$key]) ? floatval($invoice[$key]) : 0
+
 			];
 		}
 		return $newData;
