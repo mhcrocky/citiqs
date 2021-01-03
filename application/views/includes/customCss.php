@@ -158,6 +158,14 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/blackbox.css">
 <?php } elseif ($this->view === 'publicorders/temporarilyClosed') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/temporarilyClosed.css">
+<?php  } elseif ($this->view === 'events/step-one') { ?>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+    <link href="<?php echo base_url(); ?>assets/css/main.jbox.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.quilljs.com/1.1.9/quill.snow.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+    <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdn.quilljs.com/1.1.9/quill.js"></script>
 <?php  } elseif ($this->view === 'pos/pos_login') { ?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/posLogin.css">
 <?php  } elseif ($this->view === 'businessreport/index' || $this->view === 'businessreport/reports' || $this->view === 'finance/reports' || $this->view === 'marketing/targeting') { ?>
