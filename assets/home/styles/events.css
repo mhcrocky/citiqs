@@ -1,0 +1,144 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+    background-color: #f2f2f2 !important;
+}
+
+.ql-container,
+.form-control {
+    background-color: #EAEAEA !important;
+}
+
+.ql-container {
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+input,
+select {
+    height: 45px !important;
+}
+
+.my-form {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.my-form .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.event-form {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.event-form .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.text-md-left {
+    color: #000 !important;
+}
+
+.ql-toolbar {
+    background-color: #DBE0E6;
+}
+
+.description {
+    margin-bottom: 65px;
+}
+
+select {
+    padding: 10px;
+    padding-right: 30px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23333332%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat, repeat;
+    background-position: right .7em top 50%, 0 0;
+    background-size: .65em auto, 100%;
+}
+
+/* For IE (thanks to @SaiManoj) */
+select::-ms-expand {
+    display: none;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.age input {
+    line-height: 1.65;
+    float: left;
+    display: block;
+    padding: 0;
+    margin: 0;
+    padding-left: 20px;
+    border: 1px solid #eee;
+}
+
+.age input:focus {
+    outline: 0;
+}
+
+.age-nav {
+    float: left;
+    position: relative;
+    height: 42px;
+}
+
+.age-button {
+    position: relative;
+    cursor: pointer;
+    border-left: 1px solid #eee;
+    width: 20px;
+    text-align: center;
+    color: #333;
+    font-size: 13px;
+    font-family: "Trebuchet MS", Helvetica, sans-serif !important;
+    line-height: 1.7;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.age-button.age-up {
+    position: absolute;
+    height: 50%;
+    top: 0;
+    border-bottom: 1px solid #eee;
+}
+
+.age-button.age-down {
+    position: absolute;
+    bottom: -1px;
+    height: 50%;
+}
+
+.info-opened {
+    color: #4d94ff;
+}
+
+.bg-in {
+    background-color: #f2f2f2 !important;
+    border: 1px solid #95c6f9 !important;
+}
