@@ -1128,129 +1128,143 @@
             return $result ? reset($result) : null;
         }
 
-        public function getLocalReport(int $vendorId): ?array
+        public function fetchReportDetailsPaid(int $venodrId, string $from = '', string $to = ''): ?array
         {
-            $vendorId = $this->db->escape($vendorId);
+            $this->load->config('custom');
+            $concatSeparator = $this->config->item('concatSeparator');
+            $concatGroupSeparator = $this->config->item('contactGroupSeparator');
+            $local = $this->config->item('local');
+            $delivery = $this->config->item('deliveryType');
+            $pickup = $this->config->item('pickupType');
+
             $query = '
-                SELECT 
-                    tbl_shop_orders.id AS order_id,
-                    tbl_shop_orders.created AS order_date,
-                    tbl_shop_products_extended.vatpercentage AS productVat,
-                    tbl_shop_products_extended.`name` AS productName,
-                    tbl_shop_products_extended.price,
-                    tbl_shop_order_extended.quantity,
-                    tbl_shop_orders.waiterTip,
-                    tbl_shop_spot_types.type AS service_type,
-                    tbl_shop_products_extended.price * tbl_shop_order_extended.quantity AS AMOUNT,
-                    (tbl_shop_orders.serviceFee - (tbl_shop_orders.serviceFee*100)/(tbl_shop_vendors.serviceFeeTax+100)) AS VATSERVICE,
-                    tbl_shop_vendors.serviceFeeTax,
-                    ((tbl_shop_products_extended.price * tbl_shop_order_extended.quantity) * 100)/(tbl_shop_products_extended.vatpercentage+100) AS EXVAT,
-                    (tbl_shop_orders.serviceFee*100)/(tbl_shop_vendors.serviceFeeTax+100) AS EXVATSERVICE,
-                    tbl_shop_orders.serviceFee,
-                    tbl_shop_products_extended.price * tbl_shop_order_extended.quantity-tbl_shop_products_extended.price * tbl_shop_order_extended.quantity * 100 / (tbl_shop_products_extended.vatpercentage+100) AS VAT
+                SELECT
+                    ' . $this->table . '.id AS orderId,
+                    ' . $this->table . '.created AS createdAt,
+                    (' . $this->table . '.amount + ' . $this->table . '.serviceFee)  AS orderTotalAmount,
+                    ' . $this->table . '.amount AS orderAmount,
+                    ' . $this->table . '.serviceFee AS serviceFee,
+                    ' . $this->table . '.paymentType AS paymentType,
+                    ROUND((' . $this->table . '.serviceFee * 100) / (tbl_shop_vendors.serviceFeeTax + 100), 2)  AS exVatService,
+                    ROUND((' . $this->table . '.serviceFee - (' . $this->table . '.serviceFee * 100) / (tbl_shop_vendors.serviceFeeTax + 100)), 2) AS vatService,
+                    ' . $this->table . '.serviceTypeId AS serviceTypeId,
+                    CASE 
+                        WHEN ' . $this->table . '. serviceTypeId = ' . $local . ' THEN "LOCAL"
+                        WHEN ' . $this->table . '. serviceTypeId = ' . $delivery . ' THEN "DELIVERY"
+                        WHEN ' . $this->table . '. serviceTypeId = ' . $pickup . ' THEN "PICKUP"
+                    END AS serviceType,
+                    tbl_shop_spots.spotName AS spotName,
+                    SUM(
+                        (CASE
+                            WHEN ' . $this->table . '. serviceTypeId = ' . $local .
+                                ' THEN ROUND((tbl_shop_products_extended.price * 100) / (tbl_shop_products_extended.vatpercentage + 100), 2)
+                            WHEN ' . $this->table . '. serviceTypeId = ' . $delivery .
+                                ' THEN ROUND((tbl_shop_products_extended.deliveryPrice * 100) / (tbl_shop_products_extended.deliveryVatpercentage + 100), 2)
+                            WHEN ' . $this->table . '. serviceTypeId = ' . $pickup .
+                                ' THEN ROUND((tbl_shop_products_extended.pickupPrice * 100) / (tbl_shop_products_extended.pickupVatpercentage + 100), 2)
+                        END)
+                    ) AS productsExVat,
+                    SUM(
+                    
+                        (CASE
+                            WHEN ' . $this->table . '. serviceTypeId = ' . $local .
+                                ' THEN (
+                                    ROUND(tbl_shop_products_extended.price - (tbl_shop_products_extended.price * 100) / (tbl_shop_products_extended.vatpercentage + 100), 2)
+                                )
+                            WHEN ' . $this->table . '. serviceTypeId = ' . $delivery .
+                                ' THEN (
+                                    ROUND((tbl_shop_products_extended.deliveryPrice - (tbl_shop_products_extended.deliveryPrice * 100) / (tbl_shop_products_extended.deliveryVatpercentage + 100)), 2)
+                                )
+                            WHEN ' . $this->table . '. serviceTypeId = ' . $pickup .
+                                ' THEN (
+                                    ROUND((tbl_shop_products_extended.pickupPrice - (tbl_shop_products_extended.pickupPrice * 100) / (tbl_shop_products_extended.pickupVatpercentage + 100)), 2)
+                                )
+                        END)
+                    ) AS productsVat,
+                    productData.products
                 FROM
                     tbl_shop_orders
                 INNER JOIN
                     tbl_shop_order_extended ON tbl_shop_orders.id = tbl_shop_order_extended.orderId
                 INNER JOIN
+                    (
+                        SELECT
+                            tbl_shop_order_extended.orderId,
+                            GROUP_CONCAT(
+                                tbl_shop_products_extended.name,
+                                \'' .  $concatSeparator . '\', tbl_shop_order_extended.quantity,
+                                \'' .  $concatSeparator . '\',
+                                    CASE
+                                        WHEN ' . $this->table . '. serviceTypeId = ' . $local . ' THEN tbl_shop_products_extended.price
+                                        WHEN ' . $this->table . '. serviceTypeId = ' . $delivery . ' THEN tbl_shop_products_extended.deliveryPrice
+                                        WHEN ' . $this->table . '. serviceTypeId = ' . $pickup . ' THEN tbl_shop_products_extended.pickupPrice
+                                    END,
+                                \'' .  $concatSeparator . '\',
+                                    CASE
+                                        WHEN ' . $this->table . '. serviceTypeId = ' . $local . ' THEN tbl_shop_products_extended.vatpercentage
+                                        WHEN ' . $this->table . '. serviceTypeId = ' . $delivery . ' THEN tbl_shop_products_extended.deliveryVatpercentage
+                                        WHEN ' . $this->table . '. serviceTypeId = ' . $pickup . ' THEN tbl_shop_products_extended.pickupVatpercentage
+                                    END,
+                                \'' .  $concatSeparator . '\',
+                                    CASE
+                                        WHEN ' . $this->table . '. serviceTypeId = ' . $local .
+                                            ' THEN ROUND((tbl_shop_products_extended.price * 100) / (tbl_shop_products_extended.vatpercentage + 100), 2)
+                                        WHEN ' . $this->table . '. serviceTypeId = ' . $delivery .
+                                            ' THEN ROUND((tbl_shop_products_extended.deliveryPrice * 100) / (tbl_shop_products_extended.deliveryVatpercentage + 100), 2)
+                                        WHEN ' . $this->table . '. serviceTypeId = ' . $pickup .
+                                            ' THEN ROUND((tbl_shop_products_extended.pickupPrice * 100) / (tbl_shop_products_extended.pickupVatpercentage + 100), 2)
+                                    END,
+                                \'' .  $concatSeparator . '\',
+                                    CASE
+                                        WHEN ' . $this->table . '. serviceTypeId = ' . $this->config->item('local') .
+                                            ' THEN ROUND(tbl_shop_products_extended.price - (tbl_shop_products_extended.price * 100) / (tbl_shop_products_extended.vatpercentage + 100), 2)
+                                        WHEN ' . $this->table . '. serviceTypeId = ' . $this->config->item('deliveryType') .
+                                            ' THEN ROUND(tbl_shop_products_extended.deliveryPrice - (tbl_shop_products_extended.deliveryPrice * 100) / (tbl_shop_products_extended.deliveryVatpercentage + 100), 2)
+                                        WHEN ' . $this->table . '. serviceTypeId = ' . $this->config->item('pickupType') .
+                                            ' THEN ROUND(tbl_shop_products_extended.pickupPrice - (tbl_shop_products_extended.pickupPrice * 100) / (tbl_shop_products_extended.pickupVatpercentage + 100), 2)
+                                    END
+                                SEPARATOR "' . $concatGroupSeparator . '"
+                            ) AS products
+                        FROM
+                            tbl_shop_products_extended
+                        INNER JOIN
+                            tbl_shop_order_extended ON tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
+                        INNER JOIN
+                            ' . $this->table  . ' ON ' . $this->table  . '.id = tbl_shop_order_extended.orderId
+                        GROUP BY
+                            tbl_shop_order_extended.orderId
+                    ) productData ON productData.orderId = tbl_shop_orders.id
+                INNER JOIN
                     tbl_shop_products_extended ON tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
                 INNER JOIN
-                    tbl_shop_products ON  tbl_shop_products_extended.productId = tbl_shop_products.id
+                    tbl_shop_products ON tbl_shop_products_extended.productId = tbl_shop_products.id
                 INNER JOIN
-                    tbl_shop_categories ON tbl_shop_products.categoryId = tbl_shop_categories.id 
+                    tbl_shop_categories ON tbl_shop_products.categoryId = tbl_shop_categories.id
                 INNER JOIN
-                    tbl_shop_vendors ON tbl_shop_vendors.vendorId = tbl_shop_categories.userId 
-                INNER JOIN
-                    (SELECT * FROM tbl_user WHERE roleid = 2) AS vendor ON vendor.id = tbl_shop_categories.userId
-                INNER JOIN
-                    (SELECT * FROM tbl_user WHERE roleid = 6 OR roleid = 2) AS buyer ON buyer.id = tbl_shop_orders.buyerId
+                    (SELECT id FROM tbl_user WHERE roleid = 2) vendor ON vendor.id = tbl_shop_categories.userId
                 INNER JOIN
                     tbl_shop_spots ON tbl_shop_orders.spotId = tbl_shop_spots.id
                 INNER JOIN
-                    tbl_shop_spot_types ON tbl_shop_orders.serviceTypeId = tbl_shop_spot_types.id
+                    tbl_shop_vendors ON tbl_shop_vendors.vendorId = vendor.id
                 WHERE
-                    vendor.id = ' . $vendorId . '
-                    AND tbl_shop_orders.paid = "1"
-                    AND tbl_shop_orders.serviceTypeId = ' . $serviceTypeId . '
-                    AND tbl_shop_orders.created > "2020-01-01" ;'; // TO DO SET THIS TODAY
+                    tbl_shop_orders.paid = "1" AND
+                vendor.id = ' . $venodrId ;
+
+            if ($from) {
+                $from = $this->db->escape($from);
+                $query .= ' AND ' . $this->table . '.created >= ' . $from . ' ';
+            }
+
+            if ($to) {
+                $to = $this->db->escape($to);
+                $query .= ' AND ' . $this->table . '.created <= ' . $to . ' ';
+            }
+            $query .= ' GROUP BY ' . $this->table . '.id;';
 
             $result = $this->db->query($query);
             $result = $result->result_array();
+
             return $result ? $result : null;
-        }
-
-        public function fetchReportDetailsPaid(int $userId, string $from = '', string $to = ''): ?array
-        {
-            $where = [
-                $this->table . '.paid' => '1',
-                'vendor.id' => $userId
-            ];
-
-            if ($from && $to) {
-                $where[$this->table .'.created>='] = $from;
-                $where[$this->table .'.created<'] = $to;
-            }
-
-            return $this->read(
-                [
-                    $this->table . '.id AS orderId',
-                    $this->table . '.amount AS orderAmount',
-                    $this->table . '.created AS createdAt',
-                    $this->table . '.serviceFee AS serviceFee',
-
-                    // category
-                    'tbl_shop_categories.id AS categoryId',
-                    'tbl_shop_categories.category AS category',
-
-                    //buyer
-                    'buyer.id AS buyerId',
-                    'buyer.email AS buyerEmail',
-                    'buyer.username AS buyerUserName',
-                    'buyer.mobile AS buyerMobile',
-
-                    //vendor
-                    'vendor.id AS vendorId',
-                    'vendor.email AS vendorEmail',
-                    'vendor.username AS vendorUserName',
-
-                    // order extende
-                    'tbl_shop_order_extended.quantity AS productQuantity',
-
-
-                    // product
-                    'tbl_shop_products.id AS productId',
-
-                    // product extened
-                    'tbl_shop_products_extended.name AS productName',
-                    'tbl_shop_products_extended.id AS productEtendedId',
-                    'tbl_shop_products_extended.price AS productPrice',
-                    'tbl_shop_products_extended.vatpercentage AS productVat',
-
-                    // spots
-                    'tbl_shop_spots.id AS spotId',
-                    'tbl_shop_spots.spotName AS spotName'
-                ],
-                $where,
-                [
-                    ['tbl_shop_order_extended', $this->table . '.id = tbl_shop_order_extended.orderId', 'INNER'],
-                    ['tbl_shop_products_extended', 'tbl_shop_order_extended.productsExtendedId  = tbl_shop_products_extended.id', 'INNER'],
-                    ['tbl_shop_products', 'tbl_shop_products_extended.productId  = tbl_shop_products.id', 'INNER'],
-                    ['tbl_shop_categories', 'tbl_shop_products.categoryId  = tbl_shop_categories.id', 'INNER'],
-                    [
-                        '(SELECT * FROM tbl_user WHERE roleid = '. $this->config->item('owner') .') vendor',
-                        'vendor.id  = tbl_shop_categories.userId',
-                        'INNER'
-                    ],
-                    [
-                        '(SELECT * FROM tbl_user WHERE roleid = ' . $this->config->item('buyer') . ' OR roleid = ' . $this->config->item('owner') . ') buyer',
-                        'buyer.id  = ' .  $this->table  . '.buyerId',
-                        'INNER'
-                    ],
-                    ['tbl_shop_spots', $this->table . '.spotId = tbl_shop_spots.id', 'INNER']
-                ],
-                'order_by',
-                [$this->table . '.updated ASC']
-            );
         }
 
     }
