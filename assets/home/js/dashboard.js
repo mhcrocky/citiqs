@@ -110,7 +110,9 @@
         url: globalVariables.baseUrl + "businessreport/get_graphs",
         data: {min:"'"+min+"'",max:"'"+max+"'",selected:selected},
         success: function(data){
-          $("#graphs").html(JSON.parse(data.replaceAll("btnBack", "hidden")));
+          data = data.replaceAll("btnBack", "hidden");
+          $("#graphs").html(JSON.parse(data.replaceAll("breadcrumb", "hidden")));
+          //$("#graphs").html(JSON.parse(data.replaceAll("btnBack", "hidden")));
           }
         });
         
@@ -125,7 +127,9 @@
             url: globalVariables.baseUrl + "businessreport/get_graphs",
             data: {min:"'"+min+"'",max:"'"+max+"'",selected:selected},
             success: function(data){
-              $("#graphs").html(JSON.parse(data.replaceAll("btnBack", "hidden")));
+              data = data.replaceAll("btnBack", "hidden");
+              $("#graphs").html(JSON.parse(data.replaceAll("breadcrumb", "hidden")));
+              //$("#graphs").html(JSON.parse(data.replaceAll("btnBack", "hidden")));
             }
           });
         });

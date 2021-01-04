@@ -49,7 +49,7 @@
                                 <div class="col-md-4">
                                     <div class="w-100 age">
                                         <input id="age" type="number" name="age" class="form-control" min="1" max="100"
-                                            step="1" value="1">
+                                            step="22" value="1">
                                     </div>
                                 </div>
                             </div>
