@@ -77,6 +77,8 @@
                     'buyerRoleId'               => $this->config->item('buyer'),
                     'salesagent'                => $this->config->item('tiqsId'),
                     'buyershorturl'             => $this->config->item('buyershorturl'),
+                    'xReport'                   => $this->config->item('x_report'),
+                    'zReport'                   => $this->config->item('z_report'),
                 ];
                 $this->getOrdered($data, $vendorId, $spotId);
                 $this->setPosSideFee($data);

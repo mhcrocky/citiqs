@@ -1053,4 +1053,15 @@ class User_model extends CI_Model
         return null;
 
     }
+
+    public function getUserProperty(int $id, string $property): ?string
+    {
+        $this->db->select($property);
+        $this->db->from('tbl_user');
+        $this->db->where('id =', $id);
+        $query = $this->db->get();
+        $result = $query->result();
+        $result = reset($result);
+        return $result->{$property};
+    }
 }

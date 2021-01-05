@@ -121,6 +121,8 @@ $config['orderPaid'] = '1';
 $config['contactGroupSeparator'] = ')$=';
 $config['concatSeparator'] = ')#%';
 $config['allergiesSeparator'] = '|||';
+$config['contactGroupSeparatorNumber'] = '|';
+$config['concatSeparatorNumber'] = '#';
 
 // paynl payment types
 $config['idealPaymentType'] = '10';
@@ -165,6 +167,18 @@ $config['giroPayment'] = 'giro payment';
 $config['payconiqPayment'] = 'payconiq payment';
 $config['pinMachinePayment'] = 'pin machine';
 $config['voucherPayment'] = 'voucher';
+
+$config['paymentTypes'] = [
+    $config['prePaid'],
+    $config['postPaid'],
+    $config['idealPayment'],
+    $config['creditCardPayment'],
+    $config['bancontactPayment'],
+    $config['giroPayment'],
+    $config['payconiqPayment'],
+    $config['pinMachinePayment'],
+    $config['voucherPayment'],
+];
 
 //paynl errorId
 $config['paymentTypeErr'] = 'PAY-405';
@@ -236,3 +250,6 @@ $config['taxC'] = 6;
 $config['taxD'] = 0;
 
 $config['_temp'] = '_temp';
+
+$config['z_report'] = 'z_report';
+$config['x_report'] = 'x_report';

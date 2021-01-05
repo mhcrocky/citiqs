@@ -289,8 +289,7 @@ $route['api/voucher']  = 'Api/Voucher/data';
 $route['api/onesignal/data']  = 'Api/OneSignal/data';
 
 $route['api/clean_printer_requests']  = 'Api/Cronjobs/cleanPrinterRequests';
-
-
+$route['api/report']  = 'Api/Reports/report';
 
 // ALFRED PAYMENT ENGINE
 $route['paymentengine/(:num)/(:any)/(:num)'] = 'Alfredpayment/paymentEngine/$1/$2/$3';
