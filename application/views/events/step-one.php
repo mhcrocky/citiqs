@@ -181,11 +181,11 @@
                             <hr class="w-100 mt-5 mb-5">
 
                             <div class="col-md-6 offset-md-4">
-                                <button style="width: 200px;border-radius: 0px;background: #07071c;" type="button"
+                                <a href="<?php echo base_url();?>events/event" style="width: 200px;border-radius: 0px;background: #07071c;"
                                     class="btn btn-primary text-left">
                                     <strong>Next step</strong> <span style="margin-left: 100px;"><i
                                             class="fa fa-arrow-right" aria-hidden="true"></i></span>
-                                </button>
+</a>
                             </div>
                     </div>
                     </form>
