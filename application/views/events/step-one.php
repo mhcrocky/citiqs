@@ -167,7 +167,7 @@
                                     <div class="input-group">
                                         <input type="time" class="form-control input-w mb-3" id="event-time1"
                                             name="event-time1">
-                                        <span class="input-group-addon fa-input pl-2 pr-2 mb-3">
+                                        <span style="padding-top: 14px;" class="input-group-addon fa-input pl-2 pr-2 mb-3">
                                             <i style="color: #fff;font-size: 20px;" class="fa fa-clock-o"></i></span>
                                     </div>
 
@@ -183,7 +183,7 @@
                                     <div class="input-group">
                                         <input type="time" class="form-control input-w mb-3" id="event-time2"
                                             name="event-time2">
-                                        <span class="input-group-addon fa-input pl-2 pr-2 mb-3">
+                                        <span style="padding-top: 14px;" class="input-group-addon fa-input pl-2 pr-2 mb-3">
                                             <i style="color: #fff;font-size: 20px;" class="fa fa-clock-o"></i></span>
                                     </div>
                                 </div>
