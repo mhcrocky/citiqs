@@ -474,6 +474,9 @@ $route['reservations/(:num)']="reservations/index/$1";
 $route['invoices'] = 'Finance/index';
 $route['finance/get_marketing_data'] = 'Finance/get_marketing_data';
 
+$route['events/event'] = 'events/event';
+$route['events/test'] = 'events/test';
+
 $route['address'] = "profile/address";
 $route['changepassword'] = "profile/changepassword";
 $route['paymentsettings'] = "profile/paymentsettings";
