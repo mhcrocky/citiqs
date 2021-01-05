@@ -8,7 +8,9 @@
                         <form name="my-form" action="success.php" method="">
                             <div class="form-group row">
                                 <label for="full_name" class="col-md-4 col-form-label text-md-left">
-                                    <strong>Create event</strong>
+                                    <h3>
+                                        <strong>Create event</strong>
+                                    </h3>
                                 </label>
                                 <div class="col-md-6">
 
