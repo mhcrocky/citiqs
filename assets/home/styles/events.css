@@ -142,3 +142,33 @@ input[type=number] {
     background-color: #f2f2f2 !important;
     border: 1px solid #95c6f9 !important;
 }
+
+li {
+    list-style-type: none;
+
+
+
+    &:nth-of-type(1) {
+        .custom-checkbox .custom-control-input:checked~.custom-control-label::after {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%230fff00' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
+        }
+
+        .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+            background-color: blue;
+        }
+    }
+
+
+}
+
+#tickets_filter,
+#additional-item_filter,
+#tickets_length,
+#additional-item_length {
+    display: none;
+}
+
+
+thead {
+    background: #fff !important;
+}
