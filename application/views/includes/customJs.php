@@ -125,4 +125,13 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/editUser.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/profile.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/found.js"></script>
+<?php } elseif ($this->view === 'events/step-one') { ?>
+    <script src="https://cdn.quilljs.com/1.1.9/quill.js"></script>
+	<script src="<?php echo base_url();?>assets/js/main.jbox.min.js"></script>
+    <script src="<?php echo base_url();?>assets/js/jbox.min.js"></script>
+    <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/events.js"></script>
+<?php } elseif ($this->view === 'events/step-two') { ?>
+	<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/eventDataTables.js"></script>
 <?php } ?>

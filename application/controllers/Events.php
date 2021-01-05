@@ -29,4 +29,52 @@ class Events extends BaseControllerWeb
 
     }
 
+    public function event()
+    {
+        $this->global['pageTitle'] = 'TIQS: Step Two';
+        $this->loadViews("events/step-two", $this->global, '', 'footerbusiness', 'headerbusiness');
+
+    }
+
+    public function test()
+    {
+        $data = [
+            [
+                'id' => '1',
+                'name' => 'Early Bird',
+                'quantity'  => '18',
+                'price' => '0.00',
+                'design' => 'A',
+                'group' => ''
+            ],
+            [
+                'id' => '2',
+                'name' => 'Normal Bird',
+                'quantity'  => '19',
+                'price' => '0.00',
+                'design' => 'A',
+                'group' => ''
+            ],
+            [
+                'id' => '3',
+                'name' => 'VIP Ticket',
+                'quantity'  => '20',
+                'price' => '0.00',
+                'design' => 'B',
+                'group' => 'VIP'
+            ],
+            [
+                'id' => '4',
+                'name' => 'Group Ticket 4 personen',
+                'quantity'  => '21',
+                'price' => '0.00',
+                'design' => 'B',
+                'group' => 'Group'
+            ],
+        ];
+        echo  json_encode($data);
+
+    }
+
+
 }

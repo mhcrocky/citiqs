@@ -20,7 +20,7 @@ $(document).ready(function() {
     });
 
 
-
+ 
 });
 
 </script>
@@ -29,6 +29,7 @@ $(document).ready(function() {
 <script src="<?php echo base_url(); ?>assets/js/metisMenu.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.slimscroll.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.slicknav.min.js"></script>
+<?php include_once FCPATH . 'application/views/includes/customJs.php'; ?>
 
 
 <!-- all line chart activation -->

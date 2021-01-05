@@ -50,6 +50,7 @@ class Shoporder_model_mobile extends CI_Model {
 							  ON `tbl_shop_orders`.`spotId` = `tbl_shop_spots`.`id` 
 						WHERE vendor.id = ".$this->db->escape($userId)." AND
 									tbl_shop_orders.paid = ".$this->db->escape('1')." AND
+									tbl_shop_orders.pStatus !=  ".$this->db->escape('3')." AND
 									date(tbl_shop_orders.created) >= date('2020/12/28')
 						GROUP BY
 							 tbl_shop_orders.id DESC

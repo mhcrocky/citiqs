@@ -44,7 +44,24 @@ class Ordersmobile extends REST_Controller
 
 	}
 
-	public function orderprocessed_get($vendorId)
+	public function ordersselected_get($vendorId, $accepted, $processed, $ready, $refused)
+	{
+//		var_dump($vendorId);die();
+
+		$orderslist = $this->shoporder_model_mobile->returnOrders($vendorId);
+
+
+//		var_dump($orderslist);
+
+		echo json_encode($orderslist);
+//		die();
+//		if(!empty($orders)){
+//			return $orders;
+//		}
+
+	}
+
+		public function orderprocessed_get($vendorId)
 	{
 //		var_dump($vendorId);die();
 

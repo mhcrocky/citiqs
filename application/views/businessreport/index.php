@@ -4,6 +4,7 @@
     $colors = $custom['typeColors'];
 ?>
 <div style="visibility: hidden;" class="main-content-inner ui-sortable">
+<!--
     <div class="sales-report-area mt-5 mb-5 row-sort ui-sortable" data-rowposition="1" data-rowsort="1">
         <div id="sortable" style="visibility: hidden;" class="row ui-sortable">
             <div class="col-md-3 ui-sortable mb-3" data-position="1" data-sort="1">
@@ -453,29 +454,29 @@
 
         </div>
     </div>
+-->
 
+    <div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable mx-auto" data-rowposition="2" data-rowsort="1">
+        <div style="row margin: auto;width: 100%;display: flex;justify-content: center;">
+            <div style="width: 330px;" class="mt-4 ml-auto ml-1">
+                <input style="min-width: 252px;width: 100%;" id="datetime"
+                    class="date form-control form-control-sm mb-2" type="text" />
+            </div>
+            <div class="mt-4 col-md-2 ml-auto mr-1">
+                <select style="min-width: 85px;" class=" custom-select custom-select-sm form-control form-control-sm"
+                    name="group_by" id="group_by">
+                    <option value="total" selected>Total</option>
+                    <option value="month">Month</option>
+                    <option value="quarter">Quarter</option>
+                    <option value="week">Week</option>
+                    <option value="day">Day</option>
+                    <option value="hour">Hour</option>
+                </select>
+            </div>
+        </div>
+        <div id="graphs"></div>
 
-<div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable mx-auto" data-rowposition="2" data-rowsort="1">
-    <div style="row margin: auto;width: 100%;display: flex;justify-content: center;">
-        <div style="width: 330px;" class="mt-4 ml-auto ml-1">
-            <input style="min-width: 252px;width: 100%;" id="datetime" class="date form-control form-control-sm mb-2"
-                type="text" />
-        </div>
-        <div class="mt-4 col-md-2 ml-auto mr-1">
-            <select style="min-width: 85px;" class=" custom-select custom-select-sm form-control form-control-sm"
-                name="group_by" id="group_by">
-                <option value="total" selected>Total</option>
-                <option value="month">Month</option>
-                <option value="quarter">Quarter</option>
-                <option value="week">Week</option>
-                <option value="day">Day</option>
-                <option value="hour">Hour</option>
-            </select>
-        </div>
     </div>
-    <div id="graphs"></div>
-
-</div>
 </div>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
