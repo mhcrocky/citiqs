@@ -84,7 +84,7 @@ $(document).ready(function() {
                 title: 'Options',
                 data: null,
                 "render": function(data, type, row) {
-                    return "<div class='bg-success' style='width: 30px;height: 30px;'><i style='color: #fff;' class='fa fa-pencil p-2'><i></div>";
+                    return "<div class='bg-success btn-edit' style='width: 30px;height: 30px;'><a class='text-light' id='edit' href='javascript:' data-toggle='modal' data-target='#editModal'><i class='fa fa-pencil p-2'><i></a></div>";
                 }
 
             },
