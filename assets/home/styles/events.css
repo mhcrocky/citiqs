@@ -10,7 +10,7 @@ select:focus {
 
 .ql-container,
 .form-control {
-    background-color: #EAEAEA !important;
+    background-color: #ffffff !important;
 }
 
 .ql-container {
@@ -165,4 +165,15 @@ li {
 
 thead {
     background: #fff !important;
+}
+
+.input-w {
+    background-color: #ffffff !important;
+}
+
+.fa-input {
+    padding-top: 9px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    background: #275C5D;
 }
