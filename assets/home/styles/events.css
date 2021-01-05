@@ -161,12 +161,6 @@ li {
 
 }
 
-#tickets_filter,
-#additional-item_filter,
-#tickets_length,
-#additional-item_length {
-    display: none;
-}
 
 
 thead {

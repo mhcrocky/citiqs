@@ -2,13 +2,13 @@
     <div class="cotainer">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <div class="card p-4">
+                <div style="background: none;" class="card p-4">
 
                     <div class="card-body">
                         <form name="my-form" action="success.php" method="">
                             <div class="form-group row">
                                 <label for="full_name" class="col-md-4 col-form-label text-md-left">
-                                    <strong>Control event</strong>
+                                    <strong>Create event</strong>
                                 </label>
                                 <div class="col-md-6">
 
@@ -32,6 +32,7 @@
 
                             <hr class="w-100 mt-5 mb-5">
 
+                            <!--
                             <div class="form-group row">
                                 <label for="shop-type" class="col-md-4 col-form-label text-md-left">Shop type</label>
                                 <div class="col-md-4">
@@ -92,6 +93,8 @@
                                     </select>
                                 </div>
                             </div>
+
+                            -->
 
                             <div class="form-group row">
                                 <label for="event-type" class="col-md-4 col-form-label text-md-left">Event
