@@ -38,9 +38,23 @@ class Reports extends REST_Controller
 		$logo = $this->user_model->getUserProperty($vendorId, 'logo');
 		$logoFile = (is_null($logo)) ? FCPATH . "/assets/home/images/tiqslogonew.png" : $this->config->item('uploadLogoFolder') . $logo;
 
-		Reportesprint_helper::printReport($totals, $from, $to, $reportType, $logoFile);
+		Reportesprint_helper::printReport($totals, $from, $to, $reportType, $logoFile, $vendorId);
 
-		return;		
+		$report = FCPATH . 'receipts' . DIRECTORY_SEPARATOR .  $vendorId . '_' . $reportType . '.png';
+
+		if (file_exists($report)) {
+			$respone = [
+				'status' => '1',
+			];
+		} else {
+			$respone = [
+				'status' => '0',
+			];
+		}
+
+        echo json_encode($respone);
+
+		return;
 	}
 
 	private function getVendorId(array $get): int

@@ -280,6 +280,18 @@ function printOrder(orderId) {
     $.get(justPrint, function(data, status) {});
 }
 
+function printReportes(vendorId, reportType) {
+    let url = globalVariables.baseUrl + 'api/report?vendorid=' + vendorId + '&report=' + reportType;
+    $.get(url, function(data, status) {
+        let response = JSON.parse(data);
+        if (response.status === '1') {
+            let tiqsBoxPrintReport = 'http://localhost/tiqsbox/index.php/Cron/printreportes/' + vendorId + '/' + reportType;
+            $.get(tiqsBoxPrintReport, function(data, status) {});
+        }
+    });
+}
+
+
 function getServiceFee(orderAmount) {
     let serviceFee = orderAmount * posGlobals.serviceFeePercent / 100 + posGlobals.minimumOrderFee;
     if (serviceFee > posGlobals.serviceFeeAmount) {

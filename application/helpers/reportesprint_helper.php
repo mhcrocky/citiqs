@@ -5,7 +5,7 @@
     Class Reportesprint_helper
     {
 
-        public static function printReport(array $data, string $from, string $to, string $reportType, string $logoFile): void
+        public static function printReport(array $data, string $from, string $to, string $reportType, string $logoFile, int $vendorId): void
         {
             $CI =& get_instance();
             $CI->load->config('custom');
@@ -20,19 +20,19 @@
                 $countLines += count($data['productsDetailsXreport']) + 2;
             };
             $startPoint = 50;
-            $reportType = ($reportType === $CI->config->item('z_report')) ? 'Z' : 'X';
+            $reportTypeHeader = ($reportType === $CI->config->item('z_report')) ? 'Z' : 'X';
 
             // image elements
             Print_helper::printImageLogo($imageprint, $logoFile);
             self::imageTextAndDrawSettings($imagetext, $draw, $countLines);
-            self::printReportHeader($imagetext, $draw, $data, $startPoint, $reportType, $from, $to);
+            self::printReportHeader($imagetext, $draw, $data, $startPoint, $reportTypeHeader, $from, $to);
             self::printReportTotals($imagetext, $draw, $data, $startPoint);
             self::printServicePaymentTypes($CI, $imagetext, $draw, $data['serviceTypes'], $startPoint, 'SERVICE TYPES');
             self::printServicePaymentTypes($CI, $imagetext, $draw, $data['paymentTypes'], $startPoint, 'PAYMENT TYPES');
             self::printProcucts($imagetext, $draw, $data, $startPoint);
 
             // draw image
-            self::drawReport($imagetext, $draw, $imageprint);
+            self::drawAndSaveReport($imagetext, $draw, $imageprint, $reportType, $vendorId);
 
             // destroy objects
             self::destroyObjects($imagetext, $draw, $imageprint);
@@ -173,7 +173,7 @@
             return number_format($number, 2, '.', ',');
         }
 
-        public static function drawReport(object &$imagetext, object &$draw, object &$imageprint): void
+        public static function drawAndSaveReport(object &$imagetext, object &$draw, object &$imageprint, string $reportType, int $vendorId): void
         {
             $imagetext->drawImage($draw);
             $imageprint->addImage($imagetext);
@@ -181,8 +181,15 @@
             $resultpngprinter = $imageprint->appendImages(true);
             $resultpngprinter->setImageFormat('png');
 
-            header('Content-type: image/png');
-            echo $resultpngprinter;
+
+            $report = FCPATH . 'receipts' . DIRECTORY_SEPARATOR .  $vendorId . '_' . $reportType . '.png';
+
+            if (file_exists($report)) unlink($report);
+
+            file_put_contents($report, $resultpngprinter);
+
+            // header('Content-type: image/png');
+            // echo $resultpngprinter;
         }
 
         public static function destroyObjects(object $imagetext, object $draw, object $imageprint): void

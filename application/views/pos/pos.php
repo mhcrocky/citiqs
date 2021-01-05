@@ -151,6 +151,20 @@
 						</div>
 						<!-- end pos main-->
 						<div class="pos_categories__footer">
+							<a
+								href="javascript:void(0)"
+								class='pos_categories__button pos_categories__button--primary'
+								onclick="printReportes('<?php echo $vendor['vendorId']; ?>', '<?php echo $xReport; ?>')"
+							>
+								X reportes
+							</a>
+							<a
+								href="javascript:void(0)"
+								class='pos_categories__button pos_categories__button--third'
+								onclick="printReportes('<?php echo $vendor['vendorId']; ?>', '<?php echo $zReport; ?>')"
+							>
+								Z reportes
+							</a>
 							<a href="javascript:void(0)" class='pos_categories__button pos_categories__button--secondary' onclick="cancelPosOrder('<?php echo $orderDataRandomKey; ?>')">Cancel Order</a>
 							<a
 								href="javascript:void(0)"
