@@ -5,24 +5,31 @@
     Class Reportesprint_helper
     {
 
-        public static function printZreport(array $data): void
+        public static function printReport(array $data, string $from, string $to, string $reportType, string $logoFile): void
         {
             $CI =& get_instance();
             $CI->load->config('custom');
+            $CI->load->helper('print_helper');
 
             $imageprint = new Imagick();
             $imagetext = new Imagick();
             $draw = new ImagickDraw();
             
             $countLines = count($data) + count($data['serviceTypes']) * 9 + count($data['paymentTypes']) * 9;
+            if (isset($data['productsDetailsXreport'])) {
+                $countLines += count($data['productsDetailsXreport']) + 2;
+            };
             $startPoint = 50;
+            $reportType = ($reportType === $CI->config->item('z_report')) ? 'Z' : 'X';
 
             // image elements
+            Print_helper::printImageLogo($imageprint, $logoFile);
             self::imageTextAndDrawSettings($imagetext, $draw, $countLines);
-            self::printReportHeader($imagetext, $draw, $data, $startPoint, 'Z');
+            self::printReportHeader($imagetext, $draw, $data, $startPoint, $reportType, $from, $to);
             self::printReportTotals($imagetext, $draw, $data, $startPoint);
             self::printServicePaymentTypes($CI, $imagetext, $draw, $data['serviceTypes'], $startPoint, 'SERVICE TYPES');
             self::printServicePaymentTypes($CI, $imagetext, $draw, $data['paymentTypes'], $startPoint, 'PAYMENT TYPES');
+            self::printProcucts($imagetext, $draw, $data, $startPoint);
 
             // draw image
             self::drawReport($imagetext, $draw, $imageprint);
@@ -53,86 +60,112 @@
             $pixel->destroy();
         }
 
-        public static function printReportHeader (object &$imagetext, object &$drawemail, array $data, int &$startPoint, string $report): void
+        public static function printReportHeader (
+            object &$imagetext,
+            object &$draw,
+            array $data,
+            int &$startPoint,
+            string $report,
+            string $from,
+            string $to
+        ): void
         {
-            $drawemail->setFontSize(40);
-            $drawemail->setStrokeWidth(2);
-            $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-            $imagetext->annotateImage($drawemail, 5, $startPoint, 0, $report . ' - REPORT');
-            $startPoint += 50;
+            $draw->setFontSize(40);
+            $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+            $imagetext->annotateImage($draw, 5, $startPoint, 0, $report . ' - REPORT ');
+            $startPoint += 30;
+            $draw->setFontSize(20);
+            $imagetext->annotateImage($draw, 5, $startPoint, 0, '(' . $from . ' - ' . $to . ')');
+            $startPoint += 10;
+            self::getBoldLine($draw, $imagetext, $startPoint);
+            $startPoint += 40;
         }
 
-        public static function printReportTotals (object &$imagetext, object &$drawemail, array $data, int &$startPoint): void
+        public static function printReportTotals (object &$imagetext, object &$draw, array $data, int &$startPoint): void
         {
-            $drawemail->setFontSize(22);
-            $drawemail->setStrokeWidth(2);
-            $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-            $imagetext->annotateImage($drawemail, 5, $startPoint, 0, 'TOTALS');
+            $draw->setFontSize(22);
+            $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+            $draw->setStrokeWidth(2);
+            $imagetext->annotateImage($draw, 5, $startPoint, 0, 'TOTALS');
+            $draw->setStrokeWidth(0);
+            $draw->setFontSize(20);
             $startPoint += 30;
-            $imagetext->annotateImage($drawemail, 20, $startPoint, 0, 'Number of orders: ' . $data['orders']);
+            $imagetext->annotateImage($draw, 20, $startPoint, 0, 'Number of orders: ' . $data['orders']);
             $startPoint += 30;
-            $imagetext->annotateImage($drawemail, 20, $startPoint, 0, 'Total: ' . self::returnFormarNumber($data['orderTotalAmount'])) ;
+            $imagetext->annotateImage($draw, 20, $startPoint, 0, 'Total: ' . self::returnFormarNumber($data['orderTotalAmount'])) ;
             $startPoint += 30;
-            $imagetext->annotateImage($drawemail, 35, $startPoint, 0, 'Amount without service fee: '. self::returnFormarNumber($data['orderAmount']) . ' €');
+            $imagetext->annotateImage($draw, 35, $startPoint, 0, 'Amount without service fee: '. self::returnFormarNumber($data['orderAmount']) . ' €');
             $startPoint += 30;
-            $imagetext->annotateImage($drawemail, 50, $startPoint, 0, 'Products ex. vat: '. self::returnFormarNumber($data['productsExVat']) . ' €');
+            $imagetext->annotateImage($draw, 50, $startPoint, 0, 'Products ex. vat: '. self::returnFormarNumber($data['productsExVat']) . ' €');
             $startPoint += 30;
-            $imagetext->annotateImage($drawemail, 50, $startPoint, 0, 'Products vat: '. self::returnFormarNumber($data['productsVat']) . ' €');
+            $imagetext->annotateImage($draw, 50, $startPoint, 0, 'Products vat: '. self::returnFormarNumber($data['productsVat']) . ' €');
 
             $startPoint += 30;
-            $imagetext->annotateImage($drawemail, 35, $startPoint, 0, 'Service fee: ' . self::returnFormarNumber($data['serviceFee']) . ' €');
+            $imagetext->annotateImage($draw, 35, $startPoint, 0, 'Service fee: ' . self::returnFormarNumber($data['serviceFee']) . ' €');
             $startPoint += 30;
-            $imagetext->annotateImage($drawemail, 50, $startPoint, 0, 'Service fee ex. vat: '. self::returnFormarNumber($data['exVatService']) . ' €');
+            $imagetext->annotateImage($draw, 50, $startPoint, 0, 'Service fee ex. vat: '. self::returnFormarNumber($data['exVatService']) . ' €');
             $startPoint += 30;
-            $imagetext->annotateImage($drawemail, 50, $startPoint, 0, 'Service fee vat: '. self::returnFormarNumber($data['vatService']) . ' €');
-            $startPoint += 50;
+            $imagetext->annotateImage($draw, 50, $startPoint, 0, 'Service fee vat: '. self::returnFormarNumber($data['vatService']) . ' €');
+            $startPoint += 30;
+
+            $imagetext->annotateImage($draw, 20, $startPoint, 0, 'Vat amounts') ;
+            $startPoint += 30;
+            foreach($data['vatGrades'] as $vat => $amount) {
+                $imagetext->annotateImage($draw, 35, $startPoint, 0, strval($vat) . ' %: '. self::returnFormarNumber($amount) . ' €');
+                $startPoint += 30;
+            }
+            self::getBoldLine($draw, $imagetext, $startPoint);
+            $startPoint += 40;
         }
 
         public static function printServicePaymentTypes(
             object $CI,
             object &$imagetext,
-            object &$drawemail,
+            object &$draw,
             array $allData,
             int &$startPoint,
             string $type
 
         ): void
         {
-            $drawemail->setFontSize(22);
-            $drawemail->setStrokeWidth(2);
-            $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-            $imagetext->annotateImage($drawemail, 5, $startPoint, 0, $type);
+            $draw->setFontSize(22);
+            $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+            $draw->setStrokeWidth(2);
+            $imagetext->annotateImage($draw, 5, $startPoint, 0, $type);
+            $draw->setStrokeWidth(0);
+            $draw->setFontSize(20);
             $startPoint += 30;
             foreach ($allData as $key => $data) {
                 if ($type === 'SERVICE TYPES') {
-                    $imagetext->annotateImage($drawemail, 20, $startPoint, 0, self::returnServiceType($CI, $key));
+                    $text = self::returnServiceType($CI, $key);
                 } else {
-                    if ($key === $CI->config->item('prePaid') || $key === $CI->config->item('postPaid')) {
-                        $imagetext->annotateImage($drawemail, 20, $startPoint, 0, 'cash payment');
-                    } else {
-                        $imagetext->annotateImage($drawemail, 20, $startPoint, 0, $key);
-                    }
+                    $text = ($key === $CI->config->item('prePaid') || $key === $CI->config->item('postPaid')) ? 'cash payment' : $key;
                 }
 
+                $imagetext->annotateImage($draw, 20, $startPoint, 0, strtoupper($text));
+                $startPoint += 10;
+                self::getBoldLine($draw, $imagetext, $startPoint, strlen($text) * 18, 20);
                 $startPoint += 30;
-                $imagetext->annotateImage($drawemail, 35, $startPoint, 0, 'Number of orders: ' . $data['count']);
+                $imagetext->annotateImage($draw, 35, $startPoint, 0, 'Number of orders: ' . $data['orders']);
                 $startPoint += 30;
-                $imagetext->annotateImage($drawemail, 35, $startPoint, 0, 'Total: ' . self::returnFormarNumber($data['orderTotalAmount'])) ;
+                $imagetext->annotateImage($draw, 35, $startPoint, 0, 'Total: ' . self::returnFormarNumber($data['orderTotalAmount'])) ;
                 $startPoint += 30;
-                $imagetext->annotateImage($drawemail, 50, $startPoint, 0, 'Amount without service fee: '. self::returnFormarNumber($data['orderAmount']) . ' €');
+                $imagetext->annotateImage($draw, 50, $startPoint, 0, 'Amount without service fee: '. self::returnFormarNumber($data['orderAmount']) . ' €');
                 $startPoint += 30;
-                $imagetext->annotateImage($drawemail, 65, $startPoint, 0, 'Products ex. vat: '. self::returnFormarNumber($data['productsExVat']) . ' €');
+                $imagetext->annotateImage($draw, 65, $startPoint, 0, 'Products ex. vat: '. self::returnFormarNumber($data['productsExVat']) . ' €');
                 $startPoint += 30;
-                $imagetext->annotateImage($drawemail, 65, $startPoint, 0, 'Products vat: '. self::returnFormarNumber($data['productsVat']) . ' €');    
+                $imagetext->annotateImage($draw, 65, $startPoint, 0, 'Products vat: '. self::returnFormarNumber($data['productsVat']) . ' €');    
                 $startPoint += 30;
-                $imagetext->annotateImage($drawemail, 50, $startPoint, 0, 'Service fee: ' . self::returnFormarNumber($data['serviceFee']) . ' €');
+                $imagetext->annotateImage($draw, 50, $startPoint, 0, 'Service fee: ' . self::returnFormarNumber($data['serviceFee']) . ' €');
                 $startPoint += 30;
-                $imagetext->annotateImage($drawemail, 65, $startPoint, 0, 'Service fee ex. vat: '. self::returnFormarNumber($data['exVatService']) . ' €');
+                $imagetext->annotateImage($draw, 65, $startPoint, 0, 'Service fee ex. vat: '. self::returnFormarNumber($data['exVatService']) . ' €');
                 $startPoint += 30;
-                $imagetext->annotateImage($drawemail, 65, $startPoint, 0, 'Service fee vat: '. self::returnFormarNumber($data['vatService']) . ' €');
+                $imagetext->annotateImage($draw, 65, $startPoint, 0, 'Service fee vat: '. self::returnFormarNumber($data['vatService']) . ' €');
                 $startPoint += 30;
             }
-            $startPoint += 20;
+
+            self::getBoldLine($draw, $imagetext, $startPoint);
+            $startPoint += 40;
         }
 
         public static function returnFormarNumber(float $number): string
@@ -164,5 +197,44 @@
             if ($typeId === $CI->config->item('local')) return 'LOCAL';
             if ($typeId === $CI->config->item('deliveryType')) return 'DELIVERY';
             if ($typeId === $CI->config->item('pickupType')) return 'PICKUP';
+        }
+
+        public static function getBoldLine(object &$draw, object &$imagetext, int &$startPoint, $width = 570, int $leftMargin = 5): void
+        {
+            $draw->setStrokeColor('black');
+            $draw->setStrokeWidth(4);
+            $draw->line($leftMargin, $startPoint, $width, $startPoint);
+            $imagetext->drawImage($draw);
+            $draw->setStrokeWidth(0);
+        }
+
+        public static function printProcucts(object &$imagetext, object &$draw, array $data, int &$startPoint): void
+        {
+            if (!isset($data['productsDetailsXreport'])) return;
+            $products = $data['productsDetailsXreport'];
+
+            $draw->setFontSize(22);
+            $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
+            $draw->setStrokeWidth(2);
+            $imagetext->annotateImage($draw, 5, $startPoint, 0, 'PRODUCT TOTALS');
+            $draw->setStrokeWidth(0);
+            $draw->setFontSize(16);
+            $startPoint += 30;
+            $imagetext->annotateImage($draw, 10, $startPoint, 0, "NAME");
+            $imagetext->annotateImage($draw, 180, $startPoint, 0, "Q#");            
+            $imagetext->annotateImage($draw, 280, $startPoint, 0, "EX. VAT");
+            $imagetext->annotateImage($draw, 380, $startPoint, 0, "VAT");
+            $imagetext->annotateImage($draw, 500, $startPoint, 0, "TOTAL");
+            $startPoint += 30;
+            $draw->setFontSize(14);
+            foreach ($products as $id => $details) {
+                $productName = (strlen($details['name']) < 13) ? $details['name'] : substr($details['name'], 0, 12) . '.';
+                $imagetext->annotateImage($draw, 10, $startPoint, 0, $productName);
+                $imagetext->annotateImage($draw, 180, $startPoint, 0, strval($details['quantity']));            
+                $imagetext->annotateImage($draw, 280, $startPoint, 0, self::returnFormarNumber($details['exVat']) . ' €');
+                $imagetext->annotateImage($draw, 380, $startPoint, 0, self::returnFormarNumber($details['vat']) . ' €');
+                $imagetext->annotateImage($draw, 500, $startPoint, 0, self::returnFormarNumber($details['total']) . ' €');
+                $startPoint += 30;
+            }
         }
     }

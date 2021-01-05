@@ -27,6 +27,4 @@
             $image->addImage($imagelogo);
             $imagelogo->destroy();
         }
-
-        // public static function getPrinterLogo()
     }

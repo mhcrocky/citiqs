@@ -121,6 +121,8 @@ $config['orderPaid'] = '1';
 $config['contactGroupSeparator'] = ')$=';
 $config['concatSeparator'] = ')#%';
 $config['allergiesSeparator'] = '|||';
+$config['contactGroupSeparatorNumber'] = '|';
+$config['concatSeparatorNumber'] = '#';
 
 // paynl payment types
 $config['idealPaymentType'] = '10';
