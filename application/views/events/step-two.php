@@ -1,20 +1,14 @@
 
 <main class="my-form">
-    <div class="w-100 mt-5">
+    <div class="w-100 mt-5 p-3">
         <strong style="font-size: 16px;" class="ml-1">Tickets</strong>
         <table id="tickets" class="mt-2" style="width:100%">
 
         </table>
     </div>
-    <hr class="w-100 mt-5 mb-5">
-    <div class="w-100 mt-5">
-    <strong style="font-size: 16px;" class="ml-1">Additional Items</strong>
-        <table id="additional-item" class="mt-2" style="width:100%">
-
-        </table>
-    </div>
 </main>
 <hr class="w-100 mt-5 mb-5">
+<!--
 <strong style="font-size: 16px;" class="ml-1">Add tickets</strong>
 <div class="row mt-2">
     <div class="col-md-4 ml-1">
@@ -67,6 +61,7 @@
     </div>
 </div>
 <hr class="w-100 mt-5 mb-5">
+-->
 <div class="row">
     <div class="col-md-3 ml-1">
         <div class="input-group">
