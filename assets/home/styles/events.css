@@ -177,3 +177,11 @@ thead {
     border-top-right-radius: 5px;
     background: #275C5D;
 }
+
+.btn-edit:hover {
+    background: #2f6a2f !important;
+}
+
+.inp-height {
+    height: 32px !important;
+}
