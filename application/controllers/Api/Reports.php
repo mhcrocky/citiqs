@@ -28,19 +28,22 @@ class Reports extends REST_Controller
 
     public function zreport_get(): void
     {
-		$vendorId = intval($this->input->get('vendorid', true));
+		$get = Utility_helper::sanitizeGet();
+		$vendorId = intval($get['vendorid']);
 		if (!$vendorId) return;
-		$orders = $this->shoporder_model->fetchReportDetailsPaid($vendorId);
+		$from = (isset($get['datetimefrom'])) ? date('Y-m-d H:i:s', strtotime($get['datetimefrom'])) : date('Y-m-d 00:00:00');
+		$to = (isset($get['datetimeto'])) ? date('Y-m-d H:i:s', strtotime($get['datetimeto'])) : date('Y-m-d H:i:s', strtotime('tomorrow'));
+		$orders = $this->shoporder_model->fetchReportDetailsPaid($vendorId, $from, $to);
 		if (!$orders) return;
 
 		$totals = [
 			'orders'			=> count($orders),
-			'orderTotalAmount'		=> 0,
+			'orderTotalAmount'	=> 0,
 			'orderAmount'		=> 0,
 			'productsExVat'		=> 0,
 			'productsVat'		=> 0,
-			'serviceFee'	=> 0,
-			'exVatService'	=> 0,
+			'serviceFee'		=> 0,
+			'exVatService'		=> 0,
 			'vatService'		=> 0,
 		];
 

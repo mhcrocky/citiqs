@@ -1157,11 +1157,11 @@
                     SUM(
                         (CASE
                             WHEN ' . $this->table . '. serviceTypeId = ' . $local .
-                                ' THEN ROUND((tbl_shop_products_extended.price * 100) / (tbl_shop_products_extended.vatpercentage + 100), 2)
+                                ' THEN ROUND((tbl_shop_order_extended.quantity * tbl_shop_products_extended.price * 100) / (tbl_shop_products_extended.vatpercentage + 100), 2)
                             WHEN ' . $this->table . '. serviceTypeId = ' . $delivery .
-                                ' THEN ROUND((tbl_shop_products_extended.deliveryPrice * 100) / (tbl_shop_products_extended.deliveryVatpercentage + 100), 2)
+                                ' THEN ROUND((tbl_shop_order_extended.quantity * tbl_shop_products_extended.deliveryPrice * 100) / (tbl_shop_products_extended.deliveryVatpercentage + 100), 2)
                             WHEN ' . $this->table . '. serviceTypeId = ' . $pickup .
-                                ' THEN ROUND((tbl_shop_products_extended.pickupPrice * 100) / (tbl_shop_products_extended.pickupVatpercentage + 100), 2)
+                                ' THEN ROUND((tbl_shop_order_extended.quantity * tbl_shop_products_extended.pickupPrice * 100) / (tbl_shop_products_extended.pickupVatpercentage + 100), 2)
                         END)
                     ) AS productsExVat,
                     SUM(
@@ -1169,15 +1169,15 @@
                         (CASE
                             WHEN ' . $this->table . '. serviceTypeId = ' . $local .
                                 ' THEN (
-                                    ROUND(tbl_shop_products_extended.price - (tbl_shop_products_extended.price * 100) / (tbl_shop_products_extended.vatpercentage + 100), 2)
+                                    ROUND((tbl_shop_order_extended.quantity * (tbl_shop_products_extended.price - (tbl_shop_products_extended.price * 100) / (tbl_shop_products_extended.vatpercentage + 100))), 2)
                                 )
                             WHEN ' . $this->table . '. serviceTypeId = ' . $delivery .
                                 ' THEN (
-                                    ROUND((tbl_shop_products_extended.deliveryPrice - (tbl_shop_products_extended.deliveryPrice * 100) / (tbl_shop_products_extended.deliveryVatpercentage + 100)), 2)
+                                    ROUND((tbl_shop_order_extended.quantity * (tbl_shop_products_extended.deliveryPrice - (tbl_shop_products_extended.deliveryPrice * 100) / (tbl_shop_products_extended.deliveryVatpercentage + 100))), 2)
                                 )
                             WHEN ' . $this->table . '. serviceTypeId = ' . $pickup .
                                 ' THEN (
-                                    ROUND((tbl_shop_products_extended.pickupPrice - (tbl_shop_products_extended.pickupPrice * 100) / (tbl_shop_products_extended.pickupVatpercentage + 100)), 2)
+                                    ROUND((tbl_shop_order_extended.quantity * (tbl_shop_products_extended.pickupPrice - (tbl_shop_products_extended.pickupPrice * 100) / (tbl_shop_products_extended.pickupVatpercentage + 100))), 2)
                                 )
                         END)
                     ) AS productsVat,
