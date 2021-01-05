@@ -567,7 +567,7 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 				"pickup" => isset($pickup[$month]) ? floatval($pickup[$month]) : 0,
 				"delivery" => isset($delivery[$month]) ? floatval($delivery[$month]) : 0,
 				"local" => isset($local[$month]) ? floatval($local[$month]) : 0,
-				"invoice" => isset($invoice[$key]) ? floatval($invoice[$key]) : 0
+				"invoice" => isset($invoice[$key]) ? floatval(-1*($invoice[$key])) : 0
 			];
 		}
 		return $newData;
