@@ -48,7 +48,8 @@
             url: globalVariables.baseUrl + "businessreport/get_graphs",
             data: {min:"'"+min+"'",max:"'"+max+"'",selected: selected},
             success: function(data){
-                $("#graphs").html(JSON.parse(data.replaceAll("btnBack", "fade")));
+              data = data.replaceAll("btnBack", "hidden");
+              $("#graphs").html(JSON.parse(data.replaceAll("breadcrumb", "hidden")));
             }
           });
         });

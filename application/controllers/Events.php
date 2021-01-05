@@ -24,7 +24,7 @@ class Events extends BaseControllerWeb
 
     public function index()
     {
-        $this->global['pageTitle'] = 'TIQS: Control Event';
+        $this->global['pageTitle'] = 'TIQS: Create Event';
         $this->loadViews("events/step-one", $this->global, '', 'footerbusiness', 'headerbusiness');
 
     }

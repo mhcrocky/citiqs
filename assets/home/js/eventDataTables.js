@@ -15,7 +15,17 @@ $(document).ready(function() {
                 title: 'Design',
                 data: null,
                 "render": function(data, type, row) {
-                    return "<div class='bg-primary' style='width: 30px;height: 30px;font-size: 16px;'></div>";
+                    var html = '<div class="dropdown show">'
+                    +'<a class="dropdown-toggle text-dark" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
+                    +'<i style="font-size: 37px;color: #377E7F;" class="fa fa-stop" aria-hidden="true"></i>&nbsp &nbsp &nbsp</a>'
+                    +'<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">'
+                    +'<a class="dropdown-item" href="#">Ticket</a>'
+                    +'<a class="dropdown-item" href="#">Seating</a>'
+                    +'<a class="dropdown-item" href="#">Seperator</a>'
+                    +'<a class="dropdown-item" href="#">Group</a>'
+                    +'<a class="dropdown-item" href="#">Item</a>'
+                    +'</div></div>';
+                    return html;
                 }
 
             },
@@ -92,6 +102,9 @@ $(document).ready(function() {
             [groupColumn, 'asc']
         ],
         displayLength: 25,
+        createdRow: function(row, data, dataIndex){
+            $(row).attr('id', 'row-' + dataIndex);
+        },
         drawCallback: function(settings) {
             $("#tickets_filter").remove();
             $("#tickets_length").remove();
@@ -109,14 +122,24 @@ $(document).ready(function() {
                     if (group == '') {
 
                     } else {
+                        var html = '<div class="dropdown show">'
+                    +'<a class="dropdown-toggle text-dark" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
+                    +'<i style="font-size: 37px;color: #39495C;" class="fa fa-stop" aria-hidden="true"></i>&nbsp &nbsp &nbsp</a>'
+                    +'<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">'
+                    +'<a class="dropdown-item" href="#">Ticket</a>'
+                    +'<a class="dropdown-item" href="#">Seating</a>'
+                    +'<a class="dropdown-item" href="#">Seperator</a>'
+                    +'<a class="dropdown-item" href="#">Group</a>'
+                    +'<a class="dropdown-item" href="#">Item</a>'
+                    +'</div></div>';
                         $(rows).eq(i).before(
-                            '<tr class="group"><td><div class="bg-primary" style="background: #00264d!important;width: 30px;height: 30px;"></div></td><td colspan="3"><input type="text" id="event-name" class="form-control" name="event-name" value="' +
-                            group + '">' +
-                            '</td><td><ul><li><div class="custom-control custom-checkbox"><input style="transform: scale(1.5);" class="custom-control-input" id="package-area-0' +
-                            i +
-                            '" type="checkbox" checked="checked" ><label class="custom-control-label" for="package-area-0' +
-                            i + '"> </label>  </div>    </li></ul></td><td></td>' +
-                            '<td><div class="bg-dark" style="width: 30px;height: 30px;"><i style="color: #fff;" class="fa fa-trash p-2"><i></div></td></tr>'
+                            '<tr class="group">'+
+                            '<td>'+html+'<td colspan="3">'
+                            +'<input type="text" id="event-name" class="form-control" name="event-name" value="' + group + '">' +
+                            '</td><td><ul><li><div class="custom-control custom-checkbox"><input style="transform: scale(1.5);" class="custom-control-input" id="package-area-0' + i +
+                            '" type="checkbox" checked="checked" ><label class="custom-control-label" for="package-area-0' +i + '"> </label>  </div>    </li></ul></td><td></td>' +
+                            '<td><div class="bg-dark" style="width: 30px;height: 30px;">'+
+                            '<i style="color: #fff;" class="fa fa-trash p-2"><i></div></td></tr>'
                         );
                     }
 
@@ -125,6 +148,8 @@ $(document).ready(function() {
             });
         }
     });
+
+    table.rowReordering();
 
 
     var table2 = $('#additional-item').DataTable({
@@ -142,7 +167,7 @@ $(document).ready(function() {
                 title: 'Design',
                 data: null,
                 "render": function(data, type, row) {
-                    return "<div class='bg-warning' style='width: 30px;height: 30px;'></div>";
+                    return '<i style="font-size: 37px;color: #E3A847;" class="fa fa-stop" aria-hidden="true"></i>';
                 }
 
             },
@@ -164,17 +189,6 @@ $(document).ready(function() {
                 "render": function(data, type, row) {
                     return '<input type="text" id="quantity" class="form-control" name="quantity" value="' +
                         data.quantity + '">';
-                }
-
-            },
-
-            {
-
-                title: 'Price (Inc. VAT)',
-                data: null,
-                "render": function(data, type, row) {
-                    return '<input type="text" id="price" class="form-control" name="price" value="' +
-                        data.price + '">';
                 }
 
             },
@@ -213,11 +227,25 @@ $(document).ready(function() {
             [groupColumn, 'asc']
         ],
         displayLength: 25,
+        createdRow: function(row, data, dataIndex){
+            $(row).attr('id', 'row-' + dataIndex);
+        },
         drawCallback: function(settings) {
             $("#additional-item_filter").remove();
             $("#additional-item_length").remove();
         }
     });
+    $('#table2').on('draw.dt', function () {
+        if ($('#table2').data()) {
+            var rows = table.rows().data();
+            var ord = new Array();
+            for (var i = 0, ien = rows.length; i < ien; i++) {
+                ord[i] = rows[i].DT_RowId;
+            }
+            //post_order(ord, $('#dattab').data('tabs'));
+        }
+    });
+    table2.rowReordering();
 
 
     /*Order by the grouping
