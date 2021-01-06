@@ -126,7 +126,7 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/profile.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/found.js"></script>
 <?php } elseif ($this->view === 'events/step-one') { ?>
-    <script src="https://cdn.quilljs.com/1.1.9/quill.js"></script>
+    <script src="<?php echo base_url();?>assets/js/quill.js"></script>
 	<script src="<?php echo base_url();?>assets/js/main.jbox.min.js"></script>
     <script src="<?php echo base_url();?>assets/js/jbox.min.js"></script>
     <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
