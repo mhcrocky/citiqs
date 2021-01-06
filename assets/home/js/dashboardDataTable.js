@@ -585,19 +585,19 @@ function format(d) {
       });
       
 
-      $.fn.dataTable.ext.search.push(
-        function (settings, data, dataIndex) {
-          let full_timestamp = $('input[name="datetimes"]').val();
-          var date = full_timestamp.split(" - ");
-          var min = moment(date[0]);
-          var max = moment(date[1]);
-          var startDate = moment(data[13]);
-          if (min == '' && max == '') { min = todayDate; }
-          if (min == '' && startDate <= max) { return true;}
-          if(max == '' && startDate >= min) {return true;}
-          if (startDate <= max && startDate >= min) { return true; }
-            return false;
-        });
+        $.fn.dataTable.ext.search.push(
+          function (settings, data, dataIndex) {
+            let full_timestamp = $('input[name="datetimes"]').val();
+            var date = full_timestamp.split(" - ");
+            var min = moment(date[0]);
+            var max = moment(date[1]);
+            var startDate = moment(data[13]);
+            if (min == '' && max == '') { min = todayDate; }
+            if (min == '' && startDate <= max) { return true;}
+            if(max == '' && startDate >= min) {return true;}
+            if (startDate <= max && startDate >= min) { return true; }
+              return false;
+          });
         
         $('input[name="datetimes"]').change(function () {
           let full_timestamp = $('input[name="datetimes"]').val();
