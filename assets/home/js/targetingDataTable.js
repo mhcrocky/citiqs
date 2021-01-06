@@ -650,9 +650,10 @@ function format(d) {
         function (settings, data, dataIndex) {
           let full_timestamp = $('input[name="datetimes"]').val();
           var date = full_timestamp.split(" - ");
-          var min = new Date(date[0]);
-          var max = new Date(date[1]);
-          var startDate = new Date(data[14]);
+          var min = moment(date[0]);
+          var max = moment(date[1]);
+          var startDate = moment(data[14]);
+          //alert('true');
           if (min == '' && max == '') { min = todayDate; }
           if (min == '' && startDate <= max) { return true;}
           if(max == '' && startDate >= min) {return true;}
