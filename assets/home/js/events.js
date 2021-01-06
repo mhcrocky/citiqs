@@ -1,5 +1,8 @@
 $(document).ready(function() {
-
+    $("#country").on("change", function(){
+        var country = $("#country option:selected").val();
+        $("#eventCountry").val(country);
+    });
     var toolbarOptions = [
         ['bold', 'italic', 'underline'], // toggled buttons
         ['blockquote', 'code-block'],
@@ -56,6 +59,10 @@ $(document).ready(function() {
         } else if (range !== null && oldRange === null)
             $('.ql-container').addClass('bg-in');
     });
+    quill.on('text-change', function(delta, source) {
+        var content = $(".ql-editor").html();
+        $("#eventdescript").val(content);
+      });
 
 });
 $('<div class="age-nav"><div class="age-button age-up"><i class="fa fa-caret-up" aria-hidden="true"></i></div><div class="age-button age-down"><i class="fa fa-caret-down" aria-hidden="true"></i></div></div>')
@@ -95,7 +102,7 @@ $('.age').each(function() {
 });
 $(function() {
 $('.input-group.date').datepicker({
-    format: 'dd/mm/yyyy',
+    format: 'yyyy-mm-dd',
     calendarWeeks: true,
     todayHighlight: true,
     autoclose: true
