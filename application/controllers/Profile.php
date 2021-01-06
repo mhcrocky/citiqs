@@ -24,6 +24,7 @@ class  Profile extends BaseControllerWeb
 		$this->load->model('shopspottype_model');
 		$this->load->model('shopvendortypes_model');
 		$this->load->model('shopvendortime_model');
+		$this->load->model('api_model');
 
 		$this->load->config('custom');
 		$this->load->library('language', array('controller' => $this->router->class));
@@ -229,7 +230,8 @@ class  Profile extends BaseControllerWeb
 		}
 		redirect('logo');
 		exit();
-    }
+	}
+
 	public function uploadDefaultProductsImage($id): void
     {
 		$folder = $this->config->item('defaultProductsImages');
@@ -306,8 +308,6 @@ class  Profile extends BaseControllerWeb
 		} elseif ($post['nonWorkFrom'] > $post['nonWorkTo']) {
 			$this->session->set_flashdata('error', 'Date to can not be before date from');
 		} else {
-			var_dump($post);
-
 			$update = $this
 						->shopvendor_model
 							->setObjectId(intval($id))
@@ -325,5 +325,20 @@ class  Profile extends BaseControllerWeb
 
 		#die();
 		redirect('openandclose');
+	}
+
+	public function userApi(): void
+	{
+		$userId = intval($this->userId);
+		$apiUser = $this->api_model->setProperty('userid', $userId)->getUser();
+
+		if (is_null($apiUser)) {
+			$apiUser = $this->api_model->insertApiUser($userId);
+		}
+
+		$data['apiUser'] = $apiUser;
+
+		$this->global['pageTitle'] = 'TIQS: API';
+		$this->loadViews("profile/api", $this->global, $data, 'footerbusiness', 'headerbusiness'); // Menu profilepage
 	}
 }

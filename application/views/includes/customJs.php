@@ -136,4 +136,7 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/eventDataTables.js"></script>
 	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <script src="https://mpryvkin.github.io/jquery-datatables-row-reordering/1.2.2/jquery.dataTables.rowReordering.js"></script>
+<?php } elseif ($this->view === 'profile/api') { ?>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/api.js"></script>
 <?php } ?>
+

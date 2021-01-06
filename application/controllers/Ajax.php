@@ -1698,4 +1698,28 @@ class Ajax extends CI_Controller
         return;
     }
 
+    public function actviateApiRequest(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = Utility_helper::sanitizePost();
+        $email = MIGRATION_EMAIL;
+        $subject = 'API key activation';
+        $message = 'User with id "' . $post['userId'] . '" asks for API key activation';
+
+        if (Email_helper::sendEmail($email, $subject, $message)) {
+            $response = [
+                'status' => '1',
+                'messages' => ['Request for key activation sent to admin']
+            ];
+        } else {
+            $response = [
+                'status' => '0',
+                'messages' => ['Action failed. Please try again']
+            ];
+        }
+
+        echo json_encode($response);
+        return;
+    }
 }
