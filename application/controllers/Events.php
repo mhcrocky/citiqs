@@ -15,7 +15,8 @@ class Events extends BaseControllerWeb
     {
 		//		die('constructor');
         parent::__construct();
-        $this->load->model('Events_model');
+        $this->load->model('event_model');
+        $this->load->helper('country_helper');
 		$this->load->library('language', array('controller' => $this->router->class));
 		$this->isLoggedIn();
 		$this->vendor_id = $this->session->userdata("userId");
@@ -25,7 +26,8 @@ class Events extends BaseControllerWeb
     public function index()
     {
         $this->global['pageTitle'] = 'TIQS: Create Event';
-        $this->loadViews("events/step-one", $this->global, '', 'footerbusiness', 'headerbusiness');
+        $data['countries'] = Country_helper::getCountries();
+        $this->loadViews("events/step-one", $this->global, $data, 'footerbusiness', 'headerbusiness');
 
     }
 
@@ -35,6 +37,16 @@ class Events extends BaseControllerWeb
         $this->loadViews("events/step-two", $this->global, '', 'footerbusiness', 'headerbusiness');
 
     }
+
+    public function save_event()
+    {
+        $data = $this->input->post(null, true);
+        $data['vendorId'] = $this->vendor_id;
+        $this->event_model->save_event($data);
+        redirect('events/event');
+
+    }
+
 
     public function test()
     {
