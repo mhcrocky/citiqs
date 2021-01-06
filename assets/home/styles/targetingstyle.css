@@ -116,6 +116,8 @@
 body {
     background-color: #D1D7DC;
     font-family: "Fira Sans", sans-serif;
+    -webkit-overflow-scrolling: touch;
+    overflow: scroll;
 }
 
 *,
