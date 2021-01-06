@@ -1,8 +1,58 @@
 <?php
+declare(strict_types=1);
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Api_model extends CI_Model {
+
+
+require_once APPPATH . 'interfaces/InterfaceCrud_model.php';
+require_once APPPATH . 'interfaces/InterfaceValidate_model.php';
+require_once APPPATH . 'abstract/AbstractSet_model.php';
+
+class Api_model  extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
+{
+
+    public $id;
+    public $userid;
+    public $apikey;
+    public $access;
+
+    private $table = 'tbl_APIkeys';
+
+    protected function setValueType(string $property,  &$value): void
+    {
+        $this->load->helper('validate_data_helper');
+        if (!Validate_data_helper::validateNumber($value)) return;
+
+        if ($property === 'id' || $property === 'userid') {
+            $value = intval($value);
+        }
+
+        return;
+    }
+
+    protected function getThisTable(): string
+    {
+        return $this->table;
+    }
+
+    public function insertValidate(array $data): bool
+    {
+        if (isset($data['userid']) && isset($data['apikey'])) {
+            return $this->updateValidate($data);
+        }
+        return false;
+    }
+
+    public function updateValidate(array $data): bool
+    {
+        if (!count($data)) return false;
+        if (isset($data['userid']) && !Validate_data_helper::validateInteger($data['userid'])) return false;
+        if (isset($data['apikey']) && !Validate_data_helper::validateString($data['apikey'])) return false;
+        if (isset($data['access']) && !($data['access'] === '1' || $data['access'] === '0')) return false;
+
+        return true;
+    }
 
     public function getAllItems($userId) {
         $this->db->select(''
@@ -61,4 +111,37 @@ class Api_model extends CI_Model {
         return $result->result_array();
     }
 
+    public function insertApiUser(int $userId): array
+    {
+        $this->load->helper('utility_helper');
+
+        $insert = [
+            'userid' => $userId,
+            'apikey' => Utility_helper::shuffleBigStringRandom(32),
+            'access' => '0'
+        ];
+
+        return $this->setObjectFromArray($insert)->create() ? $insert : $this->insertApiUser($userId);
+    }
+
+    public function getUser(): ?array
+    {
+        if ($this->apikey) {
+            $where = [$this->table . '.apikey = ' => $this->apikey];
+        }
+
+        if ($this->userid) {
+            $where = [$this->table . '.userid = ' => $this->userid];
+        }
+
+        $result = $this->readImproved([
+            'what' => ['*'],
+            'where' => $where
+        ]);
+
+        if (!$result) return null;
+
+        $result = reset($result);
+        return $result;
+    }
 }
