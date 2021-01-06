@@ -653,7 +653,7 @@ function format(d) {
           var min = moment(date[0]);
           var max = moment(date[1]);
           var startDate = moment(data[14]);
-          //alert('true');
+   
           if (min == '' && max == '') { min = todayDate; }
           if (min == '' && startDate <= max) { return true;}
           if(max == '' && startDate >= min) {return true;}
