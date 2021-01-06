@@ -65,3 +65,14 @@ function validateFormData(form) {
     }
     return countErrors ? false : true;
 }
+
+function alertifyAjaxResponse(response) {
+    let messages = response['messages'];
+    let message;
+    let action = response.status === '1' ? 'success' : 'error'
+    if (response.status === '1') {
+        for (message of messages) {
+            alertify[action](message);
+        }
+    }
+}

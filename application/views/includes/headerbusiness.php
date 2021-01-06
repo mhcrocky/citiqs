@@ -442,6 +442,7 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
                                             <li><a href="<?php echo $this->baseUrl; ?>logo"><i class="ti-image"></i> <span>Logo</span></a></li>
                                             <li><a href="<?php echo $this->baseUrl; ?>termsofuse"><i class="ti-align-justify"></i> <span>Terms of Use</span></a></li>
                                             <li><a href="<?php echo $this->baseUrl; ?>openandclose"><i class="ti-time"></i> <span>Open and Close</span></a></li>
+                                            <li><a href="<?php echo $this->baseUrl; ?>userapi"><i class="ti-location-pin"></i> <span>Api</span></a></li>
                                         </ul>
                                     </li>
 <!--									<li>-->

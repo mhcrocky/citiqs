@@ -265,6 +265,9 @@ var callThis = (function() {
         saveAnalytics:  function(callFunction) {
             callFunction(this);
         },
+        actviateApiRequest: function(callFunction) {
+            callFunction(this);
+        }
     };
     return methods;
 })();
