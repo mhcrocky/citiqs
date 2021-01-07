@@ -19,6 +19,7 @@
         public $archived;
         public $isFod;
         public $isFodHardLock;
+        public $printReports;
 
         private $table = 'tbl_shop_printers';
 
@@ -63,6 +64,7 @@
             if (isset($data['archived']) && !($data['archived'] === '1' || $data['archived'] === '0')) return false;
             if (isset($data['isFod']) && !($data['isFod'] === '1' || $data['isFod'] === '0')) return false;
             if (isset($data['isFodHardLock']) && !($data['isFodHardLock'] === '1' || $data['isFodHardLock'] === '0')) return false;
+            if (isset($data['printReports']) && !($data['printReports'] === '1' || $data['printReports'] === '0')) return false;
 
             return true;
         }
