@@ -1,4 +1,25 @@
 $(document).ready(function() {
+    $('#visible').change(function() {
+        if (this.checked) {
+            //var returnVal = confirm("Are you sure?");
+            $("#ticketVisible").val(1);
+            return $(this).prop("checked", true);
+        }
+        $("#ticketVisible").val(0);
+        return $(this).prop("checked", false);
+    });
+    $("#group").on("change", function(){
+        var group = $("#group option:selected").val();
+        $("#ticketGroup").val(group);
+    });
+    $("#ticketType").on("change", function(){
+        var type = $("#ticketType option:selected").val();
+        $("#ticketTypeVal").val(type);
+    });
+    $("#ticketEvent").on("change", function(){
+        var event = $("#ticketEvent option:selected").val();
+        $("#eventId").val(event);
+    });
     var groupColumn = 2;
     var table = $('#tickets').DataTable({
         columnDefs: [{
@@ -7,7 +28,7 @@ $(document).ready(function() {
         }],
         ajax: {
             type: 'get',
-            url: globalVariables.baseUrl +"events/test",
+            url: globalVariables.baseUrl +"events/get_tickets",
             dataSrc: '',
         },
         columns: [{
@@ -36,14 +57,14 @@ $(document).ready(function() {
                 data: null,
                 "render": function(data, type, row) {
                     return '<input type="text" id="event-name" class="form-control" name="event-name" value="' +
-                        data.name + '">';
+                        data.ticketDescription + '">';
                 }
 
             },
             {
 
                 title: 'Group',
-                data: 'group'
+                data: 'ticketGroupId'
 
             },
             {
@@ -52,7 +73,7 @@ $(document).ready(function() {
                 data: null,
                 "render": function(data, type, row) {
                     return '<input type="text" id="quantity" class="form-control" name="quantity" value="' +
-                        data.quantity + '">';
+                        data.ticketQuantity + '">';
                 }
 
             },
@@ -63,7 +84,7 @@ $(document).ready(function() {
                 data: null,
                 "render": function(data, type, row) {
                     return '<input type="text" id="price" class="form-control" name="price" value="' +
-                        data.price + '">';
+                        data.ticketPrice + '">';
                 }
 
             },
@@ -72,9 +93,13 @@ $(document).ready(function() {
                 title: 'Visible',
                 data: null,
                 "render": function(data, type, row) {
+                    var checked = "";
+                    if(data.ticketVisible == 1){
+                        checked = "checked";
+                    }
                     return '<ul><li><div class="custom-control custom-checkbox"><input style="transform: scale(1.5);" class="custom-control-input" id="package-area-' +
                         data.id +
-                        '"  type="checkbox" checked="checked" ><label class="custom-control-label" for="package-area-' +
+                        '"  type="checkbox" '+checked+' ><label class="custom-control-label" for="package-area-' +
                         data.id + '"> </label>  </div>    </li></ul>';
                 }
 
