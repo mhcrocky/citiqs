@@ -1,4 +1,42 @@
 $(document).ready(function() {
+    //Options
+    $('#guestTicketCheck').change(function() {
+        if (this.checked) {
+            $("#guestTicket").val(1);
+            return $(this).prop("checked", true);
+        }
+        $("#guestTicket").val(0);
+        return $(this).prop("checked", false);
+    });
+    
+    $('#ticketSwapCheck').change(function() {
+        if (this.checked) {
+            $("#ticketSwap").val(1);
+            return $(this).prop("checked", true);
+        }
+        $("#ticketSwap").val(0);
+        return $(this).prop("checked", false);
+    });
+    
+    $('#partialAccessCheck').change(function() {
+        if (this.checked) {
+            $("#partialAccess").val(1);
+            return $(this).prop("checked", true);
+        }
+        $("#partialAccess").val(0);
+        return $(this).prop("checked", false);
+    });
+    
+    $('#soldout').change(function() {
+        if (this.checked) {
+            $("#soldoutExpired").val(1);
+            return $(this).prop("checked", true);
+        }
+        $("#soldoutExpired").val(0);
+        return $(this).prop("checked", false);
+    });
+
+    //Add Ticket
     $('#visible').change(function() {
         if (this.checked) {
             //var returnVal = confirm("Are you sure?");
@@ -109,7 +147,7 @@ $(document).ready(function() {
                 title: 'Options',
                 data: null,
                 "render": function(data, type, row) {
-                    return "<div class='bg-success btn-edit' style='width: 30px;height: 30px;'><a class='text-light' id='edit' href='javascript:' data-toggle='modal' data-target='#editModal'><i class='fa fa-pencil p-2'><i></a></div>";
+                    return "<div class='bg-success btn-edit' style='width: 30px;height: 30px;'><a class='text-light' onclick='getTicketOptions("+data.ticketId+")' id='edit' href='javascript:' data-toggle='modal' data-target='#editModal'><i class='fa fa-pencil p-2'><i></a></div>";
                 }
 
             },
@@ -189,3 +227,49 @@ $(document).ready(function() {
     });
     */
 });
+
+$(function() {
+    $('.input-group.date').datepicker({
+        format: 'yyyy-mm-dd',
+        calendarWeeks: true,
+        todayHighlight: true,
+        autoclose: true
+    });
+});
+
+function getTicketOptions(ticketId){
+    defaultOptions();
+    $("#ticketId").val(ticketId);
+    $.get(globalVariables.baseUrl + "events/get_ticket_options/"+ticketId, function(data){
+        if(data == ""){
+            return defaultOptions();
+        }
+        data = JSON.parse(data);
+        $.each(data, function(index,value){
+            if(index == 'ticketExpired'){
+                $("#"+value).prop( "checked", true );
+            }
+            $("#"+index).val(value);
+            
+        });
+    });
+    
+}
+
+function defaultOptions(){
+    $("#ticketId").val('');
+    $("#guestTicket").val(1);
+    $("#ticketSwap").val(1);
+    $("#partialAccess").val(1);
+    $("#nonSharedTicketFee").val(1);
+    $("#sharedTicketFee").val(1);
+    $("#manually").prop( "checked", true );
+    $("#startDate").val('');
+    $("#startTime").val('');
+    $("#endDate").val('');
+    $("#endTime").val('');
+    $("#soldoutExpired").val(0);
+    $("#mailPerAmount").val(1);
+    $("#emailAddress").val('');
+    
+}
