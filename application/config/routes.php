@@ -475,6 +475,8 @@ $route['finance/get_marketing_data'] = 'Finance/get_marketing_data';
 
 $route['events/event'] = 'events/event';
 $route['events/save_event'] = 'events/save_event';
+$route['events/save_ticket'] = 'events/save_ticket';
+$route['events/get_tickets'] = 'events/get_tickets';
 $route['events/test'] = 'events/test';
 
 $route['address'] = "profile/address";
