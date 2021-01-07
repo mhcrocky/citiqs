@@ -170,4 +170,17 @@
 
             return $userId;
         }
+
+        public function checkPrinterReportes(): bool
+        {
+            $reportPrinters = $this->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    $this->table . '.userId' => $this->userId,
+                    $this->table . '.printReports' => '1',
+                ]
+            ]);
+
+            return $reportPrinters ? true : false;
+        }
     }
