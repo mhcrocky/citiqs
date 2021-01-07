@@ -61,4 +61,16 @@
             return true;
         }
 
+        public function checkIsPrinterConnected(): bool
+        {
+            $connected = $this->readImproved([
+                'what'  => ['id'],
+                'where' => [
+                    $this->table . '.printerId = ' => $this->printerId,
+                    $this->table . '.conected >= ' => $this->conected,
+                ],
+                'LIMIT'=> ['1']
+            ]);
+            return !is_null($connected);
+        }
     }

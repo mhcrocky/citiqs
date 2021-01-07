@@ -117,6 +117,11 @@
 							<p class="item-description" style="white-space: initial;">Master is: <?php echo $printer['master']; ?></p>
 							<?php } ?>
 							<p class="item-description" style="white-space: initial;">Print reports: <?php echo ($printer['printReports'] === '1') ? 'Yes' : 'No'; ?></p>
+							<p
+								style="color:#ff3333; font-weight:900; font-size:16px; visibility:hidden"
+								data-printer-id="<?php echo $printer['id']; ?>"
+								class="printerErrMessage"
+							>NOT CONNECTED</p>
 						</div><!-- end item header -->
 						<div class="grid-footer">
 							<div class="iconWrapper">
@@ -266,8 +271,15 @@
 	</div>
 </div>
 <script>
-function editPrinter(id){
-	$("#btn-"+id).click();
-	return ;
-}
+	function editPrinter(id){
+		$("#btn-"+id).click();
+		return ;
+	}
+	var printerGlobals =(function(){
+		let globals = {
+			'errClass' : 'printerErrMessage'
+		}
+		Object.freeze(globals);
+		return globals;
+	}());
 </script>
