@@ -9,30 +9,29 @@
                 </button>
             </div>
             <div class="modal-body">
+            <form name="my-form" action="<?php echo base_url(); ?>events/save_ticket_options" method="POST">
                 <ul>
                     <li>
                         <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input" id="package-area-edit-1" type="checkbox"
-                                checked="checked">
-                            <label class="custom-control-label font-weight-bold text-dark" for="package-area-edit-1">
+                            <input class="custom-control-input" id="guestTicketCheck" type="checkbox" checked="checked">
+                            <label class="custom-control-label font-weight-bold text-dark" for="guestTicketCheck">
                                 Can be used as guest ticket
                             </label>
                         </div>
                     </li>
                     <li>
                         <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input" id="package-area-edit-2" type="checkbox"
-                                checked="checked">
-                            <label class="custom-control-label font-weight-bold text-dark" for="package-area-edit-2">
+                            <input class="custom-control-input" id="ticketSwapCheck" type="checkbox" checked="checked">
+                            <label class="custom-control-label font-weight-bold text-dark" for="ticketSwapCheck">
                                 Ticket can be swapped on Ticketswap
                             </label>
                         </div>
                     </li>
                     <li>
                         <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input" id="package-area-edit-3" type="checkbox"
+                            <input class="custom-control-input" id="partialAccessCheck" type="checkbox"
                                 checked="checked">
-                            <label class="custom-control-label font-weight-bold text-dark" for="package-area-edit-3">
+                            <label class="custom-control-label font-weight-bold text-dark" for="partialAccessCheck">
                                 Partial access during event
                             </label>
                         </div>
@@ -43,20 +42,19 @@
                 <div class="row mb-2">
                     <div class="col-md-3 text-dark">Non shared ( Min 0.00 )</div>
                     <div class="col-md-3">
-                        <input type="number" name="age" class="form-control inp-height" min="1" max="100" step="22"
-                            value="1">
+                        <input type="number" id="nonSharedTicketFee" name="nonSharedTicketFee" class="form-control inp-height" min="1"
+                             value="1">
                     </div>
 
                     <div class="col-md-3">Shared ( Min 0.00 )</div>
                     <div class="col-md-3">
-                        <input type="number" name="age" class="form-control inp-height" min="1" max="100" step="22"
-                            value="1">
+                        <input type="number" id="sharedTicketFee" name="sharedTicketFee" class="form-control inp-height" min="1" value="1">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3 text-dark">Max Discount</div>
                     <div class="col-md-3">
-                        <input type="number" name="age" class="form-control inp-height" min="1" max="100" step="22"
+                        <input type="number" id="maxDiscount" name="maxDiscount" class="form-control inp-height" min="1"
                             value="1">
                     </div>
                 </div>
@@ -71,18 +69,18 @@
 
                         <!-- Default unchecked -->
                         <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" id="defaultChecked"
-                                name="defaultExampleRadios" checked="">
-                            <label class="custom-control-label text-dark" for="defaultChecked">On date and time</label>
+                            <input type="radio" class="custom-control-input" id="manually"
+                               value="manually" name="ticketExpired" checked="">
+                            <label class="custom-control-label text-dark" for="manually">On date and time</label>
                         </div>
 
                         <div class="my-2"></div>
 
                         <!-- Default checked -->
                         <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" id="defaultUnchecked"
-                                name="defaultExampleRadios">
-                            <label class="custom-control-label text-dark" for="defaultUnchecked">
+                            <input type="radio" class="custom-control-input" id="automatically" value="automatically"
+                                name="ticketExpired">
+                            <label class="custom-control-label text-dark" for="automatically">
                                 Automatically when ticket is almost sold out
                             </label>
                         </div>
@@ -96,7 +94,7 @@
                     </div>
                     <div class="col col-md-3">
                         <div class="input-group date">
-                            <input type="text" class="form-control inp-height" id="event-date1" name="event-date1">
+                            <input type="text" class="form-control inp-height" id="startDate" name="startDate">
                             <span style="padding-top: 5px;" class="input-group-addon fa-input pl-2 pr-2">
                                 <i style="color: #fff;font-size: 18px;" class="fa fa-calendar"></i></span>
                         </div>
@@ -106,7 +104,7 @@
                     </div>
                     <div class="col col-md-3">
                         <div class="input-group">
-                            <input type="time" class="form-control inp-height" id="event-time1" name="event-time1">
+                            <input type="time" class="form-control inp-height" id="startTime" name="startTime">
                             <span style="padding-top: 5px;" class="input-group-addon fa-input pl-2 pr-2">
                                 <i style="color: #fff;font-size: 20px;" class="fa fa-clock-o"></i></span>
                         </div>
@@ -119,7 +117,7 @@
                     </div>
                     <div class="col col-md-3">
                         <div class="input-group date">
-                            <input type="text" class="form-control inp-height" id="event-date2" name="event-date2">
+                            <input type="text" class="form-control inp-height" id="endDate" name="endDate">
                             <span style="padding-top: 5px;" class="input-group-addon fa-input pl-2 pr-2">
                                 <i style="color: #fff;font-size: 18px;" class="fa fa-calendar"></i></span>
                         </div>
@@ -129,7 +127,7 @@
                     </div>
                     <div class="col col-md-3">
                         <div class="input-group">
-                            <input type="time" class="form-control inp-height" id="event-time2" name="event-time2">
+                            <input type="time" class="form-control inp-height" id="endTime" name="endTime">
                             <span style="padding-top: 5px;" class="input-group-addon fa-input pl-2 pr-2">
                                 <i style="color: #fff;font-size: 20px;" class="fa fa-clock-o"></i></span>
                         </div>
@@ -146,7 +144,7 @@
                         <ul>
                             <li>
                                 <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" id="sold-out" type="checkbox">
+                                    <input class="custom-control-input" id="soldout" type="checkbox">
                                     <label class="custom-control-label font-weight-bold text-dark" for="sold-out">
 
                                     </label>
@@ -163,7 +161,7 @@
                 <div class="row mb-3">
                     <div class="col col-md-3">Get email per</div>
                     <div class="col col-md-3">
-                        <input type="number" name="per-email" class="form-control inp-height" min="1" max="100"
+                        <input type="number" id="mailPerAmount" name="mailPerAmount" class="form-control inp-height" min="1"
                             value="1">
                     </div>
                     <div class="col col-md-3">ticket sold</div>
@@ -171,19 +169,24 @@
                 <div class="row mb-3">
                     <div class="col col-md-3">On email address</div>
                     <div class="col col-md-6">
-                        <input type="text" name="per-email" class="form-control inp-height">
+                        <input type="text" id="emailAddress" name="emailAddress" class="form-control inp-height">
                     </div>
                 </div>
 
-
+                <input type="hidden" id="guestTicket" name="guestTicket" value="1">
+                <input type="hidden" id="ticketSwap" name="ticketSwap" value="1">
+                <input type="hidden" id="partialAccess" name="partialAccess" value="1">
+                <input type="hidden" id="soldoutExpired" name="soldoutExpired" value="0">
+                <input type="hidden" id="ticketId" name="ticketId">
 
 
 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
+            </form>
         </div>
     </div>
 </div>
@@ -219,7 +222,8 @@
                                 <select id="ticketEvent" class="form-control input-w">
                                     <option selected disabled>Select option</option>
                                     <?php foreach($events as $event): ?>
-                                    <option value="<?php echo $event['id']; ?>"><?php echo $event['eventname']; ?></option>
+                                    <option value="<?php echo $event['id']; ?>"><?php echo $event['eventname']; ?>
+                                    </option>
                                     <?php endforeach; ?>
                                 </select>
                                 <input type="hidden" id="eventId" name="eventId">
