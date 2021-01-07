@@ -18,6 +18,7 @@
             $this->load->model('shopprinterrequest_model');
             $this->load->model('shopprinters_model');
             $this->load->model('shopvendorfod_model');
+            $this->load->model('shopreportrequest_model');
 
             $this->load->helper('utility_helper');
             $this->load->helper('validate_data_helper');
@@ -38,6 +39,7 @@
         public function data_get()
         {
             $mac = $this->getMacNumber();
+            $this->printFinanceReport($mac);
             $order = $this->getOrder($mac);
             $vendorId = intval($order['vendorId']);
             $bbUser = $this->shopvendorfod_model->isBBVendor($vendorId);
@@ -229,4 +231,29 @@
             $this->shoporderex_model->updateTwoToZero();
         }
 
+        private function printFinanceReport($mac): void
+        {
+            $data = $this->shopreportrequest_model->checkRequests($mac);
+            if (!$data) return;
+
+            $this->shopreportrequest_model->id = intval(Utility_helper::getAndUnsetValue($data, 'id'));
+
+            $data['finance'] = '1';
+            $data['datetimefrom'] = str_replace(' ', 'T', $data['datetimefrom']);
+            $data['datetimeto'] = str_replace(' ', 'T', $data['datetimeto']);
+
+            $url = base_url() . 'api/report?' . http_build_query($data);
+            $response = json_decode(file_get_contents($url));
+
+            if ($response->status === '1') {
+                $report = $this->config->item('financeReportes') . $data['vendorid'] . '_' . $data['report'] . '.png';
+                header('Content-type: image/png');
+                echo file_get_contents($report);
+                unlink($report);
+                $this->shopreportrequest_model->setProperty('printed', '1')->update();
+                exit();
+            }
+
+            return;
+        }
     }

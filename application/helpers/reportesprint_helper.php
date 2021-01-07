@@ -5,7 +5,7 @@
     Class Reportesprint_helper
     {
 
-        public static function printReport(array $data, string $from, string $to, string $reportType, string $logoFile, int $vendorId): void
+        public static function printReport(array $data, string $from, string $to, string $reportType, string $logoFile, int $vendorId, bool $isPosRequest = true): void
         {
             $CI =& get_instance();
             $CI->load->config('custom');
@@ -32,7 +32,7 @@
             self::printProcucts($imagetext, $draw, $data, $startPoint);
 
             // draw image
-            self::drawAndSaveReport($imagetext, $draw, $imageprint, $reportType, $vendorId);
+            self::drawAndSaveReport($CI,$imagetext, $draw, $imageprint, $reportType, $vendorId, $isPosRequest);
 
             // destroy objects
             self::destroyObjects($imagetext, $draw, $imageprint);
@@ -173,7 +173,7 @@
             return number_format($number, 2, '.', ',');
         }
 
-        public static function drawAndSaveReport(object &$imagetext, object &$draw, object &$imageprint, string $reportType, int $vendorId): void
+        public static function drawAndSaveReport(object $CI, object &$imagetext, object &$draw, object &$imageprint, string $reportType, int $vendorId, bool $isPosRequest): void
         {
             $imagetext->drawImage($draw);
             $imageprint->addImage($imagetext);
@@ -182,7 +182,8 @@
             $resultpngprinter->setImageFormat('png');
 
 
-            $report = FCPATH . 'receipts' . DIRECTORY_SEPARATOR .  $vendorId . '_' . $reportType . '.png';
+            $folder = $isPosRequest ? $CI->config->item('posReportes') : $CI->config->item('financeReportes');
+            $report = $folder . $vendorId . '_' . $reportType . '.png';
 
             if (file_exists($report)) unlink($report);
 

@@ -61,4 +61,32 @@
 
         }
 
+        public function checkRequests(string $printerMac): ?array
+        {
+            $data = $this->readImproved([
+                'what' => [
+                    $this->table . '.id',
+                    $this->table . '.userId AS vendorid',
+                    $this->table . '.report',
+                    $this->table . '.dateTimeFrom AS datetimefrom', 
+                    $this->table . '.dateTimeTo AS datetimeto',
+                ],
+                'where' => [
+                    'tbl_shop_printers.macNumber' => $printerMac,
+                    $this->table . '.printed =' => '0',
+                ],
+                'joins' => [
+                    ['tbl_shop_printers', 'tbl_shop_printers.userId = ' . $this->table . '.userId', 'INNER']
+                ],
+                'conditions' => [
+                    'ORDER_BY' => [$this->table . '.id ASC'],
+                    'LIMIT' => ['1']
+                ]
+            ]);
+
+            if (is_null($data)) return null;
+
+            return reset($data);
+        }
+
     }
