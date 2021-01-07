@@ -56,6 +56,21 @@ class Events extends BaseControllerWeb
 
     }
 
+    public function save_ticket_options()
+    {
+        $data = $this->input->post(null, true);
+        $this->event_model->save_ticket_options($data);
+        redirect('events/event');
+
+    }
+
+    public function get_ticket_options($ticketId)
+    {
+        $data = $this->event_model->get_ticket_options($ticketId);
+        echo json_encode($data);
+
+    }
+
     public function get_tickets()
     {
         $data  = $this->event_model->get_tickets($this->vendor_id);
