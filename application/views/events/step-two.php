@@ -1,4 +1,3 @@
-
 <!-- Edit Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -189,9 +188,124 @@
     </div>
 </div>
 
+
+
+<!-- Add Ticket Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold text-dark" id="editModalLabel">Add Ticket</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body">
+                    <form name="my-form" action="<?php echo base_url(); ?>events/save_ticket" method="POST">
+                        <div class="form-group row">
+                            <label for="ticket-name" class="col-md-4 col-form-label text-md-left">Ticket Name</label>
+                            <div class="col-md-6">
+
+                                <input type="text" id="ticketDescription" class="input-w form-control"
+                                    name="ticketDescription">
+
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="ticketEvent" class="col-md-4 col-form-label text-md-left">Ticket event</label>
+                            <div class="col-md-6">
+                                <select id="ticketEvent" class="form-control input-w">
+                                    <option selected disabled>Select option</option>
+                                    <?php foreach($events as $event): ?>
+                                    <option value="<?php echo $event['id']; ?>"><?php echo $event['eventname']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <input type="hidden" id="eventId" name="eventId">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="ticketType" class="col-md-4 col-form-label text-md-left">Ticket type</label>
+                            <div class="col-md-6">
+                                <select id="ticketType" class="form-control input-w">
+                                    <option selected disabled>Select option</option>
+                                    <option value="1">Option 1</option>
+                                    <option value="2">Option 2</option>
+                                </select>
+                                <input type="hidden" id="ticketTypeVal" name="ticketType">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="quantity" class="col-md-4 col-form-label text-md-left">Ticket quantity</label>
+                            <div class="col-md-6">
+                                <input type="number" id="quantity" class="form-control input-w" name="ticketQuantity">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="price" class="col-md-4 col-form-label text-md-left">Ticket price</label>
+                            <div class="col-md-6">
+                                <input type="number" id="price" class="form-control input-w" name="ticketPrice">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-4 col-form-label text-md-left">
+                                Ticket Visible
+                            </div>
+                            <div class="col-md-4">
+                                <ul>
+                                    <li>
+                                        <div class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" id="visible" type="checkbox" checked>
+                                            <label class="custom-control-label font-weight-bold text-dark"
+                                                for="visible">
+
+                                            </label>
+                                            <input type="hidden" id="ticketVisible" name="ticketVisible" value="1">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="group" class="col-md-4 col-form-label text-md-left">Ticket group</label>
+                            <div class="col-md-6">
+                                <select id="group" class="form-control input-w">
+                                    <option selected disabled>Select option</option>
+                                    <option value="1">Group</option>
+                                    <option value="2">VIP</option>
+                                </select>
+                                <input type="hidden" id="ticketGroup" name="ticketGroupId">
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <main class="my-form">
     <div class="w-100 mt-5 p-3">
-        <strong style="font-size: 16px;" class="ml-1">Tickets</strong>
+        <div class="input-group col-md-2">
+            <input type="button" value="Add Ticket" style="background: #009933 !important;border-radius:0"
+                class="btn btn-success form-control mb-3 text-left" id="event-time2" name="event-time2"
+                data-toggle="modal" data-target="#addModal">
+            <a style="background: #004d1a;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3"
+                data-toggle="modal" data-target="#addModal">
+                <i style="color: #fff;font-size: 18px;" class="fa fa-plus"></i></a>
+        </div>
+
+        <p class="mt-2"><strong style="font-size: 16px;" class="ml-1">Tickets</strong></p>
         <table id="tickets" class="mt-2" style="width:100%">
 
         </table>
