@@ -267,6 +267,9 @@ var callThis = (function() {
         },
         actviateApiRequest: function(callFunction) {
             callFunction(this);
+        },
+        sendReportPrintRequest: function(callFunction) {
+            callFunction(this);
         }
     };
     return methods;

@@ -44,6 +44,27 @@
 								</select>
 							</div>
 						<?php } ?>
+						<div>
+							<Label>Print reportes: </label>
+							<label>
+								<input
+									type="radio"
+									name="printReports"
+									value="1"
+									checked
+								/>
+								Yes
+							</label>
+							<label>
+								<input
+									type="radio"
+									name="printReports"
+									value="0"
+									checked
+								/>
+								No
+							</label>
+						</div>
 					</form>
 				</div>
 			</div>
@@ -95,6 +116,12 @@
 							<p class="item-description" style="white-space: initial;">SLAVE PRINTER</p>
 							<p class="item-description" style="white-space: initial;">Master is: <?php echo $printer['master']; ?></p>
 							<?php } ?>
+							<p class="item-description" style="white-space: initial;">Print reports: <?php echo ($printer['printReports'] === '1') ? 'Yes' : 'No'; ?></p>
+							<p
+								style="color:#ff3333; font-weight:900; font-size:16px; visibility:hidden"
+								data-printer-id="<?php echo $printer['id']; ?>"
+								class="printerErrMessage"
+							>NOT CONNECTED</p>
 						</div><!-- end item header -->
 						<div class="grid-footer">
 							<div class="iconWrapper">
@@ -199,6 +226,27 @@
 											</label>
 										</div>
 									<?php } ?>
+									<div>
+										<Label>Print reportes: </label>
+										<label>
+											<input
+												type="radio"
+												name="printReports"
+												value="1"
+												<?php if ($printer['printReports'] === '1') echo 'checked'; ?>
+											/>
+											Yes
+										</label>
+										<label>
+											<input
+												type="radio"
+												name="printReports"
+												value="0"
+												<?php if ($printer['printReports'] === '0') echo 'checked'; ?>
+											/>
+											No
+										</label>
+									</div>
 								</form>
 							</div>
 						</div>
@@ -223,8 +271,15 @@
 	</div>
 </div>
 <script>
-function editPrinter(id){
-	$("#btn-"+id).click();
-	return ;
-}
+	function editPrinter(id){
+		$("#btn-"+id).click();
+		return ;
+	}
+	var printerGlobals =(function(){
+		let globals = {
+			'errClass' : 'printerErrMessage'
+		}
+		Object.freeze(globals);
+		return globals;
+	}());
 </script>

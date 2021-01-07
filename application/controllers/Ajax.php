@@ -30,6 +30,8 @@ class Ajax extends CI_Controller
         $this->load->model('shopsession_model');
         $this->load->model('shopposorder_model');
         $this->load->model('shopvendortemplate_model');
+        $this->load->model('shopreportrequest_model');
+        $this->load->model('shopprinterrequest_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -1721,5 +1723,46 @@ class Ajax extends CI_Controller
 
         echo json_encode($response);
         return;
+    }
+
+    public function sendReportPrintRequest(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = Utility_helper::sanitizePost();
+        $post['userId'] =  intval($_SESSION['userId']);
+        $insert = $this->shopreportrequest_model->setObjectFromArray($post)->create();
+
+        if ($insert) {
+            $response = [
+                'status' => '1',
+                'messages' => ['Success']
+            ];
+        } else {
+            $response = [
+                'status' => '0',
+                'messages' => ['Action failed. Please try again']
+            ];
+        }
+
+        echo json_encode($response);
+
+        return;
+    }
+
+    public function checkPrintersConnection($printerId): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $connected = $this
+                        ->shopprinterrequest_model
+                            ->setProperty('printerId', intval($printerId))
+                            ->setProperty('conected', date('Y-m-d H:i:s', strtotime('-5 minutes')))
+                            ->checkIsPrinterConnected();
+
+        $status = $connected ? '1' : '0';
+        echo json_encode([
+            'status' => $status
+        ]);
     }
 }

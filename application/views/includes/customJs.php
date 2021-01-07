@@ -76,6 +76,7 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/orders.js"></script>
 <?php } elseif ($this->view === 'warehouse/printers') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/printers.js"></script>
 <?php } elseif ($this->view === 'warehouse/spots') { ?>
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js"></script>
@@ -143,6 +144,7 @@
 	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.table2excel.js"></script>
 	<script src="<?php echo base_url(); ?>assets/js/query-builder.standalone.js"></script>
 	<script src="<?php echo base_url(); ?>assets/home/js/dashboardDataTable.js"></script>
+	<script src="<?php echo base_url(); ?>assets/home/js/businessReports.js"></script>
 <?php } elseif ($this->view === 'events/step-two') { ?>
 	<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/eventDataTables.js"></script>

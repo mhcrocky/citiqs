@@ -253,3 +253,7 @@ $config['_temp'] = '_temp';
 
 $config['z_report'] = 'z_report';
 $config['x_report'] = 'x_report';
+
+$config['reportes'] = FCPATH . 'reportes' . DIRECTORY_SEPARATOR;
+$config['posReportes'] = $config['reportes'] . DIRECTORY_SEPARATOR . 'pos'  . DIRECTORY_SEPARATOR;
+$config['financeReportes'] = $config['reportes'] . DIRECTORY_SEPARATOR . 'finance' . DIRECTORY_SEPARATOR ;

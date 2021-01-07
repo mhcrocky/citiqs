@@ -33,14 +33,16 @@ class Reports extends REST_Controller
 		$from = (isset($get['datetimefrom'])) ? date('Y-m-d H:i:s', strtotime($get['datetimefrom'])) : date('Y-m-d 00:00:00');
 		$to = (isset($get['datetimeto'])) ? date('Y-m-d H:i:s', strtotime($get['datetimeto'])) : date('Y-m-d H:i:s', strtotime('now'));
 		$reportType = $get['report'];
+		$isPosRequest = isset($get['finance']) ? false : true;
 		$orders = $this->getOrders($vendorId, $from, $to, $reportType);
 		$totals = $this->prepareTotals($orders, $reportType);
 		$logo = $this->user_model->getUserProperty($vendorId, 'logo');
 		$logoFile = (is_null($logo)) ? FCPATH . "/assets/home/images/tiqslogonew.png" : $this->config->item('uploadLogoFolder') . $logo;
 
-		Reportesprint_helper::printReport($totals, $from, $to, $reportType, $logoFile, $vendorId);
+		Reportesprint_helper::printReport($totals, $from, $to, $reportType, $logoFile, $vendorId, $isPosRequest);
 
-		$report = FCPATH . 'receipts' . DIRECTORY_SEPARATOR .  $vendorId . '_' . $reportType . '.png';
+		$folder = $isPosRequest ? $this->config->item('posReportes')  : $this->config->item('financeReportes');
+		$report = $folder . $vendorId . '_' . $reportType . '.png';
 
 		if (file_exists($report)) {
 			$respone = [
