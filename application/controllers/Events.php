@@ -34,7 +34,8 @@ class Events extends BaseControllerWeb
     public function event()
     {
         $this->global['pageTitle'] = 'TIQS: Step Two';
-        $this->loadViews("events/step-two", $this->global, '', 'footerbusiness', 'headerbusiness');
+        $data['events'] = $this->event_model->get_events($this->vendor_id);
+        $this->loadViews("events/step-two", $this->global, $data, 'footerbusiness', 'headerbusiness');
 
     }
 
@@ -44,6 +45,21 @@ class Events extends BaseControllerWeb
         $data['vendorId'] = $this->vendor_id;
         $this->event_model->save_event($data);
         redirect('events/event');
+
+    }
+
+    public function save_ticket()
+    {
+        $data = $this->input->post(null, true);
+        $this->event_model->save_ticket($data);
+        redirect('events/event');
+
+    }
+
+    public function get_tickets()
+    {
+        $data  = $this->event_model->get_tickets($this->vendor_id);
+        echo json_encode($data);
 
     }
 
