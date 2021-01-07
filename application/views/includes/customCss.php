@@ -190,6 +190,7 @@
 <?php  } elseif ($this->view === 'events/step-two') { ?>
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
 
 <?php } ?>

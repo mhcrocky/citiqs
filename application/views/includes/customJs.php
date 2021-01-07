@@ -147,6 +147,7 @@
 	<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/eventDataTables.js"></script>
 	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+	<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
 <script src="https://mpryvkin.github.io/jquery-datatables-row-reordering/1.2.2/jquery.dataTables.rowReordering.js"></script>
 <?php } elseif ($this->view === 'profile/api') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/api.js"></script>
