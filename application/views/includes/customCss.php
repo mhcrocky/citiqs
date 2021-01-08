@@ -167,7 +167,7 @@
     
 <?php  } elseif ($this->view === 'pos/pos_login') { ?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/posLogin.css">
-<?php  } elseif ($this->view === 'businessreport/index' || $this->view === 'businessreport/reports' || $this->view === 'finance/reports' || $this->view === 'marketing/targeting') { ?>
+<?php  } elseif ($this->view === 'businessreport/index' || $this->view === 'businessreport/reports' || $this->view === 'finance/reports' || $this->view === 'finance/clearing' || $this->view === 'marketing/targeting') { ?>
 <?php   if($this->view === 'marketing/targeting'): ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/targetingstyle.css">
@@ -186,7 +186,7 @@
         tr.shown td.details-control {
 		  background: url("<?php echo base_url('assets/images/datatables/details_close.png') ?>") no-repeat center center;
         }
-    </style>
+    </style> 
 <?php  } elseif ($this->view === 'events/step-two') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
