@@ -472,6 +472,8 @@ $route['reservations/(:num)']="reservations/index/$1";
 
 $route['invoices'] = 'Finance/index';
 $route['finance/get_marketing_data'] = 'Finance/get_marketing_data';
+$route['clearing'] = 'Finance/clearing';
+
 
 $route['events/create'] = 'events/create';
 $route['events/event/(:num)'] = 'events/event/$1';
@@ -491,6 +493,8 @@ $route['logo'] = "profile/logo";
 $route['termsofuse'] = "profile/termsofuse";
 $route['openandclose'] = "profile/openandclose";
 $route['userapi'] = "profile/userApi";
+$route[''];
+
 
 $route['inandout/(:any)/(:num)'] = "Blackbox/index/$1/$2";
 $route['in/(:any)/(:num)'] = "Blackbox/actionIn/$1/$2";

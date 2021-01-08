@@ -38,5 +38,12 @@ class Finance extends BaseControllerWeb
 		
 	}
 
+	public function clearing()
+	{
+		$data['title'] = 'clearing';
+		$this->global['pageTitle'] = 'TIQS: Clearing';
+		$this->loadViews("finance/clearing", $this->global, $data, 'footerbusiness', 'headerbusiness');
+	}
+
 
 }

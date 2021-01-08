@@ -218,6 +218,7 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
 									<li>
 										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-shopping-cart-full"></i><span>Finance</span></a>
 										<ul class="collapse">
+											<li><a href="<?php echo $this->baseUrl; ?>clearing"><i class="ti-pencil-alt"></i> <span>Clearing</span></a></li>
 											<li><a href="<?php echo $this->baseUrl; ?>businessreports"><i class="ti-pencil-alt"></i> <span>Transactions</span></a></li>
 											<li><a href="<?php echo $this->baseUrl; ?>invoices"><i class="ti-user"></i> <span>Invoices</span></a></li>
 											<li><a href="<?php echo $this->baseUrl; ?>dashboard"><i class="ti-pencil-alt"></i> <span>Payment links</span></a></li>
@@ -317,8 +318,9 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
 										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ticket"></i><span>e-ticketing & Seating</span></a>
 										<ul class="collapse">
 											<li><a href="<?php echo $this->baseUrl;?>events/create"><i class="ti-agenda"></i> <span>Create your event</span></a></li>
+											<li><a href="<?php echo $this->baseUrl;?>events"><i class="ti-ticket"></i> <span>Your Events</span></a></li>
 											<li>
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Your Events</span></a>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Settings</span></a>
 												<ul class="collapse">
 													<li>
 													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Your Events</span></a></li>
@@ -332,7 +334,7 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
 												</ul>
 											</li>
 											<li>
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Your event statistics</span></a>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Statistics</span></a>
 												<ul class="collapse">
 													<li>
 													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Event main Statistics</span></a></li>
@@ -347,20 +349,7 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
 												</ul>
 											</li>
 
-											<li>
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Your Events</span></a>
-												<ul class="collapse">
-													<li>
-													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Your Events</span></a></li>
-													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Shop settings</a></li>
-													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>RSVP/Guest lists</a></li>
-													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>3rd party</a></li>
-													<li><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Discount codes</a></li>
-													<li><a href="<?php echo $this->baseUrl; ?>customer_panel/reservations_report"><i class="ti-write"></i> <span>Secure ticket box</span></a></li>
-													<li><a href="<?php echo $this->baseUrl; ?>customer_panel/report"><i class="ti-clipboard"></i> <span>Create barcodes</span></a></li>
-													</li>
-												</ul>
-											</li>
+
 
 											<li>
 												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>POS</span></a>
