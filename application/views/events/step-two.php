@@ -216,6 +216,7 @@
                             </div>
                         </div>
 
+                        <!--
                         <div class="form-group row">
                             <label for="ticketEvent" class="col-md-4 col-form-label text-md-left">Ticket event</label>
                             <div class="col-md-6">
@@ -226,9 +227,11 @@
                                     </option>
                                     <?php endforeach; ?>
                                 </select>
-                                <input type="hidden" id="eventId" name="eventId">
+                                
                             </div>
                         </div>
+                        -->
+                        <input type="hidden" id="eventId" name="eventId" value="<?php echo $eventId ;?>">
 
                         <div class="form-group row">
                             <label for="ticketType" class="col-md-4 col-form-label text-md-left">Ticket type</label>

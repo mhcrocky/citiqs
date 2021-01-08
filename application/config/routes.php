@@ -474,7 +474,7 @@ $route['invoices'] = 'Finance/index';
 $route['finance/get_marketing_data'] = 'Finance/get_marketing_data';
 
 $route['events/create'] = 'events/create';
-$route['events/event'] = 'events/event';
+$route['events/event/(:num)'] = 'events/event/$1';
 $route['events/save_event'] = 'events/save_event';
 $route['events/save_ticket'] = 'events/save_ticket';
 $route['events/save_ticket_options'] = 'events/save_ticket_options';

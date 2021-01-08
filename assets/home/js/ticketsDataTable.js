@@ -65,8 +65,11 @@ $(document).ready(function() {
             "targets": groupColumn
         }],
         ajax: {
-            type: 'get',
+            type: 'post',
             url: globalVariables.baseUrl +"events/get_tickets",
+            data: function(data){
+                data.id = $("#eventId").val();
+            },
             dataSrc: '',
         },
         columns: [{
