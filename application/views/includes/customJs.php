@@ -127,9 +127,9 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/profile.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/found.js"></script>
 <?php } elseif ($this->view === 'events/step-one') { ?>
-    <script src="<?php echo base_url();?>assets/js/quill.js"></script>
-	<script src="<?php echo base_url();?>assets/js/main.jbox.min.js"></script>
-    <script src="<?php echo base_url();?>assets/js/jbox.min.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/js/quill.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/js/main.jbox.min.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/js/jbox.min.js"></script>
     <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/events.js"></script>
 <?php } elseif ($this->view === 'businessreport/reports') { ?>
@@ -142,12 +142,18 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.table2excel.js"></script>
-	<script src="<?php echo base_url(); ?>assets/js/query-builder.standalone.js"></script>
-	<script src="<?php echo base_url(); ?>assets/home/js/dashboardDataTable.js"></script>
-	<script src="<?php echo base_url(); ?>assets/home/js/businessReports.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/js/query-builder.standalone.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/dashboardDataTable.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/businessReports.js"></script>
 <?php } elseif ($this->view === 'events/step-two') { ?>
 	<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-	<script src="<?php echo $this->baseUrl; ?>assets/home/js/eventDataTables.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/ticketsDataTable.js"></script>
+	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+	<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://mpryvkin.github.io/jquery-datatables-row-reordering/1.2.2/jquery.dataTables.rowReordering.js"></script>
+<?php } elseif ($this->view === 'events/events') { ?>
+	<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/eventsDataTable.js"></script>
 	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 	<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
 <script src="https://mpryvkin.github.io/jquery-datatables-row-reordering/1.2.2/jquery.dataTables.rowReordering.js"></script>
