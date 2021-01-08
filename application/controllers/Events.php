@@ -25,6 +25,13 @@ class Events extends BaseControllerWeb
 
     public function index()
     {
+        $this->global['pageTitle'] = 'TIQS: Events';
+        $this->loadViews("events/events", $this->global, '', 'footerbusiness', 'headerbusiness');
+
+    }
+
+    public function create()
+    {
         $this->global['pageTitle'] = 'TIQS: Create Event';
         $data['countries'] = Country_helper::getCountries();
         $this->loadViews("events/step-one", $this->global, $data, 'footerbusiness', 'headerbusiness');
@@ -61,6 +68,13 @@ class Events extends BaseControllerWeb
         $data = $this->input->post(null, true);
         $this->event_model->save_ticket_options($data);
         redirect('events/event');
+
+    }
+
+    public function get_events()
+    {
+        $data = $this->event_model->get_events($this->vendor_id);
+        echo json_encode($data);
 
     }
 

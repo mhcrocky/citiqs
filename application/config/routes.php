@@ -473,11 +473,13 @@ $route['reservations/(:num)']="reservations/index/$1";
 $route['invoices'] = 'Finance/index';
 $route['finance/get_marketing_data'] = 'Finance/get_marketing_data';
 
+$route['events/create'] = 'events/create';
 $route['events/event'] = 'events/event';
 $route['events/save_event'] = 'events/save_event';
 $route['events/save_ticket'] = 'events/save_ticket';
 $route['events/save_ticket_options'] = 'events/save_ticket_options';
 $route['events/get_tickets'] = 'events/get_tickets';
+$route['events/get_events'] = 'events/get_events';
 $route['events/get_ticket_options'] = 'events/get_ticket_options';
 $route['events/test'] = 'events/test';
 

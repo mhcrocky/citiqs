@@ -43,10 +43,9 @@ class Event_model extends CI_Model {
 
 	public function get_events($vendor_id)
 	{
-		$this->db->select('id, eventname');
-		$this->db->from('tbl_events');
+		
 		$this->db->where('vendorId', $vendor_id);
-		$query = $this->db->get();
+		$query = $this->db->get('tbl_events');
 		return $query->result_array();
 	}
 
