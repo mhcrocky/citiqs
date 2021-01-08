@@ -83,6 +83,15 @@ $(document).ready(function() {
                 data: 'EndTime'
 
             },
+            {
+
+                title: 'Actions',
+                data: null,
+                "render": function(data, type, row) {
+                    return '<a class="text-dark" href="'+globalVariables.baseUrl+'events/event/'+data.id+'"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>';
+                }
+
+            }
         ],
        
         displayLength: 25,

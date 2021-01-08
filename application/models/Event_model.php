@@ -9,7 +9,8 @@ class Event_model extends CI_Model {
 
 	public function save_event($data)
 	{
-		return $this->db->insert('tbl_events',$data);
+		$this->db->insert('tbl_events',$data);
+		return $this->db->insert_id();
 	}
 
 	public function save_ticket($data)
@@ -49,12 +50,13 @@ class Event_model extends CI_Model {
 		return $query->result_array();
 	}
 
-	public function get_tickets($vendor_id)
+	public function get_tickets($vendor_id,$eventId)
 	{
 		$this->db->select('*,tbl_event_tickets.id as ticketId');
 		$this->db->from('tbl_event_tickets');
 		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId');
 		$this->db->where('vendorId', $vendor_id);
+		$this->db->where('eventId', $eventId);
 		$query = $this->db->get();
 		return $query->result_array();
 	}

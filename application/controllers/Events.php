@@ -13,7 +13,6 @@ class Events extends BaseControllerWeb
 	private $vendor_id;
     function __construct()
     {
-		//		die('constructor');
         parent::__construct();
         $this->load->model('event_model');
         $this->load->helper('country_helper');
@@ -38,10 +37,11 @@ class Events extends BaseControllerWeb
 
     }
 
-    public function event()
+    public function event($eventId)
     {
         $this->global['pageTitle'] = 'TIQS: Step Two';
         $data['events'] = $this->event_model->get_events($this->vendor_id);
+        $data['eventId'] = $eventId;
         $this->loadViews("events/step-two", $this->global, $data, 'footerbusiness', 'headerbusiness');
 
     }
@@ -50,8 +50,8 @@ class Events extends BaseControllerWeb
     {
         $data = $this->input->post(null, true);
         $data['vendorId'] = $this->vendor_id;
-        $this->event_model->save_event($data);
-        redirect('events/event');
+        $eventId = $this->event_model->save_event($data);
+        redirect('events/event/'.$eventId);
 
     }
 
@@ -87,7 +87,8 @@ class Events extends BaseControllerWeb
 
     public function get_tickets()
     {
-        $data  = $this->event_model->get_tickets($this->vendor_id);
+        $eventId = $this->input->post("id");
+        $data  = $this->event_model->get_tickets($this->vendor_id,$eventId);
         echo json_encode($data);
 
     }
