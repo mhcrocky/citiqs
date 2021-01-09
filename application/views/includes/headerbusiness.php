@@ -218,26 +218,26 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
 									<li>
 										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-shopping-cart-full"></i><span>Finance</span></a>
 										<ul class="collapse">
-											<li><a href="<?php echo $this->baseUrl; ?>clearing"><i class="ti-pencil-alt"></i> <span>Clearing</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>clearing"><i class="ti-pencil-alt"></i> <span>Pay-out</span></a></li>
 											<li><a href="<?php echo $this->baseUrl; ?>businessreports"><i class="ti-pencil-alt"></i> <span>Transactions</span></a></li>
 											<li><a href="<?php echo $this->baseUrl; ?>invoices"><i class="ti-user"></i> <span>Invoices</span></a></li>
-											<li><a href="<?php echo $this->baseUrl; ?>dashboard"><i class="ti-pencil-alt"></i> <span>Payment links</span></a></li>
-											<li>
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Settings</span></a>
-												<ul class="collapse">
-													<li>
-														<a href="<?php echo $this->baseUrl; ?>customer_panel/settings">
-															<i class="ti-shopping-cart-full"></i>
-															<span>PSP keycode</span>
-														</a>
-													</li>
-													<li>
-														<a href="<?php echo $this->baseUrl. 'booking_agenda/design'; ?>"
-														><i class="ti-clipboard"></i> <span>Payment plan</span>
-														</a>
-													</li>
-												</ul>
-											</li>
+<!--											<li><a href="--><?php //echo $this->baseUrl; ?><!--dashboard"><i class="ti-pencil-alt"></i> <span>Payment links</span></a></li>-->
+<!--											<li>-->
+<!--												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Settings</span></a>-->
+<!--												<ul class="collapse">-->
+<!--													<li>-->
+<!--														<a href="--><?php //echo $this->baseUrl; ?><!--customer_panel/settings">-->
+<!--															<i class="ti-shopping-cart-full"></i>-->
+<!--															<span>PSP keycode</span>-->
+<!--														</a>-->
+<!--													</li>-->
+<!--													<li>-->
+<!--														<a href="--><?php //echo $this->baseUrl. 'booking_agenda/design'; ?><!--"-->
+<!--														><i class="ti-clipboard"></i> <span>Payment plan</span>-->
+<!--														</a>-->
+<!--													</li>-->
+<!--												</ul>-->
+<!--											</li>-->
 										</ul>
 									<li>
 

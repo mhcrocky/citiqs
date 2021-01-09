@@ -473,6 +473,7 @@ $route['reservations/(:num)']="reservations/index/$1";
 $route['invoices'] = 'Finance/index';
 $route['finance/get_marketing_data'] = 'Finance/get_marketing_data';
 $route['clearing'] = 'Finance/clearing';
+$route['finance/get_clearings'] = 'finance/get_clearings';
 
 
 $route['events/create'] = 'events/create';
