@@ -127,7 +127,7 @@ class Events extends BaseControllerWeb
                 
                 'vendorId' => $userId,
                 'iframeSrc' => base_url() . 'events/shop',
-                'design' => $design[0]['shopDesign'],
+                'design' => unserialize($design[0]['shopDesign']),
                 'devices' => $this->bookandpayagendabooking_model->get_devices(),
             ];
 
