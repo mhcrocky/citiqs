@@ -163,7 +163,9 @@
 			</div>
 
 			<div class="width-650">
-				<form action="<?php echo base_url(); ?>loginMe" method="post">
+				<div style="margin-top:-10%" align="right">
+					<img src="<?php echo $this->baseUrl; ?>assets/home/images/girl.png" alt="tiqs" width="50%"/>
+					<form action="<?php echo base_url(); ?>loginMe" method="post">
 					<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
 						<?php echo $this->language->Line("registerbusiness-3500",'Use your e-mail to login');?>
 					</p>
@@ -188,10 +190,9 @@
 				<div >
 					<a style="color: orange" href="forgotPassword" ><?php echo $this->language->Line("registerbusiness-F4100A","I FORGOT MY PASSWORD");?></a>
 				</div>
-
-				<div style="margin-top: 10%">
-					<img src="<?php echo $this->baseUrl; ?>assets/home/images/girl.png" alt="tiqs" width="100%" style="margin-top: -35%" />
 				</div>
+
+
 
 			</div>
 			<div class="mobile-hide" style="text-align:center; margin-top: 0px; margin-bottom: 50px; margin-left: 100px">
