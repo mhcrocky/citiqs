@@ -60,4 +60,19 @@ class Event_model extends CI_Model {
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+
+	function save_design($vendor_id,$design){
+		$this->db->set('shopDesign', $design);
+		$this->db->where('vendorId', $vendor_id);
+		return $this->db->update('tbl_events');
+	}
+
+	function get_design($vendor_id){
+
+		$this->db->select('shopDesign')
+		->from('tbl_events')
+		->where('vendorId',$vendor_id);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 }

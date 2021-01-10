@@ -46,6 +46,27 @@ class Events extends BaseControllerWeb
 
     }
 
+    public function shop()
+    {
+        $this->global['pageTitle'] = 'TIQS: Shop';
+        $design = $this->event_model->get_design($this->session->userdata('userId'));
+        $data['design'] = unserialize($design[0]['shopDesign']);
+        $data['events'] = $this->event_model->get_events($this->vendor_id);
+        $this->loadViews("events/shop", $this->global, $data, null, 'headerNewShop');
+
+    }
+
+    public function tickets($eventId)
+    {
+        $this->global['pageTitle'] = 'TIQS: Step Two';
+        $design = $this->event_model->get_design($this->session->userdata('userId'));
+        $data['design'] = unserialize($design[0]['shopDesign']);
+        $data['tickets'] = $this->event_model->get_tickets($this->vendor_id,$eventId);
+        $data['eventId'] = $eventId;
+        $this->loadViews("events/tickets", $this->global, $data, null, 'headerNewShop');
+
+    }
+
     public function save_event()
     {
         $data = $this->input->post(null, true);
@@ -93,46 +114,36 @@ class Events extends BaseControllerWeb
 
     }
 
+    public function viewdesign(): void
+        {
+            $this->load->model('shopvendor_model');
+            $this->load->model('bookandpayagendabooking_model');
+            $this->load->model('shopcategory_model');
+            $this->load->model('shopspot_model');
+            $this->load->model('shopvendortemplate_model');
+            $userId = intval($_SESSION['userId']);
+            $design = $this->event_model->get_design($this->session->userdata('userId'));
+            $data = [
+                
+                'vendorId' => $userId,
+                'iframeSrc' => base_url() . 'events/shop',
+                'design' => $design[0]['shopDesign'],
+                'devices' => $this->bookandpayagendabooking_model->get_devices(),
+            ];
 
-    public function test()
+            $this->global['pageTitle'] = 'TIQS : DESIGN';
+            $this->loadViews('events/design', $this->global, $data, 'footerbusiness', 'headerbusiness');
+            return;
+        }
+
+
+
+        public function save_design()
     {
-        $data = [
-            [
-                'id' => '1',
-                'name' => 'Early Bird',
-                'quantity'  => '18',
-                'price' => '0.00',
-                'design' => 'A',
-                'group' => ''
-            ],
-            [
-                'id' => '2',
-                'name' => 'Normal Bird',
-                'quantity'  => '19',
-                'price' => '0.00',
-                'design' => 'A',
-                'group' => ''
-            ],
-            [
-                'id' => '3',
-                'name' => 'VIP Ticket',
-                'quantity'  => '20',
-                'price' => '0.00',
-                'design' => 'B',
-                'group' => 'VIP'
-            ],
-            [
-                'id' => '4',
-                'name' => 'Group Ticket 4 personen',
-                'quantity'  => '21',
-                'price' => '0.00',
-                'design' => 'B',
-                'group' => 'Group'
-            ],
-        ];
-        echo  json_encode($data);
+        $design = serialize($this->input->post(null,true));
 
+        $this->event_model->save_design($this->vendor_id,$design);
+        redirect('events/viewdesign');
     }
-
 
 }

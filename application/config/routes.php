@@ -475,15 +475,19 @@ $route['finance/get_marketing_data'] = 'Finance/get_marketing_data';
 $route['clearing'] = 'Finance/clearing';
 
 
-$route['events/create'] = 'events/create';
-$route['events/event/(:num)'] = 'events/event/$1';
-$route['events/save_event'] = 'events/save_event';
-$route['events/save_ticket'] = 'events/save_ticket';
-$route['events/save_ticket_options'] = 'events/save_ticket_options';
-$route['events/get_tickets'] = 'events/get_tickets';
-$route['events/get_events'] = 'events/get_events';
-$route['events/get_ticket_options'] = 'events/get_ticket_options';
-$route['events/test'] = 'events/test';
+$route['events/create'] = 'Events/create';
+$route['events/event/(:num)'] = 'Events/event/$1';
+$route['events/tickets/(:num)'] = 'Events/tickets/$1';
+$route['events/save_event'] = 'Events/save_event';
+$route['events/save_ticket'] = 'Events/save_ticket';
+$route['events/save_ticket_options'] = 'Events/save_ticket_options';
+$route['events/get_tickets'] = 'Events/get_tickets';
+$route['events/get_events'] = 'Events/get_events';
+$route['events/get_ticket_options'] = 'Events/get_ticket_options';
+$route['events/viewdesign'] = 'Events/viewdesign';
+$route['events/shop'] = 'Events/shop/$1';
+$route['events/tickets/(:num)'] = 'Events/tickets/$1';
+
 
 $route['address'] = "profile/address";
 $route['changepassword'] = "profile/changepassword";
@@ -493,7 +497,6 @@ $route['logo'] = "profile/logo";
 $route['termsofuse'] = "profile/termsofuse";
 $route['openandclose'] = "profile/openandclose";
 $route['userapi'] = "profile/userApi";
-$route[''];
 
 
 $route['inandout/(:any)/(:num)'] = "Blackbox/index/$1/$2";
