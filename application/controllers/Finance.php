@@ -15,6 +15,8 @@ class Finance extends BaseControllerWeb
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->model('clearings_model');
+		$this->load->helper('country_helper');
 		$this->load->library('language', array('controller' => $this->router->class));
 		$this->isLoggedIn();
 		$this->vendor_id = $this->session->userdata("userId");
@@ -43,6 +45,12 @@ class Finance extends BaseControllerWeb
 		$data['title'] = 'clearing';
 		$this->global['pageTitle'] = 'TIQS: Clearing';
 		$this->loadViews("finance/clearing", $this->global, $data, 'footerbusiness', 'headerbusiness');
+	}
+
+	public function get_clearings()
+	{
+		$data = $this->clearings_model->get_clearings($this->vendor_id);
+		echo json_encode($data);
 	}
 
 

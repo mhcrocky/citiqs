@@ -10,12 +10,6 @@ $(document).ready(function() {
             dataSrc: '',
         },
         columns: [
-            {
-
-                title: 'ID',
-                data: 'id'
-
-            },
 
             {
 
