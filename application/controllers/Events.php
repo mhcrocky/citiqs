@@ -80,7 +80,7 @@ class Events extends BaseControllerWeb
     {
         $data = $this->input->post(null, true);
         $this->event_model->save_ticket($data);
-        redirect('events/event');
+        redirect('events/event/'.$data['eventId']);
 
     }
 
