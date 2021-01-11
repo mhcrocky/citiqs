@@ -7,106 +7,114 @@ p,label{
 	color: #000 !important;
 }
 </style>
-<div class="main-wrapper" style="text-align:center">
-	<div class="w-100 height-100">
-		<div class="flex-column align-start width-650 mx-auto">
-			<div style="text-align:center;">
-				<form action="<?php echo $this->baseUrl; ?>profileUpdate" method="post" id="editProfile" enctype="multipart/form-data">
-					<!--					<input type="text" value="--><?php //echo $user->id; ?><!--" name="id" id="userId" readonly hidden required />-->
-					<!-- <h2 class="heading mb-35"><?php echo $this->language->line("PROF-010A",'YOUR PROFILE PAGE.');?></h2> -->
-					<div class="">
-						<div class="flex-column align-space">
+
+<div class="main-wrapper-nh" style="text-align:center">
+	<div class="col-half height-100">
+		<div style="text-align:center;">
+			<form action="<?php echo $this->baseUrl; ?>profileUpdate" method="post" id="editProfile" enctype="multipart/form-data">
+				<!--					<input type="text" value="--><?php //echo $user->id; ?><!--" name="id" id="userId" readonly hidden required />-->
+				<!-- <h2 class="heading mb-35"><?php echo $this->language->line("PROF-010A",'YOUR PROFILE PAGE.');?></h2> -->
+				<div class="">
+					<div class="flex-column align-space">
+						<div class="form-group has-feedback">
+							<p style="font-family: caption-light; padding: 10px">
+								<?php echo $this->language->line("PROF-V1V020A",'BUSINESS NAME');?>
+							</p>
 							<div class="form-group has-feedback">
+								<input
+									value="<?php echo $user->username; ?>"
+									name="username"
+									required
+									type="text"
+									class="form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview"
+									id="fname"
+									style="border-radius: 50px; border:none"
+									placeholder="<?php echo $name; ?>"
+									maxlength="128"
+									role="textbox"
+									autocomplete="off"
+									tabindex="-1"
+								/>
+							</div>
+							<div class="virtual-keyboard-hook" data-target-id="fname" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
+						</div>
+						<?php if ($user->IsDropOffPoint === '1') { ?>
+							<div>
+								<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin-bottom:10px; text-align: center">
+									<?php echo $this->language->Line("registerbusiness-V1V1600A",'SHORTNAME');?>
+								</p>
+							</div>
+							<div class="form-group has-feedback">
+								<input value="<?php echo $user->usershorturl; ?>" type="text" class="form-control"  required id="usershorturl" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php echo $this->language->Line("registerbusiness-1700A",'Your shortname');?>" name="usershorturl" pattern="[a-z]{1,15}" title="<?php echo $this->language->Line("registerbusiness-1800A",'Only [a-z] characters allowed (no capital), no spaces, points or special characters like @#$% and max 15 length');?>" />
+								<div class="virtual-keyboard-hook" data-target-id="usershorturl" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
+							</div>
+						<?php } ?>
+						<div>
+							<div>
 								<p style="font-family: caption-light; padding: 10px">
-									<?php echo $this->language->line("PROF-V1V020A",'BUSINESS NAME');?>
+									<?php echo $this->language->line("PROF-V030A31",'MOBILE NUMBER (Country code + number e.g. 0031(country) 0123456789 (number) => 00310123456789)');?>
 								</p>
 								<div class="form-group has-feedback">
-									<input
-										value="<?php echo $user->username; ?>"
-										name="username"
-										required
-										type="text"
-										class="form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview"
-										id="fname"
-										style="border-radius: 50px; border:none"
-										placeholder="<?php echo $name; ?>"
-										maxlength="128"
-										role="textbox"
-										autocomplete="off"
-										tabindex="-1"
-									/>
-								</div>
-								<div class="virtual-keyboard-hook" data-target-id="fname" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
-							</div>
-							<?php if ($user->IsDropOffPoint === '1') { ?>
-								<div>
-									<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin-bottom:10px; text-align: center">
-										<?php echo $this->language->Line("registerbusiness-V1V1600A",'SHORTNAME');?>
-									</p>
-								</div>
-								<div class="form-group has-feedback">
-									<input value="<?php echo $user->usershorturl; ?>" type="text" class="form-control"  required id="usershorturl" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php echo $this->language->Line("registerbusiness-1700A",'Your shortname');?>" name="usershorturl" pattern="[a-z]{1,15}" title="<?php echo $this->language->Line("registerbusiness-1800A",'Only [a-z] characters allowed (no capital), no spaces, points or special characters like @#$% and max 15 length');?>" />
-									<div class="virtual-keyboard-hook" data-target-id="usershorturl" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
-								</div>
-							<?php } ?>
-							<div>
-								<div>
-									<p style="font-family: caption-light; padding: 10px">
-										<?php echo $this->language->line("PROF-V030A31",'MOBILE NUMBER (Country code + number e.g. 0031(country) 0123456789 (number) => 00310123456789)');?>
-									</p>
-									<div class="form-group has-feedback">
-										<input name="mobile" value="<?php echo $user->mobile; ?>" required style="border-radius: 50px; border:none" type="text" class="form-control" id="mobile" placeholder="<?php echo $user->mobile; ?>" maxlength="20">
-									</div>
+									<input name="mobile" value="<?php echo $user->mobile; ?>" required style="border-radius: 50px; border:none" type="text" class="form-control" id="mobile" placeholder="<?php echo $user->mobile; ?>" maxlength="20">
 								</div>
 							</div>
-							<?php if ($user->IsDropOffPoint === '1') { ?>
-								<div>
-									<p style="font-family: caption-light; padding: 10px">Business type</p>
-									<div class="selectWrapper mb-35">
-										<select class="selectBox form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview" id="business_type" name="business_type_id" style="font-family:'caption-light';border-radius: 25px;" required>
-											<option value=""><?php echo $this->language->Line("registerbusiness-V1V1600A1","SELECT BUSINESS TYPE");?></option>
-											<?php foreach ($businessTypes as $type) { ?>
-												<option <?php if($type['id'] === $user->business_type_id) echo 'selected'; ?> value="<?php echo $type['id'] ?>">
-													<?php echo $this->language->Line(ucfirst($type['busineess_type']),ucfirst($type['busineess_type'])) ?>
-												</option>
-											<?php } ?>
-										</select>
-									</div>
-								</div>
-								<div>
-									<p style="font-family: caption-light; padding: 10px">
-										<?php echo $this->language->line("PROF-0303021","
-									VAT number
-									");?>
-									</p>
-								</div>
-								<div class="form-group has-feedback">
-									<input type="text" value="<?php echo $user->vat_number; ?>" name="vat_number" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php echo $this->language->line("PROF-V03031","BUSINESS VAT NUMBER");?>" />
-									<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-								</div>
-							<?php } ?>
+						</div>
+						<?php if ($user->IsDropOffPoint === '1') { ?>
 							<div>
-								<div>
-									<p style="font-family: caption-light; padding: 10px">
-										<?php echo $this->language->line("PROF-V031","YOUR E-MAIL ADDRESS");?>
-									</p>
+								<p style="font-family: caption-light; padding: 10px">Business type</p>
+								<div class="selectWrapper mb-35">
+									<select class="selectBox form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview" id="business_type" name="business_type_id" style="font-family:'caption-light';border-radius: 25px;" required>
+										<option value=""><?php echo $this->language->Line("registerbusiness-V1V1600A1","SELECT BUSINESS TYPE");?></option>
+										<?php foreach ($businessTypes as $type) { ?>
+											<option <?php if($type['id'] === $user->business_type_id) echo 'selected'; ?> value="<?php echo $type['id'] ?>">
+												<?php echo $this->language->Line(ucfirst($type['busineess_type']),ucfirst($type['busineess_type'])) ?>
+											</option>
+										<?php } ?>
+									</select>
+								</div>
+							</div>
+							<div>
+								<p style="font-family: caption-light; padding: 10px">
+									<?php echo $this->language->line("PROF-0303021","
+								VAT number
+								");?>
+								</p>
+							</div>
+							<div class="form-group has-feedback">
+								<input type="text" value="<?php echo $user->vat_number; ?>" name="vat_number" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="<?php echo $this->language->line("PROF-V03031","BUSINESS VAT NUMBER");?>" />
+								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+							</div>
+						<?php } ?>
+						<div>
+							<div>
+								<p style="font-family: caption-light; padding: 10px">
+									<?php echo $this->language->line("PROF-V031","YOUR E-MAIL ADDRESS");?>
+								</p>
 
-									<div class="form-group has-feedback">
-										<input style="border-radius: 50px; border:none" type="text" class="form-control" id="email" name="email" placeholder="<?php echo $user->email; ?>" value="<?php echo $user->email; ?>" required />
-									</div>
+								<div class="form-group has-feedback">
+									<input style="border-radius: 50px; border:none" type="text" class="form-control" id="email" name="email" placeholder="<?php echo $user->email; ?>" value="<?php echo $user->email; ?>" required />
 								</div>
 							</div>
+						</div>
+						<div>
 							<div>
-								<div>
-									<p style="font-family: caption-light; padding: 10px">
-										<?php echo $this->language->line("RECEIPT-V031","E-MAIL ADDRESS FOR RECEIPT");?>
-									</p>
+								<p style="font-family: caption-light; padding: 10px">
+									<?php echo $this->language->line("RECEIPT-V031","E-MAIL ADDRESS FOR RECEIPT");?>
+								</p>
 
-									<div class="form-group has-feedback">
-										<input style="border-radius: 50px; border:none" type="text" class="form-control" id="email" name="receiptEmail" placeholder="Email for receipt" value="<?php echo strval($vendor['receiptEmail']); ?>"  />
-									</div>
+								<div class="form-group has-feedback">
+									<input style="border-radius: 50px; border:none" type="text" class="form-control" id="email" name="receiptEmail" placeholder="Email for receipt" value="<?php echo strval($vendor['receiptEmail']); ?>"  />
 								</div>
 							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-half height-100">
+				<div style="text-align:center;">
+
 							<?php if ($user->IsDropOffPoint === '1') { ?>
 								<div>
 									<p style="font-family: caption-light; padding: 10px">
@@ -266,10 +274,8 @@ p,label{
 						</div>
 					</div>
 				</form>
-			</div>
 		</div>
 	</div>
-</div>
 </div>
 
 <script>
