@@ -82,7 +82,9 @@ $(document).ready(function() {
                 title: 'Actions',
                 data: null,
                 "render": function(data, type, row) {
-                    return '<a class="text-dark" href="'+globalVariables.baseUrl+'events/event/'+data.id+'"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>';
+                    var edit_btn = '<a class="text-primary" href="'+globalVariables.baseUrl+'events/edit/'+data.id+'"><i class="fa fa-pencil" aria-hidden="true"></i></a>';
+                    var arrow_left = '<a class="ml-3 text-dark" href="'+globalVariables.baseUrl+'events/event/'+data.id+'"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>';
+                    return edit_btn + ' ' + arrow_left;
                 }
 
             }
