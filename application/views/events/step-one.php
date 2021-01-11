@@ -1,3 +1,4 @@
+
 <main class="my-form">
     <div class="cotainer">
         <div class="row justify-content-center">
@@ -5,7 +6,9 @@
                 <div style="background: none;" class="card p-4">
 
                     <div class="card-body">
-                        <form name="my-form" class="needs-validation" action="<?php echo base_url(); ?>events/save_event" method="POST" novalidate>
+                        <form name="my-form" class="needs-validation"
+                            action="<?php echo base_url(); ?>events/save_event" method="POST"
+                            enctype="multipart/form-data" novalidate>
                             <div class="form-group row">
                                 <label for="full_name" class="col-md-4 col-form-label text-md-left">
                                     <h3>
@@ -20,7 +23,8 @@
                                 <label for="event-name" class="col-md-4 col-form-label text-md-left">Event Name</label>
                                 <div class="col-md-8">
 
-                                    <input type="text" id="event-name" class="input-w form-control" name="eventname" required>
+                                    <input type="text" id="event-name" class="input-w form-control" name="eventname"
+                                        required>
 
                                 </div>
                             </div>
@@ -32,6 +36,20 @@
                                     <div id="editor"></div>
                                     <div id="log"></div>
                                     <input id="eventdescript" type="hidden" name="eventdescript">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="image" class="col-md-4 col-form-label text-md-left">Upload Image</label>
+                                <div class="col-md-8">
+
+
+                                    <label class="file">
+                                        <input type="file" name="userfile" id="file" onchange="imageUpload(this)"
+                                            aria-label="File browser example">
+                                        <span class="file-custom" data-content="Choose image ..."></span>
+                                    </label>
+
+
                                 </div>
                             </div>
 
@@ -124,7 +142,8 @@
                             <div class="form-group row">
                                 <label for="address" class="col-md-4 col-form-label text-md-left">Address</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="address" class="form-control input-w" name="eventAddress" required>
+                                    <input type="text" id="address" class="form-control input-w" name="eventAddress"
+                                        required>
                                 </div>
                             </div>
 
@@ -139,7 +158,8 @@
                                 <label for="postal-code" class="col-md-4 col-form-label text-md-left">Postal
                                     code</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="postal-code" class="form-control input-w" name="eventZipcode" required>
+                                    <input type="text" id="postal-code" class="form-control input-w" name="eventZipcode"
+                                        required>
                                 </div>
                             </div>
 
@@ -171,7 +191,8 @@
                                     <div class="input-group">
                                         <input type="time" class="form-control input-w mb-3" id="event-time1"
                                             name="StartTime" required>
-                                        <span style="padding-top: 14px;" class="input-group-addon fa-input pl-2 pr-2 mb-3">
+                                        <span style="padding-top: 14px;"
+                                            class="input-group-addon fa-input pl-2 pr-2 mb-3">
                                             <i style="color: #fff;font-size: 20px;" class="fa fa-clock-o"></i></span>
                                     </div>
 
@@ -187,7 +208,8 @@
                                     <div class="input-group">
                                         <input type="time" class="form-control input-w mb-3" id="event-time2"
                                             name="EndTime" required>
-                                        <span style="padding-top: 14px;" class="input-group-addon fa-input pl-2 pr-2 mb-3">
+                                        <span style="padding-top: 14px;"
+                                            class="input-group-addon fa-input pl-2 pr-2 mb-3">
                                             <i style="color: #fff;font-size: 20px;" class="fa fa-clock-o"></i></span>
                                     </div>
                                 </div>
@@ -196,8 +218,7 @@
                             <hr class="w-100 mt-5 mb-5">
 
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit"
-                                    style="width: 200px;border-radius: 0px;background: #07071c;"
+                                <button type="submit" style="width: 200px;border-radius: 0px;background: #07071c;"
                                     class="btn btn-primary text-left">
                                     <strong>Next step</strong> <span style="margin-left: 100px;"><i
                                             class="fa fa-arrow-right" aria-hidden="true"></i></span>

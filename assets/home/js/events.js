@@ -108,3 +108,11 @@ $('.input-group.date').datepicker({
     autoclose: true
 });
 });
+
+function imageUpload(el) {
+
+    $('.file-custom').hover(function() {
+        $(this).attr('data-content', el.files[0].name);
+    });
+
+}
