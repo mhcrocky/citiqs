@@ -85,7 +85,8 @@
 
             $where = [
                 'userId'    => intval($_SESSION['userId']),
-                'archived'  => '0'
+                'archived'  => '0',
+                'isApi'  => '0',
             ];
 
             if (isset($_GET['active']) && ($_GET['active'] === '0' || $_GET['active'] === '1')) {
@@ -669,7 +670,8 @@
                 'printers' => $this->shopprinters_model->read(['*'], ['userId=' => $userId, 'masterMac=' => '0']),
                 'spots' => $this->shopspot_model->fetchUserSpotsImporved([
                                                     'tbl_shop_printers.userId=' => $userId,
-                                                    'tbl_shop_spots.archived=' => '0'
+                                                    'tbl_shop_spots.archived=' => '0',
+                                                    'tbl_shop_spots.isApi=' => '0'
                                                 ]),
                 'spotTypes' =>$this->shopspottype_model->read(['*'], ['id>' => 0]),
                 'dayOfWeeks' => $this->config->item('weekDays'),

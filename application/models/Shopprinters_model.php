@@ -20,6 +20,7 @@
         public $isFod;
         public $isFodHardLock;
         public $printReports;
+        public $isApi;
 
         private $table = 'tbl_shop_printers';
 
@@ -65,6 +66,7 @@
             if (isset($data['isFod']) && !($data['isFod'] === '1' || $data['isFod'] === '0')) return false;
             if (isset($data['isFodHardLock']) && !($data['isFodHardLock'] === '1' || $data['isFodHardLock'] === '0')) return false;
             if (isset($data['printReports']) && !($data['printReports'] === '1' || $data['printReports'] === '0')) return false;
+            if (isset($data['isApi']) && !($data['isApi'] === '1' || $data['isApi'] === '0')) return false;
 
             return true;
         }
@@ -82,6 +84,7 @@
                 [
                     'tbl_shop_product_printers.productId=' => $productId,
                     $this->table . '.archived' => "0",
+                    $this->table . '.isApi' => "0",
                 ],
                 [
                     ['tbl_shop_product_printers', $this->table .'.id = tbl_shop_product_printers.printerId' ,'INNER']
@@ -100,6 +103,7 @@
 
         public function fetchPrinters(): ?array
         {
+            $this->userId = $this->db->escape($this->userId);
             $query =
             '
                 SELECT
@@ -112,6 +116,7 @@
                 WHERE
                     tbl_shop_printers.userId = ' . $this->userId . '
                     AND tbl_shop_printers.archived = "0"
+                    AND tbl_shop_printers.isApi = "0"
                 ORDER BY tbl_shop_printers.printer ASC;
             ';
 

@@ -153,6 +153,8 @@
                 'tbl_shop_printers.userId=' => $vendor['vendorId'],
                 'tbl_shop_spots.active' => '1',
                 'tbl_shop_spots.spotTypeId' => $typeId,
+                'tbl_shop_spots.archived' => '0',
+                'tbl_shop_spots.isApi' => '0'
             ];
             $spots = $this->shopspot_model->fetchUserSpotsImporved($where);
 

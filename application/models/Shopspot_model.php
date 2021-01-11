@@ -15,6 +15,7 @@
         public $active;
         public $spotTypeId;
         public $archived;
+        public $isApi;
 
         private $table = 'tbl_shop_spots';
 
@@ -54,6 +55,7 @@
             if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
             if (isset($data['spotTypeId']) && !Validate_data_helper::validateInteger($data['spotTypeId'])) return false;
             if (isset($data['archived']) && !($data['archived'] === '1' || $data['archived'] === '0')) return false;
+            if (isset($data['isApi']) && !($data['isApi'] === '1' || $data['isApi'] === '0')) return false;
 
             return true;
         }
@@ -74,6 +76,7 @@
                 [
                     'tbl_shop_printers.userId=' => $userId,
                     $this->table . '.archived' => '0',
+                    $this->table . '.isApi' => '0',
                 ],
                 [
                     ['tbl_shop_printers', $this->table . '.printerId = tbl_shop_printers.id', 'INNER'],
@@ -189,6 +192,8 @@
                 'tbl_shop_printers.userId=' => $vendorId,
                 'tbl_shop_spots.active' => '1',
                 'tbl_shop_spots.id' => $spotId,
+                'tbl_shop_spots.archived' => '0',
+                'tbl_shop_spots.isApi' => '0',
                 'tbl_shop_vendor_types.active=' => '1',
                 'tbl_shop_vendor_types.vendorId=' => $vendorId
             ];
