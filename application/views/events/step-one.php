@@ -5,7 +5,7 @@
                 <div style="background: none;" class="card p-4">
 
                     <div class="card-body">
-                        <form name="my-form" action="<?php echo base_url(); ?>events/save_event" method="POST">
+                        <form name="my-form" class="needs-validation" action="<?php echo base_url(); ?>events/save_event" method="POST" novalidate>
                             <div class="form-group row">
                                 <label for="full_name" class="col-md-4 col-form-label text-md-left">
                                     <h3>
@@ -20,7 +20,7 @@
                                 <label for="event-name" class="col-md-4 col-form-label text-md-left">Event Name</label>
                                 <div class="col-md-8">
 
-                                    <input type="text" id="event-name" class="input-w form-control" name="eventname">
+                                    <input type="text" id="event-name" class="input-w form-control" name="eventname" required>
 
                                 </div>
                             </div>
@@ -117,21 +117,21 @@
                                 <label for="venue" class="col-md-4 col-form-label text-md-left">Venue</label>
                                 <div class="col-md-6">
                                     <input type="text" id="venue" class="form-control input-w" name="eventVenue"
-                                        placeholder="Enter a location">
+                                        placeholder="Enter a location" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="address" class="col-md-4 col-form-label text-md-left">Address</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="address" class="form-control input-w" name="eventAddress">
+                                    <input type="text" id="address" class="form-control input-w" name="eventAddress" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="city" class="col-md-4 col-form-label text-md-left">City</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="city" class="form-control input-w" name="eventCity">
+                                    <input type="text" id="city" class="form-control input-w" name="eventCity" required>
                                 </div>
                             </div>
 
@@ -139,7 +139,7 @@
                                 <label for="postal-code" class="col-md-4 col-form-label text-md-left">Postal
                                     code</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="postal-code" class="form-control input-w" name="eventZipcode">
+                                    <input type="text" id="postal-code" class="form-control input-w" name="eventZipcode" required>
                                 </div>
                             </div>
 
@@ -147,7 +147,7 @@
                                 <label for="country" class="col-md-4 col-form-label text-md-left">Country
                                 </label>
                                 <div class="col-md-6">
-                                    <select id="country" class="form-control input-w">
+                                    <select id="country" class="form-control input-w" required>
                                         <option value="">Select option</option>
                                         <?php foreach($countries as $country): ?>
                                         <option value="<?php echo $country; ?>"><?php echo $country; ?></option>
@@ -163,14 +163,14 @@
                                 <div class="col-md-3">
                                     <div class="input-group date">
                                         <input type="text" class="form-control input-w mb-3" id="event-date1"
-                                            name="StartDate">
+                                            name="StartDate" required>
                                         <span class="input-group-addon fa-input pl-2 pr-2 mb-3">
                                             <i style="color: #fff;font-size: 18px;" class="fa fa-calendar"></i></span>
                                     </div>
                                     <hr style="margin-top: 0px;margin-bottom: 0px;border-top: none">
                                     <div class="input-group">
                                         <input type="time" class="form-control input-w mb-3" id="event-time1"
-                                            name="StartTime">
+                                            name="StartTime" required>
                                         <span style="padding-top: 14px;" class="input-group-addon fa-input pl-2 pr-2 mb-3">
                                             <i style="color: #fff;font-size: 20px;" class="fa fa-clock-o"></i></span>
                                     </div>
@@ -179,14 +179,14 @@
                                 <div class="col-md-3">
                                     <div class="input-group date">
                                         <input type="text" class="form-control input-w mb-3" id="event-date2"
-                                            name="EndDate">
+                                            name="EndDate" required>
                                         <span class="input-group-addon fa-input pl-2 pr-2 mb-3">
                                             <i style="color: #fff;font-size: 18px;" class="fa fa-calendar"></i></span>
                                     </div>
                                     <hr style="margin-top: 0px;margin-bottom: 0px;border-top: none">
                                     <div class="input-group">
                                         <input type="time" class="form-control input-w mb-3" id="event-time2"
-                                            name="EndTime">
+                                            name="EndTime" required>
                                         <span style="padding-top: 14px;" class="input-group-addon fa-input pl-2 pr-2 mb-3">
                                             <i style="color: #fff;font-size: 20px;" class="fa fa-clock-o"></i></span>
                                     </div>
