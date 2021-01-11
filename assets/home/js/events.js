@@ -101,7 +101,7 @@ $('.age').each(function() {
 
 });
 $(function() {
-$('.input-group.date').datepicker({
+$('.input-date').datepicker({
     format: 'yyyy-mm-dd',
     calendarWeeks: true,
     todayHighlight: true,

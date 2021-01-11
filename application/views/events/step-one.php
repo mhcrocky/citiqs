@@ -1,4 +1,3 @@
-
 <main class="my-form">
     <div class="cotainer">
         <div class="row justify-content-center">
@@ -49,7 +48,8 @@
                                         <span class="file-custom" data-content="Choose image ..."></span>
                                     </label>
                                     <div style="padding-left: 0;" class="col-sm-6">
-                                    <img src="<?php echo base_url(); ?>assets/images/img-preview.png" id="preview" class="img-thumbnail">
+                                        <img src="<?php echo base_url(); ?>assets/images/img-preview.png" id="preview"
+                                            class="img-thumbnail">
                                     </div>
 
 
@@ -183,13 +183,16 @@
                             <div class="form-group row">
                                 <label for="event-date1" class="col-md-4 col-form-label text-md-left">Time of event
                                 </label>
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <div class="input-group date">
-                                        <input type="text" class="form-control input-w mb-3" id="event-date1"
+                                        <input type="text" class="form-control input-w input-date" id="event-date1"
                                             name="StartDate" required>
-                                        <span class="input-group-addon fa-input pl-2 pr-2 mb-3">
+                                        <input type="time" class="form-control input-w" id="event-time1"
+                                            name="StartTime" value="00:00:00" required>
+                                        <span class="input-group-addon fa-input pl-2 pr-2">
                                             <i style="color: #fff;font-size: 18px;" class="fa fa-calendar"></i></span>
                                     </div>
+                                    <!--
                                     <hr style="margin-top: 0px;margin-bottom: 0px;border-top: none">
                                     <div class="input-group">
                                         <input type="time" class="form-control input-w mb-3" id="event-time1"
@@ -198,24 +201,33 @@
                                             class="input-group-addon fa-input pl-2 pr-2 mb-3">
                                             <i style="color: #fff;font-size: 20px;" class="fa fa-clock-o"></i></span>
                                     </div>
+                                    -->
 
                                 </div>
-                                <div class="col-md-3">
+                            </div>
+                            <div class="form-group row">
+                                <label for="event-date1" class="col-md-4 col-form-label text-md-left">
+                                </label>
+                                <div class="col-md-6">
                                     <div class="input-group date">
-                                        <input type="text" class="form-control input-w mb-3" id="event-date2"
+                                        <input type="text" class="form-control input-w input-date" id="event-date2"
                                             name="EndDate" required>
-                                        <span class="input-group-addon fa-input pl-2 pr-2 mb-3">
+                                        <input type="time" class="form-control input-w" id="event-time2" name="EndTime"
+                                            value="12:00:00" required>
+                                        <span class="input-group-addon fa-input pl-2 pr-2">
                                             <i style="color: #fff;font-size: 18px;" class="fa fa-calendar"></i></span>
                                     </div>
+                                    <!--
                                     <hr style="margin-top: 0px;margin-bottom: 0px;border-top: none">
                                     <div class="input-group">
-                                        <input type="time" class="form-control input-w mb-3" id="event-time2"
-                                            name="EndTime" required>
+                                        
                                         <span style="padding-top: 14px;"
                                             class="input-group-addon fa-input pl-2 pr-2 mb-3">
                                             <i style="color: #fff;font-size: 20px;" class="fa fa-clock-o"></i></span>
                                     </div>
+                                    -->
                                 </div>
+
                             </div>
 
                             <hr class="w-100 mt-5 mb-5">
