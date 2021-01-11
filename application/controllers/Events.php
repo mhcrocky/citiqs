@@ -48,6 +48,17 @@ class Events extends BaseControllerWeb
 
     }
 
+    public function edit($eventId)
+    {
+        $this->global['pageTitle'] = 'TIQS: Edit Event';
+        $data['event'] = $this->event_model->get_event($this->vendor_id,$eventId);
+        $data['countries'] = Country_helper::getCountries();
+
+        $this->loadViews("events/edit_event", $this->global, $data, 'footerbusiness', 'headerbusiness');
+        
+
+    }
+
     public function shop()
     {
         $this->global['pageTitle'] = 'TIQS: Shop';
@@ -94,6 +105,42 @@ class Events extends BaseControllerWeb
             $eventId = $this->event_model->save_event($data);
         }
         redirect('events/event/'.$eventId);
+
+    }
+
+    public function update_event($eventId)
+    {
+        $imgChanged = $this->input->post("imgChanged");
+        if($imgChanged == 'false') {
+            $data = $this->input->post(null, true);
+            $data['vendorId'] = $this->vendor_id;
+            unset($data['imgChanged']);
+            unset($data['imgName']);
+            $this->event_model->update_event($eventId, $data);
+            redirect('events');
+        }
+        $config['upload_path']   = FCPATH . 'assets/images/events';
+        $config['allowed_types'] = 'jpg|png|jpeg|webp|bmp';
+        $config['max_size']      = '102400'; // 102400 100mb
+        $config['encrypt_name'] = TRUE;
+
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('userfile')) {
+            $errors   = $this->upload->display_errors('', '');
+            var_dump($errors);
+            redirect('events/create');
+        } else {
+            $upload_data = $this->upload->data();
+            $data = $this->input->post(null, true);
+            $data['vendorId'] = $this->vendor_id;
+			$file_name = $upload_data['file_name'];
+            $data['eventimage'] = $file_name;
+            unlink(FCPATH . 'assets/images/events/'.$data['imgName']);
+            unset($data['imgChanged']);
+            unset($data['imgName']);
+            $this->event_model->update_event($eventId, $data);
+        }
+        redirect('events');
 
     }
 
