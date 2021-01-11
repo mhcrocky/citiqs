@@ -48,6 +48,9 @@
                                             aria-label="File browser example">
                                         <span class="file-custom" data-content="Choose image ..."></span>
                                     </label>
+                                    <div style="padding-left: 0;" class="col-sm-6">
+                                    <img src="<?php echo base_url(); ?>assets/images/img-preview.png" id="preview" class="img-thumbnail">
+                                    </div>
 
 
                                 </div>
