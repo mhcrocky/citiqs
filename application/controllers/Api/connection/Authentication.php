@@ -1,0 +1,92 @@
+<?php
+    declare(strict_types=1);
+
+    require_once APPPATH . 'libraries/REST_Controller.php';
+
+    defined('BASEPATH') OR exit('No direct script access allowed');
+
+    class Authentication extends REST_Controller
+    {
+
+        public function __construct()
+        {
+            parent::__construct();
+
+            // models
+            $this->load->model('api_model');
+            $this->load->model('shopvendor_model');
+
+            // helpers
+            $this->load->helper('sanitize_helper');
+
+            // libaries
+            $this->load->library('language', array('controller' => $this->router->class));
+        }
+
+        public function index(): void
+        {
+            return;
+        }
+
+        /**
+         * vendorAuthentication
+         *
+         * Method authenticates vendor.
+         *
+         * @access public
+         * @return array|null
+         */
+        public function vendorAuthentication(): ?array
+        {
+            $header = getallheaders();
+
+            // if 'x-api-key' is not set in the request header
+            if (empty($header['x-api-key'])) {
+                $response = [
+                    'status' => '0',
+                    'message' => 'Authentication key is not set'
+                ];
+                $this->response($response, 401);
+                return null;
+            }
+
+            $userData = $this->api_model->setProperty('apikey', $header['x-api-key'])->getUser();
+
+            // if 'x-api-key' doesnt't exists
+            if (empty($userData)) {
+                $response = [
+                    'status' => '0',
+                    'message' => 'Invalid authentication key'
+                ];
+                $this->response($response, 403);
+                return null;
+            }
+
+            // if access status is not equal '1'
+            if ($userData['access'] !== '1') {
+                $response = [
+                    'status' => '0',
+                    'message' => 'Access denied'
+                ];
+                $this->response($response, 403);
+                return null;
+            }
+
+            $vendorId = intval($userData['userid']);
+            $vendor = $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData();
+
+            // if something, somewhere goes wrong
+            if (!$vendor) {
+                $response = [
+                    'status' => '0',
+                    'message' => 'Error on vendor authentication'
+                ];
+                $this->response($response, 403);
+                return null;
+            }
+
+            // Method returns array with vendor's properties if everything is OK
+            return $vendor;
+        }
+
+    }
