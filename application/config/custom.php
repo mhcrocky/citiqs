@@ -143,10 +143,21 @@ $config['uploadLogoFolder']    = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'imag
 $config['defaultProductsImages'] = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'defaultProductsImages' . DIRECTORY_SEPARATOR;
 $config['placeImages'] = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'placeImages' . DIRECTORY_SEPARATOR;
 $config['backGroundImages']    = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'backGroundImages' . DIRECTORY_SEPARATOR;
+
 //spot types
 $config['local'] = 1;
 $config['deliveryType'] = 2;
 $config['pickupType'] = 3;
+
+$config['localTypeString'] = 'LOCAL';
+$config['deliveryTypeString'] = 'DELIVERY';
+$config['pickupTypeString'] = 'PICKUP';
+
+$config['serviceTypes'] = [
+    $config['localTypeString'] => $config['local'],
+    $config['deliveryTypeString'] => $config['deliveryType'],
+    $config['pickupTypeString'] => $config['pickupType'],
+];
 
 $config['typeColors'] = [
     'local' => '#e25f2a',

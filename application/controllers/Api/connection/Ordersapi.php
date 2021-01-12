@@ -18,7 +18,9 @@
             $this->load->helper('error_messages_helper');
             $this->load->helper('utility_helper');
             $this->load->helper('sanitize_helper');
+            $this->load->helper('validate_data_helper');
 
+            $this->load->config('custom');
             // libaries
             $this->load->library('language', array('controller' => $this->router->class));
         }
@@ -42,31 +44,151 @@
 
             $post = Sanitize_helper::sanitizePhpInput();
 
-            if (empty($post)) {
-                $response = [
-                    'status' => 0,
-                    'errorCode' => Error_messages_helper::$NO_DATA
-                ];
-                $response['message'] = Error_messages_helper::getErrorMessage($response['errorCode']);
-                $this->response($response, 200);
-                return;
-            }
+            if (!$this->validatePostData($post)) return;
 
+            if (!$this->validateBasicOrderData($post, $vendor)) return;
             die();
 
-            // manage byuer
-            $email = isset($post['byuer']['email']) ? $this->security->xss_clean($post['byuer']['email']) : '';
-            $email = ['email' => $email];
-            $url = base_url() . 'api/connection/buyer?email=email'; # . http_build_query($email);
-            $headers = ['x-api-key: ' . $vendor['apiKey']];
-            #var_dump(Connections_helper::sendGetRequest($url, ['x-api-key: '. $vendor['apiKey']]));
-
-            $headers = ['x-api-key: ' . $vendor['apiKey']];
-            $response = Connections_helper::sendGetRequest($url, $headers);
-
-            var_dump($response);
-
             return;
+        }
+
+        private function validatePostData(?array $order): bool
+        {
+            if (empty($order)) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$NO_ORDER_DATA);
+                $this->response($response, 200);
+                return false;
+            }
+
+            return true;
+        }
+
+        private function validateBasicOrderData(array $post, array $vendor): bool
+        {
+            if (!isset($post[0]['order'])) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$INVALID_ORDER_DATA);
+                $this->response($response, 200);
+                return false;
+            }
+
+            $order = $post[0]['order'];
+
+            if (!$this->checkServiceType($order, $vendor['typeData'])) return false;
+
+            if (!$this->checkAmount($order)) return false;
+
+            if (!$this->checkWaiterTip($order)) return false;
+
+            if (!$this->checkTime($order)) return false;
+
+            if (!$this->checkOrderRemark($order)) return false;
+
+            return true;
+        }
+
+        private function checkServiceType(array $order, array $vendorTypes): bool
+        {
+            if (!isset($order['serviceType'])) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$SERVICE_TYPE_NOT_SET);
+                $this->response($response, 200);
+                return false;
+            }
+
+            $serviceType = $order['serviceType'];
+            // check is servvice type DELIVERY or PICKUP
+            if (!($serviceType === $this->config->item('deliveryTypeString') || $serviceType === $this->config->item('pickupTypeString'))) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$INVALID_SERVICE_TYPE);
+                $this->response($response, 200);
+                return false;
+            }
+
+            // check is order service type approved by vendor
+            $orderTypeId = $this->config->item('serviceTypes')[$serviceType];
+            foreach ($vendorTypes as $type) {
+                if ($type['active'] === '0' && $orderTypeId === intval($type['typeId'])) {
+                    $response = Connections_helper::getFailedResponse(Error_messages_helper::$TYPE_NOT_ALLOWED_BY_VENDOR);
+                    $this->response($response, 200);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private function checkAmount(array $order): bool
+        {
+            if (!isset($order['amount'])) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$ORDER_AMOUNT_NOT_SET);
+                $this->response($response, 200);
+                return false;
+            }
+
+            $amount = $order['amount'];
+            if (!Validate_data_helper::validateNumber($amount)) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$ORDER_AMOUNT_INVALID_FORMAT);
+                $this->response($response, 200);
+                return false;
+            }
+
+            $amount = floatval($amount);
+            if ($amount <= 0) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$ORDER_AMOUNT_NOT_POSITIVE);
+                $this->response($response, 200);
+                return false;
+            }
+
+            return true;
+        }
+
+        private function checkWaiterTip(array $order): bool
+        {
+            if (!isset($order['waiterTip'])) return true;
+            $waiterTip = $order['waiterTip'];
+            if (!Validate_data_helper::validateNumber($waiterTip)) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$WAITERTIP_AMOUNT_INVALID_FORMAT);
+                $this->response($response, 200);
+                return false;
+            }
+
+            $waiterTip = floatval($waiterTip);
+
+            if ($waiterTip <= 0) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$WAITERTIP_AMOUNT_NOT_POSITIVE);
+                $this->response($response, 200);
+                return false;
+            }
+
+            return true;
+        }
+
+        private function checkTime(array $order): bool
+        {
+            if (!isset($order['time'])) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$ORDER_TIME_NOT_SET);
+                $this->response($response, 200);
+                return false;
+            }
+
+            if (!Validate_data_helper::validateDate($order['time'])) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$ORDER_INVALID_TIME);
+                $this->response($response, 200);
+                return false;
+            }
+
+            return true;
+        }
+
+        private function checkOrderRemark(array $order): bool
+        {
+            if (!isset($order['remarks'])) return true;
+            $remark = $order['remarks'];
+            if (!is_string($remark)) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$INVALID_ORDER_REMARK);
+                $this->response($response, 200);
+                return false;
+            }
+
+            return true;
         }
 
         private function getBuyer(array $post)
@@ -84,3 +206,16 @@
 
         }
     }
+
+
+            // manage byuer
+            // $email = isset($post['byuer']['email']) ? $this->security->xss_clean($post['byuer']['email']) : '';
+            // $email = ['email' => $email];
+            // $url = base_url() . 'api/connection/buyer?email=email'; # . http_build_query($email);
+            // $headers = ['x-api-key: ' . $vendor['apiKey']];
+            // #var_dump(Connections_helper::sendGetRequest($url, ['x-api-key: '. $vendor['apiKey']]));
+
+            // $headers = ['x-api-key: ' . $vendor['apiKey']];
+            // $response = Connections_helper::sendGetRequest($url, $headers);
+
+            // var_dump($response);

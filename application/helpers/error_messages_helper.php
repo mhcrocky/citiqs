@@ -30,6 +30,21 @@
         public static $BUYER_UPDATE_NOT_ALLOWED = 112;
         public static $BUYER_UPDATE_FAILED = 113;
 
+        // ORDER ERROR CODES
+        public static $NO_ORDER_DATA = 200;
+        public static $INVALID_ORDER_DATA = 201;
+        public static $SERVICE_TYPE_NOT_SET = 202;
+        public static $INVALID_SERVICE_TYPE = 203;
+        public static $TYPE_NOT_ALLOWED_BY_VENDOR = 204;
+        public static $ORDER_AMOUNT_NOT_SET = 205;
+        public static $ORDER_AMOUNT_INVALID_FORMAT = 206;
+        public static $ORDER_AMOUNT_NOT_POSITIVE = 207;
+        public static $WAITERTIP_AMOUNT_INVALID_FORMAT = 208;
+        public static $WAITERTIP_AMOUNT_NOT_POSITIVE = 209;
+        public static $ORDER_TIME_NOT_SET = 210;
+        public static $ORDER_INVALID_TIME = 211;
+        public static $INVALID_ORDER_REMARK = 212;
+
         public static function getErrorMessage(int $errorCode): string
         {
 
@@ -114,5 +129,58 @@
             if ($errorCode === self::$BUYER_UPDATE_FAILED) {
                 return 'Buyer update failed';
             }
+
+            if ($errorCode === self::$NO_ORDER_DATA) {
+                return 'No order data';
+            }
+
+            if ($errorCode === self::$INVALID_ORDER_DATA) {
+                return 'Invalid order data';
+            }
+
+            if ($errorCode === self::$SERVICE_TYPE_NOT_SET) {
+                return 'Service type is not set';
+            }
+
+            if ($errorCode === self::$INVALID_SERVICE_TYPE) {
+                return 'Service type can only be ' . $CI->config->item('deliveryTypeString') . ' or ' . $CI->config->item('pickupTypeString') . ' type.'  ;
+            }
+
+            if ($errorCode === self::$TYPE_NOT_ALLOWED_BY_VENDOR) {
+                return 'Service type is not allowed by vendor';
+            }
+
+            if ($errorCode === self::$ORDER_AMOUNT_NOT_SET) {
+                return 'Order amount is not set';
+            }
+
+            if ($errorCode === self::$ORDER_AMOUNT_INVALID_FORMAT) {
+                return 'Order amount must be integer or float number';
+            }
+
+            if ($errorCode === self::$ORDER_AMOUNT_NOT_POSITIVE) {
+                return 'Order amount must be positive number';
+            }
+
+            if ($errorCode === self::$WAITERTIP_AMOUNT_INVALID_FORMAT) {
+                return 'Waiter tip amount must be integer or float number';
+            }
+
+            if ($errorCode === self::$WAITERTIP_AMOUNT_NOT_POSITIVE) {
+                return 'Waiter tip must be positive number';
+            }
+
+            if ($errorCode === self::$ORDER_TIME_NOT_SET) {
+                return 'Order time is not set';
+            }
+
+            if ($errorCode === self::$ORDER_INVALID_TIME) {
+                return 'Order time is not valid';
+            }
+
+            if ($errorCode === self::$INVALID_ORDER_REMARK) {
+                return 'Order remark must be string';
+            }
+            
         }
     }
