@@ -40,16 +40,16 @@
             <?php if (!empty($events)) { ?>
             <div class="middle">
                 <?php foreach ($events as $event) { ?>
-                <div class="col-md-4 places" style="background-color: none;">
+                <div class="col-md-4 places" style="background-color: none;margin-bottom: 10px !important;">
                     <div class="card mb-4 shadow-sm">
                         <!-- <img src="--><?php //echo $directory['image']; ?>
                         <!--" class="bd-placeholder-img card-img-top" -->
 
                         <img src="<?php echo base_url(); ?>assets/images/events/<?php echo $event['eventImage']; ?>"
-                            class="bd-placeholder-img card-img-top" height="220px" width="100%"
+                            class="bd-placeholder-img card-img-top card-img-top-2" height="220px" width="100%"
                             alt="<?php echo $event['eventname']; ?>" />
 
-                        <div class="card-body text-center" style="background-color: #0d173b">
+                        <div class="card-body card-body-2 text-center" style="background-color: #0d173b">
 
                             <p class="pb-2 font-weight-bold" style="font-size: 24px;color: antiquewhite;">
                                 <?php echo $event['eventname']; ?></p>
