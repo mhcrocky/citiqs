@@ -158,7 +158,7 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/blackbox.css">
 <?php } elseif ($this->view === 'publicorders/temporarilyClosed') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/temporarilyClosed.css">
-<?php  } elseif ($this->view === 'events/step-one') { ?>
+<?php  } elseif ($this->view === 'events/step-one' || $this->view === 'events/edit_event') { ?>
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url(); ?>assets/css/main.jbox.min.css" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url();?>assets/css/quill.snow.css" rel="stylesheet">
@@ -195,9 +195,12 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
 <?php  } elseif ($this->view === 'events/shop' || $this->view === 'events/tickets') { ?>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/bizdirstyle.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/selectSpot.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/bigsquare.css">
+
+    
 
 <?php } ?>
 

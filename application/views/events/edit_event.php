@@ -6,8 +6,8 @@
 
                     <div class="card-body">
                         <form name="my-form" class="needs-validation"
-                            action="<?php echo base_url(); ?>events/save_event" method="POST"
-                            enctype="multipart/form-data" novalidate>
+                            action="<?php echo base_url(); ?>events/update_event/<?php echo $event->id; ?>"
+                            method="POST" enctype="multipart/form-data" novalidate>
                             <div class="form-group row">
                                 <label for="full_name" class="col-md-4 col-form-label text-md-left">
                                     <h3>
@@ -23,7 +23,7 @@
                                 <div class="col-md-8">
 
                                     <input type="text" id="event-name" class="input-w form-control" name="eventname"
-                                        required>
+                                        value="<?php echo $event->eventname; ?>" required>
 
                                 </div>
                             </div>
@@ -32,9 +32,10 @@
                                 <label for="email_address"
                                     class="col-md-4 col-form-label text-md-left">Description</label>
                                 <div class="col-md-8 description">
-                                    <div id="editor"></div>
+                                    <div id="editor"><?php echo $event->eventdescript; ?></div>
                                     <div id="log"></div>
-                                    <input id="eventdescript" type="hidden" name="eventdescript">
+                                    <input id="eventdescript" type="hidden" value="<?php echo $event->eventdescript; ?>"
+                                        name="eventdescript">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -43,14 +44,18 @@
 
 
                                     <label class="file">
-                                        <input type="file" name="userfile" id="file" onchange="imageUpload(this)"
+                                        <input type="file" name="userfile" id="file" onchange="editImageUpload(this)"
                                             aria-label="File browser example">
                                         <span class="file-custom" data-content="Choose image ..."></span>
                                     </label>
                                     <div style="padding-left: 0;" class="col-sm-6">
-                                        <img src="<?php echo base_url(); ?>assets/images/img-preview.png" id="preview"
-                                            class="img-thumbnail">
+                                        <img src="<?php echo base_url(); ?>assets/images/events/<?php echo $event->eventImage; ?>"
+                                            id="preview" class="img-thumbnail">
                                     </div>
+
+                                    <input type="hidden" id="imgChanged" value="false" name="imgChanged">
+                                    <input type="hidden" id="imgName" value="<?php echo $event->eventImage; ?>"
+                                        name="imgName">
 
 
                                 </div>
@@ -138,7 +143,8 @@
                                 <label for="venue" class="col-md-4 col-form-label text-md-left">Venue</label>
                                 <div class="col-md-6">
                                     <input type="text" id="venue" class="form-control input-w" name="eventVenue"
-                                        placeholder="Enter a location" required>
+                                        placeholder="Enter a location" value="<?php echo $event->eventVenue; ?>"
+                                        required>
                                 </div>
                             </div>
 
@@ -146,14 +152,15 @@
                                 <label for="address" class="col-md-4 col-form-label text-md-left">Address</label>
                                 <div class="col-md-6">
                                     <input type="text" id="address" class="form-control input-w" name="eventAddress"
-                                        required>
+                                        value="<?php echo $event->eventAddress; ?>" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="city" class="col-md-4 col-form-label text-md-left">City</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="city" class="form-control input-w" name="eventCity" required>
+                                    <input type="text" id="city" class="form-control input-w" name="eventCity"
+                                        value="<?php echo $event->eventCity; ?>" required>
                                 </div>
                             </div>
 
@@ -162,18 +169,24 @@
                                     code</label>
                                 <div class="col-md-6">
                                     <input type="text" id="postal-code" class="form-control input-w" name="eventZipcode"
-                                        required>
+                                        value="<?php echo $event->eventZipcode; ?>" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="country" class="col-md-4 col-form-label text-md-left">Country
                                 </label>
-                                <div class="col-md-6">
-                                    <select id="country" class="form-control input-w" required>
-                                        <option value="">Select option</option>
+                                <div class="col-md-6 font-weight-bold">
+                                    <select id="country" class="form-control input-w font-weight-bold" required>
+                                        <option class="text-weight-bold" value="">Select option</option>
                                         <?php foreach($countries as $country): ?>
+                                        <?php if($event->eventCountry == $country): ?>
+                                        <option class="font-weight-bold" value="<?php echo $country; ?>" selected>
+                                            <?php echo $country; ?>
+                                        </option>
+                                        <?php else: ?>
                                         <option value="<?php echo $country; ?>"><?php echo $country; ?></option>
+                                        <?php endif; ?>
                                         <?php endforeach; ?>
                                     </select>
                                     <input type="hidden" id="eventCountry" name="eventCountry">
@@ -186,9 +199,9 @@
                                 <div class="col-md-6">
                                     <div class="input-group date">
                                         <input type="text" class="form-control input-w input-date" id="event-date1"
-                                            name="StartDate" required>
+                                            name="StartDate" value="<?php echo $event->StartDate; ?>" required>
                                         <input type="time" class="form-control input-w" id="event-time1"
-                                            name="StartTime" value="00:00:00" required>
+                                            name="StartTime" value="<?php echo $event->StartTime; ?>" required>
                                         <span class="input-group-addon fa-input pl-2 pr-2">
                                             <i style="color: #fff;font-size: 18px;" class="fa fa-calendar"></i></span>
                                     </div>
@@ -211,9 +224,9 @@
                                 <div class="col-md-6">
                                     <div class="input-group date">
                                         <input type="text" class="form-control input-w input-date" id="event-date2"
-                                            name="EndDate" required>
+                                            name="EndDate" value="<?php echo $event->EndDate; ?>" value="" required>
                                         <input type="time" class="form-control input-w" id="event-time2" name="EndTime"
-                                            value="12:00:00" required>
+                                            value="<?php echo $event->EndTime; ?>" required>
                                         <span class="input-group-addon fa-input pl-2 pr-2">
                                             <i style="color: #fff;font-size: 18px;" class="fa fa-calendar"></i></span>
                                     </div>

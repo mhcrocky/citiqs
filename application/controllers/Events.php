@@ -10,7 +10,7 @@ use \koolreport\clients\Bootstrap;
 
 class Events extends BaseControllerWeb
 {
-	private $vendor_id;
+    private $vendor_id;
     function __construct()
     {
         parent::__construct();
@@ -40,9 +40,22 @@ class Events extends BaseControllerWeb
     public function event($eventId)
     {
         $this->global['pageTitle'] = 'TIQS: Step Two';
-        $data['events'] = $this->event_model->get_events($this->vendor_id);
-        $data['eventId'] = $eventId;
+        $data = [
+            'events' => $this->event_model->get_events($this->vendor_id),
+            'eventId' => $eventId
+        ];
         $this->loadViews("events/step-two", $this->global, $data, 'footerbusiness', 'headerbusiness');
+
+    }
+
+    public function edit($eventId)
+    {
+        $this->global['pageTitle'] = 'TIQS: Edit Event';
+        $data['event'] = $this->event_model->get_event($this->vendor_id,$eventId);
+        $data['countries'] = Country_helper::getCountries();
+
+        $this->loadViews("events/edit_event", $this->global, $data, 'footerbusiness', 'headerbusiness');
+        
 
     }
 
@@ -50,8 +63,10 @@ class Events extends BaseControllerWeb
     {
         $this->global['pageTitle'] = 'TIQS: Shop';
         $design = $this->event_model->get_design($this->session->userdata('userId'));
-        $data['design'] = unserialize($design[0]['shopDesign']);
-        $data['events'] = $this->event_model->get_events($this->vendor_id);
+        $data = [
+            'design' => unserialize($design[0]['shopDesign']),
+            'events' => $this->event_model->get_events($this->vendor_id)
+        ];
         $this->loadViews("events/shop", $this->global, $data, null, 'headerNewShop');
 
     }
@@ -60,19 +75,72 @@ class Events extends BaseControllerWeb
     {
         $this->global['pageTitle'] = 'TIQS: Step Two';
         $design = $this->event_model->get_design($this->session->userdata('userId'));
-        $data['design'] = unserialize($design[0]['shopDesign']);
-        $data['tickets'] = $this->event_model->get_tickets($this->vendor_id,$eventId);
-        $data['eventId'] = $eventId;
+        $data = [
+            'design' => unserialize($design[0]['shopDesign']),
+            'tickets' => $this->event_model->get_tickets($this->vendor_id,$eventId),
+            'eventId' => $eventId
+        ];
         $this->loadViews("events/tickets", $this->global, $data, null, 'headerNewShop');
 
     }
 
     public function save_event()
     {
-        $data = $this->input->post(null, true);
-        $data['vendorId'] = $this->vendor_id;
-        $eventId = $this->event_model->save_event($data);
+        $config['upload_path']   = FCPATH . 'assets/images/events';
+        $config['allowed_types'] = 'jpg|png|jpeg|webp|bmp';
+        $config['max_size']      = '102400'; // 102400 100mb
+        $config['encrypt_name'] = TRUE;
+
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('userfile')) {
+            $errors   = $this->upload->display_errors('', '');
+            var_dump($errors);
+            redirect('events/create');
+        } else {
+            $upload_data = $this->upload->data();
+            $data = $this->input->post(null, true);
+            $data['vendorId'] = $this->vendor_id;
+			$file_name = $upload_data['file_name'];
+            $data['eventimage'] = $file_name;
+            $eventId = $this->event_model->save_event($data);
+        }
         redirect('events/event/'.$eventId);
+
+    }
+
+    public function update_event($eventId)
+    {
+        $imgChanged = $this->input->post("imgChanged");
+        if($imgChanged == 'false') {
+            $data = $this->input->post(null, true);
+            $data['vendorId'] = $this->vendor_id;
+            unset($data['imgChanged']);
+            unset($data['imgName']);
+            $this->event_model->update_event($eventId, $data);
+            redirect('events');
+        }
+        $config['upload_path']   = FCPATH . 'assets/images/events';
+        $config['allowed_types'] = 'jpg|png|jpeg|webp|bmp';
+        $config['max_size']      = '102400'; // 102400 100mb
+        $config['encrypt_name'] = TRUE;
+
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('userfile')) {
+            $errors   = $this->upload->display_errors('', '');
+            var_dump($errors);
+            redirect('events/create');
+        } else {
+            $upload_data = $this->upload->data();
+            $data = $this->input->post(null, true);
+            $data['vendorId'] = $this->vendor_id;
+			$file_name = $upload_data['file_name'];
+            $data['eventimage'] = $file_name;
+            unlink(FCPATH . 'assets/images/events/'.$data['imgName']);
+            unset($data['imgChanged']);
+            unset($data['imgName']);
+            $this->event_model->update_event($eventId, $data);
+        }
+        redirect('events');
 
     }
 
@@ -115,33 +183,24 @@ class Events extends BaseControllerWeb
     }
 
     public function viewdesign(): void
-        {
-            $this->load->model('shopvendor_model');
-            $this->load->model('bookandpayagendabooking_model');
-            $this->load->model('shopcategory_model');
-            $this->load->model('shopspot_model');
-            $this->load->model('shopvendortemplate_model');
-            $userId = intval($_SESSION['userId']);
-            $design = $this->event_model->get_design($this->session->userdata('userId'));
-            $data = [
-                
-                'vendorId' => $userId,
-                'iframeSrc' => base_url() . 'events/shop',
-                'design' => unserialize($design[0]['shopDesign']),
-                'devices' => $this->bookandpayagendabooking_model->get_devices(),
-            ];
+    {
+        $this->load->model('bookandpayagendabooking_model');
+        $design = $this->event_model->get_design($this->vendor_id);
+        $data = [ 
+            'vendorId' => $this->vendor_id,
+            'iframeSrc' => base_url() . 'events/shop',
+            'design' => unserialize($design[0]['shopDesign']),
+            'devices' => $this->bookandpayagendabooking_model->get_devices(),
+        ];
 
-            $this->global['pageTitle'] = 'TIQS : DESIGN';
-            $this->loadViews('events/design', $this->global, $data, 'footerbusiness', 'headerbusiness');
-            return;
-        }
+        $this->global['pageTitle'] = 'TIQS : DESIGN';
+        $this->loadViews('events/design', $this->global, $data, 'footerbusiness', 'headerbusiness');
+        return;
+    }
 
-
-
-        public function save_design()
+    public function save_design()
     {
         $design = serialize($this->input->post(null,true));
-
         $this->event_model->save_design($this->vendor_id,$design);
         redirect('events/viewdesign');
     }

@@ -1,86 +1,96 @@
 <style>
-<?php
-if(isset($design)){
-	$design = $design['selectType'];
-	
-	$design_ids = $design['id'];
-	foreach($design_ids as $key => $design_id){
-		echo '#'. $key . '{';
-		echo array_keys($design_id)[0].':';
-		echo array_values($design_id)[0].'!important } ';
-	}
+<?php if(isset($design)) {
+    $design=$design['selectType'];
 
-	$design_classes = $design['class'];
-	foreach($design_classes as $key => $design_class){
-		echo '.'. $key . '{';
-		echo array_keys($design_class)[0].':';
-		echo array_values($design_class)[0].'!important } ';
-	}
-} ?>
+    $design_ids=$design['id'];
+
+    foreach($design_ids as $key=> $design_id) {
+        echo '#'. $key . '{';
+        echo array_keys($design_id)[0].':';
+        echo array_values($design_id)[0].'!important } ';
+    }
+
+    $design_classes=$design['class'];
+
+    foreach($design_classes as $key=> $design_class) {
+        echo '.'. $key . '{';
+        echo array_keys($design_class)[0].':';
+        echo array_values($design_class)[0].'!important } ';
+    }
+}
+
+?>
 </style>
-<main class="main-wrapper-nh" style="text-align:center">
-	<div class="background-apricot-blue height-100 designBackgroundImage" id="selectTypeBody" style="width:100vw; height:100vh">
+<main class="main-wrapper-nh" style="text-align:center;height: auto;">
+    <div class="background-apricot-blue height-100 designBackgroundImage" id="selectTypeBody"
+        style="width:100vw; height:100vh">
 
-		<div class="form-group has-feedback" >
-			<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="250" height="auto" />
-		</div><!-- /.login-logo -->
-		
-
-
-		<!-- EMXAMPLE HOW TO ADD CSS PROPETY TO ELEMENT IN DESIGN -->
-		<h1 style="text-align:center" id="selectTypeH1"><?php //echo $vendor['vendorName'] ?></h1>
+        <div class="form-group has-feedback">
+            <img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="250"
+                height="auto" />
+        </div><!-- /.login-logo -->
 
 
-		<div class="selectWrapper mb-35">
-			<?php if (!empty($events)) { ?>
-			<div class="middle">
-				<?php foreach ($events as $event) { ?>
-				<a href="<?php echo base_url(); ?>events/tickets/<?php echo $event['id']; ?>">
-					<label>
-						<div class="front-end box selectTypeLabels">
-							<div style="margin-top: 20px">
-								<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="100px" height="" />
-							</div>
 
-							<div style="margin-top: -10px">
-								<div style="margin-top: -30px">
-									<span  class="selectTypeLabelsColor"><?php echo $event['eventname']; ?></span>
-								</div>
-							</div>
+        <!-- EMXAMPLE HOW TO ADD CSS PROPETY TO ELEMENT IN DESIGN -->
+        <h1 style="text-align:center" id="selectTypeH1"><?php //echo $vendor['vendorName'] ?></h1>
 
-							<div style="margin-top:80px">
-								
-							</div>
 
-							<div style="margin-top: -70px">
-								<div style="margin-top: 10px">
-									<span style="font-size: xx-small" class="selectTypeLabelsColor"><?php echo $event['eventdescript']; ?></span>
-								</div>
-							</div>
+        <div class="selectWrapper height-100 mb-35">
+            <?php if (!empty($events)) { ?>
+            <div class="middle">
+                <?php foreach ($events as $event) { ?>
+                <div class="col-md-4 places" style="background-color: none;">
+                    <div class="card mb-4 shadow-sm">
+                        <!-- <img src="--><?php //echo $directory['image']; ?>
+                        <!--" class="bd-placeholder-img card-img-top" -->
 
-						</div>
-					</label>
-					</a>
+                        <img src="<?php echo base_url(); ?>assets/images/events/<?php echo $event['eventImage']; ?>"
+                            class="bd-placeholder-img card-img-top" height="220px" width="100%"
+                            alt="<?php echo $event['eventname']; ?>" />
 
-				<?php } ?>
-			</div>
-			<?php } ?>
+                        <div class="card-body text-center" style="background-color: #0d173b">
 
-		</div>
-	</div>
+                            <p class="pb-2 font-weight-bold" style="font-size: 24px;color: antiquewhite;">
+                                <?php echo $event['eventname']; ?></p>
+                            <p class="pb-2 font-weight-bold distance" style="font-size: 24px;color: antiquewhite;">
+                                <?php echo $event['eventdescript']; ?></p>
+                            <span style="color: antiquewhite;"></span>
+                            <div class="social-links align-items-center pt-3">
+                                <a class="contact-link"
+                                    href="<?php echo base_url(); ?>events/tickets/<?php echo $event['id']; ?>"
+                                    target="_blank;">
+                                    <button data-brackets-id="2918" type="submit" class="button button-orange">ORDER
+                                        HERE</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-<!--	<div class="col-half background-blue height-100">-->
-<!--		<div class="align-start">-->
-<!--			</div>-->
-<!--				<div style="text-align:center;">-->
-<!--					<img src="--><?php //echo base_url(); ?><!--assets/home/images/alfredmenu.png" alt="tiqs" width="auto" height="110" />-->
-<!--				</div>-->
-<!--				<h1 style="text-align:center">QR-MENU</h1>-->
-<!--				<div style="text-align:center; margin-top: 30px">-->
-<!--					<p style="font-size: larger; margin-top: 50px; margin-left: 0px">--><?php //$this->language->line("HOMESTART-SPOT-X001111ABC",'BUILD BY TIQS');?><!--</p>-->
-<!--				</div>-->
-<!--			</div>-->
-<!--		</div>-->
-<!--	</div>-->
+
+
+                <?php } ?>
+            </div>
+            <?php } ?>
+
+        </div>
+    </div>
+
+    <!--	<div class="col-half background-blue height-100">-->
+    <!--		<div class="align-start">-->
+    <!--			</div>-->
+    <!--				<div style="text-align:center;">-->
+    <!--					<img src="--><?php //echo base_url(); ?>
+    <!--assets/home/images/alfredmenu.png" alt="tiqs" width="auto" height="110" />-->
+    <!--				</div>-->
+    <!--				<h1 style="text-align:center">QR-MENU</h1>-->
+    <!--				<div style="text-align:center; margin-top: 30px">-->
+    <!--					<p style="font-size: larger; margin-top: 50px; margin-left: 0px">--><?php //$this->language->line("HOMESTART-SPOT-X001111ABC",'BUILD BY TIQS');?>
+    <!--</p>-->
+    <!--				</div>-->
+    <!--			</div>-->
+    <!--		</div>-->
+    <!--	</div>-->
 
 </main>
