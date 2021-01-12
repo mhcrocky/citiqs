@@ -17,7 +17,9 @@
             $this->load->model('shopvendor_model');
 
             // helpers
+            $this->load->helper('connections_helper');
             $this->load->helper('sanitize_helper');
+            $this->load->helper('error_messages_helper');
 
             // libaries
             $this->load->library('language', array('controller' => $this->router->class));
@@ -42,10 +44,7 @@
 
             // if 'x-api-key' is not set in the request header
             if (empty($header['x-api-key'])) {
-                $response = [
-                    'status' => '0',
-                    'message' => 'Authentication key is not set'
-                ];
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$AUTHENTICATION_KEY_NOT_SET);
                 $this->response($response, 401);
                 return null;
             }
@@ -54,20 +53,14 @@
 
             // if 'x-api-key' doesnt't exists
             if (empty($userData)) {
-                $response = [
-                    'status' => '0',
-                    'message' => 'Invalid authentication key'
-                ];
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$INVALID_AUTHENTICATION_KEY);
                 $this->response($response, 403);
                 return null;
             }
 
             // if access status is not equal '1'
             if ($userData['access'] !== '1') {
-                $response = [
-                    'status' => '0',
-                    'message' => 'Access denied'
-                ];
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$ACCESS_DENIED);
                 $this->response($response, 403);
                 return null;
             }
@@ -77,10 +70,7 @@
 
             // if something, somewhere goes wrong
             if (!$vendor) {
-                $response = [
-                    'status' => '0',
-                    'message' => 'Error on vendor authentication'
-                ];
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$ERROR_VENDOR_AUTHENTICATION);
                 $this->response($response, 403);
                 return null;
             }

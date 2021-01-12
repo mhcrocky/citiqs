@@ -332,7 +332,7 @@
                 'oldMakeOrderView'  => $this->config->item('oldMakeOrderView'),
                 'newMakeOrderView'  => $this->config->item('newMakeOrderView'),
                 'buyerRole'         => $this->config->item('buyer'),
-                'salesagent'        => $this->config->item('tiqsId'),
+                'salesagent'        => $this->config->item('defaultSalesAgentId'),
                 'local'             => $this->config->item('local'),
                 'buyershorturl'     => $this->config->item('buyershorturl'),
                 'countryCodes'      => Country_helper::getCountryPhoneCodes(),
