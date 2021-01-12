@@ -503,5 +503,17 @@ $route['userapi'] = "profile/userApi";
 $route['inandout/(:any)/(:num)'] = "Blackbox/index/$1/$2";
 $route['in/(:any)/(:num)'] = "Blackbox/actionIn/$1/$2";
 $route['out/(:any)/(:num)'] = "Blackbox/actionOut/$1/$2";
+
+
+// connections api routes
+
+//buyer
+$route['api/connection/buyer']['get'] = 'Api/connection/Buyerapi/buyer';
+$route['api/connection/buyer']['post'] = 'Api/connection/Buyerapi/buyer';
+$route['api/connection/buyer/(:any)']['put'] = 'Api/connection/Buyerapi/buyer/$1';
+
+// orders
+$route['api/connection/order']['post']  = 'Api/connection/Ordersapi/order';
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

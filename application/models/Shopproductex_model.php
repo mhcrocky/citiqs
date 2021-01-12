@@ -504,6 +504,7 @@
                     'tbl_shop_categories.userId=' => $userId,
                     'tbl_shop_categories.active=' => '1',
                     'tbl_shop_categories.archived=' => '0',
+                    'tbl_shop_categories.isApi=' => '0',
                     'tbl_shop_products.dateTimeFrom<=' => $date,
                     'tbl_shop_products.dateTimeTo>' => $date,
                     'tbl_shop_products.active=' => '1',

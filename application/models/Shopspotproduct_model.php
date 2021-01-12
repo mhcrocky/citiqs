@@ -139,6 +139,8 @@
         {
             $where = [
                 $this->table . '.productId=' => $this->productId,
+                'tbl_shop_spots.archived=' => '0',
+                'tbl_shop_spots.isApi=' => '0',
             ];
 
             if ($onlyActive) {

@@ -25,9 +25,12 @@
         public static function sanitizeData($data): ?string
         {
             if (is_string($data) || is_numeric($data)) {
+                $CI =& get_instance();
+                $CI->load->helper('validate_data_helper');
+
                 $sanitizeData = (string) $data;
                 $sanitizeData = filter_var($sanitizeData, FILTER_SANITIZE_STRIPPED);
-                return $sanitizeData || Validate_helper::validateNumber($sanitizeData) ? $sanitizeData : null;
+                return $sanitizeData || Validate_data_helper::validateNumber($sanitizeData) ? $sanitizeData : null;
             }
             return null;
         }
@@ -37,6 +40,7 @@
          *
          * Method sanitizes all element of array to prevents XSS attack.  It takes $array as argument.
          * It will return new array only if all elements of passed array (key and values) are safe, else it returns null.
+         * Method doesn't sanitze multidimensional array
          *
          * @static
          * @access public
@@ -66,12 +70,15 @@
          */
         public static function sanitizePhpInput(): ?array
         {
-            $data = file_get_contents("php://input");
+            $CI =& get_instance();
+            $data = trim(file_get_contents("php://input"));
+            if (empty($data)) return null;
+            $data = $CI->security->xss_clean($data);
             $data = json_decode($data, true);
-            return self::sanitizeArray($data);
+            return $data;
         }
 
-
+        // TO DO UPGRADE WITH PHP BUIL IN FILTERS
         public static function isValidMac($mac)
         {
             if (strlen($mac) != 17) return false;

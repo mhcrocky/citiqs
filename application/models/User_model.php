@@ -1064,4 +1064,33 @@ class User_model extends CI_Model
         $result = reset($result);
         return $result->{$property};
     }
+
+    public function getApiIdentifier(): ?string
+    {
+        if (is_null($this->apiIdentifier)) {
+            $identifer = md5($this->email);
+            $query = 'UPDATE tbl_user SET apiIdentifier = "' . $identifer . '" WHERE tbl_user.id = ' . intval($this->id) . ';';
+            $this->db->query($query);
+            return $identifer;
+        }
+        return $this->apiIdentifier;
+    }
+
+    public function checkApiIdentifier(): ?array
+    {
+        $this->db->select('id, roleid');
+        $this->db->from('tbl_user');
+        $this->db->where('apiIdentifier', $this->apiIdentifier);
+        $result = $this->db->get();
+        $result = $result->result_array();
+        if (empty($result)) return null;
+        return reset($result);
+    }
+
+    public function apiUpdateUser($apiBuyer): bool
+    {
+        $this->getGeoCoordinates($apiBuyer);
+        $where = ' id = ' . $this->id;
+        return $this->db->update('tbl_user', $apiBuyer, $where);
+    }
 }

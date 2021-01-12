@@ -27,7 +27,7 @@
             <input
                 type="email"
                 name="user[username]"
-                value="<?php echo 'no name ' . date('Y-m-d H:i:s');; ?>"
+                value="<?php echo 'no name ' . date('Y-m-d H:i:s'); ?>"
                 required
                 readonly
                 hidden

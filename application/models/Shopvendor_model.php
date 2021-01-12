@@ -283,6 +283,7 @@
                     'tbl_user.lng AS vendorLon',
                     'tbl_user.oneSignalId AS oneSignalId',
                     'vendorTemplates.templateValue AS design',
+                    'tbl_APIkeys.apiKey AS apiKey',
 
                     'GROUP_CONCAT(
                         CONCAT(
@@ -311,7 +312,8 @@
                                 tbl_shop_vendor_templates.active = "1"
                                 AND tbl_shop_vendor_templates.vendorId =  ' . $this->vendorId . '
                         ) vendorTemplates', 'vendorTemplates.vendorId = ' . $this->table .'.vendorId' , 'LEFT'
-                    ]
+                        ],
+                    ['tbl_APIkeys', 'tbl_APIkeys.userId = ' . $this->table . '.vendorId', 'LEFT']
                 ],
                 'conditons' => [
                     'group_by' =>  $this->table .'.vendorId'

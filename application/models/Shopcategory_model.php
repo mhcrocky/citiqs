@@ -21,6 +21,7 @@
         public $archived;
         public $private;
         public $openKey;
+        public $isApi;
 
         private $table = 'tbl_shop_categories';
 
@@ -61,6 +62,7 @@
             if (isset($data['archived']) && !($data['archived'] === '1' || $data['archived'] === '0')) return false;
             if (isset($data['private']) && !($data['private'] === '1' || $data['private'] === '0')) return false;
             if (isset($data['openKey']) && !Validate_data_helper::validateString($data['openKey'])) return false;
+            if (isset($data['isApi']) && !($data['isApi'] === '1' || $data['isApi'] === '0')) return false;
 
             return true;
         }
@@ -68,6 +70,8 @@
         public function fetch(array $where): ?array
         {
             $where['archived'] = '0';
+            $where['isApi'] = '0';
+
             return $this->read(
                 [
                     $this->table . '.id AS categoryId',

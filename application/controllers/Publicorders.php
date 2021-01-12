@@ -153,6 +153,8 @@
                 'tbl_shop_printers.userId=' => $vendor['vendorId'],
                 'tbl_shop_spots.active' => '1',
                 'tbl_shop_spots.spotTypeId' => $typeId,
+                'tbl_shop_spots.archived' => '0',
+                'tbl_shop_spots.isApi' => '0'
             ];
             $spots = $this->shopspot_model->fetchUserSpotsImporved($where);
 
@@ -330,7 +332,7 @@
                 'oldMakeOrderView'  => $this->config->item('oldMakeOrderView'),
                 'newMakeOrderView'  => $this->config->item('newMakeOrderView'),
                 'buyerRole'         => $this->config->item('buyer'),
-                'salesagent'        => $this->config->item('tiqsId'),
+                'salesagent'        => $this->config->item('defaultSalesAgentId'),
                 'local'             => $this->config->item('local'),
                 'buyershorturl'     => $this->config->item('buyershorturl'),
                 'countryCodes'      => Country_helper::getCountryPhoneCodes(),
