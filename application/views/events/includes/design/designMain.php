@@ -32,7 +32,7 @@
                 </div>
             </div>
                 <?php
-                    include_once FCPATH . 'application/views/warehouse/includes/design/selectTypeView.php';
+                    include_once FCPATH . 'application/views/events/includes/design/selectTypeView.php';
                 ?>
                 <input type="submit" class="btn btn-primary" value="submit" />
             </form>

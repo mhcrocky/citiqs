@@ -5,7 +5,7 @@
                 <div style="background: none;" class="card p-4">
 
                     <div class="card-body">
-                        <form name="my-form" class="needs-validation"
+                        <form id="my-form" name="my-form" class="needs-validation"
                             action="<?php echo base_url(); ?>events/update_event/<?php echo $event->id; ?>"
                             method="POST" enctype="multipart/form-data" novalidate>
                             <div class="form-group row">
@@ -246,11 +246,14 @@
                             <hr class="w-100 mt-5 mb-5">
 
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" style="width: 200px;border-radius: 0px;background: #07071c;"
-                                    class="btn btn-primary text-left">
-                                    <strong>Next step</strong> <span style="margin-left: 100px;"><i
-                                            class="fa fa-arrow-right" aria-hidden="true"></i></span>
-                                </button>
+                                <div class="input-group">
+                                    <input type="submit" value="Save changes"
+                                        style="background: #377E7F !important;border-radius:0;font-size: 15px;"
+                                        class="btn btn-primary form-control mb-3 text-left font-weight-bold">
+                                    <span style="background: #275C5D;padding-top: 14px;"
+                                        class="input-group-addon pl-2 pr-2 mb-3">
+                                        <i style="color: #fff;font-size: 18px;" class="fa fa-check"></i></span>
+                                </div>
                             </div>
                     </div>
                     </form>

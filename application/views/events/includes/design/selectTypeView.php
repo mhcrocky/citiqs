@@ -85,6 +85,104 @@
         </label>
     </div>
 
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Border-radius:
+            <input
+                type="text"
+                class="form-control"
+                name="selectType[class][card-img-top][border-top-right-radius]"
+                data-css-selector="class"
+                data-css-selector-value="card-img-top"
+                data-css-property="border-top-right-radius"
+                onfocus="borderRadius(this)"
+                oninput="borderRadius(this)"
+				style="border-radius: 50px"
+                <?php if ( isset($design['selectType']['class']['card-img-top']['border-top-right-radius']) ) { ?>
+
+                    value = "<?php echo $design['selectType']['class']['card-img-top']['border-top-right-radius']; ?>"
+
+                    data-value="1"
+                <?php } ?>
+            />
+            <input
+                type="hidden"
+                id="border-top-left-radius"
+                name="selectType[class][card-img-top-2][border-top-left-radius]"
+                data-css-selector="class"
+                data-css-selector-value="card-img-top-2"
+                data-css-property="border-top-left-radius"
+                onchange="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['selectType']['class']['card-img-top-2']['border-top-left-radius']) ) { ?>
+
+                    value = "<?php echo $design['selectType']['class']['card-img-top-2']['border-top-left-radius']; ?>"
+
+                    data-value="1"
+                <?php } ?>
+            />
+            <input
+                type="hidden"
+                id="border-bottom-right-radius"
+                name="selectType[class][card-body][border-bottom-right-radius]"
+                data-css-selector="class"
+                data-css-selector-value="card-body"
+                data-css-property="border-bottom-right-radius"
+                onchange="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['selectType']['class']['card-body']['border-bottom-right-radius']) ) { ?>
+
+                    value = "<?php echo $design['selectType']['class']['card-body']['border-bottom-right-radius']; ?>"
+
+                    data-value="1"
+                <?php } ?>
+            />
+            <input
+                type="hidden"
+                id="border-bottom-left-radius"
+                name="selectType[class][card-body-2][border-bottom-left-radius]"
+                data-css-selector="class"
+                data-css-selector-value="card-body-2"
+                data-css-property="border-bottom-left-radius"
+                onchange="styleELements(this)"
+                onkeyup="styleELements(this)"
+                <?php if ( isset($design['selectType']['class']['card-body-2']['border-bottom-left-radius']) ) { ?>
+
+                    value = "<?php echo $design['selectType']['class']['card-body-2']['border-bottom-left-radius']; ?>"
+
+                    data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Card margin-bottom:
+            <input
+                type="text"
+                class="form-control"
+                name="selectType[class][places][margin-bottom]"
+                data-css-selector="class"
+                data-css-selector-value="places"
+                data-css-property="margin-bottom"
+                onchange="styleELements(this)"
+                onkeyup="styleELements(this)"
+                style="border-radius: 50px"
+                <?php if ( isset($design['selectType']['class']['places']['margin-bottom']) ) { ?>
+
+                    value = "<?php echo $design['selectType']['class']['places']['margin-bottom']; ?>"
+
+                    data-value="1"
+                <?php } else {?>
+                    value = "10px"
+                <?php } ?>
+            />
+        </label>
+    </div>
+
+
     <!--
         Add new css property to element h1 in application/views/publicorders/selectType.php view.
         View has h1 tag. Add attribute id with his value. In this case attribute value is selectTypeH1.
@@ -170,3 +268,18 @@
 		</label>
 	</div>
 </fieldset>
+<script>
+function borderRadius(el){
+    styleELements(el);
+
+    var elVal = $(el).val();
+    $("#border-top-left-radius").val(elVal);
+    $("#border-bottom-left-radius").val(elVal);
+    $("#border-bottom-right-radius").val(elVal);
+    
+    styleELements(document.getElementById("border-top-left-radius"));
+    styleELements(document.getElementById("border-bottom-left-radius"));
+    styleELements(document.getElementById("border-bottom-right-radius"));
+    
+}
+</script>
