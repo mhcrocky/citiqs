@@ -6,13 +6,14 @@
     class Error_messages_helper
     {
         // NO DATA
-        public static $NO_DATA = 1;
+        public static $NO_DATA_SENT = 1;
+        public static $NO_DATA_RETURN = 2;
 
         // AUTHENTICATION ERROR CODES
-        public static $AUTHENTICATION_KEY_NOT_SET = 2;
-        public static $INVALID_AUTHENTICATION_KEY = 3;
-        public static $ACCESS_DENIED = 4;
-        public static $ERROR_VENDOR_AUTHENTICATION = 5;
+        public static $AUTHENTICATION_KEY_NOT_SET = 10;
+        public static $INVALID_AUTHENTICATION_KEY = 11;
+        public static $ACCESS_DENIED = 12;
+        public static $ERROR_VENDOR_AUTHENTICATION = 13;
 
         // BUYER ERROR CODES
         public static $BUYER_INSERT_FAILED = 100;
@@ -44,6 +45,7 @@
         public static $ORDER_TIME_NOT_SET = 210;
         public static $ORDER_INVALID_TIME = 211;
         public static $INVALID_ORDER_REMARK = 212;
+        public static $ORDER_BUYER_NOT_SET = 213;
 
         public static function getErrorMessage(int $errorCode): string
         {
@@ -52,8 +54,12 @@
             $CI->load->config('custom');
 
             // NO DATA MESSAGE
-            if ($errorCode === self::$NO_DATA) {
+            if ($errorCode === self::$NO_DATA_SENT) {
                 return 'Empty set of data sent';
+            }
+
+            if ($errorCode === self::$NO_DATA_RETURN) {
+                return 'Empty set of data return';
             }
 
             // AUTHENTICATION ERRORS MESSAGES
@@ -115,7 +121,7 @@
             }
 
             if ($errorCode === self::$BUYER_LAST_NAME_REQUIRED) {
-                return 'Buyer last name is required';
+                return 'Buyer second name is required';
             }
 
             if ($errorCode === self::$NOT_EXISTING_BUYER_API_IDENTIFIER) {
@@ -181,6 +187,10 @@
             if ($errorCode === self::$INVALID_ORDER_REMARK) {
                 return 'Order remark must be string';
             }
-            
+
+            if ($errorCode === self::$ORDER_BUYER_NOT_SET) {
+                return 'Order buyer is not set';
+            }
+
         }
     }

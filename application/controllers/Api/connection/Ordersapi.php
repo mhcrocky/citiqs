@@ -47,7 +47,8 @@
             if (!$this->validatePostData($post)) return;
 
             if (!$this->validateBasicOrderData($post, $vendor)) return;
-            die();
+
+            if (!$this->manageBuyerData($post, $vendor)) return;
 
             return;
         }
@@ -62,6 +63,8 @@
 
             return true;
         }
+
+        // handle order data
 
         private function validateBasicOrderData(array $post, array $vendor): bool
         {
@@ -191,31 +194,80 @@
             return true;
         }
 
-        private function getBuyer(array $post)
+        // handle buyer data
+        private function manageBuyerData(array $post, array $vendor): bool
         {
-            $email = isset($post['byuer']['email']) ? $this->security->xss_clean($post['byuer']['email']) : '';
-            $email = ['email' => $email];
-            $url = base_url() . 'api/connection/buyer?email=email'; # . http_build_query($email);
-            $headers = ['x-api-key: ' . $vendor['apiKey']];
-            #var_dump(Connections_helper::sendGetRequest($url, ['x-api-key: '. $vendor['apiKey']]));
+            if (!isset($post[0]['buyer'])) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$ORDER_BUYER_NOT_SET);
+                $this->response($response, 200);
+                return false;
+            }
+
+            $buyer = $post[0]['buyer'];
+
+            if (empty($buyer['email'])) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$ERR_BUYER_EMAIL_NOT_SET);
+                $this->response($response, 200);
+                return false;
+            }
 
             $headers = ['x-api-key: ' . $vendor['apiKey']];
-            $response = Connections_helper::sendGetRequest($url, $headers);
 
-            var_dump($response);
+            $getRseponse = $this->buyerApiGetResponse($buyer['email'], $headers);
 
+            if ($getRseponse->status === Connections_helper::$FAILED_STATUS) {
+                if ($getRseponse->errorCode === Error_messages_helper::$BUYER_NOT_EXISTS) {
+                    $postResponse = $this->buyerApiPostResponse($buyer, $headers);
+                    if ($postResponse->status === Connections_helper::$FAILED_STATUS) {
+                        $response = Connections_helper::getFailedResponse($postResponse->errorCode);
+                        $this->response($response, 200);
+                        return false;
+                    }
+                    return true;
+                }
+                $response = Connections_helper::getFailedResponse($getRseponse->errorCode);
+                $this->response($response, 200);
+                return false;
+            }
+
+            $updateResponse = $this->buyerApiPutResponse($buyer, $headers, $getRseponse->data->buyer->apiIdentifier);
+            if ($updateResponse->status === Connections_helper::$FAILED_STATUS) {
+                $response = Connections_helper::getFailedResponse($updateResponse->errorCode);
+                $this->response($response, 200);
+                return false;
+            }
+
+            return true;
         }
+
+        private function buyerApiGetResponse(string $email, array $headers): object
+        {
+            $getUrl = base_url() . 'api/connection/buyer?email=' . trim($email);
+            $response = Connections_helper::sendGetRequest($getUrl, $headers);
+            if (is_null($response)) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$NO_DATA_RETURN);
+            }
+            return $response;
+        }
+
+        private function buyerApiPostResponse(array $buyer, array $headers): object
+        {
+            $postUrl = base_url() . 'api/connection/buyer';
+            $response = Connections_helper::sendPostRequest($postUrl, $buyer, $headers);
+            if (is_null($response)) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$NO_DATA_RETURN);
+            }
+            return $response;
+        }
+
+        private function buyerApiPutResponse(array $buyer, array $headers, string $userApiIdentifier): object
+        {
+            $putUrl = base_url() . 'api/connection/buyer/' . $userApiIdentifier;
+            $response = Connections_helper::sendPutRequest($putUrl, json_encode([$buyer]), $headers);
+            if (is_null($response)) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$NO_DATA_RETURN);
+            }
+            return $response;
+        }
+
     }
-
-
-            // manage byuer
-            // $email = isset($post['byuer']['email']) ? $this->security->xss_clean($post['byuer']['email']) : '';
-            // $email = ['email' => $email];
-            // $url = base_url() . 'api/connection/buyer?email=email'; # . http_build_query($email);
-            // $headers = ['x-api-key: ' . $vendor['apiKey']];
-            // #var_dump(Connections_helper::sendGetRequest($url, ['x-api-key: '. $vendor['apiKey']]));
-
-            // $headers = ['x-api-key: ' . $vendor['apiKey']];
-            // $response = Connections_helper::sendGetRequest($url, $headers);
-
-            // var_dump($response);
