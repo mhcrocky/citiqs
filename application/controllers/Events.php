@@ -63,10 +63,8 @@ class Events extends BaseControllerWeb
     {
         $this->global['pageTitle'] = 'TIQS: Shop';
         $design = $this->event_model->get_design($this->session->userdata('userId'));
-        $data = [
-            'design' => unserialize($design[0]['shopDesign']),
-            'events' => $this->event_model->get_events($this->vendor_id)
-        ];
+        $this->global['design'] = unserialize($design[0]['shopDesign']);
+        $data['events'] = $this->event_model->get_events($this->vendor_id);
         $this->loadViews("events/shop", $this->global, $data, null, 'headerNewShop');
 
     }
@@ -75,8 +73,8 @@ class Events extends BaseControllerWeb
     {
         $this->global['pageTitle'] = 'TIQS: Step Two';
         $design = $this->event_model->get_design($this->session->userdata('userId'));
+        $this->global['design'] = unserialize($design[0]['shopDesign']);
         $data = [
-            'design' => unserialize($design[0]['shopDesign']),
             'tickets' => $this->event_model->get_tickets($this->vendor_id,$eventId),
             'eventId' => $eventId
         ];
