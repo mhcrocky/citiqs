@@ -57,6 +57,7 @@
         public static $PRODUCT_QUANTITY_NOT_SET = 222;
         public static $PRODUCT_QUANTITY_INVALID_FORMAT = 223;
         public static $PRODUCT_QUANTITY_VALUE = 224;
+        public static $ORDER_INSERT_FAILED_ON_PRODUCT_INSERT = 225;
 
         public static function getErrorMessage(int $errorCode): string
         {
@@ -245,6 +246,10 @@
 
             if ($errorCode === self::$PRODUCT_QUANTITY_VALUE) {
                 return 'Prroduct quantity must be greater than 0';
+            }
+
+            if ($errorCode === self::$ORDER_INSERT_FAILED_ON_PRODUCT_INSERT) {
+                return 'Order insert failed';
             }
         }
     }

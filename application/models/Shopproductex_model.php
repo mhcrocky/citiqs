@@ -751,4 +751,75 @@
             $max = intval($max);
             return $max === $productUpdateCycle ? true : false;
         }
+
+        public function manageApiProduct(array $product, array $apiData, int $serviceTypeId)
+        {
+            $this->load->config('custom');
+
+            $productExtended = $this->readImproved([
+                'what' => [$this->table . '.*'],
+                'where' => [
+                    $this->table . '.name' => $product['name'],
+                    'tbl_shop_categories.id' => $apiData['categoryId']
+                ],
+                'joins' => [
+                    ['tbl_shop_products', 'ON tbl_shop_products.id = ' . $this->table . '.productId' , 'INNER'],
+                    ['tbl_shop_categories', 'ON tbl_shop_categories.id = tbl_shop_products.categoryId' , 'INNER']
+                ],
+                'conditions' => [
+                    'ORDER_BY' => [$this->table . '.id DESC'],
+                    'LIMIT' => ['1'],
+                ]
+            ]);
+
+            // insert prodcut and product extended
+            if (is_null($productExtended)) {
+                $this->load->model('shopproduct_model');
+                $insertProduct = [
+                    'categoryId' =>  $apiData['categoryId'],
+                    'active' => '1',
+                    'addRemark' => '1'
+                ];
+
+                if (!$this->shopproduct_model->setObjectFromArray($insertProduct)->create()) return null;
+
+                $insertProductEx = [
+                    'productId' => $this->shopproduct_model->id,
+                    'name' => $product['name'],
+                    'price' => 0,
+                    'shortDescription' => $product['name'],
+                    'updateCycle' => '1'
+                ];
+
+                $insertProductEx['productTypeId'] = isset($product['sideDishes']) ? $apiData['mainProductTypeId'] : $apiData['sideDishesProductTypeId'];
+
+                if ($serviceTypeId === $this->config->item('deliveryType')) {
+                    $insertProductEx['deliveryPrice'] = floatval($product['price']);
+                }
+
+                if ($serviceTypeId === $this->config->item('pickupType')) {
+                    $insertProductEx['pickupPrice'] = floatval($product['price']);
+                }
+
+                return $this->setObjectFromArray($insertProductEx)->create() ? $this->id : null;
+            }
+            // product already inserted, check is price changed
+            $productExtended = reset($productExtended);
+            if (
+                ($serviceTypeId === $this->config->item('deliveryType') && floatval($productExtended['deliveryPrice']) === floatval($product['price']))
+                || ($serviceTypeId === $this->config->item('pickupType') && floatval($productExtended['pickupPrice']) === floatval($product['price']))
+            ) {
+                // price is same, return id
+                return intval($productExtended['id']);
+            }
+
+            if ($serviceTypeId === $this->config->item('deliveryType')) {
+                $productExtended['deliveryPrice'] = floatval($product['price']);
+            }
+            if ($serviceTypeId === $this->config->item('pickupType')) {
+                $productExtended['pickupPrice'] = floatval($product['price']);
+            }
+            $productExtended['updateCycle']++;
+            return $this->setObjectFromArray($productExtended)->create() ? $this->id : null;
+        }
     }

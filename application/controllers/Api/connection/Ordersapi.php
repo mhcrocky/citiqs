@@ -13,6 +13,9 @@
         {
             parent::__construct();
 
+            // models
+            $this->load->model('shopproductex_model');
+
             // helpers
             $this->load->helper('connections_helper');
             $this->load->helper('error_messages_helper');
@@ -21,6 +24,7 @@
             $this->load->helper('validate_data_helper');
 
             $this->load->config('custom');
+
             // libaries
             $this->load->library('language', array('controller' => $this->router->class));
         }
@@ -51,8 +55,8 @@
             if (!$this->manageBuyerData($post, $vendor)) return;
 
             if (!$this->manageProductData($post, $vendor)) return;
-
-            var_dump($post);
+            echo '<pre>';
+            print_r($post);
             die();
 
             return;
@@ -308,14 +312,16 @@
                 return false;
             }
 
-            $products = $post[0]['products'];
+            $serviceType = $post[0]['order']['serviceType'];
+            $serviceTypeId = $this->config->item('serviceTypes')[$serviceType];
 
-            foreach ($products as $product) {
+            foreach ($post[0]['products'] as $key => $product) {
                 if (!$this->validateProduct($product)) return false;
+                if (!$this->setProductExId($post[0]['products'][$key], $vendor['apiFeatures'], $serviceTypeId)) return false;
                 if (isset($product[$this->config->item('side_dishes')])) {
-                    $sideDishes = $product[$this->config->item('side_dishes')];
-                    foreach ($sideDishes as $dish) {
+                    foreach ($post[0]['products'][$key][$this->config->item('side_dishes')] as $kkey => $dish) {
                         if (!$this->validateProduct($dish)) return false;
+                        if (!$this->setProductExId($post[0]['products'][$key][$this->config->item('side_dishes')][$kkey], $vendor['apiFeatures'], $serviceTypeId)) return false;
                     }
                 }
             }
@@ -376,4 +382,14 @@
             return true;
         }
 
+        private function setProductExId(array &$product, array $apiFeatures, int $serviceTypeId): bool
+        {
+            $product['productExId'] = $this->shopproductex_model->manageApiProduct($product, $apiFeatures, $serviceTypeId);
+            if (is_null($product['productExId'])) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$ORDER_INSERT_FAILED_ON_PRODUCT_INSERT);
+                $this->response($response, 200);
+                return false;
+            }
+            return true;
+        }
     }
