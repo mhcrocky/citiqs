@@ -18,6 +18,7 @@
             $this->load->model('shopcategory_model');
             $this->load->model('shopprinters_model');
             $this->load->model('shopspot_model');
+            $this->load->model('shopprodutctype_model');
 
             // helpers
             $this->load->helper('connections_helper');
@@ -95,11 +96,17 @@
             $deliverySpotId = $this->shopspot_model->getApiDeliverySpotId();
             $pickUpSpotId = $this->shopspot_model->getApiPickupSpotId();
 
+            $this->shopprodutctype_model->setProperty('vendorId', $vendorId);
+            $mainProductTypeId = $this->shopprodutctype_model->manageMainTypeId();
+            $sideDishesProductTypeId = $this->shopprodutctype_model->getApiSideDishesTypeId();
+
             $vendor['apiFeatures'] = [
                 'categoryId' => $categoryId,
                 'printerId' => $printerId,
                 'deliverySpotId' => $deliverySpotId,
                 'pickUpSpotId' => $pickUpSpotId,
+                'mainProductTypeId' => $mainProductTypeId,
+                'sideDishesProductTypeId' => $sideDishesProductTypeId,
             ];
 
             return;

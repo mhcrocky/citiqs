@@ -116,5 +116,55 @@
         }
 
 
+        public function manageMainTypeId(): int
+        {
+            $id = $this->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    $this->table . '.vendorId' => $this->vendorId,
+                    $this->table . '.isMain' => '1'
+                ]
+            ]);
 
+            if (is_null($id)) {
+                $insert = [
+                    'vendorId' => $this->vendorId,
+                    'type' => $this->config->item('main_type'),
+                    'active' => '1',
+                    'isMain' => '1'
+                ];
+                return $this->setObjectFromArray($insert)->create() ? $this->id : null;
+            }
+
+            $id = reset($id);
+            $id = intval($id['id']);
+            return $id;
+        }
+
+        public function getApiSideDishesTypeId(): int
+        {
+            $id = $this->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    $this->table . '.vendorId' => $this->vendorId,
+                    $this->table . '.isMain' => '0',
+                    $this->table . '.type' => $this->config->item('api_side_dishes_product_type'),
+                ]
+            ]);
+
+            if (is_null($id)) {
+                $insert = [
+                    'vendorId' => $this->vendorId,
+                    'type' => $this->config->item('api_side_dishes_product_type'),
+                    'active' => '1',
+                    'isMai' => '0'
+                ];
+                return $this->setObjectFromArray($insert)->create() ? $this->id : null;
+            }
+
+            $id = reset($id);
+            $id = intval($id['id']);
+            return $id;
+        }
     }
+
