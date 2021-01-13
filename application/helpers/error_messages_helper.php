@@ -46,6 +46,8 @@
         public static $ORDER_INVALID_TIME = 211;
         public static $INVALID_ORDER_REMARK = 212;
         public static $ORDER_BUYER_NOT_SET = 213;
+        public static $ISPAID_STATUS_NOT_SET = 214;
+        public static $INVALID_ISPAID_STATUS = 215;
 
         public static function getErrorMessage(int $errorCode): string
         {
@@ -190,6 +192,14 @@
 
             if ($errorCode === self::$ORDER_BUYER_NOT_SET) {
                 return 'Order buyer is not set';
+            }
+
+            if ($errorCode === self::$ISPAID_STATUS_NOT_SET) {
+                return 'Order paid status is not set';
+            }
+
+            if ($errorCode === self::$INVALID_ISPAID_STATUS) {
+                return 'Order paid status can have value 0 or 1, string type';
             }
 
         }

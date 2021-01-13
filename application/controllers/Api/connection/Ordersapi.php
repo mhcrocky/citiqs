@@ -76,7 +76,10 @@
 
             $order = $post[0]['order'];
 
+
             if (!$this->checkServiceType($order, $vendor['typeData'])) return false;
+
+            if (!$this->checkIsPaidStatus($order)) return false;
 
             if (!$this->checkAmount($order)) return false;
 
@@ -113,6 +116,25 @@
                     $this->response($response, 200);
                     return false;
                 }
+            }
+
+            return true;
+        }
+
+        private function checkIsPaidStatus(array $order): bool
+        {
+            if (!isset($order['isPaid'])) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$ISPAID_STATUS_NOT_SET);
+                $this->response($response, 200);
+                return false;
+            }
+
+            $isPaid = $order['isPaid'];
+
+            if (!($isPaid === $this->config->item('orderPaid') || $isPaid === $this->config->item('orderNotPaid'))) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$INVALID_ISPAID_STATUS);
+                $this->response($response, 200);
+                return false;
             }
 
             return true;
@@ -183,8 +205,8 @@
 
         private function checkOrderRemark(array $order): bool
         {
-            if (!isset($order['remarks'])) return true;
-            $remark = $order['remarks'];
+            if (!isset($order['remark'])) return true;
+            $remark = $order['remark'];
             if (!is_string($remark)) {
                 $response = Connections_helper::getFailedResponse(Error_messages_helper::$INVALID_ORDER_REMARK);
                 $this->response($response, 200);
