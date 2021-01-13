@@ -236,4 +236,60 @@
 
             return $result;
         }
+
+        public function getApiDeliverySpotId(): ?int
+        {
+            $id = $this->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    $this->table . '.printerId' => $this->printerId,
+                    $this->table . '.isApi' => '1',
+                    $this->table . '.spotTypeId' => $this->config->item('deliveryType'),
+                    $this->table . '.spotName' => $this->config->item('api_spot_delivery'),
+                ]
+            ]);
+
+            if (is_null($id)) {
+                $insert = [
+                    'printerId' => $this->printerId,
+                    'spotName' => $this->config->item('api_spot_delivery'),
+                    'active' => '1',
+                    'spotTypeId' => $this->config->item('deliveryType'),
+                    'isApi' => '1'
+                ];
+                return $this->setObjectFromArray($insert)->create() ? $this->id : null;
+            }
+
+            $id = reset($id);
+            $id = intval($id['id']);
+            return $id;
+        }
+
+        public function getApiPickupSpotId(): ?int
+        {
+            $id = $this->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    $this->table . '.printerId' => $this->printerId,
+                    $this->table . '.isApi' => '1',
+                    $this->table . '.spotTypeId' => $this->config->item('pickupType'),
+                    $this->table . '.spotName' => $this->config->item('api_spot_pickup'),
+                ]
+            ]);
+
+            if (is_null($id)) {
+                $insert = [
+                    'printerId' => $this->printerId,
+                    'spotName' => $this->config->item('api_spot_pickup'),
+                    'active' => '1',
+                    'spotTypeId' => $this->config->item('pickupType'),
+                    'isApi' => '1'
+                ];
+                return $this->setObjectFromArray($insert)->create() ? $this->id : null;
+            }
+
+            $id = reset($id);
+            $id = intval($id['id']);
+            return $id;
+        }
     }

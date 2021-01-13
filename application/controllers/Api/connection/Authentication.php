@@ -15,6 +15,9 @@
             // models
             $this->load->model('api_model');
             $this->load->model('shopvendor_model');
+            $this->load->model('shopcategory_model');
+            $this->load->model('shopprinters_model');
+            $this->load->model('shopspot_model');
 
             // helpers
             $this->load->helper('connections_helper');
@@ -75,8 +78,31 @@
                 return null;
             }
 
+            $this->getVendorApiFeatures($vendor);
+
             // Method returns array with vendor's properties if everything is OK
             return $vendor;
+        }
+
+        private function getVendorApiFeatures(array &$vendor): void
+        {
+            $vendorId = $vendor['vendorId'];
+
+            $categoryId = $this->shopcategory_model->setProperty('userId', $vendorId)->getApiCategoryId();
+            $printerId = $this->shopprinters_model->setProperty('userId', $vendorId)->getApiPrinterId();
+
+            $this->shopspot_model->setProperty('printerId', $printerId);
+            $deliverySpotId = $this->shopspot_model->getApiDeliverySpotId();
+            $pickUpSpotId = $this->shopspot_model->getApiPickupSpotId();
+
+            $vendor['apiFeatures'] = [
+                'categoryId' => $categoryId,
+                'printerId' => $printerId,
+                'deliverySpotId' => $deliverySpotId,
+                'pickUpSpotId' => $pickUpSpotId,
+            ];
+
+            return;
         }
 
     }

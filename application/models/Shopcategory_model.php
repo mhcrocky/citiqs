@@ -153,4 +153,30 @@
 
             return !is_null($check);
         }
+
+        public function getApiCategoryId(): ?int
+        {
+            $id = $this->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    $this->table . '.userId' => $this->userId,
+                    $this->table . '.isApi' => '1',
+                    $this->table . '.category' => $this->config->item('api_category'),
+                ]
+            ]);
+
+            if (is_null($id)) {
+                $insert = [
+                    'userId' => $this->userId,
+                    'active' => '1',
+                    'category' => $this->config->item('api_category'),
+                    'isApi' => '1'
+                ];
+                return $this->setObjectFromArray($insert)->create() ? $this->id : null;
+            }
+
+            $id = reset($id);
+            $id = intval($id['id']);
+            return $id;
+        }
     }
