@@ -15,47 +15,49 @@
                 oninput="styleELements(this)"
 
                 <?php if ( isset($design['selectType']['id']['selectTypeBody']['background-color']) ) { ?>
-                value = "rgba(255,175,175,1)"
+                value = "<?php echo $design['selectType']['id']['selectTypeBody']['background-color']?>"
                 data-value="1"
                 <?php } ?>
             />
         </label>
     </div>
     <div class="form-group col-sm-12">
-        <label style="display:block;"l>
-            Headline background color:
+        <label style="display:block;">
+            Image Background color:
+            <input
+                class="form-control colorInput"
+                name="selectType[id][img-header][background-color]"
+                data-jscolor=""
+                data-css-selector="id"
+                data-css-selector-value="img-header"
+                data-css-property="background-color"
+				style="border-radius: 50px"
+				onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+
+                <?php if ( isset($design['selectType']['id']['img-header']['background-color']) ) { ?>
+                value = "<?php echo $design['selectType']['id']['img-header']['background-color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Card background color:
             <input
                 data-jscolor=""
                 class="form-control"
-                name="selectType[id][selectTypeH1][background-color]"
-                data-css-selector="id"
-                data-css-selector-value="selectTypeH1"
+                name="selectType[class][card-body][background-color]"
+                data-css-selector="class"
+                data-css-selector-value="card-body"
                 data-css-property="background-color"
                 onfocus="styleELements(this)"
                 oninput="styleELements(this)"
 				style="border-radius: 50px"
-				<?php if ( isset($design['selectType']['id']['selectTypeH1']['background-color']) ) { ?>
-                value = "<?php echo $design['selectType']['id']['selectTypeH1']['background-color']?>"
-                data-value="1"
-                <?php } ?>
-            />
-        </label>
-    </div>
-    <div class="form-group col-sm-12">
-        <label style="display:block;">
-            Headline font color:
-            <input
-                data-jscolor=""
-                class="form-control"
-                name="selectType[id][selectTypeH1][color]"
-                data-css-selector="id"
-                data-css-selector-value="selectTypeH1"
-                data-css-property="color"
-				style="border-radius: 50px"
-                onfocus="styleELements(this)"
-                oninput="styleELements(this)"
-                <?php if ( isset($design['selectType']['id']['selectTypeH1']['color']) ) { ?>
-                value = "<?php echo $design['selectType']['id']['selectTypeH1']['color']?>"
+                <?php if ( isset($design['selectType']['class']['card-body']['background-color']) ) { ?>
+                value = "<?php echo $design['selectType']['class']['card-body']['background-color']?>"
                 data-value="1"
                 <?php } ?>
             />
@@ -64,22 +66,24 @@
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
-            Headline font size:
+            Title font size:
             <input
                 type="text"
                 class="form-control"
-                name="selectType[id][selectTypeH1][font-size]"
-                data-css-selector="id"
-                data-css-selector-value="selectTypeH1"
+                name="selectType[class][text-size][font-size]"
+                data-css-selector="class"
+                data-css-selector-value="text-size"
                 data-css-property="font-size"
                 onfocus="styleELements(this)"
                 oninput="styleELements(this)"
 				style="border-radius: 50px"
-                <?php if ( isset($design['selectType']['id']['selectTypeH1']['font-size']) ) { ?>
+                <?php if ( isset($design['selectType']['class']['text-size']['font-size']) ) { ?>
 
-                    value = "<?php echo $design['selectType']['id']['selectTypeH1']['font-size']?>"
+                    value = "<?php echo $design['selectType']['class']['text-size']['font-size']?>"
 
                     data-value="1"
+                <?php } else { ?>
+                    value = "24px"
                 <?php } ?>
             />
         </label>
@@ -226,45 +230,4 @@
         </div>
     -->
 
-    <div class="form-group col-sm-12">
-        <label style="display:block;">
-            Types background color:
-            <input
-                data-jscolor=""
-                class="form-control"
-                name="selectType[class][selectTypeLabels][background-color]"
-                data-css-selector="class"
-                data-css-selector-value="selectTypeLabels"
-                data-css-property="background-color"
-                onfocus="styleELements(this)"
-                oninput="styleELements(this)"
-				style="border-radius: 50px"
-                <?php if ( isset($design['selectType']['class']['selectTypeLabels']['background-color']) ) { ?>
-                value = "<?php echo $design['selectType']['class']['selectTypeLabels']['background-color']?>"
-                data-value="1"
-                <?php } ?>
-            />
-        </label>
-    </div>
-
-	<div class="form-group col-sm-12">
-		<label style="display:block;">
-			Types Radius:
-			<input
-				type="text"
-				class="form-control"
-				name="selectType[class][selectTypeLabels][border-radius]"
-				data-css-selector="class"
-				data-css-selector-value="selectTypeLabels"
-				data-css-property="border-radius"
-				onfocus="styleELements(this)"
-				oninput="styleELements(this)"
-				style="border-radius: 50px"
-				<?php if ( isset($design['selectType']['class']['selectTypeLabels']['border-radius']) ) { ?>
-					value = "<?php echo $design['selectType']['class']['selectTypeLabels']['border-radius']?>"
-					data-value="1"
-				<?php } ?>
-			/>
-		</label>
-	</div>
 </fieldset>

@@ -267,6 +267,13 @@ function showBgImage(image) {
     }
 }
 
+function nav_link(current, s1, s2){
+    $(current).show();
+    $(s1).hide();
+    $(s2).hide();
+}
+
+
 function checkForBgImage() {
     let bgImage = document.getElementById('bgImage').value;
     if (bgImage) {

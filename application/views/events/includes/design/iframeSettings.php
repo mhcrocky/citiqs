@@ -31,23 +31,6 @@
             />
             &nbsp;px
         </label>
-        <label for="selectedSpotId" style="margin-right:30px">
-            Spots:&nbsp;&nbsp;
-            <select
-                id="selectedSpotId"
-                class="form-control"
-                onchange="changeIframe('iframeWidth', 'iframeHeight', 'iframeId', 'selectedSpotId', 'categorySortNumberId', 'categoryConatinerId')"
-            >
-                <option value="">Select spot</option>
-                <?php foreach ($spots as $spotType => $typeSpots) { ?>
-                    <optgroup label="<?php echo $spotType; ?>">
-                        <?php foreach ($typeSpots as $spot) { ?>
-                            <option value="&spotid=<?php echo $spot['spotId']; ?>"><?php echo $spot['spotName']; ?></option>
-                        <?php } ?>
-                    </optgroup>
-                    <?php } ?>
-            </select>
-        </label>
         <label for="categorySortNumberId" id="categoryConatinerId" style="display: none">
             Categories:&nbsp;&nbsp;
             <select

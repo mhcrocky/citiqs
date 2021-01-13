@@ -183,12 +183,16 @@ class Events extends BaseControllerWeb
     public function viewdesign(): void
     {
         $this->load->model('bookandpayagendabooking_model');
+        $this->load->model('shopvendor_model');
         $design = $this->event_model->get_design($this->vendor_id);
+        $id = intval($this->shopvendor_model->setProperty('vendorId', $this->vendor_id)->getProperty('id'));
         $data = [ 
+            'id' => $id,
             'vendorId' => $this->vendor_id,
             'iframeSrc' => base_url() . 'events/shop',
             'design' => unserialize($design[0]['shopDesign']),
             'devices' => $this->bookandpayagendabooking_model->get_devices(),
+            'analytics' => $this->shopvendor_model->setObjectId($id)->getVendorAnalytics()
         ];
 
         $this->global['pageTitle'] = 'TIQS : DESIGN';

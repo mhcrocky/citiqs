@@ -171,5 +171,8 @@
 	<script type="text/javascript" src="<?php echo base_url(); ?>assets/home/js/clearingDataTable.js"></script>
 <?php } elseif ($this->view === 'profile/api') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/api.js"></script>
+<?php } elseif ($this->view === 'events/design') { ?>
+	<script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jscolor.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/shopdesign.js"></script>
 <?php } ?>
 
