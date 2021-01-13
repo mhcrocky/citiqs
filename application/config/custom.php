@@ -268,3 +268,12 @@ $config['x_report'] = 'x_report';
 $config['reportes'] = FCPATH . 'reportes' . DIRECTORY_SEPARATOR;
 $config['posReportes'] = $config['reportes'] . DIRECTORY_SEPARATOR . 'pos'  . DIRECTORY_SEPARATOR;
 $config['financeReportes'] = $config['reportes'] . DIRECTORY_SEPARATOR . 'finance' . DIRECTORY_SEPARATOR ;
+
+$config['main_type'] = 'MAIN PRODUCT';
+
+$config['side_dishes'] = 'sideDishes';
+$config['api_category'] = 'API CATEGORY';
+$config['api_printer'] = 'API PRINTER';
+$config['api_spot_delivery'] = 'API SPOT DELIVERY';
+$config['api_spot_pickup'] = 'API SPOT PICKUP';
+$config['api_side_dishes_product_type'] = 'API SIDE DISHES';

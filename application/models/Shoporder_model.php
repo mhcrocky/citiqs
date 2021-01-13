@@ -36,6 +36,7 @@
         public $old_order;
         public $orderRandomKey;
         public $bbOrderPrint;
+        public $apiIdentifier;
 
         private $table = 'tbl_shop_orders';
 
@@ -100,6 +101,7 @@
             if (isset($data['old_order']) && !Validate_data_helper::validateInteger($data['old_order'])) return false;
             if (isset($data['orderRandomKey']) && !Validate_data_helper::validateString($data['orderRandomKey'])) return false;
             if (isset($data['bbOrderPrint']) && !($data['bbOrderPrint'] === '1' || $data['bbOrderPrint'] === '0')) return false;
+            if (isset($data['apiIdentifier']) && !Validate_data_helper::validateString($data['apiIdentifier'])) return false;
 
             return true;
         }

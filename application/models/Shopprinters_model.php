@@ -188,4 +188,31 @@
 
             return $reportPrinters ? true : false;
         }
+
+        public function getApiPrinterId(): ?int
+        {
+            $id = $this->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    $this->table . '.userId' => $this->userId,
+                    $this->table . '.isApi' => '1',
+                    $this->table . '.printer' => $this->config->item('api_printer'),
+                ]
+            ]);
+
+            if (is_null($id)) {
+                $insert = [
+                    'userId' => $this->userId,
+                    'active' => '1',
+                    'printer' => $this->config->item('api_printer'),
+                    'macNumber' => ('MAC NOT SET ' . $this->config->item('api_printer')),
+                    'isApi' => '1'
+                ];
+                return $this->setObjectFromArray($insert)->create() ? $this->id : null;
+            }
+
+            $id = reset($id);
+            $id = intval($id['id']);
+            return $id;
+        }
     }
