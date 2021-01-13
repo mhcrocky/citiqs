@@ -798,9 +798,9 @@ class User_model extends CI_Model
         return $this;
     }
 
-    public function setUser()
+    public function setUser($property = '*')
     {
-        $this->db->select('*');
+        $this->db->select($property);
         $this->db->from($this->table);
         $this->db->where($this->where);
         $user = $this->db->get()->result_array();

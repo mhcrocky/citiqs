@@ -58,6 +58,11 @@
         public static $PRODUCT_QUANTITY_INVALID_FORMAT = 223;
         public static $PRODUCT_QUANTITY_VALUE = 224;
         public static $ORDER_INSERT_FAILED_ON_PRODUCT_INSERT = 225;
+        public static $VENDOR_DELIVERY_SERVICE_FEE_NOT_SET = 226;
+        public static $VENDOR_PICKUP_SERVICE_FEE_NOT_SET = 227;
+        public static $PRODUCT_REMARK_INVALID = 228;
+        public static $ORDER_FAILED_ON_INSERT_IN_DB = 229;
+        public static $ORDER_FAILED_ON_INSERT_ORDEREX = 230;
 
         public static function getErrorMessage(int $errorCode): string
         {
@@ -249,6 +254,26 @@
             }
 
             if ($errorCode === self::$ORDER_INSERT_FAILED_ON_PRODUCT_INSERT) {
+                return 'Order insert failed';
+            }
+
+            if ($errorCode === self::$VENDOR_DELIVERY_SERVICE_FEE_NOT_SET) {
+                return 'Order insert failed. Vendor delivery servicefee and(or) amount are not set';
+            }
+
+            if ($errorCode === self::$VENDOR_PICKUP_SERVICE_FEE_NOT_SET) {
+                return 'Order insert failed. Vendor pickup servicefee and(or) amount are not set';
+            }
+
+            if ($errorCode === self::$PRODUCT_REMARK_INVALID) {
+                return 'Product remark must be string';
+            }
+
+            if ($errorCode === self::$ORDER_FAILED_ON_INSERT_IN_DB) {
+                return 'Order insert failed';
+            }
+
+            if ($errorCode === self::$ORDER_FAILED_ON_INSERT_ORDEREX) {
                 return 'Order insert failed';
             }
         }

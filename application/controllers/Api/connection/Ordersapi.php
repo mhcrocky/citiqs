@@ -15,6 +15,10 @@
 
             // models
             $this->load->model('shopproductex_model');
+            $this->load->model('user_model');
+            $this->load->model('shoporder_model');
+            $this->load->model('shoporder_model');
+            $this->load->model('shoporderex_model');
 
             // helpers
             $this->load->helper('connections_helper');
@@ -55,10 +59,22 @@
             if (!$this->manageBuyerData($post, $vendor)) return;
 
             if (!$this->manageProductData($post, $vendor)) return;
-            echo '<pre>';
-            print_r($post);
-            die();
 
+            if (!$this->insertOrder($post, $vendor)) return;
+
+            $response = [
+                'status' => Connections_helper::$SUCCESS_STATUS,
+                'message' => 'Order inserted',
+            ];
+
+            $apiIdentifier = md5(strval($this->shoporder_model->id) . Utility_helper::shuffleBigStringRandom(32));
+            if ($this->shoporder_model->setProperty('apiIdentifier', $apiIdentifier)->update()) {
+                $response['data'] = [
+                    'apiIdentifier' => $apiIdentifier
+                ];
+            }
+
+            $this->response($response, 200);
             return;
         }
 
@@ -367,6 +383,12 @@
                 return false;
             }
 
+            if (isset($product['remark']) && !is_string($product['remark'])) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$PRODUCT_REMARK_INVALID);
+                $this->response($response, 200);
+                return false;
+            }
+
             if (!Validate_data_helper::validateInteger($product['quantity'])) {
                 $response = Connections_helper::getFailedResponse(Error_messages_helper::$PRODUCT_QUANTITY_INVALID_FORMAT);
                 $this->response($response, 200);
@@ -392,4 +414,121 @@
             }
             return true;
         }
+
+        private function insertOrder(array $post, array $vendor): bool
+        {
+            $order = $post[0]['order'];
+            $buyer  = $post[0]['buyer'];
+            $products = $post[0]['products'];
+            
+
+            if (!$this->setServiceFee($order, $vendor)) return false;
+            if (!$this->setBuyerId($order, $buyer)) return false;
+
+            // insert order in tbl_shop_orders
+            $insertOrder = $this->getInsertOrderArray($order, $vendor);
+
+            $this->shoporder_model->setObjectFromArray($insertOrder)->create();
+            if (!$this->shoporder_model->id) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$ORDER_FAILED_ON_INSERT_IN_DB);
+                $this->response($response, 200);
+                return false;
+            }
+
+            // insert order ex
+            foreach ($products as $product) {
+                if (!$this->insertOrderExtended($this->shoporder_model, $product)) return false;
+                if (isset($product[$this->config->item('side_dishes')])) {
+                    $sideDishes = $product[$this->config->item('side_dishes')];
+                    $countSideDishes = 1;
+                    foreach ($sideDishes as $dish) {
+                        if (!$this->insertOrderExtended($this->shoporder_model, $dish, 0, $countSideDishes)) return false;
+                        $countSideDishes++;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private function setServiceFee(array &$order, array $vendor): bool
+        {
+            if ($order['serviceType'] === $this->config->item('deliveryTypeString')) {
+                if (!$vendor['deliveryServiceFeePercent'] || !$vendor['deliveryServiceFeeAmount']) {
+                    $response = Connections_helper::getFailedResponse(Error_messages_helper::$VENDOR_DELIVERY_SERVICE_FEE_NOT_SET);
+                    $this->response($response, 200);
+                    return false;
+                }
+                $serviceFee = $vendor['deliveryServiceFeePercent'];
+                $serviceFeeAmount = $vendor['deliveryServiceFeeAmount'];
+            }
+
+            if ($order['serviceType'] === $this->config->item('pickupTypeString')) {
+                if (!$vendor['pickupServiceFeePercent'] || !$vendor['pickupServiceFeeAmount']) {
+                    $response = Connections_helper::getFailedResponse(Error_messages_helper::$VENDOR_PICKUP_SERVICE_FEE_NOT_SET);
+                    $this->response($response, 200);
+                    return false;
+                }
+                $serviceFee = $vendor['pickupServiceFeePercent'];
+                $serviceFeeAmount = $vendor['pickupServiceFeeAmount'];
+            }
+
+            $order['serviceFee'] = round((floatval($order['amount']) * $serviceFee / 100),2);
+            if ($order['serviceFee'] > $serviceFeeAmount) $order['serviceFee'] = $serviceFeeAmount;
+
+            return true;
+        }
+
+        private function setBuyerId(array &$order, array $buyer): bool
+        {
+            $this->user_model->setUniqueValue(trim($buyer['email']))->setWhereCondtition()->setUser('id');
+            $order['buyerId'] = $this->user_model->id;
+            return true;
+        }
+
+        private function getInsertOrderArray(array $order, array $vendor): array
+        {
+            $insertOrder = [
+                'buyerId' => $order['buyerId'],
+                'amount' => $order['amount'],
+                'serviceFee' => $order['serviceFee'],
+                'paid' => $order['isPaid'],
+                'created' => $order['time'],
+            ];
+
+            $insertOrder['waiterTip'] = isset($order['waiterTip']) ? $order['waiterTip'] : 0;
+            $insertOrder['serviceTypeId'] = $this->config->item('serviceTypes')[$order['serviceType']];
+            $insertOrder['remarks'] = isset($order['remark']) ? $order['remark'] : '';
+            
+            if ($insertOrder['serviceTypeId'] === $this->config->item('deliveryType')) {
+                $insertOrder['spotId'] = $vendor['apiFeatures']['deliverySpotId'];
+            }
+            if ($insertOrder['serviceTypeId'] === $this->config->item('pickupType')) {
+                $insertOrder['spotId'] = $vendor['apiFeatures']['pickUpSpotId'];
+            }
+
+            return $insertOrder;
+        }
+
+        private function insertOrderExtended(object $shoporderModel, array $product, int $mainIndex = 1, int $subMainIndex = 0): bool
+        {
+            $orderEx = [
+                'orderId' => $shoporderModel->id,
+                'productsExtendedId' => $product['productExId'],
+                'quantity' => $product['quantity'],
+                'mainPrductOrderIndex' => $mainIndex,
+                'subMainPrductOrderIndex' => $subMainIndex
+            ];
+
+            if (!$this->shoporderex_model->setObjectFromArray($orderEx)->create()) {
+                $this->shoporderex_model->orderId = $shoporderModel->id;
+                $this->shoporderex_model->deleteOrderDetails();
+                $shoporderModel->delete();
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$ORDER_FAILED_ON_INSERT_ORDEREX);
+                $this->response($response, 200);
+                return false;
+            }
+            return true;
+        }
+
     }
