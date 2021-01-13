@@ -1,85 +1,109 @@
-<style>
-<?php
-if(isset($design)){
-	$design = $design['selectType'];
-	
-	$design_ids = $design['id'];
-	foreach($design_ids as $key => $design_id){
-		echo '#'. $key . '{';
-		echo array_keys($design_id)[0].':';
-		echo array_values($design_id)[0].'!important } ';
-	}
 
-	$design_classes = $design['class'];
-	foreach($design_classes as $key => $design_class){
-		echo '.'. $key . '{';
-		echo array_keys($design_class)[0].':';
-		echo array_values($design_class)[0].'!important } ';
-	}
-} ?>
-</style>
-<main class="main-wrapper-nh" style="text-align:center">
-	<div class="background-apricot-blue height-100 designBackgroundImage" id="selectTypeBody" style="width:100vw; height:100vh">
-
-		<div class="form-group has-feedback" >
-			<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="250" height="auto" />
-		</div><!-- /.login-logo -->
-		
+<div style="background:red;text-align: center;" id="header-img" class="w-100" style="text-align:center">
 
 
-		<!-- EMXAMPLE HOW TO ADD CSS PROPETY TO ELEMENT IN DESIGN -->
-		<h1 style="text-align:center" id="selectTypeH1"><?php //echo $vendor['vendorName'] ?></h1>
+    <div class="form-group has-feedback">
+        <img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="250" height="auto" />
+    </div>
+
+</div>
+<?php if (!empty($tickets)) : ?>
+<div class="shop__item-list selectedSpotBackground full-height">
+    <?php foreach ($tickets as $ticket): ?>
+    <div class="shop__single-item">
+        <div class="shop__single-item__info">
+            <!-- wrapped long description and title -->
+            <div>
+                <strong
+                    class="shop__single-item__info--title productName"><?php echo $ticket['ticketDescription']; ?></strong>
+            </div>
+        </div>
+        <div class="shop__single-item__image">
+            <img style="display: none;" src="https://tiqs.com/alfred/assets/images/productImages/2909_1608623878.png"
+                alt="<?php echo $ticket['ticketDescription']; ?>">
+        </div>
+        <!-- ADDED DIV FOR + PRICE - -->
+        <div style="min-width: 270px;" class="shop__single-item__cart-wrapper">
+            <div class="shop__single-item__price items priceQuantity">
+                <span><?php echo $ticket['ticketPrice']; ?></span>
+            </div>
+            <div class="shop__single-item__quanitity-buttons">
+                <div class="shop__single-item__add-to-cart items priceQuantity"
+                    onclick="removeOrder('<?php echo $ticket['ticketId']; ?>', '<?php echo $ticket['ticketPrice']; ?>')">
+                    <span style="font-size:16px; vertical-align: middle; text-align:center">
+                        <i class="fa fa-minus priceQuantity" aria-hidden="true"></i>
+                    </span>
+                </div>
+                <div class="shop__single-item__quiantity">
+                    <div class="shop__single-item__add-to-cart items priceQuantity">
+                        <span id="orderQuantityValue_<?php echo $ticket['ticketId']; ?>"
+                            class="countOrdered priceQuantity" style="font-size:14px;">0</span>
+                    </div>
+                </div>
+                <div class="shop__single-item__add-to-cart items priceQuantity"
+                    onclick="addOrder('<?php echo $ticket['ticketId']; ?>', '<?php echo $ticket['ticketQuantity']; ?>', '<?php echo $ticket['ticketPrice']; ?>')">
+                    <span style="font-size:16px; vertical-align: middle; text-align:center">
+                        <i class="fa fa-plus priceQuantity" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+            <!-- end quantity buttons -->
+        </div>
+    </div>
+    <?php endforeach; ?>
+    <div class="bottom-bar footer">
+        <div class="container">
+            <div class="row">
+                <!--				<div class="col-12 col-md-6 text-center text-left-md">-->
+                <div class="col-12 text-center text-left-md">
+                    <div style="background: red !important;" class="totalButton">
+                        <p class="button-main button-secondary bottom-bar__checkout totalButton">TOTAL: <span
+                                class="bottom-bar__total-price">€&nbsp;<span class="totalPrice">00.00</span></span> </p>
+                        <!-- <button class='button-main button-secondary' onclick="focusCheckOutModal('modal__checkout__list')">Order List</button> -->
+                    </div>
+                </div>
+                <!--				<div class="col-12 col-md-6 text-center text-right-md">-->
+                <div style="background: red !important;" class="col-12 text-center text-right-md">
+                    <button class="button-main button-secondary bottom-bar__checkout payButton" onclick="checkout(0)"
+                        style="width:100%">PAY</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-		<div class="selectWrapper mb-35">
-			<?php if (!empty($tickets)) { ?>
-			<div class="middle">
-				<?php foreach ($tickets as $ticket) { ?>
-			
-					<label>
-						<div class="front-end box selectTypeLabels">
-							<div style="margin-top: 20px">
-								<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="100px" height="" />
-							</div>
+</div>
+<?php endif; ?>
 
-							<div style="margin-top: -10px">
-								<div style="margin-top: -30px">
-									<span  class="selectTypeLabelsColor"><?php echo $ticket['ticketDescription']; ?></span>
-								</div>
-							</div>
+<script>
+function removeOrder(id, price) {
+    var quantityValue = $("#orderQuantityValue_" + id).text();
+    var totalPrice = $(".totalPrice").text()
+    quantityValue = parseInt(quantityValue);
+    totalPrice = parseInt(totalPrice);
+    price = parseInt(price);
+    if (quantityValue == 0) {
+        return;
+    }
+    quantityValue--;
+    totalPrice = totalPrice - price;
+    $("#orderQuantityValue_" + id).text(quantityValue);
+    return $(".totalPrice").text(totalPrice.toFixed(2));
+}
 
-							<div style="margin-top:80px">
-								
-							</div>
-
-							<div style="margin-top: -70px">
-								<div style="margin-top: 10px">
-									<span style="font-size: 20px;" class="selectTypeLabelsColor"><?php echo $ticket['ticketPrice']; ?> €</span>
-								</div>
-							</div>
-
-						</div>
-					</label>
-
-				<?php } ?>
-			</div>
-			<?php } ?>
-
-		</div>
-	</div>
-
-<!--	<div class="col-half background-blue height-100">-->
-<!--		<div class="align-start">-->
-<!--			</div>-->
-<!--				<div style="text-align:center;">-->
-<!--					<img src="--><?php //echo base_url(); ?><!--assets/home/images/alfredmenu.png" alt="tiqs" width="auto" height="110" />-->
-<!--				</div>-->
-<!--				<h1 style="text-align:center">QR-MENU</h1>-->
-<!--				<div style="text-align:center; margin-top: 30px">-->
-<!--					<p style="font-size: larger; margin-top: 50px; margin-left: 0px">--><?php //$this->language->line("HOMESTART-SPOT-X001111ABC",'BUILD BY TIQS');?><!--</p>-->
-<!--				</div>-->
-<!--			</div>-->
-<!--		</div>-->
-<!--	</div>-->
-
-</main>
+function addOrder(id, limit, price) {
+    var quantityValue = $("#orderQuantityValue_" + id).text();
+    var totalPrice = $(".totalPrice").text()
+    quantityValue = parseInt(quantityValue);
+    totalPrice = parseInt(totalPrice);
+    price = parseInt(price);
+    limit = parseInt(limit);
+    if (quantityValue == limit) {
+        return;
+    }
+    quantityValue++;
+    totalPrice = totalPrice + price;
+    $("#orderQuantityValue_" + id).text(quantityValue);
+    return $(".totalPrice").text(totalPrice.toFixed(2));
+}
+</script>

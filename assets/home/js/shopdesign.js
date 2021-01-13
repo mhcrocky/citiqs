@@ -236,6 +236,19 @@ function removeBgImage(element, bgImageId, removeImageId) {
     removeBgImageFromIframe();
 }
 
+function borderRadius(el){
+    styleELements(el);
+
+    var elVal = $(el).val();
+    $("#border-top-left-radius").val(elVal);
+    $("#border-bottom-left-radius").val(elVal);
+    $("#border-bottom-right-radius").val(elVal);
+    
+    styleELements(document.getElementById("border-top-left-radius"));
+    styleELements(document.getElementById("border-bottom-left-radius"));
+    styleELements(document.getElementById("border-bottom-right-radius"));
+    
+}
 
 function showBgImage(image) {
     let selector = getJquerySelector('class', designGlobals.designBackgroundImageClass);

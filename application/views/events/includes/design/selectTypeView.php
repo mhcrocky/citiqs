@@ -1,5 +1,5 @@
 <fieldset id="selectTypeView" class="hideFieldsets">
-    <legend>Select type view</legend>
+    <legend>Shop view</legend>
     <div class="form-group col-sm-12">
         <label style="display:block;">
             Background color:
@@ -15,7 +15,7 @@
                 oninput="styleELements(this)"
 
                 <?php if ( isset($design['selectType']['id']['selectTypeBody']['background-color']) ) { ?>
-                value = "<?php echo $design['selectType']['id']['selectTypeBody']['background-color']?>"
+                value = "rgba(255,175,175,1)"
                 data-value="1"
                 <?php } ?>
             />
@@ -268,18 +268,3 @@
 		</label>
 	</div>
 </fieldset>
-<script>
-function borderRadius(el){
-    styleELements(el);
-
-    var elVal = $(el).val();
-    $("#border-top-left-radius").val(elVal);
-    $("#border-bottom-left-radius").val(elVal);
-    $("#border-bottom-right-radius").val(elVal);
-    
-    styleELements(document.getElementById("border-top-left-radius"));
-    styleELements(document.getElementById("border-bottom-left-radius"));
-    styleELements(document.getElementById("border-bottom-right-radius"));
-    
-}
-</script>

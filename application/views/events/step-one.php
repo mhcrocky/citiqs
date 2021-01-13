@@ -44,7 +44,7 @@
 
                                     <label class="file">
                                         <input type="file" name="userfile" id="file" onchange="imageUpload(this)"
-                                            aria-label="File browser example">
+                                            aria-label="File browser" >
                                         <span class="file-custom" data-content="Choose image ..."></span>
                                     </label>
                                     <div style="padding-left: 0;" class="col-sm-6">

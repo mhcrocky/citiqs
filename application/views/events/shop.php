@@ -1,26 +1,3 @@
-<style>
-<?php if(isset($design)) {
-    $design=$design['selectType'];
-
-    $design_ids=$design['id'];
-
-    foreach($design_ids as $key=> $design_id) {
-        echo '#'. $key . '{';
-        echo array_keys($design_id)[0].':';
-        echo array_values($design_id)[0].'!important } ';
-    }
-
-    $design_classes=$design['class'];
-
-    foreach($design_classes as $key=> $design_class) {
-        echo '.'. $key . '{';
-        echo array_keys($design_class)[0].':';
-        echo array_values($design_class)[0].'!important } ';
-    }
-}
-
-?>
-</style>
 <main class="main-wrapper-nh" style="text-align:center;height: auto;">
     <div class="background-apricot-blue height-100 designBackgroundImage" id="selectTypeBody"
         style="width:100vw; height:100vh">
@@ -59,7 +36,7 @@
                             <div class="social-links align-items-center pt-3">
                                 <a class="contact-link"
                                     href="<?php echo base_url(); ?>events/tickets/<?php echo $event['id']; ?>"
-                                    target="_blank;">
+                                    >
                                     <button data-brackets-id="2918" type="submit" class="button button-orange">ORDER
                                         HERE</button>
                                 </a>
