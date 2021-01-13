@@ -50,6 +50,11 @@
 
             if (!$this->manageBuyerData($post, $vendor)) return;
 
+            if (!$this->manageProductData($post, $vendor)) return;
+
+            var_dump($post);
+            die();
+
             return;
         }
 
@@ -217,6 +222,7 @@
         }
 
         // handle buyer data
+
         private function manageBuyerData(array $post, array $vendor): bool
         {
             if (!isset($post[0]['buyer'])) {
@@ -290,6 +296,84 @@
                 $response = Connections_helper::getFailedResponse(Error_messages_helper::$NO_DATA_RETURN);
             }
             return $response;
+        }
+
+        // handle products
+
+        private function manageProductData(array &$post, array $vendor): bool
+        {
+            if (!isset($post[0]['products'])) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$PRODUCTS_NOT_SET);
+                $this->response($response, 200);
+                return false;
+            }
+
+            $products = $post[0]['products'];
+
+            foreach ($products as $product) {
+                if (!$this->validateProduct($product)) return false;
+                if (isset($product[$this->config->item('side_dishes')])) {
+                    $sideDishes = $product[$this->config->item('side_dishes')];
+                    foreach ($sideDishes as $dish) {
+                        if (!$this->validateProduct($dish)) return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private function validateProduct(array $product): bool
+        {
+            if (empty($product['name'])) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$PRODUCT_NAME_NOT_SET);
+                $this->response($response, 200);
+                return false;
+            }
+
+            if (!Validate_data_helper::validateString($product['name']) || !is_string($product['name'])) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$PRODUCT_NAME_INVALID_FORMAT);
+                $this->response($response, 200);
+                return false;
+            }
+
+            if (empty($product['price'])) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$PRODUCT_PRICE_NOT_SET);
+                $this->response($response, 200);
+                return false;
+            }
+
+            if (!Validate_data_helper::validateNumber($product['price'])) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$PRODUCT_PRICE_INVALID_FORMAT);
+                $this->response($response, 200);
+                return false;
+            }
+
+            if (floatval($product['price']) <= 0) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$PRODUCT_PRICE_VALUE);
+                $this->response($response, 200);
+                return false;
+            }
+
+            if (empty($product['quantity'])) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$PRODUCT_QUANTITY_NOT_SET);
+                $this->response($response, 200);
+                return false;
+            }
+
+            if (!Validate_data_helper::validateInteger($product['quantity'])) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$PRODUCT_QUANTITY_INVALID_FORMAT);
+                $this->response($response, 200);
+                return false;
+            }
+
+            if (intval($product['quantity']) <= 0) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$PRODUCT_QUANTITY_VALUE);
+                $this->response($response, 200);
+                return false;
+            }
+
+            return true;
         }
 
     }

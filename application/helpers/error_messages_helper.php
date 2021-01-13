@@ -48,6 +48,15 @@
         public static $ORDER_BUYER_NOT_SET = 213;
         public static $ISPAID_STATUS_NOT_SET = 214;
         public static $INVALID_ISPAID_STATUS = 215;
+        public static $PRODUCTS_NOT_SET = 216;
+        public static $PRODUCT_NAME_NOT_SET = 217;
+        public static $PRODUCT_NAME_INVALID_FORMAT = 218;
+        public static $PRODUCT_PRICE_NOT_SET = 219;
+        public static $PRODUCT_PRICE_INVALID_FORMAT = 220;
+        public static $PRODUCT_PRICE_VALUE = 221;
+        public static $PRODUCT_QUANTITY_NOT_SET = 222;
+        public static $PRODUCT_QUANTITY_INVALID_FORMAT = 223;
+        public static $PRODUCT_QUANTITY_VALUE = 224;
 
         public static function getErrorMessage(int $errorCode): string
         {
@@ -202,5 +211,40 @@
                 return 'Order paid status can have value 0 or 1, string type';
             }
 
+            if ($errorCode === self::$PRODUCTS_NOT_SET) {
+                return 'No product(s) in order';
+            }
+
+            if ($errorCode === self::$PRODUCT_NAME_NOT_SET) {
+                return 'Prroduct name is not set';
+            }
+
+            if ($errorCode === self::$PRODUCT_NAME_INVALID_FORMAT) {
+                return 'Prroduct name must be a string';
+            }
+
+            if ($errorCode === self::$PRODUCT_PRICE_NOT_SET) {
+                return 'Prroduct price is not set';
+            }
+
+            if ($errorCode === self::$PRODUCT_PRICE_INVALID_FORMAT) {
+                return 'Prroduct price must be integer or float greater than 0';
+            }
+
+            if ($errorCode === self::$PRODUCT_PRICE_VALUE) {
+                return 'Prroduct price must be greater than 0';
+            }
+
+            if ($errorCode === self::$PRODUCT_QUANTITY_NOT_SET) {
+                return 'Prroduct quantity is not set';
+            }
+
+            if ($errorCode === self::$PRODUCT_QUANTITY_INVALID_FORMAT) {
+                return 'Prroduct quantity must be integer greater than 0';
+            }
+
+            if ($errorCode === self::$PRODUCT_QUANTITY_VALUE) {
+                return 'Prroduct quantity must be greater than 0';
+            }
         }
     }

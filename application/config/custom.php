@@ -271,6 +271,7 @@ $config['financeReportes'] = $config['reportes'] . DIRECTORY_SEPARATOR . 'financ
 
 $config['main_type'] = 'MAIN PRODUCT';
 
+$config['side_dishes'] = 'sideDishes';
 $config['api_category'] = 'API CATEGORY';
 $config['api_printer'] = 'API PRINTER';
 $config['api_spot_delivery'] = 'API SPOT DELIVERY';
