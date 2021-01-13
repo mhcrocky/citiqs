@@ -31,14 +31,16 @@
             'showClass' : 'showFieldsets',
             'hideClass' : 'hideFieldsets',
             'selectTypeView' : 'selectTypeView',
-
+            'ticketsView' : 'ticketsView',
             'iframeWidthDeviceId' : 'iframeWidthDevice',
             'iframeHeightDeviceId' : 'iframeHeightDevice',
             'phone' : document.getElementById('phone_1'),
             'designBackgroundImageClass' : 'designBackgroundImage',
             'checkUrl' : function (url) {
-                            if (url.includes('events')) {
+                            if (url.includes('shop')) {
                                 return this['selectTypeView'];
+                            } else if (url.includes('tickets')) {
+                                return this['ticketsView'];
                             }
                            
                             return false;
