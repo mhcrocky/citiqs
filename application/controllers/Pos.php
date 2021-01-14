@@ -60,7 +60,7 @@
             $vendorId = intval($_SESSION['userId']);
             $localTypeId = $this->config->item('local');
             $spots = $this->shopspot_model->fetchUserSpotsByType($vendorId, $localTypeId);
-            $spotId = !empty($_GET['spotid']) ? intval($this->input->get('spotid', true)) : (count($spots) === 1) ? intval($spots[0]['spotId']) : null;
+            $spotId = !empty($_GET['spotid']) ? intval($this->input->get('spotid', true)) : ((count($spots) === 1) ? intval($spots[0]['spotId']) : null);
             $spot = $spotId ? $this->shopspot_model->fetchSpot($vendorId, $spotId) : null;
             $allProducts = ($spot && $this->isLocalSpotOpen($spot)) ? $this->shopproductex_model->getMainProductsOnBuyerSide($vendorId, $spot) : null;
             $isFodActive = $spotId ? Fod_helper::isFodActive($vendorId, $spotId) : true;
