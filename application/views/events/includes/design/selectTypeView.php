@@ -49,15 +49,15 @@
             <input
                 data-jscolor=""
                 class="form-control"
-                name="selectType[class][card-body][background-color]"
+                name="selectType[class][card-body-color][background-color]"
                 data-css-selector="class"
-                data-css-selector-value="card-body"
+                data-css-selector-value="card-body-color"
                 data-css-property="background-color"
                 onfocus="styleELements(this)"
                 oninput="styleELements(this)"
 				style="border-radius: 50px"
-                <?php if ( isset($design['selectType']['class']['card-body']['background-color']) ) { ?>
-                value = "<?php echo $design['selectType']['class']['card-body']['background-color']?>"
+                <?php if ( isset($design['selectType']['class']['card-body-color']['background-color']) ) { ?>
+                value = "<?php echo $design['selectType']['class']['card-body-color']['background-color']?>"
                 data-value="1"
                 <?php } ?>
             />
@@ -128,15 +128,15 @@
             <input
                 type="hidden"
                 id="border-bottom-right-radius"
-                name="selectType[class][card-body][border-bottom-right-radius]"
+                name="selectType[class][card-b][border-bottom-right-radius]"
                 data-css-selector="class"
-                data-css-selector-value="card-body"
+                data-css-selector-value="card-b"
                 data-css-property="border-bottom-right-radius"
                 onchange="styleELements(this)"
                 oninput="styleELements(this)"
-                <?php if ( isset($design['selectType']['class']['card-body']['border-bottom-right-radius']) ) { ?>
+                <?php if ( isset($design['selectType']['class']['card-b']['border-bottom-right-radius']) ) { ?>
 
-                    value = "<?php echo $design['selectType']['class']['card-body']['border-bottom-right-radius']; ?>"
+                    value = "<?php echo $design['selectType']['class']['card-b']['border-bottom-right-radius']; ?>"
 
                     data-value="1"
                 <?php } ?>

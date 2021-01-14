@@ -35,8 +35,11 @@
     <?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
     <style>
     <?php if(isset($design)) {
+        $bgImage = $design['bgImage'];
         $design=$design['selectType'];
-
+        echo "body{background-image: url('".$this->baseUrl . "assets/images/backGroundImages/" . $bgImage."') !important;
+            background-size: cover;
+            }";
         $design_ids=$design['id'];
 
         foreach($design_ids as $key=> $design_id) {

@@ -26,7 +26,7 @@
                             class="bd-placeholder-img card-img-top card-img-top-2" height="220px" width="100%"
                             alt="<?php echo $event['eventname']; ?>" />
 
-                        <div class="card-body card-body-2 text-center" style="background-color: #0d173b">
+                        <div class="card-body card-body-2 card-body-color card-b text-center" style="background-color: #0d173b">
 
                             <p class="pb-2 font-weight-bold text-size" style="font-size: 24px;color: antiquewhite;">
                                 <?php echo $event['eventname']; ?></p>

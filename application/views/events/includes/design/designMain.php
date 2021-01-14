@@ -10,6 +10,31 @@
         </div>
 
 
+            <input type="number" name="vendorId" required hidden readonly value="<?php echo $vendorId; ?>" />
+                <input
+                    type="text"
+                    id="bgImage"
+                    name="bgImage"
+                    hidden
+                    <?php if (!empty($design['bgImage'])) { ?>
+                        value = "<?php echo $design['bgImage']; ?>"
+                        data-value="1"
+                    <?php } ?>
+                />                            
+                <input
+                    type="text"
+                    id="removeImage"
+                    name="removeImage"
+                    hidden readonly
+                    value = "0"
+                    <?php if (!empty($design['bgImage'])) { ?>
+                        value = "<?php echo $design['bgImage']; ?>"
+                    <?php } else { ?>
+                        value = "0"
+                    <?php } ?>
+                />
+
+
 
 
         <div class="row" id="controls">
