@@ -489,6 +489,8 @@ $route['events/viewdesign'] = 'Events/viewdesign';
 $route['events/shop'] = 'Events/shop/$1';
 $route['events/tickets/(:num)'] = 'Events/tickets/$1';
 
+$route['video/get_videos'] = 'Video/get_videos';
+
 
 $route['address'] = "profile/address";
 $route['changepassword'] = "profile/changepassword";
