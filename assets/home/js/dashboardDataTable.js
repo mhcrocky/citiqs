@@ -3,6 +3,16 @@ $(document).ready( function () {
         allow_empty: true,
         filters: [
           {
+            id: 'tbl_shop_orders.id',
+            label: 'Order Id',
+            type: 'integer',
+            class: 'id',
+            // optgroup: 'core',
+            default_value: '',
+            size: 30,
+            unique: true
+          },
+          {
             id: 'tbl_shop_products_extended.price',
             label: 'Price',
             type: 'integer',
@@ -17,6 +27,26 @@ $(document).ready( function () {
             label: 'Product Name',
             type: 'string',
             class: 'name',
+            // optgroup: 'core',
+            default_value: '',
+            size: 30,
+            unique: true
+          },
+          {
+            id: 'tbl_user.username',
+            label: 'Buyer Name',
+            type: 'string',
+            class: 'username',
+            // optgroup: 'core',
+            default_value: '',
+            size: 30,
+            unique: true
+          },
+          {
+            id: 'tbl_user.email',
+            label: 'Buyer Email',
+            type: 'string',
+            class: 'email',
             // optgroup: 'core',
             default_value: '',
             size: 30,
