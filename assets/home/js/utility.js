@@ -76,3 +76,8 @@ function alertifyAjaxResponse(response) {
         }
     }
 }
+function facebookCustom(name, nameValue) {
+    if (typeof fbq !== 'undefined') {
+        fbq('trackCustom', name , {promotion: nameValue});
+    }
+}
