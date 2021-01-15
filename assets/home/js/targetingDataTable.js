@@ -30,6 +30,16 @@ $(document).ready( function () {
             unique: true
           },
           {
+            id: 'tbl_shop_products_extended.name',
+            label: 'Product Name',
+            type: 'string',
+            class: 'name',
+            // optgroup: 'core',
+            default_value: '',
+            size: 30,
+            unique: true
+          },
+          {
             id: 'AMOUNT',
             label: 'Amount',
             type: 'integer',
