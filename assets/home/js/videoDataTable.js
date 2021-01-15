@@ -12,17 +12,26 @@ $(document).ready(function() {
         columns: [
             {
 
-                title: 'Index',
-                data: 'index'
+                title: 'ID',
+                data: 'id'
 
             },
 
             {
 
-                title: 'Name',
-                data: 'video'
+                title: 'Filename',
+                data: 'filename'
 
+            },
+            {
+                title: 'Action',
+                data: null,
+                "render": function (data, type, row) {
+                return '<a href="#" title="Delete" class="text-danger" onclick="deleteVideo(\''+data.filename+'\')"><i class="fa fa-trash" aria-hidden="true"></i></a>';
+              }
             }
+
+
             
         ],
        
@@ -47,4 +56,13 @@ $(document).ready(function() {
     });
     */
 });
+
+function deleteVideo(filename){
+    confirm('Are you sure?');
+    $.post(globalVariables.baseUrl + "video/delete_video", {filename: filename}, function(data){
+        $('#videos').DataTable().ajax.reload();
+        $('#videos').DataTable().draw();
+        alertify['success']('File is deleted successfully!');
+    });
+}
 
