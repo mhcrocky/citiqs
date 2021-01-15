@@ -17,10 +17,17 @@ class Video_model extends CI_Model {
 		return $this->db->insert_batch('tbl_video_recordings',$data);
 	}
 
-	public function delete_video($userId, $filename){
+	public function delete_video($userId, $description){
 		$this->db->where('userId', $userId);
 		$this->db->where('filename', $filename);
 		return $this->db->delete('tbl_video_recordings');
+	}
+
+	public function add_video_description($id, $userId, $description){
+		$this->db->set('description', $description);
+		$this->db->where('userId', $userId);
+		$this->db->where('id', $id);
+		return $this->db->update('tbl_video_recordings');
 	}
 
 	public function video_exists($filename){

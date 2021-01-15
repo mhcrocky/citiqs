@@ -53,6 +53,12 @@ class Video extends BaseControllerWeb
 		return $this->video_model->delete_video($this->user_id, $filename);
 	}
 
+	public function add_video_description(){
+		$id = $this->input->post('id');
+		$description = $this->input->post('description');
+		return $this->video_model->add_video_description($id, $this->userId, $description);
+	}
+
 	public function get_videos(){
 		$data = $this->video_model->get_videos($this->user_id);
 		echo json_encode($data);
