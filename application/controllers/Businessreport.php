@@ -139,6 +139,8 @@ class Businessreport extends BaseControllerWeb
 				'EXVAT'=>$total_EXVAT,
 				'VAT'=>$total_VAT,
 				'order_date'=>$val[0]['order_date'],
+				'username' => $val[0]['username'],
+				'email' => $val[0]['email'],
 				//'price'=>$total_price,
 				'child'=>$val
 			];
