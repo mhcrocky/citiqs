@@ -20,6 +20,16 @@ $(document).ready( function () {
         allow_empty: true,
         filters: [
           {
+            id: 'tbl_shop_orders.id',
+            label: 'Order Id',
+            type: 'integer',
+            class: 'id',
+            // optgroup: 'core',
+            default_value: '',
+            size: 30,
+            unique: true
+          },
+          {
             id: 'tbl_shop_products_extended.price',
             label: 'Price',
             type: 'integer',
@@ -34,6 +44,26 @@ $(document).ready( function () {
             label: 'Product Name',
             type: 'string',
             class: 'name',
+            // optgroup: 'core',
+            default_value: '',
+            size: 30,
+            unique: true
+          },
+          {
+            id: 'tbl_user.username',
+            label: 'Buyer Name',
+            type: 'string',
+            class: 'username',
+            // optgroup: 'core',
+            default_value: '',
+            size: 30,
+            unique: true
+          },
+          {
+            id: 'tbl_user.email',
+            label: 'Buyer Email',
+            type: 'string',
+            class: 'email',
             // optgroup: 'core',
             default_value: '',
             size: 30,
@@ -94,7 +124,7 @@ $(document).ready( function () {
       
       $('#query-builder').queryBuilder(options);
       $('#query').queryBuilder(options);
-      console.log($('#query'));
+      //console.log($('#query'));
       var sql;
       $('.parse-json').on('click', function() {
         table.ajax.reload();
@@ -123,7 +153,7 @@ $(document).ready( function () {
           url: globalVariables.baseUrl + "marketing/targeting/save_results",
           data: {results: data},
           success: function(data){
-            console.log(data);
+            //console.log(data);
           }
         });
         
@@ -564,13 +594,12 @@ function format(d) {
       });
       
 			if(d.export_ID==null){
-				button = '<button type="button" onclick="" class="btn btn-warning btn-refund btn-sm export-'+d.order_id+'">REFUND</button>';
+				button = '';
 			}else{
-				button = '<button type="button" onclick="" class="btn btn-warning btn-refund btn-sm export-'+d.order_id+'">REFUND</button>';
+				button = '';
 			}
 			var child_table =
 				'<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;width:100%;background:#d0a17a91;" class="table table-bordered table-hover" >' + row +
-				'<tr><td><strong>Action</strong></td><td>'+button+'</td></tr>'
 				'</table>';
 
 			return child_table;
