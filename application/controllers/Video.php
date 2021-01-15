@@ -5,41 +5,57 @@ require APPPATH . '/libraries/BaseControllerWeb.php';
 
 class Video extends BaseControllerWeb
 {
-	private $vendor_id;
+	private $user_id;
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('comparison_model');
+		$this->load->model('video_model');
 		$this->load->library('language', array('controller' => $this->router->class));
 		$this->isLoggedIn();
-		$this->vendor_id = $this->session->userdata("userId");
+		$this->user_id = $this->session->userdata("userId");
 	}
 
 	public function index(){
 		$this->global['pageTitle'] = 'TIQS: Videos';
+		$this->save_videos();
 		$this->loadViews("video/index", $this->global, '', 'footerbusiness', 'headerbusiness');
 	}
 
-	public function get_videos(){
-		$path = FCPATH . "uploads/video/" . $this->vendor_id;
+	public function save_videos(){
+		$path = FCPATH . "uploads/video/" . $this->user_id;
 		$data = [];
-		$i = 1;
 		if(is_dir($path)){
 			$videos = glob($path."/*");
 			foreach($videos as $video){
 				if(is_file($video)){
-					$data[] = [
-						'index' => $i,
-						'video' => basename($video)
-					];
+					$filename = basename($video);
+					if($this->video_model->video_exists($filename)){
+						$data[] = [
+							'filename' => basename($video),
+							'description' => '',
+							'userId' => $this->user_id
+						];
+
+					}
 					
 				}
-			 $i++;
 			}
-			
-			echo json_encode($data);
+
+			$this->video_model->save_videos($data);
 		}
-		//echo "false";
+		return ;
+	}
+
+	public function delete_video(){
+		$filename = $this->input->post('filename');
+		$file = FCPATH . "uploads/video/" . $this->user_id . "/" . $filename;
+		unlink($file);
+		return $this->video_model->delete_video($this->user_id, $filename);
+	}
+
+	public function get_videos(){
+		$data = $this->video_model->get_videos($this->user_id);
+		echo json_encode($data);
 	}
 
 }
