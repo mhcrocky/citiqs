@@ -13,6 +13,16 @@ $(document).ready( function () {
             unique: true
           },
           {
+            id: 'tbl_shop_products_extended.name',
+            label: 'Product Name',
+            type: 'string',
+            class: 'name',
+            // optgroup: 'core',
+            default_value: '',
+            size: 30,
+            unique: true
+          },
+          {
             id: 'AMOUNT',
             label: 'Amount',
             type: 'integer',
@@ -214,121 +224,120 @@ $(document).ready( function () {
           dataSrc: '',
         },
         footerCallback: function( tfoot, data, start, end, display ) {
-           var api = this.api(), data;
-          //Totals For Current Page
+          var api = this.api(), data;
+         //Totals For Current Page
 
-          let pageAmountTotalData = api.column( 2, { page: 'current'}  ).cache('search');
-          let pageAmountTotal = pageAmountTotalData.length ? 
-          pageAmountTotalData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
+         let pageAmountTotalData = api.column( 4, { page: 'current'}  ).cache('search');
+         let pageAmountTotal = pageAmountTotalData.length ? 
+         pageAmountTotalData.reduce( function (a, b) {
+             return parseFloat(a) + parseFloat(b);
+           }) : 0;
 
-          let pageServiceFeeData = api.column( 5,  { page: 'current'} ).cache('search');
-          let pageServiceFeeTotal = pageServiceFeeData.length ? 
-          pageServiceFeeData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
+         let pageServiceFeeData = api.column( 6,  { page: 'current'} ).cache('search');
+         let pageServiceFeeTotal = pageServiceFeeData.length ? 
+         pageServiceFeeData.reduce( function (a, b) {
+             return parseFloat(a) + parseFloat(b);
+           }) : 0;
 
-          let pageVatServiceData = api.column( 7,  { page: 'current'} ).cache('search');
-          let pageVatServiceTotal = pageVatServiceData.length ? 
-          pageVatServiceData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
+         let pageVatServiceData = api.column( 8,  { page: 'current'} ).cache('search');
+         let pageVatServiceTotal = pageVatServiceData.length ? 
+         pageVatServiceData.reduce( function (a, b) {
+             return parseFloat(a) + parseFloat(b);
+           }) : 0;
 
-          let pageExvatServiceData = api.column( 8,  { page: 'current'} ).cache('search');
-          let pageExvatServiceTotal = pageExvatServiceData.length ? 
-          pageExvatServiceData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
+         let pageExvatServiceData = api.column( 9,  { page: 'current'} ).cache('search');
+         let pageExvatServiceTotal = pageExvatServiceData.length ? 
+         pageExvatServiceData.reduce( function (a, b) {
+             return parseFloat(a) + parseFloat(b);
+           }) : 0;
 
-          let pageWaiterTipData = api.column( 9, { page: 'current'}  ).cache('search');
-          let pageWaiterTipTotal = pageWaiterTipData.length ? 
-          pageWaiterTipData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
+         let pageWaiterTipData = api.column( 10, { page: 'current'}  ).cache('search');
+         let pageWaiterTipTotal = pageWaiterTipData.length ? 
+         pageWaiterTipData.reduce( function (a, b) {
+             return parseFloat(a) + parseFloat(b);
+           }) : 0;
 
-          let pageAmountData = api.column( 10, { page: 'current'}  ).cache('search');
-          let pageAmount = pageAmountData.length ? 
-          pageAmountData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
-          let pageExvatData = api.column( 11, { page: 'current'} ).cache('search');
-          let pageExvatTotal = pageExvatData.length ? 
-            pageExvatData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
-          let pageVatData = api.column( 12, { page: 'current'} ).cache('search');
-          let pageVatTotal = pageVatData.length ? 
-            pageVatData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
+         let pageAmountData = api.column( 11, { page: 'current'}  ).cache('search');
+         let pageAmount = pageAmountData.length ? 
+         pageAmountData.reduce( function (a, b) {
+             return parseFloat(a) + parseFloat(b);
+           }) : 0;
+         let pageExvatData = api.column( 12, { page: 'current'} ).cache('search');
+         let pageExvatTotal = pageExvatData.length ? 
+           pageExvatData.reduce( function (a, b) {
+             return parseFloat(a) + parseFloat(b);
+           }) : 0;
+         let pageVatData = api.column( 13, { page: 'current'} ).cache('search');
+         let pageVatTotal = pageVatData.length ? 
+           pageVatData.reduce( function (a, b) {
+             return parseFloat(a) + parseFloat(b);
+           }) : 0;
 
 
-          //Totals For All Pages
+         //Totals For All Pages
 
-          let amountTotalData = api.column( 2,{ search: 'applied' } ).cache('search');
-          let amountTotal = amountTotalData.length ? 
-          amountTotalData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
+         let amountTotalData = api.column( 4,{ search: 'applied' } ).cache('search');
+         let amountTotal = amountTotalData.length ? 
+         amountTotalData.reduce( function (a, b) {
+             return parseFloat(a) + parseFloat(b);
+           }) : 0;
 
-          let vatServiceData = api.column( 7,  { search: 'applied' } ).cache('search');
-          let vatServiceTotal = vatServiceData.length ? 
-          vatServiceData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
+         let vatServiceData = api.column( 8,  { search: 'applied' } ).cache('search');
+         let vatServiceTotal = vatServiceData.length ? 
+         vatServiceData.reduce( function (a, b) {
+             return parseFloat(a) + parseFloat(b);
+           }) : 0;
 
-          let exvatServiceData = api.column( 8, { search: 'applied' }).cache('search');
-          let exvatServiceTotal = exvatServiceData.length ? 
-          exvatServiceData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
+         let exvatServiceData = api.column( 9, { search: 'applied' }).cache('search');
+         let exvatServiceTotal = exvatServiceData.length ? 
+         exvatServiceData.reduce( function (a, b) {
+             return parseFloat(a) + parseFloat(b);
+           }) : 0;
 
-          let waiterTipData = api.column( 9,{ search: 'applied' } ).cache('search');
-          let waiterTipTotal = waiterTipData.length ? 
-          waiterTipData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
+         let waiterTipData = api.column( 10,{ search: 'applied' } ).cache('search');
+         let waiterTipTotal = waiterTipData.length ? 
+         waiterTipData.reduce( function (a, b) {
+             return parseFloat(a) + parseFloat(b);
+           }) : 0;
 
-          let amountData = api.column( 10,{ search: 'applied' } ).cache('search');
-          let amount = amountData.length ? 
-          amountData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
+         let amountData = api.column( 11,{ search: 'applied' } ).cache('search');
+         let amount = amountData.length ? 
+         amountData.reduce( function (a, b) {
+             return parseFloat(a) + parseFloat(b);
+           }) : 0;
 
-          let exvatData = api.column( 11,{ search: 'applied' } ).cache('search');
-          let exvatTotal = exvatData.length ? 
-            exvatData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0; 
+         let exvatData = api.column( 12,{ search: 'applied' } ).cache('search');
+         let exvatTotal = exvatData.length ? 
+           exvatData.reduce( function (a, b) {
+             return parseFloat(a) + parseFloat(b);
+           }) : 0; 
 
-          let vatData = api.column( 12, { search: 'applied' }).cache('search');
-          let vatTotal = vatData.length ? 
-            vatData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
+         let vatData = api.column( 13, { search: 'applied' }).cache('search');
+         let vatTotal = vatData.length ? 
+           vatData.reduce( function (a, b) {
+             return parseFloat(a) + parseFloat(b);
+           }) : 0;
 
-          let serviceFeeData = api.column( 5,  { search: 'applied' } ).cache('search');
-          let serviceFeeTotal = serviceFeeData.length ? 
-          serviceFeeData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
+         let serviceFeeData = api.column( 6,  { search: 'applied' } ).cache('search');
+         let serviceFeeTotal = serviceFeeData.length ? 
+         serviceFeeData.reduce( function (a, b) {
+             return parseFloat(a) + parseFloat(b);
+           }) : 0;
 
-           $(tfoot).find('th').eq(1).html(round_up(pageAmountTotal)+'('+round_up(amountTotal)+')');
-           $(tfoot).find('th').eq(2).html('-');
-           $(tfoot).find('th').eq(3).html('-');
-           $(tfoot).find('th').eq(4).html(round_up(pageServiceFeeTotal)+'('+round_up(serviceFeeTotal)+')');
-           $(tfoot).find('th').eq(5).html('-');
-           $(tfoot).find('th').eq(6).html(round_up(pageVatServiceTotal)+'('+round_up(vatServiceTotal)+')');
-           $(tfoot).find('th').eq(7).html(round_up(pageExvatServiceTotal)+'('+round_up(exvatServiceTotal)+')');
-           $(tfoot).find('th').eq(8).html(round_up(pageWaiterTipTotal)+'('+round_up(waiterTipTotal)+')');
-           $(tfoot).find('th').eq(9).html(round_up(pageAmount)+'('+round_up(amount)+')');
-           $(tfoot).find('th').eq(10).html(round_up(pageExvatTotal)+'('+round_up(exvatTotal)+')');
-           $(tfoot).find('th').eq(11).html(round_up(pageVatTotal)+'('+round_up(vatTotal)+')');
-           $('.buttons-excel').addClass('btn').addClass('btn-success').addClass('mb-3');
-           $('.buttons-excel').text('Export as Excel');
-        
-          
+          $(tfoot).find('th').eq(3).html(round_up(pageAmountTotal)+'('+round_up(amountTotal)+')');
+          $(tfoot).find('th').eq(4).html('-');
+          $(tfoot).find('th').eq(5).html(round_up(pageServiceFeeTotal)+'('+round_up(serviceFeeTotal)+')');
+          $(tfoot).find('th').eq(6).html('-');
+          $(tfoot).find('th').eq(7).html(round_up(pageVatServiceTotal)+'('+round_up(vatServiceTotal)+')');
+          $(tfoot).find('th').eq(8).html(round_up(pageExvatServiceTotal)+'('+round_up(exvatServiceTotal)+')');
+          $(tfoot).find('th').eq(9).html(round_up(pageWaiterTipTotal)+'('+round_up(waiterTipTotal)+')');
+          $(tfoot).find('th').eq(10).html(round_up(pageAmount)+'('+round_up(amount)+')');
+          $(tfoot).find('th').eq(11).html(round_up(pageExvatTotal)+'('+round_up(exvatTotal)+')');
+          $(tfoot).find('th').eq(12).html(round_up(pageVatTotal)+'('+round_up(vatTotal)+')');
+          $('.buttons-excel').addClass('btn').addClass('btn-success').addClass('mb-3');
+          $('.buttons-excel').text('Export as Excel');
+       
+         
         },
         rowId: function(a) {
           return 'row_id_' + a.order_id;
@@ -349,6 +358,14 @@ $(document).ready( function () {
         {
           title: 'Order ID',
           data: 'order_id'
+        },
+        {
+          title: 'Buyer Name',
+          data: 'username'
+        },
+        {
+          title: 'Buyer Email',
+          data: 'email'
         },
         {
           title: 'Total Amount',
@@ -591,7 +608,7 @@ function format(d) {
             var date = full_timestamp.split(" - ");
             var min = moment(date[0]);
             var max = moment(date[1]);
-            var startDate = moment(data[13]);
+            var startDate = moment(data[15]);
             if (min == '' && max == '') { min = todayDate; }
             if (min == '' && startDate <= max) { return true;}
             if(max == '' && startDate >= min) {return true;}
