@@ -10,11 +10,12 @@
             </div>
             <div class="modal-body">
             <label for="description" class="font-weight-bold">Description</label>
+            <input type="hidden" id="video_id" name="id">
             <textarea id="description" class="form-control" placeholder="Video Description"></textarea>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="button" id="closeModal" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" onclick="saveDescription()" class="btn btn-primary">Save changes</button>
             </div>
             </form>
         </div>

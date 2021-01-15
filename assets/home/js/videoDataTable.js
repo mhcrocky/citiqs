@@ -30,7 +30,7 @@ $(document).ready(function() {
                     if(data.description != ""){
                         return data.description;
                     }
-                    let html = '<a href="#" title="Add Description" class="text-primary" data-toggle="modal" data-target="#addDescriptionModal"><i class="fa fa-plus" aria-hidden="true"></i> Add Description</a>';
+                    let html = '<a href="#" title="Add Description" onclick="addDescription(\''+data.id+'\')" class="text-primary" data-toggle="modal" data-target="#addDescriptionModal"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp Add Description</a>';
                     return html;
               }
             },
@@ -56,17 +56,6 @@ $(document).ready(function() {
     table.rowReordering();
 
 
-
-    /*Order by the grouping
-    $('#tickets tbody').on('click', 'tr.group', function() {
-        var currentOrder = table.order()[0];
-        if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
-            table.order([groupColumn, 'desc']).draw();
-        } else {
-            table.order([groupColumn, 'asc']).draw();
-        }
-    });
-    */
 });
 
 function deleteVideo(filename){
@@ -75,6 +64,23 @@ function deleteVideo(filename){
         $('#videos').DataTable().ajax.reload();
         $('#videos').DataTable().draw();
         alertify['success']('File is deleted successfully!');
+    });
+}
+
+function addDescription(id){
+    $("#video_id").val(id);
+}
+
+function saveDescription(id){
+    let data = {
+        id: $("#video_id").val(),
+        description: $("textarea#description").val()
+    }
+    $.post(globalVariables.baseUrl + "video/add_video_description", data, function(data){
+        $('#videos').DataTable().ajax.reload();
+        $('#videos').DataTable().draw();
+        $('#closeModal').click();
+        alertify['success']('Description is deleted successfully!');
     });
 }
 
