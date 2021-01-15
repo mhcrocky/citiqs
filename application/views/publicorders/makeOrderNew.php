@@ -14,7 +14,7 @@
                     foreach ($categories as $categoryName) {
                         $count++;
                         $categoryList .= '<li class="list-group-item selectedSpotBackground">';
-                        $categoryList .=    '<a class="menuColor" href="#" data-index="' . $count . '">' . $categoryName . '</a>';
+                        $categoryList .=    '<a class="menuColor" href="#" onclick="facebookCustom(\'category\',\'' . $categoryName . '\',)"data-index="' . $count . '">' . $categoryName . '</a>';
                         $categoryList .= '</li>';
                     }
                     $categoryList .= '</ul>';
