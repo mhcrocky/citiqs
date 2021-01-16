@@ -75,7 +75,7 @@
             <i class="fa fa-upload" aria-hidden="true"></i>
             &nbsp Upload Video
         </a>
-        <table id="videos" class="mt-5" style="width:100%;background: #fff;">
+        <table id="videos" class="table-responsive mt-5" style="width:100%;background: #fff;">
 
         </table>
     </div>

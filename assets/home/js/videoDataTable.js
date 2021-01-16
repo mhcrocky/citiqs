@@ -4,6 +4,7 @@ $(document).ready(function() {
         columnDefs: [{
             "visible": false,
         }],
+        ordering:true,
         ajax: {
             type: 'get',
             url: globalVariables.baseUrl +"video/get_videos",
@@ -72,7 +73,6 @@ $(document).ready(function() {
         }
     });
 
-    table.rowReordering();
     $('#playVideoModal').on('hidden.bs.modal', function () {
         $('#video').empty();
     });
@@ -105,7 +105,10 @@ $(document).ready(function() {
 });
 
 function deleteVideo(filename){
-    confirm('Are you sure?');
+    var r = confirm('Are you sure?');
+    if(r != true){
+        return ;
+    }
     $.post(globalVariables.baseUrl + "video/delete_video", {filename: filename}, function(data){
         $('#videos').DataTable().ajax.reload();
         $('#videos').DataTable().draw();
