@@ -18,7 +18,8 @@ class Video extends BaseControllerWeb
 	public function index(){
 		$this->global['pageTitle'] = 'TIQS: Videos';
 		$this->save_videos();
-		$this->loadViews("video/index", $this->global, '', 'footerbusiness', 'headerbusiness');
+		$data['userId'] = $this->userId;
+		$this->loadViews("video/index", $this->global, $data, 'footerbusiness', 'headerbusiness');
 	}
 
 	public function save_videos(){
@@ -29,10 +30,12 @@ class Video extends BaseControllerWeb
 			foreach($videos as $video){
 				if(is_file($video)){
 					$filename = basename($video);
+					$file = $path . "/" . $filename;
 					if($this->video_model->video_exists($filename)){
 						$data[] = [
 							'filename' => basename($video),
 							'description' => '',
+							'date_created' => date ("Y-m-d H:i:s.", filectime($file)),
 							'userId' => $this->user_id
 						];
 
