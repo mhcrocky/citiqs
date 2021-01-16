@@ -35,11 +35,30 @@ $(document).ready(function() {
               }
             },
             {
+                title: 'Created At',
+                data: 'date_created',
+            },
+            {
+                title: 'Video',
+                data: null,
+                "render": function (data, type, row) {
+                    let html = '<a href="#" title="Play Video" onclick="playVideo(\''+data.filename+'\',\''+data.userId+'\')" class="text-primary" data-toggle="modal" data-target="#playVideoModal"><i class="fa fa-youtube-play" aria-hidden="true"></i> &nbsp Watch Video</a>';
+                    return html;
+              }
+            },
+            {
                 title: 'Action',
                 data: null,
                 "render": function (data, type, row) {
                     let html = '<a href="#" title="Delete" class="text-danger" onclick="deleteVideo(\''+data.filename+'\')"><i class="fa fa-trash" aria-hidden="true"></i></a>';
                     return html;
+              }
+            },
+            {
+                title: '',
+                data: null,
+                "render": function (data, type, row) {
+                    return '<a class="btn btn-success" href="'+globalVariables.baseUrl+'uploads/video/'+data.userId+'/'+data.filename+'" download>Download Video</a>';
               }
             }
 
@@ -54,7 +73,34 @@ $(document).ready(function() {
     });
 
     table.rowReordering();
+    $('#playVideoModal').on('hidden.bs.modal', function () {
+        $('#video').empty();
+    });
 
+    $('#uploadVideo').submit(function (e) {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+        formData.append('vendor_id', $("#vendor_id").val());
+        formData.append('userfile', $("#userfile")[0].files[0]);
+
+        $.ajax({
+            url: globalVariables.baseUrl + "api/video/upload_post",
+            data:formData,
+            type:'POST',
+            contentType: false,
+            processData: false,
+            success: function(data){
+                alertify['success'](data.text);
+                $('#closeUploader').click();
+                setTimeout(function(){ window.location.href = globalVariables.baseUrl+"video"; }, 2000);
+            },
+            error: function(data){
+                let error = data.responseJSON;
+                alertify['error'](error.text);
+            }
+        });
+    });
 
 });
 
@@ -69,6 +115,14 @@ function deleteVideo(filename){
 
 function addDescription(id){
     $("#video_id").val(id);
+}
+
+function playVideo(filename, userId){
+    let html = '<video controls="" preload="metadata" width="100%" height="auto">'+
+    '<source src="'+globalVariables.baseUrl+'uploads/video/'+userId+'/'+filename+'">'+
+    '</video>';
+    $("#video").html(html);
+
 }
 
 function saveDescription(id){
