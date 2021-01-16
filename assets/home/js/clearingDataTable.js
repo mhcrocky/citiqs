@@ -59,7 +59,6 @@ $(document).ready( function () {
     ],
   });
 
-  table.rowReordering();
 
   var getTodayDate = new Date();
   var month = getTodayDate.getMonth()+1;
@@ -109,7 +108,7 @@ $(document).ready( function () {
       var date = full_timestamp.split(" - ");
       var min = moment(date[0]);
       var max = moment(date[1]);
-      var startDate = moment(data[4]);
+      var startDate = moment(data[1]);
       if(startDate <= max){
         console.log(todayDate+' 00:00:01');
       }
