@@ -17,7 +17,7 @@ class Video_model extends CI_Model {
 		return $this->db->insert_batch('tbl_video_recordings',$data);
 	}
 
-	public function delete_video($userId, $description){
+	public function delete_video($userId, $filename){
 		$this->db->where('userId', $userId);
 		$this->db->where('filename', $filename);
 		return $this->db->delete('tbl_video_recordings');
