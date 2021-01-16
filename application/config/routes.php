@@ -491,6 +491,7 @@ $route['events/tickets/(:num)'] = 'Events/tickets/$1';
 
 $route['video/get_videos'] = 'Video/get_videos';
 $route['video/delete_video'] = 'Video/delete_video';
+$route['video/add_video_description'] = 'Video/add_video_description';
 
 
 $route['address'] = "profile/address";
