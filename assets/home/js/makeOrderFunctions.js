@@ -1,4 +1,5 @@
 'use_strict';
+
 function toggleElement(element) {
     let container = element.parentElement.parentElement.nextElementSibling;
     let inputField = container.children[1];
