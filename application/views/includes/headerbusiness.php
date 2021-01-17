@@ -8,7 +8,7 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title><?php echo $pageTitle ? $pageTitle : 'TIQS | LOST AND FOUND'; ?></title>
+        <title><?php echo $pageTitle ? $pageTitle : 'TIQS'; ?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" type="image/png" href="<?php echo $this->baseUrl; ?>assets/home/images/tiqsiconlogonew.png">
         <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl;?>assets/css/business_dashboard/bootstrap.min.css">
@@ -231,7 +231,12 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
 													<li><a href="<?php echo $this->baseUrl; ?>products"><i class="ti-bag"></i> <span>Products</span></a></li>
 												</ul>
 											</li>
-
+											<li>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-video-camera"></i><span>video</span></a>
+												<ul class="collapse">
+													<li><a href="<?php echo $this->baseUrl; ?>video"><i class="ti-video-camera"></i> <span>Manage</span></a></li>
+												</ul>
+											</li>
 
 											<li>
 											<li>
@@ -249,17 +254,11 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
 													<li><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span>Store</span></a></li>
 												</ul>
 											</li>
+
 											</li>
 											</li>
 										</ul>
 									</li>
-
-									<li>
-										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i><span>Lost & Found</span></a>
-										<ul class="collapse">
-										</ul>
-									</li>
-
 									<li>
                                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span>Reservations</span></a>
                                         <ul class="collapse">
@@ -405,6 +404,11 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
                                         </ul>
                                     </li>
 									<li>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i><span>Lost & Found</span></a>
+										<ul class="collapse">
+										</ul>
+									</li>
+									<li>
 										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-user"></i><span>Users</span></a>
 										<ul class="collapse">
 											<li><a href="<?php echo $this->baseUrl;?>employee"><i class="ti-user"></i> <span>Employee's</span></a></li>
@@ -495,7 +499,10 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
                                 <div id="user-title" class="pull-left">
                                     <p style="font-weight: 100; font-size: 100%;padding-top:10px;color: #000;">
                                         <?php echo $this->session->userdata('userId');?> <?php echo $this->session->userdata('name');?>
-                                    </p>
+										<a href="loggedin">
+											<image src="<?php echo $this->baseUrl; ?>assets/home/images/manualicon.png" style="width:28px; margin-left: 30px" >
+										</a>
+									</p>
                                 </div>
                                 <div id="search-box" class="search-box pull-right">
                                     <form action="#">

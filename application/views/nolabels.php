@@ -1,5 +1,5 @@
 <div style="margin-top: 0;" class="main-wrapper">
-	<div class="col-half background-apricot-blue height-100">
+	<div class="col-half width-650 background-apricot-blue height-100">
 		<div class="flex-column align-start">
 			<div class="mt-50" style="text-align:left; margin-left: -30px">
 				<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="300" height="auto" />
@@ -18,11 +18,35 @@
 
 
 
-	<div class="col-half background-yankee timeline-content">
-			<embed src="<?php echo base_url(); ?>/assets/home/documents/NL-manual.pdf" height=100% width="100%">
+	<div class="col background-apricot" style="margin-left: 0px ;margin-right: 0px; padding: 0px; width: 100%">
+			<ul class="nav nav-tabs" style="border-bottom: none;background-color: #efd1ba;margin-top: 10px;margin-bottom: 10px " role="tablist">
+				<li class="nav-item">
+					<a style="border-radius: 50px; margin-left:10px" class="nav-link active" data-toggle="tab" href="#manual"> <i class="ti-pencil-alt"> </i> Manual</a>
+				</li>
+				<li class="nav-item">
+					<a style="border-radius: 50px;margin-left:10px" class="nav-link" data-toggle="tab" href="#app"> <i class="ti-pencil-alt"> </i> VENDOR App</a>
+				</li>
+				<li class="nav-item">
+					<a style="border-radius: 50px;margin-left:10px" class="nav-link" data-toggle="tab" href="#api"> <i class="ti-pencil-alt"> </i> Alfred API</a>
+				</li>
+				<li class="nav-item">
+					<a style="border-radius: 50px;margin-left:10px" class="nav-link" data-toggle="tab" href="#api"> <i class="ti-pencil-alt"> </i> Alfred API</a>
+				</li>
+			</ul>
+
+			<div class="tab-content no-border" style="height: 100%; width: 100%">
+				<div id="manual" class="tab-pane active" style="background: none; height: 100%;margin-left: 0px ;margin-right: 0px; width:100%">
+					<embed src="<?php echo base_url(); ?>/assets/home/documents/NL-manual.pdf" height=100% width="100%">
+				</div>
+				<div id="app" class="tab-pane"style="background: none; height: 100%">
+					<embed src="<?php echo base_url(); ?>/assets/home/documents/EN-Manual VENDOR.pdf" height=100% width="100%">
+				</div>
+				<div id="api" class="tab-pane" style="background: none; height: 100%">
+					<embed src="<?php echo base_url(); ?>/assets/home/documents/EN-MANUAL Alfred-API.pdf" height=100% width="100%">
+				</div>
+			</div>
+
 	</div>
-	<!-- time-line -->
-<!-- end col half -->
 </div>
 <!-- end main wrapper -->
 <script>
