@@ -270,6 +270,9 @@ var callThis = (function() {
         },
         sendReportPrintRequest: function(callFunction) {
             callFunction(this);
+        },
+        updateApiName: function(callFunction) {
+            callFunction(this);
         }
     };
     return methods;

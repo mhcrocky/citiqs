@@ -16,6 +16,7 @@ class Api_model  extends AbstractSet_model implements InterfaceCrud_model, Inter
     public $userid;
     public $apikey;
     public $access;
+    public $name;
 
     private $table = 'tbl_APIkeys';
 
@@ -38,7 +39,7 @@ class Api_model  extends AbstractSet_model implements InterfaceCrud_model, Inter
 
     public function insertValidate(array $data): bool
     {
-        if (isset($data['userid']) && isset($data['apikey'])) {
+        if (isset($data['userid']) && isset($data['apikey']) && isset($data['name'])) {
             return $this->updateValidate($data);
         }
         return false;
@@ -50,6 +51,7 @@ class Api_model  extends AbstractSet_model implements InterfaceCrud_model, Inter
         if (isset($data['userid']) && !Validate_data_helper::validateInteger($data['userid'])) return false;
         if (isset($data['apikey']) && !Validate_data_helper::validateString($data['apikey'])) return false;
         if (isset($data['access']) && !($data['access'] === '1' || $data['access'] === '0')) return false;
+        if (isset($data['name']) && !Validate_data_helper::validateString($data['name'])) return false;
 
         return true;
     }
@@ -111,14 +113,15 @@ class Api_model  extends AbstractSet_model implements InterfaceCrud_model, Inter
         return $result->result_array();
     }
 
-    public function insertApiUser(int $userId): array
+    public function insertApiUser(int $userId, string $name): array
     {
         $this->load->helper('utility_helper');
 
         $insert = [
             'userid' => $userId,
             'apikey' => Utility_helper::shuffleBigStringRandom(32),
-            'access' => '0'
+            'access' => '0',
+            'name' => $name
         ];
 
         return $this->setObjectFromArray($insert)->create() ? $insert : $this->insertApiUser($userId);
@@ -142,6 +145,21 @@ class Api_model  extends AbstractSet_model implements InterfaceCrud_model, Inter
         if (!$result) return null;
 
         $result = reset($result);
+        return $result;
+    }
+
+    public function getUsers(): ?array
+    {
+
+        $where = [$this->table . '.userid = ' => $this->userid];
+
+        $result = $this->readImproved([
+            'what' => ['*'],
+            'where' => $where
+        ]);
+
+        if (!$result) return null;
+
         return $result;
     }
 }

@@ -32,6 +32,7 @@ class Ajax extends CI_Controller
         $this->load->model('shopvendortemplate_model');
         $this->load->model('shopreportrequest_model');
         $this->load->model('shopprinterrequest_model');
+        $this->load->model('api_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -1705,10 +1706,11 @@ class Ajax extends CI_Controller
         if (!$this->input->is_ajax_request()) return;
 
         $post = Utility_helper::sanitizePost();
+
         $email = MIGRATION_EMAIL;
         $subject = 'API key activation';
-        $message = 'User with id "' . $post['userId'] . '" asks for API key activation';
-
+        $message  = 'User with id "' . $post['userId'] . '" asks for activation ';
+        $message .= 'api key ' . $post['apikey'] . '.';
         if (Email_helper::sendEmail($email, $subject, $message)) {
             $response = [
                 'status' => '1',
@@ -1764,5 +1766,27 @@ class Ajax extends CI_Controller
         echo json_encode([
             'status' => $status
         ]);
+    }
+
+    public function updateApiName($id): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+        $name = $this->input->post('name', true);
+        $id = intval($id);
+        $update = $this->api_model->setObjectId($id)->setProperty('name', $name)->update();
+
+        if ($update) {
+            $response = [
+                'status' => '1',
+                'messages' => ['Name updated']
+            ];
+        } else {
+            $response = [
+                'status' => '0',
+                'messages' => ['Name update failed. Please try again']
+            ];
+        }
+
+        echo json_encode($response);
     }
 }

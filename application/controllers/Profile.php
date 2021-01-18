@@ -330,15 +330,37 @@ class  Profile extends BaseControllerWeb
 	public function userApi(): void
 	{
 		$userId = intval($this->userId);
-		$apiUser = $this->api_model->setProperty('userid', $userId)->getUser();
+		$apiUsers = $this->api_model->setProperty('userid', $userId)->getUsers();
 
-		if (is_null($apiUser)) {
-			$apiUser = $this->api_model->insertApiUser($userId);
+		if (is_null($apiUsers)) {
+			$name = strval($this->user_model->getUserProperty($userId, 'username'));
+			$apiUser = $this->api_model->insertApiUser($userId, $name);
+			array_push($apiUsers, $apiUser);
 		}
 
-		$data['apiUser'] = $apiUser;
+		$data = [
+			'apiUsers' => $apiUsers,
+			'userId' => $userId,
+		];
 
 		$this->global['pageTitle'] = 'TIQS: API';
 		$this->loadViews("profile/api", $this->global, $data, 'footerbusiness', 'headerbusiness'); // Menu profilepage
+	}
+
+	public function addNewApiUser(): void
+	{
+		$post = Utility_helper::sanitizePost();
+		$userId = intval($post['userId']);
+		$name = $post['name'];
+
+		$apiUser = $this->api_model->insertApiUser($userId, $name);
+
+		if (empty($apiUser)) {
+			$this->session->set_flashdata('error', 'Process failed');
+		} else {
+			$this->session->set_flashdata('success', 'Api user created');
+		}
+
+		redirect('userapi');
 	}
 }
