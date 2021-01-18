@@ -497,6 +497,8 @@
                 'serviceFee' => $order['serviceFee'],
                 'paid' => $order['isPaid'],
                 'created' => $order['time'],
+                'apiKeyId' => $vendor['apiKeyId'],
+                'paymentType' => $vendor['apiName']
             ];
 
             $insertOrder['waiterTip'] = isset($order['waiterTip']) ? $order['waiterTip'] : 0;

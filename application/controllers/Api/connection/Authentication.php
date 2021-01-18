@@ -71,7 +71,9 @@
 
             $vendorId = intval($userData['userid']);
             $vendor = $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData();
-
+            $vendor['apiKey'] = $userData['apikey'];
+            $vendor['apiKeyId'] = $userData['id'];
+            $vendor['apiName'] = $userData['name'];
             // if something, somewhere goes wrong
             if (!$vendor) {
                 $response = Connections_helper::getFailedResponse(Error_messages_helper::$ERROR_VENDOR_AUTHENTICATION);
