@@ -146,6 +146,8 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/dashboardDataTable.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/businessReports.js"></script>
 <?php } elseif ($this->view === 'events/step-two') { ?>
+	<script src="<?php echo $this->baseUrl; ?>assets/js/quill.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/events.js"></script>
 	<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/ticketsDataTable.js"></script>
 	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
@@ -174,10 +176,12 @@
 <?php } elseif ($this->view === 'events/design') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jscolor.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/shopdesign.js"></script>
-	<?php } elseif ($this->view === 'video/index') { ?>
+<?php } elseif ($this->view === 'video/index') { ?>
 	<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/videoDataTable.js"></script>
 	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 	<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+<?php } elseif ($this->view === 'events/pay') { ?>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/ticket-pay.js"></script>
 <?php } ?>
 

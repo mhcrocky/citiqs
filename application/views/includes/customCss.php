@@ -189,6 +189,7 @@
     </style> 
 <?php  } elseif ($this->view === 'events/step-two') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+    <link href="<?php echo base_url();?>assets/css/quill.snow.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
 <?php  } elseif ($this->view === 'events/events') { ?>
@@ -203,11 +204,12 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/selectSpot.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/bigsquare.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/slick.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/slick-theme.css"/>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/shop-with-slider.css"/>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/order-popup.css"/>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/makeOrderUpdate.css" />
-
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/slick-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/shop-with-slider.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/order-popup.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/makeOrderUpdate.css" />
+<?php  } elseif ($this->view === 'events/pay' || $this->view === 'events/your_tickets') { ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/ticket-pay.css" />
     
 
 <?php } ?>
