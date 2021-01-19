@@ -481,13 +481,15 @@ $route['events/event/(:num)'] = 'Events/event/$1';
 $route['events/tickets/(:num)'] = 'Events/tickets/$1';
 $route['events/save_event'] = 'Events/save_event';
 $route['events/save_ticket'] = 'Events/save_ticket';
-$route['events/save_ticket_options'] = 'Events/save_ticket_options';
+$route['events/save_ticket_options/(:num)'] = 'Events/save_ticket_options/$1';
 $route['events/get_tickets'] = 'Events/get_tickets';
 $route['events/get_events'] = 'Events/get_events';
 $route['events/get_ticket_options'] = 'Events/get_ticket_options';
 $route['events/viewdesign'] = 'Events/viewdesign';
 $route['events/shop'] = 'Events/shop/$1';
 $route['events/tickets/(:num)'] = 'Events/tickets/$1';
+$route['events/your_tickets'] = 'Events/your_tickets';
+$route['events/pay'] = 'Events/pay';
 
 $route['video/get_videos'] = 'Video/get_videos';
 $route['video/delete_video'] = 'Video/delete_video';
