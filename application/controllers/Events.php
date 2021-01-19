@@ -93,6 +93,7 @@ class Events extends BaseControllerWeb
         $this->global['pageTitle'] = 'TIQS: Your Tickets';
         $results = $this->input->post(null, true);
         if(count($results) > 0){
+            $total = 0;
             $quantities = $results['quantity'];
             $id = $results['id'];
             $descript = $results['descript'];
@@ -100,12 +101,14 @@ class Events extends BaseControllerWeb
             $tickets = [];
             foreach($quantities as $key => $quantity){
                 if($quantity == '0'){ continue; }
+                $amount = floatval($price[$key])*floatval($quantity);
+                $total = $total + $amount;
                     $tickets[] = [
                         'id' => $id[$key],
                         'descript' => $descript[$key],
                         'quantity' => $quantity,
                         'price' => $price[$key],
-                        'amount' => floatval($price[$key])*floatval($quantity)
+                        'amount' => $amount
                     ];
             }
             
@@ -113,6 +116,8 @@ class Events extends BaseControllerWeb
             $current_time = date($results['current_time']);
             $newTime = date("Y-m-d H:i:s",strtotime("$current_time +10 minutes"));
             $this->session->set_tempdata('exp_time', $newTime, 600);
+            $total = number_format($total, 2, '.', '');
+            $this->session->set_tempdata('total', $total, 600);
         }
    
         $this->loadViews("events/your_tickets", $this->global, '', 'nofooter', 'headerNewShop');
