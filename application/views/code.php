@@ -63,9 +63,8 @@
 
 <body>
 <!-- end header -->
-<div class="main-wrapper">
-
-	<div class="col-half background-blue-light height-100">
+<div class="main-wrapper-nh">
+	<div class="col-half width-650 background-blue-light height-100" style="margin-top: 30px">
 		<div class="flex-column align-start">
 			<div align="center">
 				<h2 class="heading">
@@ -161,13 +160,10 @@
 
 					</div><!-- /.login-box-body -->
 
-					<div style=" font-size: x-large">
-						<p align="center">LOST BY YOU, RETURNED BY US
-						</p>
-					</div>
-
 					<div class="row" align="center" style="padding:50px ">
-						<img border="0" src="<?php echo base_url(); ?>tiqsimg/tiqslogonew.png" alt="tiqs" width="125" height="45" />
+						<div class="profile-name text-center">
+							<img class="logo-img" src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogowhite.png" alt="logo">
+						</div>
 					</div class="login-box">
 
 				</div>
@@ -175,65 +171,34 @@
 		</div>
 	</div>
 
-	<div class="col-half background-orange height-100 div-no-mobile">
-		<div class="background-blue div-no-mobile height-100">
-			<div class="flex-column align-start">
-				<div style="text-align:center">
-					<div style="margin-top: 0px; margin-left: 0px">
-						<img border="0" src="<?php echo base_url(); ?>assets/home/images/tiqsbusiness.png" alt="tiqs" width="auto" height="110" />
-					</div>
-					<p style="font-size: larger; margin-top: 50px; margin-left: 0px"><?php echo $this->language->line("HOMESTART-001C",'THE NUMBER ONE PLATFORM <br> FOR LOST AND FOUND');?></p>
-				</div>
-				<div style="text-align:center; margin-top: 30px">
-					<img border="0" src="<?php echo base_url(); ?>assets/home/images/dhlpoweredby.png" alt="tiqs" width="auto" height="15" />
-				</div>
+	<div class="col background-apricot" style="margin-left: 0px ;margin-right: 0px; padding: 0px; width: 100%">
+		<ul class="nav nav-tabs" style="border-bottom: none;background-color: #efd1ba;margin-top: 10px;margin-bottom: 10px " role="tablist">
+			<li class="nav-item">
+				<a style="border-radius: 50px; margin-left:10px" class="nav-link active" data-toggle="tab" href="#manual"> <i class="ti-pencil-alt"> </i> Manual</a>
+			</li>
+			<li class="nav-item">
+				<a style="border-radius: 50px;margin-left:10px" class="nav-link" data-toggle="tab" href="#app"> <i class="ti-pencil-alt"> </i> VENDOR App</a>
+			</li>
+			<li class="nav-item">
+				<a style="border-radius: 50px;margin-left:10px" class="nav-link" data-toggle="tab" href="#api"> <i class="ti-pencil-alt"> </i> Alfred API</a>
+			</li>
+			<li class="nav-item">
+				<a style="border-radius: 50px;margin-left:10px" class="nav-link" data-toggle="tab" href="#api"> <i class="ti-pencil-alt"> </i> Alfred API</a>
+			</li>
+		</ul>
+
+		<div class="tab-content no-border" style="height: 100vh; width: 100%">
+			<div id="manual" class="tab-pane active" style="background: none; height: 100%;margin-left: 0px ;margin-right: 0px; width:100%">
+				<embed src="<?php echo base_url(); ?>/assets/home/documents/NL-manual.pdf" height=100% width="100%">
+			</div>
+			<div id="app" class="tab-pane"style="background: none; height: 100%">
+				<embed src="<?php echo base_url(); ?>/assets/home/documents/EN-Manual VENDOR.pdf" height=100% width="100%">
+			</div>
+			<div id="api" class="tab-pane" style="background: none; height: 100%">
+				<embed src="<?php echo base_url(); ?>/assets/home/documents/EN-MANUAL Alfred-API.pdf" height=100% width="100%">
 			</div>
 		</div>
-
-		<div class="background-orange div-no-mobile height-100">
-			<div class="flex-column align-start">
-				<div style="text-align:center">
-					<div style="margin-top: 0px; margin-left: 0px">
-						<img border="0" src="<?php echo base_url(); ?>assets/home/images/tiqscustomer.png" alt="tiqs" width="auto" height="110" />
-					</div>
-					<p style=" font-size: larger; margin-top: 50px; margin-left: 0px"><?php echo $this->language->line("HOMESTART-002A",'WE REUNITE LOST AND FOUND ITEMS <br>WITH THEIR RIGHTFUL OWNERS');?></p>
-				</div>
-				<div style="text-align:center; margin-top: 30px">
-					<img border="0" src="<?php echo base_url(); ?>assets/home/images/dhlpoweredby.png" alt="tiqs" width="auto" height="15" />
-				</div>
-			</div>
-		</div><!-- end col half -->
 	</div>
-
-	<div class="col-half background-orange height-100 div-only-mobile" style="min-height: 100%">
-		<div class="flex-column align-start">
-			<div style="text-align:center">
-				<div style="margin-top: 0px; margin-left: 0px">
-					<img border="0" src="<?php echo base_url(); ?>assets/home/images/tiqscustomer.png" alt="tiqs" width="auto" height="80" />
-				</div>
-				<p style="font-family: caption-light; font-size: larger; margin-top: 50px; margin-left: 30px ; margin-right: 30px"><?php echo $this->language->line("HOMESTART-002C",'WE REUNITE LOST AND FOUND ITEMS <br>WITH THEIR RIGHTFUL OWNERS');?></p>
-			</div>
-			<div style="text-align:center; margin-top: 30px">
-				<img border="0" src="<?php echo base_url(); ?>assets/home/images/dhlpoweredby.png" alt="tiqs" width="auto" height="15" />
-			</div>
-		</div>
-	</div><!-- end col half -->
-
-	<div class="col-half background-blue height-100 div-only-mobile">
-		<div class="flex-column align-start">
-			<div style="text-align:center">
-				<div style="margin-top: 0px; margin-left: 0px">
-					<img border="0" src="<?php echo base_url(); ?>assets/home/images/tiqsbusiness.png" alt="tiqs" width="auto" height="80" />
-				</div>
-				<p style="font-family: caption-light;font-size: larger; margin-top: 50px; margin-left: 30px ; margin-right: 30px"><?php echo $this->language->line("HOMESTART-001A",'THE NUMBER ONE PLATFORM <br> FOR LOST AND FOUND');?></p>
-			</div>
-			<div style="text-align:center; margin-top: 30px">
-				<img border="0" src="<?php echo base_url(); ?>assets/home/images/dhlpoweredby.png" alt="tiqs" width="auto" height="15" />
-			</div>
-		</div>
-	</div><!-- end col half -->
-
-</div>
 </div>
 </body>
 

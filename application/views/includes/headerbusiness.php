@@ -499,7 +499,7 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
                                 <div id="user-title" class="pull-left">
                                     <p style="font-weight: 100; font-size: 100%;padding-top:10px;color: #000;">
                                         <?php echo $this->session->userdata('userId');?> <?php echo $this->session->userdata('name');?>
-										<a href="loggedin">
+										<a href="https://tiqs.com/alfred/loggedin">
 											<image src="<?php echo $this->baseUrl; ?>assets/home/images/manualicon.png" style="width:28px; margin-left: 30px" >
 										</a>
 									</p>
