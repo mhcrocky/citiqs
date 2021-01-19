@@ -490,6 +490,7 @@ $route['events/shop'] = 'Events/shop/$1';
 $route['events/tickets/(:num)'] = 'Events/tickets/$1';
 $route['events/your_tickets'] = 'Events/your_tickets';
 $route['events/pay'] = 'Events/pay';
+$route['events/selectpayment'] = 'Events/selectpayment';
 
 $route['video/get_videos'] = 'Video/get_videos';
 $route['video/delete_video'] = 'Video/delete_video';
