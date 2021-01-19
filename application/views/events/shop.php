@@ -7,7 +7,11 @@
                 height="auto" />
         </div><!-- /.login-logo -->
 
-
+        <?php if($this->session->flashdata('expired')): ?>
+        <div class="alert alert-danger" role="alert">
+            <?php echo $this->session->flashdata('expired'); ?>
+        </div>
+        <?php endif; ?>
 
         <!-- EMXAMPLE HOW TO ADD CSS PROPETY TO ELEMENT IN DESIGN -->
         <h1 style="text-align:center" id="selectTypeH1"><?php //echo $vendor['vendorName'] ?></h1>
