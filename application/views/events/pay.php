@@ -1,35 +1,50 @@
-<div style="text-align: center;" id="header-img" class="w-100" style="text-align:center">
 
-
-    <div class="form-group has-feedback">
-        <img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="250" height="auto" />
-    </div>
-
-</div>
-
-<div class="form">
-    <div class="100">
-        <label class="email">
-            <p class="label-txt">YOUR EMAIL</p>
-            <input type="email" id="email" name="email" class="input">
-            <div class="line-box">
-                <div class="line"></div>
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <div class="login100-form-title" style="background-image: url(<?php echo base_url() ?>assets/home/images/shopping-600x400.jpg);">
+                <span class="login100-form-title-1">
+                <img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="200" height="auto" /> 
             </div>
-        </label>
-        <label class="address">
-            <p class="label-txt">YOUR ADDRESS</p>
-            <input type="text" id="address" name="address" class="input">
-            <div class="line-box">
-                <div class="line"></div>
-            </div>
-        </label>
-        <label>
-            <p class="label-txt">YOUR PHONE NUMBER (OPTIONAL)</p>
-            <input type="text" class="input">
-            <div class="line-box">
-                <div class="line"></div>
-            </div>
-        </label>
-        <button id="pay" class="btn-warning btn-block" type="submit">PAY</button>
+            <form class="login100-form validate-form" action="<?php echo base_url(); ?>events/selectpayment" method="POST">
+                <div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
+                    <span class="label-input100">Email</span>
+                    <input class="input100" type="email" id="email" name="email" placeholder="Email Address" required>
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 validate-input m-b-18" data-validate="Address is required">
+                    <span class="label-input100">Address</span>
+                    <input class="input100" type="text" id="address" name="address" placeholder="Address" required>
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 validate-input m-b-18" data-validate="Phone Number is required">
+                    <span class="label-input100">Phone Number</span>
+                    <input class="input100" type="tel" name="mobileNumber" placeholder="Phone Number (Optional)">
+                    <span class="focus-input100"></span>
+                </div>
+                
+                <!--
+                <div class="flex-sb-m w-full p-b-30">
+                    <div class="contact100-form-checkbox">
+                        <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                        <label class="label-checkbox100" for="ckb1">
+                            
+                        </label>
+                    </div>
+                    <div>
+                        <a href="#" class="txt1">
+                            
+                        </a>
+                    </div>
+                </div>
+                -->
+
+                <div style="width: 100%;" class="w-100 bg-warning mr-right text-right mt-5">
+                    <button id="pay" style="height: 40px;" class="btn btn-primary btn-block mt-2">
+                       <strong> PAY</strong>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
