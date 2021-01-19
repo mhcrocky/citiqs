@@ -33,28 +33,43 @@
         href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/keyboard.css" />
     <?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
+    <?php include_once FCPATH . 'application/views/includes/jsGlobalVariables.php'; ?>
+    <?php if($this->session->tempdata('exp_time')): ?>
+    <script>
+    'use strict';
+    var globalTime = (function() {
+        let globals = {
+            time: '<?php echo $this->session->tempdata('exp_time'); ?>',
+        }
+        Object.freeze(globals);
+        return globals;
+    }());
+    </script>
+    <?php endif; ?>
     <style>
     <?php if(isset($design)) {
-        $bgImage = $design['bgImage'];
+        $bgImage=$design['bgImage'];
         $design=$design['selectType'];
-        echo "body{background-image: url('".$this->baseUrl . "assets/images/backGroundImages/" . $bgImage."') !important;
-            background-size: cover;
-            }";
-        $design_ids=$design['id'];
+        echo "body{background-image: url('".$this->baseUrl . "assets/images/backGroundImages/". $bgImage."') !important;
+background-size: cover;
+    }
 
-        foreach($design_ids as $key=> $design_id) {
-            echo '#'. $key . '{';
-            echo array_keys($design_id)[0].':';
-            echo array_values($design_id)[0].'!important } ';
-        }
+    ";
+$design_ids=$design['id'];
 
-        $design_classes=$design['class'];
+    foreach($design_ids as $key=> $design_id) {
+        echo '#'. $key . '{';
+        echo array_keys($design_id)[0].':';
+        echo array_values($design_id)[0].'!important } ';
+    }
 
-        foreach($design_classes as $key=> $design_class) {
-            echo '.'. $key . '{';
-            echo array_keys($design_class)[0].':';
-            echo array_values($design_class)[0].'!important } ';
-        }
+    $design_classes=$design['class'];
+
+    foreach($design_classes as $key=> $design_class) {
+        echo '.'. $key . '{';
+        echo array_keys($design_class)[0].':';
+        echo array_values($design_class)[0].'!important } ';
+    }
     }
 
     ?>html,
