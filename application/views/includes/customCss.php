@@ -208,9 +208,10 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/shop-with-slider.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/order-popup.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/makeOrderUpdate.css" />
-<?php  } elseif ($this->view === 'events/pay' || $this->view === 'events/your_tickets') { ?>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/ticket-pay.css" />
-    
-
+<?php  } elseif ($this->view === 'events/your_tickets' || $this->view === 'events/pay') { ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-util.css" />
+<?php  } elseif ($this->view === 'events/selectpayment' || $this->view === 'events/pay') { ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/select-pay.css" />
 <?php } ?>
 

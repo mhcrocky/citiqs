@@ -181,7 +181,11 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/videoDataTable.js"></script>
 	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 	<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
-<?php } elseif ($this->view === 'events/pay') { ?>
-    <script src="<?php echo $this->baseUrl; ?>assets/home/js/ticket-pay.js"></script>
+<?php } elseif ($this->view === 'events/tickets') { ?>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/select-tickets.js"></script>
+<?php } elseif ($this->view === 'events/your_tickets') { ?>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/your-tickets.js"></script>
 <?php } ?>
 
