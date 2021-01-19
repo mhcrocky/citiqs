@@ -119,6 +119,10 @@ class Events extends BaseControllerWeb
             $total = number_format($total, 2, '.', '');
             $this->session->set_tempdata('total', $total, 600);
         }
+        if(!$this->session->tempdata('tickets')){
+            $this->session->set_flashdata('expired', 'Session Expired!');
+            redirect('events/shop');
+        }
    
         $this->loadViews("events/your_tickets", $this->global, '', 'nofooter', 'headerNewShop');
 
@@ -127,8 +131,25 @@ class Events extends BaseControllerWeb
     public function pay()
     {
         $this->global['pageTitle'] = 'TIQS: Pay';
+        if(!$this->session->tempdata('tickets')){
+            $this->session->set_flashdata('expired', 'Session Expired!');
+            redirect('events/shop');
+        }
         $this->loadViews("events/pay", $this->global, '', 'nofooter', 'headerNewShop');
     }
+
+    public function selectpayment()
+    {
+        $userInfo = $this->input->post(null, true);
+        $this->global['pageTitle'] = 'TIQS: Select Payment';
+        $this->session->set_userdata('userInfo', $userInfo);
+        if(!$this->session->tempdata('tickets')){
+            $this->session->set_flashdata('expired', 'Session Expired!');
+            redirect('events/shop');
+        }
+        $this->loadViews("events/selectpayment", $this->global, '', 'nofooter', 'headerNewShop');
+    }
+
 
     public function save_event()
     {
