@@ -1,4 +1,6 @@
 <div class='checkout-message' style='margin-top: 100px; margin-bottom: 100px;'>
+
+
 	<h2>CONFIRMATION</h2>
 	<div class="checkout-message__content">
 		<h3>Your&nbsp;Order was</h3>
@@ -10,6 +12,11 @@
                 <?php
                     $amount = floatval($order['orderAmount']) + floatval($order['serviceFee']);
                 ?>
+
+				<script>
+					fbq('track', 'Purchase', {currency: "EUR", value: "<?php echo number_format($amount, 2, '.', ''); ?>"});
+				</script>
+
                 <h3>amount: <span class='checkout-message__amount'><?php echo number_format($amount, 2, '.', ''); ?></span></h3>
                 <?php if (floatval($order['waiterTip'])) { ?>
                     <h3>tip: <span class='checkout-message__amount'><?php echo number_format($order['waiterTip'], 2, '.', ''); ?></span></h3>
