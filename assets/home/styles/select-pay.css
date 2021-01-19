@@ -1,0 +1,98 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,700");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css");
+body{background: #ebeeef !important}
+h1.white{
+  font-family: 'Montserrat', sans-serif;
+  margin:30px 20px 50px;
+  color:#fff;
+  text-transform:uppercase;
+}
+.serviceBox{
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.serviceBox .service-icon{
+    color: #fff;
+    background: #fff;
+    font-size: 45px;
+    line-height: 100px;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 30px;
+    border-radius: 50%;
+    box-shadow: 5px 0 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.serviceBox .service-icon:before,
+.serviceBox .service-icon:after{
+    content: "";
+    background: linear-gradient(to right, #F09119 50%, transparent 50%);
+    border-radius: 50%;
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    z-index: -1;
+  transition: all ease 0.8s;
+}
+.serviceBox:hover .service-icon:before, .serviceBox:hover .service-icon:after {
+    transform: rotateZ(180deg);
+}
+.serviceBox:hover .service-icon {
+    box-shadow: -5px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.serviceBox .service-icon:after{
+    background: #F09119;
+    box-shadow: 0 7px 15px rgba(0, 0, 0, 0.3);
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+}
+.serviceBox {
+    border: 1px solid #e5e4e4;
+    padding: 40px;
+    border-radius: 20px;
+    background: #f9f9f9;
+    position: relative;
+    z-index: 1;
+}
+
+
+.serviceBox .title{
+    color: #F1921A;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+}
+
+.serviceBox .description{
+    color: #777;
+    font-size: 15px;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+.serviceBox.red .service-icon:before{ background: linear-gradient(to right, #E34A3A 50%, transparent 50%); }
+.serviceBox.red .service-icon:after{ background: #E34A3A; }
+.serviceBox.red .title{ color: #E34A3A; }
+
+.serviceBox.blue .service-icon:before{ background: linear-gradient(to right, #009CB5 50%, transparent 50%); }
+.serviceBox.blue .service-icon:after{ background: #009CB5; }
+.serviceBox.blue .title{ color: #009CB5; }
+
+.serviceBox.green .service-icon:before{ background: linear-gradient(to right, #A1C52D 50%, transparent 50%); }
+.serviceBox.green .service-icon:after{ background: #A1C52D; }
+.serviceBox.green .title{ color: #A1C52D; }
+
+@media only screen and (max-width:990px){
+    .serviceBox{ margin: 0 0 30px; }
+}
