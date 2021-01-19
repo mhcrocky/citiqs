@@ -7,9 +7,15 @@
     </div>
 
 </div>
+<form action="<?php echo base_url(); ?>events/your_tickets" method="POST">
 <?php if (!empty($tickets)) : ?>
+    <input type="hidden" id="current_time" name="current_time" value="">
 <div class="shop__item-list selectedSpotBackground full-height">
     <?php foreach ($tickets as $ticket): ?>
+    <input type="hidden" id="quantity_<?php echo $ticket['ticketId']; ?>" name="quantity[]" value="0">
+    <input type="hidden" name="id[]" value="<?php echo $ticket['ticketId']; ?>">
+    <input type="hidden" name="descript[]" value="<?php echo $ticket['ticketDescription']; ?>">
+    <input type="hidden" name="price[]" value="<?php echo $ticket['ticketPrice']; ?>">
     <div class="shop__single-item">
         <div class="shop__single-item__info">
             <!-- wrapped long description and title -->
@@ -64,7 +70,7 @@
                 </div>
                 <!--				<div class="col-12 col-md-6 text-center text-right-md">-->
                 <div style="background: red !important;" class="col-12 text-center text-right-md">
-                    <button class="button-main button-secondary bottom-bar__checkout payButton" onclick="checkout(0)"
+                    <button type="submit" class="button-main button-secondary bottom-bar__checkout payButton"
                         style="width:100%">PAY</button>
                 </div>
             </div>
@@ -74,8 +80,10 @@
 
 </div>
 <?php endif; ?>
-
+</form>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script>
+
 function removeOrder(id, price) {
     var quantityValue = $("#orderQuantityValue_" + id).text();
     var totalPrice = $(".totalPrice").text()
@@ -88,6 +96,7 @@ function removeOrder(id, price) {
     quantityValue--;
     totalPrice = totalPrice - price;
     $("#orderQuantityValue_" + id).text(quantityValue);
+    $("#quantity_"+id).val(quantityValue);
     return $(".totalPrice").text(totalPrice.toFixed(2));
 }
 
@@ -104,6 +113,15 @@ function addOrder(id, limit, price) {
     quantityValue++;
     totalPrice = totalPrice + price;
     $("#orderQuantityValue_" + id).text(quantityValue);
+    $("#quantity_"+id).val(quantityValue);
     return $(".totalPrice").text(totalPrice.toFixed(2));
 }
+$(document).ready(function(){
+    setInterval(() => {
+    var CurrentDate = moment().format();
+    $("#current_time").val(CurrentDate);
+   
+}, 1000);
+});
+
 </script>
