@@ -71,15 +71,58 @@ class Events extends BaseControllerWeb
 
     public function tickets($eventId)
     {
+        $this->session->unset_userdata("event_date");
         $this->global['pageTitle'] = 'TIQS: Step Two';
         $design = $this->event_model->get_design($this->session->userdata('userId'));
         $this->global['design'] = unserialize($design[0]['shopDesign']);
+        $event = $this->event_model->get_event($this->vendor_id,$eventId);
+        $event_start =  date_create($event->StartDate . " " . $event->StartTime);
+        $event_end = date_create($event->EndDate . " " . $event->EndTime);
+        $event_date = date_format($event_start, "d M Y H:i") . " - ". date_format($event_end, "d M Y H:i");
+        $this->session->set_userdata("event_date",$event_date);
         $data = [
             'tickets' => $this->event_model->get_tickets($this->vendor_id,$eventId),
             'eventId' => $eventId
         ];
         $this->loadViews("events/tickets", $this->global, $data, null, 'headerNewShop');
 
+    }
+
+    public function your_tickets()
+    {
+        $this->global['pageTitle'] = 'TIQS: Your Tickets';
+        $results = $this->input->post(null, true);
+        if(count($results) > 0){
+            $quantities = $results['quantity'];
+            $id = $results['id'];
+            $descript = $results['descript'];
+            $price = $results['price'];
+            $tickets = [];
+            foreach($quantities as $key => $quantity){
+                if($quantity == '0'){ continue; }
+                    $tickets[] = [
+                        'id' => $id[$key],
+                        'descript' => $descript[$key],
+                        'quantity' => $quantity,
+                        'price' => $price[$key],
+                        'amount' => floatval($price[$key])*floatval($quantity)
+                    ];
+            }
+            
+            $this->session->set_tempdata('tickets', $tickets, 600);
+            $current_time = date($results['current_time']);
+            $newTime = date("Y-m-d H:i:s",strtotime("$current_time +10 minutes"));
+            $this->session->set_tempdata('exp_time', $newTime, 600);
+        }
+   
+        $this->loadViews("events/your_tickets", $this->global, '', 'nofooter', 'headerNewShop');
+
+    }
+
+    public function pay()
+    {
+        $this->global['pageTitle'] = 'TIQS: Pay';
+        $this->loadViews("events/pay", $this->global, '', 'nofooter', 'headerNewShop');
     }
 
     public function save_event()
@@ -150,11 +193,11 @@ class Events extends BaseControllerWeb
 
     }
 
-    public function save_ticket_options()
+    public function save_ticket_options($eventId)
     {
         $data = $this->input->post(null, true);
         $this->event_model->save_ticket_options($data);
-        redirect('events/event');
+        redirect('events/event/'.$eventId);
 
     }
 
