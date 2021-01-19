@@ -294,6 +294,7 @@
             $response = Connections_helper::sendGetRequest($getUrl, $headers);
             if (is_null($response)) {
                 $response = Connections_helper::getFailedResponse(Error_messages_helper::$NO_DATA_RETURN);
+                $response = (object) $response;
             }
             return $response;
         }
@@ -304,6 +305,7 @@
             $response = Connections_helper::sendPostRequest($postUrl, $buyer, $headers);
             if (is_null($response)) {
                 $response = Connections_helper::getFailedResponse(Error_messages_helper::$NO_DATA_RETURN);
+                $response = (object) $response;
             }
             return $response;
         }
@@ -314,6 +316,7 @@
             $response = Connections_helper::sendPutRequest($putUrl, json_encode([$buyer]), $headers);
             if (is_null($response)) {
                 $response = Connections_helper::getFailedResponse(Error_messages_helper::$NO_DATA_RETURN);
+                $response = (object) $response;
             }
             return $response;
         }
@@ -494,6 +497,8 @@
                 'serviceFee' => $order['serviceFee'],
                 'paid' => $order['isPaid'],
                 'created' => $order['time'],
+                'apiKeyId' => $vendor['apiKeyId'],
+                'paymentType' => $vendor['apiName']
             ];
 
             $insertOrder['waiterTip'] = isset($order['waiterTip']) ? $order['waiterTip'] : 0;

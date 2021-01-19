@@ -37,6 +37,7 @@
         public $orderRandomKey;
         public $bbOrderPrint;
         public $apiIdentifier;
+        public $apiKeyId;
 
         private $table = 'tbl_shop_orders';
 
@@ -102,6 +103,7 @@
             if (isset($data['orderRandomKey']) && !Validate_data_helper::validateString($data['orderRandomKey'])) return false;
             if (isset($data['bbOrderPrint']) && !($data['bbOrderPrint'] === '1' || $data['bbOrderPrint'] === '0')) return false;
             if (isset($data['apiIdentifier']) && !Validate_data_helper::validateString($data['apiIdentifier'])) return false;
+            if (isset($data['apiKeyId']) && !Validate_data_helper::validateInteger($data['apiKeyId'])) return false;
 
             return true;
         }
