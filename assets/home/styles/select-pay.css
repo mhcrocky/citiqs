@@ -96,3 +96,29 @@ h1.white{
 @media only screen and (max-width:990px){
     .serviceBox{ margin: 0 0 30px; }
 }
+
+.hidden {
+    display: none;
+}
+.half-col {
+    width: 40%;
+    margin-left: 15px;
+    margin-left: 15px;
+    display: inline-block;
+}
+.img-w-150 {
+    max-width: 150px;
+    width:100%;
+}
+.img-w-89 {
+    max-width: 89px;
+    width:100%;
+}
+@media only screen and (max-width: 600px) {
+.title {
+    font-size: 100% !important;
+}
+.img-w-89 {
+    width: 50px;
+}
+}
