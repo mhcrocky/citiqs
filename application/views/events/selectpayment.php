@@ -1,3 +1,8 @@
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
 <div style="text-align: center;" id="header-img" class="w-100" style="text-align:center">
 
 
@@ -6,8 +11,43 @@
     </div>
 
 </div>
-<div class="container-fluid">
-    <h1 class="white text-center">Select Payment</h1>
+<div class="container-fluid selectPayment pr-5 pl-5">
+    <h1 style="color: #F1921A !important;" class="white text-center yellow">Select Payment</h1>
+    <div class="row">
+
+        <div class="col-md-6 col-sm-6 mb-4">
+            <div class="serviceBox blue">
+            <img src="https://tiqs.com/alfred/assets/home/imgs/extra/ideal.png" alt="iDEAL">
+                <h3 class="title"><a id="iDeal" href="#">iDEAL</a></h3>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-6 mb-4">
+            <div class="serviceBox blue">
+            <img src="https://tiqs.com/alfred/assets/home/imgs/extra/bancontact.png" alt="bancontact">
+                <h3 class="title">Bancontact</h3>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-6 mb-4">
+            <div class="serviceBox blue">
+            <img style="width: 150px" src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Pay at waiter" />
+                <h3 class="title">Pay at waiter</h3>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 mb-4">
+            <div class="serviceBox blue">
+            <img style="width: 89px" src="<?php echo base_url() . 'assets/home/images/voucher.png'; ?>" alt="voucher" >
+                <h3 class="title">gebruik Voucher</h3>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<div class="container-fluid iDeal hidden">
+    <h1 style="color: #F1921A !important;" class="white text-center">Select Payment</h1>
     <div class="row">
         <div class="col-md-3 col-sm-6 mb-4">
             <div class="serviceBox blue">
@@ -94,5 +134,22 @@
             </div>
         </div>
 
+        <div class="w-100 text-center font-weight-bold mb-5 p-3">
+            <h3 class="title">
+                <a class="text-primary" id="backPayment" href="javascript:;">Back to payment method</a>
+            </h3>
+        </div>
+
     </div>
 </div>
+
+<script>
+    $("#iDeal").on("click", function(){
+        $(".iDeal").removeClass("hidden");
+        $(".selectPayment").addClass("hidden");
+    });
+    $("#backPayment").on("click", function(){
+        $(".iDeal").addClass("hidden");
+        $(".selectPayment").removeClass("hidden");
+    });
+</script>
