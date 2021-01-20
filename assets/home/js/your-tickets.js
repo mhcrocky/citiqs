@@ -13,7 +13,9 @@ var x = setInterval(function() {
     document.getElementById("timer").innerHTML =
         "Expiration time: " + addZero(minutes) + ":" + addZero(seconds) + "";
     if (minutes == 0 && seconds == 0) {
-        window.location.href = globalVariables.baseUrl + "events/your_tickets";
+        setTimeout(() => {
+            window.location.href = globalVariables.baseUrl + "events/your_tickets";
+        }, 3000);
     }
     $('.limiter').css('visibility', 'visible');
 
