@@ -1,12 +1,7 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
-include(APPPATH . '/libraries/koolreport/core/autoload.php');
 
 require APPPATH . '/libraries/BaseControllerWeb.php';
-
-use \koolreport\drilldown\DrillDown;
-use \koolreport\widgets\google\ColumnChart;
-use \koolreport\clients\Bootstrap;
 
 class Events extends BaseControllerWeb
 {
@@ -16,7 +11,8 @@ class Events extends BaseControllerWeb
         parent::__construct();
         $this->load->model('event_model');
         $this->load->helper('country_helper');
-		$this->load->library('language', array('controller' => $this->router->class));
+        $this->load->library('language', array('controller' => $this->router->class));
+        
 		$this->isLoggedIn();
 		$this->vendor_id = $this->session->userdata("userId");
     } 
@@ -58,100 +54,6 @@ class Events extends BaseControllerWeb
         
 
     }
-
-    public function shop()
-    {
-        $this->global['pageTitle'] = 'TIQS: Shop';
-        $design = $this->event_model->get_design($this->session->userdata('userId'));
-        $this->global['design'] = unserialize($design[0]['shopDesign']);
-        $data['events'] = $this->event_model->get_events($this->vendor_id);
-        $this->loadViews("events/shop", $this->global, $data, null, 'headerNewShop');
-
-    }
-
-    public function tickets($eventId)
-    {
-        $this->session->unset_userdata("event_date");
-        $this->global['pageTitle'] = 'TIQS: Step Two';
-        $design = $this->event_model->get_design($this->session->userdata('userId'));
-        $this->global['design'] = unserialize($design[0]['shopDesign']);
-        $event = $this->event_model->get_event($this->vendor_id,$eventId);
-        $event_start =  date_create($event->StartDate . " " . $event->StartTime);
-        $event_end = date_create($event->EndDate . " " . $event->EndTime);
-        $event_date = date_format($event_start, "d M Y H:i") . " - ". date_format($event_end, "d M Y H:i");
-        $this->session->set_userdata("event_date",$event_date);
-        $this->session->set_userdata("eventImage",$event->eventImage);
-        $data = [
-            'tickets' => $this->event_model->get_tickets($this->vendor_id,$eventId),
-            'eventId' => $eventId,
-            'eventImage' => $event->eventImage
-        ];
-        $this->loadViews("events/tickets", $this->global, $data, null, 'headerNewShop');
-
-    }
-
-    public function your_tickets()
-    {
-        $this->global['pageTitle'] = 'TIQS: Your Tickets';
-        $results = $this->input->post(null, true);
-        if(count($results) > 0){
-            $total = 0;
-            $quantities = $results['quantity'];
-            $id = $results['id'];
-            $descript = $results['descript'];
-            $price = $results['price'];
-            $tickets = [];
-            foreach($quantities as $key => $quantity){
-                if($quantity == '0'){ continue; }
-                $amount = floatval($price[$key])*floatval($quantity);
-                $total = $total + $amount;
-                    $tickets[] = [
-                        'id' => $id[$key],
-                        'descript' => $descript[$key],
-                        'quantity' => $quantity,
-                        'price' => $price[$key],
-                        'amount' => $amount
-                    ];
-            }
-            
-            $this->session->set_tempdata('tickets', $tickets, 600);
-            $current_time = date($results['current_time']);
-            $newTime = date("Y-m-d H:i:s",strtotime("$current_time +10 minutes"));
-            $this->session->set_tempdata('exp_time', $newTime, 600);
-            $total = number_format($total, 2, '.', '');
-            $this->session->set_tempdata('total', $total, 600);
-        }
-        if(!$this->session->tempdata('tickets')){
-            $this->session->set_flashdata('expired', 'Session Expired!');
-            redirect('events/shop');
-        }
-   
-        $this->loadViews("events/your_tickets", $this->global, '', 'nofooter', 'headerNewShop');
-
-    }
-
-    public function pay()
-    {
-        $this->global['pageTitle'] = 'TIQS: Pay';
-        if(!$this->session->tempdata('tickets')){
-            $this->session->set_flashdata('expired', 'Session Expired!');
-            redirect('events/shop');
-        }
-        $this->loadViews("events/pay", $this->global, '', 'nofooter', 'headerNewShop');
-    }
-
-    public function selectpayment()
-    {
-        $userInfo = $this->input->post(null, true);
-        $this->global['pageTitle'] = 'TIQS: Select Payment';
-        $this->session->set_userdata('userInfo', $userInfo);
-        if(!$this->session->tempdata('tickets')){
-            $this->session->set_flashdata('expired', 'Session Expired!');
-            redirect('events/shop');
-        }
-        $this->loadViews("events/selectpayment", $this->global, '', 'nofooter', 'headerNewShop');
-    }
-
 
     public function save_event()
     {
@@ -260,7 +162,7 @@ class Events extends BaseControllerWeb
         $data = [ 
             'id' => $id,
             'vendorId' => $this->vendor_id,
-            'iframeSrc' => base_url() . 'events/shop',
+            'iframeSrc' => base_url() . 'events/shop/' . $this->session->userdata('shortUrl'),
             'design' => unserialize($design[0]['shopDesign']),
             'devices' => $this->bookandpayagendabooking_model->get_devices(),
             'analytics' => $this->shopvendor_model->setObjectId($id)->getVendorAnalytics()

@@ -89,4 +89,25 @@ class Event_model extends CI_Model {
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+
+	function save_event_reservations($userInfo, $tickets, $customer){
+		$data = [];
+		foreach($tickets as $ticket){
+			$set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKLMNPQRSTVWXY';
+			$reservationId = 'T-' . substr(str_shuffle($set), 0, 16);
+			$data[] = [
+				'reservationId' => $reservationId,
+				'customer' => $customer,
+				'eventId' => $ticket['id'],
+				'eventdate' => $ticket['startDate'],
+				'timefrom' => $ticket['startTime'],
+				'timeto' => $ticket['endTime'],
+				'price' => $ticket['price'],
+				'numberofpersons' => $ticket['quantity'],
+				'email' => $userInfo['email'],
+				'mobilephone' => $userInfo['mobileNumber'],
+			];
+		}
+		 return $this->db->insert_batch('tbl_bookandpay',$data);
+	}
 }
