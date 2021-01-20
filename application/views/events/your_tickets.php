@@ -15,6 +15,10 @@
 <div style="visibility: hidden;" class="limiter">
     <div class="container-login100">
         <div style="text-align: center;" class="wrap-login100">
+            <div style="background: #fff !important;">
+                <img style="width:100%" class="image-responsive"
+                    src="<?php echo base_url() ?>assets/images/events/<?php echo $this->session->userdata("eventImage"); ?>">
+            </div>
             <div class="login100-form-title">
                 <span class="login100-form-title-1">
                     <?php if($this->session->has_userdata('event_date')): ?>

@@ -1,3 +1,4 @@
+
 <div style="background:red;text-align: center;" id="header-img" class="w-100" style="text-align:center">
 
 
@@ -10,6 +11,7 @@
     <?php if (!empty($tickets)) : ?>
     <input type="hidden" id="current_time" name="current_time" value="">
     <div class="shop__item-list selectedSpotBackground full-height">
+        <img style="width: 100%;" class="img-responsive" src="<?php echo base_url(); ?>assets/images/events/<?php echo $eventImage; ?>" >
         <?php foreach ($tickets as $ticket): ?>
         <input type="hidden" id="quantity_<?php echo $ticket['ticketId']; ?>" name="quantity[]" value="0">
         <input type="hidden" name="id[]" value="<?php echo $ticket['ticketId']; ?>">
