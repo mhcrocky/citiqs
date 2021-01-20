@@ -1,12 +1,11 @@
-
 <div class="limiter">
     <div class="container-login100">
-        <div class="wrap-login100">
-            <div class="login100-form-title" style="background-image: url(<?php echo base_url() ?>assets/home/images/shopping-600x400.jpg);">
-                <span class="login100-form-title-1">
-                <img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="200" height="auto" /> 
+        <div style="background: #fff !important;" class="wrap-login100">
+            <div style="background: #fff !important;">
+                <img style="width:100%" class="image-responsive" src="<?php echo base_url() ?>assets/images/events/<?php echo $this->session->userdata("eventImage"); ?>">
             </div>
-            <form class="login100-form validate-form" action="<?php echo base_url(); ?>events/selectpayment" method="POST">
+            <form class="login100-form validate-form" action="<?php echo base_url(); ?>events/selectpayment"
+                method="POST">
                 <div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
                     <span class="label-input100">Email</span>
                     <input class="input100" type="email" id="email" name="email" placeholder="Email Address" required>
@@ -22,7 +21,7 @@
                     <input class="input100" type="tel" name="mobileNumber" placeholder="Phone Number (Optional)">
                     <span class="focus-input100"></span>
                 </div>
-                
+
                 <!--
                 <div class="flex-sb-m w-full p-b-30">
                     <div class="contact100-form-checkbox">
@@ -41,7 +40,7 @@
 
                 <div style="width: 100%;" class="w-100 bg-warning mr-right text-right mt-5">
                     <button id="pay" style="height: 40px;" class="btn btn-primary btn-block mt-2">
-                       <strong> PAY</strong>
+                        <strong> PAY</strong>
                     </button>
                 </div>
             </form>
