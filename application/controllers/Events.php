@@ -80,9 +80,11 @@ class Events extends BaseControllerWeb
         $event_end = date_create($event->EndDate . " " . $event->EndTime);
         $event_date = date_format($event_start, "d M Y H:i") . " - ". date_format($event_end, "d M Y H:i");
         $this->session->set_userdata("event_date",$event_date);
+        $this->session->set_userdata("eventImage",$event->eventImage);
         $data = [
             'tickets' => $this->event_model->get_tickets($this->vendor_id,$eventId),
-            'eventId' => $eventId
+            'eventId' => $eventId,
+            'eventImage' => $event->eventImage
         ];
         $this->loadViews("events/tickets", $this->global, $data, null, 'headerNewShop');
 
