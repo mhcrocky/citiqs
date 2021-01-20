@@ -142,6 +142,7 @@ class Businessreport extends BaseControllerWeb
 				'username' => $val[0]['username'],
 				'email' => $val[0]['email'],
 				//'price'=>$total_price,
+				'paymenttype' => $val[0]['paymenttype'],
 				'child'=>$val
 			];
 			
