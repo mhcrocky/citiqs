@@ -116,8 +116,13 @@ h1.white{
 }
 @media only screen and (max-width: 600px) {
 .title {
+    font-size: 12px !important;
+}
+
+h1.yellow {
     font-size: 100% !important;
 }
+
 .img-w-89 {
     width: 50px;
 }

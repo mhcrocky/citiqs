@@ -1,16 +1,7 @@
-<div style="text-align: center;" id="header-img" class="w-100" style="text-align:center">
 
 
-    <div class="form-group has-feedback">
-        <img class="img-w-150" src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs"
-            width="250" height="auto" />
-    </div>
-
-</div>
-
-
-<div id="selectPayment" class="container-fluid selectPayment pr-5 pl-5 mx-auto">
-    <h1 style="color: #F1921A !important;" class="white text-center yellow">Select Payment</h1>
+<div id="selectPayment" class="container-fluid selectPayment pr-5 pl-5 mx-auto mb-5">
+    <h1 style="color: #F1921A !important; font-size: 24px;" class="white text-center yellow">Select Payment</h1>
     <div class="row mx-auto">
 
         <div class="col-md-8 col-sm-12 serviceBox blue mx-auto">
@@ -49,7 +40,7 @@
     </div>
 </div>
 <div id="iDeal" class="container-fluid iDeal hidden mx-auto">
-    <h1 style="color: #F1921A !important;" class="white text-center">Select Payment</h1>
+    <h1 style="color: #F1921A !important;" class="white text-center yellow">Select Payment</h1>
     <div class="row mx-auto">
         <div class="col-md-8 col-sm-12 serviceBox blue mb-4 mx-auto">
             <div class="half-col mb-4">
@@ -121,7 +112,7 @@
         </div>
 
         <div class="w-100 text-center font-weight-bold mb-5 p-3">
-            <h3 class="title">
+            <h3 style="font-size: 20px;" class="title">
                 <a class="text-primary" id="backPayment" href="#selectPayment">Back to payment method</a>
             </h3>
         </div>

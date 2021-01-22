@@ -1,3 +1,4 @@
+
 <div class="limiter">
     <div class="container-login100">
         <div style="background: #fff !important;" class="wrap-login100">
@@ -38,9 +39,9 @@
                 </div>
                 -->
 
-                <div style="width: 100%;" class="w-100 bg-warning mr-right text-right mt-5">
-                    <button id="pay" style="height: 40px;" class="btn btn-primary btn-block mt-2">
-                        <strong> PAY</strong>
+                <div style="width: 100%;" class="w-100 mr-right text-right mt-5">
+                    <button id="pay" class="btn btn-danger btn-lg btn-block mt-2">
+                        PAY
                     </button>
                 </div>
             </form>

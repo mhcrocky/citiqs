@@ -5,7 +5,6 @@ require APPPATH . '/libraries/BaseControllerWeb.php';
 
 class Booking_events extends BaseControllerWeb
 {
-    private $vendor_id;
     function __construct()
     {
         parent::__construct();
@@ -33,7 +32,7 @@ class Booking_events extends BaseControllerWeb
         $design = $this->event_model->get_design($customer->id);
         $this->global['design'] = unserialize($design[0]['shopDesign']);
         $data['events'] = $this->event_model->get_events($customer->id);
-        $this->loadViews("events/shop", $this->global, $data, null, 'headerNewShop');
+        $this->loadViews("events/shop", $this->global, $data, 'footerShop', 'headerShop');
 
     }
 
@@ -57,9 +56,10 @@ class Booking_events extends BaseControllerWeb
         $data = [
             'tickets' => $this->event_model->get_tickets($vendor_id,$eventId),
             'eventId' => $eventId,
+            'eventName' => $event->eventname,
             'eventImage' => $event->eventImage
         ];
-        $this->loadViews("events/tickets", $this->global, $data, null, 'headerNewShop');
+        $this->loadViews("events/tickets", $this->global, $data, 'footerShop', 'headerShop');
 
     }
 
@@ -92,7 +92,6 @@ class Booking_events extends BaseControllerWeb
                         'endTime' => $this->session->userdata("endTime")
                     ];
             }
-            var_dump($tickets);
             
             $this->session->set_tempdata('tickets', $tickets, 600);
             $current_time = date($results['current_time']);
@@ -106,7 +105,7 @@ class Booking_events extends BaseControllerWeb
             redirect('events/shop/'. $this->session->userdata('shortUrl'));
         }
    
-        $this->loadViews("events/your_tickets", $this->global, '', 'nofooter', 'headerNewShop');
+        $this->loadViews("events/your_tickets", $this->global, '', 'footerShop', 'headerShop');
 
     }
 
@@ -117,7 +116,7 @@ class Booking_events extends BaseControllerWeb
             $this->session->set_flashdata('expired', 'Session Expired!');
             redirect('events/shop/'. $this->session->userdata('shortUrl'));
         }
-        $this->loadViews("events/pay", $this->global, '', 'nofooter', 'headerNewShop');
+        $this->loadViews("events/pay", $this->global, '', 'footerShop', 'headerShop');
     }
 
     public function selectpayment()
@@ -132,7 +131,7 @@ class Booking_events extends BaseControllerWeb
             $this->session->set_flashdata('expired', 'Session Expired!');
             redirect('events/shop/'. $this->session->userdata('shortUrl'));
         }
-        $this->loadViews("events/selectpayment", $this->global, '', 'nofooter', 'headerNewShop');
+        $this->loadViews("events/selectpayment", $this->global, '', 'footerShop', 'headerShop');
     }
 
 

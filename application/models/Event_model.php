@@ -104,8 +104,8 @@ class Event_model extends CI_Model {
 				'timeto' => $ticket['endTime'],
 				'price' => $ticket['price'],
 				'numberofpersons' => $ticket['quantity'],
-				'email' => $userInfo['email'],
-				'mobilephone' => $userInfo['mobileNumber'],
+				'email' => isset($userInfo['email']),
+				'mobilephone' => isset($userInfo['mobileNumber']),
 			];
 		}
 		 return $this->db->insert_batch('tbl_bookandpay',$data);

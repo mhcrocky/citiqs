@@ -1,61 +1,53 @@
-<main class="main-wrapper-nh" style="text-align:center;height: auto;">
-    <div class="background-apricot-blue height-100 designBackgroundImage" id="selectTypeBody"
-        style="width:100vw; height:100vh">
+<!-- HERO SECTION -->
+<section class='hero-section position-relative'>
+    <div class="d-none d-md-flex col-6 px-0 hero__background">
+        <img src="<?php echo base_url(); ?>assets/images/bf82f6956a32819af48c2572243e8286.jpg" alt="">
+    </div>
 
-        <div id="img-header" class="form-group has-feedback">
-            <img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="250"
-                height="auto" />
-        </div><!-- /.login-logo -->
-
-        <?php if($this->session->flashdata('expired')): ?>
+    <?php if($this->session->flashdata('expired')): ?>
         <div class="alert alert-danger" role="alert">
             <?php echo $this->session->flashdata('expired'); ?>
         </div>
         <?php endif; ?>
-
-        <!-- EMXAMPLE HOW TO ADD CSS PROPETY TO ELEMENT IN DESIGN -->
-        <h1 style="text-align:center" id="selectTypeH1"><?php //echo $vendor['vendorName'] ?></h1>
-
-
-        <div class="selectWrapper height-100 mb-35">
-            <?php if (!empty($events)): ?>
-            <div class="middle">
-                <?php foreach ($events as $event): ?>
-                <div class="col-md-4 places" style="background-color: none;margin-bottom: 10px !important;">
-                    <div class="card mb-4 shadow-sm">
-                        <!-- <img src="--><?php //echo $directory['image']; ?>
-                        <!--" class="bd-placeholder-img card-img-top" -->
-
-                        <img src="<?php echo base_url(); ?>assets/images/events/<?php echo $event['eventImage']; ?>"
-                            class="bd-placeholder-img card-img-top card-img-top-2" height="220px" width="100%"
-                            alt="<?php echo $event['eventname']; ?>" />
-
-                        <div class="card-body card-body-2 card-body-color card-b text-center" style="background-color: #0d173b">
-
-                            <p class="pb-2 font-weight-bold text-size" style="font-size: 24px;color: antiquewhite;">
-                                <?php echo $event['eventname']; ?></p>
-                            <p id="description" class="pb-2 font-weight-bold distance" style="font-size: 24px;color: antiquewhite;">
-                                <?php echo $event['eventdescript']; ?></p>
-                            <span style="color: antiquewhite;"></span>
-                            <div class="social-links align-items-center pt-3">
-                                <a class="contact-link"
-                                    href="<?php echo base_url(); ?>events/tickets/<?php echo $event['id']; ?>"
-                                    >
-                                    <button data-brackets-id="2918" type="submit" class="button button-orange">ORDER
-                                        HERE</button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+    <!-- end col -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <h1>Our Events</h1>
+                <p class='text-muted mt-4 mb-5'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sagittis
+                    at est ut facilisis. Suspendisse eu luctus mauris.</p>
+                <div class='d-flex flex-column flex-sm-row align-items-start flex-wrap'>
+                    <a href="#events" class="btn btn-primary btn-lg bg-primary px-4 mr-sm-3 mt-3">Events</a>
+                    <a href="#event" class="btn btn-secondary btn-lg bg-secondary px-4 mt-3">Order Now</a>
                 </div>
-
-
-
-                <?php endforeach; ?>
             </div>
-            <?php endif; ?>
+            <!-- end col -->
 
         </div>
-    </div>
+        <!-- end row -->
+        <?php if (!empty($events)): ?>
+  
+        <div id="events" class="row single-item__grid">
+        <?php foreach ($events as $event): ?>
+            <div class="col-12 col-sm-6 col-md-3 single-item mb-4 mb-md-0">
+                <a href="<?php echo base_url(); ?>events/tickets/<?php echo $event['id']; ?>" class='single-item'>
+                    <div class="single-item__image">
+                        <img src="<?php echo base_url(); ?>assets/images/events/<?php echo $event['eventImage']; ?>" alt="">
+                        <p class='single-item__promotion'>Order Now</p>
+                    </div>
+                    <div class="single-item__content">
+                        <p class='mb-0'><?php echo $event['eventname']; ?></p>
+                        <div>
+                            <span class='single-item__price'><?php echo $event['eventdescript']; ?></span>
+                        </div>
+                    </div>
+                </a>
+            </div>
 
-</main>
+        <?php endforeach; ?>
+        </div>
+        <?php endif; ?>
+        <!-- end row -->
+    </div>
+</section>
+<!-- END HERO SECTION -->
