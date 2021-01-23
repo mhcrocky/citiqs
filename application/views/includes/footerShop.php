@@ -70,7 +70,7 @@
                 </div>
                 <div>
                     <button type="submit" class="btn btn-primary bg-primary mr-1">Save</button>
-                    <a href="<?php echo base_url(); ?>events/pay" class="btn btn-secondary bg-secondary">Go to Pay</a>
+                    <a <?php if(!$this->session->userdata('tickets')){ echo 'href="#"';} ?> href="<?php echo base_url(); ?>events/pay" class="btn btn-secondary bg-secondary">Go to Pay</a>
                 </div>
             </div>
             </form>
