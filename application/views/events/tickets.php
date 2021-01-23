@@ -20,7 +20,6 @@
                         $checkout_tickets = [];
                         if($this->session->tempdata('tickets')){
                             $checkout_tickets = array_values(array_keys($this->session->tempdata('tickets')));
-                            var_dump($checkout_tickets);
                         }
                          foreach ($tickets as $ticket): 
                               $ticketId = $ticket['ticketId'];
