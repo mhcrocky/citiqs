@@ -92,6 +92,7 @@ class Event_model extends CI_Model {
 
 	function save_event_reservations($userInfo, $tickets, $customer){
 		$data = [];
+		if(!isset($userInfo['email'])){ return ;}
 		foreach($tickets as $ticket){
 			$set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKLMNPQRSTVWXY';
 			$reservationId = 'T-' . substr(str_shuffle($set), 0, 16);
@@ -104,8 +105,8 @@ class Event_model extends CI_Model {
 				'timeto' => $ticket['endTime'],
 				'price' => $ticket['price'],
 				'numberofpersons' => $ticket['quantity'],
-				'email' => isset($userInfo['email']),
-				'mobilephone' => isset($userInfo['mobileNumber']),
+				'email' => $userInfo['email'],
+				'mobilephone' => $userInfo['mobileNumber'],
 			];
 		}
 		 return $this->db->insert_batch('tbl_bookandpay',$data);

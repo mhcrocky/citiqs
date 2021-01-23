@@ -16,7 +16,7 @@
                 </ul>
             </div>
             <!-- end col -->
-            <input type="hidden" id="current_time" name="current_time">
+            <input type="hidden" class="current_time" name="current_time">
             <div class="col-12 col-md-8 pl-md-5">
                 <h4 class="color-primary font-weight-bold mt-4 mt-md-3 mb-2 mb-md-4">
                     <?php echo $this->session->userdata('event_date'); ?></h4>

@@ -1,7 +1,11 @@
+html{
+	overflow-y: scroll;
+	scroll-behavior: smooth;
+}
+
 body{
 	font-family: 'DM Sans', sans-serif;
 	font-size: 18px;
-	scroll-behavior: smooth;
 }
 
 /* typography */
@@ -815,6 +819,10 @@ transition: all .5s ease-out;
 		.option-group .custom-checkbox, .option-group .custom-radio,
 		.option-group .form-group{
 			width: 100%;
+		}
+
+		h4.total {
+			font-size: 100% !important;
 		}
 		
 		

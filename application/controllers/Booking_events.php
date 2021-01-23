@@ -16,8 +16,9 @@ class Booking_events extends BaseControllerWeb
     {
         $this->load->model('user_model');
         $this->session->unset_userdata('customer');
+        $this->global['pageTitle'] = 'TIQS: Shop';
         $customer = $this->user_model->getUserInfoByShortUrl($shortUrl);
-
+        
         if (!$shortUrl) {
             redirect('https://tiqs.com/info');
         }
@@ -26,11 +27,17 @@ class Booking_events extends BaseControllerWeb
             redirect('https://tiqs.com/info');
         }
 
+        if($this->session->userdata('shortUrl') != $shortUrl){
+            $this->session->unset_userdata('tickets');
+            $this->session->unset_userdata('exp_time');
+        }
+
         $this->session->set_userdata('customer', $customer->id);
         $this->session->set_userdata('shortUrl', $shortUrl);
-        $this->global['pageTitle'] = 'TIQS: Shop';
         $design = $this->event_model->get_design($customer->id);
-        $this->global['design'] = unserialize($design[0]['shopDesign']);
+        if(isset($design[0])){
+            $this->global['design'] = unserialize($design[0]['shopDesign']);
+        }
         $data['events'] = $this->event_model->get_events($customer->id);
         $this->loadViews("events/shop", $this->global, $data, 'footerShop', 'headerShop');
 
@@ -80,7 +87,7 @@ class Booking_events extends BaseControllerWeb
                 if($quantity == '0'){ continue; }
                 $amount = floatval($price[$key])*floatval($quantity);
                 $total = $total + $amount;
-                    $tickets[] = [
+                    $tickets[$id[$key]] = [
                         'id' => $id[$key],
                         'descript' => $descript[$key],
                         'quantity' => $quantity,
@@ -91,6 +98,13 @@ class Booking_events extends BaseControllerWeb
                         'endDate' => $this->session->userdata("endDate"),
                         'endTime' => $this->session->userdata("endTime")
                     ];
+            }
+            if($this->session->tempdata('tickets')){
+                $old_tickets = $this->session->tempdata('tickets');
+                $tickets1 = $this->check_diff_multi($tickets, $old_tickets);
+                $tickets2 = $this->check_diff_multi($old_tickets, $tickets);
+                $tickets = $tickets1 + $tickets2;
+                //$tickets = $this->unique_multidim_array($tickets, 'id');
             }
             
             $this->session->set_tempdata('tickets', $tickets, 600);
@@ -109,6 +123,45 @@ class Booking_events extends BaseControllerWeb
 
     }
 
+    public function update_quantity()
+    {
+        $vendor_id = $this->session->userdata('customer');
+        $results = $this->input->post(null, true);
+        var_dump($results);
+        if(count($results) > 0){
+            $total = 0;
+            $quantities = $results['quantity'];
+            $id = $results['id'];
+            $descript = $results['descript'];
+            $price = $results['price'];
+            $time = (int)$results['exp_sec']/1000;
+            $time = $time - 2;
+            $tickets = $this->session->userdata('tickets');
+            foreach($quantities as $key => $quantity){
+                if($quantity == '0'){ continue; }
+                $amount = floatval($price[$key])*floatval($quantity);
+                $total = $total + $amount;
+                unset($tickets[$id[$key]]);
+                $tickets[$id[$key]] = [
+                        'id' => $id[$key],
+                        'descript' => $descript[$key],
+                        'quantity' => $quantity,
+                        'price' => $price[$key],
+                        'amount' => $amount,
+                        'startDate' => $this->session->userdata("startDate"),
+                        'startTime' => $this->session->userdata("startTime"),
+                        'endDate' => $this->session->userdata("endDate"),
+                        'endTime' => $this->session->userdata("endTime")
+                    ];
+            }
+            $this->session->unset_userdata('tickets');
+            $this->session->unset_tempdata('tickets');
+        }
+        $this->session->set_tempdata('tickets', $tickets, $time);
+        redirect('events/your_tickets');
+
+    }
+
     public function pay()
     {
         $this->global['pageTitle'] = 'TIQS: Pay';
@@ -123,16 +176,45 @@ class Booking_events extends BaseControllerWeb
     {
         $userInfo = $this->input->post(null, true);
         $tickets = $this->session->userdata('tickets');
+        $this->session->unset_userdata('tickets');
+        $this->session->unset_userdata('exp_time');
         $customer = $this->session->userdata('customer');
         $this->event_model->save_event_reservations($userInfo,$tickets, $customer);
         $this->global['pageTitle'] = 'TIQS: Select Payment';
         $this->session->set_userdata('userInfo', $userInfo);
-        if(!$this->session->tempdata('tickets')){
-            $this->session->set_flashdata('expired', 'Session Expired!');
-            redirect('events/shop/'. $this->session->userdata('shortUrl'));
-        }
         $this->loadViews("events/selectpayment", $this->global, '', 'footerShop', 'headerShop');
     }
+
+
+    public function delete_ticket()
+    {
+        $tickets = $this->session->tempdata('tickets');
+        $ticketId = $this->input->post('id');
+        $time = (int)$this->input->post('current_time')/1000;
+        $time = $time - 2;
+        unset($tickets[$ticketId]);
+        $this->session->unset_userdata('tickets');
+        $this->session->unset_tempdata('tickets');
+        $this->session->set_tempdata('tickets', $tickets, $time);
+        return ;
+    }
+
+
+    function check_diff_multi($array1, $array2){
+        $result = array();
+        foreach($array1 as $key => $val) {
+             if(isset($array2[$key])){
+               if(is_array($val) && $array2[$key]){
+                   $result[$key] = $this->check_diff_multi($val, $array2[$key]);
+               }
+           } else {
+               $result[$key] = $val;
+           }
+        }
+    
+        return $result;
+    }
+
 
 
 }

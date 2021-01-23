@@ -1,14 +1,15 @@
 <!-- HERO SECTION -->
+<?php if($this->session->flashdata('expired')): ?>
+<div style="margin-left: 2px;margin-right: 2px;" class="alert alert-danger" role="alert">
+    <?php echo ucfirst($this->session->flashdata('expired')); ?>
+</div>
+<?php endif; ?>
 <section class='hero-section position-relative'>
     <div class="d-none d-md-flex col-6 px-0 hero__background">
-        <img src="<?php echo base_url(); ?>assets/images/bf82f6956a32819af48c2572243e8286.jpg" alt="">
+        <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80"
+            alt="">
     </div>
 
-    <?php if($this->session->flashdata('expired')): ?>
-        <div class="alert alert-danger" role="alert">
-            <?php echo $this->session->flashdata('expired'); ?>
-        </div>
-        <?php endif; ?>
     <!-- end col -->
     <div class="container">
         <div class="row">
@@ -26,13 +27,14 @@
         </div>
         <!-- end row -->
         <?php if (!empty($events)): ?>
-  
-        <div id="events" class="row single-item__grid">
-        <?php foreach ($events as $event): ?>
+
+        <div id="events" style="box-shadow: 0 0 70px 30px #00000014 !important;" class="row single-item__grid">
+            <?php foreach ($events as $event): ?>
             <div class="col-12 col-sm-6 col-md-3 single-item mb-4 mb-md-0">
                 <a href="<?php echo base_url(); ?>events/tickets/<?php echo $event['id']; ?>" class='single-item'>
                     <div class="single-item__image">
-                        <img src="<?php echo base_url(); ?>assets/images/events/<?php echo $event['eventImage']; ?>" alt="">
+                        <img src="<?php echo base_url(); ?>assets/images/events/<?php echo $event['eventImage']; ?>"
+                            alt="">
                         <p class='single-item__promotion'>Order Now</p>
                     </div>
                     <div class="single-item__content">
@@ -44,7 +46,7 @@
                 </a>
             </div>
 
-        <?php endforeach; ?>
+            <?php endforeach; ?>
         </div>
         <?php endif; ?>
         <!-- end row -->
