@@ -134,7 +134,7 @@ class Booking_events extends BaseControllerWeb
             $id = $results['id'];
             $descript = $results['descript'];
             $price = $results['price'];
-            $time = (int)$results['exp_sec']/1000;
+            $time = (int)($results['exp_sec']/1000);
             $time = $time - 2;
             $tickets = $this->session->userdata('tickets');
             foreach($quantities as $key => $quantity){
@@ -190,7 +190,7 @@ class Booking_events extends BaseControllerWeb
     {
         $tickets = $this->session->tempdata('tickets');
         $ticketId = $this->input->post('id');
-        $time = (int)$this->input->post('current_time')/1000;
+        $time = (int)($this->input->post('current_time')/1000);
         $time = $time - 2;
         unset($tickets[$ticketId]);
         $this->session->unset_userdata('tickets');
