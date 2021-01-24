@@ -113,106 +113,15 @@
                 TIQS <?php echo date('Y'); ?>, All rights reserved
             </div>
         </div>
-        <!-- end row -->
-        <!--<div class="row footer__row">
-    			<div class="col-12 col-md-6">
-    				<p class='mb-0'>Lorem Ipsum</p>
-    			</div>
-    		</div>-->
+
     </div>
 </footer>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script src="<?php echo $this->baseUrl; ?>assets/home/js/your-tickets.js"></script>
+<script src="<?php echo $this->baseUrl; ?>assets/home/js/eventShop.js"></script>
 <script>
-$("#next").on('click', function(e) {
-    e.preventDefault();
-    let total = $(".totalPrice").text();
-    if (total != '00.00') {
-        $("#my-form").submit();
-    }
-    return;
-});
 
-function absVal(el) {
-    let value = $(el).val();
-    let absVal = Math.abs(value);
-    return $(el).val(absVal);
-}
-
-function deleteTicket(id) {
-    let current_time = $('.exp_sec').val();
-    $.post(globalVariables.baseUrl + "booking_events/delete_ticket", {id: id,current_time: current_time}, function(data){
-		$( "#ticket_"+id ).fadeOut( "slow", function() {
-			$( "#ticket_"+id ).remove();
-		});
-	})
-}
-
-
-function clearTotal(el, price){
-	var quantity = $(el).val();
-	var totalPrice = $(".totalPrice").text();
-	totalPrice = parseInt(totalPrice);
-	quantity = parseInt(quantity);
-	price = parseInt(price);
-	totalPrice = totalPrice - quantity*price;
-	return $(".totalPrice").text(totalPrice.toFixed(2));
-}
-
-function removeTicket(id, price) {
-    var quantityValue = $("#ticketQuantityValue_" + id).val();
-    var totalPrice = $(".totalPrice").text();
-    quantityValue = parseInt(quantityValue);
-    totalPrice = parseInt(totalPrice);
-    price = parseInt(price);
-    if (quantityValue == 0) {
-        return;
-    }
-    quantityValue--;
-    totalPrice = totalPrice - price;
-    $("#ticketQuantityValue_" + id).val(quantityValue);
-    $("#quantity_" + id).val(quantityValue);
-    return $(".totalPrice").text(totalPrice.toFixed(2));
-}
-
-function addTicket(id, limit, price) {
-    var quantityValue = $("#ticketQuantityValue_" + id).val();
-    var totalPrice = $(".totalPrice").text();
-    quantityValue = parseInt(quantityValue);
-    totalPrice = parseInt(totalPrice);
-    price = parseInt(price);
-    limit = parseInt(limit);
-    if (quantityValue == limit) {
-        return;
-    }
-    quantityValue++;
-    totalPrice = totalPrice + price;
-    $("#ticketQuantityValue_" + id).val(quantityValue);
-    $("#quantity_" + id).val(quantityValue);
-    return $(".totalPrice").text(totalPrice.toFixed(2));
-}
-
-function ticketQuantity(el, id, price) {
-    var quantityValue = $(el).val();
-    var totalPrice = $(".totalPrice").text();
-    quantityValue = parseInt(quantityValue);
-    totalPrice = parseInt(totalPrice);
-    price = parseInt(price);
-    totalPrice = totalPrice + price*quantityValue;
-    $(el).val(quantityValue);
-    $("#quantity_" + id).val(quantityValue);
-    return $(".totalPrice").text(totalPrice.toFixed(2));
-}
-
-$(document).ready(function() {
-    setInterval(() => {
-        var CurrentDate = moment().format();
-        $(".current_time").val(CurrentDate);
-
-    }, 1000);
-});
 </script>
 
 

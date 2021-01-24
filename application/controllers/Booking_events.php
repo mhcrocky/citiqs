@@ -45,6 +45,10 @@ class Booking_events extends BaseControllerWeb
 
     public function tickets($eventId)
     {
+        if(!$this->input->post('isAjax')){ 
+            redirect('events/shop/'. $this->session->userdata('shortUrl'));
+            return; 
+        }
         $vendor_id = $this->session->userdata('customer');
         $this->session->unset_userdata("event_date");
         $this->global['pageTitle'] = 'TIQS: Step Two';
@@ -66,6 +70,13 @@ class Booking_events extends BaseControllerWeb
             'eventName' => $event->eventname,
             'eventImage' => $event->eventImage
         ];
+        $result = $this->load->view("events/tickets", $data,true);
+				if( isset($result) ) {
+					return $this->output
+					->set_content_type('application/json')
+					->set_status_header(200)
+					->set_output(json_encode($result));
+				}
         $this->loadViews("events/tickets", $this->global, $data, 'footerShop', 'headerShop');
 
     }

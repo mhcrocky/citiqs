@@ -1,5 +1,5 @@
 <form id="my-form" action="<?php echo base_url(); ?>events/your_tickets" method="POST">
-    <section>
+    <section id="tickets">
         <div class="container">
             <div class="row row-menu">
                 <div class="col-12 col-md-4">
@@ -54,7 +54,7 @@
                         </div>
                         <?php endforeach; ?>
                         <!-- end menu list item -->
-                        <div id="fixedbutton" class=" w-100 mr-2">
+                        <div class=" w-100 mr-2">
                             <div class="w-100 pt-2 pb-2 bg-light">
                                 <button type="button" class="btn btn-danger mb-2 mr-2 w-100 btn-block">TOTAL: €<span
                                         class="totalPrice">00.00</span></button>
