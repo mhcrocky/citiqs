@@ -202,7 +202,18 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <?php  } elseif ($this->view === 'events/selectpayment') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/select-pay.css" />
-    <style> .header__checkout { display:none }</style>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
+    <style> 
+    .header__checkout { display:none }
+    <style>
+    @media only screen and (max-width: 500px) {
+        .card-wrapper > .jp-card-container {
+            transform: scale(0.88) !important;
+            transform-origin: center !important;
+        }
+    }
+</style>
+    </style>
 <?php  } elseif ($this->view === 'events/pay') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
 <?php } ?>
