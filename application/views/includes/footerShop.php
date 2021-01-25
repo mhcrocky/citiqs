@@ -25,7 +25,7 @@
                     <input type="hidden" name="id[]" value="<?php echo $ticket['id']; ?>">
                     <input type="hidden" name="descript[]" value="<?php echo $ticket['descript']; ?>">
                     <input type="hidden" name="price[]" value="<?php echo $ticket['price']; ?>">
-                    <div id="ticket_<?php echo $ticket['id']; ?>" class="menu-list__item">
+                    <div class="menu-list__item ticket_<?php echo $ticket['id']; ?>">
                         <div class="menu-list__name">
                             <b class="menu-list__title">Description</b>
                             <div>
@@ -41,15 +41,15 @@
                                     onclick="removeTicket('<?php echo $ticket['id']; ?>','<?php echo $ticket['price']; ?>')">-</button>
                                 <input id="ticketQuantityValue_<?php echo $ticket['id']; ?>" type="text"
                                     value="<?php echo $ticket['quantity']; ?>" placeholder="0"
-									onfocus="clearTotal(this, '<?php echo $ticket['price']; ?>')"
-									onblur="ticketQuantity(this,'<?php echo $ticket['id']; ?>', '<?php echo $ticket['price']; ?>')"
-                                    onchange="ticketQuantity(this,'<?php echo $ticket['id']; ?>', '<?php echo $ticket['price']; ?>')"
+									onfocus="clearTotal(this, '<?php echo $ticket['price']; ?>', 'totalBasket')"
+									onblur="ticketQuantity(this,'<?php echo $ticket['id']; ?>', '<?php echo $ticket['price']; ?>', 'totalBasket')"
+                                    onchange="ticketQuantity(this,'<?php echo $ticket['id']; ?>', '<?php echo $ticket['price']; ?>', 'totalBasket')"
                                     oninput="absVal(this);" placeholder="0" class="quantity-input">
                                 <button type="button" class="quantity-button"
-                                    onclick="addTicket('<?php echo $ticket['id']; ?>', '50', '<?php echo $ticket['price']; ?>')">+</button>
+                                    onclick="addTicket('<?php echo $ticket['id']; ?>', '50', '<?php echo $ticket['price']; ?>', 'totalBasket')">+</button>
                             </div>
                             <b class="menu-list__type mx-auto">
-                                <button onclick="deleteTicket('<?php echo $ticket['id']; ?>')" type="button" class="btn btn-danger bg-light color-secondary">
+                                <button onclick="deleteTicket('<?php echo $ticket['id']; ?>','<?php echo $ticket['price']; ?>')" type="button" class="btn btn-danger bg-light color-secondary">
                                     <i class="fa fa-trash mr-2" aria-hidden="true"></i>
                                     Delete</button>
                             </b>
@@ -63,7 +63,7 @@
             <div class="modal-footer">
                 <div class="checkout-modal-sum">
                     <h4 class='mb-0 total'>TOTAL:
-                        <span class='ml-2 color-secondary font-weight-bold totalPrice'>
+                        <span class='ml-2 color-secondary font-weight-bold totalBasket'>
                             <?php echo number_format($total, 2, '.', ''); ?>
                         </span>€
                     </h4>

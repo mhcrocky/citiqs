@@ -23,7 +23,7 @@
                 <?php if (!empty($tickets)) : ?>
                 <div class="menu-list">
                     <?php foreach ($tickets as $ticket): ?>
-                    <div class="menu-list__item">
+                    <div class="menu-list__item ticket_<?php echo $ticket['id']; ?>">
                         <div class="menu-list__name">
 
                             <div>

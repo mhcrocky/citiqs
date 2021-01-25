@@ -42,13 +42,13 @@
                                 <b class="menu-list__type">quantity</b>
                                 <div class="quantity-section">
                                     <button class="quantity-button"
-                                        onclick="removeTicket('<?php echo $ticketId; ?>','<?php echo $ticket['ticketPrice']; ?>')">-</button>
+                                        onclick="removeTicket('<?php echo $ticketId; ?>','<?php echo $ticket['ticketPrice']; ?>','totalPrice')">-</button>
                                     <input id="ticketQuantityValue_<?php echo $ticketId; ?>" type="number" value="0"
-                                        oninput="ticketQuantity(this,'<?php echo $ticketId; ?>')"
-                                        onchange="ticketQuantity(this,'<?php echo $ticketId; ?>')"
+                                        oninput="ticketQuantity(this,'<?php echo $ticketId; ?>','totalPrice')"
+                                        onchange="ticketQuantity(this,'<?php echo $ticketId; ?>','totalPrice')"
                                         onkeyup="absVal(this);" placeholder="0" class="quantity-input">
                                     <button type="button" class="quantity-button"
-                                        onclick="addTicket('<?php echo $ticketId; ?>', '<?php echo $ticket['ticketQuantity']; ?>', '<?php echo $ticket['ticketPrice']; ?>')">+</button>
+                                        onclick="addTicket('<?php echo $ticketId; ?>', '<?php echo $ticket['ticketQuantity']; ?>', '<?php echo $ticket['ticketPrice']; ?>','totalPrice')">+</button>
                                 </div>
                             </div>
                         </div>

@@ -25,7 +25,7 @@ $("#next").on('click', function(e) {
 
 function getTicketsView(eventId, first = false) {
     let isAjax = true;
-    $('.bg-light').removeClass('bg-light').addClass('bg-white');
+    $('div.bg-light').removeClass('bg-light').addClass('bg-white');
     $("#event_" + eventId).addClass('bg-light').removeClass('bg-white');
     $.post(globalVariables.baseUrl + "events/tickets/" + eventId, {
         isAjax: isAjax
@@ -84,29 +84,39 @@ function absVal(el) {
     return $(el).val(absVal);
 }
 
-function deleteTicket(id) {
+function deleteTicket(id,price) {
+    let quantityValue = $("#ticketQuantityValue_" + id).val();
+    let totalPrice = $(".totalBasket").text();
+    quantityValue = parseInt(quantityValue);
+    totalPrice = parseInt(totalPrice);
+    price = parseInt(price);
+    totalPrice = totalPrice - price;
     let current_time = $('.exp_sec').val();
     $.post(globalVariables.baseUrl + "booking_events/delete_ticket", {id: id,current_time: current_time}, function(data){
-		$( "#ticket_"+id ).fadeOut( "slow", function() {
-			$( "#ticket_"+id ).remove();
-		});
+		$( ".ticket_"+id ).fadeOut( "slow", function() {
+            $( ".ticket_"+id ).remove();
+            $(".totalBasket").text(totalPrice.toFixed(2));
+            if(!data){
+                window.location.href = globalVariables.baseUrl + "events/your_tickets";
+            }
+        });
 	})
 }
 
 
-function clearTotal(el, price){
+function clearTotal(el, price, totalClass){
 	var quantity = $(el).val();
-	var totalPrice = $(".totalPrice").text();
+	var totalPrice = $("."+totalClass).text();
 	totalPrice = parseInt(totalPrice);
 	quantity = parseInt(quantity);
 	price = parseInt(price);
 	totalPrice = totalPrice - quantity*price;
-	return $(".totalPrice").text(totalPrice.toFixed(2));
+	return $("."+totalClass).text(totalPrice.toFixed(2));
 }
 
-function removeTicket(id, price) {
+function removeTicket(id, price, totalClass) {
     var quantityValue = $("#ticketQuantityValue_" + id).val();
-    var totalPrice = $(".totalPrice").text();
+    var totalPrice = $("."+totalClass).text();
     quantityValue = parseInt(quantityValue);
     totalPrice = parseInt(totalPrice);
     price = parseInt(price);
@@ -117,12 +127,12 @@ function removeTicket(id, price) {
     totalPrice = totalPrice - price;
     $("#ticketQuantityValue_" + id).val(quantityValue);
     $("#quantity_" + id).val(quantityValue);
-    return $(".totalPrice").text(totalPrice.toFixed(2));
+    return $("."+totalClass).text(totalPrice.toFixed(2));
 }
 
-function addTicket(id, limit, price) {
+function addTicket(id, limit, price, totalClass) {
     var quantityValue = $("#ticketQuantityValue_" + id).val();
-    var totalPrice = $(".totalPrice").text();
+    var totalPrice = $("."+totalClass).text();
     quantityValue = parseInt(quantityValue);
     totalPrice = parseInt(totalPrice);
     price = parseInt(price);
@@ -134,17 +144,17 @@ function addTicket(id, limit, price) {
     totalPrice = totalPrice + price;
     $("#ticketQuantityValue_" + id).val(quantityValue);
     $("#quantity_" + id).val(quantityValue);
-    return $(".totalPrice").text(totalPrice.toFixed(2));
+    return $("."+totalClass).text(totalPrice.toFixed(2));
 }
 
-function ticketQuantity(el, id, price) {
+function ticketQuantity(el, id, price, totalClass) {
     var quantityValue = $(el).val();
-    var totalPrice = $(".totalPrice").text();
+    var totalPrice = $("."+totalClass).text();
     quantityValue = parseInt(quantityValue);
     totalPrice = parseInt(totalPrice);
     price = parseInt(price);
     totalPrice = totalPrice + price*quantityValue;
     $(el).val(quantityValue);
     $("#quantity_" + id).val(quantityValue);
-    return $(".totalPrice").text(totalPrice.toFixed(2));
+    return $("."+totalClass).text(totalPrice.toFixed(2));
 }
