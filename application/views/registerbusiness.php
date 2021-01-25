@@ -1,5 +1,5 @@
-<div class="main-wrapper">
-	<div class="col-half background-blue height-100" style="margin-top: -30px">
+<div class="main-wrapper-nh">
+	<div class="col-half width-650 background-blue height-100" style="margin-top: 30px">
 		<div class="flex-column align-start">
 			<div style="text-align:center">
 				<p style="font-family:'caption-bold'; font-size:300%; color:#ffffff;">
@@ -372,41 +372,17 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-half background-apricot timeline-content" style="margin-top: -30px">
-		<div class="timeline-block background-yankee">
-			<span class='timeline-number text-orange hide-mobile'>1</span>
-			<div class="timeline-text">
-				<div class='timeline-heading'>
-					<span class='timeline-number text-orange show-mobile'>1</span>
-					<h2 style="font-weight:bold; font-family: caption-bold"><?php echo $this->language->Line("spot-registerbusiness-A200133A","REGISTER");?></h2>
-				</div>
-				<p class="text-content-light" style="font-size: larger"><?php echo $this->language->Line("spot-registerbusiness-A200134A","REGISTER AND RECEIVE AN E-MAIL WITH YOUR CREDENTIALS AND AN ACTIVATION LINK, TO LOGIN YOUR ACCOUNT.");?></p>
-				<!-- <p class="text-content-light">NO CREDENTIALS RECEIVED YET, WAIT A MINUTE AND PLEASE CHECK YOUR SPAM MAIL  </p>-->
-				<div class="flex-column align-space">
-				<!-- <p class="text-content-light" style="">LOST BY YOUR CUSTOMER, <br>RETURNED BY US.</p>-->
-				</div>
+	<div class="col background-blue" style="margin-left: 0px ;margin-right: 0px; padding: 0px; width: 100%; margin-top: 50px">
+		<ul class="nav nav-tabs" style="border-bottom: none;background-color: #131e3a; margin-top: 10px;margin-bottom: 10px " role="tablist">
+			<li class="nav-item">
+				<a style="color: #efd1ba; border-radius: 50px; margin-left:10px" class="nav-link active" data-toggle="tab" href="#manual"> <i class="ti-pencil-alt"> </i> HOW TO REGISTER</a>
+			</li>
+		</ul>
+
+		<div class="tab-content no-border" style="height: 90%; width: 100%">
+			<div id="manual" class="tab-pane active" style="background: none; height: 100%;margin-left: 0px ;margin-right: 0px; width:100%">
+				<embed src="<?php echo base_url(); ?>/assets/home/documents/NL-manual.pdf" height=100% width="100%">
 			</div>
-		</div><!-- end timeline block -->
-		<div class="timeline-block background-blue-light">
-			<span class='timeline-number text-orange hide-mobile'>2</span>
-			<div class="timeline-text">
-				<div class="timeline-heading">
-					<span class='timeline-number text-blue show-mobile'>2</span>
-					<h2 style="font-weight:bold; font-family: caption-bold"><?php echo $this->language->Line("spot-registerbusiness-A200136A","ACTIVATE");?></h2>
-				</div>
-				<p class="text-content-light" style="font-size: larger"><?php echo $this->language->Line("spot-registerbusiness-A200137A","ACTIVATE YOUR ACCOUNT WITH ACTIVATION CODE IN THE E-MAIL OR BY LOGIN-IN AND MANUALLY ACTIVATE YOUR ACCOUNT.");?> </p>
-				<div class="flex-column align-space">
-				<!-- <p class="text-content-light" >LOST BY YOUR CUSTOMER, <br>RETURNED BY US.</p>-->
-				</div>
-			</div>
-		</div><!-- end timeline block -->
-
-
-		<div class="row" style="text-align:center; padding:50px ">
-			<img src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="125" height="45" />
-		</div>
-		<div class="text-left mt-50 mobile-hide" style="margin-left: 100px; margin-bottom: 100px;  margin-top: -30px">
-
 		</div>
 	</div>
 </div>

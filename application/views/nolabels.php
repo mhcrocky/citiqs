@@ -16,8 +16,6 @@
 		</div>
 	</div><!-- end col half -->
 
-
-
 	<div class="col background-apricot" style="margin-left: 0px ;margin-right: 0px; padding: 0px; width: 100%">
 			<ul class="nav nav-tabs" style="border-bottom: none;background-color: #efd1ba;margin-top: 10px;margin-bottom: 10px " role="tablist">
 				<li class="nav-item">
@@ -34,7 +32,7 @@
 				</li>
 			</ul>
 
-			<div class="tab-content no-border" style="height: 100%; width: 100%">
+			<div class="tab-content no-border" style="height: 100vh; width: 100%">
 				<div id="manual" class="tab-pane active" style="background: none; height: 100%;margin-left: 0px ;margin-right: 0px; width:100%">
 					<embed src="<?php echo base_url(); ?>/assets/home/documents/NL-manual.pdf" height=100% width="100%">
 				</div>

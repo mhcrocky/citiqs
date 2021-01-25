@@ -1,12 +1,7 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
-include(APPPATH . '/libraries/koolreport/core/autoload.php');
 
 require APPPATH . '/libraries/BaseControllerWeb.php';
-
-use \koolreport\drilldown\DrillDown;
-use \koolreport\widgets\google\ColumnChart;
-use \koolreport\clients\Bootstrap;
 
 class Events extends BaseControllerWeb
 {
@@ -16,7 +11,8 @@ class Events extends BaseControllerWeb
         parent::__construct();
         $this->load->model('event_model');
         $this->load->helper('country_helper');
-		$this->load->library('language', array('controller' => $this->router->class));
+        $this->load->library('language', array('controller' => $this->router->class));
+        
 		$this->isLoggedIn();
 		$this->vendor_id = $this->session->userdata("userId");
     } 
@@ -56,29 +52,6 @@ class Events extends BaseControllerWeb
 
         $this->loadViews("events/edit_event", $this->global, $data, 'footerbusiness', 'headerbusiness');
         
-
-    }
-
-    public function shop()
-    {
-        $this->global['pageTitle'] = 'TIQS: Shop';
-        $design = $this->event_model->get_design($this->session->userdata('userId'));
-        $this->global['design'] = unserialize($design[0]['shopDesign']);
-        $data['events'] = $this->event_model->get_events($this->vendor_id);
-        $this->loadViews("events/shop", $this->global, $data, null, 'headerNewShop');
-
-    }
-
-    public function tickets($eventId)
-    {
-        $this->global['pageTitle'] = 'TIQS: Step Two';
-        $design = $this->event_model->get_design($this->session->userdata('userId'));
-        $this->global['design'] = unserialize($design[0]['shopDesign']);
-        $data = [
-            'tickets' => $this->event_model->get_tickets($this->vendor_id,$eventId),
-            'eventId' => $eventId
-        ];
-        $this->loadViews("events/tickets", $this->global, $data, null, 'headerNewShop');
 
     }
 
@@ -150,11 +123,11 @@ class Events extends BaseControllerWeb
 
     }
 
-    public function save_ticket_options()
+    public function save_ticket_options($eventId)
     {
         $data = $this->input->post(null, true);
         $this->event_model->save_ticket_options($data);
-        redirect('events/event');
+        redirect('events/event/'.$eventId);
 
     }
 
@@ -189,7 +162,7 @@ class Events extends BaseControllerWeb
         $data = [ 
             'id' => $id,
             'vendorId' => $this->vendor_id,
-            'iframeSrc' => base_url() . 'events/shop',
+            'iframeSrc' => base_url() . 'events/shop/' . $this->session->userdata('shortUrl'),
             'design' => unserialize($design[0]['shopDesign']),
             'devices' => $this->bookandpayagendabooking_model->get_devices(),
             'analytics' => $this->shopvendor_model->setObjectId($id)->getVendorAnalytics()

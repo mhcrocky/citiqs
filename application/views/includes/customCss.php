@@ -189,6 +189,7 @@
     </style> 
 <?php  } elseif ($this->view === 'events/step-two') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+    <link href="<?php echo base_url();?>assets/css/quill.snow.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
 <?php  } elseif ($this->view === 'events/events') { ?>
@@ -198,17 +199,22 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
 <?php  } elseif ($this->view === 'events/shop' || $this->view === 'events/tickets') { ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/bizdirstyle.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/selectSpot.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/bigsquare.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/slick.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/slick-theme.css"/>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/shop-with-slider.css"/>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/order-popup.css"/>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/makeOrderUpdate.css" />
-
-    
-
+<?php  } elseif ($this->view === 'events/selectpayment') { ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/select-pay.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
+    <style> 
+    .header__checkout { display:none }
+    <style>
+    @media only screen and (max-width: 500px) {
+        .card-wrapper > .jp-card-container {
+            transform: scale(0.88) !important;
+            transform-origin: center !important;
+        }
+    }
+</style>
+    </style>
+<?php  } elseif ($this->view === 'events/pay') { ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
 <?php } ?>
 

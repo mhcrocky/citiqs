@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body">
-            <form name="my-form" action="<?php echo base_url(); ?>events/save_ticket_options" method="POST">
+            <form name="my-form" action="<?php echo base_url(); ?>events/save_ticket_options/<?php echo $eventId; ?>" method="POST">
                 <ul>
                     <li>
                         <div class="custom-control custom-checkbox">
@@ -173,6 +173,15 @@
                     </div>
                 </div>
 
+                <div class="row mb-5">
+                    <div class="col col-md-3">Email Body</div>
+                    <div class="col col-md-6 mb-5">
+                        <div id="editor"></div>
+                        <div id="log"></div>
+                        <input id="eventdescript" type="hidden" name="emailBody">
+                    </div>
+                </div>
+
                 <input type="hidden" id="guestTicket" name="guestTicket" value="1">
                 <input type="hidden" id="ticketSwap" name="ticketSwap" value="1">
                 <input type="hidden" id="partialAccess" name="partialAccess" value="1">
@@ -231,7 +240,7 @@
                             </div>
                         </div>
                         -->
-                        <input type="hidden" id="eventId" name="eventId" value="<?php echo $eventId ;?>">
+                        <input type="hidden" id="eventId" name="eventId" value="<?php echo $eventId; ?>">
 
                         <div class="form-group row">
                             <label for="ticketType" class="col-md-4 col-form-label text-md-left">Ticket type</label>
