@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="<?php echo $_SESSION['site_lang']; ?>">
 	<head>
-		<title><?php echo $pageTitle ? $pageTitle : 'TIQS | LOST AND FOUND'; ?></title>
+		<title><?php echo $pageTitle ? $pageTitle : 'TIQS | ALFRED';?></title>
+		<?php include_once FCPATH . 'application/views/includes/analytics.php'; ?>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 		<meta charset="UTF-8" />
 		<script src="<?php echo $this->baseUrl; ?>assets/home/js/jspdf.min.js"></script>
