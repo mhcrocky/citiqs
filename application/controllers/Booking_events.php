@@ -174,6 +174,47 @@ class Booking_events extends BaseControllerWeb
 
     }
 
+    public function add_to_basket()
+    {
+        $vendor_id = $this->session->userdata('customer');
+        $tickets = $this->session->userdata('tickets') ?? [];
+        $ticket = $this->input->post(null, true);
+        $current_time = date($ticket['time']);
+        $newTime = date("Y-m-d H:i:s",strtotime("$current_time +10 minutes"));
+        $this->session->set_tempdata('exp_time', $newTime, 600);
+        $amount = floatval($ticket['price'])*floatval($ticket['quantity']);
+        $ticketId = $ticket['id'];
+        unset($tickets[$ticketId]);
+        $tickets[$ticketId] = [
+            'id' => $ticketId,
+            'descript' => $ticket['descript'],
+            'quantity' => $ticket['quantity'],
+            'price' => $ticket['price'],
+            'amount' => $amount,
+            'startDate' => $this->session->userdata("startDate"),
+            'startTime' => $this->session->userdata("startTime"),
+            'endDate' => $this->session->userdata("endDate"),
+            'endTime' => $this->session->userdata("endTime")
+        ];
+        $total = 0;
+        foreach($tickets as $ticket){
+            $total = $total + $ticket['amount'];
+        }
+        $total = number_format($total, 2, '.', '');
+        $this->session->set_tempdata('total', $total, 600);
+        
+        echo json_encode(['descript'=>$ticket['descript'],'price' => $ticket['price']]);
+        
+        if($ticket['quantity'] != 0){
+            $this->session->unset_userdata('tickets');
+            $this->session->unset_tempdata('tickets');
+            $this->session->set_tempdata('tickets', $tickets, 600);
+        }
+
+        
+
+    }
+
     public function pay()
     {
         $this->global['pageTitle'] = 'TIQS: Pay';
@@ -205,11 +246,7 @@ class Booking_events extends BaseControllerWeb
         $time = (int)($this->input->post('current_time')/1000);
         $time = $time - 2;
         unset($tickets[$ticketId]);
-        if(count($tickets) > 0) {
-            echo true;
-        } else {
-            echo false;
-        }
+        
         $this->session->unset_userdata('tickets');
         $this->session->unset_tempdata('tickets');
         $this->session->set_tempdata('tickets', $tickets, $time);

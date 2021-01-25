@@ -32,7 +32,8 @@
                             <div class="menu-list__name">
                                 <b class="menu-list__title">Description</b>
                                 <div>
-                                    <p class="menu-list__ingredients"><?php echo $ticket['ticketDescription']; ?></p>
+                                    <p class="menu-list__ingredients descript_<?php echo $ticketId; ?>">
+                                        <?php echo $ticket['ticketDescription']; ?></p>
                                 </div>
                             </div>
                             <div class="menu-list__right-col ml-auto">
@@ -41,14 +42,14 @@
                                 </div>
                                 <b class="menu-list__type">quantity</b>
                                 <div class="quantity-section">
-                                    <button class="quantity-button"
-                                        onclick="removeTicket('<?php echo $ticketId; ?>','<?php echo $ticket['ticketPrice']; ?>','totalPrice')">-</button>
+                                    <button type="button" class="quantity-button"
+                                        onclick="removeTicket('<?php echo $ticketId; ?>','<?php echo $ticket['ticketPrice']; ?>','totalBasket')">-</button>
                                     <input id="ticketQuantityValue_<?php echo $ticketId; ?>" type="number" value="0"
-                                        oninput="ticketQuantity(this,'<?php echo $ticketId; ?>','totalPrice')"
-                                        onchange="ticketQuantity(this,'<?php echo $ticketId; ?>','totalPrice')"
+                                        oninput="ticketQuantity(this,'<?php echo $ticketId; ?>','totalBasket')"
+                                        onchange="ticketQuantity(this,'<?php echo $ticketId; ?>','totalBasket')"
                                         onkeyup="absVal(this);" placeholder="0" class="quantity-input">
                                     <button type="button" class="quantity-button"
-                                        onclick="addTicket('<?php echo $ticketId; ?>', '<?php echo $ticket['ticketQuantity']; ?>', '<?php echo $ticket['ticketPrice']; ?>','totalPrice')">+</button>
+                                        onclick="addTicket('<?php echo $ticketId; ?>', '<?php echo $ticket['ticketQuantity']; ?>', '<?php echo $ticket['ticketPrice']; ?>','totalBasket')">+</button>
                                 </div>
                             </div>
                         </div>
@@ -56,10 +57,10 @@
                         <!-- end menu list item -->
                         <div class=" w-100 mr-2">
                             <div class="w-100 pt-2 pb-2 bg-light">
-                                <button type="button" class="btn btn-danger mb-2 mr-2 w-100 btn-block">TOTAL: €<span
-                                        class="totalPrice">00.00</span></button>
-                                <button id="next" type="submit"
-                                    class="btn btn-danger mr-2 w-100 btn-block">NEXT</button>
+                            <?php if(count($tickets) > 0): ?>
+                                <a href="<?php echo base_url(); ?>events/your_tickets" id="next"
+                                    class="btn btn-danger mr-2 w-100 btn-block">NEXT</a>
+                            <?php endif; ?>
                             </div>
                         </div>
 

@@ -1,5 +1,4 @@
 <!-- MODAL CHECKOUT -->
-
 <!-- MODAL ADDITIONAL OPTIONS -->
 <div class="modal fade" id="checkout-modal" tabindex="-1" role="dialog" aria-labelledby="checkout-modal"
     aria-hidden="true">
@@ -16,10 +15,10 @@
             <form id="update-form" action="<?php echo base_url(); ?>booking_events/update_quantity" method="POST">
             <input type="hidden" class="exp_sec" name="exp_sec">
                 <?php $total = 0; ?>
+                <div id="checkout-list" class="menu-list">
                 <?php if($this->session->userdata('tickets')): 
-                    $tickets = $this->session->userdata('tickets'); ?>
-                <div class="menu-list">
-                    <?php foreach($tickets as $ticket): 
+                    $tickets = $this->session->userdata('tickets');
+                    foreach($tickets as $ticket): 
                         $total = $total + floatval($ticket['amount']); ?>
                         <input type="hidden" id="quantity_<?php echo $ticket['id']; ?>" name="quantity[]" value="0">
                     <input type="hidden" name="id[]" value="<?php echo $ticket['id']; ?>">
@@ -29,7 +28,7 @@
                         <div class="menu-list__name">
                             <b class="menu-list__title">Description</b>
                             <div>
-                                <p class="menu-list__ingredients"><?php echo $ticket['descript']; ?></p>
+                                <p class="menu-list__ingredients descript_<?php echo $ticket['id']; ?>"><?php echo $ticket['descript']; ?></p>
                             </div>
                         </div>
                         <div class="menu-list__left-col ml-auto">
@@ -37,14 +36,14 @@
                                 <b class="menu-list__price--discount mx-auto"><?php echo $ticket['price']; ?>€</b>
                             </div>
                             <div class="quantity-section mx-auto mb-2">
-                                <button class="quantity-button"
-                                    onclick="removeTicket('<?php echo $ticket['id']; ?>','<?php echo $ticket['price']; ?>')">-</button>
+                                <button  type="button" class="quantity-button"
+                                    onclick="removeTicket('<?php echo $ticket['id']; ?>','<?php echo $ticket['price']; ?>', 'totalBasket')">-</button>
                                 <input id="ticketQuantityValue_<?php echo $ticket['id']; ?>" type="text"
                                     value="<?php echo $ticket['quantity']; ?>" placeholder="0"
 									onfocus="clearTotal(this, '<?php echo $ticket['price']; ?>', 'totalBasket')"
 									onblur="ticketQuantity(this,'<?php echo $ticket['id']; ?>', '<?php echo $ticket['price']; ?>', 'totalBasket')"
                                     onchange="ticketQuantity(this,'<?php echo $ticket['id']; ?>', '<?php echo $ticket['price']; ?>', 'totalBasket')"
-                                    oninput="absVal(this);" placeholder="0" class="quantity-input">
+                                    oninput="absVal(this);" placeholder="0" disabled class="quantity-input">
                                 <button type="button" class="quantity-button"
                                     onclick="addTicket('<?php echo $ticket['id']; ?>', '50', '<?php echo $ticket['price']; ?>', 'totalBasket')">+</button>
                             </div>
@@ -57,8 +56,8 @@
                     </div>
                     <?php endforeach; ?>
                     <!-- end menu list item -->
+                    <?php endif; ?>
                 </div>
-                <?php endif; ?>
             </div>
             <div class="modal-footer">
                 <div class="checkout-modal-sum">
@@ -69,7 +68,6 @@
                     </h4>
                 </div>
                 <div>
-                    <button type="submit" class="btn btn-primary bg-primary mr-1">Save</button>
                     <a <?php if(!$this->session->userdata('tickets')){ echo 'href="#"';} ?> href="<?php echo base_url(); ?>events/pay" class="btn btn-secondary bg-secondary">Go to Pay</a>
                 </div>
             </div>

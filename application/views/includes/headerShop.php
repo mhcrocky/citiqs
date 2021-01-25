@@ -19,6 +19,9 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+    input[type="text"]:disabled{background-color: #fff; color: #000;}
+    </style>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
@@ -67,7 +70,7 @@
             </div>
             <a href="#" class="btn btn-primary btn-lg bg-primary px-3 px-md-4 text-center header__checkout"
                 data-toggle="modal" data-target="#checkout-modal"><i class="fa fa-shopping-basket mr-md-3"></i><span
-                    class='d-none d-lg-inline'>CHECKOUT</span></a>
+                    class='d-none d-lg-inline'>CHECKOUT</span> &nbsp €<b class="totalBasket"><?php echo $this->session->userdata('total'); ?></b></a>
 
         </nav>
     </header>

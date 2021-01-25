@@ -1,6 +1,10 @@
 $(document).ready(function(){
     if (typeof globalTime !== 'undefined') {
-        countDownTimer();
+        let time = globalTime.time;
+        var countDownDate = moment(time);
+        var now = moment();
+        var distance = countDownDate - now;
+        countDownTimer(distance);
       }
     if ($('#first_element').val()) {
         let id = $('#first_element').val();
@@ -12,11 +16,24 @@ $(document).ready(function(){
 
     }, 1000);
 
+    $(document).on('click', '.quantity-up', function() {
+        let id = $(this).data("embellishmentid");
+        let price = $("#price_"+id).val();
+        addTicket(id,  50, price, 'totalBasket');
+      });
+
+    $(document).on('click', '.quantity-down', function() {
+        let id = $(this).data("embellishmentid");
+        let price = $("#price_"+id).val();
+        console.log(price);
+        removeTicket(id, price, 'totalBasket');
+      });
+
 });
 
 $("#next").on('click', function(e) {
     e.preventDefault();
-    let total = $(".totalPrice").text();
+    let total = $(".totalBasket").text();
     if (total != '00.00') {
         $("#my-form").submit();
     }
@@ -46,11 +63,15 @@ function getTicketsView(eventId, first = false) {
 
 }
 
-function countDownTimer(){
-    var countDownDate = moment(globalTime.time);
+function countDownTimer(distance, reset=false){
+
+    console.log(reset);
+    if(reset){
+        var interval_id = window.setInterval("", 9999); // Get a reference to the last
+    for (var i = 1; i < interval_id; i++)
+        window.clearInterval(i);
+    }
     var x = setInterval(function() {
-    var now = moment();
-    var distance = countDownDate - now;
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     $('.exp_sec').val(distance);
@@ -66,7 +87,10 @@ function countDownTimer(){
         clearInterval(x);
         $(".timer").text("EXPIRED");
     }
+    distance = distance - 1000;
 }, 1000);
+
+
 }
 
 function addZero(num) {
@@ -86,19 +110,16 @@ function absVal(el) {
 
 function deleteTicket(id,price) {
     let quantityValue = $("#ticketQuantityValue_" + id).val();
-    let totalPrice = $(".totalBasket").text();
+    let totalBasket = $(".totalBasket").text();
     quantityValue = parseInt(quantityValue);
-    totalPrice = parseInt(totalPrice);
+    totalBasket = parseInt(totalBasket);
     price = parseInt(price);
-    totalPrice = totalPrice - price;
+    totalBasket = totalBasket - price;
     let current_time = $('.exp_sec').val();
     $.post(globalVariables.baseUrl + "booking_events/delete_ticket", {id: id,current_time: current_time}, function(data){
 		$( ".ticket_"+id ).fadeOut( "slow", function() {
             $( ".ticket_"+id ).remove();
-            $(".totalBasket").text(totalPrice.toFixed(2));
-            if(!data){
-                window.location.href = globalVariables.baseUrl + "events/your_tickets";
-            }
+            $(".totalBasket").text(totalBasket.toFixed(2));
         });
 	})
 }
@@ -106,55 +127,153 @@ function deleteTicket(id,price) {
 
 function clearTotal(el, price, totalClass){
 	var quantity = $(el).val();
-	var totalPrice = $("."+totalClass).text();
-	totalPrice = parseInt(totalPrice);
+	var totalBasket = $("."+totalClass).text();
+	totalBasket = parseInt(totalBasket);
 	quantity = parseInt(quantity);
 	price = parseInt(price);
-	totalPrice = totalPrice - quantity*price;
-	return $("."+totalClass).text(totalPrice.toFixed(2));
+	totalBasket = totalBasket - quantity*price;
+	return $("."+totalClass).text(totalBasket.toFixed(2));
 }
 
 function removeTicket(id, price, totalClass) {
     var quantityValue = $("#ticketQuantityValue_" + id).val();
-    var totalPrice = $("."+totalClass).text();
+    var totalBasket = $("."+totalClass).text();
     quantityValue = parseInt(quantityValue);
-    totalPrice = parseInt(totalPrice);
+    totalBasket = parseInt(totalBasket);
     price = parseInt(price);
+    var priceVal = price;
     if (quantityValue == 0) {
         return;
     }
     quantityValue--;
-    totalPrice = totalPrice - price;
+    totalBasket = totalBasket - price;
     $("#ticketQuantityValue_" + id).val(quantityValue);
     $("#quantity_" + id).val(quantityValue);
-    return $("."+totalClass).text(totalPrice.toFixed(2));
+    $("."+totalClass).text(totalBasket.toFixed(2));
+    let time = $(".current_time").val();
+    let descript = $(".descript_"+id).html();
+    let data = {
+        id: id,
+        quantity: quantityValue,
+        price: price.toFixed(2),
+        descript:  descript,
+        time: time
+
+    }
+
+    $.post(globalVariables.baseUrl + "booking_events/add_to_basket", data, function(data){
+        data = JSON.parse(data);
+        var descript_data = data['descript'];
+        var price_data = data['price'];
+        let html = '<div class="menu-list__item ticket_'+id+'">'+
+        '<div class="menu-list__name">'+
+            '<b class="menu-list__title">Description</b>'+
+            '<div>'+
+                '<p class="menu-list__ingredients descript_'+id+'">'+descript_data+'</p>'+
+            '</div>'+
+        '</div>'+
+        '<div class="menu-list__left-col ml-auto">'+
+            '<div class="menu-list__price mx-auto">'+
+                '<b class="menu-list__price--discount mx-auto">'+price.toFixed(2)+'€</b>'+
+            '</div>'+
+            '<div class="quantity-section mx-auto mb-2">'+
+                '<button type="button" class="quantity-button quantity-down" data-embellishmentid="'+id+'">-</button>'+
+                '<input id="ticketQuantityValue_'+id+'" type="text" value="'+quantityValue+'" placeholder="0" onfocus="clearTotal(this, \''+price+'\', \'totalBasket\')" onblur="ticketQuantity(this,\''+id+'\', \''+price+'\', \'totalBasket\')" onchange="ticketQuantity(this,\''+id+'\', \''+price+'\', \'totalBasket\')" oninput="absVal(this);" disabled="" class="quantity-input">'+
+                '<button type="button" class="quantity-button quantity-up" data-embellishmentid="'+id+'">+</button>'+
+            '</div>'+
+            '<b class="menu-list__type mx-auto">'+
+                '<button onclick="deleteTicket(\''+id+'\',\''+priceVal+'\')" type="button" class="btn btn-danger bg-light color-secondary">'+
+                    '<i class="fa fa-trash mr-2" aria-hidden="true"></i>'+
+                    'Delete</button>'+
+            '</b>'+
+        '</div>'+
+        '</div>'+
+        '<input type="hidden" id="price_'+id+'" value="'+price_data+'">';
+
+        countDownTimer(600000,true);
+
+         if($('.ticket_'+id).length > 0){
+            return $('.ticket_'+id).replaceWith(html);
+        }
+         $('#checkout-list').append(html);
+    });
 }
 
 function addTicket(id, limit, price, totalClass) {
     var quantityValue = $("#ticketQuantityValue_" + id).val();
-    var totalPrice = $("."+totalClass).text();
+    var totalBasket = $("."+totalClass).text();
     quantityValue = parseInt(quantityValue);
-    totalPrice = parseInt(totalPrice);
+    totalBasket = parseInt(totalBasket);
     price = parseInt(price);
+    var priceVal = price;
     limit = parseInt(limit);
     if (quantityValue == limit) {
         return;
     }
     quantityValue++;
-    totalPrice = totalPrice + price;
+    totalBasket = totalBasket + price;
+    
     $("#ticketQuantityValue_" + id).val(quantityValue);
     $("#quantity_" + id).val(quantityValue);
-    return $("."+totalClass).text(totalPrice.toFixed(2));
+    $("."+totalClass).text(totalBasket.toFixed(2));
+    let time = $(".current_time").val();
+    let descript = $(".descript_"+id).first().html();
+    let data = {
+        id: id,
+        quantity: quantityValue,
+        price: price.toFixed(2),
+        descript:  descript,
+        time: time
+
+    };
+    $.post(globalVariables.baseUrl + "booking_events/add_to_basket", data, function(data){
+        data = JSON.parse(data);
+        var descript_data = data['descript'];
+        var price_data = data['price'];
+        let html = '<div class="menu-list__item ticket_'+id+'">'+
+        '<div class="menu-list__name">'+
+            '<b class="menu-list__title">Description</b>'+
+            '<div>'+
+                '<p class="menu-list__ingredients descript_'+id+'">'+descript_data+'</p>'+
+            '</div>'+
+        '</div>'+
+        '<div class="menu-list__left-col ml-auto">'+
+            '<div class="menu-list__price mx-auto">'+
+                '<b class="menu-list__price--discount mx-auto">'+price.toFixed(2)+'€</b>'+
+            '</div>'+
+            '<div class="quantity-section mx-auto mb-2">'+
+                '<button type="button" class="quantity-button quantity-down" data-embellishmentid="'+id+'">-</button>'+
+                '<input id="ticketQuantityValue_'+id+'" type="text" value="'+quantityValue+'" placeholder="0" onfocus="clearTotal(this, \''+price+'\', \'totalBasket\')" onblur="ticketQuantity(this,\''+id+'\', \''+price+'\', \'totalBasket\')" onchange="ticketQuantity(this,\''+id+'\', \''+price+'\', \'totalBasket\')" oninput="absVal(this);" disabled="" class="quantity-input">'+
+                '<button type="button" class="quantity-button quantity-up" data-embellishmentid="'+id+'">+</button>'+
+            '</div>'+
+            '<b class="menu-list__type mx-auto">'+
+                '<button onclick="deleteTicket(\''+id+'\',\''+price_data+'\')" type="button" class="btn btn-danger bg-light color-secondary">'+
+                    '<i class="fa fa-trash mr-2" aria-hidden="true"></i>'+
+                    'Delete</button>'+
+            '</b>'+
+        '</div>'+
+        '</div>'+
+        '<input type="hidden" id="price_'+id+'" value="'+price_data+'">';
+        
+        countDownTimer(600000,true);
+
+         if($('.ticket_'+id).length > 0){
+            return $('.ticket_'+id).replaceWith(html);
+        }
+         $('#checkout-list').prepend(html);
+    });
+    
 }
+
 
 function ticketQuantity(el, id, price, totalClass) {
     var quantityValue = $(el).val();
-    var totalPrice = $("."+totalClass).text();
+    var totalBasket = $("."+totalClass).text();
     quantityValue = parseInt(quantityValue);
-    totalPrice = parseInt(totalPrice);
+    totalBasket = parseInt(totalBasket);
     price = parseInt(price);
-    totalPrice = totalPrice + price*quantityValue;
+    totalBasket = totalBasket + price*quantityValue;
     $(el).val(quantityValue);
     $("#quantity_" + id).val(quantityValue);
-    return $("."+totalClass).text(totalPrice.toFixed(2));
+    return $("."+totalClass).text(totalBasket.toFixed(2));
 }
