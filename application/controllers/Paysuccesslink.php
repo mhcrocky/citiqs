@@ -19,6 +19,7 @@ class  Paysuccesslink extends BaseControllerWeb
         $this->load->model('shopposorder_model');
         $this->load->model('shopsession_model');
         $this->load->model('shopvendorfod_model');
+        $this->load->model('shopvendor_model');
 
         $this->load->helper('url');
         $this->load->helper('utility_helper');
@@ -98,14 +99,34 @@ class  Paysuccesslink extends BaseControllerWeb
         $orderRandomKey = !empty($get[$this->config->item('orderDataGetKey')]) ? $get[$this->config->item('orderDataGetKey')] : null;
 
         if ($orderId && $orderRandomKey) {
+
+
             $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
+
+
             if (is_null($order) || $order[0]['orderRandomKey'] !== $get[$this->config->item('orderDataGetKey')]) {
                 redirect('places');
             }
             $order = reset($order);
             $data['order'] = $order;
             $data['orderDataGetKey'] = $this->config->item('orderDataGetKey');
+
+            $vendorId = intval($order['vendorId']);
+            $this->setGlobalVendor($vendorId);
         }
         return;
+    }
+
+    private function setGlobalVendor(int $vendorId): void
+    {
+        $this->global['vendor'] = $this->shopvendor_model
+                                    ->setProperty('vendorId', $vendorId)
+                                    ->getProperties([
+                                        'googleAnalyticsCode',
+                                        'googleAdwordsConversionId',
+                                        'googleAdwordsConversionLabel',
+                                        'googleTagManagerCode',
+                                        'facebookPixelId'
+                                    ]);
     }
 }
