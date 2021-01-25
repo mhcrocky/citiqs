@@ -153,6 +153,7 @@ class Booking_events extends BaseControllerWeb
                 $amount = floatval($price[$key])*floatval($quantity);
                 $total = $total + $amount;
                 unset($tickets[$id[$key]]);
+                
                 $tickets[$id[$key]] = [
                         'id' => $id[$key],
                         'descript' => $descript[$key],
@@ -204,6 +205,11 @@ class Booking_events extends BaseControllerWeb
         $time = (int)($this->input->post('current_time')/1000);
         $time = $time - 2;
         unset($tickets[$ticketId]);
+        if(count($tickets) > 0) {
+            echo true;
+        } else {
+            echo false;
+        }
         $this->session->unset_userdata('tickets');
         $this->session->unset_tempdata('tickets');
         $this->session->set_tempdata('tickets', $tickets, $time);
