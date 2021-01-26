@@ -5,7 +5,7 @@ $(document).ready(function(){
         var now = moment();
         var distance = countDownDate - now;
         countDownTimer(distance);
-      } else if($('#shop').length == 0) {
+      } else if (typeof globalTime === 'undefined' && $('#shop').length == 0) {
         window.location.href = globalVariables.baseUrl + "booking_events/clear_tickets";
       }
     if ($('#first_element').val()) {
