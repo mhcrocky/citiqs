@@ -30,6 +30,7 @@ class Booking_events extends BaseControllerWeb
         if($this->session->userdata('shortUrl') != $shortUrl){
             $this->session->unset_userdata('tickets');
             $this->session->unset_userdata('exp_time');
+            $this->session->unset_userdata('total');
         }
 
         $this->session->set_userdata('customer', $customer->id);
@@ -134,49 +135,13 @@ class Booking_events extends BaseControllerWeb
 
     }
 
-    public function update_quantity()
-    {
-        $vendor_id = $this->session->userdata('customer');
-        $results = $this->input->post(null, true);
-        var_dump($results);
-        if(count($results) > 0){
-            $total = 0;
-            $quantities = $results['quantity'];
-            $id = $results['id'];
-            $descript = $results['descript'];
-            $price = $results['price'];
-            $time = (int)($results['exp_sec']/1000);
-            $time = $time - 2;
-            $tickets = $this->session->userdata('tickets');
-            foreach($quantities as $key => $quantity){
-                if($quantity == '0'){ continue; }
-                $amount = floatval($price[$key])*floatval($quantity);
-                $total = $total + $amount;
-                unset($tickets[$id[$key]]);
-                
-                $tickets[$id[$key]] = [
-                        'id' => $id[$key],
-                        'descript' => $descript[$key],
-                        'quantity' => $quantity,
-                        'price' => $price[$key],
-                        'amount' => $amount,
-                        'startDate' => $this->session->userdata("startDate"),
-                        'startTime' => $this->session->userdata("startTime"),
-                        'endDate' => $this->session->userdata("endDate"),
-                        'endTime' => $this->session->userdata("endTime")
-                    ];
-            }
-            $this->session->unset_userdata('tickets');
-            $this->session->unset_tempdata('tickets');
-        }
-        $this->session->set_tempdata('tickets', $tickets, $time);
-        redirect('events/your_tickets');
-
-    }
-
     public function add_to_basket()
     {
         $vendor_id = $this->session->userdata('customer');
+        $first_ticket = false;
+        if(!$this->session->userdata('tickets')){
+            $first_ticket = true;
+        }
         $tickets = $this->session->userdata('tickets') ?? [];
         $ticket = $this->input->post(null, true);
         $current_time = date($ticket['time']);
@@ -196,14 +161,8 @@ class Booking_events extends BaseControllerWeb
             'endDate' => $this->session->userdata("endDate"),
             'endTime' => $this->session->userdata("endTime")
         ];
-        $total = 0;
-        foreach($tickets as $ticket){
-            $total = $total + $ticket['amount'];
-        }
-        $total = number_format($total, 2, '.', '');
-        $this->session->set_tempdata('total', $total, 600);
         
-        echo json_encode(['descript'=>$ticket['descript'],'price' => $ticket['price']]);
+        echo json_encode(['descript'=>$ticket['descript'],'price' => $ticket['price'], 'first_ticket' => $first_ticket]);
         
         if($ticket['quantity'] != 0){
             $this->session->unset_userdata('tickets');
@@ -211,8 +170,26 @@ class Booking_events extends BaseControllerWeb
             $this->session->set_tempdata('tickets', $tickets, 600);
         }
 
-        
+        $total = 0;
+        foreach($tickets as $ticket){
+            $total = $total + $ticket['amount'];
+        }
+        $total = number_format($total, 2, '.', '');
+        $this->session->set_tempdata('total', $total, 600);  
+    }
 
+    public function clear_tickets()
+    {
+        $this->session->unset_userdata('tickets');
+        $this->session->unset_userdata('exp_time');
+        $this->session->unset_userdata('total');
+        $this->session->unset_tempdata('tickets');
+        $this->session->unset_tempdata('exp_time');
+        $this->session->unset_tempdata('total');
+        if(!$this->session->tempdata('tickets')){
+            $this->session->set_flashdata('expired', 'Session Expired!');
+            redirect('events/shop/'. $this->session->userdata('shortUrl'));
+        }
     }
 
     public function pay()

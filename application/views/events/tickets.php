@@ -55,14 +55,7 @@
                         </div>
                         <?php endforeach; ?>
                         <!-- end menu list item -->
-                        <div class=" w-100 mr-2">
-                            <div class="w-100 pt-2 pb-2 bg-light">
-                            <?php if(count($tickets) > 0): ?>
-                                <a href="<?php echo base_url(); ?>events/your_tickets" id="next"
-                                    class="btn btn-danger mr-2 w-100 btn-block">NEXT</a>
-                            <?php endif; ?>
-                            </div>
-                        </div>
+
 
                     </div>
                     <?php endif; ?>

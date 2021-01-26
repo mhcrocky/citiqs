@@ -5,6 +5,8 @@ $(document).ready(function(){
         var now = moment();
         var distance = countDownDate - now;
         countDownTimer(distance);
+      } else if($('#shop').length == 0) {
+        window.location.href = globalVariables.baseUrl + "booking_events/clear_tickets";
       }
     if ($('#first_element').val()) {
         let id = $('#first_element').val();
@@ -63,25 +65,18 @@ function getTicketsView(eventId, first = false) {
 
 }
 
-function countDownTimer(distance, reset=false){
+function countDownTimer(distance){
 
-    console.log(reset);
-    if(reset){
-        var interval_id = window.setInterval("", 9999); // Get a reference to the last
-    for (var i = 1; i < interval_id; i++)
-        window.clearInterval(i);
-    }
     var x = setInterval(function() {
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    $('.exp_sec').val(distance);
+    $('#exp_time').val(distance);
     $(".timer").text("Expiration time: " + addZero(minutes) + ":" + addZero(seconds) + "");
     if (minutes == 0 && seconds == 0) {
         setTimeout(() => {
-            window.location.href = globalVariables.baseUrl + "events/your_tickets";
-        }, 3000);
+            window.location.href = globalVariables.baseUrl + "booking_events/clear_tickets";
+        }, 500);
     }
-    $('.limiter').css('visibility', 'visible');
 
     if (distance < 0) {
         clearInterval(x);
@@ -115,7 +110,7 @@ function deleteTicket(id,price) {
     totalBasket = parseInt(totalBasket);
     price = parseInt(price);
     totalBasket = totalBasket - price;
-    let current_time = $('.exp_sec').val();
+    let current_time = $('#exp_time').val();
     $.post(globalVariables.baseUrl + "booking_events/delete_ticket", {id: id,current_time: current_time}, function(data){
 		$( ".ticket_"+id ).fadeOut( "slow", function() {
             $( ".ticket_"+id ).remove();
@@ -150,14 +145,14 @@ function removeTicket(id, price, totalClass) {
     $("#ticketQuantityValue_" + id).val(quantityValue);
     $("#quantity_" + id).val(quantityValue);
     $("."+totalClass).text(totalBasket.toFixed(2));
-    let time = $(".current_time").val();
+    let current_time = $(".current_time").val();
     let descript = $(".descript_"+id).html();
     let data = {
         id: id,
         quantity: quantityValue,
         price: price.toFixed(2),
         descript:  descript,
-        time: time
+        time: current_time
 
     }
 
@@ -165,6 +160,7 @@ function removeTicket(id, price, totalClass) {
         data = JSON.parse(data);
         var descript_data = data['descript'];
         var price_data = data['price'];
+        var first_ticket = data['first_ticket'];
         let html = '<div class="menu-list__item ticket_'+id+'">'+
         '<div class="menu-list__name">'+
             '<b class="menu-list__title">Description</b>'+
@@ -190,10 +186,12 @@ function removeTicket(id, price, totalClass) {
         '</div>'+
         '<input type="hidden" id="price_'+id+'" value="'+price_data+'">';
 
-        countDownTimer(600000,true);
 
          if($('.ticket_'+id).length > 0){
             return $('.ticket_'+id).replaceWith(html);
+        }
+        if(first_ticket == 1){
+            countDownTimer(600000);
         }
          $('#checkout-list').append(html);
     });
@@ -216,20 +214,21 @@ function addTicket(id, limit, price, totalClass) {
     $("#ticketQuantityValue_" + id).val(quantityValue);
     $("#quantity_" + id).val(quantityValue);
     $("."+totalClass).text(totalBasket.toFixed(2));
-    let time = $(".current_time").val();
+    let current_time = $(".current_time").val();
     let descript = $(".descript_"+id).first().html();
     let data = {
         id: id,
         quantity: quantityValue,
         price: price.toFixed(2),
         descript:  descript,
-        time: time
-
+        time: current_time
     };
     $.post(globalVariables.baseUrl + "booking_events/add_to_basket", data, function(data){
         data = JSON.parse(data);
+        //console.log(data);
         var descript_data = data['descript'];
         var price_data = data['price'];
+        var first_ticket = data['first_ticket'];
         let html = '<div class="menu-list__item ticket_'+id+'">'+
         '<div class="menu-list__name">'+
             '<b class="menu-list__title">Description</b>'+
@@ -255,10 +254,14 @@ function addTicket(id, limit, price, totalClass) {
         '</div>'+
         '<input type="hidden" id="price_'+id+'" value="'+price_data+'">';
         
-        countDownTimer(600000,true);
+
 
          if($('.ticket_'+id).length > 0){
             return $('.ticket_'+id).replaceWith(html);
+        }
+
+        if(first_ticket == 1){
+            countDownTimer(600000);
         }
          $('#checkout-list').prepend(html);
     });

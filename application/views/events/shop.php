@@ -4,6 +4,7 @@
     <?php echo ucfirst($this->session->flashdata('expired')); ?>
 </div>
 <?php endif; ?>
+<input type="hidden" id="shop" value="shop">
 <section id="main-content" class='hero-section position-relative'>
     <div class="d-none d-md-flex col-6 px-0 hero__background">
         <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80"
@@ -17,16 +18,14 @@
                 <h1>Our Events</h1>
                 <p class='text-muted mt-4 mb-5'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sagittis
                     at est ut facilisis. Suspendisse eu luctus mauris.</p>
-                <div class='d-flex flex-column flex-sm-row align-items-start flex-wrap'>
-                    <a href="#events" class="btn btn-primary btn-lg bg-primary px-4 mr-sm-3 mt-3">Events</a>
-                    <a href="#events" class="btn btn-secondary btn-lg bg-secondary px-4 mt-3">Order Now</a>
-                </div>
+
             </div>
             <!-- end col -->
 
         </div>
+        <input type="hidden" id="exp_time" name="exp_time" value="1">
         <!-- end row -->
-        <?php if (!empty($events)): ?>
+        <?php if (!empty($events)): ?> 
 
         <div id="events" style="box-shadow: 0 0 70px 30px #00000014 !important;background: #00000014;padding: 0px 0px;"
             class="row single-item__grid">
