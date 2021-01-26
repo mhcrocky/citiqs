@@ -1,13 +1,20 @@
+(function($, window, document) {
+    if (typeof globalTime === 'undefined' && $('#shop').length == 0) {
+        window.location.href = globalVariables.baseUrl + "booking_events/clear_tickets";
+    }
+
+}(window.jQuery, window, document));
+
+
 $(document).ready(function(){
+    $('body').show();
     if (typeof globalTime !== 'undefined') {
         let time = globalTime.time;
         var countDownDate = moment(time);
         var now = moment();
         var distance = countDownDate - now;
         countDownTimer(distance);
-      } else if (typeof globalTime === 'undefined' && $('#shop').length == 0) {
-        window.location.href = globalVariables.baseUrl + "booking_events/clear_tickets";
-      }
+    }
     if ($('#first_element').val()) {
         let id = $('#first_element').val();
         getTicketsView(id, true);

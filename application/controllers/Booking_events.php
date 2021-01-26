@@ -206,8 +206,8 @@ class Booking_events extends BaseControllerWeb
     {
         $userInfo = $this->input->post(null, true);
         $tickets = $this->session->userdata('tickets');
-        $this->session->unset_userdata('tickets');
-        $this->session->unset_userdata('total');
+        //$this->session->unset_userdata('tickets');
+        //$this->session->unset_userdata('total');
 
         $customer = $this->session->userdata('customer');
         $this->event_model->save_event_reservations($userInfo,$tickets, $customer);
