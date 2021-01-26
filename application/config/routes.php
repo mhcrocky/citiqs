@@ -492,6 +492,7 @@ $route['events/tickets/(:num)'] = 'Booking_events/tickets/$1';
 $route['events/your_tickets'] = 'Booking_events/your_tickets';
 $route['events/pay'] = 'Booking_events/pay';
 $route['events/selectpayment'] = 'Booking_events/selectpayment';
+$route['booking_events/clear_tickets'] = 'Booking_events/clear_tickets';
 
 $route['video/get_videos'] = 'Video/get_videos';
 $route['video/delete_video'] = 'Video/delete_video';
