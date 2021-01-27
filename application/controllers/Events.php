@@ -40,7 +40,8 @@ class Events extends BaseControllerWeb
         $this->global['pageTitle'] = 'TIQS: Step Two';
         $data = [
             'events' => $this->event_model->get_events($this->vendor_id),
-            'eventId' => $eventId
+            'eventId' => $eventId,
+            'emails' => $this->email_templates_model->get_ticketing_email_by_user($this->vendor_id)
         ];
         $this->loadViews("events/step-two", $this->global, $data, 'footerbusiness', 'headerbusiness');
 
@@ -154,7 +155,7 @@ class Events extends BaseControllerWeb
         echo json_encode($data);
 
     }
-
+ 
     public function viewdesign(): void
     {
         $this->load->model('bookandpayagendabooking_model');
@@ -180,6 +181,13 @@ class Events extends BaseControllerWeb
         $design = serialize($this->input->post(null,true));
         $this->event_model->save_design($this->vendor_id,$design);
         redirect('events/viewdesign');
+    }
+
+    public function update_email_template()
+    {
+        $id = $this->input->post('id');
+        $emailId = $this->input->post('emailId');
+        $this->event_model->update_email_template($id, $emailId);
     }
 
     public function email_designer()

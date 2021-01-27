@@ -13,7 +13,7 @@ class Email_templates_model extends CI_Model
     public function get_emails_by_user ($user_id) {
         $this->db->from('tbl_email_templates');
         $this->db->where('user_id', $user_id);
-        $this->db->where('template_name <>', 'ticketingtemplate');
+        $this->db->not_like('template_name', 'ticketing_');
         $query = $this->db->get();
         $result = $query->result();
         return $result;
@@ -22,7 +22,7 @@ class Email_templates_model extends CI_Model
     public function get_ticketing_email_by_user ($user_id) {
         $this->db->from('tbl_email_templates');
         $this->db->where('user_id', $user_id);
-        $this->db->where('template_name', 'ticketingtemplate');
+        $this->db->like('template_name', 'ticketing_');
         $query = $this->db->get();
         $result = $query->result();
         return $result;

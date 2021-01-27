@@ -19,7 +19,7 @@
                         <?php foreach ($emails as $email) { ?>
                             <tr>
                                 <th scope="row"><?php echo $email->id; ?></th>
-                                <td><?php echo $email->template_name; ?></td>
+                                <td><?php echo str_replace('ticketing_', '', $email->template_name); ?></td>
                                 <td><?php echo $email->template_file; ?></td>
                                 <td class="action">
                                     <a href="<?php echo base_url(); ?>events/emaildesigner/ticketing/<?php echo $email->id; ?>">

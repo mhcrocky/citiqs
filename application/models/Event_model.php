@@ -81,6 +81,12 @@ class Event_model extends CI_Model {
 		return $this->db->update('tbl_events');
 	}
 
+	function update_email_template($id, $emailId){
+		$this->db->set('emailId', $emailId);
+		$this->db->where('id', $id);
+		return $this->db->update('tbl_event_tickets');
+	}
+
 	function get_design($vendor_id){
 
 		$this->db->select('shopDesign')

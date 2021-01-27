@@ -147,6 +147,28 @@ $(document).ready(function() {
             },
             {
 
+                title: 'Email Template',
+                data: null,
+                "render": function(data, type, row) {
+                    var html = '<select style="min-width: 150px;" class="form-control" id="email_template" onchange="updateEmailTemplate(this, '+data.ticketId+')">';
+                    html += '<option value="0">Select Template</option>';
+                    var emails = JSON.parse(globalEmails);
+                    $.each(emails, function( index, email ) {
+                        let template_name = email.template_name;
+                        if(data.emailId == email.id){
+                            html += '<option value="'+email.id+'" selected>'+template_name.replace('ticketing_', '')+'</option>';
+                        } else {
+                            html += '<option value="'+email.id+'">'+template_name.replace('ticketing_', '')+'</option>';
+                        }
+                    });
+                    html += '</select>'
+                    
+                    return html;
+                }
+
+            },
+            {
+
                 title: 'Options',
                 data: null,
                 "render": function(data, type, row) {
@@ -203,7 +225,7 @@ $(document).ready(function() {
                             '<td>'+html+'<td colspan="3">'
                             +'<input type="text" id="event-name" class="form-control" name="event-name" value="' + group + '">' +
                             '</td><td><ul><li><div class="custom-control custom-checkbox"><input style="transform: scale(1.5);" class="custom-control-input" id="package-area-0' + i +
-                            '" type="checkbox" checked="checked" ><label class="custom-control-label" for="package-area-0' +i + '"> </label>  </div>    </li></ul></td><td></td>' +
+                            '" type="checkbox" checked="checked" ><label class="custom-control-label" for="package-area-0' +i + '"> </label>  </div>    </li></ul></td><td></td><td></td>' +
                             '<td><div class="bg-dark" style="width: 30px;height: 30px;">'+
                             '<i style="color: #fff;" class="fa fa-trash p-2"><i></div></td></tr>'
                         );
@@ -274,5 +296,14 @@ function defaultOptions(){
     $("#soldoutExpired").val(0);
     $("#mailPerAmount").val(1);
     $("#emailAddress").val('');
+    
+}
+
+function updateEmailTemplate(el, id){
+    let emailId = $(el).find('option:selected').val();
+    $.post(globalVariables.baseUrl + "events/update_email_template", {id:id, emailId: emailId}, function(data){
+        console.log(data);
+    });
+    console.log(emailId);
     
 }

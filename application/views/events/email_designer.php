@@ -384,7 +384,9 @@
             </ul>
 
             <br>
-            <input style="border:1px solid #ced4da;display:none" type="text" name="template_name" id="template_name" required value="ticketingtemplate">
+            <label for="template_name">Template Name</label>
+            <input style="border:1px solid #ced4da;" type="text" onchange="changeTemplateName(this)" required>
+            <input style="border:1px solid #ced4da;display:none" type="hidden" name="template_name" id="template_name" required value="ticketingtemplate">
             <div style="visibility: hidden;" class="required text-danger text-center" id="required">&nbsp &nbsp &nbsp This field is required</div>
             <div class="w-100 mt-3">
                 <h4><b>Test Email</b></h4>
@@ -1031,6 +1033,12 @@
         if(e.lengthComputable){
             $('progress').attr({value:e.loaded,max:e.total});
         }
+    }
+
+    function changeTemplateName(el){
+        let val = $(el).val();
+        let name = 'ticketing_' + val;
+        return $("#template_name").val(name);
     }
 
     function sendEmail(){

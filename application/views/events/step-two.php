@@ -309,7 +309,7 @@
         </div>
     </div>
 </div>
-
+ 
 <main class="my-form">
     <div class="w-100 mt-5 p-3">
         <div class="input-group col-md-2">
@@ -409,3 +409,7 @@
         </div>
     </div>
 </div>
+
+<script>
+const globalEmails  = '<?php echo json_encode($emails); ?>';
+</script>

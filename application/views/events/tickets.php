@@ -44,10 +44,8 @@
                                 <div class="quantity-section">
                                     <button type="button" class="quantity-button"
                                         onclick="removeTicket('<?php echo $ticketId; ?>','<?php echo $ticket['ticketPrice']; ?>','totalBasket')">-</button>
-                                    <input id="ticketQuantityValue_<?php echo $ticketId; ?>" type="number" value="0"
-                                        oninput="ticketQuantity(this,'<?php echo $ticketId; ?>','totalBasket')"
-                                        onchange="ticketQuantity(this,'<?php echo $ticketId; ?>','totalBasket')"
-                                        onkeyup="absVal(this);" placeholder="0" class="quantity-input">
+                                    <input type="number" min="1" id="ticketQuantityValue_<?php echo $ticketId; ?>" value="0"
+                                        onkeyup="absVal(this);" placeholder="0" class="quantity-input" disabled>
                                     <button type="button" class="quantity-button"
                                         onclick="addTicket('<?php echo $ticketId; ?>', '<?php echo $ticket['ticketQuantity']; ?>', '<?php echo $ticket['ticketPrice']; ?>','totalBasket')">+</button>
                                 </div>
