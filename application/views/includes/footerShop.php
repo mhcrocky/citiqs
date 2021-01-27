@@ -76,7 +76,7 @@
 </div>
 <!-- Modal -->
 
-<footer class='footer bg-light-gray mt-2'>
+<footer class="footer bg-light-gray mt-2">
     <div class="container text-center">
         <div class="row footer__row">
             <div class="col-12 col-md-6 text-center">

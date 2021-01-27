@@ -36,7 +36,7 @@ var designGlobals = (function() {
         'iframeId': 'iframe',
         'showClass': 'showFieldsets',
         'hideClass': 'hideFieldsets',
-        'selectTypeView': 'selectTypeView',
+        'shopView': 'shopView',
         'ticketsView': 'ticketsView',
         'iframeWidthDeviceId': 'iframeWidthDevice',
         'iframeHeightDeviceId': 'iframeHeightDevice',
@@ -44,7 +44,7 @@ var designGlobals = (function() {
         'designBackgroundImageClass': 'designBackgroundImage',
         'checkUrl': function(url) {
             if (url.includes('shop')) {
-                return this['selectTypeView'];
+                return this['shopView'];
             } else if (url.includes('tickets')) {
                 return this['ticketsView'];
             }

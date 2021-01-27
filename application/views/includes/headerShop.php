@@ -20,7 +20,34 @@
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
-    input[type="text"]:disabled{background-color: #fff; color: #000;}
+    input[type="text"]:disabled, input[type="number"]:disabled  {
+        background-color: #fff;
+        color: #000;
+    }
+    <?php if(isset($design)) {
+        $bgImage=$design['bgImage'];
+        $design=$design['shop'];
+        echo "body{background-image: url('".$this->baseUrl . "assets/images/backGroundImages/". $bgImage."') !important;
+            background-size: cover;}";
+        
+        $design_ids=$design['id'];
+        foreach($design_ids as $key=> $design_id) {
+            echo '#'. $key . '{';
+                echo array_keys($design_id)[0].':';
+                echo array_values($design_id)[0].'!important } ';
+            }
+            
+            $design_classes=$design['class'];
+            
+            foreach($design_classes as $key=> $design_class) {
+                $key = str_replace('---', '.', $key);
+                echo '.'. $key . '{';
+                    echo array_keys($design_class)[0].':';
+                    echo array_values($design_class)[0].'!important } ';
+                }
+            }
+
+    ?>
     </style>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
@@ -46,14 +73,14 @@
 
 </head>
 
-<body>
+<body id="body">
 
     <!-- HEADER -->
-    <header class='header'>
+    <header class="header">
         <nav class="navbar navbar-expand-lg container">
             <a class="navbar-brand"
                 href="<?php echo $this->baseUrl; ?>events/shop/<?php echo $this->session->userdata('shortUrl'); ?>">
-                <img src="<?php echo base_url(); ?>assets/home/images/logo1.png" alt="">
+                <img class="menu-icon" src="<?php echo base_url(); ?>assets/home/images/logo1.png" alt="">
             </a>
             <button class="navbar-toggler py-2 px-3 px-md-4 bg-secondary" type="button" data-toggle="collapse"
                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -70,7 +97,8 @@
             </div>
             <a href="#" class="btn btn-primary btn-lg bg-primary px-3 px-md-4 text-center header__checkout"
                 data-toggle="modal" data-target="#checkout-modal"><i class="fa fa-shopping-basket mr-md-3"></i><span
-                    class='d-none d-lg-inline'>CHECKOUT</span> &nbsp €<b class="totalBasket"><?php echo $this->session->userdata('total'); ?></b></a>
+                    class='d-none d-lg-inline'>CHECKOUT</span> &nbsp €<b
+                    class="totalBasket"><?php echo $this->session->userdata('total'); ?></b></a>
 
         </nav>
     </header>

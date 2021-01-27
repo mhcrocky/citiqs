@@ -1,7 +1,10 @@
 <!-- HERO SECTION -->
 <?php if($this->session->flashdata('expired')): ?>
-<div style="margin-left: 2px;margin-right: 2px;" class="alert alert-danger" role="alert">
-    <?php echo ucfirst($this->session->flashdata('expired')); ?>
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong><?php echo ucfirst($this->session->flashdata('expired')); ?></strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
 <?php endif; ?>
 <input type="hidden" id="shop" value="shop">
