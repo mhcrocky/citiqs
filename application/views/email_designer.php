@@ -1,7 +1,11 @@
 
-<?php $this->load->view('includes/email_designer_header'); ?>
+<script type="text/javascript">
+        var path = '<?= base_url(); ?>';
+        var user_id = <?php echo $user->id; ?>;
+        var images_path = '<?php echo $images_path; ?>';
+        var template_id = <?php echo (isset($template_id) and $template_id) ? $template_id : 'false'; ?>;
+</script>
 
-<body class="edit mx-auto mt-3">
 <div style="border: 1px solid gray !important;" class="navbar navbar-inverse navbar-layoutit mt-3">
     <div class="navbar-header">
         <button data-target="navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
@@ -957,7 +961,15 @@
         </div>
     </div>
 </div>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.2.6/plugins/colorpicker/plugin.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>assets/emaildesigner/js/colpick.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>assets/emaildesigner/js/template.editor.js"></script>
 
 
 <script>
@@ -1140,7 +1152,3 @@
 
     }
 </script>
-
-</body>
-
-</html>
