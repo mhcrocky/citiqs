@@ -22,7 +22,7 @@
                                 <td><?php echo $email->template_name; ?></td>
                                 <td><?php echo $email->template_file; ?></td>
                                 <td class="action">
-                                    <a href="emaildesigner/edit/<?php echo $email->id; ?>">
+                                    <a href="<?php echo base_url(); ?>emaildesigner/edit/<?php echo $email->id; ?>">
                                         <i class="fa fa-pencil text-primary" aria-hidden="true"></i>
                                     </a>
                                     <a href="#" onclick="confirmDelete(<?php echo $email->id; ?>)">
