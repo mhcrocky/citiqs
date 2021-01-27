@@ -8,11 +8,21 @@ class Email_templates_model extends CI_Model
     {
         $this->db->insert('tbl_email_templates', $data);
         return $this->db->insert_id();
-    }
+    } 
 
     public function get_emails_by_user ($user_id) {
         $this->db->from('tbl_email_templates');
         $this->db->where('user_id', $user_id);
+        $this->db->where('template_name <>', 'ticketingtemplate');
+        $query = $this->db->get();
+        $result = $query->result();
+        return $result;
+    }
+
+    public function get_ticketing_email_by_user ($user_id) {
+        $this->db->from('tbl_email_templates');
+        $this->db->where('user_id', $user_id);
+        $this->db->where('template_name', 'ticketingtemplate');
         $query = $this->db->get();
         $result = $query->result();
         return $result;
