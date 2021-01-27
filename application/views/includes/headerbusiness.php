@@ -291,6 +291,7 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
 										<ul class="collapse">
 											<li><a href="<?php echo $this->baseUrl;?>events/create"><i class="ti-agenda"></i> <span>Create your event</span></a></li>
 											<li><a href="<?php echo $this->baseUrl;?>events"><i class="ti-ticket"></i> <span>Your Events</span></a></li>
+                                            <li><a href="<?php echo $this->baseUrl;?>events/emaildesigner"><i class="ti-email"></i> <span>Email Designer</span></a></li>
 											<li><a href="<?php echo $this->baseUrl;?>events/viewdesign"><i class="ti-ticket"></i> <span></span>Shop settings</a></li>
 											<li>
 												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Settings</span></a>
