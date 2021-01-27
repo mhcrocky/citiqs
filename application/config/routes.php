@@ -485,6 +485,9 @@ $route['events/get_tickets'] = 'Events/get_tickets';
 $route['events/get_events'] = 'Events/get_events';
 $route['events/get_ticket_options'] = 'Events/get_ticket_options';
 $route['events/viewdesign'] = 'Events/viewdesign';
+$route['events/emaildesigner'] = 'Events/email_designer';
+$route['events/emaildesigner/ticketing'] = 'Events/email_designer_edit';
+$route['events/emaildesigner/ticketing/(:num)'] = 'Events/email_designer_edit/$1';
 
 $route['events/shop'] = 'Booking_events/index';
 $route['events/shop/(:any)'] = 'Booking_events/index/$1';
