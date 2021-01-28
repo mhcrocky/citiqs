@@ -18,12 +18,14 @@ class Employee extends BaseControllerWeb {
         $this->load->library('language', array('controller' => $this->router->class));
         $this->load->library('form_validation');
         $this->isLoggedIn();
-    }
+    } 
 
     public function index() {
         $ownerId = $this->session->userdata("userId");
         $data = [
             'employees' => $this->employee_model->getOwnerEmployees($ownerId),
+            'menuOptions' => $this->employee_model->getMenuOptions(),
+            'employeeMenuOptions' => $this->employee_model->getMenuOptionsByVendor($ownerId),
             'ownerId' => $_SESSION['userId'],
             'time' => time(),
         ];
@@ -35,6 +37,14 @@ class Employee extends BaseControllerWeb {
         $data = ['baseUrl' => base_url()];
         $this->global['pageTitle'] = 'tiqs: Add New Employee';
         $this->loadViews("employeenew", $this->global, $data, NULL);
+    }
+
+    public function save_menu_options() {
+        $vendorId = $this->session->userdata("userId");
+        $menuOptions = json_decode($this->input->post('menuOptionsId'));
+        $userId = $this->input->post('userId');
+        $output = $this->employee_model->saveMenuOptionsByEmployee($vendorId, $userId, $menuOptions);
+        echo $output;
     }
 
     public function addNewEmployeeSetup()

@@ -118,6 +118,72 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
         return $query->result();
     }
 
+    public function getMenuOptions()
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_menu_options');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function saveMenuOptionsByEmployee($vendorId, $userId, $items)
+    {
+        $data = [];
+        
+        foreach($items as $item){
+            $menuOptionId = $item;
+            $data = [
+                'vendorId' => $vendorId,
+                'userId' => $userId,
+                'menuOptionId' => $menuOptionId
+            ];
+            $exists = $this->checkIfMenuOptionExistsByUser($userId, $vendorId, $menuOptionId);
+            if($exists){
+                $this->db->insert('tbl_user_allowed', $data);
+            } else {
+                $this->db->update('tbl_user_allowed', $data);
+            }
+        }
+        return true;
+    }
+
+    public function checkIfMenuOptionExistsByUser($userId, $vendorId, $menuOptionId)
+    {
+        $this->db->select('*')
+             ->from('tbl_user_allowed')
+             ->where([
+                 'userId' => $userId,
+                 'vendorId'=> $vendorId,
+                 'menuOptionId' => $menuOptionId
+                 ]);
+        $query = $this->db->get();
+        $results = $query->result_array();
+        if(count($results) > 0 ){
+            return false;
+        }
+        return true;
+    }
+
+    public function getMenuOptionsByVendor($vendorId)
+    {
+        $this->db->select('tbl_user_allowed.id as allowedId, menuOptionId, menuOption, userId')
+         ->from('tbl_user_allowed')
+         ->join('tbl_menu_options', 'tbl_user_allowed.menuOptionId = tbl_menu_options.id', 'left')
+         ->where('vendorId', $vendorId);
+        $query = $this->db->get();
+        $results = $query->result_array();
+        $options = [];
+        if(count($results) > 0){
+            foreach($results as $key => $result){
+                $userId = $result['userId'];
+                $optionId = $result['menuOptionId'];
+                $options[$userId][$optionId] = $result;
+            }
+        }
+
+        return $options;
+    }
+
     public function getEmployeeForBB()
     {
         // get for bb
