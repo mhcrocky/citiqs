@@ -1,29 +1,4 @@
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/employeenew.css">
 <!-- Add Modal -->
-<style>
-  .connectedSortable {
-    border: 1px solid #bebebe;
-	background-color: #eee;
-    width: 46%;
-    min-height: 300px;
-    list-style-type: none;
-    margin: 0;
-    padding: 5px 0 0 0;
-    float: left;
-    margin-right: 10px;
-	margin-bottom: 10px;
-  }
-  .connectedSortable li {
-    margin: 0 5px 5px 5px;
-    padding: 5px;
-    font-size: 1.2em;
-    width: auto;
-  }
-  .h1 {
-	font-size: 28px;
-	color: #000;
-  }
-  </style>
 <div class="modal fade" id="addNewModal" tabindex="-1" role="dialog" aria-labelledby="addNewModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
