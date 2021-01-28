@@ -129,7 +129,7 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
     public function saveMenuOptionsByEmployee($vendorId, $userId, $items)
     {
         $data = [];
-        
+
         foreach($items as $item){
             $menuOptionId = $item;
             $data = [
@@ -138,11 +138,10 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
                 'menuOptionId' => $menuOptionId
             ];
             $exists = $this->checkIfMenuOptionExistsByUser($userId, $vendorId, $menuOptionId);
-            if($exists){
+            if(!$exists){
                 $this->db->insert('tbl_user_allowed', $data);
-            } else {
-                $this->db->update('tbl_user_allowed', $data);
             }
+            
         }
         return true;
     }
@@ -159,9 +158,9 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
         $query = $this->db->get();
         $results = $query->result_array();
         if(count($results) > 0 ){
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     public function getMenuOptionsByVendor($vendorId)
