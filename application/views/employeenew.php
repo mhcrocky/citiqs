@@ -172,7 +172,7 @@
                     <div class="iconWrapper ml-2">
                         <span class="fa-stack fa-2x edit-icon btn-edit-item"
                             onclick="editMenuOptions('<?php echo $employee->id; ?>')">
-                            <i class="far fa-hamburger"></i>
+                            <i class="far fa-bars"></i>
                         </span>
                     </div>
                 </div>
