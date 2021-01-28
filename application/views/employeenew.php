@@ -253,12 +253,12 @@
                 </div>
                 <!-- END EDIT FOR NEW USER -->
 
-				<button style="display: none" type="button" id="editMenuOptions<?php echo $employee->id; ?>"
+                <button style="display: none" type="button" id="editMenuOptions<?php echo $employee->id; ?>"
                     class="btn btn-primary" data-toggle="modal"
                     data-target="#editMenuOptionsModal<?php echo $employee->id; ?>Modal">Edit</button>
                 <!-- MENU OPTIONS Modal -->
-                <div class="modal fade" id="editMenuOptionsModal<?php echo $employee->id; ?>Modal" tabindex="-1" role="dialog"
-                    aria-labelledby="editMenuOptionsLabel" aria-hidden="true">
+                <div class="modal fade" id="editMenuOptionsModal<?php echo $employee->id; ?>Modal" tabindex="-1"
+                    role="dialog" aria-labelledby="editMenuOptionsLabel" aria-hidden="true">
                     <div class="modal-dialog modal-md" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -269,33 +269,36 @@
                             </div>
                             <div class="modal-body mx-auto">
                                 <ul id="allMenuItems<?php echo $employee->id; ?>" class="connectedSortable">
-								    <li class="h1 title">All menu options</li>
-									<?php foreach($menuOptions as $menuOption): 
+                                    <li class="h1 title">All menu options</li>
+                                    <?php foreach($menuOptions as $menuOption): 
 									      $optionId = $menuOption['id'];
 									      if(isset($employeeMenuOptions[$employee->id][$optionId])){ continue;}
 										?>
-                                    <li class="ui-state-default" data-embellishmentid="<?php echo $menuOption['id']; ?>"><?php echo ucfirst($menuOption['menuOption']); ?></li>
-									<?php endforeach; ?>
+                                    <li class="ui-state-default"
+                                        data-embellishmentid="<?php echo $menuOption['id']; ?>">
+                                        <?php echo ucfirst($menuOption['menuOption']); ?></li>
+                                    <?php endforeach; ?>
                                 </ul>
 
                                 <ul id="selectedMenuItems<?php echo $employee->id; ?>" class="connectedSortable">
-								<li class="h1 title">Selected Menu</li>
-								<?php if(isset($employeeMenuOptions[$employee->id])): 
+                                    <li class="h1 title">Selected Menu</li>
+                                    <?php if(isset($employeeMenuOptions[$employee->id])): 
 									  $items = $employeeMenuOptions[$employee->id]; 
 									  foreach($items as $item) :?>
-									<li class="ui-state-default" data-embellishmentid="<?php echo $item['menuOptionId']; ?>"><?php echo ucfirst($item['menuOption']); ?></li>
-								<?php endforeach;
+                                    <li class="ui-state-default"
+                                        data-embellishmentid="<?php echo $item['menuOptionId']; ?>">
+                                        <?php echo ucfirst($item['menuOption']); ?></li>
+                                    <?php endforeach;
 								      endif; ?>
-								    
+
                                 </ul>
                             </div>
                             <div class="modal-footer">
                                 <input style="width: 100px;border-radius: 25px;" type="button"
-                                    onclick="savePosition('<?php echo $employee->id; ?>')"
-                                    class="btn btn-primary p-2" value="Save" />
+                                    onclick="savePosition('<?php echo $employee->id; ?>')" class="btn btn-primary p-2"
+                                    value="Save" />
                                 <button style="width: 100px;border-radius: 25px;" type="button"
-                                class="btn btn-secondary p-2"
-                                    data-dismiss="modal">Cancel</button>
+                                    class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
                             </div>
                         </div>
                     </div>
@@ -312,35 +315,39 @@
     </div>
 </div>
 <script>
-  $(function() {
-    $( ".connectedSortable" ).sortable({
-	  connectWith: ".connectedSortable",
-	  items: '> li:not(.title)'
+$(function() {
+    $(".connectedSortable").sortable({
+        connectWith: ".connectedSortable",
+        items: '> li:not(.title)'
     }).disableSelection();
-  });
+});
 
 function editEmployee(employeeId) {
     $('#editModalEmployee' + employeeId).click();
 }
+
 function editMenuOptions(employeeId) {
     $('#editMenuOptions' + employeeId).click();
 }
 
 function savePosition(id) {
-    if($('#selectedMenuItems'+id+' li').length > 0){
-		var menuOptionsId = [];
-		var i = 0;
-		$('#selectedMenuItems'+id+' li:not(.title)').each(function( index ) {
-			menuOptionsId[i++] = $( this ).data('embellishmentid');
-		});
-		$.post(globalVariables.baseUrl + 'employee/save_menu_options', {menuOptionsId: JSON.stringify(menuOptionsId), userId: id},function(data){
-			if(data){
-				alertify.success('Menu options saved successfully!');
-			} else {
-				alertify.error('Something went wrong!');
-			}
-			
-		});
-	};
+    if ($('#selectedMenuItems' + id + ' li').length > 0) {
+        var menuOptionsId = [];
+        var i = 0;
+        $('#selectedMenuItems' + id + ' li:not(.title)').each(function(index) {
+            menuOptionsId[i++] = $(this).data('embellishmentid');
+        });
+        $.post(globalVariables.baseUrl + 'employee/save_menu_options', {
+            menuOptionsId: JSON.stringify(menuOptionsId),
+            userId: id
+        }, function(data) {
+            if (data) {
+                alertify.success('Menu options saved successfully!');
+            } else {
+                alertify.error('Something went wrong!');
+            }
+
+        });
+    };
 }
 </script>
