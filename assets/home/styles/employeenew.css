@@ -21,7 +21,8 @@
 }
 .connectedSortable {
     border: 1px solid #bebebe;
-	background-color: #eee;
+    border-top: 15px solid #128cfc;
+	border-radius: 10px;
     width: 46%;
     min-height: 300px;
     list-style-type: none;
@@ -33,11 +34,29 @@
   }
   .connectedSortable li {
     margin: 0 5px 5px 5px;
+    background-color: #f2f7ff;
     padding: 5px;
     font-size: 1.2em;
     width: auto;
+    border: 0px solid #0b5aa2;
+    border-radius: 10px;
+  }
+  .ui-sortable-helper {
+      background-color: #bebebe !important;
   }
   .h1 {
 	font-size: 28px;
 	color: #000;
   }
+
+  .title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+      background-color: #d9e7ff !important;
+      color: #000;
+      min-height: 55px;
+      margin-top: 5px;
+  }
+
+  

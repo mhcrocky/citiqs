@@ -145,7 +145,7 @@
                         </span>
                     </div>
                     <div class="iconWrapper ml-2">
-                        <span class="fa-stack fa-2x edit-icon btn-edit-item"
+                        <span class="fa-stack fa-2x edit-icon btn-edit-item bg-dark"
                             onclick="editMenuOptions('<?php echo $employee->id; ?>')">
                             <i class="far fa-bars"></i>
                         </span>
@@ -290,11 +290,11 @@
                                 </ul>
                             </div>
                             <div class="modal-footer">
-                                <input style="width: 100px;" type="button"
+                                <input style="width: 100px;border-radius: 25px;" type="button"
                                     onclick="savePosition('<?php echo $employee->id; ?>')"
-                                    class="grid-button button theme-editor-header-button" value="Save" />
-                                <button style="width: 100px;" type="button"
-                                    class="grid-button-cancel button theme-editor-header-button"
+                                    class="btn btn-primary p-2" value="Save" />
+                                <button style="width: 100px;border-radius: 25px;" type="button"
+                                class="btn btn-secondary p-2"
                                     data-dismiss="modal">Cancel</button>
                             </div>
                         </div>
