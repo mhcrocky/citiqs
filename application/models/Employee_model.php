@@ -129,7 +129,9 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
     public function saveMenuOptionsByEmployee($vendorId, $userId, $items)
     {
         $data = [];
-
+        $menuOptions = array_keys($this->getMenuOptionsByVendor($vendorId)[$userId]);
+        $deleted_items = array_diff($menuOptions, $items);
+        var_dump($deleted_items);
         foreach($items as $item){
             $menuOptionId = $item;
             $data = [
@@ -142,6 +144,14 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
                 $this->db->insert('tbl_user_allowed', $data);
             }
             
+        }
+        foreach($deleted_items as $deleted_item){
+            $this->db->where([
+                'userId' => $userId,
+                'vendorId'=> $vendorId,
+                'menuOptionId' => $deleted_item
+                ]);
+            $this->db->delete('tbl_user_allowed');
         }
         return true;
     }
