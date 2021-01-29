@@ -119,6 +119,16 @@ $(document).ready( function () {
             size: 30,
             unique: true
           },
+			{
+				id: 'tbl_shop_orders.paymentType',
+				label: 'Payment type',
+				type: 'string',
+				class: 'paymenttype',
+				// optgroup: 'core',
+				default_value: '',
+				size: 30,
+				unique: true
+			},
         ]
       };
       
@@ -227,8 +237,8 @@ $(document).ready( function () {
         html += '<th>Product VAT</th>';
         html += '<th>Price</th>';
         html += '<th>Quantity</th>';
-        html += '<th>EXVAT</th>';
-        html += '<th>VAT</th>';
+        // html += '<th>EXVAT</th>';
+        // html += '<th>VAT</th>';
         html += '</tr>';
         html += '</thead>';
         var productsVat = [];
@@ -254,8 +264,8 @@ $(document).ready( function () {
                   html += '<td>' + num_percentage(val.productVat) + '</td>' ;
                   html += '<td>' + round_up(val.price) + '</td>' ;
                   html += '<td>' + val.quantity + '</td>' ;
-                  html += '<td>' + round_up(val.EXVAT) + '</td>' ;
-                  html += '<td>' + round_up(val.VAT) + '</td>';
+                  // html += '<td>' + round_up(val.EXVAT) + '</td>' ;
+                  // html += '<td>' + round_up(val.VAT) + '</td>';
                 html += '</tr>';
                 
                 //var array_values = Object.keys(val).map(i => val[i]);
@@ -350,16 +360,17 @@ $(document).ready( function () {
           pageAmountData.reduce( function (a, b) {
               return parseFloat(a) + parseFloat(b);
             }) : 0;
-          let pageExvatData = api.column( 12, { page: 'current'} ).cache('search');
-          let pageExvatTotal = pageExvatData.length ? 
-            pageExvatData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
-          let pageVatData = api.column( 13, { page: 'current'} ).cache('search');
-          let pageVatTotal = pageVatData.length ? 
-            pageVatData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
+
+          // let pageExvatData = api.column( 12, { page: 'current'} ).cache('search');
+          // let pageExvatTotal = pageExvatData.length ?
+          //   pageExvatData.reduce( function (a, b) {
+          //     return parseFloat(a) + parseFloat(b);
+          //   }) : 0;
+          // let pageVatData = api.column( 13, { page: 'current'} ).cache('search');
+          // let pageVatTotal = pageVatData.length ?
+          //   pageVatData.reduce( function (a, b) {
+          //     return parseFloat(a) + parseFloat(b);
+          //   }) : 0;
 
 
           //Totals For All Pages
@@ -394,17 +405,17 @@ $(document).ready( function () {
               return parseFloat(a) + parseFloat(b);
             }) : 0;
 
-          let exvatData = api.column( 12,{ search: 'applied' } ).cache('search');
-          let exvatTotal = exvatData.length ? 
-            exvatData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0; 
-
-          let vatData = api.column( 13, { search: 'applied' }).cache('search');
-          let vatTotal = vatData.length ? 
-            vatData.reduce( function (a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }) : 0;
+          // let exvatData = api.column( 12,{ search: 'applied' } ).cache('search');
+          // let exvatTotal = exvatData.length ?
+          //   exvatData.reduce( function (a, b) {
+          //     return parseFloat(a) + parseFloat(b);
+          //   }) : 0;
+		  //
+          // let vatData = api.column( 13, { search: 'applied' }).cache('search');
+          // let vatTotal = vatData.length ?
+          //   vatData.reduce( function (a, b) {
+          //     return parseFloat(a) + parseFloat(b);
+          //   }) : 0;
 
           let serviceFeeData = api.column( 6,  { search: 'applied' } ).cache('search');
           let serviceFeeTotal = serviceFeeData.length ? 
@@ -420,8 +431,8 @@ $(document).ready( function () {
            $(tfoot).find('th').eq(8).html(round_up(pageExvatServiceTotal)+'('+round_up(exvatServiceTotal)+')');
            $(tfoot).find('th').eq(9).html(round_up(pageWaiterTipTotal)+'('+round_up(waiterTipTotal)+')');
            $(tfoot).find('th').eq(10).html(round_up(pageAmount)+'('+round_up(amount)+')');
-           $(tfoot).find('th').eq(11).html(round_up(pageExvatTotal)+'('+round_up(exvatTotal)+')');
-           $(tfoot).find('th').eq(12).html(round_up(pageVatTotal)+'('+round_up(vatTotal)+')');
+           // $(tfoot).find('th').eq(11).html(round_up(pageExvatTotal)+'('+round_up(exvatTotal)+')');
+           // $(tfoot).find('th').eq(12).html(round_up(pageVatTotal)+'('+round_up(vatTotal)+')');
            $('.buttons-excel').addClass('btn').addClass('btn-success').addClass('mb-3');
            $('.buttons-excel').text('Export as Excel');
         

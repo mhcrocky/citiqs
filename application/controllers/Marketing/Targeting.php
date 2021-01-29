@@ -86,14 +86,15 @@ class Targeting extends BaseControllerWeb
 				'EXVATSERVICE'=>$val[0]['EXVATSERVICE'],
 				'waiterTip'=>$val[0]['waiterTip'],
 				'AMOUNT'=>$total_AMOUNT,
-				'EXVAT'=>$total_EXVAT,
-				'VAT'=>$total_VAT,
+//				'EXVAT'=>$total_EXVAT,
+//				'VAT'=>$total_VAT,
 				'order_date'=>$val[0]['order_date'],
 				'username' => $val[0]['username'],
 				'email' => $val[0]['email'],
 				//'price'=>$total_price,
 				'child'=>$val,
 				'vendor_id'=> $this->session->userdata("userId"),
+				'paymenttype' => $val[0]['paymenttype'],
 				'user_id' => $val[0]['buyerId']
 			];
 			

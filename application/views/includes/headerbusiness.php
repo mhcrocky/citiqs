@@ -161,7 +161,14 @@ $userShortUrl = $CI->user_modelpublic->getUserInfoById($this->session->userdata(
                                     </div>
                                 </div>
                                 <ul class="metismenu" id="menu">
-									<li><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-receipt"></i><span>Dashboard</span></a></li>
+
+									<?php
+									$menus=$this->session->userdata('menus');
+									if ($menus[0]=='all') { ?>
+										<li><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-receipt"></i><span>Dashboard</span></a></li>
+									<?php }
+									?>
+
 									<li>
 										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-shopping-cart-full"></i><span>Marketing & Loyalty</span></a>
 										<ul class="collapse">

@@ -158,14 +158,14 @@
 
 			<div style="text-align:left;">
 				<p style="font-family:'caption-bold'; font-size:300%; color:#ffffff;">
-					<?php echo $this->language->Line("LOGIN-L203400",'PERSONAL LOGIN.');?>
+					<?php echo $this->language->Line("LOGIN-EEL203400",'EMPLOYEE LOGIN.');?>
 				</p>
 			</div>
 
 			<div class="width-650">
 				<div style="margin-top:-10%" align="right">
 					<img src="<?php echo $this->baseUrl; ?>assets/home/images/girl.png" alt="tiqs" width="50%"/>
-					<form action="<?php echo base_url(); ?>loginMe" method="post">
+					<form action="<?php echo base_url(); ?>loginEmployee" method="post">
 					<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
 						<?php echo $this->language->Line("registerbusiness-3500",'Use your e-mail to login');?>
 					</p>

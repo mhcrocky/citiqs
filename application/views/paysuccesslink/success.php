@@ -1,6 +1,4 @@
 <div class='checkout-message' style='margin-top: 100px; margin-bottom: 100px;'>
-
-
 	<h2>CONFIRMATION</h2>
 	<div class="checkout-message__content">
 		<h3>Your&nbsp;Order was</h3>

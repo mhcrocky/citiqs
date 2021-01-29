@@ -131,6 +131,12 @@ class Login extends BaseControllerWeb
 						'lng' => $result->lng,
 					);
 					$sessionArray['activatePos'] = $this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('activatePos');
+
+					$MenuArray = array(
+						'all'
+					);
+
+					$sessionArray['menus'] = $MenuArray;
 					$this->session->set_userdata($sessionArray);
 					unset($sessionArray['userId'], $sessionArray['isLoggedIn'], $sessionArray['lastLogin']);
 					$loginInfo = array("userId" => $result->userId, "sessionData" => json_encode($sessionArray), "machineIp" => $_SERVER['REMOTE_ADDR'], "userAgent" => getBrowserAgent(), "agentString" => $this->agent->agent_string(), "platform" => $this->agent->platform());
@@ -149,6 +155,74 @@ class Login extends BaseControllerWeb
 			}
 		}
 	}
+
+	public function loginEmployee()
+	{
+
+		$this->form_validation->set_rules('email', 'Email', 'valid_email|max_length[128]|trim');
+		$this->form_validation->set_rules('password', 'Password', 'required|max_length[32]');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->index();
+		}
+
+		else
+		{ // check login credentials at employee table
+
+			$email = strtolower($this->security->xss_clean($this->input->post('email')));
+			$password = $this->security->xss_clean($this->input->post('password'));
+
+			$result = $this->login_model->loginEmployee($email, $password);
+
+			// if empty than not known.
+
+			if (empty($result)) {
+				// go back
+				$this->session->set_flashdata('error', 'Are you using the right credentials?, or did you not register yet? Please try again or register. ');
+				redirect('login');
+				//	$this->index();
+			} else {
+				//
+				$userId=$result->ownerId;
+				$result = $this->user_model->getUserInfoById($userId);
+				$lastlogin = $this->login_model->lastLoginInfo($result->userId);
+				$sessionArray = array(
+					'userId' => $result->userId,
+					'role' => $result->roleId,
+					'roleText' => $result->role,
+					'name' => $result->name,
+					'userShortUrl' => $result->usershorturl,
+					'lastLogin' => $lastlogin > 'createdDtm',
+					'isLoggedIn' => TRUE,
+					'lat' => $result->lat,
+					'lng' => $result->lng,
+				);
+				$sessionArray['activatePos'] = $this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('activatePos');
+
+				$MenuArray = array(
+					'employee'
+				);
+
+				$sessionArray['menus'] = $MenuArray;
+
+				$this->session->set_userdata($sessionArray);
+
+
+
+				unset($sessionArray['userId'], $sessionArray['isLoggedIn'], $sessionArray['lastLogin']);
+				$loginInfo = array("userId" => $result->userId, "sessionData" => json_encode($sessionArray), "machineIp" => $_SERVER['REMOTE_ADDR'], "userAgent" => getBrowserAgent(), "agentString" => $this->agent->agent_string(), "platform" => $this->agent->platform());
+				$this->login_model->lastLogin($loginInfo);
+				if ($result->roleId == "4") {
+					redirect('/translate');
+				} else {
+					redirect('/loggedin');
+				}
+				//redirect('/dashboard');
+			}
+		}
+
+	}
+
 
 	public function logout()
 	{
@@ -487,137 +561,6 @@ class Login extends BaseControllerWeb
 	{
 		redirect('registerbusiness');
 		exit();
-		if (isset($_SESSION['error'])) {
-			unset($_SESSION['error']);
-		}
-
-		$config = [
-			'installation_url' => 'https://tiqs.com/newsletters', // Your Sendy installation URL (without trailing slash).
-			'api_key' => 'TtlB6UhkbYarYr4PwlR1', // Your API key. Available in Sendy Settings.
-			'list_id' => 'M1vvllc9SH763o71IlYvPl8A',
-		];
-
-		$sendy = new \SendyPHP\SendyPHP($config);
-		$this->load->library('form_validation');
-		$this->load->model('user_model');
-		$this->load->library('session');
-		$this->form_validation->set_rules('name', 'Full Name', 'trim|required|max_length[128]');
-		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|max_length[128]');
-		$this->form_validation->set_rules('password', 'Password', 'required|max_length[20]');
-		$this->form_validation->set_rules('cpassword', 'Confirm Password', 'trim|required|matches[password]|max_length[20]');
-		// $this->form_validation->set_rules('role','Role','trim|required|numeric');
-		$this->form_validation->set_rules('mobile', 'Mobile Number', 'required|min_length[10]');
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->load->view('register');
-		} else {
-			$source = $this->session->userdata('source');
-			if (($source == 'insta') || ($source == 'facebook') || ($source == 'google')) {
-				if ($source == 'insta') {
-					$email = $this->security->xss_clean($this->input->post('email'));
-					$active = '0';
-				} else {
-					$email = $this->session->userdata('email');
-					$active = '1';
-				}
-				if (!($this->user_model->isDuplicate($email))) {
-					$name = ucwords(strtolower($this->security->xss_clean($this->session->userdata('name'))));
-					$email = strtolower($this->security->xss_clean($email));
-					$password = $this->security->xss_clean($this->input->post('password'));
-					$selector = $this->security->xss_clean($this->input->post('selector'));
-					$mobile = $this->security->xss_clean($this->input->post('mobile'));
-					$roleId = 2; // role user 2= vendor 1=administrator 3=employee
-					$userId = 9;  // created by = 9 = register online by the system.
-					$selector = 9;
-
-					$userInfo = array('email' => $email,
-						'password' => getHashedPassword($password),
-						'roleId' => $roleId,
-						'username' => $name,
-						'mobile' => $mobile,
-						'createdBy' => $userId,
-						'createdDtm' => date('Y-m-d H:i:s'),
-						'istype' => $selector,
-						'active' => $active
-					);
-					$result = $this->user_model->registernew($userInfo);
-					if ($source == 'insta') {
-						if ($result > 0) {
-							$responseArray = $sendy->subscribe(
-								array(
-									'name' => $name,
-									'email' => $email
-								)
-							);
-							$this->actemail($email, $password);
-						}
-					} else {
-						$result = $this->login_model->loginMe($email, $source);
-						$this->session->set_userdata('dropoffpoint', $result->IsDropOffPoint);
-						$lastlogin = $this->login_model->lastLoginInfo($result->userId);
-						$sessionArray = array('userId' => $result->userId,
-							'role' => $result->roleId,
-							'roleText' => $result->role,
-							'name' => $result->name,
-							'lastLogin' => $lastlogin > 'createdDtm',
-							'isLoggedIn' => TRUE
-						);
-						$this->session->set_userdata($sessionArray);
-						unset($sessionArray['userId'], $sessionArray['isLoggedIn'], $sessionArray['lastLogin']);
-						$loginInfo = array("userId" => $result->userId,
-							"sessionData" => json_encode($sessionArray),
-							"machineIp" => $_SERVER['REMOTE_ADDR'],
-							"userAgent" => getBrowserAgent(),
-							"agentString" => $this->agent->agent_string(),
-							"platform" => $this->agent->platform()
-						);
-						$this->login_model->lastLogin($loginInfo);
-						redirect('/loggedin');
-						//redirect('/dashboard');
-					}
-				}
-			} else {
-				if ($this->user_model->isDuplicate($this->security->xss_clean($this->input->post('email')))) {
-					$this->session->set_flashdata('error', 'We already know you, please reset password (forgot password) or use other e-mail address to (register)');
-					redirect("/login");
-				} else {
-					$name = ucwords(strtolower($this->security->xss_clean($this->input->post('name'))));
-					$email = strtolower($this->security->xss_clean($this->input->post('email')));
-					$password = $this->security->xss_clean($this->input->post('password'));
-					// default set for register
-					// $roleId = $this->security->xss_clean($this->input->post('role'));
-					$selector = $this->security->xss_clean($this->input->post('selector'));
-					$mobile = $this->security->xss_clean($this->input->post('mobile'));
-					$roleId = 2; // role user 2= vendor 1=administrator 3=employee
-					$userId = 9;  // created by = 9 = register online by the system.
-					$selector = 9;
-					$userInfo = array('email' => $email,
-						'password' => getHashedPassword($password),
-						'roleId' => $roleId,
-						'username' => $name,
-						'mobile' => $mobile,
-						'createdBy' => $userId,
-						'createdDtm' => date('Y-m-d H:i:s'),
-						'istype' => $selector
-					);
-					$result = $this->user_model->registernew($userInfo);
-
-					if ($result > 0) {
-						$responseArray = $sendy->subscribe(
-							array(
-								'name' => $name,
-								'email' => $email
-							)
-						);
-						$this->actemail($email, $password);
-					} else {
-						$this->session->set_flashdata('error', 'User creation failed');
-						redirect("/login");
-					}
-					$clean = $this->security->xss_clean($this->input->post(NULL, TRUE));
-				}
-			}
-		}
 	}
 
 	public function registerbusiness()

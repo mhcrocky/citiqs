@@ -21,7 +21,7 @@ class Loggedin extends BaseControllerWeb
 
 	public function index()
 	{
-		$this->global['pageTitle'] = 'TIQS : SHOP';
+		$this->global['pageTitle'] = 'TIQS : DASHBOARD';
 
 		if (empty($_SESSION['userId'])) {
 			redirect('login');

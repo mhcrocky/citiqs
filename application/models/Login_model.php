@@ -43,8 +43,21 @@ class Login_model extends CI_Model
         }
     }
 
+	function loginEmployee($email, $password){
+		$this->db->select('tbl_employee.ownerId');
+		$this->db->from('tbl_employee');
+		$this->db->where('tbl_employee.email', $email);
+		$this->db->where('tbl_employee.password', $password);
+		$query = $this->db->get();
+		$user = $query->row();
+		if(!empty($user)) {
+			return $user;
+		} else {
+			return array();
+		}
+	}
 
-    /**
+	/**
      * This function used to check email exists or not
      * @param {string} $email : This is users email id
      * @return {boolean} $result : TRUE/FALSE

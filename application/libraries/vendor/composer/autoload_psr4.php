@@ -27,13 +27,6 @@ return array(
     'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
     'Google\\Auth\\' => array($vendorDir . '/google/auth/src'),
     'Firebase\\JWT\\' => array($vendorDir . '/firebase/php-jwt/src'),
-<<<<<<< HEAD
     'Facebook\\' => array($vendorDir . '/facebook/graph-sdk/src/Facebook'),
-=======
-<<<<<<< HEAD
-    'Facebook\\' => array($vendorDir . '/facebook/graph-sdk/src/Facebook'),
-=======
->>>>>>> test-thomas
->>>>>>> test-thomas
     'Clue\\StreamFilter\\' => array($vendorDir . '/clue/stream-filter/src'),
 );

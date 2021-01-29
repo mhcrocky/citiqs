@@ -12,6 +12,7 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
     public $id;
     public $username;
     public $email;
+    public $password;
     public $uniquenumber;
     public $ownerId;
     public $validitytime;

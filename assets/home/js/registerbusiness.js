@@ -73,11 +73,11 @@ function registerNewBusiness(formId, passwordId, repeatPasswordId) {
     let repeatPassword = document.getElementById(repeatPasswordId).value.trim();
 
     if (!password) {
-        alertify.error('Password is requreid');
+        alertify.error('Password is required');
         return false;
     }
     if (!repeatPassword) {
-        alertify.error('Repeat password is requreid');
+        alertify.error('Repeat password is required');
         return false;
     }
     if (password !== repeatPassword) {

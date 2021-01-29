@@ -52,6 +52,7 @@ class Employee extends BaseControllerWeb {
 
         $this->form_validation->set_rules('username', 'Username', 'trim|required');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+		$this->form_validation->set_rules('password', 'Password', 'trim|required');
         $this->form_validation->set_rules('expiration_time_value', 'Expiration time value', 'trim|required|numeric');
         $this->form_validation->set_rules('expiration_time_type', 'Unique number', 'trim|required');
         if ($this->form_validation->run()) {
@@ -82,6 +83,7 @@ class Employee extends BaseControllerWeb {
     {
         $this->form_validation->set_rules('username', 'Username', 'trim|required');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+		$this->form_validation->set_rules('password', 'Password', 'trim|required');
         $this->form_validation->set_rules('expiration_time_value', 'Username', 'trim|required|numeric');
         $this->form_validation->set_rules('expiration_time_type', 'Unique number', 'trim|required');
         if ($this->form_validation->run() !== FALSE) {

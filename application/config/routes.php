@@ -139,6 +139,7 @@ $route['saveLocation'] = 'Whatislostisfound/saveLocation';
 $route['register'] = 'login/register';
 $route['registerbusiness'] = 'login/registerbusiness';
 $route['loginMe'] = 'login/loginMe';
+$route['loginEmployee'] = 'login/loginEmployee';
 $route['logout'] = 'user/logout';
 $route['userListing'] = 'user/userListing';
 $route['lostandfoundlist'] = 'user/lostandfoundlist';

@@ -24,6 +24,10 @@
                                 <label for="email">Email</label>
                                 <input type="text" class="form-control" id="email" name="email" required />
                             </div>
+							<div>
+								<label for="password">Password</label>
+								<input type="text" class="form-control" id="password" name="password" required />
+							</div>
                             <div>
                                 <label for="expiration_time_value">Expiration time value</label>
                                 <input type="number" step="1" min="1" class="form-control" id="expiration_time_value"
@@ -184,6 +188,12 @@
                                                     id="email<?php echo $employee->id; ?>" name="email" required
                                                     value="<?php echo $employee->email; ?>" />
                                             </div>
+											<div>
+												<label for="username<?php echo $employee->id; ?>">Password</label>
+												<input type="text" class="form-control"
+													   id="password<?php echo $employee->id; ?>" name="password" required
+													   value="<?php echo $employee->password; ?>" />
+											</div>
                                             <div>
                                                 <label for="validitytime<?php echo $employee->id; ?>">Validity
                                                     time</label>
