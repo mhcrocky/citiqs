@@ -118,7 +118,7 @@ $(document).ready( function () {
             default_value: '',
             size: 30,
             unique: true
-          },
+           },
 			{
 				id: 'tbl_shop_orders.paymentType',
 				label: 'Payment type',
@@ -527,22 +527,6 @@ $(document).ready( function () {
           }
         },
         {
-          title: 'EXVAT',
-          data: null,
-          "render": function (data, type, row) {
-            let exvat = parseFloat(data.EXVAT);
-            return exvat.toFixed(2);
-          }
-        },
-        {
-          title: 'VAT',
-          data: null,
-          "render": function (data, type, row) {
-            let vat = parseFloat(data.VAT);
-            return vat.toFixed(2);
-          }
-        },
-        {
           title: 'Date',
           data: 'order_date'
         }
@@ -702,7 +686,7 @@ function format(d) {
           var date = full_timestamp.split(" - ");
           var min = moment(date[0]);
           var max = moment(date[1]);
-          var startDate = moment(data[14]);
+          var startDate = moment(data[12]); // data['Position of date's column -1']
    
           if (min == '' && max == '') { min = todayDate; }
           if (min == '' && startDate <= max) { return true;}

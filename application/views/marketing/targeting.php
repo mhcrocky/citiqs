@@ -124,8 +124,6 @@ tr:nth-of-type(odd) {
                     <th></th>
                     <th></th>
                     <th></th>
-                    <th></th>
-                    <th></th>
 
                 </tr>
             </tfoot>
