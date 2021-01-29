@@ -277,31 +277,36 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body mx-auto">
-                                <ul id="allMenuItems<?php echo $employee->id; ?>" class="connectedSortable">
-                                    <li class="h1 title">All menu options</li>
-                                    <?php foreach($menuOptions as $menuOption): 
+                            <div class="row w-100 modal-body mx-auto">
+                                <div style="width: 46%" >
+                                    <div class="w-100 title vertical-center">All menu options</div>
+
+                                    <ul id="allMenuItems<?php echo $employee->id; ?>" class="connectedSortable">
+
+                                        <?php foreach($menuOptions as $menuOption): 
 									      $optionId = $menuOption['id'];
 									      if(isset($employeeMenuOptions[$employee->id][$optionId])){ continue;}
 										?>
-                                    <li class="ui-state-default"
-                                        data-embellishmentid="<?php echo $menuOption['id']; ?>">
-                                        <?php echo ucfirst($menuOption['menuOption']); ?></li>
-                                    <?php endforeach; ?>
-                                </ul>
-
-                                <ul id="selectedMenuItems<?php echo $employee->id; ?>" class="connectedSortable">
-                                    <li class="h1 title">Selected Menu</li>
-                                    <?php if(isset($employeeMenuOptions[$employee->id])): 
+                                        <li class="ui-state-default"
+                                            data-embellishmentid="<?php echo $menuOption['id']; ?>">
+                                            <?php echo ucfirst($menuOption['menuOption']); ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                                <div class="ml-3" style="width: 46%;">
+                                    <div class="title vertical-center">Selected Menu</div>
+                                    <ul id="selectedMenuItems<?php echo $employee->id; ?>" class="connectedSortable">
+                                        <?php if(isset($employeeMenuOptions[$employee->id])): 
 									  $items = $employeeMenuOptions[$employee->id]; 
 									  foreach($items as $item) :?>
-                                    <li class="ui-state-default"
-                                        data-embellishmentid="<?php echo $item['menuOptionId']; ?>">
-                                        <?php echo ucfirst($item['menuOption']); ?></li>
-                                    <?php endforeach;
+                                        <li class="ui-state-default"
+                                            data-embellishmentid="<?php echo $item['menuOptionId']; ?>">
+                                            <?php echo ucfirst($item['menuOption']); ?></li>
+                                        <?php endforeach;
 								      endif; ?>
 
-                                </ul>
+                                    </ul>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <input style="width: 100px;border-radius: 25px;" type="button"
