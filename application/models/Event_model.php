@@ -64,6 +64,13 @@ class Event_model extends CI_Model {
 		return $query->first_row();
 	}
 
+	public function get_ticket($ticketId)
+	{
+		$this->db->where('id', $ticketId);
+		$query = $this->db->get('tbl_event_tickets');
+		return $query->first_row();
+	}
+
 	public function get_tickets($vendor_id,$eventId)
 	{
 		$this->db->select('*,tbl_event_tickets.id as ticketId');
@@ -99,9 +106,11 @@ class Event_model extends CI_Model {
 	function save_event_reservations($userInfo, $tickets, $customer){
 		$data = [];
 		if(!isset($userInfo['email'])){ return ;}
+		$reservationIds = [];
 		foreach($tickets as $ticket){
 			$set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKLMNPQRSTVWXY';
 			$reservationId = 'T-' . substr(str_shuffle($set), 0, 16);
+			$reservationIds[] = $reservationId;
 			$data[] = [
 				'reservationId' => $reservationId,
 				'customer' => $customer,
@@ -115,6 +124,7 @@ class Event_model extends CI_Model {
 				'mobilephone' => $userInfo['mobileNumber'],
 			];
 		}
-		 return $this->db->insert_batch('tbl_bookandpay',$data);
+		$this->db->insert_batch('tbl_bookandpay',$data);
+		 return $reservationIds;
 	}
 }
