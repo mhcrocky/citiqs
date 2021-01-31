@@ -38,13 +38,13 @@ if($current_url == $employeeUrl || $current_url == $employeeUrl){
 
 			<div style="text-align:left">
 				<p style="font-family:'caption-bold'; font-size:300%; color:#ffffff;">
-					<?php echo $this->language->Line("LOGIN-LL3400",'PERSONAL LOGIN.');?>
+					<?php echo $this->language->Line("LOGIN-ELL3400",'EMPLOYEE LOGIN.');?>
 				</p>
 			</div>
 
 			<div class="width-650">
 				<?php include_once APPPATH . 'views/includes/sessionMessages.php' ?>
-				<form action="<?php echo $loginUrl; ?>" method="post">
+				<form action="<?php echo $employeeUrl; ?>" method="post">
 					<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
 						<?php echo $this->language->Line("registerbusiness-3500",'Use your e-mail to login');?>
 					</p>
@@ -173,7 +173,7 @@ if($current_url == $employeeUrl || $current_url == $employeeUrl){
 			<div class="width-650">
 				<div style="margin-top:-10%" align="right">
 					<img src="<?php echo $this->baseUrl; ?>assets/home/images/girl.png" alt="tiqs" width="50%"/>
-					<form action="<?php echo $loginUrl; ?>" method="post">
+					<form action="<?php echo $employeeUrl; ?>" method="post">
 					<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
 						<?php echo $this->language->Line("registerbusiness-3500",'Use your e-mail to login');?>
 					</p>
