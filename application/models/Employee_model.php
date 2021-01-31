@@ -127,6 +127,36 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
         return $query->result_array();
     }
 
+    public function getMenuHierarchyNumbers()
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_menu_options');
+        $query = $this->db->get();
+        $results = $query->result_array();
+        $options = [];
+        foreach($results as $result){
+            $options[] = $result['hierarchyNumber'];
+        }
+        return $options;
+    }
+
+    public function getMenuOptionsByEmployee($userId)
+    {
+        $this->db->select('hierarchyNumber')
+         ->from('tbl_user_allowed')
+         ->join('tbl_menu_options', 'tbl_user_allowed.menuOptionId = tbl_menu_options.id', 'left')
+         ->where('userId', $userId);
+        $query = $this->db->get();
+        $results = $query->result_array();
+        $options = [];
+        foreach($results as $result){
+            $options[] = $result['hierarchyNumber'];
+        }
+        $hierarchyMenu = $this->getMenuHierarchyNumbers();
+        $diff = array_diff($hierarchyMenu,$options);
+        return $diff;
+    }
+
     public function saveMenuOptionsByEmployee($vendorId, $userId, $items)
     {
         $data = [];
