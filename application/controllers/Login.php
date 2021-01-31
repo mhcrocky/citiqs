@@ -174,7 +174,7 @@ class Login extends BaseControllerWeb
 			$email = strtolower($this->security->xss_clean($this->input->post('email')));
 			$password = $this->security->xss_clean($this->input->post('password'));
 
-			$result = $this->login_model->loginMe($email, $password);
+			$result = $this->login_model->loginEmployee($email, $password);
 
 			// if empty than not known.
 
@@ -185,8 +185,8 @@ class Login extends BaseControllerWeb
 				//	$this->index();
 			} else {
 				//
-				$userId=$result->userId;
-				//$result = $this->user_model->getUserInfoById($userId);
+				$userId=$result->ownerId;
+				$result = $this->user_model->getUserInfoById($userId);
 				$lastlogin = $this->login_model->lastLoginInfo($result->userId);
 				$sessionArray = array(
 					'userId' => $result->userId,
@@ -200,6 +200,7 @@ class Login extends BaseControllerWeb
 					'lng' => $result->lng,
 				);
 				$sessionArray['activatePos'] = $this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('activatePos');
+
 				$this->load->model('employee_model');
 				$MenuArray = $this->employee_model->getMenuOptionsByEmployee($result->userId);
 				
