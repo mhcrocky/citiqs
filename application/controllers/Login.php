@@ -158,9 +158,11 @@ class Login extends BaseControllerWeb
 
 	public function loginEmployee()
 	{
+		
 
 		$this->form_validation->set_rules('email', 'Email', 'valid_email|max_length[128]|trim');
 		$this->form_validation->set_rules('password', 'Password', 'required|max_length[32]');
+
 
 		if ($this->form_validation->run() == FALSE) {
 			$this->index();
@@ -172,7 +174,7 @@ class Login extends BaseControllerWeb
 			$email = strtolower($this->security->xss_clean($this->input->post('email')));
 			$password = $this->security->xss_clean($this->input->post('password'));
 
-			$result = $this->login_model->loginEmployee($email, $password);
+			$result = $this->login_model->loginMe($email, $password);
 
 			// if empty than not known.
 
@@ -183,8 +185,8 @@ class Login extends BaseControllerWeb
 				//	$this->index();
 			} else {
 				//
-				$userId=$result->ownerId;
-				$result = $this->user_model->getUserInfoById($userId);
+				$userId=$result->userId;
+				//$result = $this->user_model->getUserInfoById($userId);
 				$lastlogin = $this->login_model->lastLoginInfo($result->userId);
 				$sessionArray = array(
 					'userId' => $result->userId,
@@ -198,15 +200,13 @@ class Login extends BaseControllerWeb
 					'lng' => $result->lng,
 				);
 				$sessionArray['activatePos'] = $this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('activatePos');
+				$this->load->model('employee_model');
+				$MenuArray = $this->employee_model->getMenuOptionsByEmployee($result->userId);
+				
+				$sessionArray['menuOptions'] = $MenuArray;
 
-				$MenuArray = array(
-					'employee'
-				);
-
-				$sessionArray['menus'] = $MenuArray;
-
+				
 				$this->session->set_userdata($sessionArray);
-
 
 
 				unset($sessionArray['userId'], $sessionArray['isLoggedIn'], $sessionArray['lastLogin']);
