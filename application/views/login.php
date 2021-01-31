@@ -1,3 +1,11 @@
+<?php 
+$loginUrl = base_url() . "loginMe";
+$employeeUrl = base_url() . "loginEmployee";
+$current_url = current_url();
+if($current_url == $employeeUrl || $current_url == $employeeUrl){
+	$loginUrl = $employeeUrl;
+}
+?>
 <div class="main-wrapper">
 
 	<div class="col-half background-orange div-only-mobile">
@@ -36,7 +44,7 @@
 
 			<div class="width-650">
 				<?php include_once APPPATH . 'views/includes/sessionMessages.php' ?>
-				<form action="<?php echo base_url(); ?>loginMe" method="post">
+				<form action="<?php echo $loginUrl; ?>" method="post">
 					<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
 						<?php echo $this->language->Line("registerbusiness-3500",'Use your e-mail to login');?>
 					</p>
@@ -97,7 +105,7 @@
 				</p>
 			</div>
 			<div class="width-650">
-				<form action="<?php echo base_url(); ?>loginMe" method="post">
+				<form action="<?php echo $loginUrl; ?>" method="post">
 					<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
 						<?php echo $this->language->Line("registerbusiness-3500",'Use your e-mail to login');?>
 					</p>
@@ -165,7 +173,7 @@
 			<div class="width-650">
 				<div style="margin-top:-10%" align="right">
 					<img src="<?php echo $this->baseUrl; ?>assets/home/images/girl.png" alt="tiqs" width="50%"/>
-					<form action="<?php echo base_url(); ?>loginEmployee" method="post">
+					<form action="<?php echo $loginUrl; ?>" method="post">
 					<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
 						<?php echo $this->language->Line("registerbusiness-3500",'Use your e-mail to login');?>
 					</p>
