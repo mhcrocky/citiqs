@@ -647,8 +647,8 @@ function format(d) {
           '<tr>' +
           '<td class="text-right" colspan="4"><b>Total Revenue</b></td>' +
           '<td class="text-center">' + totalAmountVat.toFixed(2) + '</td>' +
-          '<td class="text-center">' + totalAmountExVat.toFixed(2) + '</td>' +
-          '<td class="text-center">' + (totalAmountVat - totalAmountExVat).toFixed(2) + '</td>' +
+          '<td class="text-center"></td>' + //totalAmountExVat.toFixed(2)
+          '<td class="text-center"></td>' + //(totalAmountVat - totalAmountExVat).toFixed(2)
           '</tr>' ;
           for (var key in productsVat) {
             html += '<tr id="tr-totals">' +
