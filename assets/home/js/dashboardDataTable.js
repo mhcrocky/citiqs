@@ -662,8 +662,8 @@ function format(d) {
           html += '<tr>' +
           '<td class="text-right" colspan="4"><b>Total Service Fee</b></td>' +
           '<td class="text-center">' + totalServiceFeeVat.toFixed(2) + '</td>' +
-          '<td class="text-center">' + round_up(totalServiceFeeExVat) + '</td>' +
           '<td class="text-center">' + (totalServiceFeeVat - totalServiceFeeExVat).toFixed(2) + '</td>' +
+          '<td class="text-center">' + round_up(totalServiceFeeExVat) + '</td>' +
           '</tr>' +
           '<tr>'+
           '<td class="text-right" colspan="4"><b>Total Waiter Tip</b></td>' +
