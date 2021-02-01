@@ -651,9 +651,9 @@ function format(d) {
           for (var key in productsVat) {
             html += '<tr id="tr-totals">' +
             '<td class="text-right" colspan="4"><b>Total Revenue VAT ' + parseInt(key) + '%</b></td>' +
-            '<td class="text-center">' + productsVat[key][1].toFixed(2) + '</td>' +
-					  '<td class="text-center">' + productsVat[key][0].toFixed(2) + '</td>' +
-            '<td class="text-center">' + (productsVat[key][1] - productsVat[key][0]).toFixed(2) + '</td>' +
+            '<td class="text-center">' + productsVat[key][0].toFixed(2) + '</td>' +
+					  '<td class="text-center">' + productsVat[key][1].toFixed(2) + '</td>' +
+            '<td class="text-center">' + (productsVat[key][0] - productsVat[key][1]).toFixed(2) + '</td>' +
             '</tr>';
             
           }
