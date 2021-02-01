@@ -1,6 +1,7 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
+require APPPATH . '/libraries/phpqrcode/qrlib.php';
 require APPPATH . '/libraries/BaseControllerWeb.php';
 
 class Booking_events extends BaseControllerWeb
@@ -215,14 +216,19 @@ class Booking_events extends BaseControllerWeb
         if(!$this->session->userdata('reservationIds')){
             $reservationIds = $this->event_model->save_event_reservations($userInfo,$tickets, $customer);
             $this->session->set_userdata('reservationIds', $reservationIds);
-            //$this->emailReservation($userInfo['email']);
+            
         }
 
         $this->global['pageTitle'] = 'TIQS: Select Payment';
-        $this->session->set_userdata('userInfo', $userInfo);
+        $this->session->set_userdata('userEmail', $userInfo['email']);
         
         
         $this->loadViews("events/selectpayment", $this->global, '', 'footerShop', 'headerShop');
+    }
+
+    public function paydorian()
+    {
+        $this->emailReservation($this->session->userdata('userEmail'));
     }
 
 
@@ -259,7 +265,6 @@ class Booking_events extends BaseControllerWeb
     
     public function emailReservation($email)
 	{
-        require APPPATH . '/libraries/phpqrcode/qrlib.php';
         $this->load->model('bookandpay_model');
         $this->load->model('sendreservation_model');
         $this->load->model('email_templates_model');
@@ -294,7 +299,7 @@ class Booking_events extends BaseControllerWeb
                 $voucher = $record->voucher;
                 
                 
-                    if ($paid == 1) {
+                    //if ($paid == 1) {
                         
                         $qrtext = $reservationId;
 
@@ -376,7 +381,7 @@ class Booking_events extends BaseControllerWeb
                                     redirect('booking/successbooking');
                                 }
                             
-                        }
+                        //}
                     }
                 }
             }

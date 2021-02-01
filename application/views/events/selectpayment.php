@@ -10,7 +10,7 @@
             <div class="half-col mb-4">
                 <img class="img-w-150" src="<?php echo base_url(); ?>assets/home/imgs/extra/bancontact.png"
                     alt="bancontact">
-                <h3 class="title"><a id="bancontact" class="text-primary" href="#bancontact">Bancontact</a></h3>
+                <h3 class="title"><a id="bancontact" class="text-primary" href="<?php echo base_url(); ?>booking_events/paydorian" href="#bancontact">Bancontact</a></h3>
             </div>
             <div class="half-col mb-4">
                 <img class="img-w-150" src="<?php echo base_url(); ?>assets/home/imgs/extra/creditcard.png"
