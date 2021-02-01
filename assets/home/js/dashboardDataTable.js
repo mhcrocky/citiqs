@@ -605,6 +605,7 @@ function format(d) {
           var productsVat = [];
           var html = '';
           var totalAmountVat = 0;
+          var totalAmountExVat = 0;
           var totalServiceFeeVat = 0;
           var totalServiceFeeExVat = 0;
           var waiterTipVat = 0;
@@ -612,6 +613,7 @@ function format(d) {
 
           $.each(tbl_datas, function( index, tbl_data ) {
             totalAmountVat = totalAmountVat + parseFloat(tbl_data.total_AMOUNT);
+            totalAmountExVat = totalAmountExVat + parseFloat(tbl_data.AMOUNT);
             percentageVat = percentageVat + parseFloat(tbl_data.VAT);
             totalServiceFeeVat = totalServiceFeeVat + parseFloat(tbl_data.serviceFee);
             totalServiceFeeExVat = totalServiceFeeExVat + parseFloat(tbl_data.VATSERVICE);
@@ -622,11 +624,11 @@ function format(d) {
                   
                   if(productsVat[String(val.productVat)] !== undefined){
 
-                    productsVat[String(val.productVat)][0] = parseFloat(productsVat[String(val.productVat)][0]) + parseFloat(val.VAT);
+                    productsVat[String(val.productVat)][0] = parseFloat(productsVat[String(val.productVat)][0]) + parseFloat(val.AMOUNT);
                     productsVat[String(val.productVat)][1] = parseFloat(productsVat[String(val.productVat)][1]) + parseFloat(val.EXVAT);
                   } else {
                     productsVat[String(val.productVat)] = [];
-                    productsVat[String(val.productVat)][0] = parseFloat(val.VAT);
+                    productsVat[String(val.productVat)][0] = parseFloat(val.AMOUNT);
                     productsVat[String(val.productVat)][1] = parseFloat(val.EXVAT);
                   }
                 });
@@ -635,7 +637,7 @@ function format(d) {
           
           });
           console.log(productsVat);
-          var totalAmountExVat = (totalAmountVat*100)/(100+percentageVat);
+          
           html += '<tr>' +
           '<td class="text-right" colspan="4"><b id="daterange">'+$('#reportDateTime').val()+'</b></td>' +
           '<th class="text-center">Amount incl. VAT</td>' +
@@ -646,7 +648,7 @@ function format(d) {
           '<td class="text-right" colspan="4"><b>Total Revenue</b></td>' +
           '<td class="text-center">' + totalAmountVat.toFixed(2) + '</td>' +
           '<td class="text-center">' + totalAmountExVat.toFixed(2) + '</td>' +
-          '<td class="text-center">' + (totalAmountVat - ((totalAmountVat*100)/(100+percentageVat))).toFixed(2) + '</td>' +
+          '<td class="text-center">' + (totalAmountVat - totalAmountExVat).toFixed(2) + '</td>' +
           '</tr>' ;
           for (var key in productsVat) {
             html += '<tr id="tr-totals">' +
