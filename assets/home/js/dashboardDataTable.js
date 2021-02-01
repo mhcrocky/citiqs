@@ -512,47 +512,82 @@ function format(d) {
 				// '<td><strong>Amount</strong></td>' +
 
 				'</tr>';
-      var productsVat = [];
-			$.each(d.child, function(indexInArray, val) {
+			
+        //$('#report_length').show();
+        let tbl_datas = d;
+        var productsVat = [];
+        var html = '';
+        var totalAmountVat = 0;
+        var totalAmountExVat = 0;
+        var totalServiceFeeVat = 0;
+        var totalServiceFeeExVat = 0;
+        var waiterTipVat = 0;
+        var waiterTipExVat = 0;
+        $.each(tbl_datas, function( index, tbl_data ) {
+          totalAmountVat = totalAmountVat + parseFloat(tbl_data.total_AMOUNT) + parseFloat(tbl_data.VAT);
+          totalAmountExVat = totalAmountExVat + parseFloat(tbl_data.total_AMOUNT) + parseFloat(tbl_data.EXVAT);
+          totalServiceFeeVat = totalServiceFeeVat + parseFloat(tbl_data.serviceFee) + parseFloat(tbl_data.VAT);
+          totalServiceFeeExVat = totalServiceFeeVat + parseFloat(tbl_data.serviceFee) + parseFloat(tbl_data.EXVAT);
+          waiterTipVat = waiterTipVat + parseFloat(tbl_data.waiterTip) + parseFloat(tbl_data.VAT);
+          waiterTipExVat = waiterTipExVat + parseFloat(tbl_data.waiterTip) + parseFloat(tbl_data.EXVAT);
+          $.each(tbl_data, function( index, value ) {
+            if(index == 'child'){
+              $.each(value, function( index, val ) {
+                if(productsVat[String(val.productVat)] !== undefined){
+                  productsVat[String(val.productVat)][0] = parseFloat(productsVat[String(val.productVat)][0]) + parseFloat(val.VAT);
+                  productsVat[String(val.productVat)][1] = parseFloat(productsVat[String(val.productVat)][1]) + parseFloat(val.EXVAT);
+                } else {
+                  productsVat[String(val.productVat)] = [];
+                  productsVat[String(val.productVat)][0] = parseFloat(val.VAT);
+                  productsVat[String(val.productVat)][1] = parseFloat(val.EXVAT);
+                }
+              });
+            }
+          });
         
-        if(productsVat[String(val.productVat)] !== undefined){
-          productsVat[String(val.productVat)][0] = parseFloat(productsVat[String(val.productVat)][0]) + parseFloat(val.EXVAT);
-          productsVat[String(val.productVat)][1] = parseFloat(productsVat[String(val.productVat)][1]) + parseFloat(val.VAT);
-        } else {
-          productsVat[String(val.productVat)] = [];
-          productsVat[String(val.productVat)][0] = parseFloat(val.EXVAT);
-          productsVat[String(val.productVat)][1] = parseFloat(val.VAT);
+        });
+        var totalExvat = 0;
+        var totalVat = 0;
+        $("#daterange").text($('#reportDateTime').val());
+        html += '<tr>' +
+        '<td class="text-right" colspan="4"><b id="daterange"></b></td>' +
+        '<th class="text-center">Amount incl. VAT</td>' +
+        '<th class="text-center">Amount excl. VAT</td>' +
+        '<th class="text-center">VAT</td>' +
+        '</tr>' +
+        '<tr>' +
+        '<td class="text-right" colspan="4"><b>Total Revenue</b></td>' +
+          '<td class="text-center">' + totalAmountExVat.toFixed(2) + '</td>' +
+          '<td class="text-center">' + totalAmountVat.toFixed(2) + '</td>' +
+          '<td class="text-center">' + (totalAmountExVat - totalAmountVat).toFixed(2) + '</td>' +
+          '</tr>' ;
+          for (var key in productsVat) {
+            html += '<tr id="tr-totals">' +
+            '<td class="text-right" colspan="4"><b>Total Revenue VAT ' + parseInt(key) + '%</b></td>' +
+            '<td class="text-center">' + productsVat[key][1].toFixed(2) + '</td>' +
+					  '<td class="text-center">' + productsVat[key][0].toFixed(2) + '</td>' +
+            '<td class="text-center">' + (productsVat[key][1] - productsVat[key][0]).toFixed(2) + '</td>' +
+            '</tr>';
+            totalExvat = totalExvat + parseFloat(productsVat[key][0]);
+            totalVat = totalVat + parseFloat(productsVat[key][1]);
+          }
+          html += '<tr>' +
+          '<td class="text-right" colspan="4"><b>Total Service Fee</b></td>' +
+          '<td class="text-center">' + totalServiceFeeExVat.toFixed(2) + '</td>' +
+          '<td class="text-center">' + totalServiceFeeVat.toFixed(2) + '</td>' +
+          '<td class="text-center">' + (totalServiceFeeExVat - totalServiceFeeVat).toFixed(2) + '</td>' +
+          '</tr>' +
+          '<tr>'
+          '<td class="text-right" colspan="4"><b>Total Waiter Tip</b></td>' +
+          '<td class="text-center">' + waiterTipExVat.toFixed(2) + '</td>' +
+          '<td class="text-center">' + waiterTipVat.toFixed(2) + '</td>' +
+          '<td class="text-center">' + (waiterTipExVat - waiterTipVat).toFixed(2) + '</td>' +
+          '</tr>' ;
+        $("#total-percentage").show();
+        $("#total-percentage").empty();
+        $("#total-percentage").html(html);
 
-        }
-      
-				row += '<tr>' +
-					'<td>' + val.productName + '</td>' +
-					'<td>' + num_percentage(val.productVat) + '</td>' +
-					'<td>' + round_up(val.price) + '</td>' +
-					'<td>' + val.quantity + '</td>' +
-					'<td>' + round_up(val.EXVAT) + '</td>' +
-					'<td>' + round_up(val.VAT) + '</td>' +
-					// '<td>' + val.AMOUNT + '</td>' +
-					'</tr>';
-			});
-
-      for (var key in productsVat) {
-
-        row += '<tr>' +
-					'<td class="text-right" colspan="4"><b>Total for ' + num_percentage(key) + '</b></td>' +
-					'<td>' + productsVat[key][0].toFixed(2) + '</td>' +
-          '<td>' + productsVat[key][1].toFixed(2) + '</td>' +
-					// '<td>' + val.AMOUNT + '</td>' +
-			'</tr>';
-      }
-      $.each(productsVat, function(index, val) {
-
-      row += '<tr>' +
-					'<td colspan="2">' + index + '</td>' +
-					'<td colspan="4">' + val + '</td>' +
-					// '<td>' + val.AMOUNT + '</td>' +
-			'</tr>';
-      });
+        //End Footer Total
       
 			if(d.export_ID==null){
 				button = '<button type="button" onclick="" class="btn btn-warning btn-refund btn-sm export-'+d.order_id+'">REFUND</button>';
@@ -601,47 +636,77 @@ function format(d) {
           $("#total-percentage").hide();
         } else {
           //$('#report_length').show();
-        let tbl_datas = table.rows({ search: 'applied'}).data();
-        var productsVat = [];
-        var html = '';
-        $.each(tbl_datas, function( index, tbl_data ) {
-
-          $.each(tbl_data, function( index, value ) {
-            if(index != 'child'){
-            } else {
-              $.each(value, function( index, val ) {
-                let len = value.length - 1;
-                if(productsVat[String(val.productVat)] !== undefined){
-                  productsVat[String(val.productVat)][0] = parseFloat(productsVat[String(val.productVat)][0]) + parseFloat(val.EXVAT);
-                  productsVat[String(val.productVat)][1] = parseFloat(productsVat[String(val.productVat)][1]) + parseFloat(val.VAT);
-                } else {
-                  productsVat[String(val.productVat)] = [];
-                  productsVat[String(val.productVat)][0] = parseFloat(val.EXVAT);
-                  productsVat[String(val.productVat)][1] = parseFloat(val.VAT);
-                }
-                
-                
-              });
-            }
-          });
+          let tbl_datas = table.rows({ search: 'applied'}).data();
+          var productsVat = [];
+          var html = '';
+          var totalAmountVat = 0;
+          var totalAmountExVat = 0;
+          var totalServiceFeeVat = 0;
+          var totalServiceFeeExVat = 0;
+          var waiterTipVat = 0;
+          var waiterTipExVat = 0;
+          $.each(tbl_datas, function( index, tbl_data ) {
+            totalAmountVat = totalAmountVat + parseFloat(tbl_data.total_AMOUNT) + parseFloat(tbl_data.VAT);
+            totalAmountExVat = totalAmountExVat + parseFloat(tbl_data.total_AMOUNT) + parseFloat(tbl_data.EXVAT);
+            totalServiceFeeVat = totalServiceFeeVat + parseFloat(tbl_data.serviceFee) + parseFloat(tbl_data.VAT);
+            totalServiceFeeExVat = totalServiceFeeVat + parseFloat(tbl_data.serviceFee) + parseFloat(tbl_data.EXVAT);
+            waiterTipVat = waiterTipVat + parseFloat(tbl_data.waiterTip) + parseFloat(tbl_data.VAT);
+            waiterTipExVat = waiterTipExVat + parseFloat(tbl_data.waiterTip) + parseFloat(tbl_data.EXVAT);
+            $.each(tbl_data, function( index, value ) {
+              if(index == 'child'){
+                $.each(value, function( index, val ) {
+                  if(productsVat[String(val.productVat)] !== undefined){
+                    productsVat[String(val.productVat)][0] = parseFloat(productsVat[String(val.productVat)][0]) + parseFloat(val.VAT);
+                    productsVat[String(val.productVat)][1] = parseFloat(productsVat[String(val.productVat)][1]) + parseFloat(val.EXVAT);
+                  } else {
+                    productsVat[String(val.productVat)] = [];
+                    productsVat[String(val.productVat)][0] = parseFloat(val.VAT);
+                    productsVat[String(val.productVat)][1] = parseFloat(val.EXVAT);
+                  }
+                });
+              }
+            });
           
-        });
-        var totalExvat = 0;
-        var totalVat = 0;
-        for (var key in productsVat) {
-
-        html += '<tr id="tr-totals">' +
-					'<td class="text-right" colspan="5"><b>Total for ' + num_percentage(key) + '</b></td>' +
-					'<td>' + productsVat[key][0].toFixed(2) + '</td>' +
-          '<td>' + productsVat[key][1].toFixed(2) + '</td>' +
-					// '<td>' + val.AMOUNT + '</td>' +
-			    '</tr>';
-          totalExvat = totalExvat + parseFloat(productsVat[key][0]);
-          totalVat = totalVat + parseFloat(productsVat[key][1]);
-        }
-        $("#total-percentage").show();
-        $("#total-percentage").empty();
-        $("#total-percentage").html(html);
+          });
+          var totalExvat = 0;
+          var totalVat = 0;
+          html += '<tr>' +
+          '<td class="text-right" colspan="4"><b id="daterange">'+$('#reportDateTime').val()+'</b></td>' +
+          '<th class="text-center">Amount incl. VAT</td>' +
+          '<th class="text-center">Amount excl. VAT</td>' +
+          '<th class="text-center">VAT</td>' +
+          '</tr>' +
+          '<tr>' +
+          '<td class="text-right" colspan="4"><b>Total Revenue</b></td>' +
+          '<td class="text-center">' + totalAmountExVat.toFixed(2) + '</td>' +
+          '<td class="text-center">' + totalAmountVat.toFixed(2) + '</td>' +
+          '<td class="text-center">' + (totalAmountExVat - totalAmountVat).toFixed(2) + '</td>' +
+          '</tr>' ;
+          for (var key in productsVat) {
+            html += '<tr id="tr-totals">' +
+            '<td class="text-right" colspan="4"><b>Total Revenue VAT ' + parseInt(key) + '%</b></td>' +
+            '<td class="text-center">' + productsVat[key][1].toFixed(2) + '</td>' +
+					  '<td class="text-center">' + productsVat[key][0].toFixed(2) + '</td>' +
+            '<td class="text-center">' + (productsVat[key][1] - productsVat[key][0]).toFixed(2) + '</td>' +
+            '</tr>';
+            totalExvat = totalExvat + parseFloat(productsVat[key][0]);
+            totalVat = totalVat + parseFloat(productsVat[key][1]);
+          }
+          html += '<tr>' +
+          '<td class="text-right" colspan="4"><b>Total Service Fee</b></td>' +
+          '<td class="text-center">' + totalServiceFeeExVat.toFixed(2) + '</td>' +
+          '<td class="text-center">' + totalServiceFeeVat.toFixed(2) + '</td>' +
+          '<td class="text-center">' + (totalServiceFeeExVat - totalServiceFeeVat).toFixed(2) + '</td>' +
+          '</tr>' +
+          '<tr>'
+          '<td class="text-right" colspan="4"><b>Total Waiter Tip</b></td>' +
+          '<td class="text-center">' + waiterTipExVat.toFixed(2) + '</td>' +
+          '<td class="text-center">' + waiterTipVat.toFixed(2) + '</td>' +
+          '<td class="text-center">' + (waiterTipExVat - waiterTipVat).toFixed(2) + '</td>' +
+          '</tr>' ;
+          $("#total-percentage").show();
+          $("#total-percentage").empty();
+          $("#total-percentage").html(html);
 
         }
       });
