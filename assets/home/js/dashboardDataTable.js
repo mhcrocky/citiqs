@@ -616,7 +616,7 @@ function format(d) {
             totalAmountExVat = totalAmountExVat + parseFloat(tbl_data.AMOUNT);
             percentageVat = percentageVat + parseFloat(tbl_data.VAT);
             totalServiceFeeVat = totalServiceFeeVat + parseFloat(tbl_data.serviceFee);
-            totalServiceFeeExVat = totalServiceFeeExVat + parseFloat(tbl_data.VATSERVICE);
+            totalServiceFeeExVat = totalServiceFeeExVat + parseFloat(round_up(tbl_data.VATSERVICE));
             waiterTipVat = waiterTipVat + parseFloat(tbl_data.waiterTip);
             $.each(tbl_data, function( index, value ) {
               if(index == 'child'){
