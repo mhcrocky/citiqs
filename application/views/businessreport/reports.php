@@ -45,7 +45,7 @@
 
                 <tfoot>
                     <tr>
-                        <th colspan="2" style="text-align:center">Total:</th>
+                        <th colspan="2" style="text-align:center">&nbsp</th>
                         <th></th>
                         <th></th>
                         <th></th>
