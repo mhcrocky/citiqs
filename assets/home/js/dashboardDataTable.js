@@ -363,19 +363,19 @@ $(document).ready( function () {
          serviceFeeData.reduce( function (a, b) {
              return parseFloat(a) + parseFloat(b);
            }) : 0;
-      /*
-			$(tfoot).find('th').eq(3).html(round_up(pageAmountTotal)+'('+round_up(amountTotal)+')');
+      
+			$(tfoot).find('th').eq(3).html(round_up(pageAmountTotal));
 			$(tfoot).find('th').eq(4).html('-');
 			$(tfoot).find('th').eq(5).html('-');
-			$(tfoot).find('th').eq(6).html(round_up(pageServiceFeeTotal)+'('+round_up(serviceFeeTotal)+')');
+			$(tfoot).find('th').eq(6).html(round_up(pageServiceFeeTotal));
 			$(tfoot).find('th').eq(7).html('-');
-			$(tfoot).find('th').eq(8).html(round_up(pageVatServiceTotal)+'('+round_up(vatServiceTotal)+')');
-			$(tfoot).find('th').eq(9).html(round_up(pageExvatServiceTotal)+'('+round_up(exvatServiceTotal)+')');
-			$(tfoot).find('th').eq(10).html(round_up(pageWaiterTipTotal)+'('+round_up(waiterTipTotal)+')');
-			$(tfoot).find('th').eq(11).html(round_up(pageAmount)+'('+round_up(amount)+')');
-			// $(tfoot).find('th').eq(12).html(round_up(pageExvatTotal)+'('+round_up(exvatTotal)+')');
-      // $(tfoot).find('th').eq(13).html(round_up(pageVatTotal)+'('+round_up(vatTotal)+')');
-      */
+			$(tfoot).find('th').eq(8).html(round_up(pageVatServiceTotal));
+			$(tfoot).find('th').eq(9).html(round_up(pageExvatServiceTotal));
+			$(tfoot).find('th').eq(10).html(round_up(pageWaiterTipTotal));
+			$(tfoot).find('th').eq(11).html(round_up(pageAmount));
+			// $(tfoot).find('th').eq(12).html(round_up(pageExvatTotal));
+      // $(tfoot).find('th').eq(13).html(round_up(pageVatTotal));
+      
           $('.buttons-excel').addClass('btn').addClass('btn-success').addClass('mb-3');
           $('.buttons-excel').text('Export as Excel');
        
