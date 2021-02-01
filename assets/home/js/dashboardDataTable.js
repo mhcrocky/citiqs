@@ -601,22 +601,27 @@ function format(d) {
           $("#total-percentage").hide();
         } else {
           //$('#report_length').show();
-          let tbl_datas = table.rows({ search: 'applied'}).data();
+          let tbl_datas = table.rows({ search: 'applied'}).data()
           var productsVat = [];
           var html = '';
           var totalAmountVat = 0;
           var totalServiceFeeVat = 0;
+          var totalServiceFeeExVat = 0;
           var waiterTipVat = 0;
           var percentageVat = 0;
+
           $.each(tbl_datas, function( index, tbl_data ) {
             totalAmountVat = totalAmountVat + parseFloat(tbl_data.total_AMOUNT);
             percentageVat = percentageVat + parseFloat(tbl_data.VAT);
             totalServiceFeeVat = totalServiceFeeVat + parseFloat(tbl_data.serviceFee);
+            totalServiceFeeExVat = totalServiceFeeExVat + parseFloat(tbl_data.VATSERVICE);
             waiterTipVat = waiterTipVat + parseFloat(tbl_data.waiterTip);
             $.each(tbl_data, function( index, value ) {
               if(index == 'child'){
                 $.each(value, function( index, val ) {
+                  
                   if(productsVat[String(val.productVat)] !== undefined){
+
                     productsVat[String(val.productVat)][0] = parseFloat(productsVat[String(val.productVat)][0]) + parseFloat(val.VAT);
                     productsVat[String(val.productVat)][1] = parseFloat(productsVat[String(val.productVat)][1]) + parseFloat(val.EXVAT);
                   } else {
@@ -629,8 +634,8 @@ function format(d) {
             });
           
           });
+          console.log(productsVat);
           var totalAmountExVat = (totalAmountVat*100)/(100+percentageVat);
-          var totalServiceFeeExVat = (totalServiceFeeVat*100)/(100+percentageVat);
           html += '<tr>' +
           '<td class="text-right" colspan="4"><b id="daterange">'+$('#reportDateTime').val()+'</b></td>' +
           '<th class="text-center">Amount incl. VAT</td>' +
@@ -655,8 +660,8 @@ function format(d) {
           html += '<tr>' +
           '<td class="text-right" colspan="4"><b>Total Service Fee</b></td>' +
           '<td class="text-center">' + totalServiceFeeVat.toFixed(2) + '</td>' +
-          '<td class="text-center">' + totalServiceFeeExVat.toFixed(2) + '</td>' +
-          '<td class="text-center">' + (totalServiceFeeVat - ((totalServiceFeeVat*100)/(100+percentageVat))).toFixed(2) + '</td>' +
+          '<td class="text-center">' + round_up(totalServiceFeeExVat) + '</td>' +
+          '<td class="text-center">' + (totalServiceFeeVat - totalServiceFeeExVat).toFixed(2) + '</td>' +
           '</tr>' +
           '<tr>'+
           '<td class="text-right" colspan="4"><b>Total Waiter Tip</b></td>' +
