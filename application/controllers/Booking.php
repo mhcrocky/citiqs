@@ -475,10 +475,11 @@ class Booking extends BaseControllerWeb
 					$this->bookandpay_model->editbookandpay($data, $reservationId);
 				}
 			}
-
+			
 			$result = $this->bookandpay_model->getReservationId($strResult['saleData']['orderData'][0]['productId']);
 
 			$customerId = $result->customer;
+
 
 			switch (strtolower($_SERVER['HTTP_HOST'])) {
 				case 'tiqs.com':
@@ -671,6 +672,9 @@ class Booking extends BaseControllerWeb
 		if ($statuscode == 100) {
 
 			$data = array();
+			if($this->session->userdata('eventShop')){
+				redirect('booking_events/emailReservation');
+			}
 			$this->global['pageTitle'] = 'TIQS : THANKS';
 			$this->session->sess_destroy();
 			$this->loadViews("bookingsuccess", $this->global, $data, 'nofooter', "noheader");

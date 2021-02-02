@@ -337,7 +337,8 @@ class Bookingpay extends BaseControllerWeb
         $arrArguments = $this->session->userdata('arrArguments');
         $paymentData = $this->session->userdata('payment_data');
         $customer = $this->session->userdata('customer');
-        $SlCode = $this->bookandpay_model->getUserSlCode($customer['id']);
+        $customerId = isset($customer['id']) ? $customer['id'] : $customer;
+        $SlCode = $this->bookandpay_model->getUserSlCode($customerId);
         //$arrArguments['serviceId'] = $SlCode;
         $paymentData['arrArguments']['serviceId'] = $SlCode; //SL-2247-8501
         $arrArguments = $paymentData['arrArguments'];
@@ -530,6 +531,9 @@ class Bookingpay extends BaseControllerWeb
                 $TransactionId = $record->TransactionID;
                 $voucher = $record->voucher;
 
+                if($this->session->userdata('eventShop')){
+                    redirect('/booking_events/emailReservation');
+                }
                 if ($timeSlotId != 0) {
                     if ($paid == 1) {
 
