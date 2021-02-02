@@ -103,7 +103,7 @@ class Event_model extends CI_Model {
 		return $query->result_array();
 	}
 
-	function save_event_reservations($userInfo, $tickets, $customer){
+	function save_event_reservations($userInfo, $tickets = array(), $customer){
 		$data = [];
 		if(!isset($userInfo['email'])){ return ;}
 		$reservationIds = [];
