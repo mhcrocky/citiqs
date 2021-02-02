@@ -10,12 +10,13 @@
             <div class="half-col mb-4">
                 <img class="img-w-150" src="<?php echo base_url(); ?>assets/home/imgs/extra/bancontact.png"
                     alt="bancontact">
-                <h3 class="title"><a id="bancontact" class="text-primary" href="<?php echo base_url(); ?>booking_events/paydorian" href="#bancontact">Bancontact</a></h3>
+                <h3 class="title"><a id="bancontact" class="text-primary"
+                        href="<?php echo base_url(); ?>booking_events/paydorian" href="#bancontact">Bancontact</a></h3>
             </div>
             <div class="half-col mb-4">
                 <img class="img-w-150" src="<?php echo base_url(); ?>assets/home/imgs/extra/creditcard.png"
                     alt="Creditcard">
-                    <h3 class="title"><a id="creditCard" class="text-primary" href="#creditCard">Credit Card</a></h3>
+                <h3 class="title"><a class="text-primary" href="http://127.0.0.1/alfred/alfred/bookingpay/selectedCCPaymenttype">Credit Card</a></h3>
             </div>
             <div class="half-col  mb-4">
                 <img class="img-w-150" src="<?php echo base_url() . 'assets/images/waiter.png'; ?>"
@@ -42,70 +43,98 @@
     <div class="row mx-auto">
         <div class="col-md-8 col-sm-12 serviceBox blue mb-4 mx-auto">
             <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/1">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/abn_amro.png') ?>"
+                        alt="ABN AMRO">
 
-                <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/abn_amro.png') ?>" alt="ABN AMRO">
-
-                <h3 class="title">ABN AMRO</h3>
+                    <h3 class="title">ABN AMRO</h3>
+                </a>
             </div>
 
             <div class="half-col mb-4">
-                <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/asn_bank.png') ?>" alt="ASN Bank">
-                <h3 class="title">ASN Bank</h3>
-            </div>
-
-
-            <div class="half-col mb-4">
-                <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/bunq.png') ?>" alt="Bunq">
-                <h3 class="title">Bunq</h3>
-            </div>
-
-            <div class="half-col mb-4">
-                <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/handelsbanken.png') ?>"
-                    alt="Handelsbanken">
-                <h3 class="title">Handelsbanken</h3>
-            </div>
-
-            <div class="half-col mb-4">
-                <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/ing.png') ?>" alt="ING">
-                <h3 class="title">ING</h3>
-            </div>
-
-            <div class="half-col mb-4">
-                <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/knab(1).png') ?>" alt="Knab">
-                <h3 class="title">Knab</h3>
-            </div>
-
-            <div class="half-col mb-4">
-                <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/moneyou.png') ?>" alt="Moneyou">
-                <h3 class="title">Moneyou</h3>
-            </div>
-
-            <div class="half-col mb-4">
-                <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/rabobank.png') ?>" alt="Rabobank">
-                <h3 class="title">Rabobank</h3>
-            </div>
-
-            <div class="half-col mb-4">
-                <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/regiobank.png') ?>" alt="RegioBank">
-                <h3 class="title">RegioBank</h3>
-            </div>
-
-            <div class="half-col mb-4">
-                <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/sns_bank.png') ?>" alt="SNS Bank">
-                <h3 class="title">SNS Bank</h3>
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/8">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/asn_bank.png') ?>"
+                        alt="ASN Bank">
+                    <h3 class="title">ASN Bank</h3>
+                </a>
             </div>
 
 
             <div class="half-col mb-4">
-                <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/triodos_bank.png') ?>"
-                    alt="Triodos Bank">
-                <h3 class="title">Triodos Bank</h3>
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/5080">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/bunq.png') ?>" alt="Bunq">
+                    <h3 class="title">Bunq</h3>
+                </a>
             </div>
 
             <div class="half-col mb-4">
-                <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/van_lanschot.png') ?>"
-                    alt="van Lanschot">
-                <h3 class="title">van Lanschot</h3>
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/5082">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/handelsbanken.png') ?>"
+                        alt="Handelsbanken">
+                    <h3 class="title">Handelsbanken</h3>
+                </a>
+            </div>
+
+            <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/4">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/ing.png') ?>" alt="ING">
+                    <h3 class="title">ING</h3>
+                </a>
+            </div>
+
+            <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/12">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/knab(1).png') ?>" alt="Knab">
+                    <h3 class="title">Knab</h3>
+                </a>
+            </div>
+
+            <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/5081">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/moneyou.png') ?>" alt="Moneyou">
+                    <h3 class="title">Moneyou</h3>
+                </a>
+            </div>
+
+            <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/2">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/rabobank.png') ?>"
+                        alt="Rabobank">
+                    <h3 class="title">Rabobank</h3>
+                </a>
+            </div>
+
+            <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/9">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/regiobank.png') ?>"
+                        alt="RegioBank">
+                    <h3 class="title">RegioBank</h3>
+                </a>
+            </div>
+
+            <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/5">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/sns_bank.png') ?>"
+                        alt="SNS Bank">
+                    <h3 class="title">SNS Bank</h3>
+                </a>
+            </div>
+
+
+            <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/10">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/triodos_bank.png') ?>"
+                        alt="Triodos Bank">
+                    <h3 class="title">Triodos Bank</h3>
+                </a>
+            </div>
+
+            <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/11">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/van_lanschot.png') ?>"
+                        alt="van Lanschot">
+                    <h3 class="title">van Lanschot</h3>
+                </a>
             </div>
         </div>
 
