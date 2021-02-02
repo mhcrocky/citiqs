@@ -204,23 +204,151 @@ class Booking_events extends BaseControllerWeb
         $this->loadViews("events/pay", $this->global, '', 'footerShop', 'headerShop');
     }
 
-    public function selectpayment()
+    public function payment_proceed()
     {
-        $userInfo = $this->input->post(null, true);
+        $this->load->model('bookandpay_model');
+        $totalPrice = 0;
+        $buyerInfo = $this->input->post(null, true);
         $tickets = $this->session->userdata('tickets');
-        //$this->session->unset_userdata('tickets');
-        //$this->session->unset_userdata('total');
-
+        $this->session->set_userdata('eventShop', 'true');
+        $this->session->set_userdata('buyerEmail', $buyerInfo['email']);
         $customer = $this->session->userdata('customer');
-
         if(!$this->session->userdata('reservationIds')){
-            $reservationIds = $this->event_model->save_event_reservations($userInfo,$tickets, $customer);
+            $reservationIds = $this->event_model->save_event_reservations($buyerInfo, $tickets, $customer);
             $this->session->set_userdata('reservationIds', $reservationIds);
             
         }
+        $reservationIds = $this->session->userdata('reservationIds');
+        $arrArguments = array();
+
+        if ($buyerInfo) {
+            $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
+
+            foreach ($reservations as $key => $reservation) {
+                $totalPrice += floatval($reservation->price);
+
+                if ($key == 0) {
+                    $arrArguments['transaction']['description'] = "tiqs - " . $reservation->eventdate . " - " . $reservation->timeslot;
+                    $arrArguments['finishUrl'] = base_url() . 'booking/successpay/' . $reservation->reservationId;
+                }
+
+                $arrArguments['statsData']['extra' . ($key + 1)] = $reservation->reservationId;
+                $arrArguments['saleData']['orderData'][$key]['productId'] = $reservation->reservationId;
+                $arrArguments['saleData']['orderData'][$key]['description'] = $reservation->Spotlabel;
+                $arrArguments['saleData']['orderData'][$key]['productType'] = 'HANDLIUNG';
+                $arrArguments['saleData']['orderData'][$key]['price'] = $reservation->price * 100;
+                $arrArguments['saleData']['orderData'][$key]['quantity'] = 1;
+                $arrArguments['saleData']['orderData'][$key]['vatCode'] = 'H';
+                $arrArguments['saleData']['orderData'][$key]['vatPercentage'] = '0.00';
+
+                if ($reservation->SpotId != 3) {
+                    $this->bookandpay_model->newvoucher($reservation->reservationId);
+                }
+
+                $this->bookandpay_model->editbookandpay([
+                    'mobilephone' => $buyerInfo['mobileNumber'],
+                    'email' => $buyerInfo['email'],
+                ], $reservation->reservationId);
+            }
+        } else {
+            redirect('agenda_booking/pay');
+        }
+
+        $price = $totalPrice * 100;
+        $priceofreservation = $price;
+
+        if ($price == 1000) {
+            $price = $price + 90;  // service fee.
+        } elseif ($price == 2000) {
+            $price = $price + 180;
+        } elseif ($price == 3000) {
+            $price = $price + 270;  // service fee.
+        } elseif ($price == 4000) {
+            $price = $price + 360;  // service fee.
+        } elseif ($price == 5000) {
+            $price = $price + 450;  // service fee.
+        } elseif ($price == 6000) {
+            $price = $price + 540;  // service fee.
+        } elseif ($price == 7000) {
+            $price = $price + 630;  // service fee.
+        } elseif ($price == 8000) {
+            $price = $price + 720;  // service fee.
+        } elseif ($price == 15000) {
+            $price = $price + 400;  // service fee.
+        } elseif ($price == 20000) {
+            $price = $price + 600;
+        }// service fee.
+        elseif ($price == 30000) {
+            $price = $price + 800;
+        }// service fee.
+        elseif ($price == 16000) {
+            $price = $price + 490;  // service fee.
+        } elseif ($price == 17000) {
+            $price = $price + 580;  // service fee.
+        }
+
+        $priceoffee = $price - $priceofreservation;
+
+        $data['finalbedrag'] = $price / 100;
+        $data['finalbedragfee'] = $priceoffee / 100;
+        $data['finalbedragexfee'] = $priceofreservation / 100;
+		$customer = $this->session->userdata('customer');
+		$SlCode = $this->bookandpay_model->getUserSlCode($customer['id']);
+		$arrArguments['serviceId'] = $SlCode;  // TEST PAYNL_SERVICE_ID_CHE/K424; SL-3157-0531(thuishaven) (eigen test SL-2247-8501)
+//
+//		$arrArguments['serviceId'] = "SL-2247-8501";  // TEST PAYNL_SERVICE_ID_CHE/K424; SL-3157-0531(thuishaven) (eigen test SL-2247-8501)
+
+        $arrArguments['amount'] = $price;
+        $arrArguments['ipAddress'] = $_SERVER['REMOTE_ADDR'];
+
+        $payData['format'] = 'json';
+        $payData['tokenid'] = PAYNL_DATA_TOKEN_ID;
+
+        $payData['token'] = PAYNL_DATA_TOKEN;
+        $payData['gateway'] = 'rest-api.pay.nl';
+        $payData['namespace'] = 'Transaction';
+        $payData['function'] = 'start';
+        $payData['version'] = 'v13';
+
+        $strUrl = 'http://' . $payData['tokenid'] . ':' . $payData['token'] . '@' . $payData['gateway'] . '/' . $payData['version'] . '/' . $payData['namespace'] . '/' .
+            $payData['function'] . '/' . $payData['format'] . '?';
+
+        $orderExchangeUrl = base_url() . '/booking/ExchangePay';
+
+        $arrArguments['statsData']['promotorId'] = $customer['id'];
+        $arrArguments['enduser']['emailAddress'] = $buyerInfo['email'];
+        $arrArguments['saleData']['invoiceDate'] = date('d-m-Y');
+        $arrArguments['saleData']['deliveryDate'] = date('d-m-Y');
+
+        $arrArguments['enduser']['language'] = 'NL';
+        $arrArguments['transaction']['orderExchangeUrl'] = $orderExchangeUrl;
+
+        $this->session->set_userdata('payment_data', [
+            'strUrl' => $strUrl,
+            'arrArguments' => $arrArguments,
+            'discountAmount' => $arrArguments['amount'],
+            'final_amount' => $data['finalbedrag'],
+            'final_amountex' => $data['finalbedragexfee'],
+            'final_amountfee' => $data['finalbedragfee'],
+        ]);
+
+        if($data['finalbedrag'] == 0){
+            $this->emailReservation($buyerInfo['email'], $reservationIds);
+        } else {
+            redirect('/events/selectpayment');
+        }
+        
+    }
+
+    public function selectpayment()
+    {
+        
+        //$this->session->unset_userdata('tickets');
+        //$this->session->unset_userdata('total');
+
+
 
         $this->global['pageTitle'] = 'TIQS: Select Payment';
-        $this->session->set_userdata('userEmail', $userInfo['email']);
         
         
         $this->loadViews("events/selectpayment", $this->global, '', 'footerShop', 'headerShop');
@@ -263,11 +391,12 @@ class Booking_events extends BaseControllerWeb
     }
 
     
-    public function emailReservation($email)
+    public function emailReservation()
 	{
         $this->load->model('bookandpay_model');
         $this->load->model('sendreservation_model');
         $this->load->model('email_templates_model');
+        $email = $this->session->userdata('buyerEmail');
         $reservationIds = $this->session->userdata('reservationIds');
         $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
         $eventdate = '';
@@ -282,14 +411,14 @@ class Booking_events extends BaseControllerWeb
             
             foreach ($result as $record) {
                 $customer = $record->customer;
-				$eventid = $record->eventid;
+                $eventid = $record->eventid;
 				$eventdate = $record->eventdate;
 				$reservationId = $record->reservationId;
 				$price = $record->price;
 				$Spotlabel = $record->Spotlabel;
 				$numberofpersons = $record->numberofpersons;
 				$name = $record->name;
-				$email = $record->email;
+                $email = $record->email;
 				$mobile = $record->mobilephone;
 				$reservationset = $record->reservationset;
 				$fromtime = $record->timefrom;
@@ -378,6 +507,7 @@ class Booking_events extends BaseControllerWeb
 								$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
 								if($this->sendEmail($email, $subject, $mailtemplate)) {
                                     $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
+                                    $this->session->sess_destroy();
                                     redirect('booking/successbooking');
                                 }
                             
