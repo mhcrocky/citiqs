@@ -5,7 +5,7 @@
             <div style="background: #fff !important;">
                 <img style="width:100%" class="image-responsive" src="<?php echo base_url() ?>assets/images/events/<?php echo $this->session->userdata("eventImage"); ?>">
             </div>
-            <form class="login100-form validate-form" action="<?php echo base_url(); ?>events/selectpayment"
+            <form class="login100-form validate-form" action="<?php echo base_url(); ?>events/payment_proceed"
                 method="POST">
                 <div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
                     <span class="label-input100">Email</span>
