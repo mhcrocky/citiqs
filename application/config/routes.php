@@ -495,6 +495,7 @@ $route['events/shop/(:any)'] = 'Booking_events/index/$1';
 $route['events/tickets/(:num)'] = 'Booking_events/tickets/$1';
 $route['events/your_tickets'] = 'Booking_events/your_tickets';
 $route['events/pay'] = 'Booking_events/pay';
+$route['events/payment_proceed'] = 'Booking_events/payment_proceed';
 $route['events/selectpayment'] = 'Booking_events/selectpayment';
 $route['booking_events/clear_tickets'] = 'Booking_events/clear_tickets';
 $route['booking_events/paydorian'] = 'Booking_events/paydorian';
