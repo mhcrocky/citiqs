@@ -303,6 +303,55 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 		return $query->result_array();
 	}
 
+	public function booking_report($vendor_id, $min_date, $max_date)
+	{
+		$query = $this->db->query("SELECT DATE(reservationtime) AS created, sum(ticketPrice*numberofpersons) AS AMOUNT FROM tbl_bookandpay 
+		INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventId = tbl_event_tickets.id 
+		WHERE customer = '$vendor_id' AND reservationtime >= $min_date AND reservationtime <= $max_date GROUP BY created");
+		$results = $query->result_array();
+		return count($results);
+	}
+
+	public function booking_report_of_week($vendor_id, $min_date, $max_date)
+	{
+		$query = $this->db->query("SELECT DATE_FORMAT(reservationtime ,'%a') AS day_of_week, sum(ticketPrice*numberofpersons) AS AMOUNT FROM tbl_bookandpay 
+		INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventId = tbl_event_tickets.id 
+		WHERE customer = '$vendor_id' AND paid=1 AND reservationtime >= $min_date AND reservationtime <= $max_date GROUP BY day_of_week ORDER BY day_of_week");
+		return $query->result_array();
+	}
+
+	public function booking_report_of_month($vendor_id, $min_date, $max_date)
+	{
+		$query = $this->db->query("SELECT DATE_FORMAT(reservationtime ,'%M') AS month, sum(ticketPrice*numberofpersons) AS AMOUNT FROM tbl_bookandpay 
+		INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventId = tbl_event_tickets.id
+		WHERE customer = '$vendor_id' AND paid=1 AND reservationtime >= $min_date AND reservationtime <= $max_date GROUP BY month ORDER BY month");
+		return $query->result_array();
+	}
+
+	public function booking_report_of_quarter($vendor_id, $min_date, $max_date)
+	{
+		$query = $this->db->query("SELECT year(reservationtime) AS year,quarter(reservationtime) AS quarter, sum(ticketPrice*numberofpersons) AS AMOUNT FROM tbl_bookandpay 
+		INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventId = tbl_event_tickets.id
+		WHERE customer = '$vendor_id' AND paid=1 AND reservationtime >= $min_date AND reservationtime <= $max_date GROUP BY year ORDER BY year");
+		return $query->result_array();
+	}
+
+	public function booking_report_of_day($vendor_id, $min_date, $max_date)
+	{
+		$query = $this->db->query("SELECT DATE(reservationtime) AS day_date, sum(ticketPrice*numberofpersons) AS AMOUNT FROM tbl_bookandpay 
+		INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventId = tbl_event_tickets.id
+		WHERE customer = '$vendor_id' AND paid=1 AND reservationtime >= $min_date AND reservationtime <= $max_date GROUP BY day_date ORDER BY day_date");
+		return $query->result_array();
+	}
+
+	public function booking_report_of_hour($vendor_id, $min_date, $max_date)
+	{
+        $query = $this->db->query("SELECT DATE_FORMAT(reservationtime ,'%H:00') AS hour, sum(ticketPrice*numberofpersons) AS AMOUNT FROM tbl_bookandpay
+		INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventId = tbl_event_tickets.id
+		WHERE customer = '$vendor_id' AND paid=1 AND reservationtime >= $min_date AND reservationtime <= $max_date GROUP BY hour ORDER BY hour");
+		return $query->result_array();
+	}
+
 	public function get_date_range_totals($vendor_id, $min_date, $max_date, $sql=''){
 		$local_results = $this->date_range_total($vendor_id, $min_date, $max_date, 'local', $sql);
 		$delivery_results = $this->date_range_total($vendor_id, $min_date, $max_date, 'delivery', $sql);
@@ -458,6 +507,7 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 	
 	function get_total_report($vendor_id,$min_date, $max_date, $query=''){
 		$data = $this->get_date_range_totals($vendor_id, $min_date, $max_date, $query);
+		$booking = $this->booking_report($vendor_id, $min_date, $max_date);
 		$min_date = str_replace("-","/",$min_date);
 		$min_date = str_replace("'","",$min_date);
 		$max_date = str_replace("-","/",$max_date);
@@ -467,7 +517,8 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 			"pickup" => $data["pickup"],
 			"delivery" => $data["delivery"],
 			"local" => $data["local"],
-			"invoice" => 0
+			"invoice" => 0,
+			"booking" => $booking
 		];
 		return $newData;
 	}
@@ -476,9 +527,11 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 		$local_results = $this->date_range_report_of_week($vendor_id, $min_date, $max_date, 'local', $sql);
 		$delivery_results = $this->date_range_report_of_week($vendor_id, $min_date, $max_date, 'delivery', $sql);
 		$pickup_results = $this->date_range_report_of_week($vendor_id, $min_date, $max_date, 'pickup', $sql);
+		$booking_results = $this->booking_report_of_week($vendor_id, $min_date, $max_date);
 		$local = [];
 		$delivery = [];
 		$pickup = [];
+		$booking = [];
 		$newData = [];
 		$weekdays = ['Mon','Tue','Wed','Fri','Sat','Sun'];
 		foreach($local_results as $local_result){
@@ -493,6 +546,10 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 			$day = $pickup_result['day_of_week'];
 			$pickup[$day] = $pickup_result['pickupAMOUNT'];
 		}
+		foreach($booking_results as $booking_result){
+			$day = $booking_result['day_of_week'];
+			$booking[$day] = $booking_result['AMOUNT'];
+		}
 
 		foreach($weekdays as $key => $weekday){
 			$newData[$key] = [
@@ -500,7 +557,8 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 				"pickup" => isset($pickup[$weekday]) ? floatval($pickup[$weekday]) : 0,
 				"delivery" => isset($delivery[$weekday]) ? floatval($delivery[$weekday]) : 0,
 				"local" => isset($local[$weekday]) ? floatval($local[$weekday]) : 0,
-				"invoice" => 0
+				"invoice" => 0,
+				"booking" => isset($booking[$weekday]) ? floatval($booking[$weekday]) : 0,
 			];
 		}
 		return $newData;
@@ -510,9 +568,11 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 		$local_results = $this->date_range_report_of_month($vendor_id, $min_date, $max_date, 'local', $sql);
 		$delivery_results = $this->date_range_report_of_month($vendor_id, $min_date, $max_date, 'delivery', $sql);
 		$pickup_results = $this->date_range_report_of_month($vendor_id, $min_date, $max_date, 'pickup', $sql);
+		$booking_results = $this->booking_report_of_month($vendor_id, $min_date, $max_date);
 		$local = [];
 		$delivery = [];
 		$pickup = [];
+		$booking = [];
 		$newData = [];
 		$months_data = [];
 		$context = stream_context_create([
@@ -560,6 +620,11 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 			$month = $pickup_result['month'];
 			$pickup[$month] = $pickup_result['pickupAMOUNT'];
 		}
+		foreach($booking_results as $booking_result){
+			$months_data[] = $booking_result['month'];
+			$month = $booking_result['month'];
+			$booking[$month] = $booking_result['AMOUNT'];
+		}
 
 		$diff = array_diff($months,$months_data);
 
@@ -570,7 +635,8 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 				"pickup" => isset($pickup[$month]) ? floatval($pickup[$month]) : 0,
 				"delivery" => isset($delivery[$month]) ? floatval($delivery[$month]) : 0,
 				"local" => isset($local[$month]) ? floatval($local[$month]) : 0,
-				"invoice" => isset($invoice[$key]) ? floatval(-1*($invoice[$key])) : 0
+				"invoice" => isset($invoice[$key]) ? floatval(-1*($invoice[$key])) : 0,
+				"booking" => isset($booking[$month]) ? floatval($booking[$month]) : 0
 			];
 		}
 		return $newData;
@@ -580,9 +646,11 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 		$local_results = $this->date_range_report_of_hour($vendor_id, $min_date, $max_date, 'local', $sql);
 		$delivery_results = $this->date_range_report_of_hour($vendor_id, $min_date, $max_date, 'delivery', $sql);
 		$pickup_results = $this->date_range_report_of_hour($vendor_id, $min_date, $max_date, 'pickup', $sql);
+		$booking_results = $this->booking_report_of_hour($vendor_id, $min_date, $max_date);
 		$local = [];
 		$delivery = [];
 		$pickup = [];
+		$booking = [];
 		$newData = [];
 		$hours = [];
 		$hours_data = [];
@@ -609,6 +677,11 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 			$hour = $pickup_result['hour'];
 			$pickup[$hour] = $pickup_result['pickupAMOUNT'];
 		}
+		foreach($booking_results as $booking_result){
+			$hours_data[] = $booking_result['hour'];
+			$hour = $booking_result['hour'];
+			$booking[$hour] = $booking_result['AMOUNT'];
+		}
 
 		$diff = array_diff($hours,$hours_data);
 		
@@ -624,7 +697,8 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 				"pickup" => isset($pickup[$hour]) ? floatval($pickup[$hour]) : 0,
 				"delivery" => isset($delivery[$hour]) ? floatval($delivery[$hour]) : 0,
 				"local" => isset($local[$hour]) ? floatval($local[$hour]) : 0,
-				"invoice" => 0
+				"invoice" => 0,
+				"booking" => isset($booking[$hour]) ? floatval($booking[$hour]) : 0
 			];
 		}
 		return $newData;
@@ -634,9 +708,11 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 		$local_results = $this->date_range_report_of_quarter($vendor_id, $min_date, $max_date, 'local', $sql);
 		$delivery_results = $this->date_range_report_of_quarter($vendor_id, $min_date, $max_date, 'delivery', $sql);
 		$pickup_results = $this->date_range_report_of_quarter($vendor_id, $min_date, $max_date, 'pickup', $sql);
+		$booking_results = $this->booking_report_of_quarter($vendor_id, $min_date, $max_date);
 		$local = [];
 		$delivery = [];
 		$pickup = [];
+		$booking = [];
 		$newData = [];
 		$quarters = [];
 		
@@ -656,6 +732,11 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 			$quarter = $pickup_result['quarter'].'-'.$pickup_result['year'];
 			$pickup[$quarter] = $pickup_result['pickupAMOUNT'];
 		}
+		foreach($booking_results as $booking_result){
+			$quarters[] = $booking_result['quarter'].'-'.$booking_result['year'];
+			$quarter = $booking_result['quarter'].'-'.$booking_result['year'];
+			$booking[$quarter] = $booking_result['AMOUNT'];
+		}
 
 		$quarters = array_unique(array_values($quarters));
 		function date_sort($a, $b) {
@@ -669,7 +750,8 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 				"pickup" => isset($pickup[$quarter]) ? floatval($pickup[$quarter]) : 0,
 				"delivery" => isset($delivery[$quarter]) ? floatval($delivery[$quarter]) : 0,
 				"local" => isset($local[$quarter]) ? floatval($local[$quarter]) : 0,
-				"invoice" => 0
+				"invoice" => 0,
+				"booking" => isset($booking[$quarter]) ? floatval($booking[$quarter]) : 0
 			];
 		}
 		return $newData;
@@ -679,9 +761,11 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 		$local_results = $this->date_range_report_of_day($vendor_id, $min_date, $max_date, 'local', $sql);
 		$delivery_results = $this->date_range_report_of_day($vendor_id, $min_date, $max_date, 'delivery', $sql);
 		$pickup_results = $this->date_range_report_of_day($vendor_id, $min_date, $max_date, 'pickup', $sql);
+		$booking_results = $this->booking_report_of_day($vendor_id, $min_date, $max_date);
 		$local = [];
 		$delivery = [];
 		$pickup = [];
+		$booking = [];
 		$newData = [];
 		$days = [];
 		/*
@@ -730,6 +814,12 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 			$pickup[$day] = $pickup_result['pickupAMOUNT'];
 		}
 
+		foreach($booking_results as $booking_result){
+			$days[] = $booking_result['day_date'];
+			$day = $booking_result['day_date'];
+			$booking[$day] = $booking_result['AMOUNT'];
+		}
+
 		$days = array_unique(array_values($days));
 		function date_sort($a, $b) {
 			return strtotime($a) - strtotime($b);
@@ -742,7 +832,8 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 				"pickup" => isset($pickup[$day]) ? floatval($pickup[$day]) : 0,
 				"delivery" => isset($delivery[$day]) ? floatval($delivery[$day]) : 0,
 				"local" => isset($local[$day]) ? floatval($local[$day]) : 0,
-				"invoice" => 0 //isset($invoice[$key]) ? floatval($invoice[$key]) : 0
+				"invoice" => 0, //isset($invoice[$key]) ? floatval($invoice[$key]) : 0
+				"booking" => isset($booking[$day]) ? floatval($booking[$day]) : 0
 
 			];
 		}

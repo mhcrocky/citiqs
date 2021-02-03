@@ -150,7 +150,7 @@ class Businessreport extends BaseControllerWeb
 
 		return $rows;
 
-	}
+	} 
 
 	public function get_timestamp_orders(){
 		$vendor_id = $this->vendor_id;
@@ -187,6 +187,9 @@ class Businessreport extends BaseControllerWeb
 								),
 								"invoice" => array(
 									"label" => "Invoices"
+								),
+								"booking" => array(
+									"label" => "Tickets"
 								)
 							),
 							"class"=>array(
@@ -203,7 +206,8 @@ class Businessreport extends BaseControllerWeb
 								"#3366cc",
 								"#dc3912",
 								"#ff9900",
-								"#6600cc"
+								"#6600cc",
+								"#375068"
 							)
                         ));
                     }

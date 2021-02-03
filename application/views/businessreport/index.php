@@ -1,8 +1,3 @@
-<?php 
-    $this->config->load('custom', true);  
-    $custom = $this->config->item('custom'); 
-    $colors = $custom['typeColors'];
-?>
 <div style="visibility: hidden;" class="main-content-inner ui-sortable">
 <!--
     <div class="sales-report-area mt-5 mb-5 row-sort ui-sortable" data-rowposition="1" data-rowsort="1">
