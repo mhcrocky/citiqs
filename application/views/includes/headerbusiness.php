@@ -101,21 +101,23 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 			background-color: whitesmoke;
 			}
 
-            [data-menuid="0"] {
-                display: none;
-                }
-
 
         </style>
-        <?php if($this->session->userdata('menuOptions')): 
-        $menuOptions = $this->session->userdata('menuOptions');
-             foreach($menuOptions as $menuOption): ?>
+        <?php if($this->session->userdata('menuOptions')): ?>
+        
         <style>
-        [data-menuid="<?php echo $menuOption; ?>"] {
-            display: none;
-        }
+            [data-menuid] {
+                display: none;
+            }
+            
+            <?php $menuOptions = array_unique($this->session->userdata('menuOptions'));
+                  foreach($menuOptions as $menuOption): ?>
+            [data-menuid="<?php echo $menuOption; ?>"] {
+                display: block !important;
+            }
+            <?php endforeach; ?>
         </style>
-        <?php endforeach; ?>
+        
         <?php endif; ?>
         <!-- modernizr css -->
         <script src="<?php echo $this->baseUrl; ?>assets/js/business_dashboard/jquery-2.2.4.min.js"></script>
