@@ -85,6 +85,18 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
         return $query->result();
     }
 
+    /*
+    public function getEmployeeIdByEmail($email, $ownerId) {
+        $this->db->select('id');
+        $this->db->from('tbl_employee');
+        $this->db->where("ownerId", $ownerId);
+        $this->db->where("email", $employeeId);
+        $query = $this->db->get();
+        $result = $query->first_row();
+        return $result->id;
+    }
+    */
+
     public function updateEmployee($employee, $employeeId) {
         $this->db->trans_start();
         $this->db->where("id", $employeeId);
@@ -149,12 +161,24 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
         $query = $this->db->get();
         $results = $query->result_array();
         $options = [];
+        $secondOptions = [];
+        $parents = [];
         foreach($results as $result){
+            if (strpos($result['hierarchyNumber'], '.') !== false) {
+                $arr = explode('.', $result['hierarchyNumber']);
+                $parents[] = $arr[0];
+                if(isset($arr[2])){
+                    $secondOptions[] = $arr[0] . '.' . $arr[1];
+                }
+            }
             $options[] = $result['hierarchyNumber'];
         }
-        $hierarchyMenu = $this->getMenuHierarchyNumbers();
-        $diff = array_diff($hierarchyMenu,$options);
-        return $diff;
+
+        $options = array_merge($options, $parents);
+        $options = array_merge($options, $secondOptions);
+        
+        //$diff = array_diff($hierarchyMenu,$options);
+        return array_unique($options);
     }
 
     public function saveMenuOptionsByEmployee($vendorId, $userId, $items)
