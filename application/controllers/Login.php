@@ -175,6 +175,7 @@ class Login extends BaseControllerWeb
 			$password = $this->security->xss_clean($this->input->post('password'));
 
 			$result = $this->login_model->loginEmployee($email, $password);
+			$employeeId = $result->employeeId;
 
 			// if empty than not known.
 
@@ -182,7 +183,7 @@ class Login extends BaseControllerWeb
 				// go back
 				$this->session->set_flashdata('error', 'Are you using the right credentials?, or did you not register yet? Please try again or register. ');
 				redirect('login');
-				//	$this->index();
+				//	$this->index(); 
 			} else {
 				//
 				$userId=$result->ownerId;
@@ -200,9 +201,9 @@ class Login extends BaseControllerWeb
 					'lng' => $result->lng,
 				);
 				$sessionArray['activatePos'] = $this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('activatePos');
-
 				$this->load->model('employee_model');
-				$MenuArray = $this->employee_model->getMenuOptionsByEmployee($result->userId);
+				
+				$MenuArray = $this->employee_model->getMenuOptionsByEmployee($employeeId);
 				
 				$sessionArray['menuOptions'] = $MenuArray;
 

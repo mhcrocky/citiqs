@@ -44,7 +44,7 @@ class Login_model extends CI_Model
     }
 
 	function loginEmployee($email, $password){
-		$this->db->select('tbl_employee.ownerId');
+		$this->db->select('tbl_employee.id as employeeId, tbl_employee.ownerId');
 		$this->db->from('tbl_employee');
 		$this->db->where('tbl_employee.email', $email);
 		$this->db->where('tbl_employee.password', $password);
