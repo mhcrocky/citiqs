@@ -316,10 +316,10 @@ function clickLabel(label) {
   } else if(label == 'Delivery'){
     deliveryClicked += 1;
     clickedArr['delivery'] = deliveryClicked;
-  } else if(label == 'Booking'){
+  } else if(label == 'Tickets'){
     bookingClicked += 1;
     clickedArr['booking'] = bookingClicked;
-  } else {
+  } else if(label == 'Invoices'){
     invoiceClicked += 1;
     clickedArr['invoice'] = invoiceClicked;
   }
