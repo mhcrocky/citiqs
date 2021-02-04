@@ -6,7 +6,7 @@ require APPPATH . '/libraries/BaseControllerWeb.php';
 
 use \koolreport\drilldown\DrillDown;
 use \koolreport\widgets\google\ColumnChart;
-use \koolreport\clients\Bootstrap;
+use \koolreport\clients\Bootstrap4;
 
 
 class Businessreport extends BaseControllerWeb
@@ -170,7 +170,7 @@ class Businessreport extends BaseControllerWeb
                     "title" => "Business Report",
                     "content" => function ($params, $scope) {
                         ColumnChart::create(array(
-                            "dataSource" => ($this->businessreport_model->get_report_of($this->session->userdata('userId'), $this->input->post('min'), $this->input->post('max'),$this->input->post('selected'), $this->input->post('sql'))), 
+                            "dataSource" => ($this->businessreport_model->get_report_of($this->session->userdata('userId'), $this->input->post('min'), $this->input->post('max'),$this->input->post('selected'), $this->input->post('sql'), $this->input->post('specific'))), 
                             "columns" => array(
                                 "date" => array(
                                     "type" => "string",
@@ -197,9 +197,13 @@ class Businessreport extends BaseControllerWeb
 							),
                             "clientEvents" => array(
                                 "itemSelect" => "function(params){
-									//console.log(params);
-								
+									var date = params.selectedRow[0];
+									var dateSplit = date.split(' - ');
+									if(dateSplit.length == 2){
+										clickBar(params.columnName);
+									}
 									
+                                    saleDrillDown.next({spot_id:params.selectedRow[0]});
                                 }",
 							),
 							"colorScheme"=>array(

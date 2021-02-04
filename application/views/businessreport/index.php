@@ -1,5 +1,5 @@
 <div style="visibility: hidden;" class="main-content-inner ui-sortable">
-<!--
+    <!--
     <div class="sales-report-area mt-5 mb-5 row-sort ui-sortable" data-rowposition="1" data-rowsort="1">
         <div id="sortable" style="visibility: hidden;" class="row ui-sortable">
             <div class="col-md-3 ui-sortable mb-3" data-position="1" data-sort="1">
@@ -484,3 +484,26 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.table2excel.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/query-builder.standalone.js"></script>
 <script src="<?php echo base_url(); ?>assets/home/js/dashboard.js"></script>
+<script>
+function clickBar(specific) {
+    var full_timestamp = $('#datetime').val();
+    var date = full_timestamp.split(' - ');
+    var min = date[0];
+    var max = date[1];
+
+    $.ajax({
+        method: 'POST',
+        url: globalVariables.baseUrl + 'businessreport/get_graphs',
+        data: {
+            min: "'" + min + "'",
+            max: "'" + max + "'",
+            selected: 'total',
+            specific: specific
+        },
+        success: function(data) {
+            data = data.replace('btnBack', 'hidden');
+            $('#graphs').html(JSON.parse(data.replaceAll('breadcrumb', 'hidden')));
+        }
+    });
+}
+</script>

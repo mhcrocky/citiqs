@@ -840,7 +840,80 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 		return $newData;
 	}
 
-	public function get_report_of($vendor_id,$min_date, $max_date, $selected, $sql=''){
+	public function get_report_of($vendor_id,$min_date, $max_date, $selected, $sql='',$specific = ''){
+		$specific = lcfirst($specific);
+		if($specific == 'booking') {
+			$results = booking_report_of_day($vendor_id, $min_date, $max_date);
+			$days = [];
+			$newData = [];
+			foreach($results as $key => $result){
+				$day = $result['day_date'];
+				$newData[$key] = [
+					'date' => $day,
+					'pickup' => 0,
+					'delivery' => 0,
+					'local' => 0,
+					'invoice' => 0,
+					'booking' => intval($result['AMOUNT'])
+				];
+			}
+			return $newData;
+	
+		}
+		else if($specific == 'pickup') {
+			$results = $this->date_range_report_of_day($vendor_id, $min_date, $max_date, 'pickup', $sql);
+			$days = [];
+			$newData = [];
+			foreach($results as $key => $result){
+				$day = $result['day_date'];
+				$newData[$key] = [
+					'date' => $day,
+					'pickup' => intval($result['pickupAMOUNT']),
+					'delivery' => 0,
+					'local' => 0,
+					'invoice' => 0,
+					'booking' => 0
+				];
+			}
+			return $newData;
+		}
+		else if($specific == 'delivery') {
+			$results = $this->date_range_report_of_day($vendor_id, $min_date, $max_date, 'delivery', $sql);
+			$days = [];
+			$newData = [];
+			foreach($results as $key => $result){
+				$day = $result['day_date'];
+				$newData[$key] = [
+					'date' => '',
+					'pickup' => 0,
+					'delivery' => intval($result['deliveryAMOUNT']),
+					'local' => 0,
+					'invoice' => 0,
+					'booking' => 0
+				];
+			}
+			
+			return $newData;
+		}
+		else if($specific == 'local') {
+			$results = $this->date_range_report_of_day($vendor_id, $min_date, $max_date, 'local', $sql);
+			$days = [];
+			$newData = [];
+			foreach($results as $key => $result){
+				$day = $result['day_date'];
+				$newData[$key] = [
+					'date' => $day,
+					'pickup' => 0,
+					'delivery' => 0,
+					'local' => intval($result['AMOUNT']),
+					'invoice' => 0,
+					'booking' => 0
+				];
+			}
+			return $newData;
+		}
+
+
 		if($selected == 'month') {return $this->get_month_report($vendor_id,$min_date, $max_date, $sql);}
 		else if($selected == 'day') {return $this->get_day_report($vendor_id,$min_date, $max_date, $sql);}
 		else if($selected == 'quarter') {return $this->get_quarter_report($vendor_id,$min_date, $max_date, $sql);}
