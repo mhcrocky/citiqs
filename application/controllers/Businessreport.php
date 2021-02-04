@@ -160,8 +160,74 @@ class Businessreport extends BaseControllerWeb
 		echo json_encode($orders);
 	}
 
-	public function get_graphs(){
+	public function get_graphs($label = false){
 		$vendor_id = $this->vendor_id;
+		if($this->input->post('label')){
+			$graphs = DrillDown::create(array(
+				"name" => "saleDrillDown",
+				"title" => " ",
+				"levels" => array(
+					array(
+						"title" => "Business Report",
+						"content" => function ($params, $scope) {
+							$label = lcfirst($this->input->post('label'));
+							ColumnChart::create(array(
+								"dataSource" => ($this->businessreport_model->get_label_report_of($this->session->userdata('userId'), $this->input->post('min'), $this->input->post('max'),$this->input->post('selected'), $this->input->post('sql'), $label)), 
+								"columns" => array(
+									"date" => array(
+										"type" => "string",
+										"label" => "Date",
+									),
+									"local" => array(
+										"label" => "Local",
+										"id" => "Local",
+									),
+									"pickup" => array(
+										"label" => "Pickup",
+									),
+									"delivery" => array(
+										"label" => "Delivery",
+									),
+									"invoice" => array(
+										"label" => "Invoices"
+									),
+									"booking" => array(
+										"label" => "Tickets"
+									)
+								),
+								"class"=>array(
+									"button"=>"bg-warning"
+								),
+								"clientEvents" => array(
+									"itemSelect" => "function(params){
+										var date = params.selectedRow[0];
+										var dateSplit = date.split(' - ');
+										if(dateSplit.length == 2){
+											clickBar(params.columnName);
+										}
+										
+										saleDrillDown.next({spot_id:params.selectedRow[0]});
+									}",
+								),
+								"colorScheme"=>array(
+									"#3366cc",
+									"#dc3912",
+									"#ff9900",
+									"#6600cc",
+									"#375068"
+								)
+							));
+						}
+					),
+	
+	 
+	
+				),
+			   
+			), true);
+			echo json_encode($graphs);
+			return ;
+		}
 		$graphs = DrillDown::create(array(
             "name" => "saleDrillDown",
             "title" => " ",
@@ -177,7 +243,8 @@ class Businessreport extends BaseControllerWeb
                                     "label" => "Date",
 								),
 								"local" => array(
-                                    "label" => "Local",
+									"label" => "Local",
+									"id" => "Local",
                                 ),
                                 "pickup" => array(
                                     "label" => "Pickup",
