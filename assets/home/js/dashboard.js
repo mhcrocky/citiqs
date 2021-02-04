@@ -287,11 +287,63 @@ function clickBar(specific) {
   });
 }
 
+var pickupClicked = 0;
+var localClicked = 0;
+var deliveryClicked = 0;
+var bookingClicked = 0;
+var invoiceClicked = 0;
+
 function clickLabel(label) {
+  
+
   var full_timestamp = $('#datetime').val();
   var date = full_timestamp.split(' - ');
   var min = date[0];
   var max = date[1];
+  var clickedArr = [];
+  clickedArr['pickup'] = pickupClicked;
+  clickedArr['local'] = localClicked;
+  clickedArr['delivery'] = deliveryClicked;
+  clickedArr['booking'] = bookingClicked;
+  clickedArr['invoice'] = invoiceClicked;
+  
+  if(label == 'Pickup'){
+    pickupClicked += 1;
+    clickedArr['pickup'] = pickupClicked;
+  } else if(label == 'Local'){
+    localClicked += 1;
+    clickedArr['local'] = localClicked;
+  } else if(label == 'Delivery'){
+    deliveryClicked += 1;
+    clickedArr['delivery'] = deliveryClicked;
+  } else if(label == 'Booking'){
+    bookingClicked += 1;
+    clickedArr['booking'] = bookingClicked;
+  } else {
+    invoiceClicked += 1;
+    clickedArr['invoice'] = invoiceClicked;
+  }
+
+  console.log(JSON.stringify(Object.assign({}, clickedArr)));
+  var labels = [];
+
+  if(clickedArr['pickup'] % 2 != 0){
+    labels[0] = 'pickup';
+  }
+  if(clickedArr['local'] % 2 != 0){
+    labels[1] = 'local';
+  }
+  if(clickedArr['delivery'] % 2 != 0){
+    labels[2] = 'delivery';
+  }
+  if(clickedArr['booking'] % 2 != 0){
+    labels[3] = 'booking';
+  }
+  if(clickedArr['invoice'] % 2 != 0){
+    labels[4] = 'invoice';
+  }
+
+  labelsArr = JSON.stringify(Object.assign({}, labels));
 
   $.ajax({
       method: 'POST',
@@ -300,7 +352,7 @@ function clickLabel(label) {
           min: "'" + min + "'",
           max: "'" + max + "'",
           selected: $('#group_by option:selected').val(),
-          label: label
+          labels: labelsArr
       },
       success: function(data) {
           data = data.replace('btnBack', 'hidden');
@@ -321,6 +373,7 @@ function clickLabel(label) {
                   $(this).attr('onclick', 'clickLabel("Tickets")');
               }
           });
+
       }
   });
 }

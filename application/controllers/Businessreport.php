@@ -162,7 +162,7 @@ class Businessreport extends BaseControllerWeb
 
 	public function get_graphs($label = false){
 		$vendor_id = $this->vendor_id;
-		if($this->input->post('label')){
+		if($this->input->post('labels')){
 			$graphs = DrillDown::create(array(
 				"name" => "saleDrillDown",
 				"title" => " ",
@@ -170,9 +170,16 @@ class Businessreport extends BaseControllerWeb
 					array(
 						"title" => "Business Report",
 						"content" => function ($params, $scope) {
-							$label = lcfirst($this->input->post('label'));
+							$labels = json_decode($this->input->post('labels'));
+							$labels = (array) $labels;
+							if(count($labels) > 0){
+								$dataSource = $this->businessreport_model->get_label_report_of($this->session->userdata('userId'), $this->input->post('min'), $this->input->post('max'),$this->input->post('selected'), $this->input->post('sql'), $labels);
+							} else {
+								$dataSource = $this->businessreport_model->get_report_of($this->session->userdata('userId'), $this->input->post('min'), $this->input->post('max'),$this->input->post('selected'), $this->input->post('sql'), $this->input->post('specific'));
+							}
+							
 							ColumnChart::create(array(
-								"dataSource" => ($this->businessreport_model->get_label_report_of($this->session->userdata('userId'), $this->input->post('min'), $this->input->post('max'),$this->input->post('selected'), $this->input->post('sql'), $label)), 
+								"dataSource" => ($dataSource), 
 								"columns" => array(
 									"date" => array(
 										"type" => "string",

@@ -923,8 +923,7 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 		
 	}
 
-	public function get_label_report_of($vendor_id,$min_date, $max_date, $selected, $sql='',$label = ''){
-		$label = lcfirst($label);
+	public function get_label_report_of($vendor_id,$min_date, $max_date, $selected, $sql='',$labels){
 		$results = '';
 		if($selected == 'month') { $results = $this->get_month_report($vendor_id,$min_date, $max_date, $sql);}
 		else if($selected == 'day') { $results = $this->get_day_report($vendor_id,$min_date, $max_date, $sql);}
@@ -934,14 +933,15 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 		else { $results = $this->get_total_report($vendor_id,$min_date, $max_date, $sql);}
 
 		$newData = [];
+		$labels = array_values($labels);
 		foreach($results as $key => $result){
 			$newData[$key] = [
 				'date' => $result['date'],
-				'pickup' => ($label == 'pickup') ? intval($result['pickup']) : 0,
-				'delivery' => ($label == 'delivery') ? intval($result['delivery']) : 0,
-				'local' => ($label == 'local') ? intval($result['local']) : 0,
-				'invoice' => ($label == 'invoice') ? intval($result['invoice']) : 0,
-				'booking' => ($label == 'booking') ? intval($result['booking']) : 0
+				'pickup' => (in_array('pickup', $labels)) ? intval($result['pickup']) : 0,
+				'delivery' => (in_array('delivery', $labels)) ? intval($result['delivery']) : 0,
+				'local' => (in_array('local', $labels)) ? intval($result['local']) : 0,
+				'invoice' => (in_array('invoice', $labels)) ? intval($result['invoice']) : 0,
+				'booking' => (in_array('booking', $labels)) ? intval($result['booking']) : 0
 			];
 		}
 		return $newData;
