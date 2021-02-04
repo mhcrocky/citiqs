@@ -51,6 +51,22 @@
             success: function(data){
               data = data.replaceAll("btnBack", "hidden");
               $("#graphs").html(JSON.parse(data.replaceAll("breadcrumb", "hidden")));
+              var texts = $('text');
+              $.each(texts, function(index){
+              let text = $(this).text();
+              if(text == 'Local'){
+                  $(this).attr('onclick', 'clickLabel("Local")');
+              } else if(text == 'Pickup'){
+                  $(this).attr('onclick', 'clickLabel("Pickup")');
+              } else if(text == 'Delivery'){
+                  $(this).attr('onclick', 'clickLabel("Delivery")');
+              } else if(text == 'Invoices'){
+                  $(this).attr('onclick', 'clickLabel("Invoices")');
+              } else if(text == 'Tickets'){
+                  $(this).attr('onclick', 'clickLabel("Tickets")');
+              }
+             });
+
             }
           });
         });
@@ -115,6 +131,22 @@
           data = data.replaceAll("btnBack", "hidden");
           $("#graphs").html(JSON.parse(data.replaceAll("breadcrumb", "hidden")));
           //$("#graphs").html(JSON.parse(data.replaceAll("btnBack", "hidden")));
+          var texts = $('text');
+          $.each(texts, function(index){
+              let text = $(this).text();
+              if(text == 'Local'){
+                  $(this).attr('onclick', 'clickLabel("Local")');
+              } else if(text == 'Pickup'){
+                  $(this).attr('onclick', 'clickLabel("Pickup")');
+              } else if(text == 'Delivery'){
+                  $(this).attr('onclick', 'clickLabel("Delivery")');
+              } else if(text == 'Invoices'){
+                  $(this).attr('onclick', 'clickLabel("Invoices")');
+              } else if(text == 'Tickets'){
+                  $(this).attr('onclick', 'clickLabel("Tickets")');
+              }
+          });
+
           }
         });
         
@@ -132,6 +164,22 @@
               data = data.replaceAll("btnBack", "hidden");
               $("#graphs").html(JSON.parse(data.replaceAll("breadcrumb", "hidden")));
               //$("#graphs").html(JSON.parse(data.replaceAll("btnBack", "hidden")));
+              var texts = $('text');
+              $.each(texts, function(index){
+              let text = $(this).text();
+              if(text == 'Local'){
+                  $(this).attr('onclick', 'clickLabel("Local")');
+              } else if(text == 'Pickup'){
+                  $(this).attr('onclick', 'clickLabel("Pickup")');
+              } else if(text == 'Delivery'){
+                  $(this).attr('onclick', 'clickLabel("Delivery")');
+              } else if(text == 'Invoices'){
+                  $(this).attr('onclick', 'clickLabel("Invoices")');
+              } else if(text == 'Tickets'){
+                  $(this).attr('onclick', 'clickLabel("Tickets")');
+              }
+             });
+
             }
           });
         });
@@ -198,4 +246,81 @@ function addZero(i) {
     i = "0" + i;
   }
   return i;
+}
+
+function clickBar(specific) {
+  var full_timestamp = $('#datetime').val();
+  var date = full_timestamp.split(' - ');
+  var min = date[0];
+  var max = date[1];
+
+  $.ajax({
+      method: 'POST',
+      url: globalVariables.baseUrl + 'businessreport/get_graphs',
+      data: {
+          min: "'" + min + "'",
+          max: "'" + max + "'",
+          selected: 'total',
+          specific: specific
+      },
+      success: function(data) {
+          data = data.replace('btnBack', 'hidden');
+          data = JSON.parse(data.replaceAll('breadcrumb', 'hidden'));
+          data = data.replaceAll('>Local', '>Test');
+          $('#graphs').html(data);
+          var texts = $('text');
+          $.each(texts, function(index){
+              let text = $(this).text();
+              if(text == 'Local'){
+                  $(this).attr('onclick', 'clickLabel("Local")');
+              } else if(text == 'Pickup'){
+                  $(this).attr('onclick', 'clickLabel("Pickup")');
+              } else if(text == 'Delivery'){
+                  $(this).attr('onclick', 'clickLabel("Delivery")');
+              } else if(text == 'Invoices'){
+                  $(this).attr('onclick', 'clickLabel("Invoices")');
+              } else if(text == 'Tickets'){
+                  $(this).attr('onclick', 'clickLabel("Tickets")');
+              }
+          });
+      }
+  });
+}
+
+function clickLabel(label) {
+  var full_timestamp = $('#datetime').val();
+  var date = full_timestamp.split(' - ');
+  var min = date[0];
+  var max = date[1];
+
+  $.ajax({
+      method: 'POST',
+      url: globalVariables.baseUrl + 'businessreport/get_graphs',
+      data: {
+          min: "'" + min + "'",
+          max: "'" + max + "'",
+          selected: $('#group_by option:selected').val(),
+          label: label
+      },
+      success: function(data) {
+          data = data.replace('btnBack', 'hidden');
+          data = JSON.parse(data.replaceAll('breadcrumb', 'hidden'));
+          $('#graphs').html(data);
+          var texts = $('text');
+          $.each(texts, function(index){
+              let text = $(this).text();
+              if(text == 'Local'){
+                  $(this).attr('onclick', 'clickLabel("Local")');
+              } else if(text == 'Pickup'){
+                  $(this).attr('onclick', 'clickLabel("Pickup")');
+              } else if(text == 'Delivery'){
+                  $(this).attr('onclick', 'clickLabel("Delivery")');
+              } else if(text == 'Invoices'){
+                  $(this).attr('onclick', 'clickLabel("Invoices")');
+              } else if(text == 'Tickets'){
+                  $(this).attr('onclick', 'clickLabel("Tickets")');
+              }
+          });
+      }
+  });
 }
