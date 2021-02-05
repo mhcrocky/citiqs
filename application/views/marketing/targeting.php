@@ -1,23 +1,4 @@
-<style>
-tr:nth-of-type(even) {
-    background-color: #fffff2 !important;
-}
 
-tr:nth-of-type(odd) {
-    background-color: #f2f2f2 !important;
-}
-
-.table-striped thead tr:nth-of-type(odd) {
-    background-color: #fffff2 !important;
-}
-
-.table-striped tfoot tr:nth-of-type(odd) {
-    background-color: #fffff2 !important;
-}
-label.font-weight-bold {
-    font-size: 14px;
-}
-</style>
 <div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable">
     <div class="float-right text-center pl-3">
         <input style="width: 330px;" class="date form-control-sm mb-2" type="text" name="datetimes" />
@@ -46,32 +27,40 @@ label.font-weight-bold {
                 </div>
                 <button type="button" class="collapsible">Open Saved Queries</button>
                 <div class="content form">
-                    <?php foreach($queries as $query): ?>
+                    <?php foreach($queries as $query): 
+                        $query_id = $query['id'];
+                        if(isset($cronJobs[$query_id])){
+                            $cronJob = $cronJobs[$query_id];
+                        } else if(isset($cronJob)){
+                            unset($cronJob);
+                        }
+                        ?>
                     <div style="background-color: #fff" class="row mx-auto align-items-center">
-                        <div id="inputGroup<?php echo $query['id']; ?>" class="inputGroup col-md-9">
+                        <div id="inputGroup<?php echo $query['id']; ?>" class="inputGroup col-lg-8">
                             <input id="radio<?php echo $query['id']; ?>" name="query" type="radio"
                                 value="<?php echo htmlspecialchars_decode($query['value']); ?>">
                             <label style="padding-left: 30px;padding-right: 70px;"
                                 for="radio<?php echo $query['id']; ?>"><span
                                     id="label<?php echo $query['id']; ?>"><?php echo $query['query']; ?></span>
                                 <div class="text-right p-3">
-                                    <button class="btn btn-secondary ml-2"
+                                    
+                                </div>
+
+                        </div>
+                        <div class="col-lg-4 mt-2">
+                        <button class="btn btn-secondary ml-2"
                                         onclick="editModal(<?php echo $query['id']; ?>)" data-toggle="modal"
                                         data-target="#editQueryModal<?php echo $query['id']; ?>">Edit</button>
                                     <button class="btn btn-danger ml-2"
                                         onclick="deleteQuery(<?php echo $query['id']; ?>)">Delete</button>
-                                </div>
-
-                        </div>
-                        <div class="col-md-3 mt-2">
-                            <button class="btn btn-primary btn-block ml-2" data-toggle="modal"
-                                data-target="#queryOptionsModal<?php echo $query['id']; ?>">Add CRON</button>
+                            <button class="btn btn-primary ml-2" data-toggle="modal"
+                                data-target="#queryOptionsModal<?php echo $query['id']; ?>"><?php echo (isset($cronJob)) ? 'Edit' : 'Add'; ?> CRON</button>
                         </div>
                     </div>
-
+                    <hr class="w-100 fade">
                     <!-- Add Query Options Modal -->
-                    <div class="modal fade" id="queryOptionsModal<?php echo $query['id']; ?>" tabindex="-1" role="dialog"
-                        aria-labelledby="queryOptionsModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="queryOptionsModal<?php echo $query['id']; ?>" tabindex="-1"
+                        role="dialog" aria-labelledby="queryOptionsModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -85,50 +74,66 @@ label.font-weight-bold {
                                     <label class="font-weight-bold mt-2" for="">
                                         Run:
                                     </label>
-                                    <select style="height: 44px" class="form-control" id="run<?php echo $query['id']; ?>">
-                                        <option value="daily">daily</option>
-                                        <option value="weekly">weekly</option>
-                                        <option value="monthly">monthly</option>
+                                    <select style="height: 44px" class="form-control"
+                                        id="run<?php echo $query['id']; ?>">
+                                        <option value="daily" <?php echo (isset($cronJob) && $cronJob['run'] == 'daily')  ? 'selected' : ''; ?>>daily</option>
+                                        <option value="weekly" <?php echo (isset($cronJob) && $cronJob['run'] == 'weekly')  ? 'selected' : ''; ?> >weekly</option>
+                                        <option value="monthly" <?php echo (isset($cronJob) && $cronJob['run'] == 'monthly')  ? 'selected' : ''; ?> >monthly</option>
                                     </select>
 
                                     <label class="font-weight-bold mt-3" for="">
                                         Seconds (0-59):
                                     </label>
-                                    <input type="text" class="form-control" name="seconds" id="seconds<?php echo $query['id']; ?>">
+                                    <input type="text" class="form-control" name="seconds"
+                                        id="seconds<?php echo $query['id']; ?>"
+                                        value="<?php echo isset($cronJob) ? $cronJob['seconds'] : ''; ?>">
 
                                     <label class="font-weight-bold mt-3" for="">
                                         Minutes (0-59):
                                     </label>
-                                    <input type="text" class="form-control" name="minutes" id="minutes<?php echo $query['id']; ?>">
+                                    <input type="text" class="form-control" name="minutes"
+                                        id="minutes<?php echo $query['id']; ?>"
+                                        value="<?php echo isset($cronJob) ? $cronJob['minutes'] : ''; ?>">
 
                                     <label class="font-weight-bold mt-3" for="">
                                         Hours (0-59):
                                     </label>
-                                    <input type="text" class="form-control" name="hours" id="hours<?php echo $query['id']; ?>">
+                                    <input type="text" class="form-control" name="hours"
+                                        id="hours<?php echo $query['id']; ?>"
+                                        value="<?php echo isset($cronJob) ? $cronJob['hours'] : ''; ?>">
 
                                     <label class="font-weight-bold mt-3" for="">
                                         Day-of-month (optional, 1-31):
                                     </label>
-                                    <input type="text" class="form-control" name="dayofmonth" id="dayofmonth<?php echo $query['id']; ?>">
+                                    <input type="text" class="form-control" name="dayofmonth"
+                                        id="dayofmonth<?php echo $query['id']; ?>"
+                                        value="<?php echo isset($cronJob) ? $cronJob['day_of_month'] : ''; ?>">
 
                                     <label class="font-weight-bold mt-3" for="">
                                         Month (1-12 or JAN-DEC):
                                     </label>
-                                    <input type="text" class="form-control" name="month" id="month<?php echo $query['id']; ?>">
+                                    <input type="text" class="form-control" name="month"
+                                        id="month<?php echo $query['id']; ?>"
+                                        value="<?php echo isset($cronJob) ? $cronJob['month'] : ''; ?>">
 
                                     <label class="font-weight-bold mt-3" for="">
                                         Day-of-week (1-7 or SUN-SAT):
                                     </label>
-                                    <input type="text" class="form-control" name="dayofweek" id="dayofweek<?php echo $query['id']; ?>">
+                                    <input type="text" class="form-control" name="dayofweek"
+                                        id="dayofweek<?php echo $query['id']; ?>"
+                                        value="<?php echo isset($cronJob) ? $cronJob['day_of_week'] : ''; ?>">
 
                                     <label class="font-weight-bold mt-3" for="">
                                         Year (optional):
                                     </label>
-                                    <input type="text" class="form-control" name="year" id="year<?php echo $query['id']; ?>">
+                                    <input type="text" class="form-control" name="year"
+                                        id="year<?php echo $query['id']; ?>"
+                                        value="<?php echo isset($cronJob) ? $cronJob['year'] : ''; ?>">
 
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" onclick="saveCRON(<?php echo $query['id']; ?>)" class="btn btn-primary" data-dismiss="modal">Save
+                                    <button type="button" onclick="saveCRON(<?php echo $query['id']; ?>)"
+                                        class="btn btn-primary" data-dismiss="modal">Save
                                         CRON</button>
                                 </div>
                             </div>
@@ -279,19 +284,19 @@ label.font-weight-bold {
 <script src="<?php echo base_url(); ?>assets/js/query-builder.standalone.js"></script>
 <script src="<?php echo base_url(); ?>assets/home/js/targetingDataTable.js"></script>
 <script>
-function saveCRON(id){
+function saveCRON(id) {
     let data = {
         query_id: id,
-        run: $('#run'+id+' option:selected').val(),
-        seconds: $('#seconds'+id).val(),
-        minutes: $('#minutes'+id).val(),
-        hours: $('#hours'+id).val(),
-        day_of_month: $('#dayofmonth'+id).val(),
-        month: $('#month'+id).val(),
-        day_of_week: $('#dayofweek'+id).val(),
-        year: $('#year'+id).val()
+        run: $('#run' + id + ' option:selected').val(),
+        seconds: $('#seconds' + id).val(),
+        minutes: $('#minutes' + id).val(),
+        hours: $('#hours' + id).val(),
+        day_of_month: $('#dayofmonth' + id).val(),
+        month: $('#month' + id).val(),
+        day_of_week: $('#dayofweek' + id).val(),
+        year: $('#year' + id).val()
     }
-    $.post(globalVariables.baseUrl+'marketing/targeting/save_cron_job', data, function(data){
+    $.post(globalVariables.baseUrl + 'marketing/targeting/save_cron_job', data, function(data) {
         console.log('success');
     });
     console.log(data);

@@ -21,6 +21,7 @@ class Targeting extends BaseControllerWeb
 		$data['title'] = 'Targeting';
 		$vendor_id = $this->vendor_id;
 		$data['queries'] = $this->targeting_model->get_queries($vendor_id);
+		$data['cronJobs'] = $this->targeting_model->getCronJobs();
 		$this->global['pageTitle'] = 'TIQS: Targeting';
 		$this->loadViews("marketing/targeting", $this->global, $data, 'footerbusiness', 'headerbusiness'); // payment screen
 

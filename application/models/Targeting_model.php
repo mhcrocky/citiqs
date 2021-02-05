@@ -129,6 +129,19 @@ WHERE vendor.id = '$vendor_id' AND tbl_shop_orders.paid = '1' AND serviceTypeId 
             return true;
         }
         return false;
+	}
+	
+	public function getCronJobs()
+    {
+        $this->db->select('*')->from('tbl_cron_jobs');
+		$query = $this->db->get();
+		$results = $query->result_array();
+		$cronJobs = [];
+		foreach($results as $result){
+			$query_id = $result['query_id'];
+			$cronJobs[$query_id] = $result;
+		}
+		return $cronJobs;
     }
 
 
