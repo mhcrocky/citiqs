@@ -162,4 +162,6 @@ span {
     border: 1px #eeeeee;
     border-radius: 10px;
     height: auto;
+    background-color: #fefefe;
+    padding-top: 10px;
 }

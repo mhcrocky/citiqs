@@ -34,7 +34,7 @@
                             unset($cronJob);
                         }
                         ?>
-                    <div style="background-color: #fff; padding-top: 10px;" class="row mx-auto query">
+                    <div class="row mx-auto query">
                         <div id="inputGroup<?php echo $query['id']; ?>" class="inputGroup col-lg-8">
                             <input id="radio<?php echo $query['id']; ?>" name="query" type="radio"
                                 value="<?php echo htmlspecialchars_decode($query['value']); ?>">
