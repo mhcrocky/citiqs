@@ -94,7 +94,7 @@ class Targeting extends BaseControllerWeb
 				//'price'=>$total_price,
 				'child'=>$val,
 				'vendor_id'=> $this->session->userdata("userId"),
-				//'paymenttype' => $val[0]['paymenttype'],
+				'paymenttype' => $val[0]['paymenttype'],
 				'user_id' => $val[0]['buyerId']
 			];
 			

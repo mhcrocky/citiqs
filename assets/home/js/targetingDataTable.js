@@ -529,6 +529,10 @@ $(document).ready( function () {
         {
           title: 'Date',
           data: 'order_date'
+        },
+        {
+          title: 'Payment Type',
+          data: 'paymenttype'
         }
         ],
       });
@@ -628,56 +632,9 @@ function format(d) {
       (day<10 ? '0' : '') + day;
 
     
-      table.on( 'search.dt', function () {
-        if(table['context'][0]['aiDisplay'].length == 0){
-          //$('#report_length').hide();
-          $("#total-percentage").hide();
-        } else {
-          //$('#report_length').show();
-        let tbl_datas = table.rows({ search: 'applied'}).data();
-        var productsVat = [];
-        var html = '';
-        $.each(tbl_datas, function( index, tbl_data ) {
-
-          $.each(tbl_data, function( index, value ) {
-            if(index != 'child'){
-            } else {
-              $.each(value, function( index, val ) {
-                let len = value.length - 1;
-                if(productsVat[String(val.productVat)] !== undefined){
-                  productsVat[String(val.productVat)][0] = parseFloat(productsVat[String(val.productVat)][0]) + parseFloat(val.EXVAT);
-                  productsVat[String(val.productVat)][1] = parseFloat(productsVat[String(val.productVat)][1]) + parseFloat(val.VAT);
-                } else {
-                  productsVat[String(val.productVat)] = [];
-                  productsVat[String(val.productVat)][0] = parseFloat(val.EXVAT);
-                  productsVat[String(val.productVat)][1] = parseFloat(val.VAT);
-                }
-                
-                
-              });
-            }
-          });
-          
-        });
-        var totalExvat = 0;
-        var totalVat = 0;
-        for (var key in productsVat) {
-
-        html += '<tr id="tr-totals">' +
-					'<td class="text-right" colspan="5"><b>Total for ' + num_percentage(key) + '</b></td>' +
-					'<td>' + productsVat[key][0].toFixed(2) + '</td>' +
-          '<td>' + productsVat[key][1].toFixed(2) + '</td>' +
-					// '<td>' + val.AMOUNT + '</td>' +
-			    '</tr>';
-          totalExvat = totalExvat + parseFloat(productsVat[key][0]);
-          totalVat = totalVat + parseFloat(productsVat[key][1]);
-        }
-        $("#total-percentage").show();
-        $("#total-percentage").empty();
-        $("#total-percentage").html(html);
-
-        }
-      });
+      //table.on( 'search.dt', function () {
+        //null
+      //});
       
 
       $.fn.dataTable.ext.search.push(
