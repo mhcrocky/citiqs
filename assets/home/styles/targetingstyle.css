@@ -16,7 +16,7 @@
 }
 
 .content {
-    padding: 0 18px;
+    
     display: none;
     overflow: hidden;
 }
@@ -31,7 +31,7 @@
 }
 
 .inputGroup label {
-    padding: 12px 30px;
+    
     width: 100%;
     display: block;
     text-align: left;
@@ -70,7 +70,7 @@
     border-radius: 50%;
     z-index: 2;
     position: absolute;
-    top: 30px;
+    top: 17px;
     transform: translateY(-50%);
     cursor: pointer;
     transition: all 200ms ease-in;
@@ -105,7 +105,7 @@
 
 .form {
     padding: 0 16px;
-    max-width: 900px;
+    width: 100%;
     margin: 50px auto;
     font-size: 18px;
     font-weight: 600;
@@ -156,4 +156,10 @@ label.font-weight-bold {
 
 span {
     margin-left: 40px;
+}
+
+.row.mx-auto.query {
+    border: 1px #eeeeee;
+    border-radius: 10px;
+    height: auto;
 }

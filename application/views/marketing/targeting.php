@@ -1,4 +1,3 @@
-
 <div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable">
     <div class="float-right text-center pl-3">
         <input style="width: 330px;" class="date form-control-sm mb-2" type="text" name="datetimes" />
@@ -35,26 +34,27 @@
                             unset($cronJob);
                         }
                         ?>
-                    <div style="background-color: #fff" class="row mx-auto align-items-center">
+                    <div style="background-color: #fff; padding-top: 10px;" class="row mx-auto query">
                         <div id="inputGroup<?php echo $query['id']; ?>" class="inputGroup col-lg-8">
                             <input id="radio<?php echo $query['id']; ?>" name="query" type="radio"
                                 value="<?php echo htmlspecialchars_decode($query['value']); ?>">
                             <label style="padding-left: 30px;padding-right: 70px;"
                                 for="radio<?php echo $query['id']; ?>"><span
                                     id="label<?php echo $query['id']; ?>"><?php echo $query['query']; ?></span>
-                                <div class="text-right p-3">
-                                    
+                                <div class="text-right">
+
                                 </div>
 
                         </div>
                         <div class="col-lg-4 mt-2">
-                        <button class="btn btn-secondary ml-2"
-                                        onclick="editModal(<?php echo $query['id']; ?>)" data-toggle="modal"
-                                        data-target="#editQueryModal<?php echo $query['id']; ?>">Edit</button>
-                                    <button class="btn btn-danger ml-2"
-                                        onclick="deleteQuery(<?php echo $query['id']; ?>)">Delete</button>
-                            <button class="btn btn-primary ml-2" data-toggle="modal"
-                                data-target="#queryOptionsModal<?php echo $query['id']; ?>"><?php echo (isset($cronJob)) ? 'Edit' : 'Add'; ?> CRON</button>
+                            <button class="btn btn-secondary ml-2 mb-1" onclick="editModal(<?php echo $query['id']; ?>)"
+                                data-toggle="modal"
+                                data-target="#editQueryModal<?php echo $query['id']; ?>">Edit</button>
+                            <button class="btn btn-danger ml-2 mb-1"
+                                onclick="deleteQuery(<?php echo $query['id']; ?>)">Delete</button>
+                            <button class="btn btn-primary ml-2 mb-1" data-toggle="modal"
+                                data-target="#queryOptionsModal<?php echo $query['id']; ?>"><?php echo (isset($cronJob)) ? 'Edit' : 'Add'; ?>
+                                CRON</button>
                         </div>
                     </div>
                     <hr class="w-100 fade">
@@ -76,9 +76,15 @@
                                     </label>
                                     <select style="height: 44px" class="form-control"
                                         id="run<?php echo $query['id']; ?>">
-                                        <option value="daily" <?php echo (isset($cronJob) && $cronJob['run'] == 'daily')  ? 'selected' : ''; ?>>daily</option>
-                                        <option value="weekly" <?php echo (isset($cronJob) && $cronJob['run'] == 'weekly')  ? 'selected' : ''; ?> >weekly</option>
-                                        <option value="monthly" <?php echo (isset($cronJob) && $cronJob['run'] == 'monthly')  ? 'selected' : ''; ?> >monthly</option>
+                                        <option value="daily"
+                                            <?php echo (isset($cronJob) && $cronJob['run'] == 'daily')  ? 'selected' : ''; ?>>
+                                            daily</option>
+                                        <option value="weekly"
+                                            <?php echo (isset($cronJob) && $cronJob['run'] == 'weekly')  ? 'selected' : ''; ?>>
+                                            weekly</option>
+                                        <option value="monthly"
+                                            <?php echo (isset($cronJob) && $cronJob['run'] == 'monthly')  ? 'selected' : ''; ?>>
+                                            monthly</option>
                                     </select>
 
                                     <label class="font-weight-bold mt-3" for="">
