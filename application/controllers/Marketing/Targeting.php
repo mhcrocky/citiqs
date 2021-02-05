@@ -115,6 +115,11 @@ class Targeting extends BaseControllerWeb
 		return $this->targeting_model->save_query($data);
 	}
 
+	public function save_cron_job(){
+		$data = $this->input->post(null,true);
+		return $this->targeting_model->saveQueryCron($data);
+	}
+
 	public function edit_query(){
 		$data = $this->input->post(null,true);
 		$id = $data['id'];

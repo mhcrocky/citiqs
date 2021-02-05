@@ -103,5 +103,33 @@ WHERE vendor.id = '$vendor_id' AND tbl_shop_orders.paid = '1' AND serviceTypeId 
 		return $this->db->delete('tbl_queries'); 
 	}
 
+	public function saveQueryCron($data)
+    {
+		$query_id = $data['query_id'];
+		$exists = $this->checkIfQueryCronExists($query_id);
+		if(!$exists){
+            $this->db->insert('tbl_cron_jobs', $data);
+        } else {
+			unset($data['query_id']);
+			$this->db->where('query_id', $query_id);
+			$this->db->update('tbl_cron_jobs', $data);
+		}
+            
+
+    }
+
+    public function checkIfQueryCronExists($query_id)
+    {
+        $this->db->select('*')
+             ->from('tbl_cron_jobs')
+             ->where('query_id', intval($query_id));
+		$query = $this->db->get();
+        $results = $query->result_array();
+        if(count($results) > 0 ){
+            return true;
+        }
+        return false;
+    }
+
 
 }
