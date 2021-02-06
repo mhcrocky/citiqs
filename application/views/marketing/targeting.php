@@ -46,7 +46,7 @@
                                 </div>
 
                         </div>
-                        <div class="col-lg-4 mt-2">
+                        <div class="col-lg-4 mt-2 text-right">
                             <button class="btn btn-secondary ml-2 mb-1" onclick="editModal(<?php echo $query['id']; ?>)"
                                 data-toggle="modal"
                                 data-target="#editQueryModal<?php echo $query['id']; ?>">Edit</button>
