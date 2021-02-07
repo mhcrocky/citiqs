@@ -79,18 +79,18 @@
                 </div>
                 <div class="modal-body">
                     <div class="w-100" id="productsRefund"></div>
-                </div>
-                <div class="row p-4 justify-content-center">
-                    <div class="col-md-3 pt-2 font-weight-bold">Amount:</div>
-                    <div class="col-md-9 input-group"><input style="max-width: 40px;" class="form-control mr-3"
-                            id="amount1" value="0"> <input style="max-width: 40px;" class="form-control" id="amount2"
-                            value="0"></div>
-                </div>
+                    <div style="flex-wrap: unset;" class="row p-4 justify-content-center">
+                        <div class="col-md-3 pt-2 font-weight-bold">Amount:</div>
+                        <div class="col-md-9 input-group">
+                            <input style="max-width: 40px;" class="form-control mr-3 ml-auto" id="amount1" value="0">
+                            <input style="max-width: 40px;" class="form-control" id="amount2" value="0">
+                        </div>
+                    </div>
 
-                <div class="row p-4 justify-content-center">
-                    <div class="col-md-3 pt-2 font-weight-bold">Description:</div>
-                    <div class="col-md-9 input-group"><input class="form-control"
-                            id="description"></div>
+                    <div class="row p-4 justify-content-center">
+                        <div class="col-md-3 pt-2 font-weight-bold">Description:</div>
+                        <div class="col-md-9 input-group"><input class="form-control" id="description"></div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-warning btn-refund">Refund</button>

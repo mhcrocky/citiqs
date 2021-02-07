@@ -767,6 +767,12 @@ function refundModal(order_id) {
   $('#description').val('tiqs - '+order_id);
   $('.productName_'+order_id).each(function(){
     let productName = $(this).text();
-    $('#productsRefund').append('<div class="font-weight-bold text-dark">'+productName+'</div>');
+    let html = '<div style="flex-wrap: unset;" class="row p-4">'+
+    '<div class="col-md-3 pt-2 font-weight-bold">'+productName+'</div>'+
+    '<div class="col-md-3 pt-2 font-weight-bold text-center">-1</div>'+
+    '<div class="col-md-6 input-group">'+
+    '<input style="max-width: 40px;" class="form-control mr-3 ml-auto amount1" value="0">'+ 
+    '<input style="max-width: 40px;" class="form-control amount2"value="0"></div></div>';
+    $('#productsRefund').append(html);
 });
 }
