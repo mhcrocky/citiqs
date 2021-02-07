@@ -528,13 +528,13 @@ function format(d) {
 				row += '<tr>' +
 					'<td class="productName_'+d.order_id+'">' + val.productName + '</td>' +
 					'<td>' + num_percentage(val.productVat) + '</td>' +
-					'<td class="productPrice_'+d.order_id+'>' + round_up(val.price) + '</td>' +
-					'<td class="productQuantity_'+d.order_id+'>' + val.quantity + '</td>' +
+					'<td class="productPrice_'+d.order_id+'">' + round_up(val.price) + '</td>' +
+					'<td class="productQuantity_'+d.order_id+'">' + val.quantity + '</td>' +
 					'<td>' + round_up(val.EXVAT) + '</td>' +
 					'<td>' + round_up(val.VAT) + '</td>' +
 					// '<td>' + val.AMOUNT + '</td>' +
-					'</tr>';
-			});
+          '</tr>';
+      });
 
       for (var key in productsVat) {
 
@@ -634,7 +634,7 @@ function format(d) {
             });
           
           });
-          console.log(productsVat);
+          //console.log(productsVat);
           
           html += '<tr>' +
           '<td class="text-right" colspan="4"><b id="daterange">'+$('#reportDateTime').val()+'</b></td>' +
