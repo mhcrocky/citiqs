@@ -1,22 +1,15 @@
     <div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable">
         <?php if ($reportPrinters) { ?>
-            <div class="float-right text-center pl-3">
-                <button
-                    class="btn btn-primary"
-                    data-timepicker-id="reportDateTime"
-                    data-report="<?php echo $xReport; ?>"
-                    onclick="sendReportPrintRequest(this)"
-                >Print x-report</button>
-                <button
-                    class="btn btn-primary"
-                    data-timepicker-id="reportDateTime"
-                    data-report="<?php echo $zReport; ?>"
-                    onclick="sendReportPrintRequest(this)"
-                >Print z-reportes</button>
-            </div>
+        <div class="float-right text-center pl-3">
+            <button class="btn btn-primary" data-timepicker-id="reportDateTime" data-report="<?php echo $xReport; ?>"
+                onclick="sendReportPrintRequest(this)">Print x-report</button>
+            <button class="btn btn-primary" data-timepicker-id="reportDateTime" data-report="<?php echo $zReport; ?>"
+                onclick="sendReportPrintRequest(this)">Print z-reportes</button>
+        </div>
         <?php } ?>
         <div class="float-right text-center pl-3">
-            <input style="width: 330px;" class="date form-control-sm mb-2" type="text" name="datetimes" id="reportDateTime"/>
+            <input style="width: 330px;" class="date form-control-sm mb-2" type="text" name="datetimes"
+                id="reportDateTime" />
             <select style="width: 264px;font-size: 14px;"
                 class="custom-select custom-select-sm form-control form-control-sm  mb-1 " id="serviceType">
                 <option value="">Choose Service Type</option>
@@ -66,9 +59,42 @@
             </div>
 
         </div>
-        <table style="display: none;" id="total-percentage" class="table table-striped table-bordered mt-3" cellspacing="0"
-            width="100%">
+        <table style="display: none;" id="total-percentage" class="table table-striped table-bordered mt-3"
+            cellspacing="0" width="100%">
 
         </table>
     </div>
-</div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="refundModal" tabindex="-1" role="dialog" aria-labelledby="refundModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="refundModalLabel">Refund Order</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="w-100" id="productsRefund"></div>
+                </div>
+                <div class="row p-4 justify-content-center">
+                    <div class="col-md-3 pt-2 font-weight-bold">Amount:</div>
+                    <div class="col-md-9 input-group"><input style="max-width: 40px;" class="form-control mr-3"
+                            id="amount1" value="0"> <input style="max-width: 40px;" class="form-control" id="amount2"
+                            value="0"></div>
+                </div>
+
+                <div class="row p-4 justify-content-center">
+                    <div class="col-md-3 pt-2 font-weight-bold">Description:</div>
+                    <div class="col-md-9 input-group"><input class="form-control"
+                            id="description"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning btn-refund">Refund</button>
+                </div>
+            </div>
+        </div>
+    </div>

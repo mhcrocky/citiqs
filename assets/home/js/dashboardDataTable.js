@@ -525,12 +525,11 @@ function format(d) {
           productsVat[String(val.productVat)][1] = parseFloat(val.VAT);
 
         }
-      
 				row += '<tr>' +
-					'<td>' + val.productName + '</td>' +
+					'<td class="productName_'+d.order_id+'">' + val.productName + '</td>' +
 					'<td>' + num_percentage(val.productVat) + '</td>' +
-					'<td>' + round_up(val.price) + '</td>' +
-					'<td>' + val.quantity + '</td>' +
+					'<td class="productPrice_'+d.order_id+'>' + round_up(val.price) + '</td>' +
+					'<td class="productQuantity_'+d.order_id+'>' + val.quantity + '</td>' +
 					'<td>' + round_up(val.EXVAT) + '</td>' +
 					'<td>' + round_up(val.VAT) + '</td>' +
 					// '<td>' + val.AMOUNT + '</td>' +
@@ -555,11 +554,9 @@ function format(d) {
 			'</tr>';
       });
       
-			if(d.export_ID==null){
-				button = '<button type="button" onclick="" class="btn btn-warning btn-refund btn-sm export-'+d.order_id+'">REFUND</button>';
-			}else{
-				button = '<button type="button" onclick="" class="btn btn-warning btn-refund btn-sm export-'+d.order_id+'">REFUND</button>';
-			}
+      button = '<button type="button" onclick="refundModal('+d.order_id+')" class="btn btn-warning btn-refund btn-sm export-'+d.order_id+'" data-toggle="modal" data-target="#refundModal">Refund</button>'
+      //button = '<button type="button" onclick="" class="btn btn-warning btn-refund btn-sm export-'+d.order_id+'">REFUND</button>';
+        
 			var child_table =
 				'<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;width:100%;background:#d0a17a91;" class="table table-bordered table-hover" >' + row +
 				'<tr><td><strong>Action</strong></td><td>'+button+'</td></tr>'
@@ -763,4 +760,13 @@ function num_format(num){
   
   var full_num = addZero(num1) + "." + num2;
   return full_num;
+}
+
+function refundModal(order_id) {
+  $('#productsRefund').empty();
+  $('#description').val('tiqs - '+order_id);
+  $('.productName_'+order_id).each(function(){
+    let productName = $(this).text();
+    $('#productsRefund').append('<div class="font-weight-bold text-dark">'+productName+'</div>');
+});
 }
