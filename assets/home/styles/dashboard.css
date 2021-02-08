@@ -108,4 +108,23 @@ svg {
 .refundTable tr th, table tr td {
 	border-top: 0px solid rgba(120, 130, 140, 0.13) !important;
 	text-align: center;
+	border: 0px;
+}
+
+input:disabled{
+    background: #fff !important;
+    opacity: 1;
+}
+
+.amount{
+	max-width: 73px;
+	width: 73px;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+.quantity{
+	max-width: 60px;
+	width: 60px;
+	padding-left: 4px;
 }

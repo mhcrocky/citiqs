@@ -83,8 +83,7 @@
                     <div style="flex-wrap: unset;" class="row p-4 justify-content-center">
                         <div class="col-md-3 pt-2 font-weight-bold">Amount:</div>
                         <div class="col-md-9 input-group">
-                            <input style="max-width: 60px;" class="form-control mr-3 ml-auto" id="amount1" value="0">
-                            <input style="max-width: 60px;" class="form-control" id="amount2" value="0">
+                            <input type="text" style="max-width: 75px;padding-left: 5px;padding-right: 5px;" class="form-control ml-auto" id="amount" value="0" disabled>
                         </div>
                     </div>
 

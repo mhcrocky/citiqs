@@ -764,32 +764,21 @@ function num_format(num){
 
 function refundModal(order_id) {
   $('#productsRefund').empty();
-  $('.amount2').each(function(){
-    $(this).val('0');
+  $('.amount').each(function(){
+    $(this).val('€0.00');
   });
-  $('#amount2').val('0');
+  $('#amount').val('€0.00');
   $('#description').val('tiqs - '+order_id);
-  let html = '<table class="refundTable text-center" style="border: 0px;width: 100% !important">'+
+  let html = '<table class="refundTable text-center w-100">'+
   '<tr><th>Name</th><th>Quantity</th><th>Price</th><th>Total</th></tr>';
   $('.productName_'+order_id).each(function(index){
     let productName = $(this).text();
     let productPrice = $(this).data('price');
     html += '<tr><th>'+productName+'</th>'+
-    '<th><input type="number" max="0" onkeyup="refundAmount(this,'+index+')" onchange="refundAmount(this,'+index+')" style="max-width: 60px;width: 60px;-moz-appearance: auto;" class="form-control ml-auto amount1 mb-2" value="-1"></th>'+
-    '<th><span id="price_'+index+'">'+productPrice+'</span></th>'+
-    '<th style="width: 100px;">'+
-    '<div style="flex-wrap: unset;" class="col-md-4 input-group">'+
-    '<input style="max-width: 60px;width: 60px;" class="form-control mr-1 ml-auto amount1_'+index+' mb-2" value="0">'+ 
-    '<input style="max-width: 60px;width: 60px;" class="form-control amount2 amount2_'+index+' mb-2" value="0"></div></th></div></tr>';
-    /*
-    let html = '<div class="row p-3">'+
-    '<div class="row col-md-8 font-weight-bold mb-2"><span class="pt-2">'+productName+'</span>'+
-    '<input type="number" max="-1" style="max-width: 65px;width: 65px;-moz-appearance: auto;" class="form-control ml-auto amount1 mb-2" value="-1"></div>'+
-    '<div style="flex-wrap: unset;" class="col-md-4 input-group">'+
-    '<input style="max-width: 40px;" class="form-control mr-3 ml-auto amount1 mb-2" value="0">'+ 
-    '<input style="max-width: 40px;" class="form-control amount2 mb-2" value="0"></div></div>';
-    $('#productsRefund').append(html);
-    */
+    '<th><input style="-moz-appearance: auto;" type="number" max="0" oninput="validateQuantity(this)" onkeyup="validateQuantity(this)" onchange="refundAmount(this,'+index+')" class="form-control ml-auto quantity mb-2" value="0"></th>'+
+    '<th class="pl-2 pr-2">€<span id="price_'+index+'">'+productPrice+'</span></th>'+
+    '<th>'+
+    '<input type="text" class="form-control amount amount_'+index+' mb-2 ml-auto mr-1" value="€0.00" disabled></th></tr>';
    });
    html += '</table>';
    $('#productsRefund').append(html);
@@ -798,12 +787,20 @@ function refundModal(order_id) {
 function refundAmount(el, index){
   let price = $('#price_'+index).text();
   let quantity = $(el).val();
-  let amount = parseFloat(price) * parseInt(quantity);
-  $('.amount2_'+index).val(amount);
+  let amount = parseFloat(price.replace('€', '')) * parseInt(quantity.replace('€', ''));
+  $('.amount_'+index).val('-€'+Math.abs(amount).toFixed(2));
   let amount2 = 0;
-  $('.amount2').each(function(){
-    let val = parseFloat($(this).val());
+  $('.amount').each(function(){
+    let val = parseFloat($(this).val().replace('€', ''));
     amount2 = amount2 + val;
   });
-  $('#amount2').val(amount2);
+  $('#amount').val('-€'+Math.abs(amount2).toFixed(2));
+}
+
+function validateQuantity(el){
+  let num = parseInt($(el).val());
+  if(num > 0){
+    $(el).val('0');
+  }
+  return ;
 }
