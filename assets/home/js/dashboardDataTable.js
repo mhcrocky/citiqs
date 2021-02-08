@@ -526,7 +526,7 @@ function format(d) {
 
         }
 				row += '<tr>' +
-					'<td class="productName_'+d.order_id+'">' + val.productName + '</td>' +
+					'<td class="productName_'+d.order_id+'" data-price="'+round_up(val.price)+'">' + val.productName + '</td>' +
 					'<td>' + num_percentage(val.productVat) + '</td>' +
 					'<td class="productPrice_'+d.order_id+'">' + round_up(val.price) + '</td>' +
 					'<td class="productQuantity_'+d.order_id+'">' + val.quantity + '</td>' +
@@ -764,9 +764,24 @@ function num_format(num){
 
 function refundModal(order_id) {
   $('#productsRefund').empty();
+  $('.amount2').each(function(){
+    $(this).val('0');
+  });
+  $('#amount2').val('0');
   $('#description').val('tiqs - '+order_id);
-  $('.productName_'+order_id).each(function(){
+  let html = '<table class="refundTable text-center" style="border: 0px;width: 100% !important">'+
+  '<tr><th>Name</th><th>Quantity</th><th>Price</th><th>Total</th></tr>';
+  $('.productName_'+order_id).each(function(index){
     let productName = $(this).text();
+    let productPrice = $(this).data('price');
+    html += '<tr><th>'+productName+'</th>'+
+    '<th><input type="number" max="0" onkeyup="refundAmount(this,'+index+')" onchange="refundAmount(this,'+index+')" style="max-width: 60px;width: 60px;-moz-appearance: auto;" class="form-control ml-auto amount1 mb-2" value="-1"></th>'+
+    '<th><span id="price_'+index+'">'+productPrice+'</span></th>'+
+    '<th style="width: 100px;">'+
+    '<div style="flex-wrap: unset;" class="col-md-4 input-group">'+
+    '<input style="max-width: 60px;width: 60px;" class="form-control mr-1 ml-auto amount1_'+index+' mb-2" value="0">'+ 
+    '<input style="max-width: 60px;width: 60px;" class="form-control amount2 amount2_'+index+' mb-2" value="0"></div></th></div></tr>';
+    /*
     let html = '<div class="row p-3">'+
     '<div class="row col-md-8 font-weight-bold mb-2"><span class="pt-2">'+productName+'</span>'+
     '<input type="number" max="-1" style="max-width: 65px;width: 65px;-moz-appearance: auto;" class="form-control ml-auto amount1 mb-2" value="-1"></div>'+
@@ -774,5 +789,21 @@ function refundModal(order_id) {
     '<input style="max-width: 40px;" class="form-control mr-3 ml-auto amount1 mb-2" value="0">'+ 
     '<input style="max-width: 40px;" class="form-control amount2 mb-2" value="0"></div></div>';
     $('#productsRefund').append(html);
-});
+    */
+   });
+   html += '</table>';
+   $('#productsRefund').append(html);
+}
+
+function refundAmount(el, index){
+  let price = $('#price_'+index).text();
+  let quantity = $(el).val();
+  let amount = parseFloat(price) * parseInt(quantity);
+  $('.amount2_'+index).val(amount);
+  let amount2 = 0;
+  $('.amount2').each(function(){
+    let val = parseFloat($(this).val());
+    amount2 = amount2 + val;
+  });
+  $('#amount2').val(amount2);
 }

@@ -104,3 +104,8 @@ svg {
 	overflow-y:scroll;
 	max-height: 500px;
 }
+
+.refundTable tr th, table tr td {
+	border-top: 0px solid rgba(120, 130, 140, 0.13) !important;
+	text-align: center;
+}

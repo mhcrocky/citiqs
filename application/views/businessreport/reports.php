@@ -78,13 +78,13 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="w-100" id="productsRefund"></div>
+                <div style="padding: 0px; padding-top: 1rem;" class="modal-body">
+                    <div class="w-100 table-responsive" id="productsRefund"></div>
                     <div style="flex-wrap: unset;" class="row p-4 justify-content-center">
                         <div class="col-md-3 pt-2 font-weight-bold">Amount:</div>
                         <div class="col-md-9 input-group">
-                            <input style="max-width: 40px;" class="form-control mr-3 ml-auto" id="amount1" value="0">
-                            <input style="max-width: 40px;" class="form-control" id="amount2" value="0">
+                            <input style="max-width: 60px;" class="form-control mr-3 ml-auto" id="amount1" value="0">
+                            <input style="max-width: 60px;" class="form-control" id="amount2" value="0">
                         </div>
                     </div>
 
