@@ -288,6 +288,7 @@ $route['updateOrderEx']         = 'Api/Orders/updateTwoToZero';
 $route['api/voucher']  = 'Api/Voucher/data';
 
 $route['api/onesignal/data']  = 'Api/OneSignal/data';
+$route['api/spotmobile/spotinsert']  = 'Api/SpotMobile/spotinsert';
 
 $route['api/clean_printer_requests']  = 'Api/Cronjobs/cleanPrinterRequests';
 $route['api/report']  = 'Api/Reports/report';

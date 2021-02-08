@@ -92,5 +92,71 @@
 
         return;
         }
+
+		public function playerinsert_post(): void
+		{
+
+			$header = getallheaders();
+			$key = $header['X-Api-Key'];
+
+			if ($this->api_model->userAuthentication($key)) {
+
+				$api = $this->input->post(null, true);
+//				$onesignalid= $this->user_model->checkOneSignalId($api['oneSignalId']);
+//				$onoff=$this->user_model->checkOneSignalId($api['onoff']);
+				$onesignalid= $api['oneSignalId'];
+				$onoffon=$api['onoff'];
+
+
+				if ($onoffon==0) {
+					echo json_encode([
+						'status' => '0',
+						'message' => 'Messaging off',
+						'onesignalid' => $onesignalid,
+						'onoff' => $onoffon,
+					]);
+					return;
+				}
+
+				if ($onoffon==1) {
+					echo json_encode([
+						'status' => '0',
+						'message' => 'Messaging on',
+						'onesignalid' => $onesignalid,
+						'onoff' => $onoffon,
+					]);
+					return;
+				}
+
+				// find playerid
+				// delete playerid
+
+				//
+
+//				$this->user_model->manageAndSetUserOneSignal($user);
+//
+//				if ($this->user_model->id) {
+//					$message = isset($this->user_model->created) ? 'User created' : 'User updated';
+//					echo json_encode([
+//						'status' => '1',
+//						'message' => $message,
+//						'userId' => $this->user_model->id
+//					]);
+//					return;
+//				}
+//				echo json_encode([
+//					'status' => '0',
+//					'message' => 'Action failed',
+//				]);
+				return;
+			}
+
+			echo json_encode([
+				'status' => '0',
+				'message' => 'Not allowed'
+			]);
+
+			return;
+		}
     }
 

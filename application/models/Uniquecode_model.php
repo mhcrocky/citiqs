@@ -82,4 +82,18 @@
 			} while (!$this->insert($data));
 			return $data['code'];
 		}
+
+		public function tablesticker()
+		{
+			$data = [];
+			do {
+				$set = '3456789BCDEFGHJKLMNPQRSTVWXY';
+				$data = [
+					'timestamp' => date('Y-m-d H:i:s'),
+					'code' => 'TABLE-' . substr(str_shuffle($set), 0, 8),
+				];
+			} while (!$this->insert($data));
+			return $data['code'];
+		}
+
     }
