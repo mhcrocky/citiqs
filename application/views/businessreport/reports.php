@@ -1,3 +1,4 @@
+
     <div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable">
         <?php if ($reportPrinters) { ?>
         <div class="float-right text-center pl-3">

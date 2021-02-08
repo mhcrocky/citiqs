@@ -98,3 +98,9 @@ svg {
   text{
 	cursor: pointer;
   }
+
+  .modal-body{
+	overflow:hidden;
+	overflow-y:scroll;
+	max-height: 500px;
+}
