@@ -767,13 +767,12 @@ function refundModal(order_id) {
   $('#description').val('tiqs - '+order_id);
   $('.productName_'+order_id).each(function(){
     let productName = $(this).text();
-    let html = '<div style="flex-wrap: unset;" class="row p-2">'+
-    '<div class="col-md-4 pt-2 font-weight-bold">'+productName+'</div>'+
-    '<div class="col-md-2 font-weight-bold text-right">'+
-    '<input type="number" style="max-width: 65px;width: 65px;-moz-appearance: auto;" class="form-control mr-auto amount1" value="-1"></div>'+
-    '<div style="flex-wrap: unset;" class="col-md-6 input-group">'+
-    '<input style="max-width: 40px;" class="form-control mr-3 ml-auto amount1" value="0">'+ 
-    '<input style="max-width: 40px;" class="form-control amount2" value="0"></div></div>';
+    let html = '<div class="row p-3">'+
+    '<div class="row col-md-8 font-weight-bold mb-2"><span class="pt-2">'+productName+'</span>'+
+    '<input type="number" max="-1" style="max-width: 65px;width: 65px;-moz-appearance: auto;" class="form-control ml-auto amount1 mb-2" value="-1"></div>'+
+    '<div style="flex-wrap: unset;" class="col-md-4 input-group">'+
+    '<input style="max-width: 40px;" class="form-control mr-3 ml-auto amount1 mb-2" value="0">'+ 
+    '<input style="max-width: 40px;" class="form-control amount2 mb-2" value="0"></div></div>';
     $('#productsRefund').append(html);
 });
 }
