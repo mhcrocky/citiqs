@@ -289,6 +289,7 @@ $route['api/voucher']  = 'Api/Voucher/data';
 
 $route['api/onesignal/data']  = 'Api/OneSignal/data';
 $route['api/spotmobile/spotinsert']  = 'Api/SpotMobile/spotinsert';
+$route['api/products/upload']  = 'Api/Products/upload';
 
 $route['api/clean_printer_requests']  = 'Api/Cronjobs/cleanPrinterRequests';
 $route['api/report']  = 'Api/Reports/report';
