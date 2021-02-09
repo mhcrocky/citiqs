@@ -526,10 +526,10 @@ function format(d) {
 
         }
 				row += '<tr>' +
-					'<td class="productName_'+d.order_id+'" data-price="'+round_up(val.price)+'">' + val.productName + '</td>' +
+					'<td class="productName_'+d.order_id+'" data-price="'+round_up(val.price)+'" data-quantity="'+val.quantity+'">' + val.productName + '</td>' +
 					'<td>' + num_percentage(val.productVat) + '</td>' +
-					'<td class="productPrice_'+d.order_id+'">' + round_up(val.price) + '</td>' +
-					'<td class="productQuantity_'+d.order_id+'">' + val.quantity + '</td>' +
+					'<td>' + round_up(val.price) + '</td>' +
+					'<td>' + val.quantity + '</td>' +
 					'<td>' + round_up(val.EXVAT) + '</td>' +
 					'<td>' + round_up(val.VAT) + '</td>' +
 					// '<td>' + val.AMOUNT + '</td>' +
@@ -770,12 +770,14 @@ function refundModal(order_id) {
   $('#amount').val('€0.00');
   $('#description').val('tiqs - '+order_id);
   let html = '<table class="refundTable text-center w-100">'+
-  '<tr><th>Name</th><th>Quantity</th><th>Price</th><th>Total</th></tr>';
+  '<tr><th>Quantity</th><th>Name</th><th>Quantity</th><th>Price</th><th>Total</th></tr>';
   $('.productName_'+order_id).each(function(index){
     let productName = $(this).text();
     let productPrice = $(this).data('price');
-    html += '<tr><th>'+productName+'</th>'+
-    '<th><input style="-moz-appearance: auto;" type="number" max="0" oninput="validateQuantity(this)" onkeyup="validateQuantity(this)" onchange="refundAmount(this,'+index+')" class="form-control ml-auto quantity mb-2" value="0"></th>'+
+    let productQuantity = $(this).data('quantity');
+    html += '<tr><th>'+productQuantity+'</th>'+
+    '<th>'+productName+'</th>'+
+    '<th><input style="-moz-appearance: auto;" type="number" max="0" min="-'+productQuantity+'" oninput="validateQuantity(this,'+productQuantity+')" onkeyup="validateQuantity(this)" onchange="refundAmount(this,'+index+')" class="form-control ml-auto quantity mb-2" value="0"></th>'+
     '<th class="pl-2 pr-2">€<span id="price_'+index+'">'+productPrice+'</span></th>'+
     '<th>'+
     '<input type="text" class="form-control amount amount_'+index+' mb-2 ml-auto mr-1" value="€0.00" disabled></th></tr>';
@@ -797,10 +799,14 @@ function refundAmount(el, index){
   $('#amount').val('-€'+Math.abs(amount2).toFixed(2));
 }
 
-function validateQuantity(el){
+function validateQuantity(el, quantity){
   let num = parseInt($(el).val());
+  quantity = -parseInt(quantity);
   if(num > 0){
     $(el).val('0');
+  }
+  if(quantity > num){
+    $(el).val(quantity);
   }
   return ;
 }

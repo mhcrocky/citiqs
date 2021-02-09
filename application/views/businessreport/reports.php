@@ -71,7 +71,7 @@
     <div class="modal fade" id="refundModal" tabindex="-1" role="dialog" aria-labelledby="refundModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div style="padding: 25px 10px;" class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="refundModalLabel">Refund Order</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -80,16 +80,16 @@
                 </div>
                 <div style="padding: 0px; padding-top: 1rem;" class="modal-body">
                     <div class="w-100 table-responsive" id="productsRefund"></div>
-                    <div style="flex-wrap: unset;" class="row p-4 justify-content-center">
+                    <div style="flex-wrap: unset;" class="row pl-4 pr-1 pt-4">
                         <div class="col-md-3 pt-2 font-weight-bold">Amount:</div>
-                        <div class="col-md-9 input-group">
+                        <div class="col-md-9">
                             <input type="text" style="max-width: 75px;padding-left: 5px;padding-right: 5px;" class="form-control ml-auto" id="amount" value="0" disabled>
                         </div>
                     </div>
 
-                    <div class="row p-4 justify-content-center">
-                        <div class="col-md-3 pt-2 font-weight-bold">Description:</div>
-                        <div class="col-md-9 input-group"><input class="form-control" id="description"></div>
+                    <div style="flex-wrap: unset;" class="row pl-4 pr-1 pt-4 pb-4">
+                        <div class="col-md-4 pt-2 font-weight-bold">Description:</div>
+                        <div class="col-md-8 input-group"><input type="text" class="form-control" id="description" disabled></div>
                     </div>
                 </div>
                 <div class="modal-footer">
