@@ -153,7 +153,8 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="editQueryModal<?php echo $query['id']; ?>Label">Edit
                                         query</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <button type="button" class="close" id="closeEditQueryModal" data-dismiss="modal"
+                                        aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
@@ -161,8 +162,11 @@
                                     <label class="form-check-label" for="">
                                         Query:
                                     </label>
-                                    <textarea class="form-control" id="query-text<?php echo $query['id']; ?>"
-                                        placeholder="Add query description..."><?php echo $query['query']; ?></textarea>
+                                    <textarea class="form-control query-text" id="query-text<?php echo $query['id']; ?>"
+                                        placeholder="Add query description..." minlength="3"
+                                        required="required"><?php echo $query['query']; ?></textarea>
+                                    <div style="margin-top: 10px;" class="w-100 query-error"
+                                        id="query-text-error-<?php echo $query['id']; ?>"></div>
                                     <main class="query-main" class="p-3 mt-5 pt-4" role="main">
 
                                         <div class="mt-5" id="query<?php echo $query['id']; ?>"></div>
@@ -170,8 +174,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary"
-                                        onclick="editQuery(<?php echo $query['id']; ?>)"
-                                        data-dismiss="modal">Save</button>
+                                        onclick="editQuery(<?php echo $query['id']; ?>)">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -258,7 +261,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="queryModalLabel">Set a query</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" id="closeQueryModal" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -266,45 +269,32 @@
                 <label class="form-check-label" for="">
                     Query:
                 </label>
-                <textarea class="form-control" id="query-text" placeholder="Add query description..."></textarea>
+                <textarea class="form-control query-text" id="query-text" minlength="3"
+                    placeholder="Add query description..." required="required"></textarea>
+                <div style="margin-top: 10px;" class="w-100 query-error" id="query-text-error"></div>
                 <main class="query-main" class="p-3 mt-5 pt-4" role="main">
 
                     <div class="mt-5" id="query"></div>
                 </main>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="saveQuery()" data-dismiss="modal">Save</button>
+                <div style="margin-top: 10px;" class="w-100" id="empty-query"></div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="saveQuery()">Save</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.table2excel.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/query-builder.standalone.js"></script>
-<script src="<?php echo base_url(); ?>assets/home/js/targetingDataTable.js"></script>
-<script>
-function saveCRON(id) {
-    let data = {
-        query_id: id,
-        run: $('#run' + id + ' option:selected').val(),
-        seconds: $('#seconds' + id).val(),
-        minutes: $('#minutes' + id).val(),
-        hours: $('#hours' + id).val(),
-        day_of_month: $('#dayofmonth' + id).val(),
-        month: $('#month' + id).val(),
-        day_of_week: $('#dayofweek' + id).val(),
-        year: $('#year' + id).val()
-    }
-    $.post(globalVariables.baseUrl + 'marketing/targeting/save_cron_job', data, function(data) {
-        console.log('success');
-    });
-    console.log(data);
-}
-</script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js">
+    </script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js">
+    </script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js">
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.table2excel.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/query-builder.standalone.js"></script>
+    <script src="<?php echo base_url(); ?>assets/home/js/targetingDataTable.js"></script>

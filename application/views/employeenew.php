@@ -24,10 +24,10 @@
                                 <label for="email">Email</label>
                                 <input type="text" class="form-control" id="email" name="email" required />
                             </div>
-							<div>
-								<label for="password">Password</label>
-								<input type="text" class="form-control" id="password" name="password" required />
-							</div>
+                            <div>
+                                <label for="password">Password</label>
+                                <input type="text" class="form-control" id="password" name="password" required />
+                            </div>
                             <div>
                                 <label for="expiration_time_value">Expiration time value</label>
                                 <input type="number" step="1" min="1" class="form-control" id="expiration_time_value"
@@ -188,12 +188,12 @@
                                                     id="email<?php echo $employee->id; ?>" name="email" required
                                                     value="<?php echo $employee->email; ?>" />
                                             </div>
-											<div>
-												<label for="username<?php echo $employee->id; ?>">Password</label>
-												<input type="text" class="form-control"
-													   id="password<?php echo $employee->id; ?>" name="password" required
-													   value="<?php echo $employee->password; ?>" />
-											</div>
+                                            <div>
+                                                <label for="username<?php echo $employee->id; ?>">Password</label>
+                                                <input type="text" class="form-control"
+                                                    id="password<?php echo $employee->id; ?>" name="password" required
+                                                    value="<?php echo $employee->password; ?>" />
+                                            </div>
                                             <div>
                                                 <label for="validitytime<?php echo $employee->id; ?>">Validity
                                                     time</label>
@@ -278,7 +278,7 @@
                                 </button>
                             </div>
                             <div class="row w-100 modal-body mx-auto">
-                                <div style="width: 46%" >
+                                <div style="width: 46%">
                                     <div class="w-100 title vertical-center">All menu options</div>
 
                                     <ul id="allMenuItems<?php echo $employee->id; ?>" class="connectedSortable">
@@ -346,23 +346,24 @@ function editMenuOptions(employeeId) {
 }
 
 function savePosition(id) {
+    var menuOptionsId = [];
     if ($('#selectedMenuItems' + id + ' li').length > 0) {
-        var menuOptionsId = [];
         var i = 0;
         $('#selectedMenuItems' + id + ' li:not(.title)').each(function(index) {
             menuOptionsId[i++] = $(this).data('embellishmentid');
         });
-        $.post(globalVariables.baseUrl + 'employee/save_menu_options', {
-            menuOptionsId: JSON.stringify(menuOptionsId),
-            userId: id
-        }, function(data) {
-            if (data) {
-                alertify.success('Menu options saved successfully!');
-            } else {
-                alertify.error('Something went wrong!');
-            }
 
-        });
-    };
+    }
+    $.post(globalVariables.baseUrl + 'employee/save_menu_options', {
+        menuOptionsId: JSON.stringify(menuOptionsId),
+        userId: id
+    }, function(data) {
+        if (data) {
+            alertify.success('Menu options saved successfully!');
+        } else {
+            alertify.error('Something went wrong!');
+        }
+
+    });
 }
 </script>

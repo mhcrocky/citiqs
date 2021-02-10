@@ -128,3 +128,7 @@ input:disabled{
 	width: 60px;
 	padding-left: 4px;
 }
+
+.border-danger{
+	border: 1px solid #df4759;
+}
