@@ -114,6 +114,7 @@ function posPayment(element) {
 
     if (!orderedProductsLength) {
         alertify.error('No product(s) in order list');
+        element.setAttribute('data-locked', '0');
         return;
     }
 
@@ -316,6 +317,40 @@ function removeSavedOrder(orderRandomKey) {
     document.getElementById('saveHoldOrder').innerHTML = 'Save order'
 }
 
+function showLoginModal() {
+    $('#posLoginModal').modal('show');
+}
+
+function posLogin(form) {
+    let url = globalVariables.ajax + 'posLogin';
+    sendFormAjaxRequest(form, url, 'posLogin', posLoginResponse)
+    return false;
+}
+
+function posLoginResponse(response) {
+    if (response['status'] === '0') {
+        return;
+    } else {
+        posGlobals['unlock'] = true;
+        $('#posLoginModal').modal('hide');
+    }
+}
+
+function lockPos() {
+    let url = globalVariables.ajax + 'lockPos';
+    sendUrlRequest(url, 'lockPos', lockPosRespone);
+}
+
+function lockPosRespone(response) {
+    if (response['status'] === '1') {
+        posGlobals['unlock'] = false;
+        showLoginModal();
+    } else {
+        alertify.error('Pos not locked!');
+    }
+
+}
+
 $(document).ready(function(){
     if (typeof makeOrderGlobals === 'undefined') return;
     let sumbitFormButton = document.getElementById(makeOrderGlobals.checkoutContinueButton);
@@ -327,3 +362,10 @@ $(document).ready(function(){
 
 resetTotal();
 countOrdered('countOrdered');
+
+if (!posGlobals['unlock']) {
+    showLoginModal();
+    window.onclick = function(e) {    
+        showLoginModal();
+    }
+}
