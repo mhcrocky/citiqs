@@ -304,6 +304,7 @@
 				'serviceFeePercent' : serviceFeePercent,
 				'serviceFeeAmount' : serviceFeeAmount,
 				'minimumOrderFee' : minimumOrderFee,
+				'counter' : 0,
 			}
 			<?php if (!empty($vendor['oneSignalId'])) { ?>
 				globals['venodrOneSignalId'] = '<?php echo $vendor['oneSignalId']; ?>';

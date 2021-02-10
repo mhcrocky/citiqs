@@ -318,7 +318,9 @@ function removeSavedOrder(orderRandomKey) {
 }
 
 function showLoginModal() {
-    $('#posLoginModal').modal('show');
+    if (!posGlobals['unlock']) {
+        $('#posLoginModal').modal('show');
+    }
 }
 
 function posLogin(form) {
@@ -333,6 +335,7 @@ function posLoginResponse(response) {
     } else {
         posGlobals['unlock'] = true;
         $('#posLoginModal').modal('hide');
+        posGlobals['checkActivityId'] = checkActivity();
     }
 }
 
@@ -345,10 +348,34 @@ function lockPosRespone(response) {
     if (response['status'] === '1') {
         posGlobals['unlock'] = false;
         showLoginModal();
+        clearActivtiyInterval();
     } else {
         alertify.error('Pos not locked!');
     }
+}
 
+function resetCounter() {
+    if (posGlobals['unlock']) {
+        posGlobals['counter'] = 0;
+        clearInterval(posGlobals['checkActivityId']);
+        posGlobals['checkActivityId'] = checkActivity();
+    }
+}
+
+function checkActivity() {
+    return setInterval( function() {
+        if (posGlobals['unlock']) {
+            posGlobals['counter'] = posGlobals['counter'] + 10;
+            if (!(posGlobals['counter'] % 30)) {
+                lockPos();
+            }
+        }
+    }, 10000);
+}
+
+function clearActivtiyInterval() {
+    posGlobals['counter'] = 0;
+    clearInterval(posGlobals['checkActivityId']);
 }
 
 $(document).ready(function(){
@@ -359,13 +386,17 @@ $(document).ready(function(){
     }
 });
 
-
 resetTotal();
 countOrdered('countOrdered');
+showLoginModal();
 
-if (!posGlobals['unlock']) {
+posGlobals['checkActivityId'] = checkActivity();
+
+window.onclick = function(e) {    
     showLoginModal();
-    window.onclick = function(e) {    
-        showLoginModal();
-    }
+    resetCounter();
+}
+
+window.onmousemove = function(e) {
+    resetCounter();
 }
