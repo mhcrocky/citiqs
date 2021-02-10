@@ -768,6 +768,7 @@ function refundModal(order_id, total_amount) {
     $(this).val('€0.00');
   });
   $('#amount').val('€0.00');
+  $('#order_amount').empty();
   $('#description').val('tiqs - '+order_id);
   let html = '<input type="hidden" id="total_amount" name="total_amount" value="'+total_amount+'">'+
   '<table class="refundTable text-center w-100">'+
@@ -784,6 +785,7 @@ function refundModal(order_id, total_amount) {
     '<input type="text" class="form-control amount amount_'+index+' mb-2 ml-auto mr-1" value="€0.00" disabled></th></tr>';
    });
    html += '</table>';
+   $('#order_amount').text(parseFloat(total_amount).toFixed(2));
    $('#freeamount').attr('min', '-'+total_amount);
    $('#amount_limit').val(total_amount);
    $('#productsRefund').append(html);
