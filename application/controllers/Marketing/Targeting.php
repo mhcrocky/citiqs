@@ -30,8 +30,8 @@ class Targeting extends BaseControllerWeb
 	public function get_report(){
 		ini_set('memory_limit','1024M');
 		$vendor_id = $this->vendor_id;//418
-		$sql1 = ($this->input->post('sql1') == 'AND ()') ? "" : $this->input->post('sql1');
-		$sql2 = ($this->input->post('sql2') == 'undefined') ? "" : $this->input->post('sql2');
+		$sql1 = ($this->input->post('sql1') == 'AND%20()') ? "" : rawurldecode($this->input->post('sql1'));
+		$sql2 = ($this->input->post('sql2') == 'undefined') ? "" : rawurldecode($this->input->post('sql2'));
 		$pickup = $this->targeting_model->get_pickup_report($vendor_id, $sql1, $sql2);
 		$delivery = $this->targeting_model->get_delivery_report($vendor_id, $sql1, $sql2);
 		$local = $this->targeting_model->get_local_report($vendor_id, $sql1, $sql2);

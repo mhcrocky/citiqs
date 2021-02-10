@@ -1,4 +1,9 @@
 $(document).ready( function () {
+  $('.query-text').on('keyup', function(){
+    $('.query-error').empty();
+    $('.query-text').removeClass('border-danger');
+    $('.query-error').removeClass('alert').removeClass('alert-danger');
+  });
   //Collapse of Saved Query
   var coll = document.getElementsByClassName("collapsible");
   var i;
@@ -311,11 +316,11 @@ $(document).ready( function () {
             var sql2 = $("input[name='query']:checked").val();
             if(query == ""){
               data.sql1 = "";
-              data.sql1 = sql1;
-              data.sql2 = sql2;
+              data.sql1 = encodeURI(sql1);
+              data.sql2 = encodeURI(sql2);
             } else {
-              data.sql1 = sql1;
-              data.sql2 = sql2;
+              data.sql1 = encodeURI(sql1);
+              data.sql2 = encodeURI(sql2);
             }
             $('.has-error').removeClass('has-error');
           },
@@ -762,7 +767,14 @@ function editModal(id) {
 
 function editQuery(id) {
   var query_text = $("#query-text" + id).val();
-  var query = $('#query').queryBuilder('getSQL', false, true).sql;
+
+  if(query_text.length < 3){
+    $("#query-text" + id).addClass('border-danger');
+    $('#query-text-error-'+id).addClass('alert').addClass('alert-danger');
+    $("#query-text-error-"+id).text('The description cannot be shorter than 3 characters!');
+    return false;
+  }
+  var query = $('#query'+id).queryBuilder('getSQL', false, true).sql;
   var sql;
   var data;
   if (query == "") {
@@ -785,16 +797,28 @@ function editQuery(id) {
       url: globalVariables.baseUrl + 'marketing/targeting/edit_query',
       data: data,
       success: function() {
+        $('#closeEditQueryModal').click();
         $("#label"+id).text(query_text);
       }
   });
+
+  $('#closeEditQueryModal').click();
 
 }
 
 function saveQuery() {
   var query_text = $("#query-text").val();
+  if(query_text.length < 3){
+    $('#query-text').addClass('border-danger');
+    $('#query-text-error').addClass('alert').addClass('alert-danger');
+    $('#query-text-error').text('The description cannot be shorter than 3 characters!');
+    return false;
+  }
   var query = $('#query').queryBuilder('getSQL', false, true).sql;
-  sql = query.replace(/\n/g, " ");
+  var sql = query.replace(/\n/g, " ");
+  if(sql.length < 3){
+    return false;
+  }
   sql = "AND (" + sql + ")";
   var data = {
       query: query_text,
@@ -805,9 +829,12 @@ function saveQuery() {
       url: globalVariables.baseUrl + 'marketing/targeting/save_query',
       data: data,
       success: function() {
+          $('#closeQueryModal').click();
           location.reload();
       }
   });
+
+  $('#closeQueryModal').click();
 
 }
 
@@ -826,6 +853,24 @@ function deleteQuery(id) {
       });
       //location.reload();
   }
+}
+
+function saveCRON(id) {
+  let data = {
+      query_id: id,
+      run: $('#run' + id + ' option:selected').val(),
+      seconds: $('#seconds' + id).val(),
+      minutes: $('#minutes' + id).val(),
+      hours: $('#hours' + id).val(),
+      day_of_month: $('#dayofmonth' + id).val(),
+      month: $('#month' + id).val(),
+      day_of_week: $('#dayofweek' + id).val(),
+      year: $('#year' + id).val()
+  }
+  $.post(globalVariables.baseUrl + 'marketing/targeting/save_cron_job', data, function(data) {
+      console.log('success');
+  });
+  console.log(data);
 }
 
 function num_format(num){
