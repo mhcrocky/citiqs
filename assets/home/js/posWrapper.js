@@ -325,14 +325,15 @@ function showLoginModal() {
 
 function posLogin(form) {
     let url = globalVariables.ajax + 'posLogin';
-    sendFormAjaxRequest(form, url, 'posLogin', posLoginResponse)
+    sendFormAjaxRequest(form, url, 'posLogin', posLoginResponse, [form])
     return false;
 }
 
-function posLoginResponse(response) {
+function posLoginResponse(form, response) {
     if (response['status'] === '0') {
         return;
     } else {
+        form.reset();
         posGlobals['unlock'] = true;
         $('#posLoginModal').modal('hide');
         posGlobals['checkActivityId'] = checkActivity();
