@@ -133,9 +133,12 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
 
     public function getMenuOptions()
     {
-        $this->db->select('*');
-        $this->db->from('tbl_menu_options');
-        $query = $this->db->get();
+
+        $query = $this->db->query("SELECT * FROM tbl_menu_options
+        ORDER BY SUBSTRING_INDEX(SUBSTRING_INDEX(CONCAT(hierarchyNumber, '.'), '.', 1), '.', -1) + 0
+        , SUBSTRING_INDEX(SUBSTRING_INDEX(CONCAT(hierarchyNumber, '.'), '.', 2), '.', -1) + 0
+        , SUBSTRING_INDEX(SUBSTRING_INDEX(CONCAT(hierarchyNumber, '.'), '.', 3), '.', -1) + 0
+        , SUBSTRING_INDEX(SUBSTRING_INDEX(CONCAT(hierarchyNumber, '.'), '.', 4), '.', -1) + 0");
         return $query->result_array();
     }
 
