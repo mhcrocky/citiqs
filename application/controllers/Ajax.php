@@ -34,6 +34,7 @@ class Ajax extends CI_Controller
         $this->load->model('shopprinterrequest_model');
         $this->load->model('api_model');
         $this->load->model('employee_model');
+        $this->load->model('shopposlogin_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -1805,8 +1806,9 @@ class Ajax extends CI_Controller
                     ->loginEmployee();
 
         if ($employeeId) {
-            $_SESSION['unlockPos'] = $employeeId;
-            $response['status'] = '1';
+            $this->shopposlogin_model->login($employeeId);
+            $_SESSION['unlockPos'] = $this->shopposlogin_model->id;
+            $response['status'] = ($_SESSION['unlockPos']) ? '1' : '0';
         } else {
             $response['status'] = '0';
         }
@@ -1818,9 +1820,15 @@ class Ajax extends CI_Controller
     public function lockPos(): void
     {
         if (!$this->input->is_ajax_request()) return;
-        unset($_SESSION['unlockPos']);
+
+        $logout = $this->shopposlogin_model->setObjectId($_SESSION['unlockPos'])->logout();
+
+        if ($logout) unset($_SESSION['unlockPos']);
+
         $response['status'] = isset($_SESSION['unlockPos']) ? '0' : '1';
+
         echo json_encode($response);
+
         return;
     }
 }
