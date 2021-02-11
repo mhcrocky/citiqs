@@ -283,7 +283,15 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<input type="password" class="form-control" name="password" id="employeePassword" />
+							<input
+								type="password"
+								name="password"
+								id="employeePassword"
+								class="posKeyboard form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview"
+								role="textbox"
+								tabindex='-1'
+								autocomplete="off"
+							/>
 						</div>
 					</div>
 					<div class="modal-footer">
