@@ -277,3 +277,7 @@ $config['api_printer'] = 'API PRINTER';
 $config['api_spot_delivery'] = 'API SPOT DELIVERY';
 $config['api_spot_pickup'] = 'API SPOT PICKUP';
 $config['api_side_dishes_product_type'] = 'API SIDE DISHES';
+
+
+// MENU OPTION ID
+$config['posMenuOptionId'] = 25;

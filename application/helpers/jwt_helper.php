@@ -85,4 +85,19 @@
 
             return $orderData;
         }
+
+        public static function fetchPos(string $orderDataRandomKey, int $vendorId, int $spotId, array $conditions): ?array
+        {
+            if (empty($orderDataRandomKey)) return null;
+
+            $CI =& get_instance();
+            $CI->load->model('shopsession_model');
+            $orderData = $CI->shopsession_model->setProperty('randomKey', $orderDataRandomKey)->getArrayPosOrderDetails();
+
+            Jwt_helper::checkJwtArray($orderData, $conditions);
+
+            if ($orderData['vendorId'] !== $vendorId || $orderData['spotId'] !== $spotId) redirect(base_url());
+
+            return $orderData;
+        }
     }

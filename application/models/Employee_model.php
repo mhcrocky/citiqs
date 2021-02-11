@@ -318,4 +318,41 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
 
         return $result;
     }
+
+    public function loginEmployee(): ?int
+    {
+        $id = $this->readImproved([
+            'what' => [$this->table . '.id'],
+            'where' => [
+                $this->table . '.ownerId' => $this->ownerId,
+                $this->table . '.password' => $this->password,
+                $this->table . '.email' => $this->email,
+            ]
+        ]);
+
+        if (is_null($id)) return $id;
+
+        $id = reset($id);
+        $id = intval($id['id']);
+
+        return $id;
+    }
+
+    public function getMenuOptionEmployees(int $menuOptionId): ?array
+    {
+        return $this->readImproved([
+            'what' => ['DISTINCT(' . $this->table . '.email) employeeEmail'],
+            'where' => [
+                $this->table . '.ownerId' => $this->ownerId,
+                'tbl_user_allowed.menuOptionId' => $menuOptionId,
+                $this->table . '.expiration_time > ' => time()
+            ],
+            'joins' => [
+                ['tbl_user_allowed', 'tbl_user_allowed.vendorId = '. $this->table . '.ownerId', 'INNER']
+            ],
+            'conditstion' => [
+                'ORDER_BY' => [$this->table . '.email', 'ASC']
+            ]
+        ]);
+    }
 }

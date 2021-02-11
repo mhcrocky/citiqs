@@ -153,6 +153,14 @@
 						<div class="pos_categories__footer">
 							<a
 								href="javascript:void(0)"
+								class='pos_categories__button pos_categories__button--third'
+								onclick="lockPos()"
+								style="float:left"
+							>
+								Pos logout
+							</a>
+							<a
+								href="javascript:void(0)"
 								class='pos_categories__button pos_categories__button--primary'
 								onclick="printReportes('<?php echo $vendor['vendorId']; ?>', '<?php echo $xReport; ?>')"
 							>
@@ -201,12 +209,14 @@
 					<input
 						type="text"
 						id="posOrderName"
-						class="form-control payOrderInputFields"
 						<?php if (!empty($posOrderName)) { ?>
 						value="<?php echo $posOrderName; ?>"
 						<?php }  ?>
+						class="posKeyboard form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview payOrderInputFields"
+						role="textbox"
+						tabindex='-1'
+						autocomplete="off"
 					/>
-					<div class="virtual-keyboard-hook" data-target-id="posOrderName" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
 					<br/>
 					<button
 						class="btn btn-success btn-lg"
@@ -253,6 +263,47 @@
 		</div>
 	</div>
 
+
+	<div class="modal" id="posLoginModal" tabindex="-1" role="dialog" aria-labelledby="posLoginModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form method="post" onsubmit="return posLogin(this)">
+					<input type="number" name="ownerId" value="<?php echo $vendor['vendorId']; ?>" readonly hidden />
+					<div class="modal-header">
+						<h5 class="modal-title" id="posLoginModalLabel">POS Login</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<select class="form-control" name="email" id="employeeEmail">
+								<option value="">Select</option>
+								<?php foreach ($employees as $employee) { ?>
+									<option value="<?php echo $employee['employeeEmail']; ?>"><?php echo $employee['employeeEmail']; ?></option>
+								<?php } ?>
+							</select>
+						</div>
+						<div class="form-group">
+							<input
+								type="password"
+								name="password"
+								id="employeePassword"
+								class="posKeyboard form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview"
+								role="textbox"
+								tabindex='-1'
+								autocomplete="off"
+							/>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<input id="submitPosLogin" type="submit" class="btn btn-primary" value="Login" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
 	<script>
 		var posGlobals =(function(){
 			let globals = new Map();
@@ -262,7 +313,8 @@
 			globals = {
 				'serviceFeePercent' : serviceFeePercent,
 				'serviceFeeAmount' : serviceFeeAmount,
-				'minimumOrderFee' : minimumOrderFee
+				'minimumOrderFee' : minimumOrderFee,
+				'counter' : 0,
 			}
 			<?php if (!empty($vendor['oneSignalId'])) { ?>
 				globals['venodrOneSignalId'] = '<?php echo $vendor['oneSignalId']; ?>';
@@ -271,7 +323,12 @@
 				globals['orderDataRandomKey'] = '<?php echo $vendor['orderDataRandomKey']; ?>';
 			<?php } else { ?>
 				globals['orderDataRandomKey'] = '';
-			<?php } ?>			
+			<?php } ?>
+			<?php if  ($lock) { ?>
+				globals['unlock'] = true;
+			<?php } else { ?>
+				globals['unlock'] = false;
+			<?php } ?>
 			return globals;
 		}());
 	</script>

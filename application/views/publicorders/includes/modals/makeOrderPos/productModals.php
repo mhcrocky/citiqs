@@ -124,10 +124,13 @@
                                         <div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">
                                             <input
                                                 type="text"
-                                                class="form-control remarks inputFieldsMakeOrder"
                                                 maxlength="<?php echo $maxRemarkLength; ?>"
                                                 data-product-remark-id="<?php echo $remarkProductId; ?>"
                                                 placeholder="Allowed <?php echo $maxRemarkLength; ?> characters"
+                                                class="posKeyboard form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview form-control remarks inputFieldsMakeOrder"
+                                                role="textbox"
+                                                tabindex='-1'
+                                                autocomplete="off"
                                             />
                                         </div>
                                     <?php } ?>
@@ -271,11 +274,14 @@
                                                             <div class="col-lg-12 col-sm-12" style="margin-bottom:3px">
                                                                 <input
                                                                     type="text"
-                                                                    class="form-control remarks inputFieldsMakeOrder"
                                                                     rows="1"
                                                                     maxlength="<?php echo $maxRemarkLength; ?>"
                                                                     data-addon-remark-id="<?php echo $remarkAddonId ?>"
                                                                     placeholder="Allowed <?php echo $maxRemarkLength; ?> characters"
+                                                                    class="posKeyboard form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview form-control remarks inputFieldsMakeOrder"
+                                                                    role="textbox"
+                                                                    tabindex='-1'
+                                                                    autocomplete="off"
                                                                 />
                                                             </div>
                                                         </div>

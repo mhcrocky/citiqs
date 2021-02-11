@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/alertify.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/alertify_default.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/keyboard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.30.2/css/keyboard-basic.min.css" integrity="sha512-2bVDVxlsH8oY3RrNeI1uJOAXWmjfEwQ9/dfJ/XM4dG5w8R3W3vSTQccpkzJWndrRo2HNXkiM4tjikPCp111sQg==" crossorigin="anonymous" />
     
     <?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
     <style>
@@ -51,6 +52,7 @@
     <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/alertify.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/createKeyBoard.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.30.2/js/jquery.keyboard.min.js" integrity="sha512-xESyr+sfDsQTzCsSU5GVQyi5SUL/hJmqs3CVUd97QegEM5EnENVaJoX2kS2XeZxNDMsMrUZg38PHqP2M5AM2zg==" crossorigin="anonymous"></script>
 </head>
 <body>
     <header class="header">

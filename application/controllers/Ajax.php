@@ -33,6 +33,8 @@ class Ajax extends CI_Controller
         $this->load->model('shopreportrequest_model');
         $this->load->model('shopprinterrequest_model');
         $this->load->model('api_model');
+        $this->load->model('employee_model');
+        $this->load->model('shopposlogin_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -1788,5 +1790,45 @@ class Ajax extends CI_Controller
         }
 
         echo json_encode($response);
+    }
+
+    public function posLogin(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = Utility_helper::sanitizePost();
+
+        $employeeId = $this
+                    ->employee_model
+                    ->setProperty('ownerId', $post['ownerId'])
+                    ->setProperty('password', $post['password'])
+                    ->setProperty('email', $post['email'])
+                    ->loginEmployee();
+
+        if ($employeeId) {
+            $this->shopposlogin_model->login($employeeId);
+            $_SESSION['unlockPos'] = $this->shopposlogin_model->id;
+            $response['status'] = ($_SESSION['unlockPos']) ? '1' : '0';
+        } else {
+            $response['status'] = '0';
+        }
+
+        echo json_encode($response);
+        return;
+    }
+
+    public function lockPos(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $logout = $this->shopposlogin_model->setObjectId($_SESSION['unlockPos'])->logout();
+
+        if ($logout) unset($_SESSION['unlockPos']);
+
+        $response['status'] = isset($_SESSION['unlockPos']) ? '0' : '1';
+
+        echo json_encode($response);
+
+        return;
     }
 }

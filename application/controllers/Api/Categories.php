@@ -5,14 +5,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require APPPATH . 'libraries/REST_Controller.php';
 
-class Products extends REST_Controller
+class Categories extends REST_Controller
 {
 
 	function __construct()
 	{
 		parent::__construct();
 
-		$this->load->model('user_model');
 		$this->load->model('api_model');
 		$this->load->helper('utility_helper');
 		$this->load->config('custom');
@@ -20,16 +19,61 @@ class Products extends REST_Controller
 
 	}
 
-    public function allcategories_get()
-    {
-        $this->db->select('id, description');
-        $this->db->from('tbl_category');
-        $this->db->order_by('description');
-        $query = $this->db->get();
-        $result = $query->result_array();
+	public function Category_post()
+	{
+		$vendorId = $this->security->xss_clean($this->input->post('vendorId'));
 
-        $this->response($result, 200);
-    }
+		$this->db->where('userId', $vendorId);
+		$this->db->from('tbl_shop_categories');
+		$query = $this->db->get();
+		$result = $query->result_array();
+//		var_dump($result);
+		$this->response($result, 200);
+	}
+
+	public function Records_post()
+	{
+		$vendorId = $this->security->xss_clean($this->input->post('vendorId'));
+
+		$this->db->where('vendorId', $vendorId);
+		$this->db->from('tbl_events');
+		$query = $this->db->get();
+		$result = $query->result_array();
+//		var_dump($result);
+		$this->response($result, 200);
+	}
+
+	public function Tickettypes_post()
+	{
+		$vendorId = $this->security->xss_clean($this->input->post('vendorId'));
+		$eventid = $this->security->xss_clean($this->input->post('description'));
+
+
+		$this->db->select('id', 'description');
+		$this->db->from('tbl_');
+		$this->db->order_by('description');
+		$query = $this->db->get();
+		$result = $query->result_array();
+
+		$this->response($result, 200);
+	}
+
+	public function Tickets_post()
+	{
+
+		$vendorId = $this->security->xss_clean($this->input->post('vendorId'));
+		$eventid = $this->security->xss_clean($this->input->post('eventId'));
+
+//		echo 'hello';
+//		die();
+
+		$this->db->where('customer', $vendorId);
+		$this->db->where('eventid', $eventid);
+		$this->db->from('tbl_bookandpay');
+		$query = $this->db->get();
+		$result = $query->result_array();
+		$this->response($result, 200);
+	}
 
 	public function index_get()
 	{
@@ -100,9 +144,6 @@ class Products extends REST_Controller
         $vendorId = $this->security->xss_clean($this->input->post('vendorId'));
         // $categoryid = $_POST['categoryid'];
         $description = $this->security->xss_clean($this->input->post('description'));
-		$printerId = $this->security->xss_clean($this->input->post('printerId'));
-		$categoryId = $this->security->xss_clean($this->input->post('categoryId'));
-
 		//         var_dump($vendorId);
 		//         var_dump($description);
 
@@ -129,7 +170,7 @@ class Products extends REST_Controller
 		$path = $uploaddir;
         // $uploadfile = $uploaddir . basename($_FILES['file']['name']);
         // if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile))
-//
+
 //		var_dump($path);
 //		var_dump($_FILES);
 
