@@ -523,6 +523,23 @@ class   Bookandpayagendabooking_model extends CI_Model
 		return $result;
 	}
 
+	public function getbookingagendadate($customer)
+	{
+        $results = $this->getbookingagenda($customer);
+		$agenda_dates = [];
+		foreach($results as $result){
+			$date_timestamp = $result->ReservationDateTime;
+			$date_timestamp = explode(' ', $date_timestamp);
+			$fulldate = $date_timestamp[0];
+			$fulldate = explode('-', $fulldate);
+			$dd = intval($fulldate[2]);
+			$mm = intval($fulldate[1]);
+			$yyyy = intval($fulldate[0]);
+			$agenda_dates[] = $dd . '-' . $mm . '-' . $yyyy;
+		}
+		return $agenda_dates;
+	}
+
 	public function getbookingagendaall($customer)
 	{
 		$this->db->select('tbl_bookandpayagenda.*, tbl_email_templates.template_name');
