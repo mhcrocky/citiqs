@@ -107,7 +107,8 @@
         private function getOrdered(array &$data, $vendorId, $spotId): void
         {
             $orderDataRandomKey = empty($_GET[$this->config->item('orderDataGetKey')]) ? '' : $this->input->get($this->config->item('orderDataGetKey'), true);
-            $ordered = Jwt_helper::fetch($orderDataRandomKey, $vendorId, $spotId, ['vendorId', 'spotId']);
+
+            $ordered = Jwt_helper::fetchPos($orderDataRandomKey, $vendorId, $spotId, ['vendorId', 'spotId']);
 
             $data['orderDataRandomKey'] = $orderDataRandomKey;
             if ($ordered && $ordered['makeOrder']) {

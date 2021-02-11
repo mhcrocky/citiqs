@@ -101,6 +101,28 @@
             return $orderData;
         }
 
+        public function getArrayPosOrderDetails(): array
+        {
+            $this->load->helper('jwt_helper');
+
+            $orderData = $this->readImproved([
+                'what' => ['orderData'],
+                'where' => [
+                    $this->table . '.randomKey' => $this->randomKey,
+                ]
+            ]);
+
+            if (is_null($orderData)) return [];
+
+            $orderData = reset($orderData);
+            $orderData = Jwt_helper::decode($orderData['orderData']);
+            $orderData = json_decode(json_encode($orderData), true);
+            $orderData['vendorId'] = intval($orderData['vendorId']);
+            $orderData['spotId'] = intval($orderData['spotId']);
+
+            return $orderData;
+        }
+
         public function updateSessionData(array $post): Shopsession_model
         {
             $this->setIdFromRandomKey();
