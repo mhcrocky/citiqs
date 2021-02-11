@@ -209,12 +209,14 @@
 					<input
 						type="text"
 						id="posOrderName"
-						class="form-control payOrderInputFields"
 						<?php if (!empty($posOrderName)) { ?>
 						value="<?php echo $posOrderName; ?>"
 						<?php }  ?>
+						class="posKeyboard form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview payOrderInputFields"
+						role="textbox"
+						tabindex='-1'
+						autocomplete="off"
 					/>
-					<div class="virtual-keyboard-hook" data-target-id="posOrderName" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
 					<br/>
 					<button
 						class="btn btn-success btn-lg"

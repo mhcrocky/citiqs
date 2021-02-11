@@ -383,25 +383,17 @@
                         $checkoutList .=            '<div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">';
                         $checkoutList .=                '<input
                                                             type="text"
-                                                            class="form-control remarks inputFieldsMakeOrder"
+                                                            class="posKeyboard ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview form-control remarks inputFieldsMakeOrder"
                                                             rows="1"
                                                             id ="' . $count . '_' .$remarkProductId . '"
                                                             maxlength="' . $maxRemarkLength . '"
                                                             placeholder="Allowed ' . $maxRemarkLength . ' characters"
                                                             data-product-remark-id="' . $remarkProductId . '"
                                                             value="' . $product['remark'] . '"
+                                                            role="textbox"
+                                                            tabindex="-1"
+                                                            autocomplete="off"
                                                         />';
-
-                        if ($isPos) {
-                            $checkoutList .=            '<div
-                                                            class="virtual-keyboard-hook"
-                                                            data-target-id="' . $count . '_' .$remarkProductId . '"
-                                                            data-keyboard-mapping="qwerty"
-                                                            style="text-align: center; font-size: 20px;"
-                                                        >
-                                                            <i class="fa fa-keyboard-o" aria-hidden="true"></i>
-                                                        </div>';
-                        }
                         $checkoutList .=            '</div>';
                     }
 
@@ -536,25 +528,16 @@
                                                                     <input
                                                                         type="text"
                                                                         id="' . $count . '_' .$remarkAddonId . '"
-                                                                        class="form-control remarks inputFieldsMakeOrder"
+                                                                        class="posKeyboard form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview form-control remarks inputFieldsMakeOrder"
                                                                         rows="1"
                                                                         maxlength="' . $maxRemarkLength . '"
                                                                         placeholder="Allowed ' . $maxRemarkLength . ' characters"
                                                                         data-addon-remark-id="' . $remarkAddonId . '"
                                                                         value="' . $addon['remark'] . '"
+                                                                        role="textbox"
+                                                                        tabindex="-1"
+                                                                        autocomplete="off"
                                                                     />';
-                                    if ($isPos) {
-                                        $checkoutList .=            '<div
-                                                                        class="virtual-keyboard-hook"
-                                                                        data-target-id="' . $count . '_' .$remarkAddonId . '"
-                                                                        data-keyboard-mapping="qwerty"
-                                                                        style="text-align: center; font-size: 20px;"
-                                                                    >
-                                                                        <i class="fa fa-keyboard-o" aria-hidden="true"></i>
-                                                                    </div>';
-                                    }
-
-
                                     $checkoutList .=            '</div>
                                                             </div>
                                                             '; 
