@@ -290,6 +290,11 @@ $route['api/voucher']  = 'Api/Voucher/data';
 $route['api/onesignal/data']  = 'Api/OneSignal/data';
 $route['api/spotmobile/spotinsert']  = 'Api/SpotMobile/spotinsert';
 $route['api/products/upload']  = 'Api/Products/upload';
+$route['api/events/records']  = 'Api/Events/Records';
+$route['api/events/tickettypes']  = 'Api/Events/TicketTypes';
+$route['api/events/tickets']  = 'Api/Events/Tickets';
+$route['api/printers/printer']  = 'Api/Printers/Printer';
+$route['api/categories/category']  = 'Api/Categories/category';
 
 $route['api/clean_printer_requests']  = 'Api/Cronjobs/cleanPrinterRequests';
 $route['api/report']  = 'Api/Reports/report';
