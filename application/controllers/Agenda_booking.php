@@ -53,12 +53,13 @@ class Agenda_booking extends BaseControllerWeb
         ]);
 
         $data['agenda'] = $this->bookandpayagendabooking_model->getbookingagenda($customer->id);
+        $data['agenda_dates'] = $this->bookandpayagendabooking_model->getbookingagendadate($customer->id);
+
 
         $logoUrl = 'assets/user_images/no_logo.png';
         if ($customer->logo) {
 			$logoUrl = 'assets/images/vendorLogos/' . $customer->logo;
         }
-
         $data['logoUrl'] = $logoUrl;
         $data['pageTitle'] = 'TIQS: Thuishaven';
         $this->session->set_userdata('shortUrl', $shortUrl);
@@ -339,7 +340,7 @@ class Agenda_booking extends BaseControllerWeb
 
         if (!$reservationIds) {
             redirect('agenda_booking/' . $customer['usershorturl']);
-        }
+        } 
 
         $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
         if (!$reservations) {
