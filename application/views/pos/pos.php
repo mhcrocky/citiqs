@@ -157,7 +157,7 @@
 								onclick="lockPos()"
 								style="float:left"
 							>
-								Lock
+								Pos logout
 							</a>
 							<a
 								href="javascript:void(0)"
