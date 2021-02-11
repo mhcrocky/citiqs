@@ -20,6 +20,7 @@ class Legal extends BaseControllerWeb
     public function index()
     {
         $this->global['pageTitle'] = 'tiqs : LEGAL';
+        $data = '';
         $this->loadViews("legal", $this->global, $data, "nofooter", "headerpublic");
 
 	}
