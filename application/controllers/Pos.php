@@ -66,6 +66,7 @@
             $isFodActive = $spotId ? Fod_helper::isFodActive($vendorId, $spotId) : true;
 
             if ($allProducts && $isFodActive) {
+
                 $data = [
                     'uploadProductImageFolder'  => $this->config->item('uploadProductImageFolder'),
                     'mainProducts'              => $allProducts['main'],
@@ -79,18 +80,25 @@
                     'buyershorturl'             => $this->config->item('buyershorturl'),
                     'xReport'                   => $this->config->item('x_report'),
                     'zReport'                   => $this->config->item('z_report'),
+                    
                 ];
+
                 $this->getOrdered($data, $vendorId, $spotId);
                 $this->setPosSideFee($data);
             }
 
+            $data['employees'] = $this
+                                    ->employee_model
+                                        ->setProperty('ownerId', $vendorId)
+                                        ->getMenuOptionEmployees($this->config->item('posMenuOptionId'));
+            $data['lock'] = (isset($_SESSION['unlockPos']) && $_SESSION['unlockPos']) ? true : false;
             $data['spots'] = $spots;
             $data['spotId'] = $spotId;
             $data['spotPosOrders'] = $this->shopposorder_model->setProperty('spotId', $spotId)->fetchSpotPosOrders();
             $data['isPos'] = 1;
             $data['fodIsActive'] = $isFodActive;
             $data['orderDataGetKey']    = $this->config->item('orderDataGetKey');
-            $data['employees'] = $this->employee_model->setProperty('ownerId', $vendorId)->getActiveEmployeeForBB($vendorId);
+            // $data['employees'] = $this->employee_model->setProperty('ownerId', $vendorId)->getActiveEmployeeForBB($vendorId);
             $this->global['pageTitle'] = 'TIQS : POS';
             $this->loadViews('pos/pos', $this->global, $data, null, 'headerWarehouse');
             return;
@@ -102,7 +110,7 @@
             $ordered = Jwt_helper::fetch($orderDataRandomKey, $vendorId, $spotId, ['vendorId', 'spotId']);
 
             $data['orderDataRandomKey'] = $orderDataRandomKey;
-            if ($ordered['makeOrder']) {
+            if ($ordered && $ordered['makeOrder']) {
                 $ordered = Utility_helper::returnMakeNewOrderElements($ordered['makeOrder'], $data['vendor'], $data['mainProducts'], $data['addons'], $data['maxRemarkLength'], true);
                 $data['checkoutList'] = $ordered['checkoutList'];
                 $data['posOrderName'] = $this->getPosOrderName($orderDataRandomKey);

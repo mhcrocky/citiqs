@@ -114,6 +114,7 @@ function posPayment(element) {
 
     if (!orderedProductsLength) {
         alertify.error('No product(s) in order list');
+        element.setAttribute('data-locked', '0');
         return;
     }
 
@@ -316,6 +317,68 @@ function removeSavedOrder(orderRandomKey) {
     document.getElementById('saveHoldOrder').innerHTML = 'Save order'
 }
 
+function showLoginModal() {
+    if (!posGlobals['unlock']) {
+        $('#posLoginModal').modal('show');
+    }
+}
+
+function posLogin(form) {
+    let url = globalVariables.ajax + 'posLogin';
+    sendFormAjaxRequest(form, url, 'posLogin', posLoginResponse, [form])
+    return false;
+}
+
+function posLoginResponse(form, response) {
+    if (response['status'] === '0') {
+        return;
+    } else {
+        form.reset();
+        posGlobals['unlock'] = true;
+        $('#posLoginModal').modal('hide');
+        posGlobals['checkActivityId'] = checkActivity();
+    }
+}
+
+function lockPos() {
+    let url = globalVariables.ajax + 'lockPos';
+    sendUrlRequest(url, 'lockPos', lockPosRespone);
+}
+
+function lockPosRespone(response) {
+    if (response['status'] === '1') {
+        posGlobals['unlock'] = false;
+        showLoginModal();
+        clearActivtiyInterval();
+    } else {
+        alertify.error('Pos not locked!');
+    }
+}
+
+function resetCounter() {
+    if (posGlobals['unlock']) {
+        posGlobals['counter'] = 0;
+        clearInterval(posGlobals['checkActivityId']);
+        posGlobals['checkActivityId'] = checkActivity();
+    }
+}
+
+function checkActivity() {
+    return setInterval( function() {
+        if (posGlobals['unlock']) {
+            posGlobals['counter'] = posGlobals['counter'] + 10;
+            if (!(posGlobals['counter'] % 30)) {
+                lockPos();
+            }
+        }
+    }, 10000);
+}
+
+function clearActivtiyInterval() {
+    posGlobals['counter'] = 0;
+    clearInterval(posGlobals['checkActivityId']);
+}
+
 $(document).ready(function(){
     if (typeof makeOrderGlobals === 'undefined') return;
     let sumbitFormButton = document.getElementById(makeOrderGlobals.checkoutContinueButton);
@@ -324,6 +387,17 @@ $(document).ready(function(){
     }
 });
 
-
 resetTotal();
 countOrdered('countOrdered');
+showLoginModal();
+
+posGlobals['checkActivityId'] = checkActivity();
+
+window.onclick = function(e) {    
+    showLoginModal();
+    resetCounter();
+}
+
+window.onmousemove = function(e) {
+    resetCounter();
+}

@@ -42,6 +42,25 @@ function sendAjaxPostRequest(post, url, callBack, callFunction = null, functionA
         }
     });
 }
+
+function sendUrlRequest(url, callBack, callFunction = null, functionArg = []) {
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function (response) {
+            let data = JSON.parse(response);
+            if (callFunction) {
+                callThis[callBack].apply(data, [callFunction, functionArg]);
+            } else {
+                callThis[callBack].apply(data);
+            }
+        },
+        error: function (err) {
+            console.dir(err);
+        }
+    });
+}
+
 var callThis = (function() {
     let methods = {        
         uploadIdentification: function() {
@@ -273,7 +292,14 @@ var callThis = (function() {
         },
         updateApiName: function(callFunction) {
             callFunction(this);
-        }
+        },
+        posLogin: function(callFunction, functionArg) {
+            functionArg.push(this);
+            callFunction(...functionArg);
+        },
+        lockPos: function(callFunction) {
+            callFunction(this);
+        },
     };
     return methods;
 })();
