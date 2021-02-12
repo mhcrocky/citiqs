@@ -173,8 +173,8 @@ thead {
 
 .fa-input {
     padding-top: 9px;
-    border-bottom-right-radius: 5px;
-    border-top-right-radius: 5px;
+    border-bottom-right-radius: 25px;
+    border-top-right-radius: 25px;
     background: #275C5D;
 }
 
@@ -218,6 +218,7 @@ thead {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    border-radius: 50px;
 }
 
 .file-custom:after {
@@ -239,6 +240,8 @@ thead {
     background-color: #eee;
     border: .075rem solid #ddd;
     border-radius: 0 .25rem .25rem 0;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
 }
 
 /* Focus */
@@ -248,4 +251,18 @@ thead {
 
 .file-custom:after {
     content: attr(data-content);
+}
+
+.border-50{
+    border-radius: 50px;
+}
+
+.inp-group-radius-left {
+    border-top-left-radius: 25px !important;
+    border-bottom-left-radius: 25px !important;
+}
+
+.inp-group-radius-right {
+    border-top-right-radius: 50px !important;
+    border-bottom-right-radius: 50px !important;
 }

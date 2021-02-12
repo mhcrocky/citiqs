@@ -381,7 +381,7 @@
     </div>
 </div>
 <hr class="w-100 mt-5 mb-5">
--->
+
 <div class="row">
     <div class="col-md-3 ml-1">
         <div class="input-group">
@@ -409,6 +409,7 @@
         </div>
     </div>
 </div>
+-->
 
 <script>
 const globalEmails  = '<?php echo json_encode($emails); ?>';
