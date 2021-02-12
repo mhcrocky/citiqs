@@ -24,6 +24,7 @@
         public $sendSmsDriver;
         public $countSentMessages;
         public $expired;
+        public $isFinished;
         public $paymentType;
         public $waiterReceipt;
         public $customerReceipt;
@@ -349,6 +350,7 @@
                         tbl_shop_orders.spotId,
                         tbl_shop_orders.created AS orderCreated,
                         tbl_shop_orders.expired AS orderExpired,
+                        tbl_shop_orders.isFinished AS orderIsFinished,
                         tbl_shop_orders.paid AS paidStatus,
                         tbl_shop_orders.paymentType AS paymentType,
                         tbl_shop_orders.waiterReceipt AS waiterReceipt,
@@ -438,7 +440,7 @@
                             WHERE tbl_user.roleid = ' . $this->config->item('owner') . '
                         ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     WHERE
-                        tbl_shop_orders.paid = "1"
+                        (tbl_shop_orders.paid = "1" || tbl_shop_orders.isFinished = "0")
                         AND tbl_shop_orders.expired = "0"
                         AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_printers.macNumber = "' . $macNumber . '" 
@@ -454,6 +456,7 @@
                         tbl_shop_orders.spotId,
                         tbl_shop_orders.created AS orderCreated,
                         tbl_shop_orders.expired AS orderExpired,
+                        tbl_shop_orders.isFinished AS orderIsFinished,
                         tbl_shop_orders.paid AS paidStatus,
                         tbl_shop_orders.paymentType AS paymentType,
                         tbl_shop_orders.waiterReceipt AS waiterReceipt,
@@ -555,7 +558,7 @@
                             WHERE tbl_user.roleid = ' . $this->config->item('owner') . '
                         ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     WHERE
-                        tbl_shop_orders.paid = "1"
+                        (tbl_shop_orders.paid = "1" || tbl_shop_orders.isFinished = "0")
                         AND tbl_shop_orders.expired = "0"
                         AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_printers.macNumber = "' . $macNumber . '" 
