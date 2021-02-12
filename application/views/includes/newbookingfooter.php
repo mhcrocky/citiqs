@@ -3,9 +3,9 @@
     <h4 id="footer-title" class="mb-3">Booking Info </h4>
     <p class="booking-info">Event Date: <span id="selected-date">
             <?php $shorturl = $this->session->userdata('shortUrl');
-			 if(base_url("agenda_booking/$shorturl") != current_url()): ?>
-            <?php echo $this->session->userdata('date'); ?>
-            <?php endif; ?>
+			 if(base_url("agenda_booking/$shorturl") != current_url()):
+              echo $this->session->userdata('eventDate');
+            endif; ?>
         </span></p>
     <p class="booking-info">SPOT Description: <span
             id="spot"><?php echo $this->session->userdata('spotDescript'); ?></span></p>
@@ -35,19 +35,20 @@
 <!-- datepicker -->
 <script>
 $(document).ready(function() {
-    var agenda_dates = JSON.parse('<?php echo json_encode($agenda_dates); ?>');
+    var agenda_dates = JSON.parse('<?php echo isset($agenda_dates) ? json_encode($agenda_dates) : '{}'; ?>');
 
 
     $('.day').each(function() {
         var date = $(this).attr('data-daydate');
         if (agenda_dates.includes(date)) {
-			console.log(date);
+            console.log(date);
             $(this).addClass('day-agenda');
         }
     });
 
 
     var url = '<?php echo current_url(); ?>';
+    url = url.split('/');
 
     if (url.includes('spots')) {
         $("#spot-active").addClass('booking-active');
@@ -75,8 +76,8 @@ $('#date-input').datepicker({
 
 $("#date-input").on('changeMonth', function() {
     setTimeout(() => {
-		console.log($('.day'));
-        var agenda_dates = JSON.parse('<?php echo json_encode($agenda_dates); ?>');
+        console.log($('.day'));
+        var agenda_dates = JSON.parse('<?php echo isset($agenda_dates) ? json_encode($agenda_dates) : '{}'; ?>');
         $('.day').each(function() {
             var date = $(this).attr('data-daydate');
             if (agenda_dates.includes(date)) {
@@ -89,7 +90,7 @@ $("#date-input").on('changeMonth', function() {
 
 /* get date from calendar on click */
 $('#date-input').on('changeDate', function() {
-    var agenda_dates = JSON.parse('<?php echo json_encode($agenda_dates); ?>');
+    var agenda_dates = JSON.parse('<?php echo isset($agenda_dates) ? json_encode($agenda_dates) : '{}'; ?>');
     $('.day').each(function() {
         var date = $(this).attr('data-daydate');
         if (agenda_dates.includes(date)) {
@@ -150,28 +151,6 @@ $('#phone-input').blur(function() {
     $('#personal-phone').text(', ' + $(this).val());
 })
 
-
-
-/* switch steps by clicking on title */
-$('.booking-form__date-link').click(function() {
-    $('.step').removeClass('active');
-    $('.step-1').addClass('active');
-})
-
-$('.booking-form__person-link').click(function() {
-    $('.step').removeClass('active');
-    $('.step-2').addClass('active');
-})
-
-$('.booking-form__time-link').click(function() {
-    $('.step').removeClass('active');
-    $('.step-3').addClass('active');
-})
-
-$('.booking-form__info-link').click(function() {
-    $('.step').removeClass('active');
-    $('.step-4').addClass('active');
-})
 
 
 /* go back button */

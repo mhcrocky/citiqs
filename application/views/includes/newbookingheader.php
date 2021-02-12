@@ -59,7 +59,7 @@
     <div class="container booking-form">
         <div id="booking-form__header" class="row">
             <div class="booking-form__header">
-                <div class="elem " id="agenda-active">
+                <div class="elem" id="agenda-active">
                     <a style="text-decoration:none;color:#fff;font-size:14px;"
                         href="<?php echo base_url(); ?>agenda_booking/spots/<?php echo $this->session->userdata('shortUrl'); ?>">Event
                         Date</a>
