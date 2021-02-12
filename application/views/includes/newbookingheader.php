@@ -23,6 +23,14 @@
         color: #fff !important;
     }
 
+    @media only screen and (max-width: 550px) {
+        .container,.booking-form,#body {
+            width: 100% !important;
+            min-width: 100% !important;
+            max-width:100% !important;
+        }
+    }
+
     <?php $CI=& get_instance();
     $CI->load->model('bookandpayagendabooking_model');
     $customer=$CI->session->userdata('customer')['id'];

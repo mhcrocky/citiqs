@@ -17,6 +17,20 @@
                     <input class="input100" type="text" id="address" name="address" placeholder="Address" required>
                     <span class="focus-input100"></span>
                 </div>
+                <div class="wrap-input100 validate-input m-b-18">
+                    <span class="label-input100">Gender</span>
+                    <select class="input100">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="nogender">No Gender</option>
+                    </select>
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 validate-input m-b-18">
+                    <span class="label-input100">Age</span>
+                    <input class="input100" type="date" id="birthday" name="birthday" placeholder="Age" required>
+                    <span class="focus-input100"></span>
+                </div>
                 <div class="wrap-input100 validate-input m-b-18" data-validate="Phone Number is required">
                     <span class="label-input100">Phone Number</span>
                     <input class="input100" type="tel" name="mobileNumber" placeholder="Phone Number (Optional)">
@@ -47,4 +61,4 @@
             </form>
         </div>
     </div>
-</div>
+</div> 

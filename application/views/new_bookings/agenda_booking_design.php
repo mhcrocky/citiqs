@@ -125,16 +125,132 @@ input[type=color] {
 .wrapper {
     margin-top: 200px;
 }
+
+
+* {
+    box-sizing: border-box;
+}
+
+.iframe-popup {
+    max-width: 540px;
+    width: calc(100% - 40px);
+    height: 400px;
+    box-shadow: 0 0 18px 1px #0000001f;
+    border-radius: 8px;
+    position: fixed;
+    bottom: 0px;
+    right: 40px;
+    padding: 20px;
+    display: none;
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.iframe-popup.show {
+    animation-name: popup_open;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+    display: block !important;
+    opacity: 1 !important;
+}
+
+/* The animation code */
+@keyframes popup_open {
+    from {
+        display: none;
+        opacity: 0;
+    }
+
+    to {
+        display: block !important;
+        opacity: 1 !important;
+    }
+}
+
+.iframe-popup__close {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    box-shadow: 0 0 18px 1px #0000001f;
+    cursor: pointer;
+    right: -12px;
+    top: -12px;
+    background-color: white
+}
+
+.iframe-popup__close:before,
+.iframe-popup__close:after {
+    content: '';
+    display: block;
+    height: 10px;
+    width: 2px;
+    background-color: black;
+    position: absolute;
+    left: 11px;
+    top: 7px;
+}
+
+.iframe-popup__close:before {
+    transform: rotate(45deg)
+}
+
+.iframe-popup__close:after {
+    transform: rotate(-45deg)
+}
+
+.iframe-popup__content {
+    width: 100%;
+    height: 100%;
+    
+}
+
+@media only screen and (max-width: 640px) {
+
+    .iframe-popup {
+        max-width: 100vw;
+        width: 100vw;
+        right: 0;
+        bottom: 0;
+        border-radius: 0;
+    }
+
+    .iframe-popup__close {
+        right: 10px;
+    }
+
+}
+
+/* code for custom scroll bar, please use it for html tag on agenda page, change colors to fit design */
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
 </style>
 <main class="w-100 container" style="margin-top:20px">
 
 
     <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#design">Design</a>
+            <a class="nav-link active" id="popup-close_2" data-toggle="tab" href="#design">Design</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#iframeSettings">Iframe</a>
+            <a class="nav-link" id='iframe-popup-open' data-toggle="tab" href="#iframeSettings">Iframe</a>
         </li>
     </ul>
     <div class="tab-content">
@@ -143,7 +259,8 @@ input[type=color] {
             <div class="row">
                 <h3 class="col-lg-12" style="margin:15px 0px">Set booking view style</h3>
                 <div class="col-lg-6">
-                    <form method="post" id="<?php echo $id; ?>" action="<?php echo base_url(); ?>agenda_booking/savedesign">
+                    <form method="post" id="<?php echo $id; ?>"
+                        action="<?php echo base_url(); ?>agenda_booking/savedesign">
                         <?php 
                                 include_once FCPATH . 'application/views/new_bookings/design/generalView.php';
                                 include_once FCPATH . 'application/views/new_bookings/design/shortUrlView.php';
@@ -155,8 +272,8 @@ input[type=color] {
                                 include_once FCPATH . 'application/views/new_bookings/design/payment.php';
                                 */
                             ?>
-                          <div class="text-center">
-                        <input type="submit" class="btn btn-primary" value="submit" />
+                        <div class="text-center">
+                            <input type="submit" class="btn btn-primary" value="submit" />
                         </div>
                     </form>
                 </div>
@@ -177,6 +294,13 @@ input[type=color] {
         </div>
         <div id="iframeSettings" class="container tab-pane" style="background: none;">
             <?php include_once FCPATH . 'application/views/new_bookings/design/iframeSettings.php'; ?>
+        </div>
+    </div>
+    <div class="iframe-popup hide" id="iframe-popup">
+        <div class='iframe-popup__close' id='popup-close'></div>
+        <div class="iframe-popup__content">
+            <iframe src="https://tiqs.com/alfred/agenda_booking/demotiqs" frameborder="0"
+                style="overflow:hidden;height:calc(100% + 40px);;width:100%" height="100%" width="100%" id='iframe-wrapper'></iframe>
         </div>
     </div>
 
@@ -216,6 +340,23 @@ document.getElementById("controls").addEventListener("change", function() {
 document.getElementById("views").addEventListener("click", function(evt) {
     updateView(evt.target.value);
 });
+
+var popup_open = document.getElementById('iframe-popup-open');
+var popup_close = document.getElementById('popup-close');
+var popup_close_2 = document.getElementById('popup-close_2');
+var iframe_popup = document.getElementById('iframe-popup');
+
+popup_open.addEventListener('click', function() {
+    iframe_popup.classList.add('show')
+})
+
+popup_close.addEventListener('click', function() {
+    iframe_popup.classList.remove('show');
+})
+
+popup_close_2.addEventListener('click', function() {
+    iframe_popup.classList.remove('show');
+})
 </script>
 <script>
 var designGlobals = (function() {
