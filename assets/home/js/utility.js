@@ -56,7 +56,7 @@ function alertifyErrMessage(element) {
 function validateFormData(form) {
     let inputs = form.querySelectorAll('[data-form-check]')
     let inputsLength = inputs.length;
-
+    let i;
     let countErrors = 0;
 
     for (i = 0; i < inputsLength; i++) {

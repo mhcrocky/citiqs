@@ -157,7 +157,7 @@
 								onclick="lockPos()"
 								style="float:left"
 							>
-								Pos logout
+								POS logout
 							</a>
 							<a
 								href="javascript:void(0)"
@@ -277,7 +277,13 @@
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<select class="form-control" name="email" id="employeeEmail">
+							<select
+								class="form-control"
+								name="email"id="employeeEmail"
+								data-form-check="1"
+								data-error-message="Email is required"
+								data-min-length="1"
+							>
 								<option value="">Select</option>
 								<?php foreach ($employees as $employee) { ?>
 									<option value="<?php echo $employee['employeeEmail']; ?>"><?php echo $employee['employeeEmail']; ?></option>
@@ -293,10 +299,14 @@
 								role="textbox"
 								tabindex='-1'
 								autocomplete="off"
+								data-form-check="1"
+								data-error-message="Password is required"
+								data-min-length="1"
 							/>
 						</div>
 					</div>
 					<div class="modal-footer">
+						<a href="<?php echo base_url() ?>orders" class="btn btn-primary">Back</a>
 						<input id="submitPosLogin" type="submit" class="btn btn-primary" value="Login" />
 					</div>
 				</form>

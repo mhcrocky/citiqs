@@ -325,8 +325,12 @@ function showLoginModal() {
 }
 
 function posLogin(form) {
+    if (!validateFormData(form)) return false;
+
     let url = globalVariables.ajax + 'posLogin';
+
     sendFormAjaxRequest(form, url, 'posLogin', posLoginResponse, [form])
+
     return false;
 }
 

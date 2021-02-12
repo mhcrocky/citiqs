@@ -161,45 +161,4 @@
             return;
         }
 
-        // public function posLoginAction(): void
-        // {
-        //     $employee = Utility_helper::sanitizePost();
-
-        //     if (empty($employee)) {
-        //         $this->session->set_flashdata('error', 'Select employee');
-        //         redirect('pos_login');
-        //     }
-
-        //     $employee['inOutEmployee'] = $this->config->item('employeeIn');
-        //     $employee['inOutDateTime'] = date('Y-m-d H:i:s');
-        //     $employee['processed'] = '0';
-
-        //     $insert = $this->shopemployee_model->setObjectFromArray($employee)->create();
-        //     if (!$insert) {
-        //         $this->session->set_flashdata('error', 'Check in failed. Please try again');
-        //         redirect('pos_login');
-        //     }
-
-        //     $_SESSION['posEmployeeId'] = $employee['employeeId'];
-        //     redirect('pos');
-        // }
-
-        // public function posLogOutAction(): void
-        // {
-        //     $employee = [
-        //         'employeeId' => $_SESSION['posEmployeeId'],
-        //         'inOutEmployee' => $this->config->item('employeeOut'),
-        //         'inOutDateTime' => date('Y-m-d H:i:s'),
-        //         'processed' => '0'
-        //     ];
-
-        //     $insert = $this->shopemployee_model->setObjectFromArray($employee)->create();
-        //     if ($insert) {
-        //         unset($_SESSION['posEmployeeId']);
-        //         redirect('pos_login');
-        //     }
-
-        //     $this->session->set_flashdata('error', 'Logout failed. Please try again');
-        //     redirect('pos');
-        // }
     }
