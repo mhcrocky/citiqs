@@ -52,35 +52,3 @@
         </label>
     </div>
 </div>
-
-<script>
-function iframeWidth(el){
-    let width = $(el).val();
-    console.log(width);
-    $('#iframe-popup').width(width+'px');
-}
-function iframeHeight(el){
-    let height = $(el).val();
-    $('#iframe-popup').height(height);
-    $('#iframe-popup').css('height', height+'px !important');
-}
-
-function changeThisIframe(widthId, heightId, iframeId) {
-    let iframe  = $('#'+iframeId);
-    let iframeSrc = designGlobals.iframe;
-    let newIframe = '';
-    
-    let width   = $('#iframeThisWidth').val();
-    let height  = $('#iframeThisHeight').val();
-    console.log(width);
-    console.log(height);
-    newIframe += '<iframe frameborder="0" ';
-    newIframe += 'style="width:' + width + 'px; height:' + height + 'px;" ';
-    newIframe += 'src="' + iframeSrc + '"></iframe>';
-
-    iframe.html(newIframe);
-    console.log(newIframe);
-
-    // saveIrame(width.value, height.value, newIframe)
-}
-</script>

@@ -184,5 +184,8 @@
 <?php } elseif ($this->view === 'events/tickets') { ?>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/select-tickets.js"></script>
+<?php } elseif ($this->view === 'new_bookings/agenda_booking_design') { ?>
+	<script src="<?php echo base_url(); ?>assets/cdn/js/jscolor.js"></script>
+	<script src="<?php echo base_url(); ?>assets/home/js/agenda_booking_design.js"></script>
 <?php } ?>
 

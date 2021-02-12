@@ -1,4 +1,56 @@
 'use strict';
+/*Only needed for the controls*/
+var phone = document.getElementById("phone_1"),
+    iframe = document.getElementById("frame_1");
+
+/*Events*/
+document.getElementById("controls").addEventListener("change", function() {
+    updateIframe();
+});
+
+document.getElementById("views").addEventListener("click", function(evt) {
+    updateView(evt.target.value);
+});
+
+var popup_open = document.getElementById('iframe-popup-open');
+var popup_close = document.getElementById('popup-close');
+var popup_close_2 = document.getElementById('popup-close_2');
+var iframe_popup = document.getElementById('iframe-popup');
+
+popup_open.addEventListener('click', function() {
+    iframe_popup.classList.add('show')
+});
+
+popup_close.addEventListener('click', function() {
+    iframe_popup.classList.remove('show');
+});
+
+popup_close_2.addEventListener('click', function() {
+    iframe_popup.classList.remove('show');
+});
+
+/*View*/
+function updateView(view) {
+    if (view) {
+        phone.className = "phone view_" + view;
+    }
+}
+
+/*Controls*/
+function updateIframe() {
+    iframe.src = document.getElementById("iframeURL").value;
+
+    phone.style.width = document.getElementById("iframeWidth").value + "px";
+    phone.style.height = document.getElementById("iframeHeight").value + "px";
+
+    /*Idea by /u/aerosole*/
+    document.getElementById("wrapper").style.perspective = (
+        document.getElementById("iframePerspective").checked ? "1000px" : "none"
+    );
+}
+updateIframe();
+
+
 function styleELements(element) {
     let selector = getJquerySelector(element.dataset.cssSelector, element.dataset.cssSelectorValue);
     let property = element.dataset.cssProperty;
@@ -170,6 +222,36 @@ function saveIrame(width, height, iframe) {
         'iframe' : iframe
     }    
     sendAjaxPostRequest(post, url, 'saveIrame');
+}
+
+function iframeWidth(el){
+    let width = $(el).val();
+    console.log(width);
+    $('#iframe-popup').width(width+'px');
+}
+
+function iframeHeight(el){
+    let height = $(el).val();
+    $('#iframe-popup').height(height);
+    $('#iframe-popup').css('height', height+'px !important');
+}
+
+function changeThisIframe(widthId, heightId, iframeId) {
+    let iframe  = $('#'+iframeId);
+    let iframeSrc = designGlobals.iframe;
+    let newIframe = '';
+    
+    let width   = $('#iframeThisWidth').val();
+    let height  = $('#iframeThisHeight').val();
+    console.log(width);
+    console.log(height);
+    newIframe += '<iframe frameborder="0" ';
+    newIframe += 'style="width:' + width + 'px; height:' + height + 'px;" ';
+    newIframe += 'src="' + iframeSrc + '"></iframe>';
+
+    iframe.html(newIframe);
+    console.log(newIframe);
+
 }
 // https://tiqs.com/alfred/places
 

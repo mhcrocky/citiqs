@@ -813,4 +813,11 @@ class Agenda_booking extends BaseControllerWeb
         redirect('agenda_booking/design');
     }
 
+    public function iframe($shortUrl=false)
+    {
+        $this->global['pageTitle'] = 'TIQS : DESIGN';
+        $data['iframeSrc'] = base_url() . 'agenda_booking/' . $shortUrl;
+        $this->loadViews('new_bookings/iframe-popup', $this->global, $data, 'footerpopup', 'headerpopup');
+    }
+
 }
