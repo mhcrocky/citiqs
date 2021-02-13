@@ -11,7 +11,18 @@ var styleLoader = function(url) {
 
 };
 
-styleLoader('https://tiqs.com/alfred/');
+styleLoader(globalVariables.baseUrl);
+
+
+function popup() {
+    var iframe_popup = document.getElementById('iframe-popup');
+    if (iframe_popup.classList.contains("show")) {
+        closeIframe();
+      } else {
+        openIframe();
+      }
+   
+}
 
 function openIframe() {
     var iframe_popup = document.getElementById('iframe-popup');

@@ -1,4 +1,6 @@
-<button onclick="openIframe()" id="iframe-popup-open">open popup</button>
+<div class="btn-container">
+    <button class="btn btn-primary" id="iframe-popup-open" onclick="popup()">Click here to make reservation</button>
+</div>
 
 <div class="iframe-popup hide" id="iframe-popup">
     <div class="iframe-popup__close" onclick="closeIframe()" id="popup-close"></div>

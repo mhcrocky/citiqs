@@ -10,7 +10,7 @@ body {
             <a class="nav-link active" id="popup-close_2" data-toggle="tab" href="#design">Design</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id='iframe-popup-open' data-toggle="tab" href="#iframeSettings">Iframe</a>
+            <a class="nav-link" data-toggle="tab" href="#iframeSettings">Iframe</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#popup">Popup</a>
