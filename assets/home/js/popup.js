@@ -11,7 +11,7 @@ var styleLoader = function(url) {
 
 };
 
-styleLoader(globalVariables.baseUrl);
+styleLoader('https://tiqs.com/alfred/');
 
 
 function popup() {
