@@ -12,22 +12,6 @@ document.getElementById("views").addEventListener("click", function(evt) {
     updateView(evt.target.value);
 });
 
-var popup_open = document.getElementById('iframe-popup-open');
-var popup_close = document.getElementById('popup-close');
-var popup_close_2 = document.getElementById('popup-close_2');
-var iframe_popup = document.getElementById('iframe-popup');
-
-popup_open.addEventListener('click', function() {
-    iframe_popup.classList.add('show')
-});
-
-popup_close.addEventListener('click', function() {
-    iframe_popup.classList.remove('show');
-});
-
-popup_close_2.addEventListener('click', function() {
-    iframe_popup.classList.remove('show');
-});
 
 /*View*/
 function updateView(view) {

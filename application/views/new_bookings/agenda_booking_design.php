@@ -13,7 +13,7 @@ body {
             <a class="nav-link" id='iframe-popup-open' data-toggle="tab" href="#iframeSettings">Iframe</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#popup">Iframe Popup</a>
+            <a class="nav-link" data-toggle="tab" href="#popup">Popup</a>
         </li>
     </ul>
     <div class="tab-content">
@@ -54,31 +54,18 @@ body {
         </div>
         <div id="popup" class="container tab-pane" style="background: none;">
             <div class="col-lg-12" style="margin:10px 0px; text-align:left">
-                <h3 style="margin: 15px 0px 20px 0px">Iframe Popup</h3>
+                <h3 style="margin: 15px 0px 20px 0px">Popup</h3>
                 <div class="form-group" style="margin-top:30px">
-                    <label for="iframeId" onclick='copyToClipboard("iframePopup")' style="text-align:left; display:block">
+                    <label for="iframeId" onclick='copyToClipboard("popupContent")' style="text-align:left; display:block">
                         Copy to clipboard:
-                        <textarea class="form-control w-100" id="iframeId" readonly rows="4"
-                            style="height:60px;width: 200px;"><?php
-                    #$iframe  = htmlentities('<script src="' . base_url() . 'assets/js/iframeResizer.js"></script>');
-                    $iframe = htmlentities('<iframe frameborder="0" style="height:600px;width:100%;" scrolling="no" height="100%" width="100%" src="'.base_url().'agenda_booking/iframe/'.$userShortUrl.'"></iframe>');
-                    #$iframe .= htmlentities('<script>iFrameResize({ scrolling: true, sizeHeight: true, sizeWidth: true, maxHeight:700, maxWidth:400, })</script>');
-                    echo $iframe;
-            ?></textarea>
+                        <textarea class="form-control w-100 h-100" id="popupContent" readonly rows="4"
+                            style="height:60px;width: 200px;">#</textarea>
                     </label>
                 </div>
             </div>
 
-            <iframe id="iframePopup" src="<?php echo base_url(); ?>agenda_booking/iframe/<?php echo $userShortUrl; ?>" frameborder="0"
-                style="height:600px;width:100%;" scrolling="no" height="100%" width="100%"></iframe>
-        </div>
-    </div>
-    <div class="iframe-popup hide" id="iframe-popup">
-        <div class='iframe-popup__close' id='popup-close'></div>
-        <div class="iframe-popup__content">
-
-            <iframe src="<?php echo $iframeSrc; ?>" frameborder="0" style="height:100%;width:100%;" overflow-x='hidden'
-                height="100%" width="100%" id='iframe-wrapper'></iframe>
+            
+                <div id="root"></div>
         </div>
     </div>
 
@@ -97,6 +84,7 @@ var designGlobals = (function() {
         'spotsView': 'spotsView',
         'checkUrl': function(url) {
             if (url.includes('<?php echo $userShortUrl; ?>')) {
+                
                 return this['shortUrlView']
             }
             if (url.includes('spots')) {
@@ -124,4 +112,15 @@ var designGlobals = (function() {
     }
     return globals;
 }());
+
+
+</script>
+<script type="text/javascript">
+
+
+    
+    $.get('<?php echo base_url(); ?>agenda_booking/iframeJson/demotiqs/?callback=?', function(data){
+        $('#popupContent').text(data);
+    $('#root').html(data);
+    });
 </script>

@@ -820,4 +820,15 @@ class Agenda_booking extends BaseControllerWeb
         $this->loadViews('new_bookings/iframe-popup', $this->global, $data, 'footerpopup', 'headerpopup');
     }
 
+    public function iframeJson($shortUrl=false)
+    {
+        $data['shortUrl'] = $shortUrl;
+        $result = $this->load->view('popup', $data,true);
+        return $this->output
+					->set_content_type('application/json')
+					->set_status_header(200)
+					->set_output(json_encode($result));
+        
+    }
+
 }
