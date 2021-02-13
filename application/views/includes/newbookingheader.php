@@ -64,7 +64,7 @@
 <body id="body">
 
 
-    <div class="container booking-form">
+    <div class="mx-auto booking-form">
         <div id="booking-form__header" class="row">
             <div class="booking-form__header">
                 <div class="elem" id="agenda-active">
