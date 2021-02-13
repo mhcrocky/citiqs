@@ -295,6 +295,8 @@ $route['api/events/tickettypes']  = 'Api/Events/TicketTypes';
 $route['api/events/tickets']  = 'Api/Events/Tickets';
 $route['api/printers/printer']  = 'Api/Printers/Printer';
 $route['api/categories/category']  = 'Api/Categories/category';
+$route['api/tickettypes/types']  = 'Api/TicketTypes/Types';
+$route['api/entrance/in']  = 'Api/Entrance/In';
 
 $route['api/clean_printer_requests']  = 'Api/Cronjobs/cleanPrinterRequests';
 $route['api/report']  = 'Api/Reports/report';
