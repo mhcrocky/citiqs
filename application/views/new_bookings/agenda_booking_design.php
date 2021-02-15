@@ -13,7 +13,7 @@ body {
             <a class="nav-link" data-toggle="tab" href="#iframeSettings">Iframe</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#popup">Popup</a>
+            <a class="nav-link" data-toggle="tab" href="#popup" onclick="popupTab()">Popup</a>
         </li>
     </ul>
     <div class="tab-content">
@@ -67,28 +67,29 @@ body {
             <div class="form-group col-sm-12">
                 <label style="display:block;">
                     Background color:
-                    <input data-jscolor="" class="form-control jscolor" name="button_background"
-                        onchange="buttonStyle(this,'background-color')" />
+                    <input data-jscolor="" id="button_background" class="form-control jscolor" name="button_background"
+                        onchange="buttonStyle(this,'background-color')"
+                        value="$('#iframe-popup-open').css('backgroundColor')" />
                 </label>
             </div>
             <div class="form-group col-sm-12">
                 <label style="display:block;">
                     Text color:
-                    <input data-jscolor="" class="form-control jscolor" name="button_text"
+                    <input data-jscolor="" id="button_text" class="form-control jscolor" name="button_text"
                         onchange="buttonStyle(this,'color')" />
                 </label>
             </div>
             <div class="form-group col-sm-12">
                 <label style="display:block;">
                     Border color:
-                    <input data-jscolor="" class="form-control jscolor" name="button_border"
+                    <input data-jscolor="" id="button_border" class="form-control jscolor" name="button_border"
                         onchange="buttonStyle(this,'border-color')" />
                 </label>
             </div>
             <div class="form-group col-sm-12">
                 <label style="display:block;">
                     Button Text:
-                    <input type="text" class="form-control" id="button_text_content" name="button_text_content"
+                    <input type="text" id="button_text_content" class="form-control" name="button_text_content"
                         onchange="buttonText(this,'color')" />
                 </label>
             </div>
@@ -152,26 +153,4 @@ $.get('<?php echo base_url(); ?>agenda_booking/iframeJson/demotiqs/?callback=?',
     $('#popupContent').text(data);
     $('#root').html(data);
 });
-
-function buttonStyle(el, selector) {
-    var color = $(el).val();
-    $('#iframe-popup-open').css(selector, color);
-}
-
-function saveButtonStyle() {
-    var css = $('#iframe-popup-open').attr('style');
-    css = '#iframe-popup-open {' + css + '}';
-    var text = $('#iframe-popup-open').text();
-    $.post(globalVariables.baseUrl + 'agenda_booking/replacebuttonstyle', {
-        buttonStyle: css,
-        btnText: text
-    }, function(data) {
-        window.location.reload();
-    });
-}
-
-function buttonText(el) {
-    let text = $(el).val();
-    $('#iframe-popup-open').text(text);
-}
 </script>

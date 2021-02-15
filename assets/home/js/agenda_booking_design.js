@@ -237,6 +237,64 @@ function changeThisIframe(widthId, heightId, iframeId) {
     console.log(newIframe);
 
 }
+
+function buttonStyle(el, selector) {
+    var color = $(el).val();
+    $('#iframe-popup-open').css(selector, color);
+}
+
+function saveButtonStyle() {
+    var css = $('#iframe-popup-open').attr('style');
+    css = '#iframe-popup-open {' + css + '}';
+    var text = $('#iframe-popup-open').text();
+    $.post(globalVariables.baseUrl + 'agenda_booking/replacebuttonstyle', {
+        buttonStyle: css,
+        btnText: text
+    }, function(data) {
+        window.location.reload();
+    });
+}
+
+function buttonText(el) {
+    let text = $(el).val();
+    $('#iframe-popup-open').text(text);
+}
+
+function popupTab() {
+    let backgroundColorRGB = $('#iframe-popup-open').css("backgroundColor");
+    let colorRGB = $('#iframe-popup-open').css("color");
+    let borderTopColorRGB = $('#iframe-popup-open').css("border-top-color");
+    let backgroundColor = rgbToHex(backgroundColorRGB);
+    let color = rgbToHex(colorRGB);
+    let borderTopColor = rgbToHex(borderTopColorRGB);
+    let button_text_content = $('#iframe-popup-open').text();
+    $('#iframe-popup-open').attr('style','background-color: '+backgroundColor+';color: '+color+';border-color:'+borderTopColor+';');
+    $('#button_text_content').val(button_text_content);
+    $('#button_background').attr('style', currentButtonStyle(backgroundColorRGB));
+    $('#button_background').val(backgroundColor.toUpperCase());
+    $('#button_text').attr('style', currentButtonStyle(colorRGB));
+    $('#button_text').val(color.toUpperCase());
+    $('#button_border').attr('style', currentButtonStyle(borderTopColorRGB));
+    $('#button_border').val(borderTopColor.toUpperCase());
+}
+
+function currentButtonStyle(backgroundColor) {
+    return 'background-image: linear-gradient(to right, ' + backgroundColor + ' 0%, ' +
+        backgroundColor +
+        ' 30px, rgba(0, 0, 0, 0) 31px, rgba(0, 0, 0, 0) 100%);background-position: left top, left top !important;background-size: auto, 32px 16px !important;background-repeat: repeat-y, repeat-y !important;background-origin: padding-box, padding-box !important;padding-left: 40px !important;';
+    
+}
+
+function rgbToHex(rgb){
+    var a = rgb.split("(")[1].split(")")[0];
+    a = a.split(",");
+    var b = a.map(function(x){             //For each array element
+        x = parseInt(x).toString(16);      //Convert to a base16 string
+        return (x.length==1) ? "0"+x : x;  //Add zero if we get only one character
+    });
+    return "#"+b.join("");
+}
+
 // https://tiqs.com/alfred/places
 
 $(document).ready(function(){
