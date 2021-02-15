@@ -45,7 +45,7 @@
         Header Background color:
         <input  data-jscolor="" class="form-control jscolor" name="selectShortUrl[class][elem][background-color]"
             data-css-selector="class" data-css-selector-value="elem" data-css-property="background-color"
-            onfocus="styleELements(this)" oninput="styleELements(this)"
+             oninput="styleELements(this)"
             <?php if ( isset($design['selectShortUrl']['class']['elem']['background-color']) ) { ?>
             value="<?php echo $design['selectShortUrl']['class']['elem']['background-color']?>" data-value="1"
             <?php } ?> />
