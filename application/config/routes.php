@@ -295,6 +295,8 @@ $route['api/events/tickettypes']  = 'Api/Events/TicketTypes';
 $route['api/events/tickets']  = 'Api/Events/Tickets';
 $route['api/printers/printer']  = 'Api/Printers/Printer';
 $route['api/categories/category']  = 'Api/Categories/category';
+$route['api/tickettypes/types']  = 'Api/TicketTypes/Types';
+$route['api/entrance/in']  = 'Api/Entrance/In';
 
 $route['api/clean_printer_requests']  = 'Api/Cronjobs/cleanPrinterRequests';
 $route['api/report']  = 'Api/Reports/report';
@@ -462,6 +464,7 @@ $route['agenda_booking/get_agenda/spots/(:num)/(:num)'] = "Agenda_booking/get_ag
 $route['agenda_booking/getAllAgenda/(:any)'] = "Agenda_booking/getAllAgenda/$1";
 $route['agenda_booking/design'] = "Agenda_booking/design";
 $route['agenda_booking/savedesign'] = "Agenda_booking/saveDesign";
+$route['agenda_booking/iframe/(:any)'] = "Agenda_booking/iframe/$1";
 $route['agenda_booking/(:any)'] = "Agenda_booking/index/$1";
 
 $route['customer_panel'] = "Customer_panel/index/";

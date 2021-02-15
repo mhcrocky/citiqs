@@ -14,8 +14,13 @@ body{
 	justify-content: flex-start;
 	width: 100%;
 	margin-bottom: 10px;
+	
 }
 
+.row {
+	margin-left: 0px !important;
+	margin-right: 0px !important;
+}
 .booking-active{
 	background: #b32400 !important;
 }
@@ -26,7 +31,9 @@ body{
     align-items: center;
     display: flex;
 	height: 100%;
+	max-width: 550px;
 	background-color: #e8612f;
+	
 }
 
 .booking-form__header div:hover{
@@ -177,4 +184,9 @@ body{
 	font-weight: 600;
 	display: inline-block;
 	cursor: pointer;
+}
+
+.container {
+	padding-right: 0px !important;
+	padding-left: 0px !important;
 }

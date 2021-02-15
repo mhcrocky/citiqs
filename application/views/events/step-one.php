@@ -22,7 +22,7 @@
                                 <label for="event-name" class="col-md-4 col-form-label text-md-left">Event Name</label>
                                 <div class="col-md-8">
 
-                                    <input type="text" id="event-name" class="input-w form-control" name="eventname"
+                                    <input type="text" id="event-name" class="input-w border-50 form-control" name="eventname"
                                         required>
 
                                 </div>
@@ -43,7 +43,7 @@
 
 
                                     <label class="file">
-                                        <input type="file" name="userfile" id="file" onchange="imageUpload(this)"
+                                        <input type="file" class="border-50" name="userfile" id="file" onchange="imageUpload(this)"
                                             aria-label="File browser" >
                                         <span class="file-custom" data-content="Choose image ..."></span>
                                     </label>
@@ -62,7 +62,7 @@
                             <div class="form-group row">
                                 <label for="shop-type" class="col-md-4 col-form-label text-md-left">Shop type</label>
                                 <div class="col-md-4">
-                                    <select id="shop-type" class="form-control input-w">
+                                    <select id="shop-type" class="form-control input-w border-50">
                                         <option>Select option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -75,7 +75,7 @@
                                     Age</label>
                                 <div class="col-md-4">
                                     <div class="w-100 age">
-                                        <input id="age" type="number" name="age" class="form-control input-w" min="1" max="100"
+                                        <input id="age" type="number" name="age" class="form-control input-w border-50" min="1" max="100"
                                             step="22" value="1">
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@
                                 <label for="free-event" class="col-md-4 col-form-label text-md-left">Free
                                     event</label>
                                 <div class="col-md-4">
-                                    <select id="free-event" class="form-control input-w">
+                                    <select id="free-event" class="form-control input-w border-50">
                                         <option>Select option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -98,7 +98,7 @@
                                     questions <i id="corona-info" style="font-size: 16px;"
                                         class="fa fa-info-circle ml-1"></i></label>
                                 <div class="col-md-4">
-                                    <select id="corona-questions" class="form-control input-w">
+                                    <select id="corona-questions" class="form-control input-w border-50">
                                         <option>Select option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -112,7 +112,7 @@
                                         class="fa fa-info-circle ml-1"></i>
                                 </label>
                                 <div class="col-md-4">
-                                    <select id="reservation-shop" class="form-control input-w">
+                                    <select id="reservation-shop" class="form-control input-w border-50">
                                         <option>Select option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -125,7 +125,7 @@
                                 <label for="event-type" class="col-md-4 col-form-label text-md-left">Event
                                     type(s)</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="event-type" class="form-control input-w" name="event-type"
+                                    <input type="text" id="event-type" class="form-control input-w border-50" name="event-type"
                                         placeholder="Type or select an event type">
                                 </div>
                             </div>
@@ -137,7 +137,7 @@
                             <div class="form-group row">
                                 <label for="venue" class="col-md-4 col-form-label text-md-left">Venue</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="venue" class="form-control input-w" name="eventVenue"
+                                    <input type="text" id="venue" class="form-control input-w border-50" name="eventVenue"
                                         placeholder="Enter a location" required>
                                 </div>
                             </div>
@@ -145,7 +145,7 @@
                             <div class="form-group row">
                                 <label for="address" class="col-md-4 col-form-label text-md-left">Address</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="address" class="form-control input-w" name="eventAddress"
+                                    <input type="text" id="address" class="form-control input-w border-50" name="eventAddress"
                                         required>
                                 </div>
                             </div>
@@ -153,7 +153,7 @@
                             <div class="form-group row">
                                 <label for="city" class="col-md-4 col-form-label text-md-left">City</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="city" class="form-control input-w" name="eventCity" required>
+                                    <input type="text" id="city" class="form-control input-w border-50" name="eventCity" required>
                                 </div>
                             </div>
 
@@ -161,7 +161,7 @@
                                 <label for="postal-code" class="col-md-4 col-form-label text-md-left">Postal
                                     code</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="postal-code" class="form-control input-w" name="eventZipcode"
+                                    <input type="text" id="postal-code" class="form-control input-w border-50" name="eventZipcode"
                                         required>
                                 </div>
                             </div>
@@ -170,7 +170,7 @@
                                 <label for="country" class="col-md-4 col-form-label text-md-left">Country
                                 </label>
                                 <div class="col-md-6">
-                                    <select id="country" class="form-control input-w" required>
+                                    <select id="country" class="form-control input-w border-50" required>
                                         <option value="">Select option</option>
                                         <?php foreach($countries as $country): ?>
                                         <option value="<?php echo $country; ?>"><?php echo $country; ?></option>
@@ -185,7 +185,7 @@
                                 </label>
                                 <div class="col-md-6">
                                     <div class="input-group date">
-                                        <input type="text" class="form-control input-w input-date" id="event-date1"
+                                        <input type="text" class="form-control input-w inp-group-radius-left input-date" id="event-date1"
                                             name="StartDate" required>
                                         <input type="time" class="form-control input-w" id="event-time1"
                                             name="StartTime" value="00:00:00" required>
@@ -195,7 +195,7 @@
                                     <!--
                                     <hr style="margin-top: 0px;margin-bottom: 0px;border-top: none">
                                     <div class="input-group">
-                                        <input type="time" class="form-control input-w mb-3" id="event-time1"
+                                        <input type="time" class="form-control input-w border-50 mb-3" id="event-time1"
                                             name="StartTime" required>
                                         <span style="padding-top: 14px;"
                                             class="input-group-addon fa-input pl-2 pr-2 mb-3">
@@ -210,7 +210,7 @@
                                 </label>
                                 <div class="col-md-6">
                                     <div class="input-group date">
-                                        <input type="text" class="form-control input-w input-date" id="event-date2"
+                                        <input type="text" class="form-control input-w input-date inp-group-radius-left" id="event-date2"
                                             name="EndDate" required>
                                         <input type="time" class="form-control input-w" id="event-time2" name="EndTime"
                                             value="12:00:00" required>
@@ -233,9 +233,9 @@
                             <hr class="w-100 mt-5 mb-5">
 
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" style="width: 200px;border-radius: 0px;background: #07071c;"
-                                    class="btn btn-primary text-left">
-                                    <strong>Next step</strong> <span style="margin-left: 100px;"><i
+                                <button type="submit" style="width: 200px;background: #07071c;height: 45px;font-size: 15px;"
+                                    class="btn btn-primary text-left border-50">
+                                    <strong>Next step</strong> <span style="margin-left: 97px;"><i
                                             class="fa fa-arrow-right" aria-hidden="true"></i></span>
                                 </button>
                             </div>

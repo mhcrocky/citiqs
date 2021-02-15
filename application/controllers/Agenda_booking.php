@@ -52,7 +52,7 @@ class Agenda_booking extends BaseControllerWeb
             'logo' => $customer->logo,
         ]);
 
-        $data['agenda'] = $this->bookandpayagendabooking_model->getbookingagenda($customer->id);
+        $data['agendas'] = $this->bookandpayagendabooking_model->getbookingagenda($customer->id);
         $data['agenda_dates'] = $this->bookandpayagendabooking_model->getbookingagendadate($customer->id);
 
 
@@ -82,7 +82,7 @@ class Agenda_booking extends BaseControllerWeb
             redirect('agenda_booking/' . $customer['usershorturl']);
         }
 
-        $this->session->set_userdata('eventDate', $eventDate);
+        $this->session->set_userdata('eventDate', date("d.m.Y", strtotime($eventDate)));
         $this->session->set_userdata('eventId', $eventId);
         $this->session->set_userdata('spot', $eventId);
         $this->session->unset_userdata('spotDescript');
@@ -811,6 +811,24 @@ class Agenda_booking extends BaseControllerWeb
 
         $this->bookandpayagendabooking_model->save_agenda_booking_design($this->session->userdata('userId'),$data);
         redirect('agenda_booking/design');
+    }
+
+    public function iframe($shortUrl=false)
+    {
+        $this->global['pageTitle'] = 'TIQS : DESIGN';
+        $data['iframeSrc'] = base_url() . 'agenda_booking/' . $shortUrl;
+        $this->loadViews('new_bookings/iframe-popup', $this->global, $data, 'footerpopup', 'headerpopup');
+    }
+
+    public function iframeJson($shortUrl=false)
+    {
+        $data['shortUrl'] = $shortUrl;
+        $result = $this->load->view('popup', $data,true);
+        return $this->output
+					->set_content_type('application/json')
+					->set_status_header(200)
+					->set_output(json_encode($result));
+        
     }
 
 }

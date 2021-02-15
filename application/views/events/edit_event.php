@@ -22,7 +22,7 @@
                                 <label for="event-name" class="col-md-4 col-form-label text-md-left">Event Name</label>
                                 <div class="col-md-8">
 
-                                    <input type="text" id="event-name" class="input-w form-control" name="eventname"
+                                    <input type="text" id="event-name" class="input-w form-control border-50" name="eventname"
                                         value="<?php echo $event->eventname; ?>" required>
 
                                 </div>
@@ -67,7 +67,7 @@
                             <div class="form-group row">
                                 <label for="shop-type" class="col-md-4 col-form-label text-md-left">Shop type</label>
                                 <div class="col-md-4">
-                                    <select id="shop-type" class="form-control input-w">
+                                    <select id="shop-type" class="form-control border-50 input-w">
                                         <option>Select option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -80,7 +80,7 @@
                                     Age</label>
                                 <div class="col-md-4">
                                     <div class="w-100 age">
-                                        <input id="age" type="number" name="age" class="form-control input-w" min="1" max="100"
+                                        <input id="age" type="number" name="age" class="form-control border-50 input-w" min="1" max="100"
                                             step="22" value="1">
                                     </div>
                                 </div>
@@ -90,7 +90,7 @@
                                 <label for="free-event" class="col-md-4 col-form-label text-md-left">Free
                                     event</label>
                                 <div class="col-md-4">
-                                    <select id="free-event" class="form-control input-w">
+                                    <select id="free-event" class="form-control border-50 input-w">
                                         <option>Select option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -103,7 +103,7 @@
                                     questions <i id="corona-info" style="font-size: 16px;"
                                         class="fa fa-info-circle ml-1"></i></label>
                                 <div class="col-md-4">
-                                    <select id="corona-questions" class="form-control input-w">
+                                    <select id="corona-questions" class="form-control border-50 input-w">
                                         <option>Select option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -117,7 +117,7 @@
                                         class="fa fa-info-circle ml-1"></i>
                                 </label>
                                 <div class="col-md-4">
-                                    <select id="reservation-shop" class="form-control input-w">
+                                    <select id="reservation-shop" class="form-control border-50 input-w">
                                         <option>Select option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -130,7 +130,7 @@
                                 <label for="event-type" class="col-md-4 col-form-label text-md-left">Event
                                     type(s)</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="event-type" class="form-control input-w" name="event-type"
+                                    <input type="text" id="event-type" class="form-control border-50 input-w" name="event-type"
                                         placeholder="Type or select an event type">
                                 </div>
                             </div>
@@ -142,7 +142,7 @@
                             <div class="form-group row">
                                 <label for="venue" class="col-md-4 col-form-label text-md-left">Venue</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="venue" class="form-control input-w" name="eventVenue"
+                                    <input type="text" id="venue" class="form-control border-50 input-w" name="eventVenue"
                                         placeholder="Enter a location" value="<?php echo $event->eventVenue; ?>"
                                         required>
                                 </div>
@@ -151,7 +151,7 @@
                             <div class="form-group row">
                                 <label for="address" class="col-md-4 col-form-label text-md-left">Address</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="address" class="form-control input-w" name="eventAddress"
+                                    <input type="text" id="address" class="form-control border-50 input-w" name="eventAddress"
                                         value="<?php echo $event->eventAddress; ?>" required>
                                 </div>
                             </div>
@@ -159,7 +159,7 @@
                             <div class="form-group row">
                                 <label for="city" class="col-md-4 col-form-label text-md-left">City</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="city" class="form-control input-w" name="eventCity"
+                                    <input type="text" id="city" class="form-control border-50 input-w" name="eventCity"
                                         value="<?php echo $event->eventCity; ?>" required>
                                 </div>
                             </div>
@@ -168,7 +168,7 @@
                                 <label for="postal-code" class="col-md-4 col-form-label text-md-left">Postal
                                     code</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="postal-code" class="form-control input-w" name="eventZipcode"
+                                    <input type="text" id="postal-code" class="form-control border-50 input-w" name="eventZipcode"
                                         value="<?php echo $event->eventZipcode; ?>" required>
                                 </div>
                             </div>
@@ -177,7 +177,7 @@
                                 <label for="country" class="col-md-4 col-form-label text-md-left">Country
                                 </label>
                                 <div class="col-md-6 font-weight-bold">
-                                    <select id="country" class="form-control input-w font-weight-bold" required>
+                                    <select id="country" class="form-control border-50 input-w font-weight-bold" required>
                                         <option class="text-weight-bold" value="">Select option</option>
                                         <?php foreach($countries as $country): ?>
                                         <?php if($event->eventCountry == $country): ?>
@@ -198,7 +198,7 @@
                                 </label>
                                 <div class="col-md-6">
                                     <div class="input-group date">
-                                        <input type="text" class="form-control input-w input-date" id="event-date1"
+                                        <input type="text" class="form-control inp-group-radius-left input-w input-date" id="event-date1"
                                             name="StartDate" value="<?php echo $event->StartDate; ?>" required>
                                         <input type="time" class="form-control input-w" id="event-time1"
                                             name="StartTime" value="<?php echo $event->StartTime; ?>" required>
@@ -208,7 +208,7 @@
                                     <!--
                                     <hr style="margin-top: 0px;margin-bottom: 0px;border-top: none">
                                     <div class="input-group">
-                                        <input type="time" class="form-control input-w mb-3" id="event-time1"
+                                        <input type="time" class="form-control border-50 input-w mb-3" id="event-time1"
                                             name="StartTime" required>
                                         <span style="padding-top: 14px;"
                                             class="input-group-addon fa-input pl-2 pr-2 mb-3">
@@ -223,7 +223,7 @@
                                 </label>
                                 <div class="col-md-6">
                                     <div class="input-group date">
-                                        <input type="text" class="form-control input-w input-date" id="event-date2"
+                                        <input type="text" class="form-control inp-group-radius-left input-w input-date" id="event-date2"
                                             name="EndDate" value="<?php echo $event->EndDate; ?>" value="" required>
                                         <input type="time" class="form-control input-w" id="event-time2" name="EndTime"
                                             value="<?php echo $event->EndTime; ?>" required>
@@ -249,9 +249,9 @@
                                 <div class="input-group">
                                     <input type="submit" value="Save changes"
                                         style="background: #377E7F !important;border-radius:0;font-size: 15px;"
-                                        class="btn btn-primary form-control mb-3 text-left font-weight-bold">
+                                        class="btn btn-primary form-control inp-group-radius-left mb-3 text-left font-weight-bold">
                                     <span style="background: #275C5D;padding-top: 14px;"
-                                        class="input-group-addon pl-2 pr-2 mb-3">
+                                        class="input-group-addon inp-group-radius-right pl-2 pr-2 mb-3">
                                         <i style="color: #fff;font-size: 18px;" class="fa fa-check"></i></span>
                                 </div>
                             </div>

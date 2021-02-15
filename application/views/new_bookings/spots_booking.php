@@ -44,7 +44,7 @@
 							<h3 id="spot-title"><?php echo $spot['data']->descript; ?></h3>
 						</div>
                         <div class="box-text">
-							<span class="spot-data"><?php echo date("d.m.yy", strtotime($eventDate)) ?></span>
+							<span class="spot-data"><?php echo date("d.m.Y", strtotime($eventDate)) ?></span>
 						</div>
 						<div class="box-text">
 							<span class="spot-data"><?php echo $spot['data']->pricingdescript; ?> € <?php echo number_format($spot['data']->price, 2); ?></span>

@@ -230,5 +230,8 @@
         padding-top: 0px;
     }
     </style>
+<?php  } elseif ($this->view === 'new_bookings/agenda_booking_design') { ?>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/design.css">
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/home/styles/agenda_booking_design.css" rel="stylesheet"/>
 <?php } ?>
 

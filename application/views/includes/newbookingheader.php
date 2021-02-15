@@ -23,6 +23,14 @@
         color: #fff !important;
     }
 
+    @media only screen and (max-width: 550px) {
+        .container,.booking-form,#body {
+            width: 100% !important;
+            min-width: 100% !important;
+            max-width:100% !important;
+        }
+    }
+
     <?php $CI=& get_instance();
     $CI->load->model('bookandpayagendabooking_model');
     $customer=$CI->session->userdata('customer')['id'];
@@ -56,10 +64,10 @@
 <body id="body">
 
 
-    <div class="container booking-form">
+    <div class="mx-auto booking-form">
         <div id="booking-form__header" class="row">
             <div class="booking-form__header">
-                <div class="elem " id="agenda-active">
+                <div class="elem" id="agenda-active">
                     <a style="text-decoration:none;color:#fff;font-size:14px;"
                         href="<?php echo base_url(); ?>agenda_booking/spots/<?php echo $this->session->userdata('shortUrl'); ?>">Event
                         Date</a>

@@ -1,0 +1,180 @@
+*{
+	box-sizing: border-box;
+}
+
+html,body {
+    width: 100%;
+    height: 100%;
+}
+
+.iframe-popup{
+	max-width: 540px;
+	width: calc(100% - 40px);
+	height: 400px;
+	box-shadow: 0 0 18px 1px #0000001f;
+	border-radius: 8px;
+	position: fixed;
+	bottom: 80px;
+	right: 40px;
+	padding: 20px;
+	display: none;
+	opacity: 0;
+	transition: 0.4s;
+	z-index: 2147483644;
+}
+
+.iframe-popup.show{
+    animation-name: popup_open;
+    animation-duration: 0.4s;	
+	animation-fill-mode: forwards;
+	display: block !important; opacity: 1 !important;
+}
+
+/* The animation code */
+@keyframes popup_open {
+  from {display: none; opacity: 0;}
+  to {display: block !important; opacity: 1 !important;}
+}
+
+.iframe-popup__close{
+	position: absolute;
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	box-shadow: 0 0 18px 1px #0000001f;
+	cursor: pointer;
+	right: -12px;
+	top: -12px;
+	background-color: white
+}
+
+.iframe-popup__close:before, 
+.iframe-popup__close:after{
+	content:'';
+	display: block;
+	height: 10px;
+	width: 2px;
+	background-color: black;
+	position: absolute;
+	left: 11px;
+    top: 7px;
+}
+
+.iframe-popup__close:before{
+	transform: rotate(45deg)
+}
+
+.iframe-popup__close:after{
+	transform: rotate(-45deg)
+}
+
+.iframe-popup__content{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+@media only screen and (max-width: 640px){
+
+	.iframe-popup{
+		max-width: 100vw;
+		width: 100vw;
+		right: 0;
+		bottom: 0;
+		border-radius: 0;
+	}
+
+	.iframe-popup__close {
+		right: 10px;
+	}
+	
+}
+
+/* code for custom scroll bar, please use it for html tag on agenda page, change colors to fit design */
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+#iframe-popup-open{
+	border-radius: 50px;
+	
+}
+
+.btn-container {
+	max-width: 540px;
+	width: calc(100% - 40px);
+	position: fixed;
+	bottom: 30px;
+	right: 40px;
+	text-align: center;
+	z-index: 2147483644;
+}
+
+.btn {
+	display: inline-block;
+	font-weight: 400;
+	color: #212529;
+	text-align: center;
+	vertical-align: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: transparent;
+	border: 1px solid transparent;
+	padding: 0.375rem 0.75rem;
+	font-size: 1rem;
+	line-height: 1.5;
+	border-radius: 0.25rem;
+	transition: color 0.15s ease-in-out,
+	background-color 0.15s ease-in-out,
+	border-color 0.15s ease-in-out,
+	box-shadow 0.15s ease-in-out;
+  }
+  .btn:hover {
+	color: #212529;
+	text-decoration: none;
+  }
+
+.btn-primary {
+	color: #fff;
+	background-color: #007bff;
+	border-color: #007bff;
+  }
+  .btn-primary:hover {
+	color: #fff;
+	background-color: #0069d9;
+	border-color: #0062cc;
+  }
+  .btn-primary:focus {
+	box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+  }
+  .btn-primary:not(:disabled):not(.disabled):active {
+	color: #fff;
+	background-color: #0062cc;
+	border-color: #005cbf;
+  }
+  .btn-primary:not(:disabled):not(.disabled):active:focuss {
+	box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+  }
+
+
+
+
