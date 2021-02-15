@@ -83,14 +83,10 @@
                     
                 ];
 
-                $this->getOrdered($data, $vendorId, $spotId);
                 $this->setPosSideFee($data);
             }
 
-            $data['employees'] = $this
-                                    ->employee_model
-                                        ->setProperty('ownerId', $vendorId)
-                                        ->getMenuOptionEmployees($this->config->item('posMenuOptionId'));
+            $data['employees'] = $this->employee_model->setProperty('ownerId', $vendorId)->getMenuOptionEmployees($this->config->item('posMenuOptionId'));
             $data['lock'] = (isset($_SESSION['unlockPos']) && $_SESSION['unlockPos']) ? true : false;
             $data['spots'] = $spots;
             $data['spotId'] = $spotId;
@@ -98,24 +94,10 @@
             $data['isPos'] = 1;
             $data['fodIsActive'] = $isFodActive;
             $data['orderDataGetKey']    = $this->config->item('orderDataGetKey');
-            // $data['employees'] = $this->employee_model->setProperty('ownerId', $vendorId)->getActiveEmployeeForBB($vendorId);
+
             $this->global['pageTitle'] = 'TIQS : POS';
             $this->loadViews('pos/pos', $this->global, $data, null, 'headerWarehouse');
             return;
-        }
-
-        private function getOrdered(array &$data, $vendorId, $spotId): void
-        {
-            $orderDataRandomKey = empty($_GET[$this->config->item('orderDataGetKey')]) ? '' : $this->input->get($this->config->item('orderDataGetKey'), true);
-
-            $ordered = Jwt_helper::fetchPos($orderDataRandomKey, $vendorId, $spotId, ['vendorId', 'spotId']);
-
-            $data['orderDataRandomKey'] = $orderDataRandomKey;
-            if ($ordered && $ordered['makeOrder']) {
-                $ordered = Utility_helper::returnMakeNewOrderElements($ordered['makeOrder'], $data['vendor'], $data['mainProducts'], $data['addons'], $data['maxRemarkLength'], true);
-                $data['checkoutList'] = $ordered['checkoutList'];
-                $data['posOrderName'] = $this->getPosOrderName($orderDataRandomKey);
-            }
         }
 
         private function isLocalSpotOpen(array $spot): bool
@@ -129,30 +111,6 @@
             return true;
         }
 
-        public function delete(string $ranodmKey, string $spotId): void
-        {
-            $this->shopsession_model->setProperty('randomKey', $ranodmKey)->setIdFromRandomKey();
-            $this->shopposorder_model->setProperty('sessionId', intval($this->shopsession_model->id))->setIdFromSessionId();
-            if ($this->shopposorder_model->id) {
-                $this->shopposorder_model->delete();
-            }
-            $redirect = base_url() . 'pos?spotid=' . $spotId;
-            redirect($redirect);
-            return;
-        }
-
-        private function getPosOrderName(string $ranodmKey): ?string
-        {
-            $this->shopsession_model->setProperty('randomKey', $ranodmKey)->setIdFromRandomKey();
-            $this
-                ->shopposorder_model
-                    ->setProperty('sessionId', intval($this->shopsession_model->id))
-                    ->setIdFromSessionId();
-            if (!$this->shopposorder_model->id) return null;
-            $this ->shopposorder_model->setObject();
-            return $this->shopposorder_model->saveName;
-        }
-
         private function setPosSideFee(array &$data): void
         {
             $data['serviceFeePercent'] = $data['vendor']['serviceFeePercentPos'] === '1' ? $data['vendor']['serviceFeePercent'] : 0.0;
@@ -161,45 +119,4 @@
             return;
         }
 
-        // public function posLoginAction(): void
-        // {
-        //     $employee = Utility_helper::sanitizePost();
-
-        //     if (empty($employee)) {
-        //         $this->session->set_flashdata('error', 'Select employee');
-        //         redirect('pos_login');
-        //     }
-
-        //     $employee['inOutEmployee'] = $this->config->item('employeeIn');
-        //     $employee['inOutDateTime'] = date('Y-m-d H:i:s');
-        //     $employee['processed'] = '0';
-
-        //     $insert = $this->shopemployee_model->setObjectFromArray($employee)->create();
-        //     if (!$insert) {
-        //         $this->session->set_flashdata('error', 'Check in failed. Please try again');
-        //         redirect('pos_login');
-        //     }
-
-        //     $_SESSION['posEmployeeId'] = $employee['employeeId'];
-        //     redirect('pos');
-        // }
-
-        // public function posLogOutAction(): void
-        // {
-        //     $employee = [
-        //         'employeeId' => $_SESSION['posEmployeeId'],
-        //         'inOutEmployee' => $this->config->item('employeeOut'),
-        //         'inOutDateTime' => date('Y-m-d H:i:s'),
-        //         'processed' => '0'
-        //     ];
-
-        //     $insert = $this->shopemployee_model->setObjectFromArray($employee)->create();
-        //     if ($insert) {
-        //         unset($_SESSION['posEmployeeId']);
-        //         redirect('pos_login');
-        //     }
-
-        //     $this->session->set_flashdata('error', 'Logout failed. Please try again');
-        //     redirect('pos');
-        // }
     }

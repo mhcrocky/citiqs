@@ -419,14 +419,16 @@ function checkout(pos) {
     return;
 }
 
-function sendOrderAjaxRequest(send, urlPart) {
+function sendOrderAjaxRequest(send, urlPart = '') {
     $.ajax({
         url: globalVariables.ajax + 'setOrderSession',
         data: send,
         type: 'POST',
         success: function (response) {
-            if (response && response !== '0') {
-                window.location.href =  globalVariables.baseUrl + urlPart + makeOrderGlobals.orderDataGetKey + '=' + response;
+            if (response['status'] === '1') {
+                if (urlPart) {
+                    window.location.href =  globalVariables.baseUrl + urlPart + makeOrderGlobals.orderDataGetKey + '=' + response;
+                }                
             } else {
                 alertify.error('Process failed! Check order details')
             }

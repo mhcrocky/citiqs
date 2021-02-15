@@ -265,7 +265,7 @@ var callThis = (function() {
         checkCategoryCode: function(callFunction) {
             callFunction(this);
         },
-        posPayment: function(callFunction, functionArg) {
+        posPayOrder: function(callFunction, functionArg) {
             if (this) {
                 functionArg.push(this);
             }
@@ -298,6 +298,13 @@ var callThis = (function() {
             callFunction(...functionArg);
         },
         lockPos: function(callFunction) {
+            callFunction(this);
+        },
+        fetchSavedOrder: function(callFunction, functionArg) {
+            functionArg.push(this);
+            callFunction(...functionArg);
+        },
+        deletePosOrder: function(callFunction) {
             callFunction(this);
         },
     };

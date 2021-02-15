@@ -24,6 +24,8 @@
         public $sendSmsDriver;
         public $countSentMessages;
         public $expired;
+        public $isPos;
+        public $posPrint;
         public $paymentType;
         public $waiterReceipt;
         public $customerReceipt;
@@ -104,6 +106,8 @@
             if (isset($data['bbOrderPrint']) && !($data['bbOrderPrint'] === '1' || $data['bbOrderPrint'] === '0')) return false;
             if (isset($data['apiIdentifier']) && !Validate_data_helper::validateString($data['apiIdentifier'])) return false;
             if (isset($data['apiKeyId']) && !Validate_data_helper::validateInteger($data['apiKeyId'])) return false;
+            if (isset($data['isPos']) && !($data['isPos'] === '1' || $data['isPos'] === '0')) return false;
+            if (isset($data['posPrint']) && !($data['posPrint'] === '1' || $data['posPrint'] === '0')) return false;
 
             return true;
         }
@@ -348,7 +352,9 @@
                         tbl_shop_orders.id AS orderId,
                         tbl_shop_orders.spotId,
                         tbl_shop_orders.created AS orderCreated,
-                        tbl_shop_orders.expired AS orderExpired,
+                        tbl_shop_orders.expired AS orderExpired,                        
+                        tbl_shop_orders.isPos AS orderIsPos,
+                        tbl_shop_orders.posPrint AS orderPosPrint,
                         tbl_shop_orders.paid AS paidStatus,
                         tbl_shop_orders.paymentType AS paymentType,
                         tbl_shop_orders.waiterReceipt AS waiterReceipt,
@@ -438,7 +444,7 @@
                             WHERE tbl_user.roleid = ' . $this->config->item('owner') . '
                         ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     WHERE
-                        tbl_shop_orders.paid = "1"
+                        ( tbl_shop_orders.paid = "1" || ( tbl_shop_orders.isPos = "1" AND tbl_shop_orders.posPrint = "1") )
                         AND tbl_shop_orders.expired = "0"
                         AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_printers.macNumber = "' . $macNumber . '" 
@@ -454,6 +460,8 @@
                         tbl_shop_orders.spotId,
                         tbl_shop_orders.created AS orderCreated,
                         tbl_shop_orders.expired AS orderExpired,
+                        tbl_shop_orders.isPos AS orderIsPos,
+                        tbl_shop_orders.posPrint AS orderPosPrint,
                         tbl_shop_orders.paid AS paidStatus,
                         tbl_shop_orders.paymentType AS paymentType,
                         tbl_shop_orders.waiterReceipt AS waiterReceipt,
@@ -555,7 +563,7 @@
                             WHERE tbl_user.roleid = ' . $this->config->item('owner') . '
                         ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     WHERE
-                        tbl_shop_orders.paid = "1"
+                        (tbl_shop_orders.paid = "1" || tbl_shop_orders.posPrint = "0")
                         AND tbl_shop_orders.expired = "0"
                         AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_printers.macNumber = "' . $macNumber . '" 

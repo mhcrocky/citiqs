@@ -68,7 +68,10 @@ class Alfredinsertorder extends BaseControllerWeb
 
         $this->voucherPaymentFailed($orderData, $orderRandomKey);
 
-        $orderId = $this->insertOrderProcess($orderData, $this->config->item('orderNotPaid'), $payType, $orderRandomKey);
+        $orderData['order']['paid'] = $this->config->item('orderNotPaid');
+        $orderData['order']['paymentType'] = $payType;
+
+        $orderId = $this->insertOrderProcess($orderData, $orderRandomKey);
 
         if (!$orderId) {
             $this->failedRedirect($orderData['vendorId'], $orderData['spotId'], $orderRandomKey);
@@ -94,7 +97,10 @@ class Alfredinsertorder extends BaseControllerWeb
 
         $this->voucherPaymentFailed($orderData, $orderRandomKey);
 
-        $orderId = $this->insertOrderProcess($orderData, $payStatus, $payType, $orderRandomKey);
+        $orderData['order']['paid'] = $payStatus;
+        $orderData['order']['paymentType'] = $payType;
+
+        $orderId = $this->insertOrderProcess($orderData, $orderRandomKey);
 
         $this->cashVoucerRedirect($orderData['vendorId'], $orderId, $orderRandomKey, $orderData['spotId']);
 
@@ -112,34 +118,29 @@ class Alfredinsertorder extends BaseControllerWeb
         $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
 
         $payStatus = $this->payingWithVoucher($orderData['order']) ? $this->config->item('orderPaid') : $this->config->item('orderNotPaid');
-        $orderId = $this->insertOrderProcess($orderData, $payStatus, $this->config->item('voucherPayment'), $orderRandomKey);
+        $orderData['order']['paid'] = $payStatus;
+        $orderData['order']['paymentType'] = $this->config->item('voucherPayment');
+        $orderId = $this->insertOrderProcess($orderData, $orderRandomKey);
 
         $this->cashVoucerRedirect($orderData['vendorId'], $orderId, $orderRandomKey, $orderData['spotId']);
         return;
     }
 
-    public function posPayment(string $orderRandomKey = ''): void
+    public function posPayment(): void
     {
         $post = Utility_helper::sanitizePost();
         $post['vendorId'] = intval($post['vendorId']);
         $post['spotId'] = intval($post['spotId']);
         $payStatus = $this->config->item('orderPaid');
         $payType =  $this->config->item('postPaid');
-
+        $orderData['order']['paymentType'] = $this->config->item('postPaid');
+  
         $this->isFodActive($post['vendorId'], $post['spotId']);
 
-        $orderId = $this->insertOrderProcess($post, $payStatus, $payType,  $orderRandomKey);
-
-        if ($orderId) {
-            $this->deletePosOrder($post, $orderRandomKey);
-        }
+        $orderId = $this->insertOrderProcess($post, '');
         
-        // $this->voucherPaymentFailed($post, $orderRandomKey);
 
-        echo json_encode([
-            'orderId' => $orderId,
-            'orderRandomKey' => $orderRandomKey,
-        ]);        
+        echo json_encode(['orderId' => $orderId]);        
     }
 
     private function failedRedirect(int $vendorId, int $spotId, string $orderRandomKey): void
@@ -186,18 +187,18 @@ class Alfredinsertorder extends BaseControllerWeb
         return $payType;
     }
 
-    private function insertOrderProcess(array $post, string $payStatus, string $payType, string $orderRandomKey): int
+    private function insertOrderProcess(array $post, string $orderRandomKey): int
     {
         $this->user_model->manageAndSetBuyer($post['user']);
         if (!$this->user_model->id) return 0;
 
         $userId = intval($this->user_model->id);
-        $orderId = $this->insertOrderInTable($post, $payStatus, $payType, $orderRandomKey, $userId);
+        $orderId = $this->insertOrderInTable($post, $orderRandomKey, $userId);
 
         (intval($post['pos'])) ? $this->insertOrderExtendedRefactored($post['orderExtended'], $orderId) : $this->insertOrderExtended($post, $orderId);
 
         $this->saveOrderImage($orderId); // OPTIMIZE THREAD ... ASYNC 
-        $this->sendNotifictaion($post, $orderId, $payStatus);
+        $this->sendNotifictaion($post, $orderId, $post['order']['paid']);
 
         return $orderId;
     }
@@ -212,13 +213,11 @@ class Alfredinsertorder extends BaseControllerWeb
         Orderprint_helper::saveOrderImage($orderForImage);
     }
 
-    private function insertOrderInTable(array $post, string $payStatus, string $payType, string $orderRandomKey, int $userId): int
+    private function insertOrderInTable(array $post, string $orderRandomKey, int $userId): int
     {
         $spot = $this->shopspot_model->fetchSpot($post['vendorId'], $post['spotId']);
 
         $post['order']['buyerId'] = $userId;
-        $post['order']['paid'] = $payStatus;
-        $post['order']['paymentType'] = $payType;
         $post['order']['serviceTypeId'] = $spot['spotTypeId'];
         $post['order']['orderRandomKey'] = $orderRandomKey;
 

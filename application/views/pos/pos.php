@@ -31,24 +31,35 @@
 						<h1>FOD is not active</h1>
 					<?php } ?>
 				</div>
-				<?php if ($spotPosOrders  && $fodIsActive) { ?>
+				<?php if ($fodIsActive) { ?>
 					<div class="col-lg-5 col-12 form-inline">
-						<label for='selectSpot'>Select holded order:&nbsp;&nbsp;</label>
-						<select onchange="redirectToNewLocation(this.value)" class="form-control">
+						<label
+							for='selectSaved'
+							class="selectSavedOrdersList"
+						>
+							Select holded order:&nbsp;&nbsp;
+						</label>
+						<select
+							onchange="fetchSavedOrder(this)"
+							class="form-control selectSavedOrdersList"
+							id="selectSaved"
+						>
 							<option value="">Select</option>
-							<?php foreach ($spotPosOrders as $saveOrder) { ?>
-								<option
-									id='<?php echo $saveOrder['randomKey']; ?>'
-									value="pos?spotid=<?php echo $saveOrder['spotId'] . '&' . $orderDataGetKey . '=' . $saveOrder['randomKey']; ?>"
-									<?php
-										if (!empty($orderDataRandomKey) && $saveOrder['randomKey'] === $orderDataRandomKey) {
-											$selected = 'selected';
-											echo $selected;
-										}
-									?>
-								>
-									<?php echo $saveOrder['saveName']; ?>
-								</option>
+							<?php if ($spotPosOrders) { ?>
+								<?php foreach ($spotPosOrders as $saveOrder) { ?>
+									<option
+										id='<?php echo $saveOrder['randomKey']; ?>'
+										value="<?php echo $saveOrder['randomKey']; ?>"
+										<?php
+											if (!empty($orderDataRandomKey) && $saveOrder['randomKey'] === $orderDataRandomKey) {
+												$selected = 'selected';
+												echo $selected;
+											}
+										?>
+									>
+										<?php echo $saveOrder['saveName']; ?>
+									</option>
+								<?php } ?>
 							<?php } ?>
 						</select>
 					</div>
@@ -157,7 +168,7 @@
 								onclick="lockPos()"
 								style="float:left"
 							>
-								Pos logout
+								POS logout
 							</a>
 							<a
 								href="javascript:void(0)"
@@ -173,7 +184,7 @@
 							>
 								Z reportes
 							</a>
-							<a href="javascript:void(0)" class='pos_categories__button pos_categories__button--secondary' onclick="cancelPosOrder('<?php echo $orderDataRandomKey; ?>')">Cancel Order</a>
+							<a href="javascript:void(0)" class='pos_categories__button pos_categories__button--secondary' onclick="cancelPosOrder()">Cancel Order</a>
 							<a
 								href="javascript:void(0)"
 								id="saveHoldOrder"
@@ -181,9 +192,15 @@
 								data-toggle="modal"
 								data-target="#holdOrder"
 							>
-								<?php echo ($orderDataRandomKey && isset($selected)) ? 'Update' : 'Save'; ?>&nbsp;Order
+								Save order
 							</a>
-							<a href="<?php echo base_url() . 'pos?spotid=' . $spotId; ?>" class='pos_categories__button pos_categories__button--third' onclick="cancelPosOrder()">New order</a>
+							<a
+								href="javascript:void(0)"
+								class='pos_categories__button pos_categories__button--third'
+								onclick="resetPosOrder()"
+							>
+								New order
+							</a>
 						</div>
 						<!-- end pos footer -->
 					</div>
@@ -209,9 +226,6 @@
 					<input
 						type="text"
 						id="posOrderName"
-						<?php if (!empty($posOrderName)) { ?>
-						value="<?php echo $posOrderName; ?>"
-						<?php }  ?>
 						class="posKeyboard form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview payOrderInputFields"
 						role="textbox"
 						tabindex='-1'
@@ -221,7 +235,9 @@
 					<button
 						class="btn btn-success btn-lg"
 						style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
-						onclick="holdOrder('<?php echo $spotId; ?>', 'posOrderName')"
+        				data-locked="0"
+						data-paid="0"
+						onclick="holdOrder(this, 'posOrderName')"
 					>
 						<i class="fa fa-check-circle" aria-hidden="true"></i>
 					</button>
@@ -247,7 +263,7 @@
 					<button
 						class="btn btn-success btn-lg"
 						style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
-						onclick="deleteOrder('<?php echo $spotId; ?>', '<?php echo $orderDataRandomKey; ?>')"
+						onclick="deletePosOrder()"
 					>
 						<i class="fa fa-check-circle" aria-hidden="true"></i>
 					</button>
@@ -277,7 +293,13 @@
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<select class="form-control" name="email" id="employeeEmail">
+							<select
+								class="form-control"
+								name="email"id="employeeEmail"
+								data-form-check="1"
+								data-error-message="Email is required"
+								data-min-length="1"
+							>
 								<option value="">Select</option>
 								<?php foreach ($employees as $employee) { ?>
 									<option value="<?php echo $employee['employeeEmail']; ?>"><?php echo $employee['employeeEmail']; ?></option>
@@ -293,10 +315,14 @@
 								role="textbox"
 								tabindex='-1'
 								autocomplete="off"
+								data-form-check="1"
+								data-error-message="Password is required"
+								data-min-length="1"
 							/>
 						</div>
 					</div>
 					<div class="modal-footer">
+						<a href="<?php echo base_url() ?>orders" class="btn btn-primary">Back</a>
 						<input id="submitPosLogin" type="submit" class="btn btn-primary" value="Login" />
 					</div>
 				</form>
@@ -315,6 +341,9 @@
 				'serviceFeeAmount' : serviceFeeAmount,
 				'minimumOrderFee' : minimumOrderFee,
 				'counter' : 0,
+				'selectedOrderRandomKey' : '',
+				'selectedOrderName' : '',
+				'selectedOrderShortName' : '',
 			}
 			<?php if (!empty($vendor['oneSignalId'])) { ?>
 				globals['venodrOneSignalId'] = '<?php echo $vendor['oneSignalId']; ?>';
@@ -329,6 +358,13 @@
 			<?php } else { ?>
 				globals['unlock'] = false;
 			<?php } ?>
+
+			<?php if  ($spotPosOrders) { ?>
+				globals['spotPosOrders'] = true;
+			<?php } else { ?>
+				globals['spotPosOrders'] = false;
+			<?php } ?>
+
 			return globals;
 		}());
 	</script>

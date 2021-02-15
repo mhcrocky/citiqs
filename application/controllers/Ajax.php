@@ -46,6 +46,7 @@ class Ajax extends CI_Controller
         $this->load->helper('dhl_helper');
         $this->load->helper('validate_data_helper');
         $this->load->helper('uploadfile_helper');
+        $this->load->helper('jwt_helper');
 
         $this->load->library('session');
         $this->load->library('language', array('controller' => $this->router->class));
@@ -664,15 +665,20 @@ class Ajax extends CI_Controller
         if (!$this->input->is_ajax_request()) return;
 
         $post = Utility_helper::sanitizePost();
-        $response = '0';
+        $response = [];
+        
 
         if ($this->prepareOrderData($post)) {
             $this->insertSession($post, $response);
             $this->savePosOrder($post, $response);
+        } else {
+            $response['status'] = '0';
         }
 
-        echo $response;
+        echo json_encode($response);
     }
+
+    
 
     private function prepareOrderData(array &$post): bool
     {
@@ -691,7 +697,7 @@ class Ajax extends CI_Controller
         return true;
     }
 
-    private function insertSession(array $post, string &$response): void
+    private function insertSession(array $post, array &$response): void
     {
         $orderDataRandomKey = trim(Utility_helper::getAndUnsetValue($post, 'orderDataRandomKey'));
         if ($orderDataRandomKey) {
@@ -704,21 +710,28 @@ class Ajax extends CI_Controller
         }
 
         if ($this->shopsession_model->id && $this->shopsession_model->randomKey) {
-            $response = $this->shopsession_model->randomKey;
+            $response['orderRandomKey'] = $this->shopsession_model->randomKey;
+            $response['status'] = '1';
+        } else {
+            $response['status'] = '0';
         }
     }
 
-    private function savePosOrder(array $post, string &$response): void
+    private function savePosOrder(array $post, array &$response): void
     {
-        if ($post['pos'] === '1' && !empty($post['posOrder']) && $response !== '0') {
+        if ($post['pos'] === '1' && !empty($post['posOrder']) && $response['status'] !== '0') {
             // save pos order
             $post['posOrder']['sessionId'] = $this->shopsession_model->id;
-            $post['posOrder']['saveName'] = '(' . date('Y-m-d H:i:s') . ') ' . $post['posOrder']['saveName'];
+            $shortName = $post['posOrder']['saveName'];
+            $post['posOrder']['saveName'] = $post['posOrder']['saveName'] . ' (' . date('Y-m-d H:i:s') . ') ';
             $managePosOrder = $this->shopposorder_model->setObjectFromArray($post['posOrder'])->managePosOrder();
             if (!$managePosOrder) {
-                $response = '0';
+                $response['status'] = '0';
             }
+            $response['orderName'] = $post['posOrder']['saveName'];
+            $response['orderShortName'] = $shortName;
         }
+
         return;
     }
 
@@ -1829,6 +1842,53 @@ class Ajax extends CI_Controller
 
         echo json_encode($response);
 
+        return;
+    }
+
+    public function fetchSavedOrder(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = Utility_helper::sanitizePost();
+        $spotId = intval($post['spotId']);
+        $orderDataRandomKey = $post['orderDataRandomKey'];
+        $vendorId = intval($_SESSION['userId']);
+        $ordered = Jwt_helper::fetchPos($orderDataRandomKey, $vendorId, $spotId, ['vendorId', 'spotId']);
+
+        if ($ordered && $ordered['makeOrder']) {
+
+            $spot = $this->shopspot_model->fetchSpot($vendorId, $spotId);
+            $allProducts = $this->shopproductex_model->getMainProductsOnBuyerSide($vendorId, $spot);
+            $vendor = $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData();
+            $maxRemarkLength = $this->config->item('maxRemarkLength');
+
+            $ordered = Utility_helper::returnMakeNewOrderElements($ordered['makeOrder'], $vendor, $allProducts['main'], $allProducts['addons'], $maxRemarkLength, true);
+            $response['checkoutList'] = $ordered['checkoutList'];
+            $response['posOrderName'] = $this->getPosOrderName($orderDataRandomKey);
+
+            echo json_encode($response);
+        }
+    }
+
+
+    private function getPosOrderName(string $ranodmKey): ?string
+    {
+        $this->shopsession_model->setProperty('randomKey', $ranodmKey)->setIdFromRandomKey();
+        $this->shopposorder_model->setProperty('sessionId', intval($this->shopsession_model->id))->setIdFromSessionId();
+
+        if (!$this->shopposorder_model->id) return null;
+
+        $this->shopposorder_model->setObject();
+
+        return $this->shopposorder_model->saveName;
+    }
+
+    public function deletePosOrder(string $ranodmKey, string $spotId): void
+    {
+        $this->shopsession_model->setProperty('randomKey', $ranodmKey)->setIdFromRandomKey();
+        $this->shopposorder_model->setProperty('sessionId', intval($this->shopsession_model->id))->setIdFromSessionId();
+        $response['status'] = ($this->shopposorder_model->id && $this->shopposorder_model->delete()) ? '1' : '0';        
+        echo json_encode($response);
         return;
     }
 }
