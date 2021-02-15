@@ -220,10 +220,10 @@
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/emaildesigner/css/colpick.css" rel="stylesheet"  type="text/css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="<?php echo base_url() ?>assets/emaildesigner/css/themes/default.css" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" href="<?php echo base_url() ?>assets/emaildesigner/css/template.editor.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="<?php echo base_url() ?>assets/emaildesigner/css/responsive-table.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/emaildesigner/css/themes/default.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/emaildesigner/css/template.editor.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/emaildesigner/css/responsive-table.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
     <style>
     body {
         margin-left: 0px;
@@ -231,7 +231,9 @@
     }
     </style>
 <?php  } elseif ($this->view === 'new_bookings/agenda_booking_design') { ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/design.css">
-    <link rel="stylesheet" href="<?php echo base_url() ?>assets/home/styles/agenda_booking_design.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/design.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/agenda_booking_design.css"/>
+<?php  } elseif ($this->view === 'new_bookings/spots_booking') { ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/css/card-style.css">
 <?php } ?>
 

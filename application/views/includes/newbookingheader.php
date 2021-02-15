@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/booking-form-styles.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/datepicker/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/toastr3.css">
+    <?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600&amp;display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
