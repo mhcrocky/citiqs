@@ -48,7 +48,7 @@
 
             $link = base_url() . 'login/activate/' . $user->id . '/' . $user->code;
             $message = file_get_contents(FCPATH . 'assets/email_templates/1/registration1611591813.html');
-            $message = str_replace('[registrationlink]', $link, $message);
+            $message = str_replace('[registration]', $link, $message);
             $subject = 'Activation link';
             return self::sendEmail($user->email, $subject, $message);
         }
