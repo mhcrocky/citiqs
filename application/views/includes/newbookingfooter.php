@@ -4,7 +4,7 @@
     <p class="booking-info">Event Date: <span id="selected-date">
             <?php $shorturl = $this->session->userdata('shortUrl');
 			 if(base_url("agenda_booking/$shorturl") != current_url()):
-              echo $this->session->userdata('eventDate');
+              echo date("d.m.Y", strtotime($this->session->userdata('eventDate')));
             endif; ?>
         </span></p>
     <p class="booking-info">SPOT Description: <span
