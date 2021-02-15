@@ -82,7 +82,7 @@ class Agenda_booking extends BaseControllerWeb
             redirect('agenda_booking/' . $customer['usershorturl']);
         }
 
-        $this->session->set_userdata('eventDate', date("d.m.Y", strtotime($eventDate)));
+        $this->session->set_userdata('eventDate', $eventDate);
         $this->session->set_userdata('eventId', $eventId);
         $this->session->set_userdata('spot', $eventId);
         $this->session->unset_userdata('spotDescript');
