@@ -83,14 +83,10 @@
                     
                 ];
 
-                $this->getOrdered($data, $vendorId, $spotId);
                 $this->setPosSideFee($data);
             }
 
-            $data['employees'] = $this
-                                    ->employee_model
-                                        ->setProperty('ownerId', $vendorId)
-                                        ->getMenuOptionEmployees($this->config->item('posMenuOptionId'));
+            $data['employees'] = $this->employee_model->setProperty('ownerId', $vendorId)->getMenuOptionEmployees($this->config->item('posMenuOptionId'));
             $data['lock'] = (isset($_SESSION['unlockPos']) && $_SESSION['unlockPos']) ? true : false;
             $data['spots'] = $spots;
             $data['spotId'] = $spotId;
@@ -98,24 +94,10 @@
             $data['isPos'] = 1;
             $data['fodIsActive'] = $isFodActive;
             $data['orderDataGetKey']    = $this->config->item('orderDataGetKey');
-            // $data['employees'] = $this->employee_model->setProperty('ownerId', $vendorId)->getActiveEmployeeForBB($vendorId);
+
             $this->global['pageTitle'] = 'TIQS : POS';
             $this->loadViews('pos/pos', $this->global, $data, null, 'headerWarehouse');
             return;
-        }
-
-        private function getOrdered(array &$data, $vendorId, $spotId): void
-        {
-            $orderDataRandomKey = empty($_GET[$this->config->item('orderDataGetKey')]) ? '' : $this->input->get($this->config->item('orderDataGetKey'), true);
-
-            $ordered = Jwt_helper::fetchPos($orderDataRandomKey, $vendorId, $spotId, ['vendorId', 'spotId']);
-
-            $data['orderDataRandomKey'] = $orderDataRandomKey;
-            if ($ordered && $ordered['makeOrder']) {
-                $ordered = Utility_helper::returnMakeNewOrderElements($ordered['makeOrder'], $data['vendor'], $data['mainProducts'], $data['addons'], $data['maxRemarkLength'], true);
-                $data['checkoutList'] = $ordered['checkoutList'];
-                $data['posOrderName'] = $this->getPosOrderName($orderDataRandomKey);
-            }
         }
 
         private function isLocalSpotOpen(array $spot): bool
@@ -127,30 +109,6 @@
                 return false;;
             }
             return true;
-        }
-
-        public function delete(string $ranodmKey, string $spotId): void
-        {
-            $this->shopsession_model->setProperty('randomKey', $ranodmKey)->setIdFromRandomKey();
-            $this->shopposorder_model->setProperty('sessionId', intval($this->shopsession_model->id))->setIdFromSessionId();
-            if ($this->shopposorder_model->id) {
-                $this->shopposorder_model->delete();
-            }
-            $redirect = base_url() . 'pos?spotid=' . $spotId;
-            redirect($redirect);
-            return;
-        }
-
-        private function getPosOrderName(string $ranodmKey): ?string
-        {
-            $this->shopsession_model->setProperty('randomKey', $ranodmKey)->setIdFromRandomKey();
-            $this
-                ->shopposorder_model
-                    ->setProperty('sessionId', intval($this->shopsession_model->id))
-                    ->setIdFromSessionId();
-            if (!$this->shopposorder_model->id) return null;
-            $this ->shopposorder_model->setObject();
-            return $this->shopposorder_model->saveName;
         }
 
         private function setPosSideFee(array &$data): void

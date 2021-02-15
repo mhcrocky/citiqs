@@ -2,7 +2,7 @@
     <div class="pos-sidebar">
         <div class="pos-checkout">
             <div class="pos-checkout__header">
-                <h3>
+                <h3 id="checkoutName">
                     Checkout
                     <?php
                         if (!empty($posOrderName)) { 
@@ -22,9 +22,12 @@
     <a
         href="javascript:void(0)"
         class='pos-checkout__button'
-        onclick="posPayment(this)"
+        onclick="posPayOrder(this)"
         data-locked="0"
-    >Pay (<span class="totalPrice">0</span>&nbsp;&euro;)</a>
+        data-paid="1"
+    >
+        Pay (<span class="totalPrice">0</span>&nbsp;&euro;)
+    </a>
 </div>
 
 <div class="col-lg-4" id="posResponse" style="dipslay:none; padding-top:40px"></div>

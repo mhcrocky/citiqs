@@ -10,7 +10,6 @@
             'orderedProducts' : 'orderedProducts',
             'spotId' : '<?php echo $spotId; ?>',
             'vendorId': '<?php echo $vendor['vendorId']; ?>',
-            'orderDataRandomKey' : '<?php echo $orderDataRandomKey; ?>',
             'orderDataGetKey' : '<?php echo $orderDataGetKey; ?>',
             'logoImageId' : 'vendorLogo',
             'activeClass' : 'pos_categories__single-item--active', // POS
@@ -18,7 +17,6 @@
             'posResponse': 'posResponse',  // POS            
             'spanQuantityIdPrefix' : 'orderQuantityValue_',
             'checkoutContinueButton' : 'checkoutContinue',
-
         }
 
         <?php if (!empty($returnCategorySlide)) { ?>
@@ -41,7 +39,12 @@
         <?php } else { ?>
             globals['oneSignalId'] = '';
         <?php } ?>
-        Object.freeze(globals);
+        <?php if (!empty($orderDataRandomKey)) { ?>
+            globals['orderDataRandomKey'] = '<?php echo $orderDataRandomKey; ?>';
+        <?php } else { ?>
+            globals['orderDataRandomKey'] = '';
+        <?php } ?>
+
         return globals;
     }());
 </script>
