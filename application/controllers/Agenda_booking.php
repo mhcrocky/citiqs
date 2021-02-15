@@ -813,13 +813,6 @@ class Agenda_booking extends BaseControllerWeb
         redirect('agenda_booking/design');
     }
 
-    public function iframe($shortUrl=false)
-    {
-        $this->global['pageTitle'] = 'TIQS : DESIGN';
-        $data['iframeSrc'] = base_url() . 'agenda_booking/' . $shortUrl;
-        $this->loadViews('new_bookings/iframe-popup', $this->global, $data, 'footerpopup', 'headerpopup');
-    }
-
     public function iframeJson($shortUrl=false)
     {
         $data['shortUrl'] = $shortUrl;
@@ -829,6 +822,41 @@ class Agenda_booking extends BaseControllerWeb
 					->set_status_header(200)
 					->set_output(json_encode($result));
         
+    }
+
+    public function replaceButtonStyle()
+    {
+        //CSS FILE
+        $f = fopen(FCPATH.'assets/home/styles/popup-style.css', 'r');
+        $newCssContent = '';
+        for ($i = 1; ($line = fgets($f)) !== false; $i++) {
+            if($line == '#iframe-popup-open{'){
+                echo 'true';
+            }
+            if (strpos($line, '#iframe-popup-open') !== false) {
+                break;
+            }
+            $newCssContent.= $line;
+        }
+
+        $newCssContent .= $this->input->post('buttonStyle');
+        $f = fopen(FCPATH.'assets/home/styles/popup-style.css', 'w');
+        fwrite($f,$newCssContent);
+        fclose($f);
+
+        //JS FILE
+        $f = fopen(FCPATH.'assets/home/js/popup.js', 'r');
+        $newJsContent = '';
+        $btnText = $this->input->post('btnText');
+        for ($i = 1; ($line = fgets($f)) !== false; $i++) {
+            if (strpos($line, "document.getElementById('iframe-popup-open').textContent") !== false) {
+                $line = "document.getElementById('iframe-popup-open').textContent = '$btnText'; \n";
+            }
+            $newJsContent .= $line;
+        }
+        $f = fopen(FCPATH.'assets/home/js/popup.js', 'w');
+        fwrite($f,$newJsContent);
+        fclose($f);
     }
 
 }

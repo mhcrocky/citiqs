@@ -53,19 +53,7 @@ body {
             <?php include_once FCPATH . 'application/views/new_bookings/design/iframeSettings.php'; ?>
         </div>
         <div id="popup" class="container tab-pane" style="background: none;">
-            <div class="col-lg-12" style="margin:10px 0px; text-align:left">
-                <h3 style="margin: 15px 0px 20px 0px">Popup</h3>
-                <div class="form-group" style="margin-top:30px">
-                    <label for="iframeId" onclick='copyToClipboard("popupContent")' style="text-align:left; display:block">
-                        Copy to clipboard:
-                        <textarea class="form-control w-100 h-100" id="popupContent" readonly rows="4"
-                            style="height:60px;width: 200px;">#</textarea>
-                    </label>
-                </div>
-            </div>
-
-            
-                <div id="root"></div>
+            <?php include_once FCPATH . 'application/views/new_bookings/design/popupView.php'; ?>
         </div>
     </div>
 
@@ -84,7 +72,7 @@ var designGlobals = (function() {
         'spotsView': 'spotsView',
         'checkUrl': function(url) {
             if (url.includes('<?php echo $userShortUrl; ?>')) {
-                
+
                 return this['shortUrlView']
             }
             if (url.includes('spots')) {
@@ -113,14 +101,30 @@ var designGlobals = (function() {
     return globals;
 }());
 
-
-</script>
-<script type="text/javascript">
-
-
-    
-    $.get('<?php echo base_url(); ?>agenda_booking/iframeJson/demotiqs/?callback=?', function(data){
-        $('#popupContent').text(data);
+$.get('<?php echo base_url(); ?>agenda_booking/iframeJson/demotiqs/?callback=?', function(data) {
+    $('#popupContent').text(data);
     $('#root').html(data);
+});
+
+function buttonStyle(el, selector) {
+    var color = $(el).val();
+    $('#iframe-popup-open').css(selector, color);
+}
+
+function saveButtonStyle() {
+    var css = $('#iframe-popup-open').attr('style');
+    css = '#iframe-popup-open {' + css + '}';
+    var text = $('#iframe-popup-open').text();
+    $.post(globalVariables.baseUrl + 'agenda_booking/replacebuttonstyle', {
+        buttonStyle: css,
+        btnText: text
+    }, function(data) {
+        window.location.reload();
     });
+}
+
+function buttonText(el) {
+    let text = $(el).val();
+    $('#iframe-popup-open').text(text);
+}
 </script>

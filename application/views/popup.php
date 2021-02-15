@@ -1,5 +1,7 @@
 <div class="btn-container">
-    <button class="btn btn-primary" id="iframe-popup-open" onclick="popup()">Click here to make reservation</button>
+    <button class="btn btn-primary" id="iframe-popup-open" onclick="popup()">
+        Click here to make reservation
+    </button>
 </div>
 
 <div class="iframe-popup hide" id="iframe-popup">

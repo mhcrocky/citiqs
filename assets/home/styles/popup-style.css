@@ -112,11 +112,6 @@ html,body {
 }
 
 
-#iframe-popup-open{
-	border-radius: 50px;
-	
-}
-
 .btn-container {
 	max-width: 540px;
 	width: calc(100% - 40px);
@@ -157,6 +152,7 @@ html,body {
 	color: #fff;
 	background-color: #007bff;
 	border-color: #007bff;
+	border-radius: 50px;
   }
   .btn-primary:hover {
 	color: #fff;
@@ -174,7 +170,4 @@ html,body {
   .btn-primary:not(:disabled):not(.disabled):active:focuss {
 	box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
   }
-
-
-
 

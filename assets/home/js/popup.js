@@ -1,3 +1,6 @@
+(function(){
+document.getElementById('iframe-popup-open').textContent = 'Click here to make reservation'; 
+})();
 var styleLoader = function(url) {
     var headID = document.getElementsByTagName('head')[0];
     var link = document.createElement('link');
@@ -10,7 +13,7 @@ var styleLoader = function(url) {
 
 
 };
-
+ 
 styleLoader('https://tiqs.com/alfred/');
 
 
