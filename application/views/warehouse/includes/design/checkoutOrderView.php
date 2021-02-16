@@ -5,7 +5,7 @@
             Background color:
             <input
                 data-jscolor=""
-style="border-radius: 50px"
+                style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[class][checkoutOrderBody][background-color]"
                 data-css-selector="class"
@@ -25,7 +25,7 @@ style="border-radius: 50px"
             Headline background color:
             <input
                 data-jscolor=""
-style="border-radius: 50px"
+                style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[id][headlineYourOrder][background-color]"
                 data-css-selector="id"
@@ -45,7 +45,7 @@ style="border-radius: 50px"
             Headline font color:
             <input
                 data-jscolor=""
-style="border-radius: 50px"
+                style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[id][headlineYourOrder][color]"
                 data-css-selector="id"
@@ -65,7 +65,7 @@ style="border-radius: 50px"
             Quantity and price background color:
             <input
                 data-jscolor=""
-style="border-radius: 50px"
+                style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[class][markedButtons][background-color]"
                 data-css-selector="class"
@@ -215,6 +215,26 @@ style="border-radius: 50px"
                 oninput="styleELements(this)"
                 <?php if ( isset($design['checkoutOrder']['class']['plusAndMinusColor']['color']) ) { ?>
                 value = "<?php echo $design['checkoutOrder']['class']['plusAndMinusColor']['color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Fee,total and tip background color:
+            <input
+                data-jscolor=""
+                style="border-radius: 50px"
+                class="form-control"
+                name="checkoutOrder[class][feeTotalTip][color]"
+                data-css-selector="class"
+                data-css-selector-value="feeTotalTip"
+                data-css-property="color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['checkoutOrder']['class']['feeTotalTip']['color']) ) { ?>
+                value = "<?php echo $design['checkoutOrder']['class']['feeTotalTip']['color']?>"
                 data-value="1"
                 <?php } ?>
             />
