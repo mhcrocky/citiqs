@@ -59,6 +59,7 @@
 
             $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '1');
 
+            $this->shoporder_model->updatePrintedStatus();
             // $this->callOrderCopy($order, $bbUser);
         }
 
