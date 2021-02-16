@@ -33,7 +33,12 @@
     crossorigin="anonymous"></script>
 
 <!-- datepicker -->
+
 <script>
+(function() {
+    customDesignLoad();
+})();
+
 $(document).ready(function() {
     var agenda_dates = JSON.parse('<?php echo isset($agenda_dates) ? json_encode($agenda_dates) : '{}'; ?>');
 
@@ -76,7 +81,8 @@ $('#date-input').datepicker({
 $("#date-input").on('changeMonth', function() {
     setTimeout(() => {
         console.log($('.day'));
-        var agenda_dates = JSON.parse('<?php echo isset($agenda_dates) ? json_encode($agenda_dates) : '{}'; ?>');
+        var agenda_dates = JSON.parse(
+            '<?php echo isset($agenda_dates) ? json_encode($agenda_dates) : '{}'; ?>');
         $('.day').each(function() {
             var date = $(this).attr('data-daydate');
             if (agenda_dates.includes(date)) {

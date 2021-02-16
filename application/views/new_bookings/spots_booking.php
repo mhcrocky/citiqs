@@ -1,6 +1,8 @@
 <?php $backgroundColors = ['background-blue-light', 'background-blue', 'background-orange-light', 'background-purple-light', 'background-orange']; ?>
 <div class="col-12 step step-2 active" id="person-input">
-    <h3 id="title">Choose an available SPOT:</h3>
+    <h3 id="title">
+        <span id="choose-spot">Choose an available SPOT: </span>
+    </h3>
     <?php 
         $last = $this->uri->total_segments();
         $agenda_id = $this->uri->segment($last);

@@ -31,6 +31,90 @@
 <legend>Select general view</legend>
 <div class="form-group col-sm-12">
     <label style="display:block;">
+        Event Text:
+        <input  type="text" class="form-control" name="headerTitle[event-text]"
+            onfocus="styleELements(this)" 
+            onchange="styleELements(this)"
+            <?php if ( isset($design['headerTitle']['event-text']) ) { ?>
+            value="<?php echo $design['headerTitle']['event-text']?>" data-value="1"
+            <?php } else { ?> id="event-text"
+            <?php } ?> />
+    </label>
+</div>
+<div class="form-group col-sm-12">
+    <label style="display:block;">
+        SPOT Text:
+        <input  type="text" class="form-control" name="headerTitle[spot-text]"
+            onfocus="styleELements(this)" 
+            onchange="styleELements(this)"
+            <?php if ( isset($design['headerTitle']['spot-text']) ) { ?>
+            value="<?php echo $design['headerTitle']['spot-text']?>" data-value="1"
+            <?php } else { ?> id="spot-text"
+            <?php } ?> />
+    </label>
+</div>
+<div class="form-group col-sm-12">
+    <label style="display:block;">
+        Timeslot Text:
+        <input  type="text" class="form-control" name="headerTitle[timeslot-text]"
+            onfocus="styleELements(this)" 
+            onchange="styleELements(this)"
+            <?php if ( isset($design['headerTitle']['timeslot-text']) ) { ?>
+            value="<?php echo $design['headerTitle']['timeslot-text']?>" data-value="1"
+            <?php } else { ?> id="timeslot-text"
+            <?php } ?> />
+    </label>
+</div>
+<div class="form-group col-sm-12">
+    <label style="display:block;">
+        Personal Info Text:
+        <input  type="text" class="form-control" name="headerTitle[personal-info-text]"
+            onfocus="styleELements(this)" 
+            onchange="styleELements(this)"
+            <?php if ( isset($design['headerTitle']['personal-info-text']) ) { ?>
+            value="<?php echo $design['headerTitle']['personal-info-text']?>" data-value="1"
+            <?php } else { ?> id="personal-info-text"
+            <?php } ?> />
+    </label>
+</div>
+<div class="form-group col-sm-12">
+    <label style="display:block;">
+        Choose Agenda Text:
+        <input  type="text" class="form-control" name="chooseTitle[choose-agenda]"
+            onfocus="styleELements(this)" 
+            onchange="styleELements(this)"
+            <?php if ( isset($design['chooseTitle']['choose-agenda']) ) { ?>
+            value="<?php echo $design['chooseTitle']['choose-agenda']?>" data-value="1"
+            <?php } else { ?> value="Choose a Agenda"
+            <?php } ?> />
+    </label>
+</div>
+<div class="form-group col-sm-12">
+    <label style="display:block;">
+        Choose SPOT Text:
+        <input  type="text" class="form-control" name="chooseTitle[choose-spot]"
+            onfocus="styleELements(this)" 
+            onchange="styleELements(this)"
+            <?php if ( isset($design['chooseTitle']['choose-spot']) ) { ?>
+            value="<?php echo $design['chooseTitle']['choose-spot']?>" data-value="1"
+            <?php } else { ?> value="Choose an available SPOT:"
+            <?php } ?> />
+    </label>
+</div>
+<div class="form-group col-sm-12">
+    <label style="display:block;">
+        Choose Timeslot Text:
+        <input  type="text" class="form-control" name="chooseTitle[choose-timeslot]"
+            onfocus="styleELements(this)" 
+            onchange="styleELements(this)"
+            <?php if ( isset($design['chooseTitle']['choose-timeslot']) ) { ?>
+            value="<?php echo $design['chooseTitle']['choose-timeslot']?>" data-value="1"
+            <?php } else { ?> value="Please Choose a Time Slot"
+            <?php } ?> />
+    </label>
+</div>
+<div class="form-group col-sm-12">
+    <label style="display:block;">
         Body Background color:
         <input  data-jscolor="" class="form-control jscolor" name="selectShortUrl[id][body][background-color]"
             data-css-selector="id" data-css-selector-value="body" data-css-property="background-color"
@@ -150,6 +234,23 @@ $(document).ready(function() {
         console.log(px);
         screen(px[0], px[1]);
     });
+
+    if($('#event-text').length > 0){
+        $('#event-text').val('Event Date');
+    }
+
+    if($('#spot-text').length > 0){
+        $('#spot-text').val('SPOT');
+    }
+
+    if($('#timeslot-text').length > 0){
+        $('#timeslot-text').val('Timeslot');
+    }
+
+    if($('#personal-info-text').length > 0){
+        $('#personal-info-text').val('Personal Info');
+        
+    }
 })
 
 function screen(width, height) {
