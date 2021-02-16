@@ -3,7 +3,7 @@
         <div class="checkout-table">
             <div id="headlineYourOrder" class="checkout-table__header">
                 <h3 class='mb-0' style="text-align:center">
-                    <?php  $this->language->line("PAYMENT-HD0010",'YOUR ORDER'); ?>
+                    <?php  echo $this->language->line("PAYMENT-AHD0010",'YOUR ORDER'); ?>
                 </h3>
             </div>
             <!--            <div class="checkout-table__single-element checkout-table__single-element--header">-->
