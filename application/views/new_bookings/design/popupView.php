@@ -11,27 +11,27 @@
 <div class="form-group col-sm-12">
     <label style="display:block;">
         Background color:
-        <input data-jscolor="" class="form-control jscolor" name="button_background"
+        <input data-jscolor="" class="form-control b-radius jscolor" name="button_background"
             onchange="buttonStyle(this,'background-color')" />
     </label>
 </div>
 <div class="form-group col-sm-12">
     <label style="display:block;">
         Text color:
-        <input data-jscolor="" class="form-control jscolor" name="button_text" onchange="buttonStyle(this,'color')" />
+        <input data-jscolor="" class="form-control b-radius jscolor" name="button_text" onchange="buttonStyle(this,'color')" />
     </label>
 </div>
 <div class="form-group col-sm-12">
     <label style="display:block;">
         Border color:
-        <input data-jscolor="" class="form-control jscolor" name="button_border"
+        <input data-jscolor="" class="form-control b-radius jscolor" name="button_border"
             onchange="buttonStyle(this,'border-color')" />
     </label>
 </div>
 <div class="form-group col-sm-12">
     <label style="display:block;">
         Button Text:
-        <input type="text" class="form-control" id="button_text_content" name="button_text_content"
+        <input type="text" class="form-control b-radius" id="button_text_content" name="button_text_content"
             onchange="buttonText(this,'color')" />
     </label>
 </div>

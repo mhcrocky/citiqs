@@ -14,13 +14,14 @@
         </div>
     </div>
     <div class="col-md-6">
-        <select id="device" class="form-control">
+    <div id="views">
+        <select id="device" class="form-control mb-3">
             <?php foreach($devices as $device): ?>
             <option
                 value="<?php echo $device['width']."x".$device['height']; ?>"><?php echo $device['device']; ?></option>
             <?php endforeach; ?>
         </select>
-        <div id="views">
+        
             <button onclick="return false" value="3">View 1 - Front</button>
             <button onclick="return false" value="1">View 2 - Laying</button>
             <button onclick="return false" value="2">View 3 - Side</button>
@@ -32,7 +33,7 @@
 <div class="form-group col-sm-12">
     <label style="display:block;">
         Event Text:
-        <input  type="text" class="form-control" name="headerTitle[event-text]"
+        <input  type="text" class="form-control b-radius" name="headerTitle[event-text]"
             onfocus="styleELements(this)" 
             onchange="styleELements(this)"
             <?php if ( isset($design['headerTitle']['event-text']) ) { ?>
@@ -44,7 +45,7 @@
 <div class="form-group col-sm-12">
     <label style="display:block;">
         SPOT Text:
-        <input  type="text" class="form-control" name="headerTitle[spot-text]"
+        <input  type="text" class="form-control b-radius" name="headerTitle[spot-text]"
             onfocus="styleELements(this)" 
             onchange="styleELements(this)"
             <?php if ( isset($design['headerTitle']['spot-text']) ) { ?>
@@ -56,7 +57,7 @@
 <div class="form-group col-sm-12">
     <label style="display:block;">
         Timeslot Text:
-        <input  type="text" class="form-control" name="headerTitle[timeslot-text]"
+        <input  type="text" class="form-control b-radius" name="headerTitle[timeslot-text]"
             onfocus="styleELements(this)" 
             onchange="styleELements(this)"
             <?php if ( isset($design['headerTitle']['timeslot-text']) ) { ?>
@@ -68,7 +69,7 @@
 <div class="form-group col-sm-12">
     <label style="display:block;">
         Personal Info Text:
-        <input  type="text" class="form-control" name="headerTitle[personal-info-text]"
+        <input  type="text" class="form-control b-radius" name="headerTitle[personal-info-text]"
             onfocus="styleELements(this)" 
             onchange="styleELements(this)"
             <?php if ( isset($design['headerTitle']['personal-info-text']) ) { ?>
@@ -80,7 +81,7 @@
 <div class="form-group col-sm-12">
     <label style="display:block;">
         Choose Agenda Text:
-        <input  type="text" class="form-control" name="chooseTitle[choose-agenda]"
+        <input  type="text" class="form-control b-radius" name="chooseTitle[choose-agenda]"
             onfocus="styleELements(this)" 
             onchange="styleELements(this)"
             <?php if ( isset($design['chooseTitle']['choose-agenda']) ) { ?>
@@ -92,7 +93,7 @@
 <div class="form-group col-sm-12">
     <label style="display:block;">
         Choose SPOT Text:
-        <input  type="text" class="form-control" name="chooseTitle[choose-spot]"
+        <input  type="text" class="form-control b-radius" name="chooseTitle[choose-spot]"
             onfocus="styleELements(this)" 
             onchange="styleELements(this)"
             <?php if ( isset($design['chooseTitle']['choose-spot']) ) { ?>
@@ -104,7 +105,7 @@
 <div class="form-group col-sm-12">
     <label style="display:block;">
         Choose Timeslot Text:
-        <input  type="text" class="form-control" name="chooseTitle[choose-timeslot]"
+        <input  type="text" class="form-control b-radius" name="chooseTitle[choose-timeslot]"
             onfocus="styleELements(this)" 
             onchange="styleELements(this)"
             <?php if ( isset($design['chooseTitle']['choose-timeslot']) ) { ?>
@@ -116,7 +117,7 @@
 <div class="form-group col-sm-12">
     <label style="display:block;">
         Body Background color:
-        <input  data-jscolor="" class="form-control jscolor" name="selectShortUrl[id][body][background-color]"
+        <input  data-jscolor="" class="form-control b-radius jscolor" name="selectShortUrl[id][body][background-color]"
             data-css-selector="id" data-css-selector-value="body" data-css-property="background-color"
             onfocus="styleELements(this)" oninput="styleELements(this)"
             <?php if ( isset($design['selectShortUrl']['id']['body']['background-color']) ) { ?>
@@ -127,7 +128,7 @@
 <div class="form-group col-sm-12">
     <label style="display:block;">
         Header Background color:
-        <input  data-jscolor="" class="form-control jscolor" name="selectShortUrl[class][elem][background-color]"
+        <input  data-jscolor="" class="form-control b-radius jscolor" name="selectShortUrl[class][elem][background-color]"
             data-css-selector="class" data-css-selector-value="elem" data-css-property="background-color"
              oninput="styleELements(this)"
             <?php if ( isset($design['selectShortUrl']['class']['elem']['background-color']) ) { ?>
@@ -138,7 +139,7 @@
 <div class="form-group col-sm-12">
     <label style="display:block;">
         Active Background color:
-        <input  data-jscolor="" class="form-control jscolor"
+        <input  data-jscolor="" class="form-control b-radius jscolor"
             name="selectShortUrl[class][booking-active][background-color]" data-css-selector="class"
             data-css-selector-value="booking-active" data-css-property="background-color" onfocus="styleELements(this)"
             oninput="styleELements(this)"
@@ -150,7 +151,7 @@
 <div class="col-sm-12 input-group">
     <label style="display:block;">
         Background color:
-        <input data-jscolor="" class="form-control jscolor"
+        <input data-jscolor="" class="form-control b-radius jscolor"
             name="selectShortUrl[class][booking-form][background-color]" data-css-selector="class"
             data-css-selector-value="booking-form" data-css-property="background-color" onfocus="styleELements(this)"
             oninput="styleELements(this)"
@@ -162,7 +163,7 @@
 <div class="form-group col-sm-12">
     <label style="display:block;">
         Footer Background color:
-        <input  data-jscolor="" class="form-control jscolor"
+        <input  data-jscolor="" class="form-control b-radius jscolor"
             name="selectShortUrl[id][booking-footer][background-color]" data-css-selector="id"
             data-css-selector-value="booking-footer" data-css-property="background-color" onfocus="styleELements(this)"
             oninput="styleELements(this)"
@@ -174,7 +175,7 @@
 <div class="form-group col-sm-12">
     <label style="display:block;">
         Title color:
-        <input  data-jscolor="" class="form-control jscolor" name="selectShortUrl[id][title][color]"
+        <input  data-jscolor="" class="form-control b-radius jscolor" name="selectShortUrl[id][title][color]"
             data-css-selector="id" data-css-selector-value="title" data-css-property="color"
             onfocus="styleELements(this)" oninput="styleELements(this)"
             <?php if ( isset($design['selectShortUrl']['id']['title']['color']) ) { ?>
@@ -184,7 +185,7 @@
 <div class="form-group col-sm-12">
     <label style="display:block;">
         Title Border Bottom color:
-        <input  data-jscolor="" class="form-control jscolor" name="selectShortUrl[id][title][border-bottom-color]"
+        <input  data-jscolor="" class="form-control b-radius jscolor" name="selectShortUrl[id][title][border-bottom-color]"
             data-css-selector="id" data-css-selector-value="title" data-css-property="border-bottom-color"
             onfocus="styleELements(this)" oninput="styleELements(this)"
             <?php if ( isset($design['selectShortUrl']['id']['title']['border-bottom-color']) ) { ?>
@@ -195,7 +196,7 @@
 <div class="form-group col-sm-12">
     <label style="display:block;">
         Booking Title color:
-        <input  data-jscolor="" class="form-control jscolor" name="selectShortUrl[id][footer-title][color]"
+        <input  data-jscolor="" class="form-control b-radius jscolor" name="selectShortUrl[id][footer-title][color]"
             data-css-selector="id" data-css-selector-value="footer-title" data-css-property="color"
             onfocus="styleELements(this)" oninput="styleELements(this)"
             <?php if ( isset($design['selectShortUrl']['id']['footer-title']['color']) ) { ?>
@@ -205,7 +206,7 @@
 <div class="form-group col-sm-12">
     <label style="display:block;">
         Booking Info color:
-        <input  data-jscolor="" class="form-control jscolor" name="selectShortUrl[class][booking-info][color]"
+        <input  data-jscolor="" class="form-control b-radius jscolor" name="selectShortUrl[class][booking-info][color]"
             data-css-selector="class" data-css-selector-value="booking-info" data-css-property="color"
             onfocus="styleELements(this)" oninput="styleELements(this)"
             <?php if ( isset($design['selectShortUrl']['class']['booking-info']['color']) ) { ?>
@@ -216,7 +217,7 @@
 <div class="form-group col-sm-12">
     <label style="display:block;">
         Go Back button color:
-        <input  data-jscolor="" class="form-control jscolor" name="selectShortUrl[class][go-back-button][color]"
+        <input  data-jscolor="" class="form-control b-radius jscolor" name="selectShortUrl[class][go-back-button][color]"
             data-css-selector="class" data-css-selector-value="go-back-button" data-css-property="color"
             onfocus="styleELements(this)" oninput="styleELements(this)"
             <?php if ( isset($design['selectShortUrl']['class']['go-back-button']['color']) ) { ?>
