@@ -39,7 +39,9 @@
         public function data_get()
         {
             $mac = $this->getMacNumber();
+
             $this->printFinanceReport($mac);
+
             $order = $this->getOrder($mac);
             $vendorId = intval($order['vendorId']);
             $bbUser = $this->shopvendorfod_model->isBBVendor($vendorId);
@@ -51,8 +53,6 @@
 
             $this->shopprinterrequest_model->setObjectFromArray(['orderId' => $order['orderId']])->update();
 
-            $this->checkoOrderTime($order);
-
             Receiptprint_helper::printPrinterReceipt($order);
 
             $this->shopprinterrequest_model->setObjectFromArray(['printerEcho' => date('Y-m-d H:i:s')])->update();
@@ -60,6 +60,7 @@
             $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '1');
 
             $this->shoporder_model->updatePrintedStatus();
+
             $this->callOrderCopy($order, $bbUser);
         }
 
@@ -81,7 +82,7 @@
                     exit;
                 }
 
-                #if ($order['paidStatus'] === '0') exit;
+                if ($order['paidStatus'] === '0') exit;
             }
         }
 
@@ -101,7 +102,11 @@
 
             if (!$order) exit;
 
-            return reset($order);
+            $order = reset($order);
+
+            $this->checkoOrderTime($order);
+
+            return $order;
         }
 
         private function checkoOrderTime(array $order): void

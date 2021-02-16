@@ -369,6 +369,20 @@
             return date('Y-m-d H:i:s', strtotime( '-' . $printTimeConstraint . ' hours', time() ));
         }
 
+        public function getPrintTimeConstraintFromMac(string $macNumber)
+        {
+            $printTimeConstraint = $this->shopvendor_model->readImproved([
+                'what' => [$this->table . '.printTimeConstraint printTimeConstraint'],
+                'where' => ['tbl_shop_printers.macNumber' => $macNumber],
+                'joins' => [
+                    ['tbl_shop_printers', 'tbl_shop_printers.userId = ' . $this->table . '.vendorId', 'INNER']
+                ]
+            ]);
+
+            $printTimeConstraint = reset($printTimeConstraint)['printTimeConstraint'];
+            return date('Y-m-d H:i:s', strtotime( '-' . $printTimeConstraint . ' hours', time() ));
+        }
+
         public function getVendors(array $where): ?array
         {
 

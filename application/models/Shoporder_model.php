@@ -445,6 +445,7 @@
                         ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     WHERE
                         ( tbl_shop_orders.paid = "1" || ( tbl_shop_orders.isPos = "1" AND tbl_shop_orders.posPrint = "1") )
+                        AND tbl_shop_orders.printStatus = "0"
                         AND tbl_shop_orders.expired = "0"
                         AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_printers.macNumber = "' . $macNumber . '" 
@@ -564,6 +565,7 @@
                         ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     WHERE
                         ( tbl_shop_orders.paid = "1" || ( tbl_shop_orders.isPos = "1" AND tbl_shop_orders.posPrint = "1") )
+                        AND tbl_shop_orders.printStatus = "0"
                         AND tbl_shop_orders.expired = "0"
                         AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_printers.macNumber = "' . $macNumber . '" 
