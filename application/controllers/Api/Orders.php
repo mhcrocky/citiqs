@@ -16,7 +16,6 @@
             $this->load->model('shoporderex_model');
             $this->load->model('shopvendor_model');
             $this->load->model('shopprinterrequest_model');
-            $this->load->model('shopprinters_model');
             $this->load->model('shopvendorfod_model');
             $this->load->model('shopreportrequest_model');
 
@@ -91,7 +90,12 @@
         {
             $mac = $this->input->get('mac', true);
 
-            if( !$mac || !$this->shopprinterrequest_model->insertPrinterRequest($mac) ) exit;
+            if (!$mac) exit;
+
+            if (
+                !$this->shopprinters_model->setProperty('macNumber', $mac)->checkIsPrinterActive()
+                || !$this->shopprinterrequest_model->insertPrinterRequest($mac)
+            ) exit;
 
             return $this->shopprinters_model->setProperty('macNumber', $mac)->printMacNumber();
         }

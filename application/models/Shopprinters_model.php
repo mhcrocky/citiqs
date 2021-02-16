@@ -215,4 +215,17 @@
             $id = intval($id['id']);
             return $id;
         }
+
+        public function checkIsPrinterActive(): bool
+        {
+            $active = $this->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    $this->table . '.active' => '1',
+                    $this->table . '.macNumber' => $this->macNumber,
+                ]
+            ]);
+
+            return !is_null($active);
+        }
     }
