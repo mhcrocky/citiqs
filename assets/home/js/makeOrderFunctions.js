@@ -424,10 +424,11 @@ function sendOrderAjaxRequest(send, urlPart = '') {
         url: globalVariables.ajax + 'setOrderSession',
         data: send,
         type: 'POST',
-        success: function (response) {
-            if (response['status'] === '1') {
+        success: function (data) {
+            let response = JSON.parse(data);            
+            if (response['status'] === '1' || response === '1') {
                 if (urlPart) {
-                    window.location.href =  globalVariables.baseUrl + urlPart + makeOrderGlobals.orderDataGetKey + '=' + response;
+                    window.location.href =  globalVariables.baseUrl + urlPart + makeOrderGlobals.orderDataGetKey + '=' + response['orderRandomKey'];
                 }                
             } else {
                 alertify.error('Process failed! Check order details')
