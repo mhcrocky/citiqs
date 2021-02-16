@@ -1,7 +1,7 @@
 
             <div class="checkout-table__single-element checkout-table__single-element--total checkoutOrderBody borderColor">
                 <div class="checkout-table__total">
-                    <b><?php echo $this->language->line("PAYMENT-AL9999",'FEE');?></b>
+                    <b class="feeTotalTip"><?php echo $this->language->line("PAYMENT-AL9999",'FEE');?></b>
                     <span id="serviceFee">
                         <?php
                             $serviceFee = $orderTotal * $serviceFeePercent / 100 + $minimumOrderFee;
@@ -12,7 +12,7 @@
             </div>
             <div class="checkout-table__single-element checkout-table__single-element--total checkoutOrderBody borderColor">
                 <div class="checkout-table__total checkoutOrderBody">
-                    <b><?php echo $this->language->line("PAYMENT-AL0010",'AMOUNT');?></b>
+                    <b class="feeTotalTip"><?php echo $this->language->line("PAYMENT-AL0010",'AMOUNT');?></b>
                     <span id="totalAmount">
                         <?php
                             $total = $orderTotal + $serviceFee;
@@ -24,7 +24,7 @@
             <?php if ($vendor['tipWaiter'] === '1') { ?>
                 <div class="checkout-table__single-element checkout-table__single-element--total checkoutOrderBody borderColor">
                     <div class="checkout-table__total checkoutOrderBody" style="text-align:right">
-                        <b><?php echo $this->language->line("PAYMENT-AL00101",'TIP');?></b>
+                        <b class="feeTotalTip"><?php echo $this->language->line("PAYMENT-AL00101",'TIP');?></b>
                         <span>
                             <input
                                 type="number"
@@ -42,7 +42,7 @@
                 </div>
                 <div class="checkout-table__single-element checkout-table__single-element--total checkoutOrderBody borderColor" style="text-align:right">
                     <div class="checkout-table__total ">
-                        <b><?php echo $this->language->line("PAYMENT-AL0010",'TOTAL');?> </b>
+                        <b class="feeTotalTip"><?php echo $this->language->line("PAYMENT-AL0010",'TOTAL');?> </b>
                         <span>
                             <input
                                 type="number"
