@@ -60,7 +60,7 @@
             $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '1');
 
             $this->shoporder_model->updatePrintedStatus();
-            // $this->callOrderCopy($order, $bbUser);
+            $this->callOrderCopy($order, $bbUser);
         }
 
         private function handlePrePostPaid(array $order, bool $bbUser): void
@@ -117,8 +117,7 @@
         private function callOrderCopy(array $order, bool $bbUser): void
         {
             if (
-                $this->shoporder_model->updatePrintedStatus()
-                && !($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid'))
+                !($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid'))
                 && !$bbUser
             ) {
                 file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
