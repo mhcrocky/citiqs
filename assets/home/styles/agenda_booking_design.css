@@ -128,3 +128,8 @@ input[type=color] {
 * {
     box-sizing: border-box;
 }
+
+
+.b-radius {
+    border-radius: 50px;
+}

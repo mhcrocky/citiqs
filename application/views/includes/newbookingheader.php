@@ -62,6 +62,26 @@
 
     ?>
     </style>
+    <script>
+    function customDesignLoad() {
+    <?php 
+        if(isset($customDesign[0]['design']) && isset(unserialize($customDesign[0]['design'])['headerTitle'])){
+            $headerTitles = unserialize($customDesign[0]['design'])['headerTitle'];
+            foreach($headerTitles as $key => $headerTitle){
+                echo "$('.".$key."').text('".$headerTitle."');";
+            }
+        }
+        if(isset($customDesign[0]['design']) && isset(unserialize($customDesign[0]['design'])['chooseTitle'])){
+            $chooseTitles = unserialize($customDesign[0]['design'])['chooseTitle'];
+            foreach($chooseTitles as $key => $chooseTitle){
+                echo "if(document.getElementById('".$key."') !== null){";
+                echo "document.getElementById('".$key."').textContent = '".$chooseTitle."';";
+                echo "}";
+            }
+        }
+    ?>
+    }
+    </script>
 
 
 </head>
@@ -73,63 +93,36 @@
         <div id="booking-form__header" class="row">
             <div class="booking-form__header">
                 <div class="elem" id="agenda-active">
-                    <a id="event-text" class="agenda-active" style="text-decoration:none;color:#fff;font-size:14px;"
+                    <a class="agenda-active header-text event-text" style="text-decoration:none;color:#fff;font-size:14px;"
                         href="<?php echo base_url(); ?>agenda_booking/spots/<?php echo $this->session->userdata('shortUrl'); ?>">Event
                         Date</a>
                 </div>
                 <div class="elem" id="spot-active">
                     <?php if($this->session->userdata('eventId')): ?>
-                    <a id="spot-text" class="spot-active" style="text-decoration:none;color:#fff;font-size:14px;"
+                    <a class="spot-active header-text spot-text" style="text-decoration:none;color:#fff;font-size:14px;"
                         href="<?php echo base_url(); ?>agenda_booking/spots/<?php echo $this->session->userdata('eventDate'); ?>/<?php echo $this->session->userdata('eventId'); ?>">SPOT</a>
                     <?php else: ?>
-                    <p id="spot-text" class="spot-active">SPOT</p>
+                    <p class="spot-active header-text spot-text">SPOT</p>
                     <?php endif; ?>
                 </div>
                 <div class="elem" id="timeslot-active">
                     <?php if($this->session->userdata('spotId')): ?>
-                    <a id="timeslot-text" class="timeslot-active"
-                        style="text-decoration:none;color:#fff;font-size:14px;"
+                    <a class="timeslot-active header-text timeslot-text" style="text-decoration:none;color:#fff;font-size:14px;"
                         href="<?php echo base_url(); ?>agenda_booking/time_slots/<?php echo $this->session->userdata('spotId'); ?>">Time
                         Slot</a>
                     <?php else: ?>
-                    <p id="timeslot-text" class="timeslot-active">Time Slot</p>
+                    <p class="timeslot-active header-text timeslot-text">Time Slot</p>
                     <?php endif; ?>
                 </div>
                 <div class="elem" id="personal-active">
                     <?php if($this->session->userdata('timeslotId')): ?>
-                    <a id="personal-info-text" class="personal-active"
+                    <a class="personal-active header-text personal-info-text"
                         style="text-decoration:none;color:#fff;font-size:14px;"
                         href="<?php echo base_url(); ?>agenda_booking/pay">Personal Info</a>
                     <?php else: ?>
-                    <p id="personal-info-text" class="personal-active">Personal Info</p>
+                    <p class="personal-active header-text personal-info-text">Personal Info</p>
                     <?php endif; ?>
                 </div>
             </div>
         </div>
         <!-- end booking for header -->
-        <script>
-        (function() {
-            <?php 
-        if(isset($customDesign[0]['design']) && isset(unserialize($customDesign[0]['design'])['headerTitle'])){
-            $headerTitles = unserialize($customDesign[0]['design'])['headerTitle'];
-            foreach($headerTitles as $key => $headerTitle){
-                echo "document.getElementById('".$key."').textContent = '".$headerTitle."';";
-            }
-        }
-
-        ?>
-        })();
-
-        function customDesignLoad() {
-            <?php 
-        if(isset($customDesign[0]['design']) && isset(unserialize($customDesign[0]['design'])['chooseTitle'])){
-            $chooseTitles = unserialize($customDesign[0]['design'])['chooseTitle'];
-            foreach($chooseTitles as $key => $chooseTitle){
-                echo "if(document.getElementById('".$key."') !== null){";
-                echo "document.getElementById('".$key."').textContent = '".$chooseTitle."';";
-                echo "}";
-            }
-        }
-        ?>
-        }
-        </script>

@@ -67,7 +67,7 @@ body {
             <div class="form-group col-sm-12">
                 <label style="display:block;">
                     Background color:
-                    <input data-jscolor="" id="button_background" class="form-control jscolor" name="button_background"
+                    <input data-jscolor="" id="button_background" class="form-control b-radius jscolor" name="button_background"
                         onchange="buttonStyle(this,'background-color')"
                         value="$('#iframe-popup-open').css('backgroundColor')" />
                 </label>
@@ -75,21 +75,21 @@ body {
             <div class="form-group col-sm-12">
                 <label style="display:block;">
                     Text color:
-                    <input data-jscolor="" id="button_text" class="form-control jscolor" name="button_text"
+                    <input data-jscolor="" id="button_text" class="form-control b-radius jscolor" name="button_text"
                         onchange="buttonStyle(this,'color')" />
                 </label>
             </div>
             <div class="form-group col-sm-12">
                 <label style="display:block;">
                     Border color:
-                    <input data-jscolor="" id="button_border" class="form-control jscolor" name="button_border"
+                    <input data-jscolor="" id="button_border" class="form-control b-radius jscolor" name="button_border"
                         onchange="buttonStyle(this,'border-color')" />
                 </label>
             </div>
             <div class="form-group col-sm-12">
                 <label style="display:block;">
                     Button Text:
-                    <input type="text" id="button_text_content" class="form-control" name="button_text_content"
+                    <input type="text" id="button_text_content" class="form-control b-radius" name="button_text_content"
                         onchange="buttonText(this,'color')" />
                 </label>
             </div>

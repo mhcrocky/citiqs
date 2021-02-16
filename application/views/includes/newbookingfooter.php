@@ -1,18 +1,18 @@
 <!-- end booking form inputs -->
 <div id="booking-footer" class="booking-form__result w-100">
     <h4 id="footer-title" class="mb-3">Booking Info </h4>
-    <p class="booking-info">Event Date: <span id="selected-date">
+    <p class="booking-info"><span class="event-text">Event Date</span>: <span id="selected-date">
             <?php $shorturl = $this->session->userdata('shortUrl');
 			 if(base_url("agenda_booking/$shorturl") != current_url()):
               echo date("d.m.Y", strtotime($this->session->userdata('eventDate')));
             endif; ?>
         </span></p>
-    <p class="booking-info">SPOT Description: <span
+    <p class="booking-info"><span class="spot-text">SPOT Description</span>: <span
             id="spot"><?php echo $this->session->userdata('spotDescript'); ?></span></p>
-    <p class="booking-info">SPOT Price: <span id="price"><?php echo $this->session->userdata('spotPrice'); ?></span></p>
-    <p class="booking-info">Time Slot: <span
+    <p class="booking-info"><span>SPOT Price:</span> <span id="price"><?php echo $this->session->userdata('spotPrice'); ?></span></p>
+    <p class="booking-info"><span class="timeslot-text">Time Slot</span>: <span
             id="selected-time"><?php echo $this->session->userdata('timeslot'); ?></span></p>
-    <p class="booking-info">Personal Info: <span id="personal-info"></span></p>
+    <p class="booking-info"><span class="personal-info-text">Personal Info</span>: <span id="personal-info"></span></p>
 </div>
 <!-- end booking form results -->
 </div>
