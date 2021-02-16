@@ -93,34 +93,34 @@
         <div id="booking-form__header" class="row">
             <div class="booking-form__header">
                 <div class="elem" id="agenda-active">
-                    <a class="agenda-active event-text" style="text-decoration:none;color:#fff;font-size:14px;"
+                    <a class="agenda-active header-text event-text" style="text-decoration:none;color:#fff;font-size:14px;"
                         href="<?php echo base_url(); ?>agenda_booking/spots/<?php echo $this->session->userdata('shortUrl'); ?>">Event
                         Date</a>
                 </div>
                 <div class="elem" id="spot-active">
                     <?php if($this->session->userdata('eventId')): ?>
-                    <a class="spot-active spot-text" style="text-decoration:none;color:#fff;font-size:14px;"
+                    <a class="spot-active header-text spot-text" style="text-decoration:none;color:#fff;font-size:14px;"
                         href="<?php echo base_url(); ?>agenda_booking/spots/<?php echo $this->session->userdata('eventDate'); ?>/<?php echo $this->session->userdata('eventId'); ?>">SPOT</a>
                     <?php else: ?>
-                    <p class="spot-active spot-text">SPOT</p>
+                    <p class="spot-active header-text spot-text">SPOT</p>
                     <?php endif; ?>
                 </div>
                 <div class="elem" id="timeslot-active">
                     <?php if($this->session->userdata('spotId')): ?>
-                    <a class="timeslot-active timeslot-text" style="text-decoration:none;color:#fff;font-size:14px;"
+                    <a class="timeslot-active header-text timeslot-text" style="text-decoration:none;color:#fff;font-size:14px;"
                         href="<?php echo base_url(); ?>agenda_booking/time_slots/<?php echo $this->session->userdata('spotId'); ?>">Time
                         Slot</a>
                     <?php else: ?>
-                    <p class="timeslot-active timeslot-text">Time Slot</p>
+                    <p class="timeslot-active header-text timeslot-text">Time Slot</p>
                     <?php endif; ?>
                 </div>
                 <div class="elem" id="personal-active">
                     <?php if($this->session->userdata('timeslotId')): ?>
-                    <a class="personal-active personal-info-text"
+                    <a class="personal-active header-text personal-info-text"
                         style="text-decoration:none;color:#fff;font-size:14px;"
                         href="<?php echo base_url(); ?>agenda_booking/pay">Personal Info</a>
                     <?php else: ?>
-                    <p class="personal-active personal-info-text">Personal Info</p>
+                    <p class="personal-active header-text personal-info-text">Personal Info</p>
                     <?php endif; ?>
                 </div>
             </div>

@@ -138,6 +138,30 @@
 </div>
 <div class="form-group col-sm-12">
     <label style="display:block;">
+        Header Text color:
+        <input  data-jscolor="" class="form-control b-radius jscolor" name="selectShortUrl[class][header-text][color]"
+            data-css-selector="class" data-css-selector-value="header-text" data-css-property="color"
+             oninput="styleELements(this)"
+            <?php if ( isset($design['selectShortUrl']['class']['header-text']['color']) ) { ?>
+            value="<?php echo $design['selectShortUrl']['class']['header-text']['color']?>" data-value="1"
+            <?php } else {?> value="#FFFFFF"
+            <?php } ?> />
+    </label>
+</div>
+<div class="form-group col-sm-12">
+    <label style="display:block;">
+        Header Font Size:
+        <input  type="text" class="form-control b-radius" name="selectShortUrl[class][header-text][font-size]"
+            data-css-selector="class" data-css-selector-value="header-text" data-css-property="font-size"
+             oninput="styleELements(this)"
+            <?php if ( isset($design['selectShortUrl']['class']['header-text']['font-size']) ) { ?>
+            value="<?php echo $design['selectShortUrl']['class']['header-text']['font-size']?>" data-value="1"
+            <?php } else {?> value="14px"
+            <?php } ?> />
+    </label>
+</div>
+<div class="form-group col-sm-12">
+    <label style="display:block;">
         Active Background color:
         <input  data-jscolor="" class="form-control b-radius jscolor"
             name="selectShortUrl[class][booking-active][background-color]" data-css-selector="class"
