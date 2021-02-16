@@ -64,8 +64,6 @@
 
         private function handlePrePostPaid(array $order, bool $bbUser): void
         {
-            if ($order['orderPosPrint'] === '0') return;
-
             if (!$bbUser && ($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid')) ) {
                 if ($order['waiterReceipt'] === '0') {
                     // one reeipt for waiter
@@ -107,8 +105,6 @@
 
         private function checkoOrderTime(array $order): void
         {
-            if ($order['orderPosPrint'] === '0') return;
-
             $printTimeConstraint = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->getPrintTimeConstraint();
             // order expiration settings
             if (strtotime($printTimeConstraint) > strtotime($order['orderCreated'])) {
@@ -123,7 +119,6 @@
                 $this->shoporder_model->updatePrintedStatus()
                 && !($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid'))
                 && !$bbUser
-                && $order['posPrint'] === '1'
             ) {
                 file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
             }

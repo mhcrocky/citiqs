@@ -563,7 +563,7 @@
                             WHERE tbl_user.roleid = ' . $this->config->item('owner') . '
                         ) vendorOne ON vendorOne.id = tbl_shop_printers.userId
                     WHERE
-                        (tbl_shop_orders.paid = "1" || tbl_shop_orders.posPrint = "0")
+                        ( tbl_shop_orders.paid = "1" || ( tbl_shop_orders.isPos = "1" AND tbl_shop_orders.posPrint = "1") )
                         AND tbl_shop_orders.expired = "0"
                         AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_printers.macNumber = "' . $macNumber . '" 
