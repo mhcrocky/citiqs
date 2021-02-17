@@ -58,15 +58,19 @@ class Events extends REST_Controller
 
 	public function Tickets_post()
 	{
-
 		$vendorId = $this->security->xss_clean($this->input->post('vendorId'));
 		$eventid = $this->security->xss_clean($this->input->post('eventId'));
+		$changetimein = $this->security->xss_clean($this->input->post('changeTimeIn'));
+		$changetimeout = $this->security->xss_clean($this->input->post('changeTimeOut'));
 
 //		echo 'hello';
 //		die();
 
 		$this->db->where('customer', $vendorId);
 		$this->db->where('eventid', $eventid);
+		$this->db->where('scannedtime >=', date_create($changetimein)->format('Y-m-d H:i:s'));
+		$this->db->where('scannedtime <=', date_create($changetimeout)->format('Y-m-d H:i:s'));
+
 		$this->db->from('tbl_bookandpay');
 		$query = $this->db->get();
 		$result = $query->result_array();

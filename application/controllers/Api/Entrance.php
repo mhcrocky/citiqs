@@ -55,8 +55,10 @@ class Entrance extends REST_Controller
 					$result[0]['numberin']=$result[0]['numberin']+1;
 					$this->db->set('numberin',$result[0]['numberin'] );
 					$this->db->set('scanned', '1');
+					$this->db->set('scannedtime', date_create('now')->format('Y-m-d H:i:s'));
 				} else {
 					$this->db->set('scanned', '2');
+					$this->db->set('scannedtime', date_create('now')->format('Y-m-d H:i:s'));
 				}
 
 				$this->db->where('reservationId', $qrcode);
@@ -71,6 +73,7 @@ class Entrance extends REST_Controller
 				$result[0]['numberin']=$result[0]['numberin']+1;
 				$this->db->set('numberin',$result[0]['numberin'] );
 				$this->db->set('scanned', '1');
+				$this->db->set('scannedtime', date_create('now')->format('Y-m-d H:i:s'));
 				$this->db->where('reservationId', $qrcode);
 				$result = $this->db->update('tbl_bookandpay');
 				if($result) {

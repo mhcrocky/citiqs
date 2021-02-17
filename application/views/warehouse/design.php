@@ -10,7 +10,11 @@
 		<li class="nav-item">
 			<a style="border-radius: 50px" class="nav-link" data-toggle="tab" href="#analytics">Analytics</a>
 		</li>
-    </ul>
+		<li class="nav-item">
+			<a style="border-radius: 50px" class="nav-link" data-toggle="tab" href="#pop-up">Pop-up</a>
+		</li>
+
+	</ul>
 
     <div class="tab-content" style="border-radius: 50px; margin-left: -10px">
         <div id="design" class="container tab-pane active" style="background: none;">                    
@@ -22,6 +26,10 @@
         <div id="analytics" class="container tab-pane" style="background: none;">
             <?php include_once FCPATH . 'application/views/warehouse/includes/design/analytics.php'; ?>
         </div>
+		<div id="pop-up" class="container tab-pane" style="background: none;">
+			<?php include_once FCPATH . 'application/views/warehouse/includes/design/popupView.php'; ?>
+		</div>
+
     </div>
 </main>
 <script>
