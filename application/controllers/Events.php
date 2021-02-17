@@ -41,7 +41,8 @@ class Events extends BaseControllerWeb
         $data = [
             'events' => $this->event_model->get_events($this->vendor_id),
             'eventId' => $eventId,
-            'emails' => $this->email_templates_model->get_ticketing_email_by_user($this->vendor_id)
+            'emails' => $this->email_templates_model->get_ticketing_email_by_user($this->vendor_id),
+            'groups' => $this->event_model->get_ticket_groups()
         ];
         $this->loadViews("events/step-two", $this->global, $data, 'footerbusiness', 'headerbusiness');
 
@@ -230,6 +231,5 @@ class Events extends BaseControllerWeb
 
         $this->loadViews("events/email_designer", $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
-
 
 }

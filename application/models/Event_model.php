@@ -76,8 +76,17 @@ class Event_model extends CI_Model {
 		$this->db->select('*,tbl_event_tickets.id as ticketId');
 		$this->db->from('tbl_event_tickets');
 		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId');
+		$this->db->join('tbl_ticket_groups', 'tbl_ticket_groups.id = tbl_event_tickets.ticketGroupId');
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('eventId', $eventId);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	public function get_ticket_groups()
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_ticket_groups');
 		$query = $this->db->get();
 		return $query->result_array();
 	}

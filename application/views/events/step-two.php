@@ -1,6 +1,6 @@
 <!-- Edit Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg" role="document"> 
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title font-weight-bold text-dark" id="editModalLabel">Edit Ticket</h5>
@@ -225,6 +225,16 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="ticket-name" class="col-md-4 col-form-label text-md-left">Ticket Design</label>
+                            <div class="col-md-6">
+
+                                <input type="" id="ticketDesign" class="input-w form-control jscolor"
+                                    name="ticketDesign">
+
+                            </div>
+                        </div>
+
                         <!--
                         <div class="form-group row">
                             <label for="ticketEvent" class="col-md-4 col-form-label text-md-left">Ticket event</label>
@@ -293,8 +303,9 @@
                             <div class="col-md-6">
                                 <select id="group" class="form-control input-w">
                                     <option selected disabled>Select option</option>
-                                    <option value="1">Group</option>
-                                    <option value="2">VIP</option>
+                                    <?php foreach($groups as $group): ?>
+                                    <option value="<?php echo $group['id']; ?>"><?php echo $group['groupname']; ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                                 <input type="hidden" id="ticketGroup" name="ticketGroupId">
                             </div>
@@ -306,6 +317,75 @@
                 <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- Choose Email Modal -->
+<div class="modal fade" id="chooseEmailModal" tabindex="-1" role="dialog" aria-labelledby="chooseEmailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold text-dark" id="editModalLabel">Choose Email Template</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body">
+                    
+                        <div class="form-group row">
+                            <label for="group" class="col-md-4 col-form-label text-md-left">Email Template</label>
+                            <div id="selectEmailTemplate" class="col-md-6">
+                                
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" id="saveEmailTemplates" class="btn btn-primary">Save changes</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Edit Group Modal -->
+<div class="modal fade" id="chooseEmailModal" tabindex="-1" role="dialog" aria-labelledby="chooseEmailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold text-dark" id="editModalLabel">Choose Email Template</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body">
+                <input type="hidden" id="editGroupId" name="editGroupId">
+                    
+                        <div class="form-group row">
+                            <label for="group" class="col-md-4 col-form-label text-md-left">Group Name</label>
+                            <div class="col-md-6">
+                                <input type="text" id="groupName" class="form-control input-w" name="groupName">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="group" class="col-md-4 col-form-label text-md-left">Capacity</label>
+                            <div class="col-md-6">
+                                <input type="text" id="groupCapacity" class="form-control input-w" name="groupCapacity">
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" id="saveEmailTemplates" class="btn btn-primary">Save changes</button>
+            </div>
+
         </div>
     </div>
 </div>

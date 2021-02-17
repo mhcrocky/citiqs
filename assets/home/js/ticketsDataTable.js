@@ -78,15 +78,9 @@ $(document).ready(function() {
                 data: null,
                 "render": function(data, type, row) {
                     var html = '<div class="dropdown show">'
-                    +'<a class="dropdown-toggle text-dark" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
-                    +'<i style="font-size: 37px;color: #377E7F;" class="fa fa-stop" aria-hidden="true"></i>&nbsp &nbsp &nbsp</a>'
-                    +'<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">'
-                    +'<a class="dropdown-item" href="#">Ticket</a>'
-                    +'<a class="dropdown-item" href="#">Seating</a>'
-                    +'<a class="dropdown-item" href="#">Seperator</a>'
-                    +'<a class="dropdown-item" href="#">Group</a>'
-                    +'<a class="dropdown-item" href="#">Item</a>'
-                    +'</div></div>';
+                    +'<a class="text-dark" href="#" role="button" >'
+                    +'<i style="font-size: 37px;color: '+data.ticketDesign+';" class="fa fa-stop" aria-hidden="true"></i>&nbsp &nbsp &nbsp</a>'
+                    +'</div>';
                     return html;
                 }
 
@@ -105,7 +99,7 @@ $(document).ready(function() {
             {
 
                 title: 'Group',
-                data: 'ticketGroupId'
+                data: 'groupname'
 
             },
             {
@@ -178,6 +172,15 @@ $(document).ready(function() {
             },
             {
 
+                title: 'Choose Email',
+                data: null,
+                "render": function(data, type, row) {
+                    return "<div class='btn btn-primary'><a class='text-light' onclick='chooseEmailTemplate("+data.emailId+","+data.ticketId+")' href='javascript:' data-toggle='modal' data-target='#chooseEmailModal'>Edit Email Template</a></div>";
+                }
+
+            },
+            {
+
                 title: '',
                 data: null,
                 "render": function(data, type, row) {
@@ -205,33 +208,30 @@ $(document).ready(function() {
 
             api.column(groupColumn, {
                 page: 'current'
-            }).data().each(function(group, i) {
-                if (last !== group) {
-                    if (group == '') {
+            }).data().each(function(groupname, i) {
+                if (last !== groupname) {
+                    if (groupname == '') {
 
                     } else {
                         var html = '<div class="dropdown show">'
-                    +'<a class="dropdown-toggle text-dark" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
-                    +'<i style="font-size: 37px;color: #39495C;" class="fa fa-stop" aria-hidden="true"></i>&nbsp &nbsp &nbsp</a>'
-                    +'<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">'
-                    +'<a class="dropdown-item" href="#">Ticket</a>'
-                    +'<a class="dropdown-item" href="#">Seating</a>'
-                    +'<a class="dropdown-item" href="#">Seperator</a>'
-                    +'<a class="dropdown-item" href="#">Group</a>'
-                    +'<a class="dropdown-item" href="#">Item</a>'
-                    +'</div></div>';
+                        +'<a class="text-dark" href="#" role="button">'
+                        +'<i style="font-size: 37px;color: #39495C;" class="fa fa-stop" aria-hidden="true"></i>&nbsp &nbsp &nbsp</a>'
+                        +'</div>';
+                        
                         $(rows).eq(i).before(
                             '<tr class="group">'+
-                            '<td>'+html+'<td colspan="3">'
-                            +'<input type="text" id="event-name" class="form-control" name="event-name" value="' + group + '">' +
+                            '<td>'+html+'</td><td colspan="3">'+
+                            '<input type="text" id="event-name" class="form-control" name="event-name" value="' + groupname + '">'+
+
                             '</td><td><ul><li><div class="custom-control custom-checkbox"><input style="transform: scale(1.5);" class="custom-control-input" id="package-area-0' + i +
-                            '" type="checkbox" checked="checked" ><label class="custom-control-label" for="package-area-0' +i + '"> </label>  </div>    </li></ul></td><td></td><td></td>' +
+                            '" type="checkbox" checked="checked" ><label class="custom-control-label" for="package-area-0' +i + '"> </label>  </div>    </li></ul></td><td></td>'+
+                            '<td></td><td></td>' +
                             '<td><div class="bg-dark" style="width: 30px;height: 30px;">'+
                             '<i style="color: #fff;" class="fa fa-trash p-2"><i></div></td></tr>'
                         );
                     }
 
-                    last = group;
+                    last = groupname;
                 }
             });
         }
@@ -299,11 +299,37 @@ function defaultOptions(){
     
 }
 
+function chooseEmailTemplate(emailId,ticketId){
+    var html = '<select style="min-width: 150px;" class="form-control" id="email_template" onchange="updateEmailTemplate(this, '+ticketId+')">';
+    html += '<option value="0">Select Template</option>';
+    var emails = JSON.parse(globalEmails);
+    $.each(emails, function( index, email ) {
+        let template_name = email.template_name;
+            if(emailId == email.id){
+                html += '<option value="'+email.id+'" selected>'+template_name.replace('ticketing_', '')+'</option>';
+            } else {
+                html += '<option value="'+email.id+'">'+template_name.replace('ticketing_', '')+'</option>';
+            }
+    });
+    html += '</select>'
+    $('#selectEmailTemplate').html(html);
+    $('#saveEmailTemplates').attr('onclick','saveEmailTemplate(this, '+emailId+')');
+    
+}
+
+function saveEmailTemplate(el, id){
+    updateEmailTemplate(el, id);
+    setTimeout(() => {
+        window.location.reload();
+    }, 500);
+    
+    
+}
+
 function updateEmailTemplate(el, id){
     let emailId = $(el).find('option:selected').val();
     $.post(globalVariables.baseUrl + "events/update_email_template", {id:id, emailId: emailId}, function(data){
-        console.log(data);
+        return true;
     });
-    console.log(emailId);
     
 }

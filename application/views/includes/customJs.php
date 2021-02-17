@@ -146,6 +146,7 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/dashboardDataTable.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/businessReports.js"></script>
 <?php } elseif ($this->view === 'events/step-two') { ?>
+	<script src="<?php echo base_url(); ?>assets/cdn/js/jscolor.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/js/quill.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/events.js"></script>
 	<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
