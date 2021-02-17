@@ -19,6 +19,7 @@
                             </label>
                         </div>
                     </li>
+                    <!--
                     <li>
                         <div class="custom-control custom-checkbox">
                             <input class="custom-control-input" id="ticketSwapCheck" type="checkbox" checked="checked">
@@ -27,6 +28,7 @@
                             </label>
                         </div>
                     </li>
+                    -->
                     <li>
                         <div class="custom-control custom-checkbox">
                             <input class="custom-control-input" id="partialAccessCheck" type="checkbox"
@@ -37,6 +39,7 @@
                         </div>
                     </li>
                 </ul>
+                <!--
                 <hr class="w-100 mt-3 mb-3">
                 <h3 class="font-weight-bold text-dark">Ticketfee per ticket</h3>
                 <div class="row mb-2">
@@ -58,6 +61,7 @@
                             value="1">
                     </div>
                 </div>
+                -->
                 <hr class="w-100 mt-3 mb-3">
                 <h3 class="font-weight-bold text-dark">Ticket sales</h3>
                 <div class="row">
@@ -140,7 +144,7 @@
                     <div class="col col-md-3">
                         Sold out when expired
                     </div>
-                    <div class="col col-md-3">
+                    <div style="display: flex;" class="col col-md-3">
                         <ul>
                             <li>
                                 <div class="custom-control custom-checkbox">
@@ -151,6 +155,7 @@
                                 </div>
                             </li>
                         </ul>
+                        <input type="text" id="soldOutWhenExpired" class="form-control inp-height">
                     </div>
 
 

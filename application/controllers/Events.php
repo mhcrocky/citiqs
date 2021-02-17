@@ -92,7 +92,7 @@ class Events extends BaseControllerWeb
             unset($data['imgChanged']);
             unset($data['imgName']);
             $this->event_model->update_event($eventId, $data);
-            redirect('events');
+            redirect('events/event/'.$eventId);
         }
         $config['upload_path']   = FCPATH . 'assets/images/events';
         $config['allowed_types'] = 'jpg|png|jpeg|webp|bmp';
@@ -115,7 +115,7 @@ class Events extends BaseControllerWeb
             unset($data['imgName']);
             $this->event_model->update_event($eventId, $data);
         }
-        redirect('events');
+        redirect('events/event/'.$eventId);
 
     }
 

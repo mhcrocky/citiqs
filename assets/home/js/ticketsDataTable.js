@@ -172,10 +172,14 @@ $(document).ready(function() {
             },
             {
 
-                title: 'Choose Email',
+                title: 'Edit Template',
                 data: null,
                 "render": function(data, type, row) {
-                    return "<div class='btn btn-primary'><a class='text-light' onclick='chooseEmailTemplate("+data.emailId+","+data.ticketId+")' href='javascript:' data-toggle='modal' data-target='#chooseEmailModal'>Edit Email Template</a></div>";
+                    if(data.emailId != '0'){
+                        return "<div class='btn btn-primary'><a class='text-light' href='"+globalVariables.baseUrl+"events/emaildesigner/ticketing/"+data.emailId+"'>Edit Email Template</a></div>";
+                    } else {
+                        return "<div class='btn btn-primary'><a class='text-light' href='javascript:;'>Edit Email Template</a></div>";
+                    }
                 }
 
             },
