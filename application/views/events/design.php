@@ -2,14 +2,17 @@
 <main class="main-content w-100 container" style="margin-top:20px; border-width: 0px">
     <ul class="nav nav-tabs" style="border-bottom: none" role="tablist">
         <li class="nav-item">
-            <a style="border-radius: 50px" onclick="nav_link('#design','#iframeSettings', '#analytics')" class="nav-link active" data-toggle="tab" href="#design">Design</a>
+            <a style="border-radius: 50px" onclick="nav_link(this)" class="nav-link nav_link active" data-toggle="tab"
+                href="#design">Design</a>
         </li>
         <li class="nav-item">
-            <a style="border-radius: 50px" onclick="nav_link('#iframeSettings','#design', '#analytics')" class="nav-link" data-toggle="tab" href="#iframeSettings">Iframe</a>
+            <a style="border-radius: 50px" onclick="nav_link(this)" class="nav-link nav_link" data-toggle="tab"
+                href="#iframeSettings">Iframe</a>
         </li>
         <li class="nav-item">
-			<a style="border-radius: 50px" onclick="nav_link('#analytics', '#iframeSettings','#design')" class="nav-link" data-toggle="tab" href="#analytics">Analytics</a>
-		</li>
+            <a style="border-radius: 50px" onclick="nav_link(this)" class="nav-link nav_link" data-toggle="tab"
+                href="#analytics">Analytics</a>
+        </li>
     </ul>
 
     <div class="tab-content" style="border-radius: 50px; margin-left: -10px">
@@ -21,8 +24,8 @@
                 <?php include_once FCPATH . 'application/views/events/includes/design/iframeSettings.php'; ?>
             </div>
             <div id="analytics" class="container tab-pane" style="background: none;">
-            <?php include_once FCPATH . 'application/views/events/includes/design/analytics.php'; ?>
-        </div>
+                <?php include_once FCPATH . 'application/views/events/includes/design/analytics.php'; ?>
+            </div>
         </form>
 
     </div>
