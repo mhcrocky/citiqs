@@ -16,7 +16,6 @@
             $this->load->model('shoporderex_model');
             $this->load->model('shopvendor_model');
             $this->load->model('shopprinterrequest_model');
-            $this->load->model('shopprinters_model');
             $this->load->model('shopvendorfod_model');
             $this->load->model('shopreportrequest_model');
 
@@ -39,7 +38,9 @@
         public function data_get()
         {
             $mac = $this->getMacNumber();
+
             $this->printFinanceReport($mac);
+
             $order = $this->getOrder($mac);
             $vendorId = intval($order['vendorId']);
             $bbUser = $this->shopvendorfod_model->isBBVendor($vendorId);
@@ -51,21 +52,19 @@
 
             $this->shopprinterrequest_model->setObjectFromArray(['orderId' => $order['orderId']])->update();
 
-            $this->checkoOrderTime($order);
-
             Receiptprint_helper::printPrinterReceipt($order);
 
             $this->shopprinterrequest_model->setObjectFromArray(['printerEcho' => date('Y-m-d H:i:s')])->update();
 
             $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '1');
 
-            // $this->callOrderCopy($order, $bbUser);
+            $this->shoporder_model->updatePrintedStatus();
+
+            $this->callOrderCopy($order, $bbUser);
         }
 
         private function handlePrePostPaid(array $order, bool $bbUser): void
         {
-            if ($order['orderPosPrint'] === '0') return;
-
             if (!$bbUser && ($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid')) ) {
                 if ($order['waiterReceipt'] === '0') {
                     // one reeipt for waiter
@@ -82,7 +81,7 @@
                     exit;
                 }
 
-                #if ($order['paidStatus'] === '0') exit;
+                if ($order['paidStatus'] === '0') exit;
             }
         }
 
@@ -91,7 +90,12 @@
         {
             $mac = $this->input->get('mac', true);
 
-            if( !$mac || !$this->shopprinterrequest_model->insertPrinterRequest($mac) ) exit;
+            if (!$mac) exit;
+
+            if (
+                !$this->shopprinters_model->setProperty('macNumber', $mac)->checkIsPrinterActive()
+                || !$this->shopprinterrequest_model->insertPrinterRequest($mac)
+            ) exit;
 
             return $this->shopprinters_model->setProperty('macNumber', $mac)->printMacNumber();
         }
@@ -102,13 +106,15 @@
 
             if (!$order) exit;
 
-            return reset($order);
+            $order = reset($order);
+
+            $this->checkoOrderTime($order);
+
+            return $order;
         }
 
         private function checkoOrderTime(array $order): void
         {
-            if ($order['orderPosPrint'] === '0') return;
-
             $printTimeConstraint = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->getPrintTimeConstraint();
             // order expiration settings
             if (strtotime($printTimeConstraint) > strtotime($order['orderCreated'])) {
@@ -120,10 +126,8 @@
         private function callOrderCopy(array $order, bool $bbUser): void
         {
             if (
-                $this->shoporder_model->updatePrintedStatus()
-                && !($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid'))
+                !($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid'))
                 && !$bbUser
-                && $order['posPrint'] === '1'
             ) {
                 file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
             }
