@@ -11,7 +11,7 @@
 			<a style="border-radius: 50px" class="nav-link" data-toggle="tab" href="#analytics">Analytics</a>
 		</li>
 		<li class="nav-item">
-			<a style="border-radius: 50px" class="nav-link" data-toggle="tab" href="#pop-up">Pop-up</a>
+			<a style="border-radius: 50px" class="nav-link" onclick="popupTab()" data-toggle="tab" href="#pop-up">Pop-up</a>
 		</li>
 
 	</ul>
