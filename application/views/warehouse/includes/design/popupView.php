@@ -4,7 +4,24 @@
         <label for="iframeId" onclick='copyToClipboard("popupContent")' style="text-align:left; display:block">
             Copy to clipboard:
             <textarea class="form-control w-100 h-100" id="popupContent" readonly rows="4"
-                style="height:60px;width: 200px;">#</textarea>
+                style="height:60px;width: 200px;">
+                <div class="btn-container">
+                    <button class="btn btn-primary" id="iframe-popup-open" onclick="popup()">
+                        Click here to make reservation
+                    </button>
+                </div>
+
+                <div class="iframe-popup hide" id="iframe-popup">
+                    <div class="iframe-popup__close" onclick="closeIframe()" id="popup-close"></div>
+                    <div class="iframe-popup__content">
+                        <iframe src="<?php echo base_url(); ?>make_order?vendorid=<?php echo $this->session->userdata('userId');?>&spotid=1342" frameborder="0"
+                            style="overflow:hidden;height:100%;width:100%" height="100%" width="100%"
+                            id="iframe-wrapper"></iframe>
+                    </div>
+                </div>
+
+                <script type="text/javascript" src="<?php echo base_url(); ?>assets/home/js/popup-alfred.js"></script>
+            </textarea>
         </label>
     </div>
 </div>
@@ -18,7 +35,8 @@
 <div class="form-group col-sm-12">
     <label style="display:block;">
         Text color:
-        <input data-jscolor="" class="form-control b-radius jscolor" name="button_text" onchange="buttonStyle(this,'color')" />
+        <input data-jscolor="" class="form-control b-radius jscolor" name="button_text"
+            onchange="buttonStyle(this,'color')" />
     </label>
 </div>
 <div class="form-group col-sm-12">
@@ -43,4 +61,21 @@
 </div>
 
 
-<div id="root"></div>
+<div id="root">
+    <div class="btn-container">
+        <button class="btn btn-primary" id="iframe-popup-open" onclick="popup()">
+            Click here to make reservation
+        </button>
+    </div>
+
+    <div class="iframe-popup hide" id="iframe-popup">
+        <div class="iframe-popup__close" onclick="closeIframe()" id="popup-close"></div>
+        <div class="iframe-popup__content">
+            <iframe src="<?php echo base_url(); ?>make_order?vendorid=<?php echo $this->session->userdata('userId');?>&spotid=1342" frameborder="0"
+                style="overflow:hidden;height:100%;width:100%" height="100%" width="100%" id="iframe-wrapper"></iframe>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/home/js/popup-alfred.js"></script>
+
+</div>
