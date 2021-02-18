@@ -27,6 +27,7 @@
                 <?php include_once FCPATH . 'application/views/events/includes/design/analytics.php'; ?>
             </div>
         </form>
+ 
 
     </div>
 </main>
