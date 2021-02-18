@@ -30,7 +30,7 @@
 </div>
 
 <legend>Select general view</legend>
-<div style="border-bottom: none; height: 500px; width: 100%; overflow: scroll;">
+<div style="height: 500px; width: 100%; overflow-y: scroll;">
 	<div class="form-group col-sm-12">
 		<label style="display:block;">
 			Event Text:

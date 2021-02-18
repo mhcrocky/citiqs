@@ -30,7 +30,7 @@ body {
                                 include_once FCPATH . 'application/views/new_bookings/design/spotsView.php';
                             ?>
                         <div class="text-center">
-                            <input type="submit" class="btn btn-primary" value="submit" />
+                            <input type="submit" class="btn btn-primary mt-3" value="submit" />
                         </div>
                     </form>
                 </div>
