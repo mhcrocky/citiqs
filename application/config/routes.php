@@ -260,6 +260,7 @@ $route['viewdesign']            = "warehouse/viewdesign";
 $route['productsorder']         = "warehouse/productsOrder";
 $route['updateproductorderno']  = "warehouse/updateProductOrderNo";
 $route['getproducts']           = "warehouse/getProducts";
+$route['warehouse/replacepopupbuttonstyle'] = "warehouse/replacePopupButtonStyle";
 
 // PUBLIC
 $route['make_order']                = 'publicorders/index';
