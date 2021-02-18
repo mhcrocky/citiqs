@@ -114,12 +114,14 @@ function setDesign() {
     let activeFieldset = document.getElementsByClassName(designGlobals.showClass);
     if (activeFieldset) {
         activeFieldset = activeFieldset[0];
-        let inputs = activeFieldset.querySelectorAll('[data-value="1"]');
-        let inputsLength = inputs.length;
-        let i;
-        for (i = 0; i < inputsLength; i++) {
-            let input = inputs[i];
-            styleELements(input);
+        if(typeof activeFieldset !== 'undefined'){
+            let inputs = activeFieldset.querySelectorAll('[data-value="1"]');
+            let inputsLength = inputs.length;
+            let i;
+            for (i = 0; i < inputsLength; i++) {
+                let input = inputs[i];
+                styleELements(input);
+            }
         }
     }   
 }
@@ -267,10 +269,19 @@ function showBgImage(image) {
     }
 }
 
-function nav_link(current, s1, s2){
-    $(current).show();
-    $(s1).hide();
-    $(s2).hide();
+function nav_link(el){
+    
+
+    
+    $('.nav_link').each(function(){
+        let hide_id = $(this).attr('href');
+        console.log(hide_id);
+        $(hide_id).hide();
+    });
+    let show_id = $(el).attr('href');
+    console.log(show_id);
+    $(show_id).show();
+    
 }
 
 

@@ -1018,4 +1018,42 @@
             return;
         }
 
+        public function replacePopupButtonStyle()
+    {
+        
+        $cssFile = FCPATH.'assets/home/styles/popup-alfred-style.css';
+        $jsFile = FCPATH.'assets/home/js/popup-alfred.js';
+        //CSS FILE
+        $f = fopen($cssFile, 'r');
+        $newCssContent = '';
+        for ($i = 1; ($line = fgets($f)) !== false; $i++) {
+            if($line == '#iframe-popup-open{'){
+                echo 'true';
+            }
+            if (strpos($line, '#iframe-popup-open') !== false) {
+                break;
+            }
+            $newCssContent.= $line;
+        }
+
+        $newCssContent .= $this->input->post('buttonStyle');
+        $f = fopen($cssFile, 'w');
+        fwrite($f,$newCssContent);
+        fclose($f);
+
+        //JS FILE
+        $f = fopen($jsFile, 'r');
+        $newJsContent = '';
+        $btnText = $this->input->post('btnText');
+        for ($i = 1; ($line = fgets($f)) !== false; $i++) {
+            if (strpos($line, "document.getElementById('iframe-popup-open').textContent") !== false) {
+                $line = "document.getElementById('iframe-popup-open').textContent = '$btnText'; \n";
+            }
+            $newJsContent .= $line;
+        }
+        $f = fopen($jsFile, 'w');
+        fwrite($f,$newJsContent);
+        fclose($f);
+    }
+
     }

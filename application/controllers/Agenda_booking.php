@@ -826,8 +826,11 @@ class Agenda_booking extends BaseControllerWeb
 
     public function replaceButtonStyle()
     {
+        
+        $cssFile = FCPATH.'assets/home/styles/popup-style.css';
+        $jsFile = FCPATH.'assets/home/js/popup.js';
         //CSS FILE
-        $f = fopen(FCPATH.'assets/home/styles/popup-style.css', 'r');
+        $f = fopen($cssFile, 'r');
         $newCssContent = '';
         for ($i = 1; ($line = fgets($f)) !== false; $i++) {
             if($line == '#iframe-popup-open{'){
@@ -840,12 +843,12 @@ class Agenda_booking extends BaseControllerWeb
         }
 
         $newCssContent .= $this->input->post('buttonStyle');
-        $f = fopen(FCPATH.'assets/home/styles/popup-style.css', 'w');
+        $f = fopen($cssFile, 'w');
         fwrite($f,$newCssContent);
         fclose($f);
 
         //JS FILE
-        $f = fopen(FCPATH.'assets/home/js/popup.js', 'r');
+        $f = fopen($jsFile, 'r');
         $newJsContent = '';
         $btnText = $this->input->post('btnText');
         for ($i = 1; ($line = fgets($f)) !== false; $i++) {
@@ -854,7 +857,7 @@ class Agenda_booking extends BaseControllerWeb
             }
             $newJsContent .= $line;
         }
-        $f = fopen(FCPATH.'assets/home/js/popup.js', 'w');
+        $f = fopen($jsFile, 'w');
         fwrite($f,$newJsContent);
         fclose($f);
     }
