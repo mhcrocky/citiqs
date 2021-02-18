@@ -278,6 +278,11 @@ function getTicketOptions(ticketId){
             if(index == 'ticketExpired'){
                 $("#"+value).prop( "checked", true );
             }
+            if(index == 'ticketExpired'){
+                $("#"+value).prop( "checked", true );
+            }
+            //$('.ql-editor').html('test')
+
             $("#"+index).val(value);
             
         });

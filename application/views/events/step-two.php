@@ -28,7 +28,7 @@
                             </label>
                         </div>
                     </li>
-                    -->
+                    
                     <li>
                         <div class="custom-control custom-checkbox">
                             <input class="custom-control-input" id="partialAccessCheck" type="checkbox"
@@ -38,22 +38,25 @@
                             </label>
                         </div>
                     </li>
+                    -->
                 </ul>
-                <!--
+                
                 <hr class="w-100 mt-3 mb-3">
                 <h3 class="font-weight-bold text-dark">Ticketfee per ticket</h3>
                 <div class="row mb-2">
-                    <div class="col-md-3 text-dark">Non shared ( Min 0.00 )</div>
+                    <div class="col-md-3 text-dark">Min 0.00</div>
                     <div class="col-md-3">
                         <input type="number" id="nonSharedTicketFee" name="nonSharedTicketFee" class="form-control inp-height" min="1"
                              value="1">
                     </div>
-
+                    <!--
                     <div class="col-md-3">Shared ( Min 0.00 )</div>
                     <div class="col-md-3">
                         <input type="number" id="sharedTicketFee" name="sharedTicketFee" class="form-control inp-height" min="1" value="1">
                     </div>
+                    -->
                 </div>
+                <!--
                 <div class="row">
                     <div class="col-md-3 text-dark">Max Discount</div>
                     <div class="col-md-3">
@@ -144,7 +147,7 @@
                     <div class="col col-md-3">
                         Sold out when expired
                     </div>
-                    <div style="display: flex;" class="col col-md-3">
+                    <div style="display: flex;" class="col col-md-9">
                         <ul>
                             <li>
                                 <div class="custom-control custom-checkbox">
