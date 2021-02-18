@@ -14,7 +14,7 @@
                 <div class="iframe-popup hide" id="iframe-popup">
                     <div class="iframe-popup__close" onclick="closeIframe()" id="popup-close"></div>
                     <div class="iframe-popup__content">
-                        <iframe src="<?php echo base_url(); ?>make_order?vendorid=<?php echo $this->session->userdata('userId');?>&spotid=1342" frameborder="0"
+                        <iframe src="<?php echo base_url(); ?>make_order?vendorid=<?php echo $this->session->userdata('userId');?>" frameborder="0"
                             style="overflow:hidden;height:100%;width:100%" height="100%" width="100%"
                             id="iframe-wrapper"></iframe>
                     </div>
