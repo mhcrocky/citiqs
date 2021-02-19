@@ -371,7 +371,7 @@
                                 <table width="640" class="main" cellspacing="0" cellpadding="0" border="0" align="center" style="background-color:#FFFFFF;" data-type="qr-code-type">
                                     <tbody>
                                     <tr>
-                                        <td align="center" style="padding:15px 50px 15px 50px;background-image: url('<?php echo base_url(); ?>assets/images/qrcode_border.png');background-repeat: no-repeat;background-position: center; ">
+                                        <td align="center" style="padding:15px 50px 15px 50px;background-repeat: no-repeat;background-position: center; ">
                                             <img class="qr-code-image"  border="0"  align="one_image" style="display:block;max-width:350px;padding:50px;" alt="" src="[QRlink]" tabindex="0">
                                         </td>
                                     </tr>
