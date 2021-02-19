@@ -37,9 +37,9 @@ class Events extends BaseControllerWeb
 
     public function event($eventId)
     {
-        $this->global['pageTitle'] = 'TIQS: Step Two';
+        $this->global['pageTitle'] = 'TIQS: Step Two'; 
         $data = [
-            'events' => $this->event_model->get_events($this->vendor_id),
+            'event' => $this->event_model->get_event($this->vendor_id,$eventId),
             'eventId' => $eventId,
             'emails' => $this->email_templates_model->get_ticketing_email_by_user($this->vendor_id),
             'groups' => $this->event_model->get_ticket_groups()
@@ -122,7 +122,16 @@ class Events extends BaseControllerWeb
     public function save_ticket()
     {
         $data = $this->input->post(null, true);
-        $this->event_model->save_ticket($data);
+        if($data['ticketType'] == 'group'){
+            $data['ticketType'] = 2;
+            $groupId = $this->event_model->save_ticket_group($data['ticketDescription'],$data['ticketQuantity']);
+            $data['ticketGroupId'] = $groupId;
+            $this->event_model->save_ticket($data);
+        } else {
+            $data['ticketType'] = 1;
+            $this->event_model->save_ticket($data);
+        }
+        
         redirect('events/event/'.$data['eventId']);
 
     }
