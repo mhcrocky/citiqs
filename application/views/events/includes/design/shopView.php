@@ -1,299 +1,160 @@
+<?php 
+if ( isset($design['shop']['eventDescript']) ) {
+    $textareaContent = $design['shop']['eventDescript'];
+    } else { 
+        $textareaContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sagittis at est ut facilisis. Suspendisse eu luctus mauris.";
+ } ?>
 <fieldset id="shopView" class="hideFieldsets">
     <legend>Shop view</legend>
     <div class="form-group col-sm-12">
         <label style="display:block;">
+            Subtitle Text Content:
+            <textarea rows="3" id="eventDescript" class="form-control"><?php echo $textareaContent; ?></textarea>
+        </label>
+    </div>
+
+    <input type="hidden" id="eventText" class="form-control colorInput" name="shop[eventDescript]"
+        value="<?php echo $textareaContent; ?>" />
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
             Header menu background color:
-            <input
-                class="form-control colorInput"
-                name="shop[class][header][background-color]"
-                data-jscolor=""
-                data-css-selector="class"
-                data-css-selector-value="header"
-                data-css-property="background-color"
-				style="border-radius: 50px"
-				onfocus="styleELements(this)"
-                oninput="styleELements(this)"
-
+            <input class="form-control colorInput" name="shop[class][header][background-color]" data-jscolor=""
+                data-css-selector="class" data-css-selector-value="header" data-css-property="background-color"
+                style="border-radius: 50px" onfocus="styleELements(this)" oninput="styleELements(this)"
                 <?php if ( isset($design['shop']['class']['header']['background-color']) ) { ?>
-                value = "<?php echo $design['shop']['class']['header']['background-color']?>"
-                data-value="1"
-                <?php } ?>
-            />
+                value="<?php echo $design['shop']['class']['header']['background-color']?>" data-value="1" <?php } ?> />
         </label>
     </div>
 
     <div class="form-group col-sm-12">
-        <label style="display:block;">
+        <label style="display:none;">
             Menu icon color:
-            <input
-                type="text"
-                class="form-control colorInput"
-                name="shop[class][menu-icon][filter]"
-                data-css-selector="class"
-                data-css-selector-value="menu-icon"
-                data-css-property="filter"
-				style="border-radius: 50px"
-				onfocus="styleELements(this)"
-                oninput="styleELements(this)"
-                
-
+            <input type="text" class="form-control colorInput" name="shop[class][menu-icon][filter]"
+                data-css-selector="class" data-css-selector-value="menu-icon" data-css-property="filter"
+                style="border-radius: 50px" onfocus="styleELements(this)" oninput="styleELements(this)"
                 <?php if ( isset($design['shop']['class']['menu-icon']['filter']) ) { ?>
-                value = "<?php echo $design['shop']['class']['menu-icon']['filter']?>"
-                data-value="1"
-                <?php } ?>
-            />
+                value="<?php echo $design['shop']['class']['menu-icon']['filter']?>" data-value="1" <?php } ?> />
         </label>
     </div>
 
-    <div class="form-group col-sm-12">
-        <label style="display:block;">
-            Background color:
-            <input
-                class="form-control colorInput"
-                name="shop[id][body][background-color]"
-                data-jscolor=""
-                data-css-selector="id"
-                data-css-selector-value="body"
-                data-css-property="background-color"
-				style="border-radius: 50px"
-				onfocus="styleELements(this)"
-                oninput="styleELements(this)"
-
-                <?php if ( isset($design['shop']['id']['body']['background-color']) ) { ?>
-                value = "<?php echo $design['shop']['id']['body']['background-color']?>"
-                data-value="1"
-                <?php } ?>
-            />
-        </label>
-    </div>
     <div class="form-group col-sm-12">
         <label style="display:block;">
             Checkout button background color:
-            <input
-                class="form-control colorInput"
-                name="shop[class][header__checkout][background-color]"
-                data-jscolor=""
-                data-css-selector="class"
-                data-css-selector-value="header__checkout"
-                data-css-property="background-color"
-				style="border-radius: 50px"
-				onfocus="styleELements(this)"
+            <input class="form-control colorInput" name="shop[class][header__checkout][background-color]"
+                data-jscolor="" data-css-selector="class" data-css-selector-value="header__checkout"
+                data-css-property="background-color" style="border-radius: 50px" onfocus="styleELements(this)"
                 oninput="styleELements(this)"
-
                 <?php if ( isset($design['shop']['class']['header__checkout']['background-color']) ) { ?>
-                value = "<?php echo $design['shop']['class']['header__checkout']['background-color']?>"
-                data-value="1"
-                <?php } ?>
-            />
+                value="<?php echo $design['shop']['class']['header__checkout']['background-color']?>" data-value="1"
+                <?php } else{ ?>
+                    value="#7855c4"
+                <?php } ?> />
         </label>
     </div>
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
             Quantity buttons background color:
-            <input
-                data-jscolor=""
-                class="form-control"
-                name="shop[class][quantity-button][background-color]"
-                data-css-selector="class"
-                data-css-selector-value="quantity-button"
-                data-css-property="background-color"
-                onfocus="styleELements(this)"
-                oninput="styleELements(this)"
-				style="border-radius: 50px"
+            <input data-jscolor="" class="form-control" name="shop[class][quantity-button][background-color]"
+                data-css-selector="class" data-css-selector-value="quantity-button" data-css-property="background-color"
+                onfocus="styleELements(this)" oninput="styleELements(this)" style="border-radius: 50px"
                 <?php if ( isset($design['shop']['class']['quantity-button']['background-color']) ) { ?>
-                value = "<?php echo $design['shop']['class']['quantity-button']['background-color']?>"
-                data-value="1"
-                <?php } ?>
-            />
+                value="<?php echo $design['shop']['class']['quantity-button']['background-color']?>" data-value="1"
+                <?php } else { ?>
+                    value="#ea2251"
+                <?php } ?> />
         </label>
     </div>
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
             Footer background color:
-            <input
-                data-jscolor=""
-                class="form-control"
-                name="shop[class][footer][background-color]"
-                data-css-selector="class"
-                data-css-selector-value="footer"
-                data-css-property="background-color"
-                onfocus="styleELements(this)"
-                oninput="styleELements(this)"
-				style="border-radius: 50px"
+            <input data-jscolor="" class="form-control" name="shop[class][footer][background-color]"
+                data-css-selector="class" data-css-selector-value="footer" data-css-property="background-color"
+                onfocus="styleELements(this)" oninput="styleELements(this)" style="border-radius: 50px"
                 <?php if ( isset($design['shop']['class']['footer']['background-color']) ) { ?>
-                value = "<?php echo $design['shop']['class']['footer']['background-color']?>"
-                data-value="1"
-                <?php } ?>
-            />
+                value="<?php echo $design['shop']['class']['footer']['background-color']?>" data-value="1" 
+                <?php } else { ?>
+                    value="#f4f2f5"
+                <?php } ?> />
         </label>
     </div>
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
             Event cards background color:
-            <input
-                data-jscolor=""
-                class="form-control"
-                name="shop[class][single-item---bg-white][background-color]"
-                data-css-selector="class"
-                data-css-selector-value="single-item.bg-white"
-                data-css-property="background-color"
-                onfocus="styleELements(this)"
-                oninput="styleELements(this)"
-				style="border-radius: 50px"
+            <input data-jscolor="" class="form-control" name="shop[class][single-item---bg-white][background-color]"
+                data-css-selector="class" data-css-selector-value="single-item.bg-white"
+                data-css-property="background-color" onfocus="styleELements(this)" oninput="styleELements(this)"
+                style="border-radius: 50px"
                 <?php if ( isset($design['shop']['class']['single-item---bg-white']['background-color']) ) { ?>
-                value = "<?php echo $design['shop']['class']['single-item---bg-white']['background-color']?>"
-                data-value="1"
-                <?php } ?>
-            />
+                value="<?php echo $design['shop']['class']['single-item---bg-white']['background-color']?>"
+                data-value="1" <?php } ?> />
         </label>
     </div>
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
             Active event card background color:
-            <input
-                data-jscolor=""
-                class="form-control"
-                name="shop[class][single-item---bg-light][background-color]"
-                data-css-selector="class"
-                data-css-selector-value="single-item.bg-light"
-                data-css-property="background-color"
-                onfocus="styleELements(this)"
-                oninput="styleELements(this)"
-				style="border-radius: 50px"
+            <input data-jscolor="" class="form-control" name="shop[class][single-item---bg-light][background-color]"
+                data-css-selector="class" data-css-selector-value="single-item.bg-light"
+                data-css-property="background-color" onfocus="styleELements(this)" oninput="styleELements(this)"
+                style="border-radius: 50px"
                 <?php if ( isset($design['shop']['class']['single-item---bg-light']['background-color']) ) { ?>
-                value = "<?php echo $design['shop']['class']['single-item---bg-light']['background-color']?>"
-                data-value="1"
-                <?php } ?>
-            />
+                value="<?php echo $design['shop']['class']['single-item---bg-light']['background-color']?>"
+                data-value="1" <?php } ?> />
         </label>
     </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Title text color:
+            <input data-jscolor="" class="form-control" name="shop[class][event-title][color]" data-css-selector="class"
+                data-css-selector-value="event-title" data-css-property="color" onfocus="styleELements(this)"
+                oninput="styleELements(this)" style="border-radius: 50px"
+                <?php if ( isset($design['shop']['class']['event-title']['color']) ) { ?>
+                value="<?php echo $design['shop']['class']['event-title']['color']?>" data-value="1" <?php } else { ?>
+                value="#212529" <?php } ?> />
+        </label>
+    </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Subtitle text color:
+            <input data-jscolor="" class="form-control" name="shop[id][event_text_descript][color]" data-css-selector="id"
+                data-css-selector-value="event_text_descript" data-css-property="color" onfocus="styleELements(this)"
+                oninput="styleELements(this)" style="border-radius: 50px"
+                <?php if ( isset($design['shop']['id']['event_text_descript']['color']) ) { ?>
+                value="<?php echo $design['shop']['id']['event_text_descript']['color']?>" data-value="1" <?php } else { ?>
+                value="#6c7581" <?php } ?> />
+        </label>
+    </div>
+
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
             Title font size:
-            <input
-                type="text"
-                class="form-control"
-                name="shop[class][text-size][font-size]"
-                data-css-selector="class"
-                data-css-selector-value="text-size"
-                data-css-property="font-size"
-                onfocus="styleELements(this)"
-                oninput="styleELements(this)"
-				style="border-radius: 50px"
-                <?php if ( isset($design['shop']['class']['text-size']['font-size']) ) { ?>
-
-                    value = "<?php echo $design['shop']['class']['text-size']['font-size']?>"
-
-                    data-value="1"
-                <?php } else { ?>
-                    value = "24px"
-                <?php } ?>
-            />
+            <input type="text" class="form-control" name="shop[class][event-title][font-size]" data-css-selector="class"
+                data-css-selector-value="event-title" data-css-property="font-size" onfocus="styleELements(this)"
+                oninput="styleELements(this)" style="border-radius: 50px"
+                <?php if ( isset($design['shop']['class']['event-title']['font-size']) ) { ?>
+                value="<?php echo $design['shop']['class']['event-title']['font-size']?>" data-value="1" <?php } else { ?>
+                value="40px" <?php } ?> />
         </label>
     </div>
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
-            Border-radius:
-            <input
-                type="text"
-                class="form-control"
-                name="shop[class][card-img-top][border-top-right-radius]"
-                data-css-selector="class"
-                data-css-selector-value="card-img-top"
-                data-css-property="border-top-right-radius"
-                onfocus="borderRadius(this)"
-                oninput="borderRadius(this)"
-				style="border-radius: 50px"
-                <?php if ( isset($design['shop']['class']['card-img-top']['border-top-right-radius']) ) { ?>
-
-                    value = "<?php echo $design['shop']['class']['card-img-top']['border-top-right-radius']; ?>"
-
-                    data-value="1"
-                <?php } ?>
-            />
-            <input
-                type="hidden"
-                id="border-top-left-radius"
-                name="shop[class][card-img-top-2][border-top-left-radius]"
-                data-css-selector="class"
-                data-css-selector-value="card-img-top-2"
-                data-css-property="border-top-left-radius"
-                onchange="styleELements(this)"
-                oninput="styleELements(this)"
-                <?php if ( isset($design['shop']['class']['card-img-top-2']['border-top-left-radius']) ) { ?>
-
-                    value = "<?php echo $design['shop']['class']['card-img-top-2']['border-top-left-radius']; ?>"
-
-                    data-value="1"
-                <?php } ?>
-            />
-            <input
-                type="hidden"
-                id="border-bottom-right-radius"
-                name="shop[class][card-b][border-bottom-right-radius]"
-                data-css-selector="class"
-                data-css-selector-value="card-b"
-                data-css-property="border-bottom-right-radius"
-                onchange="styleELements(this)"
-                oninput="styleELements(this)"
-                <?php if ( isset($design['shop']['class']['card-b']['border-bottom-right-radius']) ) { ?>
-
-                    value = "<?php echo $design['shop']['class']['card-b']['border-bottom-right-radius']; ?>"
-
-                    data-value="1"
-                <?php } ?>
-            />
-            <input
-                type="hidden"
-                id="border-bottom-left-radius"
-                name="shop[class][card-body-2][border-bottom-left-radius]"
-                data-css-selector="class"
-                data-css-selector-value="card-body-2"
-                data-css-property="border-bottom-left-radius"
-                onchange="styleELements(this)"
-                onkeyup="styleELements(this)"
-                <?php if ( isset($design['shop']['class']['card-body-2']['border-bottom-left-radius']) ) { ?>
-
-                    value = "<?php echo $design['shop']['class']['card-body-2']['border-bottom-left-radius']; ?>"
-
-                    data-value="1"
-                <?php } ?>
-            />
+            Subtitle font size:
+            <input type="text" class="form-control" name="shop[id][event_text_descript][font-size]" data-css-selector="id"
+                data-css-selector-value="event_text_descript" data-css-property="font-size" onfocus="styleELements(this)"
+                oninput="styleELements(this)" style="border-radius: 50px"
+                <?php if ( isset($design['shop']['id']['event_text_descript']['font-size']) ) { ?>
+                value="<?php echo $design['shop']['id']['event_text_descript']['font-size']?>" data-value="1" <?php } else { ?>
+                value="18px" <?php } ?> />
         </label>
     </div>
-
-
-    <div class="form-group col-sm-12">
-        <label style="display:block;">
-            Card margin-bottom:
-            <input
-                type="text"
-                class="form-control"
-                name="shop[class][places][margin-bottom]"
-                data-css-selector="class"
-                data-css-selector-value="places"
-                data-css-property="margin-bottom"
-                onchange="styleELements(this)"
-                onkeyup="styleELements(this)"
-                style="border-radius: 50px"
-                <?php if ( isset($design['shop']['class']['places']['margin-bottom']) ) { ?>
-
-                    value = "<?php echo $design['shop']['class']['places']['margin-bottom']; ?>"
-
-                    data-value="1"
-                <?php } else {?>
-                    value = "10px"
-                <?php } ?>
-            />
-        </label>
-    </div>
-
 
     <!--
         Add new css property to element h1 in application/views/publicorders/shop.php view.
@@ -339,3 +200,9 @@
     -->
 
 </fieldset>
+<script>
+$('textarea#eventDescript').on('change', function() {
+    let eventDescript = $(this).val();
+    $('#eventText').val(eventDescript);
+})
+</script>
