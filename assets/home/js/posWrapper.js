@@ -491,6 +491,18 @@ window.onclick = function(e) {
     runKeyboard('posKeyboard');
 }
 
+window.onkeyup = function(e) {
+    if (e.keyCode === 27) {
+        showLoginModal();
+    }
+}
+
+window.onkeydown = function(e) {
+    if (e.keyCode === 27) {
+        showLoginModal();
+    }
+}
+
 window.onmousemove = function(e) {
     resetCounter();
 }
