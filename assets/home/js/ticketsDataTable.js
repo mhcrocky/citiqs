@@ -52,11 +52,20 @@ $(document).ready(function() {
     });
     $("#ticketType").on("change", function(){
         var type = $("#ticketType option:selected").val();
+        if(type == 'group'){
+            $("#group").prop('disabled', true);
+        } else {
+            $("#group").prop('disabled', false);
+        }
         $("#ticketTypeVal").val(type);
     });
     $("#ticketEvent").on("change", function(){
         var event = $("#ticketEvent option:selected").val();
         $("#eventId").val(event);
+    });
+    $("#ticketEmailTemplate").on("change", function(){
+        var event = $("#ticketEmailTemplate option:selected").val();
+        $("#ticketEmailTemplateId").val(event);
     });
     var groupColumn = 2;
     var table = $('#tickets').DataTable({
