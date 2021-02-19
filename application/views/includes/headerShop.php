@@ -24,20 +24,23 @@
         background-color: #fff;
         color: #000;
     }
-    <?php if(isset($design)) {
+    <?php
+    $eventDescript = '';
+     if(isset($design)) {
         $bgImage=$design['bgImage'];
-        $design=$design['shop'];
+        $shopdesign=$design['shop'];
+        $eventDescript=$design['shop']['eventDescript'];
         echo "body{background-image: url('".$this->baseUrl . "assets/images/backGroundImages/". $bgImage."') !important;
             background-size: cover;}";
         
-        $design_ids=$design['id'];
+        $design_ids=$shopdesign['id'];
         foreach($design_ids as $key=> $design_id) {
             echo '#'. $key . '{';
                 echo array_keys($design_id)[0].':';
                 echo array_values($design_id)[0].'!important } ';
             }
             
-            $design_classes=$design['class'];
+            $design_classes=$shopdesign['class'];
             
             foreach($design_classes as $key=> $design_class) {
                 $key = str_replace('---', '.', $key);
@@ -45,10 +48,16 @@
                     echo array_keys($design_class)[0].':';
                     echo array_values($design_class)[0].'!important } ';
                 }
+                
             }
 
     ?>
     </style>
+    <script> 
+    function changeTextContent(){
+        $('#event_text_descript').text('<?php echo $eventDescript; ?>');
+    } 
+    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
