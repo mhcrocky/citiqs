@@ -181,6 +181,10 @@ function updateView(view) {
 
 /*Controls*/
 function updateIframe() {
+    if (
+        !document.getElementById(designGlobals.iframeWidthDeviceId)
+        || !document.getElementById(designGlobals.iframeHeightDeviceId)
+    ) return;
     let iframeWidthValue = document.getElementById(designGlobals.iframeWidthDeviceId).value;
     let iframeHeightValue = document.getElementById(designGlobals.iframeHeightDeviceId).value;
 
@@ -308,50 +312,6 @@ function alertifyAnalyticsMessage(response) {
     }
 }
 
-$(document).ready(function(){
-    let iframe = document.getElementById(designGlobals.iframeId);
-    if (iframe) {
-        iframeURLChange(iframe, function (newURL) {
-            showViewSettings(designGlobals.checkUrl(newURL));
-        });
-    
-        iframe.onload = function () {
-            setDesign();
-            checkForBgImage();
-        }
-    }
-
-    $('#device').on('change', function() {
-        let device = $("#device option:selected").val();
-        let px = device.split('x');
-        screen(px[0], px[1]);
-    });
-})
-
-/*Events*/
-document.getElementById("controls").addEventListener("change", function() {
-    updateIframe();
-});
-
-document.getElementById("views").addEventListener("click", function(evt) {
-    updateView(evt.target.value);
-});
-
-updateIframe();
-
-jscolor.presets.default = {
-	format :'rgba',
-	height: 181,
-	position: 'bottom',        // position the picker to the right of the target
-	previewPosition: 'left', // display color preview on the right side
-	previewSize: 80,
-	alphaChannel :true,
-	borderRadius : 20,
-	borderWidth : 3
-
-};
-
-
 // Popup functions
 
 function buttonStyle(el, selector) {
@@ -410,3 +370,52 @@ function rgbToHex(rgb){
     });
     return "#"+b.join("");
 }
+
+
+$(document).ready(function(){
+    let iframe = document.getElementById(designGlobals.iframeId);
+    if (iframe) {
+        iframeURLChange(iframe, function (newURL) {
+            showViewSettings(designGlobals.checkUrl(newURL));
+        });
+    
+        iframe.onload = function () {
+            setDesign();
+            checkForBgImage();
+        }
+    }
+
+    $('#device').on('change', function() {
+        let device = $("#device option:selected").val();
+        let px = device.split('x');
+        screen(px[0], px[1]);
+    });
+})
+
+/*Events*/
+if (document.getElementById("controls")) {
+    document.getElementById("controls").addEventListener("change", function() {
+        updateIframe();
+    });
+}
+
+if (document.getElementById("views")) {
+    document.getElementById("views").addEventListener("click", function(evt) {
+        updateView(evt.target.value);
+    });
+}
+
+
+updateIframe();
+
+jscolor.presets.default = {
+	format :'rgba',
+	height: 181,
+	position: 'bottom',        // position the picker to the right of the target
+	previewPosition: 'left', // display color preview on the right side
+	previewSize: 80,
+	alphaChannel :true,
+	borderRadius : 20,
+	borderWidth : 3
+
+};
