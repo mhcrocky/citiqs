@@ -266,3 +266,7 @@ thead {
     border-top-right-radius: 50px !important;
     border-bottom-right-radius: 50px !important;
 }
+
+#group:disabled {
+    background: #f2f2f2 !important;
+}
