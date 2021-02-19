@@ -268,12 +268,4 @@
         </div>
     </div>
 </div>
-<script>
-    var payOrderGlobals = (function(){
-        let globals = {
-            'orderDataGetKey' : '<?php echo $orderDataGetKey; ?>'
-        }
-        Object.freeze(globals);
-        return globals;
-    }());
-</script>
+

@@ -7,11 +7,34 @@ function submitForm(formId) {
 }
 function inIframe () {
     try {
+        if (window.self !== window.top && payOrderGlobals) {
+            setInterval(checkIsIframeOrderPaid, 1000);
+        }
         return window.self !== window.top;
     } catch (e) {
         return false;
     }
 }
+
+function checkIsIframeOrderPaid() {
+    let url = globalVariables.ajax + 'checkIsIframeOrderPaid?' + payOrderGlobals['orderDataGetKey'] + '=' + payOrderGlobals['orderRandomKey'];
+    sendUrlRequest(url, 'checkIsIframeOrderPaid', checkIsIframeOrderPaidResponse)
+}
+
+function checkIsIframeOrderPaidResponse(response) {
+
+    // TO DO 
+    //  CHECK PAYMENT PAID
+    //      IF ONLINE => WAIT FOR RESPONSE FROM PAYNL
+    if (response['status'] === '1') {
+        let success = '';
+        success += globalVariables.baseUrl + 'success?';
+        success += response['orderKey'] + '=' + response['orderRandomKey'];
+        success += '&orderid' + '=' + response['id'];
+        window.self.location.href = success;
+    }
+}
+
 function reloadPageIfMinus(element, checkZeroValue = '1') {    
     let inputValue = parseFloat(element.value);
     let checkZero = checkZeroValue === '1' ? true : false;

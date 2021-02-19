@@ -1330,4 +1330,25 @@
             return $queryPart;
         }
 
+        public function fecthPaidOrderByRandomKey(): ?array
+        {
+            $order = $this->readImproved([
+                'what' => [
+                    $this->table . '.id', $this->table . '.paid'
+                ],
+                'where' => [
+                    $this->table . '.orderRandomKey' => $this->orderRandomKey,
+                    $this->table . '.paid' => '1'
+                ],
+                'conditions' => [
+                    'ORDER_BY' => ['id', 'DESC'],
+                    'LIMIT' => [1]
+                ]
+            ]);
+
+            if (is_null($order)) return null;
+
+            return reset($order);
+        }
+
     }
