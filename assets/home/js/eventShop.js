@@ -1,9 +1,9 @@
-(function($, window, document) {
+(function() {
     if (typeof globalTime === 'undefined' && $('#shop').length == 0) {
         window.location.href = globalVariables.baseUrl + "booking_events/clear_tickets";
     }
 
-}(window.jQuery, window, document));
+}());
 
 
 $(document).ready(function(){
