@@ -307,6 +307,9 @@ var callThis = (function() {
         deletePosOrder: function(callFunction) {
             callFunction(this);
         },
+        checkIsIframeOrderPaid: function(callFunction) {
+            callFunction(this);
+        },
     };
     return methods;
 })();

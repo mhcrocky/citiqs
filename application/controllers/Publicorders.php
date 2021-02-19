@@ -486,7 +486,6 @@
                 'oldMakeOrderView'      => $this->config->item('oldMakeOrderView'),
                 'newMakeOrderView'      => $this->config->item('newMakeOrderView'),
                 'redirect'              => $this->getRedirect($vendor, $spotTypeId, $orderRandomKey, intval($orderData['spotId'])),
-                'orderRandomKey'        => $orderRandomKey,
                 'orderDataGetKey'       => $this->config->item('orderDataGetKey'),
                 'orderRandomKey'        => $orderRandomKey,
                 'spotId'                => $orderData['spotId'],

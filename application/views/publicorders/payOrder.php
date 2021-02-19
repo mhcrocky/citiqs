@@ -11,3 +11,13 @@
         </div>
     </div>
 </main>
+<script>    
+    const payOrderGlobals = (function(){
+        let globals = {
+            'orderDataGetKey' : '<?php echo $orderDataGetKey; ?>',
+            'orderRandomKey' : '<?php echo $orderRandomKey; ?>'
+        }
+        Object.freeze(globals);
+        return globals;
+    }());
+</script>

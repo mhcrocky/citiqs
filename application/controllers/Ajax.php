@@ -1891,4 +1891,29 @@ class Ajax extends CI_Controller
         echo json_encode($response);
         return;
     }
+
+    public function checkIsIframeOrderPaid(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $get = Utility_helper::sanitizeGet();
+        $order = $this->shoporder_model->setProperty('orderRandomKey', $get['order'])->fecthPaidOrderByRandomKey();
+
+        if (is_null($order)) {
+            $response = [
+                'status' => '0'
+            ];
+        } else {
+            $response = [
+                'status' => '1',
+                'id' => $order['id'],
+                'orderRandomKey' => $get['order'],
+                'orderKey' => $this->config->item('orderDataGetKey')
+            ];
+        }
+
+        echo json_encode($response);
+
+        return;
+    }
 }
