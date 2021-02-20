@@ -1,9 +1,13 @@
+<script type="text/javascript" src="https://cdn.tiny.cloud/1/w5hbenttyblzlt08ckv8uv4scx6kb7hurbylozobxdibm0rx/tinymce/5/tinymce.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.7.0/plugins/colorpicker/plugin.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>assets/emaildesigner/js/colpick.js"></script>
 <script type="text/javascript">
         var path = '<?= base_url(); ?>';
         var user_id = <?php echo $user->id; ?>;
         var images_path = '<?php echo $images_path; ?>';
         var template_id = <?php echo (isset($template_id) and $template_id) ? $template_id : 'false'; ?>;
+
 </script>
 
 <div style="border: 1px solid gray !important;" class="navbar navbar-inverse navbar-layoutit mt-3">
@@ -54,8 +58,8 @@
                                     <tbody>
                                     <tr>
                                         <td align="left" class="title" style="padding:5px 50px 5px 50px">
-                                            <h1 style="font-family:Arial" onclick="maintitle(this)"> Enter your Title here! </h1>
-                                            <h4 onclick="subtitle(this)">Your Subtitle</h4>
+                                            <h1 style="font-family:Arial"> Enter your Title here! </h1>
+                                            <h4>Your Subtitle</h4>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -192,7 +196,7 @@
                                 <table class="main" width="640" cellspacing="0" cellpadding="0" border="0" bgcolor="#FFFFFF" align="center" style="background-color:#FFFFFF;" data-type="imgtxt">
                                     <tbody>
                                     <tr>
-                                        <td class="image-text" align="left" style="padding: 15px 50px 10px 50px; font-family: Arial; font-size: 13px; color: #000000; line-height: 22px;>
+                                        <td class="image-text" align="left" style="padding: 15px 50px 10px 50px; font-family: Arial; font-size: 13px; color: #000000; line-height: 22px;">
                                             <table class="image-in-table" width="190" align="left">
                                                 <tbody>
                                                 <tr>
@@ -385,8 +389,8 @@
 
             <br>
             <label for="template_name">Template Name</label>
-            <input style="border:1px solid #ced4da;" type="text" onchange="changeTemplateName(this)" required>
-            <input style="border:1px solid #ced4da;display:none" type="hidden" name="template_name" id="template_name" required value="ticketingtemplate">
+            <input style="border:1px solid #ced4da;" type="text" onchange="changeTemplateName(this)" value="<?php echo isset($email_template->template_name) ? str_replace('ticketing_','',$email_template->template_name) : ''; ?>" required>
+            <input style="border:1px solid #ced4da;display:none" type="hidden" name="template_name" id="template_name" required value="<?php echo isset($email_template->template_name) ? $email_template->template_name : ''; ?>">
             <div style="visibility: hidden;" class="required text-danger text-center" id="required">&nbsp &nbsp &nbsp This field is required</div>
             <div class="w-100 mt-3">
                 <h4><b>Test Email</b></h4>
@@ -428,43 +432,7 @@
             </form>
 
             <h4 style="visibility: hidden;" class="text-center text-info">Style</h4>
-            <form id="background"  class="form-inline">
-                <div class="form-group">
-                    <label for="bgcolor">Background</label>
-                    <div class="color-circle" id="bgcolor"></div>
-                    <script type="text/javascript">
-                        $('#bgcolor').colpick({
-                            layout: 'hex',
-                            onBeforeShow: function () {
-                                $(this).colpickSetColor($('#bgcolor').css('backgroundColor').replace('#', ''));
-                            },
-                            onChange: function (hsb, hex, rgb, el, bySetColor) {
-
-                                if (!bySetColor)
-                                    $(el).css('background-color', '#' + hex);
-                            },
-                            onSubmit: function (hsb, hex, rgb, el) {
-                                $(el).css('background-color', '#' + hex);
-
-                                $('#' + $('#path').val()).css('background-color', '#' + hex);
-                                $(el).colpickHide();
-                            }
-
-                        }).keyup(function () {
-                            $(this).colpickSetColor(this.value);
-                        });
-                    </script>
-
-                </div>
-            </form>
-
-            <form class="form-inline" id="font-settings" style="margin-top:5px">
-                <div class="form-group">
-                    <label for="fontstyle">Font style</label>
-                    <div id="fontstyle" class="color-circle"><i class="fa fa-font"></i></div>
-
-                </div>
-            </form>
+            
 
            
             <div class="form-group" style="margin-top:5px;">
@@ -490,7 +458,6 @@
                 </select>
                 <div class="w-100 text-right mt-1">
                     <button id="button-copyWord" onclick="copyWord(this)" class="btn btn-secondary">Copy</button>
-                    <button onclick="paste()" class="btn btn-secondary">Paste</button>
                 </div>
 
             </div>
@@ -639,10 +606,12 @@
             </div>
             
             <form id="editor" style="margin-top:5px">
-                
+           
+            <textarea id="html5editor"></textarea>
             </form>
             
             <form id="editorlite" style="margin-top:5px">
+            <textarea id="html5editorlite"></textarea>
                 
             </form>
 
@@ -967,10 +936,8 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.2.6/plugins/colorpicker/plugin.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url() ?>assets/emaildesigner/js/colpick.js"></script>
-<script type="text/javascript" src="<?php echo base_url() ?>assets/emaildesigner/js/template.editor.js"></script>
+
+<script type="text/javascript" src="<?php echo base_url() ?>assets/emaildesigner/js/template.tiny.editor.js"></script>
 
 
 <script>
@@ -1093,7 +1060,7 @@
 
         $('#previewimg').modal('hide');
     }
-
+ 
     function loadimages(){
 
         var request = $.ajax({
@@ -1113,7 +1080,10 @@
                 append: $('<tbody>'),
             });
             var i = 0;
-            data.images.forEach(function (image, index) {
+            if(data.images){
+
+            
+            data.images.each(function (image, index) {
                 if (i == 0) {
                     table.find('tbody').append($('<tr>'));
                 }
@@ -1153,9 +1123,11 @@
                     i++;
                 }
             })
+        }
 
             $( "#contenutoimmagini" ).html( table );
         });
 
     }
+
 </script>
