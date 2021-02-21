@@ -215,6 +215,7 @@ class Booking_events extends BaseControllerWeb
         $customer = $this->session->userdata('customer');
         if(!$this->session->userdata('reservationIds')){
             $reservationIds = $this->event_model->save_event_reservations($buyerInfo, $tickets, $customer);
+            var_dump();
             $this->session->set_userdata('reservationIds', $reservationIds);
             
         }
@@ -405,7 +406,7 @@ class Booking_events extends BaseControllerWeb
             $eventdate = $reservation->eventdate;
             $data['paid'] = '1';
             $this->bookandpay_model->editbookandpay($data, $reservationIds[$i]);
-            $result = $this->sendreservation_model->getReservationByMailandEventDate($email, $eventdate);
+            $result = $this->sendreservation_model->getReservationData($reservation->reservationId, $email, $eventdate);
             
             $TransactionId='empty';
             
@@ -437,7 +438,7 @@ class Booking_events extends BaseControllerWeb
 								$file = '/home/tiqs/domains/tiqs.com/public_html/alfred/uploads/qrcodes/';
 								break;
 							case '127.0.0.1':
-								$file = 'C:/wamp64/www/tiqs/booking2020/uploads/qrcodes/';
+								$file = 'C:/wamp64/www/alfred/alfred/uploads/qrcodes/';
 								break;
 							default:
 								break;
@@ -450,12 +451,13 @@ class Booking_events extends BaseControllerWeb
 						$file_name = $folder . $file_name1;
 
 						QRcode::png($text, $file_name);
+
 						switch (strtolower($_SERVER['HTTP_HOST'])) {
 							case 'tiqs.com':
 								$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
 								break;
 							case '127.0.0.1':
-								$SERVERFILEPATH = 'http://127.0.0.1/spot/uploads/thuishaven/qrcodes/';
+								$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
 								break;
 							default:
 								break;
@@ -468,11 +470,12 @@ class Booking_events extends BaseControllerWeb
 								$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
 								break;
 							case '127.0.0.1':
-								$SERVERFILEPATH = 'http://127.0.0.1/spot/uploads/thuishaven/qrcodes/';
+								$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
 								break;
 							default:
 								break;
                         }
+
                         
 						if($emailId) {
                             $emailTemplate = $this->email_templates_model->get_emails_by_id($emailId);
