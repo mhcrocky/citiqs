@@ -131,7 +131,7 @@ class Event_model extends CI_Model {
 				'reservationId' => $reservationId,
 				'customer' => $customer,
 				'eventId' => $ticket['id'],
-				'eventdate' => $ticket['startDate'],
+				'eventdate' => date('Y-m-d', strtotime($ticket['startDate'])),
 				'timefrom' => $ticket['startTime'],
 				'timeto' => $ticket['endTime'],
 				'price' => $ticket['price'],
@@ -143,4 +143,15 @@ class Event_model extends CI_Model {
 		$this->db->insert_batch('tbl_bookandpay',$data);
 		 return $reservationIds;
 	}
+
+	public function get_booking_report($vendorId, $eventId)
+	{
+		$query = $this->db->query("SELECT reservationId, reservationtime, price,numberofpersons,(price*numberofpersons) as amount, mobilephone, email,eventdate,timefrom,timeto, ticketDescription
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_events.vendorId = ".$vendorId." AND tbl_events.Id = ".$eventId."
+		ORDER BY reservationtime DESC");
+		return $query->result_array();
+	}
+
 }

@@ -200,6 +200,21 @@ class Events extends BaseControllerWeb
         $this->event_model->update_email_template($id, $emailId);
     }
 
+    public function report($eventId)
+    {
+        $this->global['pageTitle'] = 'TIQS : EVENT REPORT';
+        $data['eventId'] = $eventId;
+        $data['event'] = $this->event_model->get_event($this->vendor_id,$eventId);
+        $this->loadViews('events/reports', $this->global, $data, 'footerbusiness', 'headerbusiness');
+    }
+
+    public function get_booking_report()
+    {
+        $eventId = $this->input->post('eventId');
+        $report = $this->event_model->get_booking_report($this->vendor_id, $eventId);
+        echo json_encode($report);
+    }
+
     public function email_designer()
     {
         $this->user_model->setUniqueValue($this->userId)->setWhereCondtition()->setUser();
@@ -236,7 +251,7 @@ class Events extends BaseControllerWeb
             $email_template = $this->email_templates_model->get_emails_by_id($email_id);
             $data['email_template'] = $email_template;
             $data['template_html'] = read_file(FCPATH . 'assets/email_templates/' . $this->user_model->id . '/' . $email_template->template_file);
-        }
+        } 
 
         $this->loadViews("events/email_designer", $this->global, $data, 'footerbusiness', 'headerbusiness');
     }

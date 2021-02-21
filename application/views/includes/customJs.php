@@ -188,5 +188,15 @@
 <?php } elseif ($this->view === 'new_bookings/agenda_booking_design') { ?>
 	<script src="<?php echo base_url(); ?>assets/cdn/js/jscolor.js"></script>
 	<script src="<?php echo base_url(); ?>assets/home/js/agenda_booking_design.js"></script>
+<?php } elseif ($this->view === 'events/reports') { ?>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/home/js/ticketsReportDataTable.js"></script>
 <?php } ?>
 

@@ -236,7 +236,8 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="ticketEmailTemplate" class="col-md-4 col-form-label text-md-left">Email Template</label>
+                            <label for="ticketEmailTemplate" class="col-md-4 col-form-label text-md-left">Email
+                                Template</label>
                             <div class="col-md-6">
                                 <select id="ticketEmailTemplate" class="form-control input-w">
                                     <option selected disabled>Select option</option>
@@ -419,7 +420,7 @@
 
 <main class="my-form">
     <div class="w-100 mt-5 p-3">
-        <div class="table-responsive mb-4">
+        <div class="table-responsive">
             <table class="table bg-white">
                 <tr>
                     <td><?php echo $event->eventname; ?></td>
@@ -433,8 +434,16 @@
                     <td><?php echo $event->EndDate; ?></td>
                     <td><?php echo $event->StartTime; ?></td>
                     <td><?php echo $event->EndTime; ?></td>
+                    <td>
+                        <a href="<?php echo base_url(); ?>events/shop/<?php echo $this->session->userdata('userShortUrl'); ?>"
+                            class="btn btn-primary" style="background: #10b981;">Go to Shop</a>
+                    </td>
                 </tr>
             </table>
+        </div>
+        <div class="w-100 mt-1 mb-4 text-right">
+            <a href="<?php echo base_url(); ?>events/report/<?php echo $event->id; ?>"
+                class="btn btn-primary mr-2" style="background: #10b981;">Go to Buyers</a>
         </div>
         <div class="input-group col-md-2">
             <input type="button" value="Add Ticket" style="background: #009933 !important;border-radius:0"

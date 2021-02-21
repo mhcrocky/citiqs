@@ -484,7 +484,7 @@ class Booking_events extends BaseControllerWeb
 							if($mailtemplate) {
 								$mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/'.$emailTemplate->template_file);
 								$mailtemplate = str_replace('[customer]', $customer, $mailtemplate);
-								$mailtemplate = str_replace('[eventdate]', date('d.m.yy', strtotime($eventdate)), $mailtemplate);
+								$mailtemplate = str_replace('[eventdate]', date('d.m.Y', strtotime($eventdate)), $mailtemplate);
 								$mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
 								$mailtemplate = str_replace('[price]', $price, $mailtemplate);
 								$mailtemplate = str_replace('[spotlabel]', $Spotlabel, $mailtemplate);
