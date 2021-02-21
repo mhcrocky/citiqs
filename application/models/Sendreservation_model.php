@@ -228,6 +228,20 @@ class Sendreservation_model extends CI_Model
 		return $result;
 	}
 
+	public function getReservationData($reservationId,$email,$eventdate)
+	{
+		$this->db->from('tbl_bookandpay');
+		$this->db->where('email', $email);
+		$this->db->where('reservationId', $reservationId);
+		$this->db->where('eventdate', $eventdate);
+		$query = $this->db->get();
+		$result = $query->result();
+//				$testquery = $this->db->last_query();
+//				var_dump($testquery);
+//				die();
+		return $result;
+	}
+
 
 	public function getReservationByOrderID($email,$eventdate,$reservationId,$transactionid)
 	{
