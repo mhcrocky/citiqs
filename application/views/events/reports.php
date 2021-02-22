@@ -20,6 +20,10 @@
             </tr>
         </table>
     </div>
+    <div class="w-100 mt-1 mb-4 text-right">
+            <a href="<?php echo base_url(); ?>events/event/<?php echo $eventId; ?>" class="btn btn-primary mr-2"
+                style="background: #10b981;">Go to Tickets</a>
+        </div>
     <div class="float-right text-center pl-3">
         <input style="width: 330px;" class="date form-control-sm mb-2" type="text" name="datetimes"
             id="reportDateTime" />
