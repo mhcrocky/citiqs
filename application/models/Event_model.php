@@ -154,7 +154,7 @@ class Event_model extends CI_Model {
 		return $query->result_array();
 	}
 
-	public function booking_report_of_day($vendorId, $eventId, $sql='')
+	public function get_booking_report_of_days($vendorId, $eventId, $sql='')
 	{
 		$query = $this->db->query("SELECT DATE(reservationtime) AS day_date,  eventdate, reservationtime, sum(numberofpersons) AS tickets 
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
@@ -164,8 +164,8 @@ class Event_model extends CI_Model {
 		return $query->result_array();
 	}
 
-	function get_day_report($vendor_id, $eventId, $sql=''){
-		$results = $this->booking_report_of_day($vendor_id, $eventId, $sql);
+	function get_days_report($vendor_id, $eventId, $sql=''){
+		$results = $this->get_booking_report_of_days($vendor_id, $eventId, $sql);
 		$newData = [];
 	
 		foreach($results as $key => $result){
