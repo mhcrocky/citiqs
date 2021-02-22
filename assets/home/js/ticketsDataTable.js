@@ -64,9 +64,15 @@ $(document).ready(function() {
         $("#eventId").val(event);
     });
     $("#ticketEmailTemplate").on("change", function(){
-        var event = $("#ticketEmailTemplate option:selected").val();
-        $("#ticketEmailTemplateId").val(event);
+        var emailTemplate = $("#ticketEmailTemplate option:selected").val();
+        $("#ticketEmailTemplateId").val(emailTemplate);
     });
+
+    $("#ticketCurrency").on("change", function(){
+        var event = $("#ticketCurrency option:selected").val();
+        $("#ticketCurrencyVal").val(event);
+    });
+
     var groupColumn = 2;
     var table = $('#tickets').DataTable({
         columnDefs: [{
