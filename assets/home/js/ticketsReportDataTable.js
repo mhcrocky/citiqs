@@ -108,14 +108,21 @@ $(document).ready( function () {
         title: '',
         data: null,
         "render": function (data, type, row) {
-          return '<a href="javascript:;" class="btn btn-warning">Refund</a>';
+          var refundData = [];
+          refundData['id'] = data.reservationId;
+          refundData['amount'] = data.amount;
+          refundData['ticketDescription'] = data.ticketDescription;
+          refundData['ticketQuantity'] = data.ticketQuantity;
+          let html = '<input type="hidden" id="'+data.reservationId+'" data-ticketdescription="'+data.ticketDescription+'" data-amount="'+data.amount+'" data-ticketquantity="'+data.numberofpersons+'" data-price="'+data.price+'">'+
+          '<a href="#" onclick="refundModal(\''+data.reservationId+'\')" class="btn btn-warning btn-refund" data-toggle="modal" data-target="#refundModal">Refund</a>';
+          return html;
         }
       },
       {
         title: '',
         data: null,
         "render": function (data, type, row) {
-          return '<a href="javascript:;" class="btn btn-primary">Resend Ticket</a>';
+          return '<a href="javascript:;" onclick="resendTicket(\''+data.reservationId+'\', \''+data.email+'\')" class="btn btn-primary">Resend Ticket</a>';
         }
       },
       ],
@@ -191,42 +198,44 @@ var full_num = addZero(num1) + "." + num2;
 return full_num;
 }
 
-function refundModal(order_id, total_amount) {
+function refundModal(reservationId) {
+  var data = $('#'+reservationId).data();
+  console.log(data);
+  console.log(data.amount);
+
 $('#productsRefund').empty();
 $('.amount').each(function(){
   $(this).val('€0.00');
 });
 $('#amount').val('€0.00');
 $('#order_amount').empty();
-$('#description').val('tiqs - '+order_id);
-let html = '<input type="hidden" id="total_amount" name="total_amount" value="'+total_amount+'">'+
+$('#description').val(reservationId);
+let html = '<input type="hidden" id="total_amount" name="total_amount" value="'+data.amount+'">'+
 '<table class="refundTable text-center w-100">'+
 '<tr><th>Quantity</th><th>Name</th><th>Quantity</th><th>Price</th><th>Total</th></tr>';
-$('.productName_'+order_id).each(function(index){
-  let productName = $(this).text();
-  let productPrice = $(this).data('price');
-  let productQuantity = $(this).data('quantity');
-  html += '<tr><th>'+productQuantity+'</th>'+
-  '<th>'+productName+'</th>'+
-  '<th><input type="number" style="-moz-appearance: auto;" max="0" min="-'+productQuantity+'" oninput="validateQuantity(this,'+productQuantity+')" onkeyup="validateQuantity(this)" onchange="refundAmount(this,'+index+')" class="form-control ml-auto quantity mb-2" value="0"></th>'+
-  '<th class="pl-2 pr-2">€<span id="price_'+index+'">'+productPrice+'</span></th>'+
+
+  
+  html += '<tr><th>'+data.ticketquantity+'</th>'+
+  '<th>'+data.ticketdescription+'</th>'+
+  '<th><input type="number" style="-moz-appearance: auto;" max="0" min="-'+data.ticketquantity+'" oninput="validateQuantity(this,'+data.ticketquantity+')" onkeyup="validateQuantity(this,'+data.ticketquantity+')" onchange="refundAmount(this)" class="form-control ml-auto quantity mb-2" value="0"></th>'+
+  '<th class="pl-2 pr-2">€<span id="price">'+data.price.toFixed(2)+'</span></th>'+
   '<th>'+
-  '<input type="text" class="form-control amount amount_'+index+' mb-2 ml-auto mr-1" value="€0.00" disabled></th></tr>';
- });
+  '<input type="text" class="form-control amount amount_40 mb-2 ml-auto mr-1" value="€0.00" disabled></th></tr>';
+ 
  html += '</table>';
- $('#order_amount').text(parseFloat(total_amount).toFixed(2));
- $('#freeamount').attr('min', '-'+total_amount);
- $('#amount_limit').val(total_amount);
+ $('#order_amount').text(parseFloat(data.amount).toFixed(2));
+ $('#freeamount').attr('min', '-'+data.amount);
+ $('#amount_limit').val(data.amount);
  $('#productsRefund').append(html);
 }
 
-function refundAmount(el, index){
-let price = $('#price_'+index).text();
+function refundAmount(el){
+let price = $('#price').text();
 let quantity = $(el).val();
 let total_amount = parseFloat($('#total_amount').val());
 let free_amount = parseFloat($('#freeamount').val());
 let amount = parseFloat(price.replace('€', '')) * parseInt(quantity.replace('€', ''));
-$('.amount_'+index).val('-€'+Math.abs(amount).toFixed(2));
+$('.amount').val('-€'+Math.abs(amount).toFixed(2));
 let amount2 = 0;
 $('.amount').each(function(){
   let val = parseFloat($(this).val().replace('€', ''));
@@ -262,3 +271,14 @@ if(num < total_amount){
 }
 
 }
+
+function resendTicket(reservationId, email){
+  let data = {
+    reservationId: reservationId,
+    email: encodeURI(email)
+  };
+  $.post(globalVariables.baseUrl + 'booking_events/emailReservation', data, function(data){
+    alertify.success('Ticket is resend successfully!');
+  });
+  
+  }
