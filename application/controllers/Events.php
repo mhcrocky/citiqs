@@ -1,7 +1,13 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
+include(APPPATH . '/libraries/koolreport/core/autoload.php');
+
 require APPPATH . '/libraries/BaseControllerWeb.php';
+
+use \koolreport\drilldown\DrillDown;
+use \koolreport\widgets\google\ColumnChart;
+use \koolreport\clients\Bootstrap4;
 
 class Events extends BaseControllerWeb
 {
@@ -204,6 +210,7 @@ class Events extends BaseControllerWeb
     {
         $this->global['pageTitle'] = 'TIQS : EVENT REPORT';
         $data['eventId'] = $eventId;
+        $data['graphs'] = $this->get_graphs($this->vendor_id, $eventId);
         $data['event'] = $this->event_model->get_event($this->vendor_id,$eventId);
         $this->loadViews('events/reports', $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
@@ -211,7 +218,8 @@ class Events extends BaseControllerWeb
     public function get_booking_report()
     {
         $eventId = $this->input->post('eventId');
-        $report = $this->event_model->get_booking_report($this->vendor_id, $eventId);
+        $sql = ($this->input->post('sql') == 'AND%20()') ? "" : rawurldecode($this->input->post('sql'));
+        $report = $this->event_model->get_booking_report($this->vendor_id, $eventId, $sql);
         echo json_encode($report);
     }
 
@@ -255,5 +263,57 @@ class Events extends BaseControllerWeb
 
         $this->loadViews("events/email_designer", $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
+
+    public function get_graphs($vendorId, $eventId, $sql=''){
+        $GLOBALS['vendorId'] = $vendorId;
+        $GLOBALS['eventId'] = $eventId;
+        $GLOBALS['sql'] = $sql;
+        $this->load->model('event_model');
+		$graphs = DrillDown::create(array(
+            "name" => "saleDrillDown",
+            "title" => " ",
+            "levels" => array(
+                array(
+                    "title" => "Business Report",
+                    "content" => function ($params, $scope) {
+                        global $vendorId;
+                        global $eventId;
+                        global $sql;
+                        ColumnChart::create(array(
+                            "dataSource" => $this->event_model->get_days_report($vendorId, $eventId, $sql), 
+                            "columns" => array(
+                                "days" => array(
+                                    "type" => "integer",
+                                    "label" => "Days",
+								),
+								"tickets" => array(
+									"label" => "Tickets",
+									"id" => "Tickets",
+                                ),
+							),
+							"class"=>array(
+								"button"=>"bg-warning"
+							),
+                            "clientEvents" => array(
+                                "itemSelect" => "function(params){
+									
+                                }",
+							),
+							"colorScheme"=>array(
+								"#3366cc",
+								"#dc3912"
+							)
+                        ));
+                    }
+                ),
+
+ 
+
+            ),
+           
+		), true);
+		return $graphs;
+
+	}
 
 }
