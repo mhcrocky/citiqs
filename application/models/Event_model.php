@@ -144,14 +144,46 @@ class Event_model extends CI_Model {
 		 return $reservationIds;
 	}
 
-	public function get_booking_report($vendorId, $eventId)
+	public function get_booking_report($vendorId, $eventId, $sql='')
 	{
 		$query = $this->db->query("SELECT reservationId, reservationtime, price,numberofpersons,(price*numberofpersons) as amount, mobilephone, email, ticketDescription, ticketQuantity
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		WHERE tbl_events.vendorId = ".$vendorId." AND tbl_events.Id = ".$eventId."
+		WHERE tbl_events.vendorId = ".$vendorId." AND tbl_events.Id = ".$eventId." $sql
 		ORDER BY reservationtime DESC");
 		return $query->result_array();
 	}
+
+	public function booking_report_of_day($vendorId, $eventId, $sql='')
+	{
+		$query = $this->db->query("SELECT DATE(reservationtime) AS day_date,  eventdate, reservationtime, sum(numberofpersons) AS tickets 
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_events.vendorId = ".$vendorId." AND tbl_events.Id = ".$eventId." $sql AND paid=1  GROUP BY day_date 
+		ORDER BY day_date DESC");
+		return $query->result_array();
+	}
+
+	function get_day_report($vendor_id, $eventId, $sql=''){
+		$results = $this->booking_report_of_day($vendor_id, $eventId, $sql);
+		$newData = [];
+	
+		foreach($results as $key => $result){
+			$reservationDate = $result['day_date'];
+			$eventDate = $result['eventdate'];
+			
+			$dStart = new DateTime($reservationDate);
+			$dEnd  = new DateTime($eventDate);
+			$dDiff = $dStart->diff($dEnd);
+			$days = $dDiff->format('%r%a');
+
+			$newData[$key] = [
+				"days" => ($days == 1) ? $days.' day' : $days.' days',
+				"tickets" => (int) $result['tickets'],
+			];
+		}
+		return $newData;
+	}
+
 
 }
