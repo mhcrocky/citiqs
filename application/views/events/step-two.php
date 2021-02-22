@@ -44,7 +44,18 @@
                     </ul>
 
                     <hr class="w-100 mt-3 mb-3">
-                    <h3 class="font-weight-bold text-dark">Ticketfee per ticket</h3>
+                    <div class="row">
+                        <div class="col-md-3 text-dark">
+                            <h3 class="font-weight-bold text-dark">Ticketfee per ticket</h3>
+                        </div>
+                        <div class="col-md-3">
+                            <select id="ticketCurrency" style="height: 35px !important;padding-top: 6px;" class="form-control input-w mt-2">
+                                <option value="euro" selected>€ - EUR</option>
+                                <option value="usd">$ - USD</option>
+                            </select>
+                            <input type="hidden" id="ticketCurrencyVal" name="ticketCurrency" value="euro">
+                        </div>
+                    </div>
                     <div class="row mb-2">
                         <div class="col-md-3 text-dark">Min 0.00</div>
                         <div class="col-md-3">
@@ -442,8 +453,8 @@
             </table>
         </div>
         <div class="w-100 mt-1 mb-4 text-right">
-            <a href="<?php echo base_url(); ?>events/report/<?php echo $event->id; ?>"
-                class="btn btn-primary mr-2" style="background: #10b981;">Go to Buyers</a>
+            <a href="<?php echo base_url(); ?>events/report/<?php echo $event->id; ?>" class="btn btn-primary mr-2"
+                style="background: #10b981;">Go to Buyers</a>
         </div>
         <div class="input-group col-md-2">
             <input type="button" value="Add Ticket" style="background: #009933 !important;border-radius:0"
