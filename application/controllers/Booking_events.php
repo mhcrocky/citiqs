@@ -398,7 +398,7 @@ class Booking_events extends BaseControllerWeb
         $this->load->model('sendreservation_model');
         $this->load->model('email_templates_model');
         $email = (null !== $this->input->post('email') && !empty($this->input->post('email'))) ? rawurldecode($this->input->post('email')) : $this->session->userdata('buyerEmail');
-        $reservationIds = (null !== $this->input->post('reservationId') && !empty($this->input->post('reservationId'))) ? $this->input->post('reservationId') : [$this->session->userdata('reservationIds')];
+        $reservationIds = (null !== $this->input->post('reservationId') && !empty($this->input->post('reservationId'))) ? $this->input->post('reservationId') : $this->session->userdata('reservationIds');
         $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
         $eventdate = '';
         $i = 0;
