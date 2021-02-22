@@ -146,7 +146,7 @@ class Event_model extends CI_Model {
 
 	public function get_booking_report($vendorId, $eventId)
 	{
-		$query = $this->db->query("SELECT reservationId, reservationtime, price,numberofpersons,(price*numberofpersons) as amount, mobilephone, email,eventdate,timefrom,timeto, ticketDescription
+		$query = $this->db->query("SELECT reservationId, reservationtime, price,numberofpersons,(price*numberofpersons) as amount, mobilephone, email, ticketDescription, ticketQuantity
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		WHERE tbl_events.vendorId = ".$vendorId." AND tbl_events.Id = ".$eventId."
