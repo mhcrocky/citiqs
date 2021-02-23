@@ -25,7 +25,7 @@
 
 							<div style="margin-top: -10px">
 								<div style="margin-top: -30px">
-									<span  class="selectTypeLabelsColor"><?php echo $type['type']; ?></span>
+									<span class="selectTypeLabelsColor typeLabel"><?php echo $type['type']; ?></span>
 								</div>
 							</div>
 
