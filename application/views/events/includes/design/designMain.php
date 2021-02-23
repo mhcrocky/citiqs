@@ -63,18 +63,20 @@
                 </div>
             </div>
         </div>
+        <div style="height: 500px; width: 100%; overflow-y: scroll;">
         <?php
                     include_once FCPATH . 'application/views/events/includes/design/shopView.php';
                     include_once FCPATH . 'application/views/events/includes/design/ticketsView.php';
                 ?>
-        <input type="submit" class="btn btn-primary" value="submit" />
+        </div>
+        <input type="submit" class="btn btn-primary mt-3" value="submit" />
         </form>
 
     </div>
     <div class="col-lg-6">
 
         <div id="wrapper" style="position:fixed; top:3%">
-            <div class="phone view_1" id="phone_1" style="margin:auto; width:80%;">
+            <div class="phone view_3" id="phone_1" style="margin:auto; width:80%;">
                 <iframe id="iframe" src="<?php echo $iframeSrc; ?>" width="420px" height="650px"></iframe>
             </div>
         </div>

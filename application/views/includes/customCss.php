@@ -193,8 +193,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
 <?php  } elseif ($this->view === 'events/events') { ?>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/query-builder.default.css" id="qb-theme"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/dashboard.css">
+    <style>
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        padding: 0px !important;
+    }
+    input[type="search"]{
+        width: auto !important;
+    }
+
+    </style>
     <?php  } elseif ($this->view === 'video/index') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
@@ -203,6 +215,7 @@
 <?php  } elseif ($this->view === 'events/selectpayment') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/select-pay.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <style> 
     .header__checkout { display:none }
     <style>
@@ -235,7 +248,16 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/agenda_booking_design.css"/>
 <?php  } elseif ($this->view === 'new_bookings/spots_booking') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/css/card-style.css">
+<<<<<<< HEAD
 <?php } elseif ($this->view === 'templates/listTemplates') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+=======
+<?php  } elseif ($this->view === 'events/reports') { ?>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/query-builder.default.css" id="qb-theme"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/dashboard.css">
+>>>>>>> a4032588c5214f4b3c8b664198713542b9e9afcf
 <?php } ?>
 

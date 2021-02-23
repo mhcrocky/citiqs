@@ -132,11 +132,17 @@ class Login extends BaseControllerWeb
 					);
 					$sessionArray['activatePos'] = $this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('activatePos');
 
+//					$this->load->model('vendor_model');
+//					$MenuArray = $this->vendor_model->getMenuOptionsByVendorId($result->userId);
+//					$sessionArray['menuOptions'] = $MenuArray;
+
+
 					$MenuArray = array(
 						'all'
 					);
 
 					$sessionArray['menus'] = $MenuArray;
+
 					$this->session->set_userdata($sessionArray);
 					unset($sessionArray['userId'], $sessionArray['isLoggedIn'], $sessionArray['lastLogin']);
 					$loginInfo = array("userId" => $result->userId, "sessionData" => json_encode($sessionArray), "machineIp" => $_SERVER['REMOTE_ADDR'], "userAgent" => getBrowserAgent(), "agentString" => $this->agent->agent_string(), "platform" => $this->agent->platform());
@@ -797,7 +803,7 @@ class Login extends BaseControllerWeb
 	public function registerbusinessAction()
 	{
 		$this->form_validation->set_rules('username', 'Full Name', 'trim|required|max_length[128]');
-		$this->form_validation->set_rules('usershorturl', 'User short url', 'trim|required|max_length[128]');
+//		$this->form_validation->set_rules('usershorturl', 'User short url', 'trim|required|max_length[128]');
 		$this->form_validation->set_rules('first_name', 'Full Name', 'trim|required|max_length[128]');
 		$this->form_validation->set_rules('second_name', 'Full Name', 'trim|required|max_length[128]');
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|max_length[128]|is_unique[tbl_user.email]');

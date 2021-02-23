@@ -321,6 +321,10 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
 
     public function loginEmployee(): ?int
     {
+//    	var_dump($this->password);
+//		var_dump($this->email);
+//
+//		die();
         $id = $this->readImproved([
             'what' => [$this->table . '.id'],
             'where' => [

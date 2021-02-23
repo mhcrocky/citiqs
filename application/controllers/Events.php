@@ -1,7 +1,13 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
+include(APPPATH . '/libraries/koolreport/core/autoload.php');
+
 require APPPATH . '/libraries/BaseControllerWeb.php';
+
+use \koolreport\drilldown\DrillDown;
+use \koolreport\widgets\google\ColumnChart;
+use \koolreport\clients\Bootstrap4;
 
 class Events extends BaseControllerWeb
 {
@@ -37,9 +43,9 @@ class Events extends BaseControllerWeb
 
     public function event($eventId)
     {
-        $this->global['pageTitle'] = 'TIQS: Step Two';
+        $this->global['pageTitle'] = 'TIQS: Step Two'; 
         $data = [
-            'events' => $this->event_model->get_events($this->vendor_id),
+            'event' => $this->event_model->get_event($this->vendor_id,$eventId),
             'eventId' => $eventId,
             'emails' => $this->email_templates_model->get_ticketing_email_by_user($this->vendor_id),
             'groups' => $this->event_model->get_ticket_groups()
@@ -122,7 +128,16 @@ class Events extends BaseControllerWeb
     public function save_ticket()
     {
         $data = $this->input->post(null, true);
-        $this->event_model->save_ticket($data);
+        if($data['ticketType'] == 'group'){
+            $data['ticketType'] = 2;
+            $groupId = $this->event_model->save_ticket_group($data['ticketDescription'],$data['ticketQuantity']);
+            $data['ticketGroupId'] = $groupId;
+            $this->event_model->save_ticket($data);
+        } else {
+            $data['ticketType'] = 1;
+            $this->event_model->save_ticket($data);
+        }
+        
         redirect('events/event/'.$data['eventId']);
 
     }
@@ -191,6 +206,38 @@ class Events extends BaseControllerWeb
         $this->event_model->update_email_template($id, $emailId);
     }
 
+    public function report($eventId)
+    {
+        $this->global['pageTitle'] = 'TIQS : EVENT REPORT';
+        $data['eventId'] = $eventId;
+        $data['event'] = $this->event_model->get_event($this->vendor_id,$eventId);
+        $this->loadViews('events/reports', $this->global, $data, 'footerbusiness', 'headerbusiness');
+    }
+
+    public function graph($eventId)
+    {
+        $this->global['pageTitle'] = 'TIQS : EVENT GRAPH';
+        $data['eventId'] = $eventId;
+        $data['event'] = $this->event_model->get_event($this->vendor_id,$eventId);
+        $data['graphs'] = $this->get_graphs($this->vendor_id, $eventId);
+        $this->loadViews('events/graph', $this->global, $data, 'footerbusiness', 'headerbusiness');
+    }
+
+    public function get_ticket_report()
+    {
+        $eventId = $this->input->post('eventId');
+        $sql = ($this->input->post('sql') == 'AND%20()') ? "" : rawurldecode($this->input->post('sql'));
+        $report = $this->event_model->get_ticket_report($this->vendor_id, $eventId, $sql);
+        echo json_encode($report);
+    }
+
+    public function get_tickets_report()
+    {
+        $sql = ($this->input->post('sql') == 'AND%20()') ? "" : rawurldecode($this->input->post('sql'));
+        $report = $this->event_model->get_tickets_report($this->vendor_id, $sql);
+        echo json_encode($report);
+    }
+
     public function email_designer()
     {
         $this->user_model->setUniqueValue($this->userId)->setWhereCondtition()->setUser();
@@ -227,9 +274,57 @@ class Events extends BaseControllerWeb
             $email_template = $this->email_templates_model->get_emails_by_id($email_id);
             $data['email_template'] = $email_template;
             $data['template_html'] = read_file(FCPATH . 'assets/email_templates/' . $this->user_model->id . '/' . $email_template->template_file);
-        }
+        } 
 
         $this->loadViews("events/email_designer", $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
+
+    public function get_graphs($vendorId, $eventId, $sql=''){
+        $GLOBALS['vendorId'] = $vendorId;
+        $GLOBALS['eventId'] = $eventId;
+        $GLOBALS['sql'] = $sql;
+        $this->load->model('event_model');
+		$graphs = DrillDown::create(array(
+            "name" => "saleDrillDown",
+            "title" => " ",
+            "levels" => array(
+                array(
+                    "title" => "Business Report",
+                    "content" => function ($params, $scope) {
+                        global $vendorId;
+                        global $eventId;
+                        global $sql;
+                        ColumnChart::create(array(
+                            "dataSource" => $this->event_model->get_days_report($vendorId, $eventId, $sql), 
+                            "columns" => array(
+                                "days" => array(
+                                    "type" => "integer",
+                                    "label" => "Days",
+								),
+								"tickets" => array(
+									"label" => "Tickets",
+									"id" => "Tickets",
+                                ),
+							),
+							"class"=>array(
+								"button"=>"bg-warning"
+							),
+                            
+							"colorScheme"=>array(
+								"#3366cc",
+								"#dc3912"
+							)
+                        ));
+                    }
+                ),
+
+ 
+
+            ),
+           
+		), true);
+		return $graphs;
+
+	}
 
 }

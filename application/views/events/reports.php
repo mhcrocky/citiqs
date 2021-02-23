@@ -1,42 +1,57 @@
-<main class="my-form">
-    <div class="w-100 mt-5 p-3">
-        <div class="input-group col-md-2">
-            <a href="<?php echo base_url(); ?>events/create">
-                <input type="button" value="Add Event" style="background: #009933 !important;border-radius:0"
-                    class="btn btn-success form-control mb-3 text-left">
-                <a style="background: #004d1a;padding-top: 8px;" class="input-group-addon pl-2 pr-2 mb-3">
-                    <i style="color: #fff;font-size: 18px;" class="fa fa-plus"></i></a>
-            </a>
+<div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable">
+    <div class="table-responsive mb-2">
+        <table style="background: none !important;" class="table">
+            <tr style="border-bottom: 3px solid #9333ea">
+                <td><?php echo $event->eventname; ?></td>
+                <td><?php echo $event->eventdescript; ?></td>
+                <td><?php echo $event->eventVenue; ?></td>
+                <td><?php echo $event->eventAddress; ?></td>
+                <td><?php echo $event->eventCity; ?></td>
+                <td><?php echo $event->eventZipcode; ?></td>
+                <td><?php echo $event->eventCountry; ?></td>
+                <td><?php echo $event->StartDate; ?></td>
+                <td><?php echo $event->EndDate; ?></td>
+                <td><?php echo $event->StartTime; ?></td>
+                <td><?php echo $event->EndTime; ?></td>
+                <td>
+                    <a href="<?php echo base_url(); ?>events/shop/<?php echo $this->session->userdata('userShortUrl'); ?>"
+                        class="btn btn-primary" style="background: #10b981;">Go to Shop</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="w-100 mt-1 mb-2 text-right">
+        <a href="<?php echo base_url(); ?>events/graph/<?php echo $eventId; ?>" class="btn btn-primary mr-2"
+            style="background: #10b981;">Tickets Graph</a>
+        <a href="<?php echo base_url(); ?>events/event/<?php echo $eventId; ?>" class="btn btn-primary mr-2"
+            style="background: #10b981;">Go to Tickets</a>
+    </div>
+
+
+    <div class="w-100 mt-3 mb-3 mx-auto">
+        <div class="col-md-12 mb-4">
+            <main class="query-main" class="p-3" role="main">
+                <div id="query-builder"></div>
+                <div class="w-100 text-right p-3">
+                    <button class="btn btn-primary parse-json">Run the query</button>
+                </div>
+            </main>
         </div>
-        <table id="events" class="mt-5" style="width:100%;background: #fff;">
+
+    </div>
+    <input type="hidden" id="eventId" value="<?php echo $eventId; ?>">
+
+    <div class="w-100 mt-3 table-responsive">
+        <table id="report" class="table table-striped table-bordered" cellspacing="0" width="100%">
+
 
         </table>
 
-        <div class="w-100 mt-4 mb-3 mx-auto">
-            <div class="col-md-12 mb-4">
-                <main class="query-main" class="p-3" role="main">
-                    <div id="query-builder"></div>
-                    <div class="w-100 text-right p-3">
-                        <button class="btn btn-primary parse-json">Run the query</button>
-                    </div>
-                </main>
-            </div>
 
-        </div>
-        <div class="float-right mt-4 text-center pl-3">
-            <input style="width: 330px;" class="date form-control-sm mb-2" type="text" name="datetimes" />
-        </div>
-
-        <div class="w-100 mt-3 table-responsive">
-            <table id="report" class="table table-striped table-bordered" cellspacing="0" width="100%">
-
-
-            </table>
-
-
-        </div>
     </div>
-</main>
+
+</div>
 
 
 <!-- Modal -->

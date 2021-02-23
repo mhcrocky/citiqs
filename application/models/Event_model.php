@@ -35,6 +35,13 @@ class Event_model extends CI_Model {
 		
 	}
 
+	public function save_ticket_group($groupname,$quantity)
+	{
+		$this->db->insert('tbl_ticket_groups',['groupname' => $groupname, 'capacity' => $quantity]);
+		return $this->db->insert_id();
+		
+	}
+
 	public function get_ticket_options($ticketId)
 	{
 		$this->db->select('*');
@@ -54,7 +61,7 @@ class Event_model extends CI_Model {
 		$this->db->where('vendorId', $vendor_id);
 		$query = $this->db->get('tbl_events');
 		return $query->result_array();
-	}
+	} 
 
 	public function get_event($vendor_id,$eventId)
 	{
@@ -77,6 +84,7 @@ class Event_model extends CI_Model {
 		$this->db->from('tbl_event_tickets');
 		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId');
 		$this->db->join('tbl_ticket_groups', 'tbl_ticket_groups.id = tbl_event_tickets.ticketGroupId');
+		$this->db->join('tbl_ticket_options', 'tbl_ticket_options.ticketId = tbl_event_tickets.id');
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('eventId', $eventId);
 		$query = $this->db->get();
@@ -124,7 +132,7 @@ class Event_model extends CI_Model {
 				'reservationId' => $reservationId,
 				'customer' => $customer,
 				'eventId' => $ticket['id'],
-				'eventdate' => $ticket['startDate'],
+				'eventdate' => date('Y-m-d', strtotime($ticket['startDate'])),
 				'timefrom' => $ticket['startTime'],
 				'timeto' => $ticket['endTime'],
 				'price' => $ticket['price'],
@@ -136,4 +144,64 @@ class Event_model extends CI_Model {
 		$this->db->insert_batch('tbl_bookandpay',$data);
 		 return $reservationIds;
 	}
+
+	public function get_ticket_report($vendorId, $eventId, $sql='')
+	{
+		$query = $this->db->query("SELECT reservationId, reservationtime, price,numberofpersons,(price*numberofpersons) as amount, mobilephone, email, ticketDescription, ticketQuantity
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_events.vendorId = ".$vendorId." AND tbl_events.Id = ".$eventId." $sql
+		ORDER BY reservationtime DESC");
+		return $query->result_array();
+	}
+
+	public function get_tickets_report($vendorId, $sql='')
+	{
+		$query = $this->db->query("SELECT reservationId, reservationtime, price,numberofpersons,(price*numberofpersons) as amount, mobilephone, email, ticketDescription, eventname
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_events.vendorId = ".$vendorId." $sql
+		ORDER BY reservationtime DESC");
+		return $query->result_array();
+	}
+
+	public function get_booking_report_of_days($vendorId, $eventId, $sql='')
+	{
+		$query = $this->db->query("SELECT DATE(reservationtime) AS day_date,  eventdate, reservationtime, sum(numberofpersons) AS tickets 
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_events.vendorId = ".$vendorId." AND tbl_events.Id = ".$eventId." $sql AND paid=1  GROUP BY day_date 
+		ORDER BY day_date ASC");
+		return $query->result_array();
+	}
+
+	function get_days_report($vendor_id, $eventId, $sql=''){
+		$results = $this->get_booking_report_of_days($vendor_id, $eventId, $sql);
+		$tickets = [];
+		$newData = [];
+		$maxDays = 0;
+		foreach($results as $key => $result){
+			$reservationDate = $result['day_date'];
+			$eventDate = $result['eventdate'];
+			$dStart = new DateTime($reservationDate);
+			$dEnd  = new DateTime($eventDate);
+			$dDiff = $dStart->diff($dEnd);
+			$days = abs($dDiff->format('%r%a'));
+			if($days > $maxDays){
+				$maxDays = $days;
+			}
+			$tickets[$days] = $result['tickets'];
+		}
+	
+		for($i = $maxDays; $i > 0; $i--){
+			
+			$newData[] = [
+				"days" => ($i == 1) ? $i.' day' : $i.' days',
+				"tickets" => isset($tickets[$i]) ? (int) $tickets[$i] : 0,
+			];
+		}
+		return $newData;
+	}
+
+
 }

@@ -501,6 +501,10 @@ $route['events/get_ticket_options'] = 'Events/get_ticket_options';
 $route['events/viewdesign'] = 'Events/viewdesign';
 $route['events/emaildesigner'] = 'Events/email_designer';
 $route['events/emaildesigner/ticketing'] = 'Events/email_designer_edit';
+$route['events/get_ticket_report'] = 'Events/get_ticket_report';
+$route['events/get_tickets_report'] = 'Events/get_tickets_report';
+$route['events/report/(:num)'] = 'Events/report/$1';
+$route['events/graph/(:num)'] = 'Events/graph/$1';
 $route['events/emaildesigner/ticketing/(:num)'] = 'Events/email_designer_edit/$1';
 
 $route['events/shop'] = 'Booking_events/index';
