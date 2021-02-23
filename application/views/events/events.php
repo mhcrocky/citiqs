@@ -23,8 +23,11 @@
             </div>
 
         </div>
+        <div class="float-right mt-4 text-center pl-3">
+            <input style="width: 330px;" class="date form-control-sm mb-2" type="text" name="datetimes" />
+        </div>
 
-        <div class="w-100 mt-4 table-responsive">
+        <div class="w-100 mt-3 table-responsive">
             <table id="report" class="table table-striped table-bordered" cellspacing="0" width="100%">
 
 
