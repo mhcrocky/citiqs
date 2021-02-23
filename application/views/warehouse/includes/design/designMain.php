@@ -133,6 +133,7 @@
                     </div>
                 </div>
             </div>
+            <div style="height: 500px; width: 100%; overflow-y: scroll;">
                 <?php
                     include_once FCPATH . 'application/views/warehouse/includes/design/selectTypeView.php';
                     include_once FCPATH . 'application/views/warehouse/includes/design/closed.php';
@@ -142,14 +143,15 @@
                     include_once FCPATH . 'application/views/warehouse/includes/design/buyerDetailsView.php';
                     include_once FCPATH . 'application/views/warehouse/includes/design/payOrderView.php';
                 ?>
-                <input type="submit" class="btn btn-primary" value="submit" />
+                </div>
+                <input type="submit" class="btn btn-primary mt-3" value="submit" />
             </form>
         <?php } ?>
     </div>
     <div class="col-lg-6">
         <?php if (!empty($design)) { ?>
             <div id="wrapper" style="position:fixed; top:3%">
-                <div class="phone view_1" id="phone_1" style="margin:auto; width:80%;">
+                <div class="phone view_3" id="phone_1" style="margin:auto; width:80%;">
                     <iframe id="iframe" src="<?php echo $iframeSrc; ?>" width="420px" height="650px"></iframe>
                 </div>
             </div>
