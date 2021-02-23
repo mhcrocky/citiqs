@@ -107,7 +107,6 @@ function tinyMceInit(textAreaId, templateContent = '') {
                         onclick: function(){editor.insertContent('[registartion]')}
                     },
                 ],
-                ],
             });
         }
     });
