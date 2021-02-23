@@ -188,5 +188,13 @@
 <?php } elseif ($this->view === 'new_bookings/agenda_booking_design') { ?>
 	<script src="<?php echo base_url(); ?>assets/cdn/js/jscolor.js"></script>
 	<script src="<?php echo base_url(); ?>assets/home/js/agenda_booking_design.js"></script>
+<?php } elseif ($this->view === 'templates/addTemplate') { ?>
+	<script src='<?php echo base_url(); ?>assets/home/js/tinymce.min.js'></script>
+	<script src='<?php echo base_url(); ?>assets/home/js/templates.js'></script>
+<?php } elseif ($this->view === 'templates/listTemplates') { ?>
+	<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+	<script src='<?php echo base_url(); ?>assets/home/js/listTemplates.js'></script>
+<?php } elseif ($this->view === 'templates/updateTemplate') { ?>
+	<script src='<?php echo base_url(); ?>assets/home/js/tinymce.min.js'></script>
+	<script src='<?php echo base_url(); ?>assets/home/js/templates.js'></script>
 <?php } ?>
-

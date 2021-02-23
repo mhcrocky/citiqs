@@ -23,6 +23,23 @@
             return true;
         }
 
+        public static function uploadFilesNew(string $folder, array $constraints = [], bool $resize = true, array $sizeConstraints = []): bool
+        {
+            $CI =& get_instance();
+            $constraints['upload_path'] = $folder;
+            $constraints['allowed_types'] = (isset($constraints['allowed_types'])) ? $constraints['allowed_types'] : 'jpeg|jpg|png';
+            $CI->load->library('upload');
+
+            $CI->upload->initialize($constraints, FALSE);
+            foreach($_FILES as $key => $file) {
+                if ($_FILES[$key]['name']) {
+                    if (!$CI->upload->do_upload($key)) return false;
+                    if ($resize) self::resizeImage($sizeConstraints);
+                }
+            }
+            return true;
+        }
+
         public static function insertFiles(array &$postColumns, string $folder): bool
         {
             if (count($_FILES)) {
@@ -209,5 +226,10 @@
                 return unlink($file);
             }
             return true;
+        }
+
+        public static function changeFilesNameValue(string $key, int $userId): void
+        {
+            $_FILES[$key]['name'] = $userId . '_' . time() . '_' . rand(1000, 99999) . '.' . self::getFileExtension($_FILES[$key]['name']);
         }
     }

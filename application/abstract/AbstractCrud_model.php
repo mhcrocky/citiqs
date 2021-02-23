@@ -53,6 +53,27 @@
             return $insert ? $insert : null;
         }
 
+        public function prepareInsertQuery(array $data): string
+        {
+            $keys = array_keys($data);
+            $values = array_values($data);
+            $escapeValues = array_map(function($value) {
+                return $this->db->escape($value);
+            }, $values);
+
+            $query  = 'INSERT INTO ' . $this->getThisTable() . ' ';
+            $query .= ' (' . implode(',' , $keys) . ')  VALUES (' . implode(',', $escapeValues) . ') ';
+            $query .= ' ON DUPLICATE KEY UPDATE ';
+
+            foreach ($keys as $index => $key) {
+                $query .= $key . ' = ' . $escapeValues[$index] . ',';
+                
+            }
+            $query = rtrim($query, ',') . ';';
+
+            return $query;
+        }
+
         public function read(array $what, array $where = null, array $join = [], string $condition = '', array $conditionArguments = []): ?array
         {
             $result = $this->db->select(implode(',', $what));

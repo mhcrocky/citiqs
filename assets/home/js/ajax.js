@@ -310,6 +310,10 @@ var callThis = (function() {
         checkIsIframeOrderPaid: function(callFunction) {
             callFunction(this);
         },
+        createEmailTemplate: function(callFunction, functionArg) {
+            functionArg.push(this);
+            callFunction(...functionArg);
+        },
     };
     return methods;
 })();

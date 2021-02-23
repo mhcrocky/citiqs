@@ -281,3 +281,15 @@ $config['api_side_dishes_product_type'] = 'API SIDE DISHES';
 
 // MENU OPTION ID
 $config['posMenuOptionId'] = 25;
+
+// EMAIL TEMPLATES
+
+$config['sendActivationLink'] = 'Send activation link';
+$config['sendResetPasswordLink'] = 'Send reset password link';
+$config['emailTemplates'] = [ $config['sendActivationLink'], $config['sendResetPasswordLink'] ];
+
+$config['template_extension'] = 'txt';
+$config['assetsFolder'] = 'assets' . DIRECTORY_SEPARATOR;
+$config['imagesFolder'] = $config['assetsFolder'] . 'images' . DIRECTORY_SEPARATOR;
+$config['emailImagesFolder'] = $config['imagesFolder'] . 'emailImages' . DIRECTORY_SEPARATOR;
+$config['emailTemplatesFolder'] = $config['assetsFolder'] . 'email_templates' . DIRECTORY_SEPARATOR;
