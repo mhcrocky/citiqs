@@ -21,6 +21,28 @@
             />
         </label>
     </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Products list border color:
+            <input
+                data-jscolor=""
+				style="border-radius: 50px"
+                class="form-control"
+                name="makeOrderNew[class][bordersColor][border-color]"
+                data-css-selector="class"
+                data-css-selector-value="bordersColor"
+                data-css-property="border-color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['makeOrderNew']['class']['bordersColor']['border-color']) ) { ?>
+                value = "<?php echo $design['makeOrderNew']['class']['bordersColor']['border-color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+
     <div class="form-group col-sm-12">
         <label style="display:block;">
             Category name background color:
@@ -341,6 +363,53 @@
             />
         </label>
     </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Pay button width:
+            <input
+                type="text"
+				style="border-radius: 50px"
+                class="form-control"
+                name="makeOrderNew[class][payButton][width]"
+                data-css-selector="class"
+                data-css-selector-value="payButton"
+                data-css-property="color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['makeOrderNew']['class']['payButton']['width']) ) { ?>
+                value = "<?php echo $design['makeOrderNew']['class']['payButton']['width']?>"
+                data-value="1"
+                <?php } else { ?>
+                value="100%"
+                <?php } ?>
+            />
+        </label>
+    </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Pay button border radius:
+            <input
+                type="text"
+				style="border-radius: 50px"
+                class="form-control"
+                name="makeOrderNew[class][payButton][border-radius]"
+                data-css-selector="class"
+                data-css-selector-value="payButton"
+                data-css-property="color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['makeOrderNew']['class']['payButton']['border-radius']) ) { ?>
+                value = "<?php echo $design['makeOrderNew']['class']['payButton']['border-radius']?>"
+                data-value="1"
+                <?php } else { ?>
+                value="0px"
+                <?php } ?>
+            />
+        </label>
+    </div>
+
     <div class="form-group col-sm-12">
         <label style="display:block;">
             Add product button font color:

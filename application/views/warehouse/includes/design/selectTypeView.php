@@ -64,6 +64,27 @@
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
+            Font color:
+            <input
+                data-jscolor=""
+                class="form-control"
+                name="selectType[class][typeLabel][color]"
+                data-css-selector="class"
+                data-css-selector-value="typeLabel"
+                data-css-property="color"
+				style="border-radius: 50px"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['selectType']['class']['typeLabel']['color']) ) { ?>
+                value = "<?php echo $design['selectType']['class']['typeLabel']['color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
             Headline font size:
             <input
                 type="text"
