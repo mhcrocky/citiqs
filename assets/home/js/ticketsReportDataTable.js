@@ -96,7 +96,7 @@ $(document).ready(function () {
     ],
     ajax: {
       type: "post",
-      url: globalVariables.baseUrl + "events/get_booking_report",
+      url: globalVariables.baseUrl + "events/get_ticket_report",
       data: function (data) {
         let eventId = $("#eventId").val();
         data.eventId = eventId;
@@ -195,38 +195,6 @@ $(document).ready(function () {
     ],
   });
 
-  /*
-  
-    var getTodayDate = new Date();
-    var month = getTodayDate.getMonth()+1;
-    var day = getTodayDate.getDate();
-    var todayDate = getTodayDate.getFullYear() + '-' +
-    (month<10 ? '0' : '') + month + '-' +
-    (day<10 ? '0' : '') + day;
-
-  
-    
-    
-
-      $.fn.dataTable.ext.search.push(
-        function (settings, data, dataIndex) {
-          let full_timestamp = $('input[name="datetimes"]').val();
-          var date = full_timestamp.split(" - ");
-          var min = moment(date[0]);
-          var max = moment(date[1]);
-          var startDate = moment(data[7]);
-          if (min == '' && max == '') { min = todayDate; }
-          if (min == '' && startDate <= max) { return true;}
-          if(max == '' && startDate >= min) {return true;}
-          if (startDate <= max && startDate >= min) { return true; }
-            return false;
-        });
-        $('input[name="datetimes"]').change(function () {
-          table.draw();
-        });
-
-
-        */
 });
 
 function round_up(val) {
