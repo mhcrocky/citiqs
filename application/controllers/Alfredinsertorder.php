@@ -133,7 +133,7 @@ class Alfredinsertorder extends BaseControllerWeb
         $post['spotId'] = intval($post['spotId']);
         $payStatus = $this->config->item('orderPaid');
         $payType =  $this->config->item('postPaid');
-        $orderData['order']['paymentType'] = $this->config->item('postPaid');
+        $post['order']['paymentType'] = $this->config->item('postPaid');
   
         $this->isFodActive($post['vendorId'], $post['spotId']);
 
