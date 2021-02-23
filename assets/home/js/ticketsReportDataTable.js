@@ -1,7 +1,3 @@
-(function(){
-  $('.drilldown-body .breadcrumb').remove();
-  $('.panel-heading .pull-right').remove();
-}());
 $(document).ready(function () {
   var options = {
     allow_empty: true,
