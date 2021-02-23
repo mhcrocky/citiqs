@@ -223,11 +223,18 @@ class Events extends BaseControllerWeb
         $this->loadViews('events/graph', $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
 
-    public function get_booking_report()
+    public function get_ticket_report()
     {
         $eventId = $this->input->post('eventId');
         $sql = ($this->input->post('sql') == 'AND%20()') ? "" : rawurldecode($this->input->post('sql'));
-        $report = $this->event_model->get_booking_report($this->vendor_id, $eventId, $sql);
+        $report = $this->event_model->get_ticket_report($this->vendor_id, $eventId, $sql);
+        echo json_encode($report);
+    }
+
+    public function get_tickets_report()
+    {
+        $sql = ($this->input->post('sql') == 'AND%20()') ? "" : rawurldecode($this->input->post('sql'));
+        $report = $this->event_model->get_tickets_report($this->vendor_id, $sql);
         echo json_encode($report);
     }
 

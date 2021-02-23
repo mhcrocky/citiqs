@@ -84,6 +84,7 @@ class Event_model extends CI_Model {
 		$this->db->from('tbl_event_tickets');
 		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId');
 		$this->db->join('tbl_ticket_groups', 'tbl_ticket_groups.id = tbl_event_tickets.ticketGroupId');
+		$this->db->join('tbl_ticket_options', 'tbl_ticket_options.ticketId = tbl_event_tickets.id');
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('eventId', $eventId);
 		$query = $this->db->get();
@@ -144,12 +145,22 @@ class Event_model extends CI_Model {
 		 return $reservationIds;
 	}
 
-	public function get_booking_report($vendorId, $eventId, $sql='')
+	public function get_ticket_report($vendorId, $eventId, $sql='')
 	{
 		$query = $this->db->query("SELECT reservationId, reservationtime, price,numberofpersons,(price*numberofpersons) as amount, mobilephone, email, ticketDescription, ticketQuantity
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		WHERE tbl_events.vendorId = ".$vendorId." AND tbl_events.Id = ".$eventId." $sql
+		ORDER BY reservationtime DESC");
+		return $query->result_array();
+	}
+
+	public function get_tickets_report($vendorId, $sql='')
+	{
+		$query = $this->db->query("SELECT reservationId, reservationtime, price,numberofpersons,(price*numberofpersons) as amount, mobilephone, email, ticketDescription, ticketQuantity
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_events.vendorId = ".$vendorId." $sql
 		ORDER BY reservationtime DESC");
 		return $query->result_array();
 	}
