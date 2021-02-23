@@ -210,9 +210,17 @@ class Events extends BaseControllerWeb
     {
         $this->global['pageTitle'] = 'TIQS : EVENT REPORT';
         $data['eventId'] = $eventId;
-        $data['graphs'] = $this->get_graphs($this->vendor_id, $eventId);
         $data['event'] = $this->event_model->get_event($this->vendor_id,$eventId);
         $this->loadViews('events/reports', $this->global, $data, 'footerbusiness', 'headerbusiness');
+    }
+
+    public function graph($eventId)
+    {
+        $this->global['pageTitle'] = 'TIQS : EVENT GRAPH';
+        $data['eventId'] = $eventId;
+        $data['event'] = $this->event_model->get_event($this->vendor_id,$eventId);
+        $data['graphs'] = $this->get_graphs($this->vendor_id, $eventId);
+        $this->loadViews('events/graph', $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
 
     public function get_booking_report()
@@ -294,11 +302,7 @@ class Events extends BaseControllerWeb
 							"class"=>array(
 								"button"=>"bg-warning"
 							),
-                            "clientEvents" => array(
-                                "itemSelect" => "function(params){
-									
-                                }",
-							),
+                            
 							"colorScheme"=>array(
 								"#3366cc",
 								"#dc3912"
