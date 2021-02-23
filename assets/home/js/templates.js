@@ -96,12 +96,17 @@ function tinyMceInit(textAreaId, templateContent = '') {
                 menu: [
                     {
                         text: '[userFirstName]',
-                        onclick: function(){editor.insertContent('[buyerFirstName]')}
+                        onclick: function(){editor.insertContent('[userFirstName]')}
                     },
                     {
                         text: '[userLastName]',
-                        onclick: function(){editor.insertContent('[buyerFirstName]')}
+                        onclick: function(){editor.insertContent('[userLastName]')}
                     },
+                    {
+                        text: '[registartionLink]',
+                        onclick: function(){editor.insertContent('[registartion]')}
+                    },
+                ],
                 ],
             });
         }

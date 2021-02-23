@@ -45,10 +45,19 @@
 
         public static function sendUserActivationEmail(object $user): bool
         {
+            $CI =& get_instance();
+            $CI->load->config('custom');
 
             $link = base_url() . 'login/activate/' . $user->id . '/' . $user->code;
-            $message = file_get_contents(FCPATH . 'assets/email_templates/1/registration1611591813.html');
+
+            $file = FCPATH . $CI->config->item('emailTemplatesFolder');
+            $file .= $CI->config->item('tiqsId') . DIRECTORY_SEPARATOR;
+            $file .= base64_encode($CI->config->item('sendActivationLink')) . '.' . $CI->config->item('template_extension');
+
+            $message = file_get_contents($file);
             $message = str_replace('[registration]', $link, $message);
+            $message = str_replace('[userFirstName]', $link, $user->first_name);
+            $message = str_replace('[userLastName]', $link, $user->second_name);
             $subject = 'Activation link';
             return self::sendEmail($user->email, $subject, $message);
         }
