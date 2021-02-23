@@ -116,6 +116,10 @@ $(document).ready(function () {
 
     columns: [
       {
+        title: "Event Name",
+        data: "eventname",
+      },
+      {
         title: "Reservation Id",
         data: "reservationId",
       },
@@ -193,7 +197,73 @@ $(document).ready(function () {
     ],
   });
 
+
+  var getTodayDate = new Date();
+      var month = getTodayDate.getMonth()+1;
+      var day = getTodayDate.getDate();
+      var todayDate = getTodayDate.getFullYear() + '-' +
+      (month<10 ? '0' : '') + month + '-' +
+      (day<10 ? '0' : '') + day;
+
+    
+      //table.on( 'search.dt', function () {
+        //null
+      //});
+      
+
+      $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+          let full_timestamp = $('input[name="datetimes"]').val();
+          var date = full_timestamp.split(" - ");
+          var min = moment(date[0]);
+          var max = moment(date[1]);
+          var startDate = moment(data[8]); // data['Position of date's column -1']
+   
+          if (min == '' && max == '') { min = todayDate; }
+          if (min == '' && startDate <= max) { return true;}
+          if(max == '' && startDate >= min) {return true;}
+          if (startDate <= max && startDate >= min) { return true; }
+            return false;
+        });
+        
+        $('input[name="datetimes"]').change(function () {
+          table.draw();
+        });
+       
+
 });
+      //DateTime Picker
+      var getTodayDate = new Date();
+      var month = getTodayDate.getMonth()+1;
+      var day = getTodayDate.getDate();
+      var todayDate = getTodayDate.getFullYear() + '-' +
+      (month<10 ? '0' : '') + month + '-' +
+      (day<10 ? '0' : '') + day;
+
+      $(function() {
+        var time = moment().hours(0).minutes(0).seconds(0);
+        $('input[name="datetimes"]').daterangepicker({
+          timePicker: true,
+          timePicker24Hour: true,
+          startDate: todayDate+' 00:00:00',
+          locale: {
+            format: 'YYYY-MM-DD HH:mm:ss'
+          },
+          ranges: {
+           'Today': [time, moment()],
+           'Yesterday': [moment().startOf("day").subtract(1, 'days'), moment().subtract(1, 'days')],
+           'Last 7 Days': [moment().startOf("day").subtract(6, 'days'), moment()],
+           'Last 30 Days': [moment().startOf("day").subtract(29, 'days'), moment()],
+           'This Month': [moment().startOf("day").startOf('month'), moment().endOf('month')],
+           'Last Month': [moment().startOf("day").subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+           'This Quarter': [moment().startOf("day").subtract(1, 'quarter'), moment()],
+           'Last Quarter': [moment().startOf("day").subtract(2, 'quarter'), moment().subtract(1, 'quarter')],
+           'This Year': [moment().startOf("day").startOf('year'), moment().endOf('year')],
+           'Last Year': [moment().startOf("day").subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
+           }
+        });
+      });
+
 
 function round_up(val) {
   val = parseFloat(val);
