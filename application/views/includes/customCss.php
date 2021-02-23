@@ -202,6 +202,9 @@
     .dataTables_wrapper .dataTables_paginate .paginate_button {
         padding: 0px !important;
     }
+    input[type="search"]{
+        width: auto !important;
+    }
 
     </style>
     <?php  } elseif ($this->view === 'video/index') { ?>
@@ -212,6 +215,7 @@
 <?php  } elseif ($this->view === 'events/selectpayment') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/select-pay.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <style> 
     .header__checkout { display:none }
     <style>
