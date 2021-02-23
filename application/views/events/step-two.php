@@ -557,5 +557,4 @@
 
 <script>
 const globalEmails = '<?php echo json_encode($emails); ?>';
-console.log(globalEmails);
 </script>
