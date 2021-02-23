@@ -1,7 +1,7 @@
 <div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable">
     <div class="table-responsive mb-2">
-        <table class="table bg-white">
-            <tr>
+        <table style="background: none !important;" class="table">
+            <tr style="border-bottom: 3px solid #9333ea">
                 <td><?php echo $event->eventname; ?></td>
                 <td><?php echo $event->eventdescript; ?></td>
                 <td><?php echo $event->eventVenue; ?></td>
@@ -22,15 +22,10 @@
     </div>
 
     <div class="w-100 mt-1 mb-2 text-right">
+        <a href="<?php echo base_url(); ?>events/graph/<?php echo $eventId; ?>" class="btn btn-primary mr-2"
+            style="background: #10b981;">Tickets Graph</a>
         <a href="<?php echo base_url(); ?>events/event/<?php echo $eventId; ?>" class="btn btn-primary mr-2"
             style="background: #10b981;">Go to Tickets</a>
-    </div>
-
-    <div class="w-100 mt-3 mb-4">
-        <div id="graphs">
-            <?php echo $graphs; ?>
-        </div>
-
     </div>
 
 
