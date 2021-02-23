@@ -475,8 +475,14 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 											<li data-menuid="12.3"><a href="<?php echo $this->baseUrl. 'agenda_booking/' . $userShortUrl; ?>" target="_blank"><i class="ti-agenda"></i> <span>Agenda reservations</span></a></li>
 											<li data-menuid="12.4"><a href="<?php echo $this->baseUrl. 'booking_agenda/' . $userShortUrl; ?>" target="_blank"><i class="ti-clipboard"></i> <span>Reservation Agenda</span></a></li>
 										</ul>
-									</li>
-
+                                    </li>
+                                    <li data-menuid="13">
+                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i><span>Templates</span></a>
+                                        <ul class="collapse">
+                                            <li data-menuid="13.1"><a href="<?php echo $this->baseUrl; ?>list_template"><i class="ti-credit-card"></i> <span>Templates</span></a></li>
+											<li data-menuid="13.1"><a href="<?php echo $this->baseUrl; ?>add_template"><i class="ti-credit-card"></i> <span>Add template</span></a></li>                                            
+                                        </ul>
+                                    </li>
                                     <li><a href="<?php echo $this->baseUrl; ?>logout"><i class="ti-shift-left"></i> <span>Logout</span></a></li>
 									<li><a href="<?php echo $this->baseUrl; ?>legal"><i class="ti-bookmark-alt"></i> <span>Legal</span></a></li>
 								</ul>

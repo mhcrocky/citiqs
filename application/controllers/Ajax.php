@@ -35,6 +35,7 @@ class Ajax extends CI_Controller
         $this->load->model('api_model');
         $this->load->model('employee_model');
         $this->load->model('shopposlogin_model');
+        $this->load->model('shoptemplates_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -1914,6 +1915,45 @@ class Ajax extends CI_Controller
 
         echo json_encode($response);
 
+        return;
+    }
+
+    public function uploadEmailImage(): void
+    {
+        $userId = intval($_SESSION['userId']);
+        Uploadfile_helper::changeFilesNameValue('file' , $userId);
+
+        $fileName = $_FILES['file']['name'];
+
+        if (Uploadfile_helper::uploadFilesNew($this->config->item('emailImagesFolder')) ) {
+            echo json_encode(array('location' => $fileName));
+        }
+    }
+
+    public function createEmailTemplate(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $templateName = $this->input->post('templateName');
+        $html = $_POST['templateHtml'];
+        $id = intval($this->input->post('templateId'));
+        $userId = intval($_SESSION['userId']);
+
+        if ($this->shoptemplates_model->saveTemplate($templateName, $html, $userId, $id)) {
+            $response = [
+                'status' => '1',
+            ];
+            $response['messages'] = $id ? ['Template updated'] : ['Template created'];
+            $response['update'] = $id ? '1' : '0';
+        } else {
+            $response = [
+                'status' => '0',
+                'messages' => ['Template not saved'],
+            ];
+
+        }
+
+        echo json_encode($response);
         return;
     }
 }
