@@ -235,12 +235,17 @@ $(document).ready(function () {
         data: null,
         render: function (data, type, row) {
           if (data.emailId != "0") {
+            var emails = JSON.parse(globalEmails);
+            var template_name = '';
+            $.each(emails, function (index, email) {
+              if(data.emailId == email.id){
+                template_name = email.template_name;
+              }
+              
+            });
+
             return (
-              "<div class='btn btn-primary'><a class='text-light' href='" +
-              globalVariables.baseUrl +
-              "events/emaildesigner/ticketing/" +
-              data.emailId +
-              "'>Edit Email Template</a></div>"
+              "<div class='btn btn-primary'><a class='text-light' onclick='editEmailTemplate("+data.emailId+",\""+template_name+"\")' href='javascript:;' data-toggle='modal' data-target='#emailTemplateModal'>Edit Email Template</a></div>"
             );
           } else {
             return "<div class='btn btn-primary'><a class='text-light' href='javascript:;'>Edit Email Template</a></div>";
@@ -429,3 +434,23 @@ function updateEmailTemplate(el, id) {
     }
   );
 }
+
+function editEmailTemplate(id, template_name) {
+  $.post(
+    globalVariables.baseUrl + "events/get_email_template",
+    { id: id },
+    function (data) {
+      let templateContent = JSON.parse(data);
+      $('#customTemplateName').val(template_name);
+      $('#updateEmailTemplate').attr('onclick','createEmailTemplate("selectTemplateName", "customTemplateName", "'+id+'")')
+      tinyMceInit('templateHtml', templateContent);
+      
+    }
+  );
+}
+
+$('#updateEmailTemplate').on('click', function(){
+  setTimeout(() => {
+    $('#closeEmailTemplate').click();
+  }, 777);
+});
