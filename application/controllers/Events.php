@@ -171,6 +171,16 @@ class Events extends BaseControllerWeb
         echo json_encode($data);
 
     }
+
+    public function get_email_template()
+    {
+        $ticketId = $this->input->post("id");
+        $this->load->model('shoptemplates_model');
+        $this->shoptemplates_model->setObjectId(intval($ticketId))->setObject();
+        $templateContent = file_get_contents($this->shoptemplates_model->getTemplateFile());
+        echo json_encode($templateContent);
+
+    }
  
     public function viewdesign(): void
     {
