@@ -180,11 +180,11 @@
             return $id;
         }
 
-        public function insertInitialCategory(): bool
+        public function insertInitialCategory(string $category): ?int
         {
-            $this->category = 'Initial category';
+            $this->category = $category;
             $this->active = '1';
 
-            return $this->create();
+            return $this->create() ? $this->id : null;
         }
     }

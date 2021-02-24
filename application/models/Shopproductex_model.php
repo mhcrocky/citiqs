@@ -822,4 +822,26 @@
             $productExtended['updateCycle']++;
             return $this->setObjectFromArray($productExtended)->create() ? $this->id : null;
         }
+
+        public function insertInitialProductExtended(string $name): bool
+        {
+            $this->name = $name;
+            $this->shortDescription = $name;
+
+            $this->showInPublic = '1';
+            $this->archived = '0';
+            
+            $this->price = 10;
+            $this->vatpercentage = 21;
+            
+            $this->deliveryPrice = 10;
+            $this->deliveryVatpercentage = 21;
+
+            $this->pickupPrice = 10;
+            $this->pickupVatpercentage = 21;
+
+            $this->updateCycle = 1;
+
+            return $this->create();
+        }
     }

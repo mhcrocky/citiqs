@@ -130,4 +130,19 @@
             return empty($check) ? false : true;
         }
 
+        public function insertInitialProduct(): ?int
+        {
+            $this->active = '1';
+            $this->dateTimeFrom = date('Y-m-d H:i:s');
+            $this->dateTimeTo = date('Y-m-d H:i:s', strtotime('+10 years'));
+
+            if (!$this->create()) return null;;
+
+            $this->load->model('shopproducttime_model');
+
+            if (!$this->shopproducttime_model->insertProductTimes($this->id)) return null;
+
+            return $this->id;
+        }
+
     }
