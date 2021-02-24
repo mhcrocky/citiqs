@@ -29,7 +29,9 @@
 				'app_id' => "8da54730-aa66-4a7f-8989-320413d88d09",
 				'include_player_ids' => array($oneSignalId),
 				'data' =>array("OrderId" => $orderId),
-				'contents' => array("en" => $message)
+				'contents' => array("en" => $message),
+				'android_channel_id' => "9599da1f-f8b9-4013-b6c5-5ddd34cc1b36",
+				'ios_sound' => "sound.wav"
 			);
 
 			// {"app_id":"","include_player_ids":["860d0e99-db07-440e-a644-3f6217d2523a"],"data":{"OrderId":"112969"},"contents":{"en":"New order"},"launchUrl":null}

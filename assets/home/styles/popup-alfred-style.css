@@ -8,11 +8,11 @@ html,body {
 }
 
 .iframe-popup{
-	max-width: 450px;
+	max-width: 400px;
 	width: calc(100% - 150px);
 	height: 700px;
 	box-shadow: 0 0 18px 1px #0000001f;
-	border-radius: 20px;
+	border-radius: 35px;
 	position: fixed;
 	bottom: 80px;
 	right: 60px;
