@@ -293,3 +293,16 @@ $config['assetsFolder'] = 'assets' . DIRECTORY_SEPARATOR;
 $config['imagesFolder'] = $config['assetsFolder'] . 'images' . DIRECTORY_SEPARATOR;
 $config['emailImagesFolder'] = $config['imagesFolder'] . 'email_images' . DIRECTORY_SEPARATOR;
 $config['emailTemplatesFolder'] = $config['assetsFolder'] . 'email_templates' . DIRECTORY_SEPARATOR;
+
+// initial values
+$config['initialDrinkCategory'] = 'Drinks';
+$config['initialFoodCategory'] = 'Food';
+
+
+
+$config['initialDrinkProduct'] = 'coca cola';
+$config['initialFoodProduct'] = 'bread';
+$config['initialFoodAddon'] = 'butter';
+
+$config['initialMainType'] = 'Main';
+$config['initialAddonType'] = 'Addon';

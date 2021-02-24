@@ -21,6 +21,12 @@ class Login extends BaseControllerWeb
 		$this->load->model('shopprinters_model');
 		$this->load->model('shopspot_model');
 		$this->load->model('shopvendortemplate_model');
+		$this->load->model('shopprodutctype_model');
+		$this->load->model('shopproduct_model');
+		$this->load->model('shopproductex_model');
+		$this->load->model('shopproductaddons_model');
+
+		$this->load->model('shopspotproduct_model');
 
 		$this->load->helper('google_helper');
 		$this->load->helper('utility_helper');
@@ -407,17 +413,60 @@ class Login extends BaseControllerWeb
 
 	private function insertShopAndPerfexUser($userId): void
 	{
+		$userId = intval($userId);
 		// fetch user object
 		$this->user_model->setUniqueValue($userId)->setWhereCondtition()->setUser();
 
-		// insert initail category
-		$this->shopcategory_model->setProperty('userId', intval($this->user_model->id))->insertInitialCategory();
-
 		// insert initail printer
-		$this->shopprinters_model->setProperty('userId', intval($this->user_model->id))->insertInitialPrinter();
+		$this->shopprinters_model->setProperty('userId', $userId)->insertInitialPrinter();
 
 		// insert initail spot
 		$this->shopspot_model->setProperty('printerId', $this->shopprinters_model->id)->insertInitialSpot();
+
+		// insert initail categories
+		$drinksCategoryId = $this->shopcategory_model->setProperty('userId', $userId)->insertInitialCategory($this->config->item('initialDrinkCategory'));
+		$foodCategoryId = $this->shopcategory_model->setProperty('userId', $userId)->insertInitialCategory($this->config->item('initialFoodCategory'));
+
+
+		//insert initial product types
+		$this->shopprodutctype_model->setProperty('vendorId', intval($this->user_model->id));
+		$mainTypeId = $this->shopprodutctype_model->insertInitialTypes($this->config->item('initialMainType'), true);
+		$addonTypeId = $this->shopprodutctype_model->insertInitialTypes($this->config->item('initialAddonType'), false);
+
+		// insert main product for drink category
+		$dirinkProductId = $this->shopproduct_model->setProperty('categoryId', $drinksCategoryId)->insertInitialProduct();
+		$this
+			->shopproductex_model
+			->setProperty('productId', $dirinkProductId)
+			->setProperty('productTypeId', $mainTypeId)
+			->insertInitialProductExtended($this->config->item('initialDrinkProduct'));
+
+
+		// insert main product for food category
+		$foodProductId = $this->shopproduct_model->setProperty('categoryId', $foodCategoryId)->insertInitialProduct();
+		$this
+			->shopproductex_model
+			->setProperty('productId', $foodProductId)
+			->setProperty('productTypeId', $mainTypeId)
+			->insertInitialProductExtended($this->config->item('initialFoodProduct'));
+
+		// insert addon
+		$foodAddonProductId = $this->shopproduct_model->setProperty('categoryId', $foodCategoryId)->insertInitialProduct();
+		$this
+			->shopproductex_model
+			->setProperty('productId', $foodAddonProductId)
+			->setProperty('productTypeId', $addonTypeId)
+			->insertInitialProductExtended($this->config->item('initialFoodAddon'));
+
+		$this
+			->shopproductaddons_model
+			->setProperty('productId', $foodProductId)
+			->setProperty('addonProductId', $foodAddonProductId)
+			->setProperty('productExtendedId', $this->shopproductex_model->id)
+			->create();
+
+		// insert spot products
+		$this->shopspotproduct_model->insertSpotProducts($this->shopproduct_model, $this->shopspot_model->id, $userId);
 
 		// insert shoplclient
 		$this->shopvendor_model->setObjectFromArray(['vendorId' => $this->user_model->id])->create();

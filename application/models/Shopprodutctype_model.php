@@ -157,7 +157,7 @@
                     'vendorId' => $this->vendorId,
                     'type' => $this->config->item('api_side_dishes_product_type'),
                     'active' => '1',
-                    'isMai' => '0'
+                    'isMain' => '0'
                 ];
                 return $this->setObjectFromArray($insert)->create() ? $this->id : null;
             }
@@ -165,6 +165,18 @@
             $id = reset($id);
             $id = intval($id['id']);
             return $id;
+        }
+
+        public function insertInitialTypes(string $type, bool $isMain): ?int
+        {
+
+            $this->type = $type;
+            $this->active = '1';
+            $this->isMain = $isMain ? '1' : '0';
+            $this->additionalNumber = 1;
+
+            return $this->create() ? $this->id : null;
+    
         }
     }
 
