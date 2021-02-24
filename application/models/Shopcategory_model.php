@@ -179,4 +179,12 @@
             $id = intval($id['id']);
             return $id;
         }
+
+        public function insertInitialCategory(): bool
+        {
+            $this->category = 'Initial category';
+            $this->active = '1';
+
+            return $this->create();
+        }
     }

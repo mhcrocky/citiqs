@@ -228,4 +228,13 @@
 
             return !is_null($active);
         }
+
+
+        public function insertInitialPrinter(): bool
+        {
+            $this->printer = 'Initial printer';
+            $this->active = '1';
+
+            return $this->create();
+        }
     }

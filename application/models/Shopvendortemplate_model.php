@@ -37,7 +37,7 @@
 
         public function insertValidate(array $data): bool
         {
-            if (isset($data['vendorId']) && isset($data['lastNumber'])) {
+            if (isset($data['vendorId'])) {
                 return $this->updateValidate($data);
             }
             return false;
@@ -207,5 +207,18 @@
 
             $design['templateValue'] = unserialize($design['templateValue']);
             return $design;
+        }
+
+        public function insertDefaultDesign(): bool
+        {
+            $templateValue = $this->getDefaultDesign();
+
+            if (is_null($templateValue)) return false;
+
+            $this->templateName = 'default';
+            $this->templateValue = $templateValue;
+            $this->active = '1';
+
+            return $this->create();
         }
     }

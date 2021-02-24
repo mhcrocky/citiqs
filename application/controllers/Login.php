@@ -17,6 +17,11 @@ class Login extends BaseControllerWeb
 		$this->load->model('objectspot_model');
 		$this->load->model('shopvendor_model');
 		$this->load->model('shopvendortime_model');
+		$this->load->model('shopcategory_model');
+		$this->load->model('shopprinters_model');
+		$this->load->model('shopspot_model');
+		$this->load->model('shopvendortemplate_model');
+
 		$this->load->helper('google_helper');
 		$this->load->helper('utility_helper');
 		$this->load->helper('email_helper');
@@ -132,9 +137,9 @@ class Login extends BaseControllerWeb
 					);
 					$sessionArray['activatePos'] = $this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('activatePos');
 
-//					$this->load->model('vendor_model');
-//					$MenuArray = $this->vendor_model->getMenuOptionsByVendorId($result->userId);
-//					$sessionArray['menuOptions'] = $MenuArray;
+			//					$this->load->model('vendor_model');
+			//					$MenuArray = $this->vendor_model->getMenuOptionsByVendorId($result->userId);
+			//					$sessionArray['menuOptions'] = $MenuArray;
 
 
 					$MenuArray = array(
@@ -157,7 +162,7 @@ class Login extends BaseControllerWeb
 			} else {
 				$this->session->set_flashdata('error', 'Are you using the right credentials?, or did you not register yet? Please try again or register. ');
 				redirect('login');
-//				$this->index();
+			//				$this->index();
 			}
 		}
 	}
@@ -405,8 +410,20 @@ class Login extends BaseControllerWeb
 		// fetch user object
 		$this->user_model->setUniqueValue($userId)->setWhereCondtition()->setUser();
 
+		// insert initail category
+		$this->shopcategory_model->setProperty('userId', intval($this->user_model->id))->insertInitialCategory();
+
+		// insert initail printer
+		$this->shopprinters_model->setProperty('userId', intval($this->user_model->id))->insertInitialPrinter();
+
+		// insert initail spot
+		$this->shopspot_model->setProperty('printerId', $this->shopprinters_model->id)->insertInitialSpot();
+
 		// insert shoplclient
 		$this->shopvendor_model->setObjectFromArray(['vendorId' => $this->user_model->id])->create();
+
+		// insert default design
+		$this->shopvendortemplate_model->setProperty('vendorId', intval($this->user_model->id))->insertDefaultDesign();
 
 		// insert vendor working times
 		$this->shopvendortime_model->setProperty('vendorId', $this->user_model->id)->insertVendorTime();
@@ -803,7 +820,7 @@ class Login extends BaseControllerWeb
 	public function registerbusinessAction()
 	{
 		$this->form_validation->set_rules('username', 'Full Name', 'trim|required|max_length[128]');
-//		$this->form_validation->set_rules('usershorturl', 'User short url', 'trim|required|max_length[128]');
+		//		$this->form_validation->set_rules('usershorturl', 'User short url', 'trim|required|max_length[128]');
 		$this->form_validation->set_rules('first_name', 'Full Name', 'trim|required|max_length[128]');
 		$this->form_validation->set_rules('second_name', 'Full Name', 'trim|required|max_length[128]');
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|max_length[128]|is_unique[tbl_user.email]');

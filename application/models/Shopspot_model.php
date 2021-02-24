@@ -292,4 +292,16 @@
             $id = intval($id['id']);
             return $id;
         }
+
+        public function insertInitialSpot(): bool
+        {
+            $this->active = '1';
+            $this->spotName = 'Initial spot';
+
+            if (!$this->create()) return false;
+
+            $this->load->model('shopspottime_model');
+
+            return $this->shopspottime_model->setProperty('spotId', $this->id)->insertSpotTime();
+        }
     }
