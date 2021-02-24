@@ -564,7 +564,7 @@ input[type=number] {
 	left: -30px;
 }
 
-.custom-control-input:checked~.custom-control-label::before,
+.custom-control-input:checked~.custom-control-label::before
 {
 	border-color: var(--color-secondary);
     background-color: var(--color-secondary);

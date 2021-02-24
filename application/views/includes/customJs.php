@@ -199,14 +199,14 @@
 	<script src="<?php echo base_url(); ?>assets/cdn/js/jscolor.js"></script>
 	<script src="<?php echo base_url(); ?>assets/home/js/agenda_booking_design.js"></script>
 <?php } elseif ($this->view === 'templates/addTemplate') { ?>
-	<script src='<?php echo base_url(); ?>assets/home/js/tinymce.min.js?apiKey=pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu'></script>
-	<!-- <script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> -->
+<!--	<script src='--><?php //echo base_url(); ?><!--assets/home/js/tinymce.min.js?apiKey=pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu'></script>-->
+	 <script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
 	<script src='<?php echo base_url(); ?>assets/home/js/templates.js'></script>
 <?php } elseif ($this->view === 'templates/listTemplates') { ?>
 	<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 	<script src='<?php echo base_url(); ?>assets/home/js/listTemplates.js'></script>
 <?php } elseif ($this->view === 'templates/updateTemplate') { ?>
-	<script src='<?php echo base_url(); ?>assets/home/js/tinymce.min.js?apiKey=pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu'></script>
+	<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
 	<script src='<?php echo base_url(); ?>assets/home/js/templates.js'></script>
 <?php } elseif ($this->view === 'events/reports') { ?>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
