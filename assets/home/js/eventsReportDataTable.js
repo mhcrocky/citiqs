@@ -68,11 +68,11 @@ $(document).ready(function () {
   $("#query-builder").queryBuilder(options);
   var sql;
   $(".parse-json").on("click", function () {
-    table.ajax.reload();
-    table.clear().draw();
+    ticketTable.ajax.reload();
+    ticketTable.clear().draw();
   });
 
-  var table = $("#report").DataTable({
+  var ticketTable = $("#report").DataTable({
     processing: true,
     colReorder: true,
     fixedHeader: true,
@@ -213,6 +213,7 @@ $(document).ready(function () {
 
       $.fn.dataTable.ext.search.push(
         function (settings, data, dataIndex) {
+          if(settings.nTable.id == 'report'){
           let full_timestamp = $('input[name="datetimes"]').val();
           var date = full_timestamp.split(" - ");
           var min = moment(date[0]);
@@ -224,10 +225,13 @@ $(document).ready(function () {
           if(max == '' && startDate >= min) {return true;}
           if (startDate <= max && startDate >= min) { return true; }
             return false;
+          } else {
+            return true;
+          }
         });
         
         $('input[name="datetimes"]').change(function () {
-          table.draw();
+          ticketTable.draw();
         });
        
 
