@@ -49,7 +49,8 @@
                             <h3 class="font-weight-bold text-dark">Ticketfee per ticket</h3>
                         </div>
                         <div class="col-md-3">
-                            <select id="ticketCurrency" style="height: 35px !important;padding-top: 6px;" class="form-control input-w mt-2">
+                            <select id="ticketCurrency" style="height: 35px !important;padding-top: 6px;"
+                                class="form-control input-w mt-2">
                                 <option value="euro" selected>€ - EUR</option>
                                 <option value="usd">$ - USD</option>
                             </select>
@@ -358,6 +359,39 @@
     </div>
 </div>
 
+<!-- Email Template Modal -->
+<div class="modal fade" id="emailTemplateModal" tabindex="-1" role="dialog" aria-labelledby="emailTemplateModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold text-dark" id="emailTemplateModalLabel">Choose Email Template
+                </h5>
+                <button type="button" class="close" id="closeEmailTemplate" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <select style="display: none;" id="selectTemplateName" class="form-control">
+                    <option value="">Select template</option>
+                </select>
+                <label for="customTemplateName">Template Name</label>
+                <input type="text" id="customTemplateName" name="templateName" class="form-control" />
+                <br />
+                <label for="templateHtml">Edit template</label>
+                <textarea id="templateHtml" name="templateHtml"></textarea>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" id="updateEmailTemplate" class="btn btn-primary">Save changes</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 <!-- Choose Email Modal -->
 <div class="modal fade" id="chooseEmailModal" tabindex="-1" role="dialog" aria-labelledby="chooseEmailModalLabel"
     aria-hidden="true">
@@ -432,8 +466,8 @@
 <main class="my-form">
     <div class="w-100 mt-5 p-3">
         <div class="table-responsive">
-            <table class="table bg-white">
-                <tr>
+        <table style="background: none !important;" class="table">
+            <tr style="border-bottom: 3px solid #9333ea">
                     <td><?php echo $event->eventname; ?></td>
                     <td><?php echo $event->eventdescript; ?></td>
                     <td><?php echo $event->eventVenue; ?></td>
@@ -557,4 +591,14 @@
 
 <script>
 const globalEmails = '<?php echo json_encode($emails); ?>';
+
+const templateGlobals = (function() {
+    let globals = {}
+
+
+
+    Object.freeze(globals);
+
+    return globals;
+}());
 </script>
