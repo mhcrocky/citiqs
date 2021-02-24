@@ -11,7 +11,8 @@ function createEmailTemplate(selectTemplateValueId, customTemplateNameId, templa
 
     let selectTemplateName = selectTemplate.value.trim();
     let customTemplateName = customTemplate.value.trim();
-    let templateHtml = tinyMCE.get(templateGlobals.templateHtmlId).getContent().trim();
+    let templateHtml = tinyMCE.get(templateGlobals.templateHtmlId).getContent().replaceAll('../../assets/images/qrcode_preview.png', '[QRlink]');
+    templateHtml = templateHtml.replaceAll('../assets/images/qrcode_preview.png', '[QRlink]').trim();
 
     if (!templateHtml) {
         let message = 'Empty template.'
@@ -80,14 +81,14 @@ function tinyMceInit(textAreaId, templateContent = '') {
         mobile: {
             theme: 'mobile'
         },
-        toolbar: 'insert | undo redo | formatselect | bold italic underline backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | copy | cut | paste | tags | help',
+        toolbar: 'insert | undo redo | formatselect | bold italic underline backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | copy | cut | paste | tags | qrcode | help',
         content_css: [
             '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
             '//www.tiny.cloud/css/codepen.min.css'
         ],
         setup: function(editor) {
             editor.on('init', function (e) {
-                editor.setContent(templateContent);
+                editor.setContent(templateContent.replaceAll('[QRlink]', globalVariables.baseUrl+'assets/images/qrcode_preview.png'));
             }),
             editor.addButton('tags', {
                 type: 'menubutton',
@@ -108,6 +109,16 @@ function tinyMceInit(textAreaId, templateContent = '') {
                     },
                 ],
             });
+
+            editor.addButton('qrcode', {
+                text: 'QRCode',
+                onclick: function(){
+                    let html = '<div style="width:100%;display: flex;justify-content: center;">'+
+                    '<img class="qr-code-image"  border="0"  align="one_image" style="display:block;max-width:350px;padding:50px;" alt="" src="'+globalVariables.baseUrl+'assets/images/qrcode_preview.png" tabindex="0">'+
+                    '</div>';
+                    editor.insertContent(html);
+                }
+            });
         }
     });
 
@@ -116,7 +127,7 @@ function tinyMceInit(textAreaId, templateContent = '') {
 function showTemplates() {
     if (templateGlobals['templateContent']) {
         tinyMceInit(templateGlobals.templateHtmlId, templateGlobals['templateContent']);
-    } else {
+    } else if(templateGlobals.templateHtmlId){
         tinyMceInit(templateGlobals.templateHtmlId);
     }
 }
