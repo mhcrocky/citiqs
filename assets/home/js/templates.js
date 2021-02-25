@@ -11,10 +11,7 @@ function createEmailTemplate(selectTemplateValueId, customTemplateNameId, templa
 
     let selectTemplateName = selectTemplate.value.trim();
     let customTemplateName = customTemplate.value.trim();
-    let templateHtml = tinyMCE.get(templateGlobals.templateHtmlId).getContent().replaceAll('../../../assets/images/qrcode_preview.png', '[QRlink]');
-    templateHtml = templateHtml.replaceAll('../../assets/images/qrcode_preview.png', '[QRlink]');
-    templateHtml = templateHtml.replaceAll('../assets/images/qrcode_preview.png', '[QRlink]').trim();
-
+    let templateHtml = tinyMCE.get(templateGlobals.templateHtmlId).getContent().replaceAll(globalVariables.baseUrl + 'assets/images/qrcode_preview.png', '[QRlink]').trim();
     if (!templateHtml) {
         let message = 'Empty template.'
         alertify.error(message);
@@ -69,6 +66,9 @@ function tinyMceInit(textAreaId, templateContent = '') {
 
     tinymce.init({
         selector: id,
+        relative_urls : false,
+        remove_script_host : false,
+        convert_urls : true,
         images_upload_credentials: true,
         images_upload_url: globalVariables.uploadEmailImageAjax,
         images_upload_base_path: globalVariables.emailImagesFolder,
