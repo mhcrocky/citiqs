@@ -55,9 +55,10 @@
             $file .= base64_encode($CI->config->item('sendActivationLink')) . '.' . $CI->config->item('template_extension');
 
             $message = file_get_contents($file);
+
             $message = str_replace('[registration]', $link, $message);
-            $message = str_replace('[userFirstName]', $link, $user->first_name);
-            $message = str_replace('[userLastName]', $link, $user->second_name);
+            $message = str_replace('[userFirstName]', $user->first_name, $message);
+            $message = str_replace('[userLastName]', $user->second_name, $message);
             $subject = 'Activation link';
             return self::sendEmail($user->email, $subject, $message);
         }
