@@ -42,7 +42,7 @@ class Alfredpayment extends BaseControllerWeb
         $vendorId = intval($order['vendorId']);
         $serviceId = $this->shopvendor_model->setProperty('vendorId', $vendorId)->getProperty('payNlServiceId');
         $arguments = Pay_helper::getArgumentsArray($vendorId, $order, $serviceId, $paymentType, $paymentOptionSubId);
-        $url = Pay_helper::getPayUrl($arguments);
+        $url = Pay_helper::getPayNlUrl($arguments, $this->config->item('orderPayNlNamespace'), $this->config->item('orderPayNlFunction'), $this->config->item('orderPayNlVersion'));
         $result = @file_get_contents($url);
         $result = json_decode($result);
 

@@ -40,8 +40,12 @@ $(document).ready(function() {
 <script src="<?php echo base_url(); ?>assets/js/business_dashboard/plugins.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/business_dashboard/scripts.js"></script>
 
-<!-- custom users scripts -->
-<?php include_once FCPATH . 'application/views/includes/customJs.php'; ?>
-<?php include_once FCPATH . 'application/views/includes/alertifySessionMessage.php'; ?>
 
+<?php
+    include_once FCPATH . 'application/views/includes/customJs.php';
+    include_once FCPATH . 'application/views/includes/alertifySessionMessage.php'; 
+    if (!$_SESSION['payNlServiceIdSet']) { 
+        include_once FCPATH . 'application/views/includes/payNlRegistration.php';
+    }
+?>
 </html>

@@ -12,9 +12,10 @@
         public $id;
         public $vendorId;
         public $paynlServiceId;
+        public $merchantId;
+        public $accountId;
         public $termsAndConditions;
         public $requireMobile;
-        public $payNlServiceId;
         public $printTimeConstraint;
         public $serviceFeeTax;
         public $healthCheck;
@@ -136,6 +137,8 @@
             if (isset($data['serviceFeePercent']) && !Validate_data_helper::validateString($data['serviceFeePercent'])) return false;
             if (isset($data['serviceFeeAmount']) && !Validate_data_helper::validateFloat($data['serviceFeeAmount'])) return false;
             if (isset($data['paynlServiceId']) && !Validate_data_helper::validateString($data['paynlServiceId'])) return false;
+            if (isset($data['merchantId']) && !Validate_data_helper::validateString($data['merchantId'])) return false;
+            if (isset($data['accountId']) && !Validate_data_helper::validateString($data['accountId'])) return false;
             if (isset($data['bancontact']) && !($data['bancontact'] === '1' || $data['bancontact'] === '0')) return false;
 			if (isset($data['payconiq']) && !($data['payconiq'] === '1' || $data['payconiq'] === '0')) return false;
             if (isset($data['ideal']) && !($data['ideal'] === '1' || $data['ideal'] === '0')) return false;

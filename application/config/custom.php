@@ -298,11 +298,27 @@ $config['emailTemplatesFolder'] = $config['assetsFolder'] . 'email_templates' . 
 $config['initialDrinkCategory'] = 'Drinks';
 $config['initialFoodCategory'] = 'Food';
 
-
-
 $config['initialDrinkProduct'] = 'coca cola';
 $config['initialFoodProduct'] = 'bread';
 $config['initialFoodAddon'] = 'butter';
 
 $config['initialMainType'] = 'Main';
 $config['initialAddonType'] = 'Addon';
+
+
+// paynl url details
+
+$config['orderPayNlNamespace'] = 'Transaction';
+$config['orderPayNlFunction'] = 'start';
+$config['orderPayNlVersion'] = 'v13';
+
+$config['addMerchantPayNlNamecpace'] = 'Alliance';
+$config['addMerchantPayNlFunction'] = 'addMerchant';
+$config['addMerchantPayNlVersion'] = 'v6';
+
+$config['addPayNlServiceNamecpace'] = 'Alliance';
+$config['addPayNlServiceFunction'] = 'addService';
+$config['addPayNlServiceVersion'] = 'v6';
+
+$config['englishLngPayNlId'] = '4';
+$config['payNlServiceCategoryId'] = '25';

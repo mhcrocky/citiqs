@@ -314,6 +314,9 @@ var callThis = (function() {
             functionArg.push(this);
             callFunction(...functionArg);
         },
+        payNlRegistration: function(callFunction) {
+            callFunction(this);
+        },
     };
     return methods;
 })();

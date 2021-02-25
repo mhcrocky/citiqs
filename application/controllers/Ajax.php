@@ -48,6 +48,7 @@ class Ajax extends CI_Controller
         $this->load->helper('validate_data_helper');
         $this->load->helper('uploadfile_helper');
         $this->load->helper('jwt_helper');
+        $this->load->helper('pay_helper');
 
         $this->load->library('session');
         $this->load->library('language', array('controller' => $this->router->class));
@@ -1956,4 +1957,20 @@ class Ajax extends CI_Controller
         echo json_encode($response);
         return;
     }
+
+    public function payNlRegistration(): void
+    {
+        if (!$this->input->is_ajax_request() || $_SESSION['payNlServiceIdSet']) return;
+
+        $userId = intval($_SESSION['userId']);
+
+        $_SESSION['payNlServiceIdSet'] = Pay_helper::createMerchant($userId, $_POST);
+
+        $response['status'] = $_SESSION['payNlServiceIdSet'] ? '1' : '0';
+        $response['messages'] = $_SESSION['payNlServiceIdSet'] ? ['Account created'] : ['Account not created'];
+
+        echo json_encode($response);
+        return;
+    }
+
 }

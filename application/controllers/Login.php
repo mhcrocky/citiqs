@@ -35,6 +35,8 @@ class Login extends BaseControllerWeb
 		$this->load->helper('curl_helper');
 		$this->load->helper('validate_data_helper');
 		$this->load->helper('country_helper');
+		$this->load->helper('pay_helper');
+
 		$this->load->library('google');
 		$this->load->library('language', array('controller' => $this->router->class));
 		$this->load->library('form_validation');
@@ -142,10 +144,15 @@ class Login extends BaseControllerWeb
 						'lng' => $result->lng,
 					);
 					$sessionArray['activatePos'] = $this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('activatePos');
+					$sessionArray['payNlServiceIdSet'] = !is_null($this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('paynlServiceId'));
+					$merchantId = $this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('merchantId');
+					if (!$sessionArray['payNlServiceIdSet'] && $merchantId) {
+						$sessionArray['payNlServiceIdSet'] = Pay_helper::getPayNlServiceId($merchantId, intval($result->userId));
+					}
 
-			//					$this->load->model('vendor_model');
-			//					$MenuArray = $this->vendor_model->getMenuOptionsByVendorId($result->userId);
-			//					$sessionArray['menuOptions'] = $MenuArray;
+					// $this->load->model('vendor_model');
+					// $MenuArray = $this->vendor_model->getMenuOptionsByVendorId($result->userId);
+					// $sessionArray['menuOptions'] = $MenuArray;
 
 
 					$MenuArray = array(
@@ -932,3 +939,4 @@ class Login extends BaseControllerWeb
 		redirect($redirect);
 	}
 }
+
