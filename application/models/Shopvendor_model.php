@@ -82,6 +82,7 @@
         public $postPaid;
         public $payconiq;
         public $vaucher;
+        public $myBank;
         public $pinMachine;
 
         private $table = 'tbl_shop_vendors';
@@ -162,6 +163,7 @@
             if (isset($data['requireName']) && !($data['requireName'] === '1' || $data['requireName'] === '0')) return false;
             if (isset($data['showAllergies']) && !($data['showAllergies'] === '1' || $data['showAllergies'] === '0')) return false;
             if (isset($data['vaucher']) && !($data['vaucher'] === '1' || $data['vaucher'] === '0')) return false;
+            if (isset($data['myBank']) && !($data['myBank'] === '1' || $data['myBank'] === '0')) return false;            
             if (isset($data['pinMachine']) && !($data['pinMachine'] === '1' || $data['pinMachine'] === '0')) return false;
             if (isset($data['showTermsAndPrivacy']) && !($data['showTermsAndPrivacy'] === '1' || $data['showTermsAndPrivacy'] === '0')) return false;
             if (isset($data['showMenu']) && !($data['showMenu'] === '1' || $data['showMenu'] === '0')) return false;
@@ -240,6 +242,7 @@
                     $this->table . '.requireEmail',
                     $this->table . '.requireName',
                     $this->table . '.showAllergies',
+                    $this->table . '.myBank',                    
                     $this->table . '.vaucher',
                     $this->table . '.pinMachine',
                     $this->table . '.showTermsAndPrivacy',
@@ -400,6 +403,7 @@
                     $this->table . '.bancontact',
                     $this->table . '.ideal',
                     $this->table . '.creditCard',
+                    $this->table . '.myBank',                    
                     $this->table . '.printTimeConstraint',
                     $this->table . '.minimumOrderFee',
                     'tbl_user.id AS vendorId',

@@ -94,6 +94,12 @@
                             <span>Bancontact</span>
                         </a>
                     <?php } ?>
+                    <?php if ($vendor['myBank'] === '1') { ?>
+                        <a href="<?php echo base_url(); ?>onlinepayment/<?php echo $myBankPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
+                            <img src="https://static.pay.nl/payment_profiles/100x100/1588.png" alt="bancontact">
+                            <span>My Bank</span>
+                        </a>
+                    <?php } ?>
                     <?php if ($vendor['giro'] === '1') { ?>
                         <a href="javascript:void(0)" onclick="toogleElements('giroBanks', 'paymentMethodsContainer', 'hidden')" class="paymentMethod method-card" >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/giropay(1).png" alt="bancontact">

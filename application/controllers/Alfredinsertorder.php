@@ -182,6 +182,8 @@ class Alfredinsertorder extends BaseControllerWeb
             $payType = $this->config->item('payconiqPayment');
         } elseif ($payNlPaymentTypeId === $this->config->item('pinMachinePaymentType')) {
             $payType = $this->config->item('pinMachinePayment');
+        } elseif ($payNlPaymentTypeId === $this->config->item('myBankPaymentType')) {
+            $payType = $this->config->item('myBankPayment');
         }
 
         return $payType;

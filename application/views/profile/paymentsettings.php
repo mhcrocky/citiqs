@@ -262,6 +262,13 @@
 								<input type="radio" id="idealNo" name="vendor[ideal]" value="0" <?php if ($vendor['ideal'] === '0') echo 'checked'; ?> />
 							</div>
 							<div class="form-group mb-35">
+								<h4>My Bank</h4>
+								<label class="radio-inline" for="myBankYes">Yes</label>
+								<input type="radio" id="myBankYes" name="vendor[myBank]" value="1" <?php if ($vendor['myBank'] === '1') echo 'checked'; ?> />
+								<label class="radio-inline" for="myBankNo">&nbsp;&nbsp;&nbsp;No</label>
+								<input type="radio" id="myBankNo" name="vendor[myBank]" value="0" <?php if ($vendor['myBank'] === '0') echo 'checked'; ?> />
+							</div>							
+							<div class="form-group mb-35">
 								<h4>VISA / MASTERCARD</h4>
 								<label class="radio-inline" for="creditCardYes">Yes</label>
 								<input type="radio" id="creditCardYes" name="vendor[creditCard]" value="1" <?php if ($vendor['creditCard'] === '1') echo 'checked'; ?> />

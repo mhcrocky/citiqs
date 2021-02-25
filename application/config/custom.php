@@ -124,13 +124,6 @@ $config['allergiesSeparator'] = '|||';
 $config['contactGroupSeparatorNumber'] = '|';
 $config['concatSeparatorNumber'] = '#';
 
-// paynl payment types
-$config['idealPaymentType'] = '10';
-$config['creditCardPaymentType'] = '706';
-$config['bancontactPaymentType'] = '436';
-$config['giroPaymentType'] = '694';
-$config['payconiqPaymentType'] = '2379';
-$config['pinMachinePaymentType'] = '1927';
 
 // time utility
 $config['workingDays'] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
@@ -170,6 +163,8 @@ $config['typeColors'] = [
 $config['prePaid'] = 'prePaid';
 $config['postPaid'] = 'postPaid';
 
+// PAY NL
+
 //paynl payment types
 $config['idealPayment'] = 'ideal payment';
 $config['creditCardPayment'] = 'credit card payment';
@@ -178,6 +173,7 @@ $config['giroPayment'] = 'giro payment';
 $config['payconiqPayment'] = 'payconiq payment';
 $config['pinMachinePayment'] = 'pin machine';
 $config['voucherPayment'] = 'voucher';
+$config['myBankPayment'] = 'my bank';
 
 $config['paymentTypes'] = [
     $config['prePaid'],
@@ -189,10 +185,41 @@ $config['paymentTypes'] = [
     $config['payconiqPayment'],
     $config['pinMachinePayment'],
     $config['voucherPayment'],
+    $config['myBankPayment']
 ];
+
+// paynl payment types
+$config['idealPaymentType'] = '10';
+$config['creditCardPaymentType'] = '706';
+$config['bancontactPaymentType'] = '436';
+$config['giroPaymentType'] = '694';
+$config['payconiqPaymentType'] = '2379';
+$config['pinMachinePaymentType'] = '1927';
+$config['myBankPaymentType'] = '1588';
 
 //paynl errorId
 $config['paymentTypeErr'] = 'PAY-405';
+
+
+// paynl url details
+
+$config['orderPayNlNamespace'] = 'Transaction';
+$config['orderPayNlFunction'] = 'start';
+$config['orderPayNlVersion'] = 'v13';
+
+$config['addMerchantPayNlNamecpace'] = 'Alliance';
+$config['addMerchantPayNlFunction'] = 'addMerchant';
+$config['addMerchantPayNlVersion'] = 'v6';
+
+$config['addPayNlServiceNamecpace'] = 'Alliance';
+$config['addPayNlServiceFunction'] = 'addService';
+$config['addPayNlServiceVersion'] = 'v6';
+
+$config['englishLngPayNlId'] = '4';
+$config['payNlServiceCategoryId'] = '25';
+
+// END PAYNL
+
 
 // PRODUCT IMAGES FOLDER
 $config['uploadProductImageFolder']    = FCPATH . 'assets/images/productImages' . DIRECTORY_SEPARATOR;
@@ -305,20 +332,3 @@ $config['initialFoodAddon'] = 'butter';
 $config['initialMainType'] = 'Main';
 $config['initialAddonType'] = 'Addon';
 
-
-// paynl url details
-
-$config['orderPayNlNamespace'] = 'Transaction';
-$config['orderPayNlFunction'] = 'start';
-$config['orderPayNlVersion'] = 'v13';
-
-$config['addMerchantPayNlNamecpace'] = 'Alliance';
-$config['addMerchantPayNlFunction'] = 'addMerchant';
-$config['addMerchantPayNlVersion'] = 'v6';
-
-$config['addPayNlServiceNamecpace'] = 'Alliance';
-$config['addPayNlServiceFunction'] = 'addService';
-$config['addPayNlServiceVersion'] = 'v6';
-
-$config['englishLngPayNlId'] = '4';
-$config['payNlServiceCategoryId'] = '25';

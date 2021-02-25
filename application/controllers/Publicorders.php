@@ -480,6 +480,7 @@
                 'creditCardPaymentType' => $this->config->item('creditCardPaymentType'),
                 'bancontactPaymentType' => $this->config->item('bancontactPaymentType'),
                 'giroPaymentType'       => $this->config->item('giroPaymentType'),
+                'myBankPaymentType'     => $this->config->item('myBankPaymentType'),
                 'payconiqPaymentType'   => $this->config->item('payconiqPaymentType'),
                 'pinMachinePaymentType' => $this->config->item('pinMachinePaymentType'),
 				'localType'             => $this->config->item('local'),

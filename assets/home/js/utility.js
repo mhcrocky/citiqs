@@ -438,7 +438,7 @@ function runKeyboard(className) {
         // the keyboard value ( like this
         // "keyboard.$preview.val('');" ), if desired
         validate: function(keyboard, value, isClosing) {
-          return true;
+            return true;
         }
   
     })
