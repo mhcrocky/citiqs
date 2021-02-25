@@ -139,6 +139,13 @@ class Event_model extends CI_Model {
 				'numberofpersons' => $ticket['quantity'],
 				'email' => $userInfo['email'],
 				'mobilephone' => $userInfo['mobileNumber'],
+				'Address' => $userInfo['address'],
+
+				//SQL
+				/*
+				ALTER TABLE `tbl_bookandpay` ADD `gender` VARCHAR(255) NOT NULL AFTER `email`, ADD `age` DATE NOT NULL AFTER `gender`; 
+				
+				*/
 			];
 		}
 		$this->db->insert_batch('tbl_bookandpay',$data);

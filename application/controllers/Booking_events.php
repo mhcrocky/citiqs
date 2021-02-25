@@ -215,7 +215,6 @@ class Booking_events extends BaseControllerWeb
         $customer = $this->session->userdata('customer');
         if(!$this->session->userdata('reservationIds')){
             $reservationIds = $this->event_model->save_event_reservations($buyerInfo, $tickets, $customer);
-            var_dump();
             $this->session->set_userdata('reservationIds', $reservationIds);
             
         }
@@ -406,30 +405,35 @@ class Booking_events extends BaseControllerWeb
             $eventdate = $reservation->eventdate;
             $data['paid'] = '1';
             $this->bookandpay_model->editbookandpay($data, $reservationIds[$i]);
-            $result = $this->sendreservation_model->getReservationData($reservation->reservationId, $email, $eventdate);
+            $result = $this->sendreservation_model->getEventReservationData($reservation->reservationId, $email, $eventdate);
             
             $TransactionId='empty';
             
             foreach ($result as $record) {
                 $customer = $record->customer;
-                $eventid = $record->eventid;
-				$eventdate = $record->eventdate;
+				$eventDate = $record->eventdate;
+                $eventName = $record->eventname;
+                $eventVenue = $record->eventVenue;
+                $eventAddress = $record->eventAddress;
+                $eventCity = $record->eventCity;
+                $eventCountry = $record->eventCountry;
+                $eventZipcode = $record->eventZipcode;
 				$reservationId = $record->reservationId;
-				$price = $record->price;
-				$Spotlabel = $record->Spotlabel;
-				$numberofpersons = $record->numberofpersons;
-				$name = $record->name;
-                $email = $record->email;
-				$mobile = $record->mobilephone;
+				$ticketPrice = $record->price;
+				$ticketQuantity = $record->numberofpersons;
+                $eventZipcode = $record->ticketDescription;
+                $buyerEmail = $record->email;
+				$buyerMobile = $record->mobilephone;
 				$reservationset = $record->reservationset;
-				$fromtime = $record->timefrom;
-				$totime = $record->timeto;
+
+				//$fromtime = $record->timefrom;
+				//$totime = $record->timeto;
 				$paid = $record->paid;
 				$TransactionId = $record->TransactionID;
                 $voucher = $record->voucher;
                 
                 
-                    //if ($paid == 1) {
+                    if ($paid == 1) {
                         
                         $qrtext = $reservationId;
 
@@ -482,28 +486,21 @@ class Booking_events extends BaseControllerWeb
                             $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/'.$emailTemplate->template_file);
                             $qrlink = $SERVERFILEPATH . $file_name1;
 							if($mailtemplate) {
+                               
 								$mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/'.$emailTemplate->template_file);
-								$mailtemplate = str_replace('[customer]', $customer, $mailtemplate);
-								$mailtemplate = str_replace('[eventdate]', date('d.m.Y', strtotime($eventdate)), $mailtemplate);
-								$mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
-								$mailtemplate = str_replace('[price]', $price, $mailtemplate);
-								$mailtemplate = str_replace('[spotlabel]', $Spotlabel, $mailtemplate);
-								$mailtemplate = str_replace('[numberofpersons]', $numberofpersons, $mailtemplate);
-								$mailtemplate = str_replace('[name]', $name, $mailtemplate);
-								$mailtemplate = str_replace('[email]', $email, $mailtemplate);
-								$mailtemplate = str_replace('[mobile]', $mobile, $mailtemplate);
-								$mailtemplate = str_replace('[fromtime]', $fromtime, $mailtemplate);
-								$mailtemplate = str_replace('[totime]', $totime, $mailtemplate);
-								$mailtemplate = str_replace('[TransactionId]', $TransactionId, $mailtemplate);
-								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
+								$mailtemplate = str_replace('[buyerEmail]', $buyerEmail, $mailtemplate);
+                                $mailtemplate = str_replace('[buyerMobile]', $buyerMobile, $mailtemplate);
+                                $mailtemplate = str_replace('[eventName]', $eventName, $mailtemplate);
+								$mailtemplate = str_replace('[eventDate]', date('d.m.Y', strtotime($eventDate)), $mailtemplate);
+								$mailtemplate = str_replace('[eventVenue]', $eventVenue, $mailtemplate);
+								$mailtemplate = str_replace('[eventAddress]', $eventAddress, $mailtemplate);
+                                $mailtemplate = str_replace('[eventCity]', $eventCity, $mailtemplate);
+								$mailtemplate = str_replace('[eventCountry]', $eventCountry, $mailtemplate);
+								$mailtemplate = str_replace('[eventZipcode]', $eventZipcode, $mailtemplate);
+								$mailtemplate = str_replace('[ticketDescription]', $ticketDescription, $mailtemplate);
+								$mailtemplate = str_replace('[ticketPrice]', $ticketPrice, $mailtemplate);
+								$mailtemplate = str_replace('[ticketQuantity]', $ticketQuantity, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
-								$mailtemplate = str_replace('Image', '', $mailtemplate);
-                                $mailtemplate = str_replace('Text', '', $mailtemplate);
-                                $mailtemplate = str_replace('Title', '', $mailtemplate);
-                                $mailtemplate = str_replace('QR Code', '', $mailtemplate);
-                                $mailtemplate = str_replace('Divider', '', $mailtemplate);
-                                $mailtemplate = str_replace('Button', '', $mailtemplate);
-                                $mailtemplate = str_replace('Social Links', '', $mailtemplate);
 								$subject = 'Your tiqs reservation(s)';
 
 								$datachange['mailsend'] = 1;
@@ -517,7 +514,7 @@ class Booking_events extends BaseControllerWeb
                                     
                                 }
                             
-                        //}
+                        }
                     }
                 }
             }

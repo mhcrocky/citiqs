@@ -266,26 +266,32 @@ class Events extends BaseControllerWeb
         $this->loadViews("events/email_designer_list", $this->global, $data, "footerbusiness", "headerbusiness");
     }
 
-    public function email_designer_edit($email_id = null)
+    public function email_designer_edit($email_id = false)
     {
-        $this->user_model->setUniqueValue($this->userId)->setWhereCondtition()->setUser();
-        $this->global['page'] = 'Email Designer';
-
-        $this->global = [
-            'user' => $this->user_model,
-            'images_path' => base_url() . 'assets/user_images/' . $this->user_model->id,
-            'template_id' => $email_id,
-            'pageTitle' => 'Email editor'
-        ];
 
         $data = [];
 
         if ($email_id) {
-            $email_template = $this->email_templates_model->get_emails_by_id($email_id);
-            $data['email_template'] = $email_template;
-            $data['template_html'] = read_file(FCPATH . 'assets/email_templates/' . $this->user_model->id . '/' . $email_template->template_file);
-        } 
+            $this->load->model('shoptemplates_model');
+            $this->shoptemplates_model->setObjectId(intval($email_id))->setObject();
 
+            $data = [
+                'emailTemplates' => $this->config->item('emailTemplates'),
+                'vendorId' => intval($_SESSION['userId']),
+                'tiqsId' => $this->config->item('tiqsId'),
+                'templateId' => $email_id,
+				'templateName' => $this->shoptemplates_model->template_name,
+				'templateContent' => file_get_contents($this->shoptemplates_model->getTemplateFile())
+            ];
+        } else {
+            $data = [
+                'emailTemplates' => $this->config->item('emailTemplates'),
+                'vendorId' => intval($_SESSION['userId']),
+                'tiqsId' => $this->config->item('tiqsId'),
+            ];
+        }
+
+        $this->global['pageTitle'] = 'TIQS : UPDATE TEMPLATE';
         $this->loadViews("events/email_designer", $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
 
