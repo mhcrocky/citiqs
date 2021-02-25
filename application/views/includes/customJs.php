@@ -222,5 +222,8 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
 	<script type="text/javascript"  src="<?php echo base_url(); ?>assets/js/query-builder.standalone.js"></script>
     <script src="<?php echo base_url(); ?>assets/home/js/ticketsReportDataTable.js"></script>
+<?php } elseif ($this->view === 'events/email_designer') { ?>
+	<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
+	<script src='<?php echo base_url(); ?>assets/home/js/templates.js'></script>
 <?php } ?>
 

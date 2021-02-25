@@ -11,7 +11,8 @@ function createEmailTemplate(selectTemplateValueId, customTemplateNameId, templa
 
     let selectTemplateName = selectTemplate.value.trim();
     let customTemplateName = customTemplate.value.trim();
-    let templateHtml = tinyMCE.get(templateGlobals.templateHtmlId).getContent().replaceAll('../../assets/images/qrcode_preview.png', '[QRlink]');
+    let templateHtml = tinyMCE.get(templateGlobals.templateHtmlId).getContent().replaceAll('../../../assets/images/qrcode_preview.png', '[QRlink]');
+    templateHtml = templateHtml.replaceAll('../../assets/images/qrcode_preview.png', '[QRlink]');
     templateHtml = templateHtml.replaceAll('../assets/images/qrcode_preview.png', '[QRlink]').trim();
 
     if (!templateHtml) {
@@ -96,17 +97,54 @@ function tinyMceInit(textAreaId, templateContent = '') {
                 icon: false,
                 menu: [
                     {
-                        text: '[userFirstName]',
-                        onclick: function(){editor.insertContent('[userFirstName]')}
+                        text: '[buyerEmail]',
+                        onclick: function(){editor.insertContent('[buyerEmail]')}
                     },
                     {
-                        text: '[userLastName]',
-                        onclick: function(){editor.insertContent('[userLastName]')}
+                        text: '[buyerMobile]',
+                        onclick: function(){editor.insertContent('[buyerMobile]')}
                     },
                     {
-                        text: '[registartionLink]',
-                        onclick: function(){editor.insertContent('[registartion]')}
+                        text: '[eventName]',
+                        onclick: function(){editor.insertContent('[eventName]')}
                     },
+                    {
+                        text: '[eventDate]',
+                        onclick: function(){editor.insertContent('[eventDate]')}
+                    },
+                    {
+                        text: '[eventVenue]',
+                        onclick: function(){editor.insertContent('[eventVenue]')}
+                    },
+                    {
+                        text: '[eventAddress]',
+                        onclick: function(){editor.insertContent('[eventAddress]')}
+                    },
+                    {
+                        text: '[eventCity]',
+                        onclick: function(){editor.insertContent('[eventCity]')}
+                    },
+                    {
+                        text: '[eventCountry]',
+                        onclick: function(){editor.insertContent('[eventCountry]')}
+                    },
+                    {
+                        text: '[eventZipcode]',
+                        onclick: function(){editor.insertContent('[eventZipcode]')}
+                    },
+                    {
+                        text: '[ticketDescription]',
+                        onclick: function(){editor.insertContent('[ticketDescription]')}
+                    },
+                    {
+                        text: '[ticketPrice]',
+                        onclick: function(){editor.insertContent('[ticketPrice]')}
+                    },
+                    {
+                        text: '[ticketQuantity]',
+                        onclick: function(){editor.insertContent('[ticketQuantity]')}
+                    },
+
                 ],
             });
 
