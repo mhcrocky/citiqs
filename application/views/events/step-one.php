@@ -22,8 +22,8 @@
                                 <label for="event-name" class="col-md-4 col-form-label text-md-left">Event Name</label>
                                 <div class="col-md-8">
 
-                                    <input type="text" id="event-name" class="input-w border-50 form-control" name="eventname"
-                                        required>
+                                    <input type="text" id="event-name" class="input-w border-50 form-control"
+                                        name="eventname" required>
 
                                 </div>
                             </div>
@@ -43,8 +43,8 @@
 
 
                                     <label class="file">
-                                        <input type="file" class="border-50" name="userfile" id="file" onchange="imageUpload(this)"
-                                            aria-label="File browser" >
+                                        <input type="file" class="border-50" name="userfile" id="file"
+                                            onchange="imageUpload(this)" aria-label="File browser">
                                         <span class="file-custom" data-content="Choose image ..."></span>
                                     </label>
                                     <div style="padding-left: 0;" class="col-sm-6">
@@ -134,43 +134,45 @@
 
                             -->
 
-                            <div class="form-group row">
+                            <div class="form-group row wideField">
                                 <label for="venue" class="col-md-4 col-form-label text-md-left">Venue</label>
-                                <div class="col-md-6">
-                                    <input type="text" id="venue" class="form-control input-w border-50" name="eventVenue"
+                                <div id="locationField" class="col-md-6">
+                                    <input type="text" id="autocomplete" onFocus="geolocate()"
+                                        class="form-control input-w border-50" name="eventVenue"
                                         placeholder="Enter a location" required>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row wideField">
                                 <label for="address" class="col-md-4 col-form-label text-md-left">Address</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="address" class="form-control input-w border-50" name="eventAddress"
-                                        required>
+                                    <input type="text" id="route" class="field form-control input-w border-50"
+                                        name="eventAddress" required>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row wideField">
                                 <label for="city" class="col-md-4 col-form-label text-md-left">City</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="city" class="form-control input-w border-50" name="eventCity" required>
+                                    <input type="text" id="locality" class="field form-control input-w border-50"
+                                        name="eventCity" required>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row wideField">
                                 <label for="postal-code" class="col-md-4 col-form-label text-md-left">Postal
                                     code</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="postal-code" class="form-control input-w border-50" name="eventZipcode"
-                                        required>
+                                    <input type="text" id="postal_code" class="field form-control input-w border-50"
+                                        name="eventZipcode" required>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row wideField">
                                 <label for="country" class="col-md-4 col-form-label text-md-left">Country
                                 </label>
                                 <div class="col-md-6">
-                                    <select id="country" class="form-control input-w border-50" required>
+                                    <select id="country" class="form-control input-w border-50 field" required>
                                         <option value="">Select option</option>
                                         <?php foreach($countries as $country): ?>
                                         <option value="<?php echo $country; ?>"><?php echo $country; ?></option>
@@ -185,8 +187,8 @@
                                 </label>
                                 <div class="col-md-6">
                                     <div class="input-group date">
-                                        <input type="text" class="form-control input-w inp-group-radius-left input-date" id="event-date1"
-                                            name="StartDate" required>
+                                        <input type="text" class="form-control input-w inp-group-radius-left input-date"
+                                            id="event-date1" name="StartDate" required>
                                         <input type="time" class="form-control input-w" id="event-time1"
                                             name="StartTime" value="00:00:00" required>
                                         <span class="input-group-addon fa-input pl-2 pr-2">
@@ -210,8 +212,8 @@
                                 </label>
                                 <div class="col-md-6">
                                     <div class="input-group date">
-                                        <input type="text" class="form-control input-w input-date inp-group-radius-left" id="event-date2"
-                                            name="EndDate" required>
+                                        <input type="text" class="form-control input-w input-date inp-group-radius-left"
+                                            id="event-date2" name="EndDate" required>
                                         <input type="time" class="form-control input-w" id="event-time2" name="EndTime"
                                             value="12:00:00" required>
                                         <span class="input-group-addon fa-input pl-2 pr-2">
@@ -233,7 +235,8 @@
                             <hr class="w-100 mt-5 mb-5">
 
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" style="width: 200px;background: #07071c;height: 45px;font-size: 15px;"
+                                <button type="submit"
+                                    style="width: 200px;background: #07071c;height: 45px;font-size: 15px;"
                                     class="btn btn-primary text-left border-50">
                                     <strong>Next step</strong> <span style="margin-left: 97px;"><i
                                             class="fa fa-arrow-right" aria-hidden="true"></i></span>
@@ -246,3 +249,85 @@
         </div>
     </div>
     </div>
+<input type="hidden" id="street_number">
+<input type="hidden" id="administrative_area_level_1">
+
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCst0EJ-LFVj3q0a6NHGFDU6HQ10H84HTI&callback=initAutocomplete&libraries=places&v=weekly"
+        async></script>
+
+    
+<script>
+    // This sample uses the Autocomplete widget to help the user select a
+    // place, then it retrieves the address components associated with that
+    // place, and then it populates the form fields with those details.
+    // This sample requires the Places library. Include the libraries=places
+    // parameter when you first load the API. For example:
+    // <script
+    // src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+    let placeSearch;
+    let autocomplete;
+    const componentForm = {
+        street_number: "short_name",
+        route: "long_name",
+        locality: "long_name",
+        administrative_area_level_1: "short_name",
+        country: "long_name",
+        postal_code: "short_name",
+    };
+
+    function initAutocomplete() {
+        // Create the autocomplete object, restricting the search predictions to
+        // geographical location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            document.getElementById("autocomplete"), {
+                types: ["geocode"]
+            }
+        );
+        // Avoid paying for data that you don't need by restricting the set of
+        // place fields that are returned to just the address components.
+        autocomplete.setFields(["address_component"]);
+        // When the user selects an address from the drop-down, populate the
+        // address fields in the form.
+        autocomplete.addListener("place_changed", fillInAddress);
+    }
+
+    function fillInAddress() {
+        // Get the place details from the autocomplete object.
+        const place = autocomplete.getPlace();
+
+        for (const component in componentForm) {
+            document.getElementById(component).value = "";
+            document.getElementById(component).disabled = false;
+        }
+
+        // Get each component of the address from the place details,
+        // and then fill-in the corresponding field on the form.
+        for (const component of place.address_components) {
+            const addressType = component.types[0];
+
+            if (componentForm[addressType]) {
+                const val = component[componentForm[addressType]];
+                document.getElementById(addressType).value = val;
+            }
+        }
+    }
+
+    // Bias the autocomplete object to the user's geographical location,
+    // as supplied by the browser's 'navigator.geolocation' object.
+    function geolocate() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const geolocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                const circle = new google.maps.Circle({
+                    center: geolocation,
+                    radius: position.coords.accuracy,
+                });
+                autocomplete.setBounds(circle.getBounds());
+            });
+        }
+    }
+</script>
