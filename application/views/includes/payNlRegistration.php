@@ -25,6 +25,19 @@
                                 data-error-message="Chamber of Commerce number of the company is requried"
                             />
                         </div>
+                        <div class="form-group">
+                            <label for="vatNumber">VAT number</label>
+                            <input
+                                class="form-control"
+                                type="text"
+                                id="vatNumber"
+                                name="vat_number"
+                                class="form-control"
+                                data-form-check='1'
+                                data-min-length="1"
+                                data-error-message="VAT number is required"
+                            />
+                        </div>
                     </fieldset>
                     <fieldset>
                         <legend>Account information</legend>

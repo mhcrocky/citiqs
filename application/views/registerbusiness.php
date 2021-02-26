@@ -37,32 +37,32 @@
 						/>
 						<span class="glyphicon glyphicon-user form-control-feedback"></span>
 					</div>
-<!--					<div>-->
-<!--						<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center">-->
-<!--							--><?php //echo $this->language->Line("spot-registerbusiness-A1400ac",'With a short name of your business and or event, your visitors can browse and find the');?>
-<!--							--><?php //echo $this->language->Line("spot-registerbusiness-A1500ac",'website. The link will represent, the url:tiqs.com/presence/[yourshortname]');?>
-<!--							--><?php //echo $this->language->Line("spot-registerbusiness-A1600ac",'Your shortname');?>
-<!--							<br/>-->
-<!--							<br/>-->
-<!--						</p>-->
-<!--					</div>-->
-<!--					<div class="form-group has-feedback">-->
-<!--						<input-->
-<!--							type="text"-->
-<!--							class="form-control"-->
-<!--							name="usershorturl"-->
-<!--							value="--><?php //echo get_cookie('usershorturl'); ?><!--"-->
-<!--							id="usershorturl"-->
-<!--							style="font-family:'caption-light'; border-radius: 50px;"-->
-<!--							placeholder="--><?php //echo $this->language->Line("spot-registerbusiness-1700",'Your shortname');?><!--"-->
-<!--							pattern="[A-Za-z0-9]{1,20}" title="--><?php //echo $this->language->Line("spot-registerbusiness-1800",'Only characters allowed, no spaces, points or special characters like @#$% and max 20 length');?><!--"-->
-<!--							data-form-check="1"-->
-<!--							data-error-message='Shortname is required and can contain only alphabetic characters and digits'-->
-<!--							data-min-length="1"-->
-<!--							onblur='alertifyErrMessage(this)'-->
-<!--						/>-->
-<!--						<span class="glyphicon glyphicon-user form-control-feedback"></span>-->
-<!--					</div>-->
+					<!--					<div>-->
+					<!--						<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center">-->
+					<!--							--><?php //echo $this->language->Line("spot-registerbusiness-A1400ac",'With a short name of your business and or event, your visitors can browse and find the');?>
+					<!--							--><?php //echo $this->language->Line("spot-registerbusiness-A1500ac",'website. The link will represent, the url:tiqs.com/presence/[yourshortname]');?>
+					<!--							--><?php //echo $this->language->Line("spot-registerbusiness-A1600ac",'Your shortname');?>
+					<!--							<br/>-->
+					<!--							<br/>-->
+					<!--						</p>-->
+					<!--					</div>-->
+					<!--					<div class="form-group has-feedback">-->
+					<!--						<input-->
+					<!--							type="text"-->
+					<!--							class="form-control"-->
+					<!--							name="usershorturl"-->
+					<!--							value="--><?php //echo get_cookie('usershorturl'); ?><!--"-->
+					<!--							id="usershorturl"-->
+					<!--							style="font-family:'caption-light'; border-radius: 50px;"-->
+					<!--							placeholder="--><?php //echo $this->language->Line("spot-registerbusiness-1700",'Your shortname');?><!--"-->
+					<!--							pattern="[A-Za-z0-9]{1,20}" title="--><?php //echo $this->language->Line("spot-registerbusiness-1800",'Only characters allowed, no spaces, points or special characters like @#$% and max 20 length');?><!--"-->
+					<!--							data-form-check="1"-->
+					<!--							data-error-message='Shortname is required and can contain only alphabetic characters and digits'-->
+					<!--							data-min-length="1"-->
+					<!--							onblur='alertifyErrMessage(this)'-->
+					<!--						/>-->
+					<!--						<span class="glyphicon glyphicon-user form-control-feedback"></span>-->
+					<!--					</div>-->
 					<div>
 						<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin-bottom:10px; text-align: center">
 							<?php echo $this->language->Line("spot-registerbusiness-S20120A","Your business type");?>
@@ -91,26 +91,6 @@
 						</select>
 					</div>
 					<div>
-						<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin-bottom:10px; text-align: center">
-							<?php echo $this->language->Line("spot-registerbusiness-20120","Business VAT number");?>
-						</p>
-					</div>
-					<div class="form-group has-feedback">
-						<input
-							type="text"
-							name="vat_number"
-							value="<?php echo get_cookie('vat_number'); ?>"
-							class="form-control"
-							style="font-family:'caption-light'; border-radius: 50px;"
-							placeholder="<?php echo $this->language->Line("spot-registerbusiness-20120","Business VAT number");?>"
-							data-form-check="1"
-							data-error-message='Business VAT number is required'
-							data-min-length="1"
-							onblur='alertifyErrMessage(this)'
-						/>
-						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-					</div>
-					<div>
 						<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center">
 							<?php echo $this->language->Line("spot-registerbusiness-1900",'Company e-mail');?>
 						</p>
@@ -132,7 +112,7 @@
 						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 					</div>
 					<div>
-						<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center"><?php echo $this->language->Line("spot-registerbusiness-A2001A","
+						<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center"><?php echo $this->language->Line("spot-registerbusiness-A2001A123","
 							Responsible person first name
 							");?>
 						</p>

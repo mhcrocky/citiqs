@@ -1964,7 +1964,20 @@ class Ajax extends CI_Controller
 
         $userId = intval($_SESSION['userId']);
 
-        $_SESSION['payNlServiceIdSet'] = Pay_helper::createMerchant($userId, $_POST);
+        $post = $this->security->xss_clean($_POST);
+
+        if (empty($post['user']['vat_number'])) {
+            $response = [
+                'status' => '0',
+                'messages' =>  ['VAT number is requried']
+            ];
+            echo json_encode($response);
+            return;
+        }
+
+        $this->user_model->updateUser(['vat_number' => $post['user']['vat_number']], ['id' => $userId]);
+
+        $_SESSION['payNlServiceIdSet'] = Pay_helper::createMerchant($userId, $post);
 
         $response['status'] = $_SESSION['payNlServiceIdSet'] ? '1' : '0';
         $response['messages'] = $_SESSION['payNlServiceIdSet'] ? ['Account created'] : ['Account not created'];
