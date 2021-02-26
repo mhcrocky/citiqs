@@ -420,6 +420,8 @@ class Booking_events extends BaseControllerWeb
                 $eventZipcode = $record->eventZipcode;
 				$reservationId = $record->reservationId;
 				$ticketPrice = $record->price;
+                $ticketId = $record->ticketId;
+                $ticketDescription = $record->ticketDescription;
 				$ticketQuantity = $record->numberofpersons;
                 $eventZipcode = $record->ticketDescription;
                 $buyerEmail = $record->email;
@@ -467,7 +469,7 @@ class Booking_events extends BaseControllerWeb
 								break;
                         }
 
-                        $emailId = $this->event_model->get_ticket($eventid)->emailId;
+                        $emailId = $this->event_model->get_ticket($ticketId)->emailId;
                         
 						switch (strtolower($_SERVER['HTTP_HOST'])) {
 							case 'tiqs.com':
@@ -483,11 +485,10 @@ class Booking_events extends BaseControllerWeb
                         
 						if($emailId) {
                             $emailTemplate = $this->email_templates_model->get_emails_by_id($emailId);
-                            $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/'.$emailTemplate->template_file);
+                            $this->config->load('custom');
+                            $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/'.$emailTemplate->template_file .'.'.$this->config->item('template_extension'));
                             $qrlink = $SERVERFILEPATH . $file_name1;
 							if($mailtemplate) {
-                               
-								$mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/'.$emailTemplate->template_file);
 								$mailtemplate = str_replace('[buyerEmail]', $buyerEmail, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerMobile]', $buyerMobile, $mailtemplate);
                                 $mailtemplate = str_replace('[eventName]', $eventName, $mailtemplate);

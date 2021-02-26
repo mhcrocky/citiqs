@@ -124,12 +124,24 @@ $(document).ready(function () {
         data: "reservationId",
       },
       {
+        title: "Buyer Name",
+        data: "name",
+      },
+      {
         title: "Buyer Email",
         data: "email",
       },
       {
         title: "Buyer Mobile",
         data: "mobilephone",
+      },
+      {
+        title: "Buyer Gender",
+        data: "gender",
+      },
+      {
+        title: "Buyer Age",
+        data: "age",
       },
       {
         title: "Ticket Description",
@@ -218,7 +230,7 @@ $(document).ready(function () {
           var date = full_timestamp.split(" - ");
           var min = moment(date[0]);
           var max = moment(date[1]);
-          var startDate = moment(data[8]); // data['Position of date's column -1']
+          var startDate = moment(data[11]); // data['Position of date's column -1']
    
           if (min == '' && max == '') { min = todayDate; }
           if (min == '' && startDate <= max) { return true;}

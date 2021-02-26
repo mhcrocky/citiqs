@@ -122,12 +122,24 @@ $(document).ready(function () {
         data: "reservationId",
       },
       {
+        title: "Buyer Name",
+        data: "name",
+      },
+      {
         title: "Buyer Email",
         data: "email",
       },
       {
         title: "Buyer Mobile",
         data: "mobilephone",
+      },
+      {
+        title: "Buyer Gender",
+        data: "gender",
+      },
+      {
+        title: "Buyer Age",
+        data: "age",
       },
       {
         title: "Ticket Description",
@@ -157,6 +169,7 @@ $(document).ready(function () {
         title: "Date",
         data: "reservationtime",
       },
+      /*
       {
         title: "",
         data: null,
@@ -178,7 +191,9 @@ $(document).ready(function () {
             '\')" class="btn btn-warning btn-refund" data-toggle="modal" data-target="#refundModal">Refund</a>';
           return html;
         },
+        
       },
+      */
       {
         title: "",
         data: null,
