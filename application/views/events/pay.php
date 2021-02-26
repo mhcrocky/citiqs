@@ -7,6 +7,11 @@
             </div>
             <form class="login100-form validate-form" action="<?php echo base_url(); ?>events/payment_proceed"
                 method="POST">
+                <div class="wrap-input100 validate-input m-b-26">
+                    <span class="label-input100">Full Name</span>
+                    <input class="input100" type="text" id="fullName" name="name" placeholder="Full Name" required>
+                    <span class="focus-input100"></span>
+                </div>
                 <div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
                     <span class="label-input100">Email</span>
                     <input class="input100" type="email" id="email" name="email" placeholder="Email Address" required>
@@ -19,8 +24,8 @@
                 </div>
                 <div class="wrap-input100 validate-input m-b-18">
                     <span class="label-input100">Gender</span>
-                    <select class="input100">
-                        <option value="male">Male</option>
+                    <select name="gender" class="input100">
+                        <option value="male" selected>Male</option>
                         <option value="female">Female</option>
                         <option value="nogender">No Gender</option>
                     </select>
@@ -28,7 +33,7 @@
                 </div>
                 <div class="wrap-input100 validate-input m-b-18">
                     <span class="label-input100">Age</span>
-                    <input class="input100" type="date" id="birthday" name="birthday" placeholder="Age" required>
+                    <input class="input100" type="date" id="age" name="age" placeholder="Age" required>
                     <span class="focus-input100"></span>
                 </div>
                 <div class="wrap-input100 validate-input m-b-18" data-validate="Phone Number is required">
