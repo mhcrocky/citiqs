@@ -68,10 +68,10 @@ function tinyMceInit(textAreaId, templateContent = '') {
         selector: id,
         relative_urls : false,
         remove_script_host : false,
-        convert_urls : true,
+        convert_urls : false,
         images_upload_credentials: true,
         images_upload_url: globalVariables.uploadEmailImageAjax,
-        images_upload_base_path: globalVariables.emailImagesFolder,
+        images_upload_base_path: globalVariables.baseUrl + globalVariables.emailImagesFolder,
         height: 500,
         menubar: false,
         plugins: [
