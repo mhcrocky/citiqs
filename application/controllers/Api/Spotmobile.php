@@ -46,7 +46,8 @@
 				$vendorid= $api['vendorId'];
 				$qrcode=$api['QRCode'];
 				$spot=$api['SPOT'];
-
+				$printer=$api['printer'];
+				$servicetype=$api['servicetype'];
 
 				if (!empty($api)) {
 					echo json_encode([

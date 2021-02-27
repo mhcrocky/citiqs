@@ -186,25 +186,25 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 										<ul class="collapse">
 											<li data-menuid="2.1"><a href="<?php echo $this->baseUrl; ?>marketing/targeting"><i class="ti-pencil-alt"></i><span>Targeting</span></a></li>
 											<li data-menuid="2.2"><a href="<?php echo $this->baseUrl; ?>marketing/selection"><i class="ti-pencil-alt"></i> <span>Notification Messaging</span></a></li>
-											<li data-menuid="2.3"><a href="<?php echo $this->baseUrl; ?>dashboard"><i class="ti-user"></i> <span>RSVP Pre-register</span></a></li>
-											<li data-menuid="2.4"><a href="<?php echo $this->baseUrl; ?>dashboard"><i class="ti-pencil-alt"></i> <span>E-mail Campaigns</span></a></li>
-											<li data-menuid="2.5"><a href="<?php echo $this->baseUrl; ?>visitors"><i class="ti-user"></i> <span>Visitors</span></a></li>
-											<li data-menuid="2.6">
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Vouchers</span></a>
-												<ul class="collapse">
-													<li data-menuid="2.6.1">
-														<a href="<?php echo $this->baseUrl; ?>customer_panel/settings">
-															<i class="ti-shopping-cart-full"></i>
-															<span>Add/design vouchers</span>
-														</a>
-													</li>
-													<li data-menuid="2.6.2">
-														<a href="<?php echo $this->baseUrl. 'booking_agenda/design'; ?>"
-														><i class="ti-clipboard"></i> <span>Voucher statistics</span>
-														</a>
-													</li>
-												</ul>
-											</li>
+<!--											<li data-menuid="2.3"><a href="--><?php //echo $this->baseUrl; ?><!--dashboard"><i class="ti-user"></i> <span>RSVP Pre-register</span></a></li>-->
+<!--											<li data-menuid="2.4"><a href="--><?php //echo $this->baseUrl; ?><!--dashboard"><i class="ti-pencil-alt"></i> <span>E-mail Campaigns</span></a></li>-->
+<!--											<li data-menuid="2.5"><a href="--><?php //echo $this->baseUrl; ?><!--visitors"><i class="ti-user"></i> <span>Visitors</span></a></li>-->
+<!--											<li data-menuid="2.6">-->
+<!--												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Vouchers</span></a>-->
+<!--												<ul class="collapse">-->
+<!--													<li data-menuid="2.6.1">-->
+<!--														<a href="--><?php //echo $this->baseUrl; ?><!--customer_panel/settings">-->
+<!--															<i class="ti-shopping-cart-full"></i>-->
+<!--															<span>Add/design vouchers</span>-->
+<!--														</a>-->
+<!--													</li>-->
+<!--													<li data-menuid="2.6.2">-->
+<!--														<a href="--><?php //echo $this->baseUrl. 'booking_agenda/design'; ?><!--"-->
+<!--														><i class="ti-clipboard"></i> <span>Voucher statistics</span>-->
+<!--														</a>-->
+<!--													</li>-->
+<!--												</ul>-->
+<!--											</li>-->
 										</ul>
 									</li>
 									<li data-menuid="3">
@@ -279,9 +279,9 @@ $userShortUrl = $this->session->userdata('userShortUrl');
                                         <ul class="collapse">
                                             <li data-menuid="5.1"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Statistics</span></a></li>
                                             <li data-menuid="5.2"><a href="<?php echo $this->baseUrl;?>customer_panel/agenda"><i class="ti-agenda"></i> <span>Make your reservations</span></a></li>
-                                            <li data-menuid="5.3"><a href="<?php echo $this->baseUrl; ?>customer_panel/reservations_report"><i class="ti-write"></i> <span>Reservations Report</span></a></li>
-                                            <li data-menuid="5.4"><a href="<?php echo $this->baseUrl; ?>customer_panel/report"><i class="ti-clipboard"></i> <span>Report</span></a></li>
-                                            <li data-menuid="5.5"><a href="<?php echo $this->baseUrl; ?>customer_panel/pivot"><i class="ti-bar-chart"></i> <span>Export</span></a></li>
+<!--                                            <li data-menuid="5.3"><a href="--><?php //echo $this->baseUrl; ?><!--customer_panel/reservations_report"><i class="ti-write"></i> <span>Reservations Report</span></a></li>-->
+<!--                                            <li data-menuid="5.4"><a href="--><?php //echo $this->baseUrl; ?><!--customer_panel/report"><i class="ti-clipboard"></i> <span>Report</span></a></li>-->
+<!--                                            <li data-menuid="5.5"><a href="--><?php //echo $this->baseUrl; ?><!--customer_panel/pivot"><i class="ti-bar-chart"></i> <span>Export</span></a></li>-->
                                             <li data-menuid="5.6">
                                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Settings</span></a>
                                                 <ul class="collapse">
@@ -302,107 +302,107 @@ $userShortUrl = $this->session->userdata('userShortUrl');
                                     </li>
 
 									<li data-menuid="6">
-										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ticket"></i><span>e-ticketing & Seating</span></a>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ticket"></i><span>e-ticketing</span></a>
 										<ul class="collapse">
 											<li data-menuid="6.1"><a href="<?php echo $this->baseUrl;?>events/create"><i class="ti-agenda"></i> <span>Create your event</span></a></li>
 											<li data-menuid="6.2"><a href="<?php echo $this->baseUrl;?>events"><i class="ti-ticket"></i> <span>Your Events</span></a></li>
                                             <li data-menuid="6.3"><a href="<?php echo $this->baseUrl;?>events/emaildesigner"><i class="ti-email"></i> <span>Email Designer</span></a></li>
 											<li data-menuid="6.4"><a href="<?php echo $this->baseUrl;?>events/viewdesign"><i class="ti-ticket"></i> <span></span>Shop settings</a></li>
-											<li data-menuid="6.5">
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Settings</span></a>
-												<ul class="collapse">
-													
-													<li data-menuid="6.5.1"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Your Events</span></a></li>
-
-													<li data-menuid="6.5.2"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>RSVP/Guest lists</a></li>
-													<li data-menuid="6.5.3"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>3rd party</a></li>
-													<li data-menuid="6.5.4"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Discount codes</a></li>
-													<li data-menuid="6.5.5"><a href="<?php echo $this->baseUrl; ?>customer_panel/reservations_report"><i class="ti-write"></i> <span>Secure ticket box</span></a></li>
-													<li data-menuid="6.5.6"><a href="<?php echo $this->baseUrl; ?>customer_panel/report"><i class="ti-clipboard"></i> <span>Create barcodes</span></a></li>
-												
-												</ul>
-											</li>
-											<li data-menuid="6.6">
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Statistics</span></a>
-												<ul class="collapse">
-													<li data-menuid="6.6.1"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Event main Statistics</span></a></li>
-													<li data-menuid="6.6.2"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Detail sales statistics</a></li>
-													<li data-menuid="6.6.3"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Detail event reports</a></li>
-													<li data-menuid="6.6.4"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Detail buyer reports</a></li>
-													<li data-menuid="6.6.5"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Grand partner insights</a></li>
-													<li data-menuid="6.6.6"><a href="<?php echo $this->baseUrl; ?>customer_panel/reservations_report"><i class="ti-write"></i> <span>Reservations Report</span></a></li>
-													<li data-menuid="6.6.7"><a href="<?php echo $this->baseUrl; ?>customer_panel/report"><i class="ti-clipboard"></i> <span>Report</span></a></li>
-													<li data-menuid="6.6.8"><a href="<?php echo $this->baseUrl; ?>customer_panel/pivot"><i class="ti-bar-chart"></i> <span>Export</span></a></li>
-												</ul>
-											</li>
-
-
-
-											<li data-menuid="6.7">
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>POS</span></a>
-												<ul class="collapse">
-													<li data-menuid="6.7.1"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>POS entrance settings</a></li>
-												</ul>
-											</li>
-											<li data-menuid="6.8">
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Entrance</span></a>
-												<ul class="collapse">
-													
-													<li data-menuid="6.8.1"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Scanning results</a></li>
-													<li data-menuid="6.8.2"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Scanning details</a></li>
-													
-												</ul>
-											</li>
-											<li data-menuid="6.9">
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Scanners</span></a>
-												<ul class="collapse">
-													
-													<li data-menuid="6.9.1"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Scanner settings</span></a></li>
-													
-												</ul>
-											</li>
-
-											<li data-menuid="6.10">
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Event fans</span></a>
-												<ul class="collapse">
-													<li data-menuid="6.10.1"><a href="<?php echo $this->baseUrl;?>customer_panel/agenda"><i class="ti-agenda"></i> <span>Rewards</span></a></li>
-													<li data-menuid="6.10.2"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Requests</span></a></li>
-													<li data-menuid="6.10.3"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Teams</a></li>
-													<li data-menuid="6.10.4"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Statistics</a></li>
-													<li data-menuid="6.10.5"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Assigned to events</a></li>
-													<li data-menuid="6.10.6"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>invite by mail template</a></li>
-													<li data-menuid="6.10.7"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>invite from fan-base</a></li>
-												</ul>
-											<li data-menuid="6.11">
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Event proppers</span></a>
-												<ul class="collapse">
-													<li data-menuid="6.11.1"><a href="<?php echo $this->baseUrl;?>customer_panel/agenda"><i class="ti-agenda"></i> <span>Rewards</span></a></li>
-													
-													<li data-menuid="6.11.2"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Requests</span></a></li>
-													<li data-menuid="6.11.3"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Teams</a></li>
-													<li data-menuid="6.11.4"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Statistics</a></li>
-													<li data-menuid="6.11.5"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Assigned to events</a></li>
-													<li data-menuid="6.11.6"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>invite by mail template</a></li>
-													<li data-menuid="6.11.7"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>invite from fan-base</a></li>
-													
-													
-												</ul>
-                                            </li>
-											<li data-menuid="6.12">
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Settings</span></a>
-												<ul class="collapse">
-													<li data-menuid="6.12.1">
-														<a href="<?php echo $this->baseUrl; ?>customer_panel/settings">
-															<i class="ti-shopping-cart-full"></i>
-															<span>Terms and conditions</span>
-														</a>
-													</li>
-													<li data-menuid="6.12.2">
-														<a href="<?php echo $this->baseUrl. 'agenda_booking/design'; ?>"
-														><i class="ti-clipboard"></i> <span>Design Agenda reservations</span>
-														</a>
-													</li>
-												</ul>
+<!--											<li data-menuid="6.5">-->
+<!--												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Settings</span></a>-->
+<!--												<ul class="collapse">-->
+<!--													-->
+<!--													<li data-menuid="6.5.1"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Your Events</span></a></li>-->
+<!---->
+<!--													<li data-menuid="6.5.2"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>RSVP/Guest lists</a></li>-->
+<!--													<li data-menuid="6.5.3"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>3rd party</a></li>-->
+<!--													<li data-menuid="6.5.4"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Discount codes</a></li>-->
+<!--													<li data-menuid="6.5.5"><a href="--><?php //echo $this->baseUrl; ?><!--customer_panel/reservations_report"><i class="ti-write"></i> <span>Secure ticket box</span></a></li>-->
+<!--													<li data-menuid="6.5.6"><a href="--><?php //echo $this->baseUrl; ?><!--customer_panel/report"><i class="ti-clipboard"></i> <span>Create barcodes</span></a></li>-->
+<!--												-->
+<!--												</ul>-->
+<!--											</li>-->
+<!--											<li data-menuid="6.6">-->
+<!--												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Statistics</span></a>-->
+<!--												<ul class="collapse">-->
+<!--													<li data-menuid="6.6.1"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Event main Statistics</span></a></li>-->
+<!--													<li data-menuid="6.6.2"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Detail sales statistics</a></li>-->
+<!--													<li data-menuid="6.6.3"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Detail event reports</a></li>-->
+<!--													<li data-menuid="6.6.4"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Detail buyer reports</a></li>-->
+<!--													<li data-menuid="6.6.5"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Grand partner insights</a></li>-->
+<!--													<li data-menuid="6.6.6"><a href="--><?php //echo $this->baseUrl; ?><!--customer_panel/reservations_report"><i class="ti-write"></i> <span>Reservations Report</span></a></li>-->
+<!--													<li data-menuid="6.6.7"><a href="--><?php //echo $this->baseUrl; ?><!--customer_panel/report"><i class="ti-clipboard"></i> <span>Report</span></a></li>-->
+<!--													<li data-menuid="6.6.8"><a href="--><?php //echo $this->baseUrl; ?><!--customer_panel/pivot"><i class="ti-bar-chart"></i> <span>Export</span></a></li>-->
+<!--												</ul>-->
+<!--											</li>-->
+<!---->
+<!---->
+<!---->
+<!--											<li data-menuid="6.7">-->
+<!--												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>POS</span></a>-->
+<!--												<ul class="collapse">-->
+<!--													<li data-menuid="6.7.1"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>POS entrance settings</a></li>-->
+<!--												</ul>-->
+<!--											</li>-->
+<!--											<li data-menuid="6.8">-->
+<!--												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Entrance</span></a>-->
+<!--												<ul class="collapse">-->
+<!--													-->
+<!--													<li data-menuid="6.8.1"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Scanning results</a></li>-->
+<!--													<li data-menuid="6.8.2"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Scanning details</a></li>-->
+<!--													-->
+<!--												</ul>-->
+<!--											</li>-->
+<!--											<li data-menuid="6.9">-->
+<!--												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Scanners</span></a>-->
+<!--												<ul class="collapse">-->
+<!--													-->
+<!--													<li data-menuid="6.9.1"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Scanner settings</span></a></li>-->
+<!--													-->
+<!--												</ul>-->
+<!--											</li>-->
+<!---->
+<!--											<li data-menuid="6.10">-->
+<!--												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Event fans</span></a>-->
+<!--												<ul class="collapse">-->
+<!--													<li data-menuid="6.10.1"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/agenda"><i class="ti-agenda"></i> <span>Rewards</span></a></li>-->
+<!--													<li data-menuid="6.10.2"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Requests</span></a></li>-->
+<!--													<li data-menuid="6.10.3"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Teams</a></li>-->
+<!--													<li data-menuid="6.10.4"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Statistics</a></li>-->
+<!--													<li data-menuid="6.10.5"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Assigned to events</a></li>-->
+<!--													<li data-menuid="6.10.6"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>invite by mail template</a></li>-->
+<!--													<li data-menuid="6.10.7"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>invite from fan-base</a></li>-->
+<!--												</ul>-->
+<!--											<li data-menuid="6.11">-->
+<!--												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Event proppers</span></a>-->
+<!--												<ul class="collapse">-->
+<!--													<li data-menuid="6.11.1"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/agenda"><i class="ti-agenda"></i> <span>Rewards</span></a></li>-->
+<!--													-->
+<!--													<li data-menuid="6.11.2"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Requests</span></a></li>-->
+<!--													<li data-menuid="6.11.3"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Teams</a></li>-->
+<!--													<li data-menuid="6.11.4"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Statistics</a></li>-->
+<!--													<li data-menuid="6.11.5"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>Assigned to events</a></li>-->
+<!--													<li data-menuid="6.11.6"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>invite by mail template</a></li>-->
+<!--													<li data-menuid="6.11.7"><a href="--><?php //echo $this->baseUrl;?><!--customer_panel/booking_tickets"><i class="ti-ticket"></i> <span></span>invite from fan-base</a></li>-->
+<!--													-->
+<!--													-->
+<!--												</ul>-->
+<!--                                            </li>-->
+<!--											<li data-menuid="6.12">-->
+<!--												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Settings</span></a>-->
+<!--												<ul class="collapse">-->
+<!--													<li data-menuid="6.12.1">-->
+<!--														<a href="--><?php //echo $this->baseUrl; ?><!--customer_panel/settings">-->
+<!--															<i class="ti-shopping-cart-full"></i>-->
+<!--															<span>Terms and conditions</span>-->
+<!--														</a>-->
+<!--													</li>-->
+<!--													<li data-menuid="6.12.2">-->
+<!--														<a href="--><?php //echo $this->baseUrl. 'agenda_booking/design'; ?><!--"-->
+<!--														><i class="ti-clipboard"></i> <span>Design Agenda reservations</span>-->
+<!--														</a>-->
+<!--													</li>-->
+<!--												</ul>-->
 											</li>
 										</ul>
 									</li>

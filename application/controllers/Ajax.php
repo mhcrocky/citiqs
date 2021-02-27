@@ -49,6 +49,7 @@ class Ajax extends CI_Controller
         $this->load->helper('uploadfile_helper');
         $this->load->helper('jwt_helper');
         $this->load->helper('pay_helper');
+        $this->load->helper('perfex_helper');
 
         $this->load->library('session');
         $this->load->library('language', array('controller' => $this->router->class));
@@ -1978,6 +1979,10 @@ class Ajax extends CI_Controller
         $this->user_model->updateUser(['vat_number' => $post['user']['vat_number']], ['id' => $userId]);
 
         $_SESSION['payNlServiceIdSet'] = Pay_helper::createMerchant($userId, $post);
+
+        if ($_SESSION['payNlServiceIdSet']) {
+            Perfex_helper::apiUpdateCustomer($userId);
+        }
 
         $response['status'] = $_SESSION['payNlServiceIdSet'] ? '1' : '0';
         $response['messages'] = $_SESSION['payNlServiceIdSet'] ? ['Account created'] : ['Account not created'];

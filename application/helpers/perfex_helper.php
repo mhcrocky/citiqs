@@ -70,8 +70,6 @@
         public static function apiInovice(array $data): ?object
         {
             $data = json_encode($data);
-//			var_dump($data);
-//			die();
             $url = PERFEX_API . 'invoice/data';
 			$headers = [
                 'authtoken:' . PERFEX_API_KEY,
@@ -80,10 +78,30 @@
             ];            
             
             $response = Curl_helper::sendCurlRawDataRequest($url, $data, $headers);
-//			var_dump($data);
-//			die();
+			// var_dump($data);
+			// die();
 
 
             return ($response && $response->status) ? $response : null;
         }
+
+        public static function apiUpdateCustomer(int $userId): void
+        {
+            $CI =& get_instance();
+
+            $CI->load->model('user_model');
+            $CI->load->model('shopvendor_model');
+
+            $CI->load->helper('curl_helper');
+
+            $data = [
+                'vat' => $CI->user_model->getUserProperty($userId, 'vat_number'),
+                'merchantId' => $CI->shopvendor_model->setProperty('vendorId', $userId)->getProperty('merchantId'),
+            ];
+
+            $url = PERFEX_API . 'customers' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . $userId  . DIRECTORY_SEPARATOR . '1' ;
+            $headers = ['authtoken:' . PERFEX_API_KEY];
+            Curl_helper::sendPutRequest($url, $data, $headers);
+        }
+
     }
