@@ -82,9 +82,11 @@ $(document).ready(function() {
                 title: 'Actions',
                 data: null,
                 "render": function(data, type, row) {
-                    var edit_btn = '<a class="text-primary" href="'+globalVariables.baseUrl+'events/edit/'+data.id+'"><i class="fa fa-pencil" aria-hidden="true"></i></a>';
-                    var arrow_left = '<a class="ml-3 text-dark" href="'+globalVariables.baseUrl+'events/event/'+data.id+'"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>';
-                    return edit_btn + ' ' + arrow_left;
+                    let arrow_svg = '<svg aria-hidden="true" data-prefix="fas" data-icon="arrow-square-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24px" height="auto" class="svg-inline--fa fa-arrow-square-right fa-w-14 fa-7x"><path fill="currentColor" d="M48 32h352c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48zm147.1 119.6l75.5 72.4H88c-13.3 0-24 10.7-24 24v16c0 13.3 10.7 24 24 24h182.6l-75.5 72.4c-9.7 9.3-9.9 24.8-.4 34.3l11 10.9c9.4 9.4 24.6 9.4 33.9 0L372.3 273c9.4-9.4 9.4-24.6 0-33.9L239.6 106.3c-9.4-9.4-24.6-9.4-33.9 0l-11 10.9c-9.5 9.6-9.3 25.1.4 34.4z" class=""></path></svg>';
+                    let edit_svg = '<svg aria-hidden="true" data-prefix="fas" data-icon="pen-square" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24px" fill="blue" class="svg-inline--fa fa-pen-square fa-w-14 fa-7x"><path fill="currentColor" d="M400 480H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48zM238.1 177.9L102.4 313.6l-6.3 57.1c-.8 7.6 5.6 14.1 13.3 13.3l57.1-6.3L302.2 242c2.3-2.3 2.3-6.1 0-8.5L246.7 178c-2.5-2.4-6.3-2.4-8.6-.1zM345 165.1L314.9 135c-9.4-9.4-24.6-9.4-33.9 0l-23.1 23.1c-2.3 2.3-2.3 6.1 0 8.5l55.5 55.5c2.3 2.3 6.1 2.3 8.5 0L345 199c9.3-9.3 9.3-24.5 0-33.9z" class=""></path></svg>';
+                    var edit_btn = '<div style="display: inline-block; width: 80px;"><a class="text-primary" href="'+globalVariables.baseUrl+'events/edit/'+data.id+'">'+edit_svg+'</a>';
+                    var arrow_right = '<a class="ml-3 text-dark" href="'+globalVariables.baseUrl+'events/event/'+data.id+'">'+arrow_svg+'</i></a></div>';
+                    return edit_btn + ' ' + arrow_right;
                 }
 
             }
