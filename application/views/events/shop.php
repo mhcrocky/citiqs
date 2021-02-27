@@ -18,7 +18,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-6">
-                <h1 class="event-title">Our Events</h1>
+                <h1 id="event-title" class="event-title">Our Events</h1>
                 <p id="event_text_descript" class="text-muted mt-4 mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sagittis
                     at est ut facilisis. Suspendisse eu luctus mauris.</p>
 

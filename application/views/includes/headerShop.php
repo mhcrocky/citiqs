@@ -26,10 +26,12 @@
     }
     <?php
     $eventDescript = '';
+    $eventTitle = '';
      if(isset($design)) {
         $bgImage=$design['bgImage'];
         $shopdesign=$design['shop'];
-        $eventDescript=$design['shop']['eventDescript'];
+        $eventTitle = isset($design['shop']['eventTitle']) ? $design['shop']['eventTitle'] : '';
+        $eventDescript = isset($design['shop']['eventDescript']) ? $design['shop']['eventDescript'] : '';
         echo "body{background-image: url('".$this->baseUrl . "assets/images/backGroundImages/". $bgImage."') !important;
             background-size: cover;}";
         
@@ -55,8 +57,16 @@
     </style>
     <script> 
     function changeTextContent(){
-        $('#event_text_descript').text('<?php echo $eventDescript; ?>');
+        let eventDescript = '<?php echo $eventDescript; ?>';
+        let eventTitle = '<?php echo $eventTitle; ?>';
+        if(eventTitle != ''){
+            $('#event-title').text(eventTitle);
+        }
+        if(eventDescript != ''){
+            $('#event_text_descript').text(eventDescript);
+        }
     } 
+
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">

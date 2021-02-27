@@ -122,6 +122,7 @@
 <?php } elseif ($this->view === 'warehouse/design' || $this->view === 'booking/design' || $this->view === 'events/design') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/devices.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/design.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
 <?php } elseif ($this->view === 'publicorders/closed') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/closed.css">
