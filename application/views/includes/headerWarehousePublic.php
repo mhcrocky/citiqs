@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/keyboard.css" />
     <?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
+    <?php include_once FCPATH . 'application/views/includes/customDesign.php'; ?>
     <style>
 	    #myModal {
             overflow: scroll;
@@ -47,7 +48,6 @@
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/createKeyBoard.js"></script>
-    <?php include_once FCPATH . 'application/views/includes/customDesign.php'; ?>
 </head>
 
 

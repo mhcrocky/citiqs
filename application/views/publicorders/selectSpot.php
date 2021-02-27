@@ -65,7 +65,7 @@
 										$noSpots = false;
 									?>
 										<li class='select__list__item bordersColor'>
-											<label
+											<label class="custom_style"
 												data-redirect="<?php echo 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spot['spotId'] ?>"
 												for="spotId_<?php echo $spot['spotId']; ?>"
 											>

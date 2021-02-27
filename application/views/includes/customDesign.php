@@ -1,15 +1,23 @@
 <?php
+
     if (isset($design[$viewName])) {
         $viewDesign = $design[$viewName];
 
 
         $css = '';
+        if(isset($design['hover'])){
+            $css .=   '.select__list__item .custom_style:hover { background-color:' . $design['hover']['select__list__item'] . ' !important; }';
+         }
+        if(isset($design['checked'])){
+            $css .=   '.select__list__item label::before { background-color:' . $design['checked']['select__list__item'] . ' !important; }';
+         }
+
         foreach($viewDesign as $cssSelector => $selectorData) {
-            $selector = ($cssSelector === 'id') ? '#' : '.';
+            $selector = ($cssSelector == 'id') ? '#' : '.';
             foreach($selectorData as $selectorValue => $cssDeclaration) {
                 $css .=  $selector . $selectorValue . ' {';
                 foreach ($cssDeclaration as $cssProperty => $value) {
-                    $css .=  $cssProperty . ' : ' . $value . ' !important;';
+                    $css .=   $cssProperty . ' : ' . $value . ' !important;';
                 }
                 $css .= '}';
             }
@@ -23,6 +31,7 @@
                 }';
          }
 
+         
         echo '<style>' . $css . '</style>';
     }
     #$design['bgImage'] = '1190_1598545539.png';
