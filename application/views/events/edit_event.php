@@ -148,36 +148,36 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row wideField">
                                 <label for="address" class="col-md-4 col-form-label text-md-left">Address</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="address" class="form-control border-50 input-w" name="eventAddress"
+                                    <input type="text" id="autocomplete" onFocus="geolocate()" class="field form-control border-50 input-w" name="eventAddress"
                                         value="<?php echo $event->eventAddress; ?>" required>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row wideField">
                                 <label for="city" class="col-md-4 col-form-label text-md-left">City</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="city" class="form-control border-50 input-w" name="eventCity"
+                                    <input type="text" id="locality" class="field form-control border-50 input-w" name="eventCity"
                                         value="<?php echo $event->eventCity; ?>" required>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row wideField">
                                 <label for="postal-code" class="col-md-4 col-form-label text-md-left">Postal
                                     code</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="postal-code" class="form-control border-50 input-w" name="eventZipcode"
+                                    <input type="text" id="postal_code" class="field form-control border-50 input-w" name="eventZipcode"
                                         value="<?php echo $event->eventZipcode; ?>" required>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row wideField">
                                 <label for="country" class="col-md-4 col-form-label text-md-left">Country
                                 </label>
                                 <div class="col-md-6 font-weight-bold">
-                                    <select id="country" class="form-control border-50 input-w font-weight-bold" required>
+                                    <select id="country" class="field form-control border-50 input-w font-weight-bold" required>
                                         <option class="text-weight-bold" value="">Select option</option>
                                         <?php foreach($countries as $country): ?>
                                         <?php if($event->eventCountry == $country): ?>

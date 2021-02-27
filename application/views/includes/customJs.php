@@ -132,6 +132,8 @@
     <script src="<?php echo $this->baseUrl; ?>assets/js/jbox.min.js"></script>
     <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/events.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCst0EJ-LFVj3q0a6NHGFDU6HQ10H84HTI&callback=initAutocomplete&libraries=places&v=weekly" async></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/googleAddressAutocomplete.js"></script>
 <?php } elseif ($this->view === 'businessreport/reports') { ?>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
