@@ -80,7 +80,9 @@
     <div class="container text-center">
         <div class="row footer__row">
             <div class="col-12 col-md-6 text-center">
-                TIQS <?php echo date('Y'); ?>, All rights reserved
+               &#169 TIQS <?php echo date('Y'); ?>. All rights reserved
+               <br>
+               Powered by <a href="https://tiqs.com">tiqs.com<a>
             </div>
         </div>
 
