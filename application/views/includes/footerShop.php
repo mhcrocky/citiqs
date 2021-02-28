@@ -82,7 +82,7 @@
             <div class="col-12 col-md-6 text-center">
                &#169 TIQS <?php echo date('Y'); ?>. All rights reserved
                <br>
-               Powered by <a href="https://tiqs.com">tiqs.com<a>
+               Powered by <a style="font-size: 100%;" href="https://tiqs.com">tiqs.com<a>
             </div>
         </div>
 
