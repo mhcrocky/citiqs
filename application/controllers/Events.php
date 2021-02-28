@@ -187,13 +187,16 @@ class Events extends BaseControllerWeb
         $this->load->model('bookandpayagendabooking_model');
         $this->load->model('shopvendor_model');
         $design = $this->event_model->get_design($this->vendor_id);
+        $this->load->model('user_model');
+        $userShortUrl = $this->user_model->getUserShortUrlById($this->vendor_id);
         $id = intval($this->shopvendor_model->setProperty('vendorId', $this->vendor_id)->getProperty('id'));
         $data = [ 
             'id' => $id,
             'vendorId' => $this->vendor_id,
-            'iframeSrc' => base_url() . 'events/shop/' . $this->session->userdata('shortUrl'),
+            'iframeSrc' => base_url() . 'events/shop/' . $userShortUrl,
             'design' => unserialize($design[0]['shopDesign']),
             'devices' => $this->bookandpayagendabooking_model->get_devices(),
+            'userShortUrl' => $userShortUrl,
             'analytics' => $this->shopvendor_model->setObjectId($id)->getVendorAnalytics()
         ];
 
