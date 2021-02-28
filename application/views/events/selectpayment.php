@@ -28,7 +28,27 @@
                 <h3 class="title"><a id="voucher" class="text-primary" href="voucher">gebruik Voucher</a></h3>
             </div>
             <div class="half-col  mb-4">
-
+                <img class="img-w-150" style="max-width: 110px;" src="https://static.pay.nl/payment_profiles/100x100/1588.png"
+                    alt="My Bank" />
+                <h3 class="title"><a id="mybank" class="text-primary" href="javascript:;">My Bank</a></h3>
+            </div>
+            <div class="half-col  mb-4">
+                <img class="img-w-89" style="max-width: 85px;" src="https://tiqs.com/alfred/assets/home/imgs/extra/payconiq.png"
+                    alt="Payconiq" />
+                <h3 class="title"><a id="payconiq" class="text-primary" href="javascript:;">Payconiq</a></h3>
+            </div>
+            <div class="half-col  mb-4">
+                <img class="img-w-150" style="max-width: 100px;" src="<?php echo base_url(); ?>assets/home/imgs/extra/giropay(1).png"
+                    alt="Giropay" />
+                <h3 class="title"><a id="giropay" class="text-primary" href="javascript:;">Giropay</a></h3>
+            </div>
+            <div class="half-col  mb-4">
+                <img class="img-w-150" style="max-width: 100px;"  src="<?php echo base_url(); ?>assets/home/images/pinmachine.png"
+                    alt="Pin machine" />
+                <h3 class="title"><a id="pinmachine" class="text-primary" href="javascript:;">Pin machine</a></h3>
+            </div>
+            <div class="half-col  mb-4">
+                
             </div>
 
         </div>
