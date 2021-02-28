@@ -62,6 +62,19 @@ if ( isset($design['shop']['eventDescript']) ) {
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
+            Navbar button background color:
+            <input class="form-control colorInput" name="shop[class][navbar-toggler][background-color]"
+                data-jscolor="" data-css-selector="class" data-css-selector-value="navbar-toggler"
+                data-css-property="background-color" style="border-radius: 50px" onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['shop']['class']['navbar-toggler']['background-color']) ) { ?>
+                value="<?php echo $design['shop']['class']['navbar-toggler']['background-color']?>" data-value="1"
+                <?php } else{ ?> value="#ea2251" <?php } ?> />
+        </label>
+    </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
             Checkout button background color:
             <input class="form-control colorInput" name="shop[class][header__checkout][background-color]"
                 data-jscolor="" data-css-selector="class" data-css-selector-value="header__checkout"
