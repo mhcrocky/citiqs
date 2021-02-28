@@ -96,7 +96,9 @@
             $this->template_name = $templateName;
             $this->user_id = $userId;
             $this->id = $id ? $id : null;
-            $this->template_file = base64_encode($templateName);
+            $filename = str_replace(' ', '_', $templateName);
+            $filename .= '_' . time();
+            $this->template_file = $filename;
 
 
             if ($this->checkIsExists()) return false;
