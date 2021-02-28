@@ -377,6 +377,15 @@ class User_model extends CI_Model
         return $query->row();
     }
 
+    function getUserShortUrlById($userId)
+    {
+        $this->db->select('usershorturl');
+        $this->db->from('tbl_user');
+        $this->db->where('id', $userId);
+        $query = $this->db->get();
+        return $query->first_row()->usershorturl;
+    }
+
 
     function getUserInfoByShortUrl($name)
     {
