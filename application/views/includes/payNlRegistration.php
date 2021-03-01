@@ -31,7 +31,7 @@
                                 class="form-control"
                                 type="text"
                                 id="vatNumber"
-                                name="vat_number"
+                                name="user[vat_number]"
                                 class="form-control"
                                 data-form-check='1'
                                 data-min-length="1"

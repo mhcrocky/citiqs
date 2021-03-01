@@ -7,6 +7,8 @@ if(!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Ajax extends CI_Controller
 {
+    private $errorMessages = [];
+
     public function __construct()
     {
         parent::__construct();
@@ -1964,31 +1966,86 @@ class Ajax extends CI_Controller
         if (!$this->input->is_ajax_request() || $_SESSION['payNlServiceIdSet']) return;
 
         $userId = intval($_SESSION['userId']);
-
         $post = $this->security->xss_clean($_POST);
 
-        if (empty($post['user']['vat_number'])) {
-            $response = [
-                'status' => '0',
-                'messages' =>  ['VAT number is requried']
-            ];
-            echo json_encode($response);
-            return;
-        }
+        $vatNumber = $this->updateVatNumber($userId, $post);
+        $merchantId = $this->updateVendorMerchnatId($userId, $post);
+        $serviceId = $this->updateVendorPaynlServiceId($merchantId, $userId);
 
-        $this->user_model->updateUser(['vat_number' => $post['user']['vat_number']], ['id' => $userId]);
-
-        $_SESSION['payNlServiceIdSet'] = Pay_helper::createMerchant($userId, $post);
-
-        if ($_SESSION['payNlServiceIdSet']) {
+        if ($vatNumber && $merchantId && $serviceId) {
+            $_SESSION['payNlServiceIdSet'] = true;
             Perfex_helper::apiUpdateCustomer($userId);
+        } else {
+            array_push($this->errorMessages, 'Account not created');
         }
 
         $response['status'] = $_SESSION['payNlServiceIdSet'] ? '1' : '0';
-        $response['messages'] = $_SESSION['payNlServiceIdSet'] ? ['Account created'] : ['Account not created'];
+        $response['messages'] = $_SESSION['payNlServiceIdSet'] ? ['Account created'] :  $this->errorMessages;
 
         echo json_encode($response);
         return;
     }
 
+    private function updateVatNumber($userId, $post): bool
+    {
+        if (empty($post['user']['vat_number'])) {
+            array_push($this->errorMessages, 'VAT number is requried');
+            return false;
+        }
+
+        $this->user_model->updateUser(['vat_number' => $post['user']['vat_number']], ['id' => $userId]);
+
+        return $this->user_model->effectedrows > 0 ? true : false;
+    }
+
+    private function updateVendorMerchnatId($userId, $post): ?string
+    {
+        if (count($this->errorMessages)) return null;
+
+        $result = Pay_helper::createMerchant($userId, $post);
+
+        if ($result->success !== '1') {
+            array_push($this->errorMessages, 'Paynl merchant err message');
+            return null;
+        }
+
+        $update = $this->shopvendor_model
+                    ->setProperty('vendorId', $userId)
+                    ->setObjectId(intval($this->shopvendor_model->getProperty('id')))
+                    ->setProperty('merchantId', $result->merchantId)
+                    ->setProperty('accountId', $result->accounts[0]->accountId)
+                    ->update();
+
+        if (!$update) {
+            array_push($this->errorMessages, 'An error occurred. Please contact us');
+            return null;
+        }
+
+        return $result->merchantId;
+    }
+
+    private function updateVendorPaynlServiceId(?string $merchantId, int $userId): ?string
+    {
+        if (count($this->errorMessages)) return null;
+
+        $result = Pay_helper::getPayNlServiceId($merchantId, $userId);
+
+        if ($result->request->result !== '1') {
+            array_push($this->errorMessages, 'Paynl service id err message');
+            return null;
+        }
+
+        $update = $this->shopvendor_model
+                    ->setProperty('vendorId', $userId)
+                    ->setObjectId(intval($this->shopvendor_model->getProperty('id')))
+                    ->setProperty('paynlServiceId', $result->serviceId)
+                    ->update();
+
+        if (!$update) {
+            array_push($this->errorMessages, 'An error occurred. Please contact us');
+            return null;
+        }
+
+        return $result->serviceId;
+    }
 }

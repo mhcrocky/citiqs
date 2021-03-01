@@ -77,11 +77,10 @@
             return $arrArguments;
         }
 
-        public static function createMerchant(int $userId, array $data): bool
+        public static function createMerchant(int $userId, array $data): object
         {
             $CI =& get_instance();
             $CI->load->model('user_model');
-            $CI->load->model('shopvendor_model');
             $CI->load->config('custom');
 
             $CI->user_model->setUniqueValue(strval($userId))->setWhereCondtition()->setUser();
@@ -89,31 +88,16 @@
             $argumentsArray = self::getMerchantArgumentsArray($CI->user_model, $data);
             $url = self::getPayNlUrl($argumentsArray, $CI->config->item('addMerchantPayNlNamecpace'), $CI->config->item('addMerchantPayNlFunction'), $CI->config->item('addMerchantPayNlVersion'));
 
-            $result = @file_get_contents($url);
+            $result = file_get_contents($url);
             $result = json_decode($result);
 
-            if ($result->success !== '1') return false;
-
-            $CI->shopvendor_model
-                ->setProperty('vendorId', $userId)
-                ->setObjectId(intval($CI->shopvendor_model->getProperty('id')))
-                ->setProperty('merchantId', $result->merchantId)
-                ->setProperty('accountId', $result->accounts[0]->accountId)
-                ->update();
-
-                // TO DO 
-                // -> update perfex crm
-                // create methods in shopvendor_model for updateing 
-
-            return self::getPayNlServiceId($merchantId, intval($userId));
+            return $result;
         }
 
-        public static function getPayNlServiceId(string $merchantId, int $userId): bool
+        public static function getPayNlServiceId(string $merchantId, int $userId): object
         {
             $CI =& get_instance();
             $CI->load->config('custom');
-            $CI->load->model('shopvendor_model');
-
             $argumentsArray = [
                 'merchantId' => $merchantId,
                 'name' => 'Food and beverages',
@@ -124,19 +108,10 @@
 
             $url = self::getPayNlUrl($argumentsArray, $CI->config->item('addPayNlServiceNamecpace'), $CI->config->item('addPayNlServiceFunction'), $CI->config->item('addPayNlServiceVersion'));
 
-            $result = @file_get_contents($url);
+            $result = file_get_contents($url);
             $result = json_decode($result);
 
-
-            if (($result->request->result !== '1')) return false;
-
-            $update = $CI->shopvendor_model
-                        ->setProperty('vendorId', $userId)
-                        ->setObjectId(intval($CI->shopvendor_model->getProperty('id')))
-                        ->setProperty('paynlServiceId', $result->serviceId)
-                        ->update();
-
-            return $update;
+            return $result;
         }
 
         public static function getMerchantArgumentsArray(object $user, array $data): array
