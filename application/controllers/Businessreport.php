@@ -160,6 +160,16 @@ class Businessreport extends BaseControllerWeb
 		echo json_encode($orders);
 	}
 
+	public function get_totals($label = false){
+		$totals = $this->businessreport_model->get_report_of($this->vendor_id, $this->input->post('min'), $this->input->post('max'), 'total', '', '');
+		if(count($totals) > 0){
+			echo json_encode($totals);
+			return ;
+		}
+		echo false;
+		
+	}
+
 	public function get_graphs($label = false){
 		$vendor_id = $this->vendor_id;
 		if($this->input->post('labels')){
@@ -188,18 +198,33 @@ class Businessreport extends BaseControllerWeb
 									"local" => array(
 										"label" => "Local",
 										"id" => "Local",
+										"type" => "number",
+										"prefix" => '€',
+									    "decimals" => 2
 									),
 									"pickup" => array(
 										"label" => "Pickup",
+										"type" => "number",
+										"prefix" => '€',
+									    "decimals" => 2
 									),
 									"delivery" => array(
 										"label" => "Delivery",
+										"type" => "number",
+										"prefix" => '€',
+									    "decimals" => 2
 									),
 									"invoice" => array(
-										"label" => "Invoices"
+										"label" => "Invoices",
+										"type" => "number",
+										"prefix" => '€',
+									    "decimals" => 2
 									),
 									"booking" => array(
-										"label" => "Tickets"
+										"label" => "Tickets",
+										"type" => "number",
+										"prefix" => '€',
+									    "decimals" => 2
 									)
 								),
 								"class"=>array(
@@ -252,18 +277,33 @@ class Businessreport extends BaseControllerWeb
 								"local" => array(
 									"label" => "Local",
 									"id" => "Local",
+									"type" => "number",
+									"prefix" => '€',
+									"decimals" => 2
                                 ),
                                 "pickup" => array(
                                     "label" => "Pickup",
+									"type" => "number",
+									"prefix" => '€',
+									"decimals" => 2
                                 ),
 								"delivery" => array(
 									"label" => "Delivery",
+									"type" => "number",
+									"prefix" => '€',
+									"decimals" => 2
 								),
 								"invoice" => array(
-									"label" => "Invoices"
+									"label" => "Invoices",
+									"type" => "number",
+									"prefix" => '€',
+									"decimals" => 2
 								),
 								"booking" => array(
-									"label" => "Tickets"
+									"label" => "Tickets",
+									"type" => "number",
+									"prefix" => '€',
+									"decimals" => 2
 								)
 							),
 							"class"=>array(

@@ -471,6 +471,87 @@
         </div>
         <div id="graphs"></div>
 
+        <div class="sales-report-area mt-5 mb-5 row-sort ui-sortable" data-rowposition="1" data-rowsort="1">
+        <div id="sortable" style="visibility: hidden;" class="row ui-sortable">
+
+            <div class="col-md-3 ui-sortable mb-3" data-position="1" data-sort="1">
+                <div style="border-left: 10px solid #3366cc !important;height:160px;" class="single-report mb-xs-30">
+                    <div class="s-report-inner pr--20 pt--30 mb-3">
+                        <div class="s-report-title d-flex justify-content-between">
+                            <h4 class="header-title mb-0">Total</h4>
+                            <p>LOCAL</p>
+                        </div>
+                        <div class="d-flex justify-content-between pb-2">
+                            <h2>€ <span id="local"></span></h2>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 ui-sortable mb-3" data-position="2" data-sort="1">
+                <div style="border-left: 10px solid #dc3912 !important;height:160px;" class="single-report mb-xs-30">
+                    <div class="s-report-inner pr--20 pt--30 mb-3">
+                        <div class="s-report-title d-flex justify-content-between">
+                            <h4 class="header-title mb-0">Total</h4>
+                            <p>PICKUP</p>
+                        </div>
+                        <div class="d-flex justify-content-between pb-2">
+                            <h2>€ <span id="pickup"></span></h2>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 ui-sortable mb-3" data-position="3" data-sort="1">
+                <div style="border-left: 10px solid #ff9900 !important;height:160px;" class="single-report mb-xs-30">
+                    <div class="s-report-inner pr--20 pt--30 mb-3">
+                        <div class="s-report-title d-flex justify-content-between">
+                            <h4 class="header-title mb-0">Total</h4>
+                            <p>DELIVERY</p>
+                        </div>
+                        <div class="d-flex justify-content-between pb-2">
+                            <h2>€ <span id="delivery"></span></h2>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 ui-sortable mb-3" data-position="4" data-sort="1">
+                <div style="border-left: 10px solid #6600cc !important;height:160px;" class="single-report mb-xs-30">
+                    <div class="s-report-inner pr--20 pt--30 mb-3">
+                        <div class="s-report-title d-flex justify-content-between">
+                            <h4 class="header-title mb-0">Total</h4>
+                            <p>INVOICES</p>
+                        </div>
+                        <div class="d-flex justify-content-between pb-2">
+                            <h2>€ <span id="invoice"></span></h2>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 ui-sortable mb-3" data-position="5" data-sort="1">
+                <div style="border-left: 10px solid #375068 !important;height:160px;" class="single-report mb-xs-30">
+                    <div class="s-report-inner pr--20 pt--30 mb-3">
+                        <div class="s-report-title d-flex justify-content-between">
+                            <h4 class="header-title mb-0">Total</h4>
+                            <p>TICKETS</p>
+                        </div>
+                        <div class="d-flex justify-content-between pb-2">
+                            <h2>€ <span id="tickets"></span></h2>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     </div>
 </div>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>

@@ -46,6 +46,30 @@
 
           $.ajax({
             method: "POST",
+            url: globalVariables.baseUrl + "businessreport/get_totals",
+            data: {min:"'"+min+"'",max:"'"+max+"'",selected:selected},
+            success: function(data){
+
+              if(isJson(data)){
+                data = JSON.parse(data)[0];
+                $('#local').text(data.local.toFixed(2));
+                $('#delivery').text(data.delivery.toFixed(2));
+                $('#pickup').text(data.pickup.toFixed(2));
+                $('#invoice').text(data.invoice.toFixed(2));
+                $('#tickets').text(data.booking.toFixed(2));
+              } else {
+                $('#local').text('0.00');
+                $('#delivery').text('0.00');
+                $('#pickup').text('0.00');
+                $('#invoice').text('0.00');
+                $('#tickets').text('0.00');
+              }
+              
+            }
+          });
+
+          $.ajax({
+            method: "POST",
             url: globalVariables.baseUrl + "businessreport/get_graphs",
             data: {min:"'"+min+"'",max:"'"+max+"'",selected: selected},
             success: function(data){
@@ -125,6 +149,30 @@
       var max = date[1];
       $.ajax({
         method: "POST",
+        url: globalVariables.baseUrl + "businessreport/get_totals",
+        data: {min:"'"+min+"'",max:"'"+max+"'",selected:selected},
+        success: function(data){
+
+          if(isJson(data)){
+            data = JSON.parse(data)[0];
+            $('#local').text(data.local.toFixed(2));
+            $('#delivery').text(data.delivery.toFixed(2));
+            $('#pickup').text(data.pickup.toFixed(2));
+            $('#invoice').text(data.invoice.toFixed(2));
+            $('#tickets').text(data.booking.toFixed(2));
+          } else {
+            $('#local').text('0.00');
+            $('#delivery').text('0.00');
+            $('#pickup').text('0.00');
+            $('#invoice').text('0.00');
+            $('#tickets').text('0.00');
+          }
+          
+        }
+      });
+      
+      $.ajax({
+        method: "POST",
         url: globalVariables.baseUrl + "businessreport/get_graphs",
         data: {min:"'"+min+"'",max:"'"+max+"'",selected:selected},
         success: function(data){
@@ -156,6 +204,8 @@
           var date = full_timestamp.split(" - ");
           var min = date[0];
           var max = date[1];
+          
+
           $.ajax({
             method: "POST",
             url: globalVariables.baseUrl + "businessreport/get_graphs",
@@ -222,6 +272,15 @@ $(function () {
       }
   });
 });
+
+function isJson(str) {
+  try {
+      JSON.parse(str);
+  } catch (e) {
+      return false;
+  }
+  return true;
+}
 
 function round_up(val){
   val = parseFloat(val);
