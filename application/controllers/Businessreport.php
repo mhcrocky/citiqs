@@ -160,7 +160,7 @@ class Businessreport extends BaseControllerWeb
 		echo json_encode($orders);
 	}
 
-	public function get_totals($label = false){
+	public function get_totals(){
 		$totals = $this->businessreport_model->get_report_of($this->vendor_id, $this->input->post('min'), $this->input->post('max'), 'total', '', '');
 		if(count($totals) > 0){
 			echo json_encode($totals);
