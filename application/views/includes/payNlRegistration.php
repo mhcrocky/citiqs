@@ -13,7 +13,7 @@
                     <fieldset>
                         <legend>Merchant</legend>
                         <div class="form-group">
-                            <label for="cocNumber">Chamber of Commerce number of the company</label>
+                            <label for="cocNumber">Chamber of Commerce (COC) number of the company</label>
                             <input
                                 class="form-control"
                                 type="text"
@@ -31,7 +31,7 @@
                                 class="form-control"
                                 type="text"
                                 id="vatNumber"
-                                name="vat_number"
+                                name="user[vat_number]"
                                 class="form-control"
                                 data-form-check='1'
                                 data-min-length="1"
@@ -134,6 +134,7 @@
                         </div>
                     </fieldset>
                 </div>
+                <div id="errorContainer"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <input type="submit" class="btn btn-primary"  value="Register" />
@@ -156,9 +157,15 @@
     function payNlRegistrationResposne(response) {
         if (response['status'] === '1') {
             $('#setPayNlServiceId').modal('hide');
+            alertifyAjaxResponse(response);
+        } else {
+            showMessagesInContainer('errorContainer', response);
         }
-        alertifyAjaxResponse(response);
     }
 
-    $('#setPayNlServiceId').modal('show');
+    $(document).ready(function(){
+        $('#setPayNlServiceId').modal('show');
+        $('.alert').alert();
+    });
+
 </script>

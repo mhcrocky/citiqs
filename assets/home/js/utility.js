@@ -443,3 +443,24 @@ function runKeyboard(className) {
   
     })
 }
+
+
+function showMessagesInContainer(conatinerId, response) {
+    let type = response['status'] === '1' ? 'alert-success' : 'alert-danger';
+    let messages = response['messages'];
+    let messagesLength = messages.length;
+    let content = '';
+    let i;
+
+    for (i = 0; i < messagesLength; i++) {
+        let message = messages[i];
+        content +=  '<div class="alert alert-danger '  + type + ' show" role="alert">';
+        content +=      '<strong>' + message  + '</strong>';
+        content +=      '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+        content +=          '<span aria-hidden="true">&times;</span>';
+        content +=      '</button>';
+        content +=  '</div>';
+    }
+
+    $('#' + conatinerId).empty().html(content);
+}
