@@ -1972,7 +1972,7 @@ class Ajax extends CI_Controller
         $merchantId = $this->updateVendorMerchnatId($userId, $post);
         $serviceId = $this->updateVendorPaynlServiceId($merchantId, $userId);
 
-        if ($vatNumber && $merchantId && $serviceId) {
+        if ($merchantId && $serviceId) {
             $_SESSION['payNlServiceIdSet'] = true;
             Perfex_helper::apiUpdateCustomer($userId);
         } else {
@@ -2004,8 +2004,13 @@ class Ajax extends CI_Controller
 
         $result = Pay_helper::createMerchant($userId, $post);
 
+        if (is_null($result)) {
+            array_push($this->errorMessages, 'Merchant id not created. Please contact us');
+            return null;
+        }
+
         if ($result->success !== '1') {
-            array_push($this->errorMessages, 'Paynl merchant err message');
+            array_push($this->errorMessages, $result->error_message);
             return null;
         }
 
@@ -2017,7 +2022,7 @@ class Ajax extends CI_Controller
                     ->update();
 
         if (!$update) {
-            array_push($this->errorMessages, 'An error occurred. Please contact us');
+            array_push($this->errorMessages, 'An error occurred while saving merchant id. Please contact us');
             return null;
         }
 
@@ -2030,8 +2035,8 @@ class Ajax extends CI_Controller
 
         $result = Pay_helper::getPayNlServiceId($merchantId, $userId);
 
-        if ($result->request->result !== '1') {
-            array_push($this->errorMessages, 'Paynl service id err message');
+        if (is_null($result) || $result->request->result !== '1') {
+            array_push($this->errorMessages, 'Service id not created. Please contact us');
             return null;
         }
 
@@ -2042,7 +2047,7 @@ class Ajax extends CI_Controller
                     ->update();
 
         if (!$update) {
-            array_push($this->errorMessages, 'An error occurred. Please contact us');
+            array_push($this->errorMessages, 'An error occurred while saving service id. Please contact us');
             return null;
         }
 

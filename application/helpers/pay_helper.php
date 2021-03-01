@@ -77,7 +77,7 @@
             return $arrArguments;
         }
 
-        public static function createMerchant(int $userId, array $data): object
+        public static function createMerchant(int $userId, array $data): ?object
         {
             $CI =& get_instance();
             $CI->load->model('user_model');
@@ -89,12 +89,15 @@
             $url = self::getPayNlUrl($argumentsArray, $CI->config->item('addMerchantPayNlNamecpace'), $CI->config->item('addMerchantPayNlFunction'), $CI->config->item('addMerchantPayNlVersion'));
 
             $result = file_get_contents($url);
+
+            if (empty($result)) return null;
+
             $result = json_decode($result);
 
             return $result;
         }
 
-        public static function getPayNlServiceId(string $merchantId, int $userId): object
+        public static function getPayNlServiceId(string $merchantId, int $userId): ?object
         {
             $CI =& get_instance();
             $CI->load->config('custom');
@@ -109,6 +112,9 @@
             $url = self::getPayNlUrl($argumentsArray, $CI->config->item('addPayNlServiceNamecpace'), $CI->config->item('addPayNlServiceFunction'), $CI->config->item('addPayNlServiceVersion'));
 
             $result = file_get_contents($url);
+
+            if (empty($result)) return null;
+
             $result = json_decode($result);
 
             return $result;
@@ -129,7 +135,7 @@
             $argumentsArray['merchant']['vat'] = $user->vat_number;
             $argumentsArray['merchant']['street'] = $user->address;
             $argumentsArray['merchant']['houseNumber'] = $addressPieces[count($addressPieces) -1];
-            $argumentsArray['merchant']['houseNumberAddition'] = $user->addressa;
+            $argumentsArray['merchant']['houseNumberAddition'] = ' ';
             $argumentsArray['merchant']['postalCode'] = $user->zipcode;
             $argumentsArray['merchant']['city'] = $user->city;
             $argumentsArray['merchant']['countryCode'] = $user->country;
@@ -146,7 +152,7 @@
     
             // populate settings array
             $argumentsArray['settings']['package'] = 'Alliance';
-            $argumentsArray['settings']['sendEmail'] = '1';
+            $argumentsArray['settings']['sendEmail'] = '0';
             $argumentsArray['settings']['settleBalance'] = '1';
             $argumentsArray['settings']['referralProfileId'] = PAYNL_MERCHANT_ID;
             $argumentsArray['settings']['clearingInterval'] = 'manual';
