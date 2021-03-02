@@ -101,6 +101,7 @@
                                                                         ?>
                                                                             <img
                                                                                 src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
+                                                                                class="ingredients"
                                                                                 alt="<?php echo $allergy; ?>"
                                                                                 height='24px'
                                                                                 width='24px'
@@ -233,7 +234,7 @@
                 </div>
 <!--				<div class="col-12 col-md-6 text-center text-right-md">-->
                 <div class="col-12 text-center text-right-md">
-                    <button class='button-main button-secondary bottom-bar__checkout payButton' onclick="checkout(0)" style="width:100%">PAY</button>
+                    <button id="payButton" class='button-main button-secondary bottom-bar__checkout payButton' onclick="checkout(0)" style="width:100%">PAY</button>
                 </div>
             </div>
         </div>

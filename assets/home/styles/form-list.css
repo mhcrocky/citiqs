@@ -124,8 +124,8 @@ body{
 
 /* check radio button background */
 .select__list__item input:checked ~ .checkmark {
-	background-color: #72b19f;
-	border: 1px solid #72b19f;
+	background-color: #72b19f !important;
+	border: 1px solid #72b19f !important;
 }
 
 .select__list__item label input:checked ~ .checkmark:after {
