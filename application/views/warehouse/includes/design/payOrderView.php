@@ -303,26 +303,6 @@
     </div>
     <div class="form-group col-sm-12">
         <label style="display:block;">
-            Pre paid, post paid voucher popup border font color:
-            <input
-                data-jscolor=""
-                style="border-radius: 50px;"
-                class="form-control"
-                name="payOrder[class][modalPayOrderButton][border-color]"
-                data-css-selector="class"
-                data-css-selector-value="modalPayOrderButton"
-                data-css-property="border-color"
-                onfocus="styleELements(this)"
-                oninput="styleELements(this)"
-                <?php if ( isset($design['payOrder']['class']['modalPayOrderButton']['border-color']) ) { ?>
-                value = "<?php echo $design['payOrder']['class']['modalPayOrderButton']['border-color']?>"
-                data-value="1"
-                <?php } ?>
-            />
-        </label>
-    </div>
-    <div class="form-group col-sm-12">
-        <label style="display:block;">
             Input fields label font color:
             <input
                 data-jscolor=""
