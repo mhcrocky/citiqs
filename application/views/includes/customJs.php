@@ -1,10 +1,10 @@
-<script src="<?php echo base_url(); ?>assets/home/js/utility.js"></script>
-<script src="<?php echo base_url(); ?>assets/home/js/ajax.js"></script>
+<script src="<?php echo $this->baseUrl; ?>assets/home/js/utility.js"></script>
+<script src="<?php echo $this->baseUrl; ?>assets/home/js/ajax.js"></script>
 <?php if ($this->view === 'labels') { ?>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCst0EJ-LFVj3q0a6NHGFDU6HQ10H84HTI"></script>
-<script src="<?php echo base_url(); ?>assets/home/js/edit-grid-item.js"></script>
+<script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/home/js/labels.js"></script>
+<script src="<?php echo $this->baseUrl; ?>assets/home/js/labels.js"></script>
 <script src="<?php echo $this->baseUrl; ?>assets/home/js/flatpickr.js"></script>
 <?php } elseif ($this->view === 'home') { ?>
 <script src="<?php echo $this->baseUrl; ?>assets/home/js/slider.js"></script>
@@ -100,11 +100,11 @@
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/selectSpot.js"></script>
 <?php } elseif ($this->view === 'publicorders/makeOrderNew') { ?>
-	<script src="<?php echo base_url() ?>assets/home/slickJs/slick.min.js"></script>
-	<script src="<?php echo base_url() ?>assets/home/js/makeOrderFunctions.js"></script>
-	<script src="<?php echo base_url() ?>assets/home/js/makeOrderNew.js"></script>
+	<script src="<?php echo $this->baseUrl ?>assets/home/slickJs/slick.min.js"></script>
+	<script src="<?php echo $this->baseUrl ?>assets/home/js/makeOrderFunctions.js"></script>
+	<script src="<?php echo $this->baseUrl ?>assets/home/js/makeOrderNew.js"></script>
 <?php } elseif ($this->view === 'publicorders/payOrder') { ?>
-	<script src="<?php echo base_url() ?>assets/home/js/payOrder.js"></script>
+	<script src="<?php echo $this->baseUrl ?>assets/home/js/payOrder.js"></script>
 <?php } elseif ($this->view === 'publicorders/buyerDetails') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/checkoutOrder.js"></script>
 <?php } elseif ($this->view === 'bizdir/index') { ?>
@@ -113,14 +113,14 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jscolor.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/design.js"></script>
 <?php } elseif ($this->view === 'pos/pos') { ?>	
-	<script src="<?php echo base_url() ?>assets/home/js/makeOrderFunctions.js"></script>
-	<script src="<?php echo base_url() ?>assets/home/js/posWrapper.js"></script>
+	<script src="<?php echo $this->baseUrl ?>assets/home/js/makeOrderFunctions.js"></script>
+	<script src="<?php echo $this->baseUrl ?>assets/home/js/posWrapper.js"></script>
 	<?php if(!empty($posCheckoutOrder) || !empty($posBuyerDetails)) { ?>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 		<script src="<?php echo $this->baseUrl; ?>assets/home/js/checkoutOrder.js"></script>
 	<?php } ?>
 	<?php if (!empty($posPay)) { ?>	
-		<script src="<?php echo base_url() ?>assets/home/js/payOrder.js"></script>
+		<script src="<?php echo $this->baseUrl ?>assets/home/js/payOrder.js"></script>
 	<?php }	?>
 <?php } elseif ($this->view === 'profile/openandclose') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/editUser.js"></script>
@@ -134,6 +134,18 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/events.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCst0EJ-LFVj3q0a6NHGFDU6HQ10H84HTI&callback=initAutocomplete&libraries=places&v=weekly" async></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/googleAddressAutocomplete.js"></script>
+<?php } elseif ($this->view === 'businessreport/index') { ?>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+	<script type="text/javascript" src="<?php echo $this->baseUrl; ?>assets/js/jquery.table2excel.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/js/query-builder.standalone.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/dashboard.js"></script>
 <?php } elseif ($this->view === 'businessreport/reports') { ?>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -143,17 +155,17 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
-	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.table2excel.js"></script>
+	<script type="text/javascript" src="<?php echo $this->baseUrl; ?>assets/js/jquery.table2excel.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/js/query-builder.standalone.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/dashboardDataTable.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/businessReports.js"></script>
 <?php } elseif ($this->view === 'events/step-two') { ?>
-	<script src="<?php echo base_url(); ?>assets/cdn/js/jscolor.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jscolor.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/js/quill.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/events.js"></script>
 	<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
-	<script src='<?php echo base_url(); ?>assets/home/js/templates.js'></script>
+	<script src='<?php echo $this->baseUrl; ?>assets/home/js/templates.js'></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/ticketsDataTable.js"></script>
 	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 	<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
@@ -169,8 +181,8 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
-	<script type="text/javascript"  src="<?php echo base_url(); ?>assets/js/query-builder.standalone.js"></script>
-	<script src="<?php echo base_url(); ?>assets/home/js/eventsReportDataTable.js"></script>
+	<script type="text/javascript"  src="<?php echo $this->baseUrl; ?>assets/js/query-builder.standalone.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/eventsReportDataTable.js"></script>
 	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 	<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
 <script src="https://mpryvkin.github.io/jquery-datatables-row-reordering/1.2.2/jquery.dataTables.rowReordering.js"></script>
@@ -183,9 +195,9 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
-	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.table2excel.js"></script>
-	<script type="text/javascript"  src="<?php echo base_url(); ?>assets/js/query-builder.standalone.js"></script>
-	<script type="text/javascript" src="<?php echo base_url(); ?>assets/home/js/clearingDataTable.js"></script>
+	<script type="text/javascript" src="<?php echo $this->baseUrl; ?>assets/js/jquery.table2excel.js"></script>
+	<script type="text/javascript"  src="<?php echo $this->baseUrl; ?>assets/js/query-builder.standalone.js"></script>
+	<script type="text/javascript" src="<?php echo $this->baseUrl; ?>assets/home/js/clearingDataTable.js"></script>
 <?php } elseif ($this->view === 'profile/api') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/api.js"></script>
 <?php } elseif ($this->view === 'events/design') { ?>
@@ -201,18 +213,18 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/select-tickets.js"></script>
 	
 <?php } elseif ($this->view === 'new_bookings/agenda_booking_design') { ?>
-	<script src="<?php echo base_url(); ?>assets/cdn/js/jscolor.js"></script>
-	<script src="<?php echo base_url(); ?>assets/home/js/agenda_booking_design.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jscolor.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/agenda_booking_design.js"></script>
 <?php } elseif ($this->view === 'templates/addTemplate') { ?>
-<!--	<script src='--><?php //echo base_url(); ?><!--assets/home/js/tinymce.min.js?apiKey=pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu'></script>-->
+<!--	<script src='--><?php //echo $this->baseUrl; ?><!--assets/home/js/tinymce.min.js?apiKey=pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu'></script>-->
 	 <script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
-	<script src='<?php echo base_url(); ?>assets/home/js/templates.js'></script>
+	<script src='<?php echo $this->baseUrl; ?>assets/home/js/templates.js'></script>
 <?php } elseif ($this->view === 'templates/listTemplates') { ?>
 	<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-	<script src='<?php echo base_url(); ?>assets/home/js/listTemplates.js'></script>
+	<script src='<?php echo $this->baseUrl; ?>assets/home/js/listTemplates.js'></script>
 <?php } elseif ($this->view === 'templates/updateTemplate') { ?>
 	<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
-	<script src='<?php echo base_url(); ?>assets/home/js/templates.js'></script>
+	<script src='<?php echo $this->baseUrl; ?>assets/home/js/templates.js'></script>
 <?php } elseif ($this->view === 'events/reports') { ?>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -222,12 +234,12 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
-	<script type="text/javascript"  src="<?php echo base_url(); ?>assets/js/query-builder.standalone.js"></script>
-    <script src="<?php echo base_url(); ?>assets/home/js/ticketsReportDataTable.js"></script>
+	<script type="text/javascript"  src="<?php echo $this->baseUrl; ?>assets/js/query-builder.standalone.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/ticketsReportDataTable.js"></script>
 <?php } elseif ($this->view === 'events/email_designer') { ?>
 	<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
-	<script src='<?php echo base_url(); ?>assets/home/js/templates.js'></script>
+	<script src='<?php echo $this->baseUrl; ?>assets/home/js/templates.js'></script>
 <?php } elseif ($this->view === 'profile/paynlMerchant') { ?>
 	<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
 	<script src='<?php echo base_url(); ?>assets/home/js/paynlMerchant.js'></script>
-<?php }?>
+<?php } ?>

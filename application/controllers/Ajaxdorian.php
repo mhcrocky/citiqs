@@ -255,6 +255,30 @@ class Ajaxdorian extends CI_Controller
 
     public function saveAgendaSpot () {
         //if (!$this->input->is_ajax_request()) return;
+        $imgChanged = $this->input->post("imgChanged");
+        $imgName = '';
+        if($imgChanged == 'false') {
+            $imgName = $this->input->post('oldImage');
+        }
+        $config['upload_path']   = FCPATH . 'assets/home/images/';
+        $config['allowed_types'] = 'jpg|png|jpeg|webp|bmp';
+        $config['max_size']      = '102400'; // 102400 100mb
+        $config['encrypt_name'] = TRUE;
+
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('userfile')) {
+            $errors   = $this->upload->display_errors('', '');
+            var_dump($errors);
+        } else {
+            $upload_data = $this->upload->data();;
+			$imgName = $upload_data['file_name'];
+            if(!empty($this->input->post('oldImage'))){
+                unlink(FCPATH . 'assets/home/images/'. $this->input->post('oldImage'));
+            }
+            
+
+        }
+
         $spotData = [
             'descript' => $this->input->post('descript'),
             'soldoutdescript' => $this->input->post('soldoutdescript'),
@@ -264,7 +288,7 @@ class Ajaxdorian extends CI_Controller
             'numberofpersons' => $this->input->post('numberofpersons'),
             'sort_order' => $this->input->post('sort_order'),
             'price' => $this->input->post('price'),
-            'image' => $this->input->post('image'),
+            'image' => $imgName,
             'agenda_id' => $this->input->post('agenda_id'),
             'email_id' => $this->input->post('email_id'),
             'spotLabelId' => $this->input->post('spotLabelId'),

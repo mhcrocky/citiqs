@@ -371,14 +371,14 @@
                 type="text"
 				style="border-radius: 50px"
                 class="form-control"
-                name="makeOrderNew[class][payButton][width]"
-                data-css-selector="class"
+                name="makeOrderNew[id][payButton][width]"
+                data-css-selector="id"
                 data-css-selector-value="payButton"
-                data-css-property="color"
+                data-css-property="width"
                 onfocus="styleELements(this)"
                 oninput="styleELements(this)"
-                <?php if ( isset($design['makeOrderNew']['class']['payButton']['width']) ) { ?>
-                value = "<?php echo $design['makeOrderNew']['class']['payButton']['width']?>"
+                <?php if ( isset($design['makeOrderNew']['id']['payButton']['width']) ) { ?>
+                value = "<?php echo $design['makeOrderNew']['id']['payButton']['width']?>"
                 data-value="1"
                 <?php } else { ?>
                 value="100%"
@@ -394,14 +394,14 @@
                 type="text"
 				style="border-radius: 50px"
                 class="form-control"
-                name="makeOrderNew[class][payButton][border-radius]"
-                data-css-selector="class"
+                name="makeOrderNew[id][payButton][border-radius]"
+                data-css-selector="id"
                 data-css-selector-value="payButton"
-                data-css-property="color"
+                data-css-property="border-radius"
                 onfocus="styleELements(this)"
                 oninput="styleELements(this)"
-                <?php if ( isset($design['makeOrderNew']['class']['payButton']['border-radius']) ) { ?>
-                value = "<?php echo $design['makeOrderNew']['class']['payButton']['border-radius']?>"
+                <?php if ( isset($design['makeOrderNew']['id']['payButton']['border-radius']) ) { ?>
+                value = "<?php echo $design['makeOrderNew']['id']['payButton']['border-radius']?>"
                 data-value="1"
                 <?php } else { ?>
                 value="0px"
@@ -569,5 +569,46 @@
                 <?php } ?>
             />
         </label>
-    </div>    
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+           Ingredients Image Color:
+            <select id="ingredientsColor" style="border-radius: 50px" class="form-control" name="selValue">
+                <option value="brightness(100%)" data-content="<i style='margin-right: 5px;color: #df5453;' class='fa fa-square'></i> Red" selected></option>
+                <option value="brightness(10000%)" data-content="<i style='margin-right: 5px;color: #fff;'  class='fa fa-square'></i> White"></option>
+                <option value="brightness(0%)" data-content="<i style='margin-right: 5px;color: #000;'  class='fa fa-square'></i> Black"></option>
+                <option value="brightness(20%)" data-content="<i style='margin-right: 5px; color: #2d1111;'  class='fa fa-square'></i> Brown"></option>
+                <option value="contrast(10%)" data-content="<i style='margin-right: 5px;color:#8a7c75;'  class='fa fa-square'></i> Gray"></option>
+                <option value="hue-rotate(90deg)" data-content="<i style='margin-right: 5px;color:#159f01;'  class='fa fa-square'></i> Green"></option>
+                <option value="hue-rotate(-0.25turn)" data-content="<i style='margin-right: 5px;color:#d64deb;'  class='fa fa-square'></i> Purple"></option>
+                <option value="hue-rotate(3.142rad)" data-content="<i style='margin-right: 5px;color:#018ed6;'  class='fa fa-square'></i> Blue"></option>
+                <option value="invert(70%)" data-content="<i style='margin-right: 5px;color: #548daa;'  class='fa fa-square'></i> Sky"></option>
+            </select>
+
+            <input type="hidden" id="ingredients_img" class="form-control colorInput" name="shop[class][ingredients][filter]"
+                <?php if ( isset($design['shop']['class']['ingredients']['filter']) ) { ?>
+                value="<?php echo $design['shop']['class']['ingredients']['filter']?>" data-value="1" <?php } else { ?>
+                value="brightness(100%)" <?php } ?> />
+
+        </label>
+    </div>  
 </fieldset>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script>
+$('#ingredientsColor').selectpicker();
+$('#ingredientsColor').on('change', function() {
+    let filter = $('#ingredientsColor option:selected').val();
+    $("#iframe").contents().find("head").append('<style> .ingredients { filter:'+ filter +' !important;}</style>');
+    $('#ingredients_img').val(filter);
+});
+
+</script>
+
+<?php if ( isset($design['shop']['class']['ingredients']['filter']) ) { ?>
+<script>
+var value = "<?php echo $design['shop']['class']['ingredients']['filter']; ?>";
+$('select[name=selValue]').val(value);
+$('#logoColor').selectpicker('refresh');
+</script>
+<?php } ?>

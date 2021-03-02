@@ -104,17 +104,12 @@
 
                         <div class="form-group">
                             <label for="fromtime">From Time</label>
-                            <time-select name="date"
-                                         v-model="timeSlotModalData.fromtime"
-                                         :config="timeOptions"
-                                         placeholder="From Time"></time-select>
+                            <input type="time" v-model="timeSlotModalData.fromtime" class="form-control" placeholder="From Time">
                         </div>
                         <div class="form-group">
                             <label for="totime">To Time</label>
-                            <time-select name="date"
-                                         v-model="timeSlotModalData.totime"
-                                         :config="timeOptions"
-                                         placeholder="To Time"></time-select>
+                            <input type="time" v-model="timeSlotModalData.totime" class="form-control" placeholder="To Time">
+
 
                         </div>
                         <div class="form-group">
@@ -170,7 +165,6 @@
 
         },
         components: {
-            'time-select': VueBootstrapDatetimePicker,
             'search-select': VueSearchSelect.ModelSelect
         },
         methods: {

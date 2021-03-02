@@ -368,6 +368,7 @@ $route['businessreport/get_timestamp_orders'] = 'Businessreport/get_timestamp_or
 $route['businessreport/sortedWidgets'] = 'Businessreport/sortedWidgets';
 $route['businessreport/sortWidgets'] = 'Businessreport/sortWidgets';
 $route['businessreport/get_graphs'] = 'Businessreport/get_graphs';
+$route['businessreport/get_totals'] = 'Businessreport/get_totals';
 $route['businessreport/graphs'] = 'Businessreport/graphs';
 $route['businessreports'] = 'Businessreport/reports';
 

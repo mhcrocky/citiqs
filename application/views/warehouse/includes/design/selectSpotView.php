@@ -76,6 +76,50 @@
     </div>
     <div class="form-group col-sm-12">
         <label style="display:block;">
+            Checkmarks color:
+            <input
+                data-jscolor=""
+				style="border-radius: 50px"
+                class="form-control"
+                name="selectSpot[class][checkmark][background-color]"
+                oninput="checkmarksStyle(this)"
+                <?php if ( isset($design['selectSpot']['class']['checkmark']['background-color']) ) { ?>
+                value = "<?php echo $design['selectSpot']['class']['checkmark']['background-color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+            <input type="hidden"
+                id="checkmark_border"
+                name="selectSpot[class][checkmark][border-color]"
+                <?php if ( isset($design['selectSpot']['class']['checkmark']['border-color']) ) { ?>
+                value = "<?php echo $design['selectSpot']['class']['checkmark']['border-color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Active Checkmark color:
+            <input
+                data-jscolor=""
+				style="border-radius: 50px"
+                class="form-control"
+                name="checkmark[color]"
+                id="activeCheckmark"
+                onfocus="activeCheckmarkStyle(this)"
+                oninput="activeCheckmarkStyle(this)"
+                <?php if ( isset($design['checkmark']['color']) ) { ?>
+                value = "<?php echo $design['checkmark']['color']; ?>"
+                data-value="1"
+                <?php } else { ?>
+                value="#72b19f"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
             Headline background color:
             <input
                 data-jscolor=""
@@ -216,6 +260,52 @@
         </label>
     </div>
 
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Confirm button border radius:
+            <input
+                type="text"
+				style="border-radius: 50px"
+                class="form-control"
+                name="selectSpot[id][confirmButton][border-radius]"
+                data-css-selector="id"
+                data-css-selector-value="confirmButton"
+                data-css-property="border-radius"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['selectSpot']['id']['confirmButton']['border-radius']) ) { ?>
+                value = "<?php echo $design['selectSpot']['id']['confirmButton']['border-radius']?>"
+                data-value="1"
+                <?php } else { ?>
+                    value="0px"
+                <?php } ?>
+            />
+        </label>
+    </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Confirm button border radius:
+            <input
+                type="text"
+				style="border-radius: 50px"
+                class="form-control"
+                name="selectSpot[id][confirmButton][width]"
+                data-css-selector="id"
+                data-css-selector-value="confirmButton"
+                data-css-property="width"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['selectSpot']['id']['confirmButton']['width']) ) { ?>
+                value = "<?php echo $design['selectSpot']['id']['confirmButton']['width']?>"
+                data-value="1"
+                <?php } else { ?>
+                    value="100%"
+                <?php } ?>
+            />
+        </label>
+    </div>
+
 
     
     
@@ -223,6 +313,20 @@
     
 </fieldset>
 <script>
+function checkmarksStyle(el){
+    var color = $(el).val();
+    $('#checkmark_border').val(color);
+    $("#iframe").contents().find(".checkmark").css({'background-color': color, 'border-color': color});
+    activeCheckmarkStyle($("#activeCheckmark"));
+}
+
+function activeCheckmarkStyle(el){
+    var color = $(el).val();
+    $("#iframe").contents().find("head").append('<style>.select__list__item input:checked ~ .checkmark{ background: '+color+' !important; border-color: '+color+' !important}</style>')
+
+    
+}
+
 function hoverStyle(el){
     var color = $(el).val();
     $("#iframe").contents().find("label").removeClass('custom_style');

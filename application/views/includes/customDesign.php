@@ -12,6 +12,8 @@
             $css .=   '.select__list__item label::before { background-color:' . $design['checked']['select__list__item'] . ' !important; }';
          }
 
+        
+
         foreach($viewDesign as $cssSelector => $selectorData) {
             $selector = ($cssSelector == 'id') ? '#' : '.';
             foreach($selectorData as $selectorValue => $cssDeclaration) {
@@ -29,6 +31,10 @@
                     background-size: cover;
                     background-position: center center;
                 }';
+         }
+
+         if(isset($design['checkmark'])){
+            $css .=   '.select__list__item input:checked ~ .checkmark { background-color:' . $design['checkmark']['color'] . ' !important;border-color:' . $design['checkmark']['color'] . ' !important; }';
          }
 
          
