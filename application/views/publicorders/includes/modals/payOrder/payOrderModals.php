@@ -17,7 +17,7 @@
                             ?>
                             onclick="redirect('<?php echo $cashRedirect; ?>')"
                             >
-                            <i class="fa fa-check-circle modalPayOrderButton" aria-hidden="true"></i>
+                            <i class="fa fa-check modalPayOrderButton" aria-hidden="true"></i>
                         </button>
                         <button
                             class="btn btn-danger btn-lg modalPayOrderButton"
@@ -48,7 +48,7 @@
                             ?>
                             onclick="redirect('<?php echo $cashRedirect; ?>')"
                             >
-                            <i class="fa fa-check-circle modalPayOrderButton" aria-hidden="true"></i>
+                            <i class="fa fa-check modalPayOrderButton" aria-hidden="true"></i>
                         </button>
                         <button
                             class="btn btn-danger btn-lg modalPayOrderButton"
@@ -83,7 +83,7 @@
                         style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
                         onclick="voucherPay('codeId')"
                     >
-                        <i class="fa fa-check-circle modalPayOrderButton" aria-hidden="true"></i>
+                        <i class="fa fa-check modalPayOrderButton" aria-hidden="true"></i>
                     </button>
                     <button
                         class="btn btn-danger btn-lg closeModal modalPayOrderButton"

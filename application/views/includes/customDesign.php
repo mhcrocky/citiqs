@@ -11,6 +11,12 @@
         if(isset($design['checked'])){
             $css .=   '.select__list__item label::before { background-color:' . $design['checked']['select__list__item'] . ' !important; }';
          }
+         if(isset($design['checkmark'])){
+            $css .=   '.select__list__item input:checked ~ .checkmark { background-color:' . $design['checkmark']['color'] . ' !important;border-color:' . $design['checkmark']['color'] . ' !important; }';
+         }
+         if(isset($design['paymentContainer'])){
+            $css .=   '#area-container .payment-container a.paymentMethod:hover { background-color:' . $design['paymentContainer']['hover'] . ';border-radius: ' . $design['paymentContainer']['border-radius'] . '; color: ' . $design['paymentContainer']['color'] . ' }';
+         }
 
         
 
@@ -31,10 +37,6 @@
                     background-size: cover;
                     background-position: center center;
                 }';
-         }
-
-         if(isset($design['checkmark'])){
-            $css .=   '.select__list__item input:checked ~ .checkmark { background-color:' . $design['checkmark']['color'] . ' !important;border-color:' . $design['checkmark']['color'] . ' !important; }';
          }
 
          

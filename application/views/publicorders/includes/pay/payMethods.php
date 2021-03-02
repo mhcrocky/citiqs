@@ -108,17 +108,17 @@
                     <?php } ?>
                     <?php if ($localType === intval($spot['spotTypeId'])) { ?>
                         <?php if ($vendor['prePaid'] === '1') { ?>
-                            <p class="paymentMethod method-card" data-toggle="modal" data-target="#prePaid">
+                            <a href="javascript:;" class="paymentMethod method-card" data-toggle="modal" data-target="#prePaid">
                                 <img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Pay at waiter" />
                                 <?php if ($vendor['vendorId'] == THGROUP) { ?>
                                     <span>Collect at the bar</span>
                                 <?php } else { ?>
                                     <span>Pay at waiter</span>
                                 <?php } ?>
-                            </p>
+                            </a>
                         <?php } ?>
                         <?php if ($vendor['postPaid'] === '1') { ?>
-                            <p class="paymentMethod method-card" data-toggle="modal" data-target="#postPaid">
+                            <a href="javascript:;" class="paymentMethod method-card" data-toggle="modal" data-target="#postPaid">
                                 <img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Pay at waiter" />
                                 
                                 <?php if ($vendor['vendorId'] == THGROUP) { ?>
@@ -126,7 +126,7 @@
                                 <?php } else { ?>
                                     <span>Pay at waiter</span>
                                 <?php } ?>
-                            </p>
+                            </a>
                         <?php } ?>
                     <?php } ?>
                     <?php if ($vendor['pinMachine'] === '1') { ?>
@@ -136,10 +136,10 @@
                         </a>
                     <?php } ?>
                     <?php if ($vendor['vaucher'] === '1') { ?>
-                        <p data-toggle="modal" data-target="#voucher" class="paymentMethod method-card" >
+                        <a href="javascript:;" data-toggle="modal" data-target="#voucher" class="paymentMethod method-card" >
                             <img src="<?php echo base_url() . 'assets/home/images/voucher.png'; ?>" alt="voucher" >
                             <span>gebruik Voucher</span>
-                        </p>
+                        </a>
                     <?php } ?>
                     <div class="clearfix"></div>
                 </div>

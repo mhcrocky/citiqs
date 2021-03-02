@@ -5,6 +5,7 @@
             Page background color:
             <input
                 data-jscolor=""
+                style="border-radius: 50px;"
                 class="form-control"
                 name="payOrder[class][payOrderBackgroundColor][background-color]"
                 data-css-selector="class"
@@ -24,6 +25,7 @@
             Header background color:
             <input
                 data-jscolor=""
+                style="border-radius: 50px;"
                 class="form-control"
                 name="payOrder[id][payHeader][background-color]"
                 data-css-selector="id"
@@ -43,6 +45,7 @@
             Choose pament method background color:
             <input
                 data-jscolor=""
+                style="border-radius: 50px;"
                 class="form-control"
                 name="payOrder[id][choosePaymentMethod][background-color]"
                 data-css-selector="id"
@@ -62,6 +65,7 @@
             Choose payment method font color:
             <input
                 data-jscolor=""
+                style="border-radius: 50px;"
                 class="form-control"
                 name="payOrder[id][choosePaymentMethod][color]"
                 data-css-selector="id"
@@ -81,6 +85,7 @@
             Payment methods background color:
             <input
                 data-jscolor=""
+                style="border-radius: 50px;"
                 class="form-control"
                 name="payOrder[id][paymentContainer][background-color]"
                 data-css-selector="id"
@@ -95,11 +100,73 @@
             />
         </label>
     </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Payment methods on hover background color:
+            <input
+                data-jscolor=""
+                style="border-radius: 50px;"
+                class="form-control"
+                name="paymentContainer[hover]"
+                onfocus="hoverStyle(this)"
+                oninput="hoverStyle(this)"
+                <?php if ( isset($design['paymentContainer']['hover']) ) { ?>
+                value = "<?php echo $design['paymentContainer']['hover']?>"
+                data-value="1"
+                <?php } else { ?>
+                value="#f1f1f1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Payment methods on hover font color:
+            <input
+                data-jscolor=""
+                style="border-radius: 50px;"
+                class="form-control"
+                name="paymentContainer[color]"
+                onfocus="hoverStyle(this, true)"
+                oninput="hoverStyle(this, true)"
+                <?php if ( isset($design['paymentContainer']['color']) ) { ?>
+                value = "<?php echo $design['paymentContainer']['color']?>"
+                data-value="1"
+                <?php } else { ?>
+                value="0px"
+                <?php } ?>
+            />
+        </label>
+    </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Payment methods on hover border radius:
+            <input
+                type="text"
+                style="border-radius: 50px;"
+                class="form-control"
+                name="paymentContainer[border-radius]"
+                onfocus="hoverStyle(this, false, true)"
+                oninput="hoverStyle(this, false, true)"
+                <?php if ( isset($design['paymentContainer']['border-radius']) ) { ?>
+                value = "<?php echo $design['paymentContainer']['border-radius']?>"
+                data-value="1"
+                <?php } else { ?>
+                value="0px"
+                <?php } ?>
+            />
+        </label>
+    </div>
+
     <div class="form-group col-sm-12">
         <label style="display:block;">
             Voucher respone background color:
             <input
                 data-jscolor=""
+                style="border-radius: 50px;"
                 class="form-control"
                 name="payOrder[class][voucher][background-color]"
                 data-css-selector="class"
@@ -119,6 +186,7 @@
             Voucher respone font color:
             <input
                 data-jscolor=""
+                style="border-radius: 50px;"
                 class="form-control"
                 name="payOrder[class][voucher][color]"
                 data-css-selector="class"
@@ -138,6 +206,7 @@
             Footer background color:
             <input
                 data-jscolor=""
+                style="border-radius: 50px;"
                 class="form-control"
                 name="payOrder[id][payFooter][background-color]"
                 data-css-selector="id"
@@ -157,6 +226,7 @@
             Footer font color:
             <input
                 data-jscolor=""
+                style="border-radius: 50px;"
                 class="form-control"
                 name="payOrder[id][backLink][color]"
                 data-css-selector="id"
@@ -173,9 +243,10 @@
     </div>
     <div class="form-group col-sm-12">
         <label style="display:block;">
-            Pre paid, post paid vocuher popup background color:
+            Pre paid, post paid voucher popup background color:
             <input
                 data-jscolor=""
+                style="border-radius: 50px;"
                 class="form-control"
                 name="payOrder[class][modalPayOrder][background-color]"
                 data-css-selector="class"
@@ -192,9 +263,10 @@
     </div>
     <div class="form-group col-sm-12">
         <label style="display:block;">
-            Pre paid, post paid vocuher popup button background color:
+            Pre paid, post paid voucher popup button background color:
             <input
                 data-jscolor=""
+                style="border-radius: 50px;"
                 class="form-control"
                 name="payOrder[class][modalPayOrderButton][background-color]"
                 data-css-selector="class"
@@ -211,9 +283,10 @@
     </div>
     <div class="form-group col-sm-12">
         <label style="display:block;">
-            Pre paid, post paid vocuher popup button font color:
+            Pre paid, post paid voucher popup button font color:
             <input
                 data-jscolor=""
+                style="border-radius: 50px;"
                 class="form-control"
                 name="payOrder[class][modalPayOrderButton][color]"
                 data-css-selector="class"
@@ -230,9 +303,30 @@
     </div>
     <div class="form-group col-sm-12">
         <label style="display:block;">
+            Pre paid, post paid voucher popup border font color:
+            <input
+                data-jscolor=""
+                style="border-radius: 50px;"
+                class="form-control"
+                name="payOrder[class][modalPayOrderButton][border-color]"
+                data-css-selector="class"
+                data-css-selector-value="modalPayOrderButton"
+                data-css-property="border-color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['payOrder']['class']['modalPayOrderButton']['border-color']) ) { ?>
+                value = "<?php echo $design['payOrder']['class']['modalPayOrderButton']['border-color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
             Input fields label font color:
             <input
                 data-jscolor=""
+                style="border-radius: 50px;"
                 class="form-control"
                 name="payOrder[class][payOrderInputFieldsLabel][color]"
                 data-css-selector="class"
@@ -252,6 +346,7 @@
             Input fields background color:
             <input
                 data-jscolor=""
+                style="border-radius: 50px;"
                 class="form-control"
                 name="payOrder[class][payOrderInputFields][background-color]"
                 data-css-selector="class"
@@ -271,6 +366,7 @@
             Input fields font color:
             <input
                 data-jscolor=""
+                style="border-radius: 50px;"
                 class="form-control"
                 name="payOrder[class][payOrderInputFields][color]"
                 data-css-selector="class"
@@ -290,6 +386,7 @@
             Input fields border color:
             <input
                 data-jscolor=""
+                style="border-radius: 50px;"
                 class="form-control"
                 name="payOrder[class][payOrderInputFields][border-color]"
                 data-css-selector="class"
@@ -305,3 +402,19 @@
         </label>
     </div>
 </fieldset>
+<script>
+function hoverStyle(el, text_color=false, radius=false){
+    if(text_color){
+       var color = $(el).val();
+       $("#iframe").contents().find("head").append('<style>#area-container .payment-container a.paymentMethod:hover { color: '+color+' !important;}</style>');
+       return ;
+    }
+    if(radius){
+       var border_radius = $(el).val();
+       $("#iframe").contents().find("head").append('<style>#area-container .payment-container a.paymentMethod:hover { border-radius: '+border_radius+' !important;}</style>');
+       return ;
+    }
+    var color = $(el).val();
+    $("#iframe").contents().find("head").append('<style>#area-container .payment-container a.paymentMethod:hover { background: '+color+' !important;}</style>');
+}
+</script>
