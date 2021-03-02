@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-md-12">
                 <div class="col-xs-12" style="text-align:left; margin-bottom: 20px;">
-                    <a href="<?php echo base_url('emaildesigner/new'); ?>" class="btn btn-primary" role="button">Add New Template</a>
+                    <a href="<?php echo base_url('add_template'); ?>" class="btn btn-primary" role="button">Add New Template</a>
                 </div>
                     <table class="table table-striped" style="margin-top: 100px;">
                         <thead>
@@ -22,7 +22,7 @@
                                 <td><?php echo $email->template_name; ?></td>
                                 <td><?php echo $email->template_file; ?></td>
                                 <td class="action">
-                                    <a href="<?php echo base_url(); ?>emaildesigner/edit/<?php echo $email->id; ?>">
+                                    <a href="<?php echo base_url(); ?>update_template/<?php echo $email->id; ?>">
                                         <i class="fa fa-pencil text-primary" aria-hidden="true"></i>
                                     </a>
                                     <a href="#" onclick="confirmDelete(<?php echo $email->id; ?>)">
