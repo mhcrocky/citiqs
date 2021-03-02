@@ -454,7 +454,7 @@
     <div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable mx-auto" data-rowposition="2" data-rowsort="1">
         <div style="flex-wrap: unset;" class="row mx-auto text-center">
             <div class="col-md-4 mt-4 ml-auto ml-1">
-                <input style="min-width: 230px;width: 100%;" id="datetime"
+                <input style="min-width: 230px;width: 100%;" id="datetimegraph"
                     class="date form-control form-control-sm mb-2" type="text" />
             </div>
             <div style="width: 87px;" class="mt-4 mr-1 text-center">
@@ -472,96 +472,92 @@
         <div id="graphs"></div>
 
         <div class="sales-report-area mt-5 mb-5 row-sort ui-sortable" data-rowposition="1" data-rowsort="1">
-        <div id="sortable" style="visibility: hidden;" class="row ui-sortable">
+            <input style="min-width: 230px;max-width: 300px;" id="datetime"
+                class="date w-100 form-control form-control-sm mb-4 ml-auto" type="text" />
+            <div id="sortable" style="visibility: hidden;" class="row ui-sortable">
 
-            <div class="col-md-3 ui-sortable mb-3" data-position="1" data-sort="1">
-                <div style="border-left: 10px solid #3366cc !important;height:160px;" class="single-report mb-xs-30">
-                    <div class="s-report-inner pr--20 pt--30 mb-3">
-                        <div class="s-report-title d-flex justify-content-between">
-                            <h4 class="header-title mb-0">Total</h4>
-                            <p>LOCAL</p>
-                        </div>
-                        <div class="d-flex justify-content-between pb-2">
-                            <h2>€ <span id="local"></span></h2>
-                            <span></span>
+                <div class="col-md-3 ui-sortable mb-3" data-position="1" data-sort="1">
+                    <div style="border-left: 10px solid #3366cc !important;height:160px;"
+                        class="single-report mb-xs-30">
+                        <div class="s-report-inner pr--20 pt--30 mb-3">
+                            <div class="s-report-title d-flex justify-content-between">
+                                <h4 class="header-title mb-0">Total</h4>
+                                <p>LOCAL</p>
+                            </div>
+                            <div class="d-flex justify-content-between pb-2">
+                                <h2>€ <span id="local"></span></h2>
+                                <span></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-3 ui-sortable mb-3" data-position="2" data-sort="1">
-                <div style="border-left: 10px solid #dc3912 !important;height:160px;" class="single-report mb-xs-30">
-                    <div class="s-report-inner pr--20 pt--30 mb-3">
-                        <div class="s-report-title d-flex justify-content-between">
-                            <h4 class="header-title mb-0">Total</h4>
-                            <p>PICKUP</p>
-                        </div>
-                        <div class="d-flex justify-content-between pb-2">
-                            <h2>€ <span id="pickup"></span></h2>
-                            <span></span>
+                <div class="col-md-3 ui-sortable mb-3" data-position="2" data-sort="1">
+                    <div style="border-left: 10px solid #dc3912 !important;height:160px;"
+                        class="single-report mb-xs-30">
+                        <div class="s-report-inner pr--20 pt--30 mb-3">
+                            <div class="s-report-title d-flex justify-content-between">
+                                <h4 class="header-title mb-0">Total</h4>
+                                <p>PICKUP</p>
+                            </div>
+                            <div class="d-flex justify-content-between pb-2">
+                                <h2>€ <span id="pickup"></span></h2>
+                                <span></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-3 ui-sortable mb-3" data-position="3" data-sort="1">
-                <div style="border-left: 10px solid #ff9900 !important;height:160px;" class="single-report mb-xs-30">
-                    <div class="s-report-inner pr--20 pt--30 mb-3">
-                        <div class="s-report-title d-flex justify-content-between">
-                            <h4 class="header-title mb-0">Total</h4>
-                            <p>DELIVERY</p>
-                        </div>
-                        <div class="d-flex justify-content-between pb-2">
-                            <h2>€ <span id="delivery"></span></h2>
-                            <span></span>
+                <div class="col-md-3 ui-sortable mb-3" data-position="3" data-sort="1">
+                    <div style="border-left: 10px solid #ff9900 !important;height:160px;"
+                        class="single-report mb-xs-30">
+                        <div class="s-report-inner pr--20 pt--30 mb-3">
+                            <div class="s-report-title d-flex justify-content-between">
+                                <h4 class="header-title mb-0">Total</h4>
+                                <p>DELIVERY</p>
+                            </div>
+                            <div class="d-flex justify-content-between pb-2">
+                                <h2>€ <span id="delivery"></span></h2>
+                                <span></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-3 ui-sortable mb-3" data-position="4" data-sort="1">
-                <div style="border-left: 10px solid #6600cc !important;height:160px;" class="single-report mb-xs-30">
-                    <div class="s-report-inner pr--20 pt--30 mb-3">
-                        <div class="s-report-title d-flex justify-content-between">
-                            <h4 class="header-title mb-0">Total</h4>
-                            <p>INVOICES</p>
-                        </div>
-                        <div class="d-flex justify-content-between pb-2">
-                            <h2>€ <span id="invoice"></span></h2>
-                            <span></span>
+                <div class="col-md-3 ui-sortable mb-3" data-position="4" data-sort="1">
+                    <div style="border-left: 10px solid #6600cc !important;height:160px;"
+                        class="single-report mb-xs-30">
+                        <div class="s-report-inner pr--20 pt--30 mb-3">
+                            <div class="s-report-title d-flex justify-content-between">
+                                <h4 class="header-title mb-0">Total</h4>
+                                <p>INVOICES</p>
+                            </div>
+                            <div class="d-flex justify-content-between pb-2">
+                                <h2>€ <span id="invoice"></span></h2>
+                                <span></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-3 ui-sortable mb-3" data-position="5" data-sort="1">
-                <div style="border-left: 10px solid #375068 !important;height:160px;" class="single-report mb-xs-30">
-                    <div class="s-report-inner pr--20 pt--30 mb-3">
-                        <div class="s-report-title d-flex justify-content-between">
-                            <h4 class="header-title mb-0">Total</h4>
-                            <p>TICKETS</p>
-                        </div>
-                        <div class="d-flex justify-content-between pb-2">
-                            <h2>€ <span id="tickets"></span></h2>
-                            <span></span>
+                <div class="col-md-3 ui-sortable mb-3" data-position="5" data-sort="1">
+                    <div style="border-left: 10px solid #375068 !important;height:160px;"
+                        class="single-report mb-xs-30">
+                        <div class="s-report-inner pr--20 pt--30 mb-3">
+                            <div class="s-report-title d-flex justify-content-between">
+                                <h4 class="header-title mb-0">Total</h4>
+                                <p>TICKETS</p>
+                            </div>
+                            <div class="d-flex justify-content-between pb-2">
+                                <h2>€ <span id="tickets"></span></h2>
+                                <span></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
-    </div>
 
     </div>
 </div>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.table2excel.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/query-builder.standalone.js"></script>
-<script src="<?php echo base_url(); ?>assets/home/js/dashboard.js"></script>
