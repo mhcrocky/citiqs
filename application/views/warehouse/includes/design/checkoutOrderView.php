@@ -62,6 +62,28 @@
     </div>
     <div class="form-group col-sm-12">
         <label style="display:block;">
+            Headline border radius:
+            <input
+                type="text"
+                style="border-radius: 50px"
+                class="form-control"
+                name="checkoutOrder[id][headlineYourOrder][border-radius]"
+                data-css-selector="id"
+                data-css-selector-value="headlineYourOrder"
+                data-css-property="border-radius"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['checkoutOrder']['id']['headlineYourOrder']['border-radius']) ) { ?>
+                value = "<?php echo $design['checkoutOrder']['id']['headlineYourOrder']['border-radius']?>"
+                data-value="1"
+                <?php } else { ?>
+                value="0px"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
             Quantity and price background color:
             <input
                 data-jscolor=""
@@ -365,7 +387,7 @@ style="border-radius: 50px"
             Back button background color:
             <input
                 data-jscolor=""
-style="border-radius: 50px"
+                style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[id][checkoutBack][background-color]"
                 data-css-selector="id"
@@ -385,7 +407,7 @@ style="border-radius: 50px"
             Back button font color:
             <input
                 data-jscolor=""
-style="border-radius: 50px"
+                style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[id][checkoutBack][color]"
                 data-css-selector="id"
@@ -402,10 +424,32 @@ style="border-radius: 50px"
     </div>
     <div class="form-group col-sm-12">
         <label style="display:block;">
+            Back button border radius:
+            <input
+                type="text"
+                style="border-radius: 50px"
+                class="form-control"
+                name="checkoutOrder[id][checkoutBack][border-radius]"
+                data-css-selector="id"
+                data-css-selector-value="checkoutBack"
+                data-css-property="border-radius"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['checkoutOrder']['id']['checkoutBack']['border-radius']) ) { ?>
+                value = "<?php echo $design['checkoutOrder']['id']['checkoutBack']['border-radius']; ?>"
+                data-value="1"
+                <?php } else { ?>
+                value="0px"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
             Continue button background color:
             <input
                 data-jscolor=""
-style="border-radius: 50px"
+                style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[id][checkoutContinue][background-color]"
                 data-css-selector="id"
@@ -425,7 +469,7 @@ style="border-radius: 50px"
             Continue button font color:
             <input
                 data-jscolor=""
-style="border-radius: 50px"
+                style="border-radius: 50px"
                 class="form-control"
                 name="checkoutOrder[id][checkoutContinue][color]"
                 data-css-selector="id"
@@ -436,6 +480,28 @@ style="border-radius: 50px"
                 <?php if ( isset($design['checkoutOrder']['id']['checkoutContinue']['color']) ) { ?>
                 value = "<?php echo $design['checkoutOrder']['id']['checkoutContinue']['color']?>"
                 data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Continue button border radius:
+            <input
+                type="text"
+                style="border-radius: 50px"
+                class="form-control"
+                name="checkoutOrder[id][checkoutContinue][border-radius]"
+                data-css-selector="id"
+                data-css-selector-value="checkoutContinue"
+                data-css-property="border-radius"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['checkoutOrder']['id']['checkoutContinue']['border-radius']) ) { ?>
+                value = "<?php echo $design['checkoutOrder']['id']['checkoutContinue']['border-radius']?>"
+                data-value="1"
+                <?php } else { ?>
+                value="0px"
                 <?php } ?>
             />
         </label>
