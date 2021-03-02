@@ -531,6 +531,7 @@ $route['logo'] = "profile/logo";
 $route['termsofuse'] = "profile/termsofuse";
 $route['openandclose'] = "profile/openandclose";
 $route['userapi'] = "profile/userApi";
+$route['paynl_merchant'] = 'profile/paynlMerchant';
 
 
 $route['inandout/(:any)/(:num)'] = "Blackbox/index/$1/$2";

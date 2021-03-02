@@ -434,6 +434,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
                                             <li data-menuid="10.6"><a href="<?php echo $this->baseUrl; ?>termsofuse"><i class="ti-align-justify"></i> <span>Terms of Use</span></a></li>
                                             <li data-menuid="10.7"><a href="<?php echo $this->baseUrl; ?>openandclose"><i class="ti-time"></i> <span>Open and Close</span></a></li>
                                             <li data-menuid="10.8"><a href="<?php echo $this->baseUrl; ?>userapi"><i class="ti-location-pin"></i> <span>Api</span></a></li>
+                                            <li data-menuid="10.8"><a href="<?php echo $this->baseUrl; ?>paynl_merchant"><i class="ti-location-pin"></i> <span>Paynl</span></a></li>
                                         </ul>
                                     </li>
 <!--									<li>-->

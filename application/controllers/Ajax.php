@@ -2053,4 +2053,42 @@ class Ajax extends CI_Controller
 
         return $result->serviceId;
     }
+
+    public function uploadDocumentsForPayNl(): void
+	{
+        $payNlErrResponse = [];
+        $count = 0;
+		foreach ($_FILES as $documentId => $file) {
+            if (!$_FILES[$documentId]['error'] && $_FILES[$documentId]['size']) {
+                $count++;
+                $filename = $_FILES[$documentId]['name'];
+                $documentFile = base64_encode(file_get_contents($_FILES[$documentId]['tmp_name']));
+                $result = Pay_helper::addDocument($documentId, $filename, $documentFile);
+                if ($result->result === '0') {
+                    $payNlErrResponse[$documentId] = $result->errorMessage;
+                }
+            }
+        }
+
+        if (!$count) {
+            $response = [
+                'status' => '0',
+                'messages' => ['You did not upload any document']
+            ];
+        } else {
+            if (empty($payNlErrResponse)) {
+                $response = [
+                    'status' => '1',
+                    'messages' => ['Document(s) uplaoded']
+                ];
+            } else {
+                $response = [
+                    'messages' => $payNlErrResponse
+                ];
+            }
+        }
+
+        echo json_encode($response);
+		return;
+	}
 }
