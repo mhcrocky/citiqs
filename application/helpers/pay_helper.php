@@ -3,7 +3,7 @@
 
     class Pay_helper
     {
-        public static function getPayNlUrl(array $argumentsArray, string $namespace, string $function, string $version): string
+        public static function getPayNlUrl(string $namespace, string $function, string $version, array $argumentsArray = []): string
         {
             $CI =& get_instance();
             $CI->load->config('custom');
@@ -16,25 +16,52 @@
                 'version'   => $version
             ];
 
-            if ($namespace === $CI->config->item('orderPayNlNamespace')) {
-                $payData['tokenid'] = PAYNL_DATA_TOKEN_ID;
-                $payData['token'] = PAYNL_DATA_TOKEN;
-            } elseif ($namespace === $CI->config->item('addMerchantPayNlNamecpace')) {
-                $payData['tokenid'] = PAYNL_DATA_TOKEN_ID_ALLIANCE;
-                $payData['token'] = PAYNL_DATA_TOKEN_ALLIANCE;
-            }
+            self::setTokens($payData, $namespace, $function);
 
             $strUrl  = 'http://' . $payData['tokenid'] . ':' . $payData['token'] . '@';
             $strUrl .= $payData['gateway'] . DIRECTORY_SEPARATOR . $payData['version'] . DIRECTORY_SEPARATOR;
             $strUrl .= $payData['namespace'] . DIRECTORY_SEPARATOR . $payData['function'] . DIRECTORY_SEPARATOR;
             $strUrl .= $payData['format'];
-            $strUrl .= '?' . http_build_query($argumentsArray);
-            
+
+            if ($argumentsArray) {
+                $strUrl .= '?' . http_build_query($argumentsArray);
+            }
+
             return $strUrl;
         }
 
-        // for oreder
-        public static function getArgumentsArray(int $vendorId, array $order, string $serviceId, string $paymentType, string $paymentOptionSubId = '0'): array
+        private static function setTokens(array &$payData, string $namespace, string $function): void
+        {
+            $CI =& get_instance();
+            $CI->load->config('custom');
+
+            if ($namespace === $CI->config->item('transactionNamespace')) {
+                $payData['tokenid'] = PAYNL_DATA_TOKEN_ID;
+                $payData['token'] = PAYNL_DATA_TOKEN;
+            } elseif ($namespace === $CI->config->item('allianceNamespace') || $namespace === $CI->config->item('documentNamespace')) {
+                $payData['tokenid'] = PAYNL_DATA_TOKEN_ID_ALLIANCE;
+                $payData['token'] = PAYNL_DATA_TOKEN_ALLIANCE;
+            }
+
+            return;
+        }
+
+        public static function payOrder(int $vendorId, array $order, string $serviceId, string $paymentType, string $paymentOptionSubId = '0'): ?object
+        {
+            $CI =& get_instance();
+            $CI->load->config('custom');
+
+            $arguments = self::getOrderArgumentsArray($vendorId, $order, $serviceId, $paymentType, $paymentOptionSubId);
+
+            return Pay_helper::getRequestResult(
+                $arguments,
+                $CI->config->item('transactionNamespace'),
+                $CI->config->item('orderPayNlFunction'),
+                $CI->config->item('orderPayNlVersion')
+            );
+        }
+
+        public static function getOrderArgumentsArray(int $vendorId, array $order, string $serviceId, string $paymentType, string $paymentOptionSubId = '0'): array
         {
             $CI =& get_instance();
             $CI->load->config('custom');
@@ -86,38 +113,13 @@
             $CI->user_model->setUniqueValue(strval($userId))->setWhereCondtition()->setUser();
 
             $argumentsArray = self::getMerchantArgumentsArray($CI->user_model, $data);
-            $url = self::getPayNlUrl($argumentsArray, $CI->config->item('addMerchantPayNlNamecpace'), $CI->config->item('addMerchantPayNlFunction'), $CI->config->item('addMerchantPayNlVersion'));
 
-            $result = file_get_contents($url);
-
-            if (empty($result)) return null;
-
-            $result = json_decode($result);
-
-            return $result;
-        }
-
-        public static function getPayNlServiceId(string $merchantId, int $userId): ?object
-        {
-            $CI =& get_instance();
-            $CI->load->config('custom');
-            $argumentsArray = [
-                'merchantId' => $merchantId,
-                'name' => 'Food and beverages',
-                'description' => 'Online payment service with QR coding',
-                'categoryId' => $CI->config->item('payNlServiceCategoryId'),
-                'publication' => 'Online payment service with QR coding',
-            ];
-
-            $url = self::getPayNlUrl($argumentsArray, $CI->config->item('addPayNlServiceNamecpace'), $CI->config->item('addPayNlServiceFunction'), $CI->config->item('addPayNlServiceVersion'));
-
-            $result = file_get_contents($url);
-
-            if (empty($result)) return null;
-
-            $result = json_decode($result);
-
-            return $result;
+            return self::getRequestResult(
+                $argumentsArray,
+                $CI->config->item('allianceNamespace'),
+                $CI->config->item('addMerchantPayNlFunction'),
+                $CI->config->item('addMerchantPayNlVersion')
+            );
         }
 
         public static function getMerchantArgumentsArray(object $user, array $data): array
@@ -157,7 +159,82 @@
             $argumentsArray['settings']['referralProfileId'] = PAYNL_MERCHANT_ID;
             $argumentsArray['settings']['clearingInterval'] = 'manual';
 
-            return $argumentsArray;
-    
+            return $argumentsArray;    
         }
+
+        public static function getPayNlServiceId(string $merchantId, int $userId): ?object
+        {
+            $CI =& get_instance();
+            $CI->load->config('custom');
+            $argumentsArray = [
+                'merchantId' => $merchantId,
+                'name' => 'Food and beverages',
+                'description' => 'Online payment service with QR coding',
+                'categoryId' => $CI->config->item('payNlServiceCategoryId'),
+                'publication' => 'Online payment service with QR coding',
+            ];
+
+            return self::getRequestResult(
+                $argumentsArray,
+                $CI->config->item('allianceNamespace'),
+                $CI->config->item('addPayNlServiceFunction'),
+                $CI->config->item('addPayNlServiceVersion')
+            );
+        }
+
+        public static function getMerchant(string $merchantId): ?object
+        {
+            $CI =& get_instance();
+            $CI->load->config('custom');
+
+            $argumentsArray = [
+                'merchantId' => $merchantId,
+            ];
+
+            return self::getRequestResult(
+                $argumentsArray,
+                $CI->config->item('allianceNamespace'),
+                $CI->config->item('getMerchantPayNlFunction'),
+                $CI->config->item('getMerchantPayNlVersion')
+            );
+        }
+
+        public static function addDocument(string $documentId, string $filename, string $documentFile): ?object
+        {
+            $CI =& get_instance();
+            $CI->load->config('custom');
+
+            $argumentsArray = [
+                'documentId' => $documentId,
+                'filename' => $filename,
+                'documentFile' => $documentFile
+            ];
+
+            return self::postReqeustResult(
+                $argumentsArray,
+                $CI->config->item('documentNamespace'),
+                $CI->config->item('addDocumentPayNlFunction'),
+                $CI->config->item('addDocumentPayNlVersion')
+            );
+
+        }
+
+        private static function getRequestResult(array $argumentsArray, string $namespace, string $function, string $version): ?object
+        {
+            $url = self::getPayNlUrl($namespace, $function, $version, $argumentsArray);
+
+            $result = file_get_contents($url);
+
+            return empty($result) ? null : json_decode($result);
+        }
+
+        private static function postReqeustResult(array $argumentsArray, string $namespace, string $function, string $version): ?object
+        {
+            $CI =& get_instance();
+            $CI->load->helper('curl_helper');
+
+            $url = self::getPayNlUrl($namespace, $function, $version);
+            return Curl_helper::sendCurlPostRequest($url, $argumentsArray);
+        }
+
     }

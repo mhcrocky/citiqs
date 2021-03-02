@@ -203,20 +203,54 @@ $config['paymentTypeErr'] = 'PAY-405';
 
 // paynl url details
 
-$config['orderPayNlNamespace'] = 'Transaction';
+// transaction namespace
+$config['transactionNamespace'] = 'Transaction';
+
+// transaction functions and versions
 $config['orderPayNlFunction'] = 'start';
 $config['orderPayNlVersion'] = 'v13';
 
-$config['addMerchantPayNlNamecpace'] = 'Alliance';
+
+// alliance namespace
+$config['allianceNamespace'] = 'Alliance';
+
+// alliance functions and versions
 $config['addMerchantPayNlFunction'] = 'addMerchant';
 $config['addMerchantPayNlVersion'] = 'v6';
 
-$config['addPayNlServiceNamecpace'] = 'Alliance';
 $config['addPayNlServiceFunction'] = 'addService';
 $config['addPayNlServiceVersion'] = 'v6';
 
+$config['getMerchantPayNlFunction'] = 'getMerchant';
+$config['getMerchantPayNlVersion'] = 'v6';
+
+// document namespace
+
+$config['documentNamespace'] = 'Document';
+
+// alliance functions and versions
+$config['addDocumentPayNlFunction'] = 'add';
+$config['addDocumentPayNlVersion'] = 'v1';
+
+// language id
 $config['englishLngPayNlId'] = '4';
+
+// service category id
 $config['payNlServiceCategoryId'] = '25';
+
+// paynl documet statuses
+$config['paynlDocumentRequested'] = '1';
+$config['paynlDocumentUploaded'] = '2';
+$config['paynlDocumentApproved'] = '3';
+$config['paynlDocumentRejected'] = '4';
+$config['paynlDocumentExpired'] = '5';
+$config['paynlDocumentStatusDesc'] = [
+    $config['paynlDocumentRequested'] => 'requested',
+    $config['paynlDocumentUploaded'] => 'uploaded',
+    $config['paynlDocumentApproved'] => 'approved',
+    $config['paynlDocumentRejected'] => 'rejected',
+    $config['paynlDocumentExpired'] => 'expired',
+];
 
 // END PAYNL
 
@@ -331,4 +365,3 @@ $config['initialFoodAddon'] = 'butter';
 
 $config['initialMainType'] = 'Main';
 $config['initialAddonType'] = 'Addon';
-

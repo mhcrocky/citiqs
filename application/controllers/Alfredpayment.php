@@ -41,12 +41,10 @@ class Alfredpayment extends BaseControllerWeb
         $order = reset($order);
         $vendorId = intval($order['vendorId']);
         $serviceId = $this->shopvendor_model->setProperty('vendorId', $vendorId)->getProperty('payNlServiceId');
-        $arguments = Pay_helper::getArgumentsArray($vendorId, $order, $serviceId, $paymentType, $paymentOptionSubId);
-        $url = Pay_helper::getPayNlUrl($arguments, $this->config->item('orderPayNlNamespace'), $this->config->item('orderPayNlFunction'), $this->config->item('orderPayNlVersion'));
-        $result = @file_get_contents($url);
-        $result = json_decode($result);
 
-        if ($result->request->result === '1') {
+        $result = Pay_helper::payOrder($vendorId, $order, $serviceId, $paymentType, $paymentOptionSubId);
+
+        if ($result && $result->request->result === '1') {
             $this
                 ->shoporderpaynl_model
                     ->setObjectFromArray([
@@ -58,6 +56,7 @@ class Alfredpayment extends BaseControllerWeb
             redirect($result->transaction->paymentURL);
             exit();
         }
+
         $this->failedRedirect($orderId, $result);
         return;
     }

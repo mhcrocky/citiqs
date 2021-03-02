@@ -17,6 +17,7 @@ class  Profile extends BaseControllerWeb
 		$this->load->helper('utility_helper');
 		$this->load->helper('validate_data_helper');
 		$this->load->helper('uploadfile_helper');
+		$this->load->helper('pay_helper');
 
 		$this->load->model('user_model');
 		$this->load->model('businesstype_model');
@@ -363,4 +364,19 @@ class  Profile extends BaseControllerWeb
 
 		redirect('userapi');
 	}
+
+	public function paynlMerchant(): void
+	{
+		$userId = intval($_SESSION['userId']);
+		$data['paynlDocumentStatusDesc'] = $this->config->item('paynlDocumentStatusDesc');
+		$merchantId = $this->shopvendor_model->setProperty('vendorId', $userId)->getProperty('merchantId');
+
+		if ($merchantId) {
+			$data['merchant'] = Pay_helper::getMerchant($merchantId);
+		}
+
+		$this->global['pageTitle'] = 'TIQS: PAYNL MERCHANT';
+		$this->loadViews("profile/paynlMerchant", $this->global, $data, 'footerbusiness', 'headerbusiness');
+	}
+
 }

@@ -317,6 +317,10 @@ var callThis = (function() {
         payNlRegistration: function(callFunction) {
             callFunction(this);
         },
+        uploadDocumentsForPayNl: function(callFunction, functionArg) {
+            functionArg.push(this);
+            callFunction(...functionArg);
+        }
     };
     return methods;
 })();

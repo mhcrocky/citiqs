@@ -227,5 +227,7 @@
 <?php } elseif ($this->view === 'events/email_designer') { ?>
 	<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
 	<script src='<?php echo base_url(); ?>assets/home/js/templates.js'></script>
-<?php } ?>
-
+<?php } elseif ($this->view === 'profile/paynlMerchant') { ?>
+	<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
+	<script src='<?php echo base_url(); ?>assets/home/js/paynlMerchant.js'></script>
+<?php }?>
