@@ -828,18 +828,18 @@ div.filter-sidebar ul li a {
 	cursor: grabbing;
 }
 
-.slick-prev, .slick-next{
+.slick-prev, .fa-arrow-left, .slick-next{
 	top: 20px;
 	width: 40px;
     height: 40px;
 }
 
-.slick-prev:before, .slick-next:before{
+.slick-prev:before, .fa-arrow-left:before, .slick-next:before{
 	color: #349171 !important;
 	font-size: 40px;
 }
 
-.slick-prev{
+.slick-prev, .fa-arrow-left{
 	left: 10px;
 }
 
@@ -856,12 +856,12 @@ div.filter-sidebar ul li a {
 		margin-bottom: 200px;
 	}
 	
-	.slick-prev, .slick-next{
+	.slick-prev, .fa-arrow-left, .slick-next{
 		width: 30px;
 		height: 30px;
 	}
 	
-	.slick-prev{
+	.slick-prev .fa-arrow-left{
 		left: 5px;
 	}
 
@@ -869,7 +869,7 @@ div.filter-sidebar ul li a {
 		right: 5px;
 	}
 	
-	.slick-prev:before, .slick-next:before{
+	.slick-prev:before, .fa-arrow-left:before, .slick-next:before{
 		font-size: 30px;
 	}
 	
