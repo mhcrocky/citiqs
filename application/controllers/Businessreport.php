@@ -17,6 +17,8 @@ class Businessreport extends BaseControllerWeb
 		parent::__construct();
 		$this->load->model('businessreport_model');
 		$this->load->model('shopprinters_model');
+		$this->load->model('shopmethodcost_model');
+
 		$this->load->library('language', array('controller' => $this->router->class));
 		$this->load->config('custom');
 
@@ -340,4 +342,10 @@ class Businessreport extends BaseControllerWeb
 
 	}
 
+	public function paymentMethods(): void
+	{
+		$this->shopmethodcost_model->insertProductGroupsAndPaymentMethods(intval($_SESSION['userId']));
+		$this->global['pageTitle'] = 'TIQS: Payment methods';
+		$this->loadViews("businessreport/paymentMethods", $this->global, null, 'footerbusiness', 'headerbusiness');
+	}
 }
