@@ -320,7 +320,10 @@ var callThis = (function() {
         uploadDocumentsForPayNl: function(callFunction, functionArg) {
             functionArg.push(this);
             callFunction(...functionArg);
-        }
+        },
+        insertAllPaymentMethods: function(callFunction) {
+            callFunction(this);
+        },
     };
     return methods;
 })();

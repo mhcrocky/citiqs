@@ -210,6 +210,10 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 									<li data-menuid="3">
 										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-shopping-cart-full"></i><span>Finance</span></a>
 										<ul class="collapse">
+                                            <?php if (intval($_SESSION['userId']) === $this->tiqsMainId) { ?>
+                                                <li><a href="<?php echo $this->baseUrl; ?>all_payment_methods"><i class="ti-pencil-alt"></i><span>All payment methods</span></a></li>
+                                            <?php } ?>
+                                            <li><a href="<?php echo $this->baseUrl; ?>payment_methods"><i class="ti-pencil-alt"></i><span>Payment methods</span></a></li>
 											<li data-menuid="3.1"><a href="<?php echo $this->baseUrl; ?>clearing"><i class="ti-pencil-alt"></i> <span>Pay-out</span></a></li>
 											<li data-menuid="3.2"><a href="<?php echo $this->baseUrl; ?>businessreports"><i class="ti-pencil-alt"></i> <span>Transactions</span></a></li>
 											<li data-menuid="3.3"><a href="<?php echo $this->baseUrl; ?>invoices"><i class="ti-user"></i> <span>Invoices</span></a></li>
@@ -434,7 +438,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
                                             <li data-menuid="10.6"><a href="<?php echo $this->baseUrl; ?>termsofuse"><i class="ti-align-justify"></i> <span>Terms of Use</span></a></li>
                                             <li data-menuid="10.7"><a href="<?php echo $this->baseUrl; ?>openandclose"><i class="ti-time"></i> <span>Open and Close</span></a></li>
                                             <li data-menuid="10.8"><a href="<?php echo $this->baseUrl; ?>userapi"><i class="ti-location-pin"></i> <span>Api</span></a></li>
-                                            <li data-menuid="10.8"><a href="<?php echo $this->baseUrl; ?>paynl_merchant"><i class="ti-location-pin"></i> <span>Paynl</span></a></li>
+                                            <li><a href="<?php echo $this->baseUrl; ?>paynl_merchant"><i class="ti-location-pin"></i> <span>Paynl</span></a></li>
                                         </ul>
                                     </li>
 <!--									<li>-->

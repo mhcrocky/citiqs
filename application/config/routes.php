@@ -371,6 +371,9 @@ $route['businessreport/get_graphs'] = 'Businessreport/get_graphs';
 $route['businessreport/get_totals'] = 'Businessreport/get_totals';
 $route['businessreport/graphs'] = 'Businessreport/graphs';
 $route['businessreports'] = 'Businessreport/reports';
+$route['payment_methods'] = 'Businessreport/paymentMethods';
+$route['all_payment_methods'] = 'Businessreport/allPaymentMethods';
+
 
 $route['accounting/report'] = 'AccountingReports/index';
 $route['accountingreport/get_report'] = 'AccountingReports/get_report';

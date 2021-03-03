@@ -158,10 +158,16 @@ $config['typeColors'] = [
     'pickup' => '#008ae6',
 ];
 
-//ALL ALFRED PAYMENT TYPES
+//ALL ALFRED PAYMENT TYPES AND PRODUCT GROUPS
+
 //cash payment types
 $config['prePaid'] = 'prePaid';
 $config['postPaid'] = 'postPaid';
+
+$config['cashPaymentTypes'] = [
+    $config['prePaid'],
+    $config['postPaid']
+];
 
 // PAY NL
 
@@ -175,9 +181,7 @@ $config['pinMachinePayment'] = 'pin machine';
 $config['voucherPayment'] = 'voucher';
 $config['myBankPayment'] = 'my bank';
 
-$config['paymentTypes'] = [
-    $config['prePaid'],
-    $config['postPaid'],
+$config['onlinePaymentTypes'] = [
     $config['idealPayment'],
     $config['creditCardPayment'],
     $config['bancontactPayment'],
@@ -185,24 +189,23 @@ $config['paymentTypes'] = [
     $config['payconiqPayment'],
     $config['pinMachinePayment'],
     $config['voucherPayment'],
-    $config['myBankPayment']
+    $config['myBankPayment'],
 ];
+
+$config['paymentTypes'] = array_merge($config['cashPaymentTypes'], $config['onlinePaymentTypes']);
 
 $config['storeAndPos'] = 'Store & POS';
 $config['reservations'] = 'Reservations';
 $config['eTicketing'] = 'E-Ticketing';
 
+$config['prodcutGroups'] = [
+    $config['storeAndPos'],
+    $config['reservations'],
+    $config['eTicketing'],
+];
 
 $config['paymentPrice'] = [
     $config['storeAndPos'] => [
-        $config['prePaid'] => [
-                'percent' => 0,
-                'amount' => 0,
-            ],
-        $config['postPaid'] => [
-                'percent' => 0,
-                'amount' => 0,
-            ],
         $config['idealPayment'] => [
                 'percent' => 0,
                 'amount' => 0,
@@ -237,14 +240,6 @@ $config['paymentPrice'] = [
             ],
     ],
     $config['reservations'] => [
-        $config['prePaid'] => [
-                'percent' => 0,
-                'amount' => 0,
-            ],
-        $config['postPaid'] => [
-                'percent' => 0,
-                'amount' => 0,
-            ],
         $config['idealPayment'] => [
                 'percent' => 0,
                 'amount' => 0,
@@ -279,14 +274,6 @@ $config['paymentPrice'] = [
             ],
     ],
     $config['eTicketing'] => [
-        $config['prePaid'] => [
-                'percent' => 0,
-                'amount' => 0,
-            ],
-        $config['postPaid'] => [
-                'percent' => 0,
-                'amount' => 0,
-            ],
         $config['idealPayment'] => [
                 'percent' => 0,
                 'amount' => 0,

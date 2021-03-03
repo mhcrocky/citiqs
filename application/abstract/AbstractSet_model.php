@@ -50,7 +50,8 @@
         }
 
         public function setProperty(string $property, $value): object
-        {   
+        {
+            $this->setValueType($property, $value);
             $this->{$property} = $value;
             return $this;
         }

@@ -16,6 +16,8 @@
         
         private function getDataArrayForDatabase(): ?array
         {
+            $this->load->helper('validate_data_helper');
+
             $data = get_object_vars($this);
             foreach($data as $key => $value) {
                 
@@ -44,6 +46,7 @@
             if (!$data) return false;
             $this->db->insert($this->getThisTable(), $data);
             $this->id  = $this->db->insert_id();
+
             return $this->id > 0 ? true : false;
         }
 
@@ -104,7 +107,9 @@
                 }
             }
 
-            $result = $this->db->where($filter['where']);
+            if (!empty($filter['where'])) {
+                $result = $this->db->where($filter['where']);
+            }
 
             if (!empty($filter['whereIn'])) {
                 $whereIn = $filter['whereIn'];
