@@ -137,7 +137,9 @@ input:disabled{
     padding-left: 40px !important;
 }
 
-.col-custom {
-	flex: 0 0 20% !important;
-	max-width: 20% !important;
-}
+@media only screen and (min-width: 850px) {
+	.col-custom {
+		flex: 0 0 20% !important;
+		max-width: 20% !important;
+	}
+  }
