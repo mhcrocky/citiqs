@@ -356,7 +356,12 @@ class Businessreport extends BaseControllerWeb
 	public function paymentMethods(): void
 	{
 		$this->shoppaymentmethods_model->insertProductGroupsAndPaymentMethods(intval($_SESSION['userId']));
+
+		$data = [
+			'productGroups' => $this->config->item('productGroups')
+		];
+
 		$this->global['pageTitle'] = 'TIQS: Payment methods';
-		$this->loadViews("businessreport/paymentMethods", $this->global, null, 'footerbusiness', 'headerbusiness');
+		$this->loadViews("businessreport/paymentMethods", $this->global, $data, 'footerbusiness', 'headerbusiness');
 	}
 }

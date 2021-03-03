@@ -621,5 +621,3 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 
     });
 </script>
-
-

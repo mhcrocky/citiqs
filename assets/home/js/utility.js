@@ -464,3 +464,8 @@ function showMessagesInContainer(conatinerId, response) {
 
     $('#' + conatinerId).empty().html(content);
 }
+
+// reload jquery datatable
+function reloadTable(id) {
+    $('#' + id).DataTable().ajax.reload();
+}

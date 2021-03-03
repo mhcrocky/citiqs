@@ -242,6 +242,9 @@
 <?php } elseif ($this->view === 'profile/paynlMerchant') { ?>
 	<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
 	<script src='<?php echo base_url(); ?>assets/home/js/paynlMerchant.js'></script>
-<?php }  elseif ($this->view === 'businessreport/allPaymentMethods') { ?>
+<?php } elseif ($this->view === 'businessreport/allPaymentMethods') { ?>
 	<script src='<?php echo base_url(); ?>assets/home/js/allPaymentMethods.js'></script>
-<?php }?>
+<?php } elseif ($this->view === 'businessreport/paymentMethods') { ?>
+	<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+	<script src='<?php echo base_url(); ?>assets/home/js/paymentMethods.js'></script>
+<?php } ?>
