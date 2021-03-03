@@ -112,6 +112,7 @@
                                                         alt="<?php echo $allergy; ?>"
                                                         height='24px'
                                                         width='24px'
+                                                        class="ingredients"
                                                         style="display:inline; margin:0px 2px 3px 0px"
                                                     />
                                                 <?php

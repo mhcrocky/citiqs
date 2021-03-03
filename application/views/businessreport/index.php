@@ -2,8 +2,8 @@
     <!--
     <div class="sales-report-area mt-5 mb-5 row-sort ui-sortable" data-rowposition="1" data-rowsort="1">
         <div id="sortable" style="visibility: hidden;" class="row ui-sortable">
-            <div class="col-md-3 ui-sortable mb-3" data-position="1" data-sort="1">
-                <div style="height:160px;" class="single-report mb-xs-30">
+            <div class="col-md-3 col-custom ui-sortable mb-3" data-position="1" data-sort="1">
+                <div style="height:140px;" class="single-report mb-xs-30">
                     <div style="min-height:500px;position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
                         class="chartjs-size-monitor">
                         <div class="chartjs-size-monitor-expand"
@@ -28,8 +28,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 ui-sortable mb-3" data-position="2" data-sort="1">
-                <div style="height:160px;" class="single-report mb-xs-30">
+            <div class="col-md-3 col-custom ui-sortable mb-3" data-position="2" data-sort="1">
+                <div style="height:140px;" class="single-report mb-xs-30">
                     <div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
                         class="chartjs-size-monitor">
                         <div class="chartjs-size-monitor-expand"
@@ -54,8 +54,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 ui-sortable mb-3" data-position="3" data-sort="1">
-                <div style="height:160px;" class="single-report mb-xs-30">
+            <div class="col-md-3 col-custom ui-sortable mb-3" data-position="3" data-sort="1">
+                <div style="height:140px;" class="single-report mb-xs-30">
                     <div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
                         class="chartjs-size-monitor">
                         <div class="chartjs-size-monitor-expand"
@@ -80,8 +80,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 ui-sortable mb-3" data-position="4" data-sort="1">
-                <div style="height:160px;" class="single-report">
+            <div class="col-md-3 col-custom ui-sortable mb-3" data-position="4" data-sort="1">
+                <div style="height:140px;" class="single-report">
                     <div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
                         class="chartjs-size-monitor">
                         <div class="chartjs-size-monitor-expand"
@@ -106,8 +106,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 ui-sortable mb-3" data-position="5" data-sort="1">
-                <div style="height:160px;" class="single-report mb-xs-30">
+            <div class="col-md-3 col-custom ui-sortable mb-3" data-position="5" data-sort="1">
+                <div style="height:140px;" class="single-report mb-xs-30">
                     <div style="min-height:500px;position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
                         class="chartjs-size-monitor">
                         <div class="chartjs-size-monitor-expand"
@@ -139,8 +139,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 ui-sortable mb-3" data-position="6" data-sort="1">
-                <div style="height:160px;" class="single-report mb-xs-30">
+            <div class="col-md-3 col-custom ui-sortable mb-3" data-position="6" data-sort="1">
+                <div style="height:140px;" class="single-report mb-xs-30">
                     <div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
                         class="chartjs-size-monitor">
                         <div class="chartjs-size-monitor-expand"
@@ -172,8 +172,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 ui-sortable mb-3" data-position="7" data-sort="1">
-                <div style="height:160px;" class="single-report mb-xs-30">
+            <div class="col-md-3 col-custom ui-sortable mb-3" data-position="7" data-sort="1">
+                <div style="height:140px;" class="single-report mb-xs-30">
                     <div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
                         class="chartjs-size-monitor">
                         <div class="chartjs-size-monitor-expand"
@@ -205,8 +205,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 ui-sortable mb-3" data-position="8" data-sort="1">
-                <div style="height:160px;" class="single-report">
+            <div class="col-md-3 col-custom ui-sortable mb-3" data-position="8" data-sort="1">
+                <div style="height:140px;" class="single-report">
                     <div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
                         class="chartjs-size-monitor">
                         <div class="chartjs-size-monitor-expand"
@@ -238,8 +238,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 ui-sortable mb-3" data-position="9" data-sort="1">
-                <div style="height:160px;" class="single-report mb-xs-30">
+            <div class="col-md-3 col-custom ui-sortable mb-3" data-position="9" data-sort="1">
+                <div style="height:140px;" class="single-report mb-xs-30">
                     <div style="min-height:500px;position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
                         class="chartjs-size-monitor">
                         <div class="chartjs-size-monitor-expand"
@@ -264,8 +264,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 ui-sortable mb-3" data-position="10" data-sort="1">
-                <div style="height:160px;" class="single-report mb-xs-30">
+            <div class="col-md-3 col-custom ui-sortable mb-3" data-position="10" data-sort="1">
+                <div style="height:140px;" class="single-report mb-xs-30">
                     <div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
                         class="chartjs-size-monitor">
                         <div class="chartjs-size-monitor-expand"
@@ -290,8 +290,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 ui-sortable mb-3" data-position="11" data-sort="1">
-                <div style="height:160px;" class="single-report mb-xs-30">
+            <div class="col-md-3 col-custom ui-sortable mb-3" data-position="11" data-sort="1">
+                <div style="height:140px;" class="single-report mb-xs-30">
                     <div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
                         class="chartjs-size-monitor">
                         <div class="chartjs-size-monitor-expand"
@@ -316,8 +316,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 ui-sortable mb-3" data-position="12" data-sort="1">
-                <div style="height:160px;" class="single-report">
+            <div class="col-md-3 col-custom ui-sortable mb-3" data-position="12" data-sort="1">
+                <div style="height:140px;" class="single-report">
                     <div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
                         class="chartjs-size-monitor">
                         <div class="chartjs-size-monitor-expand"
@@ -342,8 +342,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 ui-sortable mb-3" data-position="13" data-sort="1">
-                <div style="height:160px;" class="single-report mb-xs-30">
+            <div class="col-md-3 col-custom ui-sortable mb-3" data-position="13" data-sort="1">
+                <div style="height:140px;" class="single-report mb-xs-30">
                     <div style="min-height:500px;position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
                         class="chartjs-size-monitor">
                         <div class="chartjs-size-monitor-expand"
@@ -368,8 +368,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 ui-sortable mb-3" data-position="14" data-sort="1">
-                <div style="height:160px;" class="single-report mb-xs-30">
+            <div class="col-md-3 col-custom ui-sortable mb-3" data-position="14" data-sort="1">
+                <div style="height:140px;" class="single-report mb-xs-30">
                     <div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
                         class="chartjs-size-monitor">
                         <div class="chartjs-size-monitor-expand"
@@ -394,8 +394,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 ui-sortable mb-3" data-position="15" data-sort="1">
-                <div style="height:160px;" class="single-report mb-xs-30">
+            <div class="col-md-3 col-custom ui-sortable mb-3" data-position="15" data-sort="1">
+                <div style="height:140px;" class="single-report mb-xs-30">
                     <div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
                         class="chartjs-size-monitor">
                         <div class="chartjs-size-monitor-expand"
@@ -420,8 +420,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 ui-sortable mb-3" data-position="16" data-sort="1">
-                <div style="height:160px;" class="single-report">
+            <div class="col-md-3 col-custom ui-sortable mb-3" data-position="16" data-sort="1">
+                <div style="height:140px;" class="single-report">
                     <div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
                         class="chartjs-size-monitor">
                         <div class="chartjs-size-monitor-expand"
@@ -476,8 +476,8 @@
                 class="date w-100 form-control form-control-sm mb-4 ml-auto" type="text" />
             <div id="sortable" style="visibility: hidden;" class="row ui-sortable">
 
-                <div class="col-md-3 ui-sortable mb-3" data-position="1" data-sort="1">
-                    <div style="border-left: 10px solid #3366cc !important;height:160px;"
+                <div class="col-md-3 col-custom ui-sortable mb-3" data-position="1" data-sort="1">
+                    <div style="border-left: 10px solid #3366cc !important;height:140px;"
                         class="single-report mb-xs-30">
                         <div class="s-report-inner pr--20 pt--30 mb-3">
                             <div class="s-report-title d-flex justify-content-between">
@@ -492,8 +492,8 @@
                     </div>
                 </div>
 
-                <div class="col-md-3 ui-sortable mb-3" data-position="2" data-sort="1">
-                    <div style="border-left: 10px solid #dc3912 !important;height:160px;"
+                <div class="col-md-3 col-custom ui-sortable mb-3" data-position="2" data-sort="1">
+                    <div style="border-left: 10px solid #dc3912 !important;height:140px;"
                         class="single-report mb-xs-30">
                         <div class="s-report-inner pr--20 pt--30 mb-3">
                             <div class="s-report-title d-flex justify-content-between">
@@ -508,8 +508,8 @@
                     </div>
                 </div>
 
-                <div class="col-md-3 ui-sortable mb-3" data-position="3" data-sort="1">
-                    <div style="border-left: 10px solid #ff9900 !important;height:160px;"
+                <div class="col-md-3 col-custom ui-sortable mb-3" data-position="3" data-sort="1">
+                    <div style="border-left: 10px solid #ff9900 !important;height:140px;"
                         class="single-report mb-xs-30">
                         <div class="s-report-inner pr--20 pt--30 mb-3">
                             <div class="s-report-title d-flex justify-content-between">
@@ -524,8 +524,8 @@
                     </div>
                 </div>
 
-                <div class="col-md-3 ui-sortable mb-3" data-position="4" data-sort="1">
-                    <div style="border-left: 10px solid #6600cc !important;height:160px;"
+                <div class="col-md-3 col-custom ui-sortable mb-3" data-position="4" data-sort="1">
+                    <div style="border-left: 10px solid #6600cc !important;height:140px;"
                         class="single-report mb-xs-30">
                         <div class="s-report-inner pr--20 pt--30 mb-3">
                             <div class="s-report-title d-flex justify-content-between">
@@ -540,8 +540,8 @@
                     </div>
                 </div>
 
-                <div class="col-md-3 ui-sortable mb-3" data-position="5" data-sort="1">
-                    <div style="border-left: 10px solid #375068 !important;height:160px;"
+                <div class="col-md-3 col-custom ui-sortable mb-3" data-position="5" data-sort="1">
+                    <div style="border-left: 10px solid #375068 !important;height:140px;"
                         class="single-report mb-xs-30">
                         <div class="s-report-inner pr--20 pt--30 mb-3">
                             <div class="s-report-title d-flex justify-content-between">
