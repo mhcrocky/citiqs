@@ -1,9 +1,4 @@
 'use strict';
-(function(){
-    $('html').height('100%');
-    $('body').height('100%');
-    $('.main-wrapper-nh').height('100%');
-}());
 
 function redirectTo(urlPath) {
     let url = globalVariables.baseUrl + urlPath;

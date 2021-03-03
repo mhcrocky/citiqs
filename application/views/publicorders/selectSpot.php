@@ -1,4 +1,4 @@
-<main class="main-wrapper-nh" style="text-align:center; width:100vw: height:100vh">
+<main class="main-wrapper-nh" style="text-align:center;">
 	<div id="selectSpotContainer" class="col-half background-apricot-blue height designBackgroundImage">
 		<div class="width-650" style="padding-top:0px"></div>
 		<?php if (!empty($_SESSION['iframe'])) { ?>
@@ -140,3 +140,10 @@
 		})
 	</script>
 <?php } ?>
+<script>
+(function(){
+    $('html').height('100%');
+    $('body').height('100%');
+    $('.main-wrapper-nh').height('100%');
+}());
+</script>
