@@ -550,26 +550,6 @@
             />
         </label>
     </div>
-    <div class="form-group col-sm-12">
-        <label style="display:block;">
-            Arrows background color:
-            <input
-                data-jscolor=""
-				style="border-radius: 50px"
-                class="form-control"
-                name="makeOrderNew[class][slick-prev][background]"
-                data-css-selector="class"
-                data-css-selector-value="slick-prev"
-                data-css-property="background"
-                onfocus="styleELements(this)"
-                oninput="styleELements(this)"
-                <?php if ( isset($design['makeOrderNew']['class']['slick-prev']['background']) ) { ?>
-                value = "<?php echo $design['makeOrderNew']['class']['slick-prev']['background']?>"
-                data-value="1"
-                <?php } ?>
-            />
-        </label>
-    </div>
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
@@ -595,10 +575,47 @@
                 data-css-selector="class"
                 data-css-selector-value="slick-next"
                 data-css-property="background"
-                id="slick-next"
+                id="slick_next"
                 <?php if ( isset($design['makeOrderNew']['class']['slick-next']['background']) ) { ?>
                 value = "<?php echo $design['makeOrderNew']['class']['slick-next']['background']?>"
                 data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Arrows background color:
+            <input
+                type="text"
+				style="border-radius: 50px"
+                class="form-control"
+                name="makeOrderNew[class][slick-prev][border-radius]"
+                data-css-selector="class"
+                data-css-selector-value="slick-prev"
+                data-css-property="border-radius"
+                onfocus="arrowStyle(this,true)"
+                oninput="arrowStyle(this, true)"
+                <?php if ( isset($design['makeOrderNew']['class']['slick-prev']['border-radius']) ) { ?>
+                value = "<?php echo $design['makeOrderNew']['class']['slick-prev']['border-radius']?>"
+                data-value="1"
+                <?php } else { ?>
+                    value="50%"
+                <?php } ?>
+            />
+            <input
+                type="hidden"
+                name="makeOrderNew[class][slick-next][border-radius]"
+                data-css-selector="class"
+                data-css-selector-value="slick-next"
+                data-css-property="border-radius"
+                id="slick_next_border"
+                <?php if ( isset($design['makeOrderNew']['class']['slick-next']['border-radius']) ) { ?>
+                value = "<?php echo $design['makeOrderNew']['class']['slick-next']['border-radius']?>"
+                data-value="1"
+                <?php } else { ?>
+                    value="50%"
                 <?php } ?>
             />
         </label>
@@ -701,11 +718,17 @@ $('#ingredientsColor').on('change', function() {
     $('#ingredients_img').val(filter);
 });
 
-function arrowStyle(){
+function arrowStyle(el, border_radius=false){
     let color = $(el).val();
-    $('#slick-next').val(color);
-    styleELements($('#slick-next'));
+    if(border_radius){
+        $('#slick_next_border').val(color);
+        styleELements(el);
+        styleELements(document.getElementById('slick_next_border'));
+        return ;
+    }
+    $('#slick_next').val(color);
     styleELements(el);
+    styleELements(document.getElementById('slick_next'));
 }
 </script>
 

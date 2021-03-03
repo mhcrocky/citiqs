@@ -17,6 +17,9 @@
          if(isset($design['paymentContainer'])){
             $css .=   '#area-container .payment-container a.paymentMethod:hover { background-color:' . $design['paymentContainer']['hover'] . ';border-radius: ' . $design['paymentContainer']['border-radius'] . '; color: ' . $design['paymentContainer']['color'] . ' }';
          }
+         if(isset($design['makeOrderNew']['class']['slick-prev'])){
+            $css .=   '.slick-next:hover, slick-prev:hover { background:' . $design['makeOrderNew']['class']['slick-prev']['background'] . ';border-radius: ' . $design['makeOrderNew']['class']['slick-prev']['border-radius'] . '; }';
+         }
 
         
 
