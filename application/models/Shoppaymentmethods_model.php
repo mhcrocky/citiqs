@@ -51,7 +51,7 @@
 
             if (!count($data)) return false;
             if (isset($data['vendorId']) && !Validate_data_helper::validateInteger($data['vendorId'])) return false;
-            if (isset($data['productGroup']) && !in_array($data['productGroup'], $this->config->item('prodcutGroups'))) return false;
+            if (isset($data['productGroup']) && !in_array($data['productGroup'], $this->config->item('productGroups'))) return false;
             if (isset($data['paymentMethod']) && !in_array($data['paymentMethod'], $this->config->item('onlinePaymentTypes'))) return false;
 
             return true;
@@ -60,7 +60,7 @@
         public function insertProductGroupsAndPaymentMethods(int $vendorId): bool
         {
             $this->load->config('custom');
-            $configProductGroups  = $this->config->item('prodcutGroups');
+            $configProductGroups  = $this->config->item('productGroups');
             $configPaymentMethods  = $this->config->item('onlinePaymentTypes');
 
             if (
@@ -151,7 +151,7 @@
         public function insertAll(array $vendorIds): bool
         {
             $this->load->config('custom');
-            $configProductGroups  = $this->config->item('prodcutGroups');
+            $configProductGroups  = $this->config->item('productGroups');
             $configPaymentMethods  = $this->config->item('onlinePaymentTypes');
 
             if (
@@ -191,8 +191,6 @@
             // insert all payment methods
             $insertMethods = [];
 
-            
-
             foreach ($vendorIds as $vendorId) {
                 $vendorId = intval($vendorId['vendorId']);
                 foreach ($configProductGroups as $group) {
@@ -211,5 +209,22 @@
             }
 
             return $insertMethods ?  ($this->multipleCreate($insertMethods) > 0) : true;
+        }
+
+        public function getVendorGroupPaymentMethods(): ?array
+        {
+            return $this->readImproved([
+                'what' => [
+                    $this->table . '.id',
+                    $this->table . '.productGroup',
+                    $this->table . '.paymentMethod',
+                    $this->table . '.vendorCost',
+                    $this->table . '.buyerCost'
+                ],
+                'where' => [
+                    $this->table . '.vendorId' => $this->vendorId,
+                    $this->table . '.productGroup' => $this->productGroup,
+                ]
+            ]);
         }
     }

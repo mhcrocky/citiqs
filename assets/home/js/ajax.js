@@ -324,6 +324,10 @@ var callThis = (function() {
         insertAllPaymentMethods: function(callFunction) {
             callFunction(this);
         },
+        updatePaymentMethodCost: function(callFunction, functionArg) {
+            functionArg.push(this);
+            callFunction(...functionArg);
+        }
     };
     return methods;
 })();

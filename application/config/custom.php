@@ -198,7 +198,7 @@ $config['storeAndPos'] = 'Store & POS';
 $config['reservations'] = 'Reservations';
 $config['eTicketing'] = 'E-Ticketing';
 
-$config['prodcutGroups'] = [
+$config['productGroups'] = [
     $config['storeAndPos'],
     $config['reservations'],
     $config['eTicketing'],
