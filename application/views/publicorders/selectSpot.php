@@ -90,7 +90,7 @@
 								type='submit'
 								class='submit-type'
 								onclick="redirectToSpot('checked')"
-								style="margin-top:30px;"
+								style="text-align:center;margin-top:30px;padding-left:0;padding-right:0"
 							>
 								CONFIRM
 							</button>

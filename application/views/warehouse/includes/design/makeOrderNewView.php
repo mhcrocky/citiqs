@@ -594,6 +594,28 @@
     </div>
     <div class="form-group col-sm-12">
         <label style="display:block;">
+            Remark input border radius:
+            <input
+                type="text"
+				style="border-radius: 50px"
+                class="form-control"
+                name="makeOrderNew[class][remarks][border-radius]"
+                data-css-selector="class"
+                data-css-selector-value="remarks"
+                data-css-property="border-radius"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['makeOrderNew']['class']['remarks']['border-radius']) ) { ?>
+                value = "<?php echo $design['makeOrderNew']['class']['remarks']['border-radius']?>"
+                data-value="1"
+                <?php } else { ?>
+                value="0px"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
            Ingredients Image Color:
             <select id="ingredientsColor" style="border-radius: 50px" class="form-control" name="selValue">
                 <option value="brightness(100%)" data-content="<i style='margin-right: 5px;color: #df5453;' class='fa fa-square'></i> Red" selected></option>
