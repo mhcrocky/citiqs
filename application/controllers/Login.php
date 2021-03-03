@@ -146,9 +146,10 @@ class Login extends BaseControllerWeb
 					$sessionArray['activatePos'] = $this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('activatePos');
 					$sessionArray['payNlServiceIdSet'] = !is_null($this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('paynlServiceId'));
 					$merchantId = $this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('merchantId');
-					if (!$sessionArray['payNlServiceIdSet'] && $merchantId) {
-						$sessionArray['payNlServiceIdSet'] = Pay_helper::getPayNlServiceId($merchantId, intval($result->userId));
-					}
+
+					// if (!$sessionArray['payNlServiceIdSet'] && $merchantId) {
+					// 	$sessionArray['payNlServiceIdSet'] = Pay_helper::getPayNlServiceId($merchantId, intval($result->userId));
+					// }
 
 					// $this->load->model('vendor_model');
 					// $MenuArray = $this->vendor_model->getMenuOptionsByVendorId($result->userId);

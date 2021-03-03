@@ -188,6 +188,140 @@ $config['paymentTypes'] = [
     $config['myBankPayment']
 ];
 
+$config['storeAndPos'] = 'Store & POS';
+$config['reservations'] = 'Reservations';
+$config['eTicketing'] = 'E-Ticketing';
+
+
+$config['paymentPrice'] = [
+    $config['storeAndPos'] => [
+        $config['prePaid'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['postPaid'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['idealPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['creditCardPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['bancontactPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['giroPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['payconiqPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['pinMachinePayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['voucherPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['myBankPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+    ],
+    $config['reservations'] => [
+        $config['prePaid'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['postPaid'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['idealPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['creditCardPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['bancontactPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['giroPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['payconiqPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['pinMachinePayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['voucherPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['myBankPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+    ],
+    $config['eTicketing'] => [
+        $config['prePaid'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['postPaid'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['idealPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['creditCardPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['bancontactPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['giroPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['payconiqPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['pinMachinePayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['voucherPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+        $config['myBankPayment'] => [
+                'percent' => 0,
+                'amount' => 0,
+            ],
+    ],
+];
+
 // paynl payment types
 $config['idealPaymentType'] = '10';
 $config['creditCardPaymentType'] = '706';
