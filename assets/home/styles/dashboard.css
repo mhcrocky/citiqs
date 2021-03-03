@@ -132,3 +132,12 @@ input:disabled{
 .border-danger{
 	border: 1px solid #df4759;
 }
+
+.s-report-inner {
+    padding-left: 40px !important;
+}
+
+.col-custom {
+	flex: 0 0 20% !important;
+	max-width: 20% !important;
+}
