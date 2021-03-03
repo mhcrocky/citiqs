@@ -7,7 +7,7 @@
 
     if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-    Class Shopmethodcost_model extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
+    Class Shoppaymentmethods_model extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
     {
         public $id;
         public $vendorId;
@@ -15,8 +15,8 @@
         public $paymentMethod;
         public $vendorCost;
         public $buyerCost;
-
-        private $table = 'tbl_shop_payment_methods_cost';
+        
+        private $table = 'tbl_shop_payment_methods';
 
         protected function setValueType(string $property,  &$value): void
         {
@@ -148,5 +148,68 @@
             return array_diff($configPaymentMethods, $paymentMethods);
         }
 
-        
+        public function insertAll(array $vendorIds): bool
+        {
+            $this->load->config('custom');
+            $configProductGroups  = $this->config->item('prodcutGroups');
+            $configPaymentMethods  = $this->config->item('onlinePaymentTypes');
+
+            if (
+                !$this->insertAllGroups($vendorIds, $configProductGroups, $configPaymentMethods)
+                || !$this->insertAllMethods($vendorIds, $configProductGroups, $configPaymentMethods)
+            ) return false;
+
+            return true;
+        }
+
+        public function insertAllGroups(array $vendorIds, array $configProductGroups, array $configPaymentMethods): bool
+        {
+            // insert all groups
+            $insertGroups = [];
+
+            foreach ($vendorIds as $vendorId) {
+                $vendorId = intval($vendorId['vendorId']);
+                $newGroups = $this->getNewProductGroups($vendorId, $configProductGroups);
+                if ($newGroups) {
+                    foreach ($newGroups as $group) {
+                        foreach ($configPaymentMethods as $method) {
+                            $insert = [
+                                'vendorId' => $vendorId,
+                                'productGroup' => $group,
+                                'paymentMethod' => $method
+                            ];
+                            array_push($insertGroups, $insert);
+                        }
+                    }
+                }
+            }
+            return $insertGroups ? ($this->multipleCreate($insertGroups) > 0) : true;
+        }
+
+        public function insertAllMethods(array $vendorIds, array $configProductGroups, array $configPaymentMethods): bool
+        {
+            // insert all payment methods
+            $insertMethods = [];
+
+            
+
+            foreach ($vendorIds as $vendorId) {
+                $vendorId = intval($vendorId['vendorId']);
+                foreach ($configProductGroups as $group) {
+                    $newMethods = $this->getNewPaymentMethods($vendorId, $configPaymentMethods, $group);
+                    if ($newMethods) {
+                        foreach ($newMethods as $method) {
+                            $insert = [
+                                'vendorId' => $vendorId,
+                                'productGroup' => $group,
+                                'paymentMethod' => $method
+                            ];
+                            array_push($insertMethods, $insert);
+                        }
+                    }
+                }
+            }
+
+            return $insertMethods ?  ($this->multipleCreate($insertMethods) > 0) : true;
+        }
     }

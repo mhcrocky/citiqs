@@ -38,6 +38,7 @@ class Ajax extends CI_Controller
         $this->load->model('employee_model');
         $this->load->model('shopposlogin_model');
         $this->load->model('shoptemplates_model');
+        $this->load->model('shoppaymentmethods_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -2090,5 +2091,26 @@ class Ajax extends CI_Controller
 
         echo json_encode($response);
 		return;
-	}
+    }
+
+    public function insertAllPaymentMethods(): void
+    {
+        if (!$this->input->is_ajax_request() || intval($_SESSION['userId']) !== $this->config->item('tiqsId')) return;
+
+        $vendorIds = $this->shopvendor_model->readImproved(['what' => ['vendorId']]);
+
+        if ($this->shoppaymentmethods_model->insertAll($vendorIds)) {
+            $response = [
+                'status' => '1',
+                'messages' => ['All data imported']
+            ];
+        } else {
+            $response = [
+                'messages' => ['Import failed']
+            ];
+        }
+
+        echo json_encode($response);
+        return;
+    }
 }

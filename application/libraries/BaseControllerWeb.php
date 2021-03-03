@@ -19,7 +19,10 @@ class BaseControllerWeb extends CI_Controller
     {
 		parent::__construct();
 		$this->load->library('language', array('controller' => $this->router->class));
-		$this->load->helper('cookie');
+        $this->load->helper('cookie');
+        $this->load->config('custom');
+
+        $this->tiqsMainId = $this->config->item('tiqsId');
 	}
 
     /**
@@ -54,7 +57,6 @@ class BaseControllerWeb extends CI_Controller
             $this->name = $this->session->userdata('name');
             $this->roleText = $this->session->userdata('roleText');
             $this->lastLogin = $this->session->userdata('lastLogin');
-
             $this->global['name'] = $this->name;
             $this->global['role'] = $this->role;
             $this->global['role_text'] = $this->roleText;
