@@ -15,7 +15,9 @@
         public $paymentMethod;
         public $vendorCost;
         public $buyerCost;
-        
+        public $percent;
+        public $amount;
+
         private $table = 'tbl_shop_payment_methods';
 
         protected function setValueType(string $property,  &$value): void
@@ -53,6 +55,8 @@
             if (isset($data['vendorId']) && !Validate_data_helper::validateInteger($data['vendorId'])) return false;
             if (isset($data['productGroup']) && !in_array($data['productGroup'], $this->config->item('productGroups'))) return false;
             if (isset($data['paymentMethod']) && !in_array($data['paymentMethod'], $this->config->item('onlinePaymentTypes'))) return false;
+            if (isset($data['percent']) && !Validate_data_helper::validateInteger($data['percent'])) return false;
+            if (isset($data['amount']) && !Validate_data_helper::validateFloat($data['amount'])) return false;
 
             return true;
         }
@@ -219,7 +223,9 @@
                     $this->table . '.productGroup',
                     $this->table . '.paymentMethod',
                     $this->table . '.vendorCost',
-                    $this->table . '.buyerCost'
+                    $this->table . '.buyerCost',
+                    $this->table . '.percent',
+                    $this->table . '.amount'
                 ],
                 'where' => [
                     $this->table . '.vendorId' => $this->vendorId,
