@@ -111,9 +111,9 @@
                             <a href="javascript:;" class="paymentMethod method-card" data-toggle="modal" data-target="#prePaid">
                                 <img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Pay at waiter" />
                                 <?php if ($vendor['vendorId'] == THGROUP) { ?>
-                                    <span class="paymentMethodText">Collect at the bar</span>
+                                    <span class="paymentMethodWaiter">Collect at the bar</span>
                                 <?php } else { ?>
-                                    <span class="paymentMethodText">Pay at waiter</span>
+                                    <span class="paymentMethodWaiter">Pay at waiter</span>
                                 <?php } ?>
                             </a>
                         <?php } ?>
@@ -122,9 +122,9 @@
                                 <img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Pay at waiter" />
                                 
                                 <?php if ($vendor['vendorId'] == THGROUP) { ?>
-                                    <span class="paymentMethodText">Collect at the bar</span>
+                                    <span class="paymentMethodWaiter">Collect at the bar</span>
                                 <?php } else { ?>
-                                    <span class="paymentMethodText">Pay at waiter</span>
+                                    <span class="paymentMethodWaiter">Pay at waiter</span>
                                 <?php } ?>
                             </a>
                         <?php } ?>
@@ -263,7 +263,7 @@
             <p class="voucher" style="display:none; margin:0px; backgorund-color:#fff; text-align:left; color:#000; font-weight:900; padding:5px">Pay with voucher: <span id="voucherAmount"></span> &euro;</p>
             <p class="voucher" style="display:none; margin:0px; backgorund-color:#fff; text-align:left; color:#000; font-weight:900; padding:5px">Left amount: <span id="leftAmount"></span> &euro;</p>
             <div id="payFooter" class="footer" style="text-align:left">
-                <a id="backLink" href="<?php echo base_url() . $redirect; ?>" class="btn-cancel">
+                <a id="backLink" href="<?php echo base_url() . $redirect; ?>" class="btn btn-cancel">
                     <i class="fa fa-arrow-left"></i>
                     <span data-trans="" data-trn-key="Annuleren">BACK</span>
                 </a>

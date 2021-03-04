@@ -160,7 +160,7 @@
                         href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&spotid=' . $spotId . '&' . $orderDataGetKey . '=' . $orderRandomKey; ?>"                        
                         style="background-color: #948b6f" class="button"
                         >
-                        <i class="fa fa-arrow-left"></i>
+                        <i class="fa fa-arrow-left arrowStyle"></i>
                         <?php echo $this->language->line("PAYMENT-9100",'Back to list'); ?>
                     </a>
                     <a
@@ -171,7 +171,7 @@
                         onclick="submitForm()"
                         >
                         Continue
-                        <i class="fa fa-arrow-right"></i>
+                        <i class="fa fa-arrow-right arrowStyle"></i>
                     </a>
                 </div>
             </div>

@@ -700,9 +700,13 @@
                 <option value="invert(70%)" data-content="<i style='margin-right: 5px;color: #548daa;'  class='fa fa-square'></i> Sky"></option>
             </select>
 
-            <input type="hidden" id="ingredients_img" class="form-control colorInput" name="shop[class][ingredients][filter]"
-                <?php if ( isset($design['shop']['class']['ingredients']['filter']) ) { ?>
-                value="<?php echo $design['shop']['class']['ingredients']['filter']?>" data-value="1" <?php } else { ?>
+            <input type="hidden" class="form-control ingredients_img" name="makeOrderNew[class][ingredients][filter]"
+                <?php if ( isset($design['makeOrderNew']['class']['ingredients']['filter']) ) { ?>
+                value="<?php echo $design['makeOrderNew']['class']['ingredients']['filter']?>" data-value="1" <?php } else { ?>
+                value="brightness(100%)" <?php } ?> />
+            <input type="hidden" class="form-control ingredients_img" name="checkoutOrder[class][ingredients][filter]"
+                <?php if ( isset($design['checkoutOrder']['class']['ingredients']['filter']) ) { ?>
+                value="<?php echo $design['checkoutOrder']['class']['ingredients']['filter']?>" data-value="1" <?php } else { ?>
                 value="brightness(100%)" <?php } ?> />
 
         </label>
@@ -715,7 +719,7 @@ $('#ingredientsColor').selectpicker();
 $('#ingredientsColor').on('change', function() {
     let filter = $('#ingredientsColor option:selected').val();
     $("#iframe").contents().find("head").append('<style> .ingredients { filter:'+ filter +' !important;}</style>');
-    $('#ingredients_img').val(filter);
+    $('.ingredients_img').val(filter);
 });
 
 function arrowStyle(el, border_radius=false){
@@ -732,10 +736,10 @@ function arrowStyle(el, border_radius=false){
 }
 </script>
 
-<?php if ( isset($design['shop']['class']['ingredients']['filter']) ) { ?>
+<?php if ( isset($design['makeOrderNew']['class']['ingredients']['filter']) ) { ?>
 <script>
-var value = "<?php echo $design['shop']['class']['ingredients']['filter']; ?>";
+var value = "<?php echo $design['makeOrderNew']['class']['ingredients']['filter']; ?>";
 $('select[name=selValue]').val(value);
-$('#logoColor').selectpicker('refresh');
+$('#ingredientsColor').selectpicker('refresh');
 </script>
 <?php } ?>

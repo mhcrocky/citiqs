@@ -384,6 +384,28 @@ style="border-radius: 50px"
     </div>
     <div class="form-group col-sm-12">
         <label style="display:block;">
+            Remarks input border radius:
+            <input
+                type="text"
+                style="border-radius: 50px"
+                class="form-control"
+                name="checkoutOrder[id][notesInput][border-radius]"
+                data-css-selector="id"
+                data-css-selector-value="notesInput"
+                data-css-property="border-radius"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['checkoutOrder']['id']['notesInput']['border-radius']) ) { ?>
+                value = "<?php echo $design['checkoutOrder']['id']['notesInput']['border-radius']; ?>"
+                data-value="1"
+                <?php } else { ?>
+                value="0px"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
             Back button background color:
             <input
                 data-jscolor=""
@@ -502,6 +524,48 @@ style="border-radius: 50px"
                 data-value="1"
                 <?php } else { ?>
                 value="0px"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Arrows color:
+            <input
+                data-jscolor=""
+                style="border-radius: 50px"
+                class="form-control"
+                name="checkoutOrder[class][arrowStyle][color]"
+                data-css-selector="class"
+                data-css-selector-value="arrowStyle"
+                data-css-property="color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['checkoutOrder']['class']['arrowStyle']['color']) ) { ?>
+                value = "<?php echo $design['checkoutOrder']['class']['arrowStyle']['color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Arrows size:
+            <input
+                type="text"
+                style="border-radius: 50px"
+                class="form-control"
+                name="checkoutOrder[class][arrowStyle][font-size]"
+                data-css-selector="class"
+                data-css-selector-value="arrowStyle"
+                data-css-property="font-size"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['checkoutOrder']['class']['arrowStyle']['font-size']) ) { ?>
+                value = "<?php echo $design['checkoutOrder']['class']['arrowStyle']['font-size']?>"
+                data-value="1"
+                <?php } else { ?>
+                    value="14px"
                 <?php } ?>
             />
         </label>
