@@ -189,7 +189,7 @@
                                                                             <img
                                                                                 src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
                                                                                 alt="<?php echo $allergy; ?>"
-                                                                                class="allergies"
+                                                                                class="ingredients"
                                                                                 height='24px'
                                                                                 width='24px'
                                                                                 style="display:inline; margin:0px 2px 3px 0px"

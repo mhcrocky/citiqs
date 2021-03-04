@@ -163,6 +163,28 @@
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
+            Payment methods font color:
+            <input
+                data-jscolor=""
+                style="border-radius: 50px;"
+                class="form-control"
+                name="payOrder[class][paymentMethodText][color]"
+                data-css-selector="class"
+                data-css-selector-value="paymentMethodText"
+                data-css-property="color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['payOrder']['class']['paymentMethodText']['color']) ) { ?>
+                value = "<?php echo $design['payOrder']['class']['paymentMethodText']['color']?>"
+                data-value="1"
+                <?php } else { ?>
+                value="#727780"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
             Payment methods font size:
             <input
                 type="text"
@@ -176,6 +198,51 @@
                 oninput="styleELements(this)"
                 <?php if ( isset($design['payOrder']['class']['paymentMethodText']['font-size']) ) { ?>
                 value = "<?php echo $design['payOrder']['class']['paymentMethodText']['font-size']?>"
+                data-value="1"
+                <?php } else { ?>
+                value="14px"
+                <?php } ?>
+            />
+        </label>
+    </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Pay at waiter methods font color:
+            <input
+                data-jscolor=""
+                style="border-radius: 50px;"
+                class="form-control"
+                name="payOrder[class][paymentMethodWaiter][color]"
+                data-css-selector="class"
+                data-css-selector-value="paymentMethodWaiter"
+                data-css-property="color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['payOrder']['class']['paymentMethodWaiter']['color']) ) { ?>
+                value = "<?php echo $design['payOrder']['class']['paymentMethodWaiter']['color']?>"
+                data-value="1"
+                <?php } else { ?>
+                value="#727780"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Pay at waiter methods font size:
+            <input
+                type="text"
+                style="border-radius: 50px;"
+                class="form-control"
+                name="payOrder[class][paymentMethodWaiter][font-size]"
+                data-css-selector="class"
+                data-css-selector-value="paymentMethodWaiter"
+                data-css-property="font-size"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['payOrder']['class']['paymentMethodWaiter']['font-size']) ) { ?>
+                value = "<?php echo $design['payOrder']['class']['paymentMethodWaiter']['font-size']?>"
                 data-value="1"
                 <?php } else { ?>
                 value="14px"
@@ -404,6 +471,74 @@
             />
         </label>
     </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Back button background color:
+            <input
+                data-jscolor=""
+                style="border-radius: 50px;"
+                class="form-control"
+                name="payOrder[id][backLink][background-color]"
+                data-css-selector="id"
+                data-css-selector-value="backLink"
+                data-css-property="background-color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['payOrder']['id']['backLink']['background-color']) ) { ?>
+                value = "<?php echo $design['payOrder']['id']['backLink']['background-color']?>"
+                data-value="1"
+                <?php } else { ?>
+                    value="rgba(255,255,255, 0)"
+                <?php } ?>
+            />
+        </label>
+    </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Back button color:
+            <input
+                data-jscolor=""
+                style="border-radius: 50px;"
+                class="form-control"
+                name="payOrder[id][backLink][color]"
+                data-css-selector="id"
+                data-css-selector-value="backLink"
+                data-css-property="color"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['payOrder']['id']['backLink']['color']) ) { ?>
+                value = "<?php echo $design['payOrder']['id']['backLink']['color']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Back button border radius:
+            <input
+                type="tex"
+                style="border-radius: 50px;"
+                class="form-control"
+                name="payOrder[id][backLink][border-radius]"
+                data-css-selector="id"
+                data-css-selector-value="backLink"
+                data-css-property="border-radius"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['payOrder']['id']['backLink']['border-radius']) ) { ?>
+                value = "<?php echo $design['payOrder']['id']['backLink']['border-radius']?>"
+                data-value="1"
+                <?php } else { ?>
+                    value="5px"
+                <?php } ?>
+            />
+        </label>
+    </div>
+
 </fieldset>
 <script>
 function hoverStyle(el, text_color=false, radius=false){
