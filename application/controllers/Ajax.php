@@ -2113,4 +2113,53 @@ class Ajax extends CI_Controller
         echo json_encode($response);
         return;
     }
+
+    public function getVendorPaymentMethods(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+        $productGroup = base64_decode($_GET['group']);
+
+        $data = [
+            'data' =>   $this
+                            ->shoppaymentmethods_model
+                            ->setProperty('vendorId', $_SESSION['userId'])
+                            ->setProperty('productGroup', $productGroup)
+                            ->getVendorGroupPaymentMethods()
+        ];
+
+
+        $data = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+        $this
+            ->output
+                ->set_status_header( 200 )
+                ->set_content_type('application/json', 'utf-8')
+                ->set_output($data);
+
+        return;
+    }
+
+    public function updatePaymentMethodCost($id): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = Utility_helper::sanitizePost();
+
+        $update = $this->shoppaymentmethods_model->setObjectId(intval($id))->setObjectFromArray($post)->update();
+
+        if ($update) {
+            $response = [
+                'status' => '1',
+                'messages' => ['Cost updated']
+            ];
+        } else {
+            $response = [
+                'status' => '0',
+                'messages' => ['Update failed']
+            ];
+        }
+
+        echo json_encode($response);
+        return;
+    }
 }
