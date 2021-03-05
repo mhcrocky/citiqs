@@ -333,11 +333,15 @@ class Ajaxdorian extends CI_Controller
 
     public function saveTimeSLot () {
         //if (!$this->input->is_ajax_request()) return;
+        $duration = $this->convertToHoursMins($this->input->post('duration'));
+        $overflow = $this->convertToHoursMins($this->input->post('overflow'));
         $spotData = [
             'timeslotdescript' => $this->input->post('timeslotdescript'),
             'available_items' => $this->input->post('available_items'),
             'fromtime' => date("H:i:s", strtotime($this->input->post('fromtime'))),
             'totime' => date("H:i:s", strtotime($this->input->post('totime'))),
+            'duration' => $duration,
+            'overflow' => $overflow,
             'price' => $this->input->post('price'),
             'spot_id' => $this->input->post('spot_id'),
             'email_id' => $this->input->post('email_id')
@@ -363,6 +367,18 @@ class Ajaxdorian extends CI_Controller
             $status = 'error';
         }
         echo json_encode(array('msg' => $msg, 'status' =>$status, 'data' => $data));
+    }
+
+    function convertToHoursMins($time, $format = '%02d:%02d') {
+        if(!is_numeric($time)){
+            return $time;
+        }
+        if ($time < 1) {
+            return;
+        }
+        $hours = floor($time / 60);
+        $minutes = ($time % 60);
+        return sprintf($format, $hours, $minutes);
     }
 
     public function deleteTimeSlot () {
