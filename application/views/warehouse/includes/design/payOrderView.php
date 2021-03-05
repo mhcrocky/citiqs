@@ -208,51 +208,6 @@
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
-            Pay at waiter methods font color:
-            <input
-                data-jscolor=""
-                style="border-radius: 50px;"
-                class="form-control"
-                name="payOrder[class][paymentMethodWaiter][color]"
-                data-css-selector="class"
-                data-css-selector-value="paymentMethodWaiter"
-                data-css-property="color"
-                onfocus="styleELements(this)"
-                oninput="styleELements(this)"
-                <?php if ( isset($design['payOrder']['class']['paymentMethodWaiter']['color']) ) { ?>
-                value = "<?php echo $design['payOrder']['class']['paymentMethodWaiter']['color']?>"
-                data-value="1"
-                <?php } else { ?>
-                value="#727780"
-                <?php } ?>
-            />
-        </label>
-    </div>
-    <div class="form-group col-sm-12">
-        <label style="display:block;">
-            Pay at waiter methods font size:
-            <input
-                type="text"
-                style="border-radius: 50px;"
-                class="form-control"
-                name="payOrder[class][paymentMethodWaiter][font-size]"
-                data-css-selector="class"
-                data-css-selector-value="paymentMethodWaiter"
-                data-css-property="font-size"
-                onfocus="styleELements(this)"
-                oninput="styleELements(this)"
-                <?php if ( isset($design['payOrder']['class']['paymentMethodWaiter']['font-size']) ) { ?>
-                value = "<?php echo $design['payOrder']['class']['paymentMethodWaiter']['font-size']?>"
-                data-value="1"
-                <?php } else { ?>
-                value="14px"
-                <?php } ?>
-            />
-        </label>
-    </div>
-
-    <div class="form-group col-sm-12">
-        <label style="display:block;">
             Voucher respone background color:
             <input
                 data-jscolor=""

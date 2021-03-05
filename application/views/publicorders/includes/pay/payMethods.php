@@ -111,9 +111,9 @@
                             <a href="javascript:;" class="paymentMethod method-card" data-toggle="modal" data-target="#prePaid">
                                 <img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Pay at waiter" />
                                 <?php if ($vendor['vendorId'] == THGROUP) { ?>
-                                    <span class="paymentMethodWaiter">Collect at the bar</span>
+                                    <span class="paymentMethodText">Collect at the bar</span>
                                 <?php } else { ?>
-                                    <span class="paymentMethodWaiter">Pay at waiter</span>
+                                    <span class="paymentMethodText">Pay at waiter</span>
                                 <?php } ?>
                             </a>
                         <?php } ?>
@@ -122,9 +122,9 @@
                                 <img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Pay at waiter" />
                                 
                                 <?php if ($vendor['vendorId'] == THGROUP) { ?>
-                                    <span class="paymentMethodWaiter">Collect at the bar</span>
+                                    <span class="paymentMethodText">Collect at the bar</span>
                                 <?php } else { ?>
-                                    <span class="paymentMethodWaiter">Pay at waiter</span>
+                                    <span class="paymentMethodText">Pay at waiter</span>
                                 <?php } ?>
                             </a>
                         <?php } ?>
