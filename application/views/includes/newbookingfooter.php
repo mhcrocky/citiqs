@@ -57,9 +57,7 @@ $(document).ready(function() {
 
     if (url.includes('spots')) {
         $("#spot-active").addClass('booking-active');
-    } else if (url.includes('timeslot')) {
-        $("#timeslot-active").addClass('booking-active');
-    } else if (url.includes('time')) {
+    } else if (url.includes('time_slots')) {
         $("#timeslot-active").addClass('booking-active');
     } else if (url.includes('pay')) {
         $("#personal-active").addClass('booking-active');
