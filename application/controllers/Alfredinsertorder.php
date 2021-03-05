@@ -222,6 +222,7 @@ class Alfredinsertorder extends BaseControllerWeb
         $post['order']['buyerId'] = $userId;
         $post['order']['serviceTypeId'] = $spot['spotTypeId'];
         $post['order']['orderRandomKey'] = $orderRandomKey;
+        $post['order']['createdOrder'] = date('Y-m-d H:i:s');
 
         if (!empty($post['order']['date']) && !empty($post['order']['time'])) {
             $orderDate = explode(' ', $post['order']['date']);

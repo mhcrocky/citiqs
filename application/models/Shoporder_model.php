@@ -14,6 +14,7 @@
         public $amount;
         public $serviceFee;
         public $paid;
+        public $createdOrder;
         public $created;
         public $updated;
         public $orderStatus;
@@ -40,6 +41,7 @@
         public $bbOrderPrint;
         public $apiIdentifier;
         public $apiKeyId;
+        public $invoiceNumber;
 
         private $table = 'tbl_shop_orders';
 
@@ -83,6 +85,7 @@
             if (isset($data['amount']) && !Validate_data_helper::validateFloat($data['amount'])) return false;
             if (isset($data['serviceFee']) && !Validate_data_helper::validateFloat($data['serviceFee'])) return false;
             if (isset($data['paid']) && !($data['paid'] === '1' || $data['paid'] === '0')) return false;
+            if (isset($data['createdOrder']) && !Validate_data_helper::validateDate($data['createdOrder'])) return false;
             if (isset($data['created']) && !Validate_data_helper::validateDate($data['created'])) return false;
             if (isset($data['updated']) && !Validate_data_helper::validateDate($data['updated'])) return false;
             if (isset($data['orderStatus']) && !Validate_data_helper::validateString($data['orderStatus'])) return false;
@@ -108,6 +111,7 @@
             if (isset($data['apiKeyId']) && !Validate_data_helper::validateInteger($data['apiKeyId'])) return false;
             if (isset($data['isPos']) && !($data['isPos'] === '1' || $data['isPos'] === '0')) return false;
             if (isset($data['posPrint']) && !($data['posPrint'] === '1' || $data['posPrint'] === '0')) return false;
+            if (isset($data['invoiceNumber']) && !Validate_data_helper::validateString($data['invoiceNumber'])) return false;
 
             return true;
         }

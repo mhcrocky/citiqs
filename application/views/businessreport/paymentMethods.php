@@ -41,6 +41,8 @@
                         <th>Payment method</th>
                         <th>Vendor cost</th>
                         <th>Buyer cost</th>
+                        <th>Percent (cost)</th>
+                        <th>Amount (cost)</th>
                     </thead>
                     <tbody>
                     </tbody>

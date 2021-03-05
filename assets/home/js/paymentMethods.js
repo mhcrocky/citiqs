@@ -39,6 +39,20 @@ function loadTable(tableId) {
                 "data": function(row, type, val, meta) {
                     return returnCost(tableId, row.id, row.buyerCost, 'buyerCost');
                 }
+            },
+            {
+                "name": "percent",
+                "targets": 5,
+                "data": function(row, type, val, meta) {
+                    return row.percent;
+                }
+            },
+            {
+                "name": "amount",
+                "targets": 6,
+                "data": function(row, type, val, meta) {
+                    return row.amount;
+                }
             }
         ]
     });
