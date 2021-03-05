@@ -1,5 +1,24 @@
 <html>
+<style>
+li {
+    list-style-type: none;
 
+
+
+    &:nth-of-type(1) {
+        .custom-checkbox .custom-control-input:checked~.custom-control-label::after {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%230fff00' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
+        }
+
+        .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+            background-color: #5bc0de;
+        }
+    }
+
+
+}
+
+</style>
 <body>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vuejs-datepicker"></script>
@@ -27,6 +46,7 @@
                                     <th>Description</th>
                                     <th>From Time</th>
                                     <th>To Time</th>
+                                    <th>Multiple Timeslots</th>
                                     <th>Duration</th>
                                     <th>Overflow</th>
                                     <th>Email Template</th>
@@ -40,6 +60,8 @@
                                     <td>{{ timeslot.timeslotdescript }}</td>
                                     <td>{{ timeFormat(timeslot.fromtime) }}</td>
                                     <td>{{ timeFormat(timeslot.totime) }}</td>
+                                    <td v-if="timeslot.multiple_timeslots == 1">Yes</td>
+                                    <td v-else>No</td>
                                     <td>{{ timeslot.duration }}</td>
                                     <td>{{ timeslot.overflow }}</td>
                                     <td><a :href="baseURL + 'emaildesigner/edit/'+ timeslot.email_id">{{ timeslot.template_name
@@ -116,12 +138,26 @@
                                 <input type="time" v-model="timeSlotModalData.totime" class="form-control"
                                     placeholder="To Time">
                             </div>
-                            <div class="form-group">
+                            <div style="display: flex;" class="form-group">
+                                <label style="margin-right:20px;" for="totime">Multiple Timeslots</label>
+                                <ul>
+                                    <li>
+                                        <div class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" id="visible" type="checkbox" v-model="checkboxValue">
+                                            <label class="custom-control-label font-weight-bold text-dark"
+                                                for="visible">
+                                            </label>
+                                            <input type="hidden" id="ticketVisible" name="ticketVisible" value="1">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div v-if="timeSlotModalData.multiple_timeslots == 1" class="form-group">
                                 <label for="totime">Duration</label>
                                 <input type="number" v-model="durationToMin" class="form-control"
                                     placeholder="Duration(minutes)">
                             </div>
-                            <div class="form-group">
+                            <div v-if="timeSlotModalData.multiple_timeslots == 1" class="form-group">
                                 <label for="totime">Overflow</label>
                                 <input type="number" v-model="overflowToMin" class="form-control"
                                     placeholder="Overflow(minutes)">
@@ -169,6 +205,7 @@
                 available_items: null,
                 fromtime: '',
                 totime: '',
+                multiple_timeslots: 0,
                 duration: null,
                 overflow: null,
                 price: '',
@@ -188,6 +225,7 @@
                     available_items: 1,
                     fromtime: '',
                     totime: '',
+                    multiple_timeslots: 0,
                     duration: null,
                     overflow: null,
                     price: '',
@@ -217,6 +255,7 @@
                 formData.append("available_items", this.timeSlotModalData.available_items);
                 formData.append("fromtime", this.timeSlotModalData.fromtime);
                 formData.append("totime", this.timeSlotModalData.totime);
+                formData.append("multiple_timeslots", this.timeSlotModalData.multiple_timeslots);
                 formData.append("duration", this.timeSlotModalData.duration);
                 formData.append("overflow", this.timeSlotModalData.overflow);
                 formData.append("price", this.timeSlotModalData.price);
@@ -224,7 +263,7 @@
                 formData.append("email_id", this.timeSlotModalData.email_id);
                 if (this.timeSlotModalData.id) {
                     formData.append("id", this.timeSlotModalData.id);
-                    this.method = 'edit';    
+                    this.method = 'edit';
                 } else {
                     this.method = 'create';
                 }
@@ -301,7 +340,7 @@
 
                 axios.post(this.baseURL + 'ajaxdorian/deleteTimeSlot', formData).then((response) => {
                         this.timeslots.splice(this.getIndexByID('timeslots', this.deleteTimeSlotTemp.id),
-                        1);
+                            1);
                         this.deleteTimeSlotTemp = null;
                         $('#confirm-delete').modal('hide');
                     })
@@ -334,6 +373,24 @@
                 },
                 set: function(value) {
                     this.timeSlotModalData.overflow = this.timeConvert(value);
+                }
+            },
+            checkboxValue: {
+                get: function() {
+                    if(this.timeSlotModalData.multiple_timeslots == 0){
+                        return false
+                    }
+                    return true;
+                },
+                set: function(value) {
+                    if(value == true){
+                        this.timeSlotModalData.multiple_timeslots = 1;
+                    } else {
+                        this.timeSlotModalData.multiple_timeslots = 0;
+                        this.timeSlotModalData.duration = null;
+                        this.timeSlotModalData.overflow = null;
+                    }
+                   
                 }
             },
             spotsOptions: function() {

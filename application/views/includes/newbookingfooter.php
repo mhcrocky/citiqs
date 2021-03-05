@@ -11,7 +11,7 @@
             id="spot"><?php echo $this->session->userdata('spotDescript'); ?></span></p>
     <p class="booking-info"><span>SPOT Price:</span> <span id="price"><?php echo $this->session->userdata('spotPrice'); ?></span></p>
     <p class="booking-info"><span class="timeslot-text">Time Slot</span>: <span
-            id="selected-time"><?php echo $this->session->userdata('timeslot'); ?></span></p>
+            id="selected-time"><?php echo (!is_numeric($this->session->userdata('timeslot'))) ? $this->session->userdata('timeslot') : ''; ?></span></p>
     <p class="booking-info"><span class="personal-info-text">Personal Info</span>: <span id="personal-info"></span></p>
 </div>
 <!-- end booking form results -->
@@ -138,7 +138,7 @@ $('#person-input .form-check-label').on('click', function() {
 
 /* get time slot on click */
 $('#time-input .form-check-label').on('click', function() {
-    $('#selected-time').text($(this).siblings('input').val());
+    //$('#selected-time').text($(this).siblings('input').val());
     $('.step').removeClass('active');
     $('.step-4').addClass('active');
 });

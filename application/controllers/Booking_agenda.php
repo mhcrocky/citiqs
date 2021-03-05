@@ -221,15 +221,25 @@ class Booking_agenda extends BaseControllerWeb
 
 
         if ($this->input->post('save')) {
-            $selectedTimeSlot = $this->bookandpaytimeslots_model->getTimeSlot($this->input->post('selected_time_slot_id'));
+            $timeslotId = $this->input->post('selected_time_slot_id');
+            $fromtime = '';
+            $totime = '';
+            $selectedTimeSlot = $this->bookandpaytimeslots_model->getTimeSlot($timeslotId);
+            if($selectedTimeSlot->multiple_timeslots == 1){
+                $fromtime = date('H:i', $this->input->post('startTime'));
+                $totime = date('H:i', $this->input->post('endTime'));
+            } else {
+                $fromtime = $selectedTimeSlot->fromtime;
+                $totime = $selectedTimeSlot->totime;
+            }
             $newBooking = [
                 'customer' => $customer['id'],
                 'eventid' => $eventId,
                 'eventdate' => date("yy-m-d", strtotime($eventDate)),
                 'SpotId' => $spot->id,
                 'Spotlabel' => $spotLabel,
-                'timefrom' => $selectedTimeSlot->fromtime,
-                'timeto' => $selectedTimeSlot->totime,
+                'timefrom' => $fromtime,
+                'timeto' => $totime,
                 'timeslot' => $selectedTimeSlot->id,
                 'price' => $selectedTimeSlot->price ? $selectedTimeSlot->price : $price,
                 'numberofpersons' => $numberOfPersons,

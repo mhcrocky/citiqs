@@ -340,6 +340,7 @@ class Ajaxdorian extends CI_Controller
             'available_items' => $this->input->post('available_items'),
             'fromtime' => date("H:i:s", strtotime($this->input->post('fromtime'))),
             'totime' => date("H:i:s", strtotime($this->input->post('totime'))),
+            'multiple_timeslots' => $this->input->post('multiple_timeslots'),
             'duration' => $duration,
             'overflow' => $overflow,
             'price' => $this->input->post('price'),
