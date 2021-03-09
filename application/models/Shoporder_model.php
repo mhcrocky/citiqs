@@ -1361,6 +1361,7 @@
             $where = [
                 $this->table . '.paid' => '1',
                 $this->table . '.invoiceNumber' => null,
+                $this->table . '.createdOrder !=' => null,
                 'tbl_shop_printers.userId' => $vendorId,
                 'tbl_shop_payment_methods.productGroup' => $this->config->item('storeAndPos'),
             ];
@@ -1393,6 +1394,7 @@
                     'tbl_shop_payment_methods.vendorCost',
                     'tbl_shop_payment_methods.percent paymentMethodPercent',
                     'tbl_shop_payment_methods.amount paymentMethodAmount',
+                    'tbl_shop_payment_methods.productGroup productGroup',
                 ],
                 'where' => $where,
                 'joins' => [
@@ -1419,6 +1421,7 @@
                     'tbl_shop_payment_methods.vendorCost',
                     'tbl_shop_payment_methods.percent paymentMethodPercent',
                     'tbl_shop_payment_methods.amount paymentMethodAmount',
+                    'tbl_shop_payment_methods.productGroup productGroup',
                 ],
                 'where' => $where,
                 'joins' => [
