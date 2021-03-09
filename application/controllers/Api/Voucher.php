@@ -20,7 +20,55 @@ class Voucher extends REST_Controller
         $this->load->library('language', array('controller' => $this->router->class));
     }
 
+    public function create_post()
+    {
+        $data = $this->input->post(null, true);
+        $data_keys = array_keys($data);
+        $voucher_fields = ['vendorId', 'code', 'percent', 'percentUsed', 'expire', 'active', 'amount'];
+        $error = false;
+        $error_message = '';
+        
+        foreach($voucher_fields as $voucher_field){
+            if(!in_array('vendorId', $data_keys)) {
+                $error = true;
+                $error_message = 'Vendor ID is required!';
+                break;
+            }
+            if(!in_array($voucher_field, $data_keys)){
+                $error = true;
+                $error_message = 'All fields are required!';
+                break;
+            }
+        }
 
+        if($error){
+            $response = [
+                'status' => "error",
+                'message' => $error_message,
+            ];
+            $this->set_response($response, 400);
+            return ;
+        }
+
+
+        if(!$this->shopvoucher_model->setObjectFromArray($data)->create()){
+            $response = [
+                'status' => "error",
+                'message' => "Something went wrong!",
+            ];
+    
+            $this->set_response($response, 400);
+            return;
+        }
+        $response = [
+            'status' => "success",
+            'message' => "The voucher is saved successfully!",
+        ];
+
+        $this->set_response($response, 201);
+        return;
+        
+    }
  
     public function data_get()
     {
@@ -83,7 +131,7 @@ class Voucher extends REST_Controller
                 ];
                 $this->set_response($response, 201);
                 return;
-            };
+            }; 
 
             if ($this->shopvoucher_model->setObjectFromArray($data)->create()) {
                 if (is_null($firstLine)) {
