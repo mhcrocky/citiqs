@@ -1355,4 +1355,83 @@
             return reset($order);
         }
 
+        public function fetchUnpaidVendorOrders(int $vendorId, bool $sum = true, string $from = '', string $to = ''): ?array
+        {
+            $this->load->config('custom');
+            $where = [
+                $this->table . '.paid' => '1',
+                $this->table . '.invoiceNumber' => null,
+                $this->table . '.createdOrder !=' => null,
+                'tbl_shop_printers.userId' => $vendorId,
+                'tbl_shop_payment_methods.productGroup' => $this->config->item('storeAndPos'),
+            ];
+
+            if ($from) {
+                $where[$this->table . '.createdOrder>='] = $from;
+            }
+            if ($to) {
+                $where[$this->table . '.createdOrder<'] = $to;
+            }
+
+            if ($sum) {
+                return $this->sumAllVendorOrders($where);
+            }
+            return $this->allVendorOrders($where);
+
+
+        }
+
+        private function sumAllVendorOrders(array $where): ?array
+        {
+            return $this->readImproved([
+                'what' => [
+                    'COUNT(' . $this->table . '.id) countOrderId',
+                    $this->table . '.paymentType orderPaymentType',
+                    'SUM(' . $this->table . '.amount) ordersAmount',
+                    'SUM(' . $this->table . '.serviceFee) ordersServiceFee',
+                    '(SUM(' . $this->table . '.amount)  + SUM(' . $this->table . '.serviceFee)) AS amountPlusServiceFee',
+                    'SUM(' . $this->table . '.waiterTip) orderTotalwaiterTip',
+                    'tbl_shop_payment_methods.vendorCost',
+                    'tbl_shop_payment_methods.percent paymentMethodPercent',
+                    'tbl_shop_payment_methods.amount paymentMethodAmount',
+                    'tbl_shop_payment_methods.productGroup productGroup',
+                ],
+                'where' => $where,
+                'joins' => [
+                    ['tbl_shop_spots', 'tbl_shop_spots.id = ' . $this->table . '.spotId', 'INNER'],
+                    ['tbl_shop_printers', 'tbl_shop_printers.id = tbl_shop_spots.printerId', 'INNER'],
+                    ['tbl_shop_payment_methods', 'tbl_shop_payment_methods.paymentMethod = tbl_shop_orders.paymentType', 'INNER']
+                ],
+                'conditions' => [
+                    'GROUP_BY' => [$this->table . '.paymentType']
+                ]
+            ]);
+        }
+
+        private function allVendorOrders(array $where): ?array
+        {
+            return $this->readImproved([
+                'what' => [
+                    $this->table . '.id orderId',
+                    $this->table . '.createdOrder orderCreated',
+                    $this->table . '.paymentType orderPaymentType',
+                    $this->table . '.amount orderAmount',
+                    $this->table . '.serviceFee orderServiceFee',
+                    $this->table . '.waiterTip orderWaiterTip',
+                    'tbl_shop_payment_methods.vendorCost',
+                    'tbl_shop_payment_methods.percent paymentMethodPercent',
+                    'tbl_shop_payment_methods.amount paymentMethodAmount',
+                    'tbl_shop_payment_methods.productGroup productGroup',
+                ],
+                'where' => $where,
+                'joins' => [
+                    ['tbl_shop_spots', 'tbl_shop_spots.id = ' . $this->table . '.spotId', 'INNER'],
+                    ['tbl_shop_printers', 'tbl_shop_printers.id = tbl_shop_spots.printerId', 'INNER'],
+                    ['tbl_shop_payment_methods', 'tbl_shop_payment_methods.paymentMethod = tbl_shop_orders.paymentType', 'INNER']
+                ],
+                'conditions' => [
+                    'ORDER_BY' => [$this->table . '.createdOrder ASC']
+                ]
+            ]);
+        }
     }

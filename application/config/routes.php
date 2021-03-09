@@ -318,6 +318,7 @@ $route['cancel']        = 'paysuccesslink/cancel';
 $route['denied']        = 'paysuccesslink/denied';
 
 $route['vendors'] = 'Api/Vendors/data';
+$route['vendor_orders'] = 'Api/Vendors/orders';
 
 $route['order/lines'] = 'Orderlines/index';
 $route['visma/export/(:num)'] = 'Api/Visma/export_single_invoice/$1';

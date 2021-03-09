@@ -6,7 +6,6 @@
 				<!-- <p>Add driver mobile number (starting with country code with zero) for sending sms.</p>
 				<p>Set the number of minutes when the message will be sent to driver after the order status is changed in status "DONE"</p> -->
 				<!-- <p>Add terms and conditions</p> -->
-
 				<form method="post" action="<?php echo base_url() ?>profile/updateVendorData/<?php echo $vendor['id']; ?>">
 				    <input type="hidden" name="paymentsettings" value="1" />
 					<input type="number" name="vendorId" value="<?php echo $user->id ?>" readonly required hidden />

@@ -47,5 +47,6 @@ $(document).ready(function() {
     if (!$_SESSION['payNlServiceIdSet']) { 
         include_once FCPATH . 'application/views/includes/payNlRegistration.php';
     }
+    include_once FCPATH . 'application/views/includes/selectlanguage.php'; 
 ?>
 </html>
