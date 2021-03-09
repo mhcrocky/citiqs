@@ -546,6 +546,8 @@ $route['add_template'] = 'Templates/addTemplate';
 $route['update_template/(:num)'] = 'Templates/updateTemplate/$1';
 $route['list_template'] = 'Templates/listTemplates';
 
+$route['voucher'] = 'Voucher/index';
+
 // connections api routes
 
 //buyer
