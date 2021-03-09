@@ -1355,11 +1355,14 @@
             return reset($order);
         }
 
-        public function fetchVendorOrders(int $vendorId, bool $sum = true, string $from = '', string $to = ''): ?array
+        public function fetchUnpaidVendorOrders(int $vendorId, bool $sum = true, string $from = '', string $to = ''): ?array
         {
+            $this->load->config('custom');
             $where = [
                 $this->table . '.paid' => '1',
+                $this->table . '.invoiceNumber' => null,
                 'tbl_shop_printers.userId' => $vendorId,
+                'tbl_shop_payment_methods.productGroup' => $this->config->item('storeAndPos'),
             ];
 
             if ($from) {
@@ -1383,9 +1386,9 @@
                 'what' => [
                     'COUNT(' . $this->table . '.id) countOrderId',
                     $this->table . '.paymentType orderPaymentType',
-                    'SUM(' . $this->table . '.amount) orderTotalAmount',
-                    'SUM(' . $this->table . '.serviceFee) orderTotalServiceFee',
-                    '(SUM(' . $this->table . '.amount)  - SUM(' . $this->table . '.serviceFee)) AS totalMinusServiceFee',
+                    'SUM(' . $this->table . '.amount) ordersAmount',
+                    'SUM(' . $this->table . '.serviceFee) ordersServiceFee',
+                    '(SUM(' . $this->table . '.amount)  + SUM(' . $this->table . '.serviceFee)) AS amountPlusServiceFee',
                     'SUM(' . $this->table . '.waiterTip) orderTotalwaiterTip',
                     'tbl_shop_payment_methods.vendorCost',
                     'tbl_shop_payment_methods.percent paymentMethodPercent',
