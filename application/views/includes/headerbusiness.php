@@ -144,6 +144,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
         <script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js" ></script>
         <script src="<?php echo $this->baseUrl; ?>assets/home/js/objectFloorPlans.js" ></script>
+		<script src="<?php echo $this->baseUrl; ?>assets/home/js/languageModal.js"></script>
         <?php
             if (isset($js) AND is_array($js)) { // ???????????  MOVE TO FOOTER IF USER CUSTOM SCRIPTS ???????????????
                 foreach ($js as $jsLink) { 
@@ -524,6 +525,16 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 										</a>
 									</p>
                                 </div>
+
+								<div id="user-title" class="pull-left">
+									<p style="font-weight: 100; font-size: 100%;padding-top:10px;color: #000;">
+<!--										--><?php //echo $this->session->userdata('userId');?><!-- --><?php //echo $this->session->userdata('name');?>
+											<a style="color: #E25F2A; margin-left: 20px" href="#" data-toggle="modal" data-target="#myModal" id='modal-button'> <img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/world.png" title="LANGUAGE"/></a>
+<!--										<a href="https://tiqs.com/alfred/loggedin">-->
+<!--											<image src="--><?php //echo $this->baseUrl; ?><!--assets/home/images/manualicon.png" style="width:28px; margin-left: 30px" >-->
+<!--										</a>-->
+									</p>
+								</div>
                                 <div id="search-box" class="search-box pull-right">
                                     <form action="#">
                                         <input
@@ -535,6 +546,8 @@ $userShortUrl = $this->session->userdata('userShortUrl');
                                         <i class="ti-search"></i>
                                     </form>
                                 </div>
+
+
                             </div>
                             <!-- profile info & task notification -->
                             
