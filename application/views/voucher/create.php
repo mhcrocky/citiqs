@@ -10,7 +10,7 @@
                             <div class="form-group row">
                                 <label for="full_name" class="col-md-4 col-form-label text-md-left">
                                     <h3>
-                                        <strong>Create voucher</strong>
+                                        <strong>Create vouchers</strong>
                                     </h3>
                                 </label>
                                 <div class="col-md-6">
@@ -22,11 +22,11 @@
 
 
                             <div class="form-group row">
-                                <label for="event-name" class="col-md-4 col-form-label text-md-left">Voucher Code</label>
+                                <label for="event-name" class="col-md-4 col-form-label text-md-left">Voucher Number</label>
                                 <div class="col-md-6">
 
-                                    <input type="text" id="code" class="input-w border-50 form-control"
-                                        name="code" required>
+                                    <input type="number" id="codes" class="input-w border-50 form-control"
+                                        name="codes" required>
 
                                 </div>
                             </div>
@@ -133,7 +133,7 @@ function saveVoucher(e){
 
     let data = {
         vendorId: $('#vendorId').val(),
-        code: $('#code').val(),
+        codes: $('#codes').val(),
         percent: $('#percent').val(),
         percentUsed: $('#percentUsed option:selected').val(),
         expire: $('#expire').val(),

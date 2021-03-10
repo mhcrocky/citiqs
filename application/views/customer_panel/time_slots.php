@@ -130,12 +130,12 @@ li {
 
                             <div class="form-group">
                                 <label for="fromtime">From Time</label>
-                                <input type="time" v-model="timeSlotModalData.fromtime" class="form-control"
+                                <input type="text" v-model="timeSlotModalData.fromtime" class="form-control timepicker-24-hr"
                                     placeholder="From Time">
                             </div>
                             <div class="form-group">
                                 <label for="totime">To Time</label>
-                                <input type="time" v-model="timeSlotModalData.totime" class="form-control"
+                                <input type="text" v-model="timeSlotModalData.totime" class="form-control timepicker-24-hr"
                                     placeholder="To Time">
                             </div>
                             <div style="display: flex;" class="form-group">
@@ -182,9 +182,15 @@ li {
             </div>
         </div>
     </div>
-
-
+    <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     <script>
+    $(document).ready(function () {
+        $('.timepicker-24-hr').datetimepicker({
+            format: 'HH:mm:ss'
+        });
+    });
+    
     var app = new Vue({
         el: '#vue_app',
 
