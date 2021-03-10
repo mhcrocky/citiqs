@@ -45,9 +45,6 @@ class Language {
 		$this->language = $database_lang;
 
 		log_message('debug', 'Language file loaded: language/'.$idiom.'/'.$langfile);
-
-
-
 		return TRUE;
 	}
 
@@ -116,6 +113,50 @@ class Language {
 							'langid' => $langID
 						);
 						$CII->db->where('langID', $langID);
+						$CII->db->update('tbl_language', $translation);
+					}
+				} catch (Exception $ex) {
+					return -1;
+				}
+			}
+		}
+		$translation = array(
+			'key' => $line,
+		);
+		// var_dump($value);
+		// die('111');
+		//		 $CII->db->where('langID', $langID);
+		//		 $CII->db->update('tbl_language', $translation);
+
+		return $value;
+	}
+
+	public function tline($line, $log_errors = TRUE)
+	{
+
+		$value = isset($this->language[$line]) ? $this->language[$line] : FALSE;
+		$CII =& get_instance();
+
+		if($value === FALSE && $log_errors === TRUE)
+		{
+			$value = $this->translate('en',$this->idiom, $line);
+			if(!$value=="") {
+				$translation = array(
+					'key' => $line,
+					'language' => $this->idiom,
+					'text' => $value,
+					'controller' => $this->controller,
+					'langID' => $line
+				);
+				try {
+					if ($CII->db->insert('tbl_language', $translation)) {
+						return $value;
+					} else {
+						$translation = array(
+							'key' => $line,
+							'langid' => $line
+						);
+						$CII->db->where('langID', $line);
 						$CII->db->update('tbl_language', $translation);
 					}
 				} catch (Exception $ex) {
