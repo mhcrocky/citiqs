@@ -547,7 +547,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
                                     <?php if (isset($_SESSION['masterAccounts']) && count($_SESSION['masterAccounts']) > 1) { ?>
                                         <form action="<?php echo base_url() . 'login/switchAccount'; ?>" method="post">
                                             <div class="form-group">
-                                                <label for="masterAccountId">Change account</label>
+                                                <label for="masterAccountId"><?php echo $this->language->tLine('Change account'); ?></label>
                                                 <select
                                                     class="form-control"
                                                     id="masterAccountId"
@@ -555,7 +555,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
                                                     required
                                                     onchange="submitSwitchAccountForm(this)"
                                                 >
-                                                    <option value="">Select</option>
+                                                    <option value=""><?php echo $this->language->tLine('Select'); ?></option>
                                                     <?php foreach ($_SESSION['masterAccounts'] as $masterAccount) { ?>
                                                         <option
                                                             value="<?php echo $masterAccount['id']; ?>"
@@ -564,7 +564,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
                                                         >
                                                             <?php
                                                                 echo $masterAccount['username'];
-                                                                if ($masterAccount['id'] === $_SESSION['masterAccountId'] ) echo ' (MASTER ACCOUNT)';
+                                                                if ($masterAccount['id'] === $_SESSION['masterAccountId'] ) echo '&nbsp;(' . $this->language->tLine('MASTER ACCOUNT') . ')';
                                                             ?>
                                                         </option>
                                                     <?php } ?>
