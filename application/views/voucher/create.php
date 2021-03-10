@@ -36,7 +36,7 @@
                                 <div class="col-md-6">
 
                                     <input type="number" id="percent" class="input-w border-50 form-control"
-                                        name="percent" required>
+                                        name="percent" onchange="disabledField(this, 'amount')" required>
 
                                 </div>
                             </div>
@@ -79,7 +79,7 @@
                                 <div class="col-md-6">
 
                                     <input type="number" id="amount" class="input-w border-50 form-control"
-                                        name="amount" required>
+                                        name="amount" onchange="disabledField(this, 'percent')" required>
 
                                 </div>
                             </div>
@@ -125,6 +125,7 @@
 
 
 <script>
+
 function saveVoucher(e){
     e.preventDefault();
     if ($('.form-control:invalid').length > 0) {
@@ -151,5 +152,19 @@ function saveVoucher(e){
         return ;
     });
 
+}
+
+function disabledField(el, field){
+    let value = $(el).val();
+    $('#'+field).attr('required', true);
+    if(value != ''){
+        $('#'+field).attr('disabled', true);
+        $('#'+field).attr('required', false);
+        $('.form-control:disabled').attr('style', 'background-color: rgb(233, 236, 239) !important;');
+    } else {
+        $('#'+field).attr('disabled', false);
+        $('#'+field).attr('required', true);
+        $('#'+field).attr('style', 'background-color: #fff');
+    }
 }
 </script>

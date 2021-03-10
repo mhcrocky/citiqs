@@ -43,6 +43,14 @@ class Voucher extends REST_Controller
             }
         }
 
+        if(empty($data['percent'])){
+            unset($data['percent']);
+        }
+
+        if(empty($data['amount'])){
+            unset($data['amount']);
+        }
+
         if($error){
             $response = [
                 'status' => "error",
