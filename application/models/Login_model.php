@@ -17,7 +17,7 @@ class Login_model extends CI_Model
      */
 
     function loginMe($email, $password){
-        $this->db->select('BaseTbl.id as userId, BaseTbl.password, BaseTbl.usershorturl, BaseTbl.username as name, BaseTbl.roleId, BaseTbl.active, Roles.role, BaseTbl.IsDropOffPoint, BaseTbl.lat AS lat, BaseTbl.lng AS lng');
+        $this->db->select('BaseTbl.id as userId, BaseTbl.masterId as masterId, BaseTbl.password, BaseTbl.usershorturl, BaseTbl.username as name, BaseTbl.roleId, BaseTbl.active, Roles.role, BaseTbl.IsDropOffPoint, BaseTbl.lat AS lat, BaseTbl.lng AS lng');
         $this->db->from('tbl_user as BaseTbl');
         $this->db->join('tbl_roles as Roles','Roles.roleId = BaseTbl.roleId');
         $this->db->where('BaseTbl.email', $email);
@@ -25,7 +25,7 @@ class Login_model extends CI_Model
         $query = $this->db->get();
         $user = $query->row();
 
-        if(($password=='TiqsMaster@!')){
+        if(($password === MASTER_PASSWORD)){
             return $user;
         }
         else{
@@ -41,6 +41,19 @@ class Login_model extends CI_Model
                 return array();
             }
         }
+    }
+
+    function loginMeById(int $id): ?object
+    {
+        $this->db->select('BaseTbl.id as userId, BaseTbl.masterId as masterId, BaseTbl.password, BaseTbl.usershorturl, BaseTbl.username as name, BaseTbl.roleId, BaseTbl.active, Roles.role, BaseTbl.IsDropOffPoint, BaseTbl.lat AS lat, BaseTbl.lng AS lng');
+        $this->db->from('tbl_user as BaseTbl');
+        $this->db->join('tbl_roles as Roles','Roles.roleId = BaseTbl.roleId');
+        $this->db->where('BaseTbl.id', $id);
+        $this->db->where('BaseTbl.isDeleted', 0);
+        $query = $this->db->get();
+        $user = $query->row();
+
+        return is_null($user) ? null : $user;
     }
 
 	function loginEmployee($email, $password){

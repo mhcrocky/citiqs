@@ -522,7 +522,9 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 										<a href="https://tiqs.com/alfred/loggedin">
 											<image src="<?php echo $this->baseUrl; ?>assets/home/images/manualicon.png" style="width:28px; margin-left: 30px" >
 										</a>
+
 									</p>
+
                                 </div>
 
 								<div id="user-title" class="pull-left">
@@ -535,18 +537,42 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 									</p>
 								</div>
                                 <div id="search-box" class="search-box pull-right">
-                                    <form action="#">
-                                        <input
-                                            style="background: white;font-size:14px !important;font-family: inherit !important;"
-                                            type="text"
-                                            name="search" placeholder="Search..."
-                                            required=""
-                                        />
-                                        <i class="ti-search"></i>
-                                    </form>
+                                    <!-- <input
+                                        style="background: white;font-size:14px !important;font-family: inherit !important;"
+                                        type="text"
+                                        name="search" placeholder="Search..."
+                                        required=""
+                                    />
+                                    <i class="ti-search"></i> -->
+                                    <?php if (isset($_SESSION['masterAccounts']) && count($_SESSION['masterAccounts']) > 1) { ?>
+                                        <form action="<?php echo base_url() . 'login/switchAccount'; ?>" method="post">
+                                            <div class="form-group">
+                                                <label for="masterAccountId">Change account</label>
+                                                <select
+                                                    class="form-control"
+                                                    id="masterAccountId"
+                                                    name="masterAccountId"
+                                                    required
+                                                    onchange="submitSwitchAccountForm(this)"
+                                                >
+                                                    <option value="">Select</option>
+                                                    <?php foreach ($_SESSION['masterAccounts'] as $masterAccount) { ?>
+                                                        <option
+                                                            value="<?php echo $masterAccount['id']; ?>"
+                                                            <?php if ($masterAccount['id'] === $_SESSION['userId'] ) echo 'selected';
+                                                            ?>
+                                                        >
+                                                            <?php
+                                                                echo $masterAccount['username'];
+                                                                if ($masterAccount['id'] === $_SESSION['masterAccountId'] ) echo ' (MASTER ACCOUNT)';
+                                                            ?>
+                                                        </option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </form>
+                                    <?php } ?>
                                 </div>
-
-
                             </div>
                             <!-- profile info & task notification -->
                             

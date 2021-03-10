@@ -1102,4 +1102,17 @@ class User_model extends CI_Model
         $where = ' id = ' . $this->id;
         return $this->db->update('tbl_user', $apiBuyer, $where);
     }
+
+    public function masterAccounts(int $masterId): ?array
+    {
+        $this->db->select('id, username');
+        $this->db->from('tbl_user');
+        $this->db->where('masterId', $masterId);
+        $this->db->where('tbl_user.isDeleted', 0);
+
+        $result = $this->db->get();
+        $result = $result->result_array();
+
+        return (empty($result)) ? null : $result;
+    }
 }
