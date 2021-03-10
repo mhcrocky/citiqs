@@ -90,7 +90,7 @@
         protected function setValueType(string $property,  &$value): void
         {
             $this->load->helper('validate_data_helper');
-            if (!Validate_data_helper::validateNumber($value)) return;
+            // if (!Validate_data_helper::validateNumber($value)) return;
 
             if (
                 $property === 'id'
@@ -211,6 +211,7 @@
 
         public function getVendorData(): ?array
         {
+            if (!ctype_digit($this->vendorId)) return null;
 
             $filter = [
                 'what' => [
