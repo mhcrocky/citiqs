@@ -23,8 +23,10 @@ class Voucher extends REST_Controller
     public function create_post()
     {
         $data = $this->input->post(null, true);
+        $numOfCodes = isset($data['codes']) ? intval($data['codes']) : 0;
+        unset($data['codes']);
         $data_keys = array_keys($data);
-        $voucher_fields = ['vendorId', 'code', 'percent', 'percentUsed', 'expire', 'active', 'amount'];
+        $voucher_fields = ['vendorId', 'percent', 'percentUsed', 'expire', 'active', 'amount'];
         $error = false;
         $error_message = '';
         
@@ -50,20 +52,44 @@ class Voucher extends REST_Controller
             return ;
         }
 
+        $fileRelaitvePath = 'assets/csv/' . $data['vendorId'] . '_' . time() . '.csv';
+        $fileLocation = base_url() . $fileRelaitvePath;
+        $csvFile = FCPATH . $fileRelaitvePath;
+        $csvFile = fopen($csvFile, 'w');
+        $firstLine = null;       
 
-        if(!$this->shopvoucher_model->setObjectFromArray($data)->create()){
-            $response = [
+        while ($numOfCodes > 0) {
+            $data['code'] = Utility_helper::shuffleStringSmallCaps(6);
+
+            
+            if ($this->shopvoucher_model->setObjectFromArray($data)->create()) {
+                if (is_null($firstLine)) {
+                    $firstLine = array_keys($data);
+                    fputcsv($csvFile, $firstLine, ';');
+                }
+
+                $dataToScv = array_values($data);
+                fputcsv($csvFile, $dataToScv, ';');
+
+                $numOfCodes--;
+                $response = [
+                    'status' => "success",
+                    'message' => "The voucher is saved successfully!",
+                ];
+            } else { 
+                $response = [
                 'status' => "error",
                 'message' => "Something went wrong!",
-            ];
-    
-            $this->set_response($response, 400);
-            return;
+                ];
+                $this->set_response($response, 400);
+                return;
+            }
         }
-        $response = [
-            'status' => "success",
-            'message' => "The voucher is saved successfully!",
-        ];
+
+        fclose($csvFile);
+
+
+        
 
         $this->set_response($response, 201);
         return;

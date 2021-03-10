@@ -13,7 +13,7 @@ class Voucher extends BaseControllerWeb
 	}
 
 	public function index(){
-		$this->global['pageTitle'] = 'TIQS: Create Voucher';
+		$this->global['pageTitle'] = 'TIQS: Create Vouchers';
         $data['vendorId'] = $this->session->userdata('userId');
 		$this->loadViews("voucher/create", $this->global, $data, 'footerbusiness', 'headerbusiness'); 
 	}
