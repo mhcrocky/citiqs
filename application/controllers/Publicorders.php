@@ -46,9 +46,24 @@
             $this->load->library('session');
         }
 
+        private function checkDataFromGet(): void
+        {
+            if (
+                (isset($_GET['spotid']) && !ctype_digit($_GET['spotid']))
+                || (isset($_GET['vendorid']) && !ctype_digit($_GET['vendorid']))
+                || (isset($_GET['category']) && !ctype_digit($_GET['category']))
+                || (isset($_GET['typeid']) && !ctype_digit($_GET['typeid']))
+            ) {
+                redirect(base_url());
+                exit;
+            }
+            return;
+        }
+
         // MAKE ORDER VIEW
         public function index(): void
         {
+            $this->checkDataFromGet();
             $get = Utility_helper::sanitizeGet();
             $spotId = empty($get['spotid']) ? 0 : intval($get['spotid']);
             $vendor = $this->shopvendor_model->setProperty('vendorId', $get['vendorid'])->getVendorData();
@@ -244,6 +259,8 @@
 
         public function spotClosed($spotId): void
         {
+            if (!ctype_digit($spotId)) redirect(base_url());
+
             $spotId = intval($spotId);
             $spot =  $this->shopspot_model->setObjectId($spotId)->setObject();
             $vendorId = $this->shopprinters_model->setObjectid($spot->printerId)->getProperty('userId');
@@ -286,8 +303,10 @@
             $this->loadViews('publicorders/temporarilyClosed', $this->global, $data, null, 'headerWarehousePublic');
         }
 
-        public function closed($vendorId): void
+        public function closed(string $vendorId): void
         {
+            if (!ctype_digit($vendorId)) redirect(base_url());
+
             $vendor = $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData();
             $isClosedPeriod = ($vendor['nonWorkFrom'] && $vendor['nonWorkTo'] && date('Y-m-d') >= $vendor['nonWorkFrom'] && date('Y-m-d') <= $vendor['nonWorkTo']);
             $isOpenTime = $this->shopvendortime_model->setProperty('vendorId', $vendorId)->isOpen();
