@@ -15,7 +15,7 @@ class Finance extends BaseControllerWeb
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('s_model');
+		$this->load->model('clearings_model');
 		$this->load->helper('country_helper');
 		$this->load->library('language', array('controller' => $this->router->class));
 		$this->isLoggedIn();
