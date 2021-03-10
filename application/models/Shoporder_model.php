@@ -41,7 +41,7 @@
         public $bbOrderPrint;
         public $apiIdentifier;
         public $apiKeyId;
-        public $invoiceNumber;
+        public $invoiceId;
 
         private $table = 'tbl_shop_orders';
 
@@ -50,7 +50,12 @@
             $this->load->helper('validate_data_helper');
             if (!Validate_data_helper::validateNumber($value)) return;
 
-            if ($property === 'id' || $property === 'buyerId' || $property === 'countSentMessages') {
+            if (
+                $property === 'id'
+                || $property === 'buyerId'
+                || $property === 'countSentMessages'
+                || $property === 'invoiceId'
+            ) {
                 $value = intval($value);
             }
             if ($property === 'amount' || $property === 'serviceFee') {
@@ -111,7 +116,7 @@
             if (isset($data['apiKeyId']) && !Validate_data_helper::validateInteger($data['apiKeyId'])) return false;
             if (isset($data['isPos']) && !($data['isPos'] === '1' || $data['isPos'] === '0')) return false;
             if (isset($data['posPrint']) && !($data['posPrint'] === '1' || $data['posPrint'] === '0')) return false;
-            if (isset($data['invoiceNumber']) && !Validate_data_helper::validateString($data['invoiceNumber'])) return false;
+            if (isset($data['invoiceId']) && !Validate_data_helper::validateInteger($data['invoiceId'])) return false;
 
             return true;
         }
@@ -1360,7 +1365,7 @@
             $this->load->config('custom');
             $where = [
                 $this->table . '.paid' => '1',
-                $this->table . '.invoiceNumber' => null,
+                $this->table . '.invoiceId' => null,
                 $this->table . '.createdOrder !=' => null,
                 'tbl_shop_printers.userId' => $vendorId,
                 'tbl_shop_payment_methods.productGroup' => $this->config->item('storeAndPos'),
@@ -1408,10 +1413,10 @@
             ]);
         }
 
-        private function allVendorOrders(array $where): ?array
+        private function allVendorOrders(array $where, $what = []): ?array
         {
-            return $this->readImproved([
-                'what' => [
+            if (empty($what)) {
+                $what = [
                     $this->table . '.id orderId',
                     $this->table . '.createdOrder orderCreated',
                     $this->table . '.paymentType orderPaymentType',
@@ -1422,7 +1427,11 @@
                     'tbl_shop_payment_methods.percent paymentMethodPercent',
                     'tbl_shop_payment_methods.amount paymentMethodAmount',
                     'tbl_shop_payment_methods.productGroup productGroup',
-                ],
+                ];
+            }
+
+            return $this->readImproved([
+                'what' => $what,
                 'where' => $where,
                 'joins' => [
                     ['tbl_shop_spots', 'tbl_shop_spots.id = ' . $this->table . '.spotId', 'INNER'],
@@ -1433,5 +1442,33 @@
                     'ORDER_BY' => [$this->table . '.createdOrder ASC']
                 ]
             ]);
+        }
+
+        public function fetchVendorOrderIds(int $vendorId, string $from, string $to): ?array
+        {
+            $this->load->config('custom');
+
+            $where = [
+                $this->table . '.paid' => '1',
+                $this->table . '.invoiceId' => null,
+                $this->table . '.createdOrder !=' => null,
+                $this->table . '.createdOrder>=' => $from,
+                $this->table . '.createdOrder<' => $to,
+                'tbl_shop_printers.userId' => $vendorId,
+                'tbl_shop_payment_methods.productGroup' => $this->config->item('storeAndPos'),
+            ];
+
+            $what = [$this->table . '.id'];
+
+            return $this->allVendorOrders($where, $what);
+        }
+
+
+        public function updateOrderWithInvoiceId(array $orderIds, int $invoiceId): bool
+        {
+            return  $this
+                        ->db
+                        ->where_in($this->table . '.id', $orderIds)
+                        ->update($this->table, array('invoiceId' => $invoiceId));
         }
     }
