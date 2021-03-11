@@ -1369,6 +1369,7 @@
                 $this->table . '.createdOrder !=' => null,
                 'tbl_shop_printers.userId' => $vendorId,
                 'tbl_shop_payment_methods.productGroup' => $this->config->item('storeAndPos'),
+                'tbl_shop_payment_methods.vendorId' => $vendorId,
             ];
 
             if ($from) {
