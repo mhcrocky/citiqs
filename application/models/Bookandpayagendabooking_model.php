@@ -6,7 +6,7 @@
  * @author : Kishor Mali
  * @version : 1.1
  * @since : 15 November 2016
- */
+ */ 
 class   Bookandpayagendabooking_model extends CI_Model
 {
 
@@ -513,6 +513,24 @@ class   Bookandpayagendabooking_model extends CI_Model
 		$this->db->where('Customer', $customer);
 		$this->db->where('ReservationDateTime >=', date("Y-m-d") );
 		$this->db->where('online', 1);
+		$this->db->order_by('ReservationDateTime', 'ASC');
+		$query = $this->db->get();
+
+//		echo $this->db->last_query();exit;
+
+		$result = $query->result();
+
+		return $result;
+	}
+
+	public function getbookingspotagenda($customer, $agendaId)
+	{
+        $this->db->select('tbl_bookandpayagenda.*, tbl_email_templates.template_name');
+		$this->db->from('tbl_bookandpayagenda');
+        $this->db->join('tbl_email_templates', 'tbl_email_templates.id = tbl_bookandpayagenda.email_id', 'left');
+		$this->db->where('Customer', $customer);
+		$this->db->where('tbl_bookandpayagenda.id', $agendaId);
+		$this->db->where('ReservationDateTime >=', date("Y-m-d") );
 		$this->db->order_by('ReservationDateTime', 'ASC');
 		$query = $this->db->get();
 
