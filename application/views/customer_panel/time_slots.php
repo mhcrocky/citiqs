@@ -64,7 +64,7 @@ li {
                                     <td v-else>No</td>
                                     <td>{{ timeslot.duration }}</td>
                                     <td>{{ timeslot.overflow }}</td>
-                                    <td><a :href="baseURL + 'emaildesigner/edit/'+ timeslot.email_id">{{ timeslot.template_name
+                                    <td><a :href="baseURL + 'update_template/'+ timeslot.email_id">{{ timeslot.template_name
                                     }}</a></td>
                                     <td>{{ timeslot.price }}</td>
                                     <td class="td_action">
