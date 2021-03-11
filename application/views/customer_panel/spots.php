@@ -38,7 +38,7 @@
                                     <td>{{ spot.numberofpersons }}</td>
                                     <td>{{ spot.price }}</td>
                                     <td><a
-                                            :href="baseURL+ 'emaildesigner/edit/'+ spot.email_id">{{ spot.template_name }}</a>
+                                            :href="baseURL+ 'update_template/'+ spot.email_id">{{ spot.template_name }}</a>
                                     </td>
                                     <td class="spot_table_image"><img :class="backgroundClass(spot.background)"
                                             :src="imgFullPath(spot.image)" alt=""></td>
@@ -471,7 +471,7 @@
         $('.form-group').show();
         $('.modal-title').text('Add Spot');
     });
-    
+
     </script>
 
 </div>
