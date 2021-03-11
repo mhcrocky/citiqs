@@ -10,18 +10,39 @@
 class Login_model extends CI_Model
 {
 
+    private function fetchtUserData(): void
+    {
+        $this->db->select('
+            BaseTbl.id as userId,
+            BaseTbl.masterId as masterId,
+            BaseTbl.password,
+            BaseTbl.usershorturl,
+            BaseTbl.username as name,
+            BaseTbl.roleId,
+            BaseTbl.active,
+            BaseTbl.IsDropOffPoint,
+            BaseTbl.lat AS lat,
+            BaseTbl.lng AS lng,
+            BaseTbl.business_type_id,
+            Roles.role
+        ');
+        $this->db->from('tbl_user as BaseTbl');
+        $this->db->join('tbl_roles as Roles','Roles.roleId = BaseTbl.roleId');
+        $this->db->where('BaseTbl.isDeleted', 0);
+        return;
+    }
+
     /**
      * This function used to check the login credentials of the user
      * @param string $email : This is email of the user
      * @param string $password : This is encrypted password of the user
      */
 
-    function loginMe($email, $password){
-        $this->db->select('BaseTbl.id as userId, BaseTbl.masterId as masterId, BaseTbl.password, BaseTbl.usershorturl, BaseTbl.username as name, BaseTbl.roleId, BaseTbl.active, Roles.role, BaseTbl.IsDropOffPoint, BaseTbl.lat AS lat, BaseTbl.lng AS lng');
-        $this->db->from('tbl_user as BaseTbl');
-        $this->db->join('tbl_roles as Roles','Roles.roleId = BaseTbl.roleId');
+    function loginMe($email, $password)
+    {
+        $this->fetchtUserData();
         $this->db->where('BaseTbl.email', $email);
-        $this->db->where('BaseTbl.isDeleted', 0);
+
         $query = $this->db->get();
         $user = $query->row();
 
@@ -43,13 +64,10 @@ class Login_model extends CI_Model
         }
     }
 
-    function loginMeById(int $id): ?object
+    public function loginMeById(int $id): ?object
     {
-        $this->db->select('BaseTbl.id as userId, BaseTbl.masterId as masterId, BaseTbl.password, BaseTbl.usershorturl, BaseTbl.username as name, BaseTbl.roleId, BaseTbl.active, Roles.role, BaseTbl.IsDropOffPoint, BaseTbl.lat AS lat, BaseTbl.lng AS lng');
-        $this->db->from('tbl_user as BaseTbl');
-        $this->db->join('tbl_roles as Roles','Roles.roleId = BaseTbl.roleId');
+        $this->fetchtUserData();
         $this->db->where('BaseTbl.id', $id);
-        $this->db->where('BaseTbl.isDeleted', 0);
         $query = $this->db->get();
         $user = $query->row();
 

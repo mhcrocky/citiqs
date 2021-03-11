@@ -915,6 +915,7 @@ class Login extends BaseControllerWeb
 			'isLoggedIn' => TRUE,
 			'lat' => $result->lat,
 			'lng' => $result->lng,
+			'businessTypeId' => $result->business_type_id
 		);
 		$sessionArray['activatePos'] = $this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('activatePos');
 		$sessionArray['payNlServiceIdSet'] = !is_null($this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('paynlServiceId'));
