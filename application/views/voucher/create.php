@@ -30,6 +30,18 @@
 
                                 </div>
                             </div>
+                            
+                            <div class="form-group row">
+                                <label for="status" class="col-md-4 col-form-label text-md-left">Voucher code
+                                </label>
+                                <div class="col-md-6">
+                                    <select id="status" name="status" class="form-control input-w border-50 field">
+                                        <option value="" disabled>Select option</option>
+                                        <option value="unique" selected>Unique</option>
+                                        <option value="same">Same</option>
+                                    </select>
+                                </div>
+                            </div>
 
                             <div class="form-group row">
                                 <label for="percent" class="col-md-4 col-form-label text-md-left">Percent</label>
@@ -135,6 +147,7 @@ function saveVoucher(e){
     let data = {
         vendorId: $('#vendorId').val(),
         codes: $('#codes').val(),
+        status: $('#status option:selected').val(),
         percent: $('#percent').val(),
         percentUsed: $('#percentUsed option:selected').val(),
         expire: $('#expire').val(),

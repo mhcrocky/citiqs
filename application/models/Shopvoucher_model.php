@@ -47,7 +47,7 @@
         public function insertValidate(array $data): bool
         {
             if (isset($data['vendorId']) && isset($data['code']) && (isset($data['amount']) || isset($data['percent']))) {
-                return $this->updateValidate($data);
+                return false;//$this->updateValidate($data);
             }
             return false;
         }

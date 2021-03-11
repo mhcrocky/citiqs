@@ -24,7 +24,12 @@ class Voucher extends REST_Controller
     {
         $data = $this->input->post(null, true);
         $numOfCodes = isset($data['codes']) ? intval($data['codes']) : 0;
+        $status = $data['status'];
         unset($data['codes']);
+        unset($data['status']);
+        if(empty($data['productId'])){
+            unset($data['productId']);
+        }
         $data_keys = array_keys($data);
         $voucher_fields = ['vendorId', 'percent', 'percentUsed', 'expire', 'active', 'amount'];
         $error = false;
@@ -43,13 +48,7 @@ class Voucher extends REST_Controller
             }
         }
 
-        if(empty($data['percent'])){
-            unset($data['percent']);
-        }
-
-        if(empty($data['amount'])){
-            unset($data['amount']);
-        }
+        
 
         if($error){
             $response = [
@@ -65,8 +64,43 @@ class Voucher extends REST_Controller
         $csvFile = FCPATH . $fileRelaitvePath;
         $csvFile = fopen($csvFile, 'w');
         $firstLine = null;       
+        $data['numberOfTimes'] = $numOfCodes;
+        $dataMultiple = [];
+        if($status != 'unique'){
+            $data['code'] = Utility_helper::shuffleStringSmallCaps(6);
+            
+            if ($this->shopvoucher_model->setObjectFromArray($data)->create()) {
+                if (is_null($firstLine)) {
+                    $firstLine = array_keys($data);
+                    fputcsv($csvFile, $firstLine, ';');
+                }
+
+                $dataToScv = array_values($data);
+                fputcsv($csvFile, $dataToScv, ';');
+
+                $numOfCodes--;
+                $response = [
+                    'status' => "success",
+                    'message' => "The voucher is created successfully!",
+                ];
+                $this->set_response($response, 201);
+                fclose($csvFile);
+                return;
+            } else { 
+                $response = [
+                'status' => "error",
+                'message' => "Something went wrong!",
+                ];
+                $this->set_response($response, 400);
+                return;
+            }
+
+        }
+
+        $data['numberOfTimes'] = 1;
 
         while ($numOfCodes > 0) {
+            
             $data['code'] = Utility_helper::shuffleStringSmallCaps(6);
 
             
@@ -82,7 +116,7 @@ class Voucher extends REST_Controller
                 $numOfCodes--;
                 $response = [
                     'status' => "success",
-                    'message' => "The voucher is saved successfully!",
+                    'message' => "The vouchers are created successfully!",
                 ];
             } else { 
                 $response = [
@@ -96,8 +130,10 @@ class Voucher extends REST_Controller
 
         fclose($csvFile);
 
-
-        
+        $response = [
+            'status' => "success",
+            'message' => "successfully",
+        ];
 
         $this->set_response($response, 201);
         return;
