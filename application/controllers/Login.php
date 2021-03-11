@@ -131,52 +131,13 @@ class Login extends BaseControllerWeb
 						//	$this->load->view('code');
 					}
 				} else {
-					$lastlogin = $this->login_model->lastLoginInfo($result->userId);
-					$sessionArray = array(
-						'userId' => $result->userId,
-						'role' => $result->roleId,
-						'roleText' => $result->role,
-						'name' => $result->name,
-						'userShortUrl' => $result->usershorturl,
-						'lastLogin' => $lastlogin > 'createdDtm',
-						'isLoggedIn' => TRUE,
-						'lat' => $result->lat,
-						'lng' => $result->lng,
-					);
-					$sessionArray['activatePos'] = $this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('activatePos');
-					$sessionArray['payNlServiceIdSet'] = !is_null($this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('paynlServiceId'));
-					$merchantId = $this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('merchantId');
-
-					// if (!$sessionArray['payNlServiceIdSet'] && $merchantId) {
-					// 	$sessionArray['payNlServiceIdSet'] = Pay_helper::getPayNlServiceId($merchantId, intval($result->userId));
-					// }
-
-					// $this->load->model('vendor_model');
-					// $MenuArray = $this->vendor_model->getMenuOptionsByVendorId($result->userId);
-					// $sessionArray['menuOptions'] = $MenuArray;
-
-
-					$MenuArray = array(
-						'all'
-					);
-
-					$sessionArray['menus'] = $MenuArray;
-
-					$this->session->set_userdata($sessionArray);
-					unset($sessionArray['userId'], $sessionArray['isLoggedIn'], $sessionArray['lastLogin']);
-					$loginInfo = array("userId" => $result->userId, "sessionData" => json_encode($sessionArray), "machineIp" => $_SERVER['REMOTE_ADDR'], "userAgent" => getBrowserAgent(), "agentString" => $this->agent->agent_string(), "platform" => $this->agent->platform());
-					$this->login_model->lastLogin($loginInfo);
-					if ($result->roleId == "4") {
-						redirect('/translate');
-					} else {
-						redirect('/loggedin');
-					}
+					$this->accountSettings($result);
 					//redirect('/dashboard');
 				}
 			} else {
 				$this->session->set_flashdata('error', 'Are you using the right credentials?, or did you not register yet? Please try again or register. ');
 				redirect('login');
-			//				$this->index();
+				// $this->index();
 			}
 		}
 	}
@@ -256,7 +217,8 @@ class Login extends BaseControllerWeb
 		session_destroy();
 		unset($_SESSION['access_token']);
 		$session_data = array(
-			'sess_logged_in' => 0);
+			'sess_logged_in' => 0
+		);
 		$this->session->set_userdata($session_data);
 	}
 
@@ -939,5 +901,62 @@ class Login extends BaseControllerWeb
 		$redirect = base_url() . 'login';
 		redirect($redirect);
 	}
-}
 
+	private function accountSettings(object $result): void
+	{
+		$lastlogin = $this->login_model->lastLoginInfo($result->userId);
+		$sessionArray = array(
+			'userId' => $result->userId,
+			'role' => $result->roleId,
+			'roleText' => $result->role,
+			'name' => $result->name,
+			'userShortUrl' => $result->usershorturl,
+			'lastLogin' => $lastlogin > 'createdDtm',
+			'isLoggedIn' => TRUE,
+			'lat' => $result->lat,
+			'lng' => $result->lng,
+		);
+		$sessionArray['activatePos'] = $this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('activatePos');
+		$sessionArray['payNlServiceIdSet'] = !is_null($this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('paynlServiceId'));
+		// $merchantId = $this->shopvendor_model->setProperty('vendorId', intval($result->userId))->getProperty('merchantId');
+		if (
+			$result->userId === $result->masterId
+			&& !isset($sessionArray['masterAccounts'])
+			&& !isset($sessionArray['masterAccountId'])
+		) {
+			$sessionArray['masterAccounts'] = $this->user_model->masterAccounts(intval($result->userId));
+			$sessionArray['masterAccountId'] = $result->userId;
+		}
+		// if (!$sessionArray['payNlServiceIdSet'] && $merchantId) {
+		// 	$sessionArray['payNlServiceIdSet'] = Pay_helper::getPayNlServiceId($merchantId, intval($result->userId));
+		// }
+
+		// $this->load->model('vendor_model');
+		// $MenuArray = $this->vendor_model->getMenuOptionsByVendorId($result->userId);
+		// $sessionArray['menuOptions'] = $MenuArray;
+
+
+		$MenuArray = array(
+			'all'
+		);
+
+		$sessionArray['menus'] = $MenuArray;
+
+		$this->session->set_userdata($sessionArray);
+		unset($sessionArray['userId'], $sessionArray['isLoggedIn'], $sessionArray['lastLogin']);
+		$loginInfo = array("userId" => $result->userId, "sessionData" => json_encode($sessionArray), "machineIp" => $_SERVER['REMOTE_ADDR'], "userAgent" => getBrowserAgent(), "agentString" => $this->agent->agent_string(), "platform" => $this->agent->platform());
+		$this->login_model->lastLogin($loginInfo);
+
+		($result->roleId == "4") ? redirect('/translate') : redirect('/loggedin');
+	}
+
+	public function switchAccount(): void
+	{
+		$id = $this->input->post('masterAccountId', true);
+		$user = $this->login_model->loginMeById(intval($id));
+		($user) ? $this->accountSettings($user) : redirect('logout');
+
+		return;
+	}
+
+}

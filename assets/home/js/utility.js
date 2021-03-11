@@ -469,3 +469,10 @@ function showMessagesInContainer(conatinerId, response) {
 function reloadTable(id) {
     $('#' + id).DataTable().ajax.reload();
 }
+
+function submitSwitchAccountForm(element) {
+    let elementValue = element.value.trim();
+    if (elementValue) {
+        element.form.submit();
+    }
+}
