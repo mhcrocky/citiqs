@@ -48,7 +48,7 @@
         public function insertValidate(array $data): bool
         {
             if (isset($data['vendorId']) && isset($data['code']) && (isset($data['amount']) || isset($data['percent']))) {
-                return false;//$this->updateValidate($data);
+                $this->updateValidate($data);
             }
             return false;
         }
@@ -63,6 +63,7 @@
             if (isset($data['percentUsed']) && !($data['percentUsed'] === '1' || $data['percentUsed'] === '0')) return false;
             if (isset($data['expire']) && !Validate_data_helper::validateDate($data['expire'])) return false;
             if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
+            if (isset($data['numberOfTimes']) && !Validate_data_helper::validateInteger($data['numberOfTimes'])) return false;
             if (isset($data['productId']) && !Validate_data_helper::validateInteger($data['productId'])) return false;
 
             return true;

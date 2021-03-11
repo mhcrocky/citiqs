@@ -270,3 +270,15 @@ thead {
 #group:disabled {
     background: #f2f2f2 !important;
 }
+
+.select2-container--default .select2-selection--single {
+    border-radius: 50px !important;
+    border: 1px solid rgba(170, 170, 170, .3) !important;
+    height: 45px !important;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__rendered {
+      padding-top:8px;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__arrow {
+      top: 9px !important;
+  }

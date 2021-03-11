@@ -228,7 +228,10 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/blackbox.css">
 <?php } elseif ($this->view === 'publicorders/temporarilyClosed') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/temporarilyClosed.css">
-<?php  } elseif ($this->view === 'events/step-one' || $this->view === 'events/edit_event' || $this->view === 'voucher/create') { ?>
+<?php  } elseif ($this->view === 'voucher/create') { ?>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<?php  } elseif ($this->view === 'events/step-one' || $this->view === 'events/edit_event') { ?>
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url(); ?>assets/css/main.jbox.min.css" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url();?>assets/css/quill.snow.css" rel="stylesheet">
