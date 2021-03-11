@@ -37,11 +37,19 @@
                                 <label for="status" class="col-md-4 col-form-label text-md-left">Voucher code
                                 </label>
                                 <div class="col-md-6">
-                                    <select id="status" name="status" class="form-control input-w border-50 field">
+                                    <select id="status" onchange="voucherCode()" name="status" class="form-control input-w border-50 field">
                                         <option value="" disabled>Select option</option>
                                         <option value="unique" selected>Unique</option>
                                         <option value="same">Same</option>
                                     </select>
+                                </div>
+                            </div>
+
+                            <div style="display: none" id="voucher_code" class="form-group row">
+                                <label for="status" class="col-md-4 col-form-label text-md-left">Code
+                                </label>
+                                <div class="col-md-6" id="code_input">
+                                    
                                 </div>
                             </div>
 
@@ -104,20 +112,12 @@
                                 <label for="productId" class="col-md-4 col-form-label text-md-left">Product Id</label>
                                 <div class="col-md-6">
 
-                                    <input type="number" id="productId" class="input-w border-50 form-control"
-                                        name="productId">
 
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="productId" class="col-md-4 col-form-label text-md-left">Product Id</label>
-                                <div class="col-md-6">
-
-
-                                    <select class="js-example-basic-single form-control input-w border-50" name="state">
-                                        <option value="1">test 1</option>
-                                        <option value="2">test 2</option>
+                                    <select id="productId" class="js-select2 form-control input-w border-50" name="productId">
+                                        <option value="" disabled selected>Select product</option>
+                                        <?php foreach($products as $product): ?>
+                                        <option value="<?php echo $product['id']; ?>"><?php echo $product['name']; ?></option>
+                                        <?php endforeach; ?>
                                     </select>
 
                                 </div>
@@ -149,10 +149,25 @@
 
     <script>
     $(document).ready(function() {
-        $('.js-example-basic-single').select2();
+        $('.js-select2').select2();
         $('b[role="presentation"]').hide();
         $('.select2-selection__arrow').append('<i class="fa fa-sort-desc"></i>');
     });
+    function voucherCode(){
+        let val = $('#status option:selected').val();
+        if(val != 'unique'){
+            $("#code_input").append('<input type="text" id="code" class="input-w border-50 form-control" name="code" required>');
+            $( "#voucher_code" ).fadeIn( "slow", function() {
+                $('#voucher_code').show();
+            });
+           
+        } else {
+            $( "#voucher_code" ).fadeIn( "slow", function() {
+                $('#voucher_code').hide();
+                $("#code_input").empty()
+            });
+        }
+    }
     function saveVoucher(e) {
         e.preventDefault();
         if ($('.form-control:invalid').length > 0) {
@@ -168,7 +183,11 @@
             expire: $('#expire').val(),
             active: $('#active option:selected').val(),
             amount: $('#amount').val(),
-            productId: $('#productId').val()
+            productId: $('#productId').find(':selected').val(),
+        }
+
+        if($('#code').length > 0){
+            data.code = $('#code').val();
         }
 
         $.post('<?php echo base_url(); ?>api/voucher/create', data, function(data) {
