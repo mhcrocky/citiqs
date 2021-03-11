@@ -97,6 +97,10 @@ function tinyMceInit(textAreaId, templateContent = '') {
                 icon: false,
                 menu: [
                     {
+                        text: '[buyerName]',
+                        onclick: function(){editor.insertContent('[buyerName]')}
+                    },
+                    {
                         text: '[buyerEmail]',
                         onclick: function(){editor.insertContent('[buyerEmail]')}
                     },
