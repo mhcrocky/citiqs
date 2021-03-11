@@ -43,11 +43,14 @@
                                     <td class="spot_table_image"><img :class="backgroundClass(spot.background)"
                                             :src="imgFullPath(spot.image)" alt=""></td>
                                     <td class="td_action">
+                                        <span class="span_action spotImportant" @click="editSpot(spot)">
+                                            <i title="Basic Edit" class="fa fa-magic" aria-hidden="true"></i>
+                                        </span>
                                         <span class="span_action" @click="editSpot(spot)">
-                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            <i title="Edit Spot" class="fa fa-pencil" aria-hidden="true"></i>
                                         </span>
                                         <span class="span_action " @click="deleteConfirmSpot(spot)">
-                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                            <i title="Delete Spot" class="fa fa-trash" aria-hidden="true"></i>
                                         </span>
                                         <span class="span_action" @click="goToTimeSlots(spot)">
                                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
@@ -269,6 +272,7 @@
                 this.method = 'edit';
                 this.spotModalData = Object.assign({}, spot);
                 $('#add_spot_modal').modal('show');
+                $('.modal-title').text('Edit Spot');
             },
             goToTimeSlots(spot) {
                 location.href = this.baseURL + 'customer_panel/time_slots/' + spot.id
@@ -309,7 +313,7 @@
                         if (this.method == 'edit') {
                             let spot = response.data.data;
                             let index = this.getIndexByID('spots', spot.id);
-                            $('#imgChanged').val(false);
+                            $('#imgChanged').val('false');
                             $('.file-custom').attr('content', 'Choose image ...');
                             $('#preview').attr('src', this.baseURL + 'assets/images/img-preview.png');
                             Vue.set(this.spots, index, spot);
@@ -455,6 +459,19 @@
         $("#imgChanged").val('true');
 
     }
+
+    $(document).on('click', '.spotImportant', function() {
+        $('.form-group').hide();
+        $('#soldoutdescript').closest(".form-group").show();
+        $('#pricingdescript').closest(".form-group").show();
+        $('#feedescript').closest(".form-group").show();
+    });
+
+    $(document).on('hidden.bs.modal', '#add_spot_modal', function () {
+        $('.form-group').show();
+        $('.modal-title').text('Add Spot');
+    });
+    
     </script>
 
 </div>

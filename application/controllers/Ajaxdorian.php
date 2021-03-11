@@ -258,7 +258,7 @@ class Ajaxdorian extends CI_Controller
         //if (!$this->input->is_ajax_request()) return;
         $imgChanged = $this->input->post("imgChanged");
         $imgName = '';
-        if($imgChanged == 'false') {
+        if($imgChanged != 'true') {
             $imgName = $this->input->post('oldImage');
         }
         $config['upload_path']   = FCPATH . 'assets/home/images/';
@@ -269,7 +269,7 @@ class Ajaxdorian extends CI_Controller
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload('userfile')) {
             $errors   = $this->upload->display_errors('', '');
-            var_dump($errors);
+            //var_dump($errors);
         } else {
             $upload_data = $this->upload->data();;
 			$imgName = $upload_data['file_name'];

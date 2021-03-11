@@ -45,7 +45,7 @@
                                     {{ backgroundText(agenda.Background) }}
                                 </td>
                                 <td>
-                                    <a :href="baseURL+ 'emaildesigner/edit/'+ agenda.email_id">
+                                    <a :href="baseURL+ 'update_template/'+ agenda.email_id">
                                         {{ agenda.template_name }}
                                     </a>
                                 </td>
