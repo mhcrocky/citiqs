@@ -20,6 +20,7 @@
         public $percentUsed;
         public $expire;
         public $active;
+        public $numberOfTimes;
         public $productId;
 
         private $table = 'tbl_shop_voucher';
