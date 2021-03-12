@@ -52,7 +52,7 @@ class Ajax extends CI_Controller
         $this->load->helper('uploadfile_helper');
         $this->load->helper('jwt_helper');
         $this->load->helper('pay_helper');
-        $this->load->helper('perfex_helper');
+        $this->load->helper('validate_data_helper');
 
         $this->load->library('session');
         $this->load->library('language', array('controller' => $this->router->class));
@@ -2156,6 +2156,61 @@ class Ajax extends CI_Controller
             $response = [
                 'status' => '0',
                 'messages' => ['Update failed']
+            ];
+        }
+
+        echo json_encode($response);
+        return;
+    }
+
+    public function registerAmbasador(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = Utility_helper::sanitizePost();
+
+        if (empty($post['email']) || !Validate_data_helper::validateString($post['email'])) {
+            $message = 'Email is required';
+            array_push($this->errorMessages, $message);
+        }
+
+        if (!Validate_data_helper::validateEmail($post['email'])) {
+            $message = 'Email is not validi';
+            array_push($this->errorMessages, $message);
+        }
+
+        if (empty($post['firstName']) || !Validate_data_helper::validateString($post['firstName'])) {
+            $message = 'First name is required';
+            array_push($this->errorMessages, $message);
+        }
+
+        if (empty($post['lastName']) || !Validate_data_helper::validateString($post['lastName'])) {
+            $message = 'Last name is required';
+            array_push($this->errorMessages, $message);
+        }
+
+        if (!count($this->errorMessages)) {
+            $ambasador = [
+                'firstName' => $post['firstName'],
+                'lastName' => $post['lastName'],
+                'email' => $post['email'],
+                'password' => Utility_helper::shuffleString(10),
+            ];
+            if (Email_helper::activateAmbasador($ambasador)) {
+                $response = [
+                    'status' => '1',
+                    'messages' => ['Activation email sent on given email adress']
+                ];
+            } else {
+                $response = [
+                    'status' => '0',
+                    'messages' => ['Activation email did not send. Please try again']
+                ];
+            }
+        } else {
+            $response = [
+                'status' => '0',
+                'messages' => $this->errorMessages
             ];
         }
 

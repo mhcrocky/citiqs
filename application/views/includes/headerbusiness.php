@@ -177,8 +177,11 @@ $userShortUrl = $this->session->userdata('userShortUrl');
                                 </div>
                                 <ul class="metismenu" id="menu">
 
-									
-									
+
+									<div style="background-color: orangered" >
+										<li data-menuid="0"><a href="<?php echo $this->baseUrl;?>"><i class="ti-flag" style="background-color: orangered"></i><span>FINISH ACCOUNT SETUP</span></a></li>
+									</div>
+
 									<li data-menuid="1"><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-receipt"></i><span>Dashboard</span></a></li>
 									
 
@@ -210,13 +213,16 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 									<li data-menuid="3">
 										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-shopping-cart-full"></i><span>Finance</span></a>
 										<ul class="collapse">
-                                            <?php if (intval($_SESSION['userId']) === $this->tiqsMainId) { ?>
-                                                <li><a href="<?php echo $this->baseUrl; ?>all_payment_methods"><i class="ti-pencil-alt"></i><span>All payment methods</span></a></li>
-                                            <?php } ?>
-                                            <li><a href="<?php echo $this->baseUrl; ?>payment_methods"><i class="ti-pencil-alt"></i><span>Payment methods</span></a></li>
+
+
 											<li data-menuid="3.1"><a href="<?php echo $this->baseUrl; ?>clearing"><i class="ti-pencil-alt"></i> <span>Pay-out</span></a></li>
 											<li data-menuid="3.2"><a href="<?php echo $this->baseUrl; ?>businessreports"><i class="ti-pencil-alt"></i> <span>Transactions</span></a></li>
 											<li data-menuid="3.3"><a href="<?php echo $this->baseUrl; ?>invoices"><i class="ti-user"></i> <span>Invoices</span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>payment_methods"><i class="ti-pencil-alt"></i><span>Payment methods</span></a></li>
+											<?php if (intval($_SESSION['userId']) === $this->tiqsMainId) { ?>
+												<li><a href="<?php echo $this->baseUrl; ?>all_payment_methods"><i class="ti-pencil-alt"></i><span>All payment methods</span></a></li>
+											<?php } ?>
+
 <!--											<li><a href="--><?php //echo $this->baseUrl; ?><!--dashboard"><i class="ti-pencil-alt"></i> <span>Payment links</span></a></li>-->
 <!--											<li>-->
 <!--												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Settings</span></a>-->
@@ -547,13 +553,14 @@ $userShortUrl = $this->session->userdata('userShortUrl');
                                     <?php if (isset($_SESSION['masterAccounts']) && count($_SESSION['masterAccounts']) > 1) { ?>
                                         <form action="<?php echo base_url() . 'login/switchAccount'; ?>" method="post">
                                             <div class="form-group">
-                                                <label for="masterAccountId"><?php echo $this->language->tLine('Change account'); ?></label>
+<!--                                                <label for="masterAccountId">--><?php //echo $this->language->tLine('Change account'); ?><!--</label>-->
                                                 <select
                                                     class="form-control"
                                                     id="masterAccountId"
                                                     name="masterAccountId"
                                                     required
                                                     onchange="submitSwitchAccountForm(this)"
+													style="border-radius: 50px;margin-top: 7px"
                                                 >
                                                     <option value=""><?php echo $this->language->tLine('Select'); ?></option>
                                                     <?php foreach ($_SESSION['masterAccounts'] as $masterAccount) { ?>
