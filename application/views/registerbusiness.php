@@ -14,7 +14,10 @@
 					<input type="text" name="IsDropOffPoint" value ='<?php echo $isDropOffPoint; ?>' readonly hidden required />
 					<input type="text" name="roleId" value ='<?php echo $roleId; ?>' readonly hidden required />
 					<input type="text" name="istype" value ='<?php echo $istype; ?>' readonly hidden required />
-					<input type="text" name="createdBy" value ='<?php echo $createdBy; ?>' readonly hidden required />							
+					<input type="text" name="createdBy" value ='<?php echo $createdBy; ?>' readonly hidden required />
+					<?php if (!empty($ambasadorId)) { ?>
+						<input type="text" name="ambasadorId" value ='<?php echo $ambasadorId; ?>' readonly hidden required />
+					<?php } ?>
 					<div>
 						<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center">
 							<?php echo $this->language->tline('Your business name');?>
@@ -83,7 +86,14 @@
 						<?php foreach ($businessTypes as $type) { ?>
 						<option
 							value="<?php echo $type['id'] ?>"
-							<?php if ($type['id'] === get_cookie('business_type_id')) echo 'selected'; ?>
+							<?php
+								if (
+									($type['id'] === get_cookie('business_type_id') && empty($businessTypeId))
+									|| (!empty($businessTypeId) && $type['id'] === $businessTypeId)
+								) {
+									echo 'selected';
+								}
+							?>
 						>
 								<?php echo ucfirst($type['busineess_type']); ?>
 						</option>
