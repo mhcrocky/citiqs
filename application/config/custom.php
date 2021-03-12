@@ -487,4 +487,4 @@ $config['initialFoodAddon'] = 'butter';
 $config['initialMainType'] = 'Main';
 $config['initialAddonType'] = 'Addon';
 
-$congi['ambasadorCokkiePrefix'] = 'crmAmbasador';
+$config['ambasadorCokkiePrefix'] = 'crmAmbasador';
