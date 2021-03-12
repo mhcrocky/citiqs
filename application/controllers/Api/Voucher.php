@@ -67,7 +67,6 @@ class Voucher extends REST_Controller
         $data['numberOfTimes'] = $numOfCodes;
         $dataMultiple = [];
         if($status != 'unique'){
-            $data['code'] = Utility_helper::shuffleStringSmallCaps(6);
             
             if ($this->shopvoucher_model->setObjectFromArray($data)->create()) {
                 if (is_null($firstLine)) {
@@ -114,10 +113,6 @@ class Voucher extends REST_Controller
                 fputcsv($csvFile, $dataToScv, ';');
 
                 $numOfCodes--;
-                $response = [
-                    'status' => "success",
-                    'message' => "The vouchers are created successfully!",
-                ];
             } else { 
                 $response = [
                 'status' => "error",
@@ -132,7 +127,7 @@ class Voucher extends REST_Controller
 
         $response = [
             'status' => "success",
-            'message' => "successfully",
+            'message' => "The vouchers are created successfully!",
         ];
 
         $this->set_response($response, 201);

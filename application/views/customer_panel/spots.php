@@ -46,6 +46,9 @@
                                         <span class="span_action spotImportant" @click="editSpot(spot)">
                                             <i title="Basic Edit" class="fa fa-magic" aria-hidden="true"></i>
                                         </span>
+                                        <span class="span_action spotLabel" @click="editSpot(spot)">
+                                            <i title="Edit Spot Label" class="fa fa-tags" aria-hidden="true"></i>
+                                        </span>
                                         <span class="span_action" @click="editSpot(spot)">
                                             <i title="Edit Spot" class="fa fa-pencil" aria-hidden="true"></i>
                                         </span>
@@ -460,6 +463,13 @@
 
     }
 
+    (function(){
+        $('#soldoutdescript').closest(".form-group").hide();
+        $('#pricingdescript').closest(".form-group").hide();
+        $('#feedescript').closest(".form-group").hide();
+        $('#spotLabelId').closest(".form-group").hide();
+    }());
+
     $(document).on('click', '.spotImportant', function() {
         $('.form-group').hide();
         $('#soldoutdescript').closest(".form-group").show();
@@ -467,8 +477,17 @@
         $('#feedescript').closest(".form-group").show();
     });
 
+    $(document).on('click', '.spotLabel', function() {
+        $('.form-group').hide();
+        $('#spotLabelId').closest(".form-group").show();
+    });
+
     $(document).on('hidden.bs.modal', '#add_spot_modal', function () {
         $('.form-group').show();
+        $('#soldoutdescript').closest(".form-group").hide();
+        $('#pricingdescript').closest(".form-group").hide();
+        $('#feedescript').closest(".form-group").hide();
+        $('#spotLabelId').closest(".form-group").hide();
         $('.modal-title').text('Add Spot');
     });
 
