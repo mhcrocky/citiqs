@@ -15,6 +15,7 @@
         public $id;
         public $vendorId;
         public $code;
+        public $description;
         public $amount;
         public $percent;
         public $percentUsed;
@@ -58,6 +59,7 @@
             if (!count($data)) return false;
             if (isset($data['vendorId']) && !Validate_data_helper::validateInteger($data['vendorId'])) return false;
             if (isset($data['code']) && !Validate_data_helper::validateString($data['code'])) return false;
+            if (isset($data['description']) && !Validate_data_helper::validateString($data['description'])) return false;
             if (isset($data['amount']) && !Validate_data_helper::validateFloat($data['amount'])) return false;
             if (isset($data['percent']) && !Validate_data_helper::validateInteger($data['percent'])) return false;
             if (isset($data['percentUsed']) && !($data['percentUsed'] === '1' || $data['percentUsed'] === '0')) return false;

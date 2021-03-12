@@ -31,7 +31,7 @@ class Voucher extends REST_Controller
             unset($data['productId']);
         }
         $data_keys = array_keys($data);
-        $voucher_fields = ['vendorId', 'percent', 'percentUsed', 'expire', 'active', 'amount'];
+        $voucher_fields = ['vendorId', 'percentUsed', 'expire', 'active'];
         $error = false;
         $error_message = '';
         
@@ -47,7 +47,6 @@ class Voucher extends REST_Controller
                 break;
             }
         }
-
         
 
         if($error){
@@ -99,9 +98,7 @@ class Voucher extends REST_Controller
         $data['numberOfTimes'] = 1;
 
         while ($numOfCodes > 0) {
-            
             $data['code'] = Utility_helper::shuffleStringSmallCaps(6);
-
             
             if ($this->shopvoucher_model->setObjectFromArray($data)->create()) {
                 if (is_null($firstLine)) {

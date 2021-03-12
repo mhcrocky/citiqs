@@ -34,7 +34,18 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="status" class="col-md-4 col-form-label text-md-left">Voucher code
+                                <label for="description" class="col-md-4 col-form-label text-md-left">
+                                Voucher Description
+                                </label>
+                                <div class="col-md-6">
+                                 
+                                    <input type="text" id="description" class="input-w border-50 form-control"
+                                        name="description" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="status" class="col-md-4 col-form-label text-md-left">Voucher Code
                                 </label>
                                 <div class="col-md-6">
                                     <select id="status" onchange="voucherCode()" name="status" class="form-control input-w border-50 field">
@@ -149,7 +160,11 @@
 
     <script>
     $(document).ready(function() {
-        $('.js-select2').select2();
+        $('.js-select2').select2({
+            placeholder: "Select product",
+            allowClear: true,
+            });
+        
         $('b[role="presentation"]').hide();
         $('.select2-selection__arrow').append('<i class="fa fa-sort-desc"></i>');
     });
@@ -177,17 +192,29 @@
         let data = {
             vendorId: $('#vendorId').val(),
             codes: $('#codes').val(),
+            description: $('#description').val(),
             status: $('#status option:selected').val(),
-            percent: $('#percent').val(),
             percentUsed: $('#percentUsed option:selected').val(),
             expire: $('#expire').val(),
             active: $('#active option:selected').val(),
-            amount: $('#amount').val(),
             productId: $('#productId').find(':selected').val(),
         }
 
         if($('#code').length > 0){
             data.code = $('#code').val();
+        }
+
+        let amount = $('#amount').val();
+        let productId = $('#productId').find(':selected').val();
+
+        if(amount === ""){
+            data.percent = $('#percent').val();
+        } else {
+            data.amount = $('#amount').val();
+        }
+
+        if(productId !== ""){
+            data.productId = $('#productId').find(':selected').val();
         }
 
         $.post('<?php echo base_url(); ?>api/voucher/create', data, function(data) {
