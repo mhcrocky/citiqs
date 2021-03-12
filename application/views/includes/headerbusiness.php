@@ -177,8 +177,11 @@ $userShortUrl = $this->session->userdata('userShortUrl');
                                 </div>
                                 <ul class="metismenu" id="menu">
 
-									
-									
+
+									<div style="background-color: orangered" >
+										<li data-menuid="0"><a href="<?php echo $this->baseUrl;?>"><i class="ti-flag" style="background-color: orangered"></i><span>FINISH ACCOUNT SETUP</span></a></li>
+									</div>
+
 									<li data-menuid="1"><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-receipt"></i><span>Dashboard</span></a></li>
 									
 
