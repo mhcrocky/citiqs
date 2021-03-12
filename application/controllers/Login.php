@@ -624,6 +624,14 @@ class Login extends BaseControllerWeb
 			'businessTypes' => $this->businesstype_model->getAll(),
 			'countries' => Country_helper::getCountries(),
 		];
+
+		if (isset($_GET['business'])) {
+			$data['businessTypeId'] = $this->input->get('business', true);
+		}
+		if (isset($_GET['ambasador'])) {
+			$data['ambasadorId'] = $this->input->get('ambasador', true);
+		}
+
 		$this->loadViews("registerbusiness", $this->global, $data, 'footerweb', 'headerpubliclogin');
 	}
 
@@ -869,7 +877,8 @@ class Login extends BaseControllerWeb
 			foreach($hotel as $key => $value) {
 				set_cookie($key, $value, (60 * 60));
 			}
-			redirect('/registerbusiness');
+			$failedRedirect = $_SERVER['HTTP_REFERER'] ? $_SERVER['HTTP_REFERER'] : 'registerbusiness';
+			redirect($failedRedirect);
 			exit();
 		}
 
@@ -889,7 +898,8 @@ class Login extends BaseControllerWeb
 				set_cookie($key, $value, (60 * 60));
 			}
 			$this->session->set_flashdata('error', '20101 Process failed! Data given not valid');
-			redirect('/registerbusiness');
+			$failedRedirect = $_SERVER['HTTP_REFERER'] ? $_SERVER['HTTP_REFERER'] : 'registerbusiness';
+			redirect($failedRedirect);
 		}
 
 		$hotel['userId'] = $this->user_model->id;
