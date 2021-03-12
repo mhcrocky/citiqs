@@ -81,7 +81,9 @@
 					'code' => 'A-' . substr(str_shuffle($set), 0, 8),
 				];
 			} while (!$this->insert($data));
-			return $data['code'];
+//			return $data['code'];
+			$data['record']=$this->db->insert_id();
+			return $data;
 		}
 
 		public function tablesticker()

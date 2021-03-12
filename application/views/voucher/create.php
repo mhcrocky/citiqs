@@ -153,7 +153,7 @@
             </div>
         </div>
     </div>
-    </div>
+</main>
 
     
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -217,12 +217,12 @@
             data.productId = $('#productId').find(':selected').val();
         }
 
-        $.post('<?php echo base_url(); ?>api/voucher/create', data, function(data) {
-            alertify[data.status](data.message);
+        $.post('<?php echo base_url(); ?>Api/Voucher/create', data, function(data) {
+            // alertify[data.status](data.message);
             return;
         }).fail(function(response) {
             response = JSON.parse(response.responseText);
-            alertify[response.status](response.message);
+            // alertify[response.status](response.message);
             return;
         });
 
