@@ -327,7 +327,11 @@ var callThis = (function() {
         updatePaymentMethodCost: function(callFunction, functionArg) {
             functionArg.push(this);
             callFunction(...functionArg);
-        }
+        },
+        registerAmbasador: function(callFunction, functionArg) {
+            functionArg.push(this);
+            callFunction(...functionArg);
+        },
     };
     return methods;
 })();

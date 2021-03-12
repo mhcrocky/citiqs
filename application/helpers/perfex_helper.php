@@ -104,4 +104,13 @@
             Curl_helper::sendPutRequest($url, $data, $headers);
         }
 
+
+        public static function apiStaff(array $staff): ?object
+        {
+            $CI =& get_instance();
+            $CI->load->helper('utility_helper');
+            $url = PERFEX_API . 'staffs/data';
+            $headers = ['authtoken:' . PERFEX_API_KEY];
+            return Curl_helper::sendCurlPostRequest($url, $staff, $headers);
+        }
     }

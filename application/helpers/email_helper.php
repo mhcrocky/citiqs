@@ -177,4 +177,20 @@
             }
             return $CI->email->send();
         }
+
+        public static function activateAmbasador(array $ambasador): bool
+        {
+            $CI =& get_instance();
+            $CI->load->helper('jwt_helper');
+
+            $message  = '<p>Click on this <a href="';
+            $message .= $activationUrl = base_url() . 'ambasador_activate' . DIRECTORY_SEPARATOR . Jwt_helper::encode($ambasador);
+            $message .= '" target="_blank">link</a> ';
+            $message .= 'to activate you ambasador status.</p>';
+            $message .= '<p>Your password is: ' . $ambasador['password'] . '</p>';
+
+            $subject = 'TIQS ambasador';
+
+            return self::sendEmail($ambasador['email'], $subject, $message);
+        }
     }

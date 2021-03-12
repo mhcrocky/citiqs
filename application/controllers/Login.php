@@ -36,6 +36,7 @@ class Login extends BaseControllerWeb
 		$this->load->helper('validate_data_helper');
 		$this->load->helper('country_helper');
 		$this->load->helper('pay_helper');
+		$this->load->helper('jwt_helper');
 
 		$this->load->library('google');
 		$this->load->library('language', array('controller' => $this->router->class));
@@ -957,6 +958,50 @@ class Login extends BaseControllerWeb
 		$user = $this->login_model->loginMeById(intval($id));
 		($user) ? $this->accountSettings($user) : redirect('logout');
 
+		return;
+	}
+
+	public function registerAmbasador(): void
+	{
+		$data = [
+			'email' => get_cookie($this->config->item('ambasadorCokkiePrefix') . 'email'),
+			'firstName' => get_cookie($this->config->item('ambasadorCokkiePrefix') . 'firstName'),
+			'lastName' => get_cookie($this->config->item('ambasadorCokkiePrefix') . 'lastName'),
+		];
+
+
+		$this->global['pageTitle'] = 'TIQS : REGISTER AMBASADOR';
+		$this->loadViews("registerAmbasador", $this->global, $data, 'footerweb', 'headerpubliclogin');
+		return;
+	}
+
+	public function ambasadorActivate($key): void
+	{
+		$ambasador = (array) Jwt_helper::decode($key);
+		$staff = [
+			'firstname' => $ambasador['firstName'] . ' ' . $ambasador['lastName'],
+			'email' => $ambasador['email'],
+			'password' => Utility_helper::getAndUnsetValue($ambasador, 'password')
+		];
+		$response = Perfex_helper::apiStaff($staff);
+
+		if ($response && $response->status) {
+			$this->session->set_flashdata('success', 'You became TIQS ambasdor');
+		} else {
+			foreach ($ambasador as $key => $value) {
+				$name = $this->config->item('ambasadorCokkiePrefix') . $key;
+				set_cookie([
+					'name' => $name,
+					'value' => $value,
+					'expire' => 300,
+					'httponly' => true
+				]);
+			}
+			$message = is_null($response) ? 'Registration faied! Please check are you already our ambasador' : 'Registration faied! Please try again';
+			$this->session->set_flashdata('error', $message);
+		}
+
+		redirect('alfred_ambasador');
 		return;
 	}
 

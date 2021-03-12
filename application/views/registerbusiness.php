@@ -3,7 +3,7 @@
 		<div class="flex-column align-start">
 			<div style="text-align:center">
 				<p style="font-family:'caption-bold'; font-size:300%; color:#ffffff;">
-				<h2 class="heading"> <?php echo $this->language->tLine('REGISTER YOUR BUSINESS.');?></h2>
+				<h2 class="heading"> <?php echo $this->language->tline('REGISTER YOUR BUSINESS.');?></h2>
 				<?php include_once APPPATH . 'views/includes/sessionMessages.php' ?>
 				<form
 					id="registerBusinessForm"
@@ -17,7 +17,7 @@
 					<input type="text" name="createdBy" value ='<?php echo $createdBy; ?>' readonly hidden required />							
 					<div>
 						<p style="font-family:'caption-light'; font-size:100%; color:#ffffff;  margin:0px; text-align: center">
-							<?php echo $this->language->tLine('Your business name');?>
+							<?php echo $this->language->tline('Your business name');?>
 							<br>
 							<br/>
 						</p>
@@ -29,7 +29,7 @@
 							value="<?php echo get_cookie('username'); ?>"
 							class="form-control"
 							style="font-family:'caption-light'; border-radius: 50px;"
-							placeholder="<?php echo $this->language->tLine('Hotel/(air)BnB/Event/Club-name/Bar');?>"
+							placeholder="<?php echo $this->language->tline('Hotel/(air)BnB/Event/Club-name/Bar');?>"
 							data-form-check="1"
 							data-error-message='Username is required'
 							data-min-length="1"
