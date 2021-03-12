@@ -164,7 +164,7 @@
     }
 
     $(document).ready(function(){
-        $('#setPayNlServiceId').modal('show');
+        // $('#setPayNlServiceId').modal('show');
         $('.alert').alert();
     });
 

@@ -177,10 +177,16 @@ $userShortUrl = $this->session->userdata('userShortUrl');
                                 </div>
                                 <ul class="metismenu" id="menu">
 
-
-									<div style="background-color: orangered" >
-										<li data-menuid="0"><a href="<?php echo $this->baseUrl;?>"><i class="ti-flag" style="background-color: orangered"></i><span>FINISH ACCOUNT SETUP</span></a></li>
-									</div>
+                                    <?php if (!$_SESSION['payNlServiceIdSet']) { ?>
+                                        <div style="background-color: orangered" >
+                                            <li data-menuid="0" data-toggle="modal" data-target="#setPayNlServiceId">
+                                                <a href="javascript:void(0)">
+                                                    <i class="ti-flag" style="background-color: orangered"></i>
+                                                    <span>FINISH ACCOUNT SETUP</span>
+                                                </a>
+                                            </li>
+                                        </div>
+                                    <?php } ?>
 
 									<li data-menuid="1"><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-receipt"></i><span>Dashboard</span></a></li>
 									
