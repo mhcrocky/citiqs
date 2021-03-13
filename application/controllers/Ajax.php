@@ -1410,7 +1410,7 @@ class Ajax extends CI_Controller
             ];
         } else {
             $orderRandomKey = $post['orderRandomKey'];
-            $user = $post['user'];           
+            $user = $post['user'];
             if ($this->populateUserData($orderRandomKey, $user)) {
                 $this->setBuyerCookies($user);
                 $redirect = 'pay_order?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
@@ -1435,7 +1435,10 @@ class Ajax extends CI_Controller
         // check mobile phone
         if ($vendor['requireMobile'] === '1' || $spotTypeId !== $this->config->item('local')) {
             if (Validate_data_helper::validateMobileNumber($post['user']['mobile'])) {
-                $post['user']['mobile'] = $post['phoneCountryCode'] . ltrim($post['user']['mobile'], '0');                
+                 // to store in cookies, without country code
+                set_cookie('mobile', ltrim($post['user']['mobile'], '0'), (365 * 24 * 60 * 60));
+                set_cookie('phoneCountryCode', $post['phoneCountryCode'], (365 * 24 * 60 * 60));
+                $post['user']['mobile'] = $post['phoneCountryCode'] . ltrim($post['user']['mobile'], '0');
             } else {
                 $message = 'Order not made! Mobile phone is required. Please try again';
                 array_push($messages, $message);
@@ -1468,9 +1471,6 @@ class Ajax extends CI_Controller
         }
         if (!empty($user['email'])) {
             set_cookie('email', $user['email'], (365 * 24 * 60 * 60));
-        }
-        if (!empty($user['mobile'])) {
-            set_cookie('mobile', $user['mobile'], (365 * 24 * 60 * 60));
         }
     }
 

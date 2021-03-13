@@ -355,7 +355,7 @@ class Businessreport extends BaseControllerWeb
 
 	public function paymentMethods(): void
 	{
-		$this->shoppaymentmethods_model->insertProductGroupsAndPaymentMethods(intval($_SESSION['userId']));
+		// $this->shoppaymentmethods_model->insertProductGroupsAndPaymentMethods(intval($_SESSION['userId']));
 
 		$data = [
 			'productGroups' => $this->config->item('productGroups')

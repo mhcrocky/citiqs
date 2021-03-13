@@ -289,6 +289,7 @@ $route['sendDriverSms']         = 'Api/Orders/sms';
 $route['updateOrderEx']         = 'Api/Orders/updateTwoToZero';
 
 $route['api/voucher']  = 'Api/Voucher/data';
+$route['api/voucher/create']  = 'Api/Voucher/create';
 
 $route['api/onesignal/data']  = 'Api/OneSignal/data';
 $route['api/spotmobile/spotinsert']  = 'Api/SpotMobile/spotinsert';

@@ -61,41 +61,71 @@
             return true;
         }
 
-        public function insertProductGroupsAndPaymentMethods(int $vendorId): bool
+        // COMMENTED METHODS ONLY FOR ONE VENDOR
+        // public function insertProductGroupsAndPaymentMethods(int $vendorId): bool
+        // {
+        //     $this->load->config('custom');
+        //     list($configProductGroups, $configPaymentMethods) = $this->getGroupAndMethods();
+
+        //     if (
+        //         !$this->insertNewGroups($vendorId, $configProductGroups, $configPaymentMethods)
+        //         || !$this->insertNewMethods($vendorId, $configProductGroups, $configPaymentMethods)
+        //     ) return false;
+
+        //     return true;
+        // }
+
+        // public function insertNewGroups(int $vendorId, array $configProductGroups, array $configPaymentMethods): bool
+        // {
+        //     $newGroups = $this->getNewProductGroups($vendorId, $configProductGroups);
+
+        //     if ($newGroups) {
+        //         foreach ($newGroups as $group) {
+        //             foreach ($configPaymentMethods as $method) {
+        //                 $insert = [
+        //                     'vendorId' => $vendorId,
+        //                     'productGroup' => $group,
+        //                     'paymentMethod' => $method
+        //                 ];
+        //                 if (!$this->setObjectFromArray($insert)->create()) return false;
+        //             }
+        //         }
+        //     }
+
+        //     return true;
+        // }
+
+        // public function insertNewMethods(int $vendorId, array $configProductGroups, array $configPaymentMethods): bool
+        // {
+
+        //     foreach ($configProductGroups as $group) {
+        //         $newMethods = $this->getNewPaymentMethods($vendorId, $configPaymentMethods, $group);
+        //         if ($newMethods) {
+        //             foreach ($newMethods as $method) {
+        //                 $insert = [
+        //                     'vendorId' => $vendorId,
+        //                     'productGroup' => $group,
+        //                     'paymentMethod' => $method,
+        //                     'percent' => $this->config->item('paymentPrice')[$group][$method]['percent'],
+        //                     'amount' => $this->config->item('paymentPrice')[$group][$method]['amount']
+        //                 ];
+        //                 if (!$this->setObjectFromArray($insert)->create()) return false;
+        //             }
+        //         }
+        //     }
+
+        //     return true;
+        // }
+
+        private function getGroupAndMethods(): array
         {
-            $this->load->config('custom');
-            $configProductGroups  = $this->config->item('productGroups');
-            $configPaymentMethods  = $this->config->item('onlinePaymentTypes');
-
-            if (
-                !$this->insertNewGroups($vendorId, $configProductGroups, $configPaymentMethods)
-                || !$this->insertNewMethods($vendorId, $configProductGroups, $configPaymentMethods)
-            ) return false;
-
-            return true;
+            return [
+                $this->config->item('productGroups'),
+                $this->config->item('paymentTypes'),
+            ];
         }
 
-        public function insertNewGroups(int $vendorId, array $configProductGroups, array $configPaymentMethods): bool
-        {
-            $newGroups = $this->getNewProductGroups($vendorId, $configProductGroups);
-
-            if ($newGroups) {
-                foreach ($newGroups as $group) {
-                    foreach ($configPaymentMethods as $method) {
-                        $insert = [
-                            'vendorId' => $vendorId,
-                            'productGroup' => $group,
-                            'paymentMethod' => $method
-                        ];
-                        if (!$this->setObjectFromArray($insert)->create()) return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
-        public function getNewProductGroups(int $vendorId, array $configProductGroups): array
+        private function getNewProductGroups(int $vendorId, array $configProductGroups): array
         {
             $productGroups = $this->readImproved([
                 'what' => ['DISTINCT(productGroup)'],
@@ -113,27 +143,7 @@
             return array_diff($configProductGroups, $productGroups);
         }
 
-        public function insertNewMethods(int $vendorId, array $configProductGroups, array $configPaymentMethods): bool
-        {
-
-            foreach ($configProductGroups as $group) {
-                $newMethods = $this->getNewPaymentMethods($vendorId, $configPaymentMethods, $group);
-                if ($newMethods) {
-                    foreach ($newMethods as $method) {
-                        $insert = [
-                            'vendorId' => $vendorId,
-                            'productGroup' => $group,
-                            'paymentMethod' => $method
-                        ];
-                        if (!$this->setObjectFromArray($insert)->create()) return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
-        public function getNewPaymentMethods(int $vendorId, array $configPaymentMethods, string $productGroup): array
+        private function getNewPaymentMethods(int $vendorId, array $configPaymentMethods, string $productGroup): array
         {
             $paymentMethods = $this->readImproved([
                 'what' => ['DISTINCT(paymentMethod)'],
@@ -155,8 +165,7 @@
         public function insertAll(array $vendorIds): bool
         {
             $this->load->config('custom');
-            $configProductGroups  = $this->config->item('productGroups');
-            $configPaymentMethods  = $this->config->item('onlinePaymentTypes');
+            list($configProductGroups, $configPaymentMethods) = $this->getGroupAndMethods();
 
             if (
                 !$this->insertAllGroups($vendorIds, $configProductGroups, $configPaymentMethods)
@@ -176,11 +185,14 @@
                 $newGroups = $this->getNewProductGroups($vendorId, $configProductGroups);
                 if ($newGroups) {
                     foreach ($newGroups as $group) {
-                        foreach ($configPaymentMethods as $method) {
+                        $paymentMethods = $this->getNewPaymentMethods($vendorId, $configPaymentMethods, $group);
+                        foreach ($paymentMethods as $method) {
                             $insert = [
                                 'vendorId' => $vendorId,
                                 'productGroup' => $group,
-                                'paymentMethod' => $method
+                                'paymentMethod' => $method,
+                                'percent' => $this->config->item('paymentPrice')[$group][$method]['percent'],
+                                'amount' => $this->config->item('paymentPrice')[$group][$method]['amount']
                             ];
                             array_push($insertGroups, $insert);
                         }
@@ -204,7 +216,9 @@
                             $insert = [
                                 'vendorId' => $vendorId,
                                 'productGroup' => $group,
-                                'paymentMethod' => $method
+                                'paymentMethod' => $method,
+                                'percent' => $this->config->item('paymentPrice')[$group][$method]['percent'],
+                                'amount' => $this->config->item('paymentPrice')[$group][$method]['amount']
                             ];
                             array_push($insertMethods, $insert);
                         }

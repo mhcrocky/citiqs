@@ -32,8 +32,11 @@ class Qrcodelist extends REST_Controller
 	public function getnextsticker_get()
 	{
 		$result = $this->QRUniquecode_model->Stpversion2();
+//		$UniqueId = $result->code;
+//		$message['uniqueId'] =  "$UniqueId";
 		$UniqueId = $result;
-		$message['uniqueId'] =  "$UniqueId";
+//		$message =  "$UniqueId";
+		$message =  $UniqueId;
 		$this->response($message, 200);
 
 	}

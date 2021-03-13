@@ -10,7 +10,7 @@ $config['dropOfPointTrue'] = 1;
 $config['dropOfPointFalse'] = 0;
 
 // TIQS id in tbl_user used when inserting finde item in tbl_label for userId value
-$config['tiqsId'] = 1;
+$config['tiqsId'] = 45038;
 // TIQS email
 $config['tiqsEmail'] = 'ceo@tiqs.com';
 $config['petersEmail'] = MIGRATION_EMAIL;
@@ -207,105 +207,129 @@ $config['productGroups'] = [
 $config['paymentPrice'] = [
     $config['storeAndPos'] => [
         $config['idealPayment'] => [
-                'percent' => 0,
-                'amount' => 0,
-            ],
+            'percent' => 0,
+            'amount' => 0.25,
+        ],
         $config['creditCardPayment'] => [
-                'percent' => 0,
-                'amount' => 0,
+                'percent' => 2,
+                'amount' => 0.35,
             ],
         $config['bancontactPayment'] => [
                 'percent' => 0,
-                'amount' => 0,
+                'amount' => 0.25,
             ],
         $config['giroPayment'] => [
                 'percent' => 0,
-                'amount' => 0,
+                'amount' => 0.25,
             ],
         $config['payconiqPayment'] => [
                 'percent' => 0,
-                'amount' => 0,
+                'amount' => 0.25,
             ],
         $config['pinMachinePayment'] => [
                 'percent' => 0,
-                'amount' => 0,
+                'amount' => 0.25,
             ],
         $config['voucherPayment'] => [
                 'percent' => 0,
                 'amount' => 0,
             ],
         $config['myBankPayment'] => [
-                'percent' => 0,
-                'amount' => 0,
+                'percent' => 1,
+                'amount' => 0.25,
             ],
+        $config['prePaid'] => [
+                'percent' => 1,
+                'amount' => 0.25,
+            ],
+        $config['postPaid'] => [
+                'percent' => 1,
+                'amount' => 0.25,
+            ]
     ],
     $config['reservations'] => [
         $config['idealPayment'] => [
                 'percent' => 0,
-                'amount' => 0,
+                'amount' => 0.25,
             ],
         $config['creditCardPayment'] => [
-                'percent' => 0,
-                'amount' => 0,
+                'percent' => 2,
+                'amount' => 0.35,
             ],
         $config['bancontactPayment'] => [
                 'percent' => 0,
-                'amount' => 0,
+                'amount' => 0.25,
             ],
         $config['giroPayment'] => [
                 'percent' => 0,
-                'amount' => 0,
+                'amount' => 0.25,
             ],
         $config['payconiqPayment'] => [
                 'percent' => 0,
-                'amount' => 0,
+                'amount' => 0.25,
             ],
         $config['pinMachinePayment'] => [
                 'percent' => 0,
-                'amount' => 0,
+                'amount' => 0.25,
             ],
         $config['voucherPayment'] => [
                 'percent' => 0,
                 'amount' => 0,
             ],
         $config['myBankPayment'] => [
-                'percent' => 0,
-                'amount' => 0,
+                'percent' => 1,
+                'amount' => 0.25,
             ],
+        $config['prePaid'] => [
+                'percent' => 1,
+                'amount' => 0.25,
+            ],
+        $config['postPaid'] => [
+                'percent' => 1,
+                'amount' => 0.25,
+            ]
     ],
     $config['eTicketing'] => [
         $config['idealPayment'] => [
-                'percent' => 0,
-                'amount' => 0,
-            ],
+            'percent' => 0,
+            'amount' => 0.25,
+        ],
         $config['creditCardPayment'] => [
-                'percent' => 0,
-                'amount' => 0,
+                'percent' => 2,
+                'amount' => 0.35,
             ],
         $config['bancontactPayment'] => [
                 'percent' => 0,
-                'amount' => 0,
+                'amount' => 0.25,
             ],
         $config['giroPayment'] => [
                 'percent' => 0,
-                'amount' => 0,
+                'amount' => 0.25,
             ],
         $config['payconiqPayment'] => [
                 'percent' => 0,
-                'amount' => 0,
+                'amount' => 0.25,
             ],
         $config['pinMachinePayment'] => [
                 'percent' => 0,
-                'amount' => 0,
+                'amount' => 0.25,
             ],
         $config['voucherPayment'] => [
                 'percent' => 0,
                 'amount' => 0,
             ],
         $config['myBankPayment'] => [
-                'percent' => 0,
-                'amount' => 0,
+                'percent' => 1,
+                'amount' => 0.25,
             ],
+        $config['prePaid'] => [
+                'percent' => 1,
+                'amount' => 0.25,
+            ],
+        $config['postPaid'] => [
+                'percent' => 1,
+                'amount' => 0.25,
+            ]
     ],
 ];
 
