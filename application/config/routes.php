@@ -550,6 +550,7 @@ $route['update_template/(:num)'] = 'Templates/updateTemplate/$1';
 $route['list_template'] = 'Templates/listTemplates';
 
 $route['voucher'] = 'Voucher/index';
+$route['voucher/create'] = 'Voucher/create';
 
 // connections api routes
 
