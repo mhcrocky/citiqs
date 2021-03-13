@@ -456,7 +456,7 @@
             $data['email'] = !empty($orderData['user']['email']) ? $orderData['user']['email'] : get_cookie('email');
             $data['mobile'] = !empty($orderData['user']['mobile']) ? $orderData['user']['mobile'] : get_cookie('mobile');
             $data['userCountry'] = isset($orderData['user']['country']) ? $orderData['user']['country'] : '';
-            $data['phoneCountryCode'] = isset($orderData['phoneCountryCode']) ? $orderData['phoneCountryCode'] : '';
+            $data['phoneCountryCode'] = isset($orderData['phoneCountryCode']) ? $orderData['phoneCountryCode'] : get_cookie('phoneCountryCode');
             $data['countryCodes'] = Country_helper::getCountryPhoneCodes();
             $data['minMobileLength'] = $this->config->item('minMobileLength');
             $data['local'] = $this->config->item('local');
