@@ -9,7 +9,7 @@ $(document).ready(function () {
     pageLength: 5,
     ajax: {
       type: "get",
-      url: globalVariables.baseUrl + "api/voucher/vouchers",
+      url: globalVariables.baseUrl + "Api/Voucher/vouchers",
       dataSrc: "",
     },
     columns: [
@@ -72,4 +72,3 @@ $(document).ready(function () {
   $('#report_filter label').addClass('text-left');
 
 });
-  
