@@ -287,3 +287,7 @@ thead {
     margin-right: 45px !important;
     color: #212529;
 }
+
+.input-clear:invalid, .input-clear:valid {
+    border-color: rgba(170, 170, 170, .3) !important;
+}
