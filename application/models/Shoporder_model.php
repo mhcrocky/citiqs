@@ -1395,6 +1395,14 @@
                     'COUNT(localOrders.id) AS countLocalOrders',
                     'COUNT(deliveryOrders.id) AS countDeliveryOrders',
                     'COUNT(pickupOrders.id) AS countPickupOrders',
+
+                    'SUM(localOrders.amount) localOrdersSum',
+                    'SUM(deliveryOrders.amount) deliveryOrdersSum',
+                    'SUM(pickupOrders.amount) pickupOrdersOrdersSum',
+
+
+
+
                     $this->table . '.paymentType orderPaymentType',
                     'SUM(' . $this->table . '.amount) ordersAmount',
                     'SUM(' . $this->table . '.serviceFee) ordersServiceFee',
@@ -1413,7 +1421,8 @@
                     [
                         '(
                             SELECT '
-                                . $this->table . '.id
+                                . $this->table . '.id,'
+                                . $this->table . '.amount
                             FROM '
                                 . $this->table .
                             ' WHERE '
@@ -1425,7 +1434,8 @@
                     [
                         '(
                             SELECT '
-                                . $this->table . '.id
+                                . $this->table . '.id,'
+                                . $this->table . '.amount
                             FROM '
                                 . $this->table .
                             ' WHERE '
@@ -1437,7 +1447,8 @@
                     [
                         '(
                             SELECT '
-                                . $this->table . '.id
+                                . $this->table . '.id,'
+                                . $this->table . '.amount
                             FROM '
                                 . $this->table .
                             ' WHERE '
