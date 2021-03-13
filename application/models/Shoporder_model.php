@@ -1392,6 +1392,9 @@
             return $this->readImproved([
                 'what' => [
                     'COUNT(' . $this->table . '.id) countOrderId',
+                    'COUNT(localOrders.id) AS countLocalOrders',
+                    'COUNT(deliveryOrders.id) AS countDeliveryOrders',
+                    'COUNT(pickupOrders.id) AS countPickupOrders',
                     $this->table . '.paymentType orderPaymentType',
                     'SUM(' . $this->table . '.amount) ordersAmount',
                     'SUM(' . $this->table . '.serviceFee) ordersServiceFee',
@@ -1406,7 +1409,43 @@
                 'joins' => [
                     ['tbl_shop_spots', 'tbl_shop_spots.id = ' . $this->table . '.spotId', 'INNER'],
                     ['tbl_shop_printers', 'tbl_shop_printers.id = tbl_shop_spots.printerId', 'INNER'],
-                    ['tbl_shop_payment_methods', 'tbl_shop_payment_methods.paymentMethod = tbl_shop_orders.paymentType', 'INNER']
+                    ['tbl_shop_payment_methods', 'tbl_shop_payment_methods.paymentMethod = tbl_shop_orders.paymentType', 'INNER'],
+                    [
+                        '(
+                            SELECT '
+                                . $this->table . '.id
+                            FROM '
+                                . $this->table .
+                            ' WHERE '
+                                . $this->table . '.serviceTypeId = ' . $this->config->item('local') .
+                        ') localOrders',
+                        'localOrders.id = ' . $this->table . '.id',
+                        'LEFT'
+                    ],
+                    [
+                        '(
+                            SELECT '
+                                . $this->table . '.id
+                            FROM '
+                                . $this->table .
+                            ' WHERE '
+                                . $this->table . '.serviceTypeId = ' . $this->config->item('deliveryType') .
+                        ') deliveryOrders',
+                        'deliveryOrders.id = ' . $this->table . '.id',
+                        'LEFT'
+                    ],
+                    [
+                        '(
+                            SELECT '
+                                . $this->table . '.id
+                            FROM '
+                                . $this->table .
+                            ' WHERE '
+                                . $this->table . '.serviceTypeId = ' . $this->config->item('pickupType') .
+                        ') pickupOrders',
+                        'pickupOrders.id = ' . $this->table . '.id',
+                        'LEFT'
+                    ],
                 ],
                 'conditions' => [
                     'GROUP_BY' => [$this->table . '.paymentType']

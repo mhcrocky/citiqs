@@ -79,6 +79,21 @@
                     </div>
                 </div>
                 -->
+                    <div class="row">
+                        <div class="col-md-3 text-dark">
+                            <h3 style="font-size: 14px;" class="text-dark">Voucher</h3>
+                        </div>
+                        <div class="col-md-3">
+                            <select id="voucherId" name="voucherId" style="height: 35px !important;padding-top: 6px;"
+                                class="form-control input-w mt-2">
+                                <option value="">Select option</option>
+                                <?php foreach($vouchers as $voucher): ?>
+                                <option value="<?php echo $voucher['id']; ?>"><?php echo $voucher['description']; ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
                     <hr class="w-100 mt-3 mb-3">
                     <h3 class="font-weight-bold text-dark">Ticket sales</h3>
                     <div class="row">
@@ -195,6 +210,7 @@
                         </div>
                     </div>
 
+                    <!--
                     <div class="row mb-5">
                         <div class="col col-md-3">Email Body</div>
                         <div class="col col-md-6 mb-5">
@@ -203,6 +219,10 @@
                             <input id="eventdescript" type="hidden" name="emailBody">
                         </div>
                     </div>
+
+                    -->
+                    <div style="display: none" id="editor"></div>
+                    <div style="display: none" id="log"></div>
 
                     <input type="hidden" id="guestTicket" name="guestTicket" value="1">
                     <input type="hidden" id="ticketSwap" name="ticketSwap" value="1">
@@ -466,8 +486,8 @@
 <main class="my-form">
     <div class="w-100 mt-5 p-3">
         <div class="table-responsive">
-        <table style="background: none !important;" class="table">
-            <tr style="border-bottom: 3px solid #9333ea">
+            <table style="background: none !important;" class="table">
+                <tr style="border-bottom: 3px solid #9333ea">
                     <td><?php echo $event->eventname; ?></td>
                     <td><?php echo $event->eventdescript; ?></td>
                     <td><?php echo $event->eventVenue; ?></td>

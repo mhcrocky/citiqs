@@ -27,10 +27,11 @@ class Event_model extends CI_Model {
 	public function save_ticket_options($data)
 	{
 		$ticketId = $data['ticketId'];
-		if($ticketId == ""){
+		$this->db->where('ticketId ', $ticketId);
+		if($this->db->get('tbl_ticket_options')->num_rows() == 0){
 			return $this->db->insert('tbl_ticket_options',$data);
 		}
-		$this->db->where('ticketId ',$ticketId );
+		$this->db->where('ticketId ', $ticketId);
 		return $this->db->update('tbl_ticket_options',$data);
 		
 	}

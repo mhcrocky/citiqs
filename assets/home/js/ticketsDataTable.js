@@ -344,6 +344,7 @@ $(function () {
 
 function getTicketOptions(ticketId) {
   defaultOptions();
+  $('.ql-snow').remove();
   $("#ticketId").val(ticketId);
   $.get(
     globalVariables.baseUrl + "events/get_ticket_options/" + ticketId,
@@ -360,7 +361,7 @@ function getTicketOptions(ticketId) {
           $("#" + value).prop("checked", true);
         }
         //$('.ql-editor').html('test')
-
+        console.log(index);
         $("#" + index).val(value);
       });
     }
