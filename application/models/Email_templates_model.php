@@ -14,6 +14,7 @@ class Email_templates_model extends CI_Model
         $this->db->from('tbl_email_templates');
         $this->db->where('user_id', $user_id);
         $this->db->not_like('template_name', 'ticketing_');
+        $this->db->not_like('template_name', 'voucher_');
         $query = $this->db->get();
         $result = $query->result();
         return $result;
@@ -26,6 +27,19 @@ class Email_templates_model extends CI_Model
         $query = $this->db->get();
         $result = $query->result();
         return $result;
+    }
+
+    public function get_voucher_email_by_user ($user_id) {
+        $this->db->from('tbl_email_templates');
+        $this->db->where('user_id', $user_id);
+        $this->db->like('template_name', 'voucher_');
+        $query = $this->db->get();
+        if($query->num_rows() > 0){
+            $result = $query->first_row();
+            return $result;
+        }
+        return false;
+        
     }
 
     public function get_emails_by_id ($id) {
