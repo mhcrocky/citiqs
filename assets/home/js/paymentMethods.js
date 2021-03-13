@@ -23,6 +23,9 @@ function loadTable(tableId) {
                 "name": "paymentMethod",
                 "targets": 2,
                 "data": function(row, type, val, meta) {
+                    if (row.paymentMethod === 'prePaid' || row.paymentMethod === 'postPaid') {
+                        return 'Cash payment';
+                    }
                     return row.paymentMethod;
                 }
             },
