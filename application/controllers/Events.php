@@ -44,10 +44,14 @@ class Events extends BaseControllerWeb
     public function event($eventId)
     {
         $this->global['pageTitle'] = 'TIQS: Step Two'; 
+        $this->load->model('shopvoucher_model');
+		$what = ['id' ,'description'];
+		$where = ["vendorId" => $this->vendor_id];
         $data = [
             'event' => $this->event_model->get_event($this->vendor_id,$eventId),
             'eventId' => $eventId,
             'emails' => $this->email_templates_model->get_ticketing_email_by_user($this->vendor_id),
+            'vouchers' => $this->shopvoucher_model->read($what,$where),
             'groups' => $this->event_model->get_ticket_groups()
         ];
         $this->loadViews("events/step-two", $this->global, $data, 'footerbusiness', 'headerbusiness');
