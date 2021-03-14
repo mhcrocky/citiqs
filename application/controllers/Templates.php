@@ -52,6 +52,7 @@
                 'tiqsId' => $this->config->item('tiqsId'),
                 'templateId' => $id,
 				'templateName' => $this->shoptemplates_model->template_name,
+                'templateType' => $this->shoptemplates_model->template_type,
 				'templateContent' => file_get_contents($this->shoptemplates_model->getTemplateFile())
             ];
 

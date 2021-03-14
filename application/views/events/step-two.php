@@ -396,7 +396,16 @@
                     <option value="">Select template</option>
                 </select>
                 <label for="customTemplateName">Template Name</label>
-                <input type="text" id="customTemplateName" name="templateName" class="form-control" />
+                <input type="text" id="customTemplateName" name="customTemplateName" class="form-control" />
+                <br />
+                <label for="templateType">Template Type</label>
+                <select class="form-control w-100" id="templateType" name="templateType">
+                    <option value="" disabled>Select type</option>
+                    <option value="general">General</option>
+                    <option value="reservations">Reservations</option>
+                    <option value="tickets">Tickets</option>
+                    <option value="vouchers">Vouchers</option>
+                </select>
                 <br />
                 <label for="templateHtml">Edit template</label>
                 <textarea id="templateHtml" name="templateHtml"></textarea>
@@ -485,7 +494,20 @@
 
 <main class="my-form">
     <div class="w-100 mt-5 p-3">
-        <div class="table-responsive">
+        <div class="input-group col-md-2">
+            <input type="button" value="Add Ticket" style="background: #009933 !important;border-radius:0"
+                class="btn btn-success form-control mb-3 text-left" id="event-time2" name="event-time2"
+                data-toggle="modal" data-target="#addModal">
+            <a style="background: #004d1a;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3"
+                data-toggle="modal" data-target="#addModal">
+                <i style="color: #fff;font-size: 18px;" class="fa fa-plus"></i></a>
+        </div>
+
+        <p class="mt-2"><strong style="font-size: 16px;" class="ml-1">Tickets</strong></p>
+        <table id="tickets" class="mt-2 mb-1" style="width:100%">
+
+        </table>
+        <div class="table-responsive mt-5">
             <table style="background: none !important;" class="table">
                 <tr style="border-bottom: 3px solid #9333ea">
                     <td><?php echo $event->eventname; ?></td>
@@ -510,19 +532,6 @@
             <a href="<?php echo base_url(); ?>events/report/<?php echo $event->id; ?>" class="btn btn-primary mr-2"
                 style="background: #10b981;">Go to Buyers</a>
         </div>
-        <div class="input-group col-md-2">
-            <input type="button" value="Add Ticket" style="background: #009933 !important;border-radius:0"
-                class="btn btn-success form-control mb-3 text-left" id="event-time2" name="event-time2"
-                data-toggle="modal" data-target="#addModal">
-            <a style="background: #004d1a;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3"
-                data-toggle="modal" data-target="#addModal">
-                <i style="color: #fff;font-size: 18px;" class="fa fa-plus"></i></a>
-        </div>
-
-        <p class="mt-2"><strong style="font-size: 16px;" class="ml-1">Tickets</strong></p>
-        <table id="tickets" class="mt-2" style="width:100%">
-
-        </table>
     </div>
 </main>
 <hr class="w-100 mt-5 mb-5">
@@ -611,9 +620,12 @@
 
 <script>
 const globalEmails = '<?php echo json_encode($emails); ?>';
+console.log(globalEmails);
 
 const templateGlobals = (function() {
-    let globals = {}
+    let globals = {
+        'templateHtmlId': 'templateHtml',
+    }
 
 
 

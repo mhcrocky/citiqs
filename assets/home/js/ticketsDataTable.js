@@ -1,5 +1,6 @@
 $(document).ready(function () {
   //Options
+  templateGlobals.templateHtmlId = 'templateHtml';
   $("#guestTicketCheck").change(function () {
     if (this.checked) {
       $("#guestTicket").val(1);
@@ -237,15 +238,17 @@ $(document).ready(function () {
           if (data.emailId != "0") {
             var emails = JSON.parse(globalEmails);
             var template_name = '';
+            var template_type = '';
             $.each(emails, function (index, email) {
               if(data.emailId == email.id){
                 template_name = email.template_name;
+                template_type = email.template_type;
               }
               
             });
 
             return (
-              "<div class='btn btn-primary'><a class='text-light' onclick='editEmailTemplate("+data.emailId+",\""+template_name+"\")' href='javascript:;' data-toggle='modal' data-target='#emailTemplateModal'>Edit Email Template</a></div>"
+              "<div class='btn btn-primary'><a class='text-light' onclick='editEmailTemplate("+data.emailId+",\""+template_name+"\",\""+template_type+"\")' href='javascript:;' data-toggle='modal' data-target='#emailTemplateModal'>Edit Email Template</a></div>"
             );
           } else {
             return "<div class='btn btn-primary'><a class='text-light' href='javascript:;'>Edit Email Template</a></div>";
@@ -436,15 +439,16 @@ function updateEmailTemplate(el, id) {
   );
 }
 
-function editEmailTemplate(id, template_name) {
+function editEmailTemplate(id, template_name, template_type) {
   $.post(
     globalVariables.baseUrl + "events/get_email_template",
     { id: id },
     function (data) {
       let templateContent = JSON.parse(data);
       $('#customTemplateName').val(template_name);
-      $('#updateEmailTemplate').attr('onclick','createEmailTemplate("selectTemplateName", "customTemplateName", "'+id+'")')
-      tinyMceInit('templateHtml', templateContent);
+      $('#templateType').val(template_type);
+      $('#updateEmailTemplate').attr('onclick','createEmailTemplate("selectTemplateName", "customTemplateName", "templateType", "'+id+'")');
+      tinymce.activeEditor.setContent(templateContent);
       
     }
   );

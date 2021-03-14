@@ -1,8 +1,7 @@
-
 <div class="row mt-5 p-4">
-    <div class="col-md-3 ml-1 mb-3">
+    <div class="col-md-4 mb-3">
         <div class="input-group">
-            <input type="button" value="Add Voucher" style="background: #10b981 !important;border-radius:0;height:45px;"
+            <input type="button" value="<?php echo $this->language->tline('Add Voucher'); ?>" style="background: #10b981 !important;border-radius:0;height:45px;"
                 class="btn btn-primary form-control mb-3 text-left" data-toggle="modal" data-target="#addVoucherModal">
             <span style="background: #275C5D;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3"
                 data-toggle="modal" data-target="#addVoucherModal">
@@ -10,13 +9,25 @@
             </span>
         </div>
     </div>
-    <div class="col-md-3 ml-1 mb-3">
+    <div class="col-md-4 mb-3">
         <div class="input-group">
-            <input type="button" value="Add Email Template" style="background: #3498eb !important;border-radius:0;height:45px;"
-                class="btn btn-primary form-control mb-3 text-left" data-toggle="modal" data-target="#emailTemplateModal">
+            <input type="button" value="<?php echo $this->language->tline('Add Email Template'); ?>"
+                style="background: #3498eb !important;border-radius:0;height:45px;"
+                class="btn btn-primary form-control mb-3 text-left" data-toggle="modal"
+                data-target="#emailTemplateModal">
             <span style="background: #275C5D;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3"
                 data-toggle="modal" data-target="#emailTemplateModal">
                 <i style="color: #fff;font-size: 18px;" class="fa fa-plus"></i>
+            </span>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="input-group">
+            <input type="button" onclick="redirectToTemplates()" value="<?php echo $this->language->tline('Email Templates List'); ?>"
+                style="background: #a87732 !important;border-radius:0;height:45px;"
+                class="btn btn-primary form-control mb-3 text-left">
+            <span onclick="redirectToTemplates()" style="background: #275C5D;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3">
+                <i style="color: #fff;font-size: 18px;" class="fa fa-bars"></i>
             </span>
         </div>
     </div>
@@ -50,7 +61,8 @@
 
 
                     <div class="form-group row">
-                        <label for="event-name" class="col-md-4 col-form-label text-md-left">Number of Voucher to make</label>
+                        <label for="event-name" class="col-md-4 col-form-label text-md-left">Number of Voucher to
+                            make</label>
                         <div class="col-md-6">
 
                             <input type="number" id="codes" class="input-w border-50 form-control" name="codes"
@@ -181,15 +193,25 @@
                     <option value="">Select template</option>
                 </select>
                 <label for="customTemplateName">Template Name</label>
-                <input type="text" onchange="customTemplateName(this)" class="form-control" value="<?php echo str_replace('voucher_', '', $templateName); ?>"/>
-                <input type="hidden" id="customTemplateName" name="templateName" class="form-control" value="<?php echo $templateName; ?>" />
+                <input type="text" id="customTemplateName" name="templateName" class="form-control"
+                    value="<?php echo $templateName; ?>" />
+                <br />
+                <label for="templateType">Template Type</label>
+                <select class="form-control w-100" id="templateType" name="templateType">
+                    <option value="" disabled>Select type</option>
+                    <option value="general">General</option>
+                    <option value="reservations">Reservations</option>
+                    <option value="tickets">Tickets</option>
+                    <option value="vouchers" selected>Vouchers</option>
+                </select>
                 <br />
                 <label for="templateHtml">Edit template</label>
                 <textarea id="templateHtml" name="templateHtml"></textarea>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="emailTemplateClose" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" id="emailTemplateClose"
+                    data-dismiss="modal">Close</button>
                 <button type="submit" onclick="saveVoucherTemplate();" class="btn btn-primary">Save changes</button>
             </div>
 
@@ -202,14 +224,14 @@
 <script>
 const templateGlobals = (function() {
     let globals = {
-        'templateHtmlId' : 'templateHtml',
+        'templateHtmlId': 'templateHtml',
     }
-        <?php if (!empty($templateContent)) { ?>
-            globals['templateContent'] = '<?php echo $templateContent; ?>'
-        <?php } ?>
-        <?php if (!empty($templateId)) { ?>
-            globals['templateId'] = '<?php echo $templateId; ?>'
-        <?php } ?>
+    <?php if (!empty($templateContent)) { ?>
+    globals['templateContent'] = `<?php echo $templateContent; ?>`
+    <?php } ?>
+    <?php if (!empty($templateId)) { ?>
+    globals['templateId'] = '<?php echo $templateId; ?>'
+    <?php } ?>
 
 
     Object.freeze(globals);
@@ -283,7 +305,7 @@ function saveVoucher(e) {
         data.productId = $('#productId').find(':selected').val();
     }
 
-    $.post('<?php echo base_url(); ?>api/voucher/create', data, function(data) {
+    $.post('<?php echo base_url(); ?>Api/Voucher/create', data, function(data) {
         $('#report').DataTable().ajax.reload();
         alertify[data.status](data.message);
         $('.form-control').addClass('input-clear');
@@ -314,20 +336,19 @@ function disabledField(el, field) {
     }
 }
 
-function customTemplateName(el) {
-    let name = $(el).val();
-    $('#customTemplateName').val('voucher_'+ name);
-}
 function saveVoucherTemplate() {
-    if(typeof templateGlobals.templateId === 'undefined'){
-        createEmailTemplate('selectTemplateName', 'customTemplateName');
+    if (typeof templateGlobals.templateId === 'undefined') {
+        createEmailTemplate('selectTemplateName', 'customTemplateName', 'templateType');
     } else {
-        createEmailTemplate('selectTemplateName', 'customTemplateName', templateGlobals.templateId);
+        createEmailTemplate('selectTemplateName', 'customTemplateName' , 'templateType', templateGlobals.templateId);
     }
     $('#emailTemplateClose').click();
     setTimeout(() => {
-        window.location.reload();
+        //window.location.reload();
     }, 2500);
-    return ;
+    return;
+}
+function redirectToTemplates(){
+    window.location.href = globalVariables.baseUrl + "voucher/listTemplates";
 }
 </script>
