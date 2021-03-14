@@ -1507,6 +1507,7 @@
                 $this->table . '.createdOrder<' => $to,
                 'tbl_shop_printers.userId' => $vendorId,
                 'tbl_shop_payment_methods.productGroup' => $this->config->item('storeAndPos'),
+                'tbl_shop_payment_methods.vendorId' => $vendorId,
             ];
 
             $what = [$this->table . '.id'];
