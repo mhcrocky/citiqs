@@ -1,4 +1,3 @@
-
 <main class="my-form">
     <div class="cotainer">
         <div class="row justify-content-center">
@@ -20,11 +19,12 @@
                             </div>
 
                             <input type="hidden" id="vendorId" name="vendorId" value="<?php echo $vendorId; ?>">
+                            <input type="hidden" id="active" name="active" value="1">
 
 
                             <div class="form-group row">
-                                <label for="event-name" class="col-md-4 col-form-label text-md-left">Voucher
-                                    Number</label>
+                                <label for="event-name" class="col-md-4 col-form-label text-md-left">
+                                    Number of Voucher to make</label>
                                 <div class="col-md-6">
 
                                     <input type="number" id="codes" class="input-w border-50 form-control" name="codes"
@@ -35,10 +35,10 @@
 
                             <div class="form-group row">
                                 <label for="description" class="col-md-4 col-form-label text-md-left">
-                                Voucher Description
+                                    Voucher Description
                                 </label>
                                 <div class="col-md-6">
-                                 
+
                                     <input type="text" id="description" class="input-w border-50 form-control"
                                         name="description" required>
                                 </div>
@@ -48,7 +48,8 @@
                                 <label for="status" class="col-md-4 col-form-label text-md-left">Voucher Code
                                 </label>
                                 <div class="col-md-6">
-                                    <select id="status" onchange="voucherCode()" name="status" class="form-control input-w border-50 field">
+                                    <select id="status" onchange="voucherCode()" name="status"
+                                        class="form-control input-w border-50 field">
                                         <option value="" disabled>Select option</option>
                                         <option value="unique" selected>Unique</option>
                                         <option value="same">Same</option>
@@ -60,7 +61,7 @@
                                 <label for="status" class="col-md-4 col-form-label text-md-left">Code
                                 </label>
                                 <div class="col-md-6" id="code_input">
-                                    
+
                                 </div>
                             </div>
 
@@ -97,6 +98,7 @@
                                 </div>
                             </div>
 
+                            <!--
                             <div class="form-group row">
                                 <label for="active" class="col-md-4 col-form-label text-md-left">Active
                                 </label>
@@ -108,6 +110,8 @@
                                     </select>
                                 </div>
                             </div>
+                            -->
+
 
                             <div class="form-group row">
                                 <label for="amount" class="col-md-4 col-form-label text-md-left">Amount</label>
@@ -124,10 +128,12 @@
                                 <div class="col-md-6">
 
 
-                                    <select id="productId" class="js-select2 form-control input-w border-50" name="productId">
+                                    <select id="productId" class="js-select2 form-control input-w border-50"
+                                        name="productId">
                                         <option value="" disabled selected>Select product</option>
                                         <?php foreach($products as $product): ?>
-                                        <option value="<?php echo $product['id']; ?>"><?php echo $product['name']; ?></option>
+                                        <option value="<?php echo $product['id']; ?>"><?php echo $product['name']; ?>
+                                        </option>
                                         <?php endforeach; ?>
                                     </select>
 
@@ -155,7 +161,7 @@
     </div>
 </main>
 
-    
+
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
@@ -163,26 +169,29 @@
         $('.js-select2').select2({
             placeholder: "Select product",
             allowClear: true,
-            });
-        
+        });
+
         $('b[role="presentation"]').hide();
         $('.select2-selection__arrow').append('<i class="fa fa-sort-desc"></i>');
     });
-    function voucherCode(){
+
+    function voucherCode() {
         let val = $('#status option:selected').val();
-        if(val != 'unique'){
-            $("#code_input").append('<input type="text" id="code" class="input-w border-50 form-control" name="code" required>');
-            $( "#voucher_code" ).fadeIn( "slow", function() {
+        if (val != 'unique') {
+            $("#code_input").append(
+                '<input type="text" id="code" class="input-w border-50 form-control" name="code" required>');
+            $("#voucher_code").fadeIn("slow", function() {
                 $('#voucher_code').show();
             });
-           
+
         } else {
-            $( "#voucher_code" ).fadeIn( "slow", function() {
+            $("#voucher_code").fadeIn("slow", function() {
                 $('#voucher_code').hide();
                 $("#code_input").empty()
             });
         }
     }
+
     function saveVoucher(e) {
         e.preventDefault();
         if ($('.form-control:invalid').length > 0) {
@@ -196,24 +205,24 @@
             status: $('#status option:selected').val(),
             percentUsed: $('#percentUsed option:selected').val(),
             expire: $('#expire').val(),
-            active: $('#active option:selected').val(),
+            active: $('#active').val(),
             productId: $('#productId').find(':selected').val(),
         }
 
-        if($('#code').length > 0){
+        if ($('#code').length > 0) {
             data.code = $('#code').val();
         }
 
         let amount = $('#amount').val();
         let productId = $('#productId').find(':selected').val();
 
-        if(amount === ""){
+        if (amount === "") {
             data.percent = $('#percent').val();
         } else {
             data.amount = $('#amount').val();
         }
 
-        if(productId !== ""){
+        if (productId !== "") {
             data.productId = $('#productId').find(':selected').val();
         }
 

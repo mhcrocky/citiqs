@@ -31,7 +31,7 @@ class Voucher extends REST_Controller
             unset($data['productId']);
         }
         $data_keys = array_keys($data);
-        $voucher_fields = ['vendorId', 'percentUsed', 'expire', 'active'];
+        $voucher_fields = ['vendorId', 'percentUsed', 'expire'];
         $error = false;
         $error_message = '';
         
@@ -130,6 +130,16 @@ class Voucher extends REST_Controller
         $this->set_response($response, 201);
         return;
         
+    }
+
+    public function vouchers_get()
+    {
+        $vendorId = $this->session->userdata('userId');
+        $what = ['*'];
+		$where = ["vendorId" => $vendorId];
+        $results = $this->shopvoucher_model->read($what,$where);
+        $vouchers = ($results == null) ? [] : $results;
+        echo json_encode($vouchers);
     }
  
     public function data_get()
