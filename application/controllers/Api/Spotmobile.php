@@ -56,7 +56,10 @@
 						'vendorId' => $vendorid,
 						'QRCode' => $qrcode,
 						'SPOT' => $spot,
+						'printer' => $printer,
+						'servicetype' => $servicetype
 					]);
+					// Here we look into the db if the spot exist if not we create the spot
 					return;
 				}
 
