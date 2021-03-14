@@ -141,6 +141,29 @@ class Voucher extends REST_Controller
         $vouchers = ($results == null) ? [] : $results;
         echo json_encode($vouchers);
     }
+
+    public function voucher_activated_post()
+    {
+        $vendorId = $this->session->userdata('userId');
+        $id = $this->input->post('id');
+        $activated = $this->input->post('activated');
+        $data = ['activated' => $activated];
+		$where = ["id" => $id];
+        if($this->shopvoucher_model->setProperty('activated', $activated)->customUpdate($where)){
+            $response = [
+                'status' => "success",
+                'message' => "Updated successfully!",
+            ];
+            $this->set_response($response, 201);
+            return ;
+        }
+        $response = [
+            'status' => "error",
+            'message' => "Something went wrong!",
+        ];
+        $this->set_response($response, 400);
+        return ;
+    }
  
     public function data_get()
     {
