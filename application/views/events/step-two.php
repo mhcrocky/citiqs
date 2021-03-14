@@ -181,7 +181,7 @@
                                 <li>
                                     <div class="custom-control custom-checkbox">
                                         <input class="custom-control-input" id="soldout" type="checkbox">
-                                        <label class="custom-control-label font-weight-bold text-dark" for="sold-out">
+                                        <label class="custom-control-label font-weight-bold text-dark" for="soldout">
 
                                         </label>
                                     </div>
