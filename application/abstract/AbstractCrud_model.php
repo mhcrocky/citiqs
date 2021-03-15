@@ -99,7 +99,12 @@
 
         public function readImproved(array $filter, int $querylogging = 0): ?array
         {
-            $result = $this->db->select(implode(',', $filter['what']));
+            if (isset($filter['escape'])) {
+                $result = $this->db->select(implode(',', $filter['what']), $filter['escape']);
+            } else {
+                $result = $this->db->select(implode(',', $filter['what']));
+            }
+
             if (isset($filter['joins']) && count($filter['joins']) ) {
                 $joins = $filter['joins'];
                 foreach ($joins as $join) {
@@ -182,12 +187,12 @@
 
         public function customDelete(array $where): bool
         {
-//        	$text = 'Abstract CRUD delete';
-//        	var_dump($where);
-//			echo $this->getThisTable();
-            $this->db->delete($this->getThisTable(), $where);
-//            echo $this->db->last_query;
-//			die();
+           	// $text = 'Abstract CRUD delete';
+           	// var_dump($where);
+			// echo $this->getThisTable();
+            // $this->db->delete($this->getThisTable(), $where);
+            // echo $this->db->last_query;
+			// die();
             return $this->db->affected_rows() ? true : false;
         }
 
