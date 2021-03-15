@@ -416,6 +416,9 @@
                 'where' => $where,
                 'joins' => [
                     ['tbl_user', 'tbl_user.id = ' . $this->table .'.vendorId' , 'INNER']
+                ],
+                'conditions' => [
+                    'ORDER_BY' => ['tbl_user.username', 'ASC'],
                 ]
             ];
 
