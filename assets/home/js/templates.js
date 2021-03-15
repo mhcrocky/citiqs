@@ -5,12 +5,14 @@ function reloadTable(id) {
 
 
 // used in email templates
-function createEmailTemplate(selectTemplateValueId, customTemplateNameId, templateId = 0) {
+function createEmailTemplate(selectTemplateValueId, customTemplateNameId, customTemplateTypeId, templateId = 0) {
     let selectTemplate = document.getElementById(selectTemplateValueId);
     let customTemplate = document.getElementById(customTemplateNameId);
+    let customTemplateType = document.getElementById(customTemplateTypeId);
 
     let selectTemplateName = selectTemplate.value.trim();
     let customTemplateName = customTemplate.value.trim();
+    let templateType = customTemplateType.value.trim();
     let templateHtml = tinyMCE.get(templateGlobals.templateHtmlId).getContent().replaceAll(globalVariables.baseUrl + 'assets/images/qrcode_preview.png', '[QRlink]').trim();
     if (!templateHtml) {
         let message = 'Empty template.'
@@ -42,6 +44,7 @@ function createEmailTemplate(selectTemplateValueId, customTemplateNameId, templa
         'templateName' : templateName,
         'templateHtml' : templateHtml,
         'templateId' : templateId,
+        'templateType' : templateType,
     };
 
     sendAjaxPostRequest(post, url, 'createEmailTemplate', createEmailTemplateResponse, [selectTemplate, customTemplate]);

@@ -56,9 +56,9 @@ $(document).ready(function () {
         data: null,
         "render": function (data, type, row) {
           if(data.activated == 1){
-            return 'Activated';
+            return '<button class="btn btn-primary" onclick="toggleActivated(this, '+data.id+', 0)">Activated</button>';
           }
-          return 'Deactivate';
+          return '<button class="btn btn-primary" onclick="toggleActivated(this, '+data.id+', 1)">Deactivate</button>';
         }
       },
       {
@@ -72,3 +72,20 @@ $(document).ready(function () {
   $('#report_filter label').addClass('text-left');
 
 });
+
+function toggleActivated(el, id, activated) {
+  let data = {
+    id: id,
+    activated: activated
+  };
+  $.post(globalVariables.baseUrl + 'Api/Voucher/voucher_activated', data, function(data) {
+    let text = (activated == 1) ? 'Activated' : 'Deactivate';
+    $(el).text(text);
+    let onclickVal = (activated == 1) ? 0 : 1;
+    $(el).attr('onclick','toggleActivated(this, '+id+', '+onclickVal+')');
+    return;
+}).fail(function(response) {
+    response = JSON.parse(response.responseText);
+    return;
+});
+}

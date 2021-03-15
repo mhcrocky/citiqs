@@ -83,11 +83,12 @@ class Event_model extends CI_Model {
 	{
 		$this->db->select('*,tbl_event_tickets.id as ticketId');
 		$this->db->from('tbl_event_tickets');
-		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId');
-		$this->db->join('tbl_ticket_groups', 'tbl_ticket_groups.id = tbl_event_tickets.ticketGroupId');
-		$this->db->join('tbl_ticket_options', 'tbl_ticket_options.ticketId = ticketId');
+		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'left');
+		$this->db->join('tbl_ticket_groups', 'tbl_ticket_groups.id = tbl_event_tickets.ticketGroupId', 'left');
+		$this->db->join('tbl_ticket_options', 'tbl_ticket_options.ticketId = tbl_event_tickets.id', 'left');
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('tbl_event_tickets.eventId', $eventId);
+		$this->db->group_by('tbl_event_tickets.id');
 		$query = $this->db->get();
 		return $query->result_array();
 	}
@@ -110,6 +111,29 @@ class Event_model extends CI_Model {
 		$this->db->set('emailId', $emailId);
 		$this->db->where('id', $id);
 		return $this->db->update('tbl_event_tickets');
+	}
+
+	function update_group($id, $groupname){
+		$this->db->set('groupname', $groupname);
+		$this->db->where('id', $id);
+		return $this->db->update('tbl_ticket_groups');
+	}
+
+	function update_ticket($id, $param, $value){
+		$this->db->set($param, $value);
+		if($param == 'ticketCurrency'){
+			$this->db->where('ticketId', $id);
+			return $this->db->update('tbl_ticket_options');
+		}
+		$this->db->where('id', $id);
+		return $this->db->update('tbl_event_tickets');
+	}
+
+	function delete_ticket($ticketId){
+		$this->db->where('id', $ticketId);
+		$this->db->delete('tbl_event_tickets');
+		$this->db->where('ticketId', $ticketId);
+		return $this->db->delete('tbl_ticket_options');
 	}
 
 	function get_design($vendor_id){

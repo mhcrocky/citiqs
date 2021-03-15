@@ -17,15 +17,7 @@ class Voucher extends BaseControllerWeb
 		$vendorId = $this->session->userdata('userId');
         $data['vendorId'] = $vendorId;
 		$this->load->model('shopproduct_model');
-		$this->load->model('email_templates_model');
-		$email_template = $this->email_templates_model->get_voucher_email_by_user($vendorId);
 		$data['templateName'] = '';
-		if($email_template){
-			$data['templateId'] = $email_template->id;
-			$data['templateName'] = $email_template->template_name;
-			$this->config->load('custom');
-			$data['templateContent'] = file_get_contents(APPPATH.'../assets/email_templates/'.$vendorId.'/'.$email_template->template_file .'.'.$this->config->item('template_extension'));
-		}
 
 		$join = [
 			0 => [
@@ -75,5 +67,20 @@ class Voucher extends BaseControllerWeb
 		$data['products'] = $this->shopproduct_model->read($what,$where, $join, 'group_by', ['tbl_shop_products.id']);
 		$this->loadViews("voucher/create", $this->global, $data, 'footerbusiness', 'headerbusiness'); 
 	}
+
+	public function listTemplates(): void
+    {
+        $vendorId = $this->session->userdata('userId');
+		$this->load->model('email_templates_model');
+
+        $data = [
+            'templates' => $this->email_templates_model->get_voucher_email_by_user($vendorId),
+            'updateTemplate' => base_url() . 'update_template' . DIRECTORY_SEPARATOR,
+        ];
+
+            $this->global['pageTitle'] = 'TIQS : LIST TEMPLATE';
+            $this->loadViews('templates/listTemplates', $this->global, $data, 'footerbusiness', 'headerbusiness');
+            return;
+        }
 
 }

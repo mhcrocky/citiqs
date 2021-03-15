@@ -13,6 +13,7 @@
         public $user_id;
         public $template_file;
         public $template_name;
+        public $template_type;
 
         private $table = 'tbl_email_templates';
 
@@ -91,7 +92,7 @@
             return $this->templateFile;
         }
 
-        public function saveTemplate(string $templateName, string $html, int $userId, int $id): bool
+        public function saveTemplate(string $templateName, string $html, string $templateType, int $userId, int $id): bool
         {
             $this->template_name = $templateName;
             $this->user_id = $userId;
@@ -99,6 +100,7 @@
             $filename = str_replace(' ', '_', $templateName);
             $filename .= '_' . time();
             $this->template_file = $filename;
+            $this->template_type = $templateType;
 
 
             if ($this->checkIsExists()) return false;
@@ -141,7 +143,7 @@
         public function fetchTemplates(): ?array
         {
             return $this->readImproved([
-                'what' => ['id', 'template_name'],
+                'what' => ['id', 'template_name', 'template_type'],
                 'where' => [
                     $this->table . '.user_id' => $this->user_id
                 ]

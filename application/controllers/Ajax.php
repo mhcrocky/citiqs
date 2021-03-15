@@ -1940,11 +1940,12 @@ class Ajax extends CI_Controller
         if (!$this->input->is_ajax_request()) return;
 
         $templateName = $this->input->post('templateName');
+        $templateType = $this->input->post('templateType');
         $html = $_POST['templateHtml'];
         $id = intval($this->input->post('templateId'));
-        $userId = intval($_SESSION['userId']);
+        $userId = intval($_SESSION['userId']); 
 
-        if ($this->shoptemplates_model->saveTemplate($templateName, $html, $userId, $id)) {
+        if ($this->shoptemplates_model->saveTemplate($templateName, $html, $templateType, $userId, $id)) {
             $response = [
                 'status' => '1',
             ];

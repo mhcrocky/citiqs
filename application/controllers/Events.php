@@ -223,6 +223,27 @@ class Events extends BaseControllerWeb
         $this->event_model->update_email_template($id, $emailId);
     }
 
+    public function update_ticket()
+    {
+        $id = $this->input->post('id');
+        $param = $this->input->post('param');
+        $value = $this->input->post('value');
+        $this->event_model->update_ticket($id, $param, $value);
+    }
+
+    public function update_group()
+    {
+        $id = $this->input->post('id');
+        $groupname = $this->input->post('groupname');
+        $this->event_model->update_group($id, $groupname);
+    }
+
+    public function delete_ticket()
+    {
+        $ticketId = $this->input->post('ticketId');
+        $this->event_model->delete_ticket($ticketId);
+    }
+
     public function report($eventId)
     {
         $this->global['pageTitle'] = 'TIQS : EVENT REPORT';
