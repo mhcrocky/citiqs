@@ -13,9 +13,9 @@ class Email_templates_model extends CI_Model
     public function get_emails_by_user ($user_id) {
         $this->db->from('tbl_email_templates');
         $this->db->where('user_id', $user_id);
-        $this->db->like('template_name', 'reservations');
+        $this->db->like('template_type', 'reservations');
         $query = $this->db->get();
-        $result = $query->result();
+        $result = $query->result_array();
         return $result;
     }
 
