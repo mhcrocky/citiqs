@@ -12,11 +12,11 @@
                     <button type="button" style="margin: 10px 0" class="btn btn-primary" @click="addAgendaModal">Add
                         agenda
                     </button>
-                    <a :href="baseURL+ 'emaildesigner'" class="btn btn-success">Email Designer</a>
+                    <a :href="baseURL+ 'customer_panel/list_templates'" class="btn btn-success">Email Designer</a>
                 <?php else: ?>
                     <div style="margin: 10px 0">
                         You need to create an email template to be able create agenda <a
-                                :href="baseURL+ 'emaildesigner/new'"><b>Click Here</b></a>
+                                :href="baseURL+ 'add_template'"><b>Click Here</b></a>
                     </div>
                 <?php endif; ?>
 
