@@ -81,7 +81,7 @@ class  Customer_panel extends BaseControllerWeb
         if(!$emails) {
             redirect('customer_panel/agenda');
         }
-
+ 
         $data = [
             'user' => $this->user_model,
             'agendas' => $this->bookandpayagendabooking_model->getbookingspotagenda($this->user_model->id, $agendaId),
@@ -505,5 +505,20 @@ class  Customer_panel extends BaseControllerWeb
         $data['termsofuse'] = $this->bookandpayagendabooking_model->getTermsofuse();
         $this->loadViews('customer_panel/settings', $this->global,  $data, 'footerbusiness', 'headerbusiness' ); 
     }
+
+    public function listTemplates(): void
+    {
+        $vendorId = $this->session->userdata('userId');
+		$this->load->model('email_templates_model');
+
+        $data = [
+            'templates' => $this->email_templates_model->get_emails_by_user($vendorId),
+            'updateTemplate' => base_url() . 'update_template' . DIRECTORY_SEPARATOR,
+        ];
+            $this->global['pageTitle'] = 'TIQS : LIST TEMPLATE';
+            $this->loadViews('templates/listTemplates', $this->global, $data, 'footerbusiness', 'headerbusiness');
+            return;
+    }
+
 }
 
