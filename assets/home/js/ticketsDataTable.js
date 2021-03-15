@@ -1,4 +1,7 @@
 $(document).ready(function () {
+  $('#editModal').on('hidden.bs.modal', function () {
+    $('#resetTicketOptions').click();
+  });
   //Options
   templateGlobals.templateHtmlId = 'templateHtml';
   $("#guestTicketCheck").change(function () {
@@ -155,10 +158,10 @@ $(document).ready(function () {
           html += '<option value="0" disabled>Select Option</option>';
           var selectedEuro = "";
           var selectedUsd = "";
-          if (data.ticketCurrency == "euro") {
-            selectedEuro = "selected";
-          } else {
+          if (data.ticketCurrency == "usd") {
             selectedUsd = "selected";
+          } else {
+            selectedEuro = "selected";
           }
 
           html += '<option value="euro" ' + selectedEuro + '>€ - EUR</option>';
@@ -348,22 +351,27 @@ $(function () {
 });
 
 function getTicketOptions(ticketId) {
-  defaultOptions();
+  $('#resetTicketOptions').click();
   $('.ql-snow').remove();
   $("#ticketId").val(ticketId);
   $.get(
     globalVariables.baseUrl + "events/get_ticket_options/" + ticketId,
     function (data) {
       if (data == "") {
-        return defaultOptions();
+        return ;
       }
       data = JSON.parse(data);
       $.each(data, function (index, value) {
         if (index == "ticketExpired") {
           $("#" + value).prop("checked", true);
         }
-        if (index == "ticketExpired") {
-          $("#" + value).prop("checked", true);
+        if (index == "soldoutExpired") {
+          let checked = (value == 1) ? true : false;
+          $("#soldout").prop("checked", checked);
+        }
+        if (index == "guestTicket") {
+          let checked = (value == 1) ? true : false;
+          $("#guestTicketCheck").prop("checked", checked);
         }
         //$('.ql-editor').html('test')
         console.log(index);
@@ -371,23 +379,6 @@ function getTicketOptions(ticketId) {
       });
     }
   );
-}
-
-function defaultOptions() {
-  $("#ticketId").val("");
-  $("#guestTicket").val(1);
-  $("#ticketSwap").val(1);
-  $("#partialAccess").val(1);
-  $("#nonSharedTicketFee").val(1);
-  $("#sharedTicketFee").val(1);
-  $("#manually").prop("checked", true);
-  $("#startDate").val("");
-  $("#startTime").val("");
-  $("#endDate").val("");
-  $("#endTime").val("");
-  $("#soldoutExpired").val(0);
-  $("#mailPerAmount").val(1);
-  $("#emailAddress").val("");
 }
 
 function chooseEmailTemplate(emailId, ticketId) {
@@ -471,6 +462,27 @@ function updateCheck(el, id, val) {
 
   $.post(globalVariables.baseUrl + "events/update_ticket", data, function (data) {
     return true;
+  });
+}
+
+function saveTicket(e){
+  e.preventDefault();
+  let data = $('#ticketForm').serialize();
+  $.post(globalVariables.baseUrl + 'events/save_ticket', data, function(data){
+      alertify['success']('Ticket is saved successfully!');
+      $("#tickets").DataTable().ajax.url(globalVariables.baseUrl + "events/get_tickets").load();
+      $('#ticketForm').trigger("reset");
+      $('#ticketClose').click();
+  });
+}
+
+function saveTicketOptions(e){
+  e.preventDefault();
+  let data = $('#editTicketOptions').serialize();
+  $.post(globalVariables.baseUrl + 'events/save_ticket_options', data, function(data){
+      alertify['success']('Ticket options are saved successfully!');
+      $("#tickets").DataTable().ajax.url(globalVariables.baseUrl + "events/get_tickets").load();
+      $('#ticketOptionsClose').click();
   });
 }
 

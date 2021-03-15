@@ -9,8 +9,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form name="my-form"
-                    action="<?php echo base_url(); ?>events/save_ticket_options/<?php echo $eventId; ?>" method="POST">
+                <form id="editTicketOptions" name="editTicketOptions"
+                    action="#" onsubmit="return saveTicketOptions(event)" method="POST">
                     <ul>
                         <li>
                             <div class="custom-control custom-checkbox">
@@ -61,7 +61,7 @@
                         <div class="col-md-3 text-dark">Min 0.00</div>
                         <div class="col-md-3">
                             <input type="number" id="nonSharedTicketFee" name="nonSharedTicketFee"
-                                class="form-control inp-height" min="1" value="1">
+                                class="form-control inp-height" min="0" step="0.01" value="1">
                         </div>
                         <!--
                     <div class="col-md-3">Shared ( Min 0.00 )</div>
@@ -86,7 +86,7 @@
                         <div class="col-md-3">
                             <select id="voucherId" name="voucherId" style="height: 35px !important;padding-top: 6px;"
                                 class="form-control input-w mt-2">
-                                <option value="">Select option</option>
+                                <option value="0">Select option</option>
                                 <?php foreach($vouchers as $voucher): ?>
                                 <option value="<?php echo $voucher['id']; ?>"><?php echo $voucher['description']; ?>
                                 </option>
@@ -130,7 +130,7 @@
                         </div>
                         <div class="col col-md-3">
                             <div class="input-group date">
-                                <input type="text" class="form-control inp-height" id="startDate" name="startDate">
+                                <input type="text" class="form-control inp-height" id="startDate" name="startDate" required>
                                 <span style="padding-top: 5px;" class="input-group-addon fa-input pl-2 pr-2">
                                     <i style="color: #fff;font-size: 18px;" class="fa fa-calendar"></i></span>
                             </div>
@@ -153,7 +153,7 @@
                         </div>
                         <div class="col col-md-3">
                             <div class="input-group date">
-                                <input type="text" class="form-control inp-height" id="endDate" name="endDate">
+                                <input type="text" class="form-control inp-height" id="endDate" name="endDate" required>
                                 <span style="padding-top: 5px;" class="input-group-addon fa-input pl-2 pr-2">
                                     <i style="color: #fff;font-size: 18px;" class="fa fa-calendar"></i></span>
                             </div>
@@ -187,7 +187,7 @@
                                     </div>
                                 </li>
                             </ul>
-                            <input type="text" id="soldOutWhenExpired" class="form-control inp-height">
+                            <input type="text" id="soldOutWhenExpired" name="soldOutWhenExpired" class="form-control inp-height">
                         </div>
 
 
@@ -234,8 +234,9 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="ticketOptionsClose" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Save changes</button>
+                <button style="display: none;" type="reset" id="resetTicketOptions" class="btn btn-primary">Reset</button>
             </div>
             </form>
         </div>
@@ -256,13 +257,13 @@
             </div>
             <div class="modal-body">
                 <div class="card-body">
-                    <form name="my-form" action="<?php echo base_url(); ?>events/save_ticket" method="POST">
+                    <form id="ticketForm" name="ticketForm" action="#" onsubmit="return saveTicket(event)" method="POST">
                         <div class="form-group row">
                             <label for="ticket-name" class="col-md-4 col-form-label text-md-left">Ticket Name</label>
                             <div class="col-md-6">
 
                                 <input type="text" id="ticketDescription" class="input-w form-control"
-                                    name="ticketDescription">
+                                    name="ticketDescription" required>
 
                             </div>
                         </div>
@@ -312,7 +313,7 @@
                         <div class="form-group row">
                             <label for="ticketType" class="col-md-4 col-form-label text-md-left">Ticket type</label>
                             <div class="col-md-6">
-                                <select id="ticketType" class="form-control input-w">
+                                <select id="ticketType" class="form-control input-w" required>
                                     <option selected disabled>Select option</option>
                                     <option value="ticket">Ticket</option>
                                     <option value="group">Group</option>
@@ -324,14 +325,14 @@
                         <div class="form-group row">
                             <label for="quantity" class="col-md-4 col-form-label text-md-left">Ticket quantity</label>
                             <div class="col-md-6">
-                                <input type="number" id="quantity" class="form-control input-w" name="ticketQuantity">
+                                <input type="number" id="quantity" class="form-control input-w" name="ticketQuantity" required>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="price" class="col-md-4 col-form-label text-md-left">Ticket price</label>
                             <div class="col-md-6">
-                                <input type="number" id="price" class="form-control input-w" name="ticketPrice">
+                                <input type="number" step="0.01" id="price" class="form-control input-w" name="ticketPrice" required>
                             </div>
                         </div>
 
@@ -358,7 +359,7 @@
                         <div class="form-group row">
                             <label for="group" class="col-md-4 col-form-label text-md-left">Ticket group</label>
                             <div class="col-md-6">
-                                <select id="group" class="form-control input-w">
+                                <select id="group" class="form-control input-w" required>
                                     <option selected disabled>Select option</option>
                                     <?php foreach($groups as $group): ?>
                                     <option value="<?php echo $group['id']; ?>"><?php echo $group['groupname']; ?>
@@ -371,7 +372,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="ticketClose" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Save Ticket</button>
             </div>
             </form>
