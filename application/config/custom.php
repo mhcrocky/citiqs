@@ -10,7 +10,7 @@ $config['dropOfPointTrue'] = 1;
 $config['dropOfPointFalse'] = 0;
 
 // TIQS id in tbl_user used when inserting finde item in tbl_label for userId value
-$config['tiqsId'] = 45038;
+$config['tiqsId'] = TIQS_ID;
 // TIQS email
 $config['tiqsEmail'] = 'ceo@tiqs.com';
 $config['petersEmail'] = MIGRATION_EMAIL;

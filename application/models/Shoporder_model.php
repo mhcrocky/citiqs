@@ -1390,20 +1390,20 @@
         private function sumAllVendorOrders(array $where): ?array
         {
             return $this->readImproved([
+                'escape' => false,
                 'what' => [
                     'COUNT(' . $this->table . '.id) countOrderId',
                     'COUNT(localOrders.id) AS countLocalOrders',
                     'COUNT(deliveryOrders.id) AS countDeliveryOrders',
                     'COUNT(pickupOrders.id) AS countPickupOrders',
-
-                    'SUM(localOrders.amount) localOrdersSum',
-                    'SUM(deliveryOrders.amount) deliveryOrdersSum',
-                    'SUM(pickupOrders.amount) pickupOrdersOrdersSum',
-
-
-
-
-                    $this->table . '.paymentType orderPaymentType',
+                    'IFNULL(SUM(localOrders.amount), 0) localOrdersSum',
+                    'IFNULL(SUM(deliveryOrders.amount), 0) deliveryOrdersSum',
+                    'IFNULL(SUM(pickupOrders.amount), 0) pickupOrdersOrdersSum',
+                    'CASE
+                        WHEN ' . $this->table . ' .paymentType = "' . $this->config->item('prePaid') . '" THEN "Cash payment pre paid"
+                        WHEN ' . $this->table . ' .paymentType = "' . $this->config->item('postPaid') . '" THEN "Cash payment post paid"
+                        ELSE ' . $this->table . ' .paymentType
+                    END orderPaymentType',
                     'SUM(' . $this->table . '.amount) ordersAmount',
                     'SUM(' . $this->table . '.serviceFee) ordersServiceFee',
                     '(SUM(' . $this->table . '.amount)  + SUM(' . $this->table . '.serviceFee)) AS amountPlusServiceFee',
