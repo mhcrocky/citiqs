@@ -111,7 +111,7 @@ $(document).ready(function () {
         data: null,
         render: function (data, type, row) {
           return (
-            '<input type="text" id="event-name" class="form-control" name="event-name" value="' +
+            '<input type="text" id="event-name" class="form-control" onchange="updateTicket('+data.ticketId+', this, \'ticketDescription\')" name="event-name" value="' +
             data.ticketDescription +
             '">'
           );
@@ -119,14 +119,17 @@ $(document).ready(function () {
       },
       {
         title: "Group",
-        data: "groupname",
+        data: null,
+        render: function (data, type, row) {
+          return data;
+        }
       },
       {
         title: "Quantity",
         data: null,
         render: function (data, type, row) {
           return (
-            '<input type="text" id="quantity" class="form-control" name="quantity" value="' +
+            '<input type="text" id="quantity" class="form-control" onchange="updateTicket('+data.ticketId+', this, \'ticketQuantity\')" name="quantity" value="' +
             data.ticketQuantity +
             '">'
           );
@@ -137,7 +140,7 @@ $(document).ready(function () {
         data: null,
         render: function (data, type, row) {
           return (
-            '<input type="text" id="price" class="form-control" name="price" value="' +
+            '<input type="text" id="price" class="form-control" onchange="updateTicket('+data.ticketId+', this, \'ticketPrice\')" name="price" value="' +
             data.ticketPrice +
             '">'
           );
@@ -148,22 +151,20 @@ $(document).ready(function () {
         data: null,
         render: function (data, type, row) {
           var html =
-            '<select style="width: 100px;" class="form-control" id="email_template" onchange="updateEmailTemplate(this, ' +
-            data.ticketId +
-            ')">';
-          html += '<option value="0">Select Option</option>';
+            '<select style="width: 100px;" class="form-control" id="currency" onchange="updateTicket('+data.ticketId+', this, \'ticketCurrency\')">';
+          html += '<option value="0" disabled>Select Option</option>';
           var selectedEuro = "";
           var selectedUsd = "";
           if (data.ticketCurrency == "euro") {
             selectedEuro = "selected";
-          } else if (data.ticketCurrency == "usd") {
+          } else {
             selectedUsd = "selected";
           }
 
-          html += '<option value="euro" ' + selectedEuro + ">€ - EUR</option>";
-          html += '<option value="usd" ' + selectedUsd + ">$ - USD</option>";
+          html += '<option value="euro" ' + selectedEuro + '>€ - EUR</option>';
+          html += '<option value="usd" ' + selectedUsd + '>$ - USD</option>';
 
-          html += "</select>";
+          html += '</select>';
 
           return html;
         },
@@ -177,7 +178,7 @@ $(document).ready(function () {
             checked = "checked";
           }
           return (
-            '<ul><li><div class="custom-control custom-checkbox"><input style="transform: scale(1.5);" class="custom-control-input" id="package-area-' +
+            '<ul><li><div class="custom-control custom-checkbox"><input style="transform: scale(1.5);" class="custom-control-input" onclick="updateCheck(this, '+data.ticketId+', '+data.ticketVisible+')" id="package-area-' +
             data.id +
             '"  type="checkbox" ' +
             checked +
@@ -259,7 +260,7 @@ $(document).ready(function () {
         title: "",
         data: null,
         render: function (data, type, row) {
-          return "<div class='bg-dark' style='width: 30px;height: 30px;'><i style='color: #fff;' class='fa fa-trash p-2'><i></div>";
+          return "<div class='bg-dark' onclick='deleteTicket("+data.ticketId+")' style='width: 30px;height: 30px;cursor: pointer;'><i style='color: #fff;' class='fa fa-trash p-2'><i></div>";
         },
       },
     ],
@@ -285,7 +286,8 @@ $(document).ready(function () {
           page: "current",
         })
         .data()
-        .each(function (groupname, i) {
+        .each(function (data, i) {
+          var groupname = data.groupname;
           if (last !== groupname) {
             if (groupname == "") {
             } else {
@@ -302,7 +304,7 @@ $(document).ready(function () {
                     "<td>" +
                     html +
                     '</td><td colspan="3">' +
-                    '<input type="text" id="event-name" class="form-control" name="event-name" value="' +
+                    '<input type="text" id="group-name" class="form-control" name="group-name" onchange="updateGroup(this, '+data.ticketGroupId+')" value="' +
                     groupname +
                     '">' +
                     '</td><td></td><td><ul><li><div class="custom-control custom-checkbox"><input style="transform: scale(1.5);" class="custom-control-input" id="package-area-0' +
@@ -426,6 +428,62 @@ function saveEmailTemplate(el, id) {
   setTimeout(() => {
     window.location.reload();
   }, 500);
+}
+
+function updateTicket(id, el, param) {
+  var value = '';
+  if(param == 'ticketCurrency'){
+    value = $(el).find("option:selected").val();
+  } else {
+    value = $(el).val();
+  }
+  
+  let data = { 
+    id: id,
+    param: param,
+    value: value
+  };
+
+  $.post(globalVariables.baseUrl + "events/update_ticket", data, function (data) {
+    return true;
+  });
+}
+
+function updateGroup(el, id) {
+  let data = { 
+    id: id,
+    groupname: $(el).val()
+  };
+
+  $.post(globalVariables.baseUrl + "events/update_group", data, function (data) {
+    return true;
+  });
+}
+
+function updateCheck(el, id, val) {
+  let updateVal = (val == 1) ? 0 : 1;
+  $(el).attr('onclick', 'updateCheck(this, '+updateVal+')');
+  let data = { 
+    id: id,
+    param: 'ticketVisible',
+    value: updateVal
+  };
+
+  $.post(globalVariables.baseUrl + "events/update_ticket", data, function (data) {
+    return true;
+  });
+}
+
+function deleteTicket(ticketId) {
+  if (window.confirm("Are you sure?")) {
+  let data = { 
+    ticketId: ticketId
+  };
+
+  $.post(globalVariables.baseUrl + "events/delete_ticket", data, function (data) {
+    $("#tickets").DataTable().ajax.url(globalVariables.baseUrl + "events/get_tickets").load();
+  });
+}
 }
 
 function updateEmailTemplate(el, id) {
