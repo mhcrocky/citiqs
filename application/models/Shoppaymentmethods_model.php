@@ -29,6 +29,10 @@
                 $value = intval($value);
             }
 
+            if ($property === 'percent' || $property === 'amount') {
+                $value = floatval($value);
+            }
+
             return;
         }
 
@@ -55,7 +59,7 @@
             if (isset($data['vendorId']) && !Validate_data_helper::validateInteger($data['vendorId'])) return false;
             if (isset($data['productGroup']) && !in_array($data['productGroup'], $this->config->item('productGroups'))) return false;
             if (isset($data['paymentMethod']) && !in_array($data['paymentMethod'], $this->config->item('onlinePaymentTypes'))) return false;
-            if (isset($data['percent']) && !Validate_data_helper::validateInteger($data['percent'])) return false;
+            if (isset($data['percent']) && !Validate_data_helper::validateFloat($data['percent'])) return false;
             if (isset($data['amount']) && !Validate_data_helper::validateFloat($data['amount'])) return false;
 
             return true;
