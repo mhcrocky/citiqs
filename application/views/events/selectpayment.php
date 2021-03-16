@@ -63,7 +63,7 @@
     <div class="row mx-auto">
         <div class="col-md-8 col-sm-12 serviceBox blue mb-4 mx-auto">
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/1">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/1" class="ideal_pay">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/abn_amro.png') ?>"
                         alt="ABN AMRO">
 
@@ -72,7 +72,7 @@
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/8">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/8" class="ideal_pay">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/asn_bank.png') ?>"
                         alt="ASN Bank">
                     <h3 class="title">ASN Bank</h3>
@@ -81,14 +81,14 @@
 
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/5080">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/5080" class="ideal_pay">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/bunq.png') ?>" alt="Bunq">
                     <h3 class="title">Bunq</h3>
                 </a>
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/5082">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/5082" class="ideal_pay">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/handelsbanken.png') ?>"
                         alt="Handelsbanken">
                     <h3 class="title">Handelsbanken</h3>
@@ -96,28 +96,28 @@
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/4">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/4" class="ideal_pay">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/ing.png') ?>" alt="ING">
                     <h3 class="title">ING</h3>
                 </a>
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/12">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/12" class="ideal_pay">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/knab(1).png') ?>" alt="Knab">
                     <h3 class="title">Knab</h3>
                 </a>
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/5081">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/5081" class="ideal_pay">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/moneyou.png') ?>" alt="Moneyou">
                     <h3 class="title">Moneyou</h3>
                 </a>
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/2">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/2" class="ideal_pay">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/rabobank.png') ?>"
                         alt="Rabobank">
                     <h3 class="title">Rabobank</h3>
@@ -125,7 +125,7 @@
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/9">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/9" class="ideal_pay">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/regiobank.png') ?>"
                         alt="RegioBank">
                     <h3 class="title">RegioBank</h3>
@@ -133,7 +133,7 @@
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/5">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/5" class="ideal_pay">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/sns_bank.png') ?>"
                         alt="SNS Bank">
                     <h3 class="title">SNS Bank</h3>
@@ -142,7 +142,7 @@
 
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/10">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/10" class="ideal_pay">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/triodos_bank.png') ?>"
                         alt="Triodos Bank">
                     <h3 class="title">Triodos Bank</h3>
@@ -150,7 +150,7 @@
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/11">
+                <a href="<?php echo base_url(); ?>bookingpay/selectediDealPaymenttype/11" class="ideal_pay">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/van_lanschot.png') ?>"
                         alt="van Lanschot">
                     <h3 class="title">van Lanschot</h3>
