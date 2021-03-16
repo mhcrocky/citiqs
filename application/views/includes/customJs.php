@@ -253,6 +253,8 @@
 <?php } elseif ($this->view === 'businessreport/paymentMethods') { ?>
 	<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 	<script src='<?php echo base_url(); ?>assets/home/js/paymentMethods.js'></script>
-<?php }  elseif ($this->view === 'registerAmbasador') { ?>
+<?php } elseif ($this->view === 'registerAmbasador') { ?>
 	<script src='<?php echo base_url(); ?>assets/home/js/registerAmbasador.js'></script>
+<?php } elseif ($this->view === 'warehouse/areas') { ?>
+	<script src='<?php echo base_url(); ?>assets/home/js/areas.js'></script>
 <?php } ?>
