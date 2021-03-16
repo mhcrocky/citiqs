@@ -151,9 +151,11 @@ class Booking_events extends BaseControllerWeb
         $this->session->set_tempdata('exp_time', $newTime, 600);
         $amount = floatval($ticket['price'])*floatval($ticket['quantity']);
         $ticketId = $ticket['id'];
+        $eventName = $this->event_model->get_eventname_by_ticket($ticketId);
         unset($tickets[$ticketId]);
         $tickets[$ticketId] = [
             'id' => $ticketId,
+            'eventName' => $eventName,
             'descript' => $ticket['descript'],
             'quantity' => $ticket['quantity'],
             'price' => $ticket['price'],
@@ -164,7 +166,7 @@ class Booking_events extends BaseControllerWeb
             'endTime' => $this->session->userdata("endTime")
         ];
         
-        echo json_encode(['descript'=>$ticket['descript'],'price' => $ticket['price'], 'first_ticket' => $first_ticket]);
+        echo json_encode(['descript'=>$ticket['descript'],'price' => $ticket['price'], 'first_ticket' => $first_ticket, 'eventName' => $eventName ]);
         
         if($ticket['quantity'] != 0){
             $this->session->unset_userdata('tickets');
@@ -370,7 +372,15 @@ class Booking_events extends BaseControllerWeb
         
         $this->session->unset_userdata('tickets');
         $this->session->unset_tempdata('tickets');
-        $this->session->set_tempdata('tickets', $tickets, $time);
+        $this->session->unset_tempdata('total');
+        $items = $this->input->post('list_items');
+        $total = $this->input->post('totalBasket');
+        $total = number_format($total, 2, '.', '');
+        $this->session->set_tempdata('total', $total, 600); 
+        $this->session->set_tempdata('tickets', $tickets, $time); 
+        if($items == 0){
+            $this->session->unset_tempdata('exp_time');
+        }
         return ;
     }
 

@@ -2,6 +2,9 @@
     if (typeof globalTime === 'undefined' && $('#shop').length == 0) {
         window.location.href = globalVariables.baseUrl + "booking_events/clear_tickets";
     }
+    if($('.ticket_item').length > 0){
+        $('#payForm').show();
+    }
 
 }());
 
@@ -49,6 +52,11 @@ $("#next").on('click', function(e) {
     return;
 });
 
+function payFormSubmit() {
+    $('#pay').click();
+    return ;
+}
+
 function getTicketsView(eventId, first = false) {
     let isAjax = true;
     $('div.bg-light').removeClass('bg-light').addClass('bg-white');
@@ -78,16 +86,19 @@ function countDownTimer(distance){
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     $('#exp_time').val(distance);
-    $(".timer").text("Expiration time: " + addZero(minutes) + ":" + addZero(seconds) + "");
-    if (minutes == 0 && seconds == 0) {
-        setTimeout(() => {
-            window.location.href = globalVariables.baseUrl + "booking_events/clear_tickets";
-        }, 500);
-    }
-
-    if (distance < 0) {
+    if($('.ticket_item').length > 0) {
+        $(".timer").text("Expiration time: " + addZero(minutes) + ":" + addZero(seconds) + "");
+        if (minutes == 0 && seconds == 0) {
+            setTimeout(() => {
+                window.location.href = globalVariables.baseUrl + "booking_events/clear_tickets";
+            }, 500);
+        }
+        if (distance < 0) {
+            clearInterval(x);
+            $(".timer").text("EXPIRED");
+        }
+    } else {
         clearInterval(x);
-        $(".timer").text("EXPIRED");
     }
     distance = distance - 1000;
 }, 1000);
@@ -116,12 +127,26 @@ function deleteTicket(id,price) {
     quantityValue = parseInt(quantityValue);
     totalBasket = parseInt(totalBasket);
     price = parseInt(price);
-    totalBasket = totalBasket - price;
+    totalBasket = totalBasket - quantityValue*price;
     let current_time = $('#exp_time').val();
-    $.post(globalVariables.baseUrl + "booking_events/delete_ticket", {id: id,current_time: current_time}, function(data){
+    let list_items = ($('.ticket_item').length > 1) ? 1 :0;
+    console.log($('.ticket_item').length);
+
+    let data = {
+        id: id,
+        current_time: current_time,
+        totalBasket: totalBasket,
+        list_items: list_items
+    }
+    $.post(globalVariables.baseUrl + "booking_events/delete_ticket", data, function(data){
 		$( ".ticket_"+id ).fadeOut( "slow", function() {
             $( ".ticket_"+id ).remove();
             $(".totalBasket").text(totalBasket.toFixed(2));
+            $('#totalBasket').text(totalBasket.toFixed(2));
+            if($('.ticket_item').length < 1) {
+                $('#payForm').hide();
+                $('.timer').empty();
+            }
         });
 	})
 }
@@ -168,11 +193,12 @@ function removeTicket(id, price, totalClass) {
         var descript_data = data['descript'];
         var price_data = data['price'];
         var first_ticket = data['first_ticket'];
-        let html = '<div class="menu-list__item ticket_'+id+'">'+
+        var eventName = data['eventName'];
+        let html = '<div class="menu-list__item ticket_item ticket_'+id+'">'+
         '<div class="menu-list__name">'+
             '<b class="menu-list__title">Description</b>'+
             '<div>'+
-                '<p class="menu-list__ingredients descript_'+id+'">'+descript_data+'</p>'+
+                '<p class="menu-list__ingredients descript_'+id+'">'+eventName+' - '+descript_data+'</p>'+
             '</div>'+
         '</div>'+
         '<div class="menu-list__left-col ml-auto">'+
@@ -205,6 +231,7 @@ function removeTicket(id, price, totalClass) {
 }
 
 function addTicket(id, limit, price, totalClass) {
+    $('#payForm').show();
     var quantityValue = $("#ticketQuantityValue_" + id).val();
     var totalBasket = $("."+totalClass).text();
     quantityValue = parseInt(quantityValue);
@@ -236,11 +263,12 @@ function addTicket(id, limit, price, totalClass) {
         var descript_data = data['descript'];
         var price_data = data['price'];
         var first_ticket = data['first_ticket'];
-        let html = '<div class="menu-list__item ticket_'+id+'">'+
+        var eventName = data['eventName'];
+        let html = '<div class="menu-list__item ticket_item ticket_'+id+'">'+
         '<div class="menu-list__name">'+
             '<b class="menu-list__title">Description</b>'+
             '<div>'+
-                '<p class="menu-list__ingredients descript_'+id+'">'+descript_data+'</p>'+
+                '<p class="menu-list__ingredients descript_'+id+'">'+eventName+' - '+descript_data+'</p>'+
             '</div>'+
         '</div>'+
         '<div class="menu-list__left-col ml-auto">'+

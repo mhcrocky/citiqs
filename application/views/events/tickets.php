@@ -33,7 +33,8 @@
                                 <b class="menu-list__title">Description</b>
                                 <div>
                                     <p class="menu-list__ingredients descript_<?php echo $ticketId; ?>">
-                                        <?php echo $ticket['ticketDescription']; ?></p>
+                                        <?php echo $ticket['ticketDescription']; ?>
+                                    </p>
                                 </div>
                             </div>
                             <div class="menu-list__right-col ml-auto">
