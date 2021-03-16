@@ -35,6 +35,7 @@
             $this->load->model('shopvendortypes_model');
             $this->load->model('shopvendortemplate_model');
             $this->load->model('bookandpayagendabooking_model');
+            $this->load->model('shoparea_model');
 
             $this->load->library('language', array('controller' => $this->router->class));
             $this->load->library('session');
@@ -1019,41 +1020,192 @@
         }
 
         public function replacePopupButtonStyle()
-    {
-        
-        $cssFile = FCPATH.'assets/home/styles/popup-alfred-style.css';
-        $jsFile = FCPATH.'assets/home/js/popup-alfred.js';
-        //CSS FILE
-        $f = fopen($cssFile, 'r');
-        $newCssContent = '';
-        for ($i = 1; ($line = fgets($f)) !== false; $i++) {
-            if($line == '#iframe-popup-open{'){
-                echo 'true';
+        {
+            
+            $cssFile = FCPATH . 'assets/home/styles/popup-alfred-style.css';
+            $jsFile = FCPATH . 'assets/home/js/popup-alfred.js';
+            //CSS FILE
+            $f = fopen($cssFile, 'r');
+            $newCssContent = '';
+            for ($i = 1; ($line = fgets($f)) !== false; $i++) {
+                if($line == '#iframe-popup-open{'){
+                    echo 'true';
+                }
+                if (strpos($line, '#iframe-popup-open') !== false) {
+                    break;
+                }
+                $newCssContent.= $line;
             }
-            if (strpos($line, '#iframe-popup-open') !== false) {
-                break;
+
+            $newCssContent .= $this->input->post('buttonStyle');
+            $f = fopen($cssFile, 'w');
+            fwrite($f,$newCssContent);
+            fclose($f);
+
+            //JS FILE
+            $f = fopen($jsFile, 'r');
+            $newJsContent = '';
+            $btnText = $this->input->post('btnText');
+            for ($i = 1; ($line = fgets($f)) !== false; $i++) {
+                if (strpos($line, "document.getElementById('iframe-popup-open').textContent") !== false) {
+                    $line = "document.getElementById('iframe-popup-open').textContent = '$btnText'; \n";
+                }
+                $newJsContent .= $line;
             }
-            $newCssContent.= $line;
+            $f = fopen($jsFile, 'w');
+            fwrite($f,$newJsContent);
+            fclose($f);
         }
 
-        $newCssContent .= $this->input->post('buttonStyle');
-        $f = fopen($cssFile, 'w');
-        fwrite($f,$newCssContent);
-        fclose($f);
+        public function areas(): void
+        {
+            $userId = intval($_SESSION['userId']);
+            $data = [
+                'printers' => $this->shopprinters_model->read(['*'], ['userId' => $userId, 'archived' => '0', 'active' => '1']),
+                'spots' => $this->shopspot_model->fetchUserSpots($userId),
+                'areas' => $this->shoparea_model->setProperty('vendorId', $userId)->fetchVednorAreas()
+            ];
 
-        //JS FILE
-        $f = fopen($jsFile, 'r');
-        $newJsContent = '';
-        $btnText = $this->input->post('btnText');
-        for ($i = 1; ($line = fgets($f)) !== false; $i++) {
-            if (strpos($line, "document.getElementById('iframe-popup-open').textContent") !== false) {
-                $line = "document.getElementById('iframe-popup-open').textContent = '$btnText'; \n";
-            }
-            $newJsContent .= $line;
+            // var_dump($data);
+            // die();
+
+            $this->global['pageTitle'] = 'TIQS : AREAS';
+            $this->loadViews('warehouse/areas', $this->global, $data, 'footerbusiness', 'headerbusiness');
+            return;
         }
-        $f = fopen($jsFile, 'w');
-        fwrite($f,$newJsContent);
-        fclose($f);
-    }
 
+        public function addArea(): void
+        {
+            $post = $this->security->xss_clean($_POST);
+
+            $this->validateAreaData($post);
+            $this->insertArea($post);
+            $this->updateSpots($post);
+
+            $this->session->set_flashdata('success', 'Area created');
+            redirect('areas');
+        }
+
+        private function validateAreaData(array $post): void
+        {
+            if (empty($post)) {
+                $this->session->set_flashdata('error', 'No data sent');
+                $err = true;
+            } elseif (empty($post['area']['area'])) {
+                $this->session->set_flashdata('error', 'Area name is required');
+                $err = true;
+            } elseif (empty($post['area']['printerId'])) {
+                $this->session->set_flashdata('error', 'Printer not selected');
+                $err = true;
+            } elseif (empty($post['areaSpots'])) {
+                $this->session->set_flashdata('error', 'You must select at least one spot for area');
+                $err = true;
+            }
+
+            if (isset($err)) redirect('areas');
+        }
+
+        private function insertArea(array $post): void
+        {
+            $vendorId = intval($_SESSION['userId']);
+            $this
+                ->shoparea_model
+                    ->setProperty('vendorId', $vendorId)
+                    ->setProperty('area', $post['area']['area'])
+                    ->setProperty('printerId', $post['area']['printerId'])
+                    ->createArea();
+
+            if (is_null($this->shoparea_model->id)) {
+                $this->session->set_flashdata('error', 'Process failed. Check is area with name "' . $post['area']['area'] . '"aleary exists');
+                redirect('areas');
+            };
+        }
+
+        private function updateSpots(array $post): void
+        {
+            $this->shopspot_model->setProperty('areaId', $this->shoparea_model->id)->updateAreaIdToNull();
+
+            foreach ($post['areaSpots'] as $spotId) {
+                $spotId = intval($spotId);
+                $update = $this
+                            ->shopspot_model
+                            ->setObjectId($spotId)
+                            ->setProperty('printerId', intval($post['area']['printerId']))
+                            ->setProperty('areaId', $this->shoparea_model->id)
+                            ->update();
+                if (!$update) {
+                    $this->session->set_flashdata('error', 'Process failed while updating spot data. Try again');
+                    redirect('areas');
+                }
+            }
+            return;
+        }
+
+        private function checkAreaId(int $vendorId, int $areaId): void
+        {
+            $vendorId = intval($_SESSION['userId']);
+            $this
+                ->shoparea_model
+                ->setObjectId($areaId)
+                ->setProperty('vendorId', $vendorId);
+            if (!$this->shoparea_model->checkAreaId()) redirect('logout');
+        }
+
+        public function deleteArea($areaId): void
+        {
+            $vendorId = intval($_SESSION['userId']);
+            $areaId = intval($areaId);
+
+            $this->checkAreaId($vendorId, $areaId);
+
+            if (!$this->shopspot_model->setProperty('areaId', $this->shoparea_model->id)->updateAreaIdToNull()) {
+                $this->session->set_flashdata('error', 'Process failed. Spots update failed');
+                redirect('areas');
+            }
+
+            if (!$this->shoparea_model->delete()) {
+                $this->session->set_flashdata('error', 'Process failed. Area did not delete');
+                redirect('areas');
+            }
+
+            $this->session->set_flashdata('success', 'Area deleted');
+            redirect('areas');
+            return;
+        }
+
+        public function editArea($areaId): void
+        {
+            $vendorId = intval($_SESSION['userId']);
+            $areaId = intval($areaId);
+
+            $this->checkAreaId($vendorId, $areaId);
+
+            $post = $this->security->xss_clean($_POST);
+
+            $this->validateAreaData($post);
+            $this->updateArea($vendorId, $areaId, $post['area']);
+            $this->updateSpots($post);
+
+            $this->session->set_flashdata('success', 'Area updated');
+            redirect('areas');
+            return;
+        }
+
+        public function updateArea(int $vendorId, int $areaId, array $area): void
+        {
+            $update = $this
+                        ->shoparea_model
+                            ->setObjectId($areaId)
+                            ->setProperty('vendorId', $vendorId)
+                            ->setProperty('area', $area['area'])
+                            ->setProperty('printerId', $area['printerId'])
+                            ->updateArea();
+
+            if (!$update) {
+                $this->session->set_flashdata('error', 'Update failed. Check is area with name "' . $area['area'] . '"aleary exists');
+                redirect('areas');
+            };
+
+            return;
+        }
     }

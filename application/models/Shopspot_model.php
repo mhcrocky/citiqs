@@ -16,6 +16,7 @@
         public $spotTypeId;
         public $archived;
         public $isApi;
+        public $areaId;
 
         private $table = 'tbl_shop_spots';
 
@@ -24,7 +25,7 @@
             $this->load->helper('validate_data_helper');
             if (!Validate_data_helper::validateNumber($value)) return;
 
-            if ($property === 'id' || $property === 'printerId' || $property === 'spotTypeId') {
+            if ($property === 'id' || $property === 'printerId' || $property === 'spotTypeId' || $property === 'areaId') {
                 $value = intval($value);
             }
 
@@ -56,6 +57,7 @@
             if (isset($data['spotTypeId']) && !Validate_data_helper::validateInteger($data['spotTypeId'])) return false;
             if (isset($data['archived']) && !($data['archived'] === '1' || $data['archived'] === '0')) return false;
             if (isset($data['isApi']) && !($data['isApi'] === '1' || $data['isApi'] === '0')) return false;
+            if (isset($data['areaId']) && !Validate_data_helper::validateInteger($data['areaId'])) return false;
 
             return true;
         }
@@ -69,6 +71,7 @@
                     $this->table . '.spotName AS spotName',
                     $this->table . '.active AS spotActive',
                     $this->table . '.spotTypeId AS spotTypeId',
+                    $this->table . '.areaId AS areaId',
                     'tbl_shop_printers.printer AS printer',
                     'tbl_shop_printers.active AS printerActive',
                     'tbl_shop_spot_types.type AS spotType'
@@ -303,5 +306,11 @@
             $this->load->model('shopspottime_model');
 
             return $this->shopspottime_model->setProperty('spotId', $this->id)->insertSpotTime();
+        }
+
+        public function updateAreaIdToNull(): bool
+        {
+            $query = 'UPDATE ' . $this->table . ' SET areaId = NULL WHERE areaId = ' . $this->areaId;
+            return $this->db->query($query);
         }
     }

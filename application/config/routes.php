@@ -262,6 +262,10 @@ $route['viewdesign']            = "warehouse/viewdesign";
 $route['productsorder']         = "warehouse/productsOrder";
 $route['updateproductorderno']  = "warehouse/updateProductOrderNo";
 $route['getproducts']           = "warehouse/getProducts";
+$route['areas']                 = "warehouse/areas";
+$route['addarea']               = "warehouse/addArea";
+$route['delete_area/(:num)']    = "warehouse/deleteArea/$1";
+$route['edit_area/(:num)']      = "warehouse/editArea/$1";
 $route['warehouse/replacepopupbuttonstyle'] = "warehouse/replacePopupButtonStyle";
 
 // PUBLIC
