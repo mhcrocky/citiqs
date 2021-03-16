@@ -58,8 +58,8 @@ li {
                                 <tr v-for="timeslot in timeslots" :key="timeslot.id">
                                     <td scope="row">{{ timeslot.id }}</td>
                                     <td>{{ timeslot.timeslotdescript }}</td>
-                                    <td>{{ timeFormat(timeslot.fromtime) }}</td>
-                                    <td>{{ timeFormat(timeslot.totime) }}</td>
+                                    <td>{{ timeslot.fromtime }}</td>
+                                    <td>{{ timeslot.totime }}</td>
                                     <td v-if="timeslot.multiple_timeslots == 1">Yes</td>
                                     <td v-else>No</td>
                                     <td>{{ timeslot.duration }}</td>
@@ -130,13 +130,13 @@ li {
 
                             <div class="form-group">
                                 <label for="fromtime">From Time</label>
-                                <input type="text" v-model="timeSlotModalData.fromtime" class="form-control timepicker-24-hr"
-                                    placeholder="From Time">
+                                <input type="text" name="fromtime" id="fromtime" class="form-control timepicker-24-hr"
+                                    placeholder="From Time" onfocus="checkField(this)" required>
                             </div>
                             <div class="form-group">
                                 <label for="totime">To Time</label>
-                                <input type="text" v-model="timeSlotModalData.totime" class="form-control timepicker-24-hr"
-                                    placeholder="To Time">
+                                <input type="text" name="totime" id="totime" class="form-control timepicker-24-hr"
+                                    placeholder="To Time" onfocus="checkField(this)" required>
                             </div>
                             <div style="display: flex;" class="form-group">
                                 <label style="margin-right:20px;" for="totime">Multiple Timeslots</label>
@@ -188,6 +188,10 @@ li {
     $(document).ready(function () {
         $('.timepicker-24-hr').datetimepicker({
             format: 'HH:mm:ss'
+        });
+        $('#add_time_slot_modal').on('hidden.bs.modal', function () {
+            $('#fromtime').val('');
+            $('#totime').val('');
         });
     });
     
@@ -245,6 +249,8 @@ li {
             editTimeSlot(timeslot) {
                 this.time = 'edit';
                 this.timeSlotModalData = Object.assign({}, timeslot);
+                $('#fromtime').val(timeslot.fromtime);
+                $('#totime').val(timeslot.totime);
                 $('#add_time_slot_modal').modal('show');
             },
             timeConvert(n) {
@@ -257,10 +263,25 @@ li {
             },
             saveTimeSlot() {
                 let formData = new FormData();
+                let fromtime = $('#fromtime').val();
+                let totime = $('#totime').val();
+                if(fromtime == '' && totime == ''){
+                    $('#fromtime').attr('style', 'border-color: #df4759;');
+                    $('#totime').attr('style', 'border-color: #df4759;');
+                    return ;
+                }
+                if(fromtime == ''){
+                    $('#fromtime').attr('style', 'border-color: #df4759;');
+                    return ;
+                }
+                if(totime == ''){
+                    $('#totime').attr('style', 'border-color: #df4759;');
+                    return ;
+                }
                 formData.append("timeslotdescript", this.timeSlotModalData.timeslotdescript);
                 formData.append("available_items", this.timeSlotModalData.available_items);
-                formData.append("fromtime", this.timeSlotModalData.fromtime);
-                formData.append("totime", this.timeSlotModalData.totime);
+                formData.append("fromtime", fromtime);
+                formData.append("totime", totime);
                 formData.append("multiple_timeslots", this.timeSlotModalData.multiple_timeslots);
                 formData.append("duration", this.timeSlotModalData.duration);
                 formData.append("overflow", this.timeSlotModalData.overflow);
@@ -427,6 +448,11 @@ li {
             })
         }
     })
+
+    function checkField(el) {
+        $(el).attr('style','');
+    }
+
     </script>
 
 </body>
