@@ -236,6 +236,10 @@
                 $preferedView = 'publicorders/makeOrder';
             } elseif ($vendor['preferredView'] === $this->config->item('newMakeOrderView')) {
                 $allProducts = $this->shopproductex_model->getMainProductsOnBuyerSide($vendorId, $spot);
+
+                echo '<pre>';
+                print_r($allProducts);
+                die();
                 if ($allProducts) {
                     $data['mainProducts'] = $allProducts['main'];
                     $data['addons'] = $allProducts['addons'];
