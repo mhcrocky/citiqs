@@ -22,39 +22,33 @@
                 <?php } ?>
             </select>
             <br/>
-        
+        <label for="templateType">Template Type</label>
+        <select class="form-control w-100" id="templateType" name="templateType">
+            <option value="" disabled>Select type</option>
+            <option value="general"
+                <?php echo (isset($templateType) && $templateType == "general") ? "selected" : '' ?>>General</option>
+            <option value="reservations"
+                <?php echo (isset($templateType) && $templateType == "reservations") ? "selected" : '' ?>>Reservations
+            </option>
+            <option value="tickets"
+                <?php echo (isset($templateType) && $templateType == "tickets") ? "selected" : '' ?>>Tickets</option>
+            <option value="vouchers"
+                <?php echo (isset($templateType) && $templateType == "vouchers") ? "selected" : '' ?>>Vouchers</option>
+        </select>
+        <br />
+
         <label for="customTemplateName">... or create custom template</label>
-        <input
-            type="text"
-            id="templateName"
-            oninput="emailTemplateName(this)"
-            class="form-control"
-            <?php if ( !empty($templateName) && empty($selected) ) { ?>
-                value ="<?php echo str_replace('ticketing_', '', $templateName); ?>"
-            <?php } ?>
-        />
-        <input
-            type="hidden"
-            id="customTemplateName"
-            name="templateName"
-            <?php if ( !empty($templateName) && empty($selected) ) { ?>
-                value ="<?php echo $templateName; ?>"
-            <?php } ?>
-        />
-        <br/>
+        <input type="text" id="customTemplateName" name="templateName" class="form-control"
+            <?php if ( !empty($templateName) && empty($selected) ) { ?> value="<?php echo $templateName; ?>"
+            <?php } ?> />
+        <br />
         <label for="templateHtml">Edit template</label>
         <textarea id="templateHtml" name="templateHtml"></textarea>
         <div class="w-100 text-right mt-1">
-            <button
-                style="height:35px;"
-                class="btn btn-primary mr-auto"
-                id="btn-save"
-                <?php if (empty($templateId)) { ?>
-                    onclick="createEmailTemplate('selectTemplateName', 'customTemplateName')"
-                <?php } else { ?>
-                    onclick="createEmailTemplate('selectTemplateName', 'customTemplateName', '<?php echo $templateId; ?>')"
-                <?php } ?>
-            >
+            <button style="height:35px;" class="btn btn-primary mr-auto" <?php if (empty($templateId)) { ?>
+                onclick="createEmailTemplate('selectTemplateName', 'customTemplateName', 'templateType')" <?php } else { ?>
+                onclick="createEmailTemplate('selectTemplateName', 'customTemplateName', 'templateType', '<?php echo $templateId; ?>')"
+                <?php } ?>>
                 <?php echo empty($templateId) ? 'Create new template' : 'Update'; ?>
             </button>
         </div>

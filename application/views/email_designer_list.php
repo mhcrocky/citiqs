@@ -12,20 +12,22 @@
                             <th style="text-align: center;">#</th>
                             <th style="text-align: center;">Template Name</th>
                             <th style="text-align: center;">File Name</th>
+                            <th style="text-align: center;">Type</th>
                             <th style="text-align: center;">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php foreach ($emails as $email) { ?>
                             <tr>
-                                <th scope="row"><?php echo $email->id; ?></th>
-                                <td><?php echo $email->template_name; ?></td>
-                                <td><?php echo $email->template_file; ?></td>
+                                <th scope="row"><?php echo $email['id']; ?></th>
+                                <td><?php echo $email['template_name']; ?></td>
+                                <td><?php echo $email['template_file']; ?></td>
+                                <td><?php echo $email['template_type']; ?></td>
                                 <td class="action">
-                                    <a href="<?php echo base_url(); ?>update_template/<?php echo $email->id; ?>">
+                                    <a href="<?php echo base_url(); ?>update_template/<?php echo $email['id']; ?>">
                                         <i class="fa fa-pencil text-primary" aria-hidden="true"></i>
                                     </a>
-                                    <a href="#" onclick="confirmDelete(<?php echo $email->id; ?>)">
+                                    <a href="#" onclick="confirmDelete(<?php echo $email['id']; ?>)">
                                         <i class="fa fa-trash text-danger" aria-hidden="true" ></i>
                                     </a>
                                 </td>
