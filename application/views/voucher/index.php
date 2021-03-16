@@ -144,6 +144,19 @@
 
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label for="status" class="col-md-4 col-form-label text-md-left">Email Template
+                        </label>
+                        <div class="col-md-6">
+                            <select id="emailId" name="emailId"
+                                class="form-control input-w border-50 field">
+                                <option value="">Select option</option>
+                                <?php foreach($emails as $email): ?>
+                                <option value="<?php echo $email['id']; ?>"><?php echo $email['template_name']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="form-group row">
                         <label for="productId" class="col-md-4 col-form-label text-md-left">Product Id</label>
@@ -222,6 +235,8 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
+
+
 const templateGlobals = (function() {
     let globals = {
         'templateHtmlId': 'templateHtml',
@@ -286,6 +301,7 @@ function saveVoucher(e) {
         expire: $('#expire').val(),
         active: $('#active').val(),
         productId: $('#productId').find(':selected').val(),
+        emailId: $('#emailId option:selected').val()
     }
 
     if ($('#code').length > 0) {
@@ -342,6 +358,9 @@ function saveVoucherTemplate() {
     } else {
         createEmailTemplate('selectTemplateName', 'customTemplateName' , 'templateType', templateGlobals.templateId);
     }
+    emailTemplatesOptions();
+    getEmailTemplates();
+    $('#report').DataTable().ajax.reload();
     $('#emailTemplateClose').click();
     setTimeout(() => {
         //window.location.reload();

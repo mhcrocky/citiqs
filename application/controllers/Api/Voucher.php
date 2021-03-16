@@ -99,7 +99,6 @@ class Voucher extends REST_Controller
 
         while ($numOfCodes > 0) {
             $data['code'] = Utility_helper::shuffleStringSmallCaps(6);
-            
             if ($this->shopvoucher_model->setObjectFromArray($data)->create()) {
                 if (is_null($firstLine)) {
                     $firstLine = array_keys($data);
@@ -142,6 +141,14 @@ class Voucher extends REST_Controller
         echo json_encode($vouchers);
     }
 
+    public function email_templates_get()
+    {
+        $vendorId = $this->session->userdata('userId');
+        $this->load->model('email_templates_model');
+		$emails = $this->email_templates_model->get_voucher_email_by_user($vendorId);
+        echo json_encode($emails);
+    }
+
     public function voucher_activated_post()
     {
         $vendorId = $this->session->userdata('userId');
@@ -150,6 +157,28 @@ class Voucher extends REST_Controller
         $data = ['activated' => $activated];
 		$where = ["id" => $id];
         if($this->shopvoucher_model->setProperty('activated', $activated)->customUpdate($where)){
+            $response = [
+                'status' => "success",
+                'message' => "Updated successfully!",
+            ];
+            $this->set_response($response, 201);
+            return ;
+        }
+        $response = [
+            'status' => "error",
+            'message' => "Something went wrong!",
+        ];
+        $this->set_response($response, 400);
+        return ;
+    }
+
+    public function update_email_template_post()
+    {
+        $vendorId = $this->session->userdata('userId');
+        $id = $this->input->post('id');
+        $emailId = $this->input->post('emailId');
+		$where = ["id" => $id, "vendorId" => $vendorId];
+        if($this->shopvoucher_model->setProperty('emailId', $emailId)->customUpdate($where)){
             $response = [
                 'status' => "success",
                 'message' => "Updated successfully!",

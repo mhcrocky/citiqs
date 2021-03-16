@@ -23,6 +23,7 @@
         public $active;
         public $numberOfTimes;
         public $productId;
+        public $emailId;
 
         private $table = 'tbl_shop_voucher';
 
@@ -49,7 +50,7 @@
         public function insertValidate(array $data): bool
         {
             if (isset($data['vendorId']) && isset($data['code']) && (isset($data['amount']) || isset($data['percent']))) {
-                $this->updateValidate($data);
+                return $this->updateValidate($data);
             }
             return false;
         }
@@ -57,7 +58,7 @@
         public function updateValidate(array $data): bool
         {
             if (!count($data)) return false;
-            if (isset($data['vendorId']) && !Validate_data_helper::validateInteger($data['vendorId'])) return false;
+            if (isset($data['vendorId']) && !Validate_data_helper::validateInteger($data['vendorId'])) return true;
             if (isset($data['code']) && !Validate_data_helper::validateString($data['code'])) return false;
             if (isset($data['description']) && !Validate_data_helper::validateString($data['description'])) return false;
             if (isset($data['amount']) && !Validate_data_helper::validateFloat($data['amount'])) return false;
@@ -67,6 +68,7 @@
             if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
             if (isset($data['numberOfTimes']) && !Validate_data_helper::validateInteger($data['numberOfTimes'])) return false;
             if (isset($data['productId']) && !Validate_data_helper::validateInteger($data['productId'])) return false;
+            if (isset($data['emailId']) && !Validate_data_helper::validateInteger($data['emailId'])) return false;
 
             return true;
         }

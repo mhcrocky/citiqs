@@ -1,3 +1,8 @@
+var globalEmails = (function() {
+  return '';
+}());
+
+getEmailTemplates();
 $(document).ready(function () {
 
   var table = $("#report").DataTable({
@@ -62,6 +67,26 @@ $(document).ready(function () {
         }
       },
       {
+        title: "Email Template",
+        data: null,
+        "render": function (data, type, row) {
+          var html = '<select style="min-width: 150px;" class="form-control" id="email_template" onchange="updateEmailTemplate(this, ' + data.id +')">';
+          html += '<option value="0">Select Template</option>';
+          var emails = JSON.parse(globalEmails);
+          $.each(emails, function (index, email) {
+            let template_name = email.template_name;
+            if (data.emailId == email.id) {
+              html += '<option value="' + email.id + '" selected>' + template_name + '</option>';
+            } else {
+              html += '<option value="' + email.id +'">' + template_name + '</option>';
+            }
+          });
+          html += "</select>";
+
+          return html;
+        }
+      },
+      {
         title: "Product Id",
         data: "productId",
       }
@@ -88,4 +113,37 @@ function toggleActivated(el, id, activated) {
     response = JSON.parse(response.responseText);
     return;
 });
+}
+
+function getEmailTemplates() {
+  $.get(globalVariables.baseUrl + "Api/Voucher/email_templates",function (data) {
+      globalEmails = data;
+    }
+  );
+}
+
+
+function emailTemplatesOptions() {
+  $.get(globalVariables.baseUrl + "Api/Voucher/email_templates",function (data) {
+      let emails = JSON.parse(data);
+      var html = '<option value="">Select Option</option>';
+      $.each(emails, function (index, email) {
+          html += '<option value="' + email.id + '" >' + email.template_name + '</option>';
+      });
+      $('#emailId').html(html);
+
+
+    }
+  );
+}
+
+function updateEmailTemplate(el, id) {
+  let emailId = $(el).find("option:selected").val();
+  $.post(
+    globalVariables.baseUrl + "Api/Voucher/update_email_template",
+    { id: id, emailId: emailId },
+    function (data) {
+      return true;
+    }
+  );
 }

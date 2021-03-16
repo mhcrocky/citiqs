@@ -17,6 +17,10 @@ class Voucher extends BaseControllerWeb
 		$vendorId = $this->session->userdata('userId');
         $data['vendorId'] = $vendorId;
 		$this->load->model('shopproduct_model');
+		$this->load->model('shopproduct_model');
+		$this->load->model('email_templates_model');
+		$data['emails'] = $this->email_templates_model->get_voucher_email_by_user($vendorId);
+		
 		$data['templateName'] = '';
 
 		$join = [
