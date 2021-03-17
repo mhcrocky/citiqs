@@ -560,6 +560,7 @@ function editEmailTemplate(id, template_name, template_type) {
       $('#customTemplateName').val(template_name);
       $('#templateType').val(template_type);
       $('#updateEmailTemplate').attr('onclick','createEmailTemplate("selectTemplateName", "customTemplateName", "templateType", "'+id+'")');
+      templateContent = templateContent.replaceAll('[QRlink]', globalVariables.baseUrl+'assets/images/qrcode_preview.png');
       tinymce.activeEditor.setContent(templateContent);
       
     }
