@@ -286,7 +286,7 @@ class  Customer_panel extends BaseControllerWeb
         $this->load->model('Bookandpayagenda_model');
         $data['bookings_graphs'] = DrillDown::create(array(
             "name" => "saleDrillDown",
-            "title" => "Sale Report",
+            "title" => "Reservation Report",
             "levels" => array(
                 array(
                     "title" => "Agenda",
