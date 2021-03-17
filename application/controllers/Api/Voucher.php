@@ -149,6 +149,63 @@ class Voucher extends REST_Controller
         echo json_encode($emails);
     }
 
+    public function multiple_actions_post()
+    {
+        $vendorId = $this->session->userdata('userId');
+        $action = $this->input->post('action');
+        $ids = json_decode($this->input->post('ids'));
+        $value = $this->input->post('value');
+        $where = ["vendorId" => $vendorId];
+        if($action == 'update_activated'){
+            if($this->shopvoucher_model->setProperty('activated', $value)->multipleUpdate($ids, $where)){
+                $response = [
+                    'status' => "success",
+                    'message' => "Updated successfully!",
+                ];
+                $this->set_response($response, 201);
+                return ;
+            }
+            $response = [
+                'status' => "error",
+                'message' => "Something went wrong!",
+            ];
+            $this->set_response($response, 400);
+            return ;
+        } else if($action == 'update_emailId'){
+            if($this->shopvoucher_model->setProperty('emailId', $value)->multipleUpdate($ids, $where)){
+                $response = [
+                    'status' => "success",
+                    'message' => "Updated successfully!",
+                ];
+                $this->set_response($response, 201);
+                return ;
+            }
+            $response = [
+                'status' => "error",
+                'message' => "Something went wrong!",
+            ];
+            $this->set_response($response, 400);
+            return ;
+        } else if($action == 'delete'){
+            if($this->shopvoucher_model->multipleDelete($ids, $where)){
+                $response = [
+                    'status' => "success",
+                    'message' => "Deleted successfully!",
+                ];
+                $this->set_response($response, 201);
+                return ;
+            }
+            $response = [
+                'status' => "error",
+                'message' => "Something went wrong!",
+            ];
+            $this->set_response($response, 400);
+            return ;
+        }
+
+        return ;
+    }
+
     public function voucher_activated_post()
     {
         $vendorId = $this->session->userdata('userId');
