@@ -434,6 +434,7 @@ class Booking_events extends BaseControllerWeb
                 $ticketDescription = $record->ticketDescription;
 				$ticketQuantity = $record->numberofpersons;
                 $eventZipcode = $record->ticketDescription;
+                $buyerName = $record->name;
                 $buyerEmail = $record->email;
 				$buyerMobile = $record->mobilephone;
 				$reservationset = $record->reservationset;
@@ -499,6 +500,7 @@ class Booking_events extends BaseControllerWeb
                             $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/'.$emailTemplate->template_file .'.'.$this->config->item('template_extension'));
                             $qrlink = $SERVERFILEPATH . $file_name1;
 							if($mailtemplate) {
+                                $mailtemplate = str_replace('[buyerName]', $buyerName, $mailtemplate);
 								$mailtemplate = str_replace('[buyerEmail]', $buyerEmail, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerMobile]', $buyerMobile, $mailtemplate);
                                 $mailtemplate = str_replace('[eventName]', $eventName, $mailtemplate);
