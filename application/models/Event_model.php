@@ -81,7 +81,7 @@ class Event_model extends CI_Model {
 
 	public function get_tickets($vendor_id,$eventId)
 	{
-		$this->db->select('*,tbl_event_tickets.id as ticketId');
+		$this->db->select('*,tbl_event_tickets.id as ticketId, tbl_ticket_groups.id as groupId');
 		$this->db->from('tbl_event_tickets');
 		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'left');
 		$this->db->join('tbl_ticket_groups', 'tbl_ticket_groups.id = tbl_event_tickets.ticketGroupId', 'left');
@@ -149,6 +149,14 @@ class Event_model extends CI_Model {
 		$this->db->delete('tbl_event_tickets');
 		$this->db->where('ticketId', $ticketId);
 		return $this->db->delete('tbl_ticket_options');
+	}
+
+	function delete_group($groupId){
+		$this->db->where('id', $groupId);
+		$this->db->delete('tbl_ticket_groups');
+		$this->db->set('ticketGroupId', '0');
+		$this->db->where('ticketGroupId', $groupId);
+		return $this->db->update('tbl_event_tickets');
 	}
 
 	function get_design($vendor_id){

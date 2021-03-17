@@ -4,17 +4,17 @@ var globalEmails = (function() {
 
 getEmailTemplates();
 
-$('.js-select2').select2({
-  placeholder: "Select product",
-  allowClear: true,
-});
-$('.select2-container').width('100%');
-
-$('b[role="presentation"]').hide();
-$('.select2-selection__arrow').append('<i class="fa fa-sort-desc"></i>');
-
 
 $(document).ready(function () {
+
+  $('.js-select2').select2({
+    placeholder: "Select product",
+    allowClear: true,
+  });
+  $('.select2-container').width('100%');
+  
+  $('b[role="presentation"]').hide();
+  $('.select2-selection__arrow').append('<i class="fa fa-sort-desc"></i>');
 
   var table = $("#voucher").DataTable({
     processing: true,

@@ -362,7 +362,7 @@
                                 <select id="group" class="form-control input-w" required>
                                     <option selected disabled>Select option</option>
                                     <?php foreach($groups as $group): ?>
-                                    <option value="<?php echo $group['id']; ?>"><?php echo $group['groupname']; ?>
+                                    <option id="group_<?php echo $group['id']; ?>" value="<?php echo $group['id']; ?>"><?php echo $group['groupname']; ?>
                                     </option>
                                     <?php endforeach; ?>
                                 </select>
@@ -620,7 +620,7 @@
 -->
 
 <script>
-const globalEmails = '<?php echo json_encode($emails); ?>';
+//const globalEmails = '<?php echo json_encode($emails); ?>';
 
 const templateGlobals = (function() {
     let globals = {

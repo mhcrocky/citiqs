@@ -1,3 +1,10 @@
+var globalEmails = (function() {
+  return '';
+}());
+
+getEmailTemplates();
+
+
 $(document).ready(function () {
   $('#editModal').on('hidden.bs.modal', function () {
     $('#resetTicketOptions').click();
@@ -290,17 +297,39 @@ $(document).ready(function () {
         })
         .data()
         .each(function (data, i) {
-          var groupname = data.groupname;
+          var groupname = (data.groupname == null) ? 'Ungrouped' : data.groupname;
+          
           if (last !== groupname) {
             if (groupname == "") {
+
             } else {
               var html =
                 '<div class="dropdown show">' +
                 '<a class="text-dark" href="#" role="button">' +
                 '<i style="font-size: 37px;color: #39495C;" class="fa fa-stop" aria-hidden="true"></i>&nbsp &nbsp &nbsp</a>' +
                 "</div>";
-
+                
+              if(data.groupId == 0 || data.groupId == null){
               $(rows)
+                .eq(i)
+                .before(
+                  '<tr class="group">' +
+                    "<td>" +
+                    html +
+                    '</td><td colspan="3">' +
+                    '<input type="text" class="form-control" value="Ungrouped" disabled>' +
+                    '</td><td></td><td><ul><li><div class="custom-control custom-checkbox"><input style="transform: scale(1.5);" class="custom-control-input" id="package-area-0' +
+                    i +
+                    '" type="checkbox" checked="checked" ><label class="custom-control-label" for="package-area-0' +
+                    i +
+                    '"> </label>  </div>    </li></ul></td><td></td>' +
+                    "<td></td><td></td>" +
+                    '<td><div class="bg-dark"  style="width: 30px;height: 30px;">' +
+                    '<i style="color: #fff;" class="fa fa-trash p-2"><i></div></td></tr>'
+                );
+                last = "Ungrouped";
+              } else {
+                $(rows)
                 .eq(i)
                 .before(
                   '<tr class="group">' +
@@ -316,12 +345,13 @@ $(document).ready(function () {
                     i +
                     '"> </label>  </div>    </li></ul></td><td></td>' +
                     "<td></td><td></td>" +
-                    '<td><div class="bg-dark" style="width: 30px;height: 30px;">' +
+                    '<td><div class="bg-dark" onclick="deleteGroup('+data.groupId+')" style="width: 30px;height: 30px;cursor: pointer;">' +
                     '<i style="color: #fff;" class="fa fa-trash p-2"><i></div></td></tr>'
                 );
+              }
+              last = groupname;
             }
 
-            last = groupname;
           }
         });
     },
@@ -374,7 +404,6 @@ function getTicketOptions(ticketId) {
           $("#guestTicketCheck").prop("checked", checked);
         }
         //$('.ql-editor').html('test')
-        console.log(index);
         $("#" + index).val(value);
       });
     }
@@ -488,14 +517,27 @@ function saveTicketOptions(e){
 
 function deleteTicket(ticketId) {
   if (window.confirm("Are you sure?")) {
-  let data = { 
-    ticketId: ticketId
-  };
-
-  $.post(globalVariables.baseUrl + "events/delete_ticket", data, function (data) {
-    $("#tickets").DataTable().ajax.url(globalVariables.baseUrl + "events/get_tickets").load();
-  });
+    let data = { 
+      ticketId: ticketId
+    };
+    
+    $.post(globalVariables.baseUrl + "events/delete_ticket", data, function (data) {
+      $("#tickets").DataTable().ajax.url(globalVariables.baseUrl + "events/get_tickets").load();
+    });
+  }
 }
+
+function deleteGroup(groupId) {
+  if (window.confirm("Are you sure?")) {
+    let data = { 
+      groupId: groupId
+    };
+    
+    $.post(globalVariables.baseUrl + "events/delete_group", data, function (data) {
+      $('#group_'+groupId).remove();
+      $("#tickets").DataTable().ajax.url(globalVariables.baseUrl + "events/get_tickets").load();
+    });
+  }
 }
 
 function updateEmailTemplate(el, id) {
@@ -524,8 +566,31 @@ function editEmailTemplate(id, template_name, template_type) {
   );
 }
 
+function getEmailTemplates() {
+  $.get(globalVariables.baseUrl + "events/get_email_templates",function (data) {
+      globalEmails = data;
+    }
+  );
+}
+
+function emailTemplatesOptions() {
+  $.get(globalVariables.baseUrl + "events/get_email_templates",function (data) {
+      let emails = JSON.parse(data);
+      var html = '<option value="">Select Option</option>';
+      $.each(emails, function (index, email) {
+          html += '<option value="' + email.id + '" >' + email.template_name + '</option>';
+      });
+      $('#ticketEmailTemplate').html(html);
+
+    }
+  );
+}
+
 $('#updateEmailTemplate').on('click', function(){
+  getEmailTemplates();
+  $("#tickets").DataTable().ajax.reload();
   setTimeout(() => {
     $('#closeEmailTemplate').click();
+    emailTemplatesOptions();
   }, 777);
 });

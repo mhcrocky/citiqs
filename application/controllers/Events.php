@@ -183,6 +183,14 @@ class Events extends BaseControllerWeb
         echo json_encode($templateContent);
 
     }
+
+    public function get_email_templates()
+    {
+        $vendorId = $this->session->userdata('userId');
+        $this->load->model('email_templates_model');
+		$emails = $this->email_templates_model->get_ticketing_email_by_user($vendorId);
+        echo json_encode($emails);
+    }
  
     public function viewdesign(): void
     {
@@ -240,6 +248,12 @@ class Events extends BaseControllerWeb
     {
         $ticketId = $this->input->post('ticketId');
         $this->event_model->delete_ticket($ticketId);
+    }
+
+    public function delete_group()
+    {
+        $groupId = $this->input->post('groupId');
+        $this->event_model->delete_group($groupId);
     }
 
     public function report($eventId)
