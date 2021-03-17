@@ -297,6 +297,13 @@
 <?php  } elseif ($this->view === 'events/shop' || $this->view === 'events/tickets') { ?>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
+    <style> 
+    @media only screen and (min-width: 500px) {
+        .login100-form {
+            padding: 43px 10px 100px 100px !important;
+        }
+    }
+    </style>
 <?php  } elseif ($this->view === 'events/selectpayment') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/select-pay.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
