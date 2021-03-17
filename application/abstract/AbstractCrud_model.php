@@ -149,6 +149,14 @@
             return $this->db->update($this->getThisTable(), $data, $where);
         }
 
+        public function multipleUpdate($ids, $where): bool
+        {
+            $data = $this->getDataArrayForDatabaseUpdate();
+            if (!$data || !$this->updateValidate($data)) return false;
+            $this->db->where_in('id', $ids);
+            return $this->db->update($this->getThisTable(), $data, $where);
+        }
+
         public function customUpdate(array $where): bool
         {
             $data = $this->getDataArrayForDatabaseUpdate();
@@ -167,6 +175,13 @@
             $where = [
                 'id' => $this->id
             ];
+            $this->db->delete($this->getThisTable(), $where);
+            return $this->db->affected_rows() ? true : false;
+        }
+
+        public function multipleDelete($ids, $where): bool
+        {
+            $this->db->where_in('id', $ids);
             $this->db->delete($this->getThisTable(), $where);
             return $this->db->affected_rows() ? true : false;
         }
