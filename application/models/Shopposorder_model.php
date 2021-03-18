@@ -13,6 +13,9 @@
         public $spotId;
         public $sessionId;
         public $saveName;
+        public $created;
+        public $updated;
+
         private $table = 'tbl_shop_pos_orders';
 
         protected function setValueType(string $property,  &$value): void
@@ -60,6 +63,8 @@
                     $this->table . '.spotId AS spotId',
                     $this->table . '.sessionId AS posSessionId',
                     $this->table . '.saveName AS saveName',
+                    $this->table . '.created AS created',
+                    'IF(' . $this->table . '.updated, ' . $this->table . '.updated,' . $this->table . '.created) AS lastChange',
                     'tbl_shop_sessions.randomKey AS randomKey',
                 ],
                 [
@@ -78,6 +83,7 @@
 
             if ($this->sessionId && !$this->create()) {
                 $this->setIdFromSessionId();
+                $this->updated = date('Y-m-d H:i:s');
                 return $this->update();
             }
             return true;
