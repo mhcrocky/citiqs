@@ -287,6 +287,14 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 													<li data-menuid="4.6.2"><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span>Store</span></a></li>
 												</ul>
 											</li>
+											<li data-menuid="4.7">
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-bag"></i><span>Reports</span></a>
+												<ul class="collapse">
+													<li data-menuid="4.7.1"><a href="<?php echo $this->baseUrl; ?>warehouse"><i class="ti-layout-accordion-separated"></i> <span>Warehouse</span></a></li>
+													<li data-menuid="4.7.2"><a href="<?php echo $this->baseUrl; ?>x report"><i class="ti-layers-alt"></i> <span>X report</span></a></li>
+													<li data-menuid="4.7.3"><a href="<?php echo $this->baseUrl; ?>z report"><i class="ti-bag"></i> <span>Y report</span></a></li>
+												</ul>
+											</li>
 
 											
 										</ul>
