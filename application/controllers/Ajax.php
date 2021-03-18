@@ -1754,6 +1754,7 @@ class Ajax extends CI_Controller
 
         $post = Utility_helper::sanitizePost();
         $post['userId'] =  intval($_SESSION['userId']);
+        $post['printed'] = '0';
         $insert = $this->shopreportrequest_model->setObjectFromArray($post)->create();
 
         if ($insert) {
