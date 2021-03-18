@@ -12,7 +12,7 @@
         <p class="col-sm-2" id="paidSpots" style="text-align:right;"></p>
     </div>
 </div> -->
-<div class="table-responsive col-sm-12" style="margin-top:20px">
+<div class="table-responsive col-sm-12 pb-2" style="margin-top:20px">
     <table id="reportesSpots" class="table table-hover table-striped display" style="width:100%">
         <thead>
             <tr>
@@ -52,8 +52,8 @@
                 <tr>
                     <td style="text-align:center"><?php echo $spotMin['spotName']; ?></td>
                     <td style="text-align:center"><?php echo count($orders); ?></td>
-                    <td style="text-align:center"><?php echo $paidSpots; ?> (<?php echo round(($paidSpots / $totalSpots * 100), 2); ?> %)</td>
-                    <td style="text-align:center; color:#ff3333;"><?php echo $unpaidSpots; ?> (<?php echo round(($unpaidSpots / $totalSpots * 100), 2); ?> %)</td>
+                    <td style="text-align:center"><?php echo $paidSpots; ?> (<?php echo round(($paidSpots / (($totalSpots != 0) ? $totalSpots * 100 : 1)), 2); ?> %)</td>
+                    <td style="text-align:center; color:#ff3333;"><?php echo $unpaidSpots; ?> (<?php echo round(($unpaidSpots / (($totalSpots != 0) ? $totalSpots * 100 : 1)), 2); ?> %)</td>
                     <td style="text-align:center"><?php echo $totalSpots; ?></td>
                 </tr>
                 <?php

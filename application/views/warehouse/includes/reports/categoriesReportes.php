@@ -12,7 +12,7 @@
         <p class="col-sm-2" id="paidCategory" style="text-align:right;"></p>
     </div>
 </div> -->
-<div class="table-responsive col-sm-12" style="margin-top:20px">
+<div class="table-responsive col-sm-12 pb-2" style="margin-top:20px">
     <table id="reportesCategories" class="table table-hover table-striped display" style="width:100%">
         <thead>
             <tr>
@@ -31,14 +31,14 @@
                 foreach ($values as $category => $details) {
                     $paidCategory = 0;
                     $unpaidCategory = 0;
-                    $totalCateory = 0;
+                    $totalCategory = 0;
                     $orders = [];
                     foreach($details as $data) {
                             if (!in_array($data['orderId'], $orders)) {
                                 array_push($orders, $data['orderId']);
                             }
                             $money = floatval($data['productPrice']) * floatval($data['productQuantity']) ;
-                            $totalCateory += $money;
+                            $totalCategory += $money;
                             $total += $money;
                             if ($data['orderPaidStatus'] === '1') {
                                 $paidCategory += $money;
@@ -52,9 +52,9 @@
                 <tr>
                     <td style="text-align:center"><?php echo $category; ?></td>
                     <td style="text-align:center"><?php echo count($orders); ?></td>
-                    <td style="text-align:center"><?php echo $paidCategory; ?> (<?php echo round(($paidCategory / $totalCateory * 100), 2); ?> %)</td>
-                    <td style="text-align:center; color:#ff3333;"><?php echo $unpaidCategory; ?> (<?php echo round(($unpaidCategory / $totalCateory * 100), 2); ?> %)</td>
-                    <td style="text-align:center"><?php echo $totalCateory; ?></td>
+                    <td style="text-align:center"><?php echo $paidCategory; ?> (<?php echo round(($paidCategory / (($totalCategory != 0) ? $totalCategory * 100 : 1)), 2); ?> %)</td>
+                    <td style="text-align:center; color:#ff3333;"><?php echo $unpaidCategory; ?> (<?php echo round(($unpaidCategory / (($totalCategory != 0) ? $totalCategory * 100 : 1)), 2); ?> %)</td>
+                    <td style="text-align:center"><?php echo $totalCategory; ?></td>
                 </tr>
                 <?php
                 

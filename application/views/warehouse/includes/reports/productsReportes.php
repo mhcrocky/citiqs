@@ -12,7 +12,7 @@
         <p class="col-sm-2" id="paidProducts" style="text-align:right;"></p>
     </div>
 </div> -->
-<div class="table-responsive col-sm-12" style="margin-top:20px">
+<div class="table-responsive col-sm-12 pb-2" style="margin-top:20px">
     <table id="reportesProducts" class="table table-hover table-striped display" style="width:100%">
         <thead>
             <tr>
@@ -66,13 +66,13 @@
                     <td style="text-align:center">
                         <?php echo $paidProducts; ?>
                         (
-                            <?php echo ($totalProducts) ? round(($paidProducts / $totalProducts * 100), 2) : '0.00'; ?> %
+                            <?php echo ($totalProducts) ? round(($paidProducts / (($totalProducts != 0) ? $totalProducts * 100 : 1)), 2) : '0.00'; ?> %
                         )
                     </td>
                     <td style="text-align:center; color:#ff3333;">
                         <?php
                             if ($unpaidProducts) {
-                                echo $unpaidProducts . '&nbsp(' . round(($unpaidProducts / $totalProducts * 100), 2)  . '&nbsp;%)';
+                                echo $unpaidProducts . '&nbsp(' . round(($unpaidProducts / (($totalProducts != 0) ? $totalProducts * 100 : 1)), 2)  . '&nbsp;%)';
                             } else {
                                 echo '0.00';
                             }

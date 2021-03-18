@@ -12,7 +12,7 @@
         <p class="col-sm-2" id="paidBuyers" style="text-align:right;"></p>
     </div>
 </div> -->
-<div class="table-responsive col-sm-12" style="margin-top:20px">
+<div class="table-responsive col-sm-12 pb-2" style="margin-top:20px">
     <table id="reportesBuyers" class="table table-hover table-striped display" style="width:100%">
         <thead>
             <tr>
@@ -56,8 +56,8 @@
                     <td style="text-align:center"><?php echo $buyerMin['buyerEmail']; ?></td>
                     <td style="text-align:center"><?php echo $buyerMin['buyerMobile']; ?></td>
                     <td style="text-align:center"><?php echo count($orders); ?></td>
-                    <td style="text-align:center"><?php echo $paidBuyers; ?> (<?php echo round(($paidBuyers / $totalBuyers * 100), 2); ?> %)</td>
-                    <td style="text-align:center; color:#ff3333;"><?php echo $unpaidBuyers; ?> (<?php echo round(($unpaidBuyers / $totalBuyers * 100), 2); ?> %)</td>
+                    <td style="text-align:center"><?php echo $paidBuyers; ?> (<?php echo round(($paidBuyers / (($totalBuyers != 0) ? $totalBuyers * 100 : 1)), 2); ?> %)</td>
+                    <td style="text-align:center; color:#ff3333;"><?php echo $unpaidBuyers; ?> (<?php echo round(($unpaidBuyers / (($totalBuyers != 0) ? $totalBuyers * 100 : 1)), 2); ?> %)</td>
                     <td style="text-align:center"><?php echo $totalBuyers; ?></td>
                 </tr>
                 <?php

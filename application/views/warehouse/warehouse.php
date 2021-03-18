@@ -30,7 +30,7 @@
                 </div>
             </form>             
         </div>
-        <div>
+        <div class="w-100 p-3">
         <?php
             if (isset($reports)) {
                 $keys = array_keys($reports);
@@ -47,7 +47,8 @@
                 </ul>
                 <div class="tab-content">
                     <?php foreach ($reports as $key => $values) { ?>
-                    <div id="<?php echo $key; ?>" class="tab-pane <?php if ($key === 'orders') echo 'active'?>" style="background-color: #FFF; text-align:left">
+                    <div id="<?php echo $key; ?>" class="tab-pane <?php if ($key === 'orders') echo 'active'?>" style="text-align:left">
+                   
                         <?php
                             if ($key === 'orders') {
                                 include_once FCPATH . 'application/views/warehouse/includes/reports/ordersReportes.php';
@@ -61,6 +62,7 @@
                                 include_once FCPATH . 'application/views/warehouse/includes/reports/productsReportes.php';
                             }
                         ?>
+                  
                         
                     </div>
                     <?php } ?>

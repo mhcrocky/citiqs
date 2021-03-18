@@ -12,7 +12,7 @@
         <p class="col-sm-2" id="paidOrders" style="text-align:right;"></p>
     </div>
 </div>
-<div class="table-responsive col-sm-12" style="margin-top:20px">
+<div class="table-responsive col-sm-12 pb-2" style="margin-top:20px">
     <table id="reportesOrders" class="table table-hover table-striped display" style="width:100%">
         <thead>
             <tr>

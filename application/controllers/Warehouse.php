@@ -69,9 +69,9 @@
                     'buyers' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'buyerId'),
                     'products' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'productId'),
                 ];
-            }
+            } 
 
-            $this->loadViews('warehouse/warehouse', $this->global, $data, null, 'headerWarehouse');
+            $this->loadViews('warehouse/warehouse', $this->global, $data, 'footerbusiness', 'headerbusiness');
         }
 
         // CATEGORIES
