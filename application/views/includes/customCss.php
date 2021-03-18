@@ -289,6 +289,13 @@
     input[type="search"]{
         width: auto !important;
     }
+    tr td {
+        text-align: left !important;
+        vertical-align: middle !important;
+    }
+    .dataTables_empty {
+        text-align: center !important; 
+    }
 
     </style>
     <?php  } elseif ($this->view === 'video/index') { ?>

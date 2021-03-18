@@ -8,7 +8,7 @@
                     <i style="color: #fff;font-size: 18px;" class="fa fa-plus"></i></a>
             </a>
         </div>
-        <table id="events" class="mt-5" style="width:100%;background: #fff;">
+        <table id="events" class="table table-striped table-bordered mt-5" style="width:100%;">
 
         </table>
 

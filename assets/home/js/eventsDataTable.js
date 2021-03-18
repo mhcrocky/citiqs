@@ -101,7 +101,6 @@ $(document).ready(function() {
     table.rowReordering();
 
 
-
     /*Order by the grouping
     $('#tickets tbody').on('click', 'tr.group', function() {
         var currentOrder = table.order()[0];
