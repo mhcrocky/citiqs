@@ -301,6 +301,9 @@ $route['api/products/upload']  = 'Api/Products/upload';
 $route['api/events/records']  = 'Api/Events/Records';
 $route['api/events/tickettypes']  = 'Api/Events/TicketTypes';
 $route['api/events/tickets']  = 'Api/Events/Tickets';
+
+$route['api/events/ticketevents']  = 'Api/Events/Ticketevents';
+
 $route['api/printers/printer']  = 'Api/Printers/Printer';
 $route['api/categories/category']  = 'Api/Categories/category';
 $route['api/tickettypes/types']  = 'Api/TicketTypes/Types';

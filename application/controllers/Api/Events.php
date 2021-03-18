@@ -43,13 +43,27 @@ class Events extends REST_Controller
 
 	public function Tickettypes_post()
 	{
+		$eventId = $this->security->xss_clean($this->input->post('eventId'));
+		$this->db->select('*');
+		$this->db->from('tbl_event_tickets');
+		$this->db->where('eventId', $eventId);
+
+		$query = $this->db->get();
+		$result = $query->result_array();
+
+		$this->response($result, 200);
+	}
+
+	public function Ticketevents_post()
+	{
 		$vendorId = $this->security->xss_clean($this->input->post('vendorId'));
-		$eventid = $this->security->xss_clean($this->input->post('description'));
 
-
-		$this->db->select('id', 'description');
-		$this->db->from('tbl_');
-		$this->db->order_by('description');
+		$this->db->select("id,vendorId,eventname,eventdescript,eventVenue,
+		eventAddress,eventCity,eventZipcode,
+		eventCountry,StartDate,EndDate,
+        StartTime,EndTime");
+		$this->db->from('tbl_events');
+		$this->db->where('vendorId', $vendorId);
 		$query = $this->db->get();
 		$result = $query->result_array();
 
@@ -63,7 +77,14 @@ class Events extends REST_Controller
 		$changetimein = $this->security->xss_clean($this->input->post('changeTimeIn'));
 		$changetimeout = $this->security->xss_clean($this->input->post('changeTimeOut'));
 
-//		echo 'hello';
+
+//		echo var_dump($vendorId);
+//		echo var_dump($eventid);
+//		echo var_dump($changetimein);
+//		echo var_dump($changetimeout);
+//
+//
+
 //		die();
 
 		$this->db->where('customer', $vendorId);
