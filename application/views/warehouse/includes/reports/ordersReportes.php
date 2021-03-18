@@ -13,6 +13,15 @@
     </div>
 </div>
 <div class="table-responsive col-sm-12 pb-2" style="margin-top:20px">
+    <div class="w-100 mb-3">
+        <div class="col-md-3 ml-auto" style="padding-right: 0px !important;">
+            <select id="paid" class="form-control" style="padding-top: 0px !important;padding-bottom: 0px !important;" onchange="paidDatatable('reportesOrders')">
+                <option value="">All types</option>
+                <option value="paid">Paid</option>
+                <option value="Not Paid">Not Paid</option>
+            </select>
+        </div>
+    </div>
     <table id="reportesOrders" class="table table-hover table-striped display" style="width:100%">
         <thead>
             <tr>

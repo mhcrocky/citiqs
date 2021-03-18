@@ -297,7 +297,7 @@ $(document).ready(function () {
         })
         .data()
         .each(function (data, i) {
-          var groupname = (data.groupname == null) ? 'Ungrouped' : data.groupname;
+          var groupname = data.groupname;
           
           if (last !== groupname) {
             if (groupname == "") {
@@ -308,27 +308,6 @@ $(document).ready(function () {
                 '<a class="text-dark" href="#" role="button">' +
                 '<i style="font-size: 37px;color: #39495C;" class="fa fa-stop" aria-hidden="true"></i>&nbsp &nbsp &nbsp</a>' +
                 "</div>";
-                
-              if(data.groupId == 0 || data.groupId == null){
-              $(rows)
-                .eq(i)
-                .before(
-                  '<tr class="group">' +
-                    "<td>" +
-                    html +
-                    '</td><td colspan="3">' +
-                    '<input type="text" class="form-control" value="Ungrouped" disabled>' +
-                    '</td><td></td><td><ul><li><div class="custom-control custom-checkbox"><input style="transform: scale(1.5);" class="custom-control-input" id="package-area-0' +
-                    i +
-                    '" type="checkbox" checked="checked" ><label class="custom-control-label" for="package-area-0' +
-                    i +
-                    '"> </label>  </div>    </li></ul></td><td></td>' +
-                    "<td></td><td></td>" +
-                    '<td><div class="bg-dark"  style="width: 30px;height: 30px;">' +
-                    '<i style="color: #fff;" class="fa fa-trash p-2"><i></div></td></tr>'
-                );
-                last = "Ungrouped";
-              } else {
                 $(rows)
                 .eq(i)
                 .before(
@@ -348,7 +327,7 @@ $(document).ready(function () {
                     '<td><div class="bg-dark" onclick="deleteGroup('+data.groupId+')" style="width: 30px;height: 30px;cursor: pointer;">' +
                     '<i style="color: #fff;" class="fa fa-trash p-2"><i></div></td></tr>'
                 );
-              }
+              
               last = groupname;
             }
 
