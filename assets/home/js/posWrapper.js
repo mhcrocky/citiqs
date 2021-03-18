@@ -81,6 +81,9 @@ function holdOrder(element, saveNameId) {
             'spotId' : makeOrderGlobals.spotId,
         }
 
+        // console.dir(send);
+        // return;
+
         if (posGlobals['selectedOrderRandomKey']) {
             send['orderDataRandomKey'] = posGlobals['selectedOrderRandomKey'];
         }
@@ -376,11 +379,12 @@ function countOrderedToZero(countOrdered) {
 //     document.getElementById('saveHoldOrder').innerHTML = 'Save order'
 // }
 
-// function showLoginModal() {
-//     if (!posGlobals['unlock']) {
-//         $('#posLoginModal').modal('show');
-//     }
-// }
+function showLoginModal() {
+    return true;
+    if (!posGlobals['unlock']) {
+        $('#posLoginModal').modal('show');
+    }
+}
 
 function posLogin(form) {
     if (!validateFormData(form)) return false;
