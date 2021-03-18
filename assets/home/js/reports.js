@@ -149,3 +149,51 @@ $(document).ready(function() {
         dayOfWeekStart : 1,
     });
 });
+
+function paidDatatable(tableId){
+    var value = $('#paid option:selected').val();
+    if(value != 0){
+        $('#'+tableId).DataTable()
+        .columns( 3 )
+        .search( '^'+value+'$', true, false )
+        .draw();
+        return ;
+    }
+    $('#'+tableId).DataTable()
+    .columns( 3 )
+    .search(value)
+    .draw();
+    return ;
+}
+
+function visibleDatatableCol(tableId, selectId, col1, col2){
+    var col = $('#'+selectId+' option:selected').val();
+    if(col == col1){
+        $('#'+tableId).DataTable()
+        .columns( col1 )
+        .visible(true);
+
+        $('#'+tableId).DataTable()
+        .columns( col2 )
+        .visible(false);
+        
+        return ;
+    } else if(col == col2){
+        $('#'+tableId).DataTable()
+        .columns( col2 )
+        .visible(true);
+
+        $('#'+tableId).DataTable()
+        .columns( col1 )
+        .visible(false);
+        return ;
+    }
+    $('#'+tableId).DataTable()
+    .columns( col1 )
+    .visible(true);
+    $('#'+tableId).DataTable()
+    .columns( col2 )
+    .visible(true);
+        
+    return ;
+}
