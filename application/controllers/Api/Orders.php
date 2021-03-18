@@ -133,6 +133,14 @@
             }
         }
 
+        /**
+         * 
+         * PRINTER FIRST SEND POST REQUEST TO CHECK IS ANY JOB TO PRINT
+         * 
+         * IF JOB IS TRUE, HE SEND GET REQUEST
+         *
+         * @return void
+         */
         public function data_post()
         {
 			// $file = FCPATH . 'application/tiqs_logs/messages.txt';
