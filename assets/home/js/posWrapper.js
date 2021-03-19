@@ -22,11 +22,7 @@ function posTriggerModalClick(modalButtonId) {
 }
 
 function cancelPosOrder() {
-    if (posGlobals['selectedOrderRandomKey']) {
-        $('#confirmCancel').modal('show');
-    } else {
-        resetPosOrder();
-    }
+    (makeOrderGlobals['orderDataRandomKey']) ? $('#confirmCancel').modal('show') : resetPosOrder();
 }
 
 function resetPosOrder() {
@@ -35,24 +31,24 @@ function resetPosOrder() {
     document.getElementById('checkoutName').innerHTML = 'Checkout';
     document.getElementById('posOrderName').value = '';
 
-    posGlobals['selectedOrderRandomKey'] = '';
+    makeOrderGlobals['orderDataRandomKey'] = '';
     posGlobals['selectedOrderName'] = '';
-    posGlobals['selectedOrderShortName'] = '';
 
     countOrderedToZero('countOrdered');
+    showSavedName();
     resetTotal();
 }
 
 function deletePosOrder() {
-    if (posGlobals['selectedOrderRandomKey'] && makeOrderGlobals['spotId']) {
-        let url = globalVariables.ajax  + 'deletePosOrder/' + posGlobals['selectedOrderRandomKey'] + '/' + makeOrderGlobals['spotId'];
+    if (makeOrderGlobals['orderDataRandomKey'] && makeOrderGlobals['spotId']) {
+        let url = globalVariables.ajax  + 'deletePosOrder/' + makeOrderGlobals['orderDataRandomKey'] + '/' + makeOrderGlobals['spotId'];
         sendUrlRequest(url, 'deletePosOrder', deletePosOrderResponse);
     }
 }
 
 function deletePosOrderResponse(response) {
     if (response['status'] === '1') {
-        $('#selectSaved option[value="' + posGlobals['selectedOrderRandomKey'] +'"]').remove();
+        $('#selectSaved option[value="' + makeOrderGlobals['orderDataRandomKey'] +'"]').remove();
         if ($('#selectSaved option').length === 1) {
             $(".selectSavedOrdersList").hide();
         }
@@ -81,11 +77,8 @@ function holdOrder(element, saveNameId) {
             'spotId' : makeOrderGlobals.spotId,
         }
 
-        // console.dir(send);
-        // return;
-
-        if (posGlobals['selectedOrderRandomKey']) {
-            send['orderDataRandomKey'] = posGlobals['selectedOrderRandomKey'];
+        if (makeOrderGlobals['orderDataRandomKey']) {
+            send['orderDataRandomKey'] = makeOrderGlobals['orderDataRandomKey'];
         }
 
         $.ajax({
@@ -99,9 +92,9 @@ function holdOrder(element, saveNameId) {
                 $('#holdOrder').modal('hide');
                 if (data['status'] !== '0') {
                     $(".selectSavedOrdersList").show();
-                    if (!posGlobals['selectedOrderRandomKey']) {
-                        $('#selectSaved').append('<option value="' + data['orderRandomKey'] + '">' + data['orderName'] + '</option>');
-                        posGlobals['selectedOrderRandomKey'] = data['orderRandomKey'];
+                    if (!makeOrderGlobals['orderDataRandomKey']) {
+                        $('#selectSaved').append('<option value="' + data['orderRandomKey'] + '">' + data['orderName'] + ' (' + data['lastChange'] + ')</option>');
+                        makeOrderGlobals['orderDataRandomKey'] = data['orderRandomKey'];
                     } else {
                         let options = document.getElementById('selectSaved').options;
                         let optionsLenght = options.length;
@@ -109,18 +102,16 @@ function holdOrder(element, saveNameId) {
                         for (i = 0; i < optionsLenght; i++) {
                             let option = options[i];
                             if (option.value === data['orderRandomKey']) {
-                                option.innerHTML = data['orderName'];
+                                option.innerHTML = data['orderName'] + ' (' + data['lastChange'] + ')';
                                 break;
                             }
                         }
                     }
 
                     posGlobals['selectedOrderName'] = data['orderName'];
-                    posGlobals['selectedOrderShortName'] = data['orderShortName'];
-
-                    document.getElementById('checkoutName').innerHTML = ('Checkout ' + data['orderName']);
-                    // document.getElementById('posOrderName').value = data['orderShortName'];
+                    document.getElementById('checkoutName').innerHTML = ('Checkout ' + data['orderName']  + ' (' + data['lastChange'] + ')');
                     document.getElementById('selectSaved').value = data['orderRandomKey'];
+                    showSavedName();
                 } else {
                     alertify.error('Process failed! Check order details')
                 }
@@ -333,8 +324,8 @@ function showOrderId(orderId) {
 }
 
 function sednNotification(orderId) {
-    if (!posGlobals.venodrOneSignalId) return
-    let url = globalVariables.baseUrl + 'Alfredinsertorder/posSendNoticication/' + orderId + '/' + posGlobals.venodrOneSignalId;
+    if (!makeOrderGlobals.oneSignalId) return
+    let url = globalVariables.baseUrl + 'Alfredinsertorder/posSendNoticication/' + orderId + '/' + makeOrderGlobals.oneSignalId;
     $.get(url, function(data, status) {});
 }
 
@@ -466,12 +457,13 @@ function fetchSavedOrder(element) {
 
 function fetchSavedOrderResponse(element, response) {
     if (response) {
-        posGlobals['selectedOrderRandomKey'] = element.value;
+        makeOrderGlobals['orderDataRandomKey'] = element.value;
         posGlobals['selectedOrderName'] = response['posOrderName'];        
         document.getElementById(makeOrderGlobals['modalCheckoutList']).innerHTML = response['checkoutList'];
-        document.getElementById('checkoutName').innerHTML = 'Checkout ' + response['posOrderName'];
+        document.getElementById('checkoutName').innerHTML = 'Checkout ' + response['posOrderName'] + ' (' + response['lastChange'] + ')';
         resetTotal();
         countOrdered('countOrdered');
+        showSavedName();
     }
 }
 
@@ -479,6 +471,10 @@ function toogleSelectSavedOrders() {
     if (!posGlobals['spotPosOrders']) {
         $(".selectSavedOrdersList").hide();
     }
+}
+
+function showSavedName() {
+    document.getElementById('posOrderName').value = posGlobals['selectedOrderName'];
 }
 
 toogleSelectSavedOrders();
@@ -510,3 +506,4 @@ window.onkeydown = function(e) {
 window.onmousemove = function(e) {
     resetCounter();
 }
+

@@ -57,7 +57,7 @@
 											}
 										?>
 									>
-										<?php echo $saveOrder['saveName']; ?>
+										<?php echo $saveOrder['saveName'] . ' (' . $saveOrder['lastChange'] . ')'; ?>
 									</option>
 								<?php } ?>
 							<?php } ?>
@@ -345,14 +345,7 @@
 				'selectedOrderName' : '',
 				'selectedOrderShortName' : '',
 			}
-			<?php if (!empty($vendor['oneSignalId'])) { ?>
-				globals['venodrOneSignalId'] = '<?php echo $vendor['oneSignalId']; ?>';
-			<?php } ?>
-			<?php if (!empty($vendor['orderDataRandomKey'])) { ?>
-				globals['orderDataRandomKey'] = '<?php echo $vendor['orderDataRandomKey']; ?>';
-			<?php } else { ?>
-				globals['orderDataRandomKey'] = '';
-			<?php } ?>
+
 			<?php if  ($lock) { ?>
 				globals['unlock'] = true;
 			<?php } else { ?>

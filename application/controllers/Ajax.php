@@ -729,13 +729,13 @@ class Ajax extends CI_Controller
             // save pos order
             $post['posOrder']['sessionId'] = $this->shopsession_model->id;
             $shortName = $post['posOrder']['saveName'];
-            $post['posOrder']['saveName'] = $post['posOrder']['saveName'] . ' (' . date('Y-m-d H:i:s') . ') ';
+            $post['posOrder']['saveName'] = $post['posOrder']['saveName'];
             $managePosOrder = $this->shopposorder_model->setObjectFromArray($post['posOrder'])->managePosOrder();
             if (!$managePosOrder) {
                 $response['status'] = '0';
             }
             $response['orderName'] = $post['posOrder']['saveName'];
-            $response['orderShortName'] = $shortName;
+            $response['lastChange'] = date('Y-m-d H:i:s');
         }
 
         return;
@@ -1871,23 +1871,26 @@ class Ajax extends CI_Controller
 
             $ordered = Utility_helper::returnMakeNewOrderElements($ordered['makeOrder'], $vendor, $allProducts['main'], $allProducts['addons'], $maxRemarkLength, true);
             $response['checkoutList'] = $ordered['checkoutList'];
-            $response['posOrderName'] = $this->getPosOrderName($orderDataRandomKey);
+            $this->getPosOrderName($orderDataRandomKey, $response);
 
             echo json_encode($response);
         }
     }
 
 
-    private function getPosOrderName(string $ranodmKey): ?string
+    private function getPosOrderName(string $ranodmKey, array &$response): void
     {
         $this->shopsession_model->setProperty('randomKey', $ranodmKey)->setIdFromRandomKey();
         $this->shopposorder_model->setProperty('sessionId', intval($this->shopsession_model->id))->setIdFromSessionId();
 
-        if (!$this->shopposorder_model->id) return null;
+        if (!$this->shopposorder_model->id) return;
 
         $this->shopposorder_model->setObject();
+        $response['posOrderName'] = $this->shopposorder_model->saveName;
+        $response['spotId'] = $this->shopposorder_model->spotId;
+        $response['lastChange'] = $this->shopposorder_model->updated ? $this->shopposorder_model->updated : $this->shopposorder_model->created;        
 
-        return $this->shopposorder_model->saveName;
+        return;
     }
 
     public function deletePosOrder(string $ranodmKey, string $spotId): void

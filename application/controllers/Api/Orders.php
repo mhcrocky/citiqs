@@ -133,6 +133,14 @@
             }
         }
 
+        /**
+         * 
+         * PRINTER FIRST SEND POST REQUEST TO CHECK IS ANY JOB TO PRINT
+         * 
+         * IF JOB IS TRUE, HE SEND GET REQUEST
+         *
+         * @return void
+         */
         public function data_post()
         {
 			// $file = FCPATH . 'application/tiqs_logs/messages.txt';
@@ -181,7 +189,16 @@
                 $arr = array("jobReady" => false);
                 // Utility_helper::logMessage($file, 'JOB NOT READY => 1');
             } else {
-    
+                if ($this->shopreportrequest_model->checkRequests($parsedJson['printerMAC'])) {
+                    $arr = [
+                        "jobReady" => true,
+                        // "mediaTypes" => array('text/plain','image/png', 'image/jpeg'));
+                        "mediaTypes" => array('image/png')
+                        // "deleteMethod" => "GET");
+                    ];
+                    $this->set_response($arr, 200); // CREATED (201) being the HTTP response code
+                    return;
+                }
                 // er is een bon betaald
                 // nu gaan we de bon opbouwen in printqueue.tbl
                 // daarvoor hebben we nodig
