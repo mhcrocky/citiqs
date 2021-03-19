@@ -127,7 +127,7 @@ $(document).on("click", ".browse", function() {
   });
 
 function imageUpload(el) {
-
+    $('.img-thumbnail').attr('style','');
     $('.file-custom').hover(function() {
         $(this).attr('data-content', el.files[0].name);
     });
@@ -142,4 +142,36 @@ function editImageUpload(el) {
 
     $("#imgChanged").val('true');
 
+}
+
+function submitEventsForm(e){
+    e.preventDefault();
+    if($('.form-control:invalid').length > 0){
+        return ;
+    }
+    var imgUrl = $('#preview').attr('src');
+    if(document.getElementById("file").files.length == 0 && imgUrl == globalVariables.baseUrl + 'assets/images/img-preview.png'){
+        $('.img-thumbnail').attr('style', 'border: 1px solid #dc3545 !important;');
+        return ;
+    }
+    let startTime = $('#event-date1').val() +' '+ $('#event-time1').val();
+    let endTime = $('#event-date2').val() +' '+ $('#event-time2').val();
+    if(dayjs(endTime) > dayjs(startTime)){
+        $('form').attr('onsubmit','return true');
+        setTimeout(() => {
+            $('#submitEventForm').click();
+        }, 2);
+    } else {
+        $('.timestamp-error').show();
+        $('#event-date2').addClass('invalid-timestamp');
+        $('#event-time2').addClass('invalid-timestamp');
+        $('#timestamp-error').append('<p class="text-danger" style="color: #df2626">Second timestamp should be greater than first timestamp!</p>');
+    }
+    return ;
+}
+
+function timestampOnFocus(){
+    $('.invalid-timestamp').addClass('clear-border-color').removeClass('invalid-timestamp');
+    $('#timestamp-error').empty();
+    return ;
 }

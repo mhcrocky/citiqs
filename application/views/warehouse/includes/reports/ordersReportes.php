@@ -1,23 +1,23 @@
-<div style="margin:10px 0px 0px 30px; font-size:16px">
-    <div class="row">
-        <p class="col-sm-2">Total orders:</p>
-        <p class="col-sm-2" id="totalOrders" style="text-align:right;"></p>
-    </div>
-    <div class="row">
-        <p class="col-sm-2">Unpaid:</p>
-        <p class="col-sm-2" id="unpaidOrders" style="border-bottom: solid 2px #000; color:#ff3333; text-align:right;"></p>
-    </div>
-    <div class="row">
-        <p class="col-sm-2">Income:</p>
-        <p class="col-sm-2" id="paidOrders" style="text-align:right;"></p>
-    </div>
-</div>
+<!--<div style="margin:10px 0px 0px 30px; font-size:16px">-->
+<!--    <div class="row">-->
+<!--        <p class="col-sm-2">Total orders:</p>-->
+<!--        <p class="col-sm-2" id="totalOrders" style="text-align:right;"></p>-->
+<!--    </div>-->
+<!--    <div class="row">-->
+<!--        <p class="col-sm-2">Unpaid:</p>-->
+<!--        <p class="col-sm-2" id="unpaidOrders" style="border-bottom: solid 2px #000; color:#ff3333; text-align:right;"></p>-->
+<!--    </div>-->
+<!--    <div class="row">-->
+<!--        <p class="col-sm-2">Income:</p>-->
+<!--        <p class="col-sm-2" id="paidOrders" style="text-align:right;"></p>-->
+<!--    </div>-->
+<!--</div>-->
 <div class="table-responsive col-sm-12 pb-2" style="margin-top:20px">
     <div class="w-100 mb-3">
         <div class="col-md-3 ml-auto" style="padding-right: 0px !important;">
             <select id="paid" class="form-control" style="padding-top: 0px !important;padding-bottom: 0px !important;" onchange="paidDatatable('reportesOrders')">
                 <option value="">All types</option>
-                <option value="paid">Paid</option>
+                <option value="paid" selected>Paid</option>
                 <option value="Not Paid">Not Paid</option>
             </select>
         </div>

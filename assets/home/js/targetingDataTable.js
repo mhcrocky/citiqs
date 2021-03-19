@@ -237,6 +237,9 @@ $(document).ready( function () {
         var html = '<table>';
         html += '<thead>';
         html += '<tr>';
+        html += '<th>Date</th>';
+        html += '<th>Name</th>';
+		html += '<th>email</th>';
         html += '<th>Order ID</th>';
         html += '<th>Product Name</th>';
         html += '<th>Product VAT</th>';
@@ -264,6 +267,9 @@ $(document).ready( function () {
                   productsVat[String(val.productVat)][1] = parseFloat(val.VAT);
                 }
                 html += '<tr>';
+				  html += '<td>' + val.order_date + '</td>';
+				  html += '<td>' + val.username + '</td>';
+				  html += '<td>' + val.email + '</td>' ;
                   html += '<td>' + val.order_id + '</td>';
                   html += '<td>' + val.productName + '</td>' ;
                   html += '<td>' + num_percentage(val.productVat) + '</td>' ;
@@ -274,8 +280,7 @@ $(document).ready( function () {
                 html += '</tr>';
                 
                 //var array_values = Object.keys(val).map(i => val[i]);
-                
-                
+
               });
             }
           });
@@ -376,8 +381,6 @@ $(document).ready( function () {
           //   pageVatData.reduce( function (a, b) {
           //     return parseFloat(a) + parseFloat(b);
           //   }) : 0;
-
-
           //Totals For All Pages
 
           let amountTotalData = api.column( 4,{ search: 'applied' } ).cache('search');
@@ -440,7 +443,6 @@ $(document).ready( function () {
            // $(tfoot).find('th').eq(12).html(round_up(pageVatTotal)+'('+round_up(vatTotal)+')');
            $('.buttons-excel').addClass('btn').addClass('btn-success').addClass('mb-3');
            $('.buttons-excel').text('Export as Excel');
-        
           
         },
         rowId: function(a) {
