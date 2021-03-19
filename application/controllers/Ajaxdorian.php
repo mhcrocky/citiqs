@@ -478,4 +478,56 @@ class Ajaxdorian extends CI_Controller
 		$CI->email->message($message);
 		return $CI->email->send();
     }
+
+
+    public function createEmailTemplate(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $userId = intval($this->session->userdata('userId'));
+        $data['template_name'] = $this->input->post('templateName');
+        $data['template_type'] = $this->input->post('templateType');
+        $html = $this->input->post('templateHtml');
+        $data['user_id'] = $userId;
+        $filename = str_replace(' ', '_', $data['template_name']);
+        $filename .= '_' . time();
+        $data['template_file'] = $filename;
+
+        $dir = FCPATH.'assets/email_templates/'.$userId;
+		if (!is_dir($dir)) {
+			mkdir($dir, 0777, TRUE);
+		}
+
+        $this->load->config('custom');
+        $filepath = $dir. '/' .$filename . '.' . $this->config->item('template_extension');
+
+        if (!$this->saveTemplateHtml($filepath, $html))
+		{
+			$response = [
+                'status' => '0',
+                'messages' => ['Template not saved'],
+            ];
+		}
+		else
+		{
+            $id = $this->email_templates_model->add_email_template($data);
+            $response = [
+                'status' => '1',
+                'messages' => ['Template created'],
+                'id' => $id,
+                'ticketId' => $this->input->post('ticketId')
+            ];
+
+            
+        }
+
+        echo json_encode($response);
+        return;
+    }
+
+    private function saveTemplateHtml($path, $html): bool
+    {
+        if (file_put_contents($path, $html)) return true;
+            return false;
+        }
 }
