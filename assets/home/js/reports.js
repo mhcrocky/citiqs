@@ -144,6 +144,12 @@ $(document).ready(function() {
         }
     });
 
+    paidDatatable('reportesOrders');
+    visibleDatatableCol('reportesProducts','selectProducts', 3, 4);
+    visibleDatatableCol('reportesCategories','selectCategories', 2, 3);
+    visibleDatatableCol('reportesBuyers','selectBuyers', 4, 5);
+    visibleDatatableCol('reportesSpots','selectSpots', 2, 3);
+
     // date time picker
     $('.timePickers').datetimepicker({
         dayOfWeekStart : 1,

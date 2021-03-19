@@ -17,7 +17,7 @@
         <div class="col-md-3 ml-auto" style="padding-right: 0px !important;">
             <select id="paid" class="form-control" style="padding-top: 0px !important;padding-bottom: 0px !important;" onchange="paidDatatable('reportesOrders')">
                 <option value="">All types</option>
-                <option value="paid">Paid</option>
+                <option value="paid" selected>Paid</option>
                 <option value="Not Paid">Not Paid</option>
             </select>
         </div>
