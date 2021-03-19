@@ -6,7 +6,7 @@
 
                     <div class="card-body">
                         <form id="my-form" name="my-form" class="needs-validation"
-                            action="<?php echo base_url(); ?>events/update_event/<?php echo $event->id; ?>"
+                            action="<?php echo base_url(); ?>events/update_event/<?php echo $event->id; ?>" onsubmit="return submitEventsForm(event)"
                             method="POST" enctype="multipart/form-data" novalidate>
                             <div class="form-group row">
                                 <label for="full_name" class="col-md-4 col-form-label text-md-left">
