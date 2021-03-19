@@ -232,7 +232,7 @@ function saveVoucher(e) {
       data.productId = $('#productId').find(':selected').val();
   }
 
-  $.post('<?php echo base_url(); ?>Api/Voucher/create', data, function(data) {
+  $.post(globalVariables.baseUrl + 'Api/Voucher/create', data, function(data) {
       $('#voucher').DataTable().ajax.reload();
       alertify[data.status](data.message);
       $('.form-control').addClass('input-clear');
