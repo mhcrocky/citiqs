@@ -298,8 +298,10 @@
 
         public function insertInitialSpot(): bool
         {
+            $this->load->config('custom');
             $this->active = '1';
             $this->spotName = 'Initial spot';
+            $this->spotTypeId = $this->config->item('local');
 
             if (!$this->create()) return false;
 
