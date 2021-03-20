@@ -39,9 +39,9 @@
             }
             $productsarray = Utility_helper::resetArrayByKeyMultiple($productsarray, '9');
             
-            self::printPrinterProducts($CI, $imagetext, $productsarray, $i, $hd);
+            $numberoflines = self::printPrinterProducts($CI, $imagetext, $productsarray, $i, $hd);
 
-            self::printOrderRemarks($draw, $i, $order['remarks']);
+            self::printOrderRemarks($draw, $numberoflines, $order['remarks'], $hd);
 
             $imagetext->drawImage($draw);
             $imageprint->addImage($imagetext);
@@ -65,7 +65,7 @@
 
         }
 
-        public static function printPrinterProducts(object $CI, object &$imagetext, array $productsarray, int &$i, int &$hd): void
+        public static function printPrinterProducts(object $CI, object &$imagetext, array $productsarray, int &$i, int &$hd): int
         {
             $receiptMain = new ImagickDraw();
             $receiptMain->setFontSize(30);
@@ -129,6 +129,7 @@
             }
 
             $imagetext->drawImage($receiptMain);
+            return $i;
         }
 
         public static function imageTextAndDrawSettings(object &$imagetext, object &$draw, int $countProducts): void
@@ -221,14 +222,14 @@
             $h++;
         }
 
-        public static function printOrderRemarks(object &$draw, int &$i, ?string $orderRemarks): void
+        public static function printOrderRemarks(object &$draw, int &$i, ?string $orderRemarks, int $hd): void
         {
             if ($orderRemarks) {
                 $i = $i + 2;
                 $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
-                $draw->annotation(0, $hd + ($i * 30), 'ORDER REMARK');
+                $draw->annotation(0, $hd + ($i * 35), 'ORDER REMARK ');
                 $i++;
-                $draw->annotation(0, $hd + ($i * 30), $orderRemarks);
+                $draw->annotation(0, $hd + ($i * 35), $orderRemarks);
                 $i++;
             }
         }
@@ -276,10 +277,10 @@
                 $draw->setTextAlignment(\Imagick::ALIGN_LEFT);
                 $draw->annotation(0, $hd + ($i * 30), 'PRINTER: ' . $printer);
                 $i++;
-                self::printPrinterProducts($CI, $imagetext, $data, $i, $hd);
+				$numberoflines = self::printPrinterProducts($CI, $imagetext, $data, $i, $hd);
             }
 
-            self::printOrderRemarks($draw, $i, $order['remarks']);
+            self::printOrderRemarks($draw, $numberoflines, $order['remarks'], $hd);
 
             $imagetext->drawImage($draw);
             $imageprint->addImage($imagetext);
