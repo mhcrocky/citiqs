@@ -33,9 +33,10 @@ function resetPosOrder() {
 
     makeOrderGlobals['orderDataRandomKey'] = '';
     posGlobals['selectedOrderName'] = '';
-
+    posGlobals['posOrderId'] = '';
     countOrderedToZero('countOrdered');
     showSavedName();
+    showPrintButton();
     resetTotal();
 }
 
@@ -57,72 +58,76 @@ function deletePosOrderResponse(response) {
     }
 }
 
-function holdOrder(element, saveNameId) {
-    let savedInputName = document.getElementById(saveNameId);
-    let saveName = savedInputName.value;
-
+function holdOrder(element) {
+    let saveName = posGlobals['posOrderName'].value;
     if (!saveName.trim()) {
         alertify.error('Order name is required');
     } else {
         let locked = parseInt(element.dataset.locked);
         if (locked) return;
+        fetchAndSendHoldOrderData();
+    }
+}
 
-        let pos = 1;
-        let send = prepareSendData(pos);
-        if (!send) {
-            alertify.error('No product(s) in order list');
-        }
-        send['posOrder'] = {
-            'saveName' : saveName,
-            'spotId' : makeOrderGlobals.spotId,
-        }
+function fetchAndSendHoldOrderData() {
+    let pos = 1;
+    let send = prepareSendData(pos);
+    let savedInputName = posGlobals['posOrderName'];
+    if (!send) {
+        alertify.error('No product(s) in order list');
+    }
 
-        if (makeOrderGlobals['orderDataRandomKey']) {
-            send['orderDataRandomKey'] = makeOrderGlobals['orderDataRandomKey'];
-        }
+    send['posOrder'] = {
+        'saveName' : savedInputName.value,
+        'spotId' : makeOrderGlobals.spotId,
+    }
 
-        $.ajax({
-            url: globalVariables.ajax + 'setOrderSession',
-            data: send,
-            type: 'POST',
-            success: function (response) {
-                let data = JSON.parse(response);
-                savedInputName.value = '';
-                element.setAttribute('data-locked', '0');
-                $('#holdOrder').modal('hide');
-                if (data['status'] !== '0') {
-                    $(".selectSavedOrdersList").show();
-                    if (!makeOrderGlobals['orderDataRandomKey']) {
-                        $('#selectSaved').append('<option value="' + data['orderRandomKey'] + '">' + data['orderName'] + ' (' + data['lastChange'] + ')</option>');
-                        makeOrderGlobals['orderDataRandomKey'] = data['orderRandomKey'];
-                    } else {
-                        let options = document.getElementById('selectSaved').options;
-                        let optionsLenght = options.length;
-                        let i;
-                        for (i = 0; i < optionsLenght; i++) {
-                            let option = options[i];
-                            if (option.value === data['orderRandomKey']) {
-                                option.innerHTML = data['orderName'] + ' (' + data['lastChange'] + ')';
-                                break;
-                            }
+    if (makeOrderGlobals['orderDataRandomKey']) {
+        send['orderDataRandomKey'] = makeOrderGlobals['orderDataRandomKey'];
+    }
+
+    $.ajax({
+        url: globalVariables.ajax + 'setOrderSession',
+        data: send,
+        type: 'POST',
+        success: function (response) {
+            let data = JSON.parse(response);
+            savedInputName.value = '';
+            posGlobals['holdOrderElement'].setAttribute('data-locked', '0');
+            $('#holdOrder').modal('hide');
+            if (data['status'] !== '0') {
+                $(".selectSavedOrdersList").show();
+                if (!makeOrderGlobals['orderDataRandomKey']) {
+                    $('#selectSaved').append('<option value="' + data['orderRandomKey'] + '">' + data['orderName'] + ' (' + data['lastChange'] + ')</option>');
+                    makeOrderGlobals['orderDataRandomKey'] = data['orderRandomKey'];
+                } else {
+                    let options = document.getElementById('selectSaved').options;
+                    let optionsLenght = options.length;
+                    let i;
+                    for (i = 0; i < optionsLenght; i++) {
+                        let option = options[i];
+                        if (option.value === data['orderRandomKey']) {
+                            option.innerHTML = data['orderName'] + ' (' + data['lastChange'] + ')';
+                            break;
                         }
                     }
-
-                    posGlobals['selectedOrderName'] = data['orderName'];
-                    document.getElementById('checkoutName').innerHTML = ('Checkout ' + data['orderName']  + ' (' + data['lastChange'] + ')');
-                    document.getElementById('selectSaved').value = data['orderRandomKey'];
-                    showSavedName();
-                } else {
-                    alertify.error('Process failed! Check order details')
                 }
-            },
-            error: function (err) {
-                savedInputName.value = '';
-                element.setAttribute('data-locked', '0');
-                console.dir(err);
+
+                posGlobals['selectedOrderName'] = data['orderName'];
+                document.getElementById('checkoutName').innerHTML = ('Checkout ' + data['orderName']  + ' (' + data['lastChange'] + ')');
+                document.getElementById('selectSaved').value = data['orderRandomKey'];
+                showSavedName();
+                showPrintButton();
+            } else {
+                alertify.error('Process failed! Check order details')
             }
-        });
-    }
+        },
+        error: function (err) {
+            savedInputName.value = '';
+            element.setAttribute('data-locked', '0');
+            console.dir(err);
+        }
+    });
 }
 
 function posTriggerModalClick(modalButtonId) {
@@ -133,11 +138,20 @@ function posTriggerModalClick(modalButtonId) {
     triggerModalClick(modalButtonId);
 }
 
+function updateToPrinted() {
+    let elements = document.querySelectorAll('#' + makeOrderGlobals['posMakeOrderId'] + ' [data-printed="0"]');
+    let elementsLength = elements.length;
+    let i;
+    for (i = 0; i < elementsLength; i++) {
+        let element = elements[i];
+        element.setAttribute('data-printed', '1');
+    }
+    fetchAndSendHoldOrderData();
+}
+
 function posPayOrder(element) {
     let locked = parseInt(element.dataset.locked);
-    if (locked) {
-        return;
-    }
+    if (locked) return;
 
     element.setAttribute('data-locked', '1');
 
@@ -150,7 +164,7 @@ function posPayOrder(element) {
         return;
     }
 
-    let data = getOrderExtedned(orderedProducts,orderedProductsLength);
+    let data = getOrderExtedned(orderedProducts, orderedProductsLength);
     let post = {
         'vendorId' : makeOrderGlobals.vendorId,
         'oneSignalId' : makeOrderGlobals.oneSignalId,
@@ -173,12 +187,14 @@ function posPayOrder(element) {
             'remarks' : '',
             'spotId' : makeOrderGlobals.spotId,
             'isPos' : '1',
-            'posPrint' : '0',
             'paid' : element.dataset.paid
         },
         'orderExtended' :  data['orderExtended'],
     }
 
+    if (posGlobals['posOrderId']) {
+        post['posOrderId'] = posGlobals['posOrderId'];
+    }
     let url = globalVariables.baseUrl + 'Alfredinsertorder/posPayment'
 
     sendAjaxPostRequest(post, url, 'posPayOrder', posPayOrderResponse, [element]);
@@ -193,6 +209,7 @@ function getOrderExtedned(orderedProducts, orderedProductsLength) {
     for (i = 0; i < orderedProductsLength; i++) {
         let orderedItem = orderedProducts[i];
         let product = document.querySelectorAll('#' + orderedItem.id + ' [data-add-product-price]')[0];
+        if (product.dataset.printed === '1') continue;
         let addons = document.querySelectorAll('#' + orderedItem.id + ' [data-addon-price]');
         let addonsLength = addons.length;
         let mainPrductOrderIndex = 0;
@@ -275,37 +292,30 @@ function getOrderExtedned(orderedProducts, orderedProductsLength) {
 }
 
 function posPayOrderResponse(element, data) {
-    let orderId = data['orderId'];
-    unlockPos(element)
-    if (element.dataset.paid === '1') {
-        payResponse(orderId);
-    } else {
-        updateResponse(orderId);
-        alertify.error('Order not paid');
+    unlockPos(element);
+
+    if (!data['orderId']) {
+        alertify.error('Order not made');
+        return;
     }
+
+    if (element.dataset.paid === '1') {
+        payResponse(data['orderId']);
+        return;
+    }
+
+    alertify.success('Request for printing sent');
+    updateToPrinted();
     return;
 }
 
 function payResponse(orderId) {
-    if (!parseInt(orderId)) {
-        alertify.error('Order not made');
-        return;
-    }
+
     deletePosOrder();
-    resetPosOrder();
     showOrderId(orderId);
     sednNotification(orderId);
     printOrder(orderId);
-    return;
-}
-
-function updateResponse(orderId) {
-    if (!parseInt(orderId)) {
-        alertify.error('Order not saved');
-        return;
-    }
-    alertify.success('Order saved');
-    $('#holdOrder').modal('hide');
+    resetPosOrder();
     return;
 }
 
@@ -345,7 +355,6 @@ function printReportes(vendorId, reportType) {
     });
 }
 
-
 function getServiceFee(orderAmount) {
     let serviceFee = orderAmount * posGlobals.serviceFeePercent / 100 + posGlobals.minimumOrderFee;
     if (serviceFee > posGlobals.serviceFeeAmount) {
@@ -362,13 +371,6 @@ function countOrderedToZero(countOrdered) {
         elements[i].innerHTML = '0';
     }
 }
-
-// function removeSavedOrder(orderRandomKey) { // TO DO UPDATE
-//     if (!orderRandomKey) return;
-//     let optionItem = document.getElementById(orderRandomKey);    
-//     if (optionItem) optionItem.remove();
-//     document.getElementById('saveHoldOrder').innerHTML = 'Save order'
-// }
 
 function showLoginModal() {
     return true;
@@ -458,12 +460,15 @@ function fetchSavedOrder(element) {
 function fetchSavedOrderResponse(element, response) {
     if (response) {
         makeOrderGlobals['orderDataRandomKey'] = element.value;
-        posGlobals['selectedOrderName'] = response['posOrderName'];        
+        posGlobals['selectedOrderName'] = response['posOrderName'];
+        posGlobals['posOrderId'] = response['posOrderId'];
+
         document.getElementById(makeOrderGlobals['modalCheckoutList']).innerHTML = response['checkoutList'];
         document.getElementById('checkoutName').innerHTML = 'Checkout ' + response['posOrderName'] + ' (' + response['lastChange'] + ')';
         resetTotal();
         countOrdered('countOrdered');
         showSavedName();
+        showPrintButton();
     }
 }
 
@@ -475,6 +480,11 @@ function toogleSelectSavedOrders() {
 
 function showSavedName() {
     document.getElementById('posOrderName').value = posGlobals['selectedOrderName'];
+}
+
+function showPrintButton() {
+    let displayElement  = posGlobals['selectedOrderName'] ? 'block' : 'none';
+    document.getElementById('posPrintButton').style.display = displayElement;
 }
 
 toogleSelectSavedOrders();

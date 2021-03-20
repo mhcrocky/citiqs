@@ -233,11 +233,12 @@
 					/>
 					<br/>
 					<button
+						id="holdOrderId"
 						class="btn btn-success btn-lg"
 						style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
         				data-locked="0"
 						data-paid="0"
-						onclick="holdOrder(this, 'posOrderName')"
+						onclick="holdOrder(this)"
 					>
 						<i class="fa fa-check-circle" aria-hidden="true"></i>
 					</button>
@@ -344,6 +345,8 @@
 				'selectedOrderRandomKey' : '',
 				'selectedOrderName' : '',
 				'selectedOrderShortName' : '',
+				'posOrderName' : document.getElementById('posOrderName'),
+				'holdOrderElement' : document.getElementById('holdOrderId'),
 			}
 
 			<?php if  ($lock) { ?>

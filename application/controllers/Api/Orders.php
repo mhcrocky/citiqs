@@ -58,13 +58,17 @@
 
             $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '1');
 
-            $this->shoporder_model->updatePrintedStatus();
+            if ($order['paidStatus'] === '1') {
+                $this->shoporder_model->updatePrintedStatus();
+            }
 
             $this->callOrderCopy($order, $bbUser);
         }
 
         private function handlePrePostPaid(array $order, bool $bbUser): void
         {
+            if ($order['orderIsPos'] === '1') return;
+
             if (!$bbUser && ($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid')) ) {
                 if ($order['waiterReceipt'] === '0') {
                     // one reeipt for waiter

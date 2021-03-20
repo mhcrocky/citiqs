@@ -15,6 +15,7 @@
         public $saveName;
         public $created;
         public $updated;
+        public $orderId;
 
         private $table = 'tbl_shop_pos_orders';
 
@@ -23,13 +24,10 @@
             $this->load->helper('validate_data_helper');
             if (!Validate_data_helper::validateNumber($value)) return;
 
-            if ($property === 'id' || $property === 'spotId' || $property === 'sessionId') {
+            if ($property === 'id' || $property === 'spotId' || $property === 'sessionId' || $property === 'orderId') {
                 $value = intval($value);
             }
 
-            if ($property === 'price') {
-                $value = floatval($value);
-            }
             return;
         }
 
@@ -52,6 +50,8 @@
             if (isset($data['spotId']) && !Validate_data_helper::validateInteger($data['spotId'])) return false;
             if (isset($data['sessionId']) && !Validate_data_helper::validateInteger($data['sessionId'])) return false;
             if (isset($data['saveName']) && !Validate_data_helper::validateString($data['saveName'])) return false;
+            if (isset($data['orderId']) && !Validate_data_helper::validateInteger($data['orderId'])) return false;
+
             return true;
         }
 
@@ -104,6 +104,38 @@
             $this->id = intval($result['id']);
             return $this;
         }
-    
+
+        public function fetchVendorPosOrders(int $vendorId): ?array
+        {
+            $orders = $this->readImproved([
+                    'what' => [
+                        $this->table . '.id AS posOrderId',
+                        $this->table . '.spotId AS spotId',
+                        $this->table . '.sessionId AS posSessionId',
+                        $this->table . '.saveName AS saveName',
+                        $this->table . '.created AS created',
+                        'IF(' . $this->table . '.updated, ' . $this->table . '.updated,' . $this->table . '.created) AS lastChange',
+                        'tbl_shop_sessions.randomKey AS randomKey',
+                        'tbl_shop_spots.spotName AS spotName'
+                    ],
+                    'where' => [
+                        'tbl_shop_printers.userId' =>  $vendorId,
+                    ],
+                    'joins' => [
+                        ['tbl_shop_sessions', $this->table . '.sessionId = tbl_shop_sessions.id', 'INNER'],
+                        ['tbl_shop_spots', $this->table . '.spotId = tbl_shop_spots.id', 'INNER'],
+                        ['tbl_shop_printers', 'tbl_shop_printers.id = tbl_shop_spots.printerId', 'INNER'],
+                    ],
+                    'conditions' => [
+                        'ORDER_BY' => [$this->table . '.saveName', 'ASC']
+                    ]
+            ]);
+
+            if (is_null($orders)) return null;
+
+            $this->load->helper('utility_helper');
+
+            return Utility_helper::resetArrayByKeyMultiple($orders, 'spotName');
+        }
 
     }

@@ -1,6 +1,12 @@
 'use_strict';
 
-function toggleElement(element) {
+function toggleElement(element, printed = '0') {
+    if (printed === '1') {
+        console.dir(element);
+        alertify.error('Not allowed to change. Item printed!');
+        element.checked = true;
+        return;
+    }
     let container = element.parentElement.parentElement.nextElementSibling;
     let inputField = container.children[1];
     let checked = element.checked;
@@ -65,7 +71,11 @@ function checkAllowedChoices(container, allowedChoices, addonTypeId, elementChec
     return true;
 }
 
-function changeProductQuayntity(element, className) {
+function changeProductQuayntity(element, className, printed = '0') {
+    if (printed === '1') {
+        alertify.error('Not allowed to change. Item printed!');
+        return;
+    }
     let type = element.dataset.type;
     let inputField = (type === 'plus') ? element.previousElementSibling : element.nextElementSibling;
     let value = parseInt(inputField.value);
@@ -155,7 +165,11 @@ function calculateQuantity(element) {
     
 }
 
-function changeAddonQuayntity(element) {
+function changeAddonQuayntity(element, printed = '0') {
+    if (printed === '1') {
+        alertify.error('Not allowed to change. Item printed!');
+        return;
+    }
     let type = element.dataset.type;
     let inputField = (type === 'plus') ? element.previousElementSibling : element.nextElementSibling;
 
@@ -470,6 +484,7 @@ function prepareSendData(pos) {
             'onlyOne' : product.dataset.onlyOne,
             'allergies': product.dataset.allergies,
             'categorySlide' : product.dataset.categorySlide,
+            'print' : product.dataset.printed,
             'addons' : {}
         };
         
@@ -503,7 +518,8 @@ function prepareSendData(pos) {
                         'productType' : addon.dataset.productType,
                         'isBoolean' : addon.dataset.isBoolean,
                         'allowedChoices' : addon.dataset.allowedChoices,
-                        'addonTypeId' : addon.dataset.addonTypeId
+                        'addonTypeId' : addon.dataset.addonTypeId,
+                        'print' : product.dataset.printed
                     }
                     if (addon.dataset['remarkId'] !== '0') {
                         let addonRemark = document.querySelectorAll('#' + orderedItem.id + ' [data-addon-remark-id="' + addon.dataset.remarkId + '"]')[0].value;

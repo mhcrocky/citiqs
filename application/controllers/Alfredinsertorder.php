@@ -131,16 +131,48 @@ class Alfredinsertorder extends BaseControllerWeb
         $post = Utility_helper::sanitizePost();
         $post['vendorId'] = intval($post['vendorId']);
         $post['spotId'] = intval($post['spotId']);
-        $payStatus = $this->config->item('orderPaid');
-        $payType =  $this->config->item('postPaid');
         $post['order']['paymentType'] = $this->config->item('postPaid');
-  
-        $this->isFodActive($post['vendorId'], $post['spotId']);
 
-        $orderId = $this->insertOrderProcess($post, '');
-        
+        $this->isFodActive($post['vendorId'], $post['spotId']);       
+ 
+        $orderId = $this->posPrintingPaying($post);
 
-        echo json_encode(['orderId' => $orderId]);        
+        if (is_null($orderId)) {
+            $orderId = $this->insertOrderProcess($post, '');
+        }
+
+        echo json_encode(['orderId' => $orderId]);
+        return;
+    }
+
+    private function posPrintingPaying(array $post): ?int
+    {
+        // check does post has key posOrderId
+        if (!empty($post['posOrderId'])) {
+            // if has, check ist this order already inserted and need only update of items and dates createdOrders and created
+            $posOrderId = intval(Utility_helper::getAndUnsetValue($post, 'posOrderId'));
+            $orderId = intval($this->shopposorder_model->setObjectId($posOrderId)->getProperty('orderId'));
+
+            if ($orderId) {
+                if ($post['order']['paid'] === '0') {
+                    if (!empty($post['orderExtended'])) {
+                        $this->insertOrderExtendedRefactored($post['orderExtended'], $orderId);
+                    }
+                } else {
+                    $date = 'Y-m-d H:i:s';
+                    $this->saveOrderImage($orderId);
+                    $this
+                        ->shoporder_model
+                        ->setObjectId($orderId)
+                        ->setProperty('createdOrder', $date)
+                        ->setProperty('created', $date)
+                        ->update();
+                }
+                return $orderId;
+            }
+        }
+
+        return null;
     }
 
     private function failedRedirect(int $vendorId, int $spotId, string $orderRandomKey): void
@@ -197,12 +229,21 @@ class Alfredinsertorder extends BaseControllerWeb
         $userId = intval($this->user_model->id);
         $orderId = $this->insertOrderInTable($post, $orderRandomKey, $userId);
 
-        (intval($post['pos'])) ? $this->insertOrderExtendedRefactored($post['orderExtended'], $orderId) : $this->insertOrderExtended($post, $orderId);
+        (intval($post['pos'])) ? $this->handlePosOrder($post, $orderId) : $this->insertOrderExtended($post, $orderId);
 
         $this->saveOrderImage($orderId); // OPTIMIZE THREAD ... ASYNC 
         $this->sendNotifictaion($post, $orderId, $post['order']['paid']);
 
         return $orderId;
+    }
+
+    private function handlePosOrder(array $post, int $orderId): void
+    {
+        $this->insertOrderExtendedRefactored($post['orderExtended'], $orderId);
+        if (!empty($post['posOrderId'])) {
+            $this->shopposorder_model->setObjectId(intval($post['posOrderId']))->setProperty('orderId', $orderId)->update();
+        }
+        return;
     }
 
     private function saveOrderImage(int $orderId): void
@@ -313,19 +354,6 @@ class Alfredinsertorder extends BaseControllerWeb
                 ->payOrderWithVoucher(floatval($order['voucherAmount']));
     }
 
-    private function deletePosOrder(array $post, string $ranodmKey): void
-    {
-        if (!$ranodmKey) return;
-        if (isset($post['pos']) && $post['pos'] === '1' && $ranodmKey) {
-            $this->shopsession_model->setProperty('randomKey', $ranodmKey)->setIdFromRandomKey();
-            $this
-                ->shopposorder_model
-                    ->setProperty('sessionId', intval($this->shopsession_model->id))
-                    ->setIdFromSessionId()
-                    ->delete();
-        }
-        return ;
-    }
 
     private function voucherPaymentFailed(array $orderData, string $orderRandomKey): void
     {
@@ -363,3 +391,4 @@ class Alfredinsertorder extends BaseControllerWeb
         $this->notificationvendor->sendVendorMessage($oneSignalId, $orderId);
     }
 }
+

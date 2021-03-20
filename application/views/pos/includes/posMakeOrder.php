@@ -4,12 +4,6 @@
             <div class="pos-checkout__header">
                 <h3 id="checkoutName">
                     Checkout
-                    <?php
-                        if (!empty($posOrderName)) { 
-                            $posOrderName = trim(substr($posOrderName, (strpos($posOrderName, ')') + 1)));
-                            echo '"' . $posOrderName . '"';
-                        }
-                    ?>
                 </h3>
                 <div class="pos-checkout-row pos-checkout-row--top pos-checkout-list" id="modal__checkout__list">
                     <?php if (isset($checkoutList)) echo $checkoutList; ?>
@@ -27,6 +21,17 @@
         data-paid="1"
     >
         Pay (<span class="totalPrice">0</span>&nbsp;&euro;)
+    </a>
+    <a
+        style="display:none"
+        id="posPrintButton"
+        href="javascript:void(0)"
+        class='pos-checkout__button'
+        onclick="posPayOrder(this)"
+        data-locked="0"
+        data-paid="0"
+    >
+        Print
     </a>
 </div>
 

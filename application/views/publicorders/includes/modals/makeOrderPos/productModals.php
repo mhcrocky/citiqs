@@ -71,8 +71,10 @@
                                         data-remark-id="<?php echo $remarkProductId ?>"
                                         data-order-quantity-value="orderQuantityValue_<?php echo $product['productId']; ?>"
                                         data-category-slide="<?php echo $categorySlide; ?>"
+                                        data-printed="0"
                                         readonly
                                         oninput="reloadPageIfMinus(this)"
+                                        onchange="reloadPageIfMinus(this)"
                                         <?php if ($product['onlyOne'] === '0') { ?>
                                             class="form-control checkProduct inputFieldsMakeOrder"
                                             style="display:inline-block"
@@ -222,6 +224,7 @@
                                                         <input
                                                             readonly
                                                             oninput="reloadPageIfMinus(this)"
+                                                            onchange="reloadPageIfMinus(this)"
                                                             type="number"
                                                             min="1"
                                                             max="<?php echo $addonAllowedQuantity; ?>"
@@ -240,6 +243,7 @@
                                                             data-addon-type-id="<?php echo $addon['productTypeId']; ?>"
                                                             data-is-boolean="<?php echo $addon['isBoolean']; ?>"
                                                             data-allowed-choices="<?php echo $addon['additionalNumber']; ?>"
+                                                            data-printed="0"
                                                             <?php if (isset($addonAllergies)) { ?>
                                                                 data-allergies="<?php echo implode($this->config->item('allergiesSeparator'), $addonAllergies); ?>"
                                                                 <?php unset($addonAllergies); ?>

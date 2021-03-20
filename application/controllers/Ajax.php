@@ -1886,6 +1886,7 @@ class Ajax extends CI_Controller
         if (!$this->shopposorder_model->id) return;
 
         $this->shopposorder_model->setObject();
+        $response['posOrderId'] = $this->shopposorder_model->id;
         $response['posOrderName'] = $this->shopposorder_model->saveName;
         $response['spotId'] = $this->shopposorder_model->spotId;
         $response['lastChange'] = $this->shopposorder_model->updated ? $this->shopposorder_model->updated : $this->shopposorder_model->created;        

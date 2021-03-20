@@ -263,7 +263,14 @@
             return $reset;
         }
 
-        public static function returnMakeNewOrderElements(?array $ordered, array $vendor, array $mainProducts, array $rawAddons, int $maxRemarkLength, bool $isPos = false): array
+        public static function returnMakeNewOrderElements(
+            ?array $ordered,
+            array $vendor,
+            array $mainProducts,
+            array $rawAddons,
+            int $maxRemarkLength,
+            bool $isPos = false
+        ): array
         {
             // $shoppingList = '';
             $checkoutList = '';
@@ -279,7 +286,7 @@
                     $randomId = 'product_' . $product['productId'] . '_' . $count;
                     $remarkProductId = (isset($product['remark'])) ? 'remark_' . $count . '_' . $product['productId'] : '0';
                     $onlyOne = ($product['onlyOne'] === '1') ? true : false;
-
+                    $disabled = (isset($product['print']) && $product['print'] === '1') ? '1' : '';
                     $checkoutList .= '<div id="' . $randomId . '" class="orderedProducts ' . $product['productId'] . '" ';
                     // if ($count === 1) {
                     //     $checkoutList .= 'style="padding-left:0px;"';
@@ -289,7 +296,9 @@
                     
                     $checkoutList .= '>';
                     $checkoutList .=    '<div class="alert alert-dismissible" style="padding-left: 0px; margin-bottom: 10px;">';
-                    $checkoutList .=        '<span onclick="removeOrdered(\'' . $randomId . '\')"><a href="javascript:void(0)"  class="close removeOrdered_' . $product['productId'] . '" data-dismiss="alert" aria-label="close">×</a></span>';
+                    if (!$disabled) {
+                        $checkoutList .=        '<span onclick="removeOrdered(\'' . $randomId . '\')"><a href="javascript:void(0)"  class="close removeOrdered_' . $product['productId'] . '" data-dismiss="alert" aria-label="close">×</a></span>';
+                    }
                     $checkoutList .=        '<h4 class="productName">' . $product['name'] . ' (€' . $product['price'] . ')</h4>';
                     $checkoutList .=    '</div>';
                     $checkoutList .=    '<div class="modal__content">';
@@ -304,7 +313,7 @@
                                                         class="modal-footer__buttons modal-footer__quantity--plus priceQuantity" 
                                                         style="margin-right:5px;" 
                                                         data-type="minus"
-                                                        onclick="changeProductQuayntity(this, \'addonQuantity\')">';
+                                                        onclick="changeProductQuayntity(this, \'addonQuantity\', \'' . $disabled . '\')">';
                         $checkoutList .=            ' -';
                         $checkoutList .=            '</span>';
                     }
@@ -320,11 +329,14 @@
                                                         data-category="' . htmlspecialchars($product['category']) . '"
                                                         data-product-extended-id="' . $productExtendedId . '"
                                                         data-product-id="' . $product['productId'] . '" 
+                                                        data-printed="' . $product['print'] . '" 
                                                         data-remark-id="' . $remarkProductId . '"                                                        
                                                         data-order-quantity-value="orderQuantityValue_' .  $product['productId'] . '"
                                                         data-ordered="orderQuantityValue_' .  $product['productId'] . '" 
-                                                        readonly 
-                                                        oninput="reloadPageIfMinus(this)" ';
+                                                        readonly
+                                                        onchange="reloadPageIfMinus(this)"
+                                                        oninput="reloadPageIfMinus(this)"
+                                                    ';
                     
                     if (!empty($product['categorySlide'])) {
                         $checkoutList .=                'data-category-slide="' . $product['categorySlide'] . '" ';
@@ -343,13 +355,14 @@
                                                         class="modal-footer__buttons modal-footer__quantity--minus priceQuantity"
                                                         style="margin-left:5px;"
                                                         data-type="plus"
-                                                        onclick="changeProductQuayntity(this, \'addonQuantity\')"
+                                                        onclick="changeProductQuayntity(this, \'addonQuantity\',  \'' . $disabled . '\')"
                                                     >';
                         $checkoutList .=            ' +';
                         $checkoutList .=            '</span>';
+                    }
                         $checkoutList .=        '</div>';
 
-                    }
+                    
                     
                     if ($vendor['showAllergies'] === '1')  {
                         $productesInCategory = $mainProducts[$product['category']];
@@ -382,9 +395,13 @@
                         $checkoutList .=        '<h6 class="remarkStyle">Remark</h6>';
                         $checkoutList .=            '<div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">';
                         $checkoutList .=                '<input
-                                                            type="text"
-                                                            class="posKeyboard ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview form-control remarks inputFieldsMakeOrder"
-                                                            rows="1"
+                                                            type="text"';
+                        if (!$disabled) {
+                            $checkoutList .=                'class="posKeyboard ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview form-control remarks inputFieldsMakeOrder" ';
+                        } else {
+                            $checkoutList .=                'class="form-control remarks inputFieldsMakeOrder" readonly ';
+                        }                                   
+                        $checkoutList .=                'rows="1"
                                                             id ="' . $count . '_' .$remarkProductId . '"
                                                             maxlength="' . $maxRemarkLength . '"
                                                             placeholder="Allowed ' . $maxRemarkLength . ' characters"
@@ -426,7 +443,7 @@
                                 $checkoutList .=                    '<input
                                                                         type="checkbox"
                                                                         class="form-check-input checkAddons inputFieldsMakeOrder"
-                                                                        onchange="toggleElement(this)" checked
+                                                                        onchange="toggleElement(this, \'' . $disabled . '\')" checked
                                                                         data-addon-type-id-check="' . $addon['addonTypeId'] . '"
                                                                     >&nbsp;';
                                 $checkoutList .=                    $addon['name'];
@@ -463,7 +480,7 @@
                                 if ($addon['initialMaxQuantity'] === '1' || $addon['isBoolean'] === '1') { 
                                     $checkoutList .=                'style="visibility:hidden; height:0px"';
                                 } else {
-                                    $checkoutList .=                'onclick="changeAddonQuayntity(this)" style="margin-right:5px;" ';
+                                    $checkoutList .=                'onclick="changeAddonQuayntity(this, \'' . $disabled . '\')" style="margin-right:5px;" ';
                                 }
 
 
@@ -474,6 +491,7 @@
                                 $checkoutList .=                '</span>';
                                 $checkoutList .=                '<input
                                                                     readonly 
+                                                                    onchange="reloadPageIfMinus(this)"
                                                                     oninput="reloadPageIfMinus(this)"
                                                                     type="number"
                                                                     min="' . $addon['minQuantity'] . '"
@@ -492,6 +510,7 @@
                                                                     data-product-type="' . $addon['productType'] . '"
                                                                     data-addon-type-id="' . $addon['addonTypeId'] . '"
                                                                     data-allowed-choices="' . $addon['allowedChoices'] . '"
+                                                                    data-printed="' . $addon['print'] . '" 
                                                                     step="' . $addon['step'] . '"
                                                                     value="' . $addon['quantity'] . '" ';
                                 if ($addon['isBoolean'] === '1') {
@@ -513,7 +532,7 @@
                                 if ($addon['initialMaxQuantity'] === '1' || $addon['isBoolean'] === '1') {
                                     $checkoutList .=                'style="visibility:hidden; height:0px"';
                                 } else {
-                                    $checkoutList .=                'onclick="changeAddonQuayntity(this)" style="margin-right:5px;" ';
+                                    $checkoutList .=                'onclick="changeAddonQuayntity(this, \'' . $disabled . '\')" style="margin-right:5px;" ';
                                 }
                                 $checkoutList .=                '>';
                                 $checkoutList .=                    ' +';
@@ -526,9 +545,13 @@
                                                                 <h6 class="remarkStyle">Remark</h6>
                                                                 <div class="col-lg-12 col-sm-12" style="margin-bottom:3px">
                                                                     <input
-                                                                        type="text"
-                                                                        id="' . $count . '_' .$remarkAddonId . '"
-                                                                        class="posKeyboard form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview form-control remarks inputFieldsMakeOrder"
+                                                                        type="text"';
+                                    if (!$disabled) {
+                                       $checkoutList .=                'class="posKeyboard form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview form-control remarks inputFieldsMakeOrder" ';
+                                    } else {
+                                        $checkoutList .=                'class="form-control remarks inputFieldsMakeOrder" readonly ';
+                                    }   
+                                        $checkoutList .=                'id="' . $count . '_' .$remarkAddonId . '"
                                                                         rows="1"
                                                                         maxlength="' . $maxRemarkLength . '"
                                                                         placeholder="Allowed ' . $maxRemarkLength . ' characters"

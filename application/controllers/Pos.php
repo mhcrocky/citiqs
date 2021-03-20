@@ -91,12 +91,11 @@
             $data['spots'] = $spots;
             $data['spotId'] = $spotId;
             $data['spotPosOrders'] = $this->shopposorder_model->setProperty('spotId', $spotId)->fetchSpotPosOrders();
+            // $data['vendorPosOrders'] = $this->shopposorder_model->fetchVendorPosOrders($vendorId);
             $data['isPos'] = 1;
             $data['fodIsActive'] = $isFodActive;
             $data['orderDataGetKey']    = $this->config->item('orderDataGetKey');
 
-            // var_dump($data['spotPosOrders']);
-            // die();
             $this->global['pageTitle'] = 'TIQS : POS';
             $this->loadViews('pos/pos', $this->global, $data, null, 'headerWarehouse');
             return;
