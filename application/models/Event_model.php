@@ -36,9 +36,9 @@ class Event_model extends CI_Model {
 		
 	}
 
-	public function save_ticket_group($groupname,$quantity)
+	public function save_ticket_group($groupname,$quantity,$eventId)
 	{
-		$this->db->insert('tbl_ticket_groups',['groupname' => $groupname, 'capacity' => $quantity]);
+		$this->db->insert('tbl_ticket_groups',['groupname' => $groupname, 'groupQuantity' => $quantity, 'eventId' => $eventId]);
 		return $this->db->insert_id();
 		
 	}
@@ -57,6 +57,19 @@ class Event_model extends CI_Model {
 	}
 
 	public function get_events($vendor_id)
+	{
+		date_default_timezone_set('Europe/Berlin');
+        $date = date('Y-m-d H:m:s');
+		//$time = date('H:m:s');
+		$this->db->select('*');
+		$this->db->from('tbl_events');
+		$this->db->where('vendorId', $vendor_id);
+		$this->db->where('concat_ws(" ", StartDate, StartTime)  >=', $date);
+		$query = $this->db->get();
+		return $query->result_array();
+	} 
+
+	public function get_all_events($vendor_id)
 	{
 		
 		$this->db->where('vendorId', $vendor_id);
@@ -89,8 +102,56 @@ class Event_model extends CI_Model {
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('tbl_event_tickets.eventId', $eventId);
 		$this->db->group_by('tbl_event_tickets.id');
+		$this->db->order_by('tbl_ticket_groups.id');
+		$query = $this->db->get();
+		$tickets = $query->result_array();
+		$groups = $this->get_ticket_groups($eventId);
+		$groupIds = [];
+		foreach ($tickets as $ticket) {
+			$groupIds[] = $ticket['groupId'];
+		}
+
+		return $this->get_ticket_with_groups($tickets,$groups,$groupIds);
+	}
+
+
+	public function get_event_tickets($vendor_id,$eventId)
+	{
+		$this->db->select('*,tbl_event_tickets.id as ticketId, tbl_ticket_groups.id as groupId');
+		$this->db->from('tbl_event_tickets');
+		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'left');
+		$this->db->join('tbl_ticket_groups', 'tbl_ticket_groups.id = tbl_event_tickets.ticketGroupId', 'left');
+		$this->db->join('tbl_ticket_options', 'tbl_ticket_options.ticketId = tbl_event_tickets.id', 'left');
+		$this->db->where('vendorId', $vendor_id);
+		$this->db->where('tbl_event_tickets.eventId', $eventId);
+		$this->db->group_by('tbl_event_tickets.id');
 		$query = $this->db->get();
 		return $query->result_array();
+
+	}
+
+	public function get_ticket_with_groups($tickets, $groups, $groupIds)
+	{
+		$ticket_groups = [];
+		foreach ($groups as $group) {
+			if(in_array($group['id'],$groupIds)){continue;}
+			$ticket_groups[] = [
+				'ticketId' => '0',
+				'ticketDescription' => 'null',
+				'ticketDesign' => '',
+				'ticketQuantity' => 0,
+				'ticketPrice' => 0,
+				'ticketCurrency' => '',
+				'ticketVisible' => 0,
+				'emailId' => 1,
+				'ticketGroupId' => $group['id'],
+				'groupId' => $group['id'],
+				'groupname' =>  $group['groupname'],
+				'groupQuantity' => $group['groupQuantity']
+			];
+		}
+		$results = array_merge($tickets,$ticket_groups);
+		return $results;
 	}
 
 	public function get_eventname_by_ticket($ticketId)
@@ -108,10 +169,11 @@ class Event_model extends CI_Model {
 	}
 
 
-	public function get_ticket_groups()
+	public function get_ticket_groups($eventId)
 	{
 		$this->db->select('*');
 		$this->db->from('tbl_ticket_groups');
+		$this->db->where('eventId', $eventId);
 		$query = $this->db->get();
 		return $query->result_array();
 	}
@@ -128,10 +190,21 @@ class Event_model extends CI_Model {
 		return $this->db->update('tbl_event_tickets');
 	}
 
-	function update_group($id, $groupname){
-		$this->db->set('groupname', $groupname);
+	function update_group($id, $param, $value){
+		$this->db->set($param, $value);
 		$this->db->where('id', $id);
 		return $this->db->update('tbl_ticket_groups');
+	}
+
+	function update_ticket_group($tickets){
+		foreach($tickets as $key => $ticket){
+			$groupId = $key;
+			$this->db->set('ticketGroupId', $groupId);
+			$ids = explode(',', $ticket);
+			$this->db->where_in('id', $ids);
+			$this->db->update('tbl_event_tickets');
+		}
+		return ;
 	}
 
 	function update_ticket($id, $param, $value){

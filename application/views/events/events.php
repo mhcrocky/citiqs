@@ -8,6 +8,13 @@
                     <i style="color: #fff;font-size: 18px;" class="fa fa-plus"></i></a>
             </a>
         </div>
+        <div style="padding-right: 0px;" class="col-md-3 ml-auto mb-3">
+            <select id="selectTime" style="height: 40px !important;" class="form-control custom-select custom-select-sm form-control-sm">
+                <option value="all">All</option>
+                <option value="past">Past</option>
+                <option value="future">Future</option>
+            </select>
+        </div>
         <table id="events" class="table table-striped table-bordered mt-5" style="width:100%;">
 
         </table>

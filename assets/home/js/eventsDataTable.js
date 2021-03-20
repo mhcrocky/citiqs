@@ -1,6 +1,6 @@
 $(document).ready(function() {
-
-    var table = $('#events').DataTable({
+ 
+    var eventTable = $('#events').DataTable({
         columnDefs: [{
             "visible": false,
         }],
@@ -97,19 +97,29 @@ $(document).ready(function() {
             $(row).attr('id', 'row-' + dataIndex);
         }
     });
+    
+    $('#selectTime').on('change',function () {
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+                let val = $('#selectTime option:selected').val();
+                let current_timestamp = dayjs();
+                console.log(current_timestamp)
+                let end_str_timestamp = data[8] + ' ' + data[10];
+                let end_timestamp = dayjs(end_str_timestamp);
+                let start_str_timestamp = data[7] + ' ' + data[9];
+                let start_timestamp = dayjs(start_str_timestamp);
 
-    table.rowReordering();
-
-
-    /*Order by the grouping
-    $('#tickets tbody').on('click', 'tr.group', function() {
-        var currentOrder = table.order()[0];
-        if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
-            table.order([groupColumn, 'desc']).draw();
-        } else {
-            table.order([groupColumn, 'asc']).draw();
-        }
-    });
-    */
+                if (val == 'past' && current_timestamp >= end_timestamp) { return true;}
+                if(val == 'future' && current_timestamp <= start_timestamp) {return true;}
+                if(val == 'all') { return true; }
+                return false;
+                
+            });
+            setTimeout(() => {
+                eventTable.draw();
+            }, 2);
+            
+        });
+        
 });
 

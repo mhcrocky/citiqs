@@ -52,7 +52,7 @@ class Events extends BaseControllerWeb
             'eventId' => $eventId,
             'emails' => $this->email_templates_model->get_ticketing_email_by_user($this->vendor_id),
             'vouchers' => $this->shopvoucher_model->read($what,$where),
-            'groups' => $this->event_model->get_ticket_groups()
+            'groups' => $this->event_model->get_ticket_groups($eventId)
         ];
         $this->loadViews("events/step-two", $this->global, $data, 'footerbusiness', 'headerbusiness');
 
@@ -134,10 +134,10 @@ class Events extends BaseControllerWeb
         $data = $this->input->post(null, true);
         if($data['ticketType'] == 'group'){
             $data['ticketType'] = 2;
-            $groupId = $this->event_model->save_ticket_group($data['ticketDescription'],$data['ticketQuantity']);
+            $groupId = $this->event_model->save_ticket_group($data['ticketDescription'],$data['ticketQuantity'],$data['eventId']);
             $data['ticketGroupId'] = $groupId;
-            $this->event_model->save_ticket($data);
-        } else {
+            //$this->event_model->save_ticket($data);
+        } else { 
             $data['ticketType'] = 1;
             $this->event_model->save_ticket($data);
         }
@@ -154,7 +154,7 @@ class Events extends BaseControllerWeb
 
     public function get_events()
     {
-        $data = $this->event_model->get_events($this->vendor_id);
+        $data = $this->event_model->get_all_events($this->vendor_id);
         echo json_encode($data);
 
     }
@@ -240,8 +240,32 @@ class Events extends BaseControllerWeb
     public function update_group()
     {
         $id = $this->input->post('id');
-        $groupname = $this->input->post('groupname');
-        $this->event_model->update_group($id, $groupname);
+        $param = $this->input->post('param');
+        $value = $this->input->post('value');
+        $this->event_model->update_group($id, $param, $value);
+    }
+
+    public function update_ticket_group()
+    {
+        $tickets = json_decode($this->input->post('tickets'));
+        $results = [];
+        foreach($tickets as $ticket){
+            if(!isset($ticket->groupId) || !is_numeric($ticket->groupId)){ continue;}
+            if(isset($results[$ticket->groupId])){
+                $results[$ticket->groupId] = $results[$ticket->groupId] . ',' . $ticket->ticketId;
+            } else {
+                $results[$ticket->groupId] =  $ticket->ticketId;
+            }
+        }
+        return $this->event_model->update_ticket_group($results);
+    }
+
+    private function _group_by($array, $key) {
+        $return = array();
+        foreach($array as $val) {
+            $return[$val[$key]][] = $val;
+        }
+        return $return;
     }
 
     public function delete_ticket()
