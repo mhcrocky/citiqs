@@ -113,6 +113,7 @@ function fetchAndSendHoldOrderData() {
                     }
                 }
 
+                posGlobals['posOrderId'] = data['posOrderId'];
                 posGlobals['selectedOrderName'] = data['orderName'];
                 document.getElementById('checkoutName').innerHTML = ('Checkout ' + data['orderName']  + ' (' + data['lastChange'] + ')');
                 document.getElementById('selectSaved').value = data['orderRandomKey'];
@@ -315,7 +316,7 @@ function payResponse(orderId) {
     showOrderId(orderId);
     sednNotification(orderId);
     printOrder(orderId);
-    resetPosOrder();
+    // resetPosOrder();
     return;
 }
 

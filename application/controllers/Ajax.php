@@ -734,6 +734,8 @@ class Ajax extends CI_Controller
             if (!$managePosOrder) {
                 $response['status'] = '0';
             }
+
+            $response['posOrderId'] = $this->shopposorder_model->id;
             $response['orderName'] = $post['posOrder']['saveName'];
             $response['lastChange'] = date('Y-m-d H:i:s');
         }
