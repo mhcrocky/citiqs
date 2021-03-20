@@ -291,3 +291,11 @@ thead {
 .input-clear:invalid, .input-clear:valid {
     border-color: rgba(170, 170, 170, .3) !important;
 }
+
+.invalid-timestamp {
+    border-color: #dc3545 !important;
+}
+
+.clear-border-color {
+    border-color: rgba(170, 170, 170, .3) !important;
+}

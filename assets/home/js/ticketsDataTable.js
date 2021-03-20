@@ -1,5 +1,5 @@
 var globalEmails = (function() {
-  return '';
+  return emailsTemplates;
 }());
 
 getEmailTemplates();
@@ -262,7 +262,7 @@ $(document).ready(function () {
               "<div class='btn btn-primary'><a class='text-light' onclick='editEmailTemplate("+data.emailId+",\""+template_name+"\",\""+template_type+"\")' href='javascript:;' data-toggle='modal' data-target='#emailTemplateModal'>Edit Email Template</a></div>"
             );
           } else {
-            return "<div class='btn btn-primary'><a class='text-light' href='javascript:;'>Edit Email Template</a></div>";
+            return "<div class='btn btn-primary'><a class='text-light' onclick='editEmailTemplate("+data.ticketId+")' href='javascript:;' data-toggle='modal' data-target='#emailTemplateModal'>Add Email Template</a></div>";
           }
         },
       },
@@ -335,8 +335,6 @@ $(document).ready(function () {
         });
     },
   });
-
-  table.rowReordering();
 
   /*Order by the grouping
     $('#tickets tbody').on('click', 'tr.group', function() {
@@ -478,7 +476,7 @@ function saveTicket(e){
   let data = $('#ticketForm').serialize();
   $.post(globalVariables.baseUrl + 'events/save_ticket', data, function(data){
       alertify['success']('Ticket is saved successfully!');
-      $("#tickets").DataTable().ajax.url(globalVariables.baseUrl + "events/get_tickets").load();
+      $("#tickets").DataTable().ajax.reload();
       $('#ticketForm').trigger("reset");
       $('#ticketClose').click();
   });
@@ -489,7 +487,7 @@ function saveTicketOptions(e){
   let data = $('#editTicketOptions').serialize();
   $.post(globalVariables.baseUrl + 'events/save_ticket_options', data, function(data){
       alertify['success']('Ticket options are saved successfully!');
-      $("#tickets").DataTable().ajax.url(globalVariables.baseUrl + "events/get_tickets").load();
+      $("#tickets").DataTable().ajax.reload();
       $('#ticketOptionsClose').click();
   });
 }
@@ -501,7 +499,7 @@ function deleteTicket(ticketId) {
     };
     
     $.post(globalVariables.baseUrl + "events/delete_ticket", data, function (data) {
-      $("#tickets").DataTable().ajax.url(globalVariables.baseUrl + "events/get_tickets").load();
+      $("#tickets").DataTable().ajax.reload(); $("#tickets").DataTable().clear().draw();
     });
   }
 }
@@ -514,7 +512,7 @@ function deleteGroup(groupId) {
     
     $.post(globalVariables.baseUrl + "events/delete_group", data, function (data) {
       $('#group_'+groupId).remove();
-      $("#tickets").DataTable().ajax.url(globalVariables.baseUrl + "events/get_tickets").load();
+      $("#tickets").DataTable().ajax.reload();
     });
   }
 }
@@ -525,12 +523,19 @@ function updateEmailTemplate(el, id) {
     globalVariables.baseUrl + "events/update_email_template",
     { id: id, emailId: emailId },
     function (data) {
+      $("#tickets").DataTable().ajax.reload();
       return true;
     }
   );
 }
 
-function editEmailTemplate(id, template_name, template_type) {
+function editEmailTemplate(id, template_name = '', template_type = '') {
+  if(template_name == ''){
+    $('#templateType').val('tickets');
+    $('#updateEmailTemplate').attr('onclick','createTicketEmailTemplate("selectTemplateName", "customTemplateName", "templateType", '+id+')');
+    return ;
+      
+  }
   $.post(
     globalVariables.baseUrl + "events/get_email_template",
     { id: id },
@@ -574,3 +579,71 @@ $('#updateEmailTemplate').on('click', function(){
     emailTemplatesOptions();
   }, 777);
 });
+
+
+
+
+
+function createTicketEmailTemplate(selectTemplateValueId, customTemplateNameId, customTemplateTypeId, ticketId) {
+  let selectTemplate = document.getElementById(selectTemplateValueId);
+  let customTemplate = document.getElementById(customTemplateNameId);
+  let customTemplateType = document.getElementById(customTemplateTypeId);
+
+  let selectTemplateName = selectTemplate.value.trim();
+  let customTemplateName = customTemplate.value.trim();
+  let templateType = customTemplateType.value.trim();
+  let templateHtml = tinyMCE.get(templateGlobals.templateHtmlId).getContent().replaceAll(globalVariables.baseUrl + 'assets/images/qrcode_preview.png', '[QRlink]').trim();
+  if (!templateHtml) {
+      let message = 'Empty template.'
+      alertify.error(message);
+      return;
+  }
+
+  if (selectTemplateName && customTemplateName) {
+      let message = 'Not allowed. Select template or give template custom name.'
+      alertify.error(message);
+      selectTemplate.style.border = '1px solid #f00';
+      customTemplate.style.border = '1px solid #f00';
+      return;
+  }
+
+  if (!selectTemplateName && !customTemplateName) {
+      alertify.error('Select template or give template custom name');
+      selectTemplate.style.border = '1px solid #f00';
+      customTemplate.style.border = '1px solid #f00';
+      return;
+  }
+
+  selectTemplate.style.border = 'initial';
+  customTemplate.style.border = 'initial';
+
+  let templateName = (selectTemplateName) ? selectTemplateName : customTemplateName;
+  let url = globalVariables.baseUrl + 'Ajaxdorian/createEmailTemplate';
+  let post = {
+      'templateName' : templateName,
+      'templateHtml' : templateHtml,
+      'ticketId' : ticketId,
+      'templateType' : templateType,
+  };
+
+  sendAjaxPostRequest(post, url, 'createEmailTemplate', createTicketEmailTemplateResponse, [selectTemplate, customTemplate]);
+}
+
+function createTicketEmailTemplateResponse(selectTemplate, customTemplate, response) {
+  alertifyAjaxResponse(response);
+
+  $.post(globalVariables.baseUrl + "events/update_email_template",{ id: response['ticketId'], emailId: response['id'] },
+    function (data) {
+      $("#tickets").DataTable().ajax.reload();
+      return true;
+    }
+  );
+  selectTemplate.value = '';
+  customTemplate.value = '';
+  tinymce.get(templateGlobals.templateHtmlId).setContent('');
+  return;
+}
+
+
+
+

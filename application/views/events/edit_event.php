@@ -6,7 +6,7 @@
 
                     <div class="card-body">
                         <form id="my-form" name="my-form" class="needs-validation"
-                            action="<?php echo base_url(); ?>events/update_event/<?php echo $event->id; ?>"
+                            action="<?php echo base_url(); ?>events/update_event/<?php echo $event->id; ?>" onsubmit="return submitEditEventForm(event)"
                             method="POST" enctype="multipart/form-data" novalidate>
                             <div class="form-group row">
                                 <label for="full_name" class="col-md-4 col-form-label text-md-left">
@@ -224,9 +224,9 @@
                                 <div class="col-md-6">
                                     <div class="input-group date">
                                         <input type="text" class="form-control inp-group-radius-left input-w input-date" id="event-date2"
-                                            name="EndDate" value="<?php echo $event->EndDate; ?>" value="" required>
+                                            name="EndDate" value="<?php echo $event->EndDate; ?>" onfocus="timestampOnFocus()" required>
                                         <input type="time" class="form-control input-w" id="event-time2" name="EndTime"
-                                            value="<?php echo $event->EndTime; ?>" required>
+                                            value="<?php echo $event->EndTime; ?>" onfocus="timestampOnFocus()" required>
                                         <span class="input-group-addon fa-input pl-2 pr-2">
                                             <i style="color: #fff;font-size: 18px;" class="fa fa-calendar"></i></span>
                                     </div>
@@ -240,6 +240,12 @@
                                     </div>
                                     -->
                                 </div>
+
+                            </div>
+                            <div style="display: none;" class="form-group row timestamp-error">
+                                <label class="col-md-4 col-form-label text-md-left">
+                                </label>
+                                <div id="timestamp-error" class="col-md-6"></div>
 
                             </div>
 
@@ -261,4 +267,37 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
+<script>
+function submitEditEventForm(e){
+    e.preventDefault();
+    if($('.form-control:invalid').length > 0){
+        return ;
+    }
+    var imgUrl = $('#preview').attr('src');
+    if(document.getElementById("file").files.length == 0 && imgUrl == '<?php echo base_url(); ?>assets/images/img-preview.png'){
+        $('.img-thumbnail').attr('style', 'border: 1px solid #dc3545 !important;');
+        return ;
+    }
+    let startTime = $('#event-date1').val() +' '+ $('#event-time1').val();
+    let endTime = $('#event-date2').val() +' '+ $('#event-time2').val();
+    if(dayjs(endTime) > dayjs(startTime)){
+        $('form').attr('onsubmit','return true');
+        setTimeout(() => {
+            $('#submitEventForm').click();
+        }, 2);
+    } else {
+        $('.timestamp-error').show();
+        $('#event-date2').addClass('invalid-timestamp');
+        $('#event-time2').addClass('invalid-timestamp');
+        $('#timestamp-error').append('<p class="text-danger" style="color: #df2626">Second timestamp should be greater than first timestamp!</p>');
+    }
+    return ;
+}
+
+function timestampOnFocus(){
+    $('.invalid-timestamp').addClass('clear-border-color').removeClass('invalid-timestamp');
+    $('#timestamp-error').empty();
+    return ;
+}
+</script>
