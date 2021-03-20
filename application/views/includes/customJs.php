@@ -164,13 +164,13 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jscolor.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/js/quill.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/events.js"></script>
-	<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="//code.jquery.com/ui/1.12.1/jquery-ui.js" ></script>
+	<script type="text/javascript" src="//cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
 	<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
 	<script src='<?php echo $this->baseUrl; ?>assets/home/js/templates.js'></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/ticketsDataTable.js"></script>
-	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-	<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
 <?php } elseif ($this->view === 'events/events') { ?>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js" integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg==" crossorigin="anonymous"></script>
 	<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/eventsDataTable.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

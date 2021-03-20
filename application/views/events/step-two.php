@@ -130,7 +130,7 @@
                         </div>
                         <div class="col col-md-3">
                             <div class="input-group date">
-                                <input type="text" class="form-control inp-height" id="startDate" name="startDate" required>
+                                <input type="text" class="form-control inp-height timestamp" id="startDate" name="startDate" required>
                                 <span style="padding-top: 5px;" class="input-group-addon fa-input pl-2 pr-2">
                                     <i style="color: #fff;font-size: 18px;" class="fa fa-calendar"></i></span>
                             </div>
@@ -140,7 +140,7 @@
                         </div>
                         <div class="col col-md-3">
                             <div class="input-group">
-                                <input type="time" class="form-control inp-height" id="startTime" name="startTime">
+                                <input type="time" class="form-control inp-height timestamp" id="startTime" name="startTime">
                                 <span style="padding-top: 5px;" class="input-group-addon fa-input pl-2 pr-2">
                                     <i style="color: #fff;font-size: 20px;" class="fa fa-clock-o"></i></span>
                             </div>
@@ -153,7 +153,7 @@
                         </div>
                         <div class="col col-md-3">
                             <div class="input-group date">
-                                <input type="text" class="form-control inp-height" id="endDate" name="endDate" required>
+                                <input type="text" class="form-control inp-height timestamp" id="endDate" name="endDate" required>
                                 <span style="padding-top: 5px;" class="input-group-addon fa-input pl-2 pr-2">
                                     <i style="color: #fff;font-size: 18px;" class="fa fa-calendar"></i></span>
                             </div>
@@ -163,7 +163,7 @@
                         </div>
                         <div class="col col-md-3">
                             <div class="input-group">
-                                <input type="time" class="form-control inp-height" id="endTime" name="endTime">
+                                <input type="time" class="form-control inp-height timestamp" id="endTime" name="endTime">
                                 <span style="padding-top: 5px;" class="input-group-addon fa-input pl-2 pr-2">
                                     <i style="color: #fff;font-size: 20px;" class="fa fa-clock-o"></i></span>
                             </div>
@@ -618,7 +618,7 @@
     </div>
 </div>
 -->
-
+<div id="result"></div>
 <script>
 const emailsTemplates = '<?php echo json_encode($emails); ?>';
 

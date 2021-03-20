@@ -65,8 +65,14 @@ $(document).ready(function () {
     var type = $("#ticketType option:selected").val();
     if (type == "group") {
       $("#group").prop("disabled", true);
+      $("#ticketEmailTemplate").prop("disabled", true);
+      $("#price").prop("disabled", true);
+      $("#price").prop("required", false);
     } else {
       $("#group").prop("disabled", false);
+      $("#ticketEmailTemplate").prop("disabled", false);
+      $("#price").prop("disabled", false);
+      $("#price").prop("required", true);
     }
     $("#ticketTypeVal").val(type);
   });
@@ -77,6 +83,14 @@ $(document).ready(function () {
   $("#ticketEmailTemplate").on("change", function () {
     var emailTemplate = $("#ticketEmailTemplate option:selected").val();
     $("#ticketEmailTemplateId").val(emailTemplate);
+  });
+
+  $("#automatically").on("change", function () {
+    $('.timestamp').prop("disabled", true);
+  });
+
+  $("#manually").on("change", function () {
+    $('.timestamp').prop("disabled", false);
   });
 
   $("#ticketCurrency").on("change", function () {
@@ -99,6 +113,12 @@ $(document).ready(function () {
         data.id = $("#eventId").val();
       },
       dataSrc: "",
+    },
+    paging:   false,
+    rowCallback: function(row, data, index) {
+      if(data.ticketId == 0){
+        $(row).html('<td style="height: 1px;width:100%" colspan="10"></td>');
+      }
     },
     columns: [
       {
@@ -135,17 +155,6 @@ $(document).ready(function () {
         }
       },
       {
-        title: "Quantity",
-        data: null,
-        render: function (data, type, row) {
-          return (
-            '<input type="text" id="quantity" class="form-control" onchange="updateTicket('+data.ticketId+', this, \'ticketQuantity\')" name="quantity" value="' +
-            data.ticketQuantity +
-            '">'
-          );
-        },
-      },
-      {
         title: "Price (Inc. VAT)",
         data: null,
         render: function (data, type, row) {
@@ -177,6 +186,17 @@ $(document).ready(function () {
           html += '</select>';
 
           return html;
+        },
+      },
+      {
+        title: "Quantity",
+        data: null,
+        render: function (data, type, row) {
+          return (
+            '<input type="text" id="quantity" class="form-control" onchange="updateTicket('+data.ticketId+', this, \'ticketQuantity\')" name="quantity" value="' +
+            data.ticketQuantity +
+            '">'
+          );
         },
       },
       {
@@ -278,6 +298,9 @@ $(document).ready(function () {
     displayLength: 25,
     createdRow: function (row, data, dataIndex) {
       $(row).attr("id", "row-" + dataIndex);
+      $(row).addClass("dataTable-row");
+      $(row).attr("data-ticketId", data.ticketId);
+      $(row).attr("data-groupId", data.groupId);
     },
     drawCallback: function (settings) {
       $("#tickets_filter").remove();
@@ -300,7 +323,7 @@ $(document).ready(function () {
           var groupname = data.groupname;
           
           if (last !== groupname) {
-            if (groupname == "") {
+            if (groupname == "" || groupname == null || groupname == 'null') {
 
             } else {
               var html =
@@ -311,14 +334,15 @@ $(document).ready(function () {
                 $(rows)
                 .eq(i)
                 .before(
-                  '<tr class="group">' +
+                  '<tr class="dataTable-row group" data-ticketid="groupId'+data.groupId+'" data-groupId="'+data.groupId+'">' +
                     "<td>" +
                     html +
                     '</td><td colspan="3">' +
-                    '<input type="text" id="group-name" class="form-control" name="group-name" onchange="updateGroup(this, '+data.ticketGroupId+')" value="' +
+                    '<input type="text" id="group-name" class="form-control" name="group-name" onchange="updateGroup(this, '+data.ticketGroupId+', \'groupname\')" value="' +
                     groupname +
                     '">' +
-                    '</td><td></td><td><ul><li><div class="custom-control custom-checkbox"><input style="transform: scale(1.5);" class="custom-control-input" id="package-area-0' +
+                    '</td><td><input type="text" class="form-control" onchange="updateGroup(this, '+data.ticketGroupId+', \'groupQuantity\')" name="quantity" value="' +data.groupQuantity +'">'+
+                    '</td><td><ul><li><div class="custom-control custom-checkbox"><input style="transform: scale(1.5);" class="custom-control-input" id="package-area-0' +
                     i +
                     '" type="checkbox" checked="checked" ><label class="custom-control-label" for="package-area-0' +
                     i +
@@ -334,6 +358,39 @@ $(document).ready(function () {
           }
         });
     },
+  });
+
+  $( "#tickets" ).sortable({
+    items: ".dataTable-row:not(.group)",
+    cursor: 'move',
+    opacity: 0.6,
+    update: function() {
+      var lastGroupId = 0;
+      var tickets = [];
+      $('.dataTable-row').each(function(index,element) {
+        var ticketId = $(this).attr('data-ticketId');
+        if(ticketId == 0){ return; }
+        if(index == 0){
+          lastGroupId = $(this).attr('data-groupId');
+          if(isNaN(lastGroupId)){ return; }
+          var ticket = {'ticketId': $(this).attr('data-ticketId'), 'groupId': lastGroupId };
+          tickets[index] = ticket;
+          return;
+        }
+
+        if(isNaN(ticketId)){
+          lastGroupId = $(this).attr('data-groupId');
+          return;
+        }
+        var ticket = {'ticketId': ticketId, 'groupId':lastGroupId };
+        tickets[index] = ticket;
+
+      });
+      console.log(tickets);
+      $.post(globalVariables.baseUrl + "events/update_ticket_group", {tickets: JSON.stringify(tickets)}, function (data) {
+        $("#tickets").DataTable().ajax.reload();
+      });
+    }
   });
 
   /*Order by the grouping
@@ -446,10 +503,12 @@ function updateTicket(id, el, param) {
   });
 }
 
-function updateGroup(el, id) {
+function updateGroup(el, id, param) {
+  console.log('updateGroup');
   let data = { 
     id: id,
-    groupname: $(el).val()
+    param: param,
+    value: $(el).val()
   };
 
   $.post(globalVariables.baseUrl + "events/update_group", data, function (data) {
