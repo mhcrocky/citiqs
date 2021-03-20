@@ -1,12 +1,3 @@
-<style>
-.invalid-timestamp {
-    border-color: #dc3545 !important;
-}
-
-.clear-border-color {
-    border-color: rgba(170, 170, 170, .3) !important;
-}
-</style>
 <main class="my-form">
     <div class="cotainer">
         <div class="row justify-content-center">
@@ -15,7 +6,7 @@
 
                     <div class="card-body">
                         <form name="events-form" class="needs-validation"
-                            action="<?php echo base_url(); ?>events/save_event"  onsubmit="return submitEventsForm(event)" method="POST"
+                            action="<?php echo base_url(); ?>events/save_event"  onsubmit="return submitAddEventForm(event)" method="POST"
                             enctype="multipart/form-data" novalidate>
                             <div class="form-group row">
                                 <label for="full_name" class="col-md-4 col-form-label text-md-left">
@@ -264,3 +255,37 @@
         </div>
     </div>
 </div>
+
+<script>
+function submitAddEventForm(e){
+    e.preventDefault();
+    if($('.form-control:invalid').length > 0){
+        return ;
+    }
+    var imgUrl = $('#preview').attr('src');
+    if(document.getElementById("file").files.length == 0 && imgUrl == '<?php echo base_url(); ?>assets/images/img-preview.png'){
+        $('.img-thumbnail').attr('style', 'border: 1px solid #dc3545 !important;');
+        return ;
+    }
+    let startTime = $('#event-date1').val() +' '+ $('#event-time1').val();
+    let endTime = $('#event-date2').val() +' '+ $('#event-time2').val();
+    if(dayjs(endTime) > dayjs(startTime)){
+        $('form').attr('onsubmit','return true');
+        setTimeout(() => {
+            $('#submitEventForm').click();
+        }, 2);
+    } else {
+        $('.timestamp-error').show();
+        $('#event-date2').addClass('invalid-timestamp');
+        $('#event-time2').addClass('invalid-timestamp');
+        $('#timestamp-error').append('<p class="text-danger" style="color: #df2626">Second timestamp should be greater than first timestamp!</p>');
+    }
+    return ;
+}
+
+function timestampOnFocus(){
+    $('.invalid-timestamp').addClass('clear-border-color').removeClass('invalid-timestamp');
+    $('#timestamp-error').empty();
+    return ;
+}
+</script>
