@@ -68,7 +68,7 @@ class Booking_events extends BaseControllerWeb
         $this->session->set_userdata("endTime",$event->EndTime);
         $this->session->set_userdata("eventImage",$event->eventImage);
         $data = [
-            'tickets' => $this->event_model->get_tickets($vendor_id,$eventId),
+            'tickets' => $this->event_model->get_event_tickets($vendor_id,$eventId),
             'eventId' => $eventId,
             'eventName' => $event->eventname,
             'eventImage' => $event->eventImage
