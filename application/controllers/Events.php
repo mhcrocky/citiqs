@@ -75,20 +75,20 @@ class Events extends BaseControllerWeb
         $config['allowed_types'] = 'jpg|png|jpeg|webp|bmp';
         $config['max_size']      = '102400'; // 102400 100mb
         $config['encrypt_name'] = TRUE;
-
+        $data['eventimage'] = '';
+        $data = $this->input->post(null, true);
+        $data['vendorId'] = $this->vendor_id;
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload('userfile')) {
             $errors   = $this->upload->display_errors('', '');
-            var_dump($errors);
-            redirect('events/create');
+            //var_dump($errors);
         } else {
             $upload_data = $this->upload->data();
-            $data = $this->input->post(null, true);
-            $data['vendorId'] = $this->vendor_id;
 			$file_name = $upload_data['file_name'];
             $data['eventimage'] = $file_name;
-            $eventId = $this->event_model->save_event($data);
+            
         }
+        $eventId = $this->event_model->save_event($data);
         redirect('events/event/'.$eventId);
 
     }

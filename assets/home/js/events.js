@@ -143,3 +143,24 @@ function editImageUpload(el) {
     $("#imgChanged").val('true');
 
 }
+
+function checkTimestamp(){
+
+    let startTime = $('#event-date1').val() +' '+ $('#event-time1').val();
+    let endTime = $('#event-date2').val() +' '+ $('#event-time2').val();
+    if(dayjs(endTime) < dayjs(startTime)){
+        $('#submitEventForm').prop('disabled', true);
+        $('.timestamp-error').show();
+        $('#event-date2').addClass('invalid-timestamp');
+        $('#event-time2').addClass('invalid-timestamp');
+        $('#timestamp-error').append('<p class="text-danger" style="color: #df2626">Second timestamp should be greater than first timestamp!</p>');
+    }
+    return ;
+}
+
+function timestampOnFocus(){
+    $('#submitEventForm').prop('disabled', false);
+    $('.invalid-timestamp').addClass('clear-border-color').removeClass('invalid-timestamp');
+    $('#timestamp-error').empty();
+    return ;
+}
