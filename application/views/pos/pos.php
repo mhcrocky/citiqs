@@ -332,7 +332,7 @@
 	</div>
 
 	<script>
-		var posGlobals =(function(){
+		var posGlobals = (function(){
 			let globals = new Map();
 			let serviceFeePercent = parseFloat('<?php echo $serviceFeePercent; ?>');
 			let serviceFeeAmount = parseFloat('<?php echo $serviceFeeAmount; ?>');
@@ -347,6 +347,7 @@
 				'selectedOrderShortName' : '',
 				'posOrderName' : document.getElementById('posOrderName'),
 				'holdOrderElement' : document.getElementById('holdOrderId'),
+				'selectSavedElement' : document.getElementById('selectSaved')
 			}
 
 			<?php if  ($lock) { ?>
@@ -363,5 +364,9 @@
 
 			return globals;
 		}());
+	</script>
+<?php } else { ?>
+	<script>
+		var posGlobals = {};
 	</script>
 <?php } ?>

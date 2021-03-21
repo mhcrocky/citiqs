@@ -16,7 +16,6 @@ function showCategory(element, categoryId, categoriesClass) {
     element.classList.add(makeOrderGlobals.activeClass);
 }
 
-
 function posTriggerModalClick(modalButtonId) {
     triggerModalClick(modalButtonId);    
 }
@@ -148,6 +147,7 @@ function updateToPrinted() {
         element.setAttribute('data-printed', '1');
     }
     fetchAndSendHoldOrderData();
+    fetchSavedOrder(posGlobals['selectSavedElement']);
 }
 
 function posPayOrder(element) {
@@ -474,7 +474,7 @@ function fetchSavedOrderResponse(element, response) {
 }
 
 function toogleSelectSavedOrders() {
-    if (!posGlobals['spotPosOrders']) {
+    if (!posGlobals.hasOwnProperty('spotPosOrders') || !posGlobals['spotPosOrders']) {
         $(".selectSavedOrdersList").hide();
     }
 }
