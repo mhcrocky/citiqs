@@ -79,6 +79,18 @@ $(document).ready(function() {
             },
             {
 
+                title: 'Archived',
+                data: null,
+                "render": function(data, type, row) {
+                    if(data.archived == 1){
+                        return 'Yes';
+                    }
+                    return 'No';
+                }
+
+            },
+            {
+
                 title: 'Actions',
                 data: null,
                 "render": function(data, type, row) {
@@ -110,6 +122,7 @@ $(document).ready(function() {
 
             if (val == 'past' && current_timestamp >= end_timestamp) { return true;}
             if(val == 'future' && current_timestamp <= start_timestamp) {return true;}
+            if(val == 'archived' && data[11] == 'Yes') { return true; }
             if(val == 'all') { return true; }
             return false;
             

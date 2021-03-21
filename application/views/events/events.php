@@ -13,6 +13,7 @@
                 <option value="all">All</option>
                 <option value="past">Past</option>
                 <option value="future" selected>Future</option>
+                <option value="archived">Archived</option>
             </select>
         </div>
         <table id="events" class="table table-striped table-bordered mt-5" style="width:100%;">
