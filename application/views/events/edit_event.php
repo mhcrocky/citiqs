@@ -274,11 +274,6 @@ function submitEditEventForm(e){
     if($('.form-control:invalid').length > 0){
         return ;
     }
-    var imgUrl = $('#preview').attr('src');
-    if(document.getElementById("file").files.length == 0 && imgUrl == '<?php echo base_url(); ?>assets/images/img-preview.png'){
-        $('.img-thumbnail').attr('style', 'border: 1px solid #dc3545 !important;');
-        return ;
-    }
     let startTime = $('#event-date1').val() +' '+ $('#event-time1').val();
     let endTime = $('#event-date2').val() +' '+ $('#event-time2').val();
     if(dayjs(endTime) > dayjs(startTime)){
