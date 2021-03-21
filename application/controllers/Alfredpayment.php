@@ -35,6 +35,9 @@ class Alfredpayment extends BaseControllerWeb
 
     public function paymentEngine($paymentType, $paymentOptionSubId, $orderId): void
     {
+//		echo var_dump($paymentType);
+//		echo var_dump($paymentOptionSubId);
+//		die();
 
         $orderId = intval($orderId);
         $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
@@ -80,7 +83,7 @@ class Alfredpayment extends BaseControllerWeb
         if ($payNlErrorId === $this->config->item('paymentTypeErr')) {
             $message = 'Payment error! Please choose another method';
         } else {
-            $message = 'Payment error!  Please try again';
+            $message = 'Payment error!  Please try again '.$payNlErrorId;
         }
         return $message;
     }

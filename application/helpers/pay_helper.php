@@ -48,6 +48,9 @@
 
         public static function payOrder(int $vendorId, array $order, string $serviceId, string $paymentType, string $paymentOptionSubId = '0'): ?object
         {
+//					echo var_dump($paymentType);
+//					echo var_dump($paymentOptionSubId);
+//					die();
             $CI =& get_instance();
             $CI->load->config('custom');
 
@@ -75,9 +78,19 @@
             $arrArguments['amount'] = strval($amount);
             $arrArguments['ipAddress'] = $_SERVER['REMOTE_ADDR'];
             $arrArguments['paymentOptionId'] = $paymentType;
-            if ($paymentType ===  $CI->config->item('idealPaymentType') && $paymentOptionSubId) {
+
+            // for PIN PAyment we also need to have a paymentOptionSubId...
+			// This is the terminal linked with the POS system.....
+			// So each POS system needs to have identification set .... we need to discuss
+			// of course if there a multiple POS systems in one business...
+
+			if ($paymentType ===  $CI->config->item('idealPaymentType') && $paymentOptionSubId) {
                 $arrArguments['paymentOptionSubId'] = $paymentOptionSubId;
             }
+
+			if ($paymentType ===  "1927") {
+				$arrArguments['paymentOptionSubId'] = "TH-9268-3020";
+			}
 
             $arrArguments['finishUrl'] = base_url() . 'successPayment';
 
@@ -101,6 +114,8 @@
             $arrArguments['saleData']['orderData'][0]['vatCode'] = 'N';
             $arrArguments['saleData']['orderData'][0]['vatPercentage'] = '0,00';
 
+//            echo var_dump($arrArguments);
+//            die();
             return $arrArguments;
         }
 
