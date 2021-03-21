@@ -18,12 +18,14 @@
                     <div class="menu-list">
                         <?php 
                         $checkout_tickets = [];
+                        $checkout_tickets_id = [];
                         if($this->session->tempdata('tickets')){
-                            $checkout_tickets = array_values(array_keys($this->session->tempdata('tickets')));
+                            $checkout_tickets = $this->session->tempdata('tickets');
+                            $checkout_tickets_id = array_values(array_keys($checkout_tickets));
                         }
                          foreach ($tickets as $ticket): 
                               $ticketId = $ticket['ticketId'];
-                              if(in_array($ticketId,$checkout_tickets)){ continue; } ?>
+                         ?>
                         <input type="hidden" id="quantity_<?php echo $ticketId; ?>" name="quantity[]" value="0">
                         <input type="hidden" name="id[]" value="<?php echo $ticketId; ?>">
                         <input type="hidden" name="descript[]" value="<?php echo $ticket['ticketDescription']; ?>">
@@ -45,8 +47,11 @@
                                 <div class="quantity-section">
                                     <button type="button" class="quantity-button"
                                         onclick="removeTicket('<?php echo $ticketId; ?>','<?php echo $ticket['ticketPrice']; ?>','totalBasket')">-</button>
-                                    <input type="number" min="1" id="ticketQuantityValue_<?php echo $ticketId; ?>" value="0"
-                                        onkeyup="absVal(this);" placeholder="0" class="quantity-input" disabled>
+                                    <input type="number" min="1" id="ticketQuantityValue_<?php echo $ticketId; ?>"
+                                        <?php if(in_array($ticketId,$checkout_tickets_id)){?>
+                                        value="<?php echo $checkout_tickets[$ticketId]['quantity']; ?>"
+                                        <?php } else { ?> value="0" <?php } ?> onkeyup="absVal(this);" placeholder="0"
+                                        class="quantity-input" disabled>
                                     <button type="button" class="quantity-button"
                                         onclick="addTicket('<?php echo $ticketId; ?>', '<?php echo $ticket['ticketQuantity']; ?>', '<?php echo $ticket['ticketPrice']; ?>','totalBasket')">+</button>
                                 </div>
