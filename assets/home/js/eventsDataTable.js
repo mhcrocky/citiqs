@@ -98,23 +98,25 @@ $(document).ready(function() {
         }
     });
     
-    $('#selectTime').on('change',function () {
-        $.fn.dataTable.ext.search.push(
-            function (settings, data, dataIndex) {
-                let val = $('#selectTime option:selected').val();
-                let current_timestamp = dayjs();
-                console.log(current_timestamp)
-                let end_str_timestamp = data[8] + ' ' + data[10];
-                let end_timestamp = dayjs(end_str_timestamp);
-                let start_str_timestamp = data[7] + ' ' + data[9];
-                let start_timestamp = dayjs(start_str_timestamp);
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            let val = $('#selectTime option:selected').val();
+            let current_timestamp = dayjs();
+            console.log(current_timestamp)
+            let end_str_timestamp = data[8] + ' ' + data[10];
+            let end_timestamp = dayjs(end_str_timestamp);
+            let start_str_timestamp = data[7] + ' ' + data[9];
+            let start_timestamp = dayjs(start_str_timestamp);
 
-                if (val == 'past' && current_timestamp >= end_timestamp) { return true;}
-                if(val == 'future' && current_timestamp <= start_timestamp) {return true;}
-                if(val == 'all') { return true; }
-                return false;
-                
-            });
+            if (val == 'past' && current_timestamp >= end_timestamp) { return true;}
+            if(val == 'future' && current_timestamp <= start_timestamp) {return true;}
+            if(val == 'all') { return true; }
+            return false;
+            
+    });
+
+    $('#selectTime').change(function () {
+        
             setTimeout(() => {
                 eventTable.draw();
             }, 2);

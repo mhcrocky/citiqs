@@ -12,7 +12,7 @@
             <select id="selectTime" style="height: 40px !important;" class="form-control custom-select custom-select-sm form-control-sm">
                 <option value="all">All</option>
                 <option value="past">Past</option>
-                <option value="future">Future</option>
+                <option value="future" selected>Future</option>
             </select>
         </div>
         <table id="events" class="table table-striped table-bordered mt-5" style="width:100%;">
