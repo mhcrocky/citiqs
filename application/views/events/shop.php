@@ -42,8 +42,14 @@
                 <a href="#tickets" onclick="getTicketsView('<?php echo $event['id']; ?>')"
                     class="single-item btn-ticket">
                     <div class="single-item__image">
-                        <img src="<?php echo base_url(); ?>assets/images/events/<?php echo $event['eventImage']; ?>"
-                            alt="">
+                        <img 
+                        <?php if($event['eventImage'] == ''): ?>
+                        style="object-fit: ;min-height: auto;"
+                        src="<?php echo base_url(); ?>assets/home/images/logo1.png"
+                        <?php else: ?>
+                        src="<?php echo base_url(); ?>assets/images/events/<?php echo $event['eventImage']; ?>"
+                        <?php endif; ?>
+                        alt="<?php echo $event['eventname']; ?>">
                         <p class='single-item__promotion'>Order Now</p>
                     </div>
                     <div class="single-item__content">
