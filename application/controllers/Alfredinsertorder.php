@@ -133,8 +133,7 @@ class Alfredinsertorder extends BaseControllerWeb
         $post['spotId'] = intval($post['spotId']);
         $post['order']['paymentType'] = $this->config->item('postPaid');
 
-        $this->isFodActive($post['vendorId'], $post['spotId']);       
- 
+        $this->isFodActive($post['vendorId'], $post['spotId']);
         $orderId = $this->posPrintingPaying($post);
 
         if (is_null($orderId)) {
@@ -159,13 +158,12 @@ class Alfredinsertorder extends BaseControllerWeb
                         $this->insertOrderExtendedRefactored($post['orderExtended'], $orderId);
                     }
                 } else {
-                    $date = 'Y-m-d H:i:s';
                     $this->saveOrderImage($orderId);
                     $this
                         ->shoporder_model
                         ->setObjectId($orderId)
-                        ->setProperty('createdOrder', $date)
-                        ->setProperty('created', $date)
+                        ->setProperty('createdOrder', date('Y-m-d H:i:s'))
+                        ->setProperty('paid', '1')
                         ->update();
                 }
                 return $orderId;

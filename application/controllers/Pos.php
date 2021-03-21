@@ -80,7 +80,6 @@
                     'buyershorturl'             => $this->config->item('buyershorturl'),
                     'xReport'                   => $this->config->item('x_report'),
                     'zReport'                   => $this->config->item('z_report'),
-                    
                 ];
 
                 $this->setPosSideFee($data);
