@@ -149,7 +149,11 @@ $userShortUrl = $this->session->userdata('userShortUrl');
             if (isset($js) AND is_array($js)) { // ???????????  MOVE TO FOOTER IF USER CUSTOM SCRIPTS ???????????????
                 foreach ($js as $jsLink) { 
                 ?>
+                    <?php if($jsLink == base_url() . 'assets/home/js/templates.js'): ?>
+                        <script defer src="<?php echo $jsLink ?>"></script>
+                    <?php else: ?>
                     <script src="<?php echo $jsLink ?>"></script>
+                    <?php endif; ?>
                 <?php
                 }
             }

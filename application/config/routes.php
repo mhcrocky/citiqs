@@ -498,6 +498,8 @@ $route['customer_panel/pivot'] = "Customer_panel/pivot";
 $route['customer_panel/pivot_export']="Customer_panel/pivot_export";
 $route['customer_panel/settings']="Customer_panel/settings";
 $route['customer_panel/list_templates']="Customer_panel/listTemplates";
+$route['customer_panel/get_email_template']="Customer_panel/get_email_template";
+$route['customer_panel/spots_order']="Customer_panel/spots_order";
 
 $route['settingsmenu/savespotobject']="Settingsmenu/saveSpotObject";
 

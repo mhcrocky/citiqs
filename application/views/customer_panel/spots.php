@@ -1,4 +1,43 @@
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<div class="modal fade" id="emailTemplateModal" tabindex="-1" role="dialog" aria-labelledby="emailTemplateModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold text-dark" id="emailTemplateModalLabel">Choose Email Template
+                </h5>
+                <button type="button" class="close" id="closeEmailTemplate" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <select style="display: none;" id="selectTemplateName" class="form-control">
+                    <option value="">Select template</option>
+                </select>
+                <label for="customTemplateName">Template Name</label>
+                <input type="text" id="customTemplateName" name="customTemplateName" class="form-control" />
+                <br />
+                <label for="templateType">Template Type</label>
+                <select class="form-control w-100" id="templateType" name="templateType">
+                    <option value="" disabled>Select type</option>
+                    <option value="general">General</option>
+                    <option value="reservations">Reservations</option>
+                    <option value="tickets">Tickets</option>
+                    <option value="vouchers">Vouchers</option>
+                </select>
+                <br />
+                <label for="templateHtml">Edit template</label>
+                <textarea id="templateHtml" name="templateHtml"></textarea>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" id="updateEmailTemplate" class="btn btn-primary">Save changes</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <div style="margin-top: 3%;" class="main-content-inner">
     <div id="vue_app">
         <div class="main-wrapper" style="text-align: center; display: block;">
@@ -13,7 +52,7 @@
                     <div style="text-align:center">
                         <table class="table table-striped">
                             <thead>
-                                <tr>
+                                <tr class="tab_head">
                                     <th>#</th>
                                     <th>Description</th>
                                     <th>Sold Out Description</th>
@@ -28,7 +67,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="spot in spots" :key="spot.id">
+                                <tr v-for="spot in spots" :key="spot.id" :data-spotId="spot.id" :data-order="spot.sort_order">
                                     <td scope="row">{{ spot.id }}</td>
                                     <td>{{ spot.descript }}</td>
                                     <td>{{ spot.soldoutdescript }}</td>
@@ -37,8 +76,10 @@
                                     <td>{{ spot.sort_order }}</td>
                                     <td>{{ spot.numberofpersons }}</td>
                                     <td>{{ spot.price }}</td>
-                                    <td><a
-                                            :href="baseURL+ 'update_template/'+ spot.email_id">{{ spot.template_name }}</a>
+                                    <td>
+                                        <a href="javascript:;" @click="editEmailTemplate(spot.email_id, spot.template_name)" data-toggle="modal" data-target="#emailTemplateModal">
+                                            {{ spot.template_name }}
+                                        </a>
                                     </td>
                                     <td class="spot_table_image"><img :class="backgroundClass(spot.background)"
                                             :src="imgFullPath(spot.image)" alt=""></td>
@@ -194,6 +235,16 @@
 
 
     <script>
+    const templateGlobals = (function() {
+        let globals = {
+            'templateHtmlId': 'templateHtml',
+        }
+        
+        Object.freeze(globals);
+        
+        return globals;
+    }());
+
     var app = new Vue({
         el: '#vue_app',
 
@@ -276,6 +327,19 @@
                 this.spotModalData = Object.assign({}, spot);
                 $('#add_spot_modal').modal('show');
                 $('.modal-title').text('Edit Spot');
+            },
+            editEmailTemplate(id, template_name = '') {
+                var template_type = 'reservations';
+                $('#templateType').val(template_type);
+                $('#updateEmailTemplate').attr('onclick','createTicketEmailTemplate("selectTemplateName", "customTemplateName", "templateType", '+id+')');
+                $.post(globalVariables.baseUrl + "customer_panel/get_email_template",{ id: id }, function (data) {
+                    let templateContent = JSON.parse(data);
+                    $('#customTemplateName').val(template_name);
+                    $('#templateType').val(template_type);
+                    $('#updateEmailTemplate').attr('onclick','updateEmailTemplate('+id+')');
+                    templateContent = templateContent.replaceAll('[QRlink]', globalVariables.baseUrl+'assets/images/qrcode_preview.png');
+                    tinymce.activeEditor.setContent(templateContent);
+                });
             },
             goToTimeSlots(spot) {
                 location.href = this.baseURL + 'customer_panel/time_slots/' + spot.id
@@ -402,6 +466,9 @@
             agendasOptions: function() {
                 let agendaOptions = [];
                 this.agendas.forEach((agenda) => {
+                    if(this.agendas.length == 1){
+                        this.spotModalData.agenda_id = agenda.id;
+                    }
                     agendaOptions.push({
                         value: agenda.id,
                         text: agenda.ReservationDescription + ' ' + this.dateFormat(agenda
@@ -491,6 +558,46 @@
         $('.modal-title').text('Add Spot');
     });
 
-    </script>
+function updateEmailTemplate(id){
+    createEmailTemplate("selectTemplateName", "customTemplateName", "templateType", id);
+    setTimeout(() => {
+        $('#closeEmailTemplate').click();
+        $('#selectTemplateName').val('');
+        $('#customTemplateName').val('');
+    }, 500);
+}
+</script>
+
+<?php if(isset($agendaId)): ?>
+<script>
+$( "table" ).sortable({
+    items: "tr:not(.tab_head)",
+    cursor: 'move',
+    opacity: 0.6,
+    update: function() {
+        var spots = [];
+        $('tr:not(.tab_head)').each(function(index,element) {
+            var sort = index + 1;
+            var order = $(this).attr('data-order');
+            if(sort == order){ return ;}
+            spots[sort] = $(this).attr('data-spotId');
+            app._data.__ob__.value.spots[index].sort_order = sort;
+        });
+        let data = {
+            spots: JSON.stringify(spots)
+        }
+
+        let formData = new FormData();
+        formData.append("spots", JSON.stringify(spots));
+
+        axios.post(globalVariables.baseUrl + "customer_panel/spots_order", formData).then((response) => {
+            //console.log(app);
+            return true;
+        });
+    }
+  });
+
+</script>
+<?php endif; ?>
 
 </div>
