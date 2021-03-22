@@ -120,10 +120,12 @@ class  Paysuccesslink extends BaseControllerWeb
             $this->setBackAndFailedUrl($data);
         }
         
-        if ($orderRandomKey && isset($order) && $order['orderRandomKey'] !== $get[$this->config->item('orderDataGetKey')]) {
-            redirect('places');
-        }
+        // if ($orderRandomKey && isset($order) && $order['orderRandomKey'] !== $get[$this->config->item('orderDataGetKey')]) {
+        //     redirect('places');
+        // }
 
+        // var_dump($data);
+        // die();
         return;
     }
 
