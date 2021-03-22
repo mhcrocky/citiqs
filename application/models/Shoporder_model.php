@@ -133,6 +133,7 @@
                     $this->table . '.waiterTip AS waiterTip',
                     $this->table . '.paid AS orderPaidStatus',
                     $this->table . '.orderRandomKey',
+                    $this->table . '.isPos',
                     'buyer.id AS buyerId',
                     'buyer.email AS buyerEmail',
                     'buyer.username AS buyerUserName',

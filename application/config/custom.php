@@ -342,6 +342,8 @@ $config['payconiqPaymentType'] = '2379';
 $config['pinMachinePaymentType'] = '1927';
 $config['myBankPaymentType'] = '1588';
 
+$config['pinMachineOptionSubId'] = 'TH-9268-3020';
+
 //paynl errorId
 $config['paymentTypeErr'] = 'PAY-405';
 

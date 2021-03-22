@@ -108,23 +108,24 @@ class  Paysuccesslink extends BaseControllerWeb
         $get = Utility_helper::sanitizeGet();
         $orderId = ( isset($get['orderid']) && is_numeric($get['orderid']) ) ? intval($get['orderid']) : null;
         $orderRandomKey = !empty($get[$this->config->item('orderDataGetKey')]) ? $get[$this->config->item('orderDataGetKey')] : null;
+        
+        $data['backSuccess'] = 'places';
+        $data['backFailed'] = 'places';;
 
-        if ($orderId && $orderRandomKey) {
-
-
+        if ($orderId) {
             $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
+            $data['order'] = reset($order);
 
-
-            if (is_null($order) || $order[0]['orderRandomKey'] !== $get[$this->config->item('orderDataGetKey')]) {
-                redirect('places');
-            }
-            $order = reset($order);
-            $data['order'] = $order;
-            $data['orderDataGetKey'] = $this->config->item('orderDataGetKey');
-
-            $vendorId = intval($order['vendorId']);
-            $this->setGlobalVendor($vendorId);
+            $this->setGlobalVendor(intval($data['order']['vendorId']));
+            $this->setBackAndFailedUrl($data);
         }
+        
+        // if ($orderRandomKey && isset($order) && $order['orderRandomKey'] !== $get[$this->config->item('orderDataGetKey')]) {
+        //     redirect('places');
+        // }
+
+        // var_dump($data);
+        // die();
         return;
     }
 
@@ -139,5 +140,19 @@ class  Paysuccesslink extends BaseControllerWeb
                                         'googleTagManagerCode',
                                         'facebookPixelId'
                                     ]);
+    }
+
+    private function setBackAndFailedUrl(array &$data): void
+    {
+        if ($data['order']['isPos'] === '1') {
+            $data['backSuccess'] = base_url() . 'pos?spotid=' . $data['order']['spotId'];
+            $data['backFailed'] = base_url() . 'pos?spotid=' . $data['order']['spotId'];
+        } else {
+            $data['backSuccess'] = base_url() . 'make_order?vendorid=' . $data['order']['vendorId'] . '&spotid=' . $data['order']['spotId']; 
+            $data['backFailed']  = base_url() . 'make_order';
+            $data['backFailed'] .= '?vendorid=' . $data['order']['vendorId'];
+            $data['backFailed'] .= '&spotid=' . $data['order']['spotId'];
+            $data['backFailed'] .= '&' . $this->config->item('orderDataGetKey') . '=' . $data['order']['orderRandomKey'];
+        }
     }
 }

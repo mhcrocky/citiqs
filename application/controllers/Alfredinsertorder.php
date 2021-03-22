@@ -131,7 +131,6 @@ class Alfredinsertorder extends BaseControllerWeb
         $post = Utility_helper::sanitizePost();
         $post['vendorId'] = intval($post['vendorId']);
         $post['spotId'] = intval($post['spotId']);
-        $post['order']['paymentType'] = $this->config->item('postPaid');
 
         $this->isFodActive($post['vendorId'], $post['spotId']);
         $orderId = $this->posPrintingPaying($post);
@@ -140,7 +139,29 @@ class Alfredinsertorder extends BaseControllerWeb
             $orderId = $this->insertOrderProcess($post, '');
         }
 
-        echo json_encode(['orderId' => $orderId]);
+        $response = ['orderId' => $orderId];
+
+        $this->posPaid($post, $response, $orderId);
+
+        echo json_encode($response);
+        return;
+    }
+
+    private function posPaid(array $post, array &$response, int $orderId): void
+    {
+        if ($post['order']['paid'] !== '1') return;
+
+        $this->shopposorder_model->setProperty('orderId', $orderId)->deleteOrder();
+
+        if ($post['order']['paymentType'] === $this->config->item('pinMachinePayment')) {
+            $redirect  = 'paymentengine';
+            $redirect .= DIRECTORY_SEPARATOR . $this->config->item('pinMachinePaymentType');
+            $redirect .= DIRECTORY_SEPARATOR . $this->config->item('pinMachineOptionSubId');
+            $redirect .= DIRECTORY_SEPARATOR . $orderId;
+
+            $response['redirect'] = $redirect;    
+        }
+
         return;
     }
 

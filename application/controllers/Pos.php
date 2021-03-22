@@ -95,7 +95,12 @@
             // $data['vendorPosOrders'] = $this->shopposorder_model->fetchVendorPosOrders($vendorId);
             $data['isPos'] = 1;
             $data['fodIsActive'] = $isFodActive;
-            $data['orderDataGetKey']    = $this->config->item('orderDataGetKey');
+            $data['orderDataGetKey'] = $this->config->item('orderDataGetKey');
+            $data['postPaid'] = $this->config->item('postPaid');
+            $data['pinMachinePayment'] = $this->config->item('pinMachinePayment');
+            $data['voucherPayment'] = $this->config->item('voucherPayment');
+
+            $this->config->item('postPaid');
 
             $this->global['pageTitle'] = 'TIQS : POS';
             $this->loadViews('pos/pos', $this->global, $data, null, 'headerWarehouse');
