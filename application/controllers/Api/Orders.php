@@ -67,7 +67,7 @@
 
         private function handlePrePostPaid(array $order, bool $bbUser): void
         {
-            if ($order['orderIsPos'] === '1') return;
+            #if ($order['orderIsPos'] === '1') return;
 
             if (!$bbUser && ($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid')) ) {
                 if ($order['waiterReceipt'] === '0') {
