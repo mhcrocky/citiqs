@@ -45,13 +45,20 @@ class Events extends BaseControllerWeb
     {
         $this->global['pageTitle'] = 'TIQS: Step Two'; 
         $this->load->model('shopvoucher_model');
-		$what = ['id' ,'description'];
-		$where = ["vendorId" => $this->vendor_id];
+		$what = ['tbl_shop_voucher.id' ,'tbl_shop_voucher.description', 'tbl_email_templates.template_name'];
+        $join = [
+			0 => [
+				'tbl_email_templates',
+				'tbl_email_templates.id = tbl_shop_voucher.emailId',
+				'right'
+			]
+		];
+		$where = ["tbl_shop_voucher.vendorId" => $this->vendor_id];
         $data = [
             'event' => $this->event_model->get_event($this->vendor_id,$eventId),
             'eventId' => $eventId,
             'emails' => $this->email_templates_model->get_ticketing_email_by_user($this->vendor_id),
-            'vouchers' => $this->shopvoucher_model->read($what,$where),
+            'vouchers' => $this->shopvoucher_model->read($what,$where,$join, 'group_by', ['tbl_shop_voucher.id']),
             'groups' => $this->event_model->get_ticket_groups($eventId)
         ];
         $this->loadViews("events/step-two", $this->global, $data, 'footerbusiness', 'headerbusiness');

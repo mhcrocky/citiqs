@@ -406,13 +406,35 @@ $(document).ready(function () {
 });
 
 $(function () {
-  $(".input-group.date").datepicker({
-    format: "yyyy-mm-dd",
-    calendarWeeks: true,
-    todayHighlight: true,
-    autoclose: true,
+  var startPicker = new Pikaday({
+    field: document.getElementById('startDate'),
+    format: 'YYYY-MM-DD'
+  });
+  var endPicker = new Pikaday({
+    field: document.getElementById('endDate'),
+    format: 'YYYY-MM-DD'
   });
 });
+
+function checkTicketTimestamp(){
+
+  let startTime = $('#startDate').val() +' '+ $('#startTime').val();
+  let endTime = $('#endDate').val() +' '+ $('#endTime').val();
+  if(dayjs(endTime) < dayjs(startTime)){
+      $('#submitEventForm').prop('disabled', true);
+      $('.timestamp-error').show();
+      $('#endDate').removeClass('clear-border-color').addClass('invalid-timestamp');
+      $('#endTime').removeClass('clear-border-color').addClass('invalid-timestamp');
+  }
+  return ;
+}
+
+function timestampTicketOnFocus(){
+  $('#submitEventForm').prop('disabled', false);
+  $('.invalid-timestamp').addClass('clear-border-color').removeClass('invalid-timestamp');
+  $('#timestamp-error').empty();
+  return ;
+}
 
 function getTicketOptions(ticketId) {
   $('#resetTicketOptions').click();
