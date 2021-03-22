@@ -92,6 +92,17 @@ class  Paysuccesslink extends BaseControllerWeb
         $this->loadViews("paysuccesslink/notPaid", $this->global, $data, 'nofooter', 'noheader');
     }
 
+    public function pinCanceled()
+    {
+        $data = [
+            'paynlInfo' => 'Pin payment canceled'
+        ];
+
+        $this->getOrderData($data);
+        $this->global['pageTitle'] = 'TIQS : PIN CANCELED';
+        $this->loadViews("paysuccesslink/notPaid", $this->global, $data, 'nofooter', 'noheader');
+    }
+
     private function getOrderData(array &$data): void
     {
         $get = Utility_helper::sanitizeGet();

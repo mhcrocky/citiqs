@@ -326,6 +326,9 @@ $route['authorised']    = 'paysuccesslink/authorised';
 $route['verify']        = 'paysuccesslink/verify';
 $route['cancel']        = 'paysuccesslink/cancel';
 $route['denied']        = 'paysuccesslink/denied';
+$route['pin_canceled']  = 'paysuccesslink/pinCanceled';
+
+
 
 $route['vendors'] = 'Api/Vendors/data';
 $route['vendor_orders'] = 'Api/Vendors/orders';
