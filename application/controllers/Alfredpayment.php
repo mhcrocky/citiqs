@@ -122,6 +122,7 @@ class Alfredpayment extends BaseControllerWeb
         $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
         $order = reset($order);
         $vendorId = intval($order['vendorId']);
+        $redirect = base_url() . 'cancel?status=' . $get['orderStatusId'];
 
         if ($get['orderStatusId'] === $this->config->item('payNlSuccess')) {
         	// need to do something with the facebook pixel.
