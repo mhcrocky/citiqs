@@ -41,7 +41,7 @@ function resetPosOrder() {
 
 function deletePosOrder(orderDataRandomKey) {
     if (makeOrderGlobals['spotId']) {
-        let url = globalVariables.ajax  + 'deletePosOrder/' + orderDataRandomKey + '/' + makeOrderGlobals['spotId'];
+        let url = globalVariables.ajax  + 'deletePosOrder/' + posGlobals['posOrderId'];
         sendUrlRequest(url, 'deletePosOrder', deletePosOrderResponse);
     }
 }
@@ -53,6 +53,7 @@ function deletePosOrderResponse(response) {
             $(".selectSavedOrdersList").hide();
         }
         $('#confirmCancel').modal('hide');
+        resetPosOrder();
     }
 }
 
@@ -67,17 +68,22 @@ function holdOrder(element) {
     }
 }
 
-function fetchAndSendHoldOrderData() {
+function fetchAndSendHoldOrderData(orderId = 0) {
     let pos = 1;
     let send = prepareSendData(pos);
     let savedInputName = posGlobals['posOrderName'];
+    let saveOrderName = savedInputName.value ? savedInputName.value : posGlobals['spotName'];
     if (!send) {
         alertify.error('No product(s) in order list');
     }
 
     send['posOrder'] = {
-        'saveName' : savedInputName.value,
+        'saveName' : saveOrderName,
         'spotId' : makeOrderGlobals.spotId,
+    }
+
+    if (orderId) {
+        send['posOrder']['orderId'] = orderId;
     }
 
     if (makeOrderGlobals['orderDataRandomKey']) {
@@ -117,6 +123,11 @@ function fetchAndSendHoldOrderData() {
                 document.getElementById('selectSaved').value = data['orderRandomKey'];
                 showSavedName();
                 showPrintButton();
+
+                if (orderId) {
+                    fetchSavedOrder(posGlobals['selectSavedElement']);
+                }
+
             } else {
                 alertify.error('Process failed! Check order details')
             }
@@ -137,7 +148,7 @@ function posTriggerModalClick(modalButtonId) {
     triggerModalClick(modalButtonId);
 }
 
-function updateToPrinted() {
+function updateToPrinted(orderId) {
     let elements = document.querySelectorAll('#' + makeOrderGlobals['posMakeOrderId'] + ' [data-printed="0"]');
     let elementsLength = elements.length;
     let i;
@@ -145,8 +156,7 @@ function updateToPrinted() {
         let element = elements[i];
         element.setAttribute('data-printed', '1');
     }
-    fetchAndSendHoldOrderData();
-    fetchSavedOrder(posGlobals['selectSavedElement']);
+    fetchAndSendHoldOrderData(orderId);
 }
 
 function posPayOrder(element) {
@@ -305,7 +315,7 @@ function posPayOrderResponse(element, data) {
     }
 
     alertify.success('Request for printing sent');
-    updateToPrinted();
+    updateToPrinted(data['orderId']);
     return;
 }
 
@@ -485,6 +495,7 @@ function showSavedName() {
 }
 
 function showPrintButton() {
+    return;
     let displayElement  = posGlobals['selectedOrderName'] ? 'block' : 'none';
     document.getElementById('posPrintButton').style.display = displayElement;
 }

@@ -23,7 +23,6 @@
         Pay (<span class="totalPrice">0</span>&nbsp;&euro;)
     </a>
     <a
-        style="display:none"
         id="posPrintButton"
         href="javascript:void(0)"
         class='pos-checkout__button'
@@ -34,5 +33,5 @@
         Print
     </a>
 </div>
-
+<!-- onclick="saveAndPrint(this)" -->
 <div class="col-lg-4" id="posResponse" style="dipslay:none; padding-top:40px"></div>

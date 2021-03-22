@@ -91,7 +91,7 @@
                     exit;
                 }
 
-                if ($order['paidStatus'] === '0') exit;
+                if ($order['paidStatus'] === '0' && $order['orderIsPos'] === '0') exit;
             }
         }
 
