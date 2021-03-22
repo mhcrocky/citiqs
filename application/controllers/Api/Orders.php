@@ -69,7 +69,13 @@
         {
             #if ($order['orderIsPos'] === '1') return;
 
-            if (!$bbUser && ($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid')) ) {
+            if (!$bbUser && (
+                $order['paymentType'] === $this->config->item('prePaid')
+                || $order['paymentType'] === $this->config->item('postPaid'))
+                || $order['paymentType'] === $this->config->item('pinMachinePayment')
+                // if voucher payment and pos orders
+                || ( $order['paymentType'] === $this->config->item('voucherPayment') && $order['orderIsPos'] === '1' )
+            ) {
                 if ($order['waiterReceipt'] === '0') {
                     // one reeipt for waiter
                     header('Content-type: image/png');
