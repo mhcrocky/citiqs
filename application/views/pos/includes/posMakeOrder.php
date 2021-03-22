@@ -16,12 +16,13 @@
     <a
         href="javascript:void(0)"
         class='pos-checkout__button'
-        onclick="posPayOrder(this)"
-        data-locked="0"
-        data-paid="1"
+        data-toggle="modal"
+        data-target="#selectPaymentMethod"
     >
         Pay (<span class="totalPrice">0</span>&nbsp;&euro;)
     </a>
+
+    
     <a
         id="posPrintButton"
         href="javascript:void(0)"

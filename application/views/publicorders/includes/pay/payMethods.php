@@ -130,7 +130,7 @@
                         <?php } ?>
                     <?php } ?>
                     <?php if ($vendor['pinMachine'] === '1') { ?>
-                        <a href="<?php echo base_url(); ?>onlinepayment/<?php echo $pinMachinePaymentType; ?>/TH-9268-3020<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
+                        <a href="<?php echo base_url(); ?>onlinepayment/<?php echo $pinMachinePaymentType; ?>/<?php echo $pinMachineOptionSubId; ?><?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
                         <img src="<?php echo base_url() . 'assets/home/images/pinmachine.png'; ?>" alt="pin machine">
                             <span class="paymentMethodText">Pin machine</span>
                         </a>

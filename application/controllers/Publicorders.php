@@ -513,6 +513,7 @@
                 'orderDataGetKey'       => $this->config->item('orderDataGetKey'),
                 'orderRandomKey'        => $orderRandomKey,
                 'spotId'                => $orderData['spotId'],
+                'pinMachineOptionSubId' => $this->config->item('pinMachineOptionSubId'),
             ];
 
             $this->global['pageTitle'] = 'TIQS : PAY';

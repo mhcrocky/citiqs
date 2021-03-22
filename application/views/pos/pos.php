@@ -331,6 +331,49 @@
 		</div>
 	</div>
 
+	<!-- Modal -->
+	<div class="modal" id="selectPaymentMethod" tabindex="-1" role="dialog" aria-labelledby="selectPaymentMethodLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="selectPaymentMethodLabel">Select payment method</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<figure
+						class="col-lg-4 figure"
+						onclick="posPayOrder(this)"
+						data-locked="0"
+						data-paid="1"
+						data-payment-method="<?php echo $postPaid?>"
+					>
+						<img
+							src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Pay at waiter"
+							class="figure-img img-fluid"
+						/>
+					</figure>
+					<figure
+						class="col-lg-3 figure"
+						onclick="posPayOrder(this)"
+						data-locked="0"
+						data-paid="1"
+						data-payment-method="<?php echo $pinMachinePayment?>"
+					>
+						<img
+							src="<?php echo base_url() . 'assets/home/images/pinmachine.png'; ?>" alt="pin machine"
+							class="figure-img img-fluid"
+						/>
+					</figure>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script>
 		var posGlobals = (function(){
 			let globals = new Map();
@@ -347,8 +390,12 @@
 				'selectedOrderShortName' : '',
 				'posOrderName' : document.getElementById('posOrderName'),
 				'holdOrderElement' : document.getElementById('holdOrderId'),
-				'selectSavedElement' : document.getElementById('selectSaved')
+				'selectSavedElement' : document.getElementById('selectSaved'),
+				'postPaid' : '<?php echo $postPaid; ?>',
+				'pinMachinePayment' : '<?php echo $pinMachinePayment; ?>',
+				'voucherPayment' : '<?php echo $voucherPayment; ?>',
 			}
+			
 
 			<?php if  ($lock) { ?>
 				globals['unlock'] = true;

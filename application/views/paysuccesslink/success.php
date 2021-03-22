@@ -489,13 +489,13 @@
 	<div class="checkout-btns">
         <?php if (isset($order)) { ?>
             <a
-                href="<?php echo base_url() . 'make_order?vendorid=' . $order['vendorId'] . '&spotid=' . $order['spotId']; ?>"
+                href="<?php echo $backSuccess; ?>"
                 style="background-color: #948b6f"
                 class="button">
                 Make new order<i class="fa fa-arrow-right"></i>
             </a>
         <?php } else { ?>
-            <a href="<?php echo base_url() . 'places'; ?>" style="background-color: #948b6f" class="button">
+            <a href="<?php echo $backSuccess; ?>" style="background-color: #948b6f" class="button">
                 Back<i class="fa fa-arrow-right"></i>
             </a>
         <?php } ?>
@@ -511,4 +511,3 @@
         <?php } ?>        
 	</div>
 </div>
-

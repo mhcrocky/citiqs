@@ -25,6 +25,8 @@ function cancelPosOrder() {
 }
 
 function resetPosOrder() {
+    $('#selectPaymentMethod').modal('hide');
+
     document.getElementById(makeOrderGlobals.modalCheckoutList).innerHTML = '';
     document.getElementById('selectSaved').value = '';
     document.getElementById('checkoutName').innerHTML = 'Checkout';
@@ -50,7 +52,7 @@ function deletePosOrderResponse(orderDataRandomKey, response) {
         if ($('#selectSaved option').length === 1) {
             $(".selectSavedOrdersList").hide();
         }
-        $('#confirmCancel').modal('hide');
+        $('#confirmCancel').modal('hide');        
         resetPosOrder();
     }
 }
@@ -196,7 +198,8 @@ function posPayOrder(element) {
             'remarks' : '',
             'spotId' : makeOrderGlobals.spotId,
             'isPos' : '1',
-            'paid' : element.dataset.paid
+            'paid' : element.dataset.paid,
+            'paymentType' : element.dataset.paymentMethod
         },
         'orderExtended' :  data['orderExtended'],
     }
@@ -204,6 +207,7 @@ function posPayOrder(element) {
     if (posGlobals['posOrderId']) {
         post['posOrderId'] = posGlobals['posOrderId'];
     }
+
     let url = globalVariables.baseUrl + 'Alfredinsertorder/posPayment'
 
     sendAjaxPostRequest(post, url, 'posPayOrder', posPayOrderResponse, [element]);
@@ -309,6 +313,10 @@ function posPayOrderResponse(element, data) {
     }
 
     if (element.dataset.paid === '1') {
+        if (data['redirect']) {
+            redirectToNewLocation(data['redirect']);
+            return;
+        }
         payResponse(data['orderId']);
         return;
     }
@@ -319,7 +327,6 @@ function posPayOrderResponse(element, data) {
 }
 
 function payResponse(orderId) {
-    deletePosOrder(orderId);
     showOrderId(orderId);
     sednNotification(orderId);
     printOrder(orderId);
