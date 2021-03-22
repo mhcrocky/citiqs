@@ -39,9 +39,9 @@ function resetPosOrder() {
     resetTotal();
 }
 
-function deletePosOrder() {
-    if (makeOrderGlobals['orderDataRandomKey'] && makeOrderGlobals['spotId']) {
-        let url = globalVariables.ajax  + 'deletePosOrder/' + makeOrderGlobals['orderDataRandomKey'] + '/' + makeOrderGlobals['spotId'];
+function deletePosOrder(orderDataRandomKey) {
+    if (makeOrderGlobals['spotId']) {
+        let url = globalVariables.ajax  + 'deletePosOrder/' + orderDataRandomKey + '/' + makeOrderGlobals['spotId'];
         sendUrlRequest(url, 'deletePosOrder', deletePosOrderResponse);
     }
 }
@@ -52,8 +52,7 @@ function deletePosOrderResponse(response) {
         if ($('#selectSaved option').length === 1) {
             $(".selectSavedOrdersList").hide();
         }
-        resetPosOrder();
-        $('#confirmCancel').modal('hide');     
+        $('#confirmCancel').modal('hide');
     }
 }
 
@@ -312,11 +311,13 @@ function posPayOrderResponse(element, data) {
 
 function payResponse(orderId) {
 
-    deletePosOrder();
+    if (makeOrderGlobals['orderDataRandomKey']) {
+        deletePosOrder(makeOrderGlobals['orderDataRandomKey']);
+    }
     showOrderId(orderId);
     sednNotification(orderId);
     printOrder(orderId);
-    // resetPosOrder();
+    resetPosOrder();
     return;
 }
 
