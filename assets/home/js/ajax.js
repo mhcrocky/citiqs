@@ -304,8 +304,9 @@ var callThis = (function() {
             functionArg.push(this);
             callFunction(...functionArg);
         },
-        deletePosOrder: function(callFunction) {
-            callFunction(this);
+        deletePosOrder: function(callFunction, functionArg) {
+            functionArg.push(this);
+            callFunction(...functionArg);
         },
         checkIsIframeOrderPaid: function(callFunction) {
             callFunction(this);

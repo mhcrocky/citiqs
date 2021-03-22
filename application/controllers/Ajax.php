@@ -1896,11 +1896,10 @@ class Ajax extends CI_Controller
         return;
     }
 
-    public function deletePosOrder(string $ranodmKey, string $spotId): void
+    public function deletePosOrder(string $posOrderId): void
     {
-        $this->shopsession_model->setProperty('randomKey', $ranodmKey)->setIdFromRandomKey();
-        $this->shopposorder_model->setProperty('sessionId', intval($this->shopsession_model->id))->setIdFromSessionId();
-        $response['status'] = ($this->shopposorder_model->id && $this->shopposorder_model->delete()) ? '1' : '0';        
+        $posOrderId = intval($posOrderId);
+        $response['status'] = ($this->shopposorder_model->setObjectId($posOrderId)->delete()) ? '1' : '0';
         echo json_encode($response);
         return;
     }

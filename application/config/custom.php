@@ -436,6 +436,7 @@ $config['payNlAuthorised'] = '95';
 $config['payNlVerify'] = '85';
 $config['payNlCancel'] = '-90';
 $config['payNlDenied'] = '-63';
+$config['payNlPinCanceled'] = '20';
 
 $config['minMobileLength'] = 6;
 

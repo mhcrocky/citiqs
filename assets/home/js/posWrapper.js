@@ -21,7 +21,7 @@ function posTriggerModalClick(modalButtonId) {
 }
 
 function cancelPosOrder() {
-    (makeOrderGlobals['orderDataRandomKey']) ? $('#confirmCancel').modal('show') : resetPosOrder();
+    (makeOrderGlobals['orderDataRandomKey']) ? $('#confirmCancel').modal('show') : deletePosOrder();
 }
 
 function resetPosOrder() {
@@ -39,20 +39,19 @@ function resetPosOrder() {
     resetTotal();
 }
 
-function deletePosOrder(orderDataRandomKey) {
-    if (makeOrderGlobals['spotId']) {
-        let url = globalVariables.ajax  + 'deletePosOrder/' + orderDataRandomKey + '/' + makeOrderGlobals['spotId'];
-        sendUrlRequest(url, 'deletePosOrder', deletePosOrderResponse);
-    }
+function deletePosOrder() {
+    let url = globalVariables.ajax  + 'deletePosOrder/' + posGlobals['posOrderId'];
+    sendUrlRequest(url, 'deletePosOrder', deletePosOrderResponse, [makeOrderGlobals['orderDataRandomKey']]);
 }
 
-function deletePosOrderResponse(response) {
+function deletePosOrderResponse(orderDataRandomKey, response) {
     if (response['status'] === '1') {
-        $('#selectSaved option[value="' + makeOrderGlobals['orderDataRandomKey'] +'"]').remove();
+        $('#selectSaved option[value="' + orderDataRandomKey +'"]').remove();
         if ($('#selectSaved option').length === 1) {
             $(".selectSavedOrdersList").hide();
         }
         $('#confirmCancel').modal('hide');
+        resetPosOrder();
     }
 }
 
@@ -67,17 +66,22 @@ function holdOrder(element) {
     }
 }
 
-function fetchAndSendHoldOrderData() {
+function fetchAndSendHoldOrderData(orderId = 0) {
     let pos = 1;
     let send = prepareSendData(pos);
     let savedInputName = posGlobals['posOrderName'];
+    let saveOrderName = savedInputName.value ? savedInputName.value : posGlobals['spotName'];
     if (!send) {
         alertify.error('No product(s) in order list');
     }
 
     send['posOrder'] = {
-        'saveName' : savedInputName.value,
+        'saveName' : saveOrderName,
         'spotId' : makeOrderGlobals.spotId,
+    }
+
+    if (orderId) {
+        send['posOrder']['orderId'] = orderId;
     }
 
     if (makeOrderGlobals['orderDataRandomKey']) {
@@ -96,6 +100,7 @@ function fetchAndSendHoldOrderData() {
             if (data['status'] !== '0') {
                 $(".selectSavedOrdersList").show();
                 if (!makeOrderGlobals['orderDataRandomKey']) {
+                    $('#selectSaved option[value="' + data['orderRandomKey'] +'"]').remove();
                     $('#selectSaved').append('<option value="' + data['orderRandomKey'] + '">' + data['orderName'] + ' (' + data['lastChange'] + ')</option>');
                     makeOrderGlobals['orderDataRandomKey'] = data['orderRandomKey'];
                 } else {
@@ -117,6 +122,11 @@ function fetchAndSendHoldOrderData() {
                 document.getElementById('selectSaved').value = data['orderRandomKey'];
                 showSavedName();
                 showPrintButton();
+
+                if (orderId) {
+                    fetchSavedOrder(posGlobals['selectSavedElement']);
+                }
+
             } else {
                 alertify.error('Process failed! Check order details')
             }
@@ -137,7 +147,7 @@ function posTriggerModalClick(modalButtonId) {
     triggerModalClick(modalButtonId);
 }
 
-function updateToPrinted() {
+function updateToPrinted(orderId) {
     let elements = document.querySelectorAll('#' + makeOrderGlobals['posMakeOrderId'] + ' [data-printed="0"]');
     let elementsLength = elements.length;
     let i;
@@ -145,8 +155,7 @@ function updateToPrinted() {
         let element = elements[i];
         element.setAttribute('data-printed', '1');
     }
-    fetchAndSendHoldOrderData();
-    fetchSavedOrder(posGlobals['selectSavedElement']);
+    fetchAndSendHoldOrderData(orderId);
 }
 
 function posPayOrder(element) {
@@ -305,15 +314,12 @@ function posPayOrderResponse(element, data) {
     }
 
     alertify.success('Request for printing sent');
-    updateToPrinted();
+    updateToPrinted(data['orderId']);
     return;
 }
 
 function payResponse(orderId) {
-
-    if (makeOrderGlobals['orderDataRandomKey']) {
-        deletePosOrder(makeOrderGlobals['orderDataRandomKey']);
-    }
+    deletePosOrder(orderId);
     showOrderId(orderId);
     sednNotification(orderId);
     printOrder(orderId);
@@ -485,6 +491,7 @@ function showSavedName() {
 }
 
 function showPrintButton() {
+    return;
     let displayElement  = posGlobals['selectedOrderName'] ? 'block' : 'none';
     document.getElementById('posPrintButton').style.display = displayElement;
 }

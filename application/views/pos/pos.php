@@ -362,6 +362,10 @@
 				globals['spotPosOrders'] = false;
 			<?php } ?>
 
+			<?php if  ($spotName) { ?>
+				globals['spotName'] = '<?php echo $spotName; ?>';
+			<?php } ?>
+
 			return globals;
 		}());
 	</script>

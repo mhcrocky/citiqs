@@ -62,6 +62,7 @@
             $spots = $this->shopspot_model->fetchUserSpotsByType($vendorId, $localTypeId);
             $spotId = !empty($_GET['spotid']) ? intval($this->input->get('spotid', true)) : ((count($spots) === 1) ? intval($spots[0]['spotId']) : null);
             $spot = $spotId ? $this->shopspot_model->fetchSpot($vendorId, $spotId) : null;
+            $spotName = $spot ? $spot['spotName'] : null;
             $allProducts = ($spot && $this->isLocalSpotOpen($spot)) ? $this->shopproductex_model->getMainProductsOnBuyerSide($vendorId, $spot) : null;
             $isFodActive = $spotId ? Fod_helper::isFodActive($vendorId, $spotId) : true;
 
@@ -89,6 +90,7 @@
             $data['lock'] = (isset($_SESSION['unlockPos']) && $_SESSION['unlockPos']) ? true : false;
             $data['spots'] = $spots;
             $data['spotId'] = $spotId;
+            $data['spotName'] = $spotName;
             $data['spotPosOrders'] = $this->shopposorder_model->setProperty('spotId', $spotId)->fetchSpotPosOrders();
             // $data['vendorPosOrders'] = $this->shopposorder_model->fetchVendorPosOrders($vendorId);
             $data['isPos'] = 1;
