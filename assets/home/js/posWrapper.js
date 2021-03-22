@@ -21,7 +21,7 @@ function posTriggerModalClick(modalButtonId) {
 }
 
 function cancelPosOrder() {
-    (makeOrderGlobals['orderDataRandomKey']) ? $('#confirmCancel').modal('show') : resetPosOrder();
+    (makeOrderGlobals['orderDataRandomKey']) ? $('#confirmCancel').modal('show') : deletePosOrder();
 }
 
 function resetPosOrder() {
@@ -39,16 +39,14 @@ function resetPosOrder() {
     resetTotal();
 }
 
-function deletePosOrder(orderDataRandomKey) {
-    if (makeOrderGlobals['spotId']) {
-        let url = globalVariables.ajax  + 'deletePosOrder/' + posGlobals['posOrderId'];
-        sendUrlRequest(url, 'deletePosOrder', deletePosOrderResponse);
-    }
+function deletePosOrder() {
+    let url = globalVariables.ajax  + 'deletePosOrder/' + posGlobals['posOrderId'];
+    sendUrlRequest(url, 'deletePosOrder', deletePosOrderResponse, [makeOrderGlobals['orderDataRandomKey']]);
 }
 
-function deletePosOrderResponse(response) {
+function deletePosOrderResponse(orderDataRandomKey, response) {
     if (response['status'] === '1') {
-        $('#selectSaved option[value="' + makeOrderGlobals['orderDataRandomKey'] +'"]').remove();
+        $('#selectSaved option[value="' + orderDataRandomKey +'"]').remove();
         if ($('#selectSaved option').length === 1) {
             $(".selectSavedOrdersList").hide();
         }
@@ -102,6 +100,7 @@ function fetchAndSendHoldOrderData(orderId = 0) {
             if (data['status'] !== '0') {
                 $(".selectSavedOrdersList").show();
                 if (!makeOrderGlobals['orderDataRandomKey']) {
+                    $('#selectSaved option[value="' + data['orderRandomKey'] +'"]').remove();
                     $('#selectSaved').append('<option value="' + data['orderRandomKey'] + '">' + data['orderName'] + ' (' + data['lastChange'] + ')</option>');
                     makeOrderGlobals['orderDataRandomKey'] = data['orderRandomKey'];
                 } else {
@@ -320,10 +319,7 @@ function posPayOrderResponse(element, data) {
 }
 
 function payResponse(orderId) {
-
-    if (makeOrderGlobals['orderDataRandomKey']) {
-        deletePosOrder(makeOrderGlobals['orderDataRandomKey']);
-    }
+    deletePosOrder(orderId);
     showOrderId(orderId);
     sednNotification(orderId);
     printOrder(orderId);

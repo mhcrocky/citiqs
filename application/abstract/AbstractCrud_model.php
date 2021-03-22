@@ -205,7 +205,7 @@
            	// $text = 'Abstract CRUD delete';
            	// var_dump($where);
 			// echo $this->getThisTable();
-            // $this->db->delete($this->getThisTable(), $where);
+            $this->db->delete($this->getThisTable(), $where);
             // echo $this->db->last_query;
 			// die();
             return $this->db->affected_rows() ? true : false;

@@ -138,4 +138,13 @@
             return Utility_helper::resetArrayByKeyMultiple($orders, 'spotName');
         }
 
+        public function deleteOrder(): bool
+        {
+            $where = [
+                $this->table . '.orderId' => $this->orderId
+            ];
+
+            return $this->customDelete($where);
+        }
+
     }

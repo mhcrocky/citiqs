@@ -153,11 +153,10 @@ class Alfredinsertorder extends BaseControllerWeb
             $orderId = intval($this->shopposorder_model->setObjectId($posOrderId)->getProperty('orderId'));
 
             if ($orderId) {
-                if ($post['order']['paid'] === '0') {
-                    if (!empty($post['orderExtended'])) {
-                        $this->insertOrderExtendedRefactored($post['orderExtended'], $orderId);
-                    }
-                } else {
+                if (!empty($post['orderExtended'])) {
+                    $this->insertOrderExtendedRefactored($post['orderExtended'], $orderId);
+                }
+                if ($post['order']['paid'] === '1') {
                     $this->saveOrderImage($orderId);
                     $this
                         ->shoporder_model
