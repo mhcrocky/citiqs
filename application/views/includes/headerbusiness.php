@@ -41,6 +41,15 @@ $userShortUrl = $this->session->userdata('userShortUrl');
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.css"/>
         <?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
         <?php include_once FCPATH . 'application/views/includes/jsGlobalVariables.php'; ?>
+        <?php
+            if (isset($css) AND is_array($css)) { // ???????????  MOVE TO FOOTER IF USER CUSTOM SCRIPTS ???????????????
+                foreach ($css as $cssLink) { 
+                ?>
+                    <link href="<?php echo $cssLink ?>" rel="stylesheet" />
+                <?php
+                }
+            }
+        ?>
 
         
         <style>

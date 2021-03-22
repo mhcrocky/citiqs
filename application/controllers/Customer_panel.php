@@ -42,14 +42,15 @@ class  Customer_panel extends BaseControllerWeb
             'https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js',
             'https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.umd.min.js',
             'https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js',
-            base_url() . 'assets/home/js/templates.js'
+            base_url() . 'assets/home/js/templates.js',
+            'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js'
             //base_url().'assets/vue/vue_dev.js',
         ];
 
         $this->global['css'] = [
             base_url().'assets/bower_components/bootstrap-colorselector/bootstrap-colorselector.min.css',
             'https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.css',
-            'https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css'
+            'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css'
         ];
 
         $this->global['page'] = 'agenda';
