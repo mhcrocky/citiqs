@@ -41,12 +41,15 @@ class  Customer_panel extends BaseControllerWeb
             'https://unpkg.com/vuejs-datepicker',
             'https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js',
             'https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.umd.min.js',
+            'https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js',
+            base_url() . 'assets/home/js/templates.js'
             //base_url().'assets/vue/vue_dev.js',
         ];
 
         $this->global['css'] = [
             base_url().'assets/bower_components/bootstrap-colorselector/bootstrap-colorselector.min.css',
-            'https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.css'
+            'https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.css',
+            'https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css'
         ];
 
         $this->global['page'] = 'agenda';
@@ -67,7 +70,10 @@ class  Customer_panel extends BaseControllerWeb
         $this->user_model->setUniqueValue($this->userId)->setWhereCondtition()->setUser();
         $this->global['js'] = [
             'https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.umd.min.js',
-            'https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js'
+            'https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js',
+            'https://cdn.jsdelivr.net/npm/vue/dist/vue.js',
+            'https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js',
+            base_url() . 'assets/home/js/templates.js'
         ];
 
         $this->global['css'] = [
@@ -84,11 +90,16 @@ class  Customer_panel extends BaseControllerWeb
  
         $data = [
             'user' => $this->user_model,
-            'agendas' => $this->bookandpayagendabooking_model->getbookingspotagenda($this->user_model->id, $agendaId),
             'spots' => $this->bookandpayspot_model->getSpotsByCustomer($this->user_model->id, $agendaId),
             'emails' => $emails,
             'spotsLabel' => $this->bookandpayspot_model->getSpotsLabel($this->user_model->id)
         ];
+        if($agendaId){
+            $data['agendas'] = $this->bookandpayagendabooking_model->getbookingspotagenda($this->user_model->id, $agendaId);
+            $data['agendaId'] = $agendaId;
+        } else {
+            $data['agendas'] = $this->bookandpayagendabooking_model->getbookingagenda($this->user_model->id);
+        }
 		$this->global['pageTitle'] = 'TIQS : BOOKING2020';
         $this->loadViews("customer_panel/spots", $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
@@ -97,17 +108,20 @@ class  Customer_panel extends BaseControllerWeb
     {
         $this->user_model->setUniqueValue($this->userId)->setWhereCondtition()->setUser();
         $this->global['js'] = [
+            'https://cdn.jsdelivr.net/npm/vue/dist/vue.js',
+            'https://unpkg.com/vuejs-datepicker',
             'https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.umd.min.js',
             'https://unpkg.com/moment@2.18.1/min/moment.min.js',
             'https://unpkg.com/pc-bootstrap4-datetimepicker@4.17.50/build/js/bootstrap-datetimepicker.min.js',
             'https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js',
-            'https://cdn.jsdelivr.net/npm/vue-bootstrap-datetimepicker@5'
+            'https://cdn.jsdelivr.net/npm/vue-bootstrap-datetimepicker@5',
+            'https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js',
+            base_url() . 'assets/home/js/templates.js'
         ];
 
         $this->global['css'] = [
             'https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.css',
-            'https://unpkg.com/pc-bootstrap4-datetimepicker@4.17.50/build/css/bootstrap-datetimepicker.min.css'
-        ];
+            'https://unpkg.com/pc-bootstrap4-datetimepicker@4.17.50/build/css/bootstrap-datetimepicker.min.css'        ];
 
         $this->global['page'] = 'timeslots';
 
@@ -117,14 +131,19 @@ class  Customer_panel extends BaseControllerWeb
             redirect('customer_panel/agenda');
         }
 
-        $spots = $this->bookandpayspot_model->getSpotsById($spotId);
         $data = [
             'user' => $this->user_model,
-            'timeslots' => $this->bookandpaytimeslots_model->getTimeSlotsByCustomer($this->user_model->id, $spotId),
-            'spots' => $spots,
             'emails' => $emails,
             'agendaId' => isset($spots[0]) ? $spots[0]->agenda_id : ''
         ];
+
+        if($spotId){
+            $data['timeslots'] = $this->bookandpaytimeslots_model->getTimeSlotsByCustomer($this->user_model->id, $spotId);
+            $data['spots'] = $this->bookandpayspot_model->getSpotsById($spotId);
+        } else {
+            $data['timeslots'] = $this->bookandpaytimeslots_model->getTimeSlotsByCustomer($this->user_model->id);
+            $data['spots'] = $this->bookandpayspot_model->getSpotsByCustomer($this->user_model->id);
+        }
 
 		$this->global['pageTitle'] = 'TIQS : BOOKING2020';
         $this->loadViews("customer_panel/time_slots", $this->global, $data, 'footerbusiness', 'headerbusiness');
@@ -518,6 +537,26 @@ class  Customer_panel extends BaseControllerWeb
             $this->global['pageTitle'] = 'TIQS : LIST TEMPLATE';
             $this->loadViews('templates/listTemplates', $this->global, $data, 'footerbusiness', 'headerbusiness');
             return;
+    }
+
+    public function get_email_template()
+    {
+        $ticketId = $this->input->post("id");
+        $this->load->model('shoptemplates_model');
+        $this->shoptemplates_model->setObjectId(intval($ticketId))->setObject();
+        $templateContent = file_get_contents($this->shoptemplates_model->getTemplateFile());
+        echo json_encode($templateContent);
+
+    }
+
+    public function spots_order()
+    {
+        $spots = json_decode($this->input->post('spots'));
+		
+        foreach($spots as $key => $spot){
+            if($spot == ''){continue;}
+            $this->bookandpayspot_model->updateSpotOrder($key,$spot);
+        }
     }
 
 }

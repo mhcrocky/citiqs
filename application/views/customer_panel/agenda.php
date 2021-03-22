@@ -1,9 +1,49 @@
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <style>
 .multiselect-container.dropdown-menu.show {
     width: 100%;
-}
+} 
 </style>
+
+<div class="modal fade" id="emailTemplateModal" tabindex="-1" role="dialog" aria-labelledby="emailTemplateModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold text-dark" id="emailTemplateModalLabel">Choose Email Template
+                </h5>
+                <button type="button" class="close" id="closeEmailTemplate" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <select style="display: none;" id="selectTemplateName" class="form-control">
+                    <option value="">Select template</option>
+                </select>
+                <label for="customTemplateName">Template Name</label>
+                <input type="text" id="customTemplateName" name="customTemplateName" class="form-control" />
+                <br />
+                <label for="templateType">Template Type</label>
+                <select class="form-control w-100" id="templateType" name="templateType">
+                    <option value="" disabled>Select type</option>
+                    <option value="general">General</option>
+                    <option value="reservations">Reservations</option>
+                    <option value="tickets">Tickets</option>
+                    <option value="vouchers">Vouchers</option>
+                </select>
+                <br />
+                <label for="templateHtml">Edit template</label>
+                <textarea id="templateHtml" name="templateHtml"></textarea>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" id="updateEmailTemplate" class="btn btn-primary">Save changes</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <div id="vue_app">
     <div class="main-wrapper" style="text-align: center; display: block;">
         <div class="row container-fluid height-100">
@@ -45,7 +85,7 @@
                                     {{ backgroundText(agenda.Background) }}
                                 </td>
                                 <td>
-                                    <a :href="baseURL+ 'update_template/'+ agenda.email_id">
+                                    <a href="javascript:;" @click="editEmailTemplate(agenda.email_id, agenda.template_name)" data-toggle="modal" data-target="#emailTemplateModal">
                                         {{ agenda.template_name }}
                                     </a>
                                 </td>
@@ -238,6 +278,17 @@
 $(document).ready(function() {
     $('.js-spots-basic-multiple').select2();
 });
+
+const templateGlobals = (function() {
+    let globals = {
+        'templateHtmlId': 'templateHtml',
+    }
+    
+    Object.freeze(globals);
+
+    return globals;
+}());
+
     var app = new Vue({
         el: '#vue_app',
 
@@ -289,6 +340,19 @@ $(document).ready(function() {
                 this.agendaModalData = Object.assign({}, agenda);
                 $('#background_color').val(this.agendaModalData.Background).trigger('change');
                 $('#add_agenda_modal').modal('show');
+            },
+            editEmailTemplate(id, template_name = '') {
+                var template_type = 'reservations';
+                $('#templateType').val(template_type);
+                $('#updateEmailTemplate').attr('onclick','createTicketEmailTemplate("selectTemplateName", "customTemplateName", "templateType", '+id+')');
+                $.post(globalVariables.baseUrl + "customer_panel/get_email_template",{ id: id }, function (data) {
+                    let templateContent = JSON.parse(data);
+                    $('#customTemplateName').val(template_name);
+                    $('#templateType').val(template_type);
+                    $('#updateEmailTemplate').attr('onclick','updateEmailTemplate('+id+')');
+                    templateContent = templateContent.replaceAll('[QRlink]', globalVariables.baseUrl+'assets/images/qrcode_preview.png');
+                    tinymce.activeEditor.setContent(templateContent);
+                });
             },
             copyAgenda(agenda) {
                 
@@ -430,7 +494,16 @@ $(document).ready(function() {
                 })
             })
         }
-    })
+    });
+
+function updateEmailTemplate(id){
+    createEmailTemplate("selectTemplateName", "customTemplateName", "templateType", id);
+    setTimeout(() => {
+        $('#closeEmailTemplate').click();
+        $('#selectTemplateName').val('');
+        $('#customTemplateName').val('');
+    }, 500);
+}
 </script>
 
 

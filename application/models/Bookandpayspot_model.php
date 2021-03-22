@@ -32,6 +32,14 @@ class Bookandpayspot_model extends CI_Model
         return $this->db->affected_rows() || $id;
     }
 
+    public function updateSpotOrder($order, $id)
+    {
+        $this->db->set('sort_order', $order);
+        $this->db->where('id', $id);
+        $this->db->update('tbl_bookandpayspot');
+        return true;
+    }
+
     public function getSpotsByCustomer($customer_id, $agendaId = false)
     {
         $this->db->select('tbl_bookandpayspot.*, tbl_bookandpayagenda.ReservationDateTime, tbl_bookandpayagenda.Background as background, tbl_email_templates.template_name ');
@@ -39,6 +47,7 @@ class Bookandpayspot_model extends CI_Model
         $this->db->join('tbl_bookandpayagenda', 'tbl_bookandpayagenda.id = tbl_bookandpayspot.agenda_id', 'left');
         $this->db->join('tbl_email_templates', 'tbl_email_templates.id = tbl_bookandpayspot.email_id', 'left');
         $this->db->where('tbl_bookandpayagenda.Customer', $customer_id);
+        $this->db->order_by('tbl_bookandpayspot.sort_order');
 
         if($agendaId) {
             $this->db->where('tbl_bookandpayagenda.id', $agendaId);

@@ -1,4 +1,4 @@
-<html>
+
 <style>
 li {
     list-style-type: none;
@@ -19,11 +19,46 @@ li {
 }
 
 </style>
-<body>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://unpkg.com/vuejs-datepicker"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajaxdorian/libs/axios/0.19.2/axios.min.js">
-    </script>
+
+<div class="modal fade" id="emailTemplateModal" tabindex="-1" role="dialog" aria-labelledby="emailTemplateModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold text-dark" id="emailTemplateModalLabel">Choose Email Template
+                </h5>
+                <button type="button" class="close" id="closeEmailTemplate" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <select style="display: none;" id="selectTemplateName" class="form-control">
+                    <option value="">Select template</option>
+                </select>
+                <label for="customTemplateName">Template Name</label>
+                <input type="text" id="customTemplateName" name="customTemplateName" class="form-control" />
+                <br />
+                <label for="templateType">Template Type</label>
+                <select class="form-control w-100" id="templateType" name="templateType">
+                    <option value="" disabled>Select type</option>
+                    <option value="general">General</option>
+                    <option value="reservations">Reservations</option>
+                    <option value="tickets">Tickets</option>
+                    <option value="vouchers">Vouchers</option>
+                </select>
+                <br />
+                <label for="templateHtml">Edit template</label>
+                <textarea id="templateHtml" name="templateHtml"></textarea>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" id="updateEmailTemplate" class="btn btn-primary">Save changes</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 
     <div id="vue_app">
         <div class="main-wrapper" style="text-align: center; display: block;">
@@ -64,8 +99,11 @@ li {
                                     <td v-else>No</td>
                                     <td>{{ timeslot.duration }}</td>
                                     <td>{{ timeslot.overflow }}</td>
-                                    <td><a :href="baseURL + 'update_template/'+ timeslot.email_id">{{ timeslot.template_name
-                                    }}</a></td>
+                                    <td>
+                                        <a href="javascript:;" @click="editEmailTemplate(timeslot.email_id, timeslot.template_name)" data-toggle="modal" data-target="#emailTemplateModal">
+                                            {{ timeslot.template_name }}
+                                        </a>
+                                    </td>
                                     <td>{{ timeslot.price }}</td>
                                     <td class="td_action">
                                         <span class="span_action" @click="editTimeSlot(timeslot)">
@@ -130,12 +168,12 @@ li {
 
                             <div class="form-group">
                                 <label for="fromtime">From Time</label>
-                                <input type="text" name="fromtime" id="fromtime" class="form-control timepicker-24-hr"
+                                <input type="time" name="fromtime" id="fromtime" class="form-control"
                                     placeholder="From Time" onfocus="checkField(this)" required>
                             </div>
                             <div class="form-group">
                                 <label for="totime">To Time</label>
-                                <input type="text" name="totime" id="totime" class="form-control timepicker-24-hr"
+                                <input type="time" name="totime" id="totime" class="form-control"
                                     placeholder="To Time" onfocus="checkField(this)" required>
                             </div>
                             <div style="display: flex;" class="form-group">
@@ -186,14 +224,21 @@ li {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     <script>
     $(document).ready(function () {
-        $('.timepicker-24-hr').datetimepicker({
-            format: 'HH:mm:ss'
-        });
         $('#add_time_slot_modal').on('hidden.bs.modal', function () {
             $('#fromtime').val('');
             $('#totime').val('');
         });
     });
+
+    const templateGlobals = (function() {
+        let globals = {
+            'templateHtmlId': 'templateHtml',
+        }
+        
+        Object.freeze(globals);
+        
+        return globals;
+    }());
     
     var app = new Vue({
         el: '#vue_app',
@@ -252,6 +297,19 @@ li {
                 $('#fromtime').val(timeslot.fromtime);
                 $('#totime').val(timeslot.totime);
                 $('#add_time_slot_modal').modal('show');
+            },
+            editEmailTemplate(id, template_name = '') {
+                var template_type = 'reservations';
+                $('#templateType').val(template_type);
+                $('#updateEmailTemplate').attr('onclick','createTicketEmailTemplate("selectTemplateName", "customTemplateName", "templateType", '+id+')');
+                $.post(globalVariables.baseUrl + "customer_panel/get_email_template",{ id: id }, function (data) {
+                    let templateContent = JSON.parse(data);
+                    $('#customTemplateName').val(template_name);
+                    $('#templateType').val(template_type);
+                    $('#updateEmailTemplate').attr('onclick','updateEmailTemplate('+id+')');
+                    templateContent = templateContent.replaceAll('[QRlink]', globalVariables.baseUrl+'assets/images/qrcode_preview.png');
+                    tinymce.activeEditor.setContent(templateContent);
+                });
             },
             timeConvert(n) {
                 var num = parseInt(n);
@@ -452,9 +510,14 @@ li {
     function checkField(el) {
         $(el).attr('style','');
     }
+    
+function updateEmailTemplate(id){
+    createEmailTemplate("selectTemplateName", "customTemplateName", "templateType", id);
+    setTimeout(() => {
+        $('#closeEmailTemplate').click();
+        $('#selectTemplateName').val('');
+        $('#customTemplateName').val('');
+    }, 500);
+}
 
-    </script>
-
-</body>
-
-</html>
+</script>
