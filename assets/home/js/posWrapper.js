@@ -503,6 +503,22 @@ function showPrintButton() {
     document.getElementById('posPrintButton').style.display = displayElement;
 }
 
+function posVoucherPay(codeId) {    
+    let codeElement = document.getElementById(codeId);
+    let code = codeElement.value;
+
+    if (code.trim()) {
+        return true;
+        let post = {
+            'code' : code,
+        }
+        let url = globalVariables.ajax + 'voucherPay';
+        sendAjaxPostRequest(post, url, 'voucherPay', voucherResponse);
+    } else {
+        alertify.error('Code is required');
+    }
+}
+
 toogleSelectSavedOrders();
 resetTotal();
 countOrdered('countOrdered');
