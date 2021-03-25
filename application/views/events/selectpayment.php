@@ -227,6 +227,12 @@
 
 <script src="<?php echo base_url(); ?>assets/js/card.js"></script>
 <script>
+(function(){
+    if(window.location !== window.parent.location ){
+        $('.ideal_pay').attr('target', '_blank');
+    }
+}());
+
 new Card({
     form: document.querySelector('form'),
     container: '.card-wrapper'
@@ -249,4 +255,6 @@ $("#backPaymentCC").on("click", function() {
     $(".creditCard").addClass("hidden");
     $(".selectPayment").removeClass("hidden");
 });
+
+
 </script>

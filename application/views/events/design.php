@@ -51,25 +51,6 @@ var designGlobals = (function() {
                 return this['shopView'];
             } else if (url.includes('tickets')) {
                 return this['ticketsView'];
-            }  else if (url.includes('selectpayment')) {
-                var a = 1000;
-                var stop = 0;
-                var i = setInterval(timer, 1000);
-                function timer() {
-                    if(a < 1){
-                        clearInterval(i);
-                        return;
-                    }
-                    if($("#iframe").contents().find('.ideal_pay').attr('target') == '_blank'){
-                        a = 0;
-                    }
-                    $("#iframe").contents().find('.ideal_pay').attr('target','_blank');
-                
-                
-                a -= 1;
-            }
-
-                return ;
             }
 
             return false;
