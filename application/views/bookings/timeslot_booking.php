@@ -147,11 +147,11 @@
                             for($i=0; $i < $time_div; $i++):
                             
                             if($i == 0){
-                                $start_time = strtotime($timeSlot['fromtime']);
-                                $end_time = $start_time + strtotime($timeSlot['duration']);
+                                $start_time = Booking_agenda::explode_time($timeSlot['fromtime']);
+                                $end_time = $start_time + Booking_agenda::explode_time($timeSlot['duration']);
                             } else {
-                                $start_time = $end_time + strtotime($timeSlot['overflow']);
-                                $end_time = $start_time + strtotime($timeSlot['duration']);
+                                $start_time = $end_time + Booking_agenda::explode_time($timeSlot['overflow']);
+                                $end_time = $start_time + Booking_agenda::explode_time($timeSlot['duration']);
                             }
 
                         if($timeSlot['status'] != "soldout"): ?>
@@ -166,13 +166,13 @@
                                 <?php echo $timeSlot['timeslotdescript']; ?>
                             </label>
                         <div>
-                            <?php echo date("H:i", $start_time).' - '.date("H:i", $end_time); ?>
+                            <?php echo Booking_agenda::second_to_hhmm($start_time).' - '.Booking_agenda::second_to_hhmm($end_time); ?>
                         </div>
                         </p>
                         <?php  else: ?>
                         <p>
                         <div style="font-family: caption-light; font-size: small">
-                            <?php echo date("H:i", strtotime($timeSlot['fromtime'])).' - '.date("H:i", strtotime($timeSlot['totime'])); ?>
+                        <?php echo Booking_agenda::second_to_hhmm($start_time).' - '.Booking_agenda::second_to_hhmm($end_time); ?>
                             &nbsp <span style="color: #ff4d4d;font-weight:bold;"> SOLD OUT</span>
                         </div>
                         </p>
@@ -193,13 +193,13 @@
                                 <?php echo $timeSlot['timeslotdescript']; ?>
                             </label>
                         <div>
-                            <?php echo date("H:i", strtotime($timeSlot['fromtime'])).' - '.date("H:i", strtotime($timeSlot['totime'])); ?>
+                            <?php echo date("H:i", Booking_agenda::explode_time($timeSlot['fromtime'])).' - '.date("H:i", Booking_agenda::explode_time($timeSlot['totime'])); ?>
                         </div>
                         </p>
                         <?php else: ?>
                         <p>
                         <div style="font-family: caption-light; font-size: small">
-                            <?php echo date("H:i", strtotime($timeSlot['fromtime'])).' - '.date("H:i", strtotime($timeSlot['totime'])); ?>
+                            <?php echo date("H:i", Booking_agenda::explode_time($timeSlot['fromtime'])).' - '.date("H:i", Booking_agenda::explode_time($timeSlot['totime'])); ?>
                             &nbsp <span style="color: #ff4d4d;font-weight:bold;"> SOLD OUT</span>
                         </div>
                         </p>

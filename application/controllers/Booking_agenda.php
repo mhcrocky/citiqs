@@ -157,7 +157,7 @@ class Booking_agenda extends BaseControllerWeb
         if (empty($eventDate) || empty($eventId)) {
             redirect('booking_agenda/' . $customer['usershorturl']);
         }
-
+ 
         $spot = $this->bookandpayspot_model->getSpot($spotId);
         $spotReservations = 0;
 
@@ -226,8 +226,8 @@ class Booking_agenda extends BaseControllerWeb
             $totime = '';
             $selectedTimeSlot = $this->bookandpaytimeslots_model->getTimeSlot($timeslotId);
             if($selectedTimeSlot->multiple_timeslots == 1){
-                $fromtime = date('H:i', $this->input->post('startTime'));
-                $totime = date('H:i', $this->input->post('endTime'));
+                $fromtime = self::second_to_hhmm($this->input->post('startTime'));
+                $totime = self::second_to_hhmm($this->input->post('endTime'));
             } else {
                 $fromtime = $selectedTimeSlot->fromtime;
                 $totime = $selectedTimeSlot->totime;
@@ -624,6 +624,22 @@ class Booking_agenda extends BaseControllerWeb
 
         echo json_encode($allAgenda);
         
+    }
+
+    public static function explode_time($time){
+        $time = explode(':', $time);
+        $time = $time[0]*3600+$time[1]*60;
+        return $time;
+    }
+
+    public static function second_to_hhmm($time){
+        $hour = floor($time/3600);
+        $min = strval(floor(($time%3600)/60));
+        if($min <= 9){
+            $min = '0'.$min;
+        }
+        $time = $hour . ':' . $min; 
+        return $time;
     }
 
     public function emailReservation($email,$reservationIds)

@@ -40,8 +40,10 @@
                 <div class="w-100 text-center">
                     <div id="card" class="w-100 box"
                         onclick="window.location.replace('<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot["data"]->id; ?>')">
+                        <?php if(!empty($spot['data']->image) && $spot['data']->image != ''): ?>
                         <img style="filter: invert(70%);" width="auto" height="50px"
                             src="<?php echo $this->baseUrl; ?>assets/home/images/<?php echo $spot['data']->image; ?>">
+                        <?php endif; ?>
                         <div class="box-title">
                             <h3 id="spot-title"><?php echo $spot['data']->descript; ?></h3>
                         </div>

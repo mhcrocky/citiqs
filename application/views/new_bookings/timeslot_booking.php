@@ -24,11 +24,12 @@
         for($i=0; $i < $time_div; $i++):
         
         if($i == 0){
-            $start_time = strtotime($timeSlot['fromtime']);
-            $end_time = $start_time + strtotime($timeSlot['duration']);
+
+            $start_time = Agenda_booking::explode_time($timeSlot['fromtime']);
+            $end_time = $start_time + Agenda_booking::explode_time($timeSlot['duration']);
         } else {
-            $start_time = $end_time + strtotime($timeSlot['overflow']);
-            $end_time = $start_time + strtotime($timeSlot['duration']);
+            $start_time = $end_time + Agenda_booking::explode_time($timeSlot['overflow']);
+            $end_time = $start_time + Agenda_booking::explode_time($timeSlot['duration']);
         }
     ?>
     <form id="form-<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>"
@@ -40,7 +41,7 @@
                 id="test<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>" name="selected_time_slot_id" data-starttime="<?php echo $start_time; ?>" data-endtime="<?php echo $end_time; ?>"
                 value="<?php echo $timeSlot['id']; ?>">
             <label class="form-check-label" for="test<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>">
-                <?php echo date("H:i", $start_time).' - '.date("H:i", $end_time); ?>
+                <?php echo Agenda_booking::second_to_hhmm($start_time).' - '.Agenda_booking::second_to_hhmm($end_time); ?>
             </label>
         </div>
         <?php endif; ?>
@@ -57,7 +58,7 @@
                 id="test<?php echo $timeSlot['id']; ?>" name="selected_time_slot_id"
                 value="<?php echo $timeSlot['id']; ?>">
             <label class="form-check-label" for="test<?php echo $timeSlot['id']; ?>">
-                <?php echo date("H:i", strtotime($timeSlot['fromtime'])).' - '.date("H:i", strtotime($timeSlot['totime'])); ?>
+                <?php echo date("H:i", Agenda_booking::explode_time($timeSlot['fromtime'])).' - '.date("H:i", Agenda_booking::explode_time($timeSlot['totime'])); ?>
             </label>
         </div>
         <?php endif; ?>
