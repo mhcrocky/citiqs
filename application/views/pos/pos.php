@@ -226,7 +226,7 @@
 					<input
 						type="text"
 						id="posOrderName"
-						class="posKeyboard form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview payOrderInputFields"
+						class="posKeyboard form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview"
 						role="textbox"
 						tabindex='-1'
 						autocomplete="off"
@@ -350,7 +350,8 @@
 						data-payment-method="<?php echo $postPaid?>"
 					>
 						<img
-							src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Pay at waiter"
+							src="<?php echo base_url() . 'assets/images/waiter.png'; ?>"
+							alt="Pay at waiter"
 							class="figure-img img-fluid"
 						/>
 					</figure>
@@ -362,9 +363,25 @@
 						data-payment-method="<?php echo $pinMachinePayment?>"
 					>
 						<img
-							src="<?php echo base_url() . 'assets/home/images/pinmachine.png'; ?>" alt="pin machine"
+							src="<?php echo base_url() . 'assets/home/images/pinmachine.png'; ?>"
+							alt="pin machine"
 							class="figure-img img-fluid"
 						/>
+					</figure>
+					<!-- onclick="posPayOrder(this)"
+						data-locked="0"
+						data-paid="1"
+						data-payment-method="<?php #echo $pinMachinePayment?>" -->
+					<figure
+						class="col-lg-3 figure"
+					>
+						<a href="javascript:;" data-toggle="modal" data-target="#voucher" >
+                            <img
+								src="<?php echo base_url() . 'assets/home/images/voucher.png'; ?>"
+								alt="voucher"
+								class="figure-img img-fluid"
+							/>
+                        </a>
 					</figure>
 				</div>
 				<div class="modal-footer">
@@ -373,7 +390,36 @@
 			</div>
 		</div>
 	</div>
-
+    <div id="voucher" class="modal" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body" style="text-align:center">
+                    <label for="codeId">Insert code from voucher</label>
+                    <input
+                        type="text"
+                        id="codeId"
+                        class="form-control"
+                    />
+                    <br/>
+                    <button
+                        class="btn btn-success btn-lg"
+                        style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
+                        onclick="posVoucherPay('codeId')"
+                    >
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    </button>
+                    <button
+                        class="btn btn-danger btn-lg closeModal"
+                        style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
+                        data-dismiss="modal"
+                    >
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 	<script>
 		var posGlobals = (function(){
 			let globals = new Map();
