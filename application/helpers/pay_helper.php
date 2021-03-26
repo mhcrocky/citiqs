@@ -45,7 +45,7 @@
 
             return;
         }
-
+ 
         public static function payOrder(int $vendorId, array $order, string $serviceId, string $paymentType, string $paymentOptionSubId = '0'): ?object
         {
 //					echo var_dump($paymentType);
@@ -113,6 +113,104 @@
             $arrArguments['saleData']['orderData'][0]['quantity'] = 1;
             $arrArguments['saleData']['orderData'][0]['vatCode'] = 'N';
             $arrArguments['saleData']['orderData'][0]['vatPercentage'] = '0,00';
+
+//            echo var_dump($arrArguments);
+//            die();
+            return $arrArguments;
+        }
+
+        public static function getReservationsArgumentsArray(int $vendorId, array $reservations, string $serviceId, string $paymentType, string $paymentOptionSubId = '0'): array
+        {
+            $CI =& get_instance();
+            $CI->load->config('custom');
+            $buyerEmail = '';
+            $totalAmount = 0;
+            foreach ($reservations as $key => $reservation) {
+                $totalAmount += floatval($reservation->numberofpersons) * floatval($reservation->price);
+
+                if ($key == 0) {
+                    $arrArguments['transaction']['description'] = "tiqs - " . $reservation->eventdate . " - " . $reservation->timeslot;
+                    $buyerEmail = $reservation->email;
+                }
+
+
+                $arrArguments['statsData']['extra' . ($key + 1)] = $reservation->reservationId;
+                $arrArguments['saleData']['orderData'][$key]['productId'] = $reservation->reservationId;
+                $arrArguments['saleData']['orderData'][$key]['description'] = $reservation->Spotlabel;
+                $arrArguments['saleData']['orderData'][$key]['productType'] = 'HANDLIUNG';
+                $arrArguments['saleData']['orderData'][$key]['price'] = $reservation->price * 100;
+                $arrArguments['saleData']['orderData'][$key]['quantity'] = 1;
+                $arrArguments['saleData']['orderData'][$key]['vatCode'] = 'H';
+                $arrArguments['saleData']['orderData'][$key]['vatPercentage'] = '0.00';
+
+            }
+
+            $amount = $totalAmount * 100;
+            $amountofreservation = $amount;
+            // amount = amount + servicefee
+            if ($amount == 1000) {
+                $amount = $amount + 90;  
+            } elseif ($amount == 2000) {
+                $amount = $amount + 180;
+            } elseif ($amount == 3000) {
+                $amount = $amount + 270;  
+            } elseif ($amount == 4000) {
+                $amount = $amount + 360;  
+            } elseif ($amount == 5000) {
+                $amount = $amount + 450;  
+            } elseif ($amount == 6000) {
+                $amount = $amount + 540;  
+            } elseif ($amount == 7000) {
+                $amount = $amount + 630;  
+            } elseif ($amount == 8000) {
+                $amount = $amount + 720;  
+            } elseif ($amount == 15000) {
+                $amount = $amount + 400;  
+            } elseif ($amount == 20000) {
+                $amount = $amount + 600;
+            } elseif ($amount == 30000) {
+                $amount = $amount + 800;
+            } elseif ($amount == 16000) {
+                $amount = $amount + 490;  
+            } elseif ($amount == 17000) {
+                $amount = $amount + 580;  
+            }
+
+
+            $arrArguments = [];
+
+            $arrArguments['serviceId'] = $serviceId;
+            $arrArguments['amount'] = strval($amount);
+            $arrArguments['ipAddress'] = $_SERVER['REMOTE_ADDR'];
+            $arrArguments['paymentOptionId'] = $paymentType;
+
+            // for PIN PAyment we also need to have a paymentOptionSubId...
+			// This is the terminal linked with the POS system.....
+			// So each POS system needs to have identification set .... we need to discuss
+			// of course if there a multiple POS systems in one business...
+
+			if ($paymentType ===  $CI->config->item('idealPaymentType') && $paymentOptionSubId) {
+                $arrArguments['paymentOptionSubId'] = $paymentOptionSubId;
+            }
+
+			if ($paymentType ===  "1927") {
+				$arrArguments['paymentOptionSubId'] = "TH-9268-3020";
+			}
+
+            $arrArguments['finishUrl'] = base_url() . 'booking_events/successBooking';
+
+            $arrArguments['transaction']['orderExchangeUrl'] = base_url() . 'booking_events/exchangePay';
+
+
+            $arrArguments['statsData']['promotorId'] = $vendorId;
+
+            $arrArguments['enduser']['emailAddress'] = $buyerEmail;
+            $arrArguments['enduser']['language'] = 'NL';
+
+            $arrArguments['saleData']['invoiceDate'] = date('d-m-Y');
+            $arrArguments['saleData']['deliveryDate'] = date('d-m-Y');
+   
+
 
 //            echo var_dump($arrArguments);
 //            die();
