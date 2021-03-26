@@ -539,7 +539,10 @@ $route['events/pay'] = 'Booking_events/pay';
 $route['events/payment_proceed'] = 'Booking_events/payment_proceed';
 $route['events/selectpayment'] = 'Booking_events/selectpayment';
 $route['booking_events/clear_tickets'] = 'Booking_events/clear_tickets';
-$route['booking_events/paydorian'] = 'Booking_events/paydorian';
+$route['booking_events/successBooking'] = 'Booking_events/successBooking';
+$route['booking_events/exchangePay'] = 'Booking_events/exchangePay';
+$route['booking/onlinepayment/(:num)'] = 'Booking_events/onlinepayment/$1';
+$route['booking/onlinepayment/(:num)/(:any)'] = 'Booking_events/onlinepayment/$1/$1';
 
 $route['video/get_videos'] = 'Video/get_videos';
 $route['video/delete_video'] = 'Video/delete_video';
