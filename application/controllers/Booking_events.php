@@ -9,7 +9,10 @@ class Booking_events extends BaseControllerWeb
     function __construct()
     {
         parent::__construct();
+        $this->load->helper('pay_helper');
         $this->load->model('event_model');
+        $this->load->model('bookandpay_model');
+        $this->load->config('custom');
         $this->load->library('language', array('controller' => $this->router->class));
     } 
 
@@ -227,21 +230,6 @@ class Booking_events extends BaseControllerWeb
             $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
 
             foreach ($reservations as $key => $reservation) {
-                $totalPrice += floatval($reservation->price);
-
-                if ($key == 0) {
-                    $arrArguments['transaction']['description'] = "tiqs - " . $reservation->eventdate . " - " . $reservation->timeslot;
-                    $arrArguments['finishUrl'] = base_url() . 'booking/successpay/' . $reservation->reservationId;
-                }
-
-                $arrArguments['statsData']['extra' . ($key + 1)] = $reservation->reservationId;
-                $arrArguments['saleData']['orderData'][$key]['productId'] = $reservation->reservationId;
-                $arrArguments['saleData']['orderData'][$key]['description'] = $reservation->Spotlabel;
-                $arrArguments['saleData']['orderData'][$key]['productType'] = 'HANDLIUNG';
-                $arrArguments['saleData']['orderData'][$key]['price'] = $reservation->price * 100;
-                $arrArguments['saleData']['orderData'][$key]['quantity'] = 1;
-                $arrArguments['saleData']['orderData'][$key]['vatCode'] = 'H';
-                $arrArguments['saleData']['orderData'][$key]['vatPercentage'] = '0.00';
 
                 if ($reservation->SpotId != 3) {
                     $this->bookandpay_model->newvoucher($reservation->reservationId);
@@ -256,89 +244,8 @@ class Booking_events extends BaseControllerWeb
             redirect('agenda_booking/pay');
         }
 
-        $price = $totalPrice * 100;
-        $priceofreservation = $price;
-
-        if ($price == 1000) {
-            $price = $price + 90;  // service fee.
-        } elseif ($price == 2000) {
-            $price = $price + 180;
-        } elseif ($price == 3000) {
-            $price = $price + 270;  // service fee.
-        } elseif ($price == 4000) {
-            $price = $price + 360;  // service fee.
-        } elseif ($price == 5000) {
-            $price = $price + 450;  // service fee.
-        } elseif ($price == 6000) {
-            $price = $price + 540;  // service fee.
-        } elseif ($price == 7000) {
-            $price = $price + 630;  // service fee.
-        } elseif ($price == 8000) {
-            $price = $price + 720;  // service fee.
-        } elseif ($price == 15000) {
-            $price = $price + 400;  // service fee.
-        } elseif ($price == 20000) {
-            $price = $price + 600;
-        }// service fee.
-        elseif ($price == 30000) {
-            $price = $price + 800;
-        }// service fee.
-        elseif ($price == 16000) {
-            $price = $price + 490;  // service fee.
-        } elseif ($price == 17000) {
-            $price = $price + 580;  // service fee.
-        }
-
-        $priceoffee = $price - $priceofreservation;
-
-        $data['finalbedrag'] = $price / 100;
-        $data['finalbedragfee'] = $priceoffee / 100;
-        $data['finalbedragexfee'] = $priceofreservation / 100;
-		$customer = $this->session->userdata('customer');
-		$SlCode = $this->bookandpay_model->getUserSlCode($customer['id']);
-		$arrArguments['serviceId'] = $SlCode;  // TEST PAYNL_SERVICE_ID_CHE/K424; SL-3157-0531(thuishaven) (eigen test SL-2247-8501)
-//
-//		$arrArguments['serviceId'] = "SL-2247-8501";  // TEST PAYNL_SERVICE_ID_CHE/K424; SL-3157-0531(thuishaven) (eigen test SL-2247-8501)
-
-        $arrArguments['amount'] = $price;
-        $arrArguments['ipAddress'] = $_SERVER['REMOTE_ADDR'];
-
-        $payData['format'] = 'json';
-        $payData['tokenid'] = PAYNL_DATA_TOKEN_ID;
-
-        $payData['token'] = PAYNL_DATA_TOKEN;
-        $payData['gateway'] = 'rest-api.pay.nl';
-        $payData['namespace'] = 'Transaction';
-        $payData['function'] = 'start';
-        $payData['version'] = 'v13';
-
-        $strUrl = 'http://' . $payData['tokenid'] . ':' . $payData['token'] . '@' . $payData['gateway'] . '/' . $payData['version'] . '/' . $payData['namespace'] . '/' .
-            $payData['function'] . '/' . $payData['format'] . '?';
-
-        $orderExchangeUrl = base_url() . '/booking/ExchangePay';
-
-        $arrArguments['statsData']['promotorId'] = $customer['id'];
-        $arrArguments['enduser']['emailAddress'] = $buyerInfo['email'];
-        $arrArguments['saleData']['invoiceDate'] = date('d-m-Y');
-        $arrArguments['saleData']['deliveryDate'] = date('d-m-Y');
-
-        $arrArguments['enduser']['language'] = 'NL';
-        $arrArguments['transaction']['orderExchangeUrl'] = $orderExchangeUrl;
-
-        $this->session->set_userdata('payment_data', [
-            'strUrl' => $strUrl,
-            'arrArguments' => $arrArguments,
-            'discountAmount' => $arrArguments['amount'],
-            'final_amount' => $data['finalbedrag'],
-            'final_amountex' => $data['finalbedragexfee'],
-            'final_amountfee' => $data['finalbedragfee'],
-        ]);
-
-        if($data['finalbedrag'] == 0){
-            $this->emailReservation($buyerInfo['email'], $reservationIds);
-        } else {
-            redirect('/events/selectpayment');
-        }
+        redirect('/events/selectpayment');
+        
         
     }
 
@@ -351,16 +258,117 @@ class Booking_events extends BaseControllerWeb
 
 
         $this->global['pageTitle'] = 'TIQS: Select Payment';
+        $data['idealPaymentType'] = $this->config->item('idealPaymentType');
+        $data['creditCardPaymentType'] = $this->config->item('creditCardPaymentType');
+        $data['bancontactPaymentType'] = $this->config->item('bancontactPaymentType');
+        $data['giroPaymentType'] = $this->config->item('giroPaymentType');
+        $data['payconiqPaymentType'] = $this->config->item('payconiqPaymentType');
+        $data['pinMachinePaymentType'] = $this->config->item('pinMachinePaymentType');
+        $data['myBankPaymentType'] = $this->config->item('myBankPaymentType');
         
         
-        $this->loadViews("events/selectpayment", $this->global, '', 'footerShop', 'headerShop');
+        $this->loadViews("events/selectpayment", $this->global, $data, 'footerShop', 'headerShop');
     }
 
-    public function paydorian()
+    public function onlinepayment($paymentType, $paymentOptionSubId = '0')
     {
-        $this->emailReservation($this->session->userdata('userEmail'));
+        $paymentType = strval($this->uri->segment('3'));
+        $paymentOptionSubId = ($this->uri->segment('4')) ? strval($this->uri->segment('4')) : '0';
+        $vendorId = $this->session->userdata('customer');
+        $SlCode = $this->bookandpay_model->getUserSlCode($vendorId);
+        $reservationIds = $this->session->userdata('reservationIds');
+        $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
+        $arrArguments = Pay_helper::getReservationsArgumentsArray($vendorId, $reservations, strval($SlCode), $paymentType, $paymentOptionSubId);
+
+        $namespace = $this->config->item('transactionNamespace');
+        $function = $this->config->item('orderPayNlFunction');
+        $version = $this->config->item('orderPayNlVersion');
+
+        $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
+        
+
+        $this->session->set_userdata('payment_data', [
+            'strUrl' => $strUrl,
+            'arrArguments' => $arrArguments,
+            'discountAmount' => $arrArguments['amount']
+        ]);
+
+
+        $this->processPaymenttype($strUrl);
+
     }
 
+    private function processPaymenttype($strUrl)
+	{
+		# Get API result
+		$strResult = @file_get_contents($strUrl);
+		$result = json_decode($strResult);
+        
+		if ($result->request->result == '1') {
+//			$this->db->where('order_id',  $_SESSION['order_id']);
+//			if (!$this->db->update('orders', array(
+//				'transactionid' => $result->transaction->transactionId,
+//				'processed' => 0
+//			))) {
+//				log_message('error', print_r($this->db->error(), true));
+//			}
+			redirect($result->transaction->paymentURL);
+		} else {
+			$this->session->set_flashdata('error', 'Payment engine error. Please, contact staff');
+			$data = array();
+			$this->global['pageTitle'] = 'TIQS : PAYMENT ERROR';
+			$this->loadViews("thuishavenerror", $this->global, $data, NULL, "noheader");
+
+		}
+
+	}
+
+    public function exchangePay()
+	{
+		$this->load->model('email_templates_model');
+		$this->load->model('bookandpayspot_model');
+		$this->load->model('bookandpayagenda_model');
+		$this->load->model('bookandpaytimeslots_model');
+
+
+		$namespace = $this->config->item('transactionNamespace');
+        $function = $this->config->item('orderPayNlFunction');
+        $version = $this->config->item('orderPayNlVersion');
+
+        $arrArguments = $this->session->userdata('arrArguments');
+        $strUrl = $this->session->userdata('strUrl');
+
+		$strResult = @file_get_contents($strUrl);
+
+		if (empty($transactionid)) {
+			echo('FALSE|' . $transactionid);
+			die();
+		}
+
+		$strResult = unserialize($strResult);
+		$result1 = $strResult;
+
+//        if ($result1['paymentDetails']['state'] == 100 || $result1['paymentDetails']['state'] == 20) {
+		if ($result1['paymentDetails']['state'] == 100 ) {
+			foreach ($strResult['saleData']['orderData'] as $key => $product) {
+				if($product['productId'] !== '000000') {
+					$reservationId = $product['productId'];
+
+					if (empty($reservationId)) {
+						echo('FALSE|' . $reservationId);
+						die();
+					}
+
+					$data['paid'] = '1';
+					$data['TransactionID'] = $transactionid;
+
+					$this->bookandpay_model->editbookandpay($data, $reservationId);
+				}
+			}
+        }
+
+        $this->emailReservation();
+    }
 
     public function delete_ticket()
     {
@@ -385,7 +393,7 @@ class Booking_events extends BaseControllerWeb
     }
 
 
-    function check_diff_multi($array1, $array2){
+    private function check_diff_multi($array1, $array2){
         $result = array();
         foreach($array1 as $key => $val) {
              if(isset($array2[$key])){
@@ -520,10 +528,6 @@ class Booking_events extends BaseControllerWeb
 								$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
 								if($this->sendEmail($email, $subject, $mailtemplate)) {
                                     $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
-                                    if(null === $this->input->post('reservationId') || empty($this->input->post('reservationId'))){
-                                        $this->session->sess_destroy();
-                                        redirect('booking/successbooking');
-                                    }
                                     
                                 }
                             
@@ -534,6 +538,33 @@ class Booking_events extends BaseControllerWeb
             $i++;
             endforeach;
         }
+    
+        public function successBooking()
+        {
+            $statuscode = intval($this->input->get('orderStatusId'));
+            if ($statuscode == 100) {
+                $data = array();
+                $this->global['pageTitle'] = 'TIQS : THANKS';
+                $this->session->sess_destroy();
+                $this->loadViews("bookingsuccess", $this->global, $data, 'nofooter', "noheader");
+            } elseif ($statuscode <0) {
+                $data = array();
+                $this->global['pageTitle'] = 'TIQS : THANKS';
+                $this->session->sess_destroy();
+                $this->loadViews("thuishavenerror", $this->global, $data, 'nofooter', "noheader");
+            } elseif ($statuscode >= 0) {
+                $data = array();
+			    $this->global['pageTitle'] = 'TIQS : THANKS';
+			    $this->session->sess_destroy();
+			    $this->loadViews("thuishavenerror", $this->global, $data, 'nofooter', "noheader");
+            } else {
+			    $data = array();
+			    $this->global['pageTitle'] = 'TIQS : THANKS';
+			    $this->session->sess_destroy();
+			    $this->loadViews("thuishavenerror", $this->global, $data, 'nofooter', "noheader");
+            }
+
+	}
 
     public function sendEmail($email, $subject, $message)
 	{
