@@ -119,14 +119,21 @@
             return $arrArguments;
         }
 
-        public static function getReservationsArgumentsArray(int $vendorId, array $reservations, string $serviceId, string $paymentType, string $paymentOptionSubId = '0'): array
+        public static function getReservationsArgumentsArray(int $vendorId, array $reservations, array $ticketsFee = [], string $serviceId, string $paymentType, string $paymentOptionSubId = '0'): array
         {
             $CI =& get_instance();
             $CI->load->config('custom');
             $buyerEmail = '';
             $totalAmount = 0;
+            
             foreach ($reservations as $key => $reservation) {
-                $totalAmount += floatval($reservation->numberofpersons) * floatval($reservation->price);
+                
+                if(count($ticketsFee) > 0) {
+                    $ticketFee = isset($ticketsFee[$reservation->reservationId]) ? $ticketsFee[$reservation->reservationId] : 0;
+                    $totalAmount +=  floatval($reservation->numberofpersons) * ( floatval($reservation->price) + floatval($ticketFee));
+                } else {
+                    $totalAmount += floatval($reservation->numberofpersons) * floatval($reservation->price);
+                }
 
                 if ($key == 0) {
                     $arrArguments['transaction']['description'] = "tiqs - " . $reservation->eventdate . " - " . $reservation->timeslot;
@@ -144,39 +151,13 @@
                 $arrArguments['saleData']['orderData'][$key]['vatPercentage'] = '0.00';
 
             }
+            $paymentGroup = $CI->config->item('reservations');
+            $amountCost = self::getPaymentCost($paymentGroup,$paymentType, 'amount');
+            $percentCost = self::getPaymentCost($paymentGroup,$paymentType, 'percent');
 
-            $amount = $totalAmount * 100;
-            $amountofreservation = $amount;
-            // amount = amount + servicefee
-            if ($amount == 1000) {
-                $amount = $amount + 90;  
-            } elseif ($amount == 2000) {
-                $amount = $amount + 180;
-            } elseif ($amount == 3000) {
-                $amount = $amount + 270;  
-            } elseif ($amount == 4000) {
-                $amount = $amount + 360;  
-            } elseif ($amount == 5000) {
-                $amount = $amount + 450;  
-            } elseif ($amount == 6000) {
-                $amount = $amount + 540;  
-            } elseif ($amount == 7000) {
-                $amount = $amount + 630;  
-            } elseif ($amount == 8000) {
-                $amount = $amount + 720;  
-            } elseif ($amount == 15000) {
-                $amount = $amount + 400;  
-            } elseif ($amount == 20000) {
-                $amount = $amount + 600;
-            } elseif ($amount == 30000) {
-                $amount = $amount + 800;
-            } elseif ($amount == 16000) {
-                $amount = $amount + 490;  
-            } elseif ($amount == 17000) {
-                $amount = $amount + 580;  
-            }
-
-
+            $reservationsAmount = $totalAmount + ($percentCost*$totalAmount/100) + $amountCost;
+            
+            $amount = $reservationsAmount * 100;
             $arrArguments = [];
 
             $arrArguments['serviceId'] = $serviceId;
@@ -350,4 +331,38 @@
             return Curl_helper::sendCurlPostRequest($url, $argumentsArray);
         }
 
+        public static function getPaymentCost($paymentGroup, $paymentType, $type)
+        {
+            $CI =& get_instance();
+            $CI->load->config('custom');
+            $paymentCost = $CI->config->item('paymentPrice');
+            $paymentCost = $paymentCost[$paymentGroup];
+            switch($paymentType){
+                case $CI->config->item('idealPaymentType'):
+                    return $paymentCost[$CI->config->item('idealPayment')][$type];
+                    break;
+                case $CI->config->item('creditCardPaymentType'):
+                    return $paymentCost[$CI->config->item('creditCardPayment')][$type];
+                    break;
+                case $CI->config->item('bancontactPaymentType'):
+                    return $paymentCost[$CI->config->item('bancontactPayment')][$type];
+                    break;
+                case $CI->config->item('giroPaymentType'):
+                    return $paymentCost[$CI->config->item('giroPayment')][$type];
+                    break;
+                case $CI->config->item('payconiqPaymentType'):
+                    return $paymentCost[$CI->config->item('payconiqPayment')][$type];
+                    break;
+                case $CI->config->item('pinMachinePaymentType'):
+                    return $paymentCost[$CI->config->item('pinMachinePayment')][$type];
+                    break;
+                case $CI->config->item('myBankPaymentType'):
+                    return $paymentCost[$CI->config->item('myBankPayment')][$type];
+                    break;
+                default:
+                    return 0;
+                    break;
+            }
+        }
+        
     }
