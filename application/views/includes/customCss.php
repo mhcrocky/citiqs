@@ -317,13 +317,17 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <style> 
-    .header__checkout { display:none }
-    @media only screen and (max-width: 500px) {
-        .card-wrapper > .jp-card-container {
-            transform: scale(0.88) !important;
-            transform-origin: center !important;
-        }
-    }
+    .header__checkout{
+		position: sticky;
+		position: fixed;
+		right: 0;
+		top: 10px;
+		z-index: 99999;
+	}
+	
+	.header__checkout span{
+		display: none !important;
+	}
 </style>
     </style>
 <?php  } elseif ($this->view === 'events/pay') { ?>

@@ -830,14 +830,9 @@ transition: all .5s ease-out;
 	}
 	
 @media (max-width: 635px){
-	
 	.header__checkout{
 		border-top-right-radius: 0;
 		border-bottom-right-radius: 0;
 		top: 85px;
 	}
 }
-
-
-
-

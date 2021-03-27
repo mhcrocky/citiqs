@@ -7,23 +7,7 @@ body,
 html {
   height: 100%;
 }
-a {
-  font-size: 14px;
-  line-height: 1.7;
-  color: #666;
-  margin: 0;
-  transition: all 0.4s;
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-}
-a:focus {
-  outline: none !important;
-}
-a:hover {
-  text-decoration: none;
-  color: #57b846;
-}
+
 h1,
 h2,
 h3,
