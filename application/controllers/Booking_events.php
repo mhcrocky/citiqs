@@ -199,6 +199,28 @@ class Booking_events extends BaseControllerWeb
         }
     }
 
+    public function delete_ticket()
+    {
+        $tickets = $this->session->tempdata('tickets');
+        $ticketId = $this->input->post('id');
+        $time = (int)($this->input->post('current_time')/1000);
+        $time = $time - 2;
+        unset($tickets[$ticketId]);
+        
+        $this->session->unset_userdata('tickets');
+        $this->session->unset_tempdata('tickets');
+        $this->session->unset_tempdata('total');
+        $items = $this->input->post('list_items');
+        $total = $this->input->post('totalBasket');
+        $total = number_format($total, 2, '.', '');
+        $this->session->set_tempdata('total', $total, 600); 
+        $this->session->set_tempdata('tickets', $tickets, $time); 
+        if($items == 0){
+            $this->session->unset_tempdata('exp_time');
+        }
+        return ;
+    }
+
     public function pay()
     {
         $this->global['pageTitle'] = 'TIQS: Pay';
@@ -211,8 +233,6 @@ class Booking_events extends BaseControllerWeb
 
     public function payment_proceed()
     {
-        $this->load->model('bookandpay_model');
-        $totalPrice = 0;
         $buyerInfo = $this->input->post(null, true);
         $tickets = $this->session->userdata('tickets');
         $this->session->set_userdata('eventShop', 'true');
@@ -225,12 +245,13 @@ class Booking_events extends BaseControllerWeb
         }
         $reservationIds = $this->session->userdata('reservationIds');
         $arrArguments = array();
-
         if ($buyerInfo) {
             $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
-
+            $ticketsFee = [];
+            $reservationsQuantity = [];
             foreach ($reservations as $key => $reservation) {
-
+                $ticketsFee[$reservation->reservationId] = $this->bookandpay_model->getReservationTicketFee($reservation->reservationId);
+                $reservationsQuantity[$reservation->reservationId] = $reservation->numberofpersons;
                 if ($reservation->SpotId != 3) {
                     $this->bookandpay_model->newvoucher($reservation->reservationId);
                 }
@@ -240,9 +261,14 @@ class Booking_events extends BaseControllerWeb
                     'email' => $buyerInfo['email'],
                 ], $reservation->reservationId);
             }
+            $this->session->unset_userdata('ticketsFee');
+            $this->session->unset_userdata('reservationsQuantity');
+            $this->session->set_userdata('ticketsFee', $ticketsFee);
+            $this->session->set_userdata('reservationsQuantity', $reservationsQuantity);
         } else {
             redirect('agenda_booking/pay');
         }
+
 
         redirect('/events/selectpayment');
         
@@ -251,13 +277,9 @@ class Booking_events extends BaseControllerWeb
 
     public function selectpayment()
     {
-        
-        //$this->session->unset_userdata('tickets');
-        //$this->session->unset_userdata('total');
-
-
-
         $this->global['pageTitle'] = 'TIQS: Select Payment';
+        $reservationsPayments = $this->config->item('reservations');
+        $paymentMethodsFee = $this->config->item('paymentPrice')[$reservationsPayments];
         $data['idealPaymentType'] = $this->config->item('idealPaymentType');
         $data['creditCardPaymentType'] = $this->config->item('creditCardPaymentType');
         $data['bancontactPaymentType'] = $this->config->item('bancontactPaymentType');
@@ -265,7 +287,31 @@ class Booking_events extends BaseControllerWeb
         $data['payconiqPaymentType'] = $this->config->item('payconiqPaymentType');
         $data['pinMachinePaymentType'] = $this->config->item('pinMachinePaymentType');
         $data['myBankPaymentType'] = $this->config->item('myBankPaymentType');
-        
+        $amount = floatval($this->session->tempdata('total'));
+        $reservationIds = $this->session->userdata('reservationIds');
+        $ticketsFee = $this->session->userdata('ticketsFee');
+        $reservationsQuantity = $this->session->userdata('reservationsQuantity');
+        foreach($reservationIds as $reservationId){
+            $amount = floatval($amount) + floatval($ticketsFee[$reservationId])*floatval($reservationsQuantity[$reservationId]);
+        }
+        $data['amount'] = number_format($amount, 2, '.', '');
+        $amount = $amount/100;
+        $data['idealPaymentFee'] = $amount*Pay_helper::getPaymentCost($reservationsPayments, $data['idealPaymentType'], 'percent') +
+         Pay_helper::getPaymentCost($reservationsPayments, $data['idealPaymentType'], 'amount');
+        $data['creditCardPaymentFee'] = $amount*Pay_helper::getPaymentCost($reservationsPayments, $data['creditCardPaymentType'], 'percent') +
+         Pay_helper::getPaymentCost($reservationsPayments, $data['creditCardPaymentType'], 'amount');
+        $data['bancontactPaymentFee'] = $amount*Pay_helper::getPaymentCost($reservationsPayments, $data['bancontactPaymentType'], 'percent') +
+         Pay_helper::getPaymentCost($reservationsPayments, $data['bancontactPaymentType'], 'amount');
+        $data['giroPaymentFee'] = $amount*Pay_helper::getPaymentCost($reservationsPayments, $data['giroPaymentType'], 'percent') +
+         Pay_helper::getPaymentCost($reservationsPayments, $data['giroPaymentType'], 'amount');
+        $data['payconiqPaymentFee'] = $amount*Pay_helper::getPaymentCost($reservationsPayments, $data['payconiqPaymentType'], 'percent') +
+         Pay_helper::getPaymentCost($reservationsPayments, $data['payconiqPaymentType'], 'amount');
+        $data['pinMachinePaymentFee'] = $amount*Pay_helper::getPaymentCost($reservationsPayments, $data['pinMachinePaymentType'], 'percent') +
+         Pay_helper::getPaymentCost($reservationsPayments, $data['pinMachinePaymentType'], 'amount');
+        $data['myBankPaymentFee'] = $amount*Pay_helper::getPaymentCost($reservationsPayments, $data['myBankPaymentType'], 'percent') +
+         Pay_helper::getPaymentCost($reservationsPayments, $data['myBankPaymentType'], 'amount');
+        $voucher = $this->config->item('voucherPayment');
+        $data['voucherPaymentFee'] = $amount*floatval($paymentMethodsFee[$voucher]['percent']) + floatval($paymentMethodsFee[$voucher]['percent']);
         
         $this->loadViews("events/selectpayment", $this->global, $data, 'footerShop', 'headerShop');
     }
@@ -277,8 +323,9 @@ class Booking_events extends BaseControllerWeb
         $vendorId = $this->session->userdata('customer');
         $SlCode = $this->bookandpay_model->getUserSlCode($vendorId);
         $reservationIds = $this->session->userdata('reservationIds');
+        $ticketsFee = $this->session->userdata('ticketsFee');
         $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
-        $arrArguments = Pay_helper::getReservationsArgumentsArray($vendorId, $reservations, strval($SlCode), $paymentType, $paymentOptionSubId);
+        $arrArguments = Pay_helper::getReservationsArgumentsArray($vendorId, $reservations, $ticketsFee, strval($SlCode), $paymentType, $paymentOptionSubId);
 
         $namespace = $this->config->item('transactionNamespace');
         $function = $this->config->item('orderPayNlFunction');
@@ -305,13 +352,6 @@ class Booking_events extends BaseControllerWeb
 		$result = json_decode($strResult);
         
 		if ($result->request->result == '1') {
-//			$this->db->where('order_id',  $_SESSION['order_id']);
-//			if (!$this->db->update('orders', array(
-//				'transactionid' => $result->transaction->transactionId,
-//				'processed' => 0
-//			))) {
-//				log_message('error', print_r($this->db->error(), true));
-//			}
 			redirect($result->transaction->paymentURL);
 		} else {
 			$this->session->set_flashdata('error', 'Payment engine error. Please, contact staff');
@@ -370,28 +410,6 @@ class Booking_events extends BaseControllerWeb
         $this->emailReservation();
     }
 
-    public function delete_ticket()
-    {
-        $tickets = $this->session->tempdata('tickets');
-        $ticketId = $this->input->post('id');
-        $time = (int)($this->input->post('current_time')/1000);
-        $time = $time - 2;
-        unset($tickets[$ticketId]);
-        
-        $this->session->unset_userdata('tickets');
-        $this->session->unset_tempdata('tickets');
-        $this->session->unset_tempdata('total');
-        $items = $this->input->post('list_items');
-        $total = $this->input->post('totalBasket');
-        $total = number_format($total, 2, '.', '');
-        $this->session->set_tempdata('total', $total, 600); 
-        $this->session->set_tempdata('tickets', $tickets, $time); 
-        if($items == 0){
-            $this->session->unset_tempdata('exp_time');
-        }
-        return ;
-    }
-
 
     private function check_diff_multi($array1, $array2){
         $result = array();
@@ -408,7 +426,6 @@ class Booking_events extends BaseControllerWeb
         return $result;
     }
 
-    
     public function emailReservation()
 	{
         $this->load->model('bookandpay_model');
@@ -523,7 +540,6 @@ class Booking_events extends BaseControllerWeb
 								$mailtemplate = str_replace('[ticketQuantity]', $ticketQuantity, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
 								$subject = 'Your tiqs reservation(s)';
-
 								$datachange['mailsend'] = 1;
 								$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
 								if($this->sendEmail($email, $subject, $mailtemplate)) {
