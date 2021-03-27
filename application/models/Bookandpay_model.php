@@ -151,6 +151,23 @@ class Bookandpay_model extends CI_Model
 		return $result;
 	}
 
+	public function getReservationTicketFee($reservationId)
+	{
+		$this->db->select('nonSharedTicketFee as ticketFee');
+		$this->db->from('tbl_bookandpay');
+		$this->db->join('tbl_ticket_options', 'tbl_ticket_options.ticketId = tbl_bookandpay.eventId', 'LEFT');
+		$this->db->where('reservationId', $reservationId);
+		$query = $this->db->get();
+		$ticketFee = 0;
+		if($query->num_rows() > 0)
+		{
+			$result = $query->first_row();
+			$ticketFee = floatval($result->ticketFee);
+		}
+
+		return $ticketFee;
+	}
+
 	public function getReservationByMail($email,$eventdate,$reservationId)
 	{
 		$this->db->from('tbl_bookandpay');
