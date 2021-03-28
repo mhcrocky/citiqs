@@ -1,12 +1,12 @@
 <?php 
-$idealPaymentFee = number_format($idealPaymentFee, 2, '.', '');
-$bancontactPaymentFee = number_format($idealPaymentFee, 2, '.', '');
-$creditCardPaymentFee = number_format($creditCardPaymentFee, 2, '.', '');
-$voucherPaymentFee = number_format($voucherPaymentFee, 2, '.', '');
-$myBankPaymentFee = number_format($myBankPaymentFee, 2, '.', '');
-$payconiqPaymentFee = number_format($payconiqPaymentFee, 2, '.', '');
-$giroPaymentFee = number_format($giroPaymentFee, 2, '.', '');
-$pinMachinePaymentFee = number_format($pinMachinePaymentFee, 2, '.', '');
+$idealPaymentFee = number_format($idealPayment, 2, '.', '');
+$bancontactPaymentFee = number_format($bancontactPayment, 2, '.', '');
+$creditCardPaymentFee = number_format($creditCardPayment, 2, '.', '');
+$voucherPaymentFee = number_format($voucher, 2, '.', '');
+$myBankPaymentFee = number_format($myBank, 2, '.', '');
+$payconiqPaymentFee = number_format($payconiqPayment, 2, '.', '');
+$giroPaymentFee = number_format($giroPayment, 2, '.', '');
+$pinMachinePaymentFee = number_format($pinMachine, 2, '.', '');
 ?>
 <div id="selectPayment" class="container-fluid selectPayment pr-5 pl-5 mx-auto mb-5">
     <h1 style="color: #F1921A !important; font-size: 24px;" class="white text-center yellow">Select Payment</h1>
@@ -23,14 +23,15 @@ $pinMachinePaymentFee = number_format($pinMachinePaymentFee, 2, '.', '');
                 <img class="img-w-150" src="<?php echo base_url(); ?>assets/home/imgs/extra/bancontact.png"
                     alt="bancontact">
                 <p style="paymentFee bg-primary"><?php echo '€'.$bancontactPaymentFee; ?></p>
-                <h3 class="title"><a id="bancontact" class="text-primary" data-paymentFee="<?php echo $bancontactPaymentFee; ?>" 
+                <h3 class="title"><a id="bancontact" class="text-primary pay_method" data-paymentFee="<?php echo $bancontactPaymentFee; ?>"
                         href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $bancontactPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Bancontact</a></h3>
             </div>
             <div class="half-col mb-4">
                 <img class="img-w-150" src="<?php echo base_url(); ?>assets/home/imgs/extra/creditcard.png"
                     alt="Creditcard">
                 <p style="paymentFee bg-primary"><?php echo '€'.$creditCardPaymentFee; ?></p>
-                <h3 class="title"><a data-paymentFee="<?php echo $creditCardPaymentFee; ?>" class="text-primary" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $creditCardPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Credit Card</a></h3>
+                <h3 class="title">
+                <a data-paymentFee="<?php echo $creditCardPaymentFee; ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $creditCardPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Credit Card</a></h3>
             </div>
             <div class="half-col  mb-4">
                 <img class="img-w-150" src="<?php echo base_url() . 'assets/images/waiter.png'; ?>"
@@ -47,25 +48,25 @@ $pinMachinePaymentFee = number_format($pinMachinePaymentFee, 2, '.', '');
                 <img class="img-w-150" style="max-width: 110px;" src="https://static.pay.nl/payment_profiles/100x100/1588.png"
                     alt="My Bank" />
                 <p style="paymentFee bg-primary"><?php echo '€'.$myBankPaymentFee; ?></p>
-                <h3 class="title"><a id="mybank" data-paymentFee="<?php echo $myBankPaymentFee ?>" class="text-primary" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $myBankPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">My Bank</a></h3>
+                <h3 class="title"><a id="mybank" data-paymentFee="<?php echo $myBankPaymentFee ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $myBankPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">My Bank</a></h3>
             </div>
             <div class="half-col  mb-4">
                 <img class="img-w-89" style="max-width: 85px;" src="https://tiqs.com/alfred/assets/home/imgs/extra/payconiq.png"
                     alt="Payconiq" />
                 <p style="paymentFee bg-primary"><?php echo '€'.$payconiqPaymentFee; ?></p>
-                <h3 class="title"><a id="payconiq" data-paymentFee="<?php echo $payconiqPaymentFee ?>" class="text-primary" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $payconiqPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Payconiq</a></h3>
+                <h3 class="title"><a id="payconiq" data-paymentFee="<?php echo $payconiqPaymentFee ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $payconiqPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Payconiq</a></h3>
             </div>
             <div class="half-col  mb-4">
                 <img class="img-w-150" style="max-width: 100px;" src="<?php echo base_url(); ?>assets/home/imgs/extra/giropay(1).png"
                     alt="Giropay" />
                 <p style="paymentFee bg-primary"><?php echo '€'.$giroPaymentFee; ?></p>
-                <h3 class="title"><a id="giropay" data-paymentFee="<?php echo $giroPaymentFee; ?>" class="text-primary" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $giroPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Giropay</a></h3>
+                <h3 class="title"><a id="giropay" data-paymentFee="<?php echo $giroPaymentFee; ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $giroPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Giropay</a></h3>
             </div>
             <div class="half-col  mb-4">
                 <img class="img-w-150" style="max-width: 100px;"  src="<?php echo base_url(); ?>assets/home/images/pinmachine.png"
                     alt="Pin machine" />
                 <p style="paymentFee bg-primary"><?php echo '€'.$pinMachinePaymentFee; ?></p>
-                <h3 class="title"><a id="pinmachine" data-paymentFee="<?php echo $pinMachinePaymentFee ?>" class="text-primary" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $pinMachinePaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Pin machine</a></h3>
+                <h3 class="title"><a id="pinmachine" data-paymentFee="<?php echo $pinMachinePaymentFee ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $pinMachinePaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Pin machine</a></h3>
             </div>
             <div class="half-col  mb-4">
                 
@@ -83,7 +84,7 @@ $pinMachinePaymentFee = number_format($pinMachinePaymentFee, 2, '.', '');
     <div class="row mx-auto">
         <div class="col-md-8 col-sm-12 serviceBox blue mb-4 mx-auto">
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/1" class="ideal_pay">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/1" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/abn_amro.png') ?>"
                         alt="ABN AMRO">
 
@@ -92,7 +93,7 @@ $pinMachinePaymentFee = number_format($pinMachinePaymentFee, 2, '.', '');
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/8" class="ideal_pay">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/8" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/asn_bank.png') ?>"
                         alt="ASN Bank">
                     <h3 class="title">ASN Bank</h3>
@@ -101,14 +102,14 @@ $pinMachinePaymentFee = number_format($pinMachinePaymentFee, 2, '.', '');
 
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5080" class="ideal_pay">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5080" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/bunq.png') ?>" alt="Bunq">
                     <h3 class="title">Bunq</h3>
                 </a>
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5082" class="ideal_pay">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5082" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/handelsbanken.png') ?>"
                         alt="Handelsbanken">
                     <h3 class="title">Handelsbanken</h3>
@@ -116,28 +117,28 @@ $pinMachinePaymentFee = number_format($pinMachinePaymentFee, 2, '.', '');
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/4" class="ideal_pay">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/4" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/ing.png') ?>" alt="ING">
                     <h3 class="title">ING</h3>
                 </a>
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/12" class="ideal_pay">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/12" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/knab(1).png') ?>" alt="Knab">
                     <h3 class="title">Knab</h3>
                 </a>
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5081" class="ideal_pay">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5081" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/moneyou.png') ?>" alt="Moneyou">
                     <h3 class="title">Moneyou</h3>
                 </a>
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/2" class="ideal_pay">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/2" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/rabobank.png') ?>"
                         alt="Rabobank">
                     <h3 class="title">Rabobank</h3>
@@ -145,7 +146,7 @@ $pinMachinePaymentFee = number_format($pinMachinePaymentFee, 2, '.', '');
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/9" class="ideal_pay">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/9" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/regiobank.png') ?>"
                         alt="RegioBank">
                     <h3 class="title">RegioBank</h3>
@@ -153,7 +154,7 @@ $pinMachinePaymentFee = number_format($pinMachinePaymentFee, 2, '.', '');
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5" class="ideal_pay">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/sns_bank.png') ?>"
                         alt="SNS Bank">
                     <h3 class="title">SNS Bank</h3>
@@ -162,7 +163,7 @@ $pinMachinePaymentFee = number_format($pinMachinePaymentFee, 2, '.', '');
 
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/10" class="ideal_pay">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/10" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/triodos_bank.png') ?>"
                         alt="Triodos Bank">
                     <h3 class="title">Triodos Bank</h3>
@@ -170,7 +171,7 @@ $pinMachinePaymentFee = number_format($pinMachinePaymentFee, 2, '.', '');
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/11" class="ideal_pay">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/11" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/van_lanschot.png') ?>"
                         alt="van Lanschot">
                     <h3 class="title">van Lanschot</h3>
@@ -249,9 +250,8 @@ $pinMachinePaymentFee = number_format($pinMachinePaymentFee, 2, '.', '');
 <script>
 (function(){
     if(window.location !== window.parent.location ){
-        $('.ideal_pay').attr('target', '_blank');
+        $('.pay_method').attr('target', '_blank');
     }
-    $('.totalBasket').text('<?php echo $amount; ?>');
     $('.header__checkout').prop('disabled', true);
 }());
 

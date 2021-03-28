@@ -235,8 +235,8 @@ function addTicket(id, limit, price, totalClass) {
     var quantityValue = $("#ticketQuantityValue_" + id).val();
     var totalBasket = $("."+totalClass).text();
     quantityValue = parseInt(quantityValue);
-    totalBasket = parseInt(totalBasket);
-    price = parseInt(price);
+    totalBasket = parseFloat(totalBasket);
+    price = parseFloat(price);
     var priceVal = price;
     limit = parseInt(limit);
     if (quantityValue == limit) {
