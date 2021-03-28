@@ -117,7 +117,7 @@ class Event_model extends CI_Model {
 
 	public function get_event_tickets($vendor_id,$eventId)
 	{
-		$this->db->select('*,tbl_event_tickets.id as ticketId, tbl_ticket_groups.id as groupId, (ticketPrice + cast(nonSharedTicketFee AS DECIMAL(10,2))) as ticketTotalPrice');
+		$this->db->select('*,tbl_event_tickets.id as ticketId, tbl_ticket_groups.id as groupId');
 		$this->db->from('tbl_event_tickets');
 		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'left');
 		$this->db->join('tbl_ticket_groups', 'tbl_ticket_groups.id = tbl_event_tickets.ticketGroupId', 'left');
@@ -132,9 +132,8 @@ class Event_model extends CI_Model {
 		}
 		$tickets = [];
 		foreach($results as $result){
-			$ticketFee = isset($result['nonSharedTicketFee']) ? $result['nonSharedTicketFee'] : 0;
-			$result['ticketTotalPrice'] = floatval($result['ticketPrice']) + floatval($ticketFee);
-			$result['ticketTotalPrice'] = number_format($result['ticketTotalPrice'], 2, '.', '');
+			$ticketFee = isset($result['nonSharedTicketFee']) ? number_format($result['nonSharedTicketFee'], 2, '.', '') : '0.00';
+			$result['ticketFee'] = $ticketFee;
 			$tickets[] = $result;
 		}
 

@@ -35,7 +35,7 @@
                         <input type="hidden" id="quantity_<?php echo $ticketId; ?>" name="quantity[]" value="0">
                         <input type="hidden" name="id[]" value="<?php echo $ticketId; ?>">
                         <input type="hidden" name="descript[]" value="<?php echo $ticket['ticketDescription']; ?>">
-                        <input type="hidden" name="price[]" value="<?php echo $ticket['ticketTotalPrice']; ?>">
+                        <input type="hidden" name="price[]" value="<?php echo $ticket['ticketPrice']; ?>">
                         <div class="menu-list__item">
                             <div class="menu-list__name">
                                 <b class="menu-list__title">Description</b>
@@ -45,23 +45,28 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="menu-list__right-col ml-auto">
+                            <div class="menu-list__right-col menu-list_right-col ml-auto ">
                                 <div class="menu-list__price">
-                                    <b class="menu-list__price--discount"><?php echo $ticket['ticketTotalPrice']; ?>€</b>
+                                    <b class="menu-list__price--discount"><?php echo $ticket['ticketPrice']; ?>€ (<?php echo $ticket['ticketFee']; ?>€)</b>
                                 </div>
                                 <b class="menu-list__type">quantity</b>
                                 <div class="quantity-section">
                                     <button type="button" class="quantity-button"
-                                        onclick="removeTicket('<?php echo $ticketId; ?>','<?php echo $ticket['ticketTotalPrice']; ?>','totalBasket')">-</button>
-                                    <input type="number" min="1" id="ticketQuantityValue_<?php echo $ticketId; ?>"
+                                        onclick="removeTicket('<?php echo $ticketId; ?>','<?php echo $ticket['ticketPrice']; ?>', '<?php echo $ticket['ticketFee']; ?>', 'totalBasket')">-</button>
+                                    <input type="number" min="1" 
                                         <?php if(in_array($ticketId,$checkout_tickets_id)){?>
                                         value="<?php echo $checkout_tickets[$ticketId]['quantity']; ?>"
                                         <?php } else { ?> value="0" <?php } ?> onkeyup="absVal(this);" placeholder="0"
-                                        class="quantity-input" disabled>
+                                        class="quantity-input ticketQuantityValue_<?php echo $ticketId; ?>" disabled>
                                     <button type="button" class="quantity-button"
-                                        onclick="addTicket('<?php echo $ticketId; ?>', '<?php echo $ticket['ticketQuantity']; ?>', '<?php echo $ticket['ticketTotalPrice']; ?>','totalBasket')">+</button>
+                                        onclick="addTicket('<?php echo $ticketId; ?>', '<?php echo $ticket['ticketQuantity']; ?>', '<?php echo $ticket['ticketPrice']; ?>', '<?php echo $ticket['ticketFee']; ?>','totalBasket')">+</button>
                                 </div>
+                                <b class="menu-list__price--discount excluding_fee text-dark mt-2">Excluding fee €<?php echo number_format($ticket['ticketFee'], 2, ',', ''); ?> and min pay fee €0,50</b>
                             </div>
+                            
+                                
+                            
+                            
                         </div>
                         <?php endforeach; ?>
                         <!-- end menu list item -->

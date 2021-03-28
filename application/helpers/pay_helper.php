@@ -119,7 +119,7 @@
             return $arrArguments;
         }
 
-        public static function getReservationsArgumentsArray(int $vendorId, array $reservations, string $serviceId, string $paymentType, string $paymentOptionSubId = '0'): array
+        public static function getTicketingArgumentsArray(int $vendorId, array $reservations, string $serviceId, string $paymentType, string $paymentOptionSubId = '0'): array
         {
             $CI =& get_instance();
             $CI->load->config('custom');
@@ -193,6 +193,80 @@
 
 //            echo var_dump($arrArguments);
 //            die();
+            return $arrArguments;
+        }
+
+        public static function getReservetionsArgumentsArray(int $vendorId, array $reservations, string $serviceId, string $paymentType, string $paymentOptionSubId = '0'): array
+        {
+            $CI =& get_instance();
+            $CI->load->config('custom');
+            $CI->load->model('bookandpayagendabooking_model');
+            $paymentsCost = $CI->bookandpayagendabooking_model->get_payment_methods($vendorId);
+            $buyerEmail = '';
+            $totalAmount = 0;
+            
+            foreach ($reservations as $key => $reservation) {
+                
+                $totalAmount +=  floatval($reservation->numberofpersons) * floatval($reservation->price);
+
+                if ($key == 0) {
+                    $arrArguments['transaction']['description'] = "tiqs - " . $reservation->eventdate . " - " . $reservation->timeslot;
+                    $buyerEmail = $reservation->email;
+                }
+
+
+                $arrArguments['statsData']['extra' . ($key + 1)] = $reservation->reservationId;
+                $arrArguments['saleData']['orderData'][$key]['productId'] = $reservation->reservationId;
+                $arrArguments['saleData']['orderData'][$key]['description'] = $reservation->Spotlabel;
+                $arrArguments['saleData']['orderData'][$key]['productType'] = 'HANDLIUNG';
+                $arrArguments['saleData']['orderData'][$key]['price'] = $reservation->price * 100;
+                $arrArguments['saleData']['orderData'][$key]['quantity'] = 1;
+                $arrArguments['saleData']['orderData'][$key]['vatCode'] = 'H';
+                $arrArguments['saleData']['orderData'][$key]['vatPercentage'] = '0.00';
+
+            }
+
+            $payment = self::getPaymentMethod($paymentType);
+            $amountCost = $paymentsCost[$payment]['amount'];
+            $percentCost = $paymentsCost[$payment]['percent'];
+
+            $reservationsAmount = $totalAmount + ($percentCost*$totalAmount/100) + $amountCost;
+            
+            $amount = $reservationsAmount * 100;
+            $arrArguments = [];
+
+            $arrArguments['serviceId'] = $serviceId;
+            $arrArguments['amount'] = strval($amount);
+            $arrArguments['ipAddress'] = $_SERVER['REMOTE_ADDR'];
+            $arrArguments['paymentOptionId'] = $paymentType;
+
+            // for PIN PAyment we also need to have a paymentOptionSubId...
+			// This is the terminal linked with the POS system.....
+			// So each POS system needs to have identification set .... we need to discuss
+			// of course if there a multiple POS systems in one business...
+
+			if ($paymentType ===  $CI->config->item('idealPaymentType') && $paymentOptionSubId) {
+                $arrArguments['paymentOptionSubId'] = $paymentOptionSubId;
+            }
+
+			if ($paymentType ===  "1927") {
+				$arrArguments['paymentOptionSubId'] = "TH-9268-3020";
+			}
+
+            $arrArguments['finishUrl'] = base_url() . 'booking/successpay/' . $data->reservationId;
+
+            $arrArguments['transaction']['orderExchangeUrl'] = base_url() . '/booking/ExchangePay';
+
+
+            $arrArguments['statsData']['promotorId'] = $vendorId;
+
+            $arrArguments['enduser']['emailAddress'] = $buyerEmail;
+            $arrArguments['enduser']['language'] = 'NL';
+
+            $arrArguments['saleData']['invoiceDate'] = date('d-m-Y');
+            $arrArguments['saleData']['deliveryDate'] = date('d-m-Y');
+   
+
             return $arrArguments;
         }
 

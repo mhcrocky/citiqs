@@ -836,3 +836,14 @@ transition: all .5s ease-out;
 		top: 85px;
 	}
 }
+
+@media (max-width: 772px){
+	.excluding_fee {
+		font-size: 12px !important;
+		padding-top: 12px !important;
+	}
+	.menu-list_right-col{
+		align-items: flex-end !important;
+	}
+	
+}

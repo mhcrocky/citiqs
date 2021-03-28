@@ -152,7 +152,7 @@ class Booking_events extends BaseControllerWeb
         $current_time = date($ticket['time']);
         $newTime = date("Y-m-d H:i:s",strtotime("$current_time +10 minutes"));
         $this->session->set_tempdata('exp_time', $newTime, 600);
-        $amount = floatval($ticket['price'])*floatval($ticket['quantity']);
+        $amount = (floatval($ticket['price']) + floatval($ticket['ticketFee']))*floatval($ticket['quantity']);
         $ticketId = $ticket['id'];
         $eventName = $this->event_model->get_eventname_by_ticket($ticketId);
         unset($tickets[$ticketId]);
@@ -162,6 +162,7 @@ class Booking_events extends BaseControllerWeb
             'descript' => $ticket['descript'],
             'quantity' => $ticket['quantity'],
             'price' => $ticket['price'],
+            'ticketFee' => $ticket['ticketFee'],
             'amount' => $amount,
             'startDate' => $this->session->userdata("startDate"),
             'startTime' => $this->session->userdata("startTime"),
@@ -169,7 +170,7 @@ class Booking_events extends BaseControllerWeb
             'endTime' => $this->session->userdata("endTime")
         ];
         
-        echo json_encode(['descript'=>$ticket['descript'],'price' => $ticket['price'], 'first_ticket' => $first_ticket, 'eventName' => $eventName ]);
+        echo json_encode(['descript'=>$ticket['descript'],'price' => $ticket['price'], 'ticketFee' => $ticket['ticketFee'], 'first_ticket' => $first_ticket, 'eventName' => $eventName ]);
         
         if($ticket['quantity'] != 0){
             $this->session->unset_userdata('tickets');
@@ -312,7 +313,7 @@ class Booking_events extends BaseControllerWeb
         $SlCode = $this->bookandpay_model->getUserSlCode($vendorId);
         $reservationIds = $this->session->userdata('reservationIds');
         $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
-        $arrArguments = Pay_helper::getReservationsArgumentsArray($vendorId, $reservations, strval($SlCode), $paymentType, $paymentOptionSubId);
+        $arrArguments = Pay_helper::getTicketingArgumentsArray($vendorId, $reservations, strval($SlCode), $paymentType, $paymentOptionSubId);
 
         $namespace = $this->config->item('transactionNamespace');
         $function = $this->config->item('orderPayNlFunction');

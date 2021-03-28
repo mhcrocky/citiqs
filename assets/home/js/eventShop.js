@@ -31,14 +31,19 @@ $(document).ready(function(){
     $(document).on('click', '.quantity-up', function() {
         let id = $(this).data("embellishmentid");
         let price = $("#price_"+id).val();
-        addTicket(id,  50, price, 'totalBasket');
+        let ticketFee = $("#price_"+id).attr('data-ticketfee');
+        addTicket(id,  50, price, ticketFee, 'totalBasket');
       });
 
     $(document).on('click', '.quantity-down', function() {
         let id = $(this).data("embellishmentid");
+        let quantity = parseInt($(".ticketQuantityValue_" + id).val());
+        if(quantity == 1){
+            return ;
+        }
         let price = $("#price_"+id).val();
-        console.log(price);
-        removeTicket(id, price, 'totalBasket');
+        let ticketFee = $("#price_"+id).attr('data-ticketfee');
+        removeTicket(id, price, ticketFee, 'totalBasket');
       });
 
 });
@@ -121,16 +126,17 @@ function absVal(el) {
     return $(el).val(absVal);
 }
 
-function deleteTicket(id,price) {
-    let quantityValue = $("#ticketQuantityValue_" + id).val();
+function deleteTicket(id, price, ticketFee) {
+    let quantityValue = $(".ticketQuantityValue_" + id).val();
     let totalBasket = $(".totalBasket").text();
     quantityValue = parseInt(quantityValue);
-    totalBasket = parseInt(totalBasket);
-    price = parseInt(price);
-    totalBasket = totalBasket - quantityValue*price;
+    totalBasket = parseFloat(totalBasket);
+    price = parseFloat(price);
+    ticketFee = parseFloat(ticketFee);
+    totalBasket = totalBasket - quantityValue*(price + ticketFee);
+    $(".ticketQuantityValue_" + id).val(0);
     let current_time = $('#exp_time').val();
     let list_items = ($('.ticket_item').length > 1) ? 1 :0;
-    console.log($('.ticket_item').length);
 
     let data = {
         id: id,
@@ -162,27 +168,31 @@ function clearTotal(el, price, totalClass){
 	return $("."+totalClass).text(totalBasket.toFixed(2));
 }
 
-function removeTicket(id, price, totalClass) {
-    var quantityValue = $("#ticketQuantityValue_" + id).val();
-    var totalBasket = $("."+totalClass).text();
-    quantityValue = parseInt(quantityValue);
-    totalBasket = parseInt(totalBasket);
-    price = parseInt(price);
-    var priceVal = price;
-    if (quantityValue == 0) {
+function removeTicket(id, price, ticketFee, totalClass) {
+    var quantityValue = $(".ticketQuantityValue_" + id).val();
+    if(quantityValue < 2){
         return;
     }
+    var totalBasket = $("."+totalClass).text();
+    quantityValue = parseInt(quantityValue);
+    totalBasket = parseFloat(totalBasket);
+    price = parseFloat(price);
+    ticketFee = parseFloat(ticketFee);
+    var priceVal = price;
+    
     quantityValue--;
-    totalBasket = totalBasket - price;
-    $("#ticketQuantityValue_" + id).val(quantityValue);
+    totalBasket = totalBasket - price - ticketFee;
+    $(".ticketQuantityValue_" + id).val(quantityValue);
     $("#quantity_" + id).val(quantityValue);
     $("."+totalClass).text(totalBasket.toFixed(2));
     let current_time = $(".current_time").val();
+    
     let descript = $(".descript_"+id).html();
     let data = {
         id: id,
         quantity: quantityValue,
         price: price.toFixed(2),
+        ticketFee: ticketFee.toFixed(2),
         descript:  descript,
         time: current_time
 
@@ -192,6 +202,7 @@ function removeTicket(id, price, totalClass) {
         data = JSON.parse(data);
         var descript_data = data['descript'];
         var price_data = data['price'];
+        var ticketFee_data = data['ticketFee'];
         var first_ticket = data['first_ticket'];
         var eventName = data['eventName'];
         let html = '<div class="menu-list__item ticket_item ticket_'+id+'">'+
@@ -203,21 +214,21 @@ function removeTicket(id, price, totalClass) {
         '</div>'+
         '<div class="menu-list__left-col ml-auto">'+
             '<div class="menu-list__price mx-auto">'+
-                '<b class="menu-list__price--discount mx-auto">'+price.toFixed(2)+'€</b>'+
+                '<b class="menu-list__price--discount mx-auto">'+price.toFixed(2)+'€ ('+ticketFee.toFixed(2)+'€)</b>'+
             '</div>'+
             '<div class="quantity-section mx-auto mb-2">'+
                 '<button type="button" class="quantity-button quantity-down" data-embellishmentid="'+id+'">-</button>'+
-                '<input id="ticketQuantityValue_'+id+'" type="text" value="'+quantityValue+'" placeholder="0" onfocus="clearTotal(this, \''+price+'\', \'totalBasket\')" onblur="ticketQuantity(this,\''+id+'\', \''+price+'\', \'totalBasket\')" onchange="ticketQuantity(this,\''+id+'\', \''+price+'\', \'totalBasket\')" oninput="absVal(this);" disabled="" class="quantity-input">'+
+                '<input type="text" value="'+quantityValue+'" placeholder="0" onfocus="clearTotal(this, \''+price+'\', \''+ticketFee+'\', \'totalBasket\')" onblur="ticketQuantity(this,\''+id+'\', \''+price+'\', \''+ticketFee+'\', \'totalBasket\')" onchange="ticketQuantity(this,\''+id+'\', \''+price+'\', \''+ticketFee+'\', \'totalBasket\')" oninput="absVal(this);" disabled="" class="quantity-input ticketQuantityValue_'+id+'">'+
                 '<button type="button" class="quantity-button quantity-up" data-embellishmentid="'+id+'">+</button>'+
             '</div>'+
             '<b class="menu-list__type mx-auto">'+
-                '<button onclick="deleteTicket(\''+id+'\',\''+priceVal+'\')" type="button" class="btn btn-danger bg-light color-secondary">'+
+                '<button onclick="deleteTicket(\''+id+'\',\''+priceVal+'\', \''+ticketFee.toFixed(2)+'\')" type="button" class="btn btn-danger bg-light color-secondary">'+
                     '<i class="fa fa-trash mr-2" aria-hidden="true"></i>'+
                     'Delete</button>'+
             '</b>'+
         '</div>'+
         '</div>'+
-        '<input type="hidden" id="price_'+id+'" value="'+price_data+'">';
+        '<input type="hidden" id="price_'+id+'" value="'+price_data+'" data-ticketfee="'+ticketFee_data+'">';
 
 
          if($('.ticket_'+id).length > 0){
@@ -230,22 +241,22 @@ function removeTicket(id, price, totalClass) {
     });
 }
 
-function addTicket(id, limit, price, totalClass) {
+function addTicket(id, limit, price, ticketfee, totalClass) {
     $('#payForm').show();
-    var quantityValue = $("#ticketQuantityValue_" + id).val();
+    var quantityValue = $(".ticketQuantityValue_" + id).val();
     var totalBasket = $("."+totalClass).text();
     quantityValue = parseInt(quantityValue);
     totalBasket = parseFloat(totalBasket);
     price = parseFloat(price);
-    var priceVal = price;
+    ticketfee = parseFloat(ticketfee);
     limit = parseInt(limit);
     if (quantityValue == limit) {
         return;
     }
     quantityValue++;
-    totalBasket = totalBasket + price;
+    totalBasket = totalBasket + price + ticketfee;
     
-    $("#ticketQuantityValue_" + id).val(quantityValue);
+    $(".ticketQuantityValue_" + id).val(quantityValue);
     $("#quantity_" + id).val(quantityValue);
     $("."+totalClass).text(totalBasket.toFixed(2));
     let current_time = $(".current_time").val();
@@ -254,6 +265,7 @@ function addTicket(id, limit, price, totalClass) {
         id: id,
         quantity: quantityValue,
         price: price.toFixed(2),
+        ticketFee: ticketfee.toFixed(2),
         descript:  descript,
         time: current_time
     };
@@ -262,6 +274,7 @@ function addTicket(id, limit, price, totalClass) {
         //console.log(data);
         var descript_data = data['descript'];
         var price_data = data['price'];
+        var ticketFee_data = data['ticketFee'];
         var first_ticket = data['first_ticket'];
         var eventName = data['eventName'];
         let html = '<div class="menu-list__item ticket_item ticket_'+id+'">'+
@@ -273,21 +286,21 @@ function addTicket(id, limit, price, totalClass) {
         '</div>'+
         '<div class="menu-list__left-col ml-auto">'+
             '<div class="menu-list__price mx-auto">'+
-                '<b class="menu-list__price--discount mx-auto">'+price.toFixed(2)+'€</b>'+
+                '<b class="menu-list__price--discount mx-auto">'+price.toFixed(2)+'€  ('+ticketfee.toFixed(2)+'€)</b>'+
             '</div>'+
             '<div class="quantity-section mx-auto mb-2">'+
                 '<button type="button" class="quantity-button quantity-down" data-embellishmentid="'+id+'">-</button>'+
-                '<input id="ticketQuantityValue_'+id+'" type="text" value="'+quantityValue+'" placeholder="0" onfocus="clearTotal(this, \''+price+'\', \'totalBasket\')" onblur="ticketQuantity(this,\''+id+'\', \''+price+'\', \'totalBasket\')" onchange="ticketQuantity(this,\''+id+'\', \''+price+'\', \'totalBasket\')" oninput="absVal(this);" disabled="" class="quantity-input">'+
+                '<input type="text" value="'+quantityValue+'" placeholder="0" onfocus="clearTotal(this, \''+price+'\', \'totalBasket\')" onblur="ticketQuantity(this,\''+id+'\', \''+price+'\', \'totalBasket\')" onchange="ticketQuantity(this,\''+id+'\', \''+price+'\', \'totalBasket\')" oninput="absVal(this);" disabled="" class="quantity-input ticketQuantityValue_'+id+'">'+
                 '<button type="button" class="quantity-button quantity-up" data-embellishmentid="'+id+'">+</button>'+
             '</div>'+
             '<b class="menu-list__type mx-auto">'+
-                '<button onclick="deleteTicket(\''+id+'\',\''+price_data+'\')" type="button" class="btn btn-danger bg-light color-secondary">'+
+                '<button onclick="deleteTicket(\''+id+'\',\''+price_data+'\', \''+ticketfee.toFixed(2)+'\')" type="button" class="btn btn-danger bg-light color-secondary">'+
                     '<i class="fa fa-trash mr-2" aria-hidden="true"></i>'+
                     'Delete</button>'+
             '</b>'+
         '</div>'+
         '</div>'+
-        '<input type="hidden" id="price_'+id+'" value="'+price_data+'">';
+        '<input type="hidden" id="price_'+id+'" value="'+price_data+'" data-ticketfee="'+ticketFee_data+'">';
         
 
 
@@ -304,13 +317,17 @@ function addTicket(id, limit, price, totalClass) {
 }
 
 
-function ticketQuantity(el, id, price, totalClass) {
+function ticketQuantity(el, id, price, ticketfee, totalClass) {
     var quantityValue = $(el).val();
+    if(quantityValue == 0 || quantityValue == '0'){
+        $(el).val(1);
+    }
     var totalBasket = $("."+totalClass).text();
     quantityValue = parseInt(quantityValue);
-    totalBasket = parseInt(totalBasket);
-    price = parseInt(price);
-    totalBasket = totalBasket + price*quantityValue;
+    totalBasket = parseFloat(totalBasket);
+    price = parseFloat(price);
+    ticketfee = parseFloat(ticketfee);
+    totalBasket = totalBasket + quantityValue*(price + ticketFee);
     $(el).val(quantityValue);
     $("#quantity_" + id).val(quantityValue);
     return $("."+totalClass).text(totalBasket.toFixed(2));
