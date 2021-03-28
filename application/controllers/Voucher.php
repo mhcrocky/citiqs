@@ -82,9 +82,15 @@ class Voucher extends BaseControllerWeb
             'updateTemplate' => base_url() . 'update_template' . DIRECTORY_SEPARATOR,
         ];
 
-            $this->global['pageTitle'] = 'TIQS : LIST TEMPLATE';
-            $this->loadViews('templates/listTemplates', $this->global, $data, 'footerbusiness', 'headerbusiness');
-            return;
-        }
+        $this->global['pageTitle'] = 'TIQS : LIST TEMPLATE';
+        $this->loadViews('templates/listTemplates', $this->global, $data, 'footerbusiness', 'headerbusiness');
+        return;
+    }
+
+	public function translate_lang(){
+		$text = $this->input->post('text');
+		echo $this->language->tline($text);
+	}
+
 
 }

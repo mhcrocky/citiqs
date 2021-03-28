@@ -28,6 +28,13 @@ $(document).ready(function () {
       url: globalVariables.baseUrl + "Api/Voucher/vouchers",
       dataSrc: "",
     },
+    dom: 'Bfrtip',
+    buttons: [{
+      extend: 'csv',
+      text: translateText('Export CSV'),
+      className: "btn btn-primary mb-3 ml-1",
+      style: "background: #10b981 !important;border-radius:0;height:45px;"
+    }],
     columns: [
       {
         title: "ID",
@@ -370,4 +377,11 @@ function updateEmailTemplates() {
     
   }
   
+}
+
+
+function translateText(text){
+  $.post(globalVariables.baseUrl + 'voucher/translate_lang', {text: text}, function(data) {
+    return data;
+  });
 }
