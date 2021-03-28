@@ -17,6 +17,7 @@ class Bookingpay extends BaseControllerWeb
         $this->load->helper('cookie');
         $this->load->helper('utility_helper');
         $this->load->helper('email_helper');
+        $this->load->helper('pay_helper');
         $this->load->model('log_model');
         $this->load->model('bookandpay_model');
         $this->load->model('sendreservation_model');
@@ -372,6 +373,34 @@ class Bookingpay extends BaseControllerWeb
             redirect(LANG_URL . '/checkout');
         }
         */
+    }
+
+    public function onlinepayment($paymentType, $paymentOptionSubId = '0')
+    {
+        $paymentType = strval($this->uri->segment('3'));
+        $paymentOptionSubId = ($this->uri->segment('4')) ? strval($this->uri->segment('4')) : '0';
+        $vendorId = $this->session->userdata('customer');
+        $SlCode = $this->bookandpay_model->getUserSlCode($vendorId);
+        $reservationIds = $this->session->userdata('reservationIds');
+        $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
+        $arrArguments = Pay_helper::getReservationsArgumentsArray($vendorId, $reservations, strval($SlCode), $paymentType, $paymentOptionSubId);
+
+        $namespace = $this->config->item('transactionNamespace');
+        $function = $this->config->item('orderPayNlFunction');
+        $version = $this->config->item('orderPayNlVersion');
+
+        $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
+        
+
+        $this->session->set_userdata('payment_data', [
+            'strUrl' => $strUrl,
+            'arrArguments' => $arrArguments,
+            'discountAmount' => $arrArguments['amount']
+        ]);
+
+
+        $this->processPaymenttype($strUrl);
+
     }
 
     private function processPaymenttype($strUrl)

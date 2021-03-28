@@ -1112,4 +1112,22 @@ class   Bookandpayagendabooking_model extends CI_Model
 		return $query->row();
 	}
 
+	function get_payment_methods($vendor_id){
+
+		$this->db->select('paymentMethod, percent, amount')
+		->from('tbl_shop_payment_methods')
+		->where('vendorId',$vendor_id)
+		->where('productGroup','Reservations');
+		$query = $this->db->get();
+		$results = $query->result_array();
+		$ticketing = [];
+		foreach($results as $result){
+			$ticketing[$result['paymentMethod']] = [
+				'percent' => $result['percent'],
+				'amount' => $result['amount']
+			];
+		}
+		return $ticketing;
+	}
+
 }
