@@ -31,9 +31,22 @@ $(document).ready(function () {
     dom: 'Bfrtip',
     buttons: [{
       extend: 'csv',
-      text: translateText('Export CSV'),
+      text: 'Export CSV',
       className: "btn btn-primary mb-3 ml-1",
       style: "background: #10b981 !important;border-radius:0;height:45px;"
+    },
+    {
+      extend: 'excel',
+      text: 'Export Excel',
+      className: "btn btn-success mb-3 ml-1",
+      style: "background: #10b981 !important;border-radius:0;height:45px;"
+    },
+    {
+      text: 'Import CSV',
+      className: "btn btn-secondary mb-3 ml-1",
+      action: function ( e, dt, node, config ) {
+        $('#uploadCsvModal').modal('toggle');
+      }
     }],
     columns: [
       {

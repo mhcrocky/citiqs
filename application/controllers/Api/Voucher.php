@@ -250,6 +250,102 @@ class Voucher extends REST_Controller
         $this->set_response($response, 400);
         return ;
     }
+
+    public function upload_csv_post()
+    {
+		$this->load->library('form_validation');
+		$vendorId = $this->session->userdata('userId');
+
+		$config['upload_path']   = FCPATH.'assets/csv';
+        $config['allowed_types'] = 'csv';
+        $config['max_size']      = '102400'; // 102400 100mb
+		$config['file_name']     = $this->input->post('filename');
+		$this->load->library('upload', $config);
+		if (!$this->upload->do_upload('userfile')) {
+			$errors   = $this->upload->display_errors('', '');
+			var_dump($errors);
+		} else {
+		    $upload_data = $this->upload->data();
+		    $file_name = $upload_data['file_name'];
+			$i = 0;
+			$file = fopen(FCPATH."assets/csv/".$file_name,"r");
+			$key = 0;
+			$data = [];
+			$headers = [];
+			$vouchers = [];
+			$start_key = 0;
+
+			while (($row = fgets($file)) !== FALSE) {
+				//$data[] = $row;
+				if ((strpos($row, ';') || strpos($row, ',')) !== false) {
+					$results = (strpos($row, ';') !== false) ? explode(';',$row) : explode(',',$row);
+					$voucher = [];
+					foreach($results as $key => $result){
+						if($i == 0){
+							if($result == '' || empty($result)){ continue;}
+							$headers[$key] = $result;
+							$start_key = $key;
+						} else {
+							if(!isset($headers[$key])){ continue;}
+							$voucher[$headers[$key]] = $result;
+						}
+		
+					}
+					$i++;
+					$vouchers[] = $voucher;
+				}
+				
+			}
+
+
+			$count = count($headers);
+			$headers[$count] = FCPATH."assets/csv/".$file_name;
+			echo json_encode($headers);
+			fclose($file);
+			//unlink(FCPATH."assets/csv/".$file_name);
+
+				
+		}
+
+
+
+		
+	}
+
+	public function import_csv_post()
+    {
+		$fields = $this->input->post(null, true);
+		$file_path = urldecode($fields['csv_path']);
+		unset($fields['csv_path']);
+		$vouchers = [];
+		$file = fopen($file_path, "r");
+		$i = 0;
+
+		while (($row = fgets($file)) !== FALSE) {
+			
+			if ((strpos($row, ';') || strpos($row, ',')) !== false) {
+				$results = (strpos($row, ';') !== false) ? explode(';',$row) : explode(',',$row);
+
+				$vouchers[] = [
+					'code' => str_replace('"', '', $results[$fields['code']]),
+					'description' => str_replace('"', '', $results[$fields['description']]),
+					'amount' => str_replace('"', '', $results[$fields['amount']]),
+					'percent' => str_replace('"', '', $results[$fields['percent']]),
+					'percentUsed' => isset($results[$fields['percentUsed']]) ? str_replace('"', '', $results[$fields['percentUsed']]) : 0,
+					'expire' => isset($results[$fields['expire']]) ? str_replace('"', '', $results[$fields['expire']]) : date('Y-m-d'),
+					'active' => isset($results[$fields['active']]) ? str_replace('"', '', $results[$fields['active']]) : 0,
+					'numberOfTimes' => isset($results[$fields['numberOfTimes']]) ? str_replace('"', '', $results[$fields['numberOfTimes']]) : 1,
+					'activated' => isset($results[$fields['activated']]) ? str_replace('"', '', $results[$fields['activated']]) : 0,
+					'productId' => isset($results[$fields['productId']]) ? str_replace('"', '', $results[$fields['productId']]) : '',
+					'emailId' => isset($results[$fields['emailId']]) ? str_replace('"', '', $results[$fields['emailId']]) : ''
+				];
+			}
+				
+		}
+
+		unlink($file_path);
+		return $this->shopvoucher_model->multipleCreate($vouchers);
+	}
  
     public function data_get()
     {

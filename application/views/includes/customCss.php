@@ -358,6 +358,88 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
     <link type="text/css" href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css" rel="stylesheet" />
+<style>
+    .custom-file-uploader {
+    position: relative;
+}
+
+.custom-file-uploader input[type='file'] {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 5;
+    width: 100%;
+
+    opacity: 0;
+    cursor: default;
+}
+
+#filterFormSection * {
+    margin: 0;
+    font-family: Tahoma, Geneva, Arial, Helvetica, sans-serif;
+    padding: 0;
+}
+
+#filterForm {
+
+    padding-right: 10px;
+
+}
+
+#filterForm select {
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    padding: 8px;
+    margin-bottom: 3px;
+}
+
+#filterForm input {
+    display: block;
+    width: 100%;
+    padding: 8px;
+}
+
+#filterFormSection #result {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+#filterFormSection #result p {
+    font-size: 25px;
+}
+
+#filterFormSection #result h3 {
+    font-size: 50px;
+    padding: 10px;
+    margin-bottom: 20px;
+    color: #69a2a9;
+}
+
+#filterFormSection #result span {
+    text-transform: capitalize;
+}
+
+#filterFormSection #result a {
+    text-decoration: none;
+    color: #000;
+    background: #ebebeb;
+    padding: 10px;
+    border-radius: 1px;
+    border: solid 1px #c1c1c1;
+    box-shadow: 1px 1px 1px #c1c1c1;
+}
+
+#filterFormSection #result a:hover {
+    background: #c5c5c5;
+}
+</style>
 <?php  } elseif ($this->view === 'events/index') { ?>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
