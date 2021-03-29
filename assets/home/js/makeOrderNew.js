@@ -1,6 +1,6 @@
 'use strict';
 
-countOrdered('countOrdered');
+
 
 $(document).ready(function(){
     $('.items-slider').slick({
@@ -21,7 +21,7 @@ $(document).ready(function(){
         placement : "right",
         container: 'body'
     });
-
+    countOrdered('countOrdered');
     resetTotal();
     if (makeOrderGlobals.categorySlide) {
         goToSlide(parseInt(makeOrderGlobals.categorySlide));

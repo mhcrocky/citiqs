@@ -21,6 +21,10 @@ main {
 .quantity {
     display: none;
 }
+.imgAlergies {
+    height: 24px;
+    width: 24px;
+}
 
 @media only screen and (max-width: 768px) {
     .quantity {

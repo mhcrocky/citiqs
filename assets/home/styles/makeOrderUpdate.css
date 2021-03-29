@@ -34,6 +34,11 @@ input{
 	display: block;
 }
 
+.imgAlergies {
+    height: 24px;
+    width: 24px;
+}
+
 @media screen and (max-width: 864px) {
 
 	.div-no-mobile {

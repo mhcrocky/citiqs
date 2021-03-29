@@ -182,6 +182,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/shop-with-slider.css"/>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/order-popup.css"/>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/makeOrderUpdate.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/makeOrderItemSlider.css" />
 <?php } elseif ($this->view === 'paysuccesslink') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">

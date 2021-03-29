@@ -35,9 +35,9 @@ class Alfredpayment extends BaseControllerWeb
 
     public function paymentEngine($paymentType, $paymentOptionSubId, $orderId): void
     {
-//		echo var_dump($paymentType);
-//		echo var_dump($paymentOptionSubId);
-//		die();
+        //		echo var_dump($paymentType);
+        //		echo var_dump($paymentOptionSubId);
+        //		die();
 
         $orderId = intval($orderId);
         $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();

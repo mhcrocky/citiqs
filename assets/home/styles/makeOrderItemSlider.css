@@ -1,0 +1,47 @@
+.items-slider .slick-arrow::before {
+    font-size: 20px;
+}
+.slick-next, .slick-prev {
+    background-color: #fff;
+    height: 31px !important;
+    padding: 0px;
+    margin-top:-1px;
+    border-radius: 50%;
+}
+.slick-next:hover, .slick-prev:hover {
+    margin-top:-1px;
+    background: #fff;
+    height: 31px;
+    padding: 0px;
+    border-radius: 50%;
+}
+.slick-prev::before {
+    content: '\f053' !important;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+
+    color: #000;
+    font-size: 14px;
+    padding-right: 0.5em;
+    position: absolute;
+    top: 7px;
+    left: 8px;
+    
+}
+
+.slick-next::before {
+    content: '\f054' !important;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+
+    color: #000;
+    font-size: 10px;
+    padding-right: 0.5em;
+    position: absolute;
+    top: 7px;
+    left: 12px;
+}
