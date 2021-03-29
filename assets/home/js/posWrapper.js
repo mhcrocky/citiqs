@@ -48,12 +48,16 @@ function deletePosOrder() {
 
 function deletePosOrderResponse(orderDataRandomKey, response) {
     if (response['status'] === '1') {
-        $('#selectSaved option[value="' + orderDataRandomKey +'"]').remove();
-        if ($('#selectSaved option').length === 1) {
-            $(".selectSavedOrdersList").hide();
-        }
-        $('#confirmCancel').modal('hide');        
+        $('#confirmCancel').modal('hide');
+        removeOrderFromSelectList(orderDataRandomKey);
         resetPosOrder();
+    }
+}
+
+function removeOrderFromSelectList(orderDataRandomKey) {
+    $('#selectSaved option[value="' + orderDataRandomKey +'"]').remove();
+    if ($('#selectSaved option').length === 1) {
+        $(".selectSavedOrdersList").hide();
     }
 }
 
@@ -313,11 +317,7 @@ function posPayOrderResponse(element, data) {
     }
 
     if (element.dataset.paid === '1') {
-        if (data['redirect']) {
-            redirectToNewLocation(data['redirect']);
-            return;
-        }
-        payResponse(data['orderId']);
+        payResponse(data);
         return;
     }
 
@@ -326,10 +326,16 @@ function posPayOrderResponse(element, data) {
     return;
 }
 
-function payResponse(orderId) {
+function payResponse(data) {
+    if (data['redirect']) {
+        redirectToNewLocation(data['redirect']);
+        return;
+    }
+    let orderId = data['orderId'];
+    removeOrderFromSelectList(makeOrderGlobals['orderDataRandomKey']);
     showOrderId(orderId);
-    sednNotification(orderId);
-    printOrder(orderId);
+    // sednNotification(orderId);
+    // printOrder(orderId);
     resetPosOrder();
     return;
 }
@@ -354,10 +360,10 @@ function sednNotification(orderId) {
     $.get(url, function(data, status) {});
 }
 
-function printOrder(orderId) {
-    let justPrint = 'http://localhost/tiqsbox/index.php/Cron/justprint/' + orderId;
-    $.get(justPrint, function(data, status) {});
-}
+// function printOrder(orderId) {
+//     let justPrint = 'http://localhost/tiqsbox/index.php/Cron/justprint/' + orderId;
+//     $.get(justPrint, function(data, status) {});
+// }
 
 function printReportes(vendorId, reportType) {
     let url = globalVariables.baseUrl + 'api/report?vendorid=' + vendorId + '&report=' + reportType;

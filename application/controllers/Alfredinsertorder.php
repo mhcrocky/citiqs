@@ -159,7 +159,13 @@ class Alfredinsertorder extends BaseControllerWeb
             $redirect .= DIRECTORY_SEPARATOR . $this->config->item('pinMachineOptionSubId');
             $redirect .= DIRECTORY_SEPARATOR . $orderId;
 
-            $response['redirect'] = $redirect;    
+            $response['redirect'] = $redirect;
+        }
+
+        $url = 'http://localhost/tiqsbox/index.php/Cron/justprint/' . $orderId;
+        @file_get_contents($url);
+        if ($post['oneSignalId']) {
+            $this->notificationvendor->sendVendorMessage($post['oneSignalId'], $orderId);
         }
 
         return;
@@ -372,7 +378,6 @@ class Alfredinsertorder extends BaseControllerWeb
                 ->payOrderWithVoucher(floatval($order['voucherAmount']));
     }
 
-
     private function voucherPaymentFailed(array $orderData, string $orderRandomKey): void
     {
         if (!empty($orderData['order']['voucherId']) && !empty($orderData['order']['voucherAmount']) && !$this->payingWithVoucher($orderData['order'])) {
@@ -402,11 +407,5 @@ class Alfredinsertorder extends BaseControllerWeb
         }
     }
 
-    public function posSendNoticication($orderId, $oneSignalId): void
-    {
-        $orderId = intval($orderId);
-        if (!$orderId) return;
-        $this->notificationvendor->sendVendorMessage($oneSignalId, $orderId);
-    }
 }
 
