@@ -534,7 +534,7 @@
             } else {
                 $redirect = 'buyer_details?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
             };       
-    
+
             return $redirect;
         }
 

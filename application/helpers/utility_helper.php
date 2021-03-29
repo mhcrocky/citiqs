@@ -346,7 +346,7 @@
                     if (!$onlyOne) {                                    
                         $checkoutList .=                'class="form-control checkProduct inputFieldsMakeOrder" style="display:inline-block"';
                     } else {
-                        $checkoutList .=                'readonly hidden';
+                        $checkoutList .=                'hidden';
                     }
                     $checkoutList .=                '/>';
 
@@ -378,8 +378,7 @@
                                         $checkoutList .=    '<img
                                                                 src="'. $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy) . '.png"
                                                                 alt="' . $allergy . '"
-                                                                height="24px"
-                                                                width="24px"
+                                                                class="ingredients imgAlergies"
                                                                 style="display:inline; margin:0px 2px 3px 0px"
                                                             />';
                                     }
@@ -395,19 +394,17 @@
                         $checkoutList .=        '<h6 class="remarkStyle">Remark</h6>';
                         $checkoutList .=            '<div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">';
                         $checkoutList .=                '<input
-                                                            type="text"';
+                                                            type="text" ';
                         if (!$disabled) {
                             $checkoutList .=                'class="posKeyboard ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview form-control remarks inputFieldsMakeOrder" ';
                         } else {
                             $checkoutList .=                'class="form-control remarks inputFieldsMakeOrder" readonly ';
                         }                                   
-                        $checkoutList .=                'rows="1"
-                                                            id ="' . $count . '_' .$remarkProductId . '"
+                        $checkoutList .=                    'id ="' . $count . '_' .$remarkProductId . '"
                                                             maxlength="' . $maxRemarkLength . '"
                                                             placeholder="Allowed ' . $maxRemarkLength . ' characters"
                                                             data-product-remark-id="' . $remarkProductId . '"
                                                             value="' . $product['remark'] . '"
-                                                            role="textbox"
                                                             tabindex="-1"
                                                             autocomplete="off"
                                                         />';
@@ -463,8 +460,7 @@
                                             $checkoutList .= '<img
                                                                 src="' . $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy) . '.png"
                                                                 alt="' . $allergy  . '"
-                                                                height="24px"
-                                                                width="24px"
+                                                                class="ingredients imgAlergies"
                                                                 style="display:inline; margin:0px 2px 3px 0px"
                                                             />';
                                         }
@@ -552,12 +548,10 @@
                                         $checkoutList .=                'class="form-control remarks inputFieldsMakeOrder" readonly ';
                                     }   
                                         $checkoutList .=                'id="' . $count . '_' .$remarkAddonId . '"
-                                                                        rows="1"
                                                                         maxlength="' . $maxRemarkLength . '"
                                                                         placeholder="Allowed ' . $maxRemarkLength . ' characters"
                                                                         data-addon-remark-id="' . $remarkAddonId . '"
                                                                         value="' . $addon['remark'] . '"
-                                                                        role="textbox"
                                                                         tabindex="-1"
                                                                         autocomplete="off"
                                                                     />';
@@ -571,7 +565,6 @@
                         $checkoutList .=        '</div>';                      
                     }
 
-                    $checkoutList .=    '</div>';
                     $checkoutList .= '</div>'; 
         
                     $price += floatval($product['amount']);

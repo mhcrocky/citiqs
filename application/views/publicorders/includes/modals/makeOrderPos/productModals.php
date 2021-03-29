@@ -79,7 +79,6 @@
                                             class="form-control checkProduct inputFieldsMakeOrder"
                                             style="display:inline-block"
                                         <?php } elseif ($product['onlyOne'] === '1') { ?>
-                                            readonly
                                             hidden
                                         <?php } ?>
                                         <?php
@@ -112,9 +111,7 @@
                                                     <img
                                                         src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
                                                         alt="<?php echo $allergy; ?>"
-                                                        height='24px'
-                                                        width='24px'
-                                                        class="ingredients"
+                                                        class="ingredients imgAlergies"
                                                         style="display:inline; margin:0px 2px 3px 0px"
                                                     />
                                                 <?php
@@ -131,7 +128,6 @@
                                                 data-product-remark-id="<?php echo $remarkProductId; ?>"
                                                 placeholder="Allowed <?php echo $maxRemarkLength; ?> characters"
                                                 class="posKeyboard form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview form-control remarks inputFieldsMakeOrder"
-                                                role="textbox"
                                                 tabindex='-1'
                                                 autocomplete="off"
                                             />
@@ -157,144 +153,140 @@
                                             $collectAddons = Utility_helper::resetArrayByKeyMultiple($collectAddons, 'productType');
                                             $countAddons = 0;
                                             echo '<div class="modal__adittional__list" style="width:100%">';
-                                            foreach ($collectAddons as $key => $elements) {
-                                                echo '<h6 style="width:100%" class="labelsMain">' . $key . '</h6>';
-                                                
-                                                foreach ($elements as $addon) {
-                                                    $countAddons++;
-                                                    $addonAllowedQuantity = $addon['addonAllowedQuantity'];
-                                                    $remarkAddonId = $addon['addRemark'] === '1' ? $remarkProductId . '_' . $countAddons : '0';                                                        
-                                                    ?>
-                                                    <div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="width:50%; margin-bottom:3px">
-                                                        <label class="form-check-label labelItems" style="word-wrap: break-word;">
-                                                            <input
-                                                                type="checkbox"
-                                                                class="form-check-input checkAddons inputFieldsMakeOrder"
-                                                                data-addon-type-id-check="<?php echo $addon['productTypeId']; ?>"
-                                                                onchange="toggleElement(this)"
-                                                            />
-                                                            &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $addon['name']; ?>
-                                                            <?php if (floatval($addon['price']) > 0) { ?>
-                                                                &euro;&nbsp;<?php echo $addon['price']; ?>
-                                                            <?php } ?>
-                                                            <!-- (min per unit 1 / max  per unit --><?php //echo $addonAllowedQuantity; ?><!--) -->
-                                                        </label>
-                                                        <?php
-                                                            if ($vendor['showAllergies'] === '1')  {
-                                                                $addon['allergies'] = unserialize($addon['allergies']);
-                                                                if (!empty($addon['allergies']['productAllergies'])) {
-                                                                    $addonAllergies = $addon['allergies']['productAllergies'];
-                                                                    $baseUrl = base_url();
-                                                                    echo '<div>';
-                                                                    foreach ($addonAllergies as $allergy) {
-                                                                        ?>
-                                                                            <img
-                                                                                src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
-                                                                                alt="<?php echo $allergy; ?>"
-                                                                                class="ingredients"
-                                                                                height='24px'
-                                                                                width='24px'
-                                                                                style="display:inline; margin:0px 2px 3px 0px"
-                                                                            />
-                                                                        <?php
-                                                                    }
-                                                                    echo '</div>';
-                                                                }
-                                                            }
+                                                foreach ($collectAddons as $key => $elements) {
+                                                    echo '<h6 style="width:100%" class="labelsMain">' . $key . '</h6>';
+                                                    
+                                                    foreach ($elements as $addon) {
+                                                        $countAddons++;
+                                                        $addonAllowedQuantity = $addon['addonAllowedQuantity'];
+                                                        $remarkAddonId = $addon['addRemark'] === '1' ? $remarkProductId . '_' . $countAddons : '0';                                                        
                                                         ?>
-
-                                                    </div>
-                                                    <div
-                                                        class="modal-footer__quantity col-lg-4 col-sm-12"
-                                                        style="visibility: hidden; margin:0px 0px 3px 0px; padding:0px"
-                                                        >
-                                                        <span
-                                                            class='modal-footer__buttons modal-footer__quantity--plus priceQuantity'
-                                                            <?php if ($addonAllowedQuantity !== '1') { ?>
-                                                                onclick="changeAddonQuayntity(this)"
-                                                                style="margin-right:5px;"
-                                                            <?php } else { ?>
-                                                                style="visibility:hidden; height:0px"
-                                                            <?php }?>
-                                                            data-type="minus"                                                                
-                                                        >
-                                                            -
-                                                        </span>
-                                                        
-                                                        <input
-                                                            readonly
-                                                            oninput="reloadPageIfMinus(this)"
-                                                            onchange="reloadPageIfMinus(this)"
-                                                            type="number"
-                                                            min="1"
-                                                            max="<?php echo $addonAllowedQuantity; ?>"
-                                                            data-addon-price="<?php echo $addon['price']; ?>"
-                                                            data-addon-name="<?php echo htmlspecialchars($addon['name']); ?>"
-                                                            data-category="<?php echo htmlspecialchars($addon['category']); ?>"
-                                                            data-product-extended-id="<?php echo $productDetails['productExtendedId']; ?>"
-                                                            data-addon-extended-id="<?php echo $addon['productExtendedId']; ?>"
-                                                            data-initial-min-quantity="1"
-                                                            data-initial-max-quantity="<?php echo $addonAllowedQuantity; ?>"
-                                                            data-addon-product-id="<?php echo $addon['productId']; ?>"
-                                                            data-min = "1"
-                                                            data-max="<?php echo $addonAllowedQuantity; ?>"
-                                                            data-remark-id="<?php echo $remarkAddonId ?>"
-                                                            data-product-type="<?php echo $addon['productType']; ?>"
-                                                            data-addon-type-id="<?php echo $addon['productTypeId']; ?>"
-                                                            data-is-boolean="<?php echo $addon['isBoolean']; ?>"
-                                                            data-allowed-choices="<?php echo $addon['additionalNumber']; ?>"
-                                                            data-printed="0"
-                                                            <?php if (isset($addonAllergies)) { ?>
-                                                                data-allergies="<?php echo implode($this->config->item('allergiesSeparator'), $addonAllergies); ?>"
-                                                                <?php unset($addonAllergies); ?>
-                                                            <?php } else { ?>
-                                                                data-allergies=""
-                                                            <?php } ?>
-                                                            step="1"
-                                                            value="1"
-                                                            class="form-control addonQuantity inputFieldsMakeOrder"
-                                                            disabled                                                                
-                                                            <?php if ($addonAllowedQuantity !== '1') { ?>
-                                                                style="display:inline-block; border:0px; background-color: #fff;"
-                                                            <?php } else { ?>
-                                                                style="display:inline-block; border:0px; background-color: #fff; margin-left:7px"
-                                                            <?php } ?>
-                                                        />
-                                                        <span
-                                                            class='modal-footer__buttons modal-footer__quantity--minus priceQuantity'                                                                
-                                                            data-type="plus"
-                                                            <?php if ($addonAllowedQuantity !== '1') { ?>
-                                                                onclick="changeAddonQuayntity(this)"
-                                                                style="margin-left:5px;"
-                                                            <?php } else { ?>
-                                                                style="visibility:hidden; height:0px"
-                                                            <?php }?>
-                                                            >
-                                                            +
-                                                        </span>
-                                                    </div>
-                                                    <?php if ($addon['addRemark'] === '1') { ?>
-                                                        <div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">
-                                                            <h6 class="remarkStyle" style="margin-top:0px;">Remark</h6>
-                                                            <div class="col-lg-12 col-sm-12" style="margin-bottom:3px">
+                                                        <div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="width:50%; margin-bottom:3px">
+                                                            <label class="form-check-label labelItems" style="word-wrap: break-word;">
                                                                 <input
-                                                                    type="text"
-                                                                    rows="1"
-                                                                    maxlength="<?php echo $maxRemarkLength; ?>"
-                                                                    data-addon-remark-id="<?php echo $remarkAddonId ?>"
-                                                                    placeholder="Allowed <?php echo $maxRemarkLength; ?> characters"
-                                                                    class="posKeyboard form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview form-control remarks inputFieldsMakeOrder"
-                                                                    role="textbox"
-                                                                    tabindex='-1'
-                                                                    autocomplete="off"
+                                                                    type="checkbox"
+                                                                    class="form-check-input checkAddons inputFieldsMakeOrder"
+                                                                    data-addon-type-id-check="<?php echo $addon['productTypeId']; ?>"
+                                                                    onchange="toggleElement(this)"
                                                                 />
-                                                            </div>
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $addon['name']; ?>
+                                                                <?php if (floatval($addon['price']) > 0) { ?>
+                                                                    &euro;&nbsp;<?php echo $addon['price']; ?>
+                                                                <?php } ?>
+                                                                <!-- (min per unit 1 / max  per unit --><?php //echo $addonAllowedQuantity; ?><!--) -->
+                                                            </label>
+                                                            <?php
+                                                                if ($vendor['showAllergies'] === '1')  {
+                                                                    $addon['allergies'] = unserialize($addon['allergies']);
+                                                                    if (!empty($addon['allergies']['productAllergies'])) {
+                                                                        $addonAllergies = $addon['allergies']['productAllergies'];
+                                                                        $baseUrl = base_url();
+                                                                        echo '<div>';
+                                                                        foreach ($addonAllergies as $allergy) {
+                                                                            ?>
+                                                                                <img
+                                                                                    src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
+                                                                                    alt="<?php echo $allergy; ?>"
+                                                                                    class="ingredients imgAlergies"
+                                                                                    style="display:inline; margin:0px 2px 3px 0px"
+                                                                                />
+                                                                            <?php
+                                                                        }
+                                                                        echo '</div>';
+                                                                    }
+                                                                }
+                                                            ?>
+
                                                         </div>
-                                                    <?php } ?>
-                                                    <?php
+                                                        <div
+                                                            class="modal-footer__quantity col-lg-4 col-sm-12"
+                                                            style="visibility: hidden; margin:0px 0px 3px 0px; padding:0px"
+                                                            >
+                                                            <span
+                                                                class='modal-footer__buttons modal-footer__quantity--plus priceQuantity'
+                                                                <?php if ($addonAllowedQuantity !== '1') { ?>
+                                                                    onclick="changeAddonQuayntity(this)"
+                                                                    style="margin-right:5px;"
+                                                                <?php } else { ?>
+                                                                    style="visibility:hidden; height:0px"
+                                                                <?php }?>
+                                                                data-type="minus"                                                                
+                                                            >
+                                                                -
+                                                            </span>
+                                                            
+                                                            <input
+                                                                readonly
+                                                                oninput="reloadPageIfMinus(this)"
+                                                                onchange="reloadPageIfMinus(this)"
+                                                                type="number"
+                                                                min="1"
+                                                                max="<?php echo $addonAllowedQuantity; ?>"
+                                                                data-addon-price="<?php echo $addon['price']; ?>"
+                                                                data-addon-name="<?php echo htmlspecialchars($addon['name']); ?>"
+                                                                data-category="<?php echo htmlspecialchars($addon['category']); ?>"
+                                                                data-product-extended-id="<?php echo $productDetails['productExtendedId']; ?>"
+                                                                data-addon-extended-id="<?php echo $addon['productExtendedId']; ?>"
+                                                                data-initial-min-quantity="1"
+                                                                data-initial-max-quantity="<?php echo $addonAllowedQuantity; ?>"
+                                                                data-addon-product-id="<?php echo $addon['productId']; ?>"
+                                                                data-min = "1"
+                                                                data-max="<?php echo $addonAllowedQuantity; ?>"
+                                                                data-remark-id="<?php echo $remarkAddonId ?>"
+                                                                data-product-type="<?php echo $addon['productType']; ?>"
+                                                                data-addon-type-id="<?php echo $addon['productTypeId']; ?>"
+                                                                data-is-boolean="<?php echo $addon['isBoolean']; ?>"
+                                                                data-allowed-choices="<?php echo $addon['additionalNumber']; ?>"
+                                                                data-printed="0"
+                                                                <?php if (isset($addonAllergies)) { ?>
+                                                                    data-allergies="<?php echo implode($this->config->item('allergiesSeparator'), $addonAllergies); ?>"
+                                                                    <?php unset($addonAllergies); ?>
+                                                                <?php } else { ?>
+                                                                    data-allergies=""
+                                                                <?php } ?>
+                                                                step="1"
+                                                                value="1"
+                                                                class="form-control addonQuantity inputFieldsMakeOrder"
+                                                                disabled                                                                
+                                                                <?php if ($addonAllowedQuantity !== '1') { ?>
+                                                                    style="display:inline-block; border:0px; background-color: #fff;"
+                                                                <?php } else { ?>
+                                                                    style="display:inline-block; border:0px; background-color: #fff; margin-left:7px"
+                                                                <?php } ?>
+                                                            />
+                                                            <span
+                                                                class='modal-footer__buttons modal-footer__quantity--minus priceQuantity'                                                                
+                                                                data-type="plus"
+                                                                <?php if ($addonAllowedQuantity !== '1') { ?>
+                                                                    onclick="changeAddonQuayntity(this)"
+                                                                    style="margin-left:5px;"
+                                                                <?php } else { ?>
+                                                                    style="visibility:hidden; height:0px"
+                                                                <?php }?>
+                                                                >
+                                                                +
+                                                            </span>
+                                                        </div>
+                                                        <?php if ($addon['addRemark'] === '1') { ?>
+                                                            <div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">
+                                                                <h6 class="remarkStyle" style="margin-top:0px;">Remark</h6>
+                                                                <div class="col-lg-12 col-sm-12" style="margin-bottom:3px">
+                                                                    <input
+                                                                        type="text"
+                                                                        maxlength="<?php echo $maxRemarkLength; ?>"
+                                                                        data-addon-remark-id="<?php echo $remarkAddonId ?>"
+                                                                        placeholder="Allowed <?php echo $maxRemarkLength; ?> characters"
+                                                                        class="posKeyboard form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview form-control remarks inputFieldsMakeOrder"
+                                                                        tabindex='-1'
+                                                                        autocomplete="off"
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        <?php } ?>
+                                                        <?php
+                                                    }
+                                                    
                                                 }
-                                                
-                                            }
                                             echo '</div>';
                                         ?>
                                     </div>
@@ -318,7 +310,6 @@
                                 id="modal_buuton_<?php echo 'single-item-details-modal' . $product['productId']; ?>_<?php echo $productDetails['productExtendedId']?>"
                                 >Add <?php echo $productDetails['name']; ?> to list</button>
                         </div>
-                    </div>
                     </div>
                 </div>
                 <!-- end modal single item details -->

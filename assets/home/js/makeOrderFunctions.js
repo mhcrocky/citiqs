@@ -311,7 +311,6 @@ function resetTotal() {
     let addonsLength = addons.length;
     let i;
     let value = 0;
-
     for (i = 0; i < productsLength; i++) {
         let product = products[i];
         value = value + parseFloat(product.dataset.addProductPrice)  * parseFloat(product.value);

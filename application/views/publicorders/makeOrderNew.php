@@ -1,52 +1,3 @@
-<style>
-.items-slider .slick-arrow::before {
-    font-size: 20px;
-}
-.slick-next, .slick-prev {
-    background-color: #fff;
-    height: 31px !important;
-    padding: 0px;
-    margin-top:-1px;
-    border-radius: 50%;
-}
-.slick-next:hover, .slick-prev:hover {
-    margin-top:-1px;
-    background: #fff;
-    height: 31px;
-    padding: 0px;
-    border-radius: 50%;
-}
-.slick-prev::before {
-    content: '\f053' !important;
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: inherit;
-
-    color: #000;
-    font-size: 14px;
-    padding-right: 0.5em;
-    position: absolute;
-    top: 7px;
-    left: 8px;
-    
-}
-
-.slick-next::before {
-    content: '\f054' !important;
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: inherit;
-
-    color: #000;
-    font-size: 10px;
-    padding-right: 0.5em;
-    position: absolute;
-    top: 7px;
-    left: 12px;
-}
-</style>
 <main class="container shop-container selectedSpotBackground designBackgroundImage" style="width:100%"
     id="makeOrderView">
     <div class="row selectedSpotBackground">
@@ -65,7 +16,7 @@
                     foreach ($categories as $categoryName) {
                         $count++;
                         $categoryList .= '<li class="list-group-item selectedSpotBackground bordersColor">';
-                        $categoryList .=    '<a class="menuColor" href="#" onclick="facebookCustom(\'category\',\'' . $categoryName . '\',)"data-index="' . $count . '">' . $categoryName . '</a>';
+                        $categoryList .=    '<a class="menuColor" href="#" onclick="facebookCustom(\'category\',\'' . $categoryName . '\',)" data-index="' . $count . '">' . $categoryName . '</a>';
                         $categoryList .= '</li>';
                     }
                     $categoryList .= '</ul>';
@@ -144,9 +95,12 @@
                                                                     echo '<div class="shop__single-item__alergies">';
                                                                     foreach ($productAllergies as $allergy) {
                                                                         ?>
-                                    <img src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
-                                        class="ingredients" alt="<?php echo $allergy; ?>" height='24px' width='24px'
-                                        style="display:inline; margin:5px 2px" />
+                                    <img
+                                        src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
+                                        class="ingredients imgAlergies"
+                                        alt="<?php echo $allergy; ?>"
+                                        style="display:inline; margin:5px 2px"
+                                    />
                                     <?php
                                                                     }
                                                                     echo '</div>';
@@ -287,18 +241,22 @@
 
 <!-- IMAGE MODAL -->
 <!-- Image Modal -->
-<div class="modal fade image-modal selectedSpotBackground" tabindex="-1" id="image-modal" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div
+    class="modal fade image-modal selectedSpotBackground"
+    tabindex="-1"
+    id="image-modal"
+    role="dialog"
+    aria-hidden="true"
+>
     <div class="modal-dialog" role="document">
         <div class="modal-content selectedSpotBackground">
             <div class='modal-image-container selectedSpotBackground'>
-                <img src="" alt="" id='modal-image'>
+                <!-- <img src="" alt="" id='modal-image'> -->
             </div>
             <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
-                <p aria-hidden="true">&times;</p>
+                <span aria-hidden="true">&times;</span>
             </button>
         </div>
-
     </div>
 </div>
 <!-- end modal image -->
