@@ -151,11 +151,6 @@ function tinyMceInit(textAreaId, templateContent = '') {
                         text: '[ticketQuantity]',
                         onclick: function(){editor.insertContent('[ticketQuantity]')}
                     },
-                    {
-                        text: '[voucherDescription]',
-                        onclick: function(){editor.insertContent('[voucherDescription]')}
-                    },
-
                 ],
             });
 

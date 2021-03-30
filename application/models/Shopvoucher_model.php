@@ -22,6 +22,8 @@
         public $expire;
         public $active;
         public $numberOfTimes;
+        public $activated;
+        public $voucherused;
         public $productId;
         public $emailId;
 
@@ -67,6 +69,8 @@
             if (isset($data['expire']) && !Validate_data_helper::validateDate($data['expire'])) return false;
             if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
             if (isset($data['numberOfTimes']) && !Validate_data_helper::validateInteger($data['numberOfTimes'])) return false;
+            if (isset($data['activated']) && !Validate_data_helper::validateInteger($data['activated'])) return false;
+            if (isset($data['voucherused']) && !Validate_data_helper::validateInteger($data['voucherused'])) return false;
             if (isset($data['productId']) && !Validate_data_helper::validateInteger($data['productId'])) return false;
             if (isset($data['emailId']) && !Validate_data_helper::validateInteger($data['emailId'])) return false;
 

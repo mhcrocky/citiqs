@@ -52,7 +52,7 @@ class Voucher extends BaseControllerWeb
 		$this->load->model('email_templates_model');
 		
 		$what = ['*'];
-		$where = ["vendorId" => $vendorId];
+		$where = ["vendorId" => $vendorId, 'voucherused' => 0];
         $data['vouchers'] = $this->shopvoucher_model->read($what,$where);
 		$this->loadViews("voucher/send", $this->global, $data, 'footerbusiness', 'headerbusiness'); 
 	}

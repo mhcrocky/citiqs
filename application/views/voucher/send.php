@@ -61,6 +61,17 @@
                     </div>
 
                     <div class="form-group row">
+                        <label for="numberOfTimes" class="col-md-4 col-form-label text-md-left">
+                        Number Of Times
+                        </label>
+                        <div class="col-md-6">
+
+                            <input type="number" id="numberOfTimes" class="input-w border-50 form-control"
+                                name="numberOfTimes" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label for="status" class="col-md-4 col-form-label text-md-left">Voucher
                         </label>
                         <div class="col-md-6">
@@ -101,6 +112,7 @@ function save_vouchersend(e){
     let data = {
         name: $('#name').val(),
         email: encodeURI($('#email').val()),
+        numberOfTimes: $('#numberOfTimes').val(),
         voucherId: $('#voucherId option:selected').val()
     }
 

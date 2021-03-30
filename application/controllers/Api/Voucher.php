@@ -124,7 +124,7 @@ class Voucher extends REST_Controller
 
         $response = [
             'status' => "success",
-            'message' => "Voucher is sent successfully!",
+            'message' => "The vouchers are created successfully!",
         ];
 
         $this->set_response($response, 201);
@@ -160,9 +160,12 @@ class Voucher extends REST_Controller
         $voucher = $this->shopvoucher_model->read($what,$where);
         $data['send'] = $this->emailSend($data['name'], $data['email'], $voucher);
         if ($this->vouchersend_model->setObjectFromArray($data)->create()) {
+            if($data['send'] == 1){
+                $this->shopvoucher_model->setProperty('voucherused', 1)->customUpdate($where);
+            }
             $response = [
                 'status' => "success",
-                'message' => "The vouchers are created successfully!",
+                'message' => "Voucher is sent successfully!",
             ];
     
             $this->set_response($response, 201);
@@ -193,7 +196,7 @@ class Voucher extends REST_Controller
 				'left',
 			]
 		];
-		$what = ['tbl_vouchersend.id, name, email, send, datecreated, description'];
+		$what = ['tbl_vouchersend.id, tbl_vouchersend.numberOfTimes, name, email, send, datecreated, description'];
 		$where = [
 			 "tbl_shop_voucher.vendorId" => $vendorId
 			];
@@ -242,6 +245,7 @@ class Voucher extends REST_Controller
             $this->set_response($response, 400);
             return ;
         } else if($action == 'delete'){
+            $where['voucherused'] = 0;
             if($this->shopvoucher_model->multipleDelete($ids, $where)){
                 $response = [
                     'status' => "success",
@@ -489,81 +493,79 @@ class Voucher extends REST_Controller
 	{
         $mailsend = 0;
         $qrtext = $data[0]['code'];
-        $buyerName = $name;
-        $buyerEmail = $email;
         $voucherCode = $data[0]['code'];
         $voucherDescription = $data[0]['description'];
         $voucherAmount = $data[0]['amount'];
         $voucherPercent = $data[0]['percent'];
-            switch (strtolower($_SERVER['HTTP_HOST'])) {
-                case 'tiqs.com':
-				    $file = '/home/tiqs/domains/tiqs.com/public_html/alfred/uploads/qrcodes/';
-					break;
-				case '127.0.0.1':
-					$file = 'C:/wamp64/www/alfred/alfred/uploads/qrcodes/';
-					break;
-					default:
-					    break;
-			}
+        switch (strtolower($_SERVER['HTTP_HOST'])) {
+            case 'tiqs.com':
+				$file = '/home/tiqs/domains/tiqs.com/public_html/alfred/uploads/qrcodes/';
+				break;
+			case '127.0.0.1':
+				$file = 'C:/wamp64/www/alfred/alfred/uploads/qrcodes/';
+				break;
+			default:
+				break;
+		}
 
-			$SERVERFILEPATH = $file;
-			$text = $qrtext;
-			$folder = $SERVERFILEPATH;
-			$file_name1 = $qrtext . ".png";
-			$file_name = $folder . $file_name1;
-            QRcode::png($text, $file_name);
+		$SERVERFILEPATH = $file;
+		$text = $qrtext;
+		$folder = $SERVERFILEPATH;
+		$file_name1 = $qrtext . ".png";
+		$file_name = $folder . $file_name1;
+        QRcode::png($text, $file_name);
 
-            switch (strtolower($_SERVER['HTTP_HOST'])) {
-				case 'tiqs.com':
-					$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
-					break;
-				case '127.0.0.1':
-					$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
-					break;
-				default:
-					break;
-            }
-                        
-			switch (strtolower($_SERVER['HTTP_HOST'])) {
-				case 'tiqs.com':
-					$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
-					break;
-				case '127.0.0.1':
-					$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
-					break;
-				default:
-					break;
-            }
-
-                        
-			if($data[0]['emailId']) {
-                $this->load->model('email_templates_model');
-                $emailTemplate = $this->email_templates_model->get_emails_by_id($data[0]['emailId']);
-                $this->config->load('custom');
-                $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$data[0]['vendorId'].'/'.$emailTemplate->template_file .'.'.$this->config->item('template_extension'));
-                $qrlink = $SERVERFILEPATH . $file_name1;
-				if($mailtemplate) {
-                    $mailtemplate = str_replace('[buyerName]', $buyerName, $mailtemplate);
-					$mailtemplate = str_replace('[buyerEmail]', $buyerEmail, $mailtemplate);
-					$mailtemplate = str_replace('[voucherCode]', $voucherCode, $mailtemplate);
-					$mailtemplate = str_replace('[voucherDescription]', $voucherDescription, $mailtemplate);
-					$mailtemplate = str_replace('[voucherAmount]', $voucherAmount, $mailtemplate);
-					$mailtemplate = str_replace('[voucherPercent]', $voucherPercent, $mailtemplate);
-					$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
-					$subject = 'Your tiqs reservation(s)';
-					$mailsend = 1;
-					$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
-					if($this->sendEmail($email, $subject, $mailtemplate)) {
-                        $mailsend = 1;
-                    }
-                            
-                }
-            }
-            
-            return $mailsend;
-            
-
+        switch (strtolower($_SERVER['HTTP_HOST'])) {
+			case 'tiqs.com':
+				$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
+				break;
+			case '127.0.0.1':
+				$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
+				break;
+			default:
+				break;
         }
+                        
+		switch (strtolower($_SERVER['HTTP_HOST'])) {
+			case 'tiqs.com':
+				$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
+				break;
+			case '127.0.0.1':
+				$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
+				break;
+			default:
+				break;
+        }
+
+                        
+		if($data[0]['emailId']) {
+            $this->load->model('email_templates_model');
+            $emailTemplate = $this->email_templates_model->get_emails_by_id($data[0]['emailId']);
+            $this->config->load('custom');
+            $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$data[0]['vendorId'].'/'.$emailTemplate->template_file .'.'.$this->config->item('template_extension'));
+            $qrlink = $SERVERFILEPATH . $file_name1;
+			if($mailtemplate) {
+                $mailtemplate = str_replace('[Name]', $name, $mailtemplate);
+				$mailtemplate = str_replace('[Email]', $email, $mailtemplate);
+				$mailtemplate = str_replace('[voucherCode]', $voucherCode, $mailtemplate);
+				$mailtemplate = str_replace('[voucherDescription]', $voucherDescription, $mailtemplate);
+				$mailtemplate = str_replace('[voucherAmount]', $voucherAmount, $mailtemplate);
+				$mailtemplate = str_replace('[voucherPercent]', $voucherPercent, $mailtemplate);
+				$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
+				$subject = 'Your tiqs reservation(s)';
+				$mailsend = 1;
+				$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
+				if($this->sendEmail($email, $subject, $mailtemplate)) {
+                    $mailsend = 1;
+                }
+                            
+            }
+        }
+            
+        return $mailsend;
+            
+
+    }
     
 
 

@@ -16,6 +16,7 @@
         public $name;
         public $email;
         public $send;
+        public $numberOfTimes;
         public $datecreated;
         public $voucherId;
 
@@ -52,6 +53,7 @@
             if (isset($data['name']) && !Validate_data_helper::validateString($data['name'])) return false;
             if (isset($data['email']) && !Validate_data_helper::validateString($data['email'])) return false;
             if (isset($data['send']) && !Validate_data_helper::validateInteger($data['send'])) return false;
+            if (isset($data['numberOfTimes']) && !Validate_data_helper::validateInteger($data['numberOfTimes'])) return false;
             if (isset($data['voucherId']) && !Validate_data_helper::validateInteger($data['voucherId'])) return false;
             return true;
         }
