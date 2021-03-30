@@ -587,7 +587,13 @@ class Voucher extends REST_Controller
 				$mailtemplate = str_replace('[voucherAmount]', $voucherAmount, $mailtemplate);
 				$mailtemplate = str_replace('[voucherPercent]', $voucherPercent, $mailtemplate);
 				$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
-				$subject = 'Your tiqs reservation(s)';
+				$subject = $emailTemplate->template_subject;
+                $subject = str_replace('[Name]', $subject, $mailtemplate);
+				$subject = str_replace('[Email]', $subject, $mailtemplate);
+				$subject = str_replace('[voucherCode]', $subject, $mailtemplate);
+				$subject = str_replace('[voucherDescription]', $subject, $mailtemplate);
+				$subject = str_replace('[voucherAmount]', $subject, $mailtemplate);
+				$subject = str_replace('[voucherPercent]', $subject, $mailtemplate);
 				$mailsend = 1;
 				$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
 				if($this->sendEmail($email, $subject, $mailtemplate)) {

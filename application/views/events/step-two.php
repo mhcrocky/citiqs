@@ -400,6 +400,9 @@
                 <label for="customTemplateName">Template Name</label>
                 <input type="text" id="customTemplateName" name="customTemplateName" class="form-control" />
                 <br />
+                <label for="customTemplateSubject">Subject</label>
+                <input type="text" id="customTemplateSubject" name="templateSubject" class="form-control" />
+                <br />
                 <label for="templateType">Template Type</label>
                 <select class="form-control w-100" id="templateType" name="templateType">
                     <option value="" disabled>Select type</option>

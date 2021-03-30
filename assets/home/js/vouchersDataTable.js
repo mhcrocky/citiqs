@@ -285,9 +285,9 @@ function disabledField(el, field) {
 
 function saveVoucherTemplate() {
   if (typeof templateGlobals.templateId === 'undefined') {
-      createEmailTemplate('selectTemplateName', 'customTemplateName', 'templateType');
+      createEmailTemplate('selectTemplateName', 'customTemplateName', 'customTemplateSubject', 'templateType');
   } else {
-      createEmailTemplate('selectTemplateName', 'customTemplateName' , 'templateType', templateGlobals.templateId);
+      createEmailTemplate('selectTemplateName', 'customTemplateName', 'customTemplateSubject', 'templateType', templateGlobals.templateId);
   }
   emailTemplatesOptions();
   getEmailTemplates();

@@ -39,12 +39,17 @@
             <?php if ( !empty($templateName) && empty($selected) ) { ?> value="<?php echo $templateName; ?>"
             <?php } ?> />
         <br />
+        <label for="customTemplateSubject">Subject</label>
+        <input type="text" id="customTemplateSubject" name="templateSubject" class="form-control"
+            <?php if ( !empty($templateSubject) && empty($selected) ) { ?> value="<?php echo $templateSubject; ?>"
+            <?php } ?> />
+        <br />
         <label for="templateHtml">Edit template</label>
         <textarea id="templateHtml" name="templateHtml"></textarea>
         <div class="w-100 text-right mt-1">
             <button style="height:35px;" class="btn btn-primary mr-auto" <?php if (empty($templateId)) { ?>
-                onclick="createEmailTemplate('selectTemplateName', 'customTemplateName', 'templateType')" <?php } else { ?>
-                onclick="createEmailTemplate('selectTemplateName', 'customTemplateName', 'templateType', '<?php echo $templateId; ?>')"
+                onclick="createEmailTemplate('selectTemplateName', 'customTemplateName', 'customTemplateSubject', 'templateType')" <?php } else { ?>
+                onclick="createEmailTemplate('selectTemplateName', 'customTemplateName', 'customTemplateSubject', 'templateType', '<?php echo $templateId; ?>')"
                 <?php } ?>>
                 <?php echo empty($templateId) ? 'Create new template' : 'Update'; ?>
             </button>
