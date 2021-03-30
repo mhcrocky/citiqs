@@ -133,23 +133,76 @@ class Alfredinsertorder extends BaseControllerWeb
         $post['spotId'] = intval($post['spotId']);
 
         $this->isFodActive($post['vendorId'], $post['spotId']);
-        $orderId = $this->posPrintingPaying($post);
 
-        if (is_null($orderId)) {
-            $orderId = $this->insertOrderProcess($post, '');
-        }
+        if (!$this->voucherPosPayment($post)) return;
 
-        $response = ['orderId' => $orderId];
+        $orderId = $this->managePosOrder($post);
 
-        $this->posPaid($post, $response, $orderId);
+        $response = [
+            'status' => '1',
+            'orderId' => $orderId,
+            'paid' => $post['order']['paid']
+        ];
+
+        $this->posSideJobs($post, $response, $orderId);
 
         echo json_encode($response);
         return;
     }
 
-    private function posPaid(array $post, array &$response, int $orderId): void
+    private function voucherPosPayment(array &$post): bool
     {
-        if ($post['order']['paid'] !== '1') return;
+        if (!empty($post['order']['voucherId']) && !empty($post['order']['voucherAmount'])) {
+            if (!$this->payingWithVoucher($post['order'])) {
+                $response = [
+                    'status' => '0',
+                    'paid' => $post['order']['paid'],
+                    'messages' => ['Voucher payment failed']
+                ];
+                echo json_encode($response);
+                return false;
+            }
+            $post['order']['paid'] = '1';
+        }
+        return true;
+    }
+
+    private function managePosOrder(array $post): int
+    {
+        // check does post has key posOrderId
+        if (!empty($post['posOrderId'])) {
+            // if has, check ist this order already inserted and need only update of items and dates createdOrders and created
+            $posOrderId = intval(Utility_helper::getAndUnsetValue($post, 'posOrderId'));
+            $orderId = intval($this->shopposorder_model->setObjectId($posOrderId)->getProperty('orderId'));
+
+            if ($orderId) {
+                if (!empty($post['orderExtended'])) {
+                    $this->insertOrderExtendedRefactored($post['orderExtended'], $orderId);
+                }
+                if (!empty($post['order']['paymentType'])) {
+                    $this->saveOrderImage($orderId);
+                    $this
+                        ->shoporder_model
+                        ->setObjectId($orderId)
+                        ->setProperty('createdOrder', date('Y-m-d H:i:s'))
+                        ->setProperty('paid', $post['order']['paid'])
+                        ->update();
+                }
+                return $orderId;
+            }
+        }
+
+        return $this->insertOrderProcess($post, '');
+    }
+
+
+    private function posSideJobs(array $post, array &$response, int $orderId): void
+    {
+        // if no payment method, we have request for printing
+        if (empty($post['order']['paymentType'])) {
+            $response['print'] = '1';
+            return;
+        }
 
         $this->shopposorder_model->setProperty('orderId', $orderId)->deleteOrder();
 
@@ -169,34 +222,6 @@ class Alfredinsertorder extends BaseControllerWeb
         }
 
         return;
-    }
-
-    private function posPrintingPaying(array $post): ?int
-    {
-        // check does post has key posOrderId
-        if (!empty($post['posOrderId'])) {
-            // if has, check ist this order already inserted and need only update of items and dates createdOrders and created
-            $posOrderId = intval(Utility_helper::getAndUnsetValue($post, 'posOrderId'));
-            $orderId = intval($this->shopposorder_model->setObjectId($posOrderId)->getProperty('orderId'));
-
-            if ($orderId) {
-                if (!empty($post['orderExtended'])) {
-                    $this->insertOrderExtendedRefactored($post['orderExtended'], $orderId);
-                }
-                if ($post['order']['paid'] === '1') {
-                    $this->saveOrderImage($orderId);
-                    $this
-                        ->shoporder_model
-                        ->setObjectId($orderId)
-                        ->setProperty('createdOrder', date('Y-m-d H:i:s'))
-                        ->setProperty('paid', '1')
-                        ->update();
-                }
-                return $orderId;
-            }
-        }
-
-        return null;
     }
 
     private function failedRedirect(int $vendorId, int $spotId, string $orderRandomKey): void

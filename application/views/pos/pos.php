@@ -359,7 +359,7 @@
 						class="col-lg-3 figure"
 						onclick="posPayOrder(this)"
 						data-locked="0"
-						data-paid="1"
+						data-paid="0"
 						data-payment-method="<?php echo $pinMachinePayment?>"
 					>
 						<img
@@ -405,7 +405,10 @@
                     <button
                         class="btn btn-success btn-lg"
                         style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
-                        onclick="posVoucherPay('codeId')"
+                        onclick="posVoucherPay(this, 'codeId')"
+						data-locked="0"
+						data-paid="0"
+						data-payment-method="<?php echo $voucherPayment?>"
                     >
                         <i class="fa fa-check" aria-hidden="true"></i>
                     </button>

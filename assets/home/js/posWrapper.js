@@ -21,16 +21,18 @@ function posTriggerModalClick(modalButtonId) {
 }
 
 function cancelPosOrder() {
-    (makeOrderGlobals['orderDataRandomKey']) ? $('#confirmCancel').modal('show') : deletePosOrder();
+    (makeOrderGlobals['orderDataRandomKey']) ? $('#confirmCancel').modal('show') : resetPosOrder();
 }
 
 function resetPosOrder() {
     $('#selectPaymentMethod').modal('hide');
+    $('#voucher').modal('hide');
 
     document.getElementById(makeOrderGlobals.modalCheckoutList).innerHTML = '';
     document.getElementById('selectSaved').value = '';
     document.getElementById('checkoutName').innerHTML = 'Checkout';
     document.getElementById('posOrderName').value = '';
+    document.getElementById('codeId').value = '';
 
     makeOrderGlobals['orderDataRandomKey'] = '';
     posGlobals['selectedOrderName'] = '';
@@ -42,6 +44,7 @@ function resetPosOrder() {
 }
 
 function deletePosOrder() {
+
     let url = globalVariables.ajax  + 'deletePosOrder/' + posGlobals['posOrderId'];
     sendUrlRequest(url, 'deletePosOrder', deletePosOrderResponse, [makeOrderGlobals['orderDataRandomKey']]);
 }
@@ -72,7 +75,7 @@ function holdOrder(element) {
     }
 }
 
-function fetchAndSendHoldOrderData(orderId = 0) {
+function prepareSendHoldOrderData(orderId = 0) {
     let pos = 1;
     let send = prepareSendData(pos);
     let savedInputName = posGlobals['posOrderName'];
@@ -93,14 +96,17 @@ function fetchAndSendHoldOrderData(orderId = 0) {
     if (makeOrderGlobals['orderDataRandomKey']) {
         send['orderDataRandomKey'] = makeOrderGlobals['orderDataRandomKey'];
     }
+    return send;
+}
 
+function fetchAndSendHoldOrderData(orderId = 0) {
     $.ajax({
         url: globalVariables.ajax + 'setOrderSession',
-        data: send,
+        data: prepareSendHoldOrderData(orderId),
         type: 'POST',
         success: function (response) {
             let data = JSON.parse(response);
-            savedInputName.value = '';
+            posGlobals['posOrderName'].value = '';
             posGlobals['holdOrderElement'].setAttribute('data-locked', '0');
             $('#holdOrder').modal('hide');
             if (data['status'] !== '0') {
@@ -170,6 +176,14 @@ function posPayOrder(element) {
 
     element.setAttribute('data-locked', '1');
 
+    let post = prepearePosPost(element);
+    let url = globalVariables.baseUrl + 'Alfredinsertorder/posPayment'
+
+    sendAjaxPostRequest(post, url, 'posPayOrder', posPayOrderResponse, [element]);
+    return;
+}
+
+function prepearePosPost(element, code = null) {
     let orderedProducts = document.getElementsByClassName(makeOrderGlobals.orderedProducts);
     let orderedProductsLength = orderedProducts.length;
 
@@ -212,10 +226,11 @@ function posPayOrder(element) {
         post['posOrderId'] = posGlobals['posOrderId'];
     }
 
-    let url = globalVariables.baseUrl + 'Alfredinsertorder/posPayment'
+    if (code) {
+        post['code'] = code;
+    }
 
-    sendAjaxPostRequest(post, url, 'posPayOrder', posPayOrderResponse, [element]);
-    return;
+    return post;
 }
 
 function getOrderExtedned(orderedProducts, orderedProductsLength) {
@@ -311,29 +326,37 @@ function getOrderExtedned(orderedProducts, orderedProductsLength) {
 function posPayOrderResponse(element, data) {
     unlockPos(element);
 
-    if (!data['orderId']) {
-        alertify.error('Order not made');
-        return;
-    }
-
-    if (element.dataset.paid === '1') {
-        payResponse(data);
-        return;
-    }
-
-    alertify.success('Request for printing sent');
-    updateToPrinted(data['orderId']);
-    return;
-}
-
-function payResponse(data) {
     if (data['redirect']) {
         redirectToNewLocation(data['redirect']);
         return;
     }
+
+    if (data['status'] === '0') {
+        alertifyAjaxResponse(data);
+        return;
+    }
+
+    if (data['status'] === '1' && data['paid'] === '1') {
+        payResponse(data);
+        return;
+    }
+
+    if (data['status'] === '1' && data['print'] === '1') {
+        alertify.success('Request for printing sent');
+        updateToPrinted(data['orderId']);
+        return;
+    }
+
+    return;
+}
+
+function payResponse(data) {
     let orderId = data['orderId'];
     removeOrderFromSelectList(makeOrderGlobals['orderDataRandomKey']);
     showOrderId(orderId);
+    if (posGlobals['posOrderId']) {
+        deletePosOrder();
+    }
     // sednNotification(orderId);
     // printOrder(orderId);
     resetPosOrder();
@@ -509,20 +532,32 @@ function showPrintButton() {
     document.getElementById('posPrintButton').style.display = displayElement;
 }
 
-function posVoucherPay(codeId) {    
-    let codeElement = document.getElementById(codeId);
-    let code = codeElement.value;
+function posVoucherPay(element, codeId) {
+    // let locked = parseInt(element.dataset.locked);
+    // if (locked) return;
+    // element.setAttribute('data-locked', '1');
 
-    if (code.trim()) {
-        return true;
-        let post = {
-            'code' : code,
-        }
-        let url = globalVariables.ajax + 'voucherPay';
-        sendAjaxPostRequest(post, url, 'voucherPay', voucherResponse);
+    let codeElement = document.getElementById(codeId);
+    let code = codeElement.value.trim();
+    if (code) {
+        let post = prepearePosPost(element, code);
+        let url = globalVariables.ajax + 'posVoucherPay';
+        sendAjaxPostRequest(post, url, 'posVoucherPay', posVoucherPayResponse, [element]);
     } else {
         alertify.error('Code is required');
     }
+}
+
+function posVoucherPayResponse(element, response) {
+    if (response['status'] === '1') {
+        let url = globalVariables.baseUrl + 'Alfredinsertorder/posPayment';
+        sendAjaxPostRequest(response['order'], url, 'posPayOrder', posPayOrderResponse, [element]);
+        return;
+    }
+
+    // handle select payment method
+
+    alertifyAjaxResponse(response);
 }
 
 toogleSelectSavedOrders();
@@ -554,4 +589,3 @@ window.onkeydown = function(e) {
 window.onmousemove = function(e) {
     resetCounter();
 }
-

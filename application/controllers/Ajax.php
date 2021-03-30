@@ -1064,10 +1064,6 @@ class Ajax extends CI_Controller
         $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
         if (empty($orderData)) return;
 
-        $amount = floatval($orderData['order']['amount']);
-        $waiterTip = floatval($orderData['order']['waiterTip']);
-        $serviceFee = floatval($orderData['order']['serviceFee']);
-        $totalAmount = $amount + $waiterTip + $serviceFee;
 
         $this->shopvoucher_model->setProperty('code', $code)->setVoucher();
 
@@ -1078,33 +1074,55 @@ class Ajax extends CI_Controller
         ) return;
 
         $this->calculateVoucherDicsount($orderData, $this->shopvoucher_model);
+        $this->voucherOrderResponse($orderData, $orderRandomKey);
 
-        if ($totalAmount > $orderData['order']['voucherAmount']) {
-            $voucherDiscount = $orderData['order']['voucherAmount'];
-            $leftAmount =  $totalAmount - $orderData['order']['voucherAmount'];
-            echo json_encode([
-                'status' => '2',
-                'message' => 'Select method to finish payment',
-                'voucherAmount' => number_format($voucherDiscount, 2, ',', '.'),
-                'leftAmount' => number_format($leftAmount, 2, ',', '.'),
-            ]);
-        } else {
-            $redirect = base_url() . 'voucherPayment?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
-            echo json_encode([
-                'status' => '1',
-                'redirect' => $redirect
-            ]);
-        }
         return;
+    }
+
+    public function posVoucherPay(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $orderData = $this->security->xss_clean($_POST);
+        $orderData['vendorId'] = intval($_SESSION['userId']);
+        $code = $orderData['code'];
+
+        $this->shopvoucher_model->setProperty('code', $code)->setVoucher();
+
+        if (is_null($this->shopvoucher_model->id)) {
+            echo json_encode([
+                'status' => '0',
+                'messages' => ['Invalid code']
+            ]);
+            return;
+        }
+
+        if (!$this->checkVoucher($orderData, $this->shopvoucher_model)) return;
+
+        $totalAmount = $this->calculateTotalAmount($orderData['order']);
+
+        $this->calculateOrderVoucherAmount($orderData, $this->shopvoucher_model, $totalAmount);
+        $this->voucherOrderResponse($totalAmount, $orderData);
+        return;
+    }
+
+    private function calculateTotalAmount(array $order): float
+    {
+        $amount = round(floatval($order['amount']), 2);
+        $waiterTip = round(floatval($order['waiterTip']), 2);
+        $serviceFee = round(floatval($order['serviceFee']), 2);
+        return ($amount + $waiterTip + $serviceFee);
     }
 
     private function calculateVoucherDicsount(array &$orderData, object $shopVoucher): void
     {
-        $amount = floatval($orderData['order']['amount']);
-        $waiterTip = floatval($orderData['order']['waiterTip']);
-        $serviceFee = floatval($orderData['order']['serviceFee']);
-        $totalAmount = $amount + $waiterTip + $serviceFee;
+        $this->calculateOrderVoucherAmount($orderData, $shopVoucher);
+        $this->shopsession_model->updateSessionData($orderData);
+        return;
+    }
 
+    private function calculateOrderVoucherAmount(array &$orderData, object $shopVoucher, float $totalAmount): void
+    {
         if ($shopVoucher->productId) {
             // price is set in checkVoucher method
             $productPrice = $this->shopproductex_model->price;
@@ -1120,10 +1138,30 @@ class Ajax extends CI_Controller
                 $voucherAmount = ($shopVoucher->amount >= $totalAmount) ? $totalAmount : $shopVoucher->amount;
             }
         }
-        $orderData['order']['voucherAmount'] = $voucherAmount;
+        $orderData['order']['voucherAmount'] = round($voucherAmount, 2);
         $orderData['order']['voucherId'] = $this->shopvoucher_model->id;
-        $this->shopsession_model->updateSessionData($orderData);
         return;
+    }
+
+    private function voucherOrderResponse(float $totalAmount, array $orderData, string $orderRandomKey = ''): void
+    {
+        if ($totalAmount > $orderData['order']['voucherAmount']) {
+            $voucherDiscount = $orderData['order']['voucherAmount'];
+            $leftAmount =  $totalAmount - $orderData['order']['voucherAmount'];
+            echo json_encode([
+                'status' => '2',
+                'message' => 'Select method to finish payment',
+                'voucherAmount' => number_format($voucherDiscount, 2, ',', '.'),
+                'leftAmount' => number_format($leftAmount, 2, ',', '.')
+            ]);
+        } else {
+            $redirect = base_url() . 'voucherPayment?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
+            echo json_encode([
+                'status' => '1',
+                'redirect' => $redirect,
+                'order' => $orderData,
+            ]);
+        }
     }
 
     public function confirmOrderAction(): void
