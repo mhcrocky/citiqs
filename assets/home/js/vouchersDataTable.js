@@ -1,9 +1,6 @@
 var globalEmails = (function() {
-  return '';
+  return emailsTemplates;
 }());
-
-getEmailTemplates();
-
 
 $(document).ready(function () {
 
