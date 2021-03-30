@@ -78,7 +78,8 @@
                             <select id="voucherId" name="voucherId" class="form-control input-w border-50 field">
                                 <option value="">Select option</option>
                                 <?php foreach($vouchers as $voucher): ?>
-                                <option value="<?php echo $voucher['id']; ?>"><?php echo $voucher['description']; ?>
+                                <option id="option_<?php echo $voucher['id']; ?>" value="<?php echo $voucher['id']; ?>"  data-times="<?php echo intval($voucher['numberOfTimes']) - intval($voucher['voucherused']); ?>">
+                                <?php echo $voucher['description']; ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
@@ -101,29 +102,3 @@
     </div>
 </div>
 
-<script>
-
-function vouchersendForm(params) {
-    $('#submitVoucherSend').click();
-}
-
-function save_vouchersend(e){
-    e.preventDefault();
-    let data = {
-        name: $('#name').val(),
-        email: encodeURI($('#email').val()),
-        numberOfTimes: $('#numberOfTimes').val(),
-        voucherId: $('#voucherId option:selected').val()
-    }
-
-    //console.log(data);
-
-    $.post(globalVariables.baseUrl + "Api/Voucher/create_vouchersend", data, function(data){
-        $('#vouchersend').DataTable().ajax.reload();
-        $('#resetForm').click();
-        $('#closeModal').click();
-        alertify[data.status](data.message);
-    });
-
-}
-    </script>

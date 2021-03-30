@@ -161,7 +161,8 @@ class Voucher extends REST_Controller
         $data['send'] = $this->emailSend($data['name'], $data['email'], $voucher);
         if ($this->vouchersend_model->setObjectFromArray($data)->create()) {
             if($data['send'] == 1){
-                $this->shopvoucher_model->setProperty('voucherused', 1)->customUpdate($where);
+                $voucherused = intval($voucher[0]['voucherused'])+1;
+                $this->shopvoucher_model->setProperty('voucherused', $voucherused)->customUpdate($where);
             }
             $response = [
                 'status' => "success",
@@ -172,6 +173,40 @@ class Voucher extends REST_Controller
             return;
         }
 
+
+        $response = [
+            'status' => "error",
+            'message' => "Something went wrong!",
+        ];
+
+        $this->set_response($response, 201);
+        return;
+
+
+    }
+
+    public function vouchersend_email_post()
+    {
+        $data = $this->input->post(null, true);
+        $data['email'] = urldecode($data['email']);
+        $what = ['*'];
+		$where = ["id" => $data['voucherId']];
+        $voucher = $this->shopvoucher_model->read($what,$where);
+        $send = $this->emailSend($data['name'], $data['email'], $voucher);
+        if ($send == 1) {
+            if($data['send'] == 0){
+                $updateWhere = ["id" => $data['id']];
+                $this->vouchersend_model->setProperty('send', 1)->customUpdate($where);
+            }
+            $response = [
+                'status' => "success",
+                'message' => "Voucher is sent successfully!",
+            ];
+    
+            $this->set_response($response, 201);
+            return;
+        }
+        
 
         $response = [
             'status' => "error",
@@ -196,7 +231,7 @@ class Voucher extends REST_Controller
 				'left',
 			]
 		];
-		$what = ['tbl_vouchersend.id, tbl_vouchersend.numberOfTimes, name, email, send, datecreated, description'];
+		$what = ['tbl_vouchersend.id, tbl_vouchersend.numberOfTimes, name, email, send, datecreated, code, description, voucherId'];
 		$where = [
 			 "tbl_shop_voucher.vendorId" => $vendorId
 			];

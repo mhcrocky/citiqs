@@ -52,8 +52,8 @@ class Voucher extends BaseControllerWeb
 		$this->load->model('email_templates_model');
 		
 		$what = ['*'];
-		$where = ["vendorId" => $vendorId, 'voucherused' => 0];
-        $data['vouchers'] = $this->shopvoucher_model->read($what,$where);
+		$where = ["vendorId" => $vendorId];
+        $data['vouchers'] = $this->shopvoucher_model->read($what,$where, [], "where", ["voucherused < numberOfTimes"]);
 		$this->loadViews("voucher/send", $this->global, $data, 'footerbusiness', 'headerbusiness'); 
 	}
 
