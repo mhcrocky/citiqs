@@ -100,57 +100,30 @@ function tinyMceInit(textAreaId, templateContent = '') {
                 icon: false,
                 menu: [
                     {
-                        text: '[buyerName]',
-                        onclick: function(){editor.insertContent('[buyerName]')}
+                        text: '[Name]',
+                        onclick: function(){editor.insertContent('[Name]')}
                     },
                     {
-                        text: '[buyerEmail]',
-                        onclick: function(){editor.insertContent('[buyerEmail]')}
+                        text: '[Email]',
+                        onclick: function(){editor.insertContent('[Email]')}
                     },
                     {
-                        text: '[buyerMobile]',
-                        onclick: function(){editor.insertContent('[buyerMobile]')}
+                        text: '[voucherCode]',
+                        onclick: function(){editor.insertContent('[voucherCode]')}
                     },
                     {
-                        text: '[eventName]',
-                        onclick: function(){editor.insertContent('[eventName]')}
+                        text: '[voucherDescription]',
+                        onclick: function(){editor.insertContent('[voucherDescription]')}
                     },
                     {
-                        text: '[eventDate]',
-                        onclick: function(){editor.insertContent('[eventDate]')}
+                        text: '[voucherAmount]',
+                        onclick: function(){editor.insertContent('[voucherAmount]')}
                     },
                     {
-                        text: '[eventVenue]',
-                        onclick: function(){editor.insertContent('[eventVenue]')}
+                        text: '[voucherPercent]',
+                        onclick: function(){editor.insertContent('[voucherPercent]')}
                     },
-                    {
-                        text: '[eventAddress]',
-                        onclick: function(){editor.insertContent('[eventAddress]')}
-                    },
-                    {
-                        text: '[eventCity]',
-                        onclick: function(){editor.insertContent('[eventCity]')}
-                    },
-                    {
-                        text: '[eventCountry]',
-                        onclick: function(){editor.insertContent('[eventCountry]')}
-                    },
-                    {
-                        text: '[eventZipcode]',
-                        onclick: function(){editor.insertContent('[eventZipcode]')}
-                    },
-                    {
-                        text: '[ticketDescription]',
-                        onclick: function(){editor.insertContent('[ticketDescription]')}
-                    },
-                    {
-                        text: '[ticketPrice]',
-                        onclick: function(){editor.insertContent('[ticketPrice]')}
-                    },
-                    {
-                        text: '[ticketQuantity]',
-                        onclick: function(){editor.insertContent('[ticketQuantity]')}
-                    },
+
                 ],
             });
 

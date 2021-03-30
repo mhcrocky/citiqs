@@ -17,7 +17,6 @@ class Voucher extends BaseControllerWeb
 		$vendorId = $this->session->userdata('userId');
         $data['vendorId'] = $vendorId;
 		$this->load->model('shopproduct_model');
-		$this->load->model('shopproduct_model');
 		$this->load->model('email_templates_model');
 		$data['emails'] = $this->email_templates_model->get_voucher_email_by_user($vendorId);
 		
@@ -43,6 +42,19 @@ class Voucher extends BaseControllerWeb
 			
 		$data['products'] = $this->shopproduct_model->read($what,$where, $join, 'group_by', ['tbl_shop_products.id']);
 		$this->loadViews("voucher/index", $this->global, $data, 'footerbusiness', 'headerbusiness'); 
+	}
+
+	public function send(){
+		$this->global['pageTitle'] = 'TIQS: Voucher Send';
+		$vendorId = $this->session->userdata('userId');
+        $data['vendorId'] = $vendorId;
+		$this->load->model('shopvoucher_model');
+		$this->load->model('email_templates_model');
+		
+		$what = ['*'];
+		$where = ["vendorId" => $vendorId];
+        $data['vouchers'] = $this->shopvoucher_model->read($what,$where, [], "where", ["voucherused < numberOfTimes"]);
+		$this->loadViews("voucher/send", $this->global, $data, 'footerbusiness', 'headerbusiness'); 
 	}
 
 	public function create(){
@@ -91,6 +103,5 @@ class Voucher extends BaseControllerWeb
 		$text = $this->input->post('text');
 		echo $this->language->tline($text);
 	}
-
 
 }
