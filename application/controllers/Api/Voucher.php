@@ -4,6 +4,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+require APPPATH . '/libraries/phpqrcode/qrlib.php';
 require APPPATH . 'libraries/REST_Controller.php';
 
 class Voucher extends REST_Controller
@@ -14,7 +15,7 @@ class Voucher extends REST_Controller
         parent::__construct();
         $this->load->helper('utility_helper');
         $this->load->helper('validate_data_helper');
-        
+        $this->load->model('vouchersend_model');
         $this->load->model('shopvoucher_model');
         $this->load->model('shopproduct_model');
         $this->load->library('language', array('controller' => $this->router->class));
@@ -123,7 +124,7 @@ class Voucher extends REST_Controller
 
         $response = [
             'status' => "success",
-            'message' => "The vouchers are created successfully!",
+            'message' => "Voucher is sent successfully!",
         ];
 
         $this->set_response($response, 201);
@@ -147,6 +148,60 @@ class Voucher extends REST_Controller
         $this->load->model('email_templates_model');
 		$emails = $this->email_templates_model->get_voucher_email_by_user($vendorId);
         echo json_encode($emails);
+    }
+
+
+    public function create_vouchersend_post()
+    {
+        $data = $this->input->post(null, true);
+        $data['email'] = urldecode($data['email']);
+        $what = ['*'];
+		$where = ["id" => $data['voucherId']];
+        $voucher = $this->shopvoucher_model->read($what,$where);
+        $data['send'] = $this->emailSend($data['name'], $data['email'], $voucher);
+        if ($this->vouchersend_model->setObjectFromArray($data)->create()) {
+            $response = [
+                'status' => "success",
+                'message' => "The vouchers are created successfully!",
+            ];
+    
+            $this->set_response($response, 201);
+            return;
+        }
+
+
+        $response = [
+            'status' => "error",
+            'message' => "Something went wrong!",
+        ];
+
+        $this->set_response($response, 201);
+        return;
+
+
+    }
+
+    public function vouchersend_get()
+    {
+        $vendorId = $this->session->userdata('userId');
+        $what = ['*'];
+		$where = ["vendorId" => $vendorId];
+        $join = [
+			0 => [
+				'tbl_shop_voucher',
+				'tbl_vouchersend.voucherId = tbl_shop_voucher.id',
+				'left',
+			]
+		];
+		$what = ['tbl_vouchersend.id, name, email, send, datecreated, description'];
+		$where = [
+			 "tbl_shop_voucher.vendorId" => $vendorId
+			];
+			
+        $results = $this->vouchersend_model->read($what,$where, $join, 'group_by', ['tbl_vouchersend.id']);
+
+        $vouchersend = ($results == null) ? [] : $results;
+        echo json_encode($vouchersend);
     }
 
     public function multiple_actions_post()
@@ -315,6 +370,7 @@ class Voucher extends REST_Controller
 	public function import_csv_post()
     {
 		$fields = $this->input->post(null, true);
+        $vendorId = $this->session->userdata('userId');
 		$file_path = urldecode($fields['csv_path']);
 		unset($fields['csv_path']);
 		$vouchers = [];
@@ -327,6 +383,7 @@ class Voucher extends REST_Controller
 				$results = (strpos($row, ';') !== false) ? explode(';',$row) : explode(',',$row);
 
 				$vouchers[] = [
+                    'vendorId' => $vendorId,
 					'code' => str_replace('"', '', $results[$fields['code']]),
 					'description' => str_replace('"', '', $results[$fields['description']]),
 					'amount' => str_replace('"', '', $results[$fields['amount']]),
@@ -425,6 +482,117 @@ class Voucher extends REST_Controller
 
         fclose($csvFile);
         redirect($fileLocation);
+    }
+
+
+    private function emailSend($name, $email,$data)
+	{
+        $mailsend = 0;
+        $qrtext = $data[0]['code'];
+        $buyerName = $name;
+        $buyerEmail = $email;
+        $voucherCode = $data[0]['code'];
+        $voucherDescription = $data[0]['description'];
+        $voucherAmount = $data[0]['amount'];
+        $voucherPercent = $data[0]['percent'];
+            switch (strtolower($_SERVER['HTTP_HOST'])) {
+                case 'tiqs.com':
+				    $file = '/home/tiqs/domains/tiqs.com/public_html/alfred/uploads/qrcodes/';
+					break;
+				case '127.0.0.1':
+					$file = 'C:/wamp64/www/alfred/alfred/uploads/qrcodes/';
+					break;
+					default:
+					    break;
+			}
+
+			$SERVERFILEPATH = $file;
+			$text = $qrtext;
+			$folder = $SERVERFILEPATH;
+			$file_name1 = $qrtext . ".png";
+			$file_name = $folder . $file_name1;
+            QRcode::png($text, $file_name);
+
+            switch (strtolower($_SERVER['HTTP_HOST'])) {
+				case 'tiqs.com':
+					$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
+					break;
+				case '127.0.0.1':
+					$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
+					break;
+				default:
+					break;
+            }
+                        
+			switch (strtolower($_SERVER['HTTP_HOST'])) {
+				case 'tiqs.com':
+					$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
+					break;
+				case '127.0.0.1':
+					$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
+					break;
+				default:
+					break;
+            }
+
+                        
+			if($data[0]['emailId']) {
+                $this->load->model('email_templates_model');
+                $emailTemplate = $this->email_templates_model->get_emails_by_id($data[0]['emailId']);
+                $this->config->load('custom');
+                $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$data[0]['vendorId'].'/'.$emailTemplate->template_file .'.'.$this->config->item('template_extension'));
+                $qrlink = $SERVERFILEPATH . $file_name1;
+				if($mailtemplate) {
+                    $mailtemplate = str_replace('[buyerName]', $buyerName, $mailtemplate);
+					$mailtemplate = str_replace('[buyerEmail]', $buyerEmail, $mailtemplate);
+					$mailtemplate = str_replace('[voucherCode]', $voucherCode, $mailtemplate);
+					$mailtemplate = str_replace('[voucherDescription]', $voucherDescription, $mailtemplate);
+					$mailtemplate = str_replace('[voucherAmount]', $voucherAmount, $mailtemplate);
+					$mailtemplate = str_replace('[voucherPercent]', $voucherPercent, $mailtemplate);
+					$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
+					$subject = 'Your tiqs reservation(s)';
+					$mailsend = 1;
+					$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
+					if($this->sendEmail($email, $subject, $mailtemplate)) {
+                        $mailsend = 1;
+                    }
+                            
+                }
+            }
+            
+            return $mailsend;
+            
+
+        }
+    
+
+
+
+    private function sendEmail($email, $subject, $message)
+	{
+		$configemail = array(
+			'protocol' => PROTOCOL,
+			'smtp_host' => SMTP_HOST,
+			'smtp_port' => SMTP_PORT,
+			'smtp_user' => SMTP_USER, // change it to yours
+			'smtp_pass' => SMTP_PASS, // change it to yours
+			'mailtype' => 'html',
+			'charset' => 'iso-8859-1',
+			'smtp_crypto' => 'tls',
+			'wordwrap' => TRUE,
+			'newline' => "\r\n"
+		);
+
+		$config = $configemail;
+		$CI =& get_instance();
+		$CI->load->library('email', $config);
+		$CI->email->set_header('X-SES-CONFIGURATION-SET', 'ConfigSet');
+		$CI->email->set_newline("\r\n");
+		$CI->email->from('support@tiqs.com');
+		$CI->email->to($email);
+		$CI->email->subject($subject);
+		$CI->email->message($message);
+		return $CI->email->send();
     }
 
 

@@ -17,7 +17,6 @@ class Voucher extends BaseControllerWeb
 		$vendorId = $this->session->userdata('userId');
         $data['vendorId'] = $vendorId;
 		$this->load->model('shopproduct_model');
-		$this->load->model('shopproduct_model');
 		$this->load->model('email_templates_model');
 		$data['emails'] = $this->email_templates_model->get_voucher_email_by_user($vendorId);
 		
@@ -45,37 +44,17 @@ class Voucher extends BaseControllerWeb
 		$this->loadViews("voucher/index", $this->global, $data, 'footerbusiness', 'headerbusiness'); 
 	}
 
-	public function test(){
-		$this->global['pageTitle'] = 'TIQS: Vouchers List';
+	public function send(){
+		$this->global['pageTitle'] = 'TIQS: Voucher Send';
 		$vendorId = $this->session->userdata('userId');
         $data['vendorId'] = $vendorId;
-		$this->load->model('shopproduct_model');
-		$this->load->model('shopproduct_model');
+		$this->load->model('shopvoucher_model');
 		$this->load->model('email_templates_model');
-		$data['emails'] = $this->email_templates_model->get_voucher_email_by_user($vendorId);
 		
-		$data['templateName'] = '';
-
-		$join = [
-			0 => [
-				'tbl_shop_products_extended',
-				'tbl_shop_products_extended.productId = tbl_shop_products.id',
-				'left',
-			],
-			1 => [
-				'tbl_shop_categories',
-				'tbl_shop_categories.id = tbl_shop_products.categoryId',
-				'left',
-			]
-		];
-		$what = ['tbl_shop_products.id' ,'tbl_shop_products_extended.name'];
-		$where = [
-			 "userId" => $vendorId,
-			 "tbl_shop_products_extended.name<>" => null
-			];
-			
-		$data['products'] = $this->shopproduct_model->read($what,$where, $join, 'group_by', ['tbl_shop_products.id']);
-		$this->loadViews("voucher/test", $this->global, $data, 'footerbusiness', 'headerbusiness'); 
+		$what = ['*'];
+		$where = ["vendorId" => $vendorId];
+        $data['vouchers'] = $this->shopvoucher_model->read($what,$where);
+		$this->loadViews("voucher/send", $this->global, $data, 'footerbusiness', 'headerbusiness'); 
 	}
 
 	public function create(){

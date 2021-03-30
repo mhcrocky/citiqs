@@ -571,6 +571,7 @@ $route['list_template'] = 'Templates/listTemplates';
 
 $route['voucher'] = 'Voucher/index';
 $route['voucher/create'] = 'Voucher/create';
+$route['voucher/send'] = 'Voucher/send';
 
 // connections api routes
 
