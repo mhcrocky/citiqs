@@ -1,8 +1,19 @@
 <main class="main-wrapper-nh" style="text-align:center">
 	<div class="background-apricot-blue height-100 designBackgroundImage" id="selectTypeBody" style="width:100vw; height:auto">
 		<?php if (empty($_SESSION['iframe'])) { ?>
-		<div class="form-group has-feedback" >
-			<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="250" height="auto" />
+		<div class="form-group has-feedback mt-50" >
+			<?php {
+				if (is_null($vendor['logo'])) {
+					$logoFile = base_url() . "assets/home/images/tiqslogowhite.png";
+				} else {
+					$logoFile = base_url(). "assets/images/vendorLogos/". $vendor['logo'];
+				}
+//				echo var_dump($logoFile);
+//				echo var_dump($vendor['logo']);
+			} ?>
+<!--			<img src="--><?php //echo base_url(); ?><!--assets/home/images/tiqslogowhite.png" alt="tiqs" width="250" height="auto" />-->
+			<img src="<?php echo $logoFile; ?>" alt="tiqs" width="250" height="auto" />
+
 		</div><!-- /.login-logo -->
 		<?php } ?>
 
@@ -19,8 +30,19 @@
 					<label>
 						<input type="radio" name="radio" value="<?php echo 'make_order?vendorid=' . $vendor['vendorId'] . '&typeid=' . $type['typeId'] ?>" onchange="redirectTo(this.value)" class="form-control" <?php if($type['typeId']==='0') echo "checked" ?> />
 						<div class="front-end box selectTypeLabels">
+							<?php {
+								if (is_null($vendor['logo'])) {
+									$logoFile = base_url() . "assets/home/images/tiqslogowhite.png";
+								} else {
+									$logoFile = base_url(). "assets/images/vendorLogos/". $vendor['logo'];
+								}
+//				echo var_dump($logoFile);
+//				echo var_dump($vendor['logo']);
+							} ?>
+
 							<div style="margin-top: 20px">
-								<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="100px" height="" />
+<!--								<img src="--><?php //echo base_url(); ?><!--assets/home/images/tiqslogowhite.png" alt="tiqs" width="100px" height="" />-->
+								<img src="<?php echo $logoFile; ?>" alt="tiqs" width="150" height="auto" />
 							</div>
 
 							<div style="margin-top: -10px">

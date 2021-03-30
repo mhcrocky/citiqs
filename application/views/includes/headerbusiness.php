@@ -212,7 +212,8 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 <!--											<li data-menuid="2.3"><a href="--><?php //echo $this->baseUrl; ?><!--dashboard"><i class="ti-user"></i> <span>RSVP Pre-register</span></a></li>-->
 <!--											<li data-menuid="2.4"><a href="--><?php //echo $this->baseUrl; ?><!--dashboard"><i class="ti-pencil-alt"></i> <span>E-mail Campaigns</span></a></li>-->
 <!--											<li data-menuid="2.5"><a href="--><?php //echo $this->baseUrl; ?><!--visitors"><i class="ti-user"></i> <span>Visitors</span></a></li>-->
-											<li data-menuid="2.6"><a href="<?php echo $this->baseUrl; ?>voucher/index"><i class="ti-settings"></i> <span>Vouchers</span></a>
+											<li data-menuid="2.6"><a href="<?php echo $this->baseUrl; ?>voucher/index"><i class="ti-settings"></i> <span>Create Vouchers</span></a>
+											<li data-menuid="2.7"><a href="<?php echo $this->baseUrl; ?>voucher/send"><i class="ti-settings"></i> <span>Send Vouchers</span></a>
 <!--												<ul class="collapse">-->
 <!--													<li data-menuid="2.6.1">-->
 <!--														<a href="--><?php //echo $this->baseUrl; ?><!--customer_panel/settings">-->
