@@ -90,7 +90,6 @@ function save_vouchersend(e){
   let data = {
       name: $('#name').val(),
       email: encodeURI($('#email').val()),
-      numberOfTimes: $('#numberOfTimes').val(),
       voucherId: voucherId
   }
   var times = $('#option_'+voucherId).attr('data-times');

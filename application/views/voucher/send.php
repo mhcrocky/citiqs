@@ -26,7 +26,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title font-weight-bold text-dark" id="addVoucherModalLabel">Create Vouchers</h5>
+                <h5 class="modal-title font-weight-bold text-dark" id="addVoucherModalLabel">Send Voucher</h5>
                 <button type="button" class="close" id="closeModal" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -57,17 +57,6 @@
 
                             <input type="email" id="email" class="input-w border-50 form-control"
                                 name="email" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="numberOfTimes" class="col-md-4 col-form-label text-md-left">
-                        Number Of Times
-                        </label>
-                        <div class="col-md-6">
-
-                            <input type="number" id="numberOfTimes" class="input-w border-50 form-control"
-                                name="numberOfTimes" required>
                         </div>
                     </div>
 
