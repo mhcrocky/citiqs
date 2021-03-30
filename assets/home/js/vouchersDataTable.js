@@ -122,6 +122,9 @@ $(document).ready(function () {
         data: "productId",
       }
     ],
+    drawCallback: function(settings){
+      getEmailTemplates();
+    },
       columnDefs: [
          {
             targets: 0,
@@ -294,6 +297,7 @@ function saveVoucherTemplate() {
   $('#voucher').DataTable().ajax.reload();
   $('#emailTemplateClose').click();
   setTimeout(() => {
+    getEmailTemplates();
       //window.location.reload();
   }, 2500);
   return;
