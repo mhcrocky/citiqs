@@ -37,6 +37,19 @@
 <script>
 (function() {
     customDesignLoad();
+    var url = '<?php echo current_url(); ?>';
+    url = url.split('/');
+
+    if (url.includes('spots')) {
+        $("#spot-active").addClass('booking-active');
+    } else if (url.includes('time_slots')) {
+        $("#timeslot-active").addClass('booking-active');
+    } else if (url.includes('pay')) {
+        $("#personal-active").addClass('booking-active');
+    } else {
+        $("#agenda-active").addClass('booking-active');
+        $('#booking-footer').addClass('d-none');
+    }
 })();
 
 $(document).ready(function() {
@@ -51,20 +64,6 @@ $(document).ready(function() {
         }
     });
 
-
-    var url = '<?php echo current_url(); ?>';
-    url = url.split('/');
-
-    if (url.includes('spots')) {
-        $("#spot-active").addClass('booking-active');
-    } else if (url.includes('time_slots')) {
-        $("#timeslot-active").addClass('booking-active');
-    } else if (url.includes('pay')) {
-        $("#personal-active").addClass('booking-active');
-    } else {
-        $("#agenda-active").addClass('booking-active');
-        $('#booking-footer').addClass('d-none');
-    }
 
 });
 

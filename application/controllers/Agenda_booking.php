@@ -61,10 +61,11 @@ class Agenda_booking extends BaseControllerWeb
 			$logoUrl = 'assets/images/vendorLogos/' . $customer->logo;
         }
         $data['logoUrl'] = $logoUrl;
-        $data['pageTitle'] = 'TIQS: AGENDA';
+        $this->global['pageTitle'] = 'TIQS: AGENDA';
+        $this->global['customDesign'] = $this->bookandpayagendabooking_model->get_agenda_booking_design($customer->id);
         $this->session->set_userdata('shortUrl', $shortUrl);
         $data['shortUrl'] = $shortUrl;
-        $this->loadViews('new_bookings/index', $data, '', 'newbookingfooter', 'newbookingheader');
+        $this->loadViews('new_bookings/index', $this->global, $data, 'newbookingfooter', 'newbookingheader');
         
 
         
@@ -148,6 +149,7 @@ class Agenda_booking extends BaseControllerWeb
         ];
 
         $this->global['pageTitle'] = 'TIQS : BOOKINGS';
+        $this->global['customDesign'] = $this->bookandpayagendabooking_model->get_agenda_booking_design($customer['id']);
         $this->loadViews("new_bookings/spots_booking", $this->global, $data, 'newbookingfooter', 'newbookingheader');    
     }
 
@@ -298,6 +300,7 @@ class Agenda_booking extends BaseControllerWeb
         $data['eventDate'] = $eventDate;
         
         $this->global['pageTitle'] = 'TIQS : BOOKINGS';
+        $this->global['customDesign'] = $this->bookandpayagendabooking_model->get_agenda_booking_design($customer['id']);
 
         $this->loadViews("new_bookings/timeslot_booking", $this->global, $data, 'newbookingfooter', 'newbookingheader');
     }
@@ -334,6 +337,7 @@ class Agenda_booking extends BaseControllerWeb
         $data['allTimeSlots'] = $allTimeSlots;
 
         $this->global['pageTitle'] = 'TIQS : BOOKINGS';
+        $this->global['customDesign'] = $this->bookandpayagendabooking_model->get_agenda_booking_design($customer['id']);
 
         $this->loadViews("new_bookings/next_time_slot", $this->global, $data, 'newbookingfooter', 'newbookingheader'); // payment screen
     }
@@ -383,6 +387,7 @@ class Agenda_booking extends BaseControllerWeb
         $data['logoUrl'] = $logoUrl;
 
         $this->global['pageTitle'] = 'TIQS : BOOKINGS'; 
+        $this->global['customDesign'] = $this->bookandpayagendabooking_model->get_agenda_booking_design($customer['id']);
         $data['termsofuse'] = $this->bookandpayagendabooking_model->getTermsofuse();
         $this->loadViews("new_bookings/final", $this->global, $data, 'newbookingfooter', 'newbookingheader'); // payment screen
     }

@@ -35,10 +35,7 @@
         }
     }
 
-    <?php $CI=& get_instance();
-    $CI->load->model('bookandpayagendabooking_model');
-    $customer=$CI->session->userdata('customer')['id'];
-    $customDesign=$CI->bookandpayagendabooking_model->get_agenda_booking_design($customer);
+    <?php
 
     if(isset($customDesign[0]['design'])) {
         $design=unserialize($customDesign[0]['design'])['selectShortUrl'];
