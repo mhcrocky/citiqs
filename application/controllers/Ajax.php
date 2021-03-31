@@ -1073,8 +1073,10 @@ class Ajax extends CI_Controller
             || !$this->checkVoucher($orderData, $this->shopvoucher_model)
         ) return;
 
-        $this->calculateVoucherDicsount($orderData, $this->shopvoucher_model);
-        $this->voucherOrderResponse($orderData, $orderRandomKey);
+        $totalAmount = $this->calculateTotalAmount($orderData['order']);
+
+        $this->calculateVoucherDicsount($orderData, $this->shopvoucher_model, $totalAmount);
+        $this->voucherOrderResponse($totalAmount, $orderData, $orderRandomKey);
 
         return;
     }
@@ -1114,9 +1116,9 @@ class Ajax extends CI_Controller
         return ($amount + $waiterTip + $serviceFee);
     }
 
-    private function calculateVoucherDicsount(array &$orderData, object $shopVoucher): void
+    private function calculateVoucherDicsount(array &$orderData, object $shopVoucher, float $totalAmount): void
     {
-        $this->calculateOrderVoucherAmount($orderData, $shopVoucher);
+        $this->calculateOrderVoucherAmount($orderData, $shopVoucher, $totalAmount);
         $this->shopsession_model->updateSessionData($orderData);
         return;
     }
