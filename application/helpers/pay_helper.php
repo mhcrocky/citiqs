@@ -19,8 +19,8 @@
             self::setTokens($payData, $namespace, $function);
 
             $strUrl  = 'http://' . $payData['tokenid'] . ':' . $payData['token'] . '@';
-            $strUrl .= $payData['gateway'] . DIRECTORY_SEPARATOR . $payData['version'] . DIRECTORY_SEPARATOR;
-            $strUrl .= $payData['namespace'] . DIRECTORY_SEPARATOR . $payData['function'] . DIRECTORY_SEPARATOR;
+            $strUrl .= $payData['gateway'] . '/' . $payData['version'] . '/';
+            $strUrl .= $payData['namespace'] . '/' . $payData['function'] . '/';
             $strUrl .= $payData['format'];
 
             if ($argumentsArray) {
@@ -196,7 +196,7 @@
             return $arrArguments;
         }
 
-        public static function getReservetionsArgumentsArray(int $vendorId, array $reservations, string $serviceId, string $paymentType, string $paymentOptionSubId = '0'): array
+        public static function getReservationsArgumentsArray(int $vendorId, array $reservations, string $serviceId, string $paymentType, string $paymentOptionSubId = '0'): array
         {
             $CI =& get_instance();
             $CI->load->config('custom');
@@ -253,9 +253,9 @@
 				$arrArguments['paymentOptionSubId'] = "TH-9268-3020";
 			}
 
-            $arrArguments['finishUrl'] = base_url() . 'booking/successpay/' . $data->reservationId;
+            $arrArguments['finishUrl'] = base_url() . 'bookingpay/successBooking/';
 
-            $arrArguments['transaction']['orderExchangeUrl'] = base_url() . '/booking/ExchangePay';
+            $arrArguments['transaction']['orderExchangeUrl'] = base_url() . 'bookingpay/exchangePay';
 
 
             $arrArguments['statsData']['promotorId'] = $vendorId;
@@ -267,6 +267,9 @@
             $arrArguments['saleData']['deliveryDate'] = date('d-m-Y');
    
 
+
+//            echo var_dump($arrArguments);
+//            die();
             return $arrArguments;
         }
 

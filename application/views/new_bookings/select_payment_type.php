@@ -130,23 +130,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												<tr class="shipment">
 													<td align="left" >
                                                         <p><?php echo ($this->language->Line("SELECT_PAYMENT_TYPE-0002", "RESERVERING")) ? $this->language->Line("SELECT_PAYMENT_TYPE-0002", "RESERVERING") : "RESERVERING"; ?></p>
-                                                        <p><?php echo ($this->language->Line("SELECT_PAYMENT_TYPE-0003", "RESERVERINGS FEE")) ? $this->language->Line("SELECT_PAYMENT_TYPE-0003", "RESERVERINGS FEE") : "RESERVERINGS FEE"; ?></p>
-                                                        <p><?php echo ($this->language->Line("SELECT_PAYMENT_TYPE-0004", "TOTAL")) ? $this->language->Line("SELECT_PAYMENT_TYPE-0004", "TOTAL") : "TOTAL"; ?></p>
+                                                        <p><?php echo ($this->language->tline("iDEAL PAYMENT FEE")) ? $this->language->tline("iDEAL PAYMENT FEE") : "iDEAL PAYMENT FEE"; ?></p>
+                                                        <p><?php echo ($this->language->tline("CREDIT CARD PAYMENT FEE")) ? $this->language->tline("CREDIT CARD PAYMENT FEE") : "CREDIT CARD PAYMENT FEE"; ?></p>
 													</td>
 													<td>
 														<p>
 														<?php
-														echo my_money_format("de_DE", $finalbedragexfee);
+														echo my_money_format("de_DE", $amount);
 														?>
 														</p>
 														<p>
 														<?php
-														echo my_money_format("de_DE", $finalbedragfee);
+														echo my_money_format("de_DE", $idealPayment);
 														?>
 														</p>
 														<p>
 														<?php
-														echo my_money_format("de_DE", $finalbedrag);
+														echo my_money_format("de_DE", $creditCardPayment);
 														?>
 														</p>
 													</td>
@@ -173,7 +173,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											<img src="<?php echo base_url('assets/imgs/extra/ideal.png') ?>" alt="iDEAL">
 											<span>iDEAL</span>
 										</a>
-										<a href="<?php echo base_url('bookingpay/selectedCCPaymenttype') ?>" class="paymentMethod method-card" data-payment-type="card">
+										<a href="<?php echo base_url('bookingpay/onlinepayment/'.$creditCardPaymentType) ?>" class="paymentMethod method-card" data-payment-type="card">
 											<img src="<?php echo base_url('assets/imgs/extra/creditcard.png') ?>" alt="Creditcard">
 											<span data-trans="" data-trn-key="Creditcard">Creditcard</span>
 										</a>
@@ -188,51 +188,51 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										</div>
 
 										<div class="payment-container">
-											<a href="<?php echo base_url('bookingpay/selectediDealPaymenttype/1') ?>" class="bank paymentMethod abn_amro">
+											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/1') ?>" class="bank paymentMethod abn_amro">
 												<img src="<?php echo base_url('assets/imgs/extra/abn_amro.png') ?>" alt="ABN AMRO">
 												<span>ABN AMRO</span>
 											</a>
-											<a href="<?php echo base_url('bookingpay/selectediDealPaymenttype/8') ?>" class="bank paymentMethod asn_bank">
+											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/8') ?>" class="bank paymentMethod asn_bank">
 												<img src="<?php echo base_url('assets/imgs/extra/asn_bank.png') ?>" alt="ASN Bank">
 												<span>ASN Bank</span>
 											</a>
-											<a href="<?php echo base_url('bookingpay/selectediDealPaymenttype/5080') ?>" class="bank paymentMethod bunq">
+											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/5080') ?>" class="bank paymentMethod bunq">
 												<img src="<?php echo base_url('assets/imgs/extra/bunq.png') ?>" alt="Bunq">
 												<span>Bunq</span>
 											</a>
-											<a href="<?php echo base_url('bookingpay/selectediDealPaymenttype/5082') ?>" class="bank paymentMethod handelsbanken">
+											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/5082') ?>" class="bank paymentMethod handelsbanken">
 												<img src="<?php echo base_url('assets/imgs/extra/handelsbanken.png') ?>" alt="Handelsbanken">
 												<span>Handelsbanken</span>
 											</a>
-											<a href="<?php echo base_url('bookingpay/selectediDealPaymenttype/4') ?>" class="bank paymentMethod ing">
+											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/4') ?>" class="bank paymentMethod ing">
 												<img src="<?php echo base_url('assets/imgs/extra/ing.png') ?>" alt="ING">
 												<span>ING</span>
 											</a>
-											<a href="<?php echo base_url('bookingpay/selectediDealPaymenttype/12') ?>" class="bank paymentMethod knab">
+											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/12') ?>" class="bank paymentMethod knab">
 												<img src="<?php echo base_url('assets/imgs/extra/knab(1).png') ?>" alt="Knab">
 												<span>Knab</span>
 											</a>
-											<a href="<?php echo base_url('bookingpay/selectediDealPaymenttype/5081') ?>" class="bank paymentMethod moneyou">
+											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/5081') ?>" class="bank paymentMethod moneyou">
 												<img src="<?php echo base_url('assets/imgs/extra/moneyou.png') ?>" alt="Moneyou">
 												<span>Moneyou</span>
 											</a>
-											<a href="<?php echo base_url('bookingpay/selectediDealPaymenttype/2') ?>" class="bank paymentMethod rabobank">
+											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/2') ?>" class="bank paymentMethod rabobank">
 												<img src="<?php echo base_url('assets/imgs/extra/rabobank.png') ?>" alt="Rabobank">
 												<span>Rabobank</span>
 											</a>
-											<a href="<?php echo base_url('bookingpay/selectediDealPaymenttype/9') ?>" class="bank paymentMethod regiobank">
+											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/9') ?>" class="bank paymentMethod regiobank">
 												<img src="<?php echo base_url('assets/imgs/extra/regiobank.png') ?>" alt="RegioBank">
 												<span>RegioBank</span>
 											</a>
-											<a href="<?php echo base_url('bookingpay/selectediDealPaymenttype/5') ?>" class="bank paymentMethod sns_bank">
+											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/5') ?>" class="bank paymentMethod sns_bank">
 												<img src="<?php echo base_url('assets/imgs/extra/sns_bank.png') ?>" alt="SNS Bank">
 												<span>SNS Bank</span>
 											</a>
-											<a href="<?php echo base_url('bookingpay/selectediDealPaymenttype/10') ?>" class="bank paymentMethod triodos_bank">
+											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/10') ?>" class="bank paymentMethod triodos_bank">
 												<img src="<?php echo base_url('assets/imgs/extra/triodos_bank.png') ?>" alt="Triodos Bank">
 												<span>Triodos Bank</span>
 											</a>
-											<a href="<?php echo base_url('bookingpay/selectediDealPaymenttype/11') ?>" class="bank paymentMethod van_lanschot">
+											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/11') ?>" class="bank paymentMethod van_lanschot">
 												<img src="<?php echo base_url('assets/imgs/extra/van_lanschot.png') ?>" alt="van Lanschot">
 												<span>van Lanschot</span>
 											</a>
@@ -491,7 +491,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class="footer">
 
-									<a href="<?php echo base_url('agenda_booking/pay') ?>" class="btn-cancel">
+									<a href="<?php echo base_url('booking_agenda/pay') ?>" class="btn-cancel">
 										<i class="fa fa-arrow-left"></i>
 										<span data-trans="" data-trn-key="Annuleren">Annuleren</span>
 									</a>

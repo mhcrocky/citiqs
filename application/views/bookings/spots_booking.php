@@ -65,7 +65,7 @@ p.p-title {
                     </div>
                         <div class="width-650"></div>
                         <div align="center">
-                            <p class="text-content mb-50"><?php echo date("d.m.yy", strtotime($eventDate)) ?></p>
+                            <p class="text-content mb-50"><?php echo date("d.m.Y", strtotime($eventDate)) ?></p>
                         </div>
                         <div class="text-center mb-50" style="text-align:center">
                             <img src="<?php echo $this->baseUrl; ?>assets/home/images/<?php echo $spot['data']->image; ?>" alt="tiqs" width="150"
@@ -132,7 +132,7 @@ p.p-title {
                         </div>
                         <div class="width-650"></div>
                         <div align="center">
-                            <p class="text-content mb-50"><?php echo date("d.m.yy", strtotime($eventDate)) ?></p>
+                            <p class="text-content mb-50"><?php echo date("d.m.Y", strtotime($eventDate)) ?></p>
                         </div>
                         <div class="text-center mb-50" style="text-align:center">
                             <img src="<?php echo $this->baseUrl; ?>assets/home/images/<?php echo $spot['data']->image; ?>" alt="tiqs" width="150"
