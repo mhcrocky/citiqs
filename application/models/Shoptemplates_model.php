@@ -13,6 +13,7 @@
         public $user_id;
         public $template_file;
         public $template_name;
+        public $template_subject;
         public $template_type;
 
         private $table = 'tbl_email_templates';
@@ -92,9 +93,10 @@
             return $this->templateFile;
         }
 
-        public function saveTemplate(string $templateName, string $html, string $templateType, int $userId, int $id): bool
+        public function saveTemplate(string $templateName, string $templateSubject, string $html, string $templateType, int $userId, int $id): bool
         {
             $this->template_name = $templateName;
+            $this->template_subject = $templateSubject;
             $this->user_id = $userId;
             $this->id = $id ? $id : null;
             $filename = str_replace(' ', '_', $templateName);

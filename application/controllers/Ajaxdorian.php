@@ -486,6 +486,7 @@ class Ajaxdorian extends CI_Controller
 
         $userId = intval($this->session->userdata('userId'));
         $data['template_name'] = $this->input->post('templateName');
+        $data['template_subject'] = $this->input->post('templateSubject');
         $data['template_type'] = $this->input->post('templateType');
         $html = $this->input->post('templateHtml');
         $data['user_id'] = $userId;

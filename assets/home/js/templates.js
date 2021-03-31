@@ -5,13 +5,16 @@ function reloadTable(id) {
 
 
 // used in email templates
-function createEmailTemplate(selectTemplateValueId, customTemplateNameId, customTemplateTypeId, templateId = 0) {
+function createEmailTemplate(selectTemplateValueId, customTemplateNameId, customTemplateSubjectId, customTemplateTypeId, templateId = 0) {
     let selectTemplate = document.getElementById(selectTemplateValueId);
     let customTemplate = document.getElementById(customTemplateNameId);
+    let customTemplateSubject = document.getElementById(customTemplateSubjectId);
+    console.log(customTemplateSubjectId);
     let customTemplateType = document.getElementById(customTemplateTypeId);
 
     let selectTemplateName = selectTemplate.value.trim();
     let customTemplateName = customTemplate.value.trim();
+    let templateSubject = customTemplateSubject.value.trim();
     let templateType = customTemplateType.value.trim();
     let templateHtml = tinyMCE.get(templateGlobals.templateHtmlId).getContent().replaceAll(globalVariables.baseUrl + 'assets/images/qrcode_preview.png', '[QRlink]').trim();
     if (!templateHtml) {
@@ -45,6 +48,7 @@ function createEmailTemplate(selectTemplateValueId, customTemplateNameId, custom
         'templateHtml' : templateHtml,
         'templateId' : templateId,
         'templateType' : templateType,
+        'templateSubject' : templateSubject,
     };
 
     sendAjaxPostRequest(post, url, 'createEmailTemplate', createEmailTemplateResponse, [selectTemplate, customTemplate]);
@@ -55,6 +59,7 @@ function createEmailTemplateResponse(selectTemplate, customTemplate, response) {
 
     if (response['status'] === '1') {
         selectTemplate.value = '';
+        customTemplateSubject.value = '';
         customTemplate.value = '';
         if (response.update === '0') {
             tinymce.get(templateGlobals.templateHtmlId).setContent('')
@@ -174,6 +179,13 @@ function showTemplates() {
     } else if(templateGlobals.templateHtmlId){
         tinyMceInit(templateGlobals.templateHtmlId);
     }
+}
+
+function customUpdateEmailTemplate(selectTemplateValueId, customTemplateNameId, customTemplateSubjectId, customTemplateTypeId, templateId = 0){
+    createEmailTemplate(selectTemplateValueId, customTemplateNameId, customTemplateSubjectId, customTemplateTypeId, templateId);
+    setTimeout(() => {
+        window.location.reload();
+    }, 1200);
 }
 
 showTemplates();

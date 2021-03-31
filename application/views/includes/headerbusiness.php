@@ -212,7 +212,8 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 <!--											<li data-menuid="2.3"><a href="--><?php //echo $this->baseUrl; ?><!--dashboard"><i class="ti-user"></i> <span>RSVP Pre-register</span></a></li>-->
 <!--											<li data-menuid="2.4"><a href="--><?php //echo $this->baseUrl; ?><!--dashboard"><i class="ti-pencil-alt"></i> <span>E-mail Campaigns</span></a></li>-->
 <!--											<li data-menuid="2.5"><a href="--><?php //echo $this->baseUrl; ?><!--visitors"><i class="ti-user"></i> <span>Visitors</span></a></li>-->
-											<li data-menuid="2.6"><a href="<?php echo $this->baseUrl; ?>voucher/index"><i class="ti-settings"></i> <span>Vouchers</span></a>
+											<li data-menuid="2.6"><a href="<?php echo $this->baseUrl; ?>voucher/index"><i class="ti-settings"></i> <span>Create Vouchers</span></a>
+											<li data-menuid="2.7"><a href="<?php echo $this->baseUrl; ?>voucher/send"><i class="ti-settings"></i> <span>Send Vouchers</span></a>
 <!--												<ul class="collapse">-->
 <!--													<li data-menuid="2.6.1">-->
 <!--														<a href="--><?php //echo $this->baseUrl; ?><!--customer_panel/settings">-->
@@ -263,7 +264,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 									<li>
 
 									<li data-menuid="4">
-										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span>Store & POS</span></a>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span>QR Menu & POS</span></a>
 										<ul class="collapse">
 										
 											<li data-menuid="4.1"><a href="<?php echo $this->baseUrl; ?>orders"><i class="ti-stats-up"></i><span>Orders</span></a></li>
@@ -308,7 +309,11 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 <!--													<li data-menuid="4.7.3"><a href="--><?php //echo $this->baseUrl; ?><!--z report"><i class="ti-bag"></i> <span>Y report</span></a></li>-->
 												</ul>
 											</li>
-
+											<li data-menuid="12.1">
+												<a href="<?php echo $this->baseUrl . 'make_order?vendorid=' . $this->session->userdata('userId'); ?>" target="_blank">
+													<i class="ti-shopping-cart-full"></i> <span>URL Link</span>
+												</a>
+											</li>
 											
 										</ul>
 									</li>
@@ -317,9 +322,9 @@ $userShortUrl = $this->session->userdata('userShortUrl');
                                         <ul class="collapse">
                                             <li data-menuid="5.1"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Statistics</span></a></li>
                                             <li data-menuid="5.2"><a href="<?php echo $this->baseUrl;?>customer_panel/agenda"><i class="ti-agenda"></i> <span>Make your reservations</span></a></li>
-<!--                                            <li data-menuid="5.3"><a href="--><?php //echo $this->baseUrl; ?><!--customer_panel/reservations_report"><i class="ti-write"></i> <span>Reservations Report</span></a></li>-->
-<!--                                            <li data-menuid="5.4"><a href="--><?php //echo $this->baseUrl; ?><!--customer_panel/report"><i class="ti-clipboard"></i> <span>Report</span></a></li>-->
-<!--                                            <li data-menuid="5.5"><a href="--><?php //echo $this->baseUrl; ?><!--customer_panel/pivot"><i class="ti-bar-chart"></i> <span>Export</span></a></li>-->
+                                            <li data-menuid="5.3"><a href="<?php echo $this->baseUrl; ?>customer_panel/reservations_report"><i class="ti-write"></i> <span>Reservations Report</span></a></li>
+                                            <li data-menuid="5.4"><a href="<?php echo $this->baseUrl; ?>customer_panel/report"><i class="ti-clipboard"></i> <span>Report</span></a></li>
+                                            <li data-menuid="5.5"><a href="<?php echo $this->baseUrl; ?>customer_panel/pivot"><i class="ti-bar-chart"></i> <span>Export</span></a></li>
                                             <li data-menuid="5.6">
                                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Settings</span></a>
                                                 <ul class="collapse">
@@ -490,13 +495,13 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 <!--										</ul>-->
 <!--									</li>-->
 
-                                    <li data-menuid="11">
-                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i><span>Connect</span></a>
-                                        <ul class="collapse">
-											<li data-menuid="11.1"><a href="<?php echo $this->baseUrl; ?>visma/config"><i class="ti-credit-card"></i> <span>Visma Accounting</span></a></li>
-                                            <li data-menuid="11.2"><a href="http://localhost/tiqsbox/index.php/Admin"><i class="ti-package"></i> <span>Tiqsbox</span></a></li>
-                                        </ul>
-                                    </li>
+<!--                                    <li data-menuid="11">-->
+<!--                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i><span>Connect</span></a>-->
+<!--                                        <ul class="collapse">-->
+<!--											<li data-menuid="11.1"><a href="--><?php //echo $this->baseUrl; ?><!--visma/config"><i class="ti-credit-card"></i> <span>Visma Accounting</span></a></li>-->
+<!--                                            <li data-menuid="11.2"><a href="http://localhost/tiqsbox/index.php/Admin"><i class="ti-package"></i> <span>Tiqsbox</span></a></li>-->
+<!--                                        </ul>-->
+<!--                                    </li>-->
 									<li data-menuid="12">
 										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-share"></i><span>Your links</span></a>
 										<ul class="collapse">

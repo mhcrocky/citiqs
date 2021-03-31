@@ -285,6 +285,9 @@
                 <input type="text" id="customTemplateName" name="templateName" class="form-control"
                     value="<?php echo $templateName; ?>" />
                 <br />
+                <label for="customTemplateSubject">Subject</label>
+                <input type="text" id="customTemplateSubject" name="templateSubject" class="form-control" />
+                <br />
                 <label for="templateType">Template Type</label>
                 <select class="form-control w-100" id="templateType" name="templateType">
                     <option value="" disabled>Select type</option>
@@ -444,6 +447,7 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
+    const emailsTemplates = '<?php echo json_encode($emails); ?>';
     const templateGlobals = (function() {
         let globals = {
             'templateHtmlId': 'templateHtml',

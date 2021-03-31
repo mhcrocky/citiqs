@@ -274,12 +274,13 @@ $(document).ready(function () {
               if(data.emailId == email.id){
                 template_name = email.template_name;
                 template_type = email.template_type;
+                template_subject = email.template_subject;
               }
               
             });
 
             return (
-              "<div class='btn btn-primary'><a class='text-light' onclick='editEmailTemplate("+data.emailId+",\""+template_name+"\",\""+template_type+"\")' href='javascript:;' data-toggle='modal' data-target='#emailTemplateModal'>Edit Email Template</a></div>"
+              "<div class='btn btn-primary'><a class='text-light' onclick='editEmailTemplate("+data.emailId+",\""+template_name+"\",\""+template_type+"\", `"+template_subject+"`)' href='javascript:;' data-toggle='modal' data-target='#emailTemplateModal'>Edit Email Template</a></div>"
             );
           } else {
             return "<div class='btn btn-primary'><a class='text-light' onclick='editEmailTemplate("+data.ticketId+")' href='javascript:;' data-toggle='modal' data-target='#emailTemplateModal'>Add Email Template</a></div>";
@@ -610,7 +611,7 @@ function updateEmailTemplate(el, id) {
   );
 }
 
-function editEmailTemplate(id, template_name = '', template_type = '') {
+function editEmailTemplate(id, template_name = '', template_type = '', template_subject = '') {
   if(template_name == ''){
     $('#templateType').val('tickets');
     $('#updateEmailTemplate').attr('onclick','createTicketEmailTemplate("selectTemplateName", "customTemplateName", "templateType", '+id+')');
@@ -623,8 +624,9 @@ function editEmailTemplate(id, template_name = '', template_type = '') {
     function (data) {
       let templateContent = JSON.parse(data);
       $('#customTemplateName').val(template_name);
+      $('#customTemplateSubject').val(template_subject);
       $('#templateType').val(template_type);
-      $('#updateEmailTemplate').attr('onclick','createEmailTemplate("selectTemplateName", "customTemplateName", "templateType", "'+id+'")');
+      $('#updateEmailTemplate').attr('onclick','createEmailTemplate("selectTemplateName", "customTemplateName", "customTemplateSubject", "templateType", "'+id+'")');
       templateContent = templateContent.replaceAll('[QRlink]', globalVariables.baseUrl+'assets/images/qrcode_preview.png');
       tinymce.activeEditor.setContent(templateContent);
       
@@ -665,13 +667,15 @@ $('#updateEmailTemplate').on('click', function(){
 
 
 
-function createTicketEmailTemplate(selectTemplateValueId, customTemplateNameId, customTemplateTypeId, ticketId) {
+function createTicketEmailTemplate(selectTemplateValueId, customTemplateNameId, customTemplateSubjectId, customTemplateTypeId, ticketId) {
   let selectTemplate = document.getElementById(selectTemplateValueId);
   let customTemplate = document.getElementById(customTemplateNameId);
+  let customTemplateSubject = document.getElementById(customTemplateSubjectId);
   let customTemplateType = document.getElementById(customTemplateTypeId);
 
   let selectTemplateName = selectTemplate.value.trim();
   let customTemplateName = customTemplate.value.trim();
+  let templateSubject = customTemplateSubject.value.trim();
   let templateType = customTemplateType.value.trim();
   let templateHtml = tinyMCE.get(templateGlobals.templateHtmlId).getContent().replaceAll(globalVariables.baseUrl + 'assets/images/qrcode_preview.png', '[QRlink]').trim();
   if (!templateHtml) {
@@ -705,6 +709,7 @@ function createTicketEmailTemplate(selectTemplateValueId, customTemplateNameId, 
       'templateHtml' : templateHtml,
       'ticketId' : ticketId,
       'templateType' : templateType,
+      'templateSubject' : templateSubject,
   };
 
   sendAjaxPostRequest(post, url, 'createEmailTemplate', createTicketEmailTemplateResponse, [selectTemplate, customTemplate]);
@@ -720,6 +725,7 @@ function createTicketEmailTemplateResponse(selectTemplate, customTemplate, respo
     }
   );
   selectTemplate.value = '';
+  customTemplateSubject.value = '';
   customTemplate.value = '';
   tinymce.get(templateGlobals.templateHtmlId).setContent('');
   return;
