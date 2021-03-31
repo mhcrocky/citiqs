@@ -49,7 +49,11 @@ class Orderscopy extends REST_Controller
 
 	private function orderCopyAtcions(array $order, string $orderImageFullPath, string $orderImageUrl): void
 	{
-		if ($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid')) {
+		if (
+			$order['paymentType'] === $this->config->item('prePaid')
+			|| $order['paymentType'] === $this->config->item('postPaid')
+			|| $order['paymentType'] === $this->config->item('voucherPayment')
+		) {
 			if ($order['waiterReceipt'] === '0') {
 				$email = $order['receiptEmail'];
 				header('Content-type: image/png');
