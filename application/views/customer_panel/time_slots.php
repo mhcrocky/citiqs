@@ -155,15 +155,15 @@ li {
                             </div>
 
                             <div class="form-group">
-                                <label for="timeslotdescript">Description</label>
+                                <label for="timeslotdescript">Name</label>
                                 <input type="text" name="timeslotdescript" v-model="timeSlotModalData.timeslotdescript"
-                                    class="form-control" id="descript" placeholder="Description">
+                                    class="form-control" id="descript" placeholder="Name">
                             </div>
 
                             <div class="form-group">
-                                <label for="available_items">Available for booking</label>
+                                <label for="available_items">Maximum available SPOTS</label>
                                 <input type="text" name="available_items" v-model="timeSlotModalData.available_items"
-                                    class="form-control" id="available_items" placeholder="Available for booking">
+                                    class="form-control" id="available_items" placeholder="Maximum available SPOTS">
                             </div>
 
                             <div class="form-group">

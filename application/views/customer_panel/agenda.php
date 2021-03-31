@@ -128,10 +128,10 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="ReservationDescription">Reservation Description</label>
+                            <label for="ReservationDescription">Reservation Name</label>
                             <input type="text" name="reservationDescription"
                                    v-model="agendaModalData.ReservationDescription" class="form-control"
-                                   id="ReservationDescription" placeholder="Reservation Description">
+                                   id="ReservationDescription" placeholder="Reservation Name">
                         </div>
                         <div class="form-group">
                             <label for="ReservationDate">Reservation Date</label>

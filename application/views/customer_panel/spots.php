@@ -87,7 +87,7 @@
                                         <span class="span_action spotImportant" @click="editSpot(spot)">
                                             <i title="Basic Edit" class="fa fa-magic" aria-hidden="true"></i>
                                         </span>
-                                        <span class="span_action spotLabel" @click="editSpot(spot)">
+                                        <span class="span_action spotLabel d-none" @click="editSpot(spot)">
                                             <i title="Edit Spot Label" class="fa fa-tags" aria-hidden="true"></i>
                                         </span>
                                         <span class="span_action" @click="editSpot(spot)">
@@ -142,9 +142,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="descript">Description</label>
+                                <label for="descript">SPOT(Service Point Or Table)</label>
                                 <input type="text" name="descript" v-model="spotModalData.descript" class="form-control"
-                                    id="descript" placeholder="Description">
+                                    id="descript" placeholder="SPOT Name">
                             </div>
                             <div class="form-group">
                                 <label for="soldoutdescript">Sold out Description</label>
@@ -172,14 +172,14 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="available_items">Available for booking</label>
+                                <label for="available_items">Maximum available SPOTS</label>
                                 <input type="text" name="available_items" v-model.lazy="spotModalData.available_items"
                                     class="form-control" id="available_items" placeholder="Available for booking">
                             </div>
                             <div class="form-group">
-                                <label for="sort_order">Order</label>
+                                <label for="sort_order">Ranking Order</label>
                                 <input type="number" name="sort_order" v-model="spotModalData.sort_order"
-                                    class="form-control" id="sort_order" placeholder="Order">
+                                    class="form-control" id="sort_order" placeholder="Ranking Order">
                             </div>
                             <div class="form-group">
                                 <label for="numberofpersons">Number Of Persons</label>

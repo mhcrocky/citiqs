@@ -63,6 +63,7 @@ $(document).ready(function() {
         $("#personal-active").addClass('booking-active');
     } else {
         $("#agenda-active").addClass('booking-active');
+        $('#booking-footer').addClass('d-none');
     }
 
 });
