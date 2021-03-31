@@ -257,8 +257,11 @@ class Ajaxdorian extends CI_Controller
     public function saveAgendaSpot () {
         //if (!$this->input->is_ajax_request()) return;
         $imgChanged = $this->input->post("imgChanged");
+        $imgDeleted = $this->input->post("imgDeleted");
         $imgName = '';
-        if($imgChanged != 'true') {
+        if($imgDeleted == 1){
+            unlink(FCPATH . 'assets/home/images/'. $this->input->post('oldImage'));
+        } else if($imgChanged != 'true') {
             $imgName = $this->input->post('oldImage');
         }
         $config['upload_path']   = FCPATH . 'assets/home/images/';

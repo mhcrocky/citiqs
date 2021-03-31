@@ -212,9 +212,16 @@
                                             <img v-if="spotModalData.image" style="width: auto;"
                                                 :src="imgFullPath(spotModalData.image)" id="preview"
                                                 class="img-thumbnail bg-secondary">
+                                            <input type="hidden" id="imgDeleted" value="0">
+                                            <button v-if="spotModalData.image" type="button" onclick="deleteSpotImage()" class="btn btn-danger mt-1">
+                                                Delete Image
+                                            </button>
 
                                             <img v-else src="<?php echo base_url(); ?>assets/images/img-preview.png"
                                                 id="preview" class="img-thumbnail">
+                                            <button v-if="spotModalData.image == ''" type="button" onclick="deleteSpotImage()" class="btn btn-danger mt-1 d-none">
+                                                Delete Image
+                                            </button>
                                         </div>
 
 
@@ -369,6 +376,7 @@
                 formData.append("price", parseFloat(this.spotModalData.price).toFixed(2));
                 formData.append("oldImage", this.spotModalData.image);
                 formData.append("userfile", $("#userfile")[0].files[0]);
+                formData.append("imgDeleted", $('#imgDeleted').val());
                 formData.append("agenda_id", this.spotModalData.agenda_id);
                 formData.append("email_id", this.spotModalData.email_id);
                 formData.append("spotLabelId", this.spotModalData.spotLabelId);
@@ -517,6 +525,7 @@
         $('.file-custom').hover(function() {
             $(this).attr('data-content', el.files[0].name);
         });
+        $('#imgDeleted').val(0);
 
     }
 
@@ -527,7 +536,16 @@
         });
 
         $("#imgChanged").val('true');
+        $('#imgDeleted').val(0);
 
+    }
+
+    function deleteSpotImage() {
+        if (window.confirm("Are you sure?")) {
+            $('#preview').attr('src', '<?php echo base_url(); ?>assets/images/img-preview.png');
+            $('#imgDeleted').val(1);
+        }
+        
     }
 
     (function(){
