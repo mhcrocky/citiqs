@@ -19,7 +19,7 @@
 
 
 		<!-- EMXAMPLE HOW TO ADD CSS PROPETY TO ELEMENT IN DESIGN -->
-		<h1 style="text-align:center" id="selectTypeH1"><?php echo $vendor['vendorName'] ?></h1>
+		<h3 style="text-align:center" id="selectTypeH1"><?php echo $vendor['vendorName'] ?></h3>
 
 
 		<div class="selectWrapper mb-35">
@@ -36,8 +36,6 @@
 								} else {
 									$logoFile = base_url(). "assets/images/vendorLogos/". $vendor['logo'];
 								}
-//				echo var_dump($logoFile);
-//				echo var_dump($vendor['logo']);
 							} ?>
 
 							<div style="margin-top: 20px">
@@ -46,7 +44,7 @@
 							</div>
 
 							<div style="margin-top: -10px">
-								<div style="margin-top: -30px">
+								<div style="margin-top: -60px">
 									<span class="selectTypeLabelsColor typeLabel"><?php echo $type['type']; ?></span>
 								</div>
 							</div>
@@ -55,7 +53,7 @@
 								<i class="<?php if($type['typeId']==='1') echo "fa fa-coffee selectTypeLabelsColor" ?>" style="font-size:48px;color:ghostwhite"></i>
 								<i class="<?php if($type['typeId']==='2') echo "fa fa-bicycle selectTypeLabelsColor" ?>" style="font-size:48px;color:ghostwhite"></i>
 								<?php if($type['typeId']==='3') { ?>
-								<img src="<?php if($type['typeId']==='3') echo base_url(); ?>assets/home/images/pickup.png" alt="tiqs" width="48px" height="48px" />
+								<img src="<?php if($type['typeId']==='3') echo base_url(); ?>assets/home/images/pickup.png" alt="tiqs" width="48px" height="48px" style="margin-top: -20px"/>
 								<?php } ?>
 							</div>
 
