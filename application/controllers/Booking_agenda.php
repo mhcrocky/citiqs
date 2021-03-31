@@ -50,7 +50,7 @@ class Booking_agenda extends BaseControllerWeb
 
         $data['agenda'] = $this->bookandpayagendabooking_model->getbookingagenda($customer->id);
 
-        $logoUrl = 'assets/user_images/no_logo.png';
+        $logoUrl = 'assets/home/images/tiqslogowhite.png';
         if ($customer->logo) {
 			$logoUrl = 'assets/images/vendorLogos/' . $customer->logo;
         }
