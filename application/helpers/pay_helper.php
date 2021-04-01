@@ -207,7 +207,7 @@
             
             foreach ($reservations as $key => $reservation) {
                 
-                $totalAmount +=  floatval($reservation->numberofpersons) * floatval($reservation->price);
+                $totalAmount +=  floatval($reservation->price);
 
                 if ($key == 0) {
                     $arrArguments['transaction']['description'] = "tiqs - " . $reservation->eventdate . " - " . $reservation->timeslot;
