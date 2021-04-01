@@ -9,7 +9,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title font-weight-bold text-dark" id="emailTemplateModalLabel">Choose Email Template
+                <h5 class="modal-title font-weight-bold text-dark" id="emailTemplateModalLabel"><?php echo $this->language->tLine('Choose Email Template'); ?>
                 </h5>
                 <button type="button" class="close" id="closeEmailTemplate" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -31,13 +31,12 @@
                     <option value="vouchers">Vouchers</option>
                 </select>
                 <br />
-                <label for="templateHtml">Edit template</label>
+                <label for="templateHtml"><?php echo $this->language->tLine('Edit template'); ?></label>
                 <textarea id="templateHtml" name="templateHtml"></textarea>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" id="updateEmailTemplate" class="btn btn-primary">Save changes</button>
+                <button type="submit" id="updateEmailTemplate" class="btn btn-primary"><?php echo $this->language->tLine('Choose Email Template'); ?><?php echo $this->language->tLine('Save changes'); ?></button>
             </div>
 
         </div>
@@ -52,11 +51,11 @@
                     <button type="button" style="margin: 10px 0" class="btn btn-primary" @click="addAgendaModal">Add
                         agenda
                     </button>
-                    <a :href="baseURL+ 'customer_panel/list_templates'" class="btn btn-success">Email Designer</a>
+                    <a :href="baseURL+ 'customer_panel/list_templates'" class="btn btn-success"><?php echo $this->language->tLine('Email Designer'); ?></a>
                 <?php else: ?>
                     <div style="margin: 10px 0">
-                        You need to create an email template to be able create agenda <a
-                                :href="baseURL+ 'add_template'"><b>Click Here</b></a>
+						<?php echo $this->language->tLine('You need to create an email template to be able create agenda'); ?> <a
+                                :href="baseURL+ 'add_template'"><b><?php echo $this->language->tLine('Click Here'); ?></b></a>
                     </div>
                 <?php endif; ?>
 
@@ -68,12 +67,12 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Reservation Description</th>
-                            <th>Reservation Date</th>
-                            <th>Background Color
-                            <th>Email Template</th>
-                            <th>Online</th>
-                            <th>Action</th>
+                            <th><?php echo $this->language->tLine('Reservation Description'); ?></th>
+                            <th><?php echo $this->language->tLine('Reservation Date'); ?></th>
+                            <th><?php echo $this->language->tLine('Background Color'); ?>
+                            <th><?php echo $this->language->tLine('Email Template'); ?></th>
+                            <th><?php echo $this->language->tLine('Online'); ?></th>
+                            <th><?php echo $this->language->tLine('Action'); ?></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -90,10 +89,10 @@
                                     </a>
                                 </td>
                                 <td v-if="agenda.online == 1">
-                                    Yes
+									<?php echo $this->language->tLine('Yes'); ?>
                                 </td>
                                 <td v-else>
-                                    No
+									<?php echo $this->language->tLine('No'); ?>
                                 </td>
                                 <td class="td_action text-center">
                                     <span title="Edit Agenda" class="span_action" @click="editAgenda(agenda)">
@@ -123,23 +122,23 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Add agenda</h4>
+                    <h4 class="modal-title"><?php echo $this->language->tLine('Add agenda'); ?></h4>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="ReservationDescription">Reservation Name</label>
+                            <label for="ReservationDescription"><?php echo $this->language->tLine('Reservation Name'); ?></label>
                             <input type="text" name="reservationDescription"
                                    v-model="agendaModalData.ReservationDescription" class="form-control"
-                                   id="ReservationDescription" placeholder="Reservation Name">
+                                   id="ReservationDescription" placeholder="<?php echo $this->language->tLine('Reservation Name'); ?>">
                         </div>
                         <div class="form-group">
-                            <label for="ReservationDate">Reservation Date</label>
+                            <label for="ReservationDate"><?php echo $this->language->tLine('Reservation Date'); ?></label>
                             <datepicker
                                     :format="format"
                                     :disabled-dates="disabledDates"
                                     v-model="agendaModalData.ReservationDateTime"
-                                    placeholder="Reservation Date"
+                                    placeholder="<?php echo $this->language->tLine('Reservation Date'); ?>"
                                     input-class="form-control">
                             </datepicker>
                         </div>
@@ -158,16 +157,16 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="descript">Email Template</label>
+                            <label for="descript"><?php echo $this->language->tLine('Email Template'); ?></label>
                             <search-select :options="emailsOptions"
                                            v-model="agendaModalData.email_id"
                                            placeholder="Select Email Template"></search-select>
                         </div>
                         <div class="form-group">
-                            <label for="online">Status</label>
+                            <label for="online"><?php echo $this->language->tLine('Status'); ?></label>
                             <select class="form-control" id="online" name="online"
                                     v-model="agendaModalData.online">
-                                <option value="" disabled selected>Select agenda status</option>
+                                <option value="" disabled selected><?php echo $this->language->tLine('Select agenda status'); ?></option>
                                 <option value="1">Online</option>
                                 <option value="0">Offline</option>
                             </select>
@@ -181,8 +180,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" @click="saveAgenda">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->language->tLine('Close'); ?></button>
+                    <button type="button" class="btn btn-primary" @click="saveAgenda"><?php echo $this->language->tLine('Save'); ?></button>
                 </div>
             </div>
         </div>
@@ -194,23 +193,23 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Add agenda</h4>
+                    <h4 class="modal-title"><?php echo $this->language->tLine('Add agenda'); ?></h4>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="ReservationDescription">Reservation Description</label>
+                            <label for="ReservationDescription"><?php echo $this->language->tLine('Reservation Name'); ?></label>
                             <input type="text" name="reservationDescription"
                                    v-model="agendaModalData.ReservationDescription" class="form-control"
-                                   id="ReservationDescription" placeholder="Reservation Description">
+                                   id="ReservationDescription" placeholder="<?php echo $this->language->tLine('Reservation Name'); ?>">
                         </div>
                         <div class="form-group">
-                            <label for="ReservationDate">Reservation Date</label>
+                            <label for="ReservationDate"><?php echo $this->language->tLine('Reservation Date'); ?></label>
                             <datepicker
                                     :format="format"
                                     :disabled-dates="disabledDates"
                                     v-model="agendaModalData.ReservationDateTime"
-                                    placeholder="Reservation Date"
+                                    placeholder="<?php echo $this->language->tLine('Reservation Date'); ?>"
                                     input-class="form-control">
                             </datepicker>
                         </div>

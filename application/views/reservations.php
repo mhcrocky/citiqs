@@ -15,7 +15,7 @@
                         <div style="display: none;" class="form-group">
                             <label for="object">Select object: </label>
                             <select class="form-control" id="object" name="object" required>
-                                <option value="">Select</option>
+                                <option value=""><?php echo $this->language->tLine('Select'); ?></option>
                                 <?php
                                 $not_null = 0;
                                  foreach ($objects as $object) { ?>
@@ -247,4 +247,3 @@
 
 
 </script>
- 
