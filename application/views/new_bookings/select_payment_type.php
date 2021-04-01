@@ -1,94 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+$idealPaymentFee = number_format($idealPayment, 2, '.', '');
+$bancontactPaymentFee = number_format($bancontactPayment, 2, '.', '');
+$creditCardPaymentFee = number_format($creditCardPayment, 2, '.', '');
+$voucherPaymentFee = number_format($voucher, 2, '.', '');
+$myBankPaymentFee = number_format($myBank, 2, '.', '');
+$payconiqPaymentFee = number_format($payconiqPayment, 2, '.', '');
+$giroPaymentFee = number_format($giroPayment, 2, '.', '');
+$pinMachinePaymentFee = number_format($pinMachine, 2, '.', '');
 ?>
-
-<!-- load font awesome -->
-<link rel="stylesheet" href="<?php echo base_url('assets/css/extra/all.min.css') ?>" />
-<script src="<?php echo base_url('assets/js/extra/all.min.js') ?>"></script>
-
-<!-- Third party styles and scripts -->
-<script src="<?php echo base_url('assets/js/extra/jquery-3.3.1.slim.min.js') ?>"></script>
-<link rel="stylesheet" href="<?php echo base_url('assets/css/extra/select2.min.css') ?>" />
-
-<!-- Style -->
-<link rel="stylesheet" href="<?php echo base_url('assets/css/extra/style.min.css') ?>" />
-
-<style>
-	#shopping-cart .pay-header {
-		background-color: #ff4f00;
-		color:white;
-	}
-	#shopping-cart {
-		z-index:1;
-		position: relative;
-	}
-
-	body #shopping-cart .mobile-menu .button {
-		background-color: rgba(255, 0, 0, 0.05);
-	}
-	.payment-title {
-		font-size:2.8rem;
-		font-weight:bold;
-		color:black;
-	}
-
-	#shopping-cart form .btn {
-		background-color: #ff4f00;
-		border-color: #ff4f00;
-		color:white;
-	}
-
-	#shopping-cart form .btn:hover,
-	#shopping-cart form .btn:active {
-		background-color: rgba(255, 0, 0, 0.75) !important;
-		border-color: rgba(255, 0, 0, 0.75) !important;
-	}
-
-	#shopping-cart form .btn {
-		color: #fff;
-		width: 100%;
-	}
-
-	#shopping-cart form .btn:hover,
-	#shopping-cart form .btn:active {
-		color: #000000 !important
-	}
-	#shopping-cart .order-details {
-		float:unset;
-		display:block;
-		border-bottom:1px solid #dadada;
-		padding-top:0;
-	}
-	form {
-		padding: 20px 25px 25px;
-	}
-
-	@media only screen and (max-width: 768px) {
-		#page-wrapper #area-container .page-container .heading {
-			position: relative;
-		}
-
-		#page-wrapper #area-container .footer,
-		.mobile-menu {
-			position: relative;
-		}
-
-		#page-wrapper #area-container .payment-container.methods {
-			margin-bottom: 0;
-		}
-	}
-
-	#area-container .payment-container .table-in3 td.calendar {
-		background-image: url('<?php echo base_url('assets/imgs/extra/in3-calendar.png') ?>') !important;
-	}
-	.bar2 {
-		padding-top:2px !important;
-		padding-bottom:2px !important;
-		border:none !important;
-		display: flex;
-		justify-content: flex-end;
-	}
-</style>
 
 <div id="wrapper">
 	<div id="content">
@@ -170,12 +90,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 									<div class="payment-container methods">
 										<a href="#" class="paymentMethod method-ideal" data-payment-type="ideal">
-											<img src="<?php echo base_url('assets/imgs/extra/ideal.png') ?>" alt="iDEAL">
-											<span>iDEAL</span>
+											<img src="<?php echo base_url('assets/imgs/extra/ideal.png'); ?>" alt="iDEAL">
+											<span><?php echo my_money_format("de_DE", $idealPaymentFee); ?></span>
+											<span class="text-dark"><strong>iDEAL</strong></span>
 										</a>
-										<a href="<?php echo base_url('bookingpay/onlinepayment/'.$creditCardPaymentType) ?>" class="paymentMethod method-card" data-payment-type="card">
+										<a href="<?php echo base_url('bookingpay/onlinepayment/'.$creditCardPaymentType); ?>" class="paymentMethod method-card" data-payment-type="card">
 											<img src="<?php echo base_url('assets/imgs/extra/creditcard.png') ?>" alt="Creditcard">
-											<span data-trans="" data-trn-key="Creditcard">Creditcard</span>
+											<span><?php echo my_money_format("de_DE", $creditCardPaymentFee); ?></span>
+											<span class="text-dark"><strong>Creditcard</strong></span>
+										</a>
+										<a href="<?php echo base_url('bookingpay/onlinepayment/'.$bancontactPaymentType); ?>" class="paymentMethod method-bancontact">
+											<img src="<?php echo base_url('assets/home/imgs/extra/bancontact.png') ?>" alt="bancontact">
+											<span><?php echo my_money_format("de_DE", $bancontactPaymentFee); ?></span>
+											<span class="text-dark"><strong><?php echo $this->language->tline('Bancontact'); ?></strong></span>
+										</a>
+										<a href="javascript:;" class="paymentMethod method-waiter" >
+											<img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="payAtWaiter">
+											<span><?php echo my_money_format("de_DE", 0); ?></span>
+											<span class="text-dark"><strong><?php echo $this->language->tline('Pay at waiter'); ?></strong></span>
+										</a>
+										<a href="javascript:;" class="paymentMethod method-voucher">
+											<img src="<?php echo base_url() . 'assets/home/images/voucher.png'; ?>" alt="voucher">
+											<span><?php echo my_money_format("de_DE", $voucherPaymentFee); ?></span>
+											<span class="text-dark"><strong><?php echo $this->language->tline('gebruik Voucher'); ?></strong></span>
+										</a>
+										<a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $myBankPaymentType; ?>" class="paymentMethod method-myBank">
+											<img src="https://static.pay.nl/payment_profiles/100x100/1588.png" alt="myBank">
+											<span><?php echo my_money_format("de_DE", $myBankPaymentFee); ?></span>
+											<span class="text-dark"><strong>My Bank</strong></span>
+										</a>
+										
+										<a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $payconiqPaymentType; ?>" class="paymentMethod method-payconiq">
+											<img src="https://tiqs.com/alfred/assets/home/imgs/extra/payconiq.png" alt="Payconiq">
+											<span><?php echo my_money_format("de_DE", $payconiqPaymentFee); ?></span>
+											<span class="text-dark"><strong>Payconiq</strong></span>
+										</a>
+										<a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $giroPaymentType; ?>" class="paymentMethod method-card" data-payment-type="card">
+											<img src="<?php echo base_url(); ?>assets/home/imgs/extra/giropay(1).png" alt="Giropay">
+											<span><?php echo my_money_format("de_DE", $giroPaymentFee); ?></span>
+											<span class="text-dark"><strong>Giropay</strong></span>
+										</a>
+										<a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $pinMachinePaymentType; ?>" class="paymentMethod method-card" data-payment-type="card">
+											<img src="<?php echo base_url(); ?>assets/home/images/pinmachine.png" alt="pinmachine">
+											<span><?php echo my_money_format("de_DE", $pinMachinePaymentFee); ?></span>
+											<span class="text-dark"><strong>Pin machine</strong></span>
 										</a>
 										<!-- <span class="paymentMethod no-mobile"></span> -->
 
@@ -523,5 +481,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</div>
 	</div>
 </div>
-<script src="<?php echo base_url('assets/js/extra/select2.min.js') ?>"></script>
-<script src="<?php echo base_url('assets/js/extra/script.min.js') ?>"></script>
+

@@ -441,6 +441,92 @@
     background: #c5c5c5;
 }
 </style>
+<?php  } elseif ($this->view === 'new_bookings/select_payment_type' || $this->view === 'bookings/select_payment_type') { ?>
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/extra/all.min.css') ?>" />
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/extra/select2.min.css') ?>" />
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/extra/style.min.css') ?>" />
+
+<style>
+	#shopping-cart .pay-header {
+		background-color: #ff4f00;
+		color:white;
+	}
+	#shopping-cart {
+		z-index:1;
+		position: relative;
+	}
+
+	body #shopping-cart .mobile-menu .button {
+		background-color: rgba(255, 0, 0, 0.05);
+	}
+	.payment-title {
+		font-size:2.8rem;
+		font-weight:bold;
+		color:black;
+	}
+
+	#shopping-cart form .btn {
+		background-color: #ff4f00;
+		border-color: #ff4f00;
+		color:white;
+	}
+
+	#shopping-cart form .btn:hover,
+	#shopping-cart form .btn:active {
+		background-color: rgba(255, 0, 0, 0.75) !important;
+		border-color: rgba(255, 0, 0, 0.75) !important;
+	}
+
+	#shopping-cart form .btn {
+		color: #fff;
+		width: 100%;
+	}
+
+	#shopping-cart form .btn:hover,
+	#shopping-cart form .btn:active {
+		color: #000000 !important
+	}
+	#shopping-cart .order-details {
+		float:unset;
+		display:block;
+		border-bottom:1px solid #dadada;
+		padding-top:0;
+	}
+	form {
+		padding: 20px 25px 25px;
+	}
+
+	@media only screen and (max-width: 768px) {
+		#page-wrapper #area-container .page-container .heading {
+			position: relative;
+		}
+
+		#page-wrapper #area-container .footer,
+		.mobile-menu {
+			position: relative;
+		}
+
+		#page-wrapper #area-container .payment-container.methods {
+			margin-bottom: 0;
+		}
+	}
+
+	#area-container .payment-container .table-in3 td.calendar {
+		background-image: url('<?php echo base_url('assets/imgs/extra/in3-calendar.png') ?>') !important;
+	}
+	.bar2 {
+		padding-top:2px !important;
+		padding-bottom:2px !important;
+		border:none !important;
+		display: flex;
+		justify-content: flex-end;
+	}
+
+    #area-container .payment-container .paymentMethod {
+        height: 120px !important;
+    }
+</style>
+
 <?php  } elseif ($this->view === 'voucher/send') { ?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />

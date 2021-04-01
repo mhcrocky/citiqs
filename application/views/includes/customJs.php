@@ -217,6 +217,12 @@
 <?php } elseif ($this->view === 'new_bookings/agenda_booking_design') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jscolor.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/agenda_booking_design.js"></script>
+<?php  } elseif ($this->view === 'new_bookings/select_payment_type' || $this->view === 'bookings/select_payment_type') { ?>
+	<script src="<?php echo base_url('assets/js/extra/all.min.js') ?>"></script>
+    <script src="<?php echo base_url('assets/js/extra/jquery-3.3.1.slim.min.js') ?>"></script>
+	<script src="<?php echo base_url('assets/js/extra/select2.min.js') ?>"></script>
+	<script src="<?php echo base_url('assets/js/extra/script.min.js') ?>"></script>
+
 <?php } elseif ($this->view === 'templates/addTemplate') { ?>
 <!--	<script src='--><?php //echo $this->baseUrl; ?><!--assets/home/js/tinymce.min.js?apiKey=pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu'></script>-->
 	 <script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>

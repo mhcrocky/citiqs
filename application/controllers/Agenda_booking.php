@@ -434,6 +434,11 @@ class Agenda_booking extends BaseControllerWeb
         $this->global['pageTitle'] = 'Payment Method';
         $data['idealPaymentType'] = $this->config->item('idealPaymentType');
         $data['creditCardPaymentType'] = $this->config->item('creditCardPaymentType');
+        $data['bancontactPaymentType'] = $this->config->item('bancontactPaymentType');
+        $data['giroPaymentType'] = $this->config->item('giroPaymentType');
+        $data['payconiqPaymentType'] = $this->config->item('payconiqPaymentType');
+        $data['pinMachinePaymentType'] = $this->config->item('pinMachinePaymentType');
+        $data['myBankPaymentType'] = $this->config->item('myBankPaymentType');
         $amount = $this->session->userdata('amount');
 
         $reservationsPayments = $this->bookandpayagendabooking_model->get_payment_methods($this->session->userdata('customer')['id']);
