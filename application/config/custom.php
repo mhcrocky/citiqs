@@ -515,3 +515,8 @@ $config['initialMainType'] = 'Main';
 $config['initialAddonType'] = 'Addon';
 
 $config['ambasadorCokkiePrefix'] = 'crmAmbasador';
+
+
+// category images
+$config['categoriesImagesRelPath'] = 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'categories' . DIRECTORY_SEPARATOR;
+$config['categoriesImagesFullPath'] = FCPATH . $config['categoriesImagesRelPath'];

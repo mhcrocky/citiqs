@@ -97,6 +97,7 @@
             $data = [
                 'userId' => intval($_SESSION['userId']),
                 'categories' => $this->shopcategory_model->fetch($where),
+                'imgFolder' => (base_url() . $this->config->item('categoriesImagesRelPath'))
             ];
 
             $this->loadViews('warehouse/productCategories', $this->global, $data, 'footerbusiness', 'headerbusiness');
@@ -111,10 +112,12 @@
         public function addCategory(): void
         {
             $data = $this->input->post(null, true);
+            $this->setCategoryImage($data);
 
             if ($this->shopcategory_model->checkIsInserted($data)) {
-                $this->session->set_flashdata('error', 'Insert failed! Role with this name already inserted');
+                $this->session->set_flashdata('error', 'Insert failed! Category with this name already inserted');
             } elseif ($this->shopcategory_model->setObjectFromArray($data)->create()) {
+                $this->uploadCategoryImage($data);
                 $this->session->set_flashdata('success', 'Category "' . $data['category'] . '" created!');
             } else {
                 $this->session->set_flashdata('error', 'Insert failed! Please try again.');
@@ -131,8 +134,7 @@
          */
         public function editCategory(): void
         {
-            $data = Validate_data_helper::validateInteger($this->uri->segment(4)) ?
-                            ['active' => $this->uri->segment(4)] : $this->input->post(null, true);
+            $data = Validate_data_helper::validateInteger($this->uri->segment(4)) ? ['active' => $this->uri->segment(4)] : $this->security->xss_clean($_POST);
             $this->shopcategory_model->setObjectId(intval($this->uri->segment(3)));
 
             if(isset($data['category']) && $this->shopcategory_model->checkIsInserted($data)) {
@@ -140,12 +142,11 @@
                 redirect('product_categories');
             }
 
-            $update =   $this
-                        ->shopcategory_model
-                        ->setObjectFromArray($data)
-                        ->update();
+            $this->setCategoryImage($data);
+            $this->deleteOldCategoryImage($data);
 
-            if ($update) {
+            if ($this->shopcategory_model->setObjectFromArray($data)->update()) {
+                $this->uploadCategoryImage($data);
                 $this->session->set_flashdata('success', 'Category updated');
             } else {
                 $this->session->set_flashdata('error', 'Update failed! Please try again.');
@@ -153,6 +154,36 @@
 
             redirect('product_categories');
             return;
+        }
+
+        private function setCategoryImage(array &$data): void
+        {
+            if (!empty($_FILES['image']['name'])) {
+                $data['image'] = time() . '_' . base64_encode($data['category']) . '.' . Uploadfile_helper::getFileExtension($_FILES['image']['name']);
+                $_FILES['image']['name'] = $data['image'];
+            } else {
+                unset($data['image']);
+            }
+
+            return;
+        }
+
+        private function uploadCategoryImage(array $data): void
+        {
+            if (!empty($data['image'])) {
+                Uploadfile_helper::uploadFiles($this->config->item('categoriesImagesFullPath'));
+            }
+            return;
+        }
+
+        private function deleteOldCategoryImage($data): void
+        {
+            if ($this->shopcategory_model->id && !empty($data['image'])) {
+                $image = $this->config->item('categoriesImagesFullPath') . $this->shopcategory_model->getProperty('image');
+                if (file_exists($image)) {
+                    unlink($image);
+                }
+            }
         }
 
         // PRODUCTS
