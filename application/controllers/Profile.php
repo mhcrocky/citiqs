@@ -122,7 +122,10 @@ class  Profile extends BaseControllerWeb
 			'active' => $active,
 			'action' => 'profileUpdate',
 			'businessTypes' => $this->businesstype_model->getAll(),
-			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData()
+			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData(),
+			'oldView' => $this->config->item('oldMakeOrderView'),
+			'newView' => $this->config->item('newMakeOrderView'),
+			'view2021' => $this->config->item('view2021'),
 		];
 
 		$this->loadViews("profile/shopsettings", $this->global, $data, 'footerbusiness', 'headerbusiness'); // Menu profilepage

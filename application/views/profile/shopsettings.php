@@ -67,10 +67,12 @@
 					</div>
 					<h4>SELECT PREFERRED MAKE ORDER VIEW</h4>
 					<div class="form-group mb-35">
-						<label class="radio-inline" for="preferredViewCheckYes">Old view</label>
-						<input type="radio" id="preferredViewCheckYes" name="vendor[preferredView]" value="1" <?php if ($vendor['preferredView'] === '1') echo 'checked'; ?> />
-						<label class="radio-inline" for="preferredViewCheckNo">&nbsp;&nbsp;&nbsp;New view</label>
-						<input type="radio" id="preferredViewCheckNo" name="vendor[preferredView]" value="2" <?php if ($vendor['preferredView'] === '2') echo 'checked'; ?> />
+						<label class="radio-inline" for="oldView">Old view</label>
+						<input type="radio" id="oldView" name="vendor[preferredView]" value="<?php echo $oldView; ?>" <?php if ($vendor['preferredView'] === $oldView) echo 'checked'; ?> />
+						<label class="radio-inline" for="newView">&nbsp;&nbsp;&nbsp;New view</label>
+						<input type="radio" id="newView" name="vendor[preferredView]" value="<?php echo $newView; ?>" <?php if ($vendor['preferredView'] === $newView) echo 'checked'; ?> />
+						<label class="radio-inline" for="view2021">&nbsp;&nbsp;&nbsp;2021 view</label>
+						<input type="radio" id="view2021" name="vendor[preferredView]" value="<?php echo $view2021; ?>" <?php if ($vendor['preferredView'] === $view2021) echo 'checked'; ?> />
 					</div>
 					<h4>SHOW REMARKS IN CHECKOUT FORM</h4>
 					<div class="form-group mb-35">
