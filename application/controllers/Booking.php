@@ -423,14 +423,15 @@ class Booking extends BaseControllerWeb
 	}
 
 
-	public function ExchangePay()
+	public function ExchangePay($transactionid=false)
 	{
 		$this->load->model('email_templates_model');
 		$this->load->model('bookandpayspot_model');
 		$this->load->model('bookandpayagenda_model');
 		$this->load->model('bookandpaytimeslots_model');
-
-		$transactionid = $this->input->get('order_id');
+		if(!$transactionid){
+			$transactionid = ($this->input->get('order_id')) ? $this->input->get('order_id') : $this->input->get('orderId');
+		}
 
 		$payData['format'] = 'array_serialize';
 		$payData['tokenid'] = 'AT-0051-0895';
@@ -459,7 +460,7 @@ class Booking extends BaseControllerWeb
 		$result1 = $strResult;
 
 //        if ($result1['paymentDetails']['state'] == 100 || $result1['paymentDetails']['state'] == 20) {
-		if ($result1['paymentDetails']['state'] == 100 ) {
+		if ($result1['paymentDetails']['state'] == 100) {
 			foreach ($strResult['saleData']['orderData'] as $key => $product) {
 				if($product['productId'] !== '000000') {
 					$reservationId = $product['productId'];
@@ -672,6 +673,8 @@ class Booking extends BaseControllerWeb
 		if ($statuscode == 100) {
 
 			$data = array();
+			$transactionid = ($this->input->get('order_id')) ? $this->input->get('order_id') : $this->input->get('orderId');
+			$this->ExchangePay($transactionid);
 			if($this->session->userdata('eventShop')){
 				redirect('booking_events/emailReservation');
 			}
@@ -733,6 +736,10 @@ class Booking extends BaseControllerWeb
 	public function successBooking(){
         $data = array();
 		$this->global['pageTitle'] = 'TIQS : THANKS';
+		$transactionid = ($this->input->get('order_id')) ? $this->input->get('order_id') : $this->input->get('orderId');
+		echo '<p style="display: none; >"';
+		$this->ExchangePay($transactionid);
+		echo '</p>';
 		$this->session->sess_destroy();
         $this->loadViews("bookingsuccess", $this->global, $data, 'nofooter', "noheader");
     

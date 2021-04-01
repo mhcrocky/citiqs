@@ -244,9 +244,9 @@
 				$arrArguments['paymentOptionSubId'] = "TH-9268-3020";
 			}
 
-            $arrArguments['finishUrl'] = base_url() . 'bookingpay/successBooking/';
+            $arrArguments['finishUrl'] = base_url() . 'booking/successBooking/';
 
-            $arrArguments['transaction']['orderExchangeUrl'] = base_url() . 'bookingpay/exchangePay/';
+            $arrArguments['transaction']['orderExchangeUrl'] = base_url() . 'booking/exchangePay/';
 
 
             $arrArguments['statsData']['promotorId'] = $vendorId;
