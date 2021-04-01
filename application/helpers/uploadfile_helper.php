@@ -8,6 +8,7 @@
 
         public static function uploadFiles(string $folder, array $constraints = [], bool $resize = true, array $sizeConstraints = []): bool
         {
+            $folder = rtrim($folder, DIRECTORY_SEPARATOR);
             $CI =& get_instance();
             $constraints['upload_path'] = $folder . DIRECTORY_SEPARATOR;
             $constraints['allowed_types'] = (isset($constraints['allowed_types'])) ? $constraints['allowed_types'] : 'jpeg|jpg|png';

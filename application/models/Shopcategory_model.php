@@ -22,6 +22,8 @@
         public $private;
         public $openKey;
         public $isApi;
+        public $image;
+        public $showImage;
 
         private $table = 'tbl_shop_categories';
 
@@ -63,6 +65,7 @@
             if (isset($data['private']) && !($data['private'] === '1' || $data['private'] === '0')) return false;
             if (isset($data['openKey']) && !Validate_data_helper::validateString($data['openKey'])) return false;
             if (isset($data['isApi']) && !($data['isApi'] === '1' || $data['isApi'] === '0')) return false;
+            if (isset($data['showImage']) && !($data['showImage'] === '1' || $data['showImage'] === '0')) return false;
 
             return true;
         }
@@ -83,7 +86,9 @@
                     $this->table . '.sortNumber',
                     $this->table . '.driverSmsMessage',
                     $this->table . '.private',
-                    $this->table . '.openKey'
+                    $this->table . '.openKey',
+                    $this->table . '.image',
+                    $this->table . '.showImage',
                 ],
                 $where,
                 [],
