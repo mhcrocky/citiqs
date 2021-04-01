@@ -358,6 +358,7 @@ class Booking_events extends BaseControllerWeb
 		$this->load->model('bookandpayagenda_model');
 		$this->load->model('bookandpaytimeslots_model');
 
+        $transactionid = ($this->input->get('order_id')) ? $this->input->get('order_id') : $this->input->get('orderId');
 
 		$namespace = $this->config->item('transactionNamespace');
         $function = $this->config->item('orderPayNlFunction');

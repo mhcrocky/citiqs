@@ -1,5 +1,4 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php 
 $idealPaymentFee = number_format($idealPayment, 2, '.', '');
 $bancontactPaymentFee = number_format($bancontactPayment, 2, '.', '');
 $creditCardPaymentFee = number_format($creditCardPayment, 2, '.', '');
@@ -9,476 +8,297 @@ $payconiqPaymentFee = number_format($payconiqPayment, 2, '.', '');
 $giroPaymentFee = number_format($giroPayment, 2, '.', '');
 $pinMachinePaymentFee = number_format($pinMachine, 2, '.', '');
 ?>
+<div id="selectPayment" class="container-fluid selectPayment pr-5 pl-5 mx-auto mb-5">
+    <h1 style="color: #F1921A !important; font-size: 24px;" class="white text-center yellow">Select Payment</h1>
+    <div class="row mx-auto">
 
-<div id="wrapper">
-	<div id="content">
-		<div class="container" id="shopping-cart">
-			<div class="container" id="page-wrapper">
-				<div class="row">
-					<div class="col-md-12">
-						<div id="area-container">
+        <div class="col-md-8 col-sm-12 serviceBox blue mx-auto">
+            <div class="half-col  mb-4">
+                <img class="img-w-150" src="<?php echo base_url(); ?>assets/home/imgs/extra/ideal.png" alt="iDEAL">
+                <p style="paymentFee bg-primary"><?php echo '€'.$idealPaymentFee; ?></p>
+                <h3 class="title">
+                <a id="iDeal" data-paymentFee="<?php echo $idealPaymentFee; ?>" class="text-primary" href="#iDeal" onclick="paymentMethodRedirect(this)">iDEAL</a></h3>
+            </div>
+            <div class="half-col mb-4">
+                <img class="img-w-150" src="<?php echo base_url(); ?>assets/home/imgs/extra/bancontact.png"
+                    alt="bancontact">
+                <p style="paymentFee bg-primary"><?php echo '€'.$bancontactPaymentFee; ?></p>
+                <h3 class="title"><a id="bancontact" class="text-primary pay_method" data-paymentFee="<?php echo $bancontactPaymentFee; ?>"
+                        href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $bancontactPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Bancontact</a></h3>
+            </div>
+            <div class="half-col mb-4">
+                <img class="img-w-150" src="<?php echo base_url(); ?>assets/home/imgs/extra/creditcard.png"
+                    alt="Creditcard">
+                <p style="paymentFee bg-primary"><?php echo '€'.$creditCardPaymentFee; ?></p>
+                <h3 class="title">
+                <a data-paymentFee="<?php echo $creditCardPaymentFee; ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $creditCardPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Credit Card</a></h3>
+            </div>
+            <div class="half-col  mb-4">
+                <img class="img-w-150" src="<?php echo base_url() . 'assets/images/waiter.png'; ?>"
+                    alt="Pay at waiter" />
+                <p style="paymentFee bg-primary"><?php echo '€0.00' ?></p>
+                <h3 class="title"><a id="payAtWaiter" class="text-primary" href="#">Pay at waiter</a></h3>
+            </div>
+            <div class="half-col  mb-4">
+                <img class="img-w-89" src="<?php echo base_url() . 'assets/home/images/voucher.png'; ?>" alt="voucher">
+                <p style="paymentFee bg-primary"><?php echo '€'.$voucherPaymentFee; ?></p>
+                <h3 class="title"><a id="voucher" data-paymentFee="<?php echo $voucherPaymentFee; ?>" class="text-primary" href="#">gebruik Voucher</a></h3>
+            </div>
+            <div class="half-col  mb-4">
+                <img class="img-w-150" style="max-width: 110px;" src="https://static.pay.nl/payment_profiles/100x100/1588.png"
+                    alt="My Bank" />
+                <p style="paymentFee bg-primary"><?php echo '€'.$myBankPaymentFee; ?></p>
+                <h3 class="title"><a id="mybank" data-paymentFee="<?php echo $myBankPaymentFee ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $myBankPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">My Bank</a></h3>
+            </div>
+            <div class="half-col  mb-4">
+                <img class="img-w-89" style="max-width: 85px;" src="https://tiqs.com/alfred/assets/home/imgs/extra/payconiq.png"
+                    alt="Payconiq" />
+                <p style="paymentFee bg-primary"><?php echo '€'.$payconiqPaymentFee; ?></p>
+                <h3 class="title"><a id="payconiq" data-paymentFee="<?php echo $payconiqPaymentFee ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $payconiqPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Payconiq</a></h3>
+            </div>
+            <div class="half-col  mb-4">
+                <img class="img-w-150" style="max-width: 100px;" src="<?php echo base_url(); ?>assets/home/imgs/extra/giropay(1).png"
+                    alt="Giropay" />
+                <p style="paymentFee bg-primary"><?php echo '€'.$giroPaymentFee; ?></p>
+                <h3 class="title"><a id="giropay" data-paymentFee="<?php echo $giroPaymentFee; ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $giroPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Giropay</a></h3>
+            </div>
+            <div class="half-col  mb-4">
+                <img class="img-w-150" style="max-width: 100px;"  src="<?php echo base_url(); ?>assets/home/images/pinmachine.png"
+                    alt="Pin machine" />
+                <p style="paymentFee bg-primary"><?php echo '€'.$pinMachinePaymentFee; ?></p>
+                <h3 class="title"><a id="pinmachine" data-paymentFee="<?php echo $pinMachinePaymentFee ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $pinMachinePaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Pin machine</a></h3>
+            </div>
+            <div class="half-col  mb-4">
+                
+            </div>
 
-							<div class="logo-container">
-							  <img src="./extra_includes/img/logoWI_side_white.png">
-							</div>
-
-							<div class="page-container">
-								<div class="heading pay-header">
-								</div>
-								<!-- /.heading -->
-
-								<div class="bar bar2">
-									<div class="language">
-										<a href="#">
-											<span class="selectedLanguage">NL</span>
-											<i class="fa fa-angle-down" aria-hidden="true"></i>
-										</a>
-
-										<div class="menu hidden">
-											<ul>
-												<li class="selected">NL</li>
-												<li>EN</li>
-												<li>FR</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-
-								<div class="order-details">
-									<table>
-										<tbody>
-												<tr class="shipment">
-													<td align="left" >
-                                                        <p><?php echo ($this->language->Line("SELECT_PAYMENT_TYPE-0002", "RESERVERING")) ? $this->language->Line("SELECT_PAYMENT_TYPE-0002", "RESERVERING") : "RESERVERING"; ?></p>
-                                                        <p><?php echo ($this->language->tline("iDEAL PAYMENT FEE")) ? $this->language->tline("iDEAL PAYMENT FEE") : "iDEAL PAYMENT FEE"; ?></p>
-                                                        <p><?php echo ($this->language->tline("CREDIT CARD PAYMENT FEE")) ? $this->language->tline("CREDIT CARD PAYMENT FEE") : "CREDIT CARD PAYMENT FEE"; ?></p>
-													</td>
-													<td>
-														<p>
-														<?php
-														echo my_money_format("de_DE", $amount);
-														?>
-														</p>
-														<p>
-														<?php
-														echo my_money_format("de_DE", $idealPayment);
-														?>
-														</p>
-														<p>
-														<?php
-														echo my_money_format("de_DE", $creditCardPayment);
-														?>
-														</p>
-													</td>
-
-												</tr>
-
-										</tbody>
-									</table>
-								</div>
-								<div class="bar">
-								
-									<div class="bar-title"><span data-trans="" data-trn-key="Kies een betaalmethode">Kies een
-                        betaalmethode</span></div>
-									<span class="bar-title-original hidden"><span data-trans=""
-																				  data-trn-key="Kies een betaalmethode">Kies een
-                        betaalmethode</span></span>
-								</div>
-								<!-- /.bar -->
-
-								<div class="content-container clearfix">
-
-									<div class="payment-container methods">
-										<a href="#" class="paymentMethod method-ideal" data-payment-type="ideal">
-											<img src="<?php echo base_url('assets/imgs/extra/ideal.png'); ?>" alt="iDEAL">
-											<span><?php echo my_money_format("de_DE", $idealPaymentFee); ?></span>
-											<span class="text-dark"><strong>iDEAL</strong></span>
-										</a>
-										<a href="<?php echo base_url('bookingpay/onlinepayment/'.$creditCardPaymentType); ?>" class="paymentMethod method-card" data-payment-type="card">
-											<img src="<?php echo base_url('assets/imgs/extra/creditcard.png') ?>" alt="Creditcard">
-											<span><?php echo my_money_format("de_DE", $creditCardPaymentFee); ?></span>
-											<span class="text-dark"><strong>Creditcard</strong></span>
-										</a>
-										<a href="<?php echo base_url('bookingpay/onlinepayment/'.$bancontactPaymentType); ?>" class="paymentMethod method-bancontact">
-											<img src="<?php echo base_url('assets/home/imgs/extra/bancontact.png') ?>" alt="bancontact">
-											<span><?php echo my_money_format("de_DE", $bancontactPaymentFee); ?></span>
-											<span class="text-dark"><strong><?php echo $this->language->tline('Bancontact'); ?></strong></span>
-										</a>
-										<a href="javascript:;" class="paymentMethod method-waiter" >
-											<img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="payAtWaiter">
-											<span><?php echo my_money_format("de_DE", 0); ?></span>
-											<span class="text-dark"><strong><?php echo $this->language->tline('Pay at waiter'); ?></strong></span>
-										</a>
-										<a href="javascript:;" class="paymentMethod method-voucher">
-											<img src="<?php echo base_url() . 'assets/home/images/voucher.png'; ?>" alt="voucher">
-											<span><?php echo my_money_format("de_DE", $voucherPaymentFee); ?></span>
-											<span class="text-dark"><strong><?php echo $this->language->tline('gebruik Voucher'); ?></strong></span>
-										</a>
-										<a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $myBankPaymentType; ?>" class="paymentMethod method-myBank">
-											<img src="https://static.pay.nl/payment_profiles/100x100/1588.png" alt="myBank">
-											<span><?php echo my_money_format("de_DE", $myBankPaymentFee); ?></span>
-											<span class="text-dark"><strong>My Bank</strong></span>
-										</a>
-										
-										<a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $payconiqPaymentType; ?>" class="paymentMethod method-payconiq">
-											<img src="https://tiqs.com/alfred/assets/home/imgs/extra/payconiq.png" alt="Payconiq">
-											<span><?php echo my_money_format("de_DE", $payconiqPaymentFee); ?></span>
-											<span class="text-dark"><strong>Payconiq</strong></span>
-										</a>
-										<a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $giroPaymentType; ?>" class="paymentMethod method-card" data-payment-type="card">
-											<img src="<?php echo base_url(); ?>assets/home/imgs/extra/giropay(1).png" alt="Giropay">
-											<span><?php echo my_money_format("de_DE", $giroPaymentFee); ?></span>
-											<span class="text-dark"><strong>Giropay</strong></span>
-										</a>
-										<a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $pinMachinePaymentType; ?>" class="paymentMethod method-card" data-payment-type="card">
-											<img src="<?php echo base_url(); ?>assets/home/images/pinmachine.png" alt="pinmachine">
-											<span><?php echo my_money_format("de_DE", $pinMachinePaymentFee); ?></span>
-											<span class="text-dark"><strong>Pin machine</strong></span>
-										</a>
-										<!-- <span class="paymentMethod no-mobile"></span> -->
-
-										<div class="clearfix"></div>
-									</div>
-									<!-- /.payment-container -->
-
-									<div class="method method-ideal hidden">
-										<div class="title hidden"><span data-trans="" data-trn-key="Kies een bank">Kies een bank</span>
-										</div>
-
-										<div class="payment-container">
-											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/1') ?>" class="bank paymentMethod abn_amro">
-												<img src="<?php echo base_url('assets/imgs/extra/abn_amro.png') ?>" alt="ABN AMRO">
-												<span>ABN AMRO</span>
-											</a>
-											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/8') ?>" class="bank paymentMethod asn_bank">
-												<img src="<?php echo base_url('assets/imgs/extra/asn_bank.png') ?>" alt="ASN Bank">
-												<span>ASN Bank</span>
-											</a>
-											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/5080') ?>" class="bank paymentMethod bunq">
-												<img src="<?php echo base_url('assets/imgs/extra/bunq.png') ?>" alt="Bunq">
-												<span>Bunq</span>
-											</a>
-											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/5082') ?>" class="bank paymentMethod handelsbanken">
-												<img src="<?php echo base_url('assets/imgs/extra/handelsbanken.png') ?>" alt="Handelsbanken">
-												<span>Handelsbanken</span>
-											</a>
-											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/4') ?>" class="bank paymentMethod ing">
-												<img src="<?php echo base_url('assets/imgs/extra/ing.png') ?>" alt="ING">
-												<span>ING</span>
-											</a>
-											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/12') ?>" class="bank paymentMethod knab">
-												<img src="<?php echo base_url('assets/imgs/extra/knab(1).png') ?>" alt="Knab">
-												<span>Knab</span>
-											</a>
-											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/5081') ?>" class="bank paymentMethod moneyou">
-												<img src="<?php echo base_url('assets/imgs/extra/moneyou.png') ?>" alt="Moneyou">
-												<span>Moneyou</span>
-											</a>
-											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/2') ?>" class="bank paymentMethod rabobank">
-												<img src="<?php echo base_url('assets/imgs/extra/rabobank.png') ?>" alt="Rabobank">
-												<span>Rabobank</span>
-											</a>
-											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/9') ?>" class="bank paymentMethod regiobank">
-												<img src="<?php echo base_url('assets/imgs/extra/regiobank.png') ?>" alt="RegioBank">
-												<span>RegioBank</span>
-											</a>
-											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/5') ?>" class="bank paymentMethod sns_bank">
-												<img src="<?php echo base_url('assets/imgs/extra/sns_bank.png') ?>" alt="SNS Bank">
-												<span>SNS Bank</span>
-											</a>
-											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/10') ?>" class="bank paymentMethod triodos_bank">
-												<img src="<?php echo base_url('assets/imgs/extra/triodos_bank.png') ?>" alt="Triodos Bank">
-												<span>Triodos Bank</span>
-											</a>
-											<a href="<?php echo base_url('bookingpay/onlinepayment/'.$idealPaymentType.'/11') ?>" class="bank paymentMethod van_lanschot">
-												<img src="<?php echo base_url('assets/imgs/extra/van_lanschot.png') ?>" alt="van Lanschot">
-												<span>van Lanschot</span>
-											</a>
-
-											<div class="clearfix"></div>
-										</div>
-										<!-- /.payment-container -->
-									</div>
-									<!-- /.method.method-ideal -->
-
-									<div class="method method-card hidden">
-										<!-- /.payment-container -->
-									</div>
-									<!-- /.method.method-card -->
-
-									<div class="method method-paypal hidden">
-										<div class="title hidden">
-											<a href="<?php echo base_url('bookingpay/selectedPayPalPaymenttype') ?>"><img src="<?php echo base_url('assets/imgs/extra/paypal(1).png') ?>"></a>
-										</div>
-
-										<div class="payment-container">
-											<form>
-												<a href="<?php echo base_url('bookingpay/selectedPayPalPaymenttype') ?>">PayPal</a>
-											</form>
-										</div>
-										<!-- /.payment-container -->
-									</div>
-									<!-- /.method.method-paypal -->
-
-									<div class="method method-in3 hidden">
-										<div class="title hidden">
-											<img src="<?php echo base_url('assets/imgs/extra/in3(1).png') ?>">
-										</div>
-
-										<div class="payment-container">
-											<form>
-
-												<table class="table table-in3">
-													<tbody>
-													<tr class="font-weight-bold">
-														<td class="calendar">
-															<span class="month">JAN</span>
-															<span class="day">7</span>
-														</td>
-														<td data-trans="" data-trn-key="Eerste termijn">
-															Eerste termijn</td>
-														<td>€ 166,62</td>
-													</tr>
-													<tr>
-														<td class="calendar">
-															<span class="month">FEB</span>
-															<span class="day">14</span>
-														</td>
-														<td data-trans="" data-trn-key="Tweede termijn">
-															Tweede termijn</td>
-														<td>€ 166,62</td>
-													</tr>
-													<tr>
-														<td class="calendar">
-															<span class="month">MAR</span>
-															<span class="day">21</span>
-														</td>
-														<td data-trans="" data-trn-key="Laatste termijn">Laatste
-															termijn</td>
-														<td>€ 166,61</td>
-													</tr>
-													</tbody>
-												</table>
-
-												<div class="form-group">
-													<label for="in3_geboortedatum" data-trans=""
-														   data-trn-key="Geboortedatum">Geboortedatum</label>
-													<input type="date" class="form-control" id="in3_geboortedatum" name="birthday"
-														   placeholder="Vul geboortedatum in" data-trans="" data-trn-key=""
-														   placeholder-trn-key="Vul geboortedatum in">
-												</div>
-												<div class="form-group">
-													<label for="in3_phone" data-trans="" data-trn-key="Telefoonnummer">Telefoonnummer</label>
-													<input type="tel" class="form-control" id="in3_phone" name="phone"
-														   placeholder="Vul telefoonnummer in" data-trans="" data-trn-key=""
-														   placeholder-trn-key="Vul telefoonnummer in">
-												</div>
-
-												<button type="submit" class="btn btn-primary" data-trans="" data-trn-key="Kies je bank">Kies
-													je bank</button>
-											</form>
-										</div>
-										<!-- /.payment-container -->
-									</div>
-									<!-- /.method.method-in3 -->
-
-									<div class="method method-afterpay hidden">
-										<div class="title hidden">
-											<img src="<?php echo base_url('assets/imgs/extra/afterpay(1).png') ?>">
-										</div>
-
-										<div class="payment-container">
-											<form>
-												<div class="form-group">
-													<label for="afterpay_geboortedatum" data-trans=""
-														   data-trn-key="Geboortedatum">Geboortedatum</label>
-													<input type="date" class="form-control" id="afterpay_geboortedatum" name="birthday"
-														   placeholder="Vul geboortedatum in" data-trans="" data-trn-key=""
-														   placeholder-trn-key="Vul geboortedatum in">
-												</div>
-												<div class="form-group">
-													<label for="afterpay_phone" data-trans=""
-														   data-trn-key="Telefoonnummer">Telefoonnummer</label>
-													<input type="tel" class="form-control" id="afterpay_phone" name="phone"
-														   placeholder="Vul telefoonnummer in" data-trans="" data-trn-key=""
-														   placeholder-trn-key="Vul telefoonnummer in">
-												</div>
-
-												<button type="submit" class="btn btn-primary" data-trans="" data-trn-key="Afronden met
-                                                AfterPay">Afronden met
-													AfterPay</button>
-											</form>
-										</div>
-										<!-- /.payment-container -->
-									</div>
-									<!-- /.method.method-in3 -->
-
-									<div class="method method-bancontact hidden">
-										<div class="title hidden">
-											<img src="<?php echo base_url('assets/imgs/extra/bancontact(2).png') ?>">
-										</div>
-
-										<div class="payment-container">
-											<form>
-												<div class="form-group">
-													<label for="bancontact_cardholder" data-trans=""
-														   data-trn-key="Kaarthouder">Kaarthouder</label>
-													<input type="text" class="form-control" id="bancontact_cardholder" name="cardholder"
-														   placeholder="Naam zoals op de kaart staat" data-trans="" data-trn-key=""
-														   placeholder-trn-key="Naam zoals op de kaart staat">
-												</div>
-
-												<div class="row">
-													<div class="col-md-8">
-														<div class="form-group">
-															<label for="bancontact_cardnumber" data-trans=""
-																   data-trn-key="Kaartnummer">Kaartnummer</label>
-															<input type="tel" class="form-control" id="bancontact_cardnumber" name="cardnumber"
-																   placeholder="0000 0000 0000 0000">
-														</div>
-													</div>
-													<div class="col-md-4">
-														<div class="form-group">
-															<label for="bancontact_valid_thru" data-trans=""
-																   data-trn-key="Vervaldatum">Vervaldatum</label>
-															<input type="text" class="form-control" id="bancontact_valid_thru" name="valid_thru"
-																   placeholder="MM / YY" data-trans="" data-trn-key="" placeholder-trn-key="MM / YY">
-														</div>
-													</div>
-												</div>
-
-												<button type="submit" class="btn btn-primary" data-trans=""
-														data-trn-key="Betalen"><?php echo $this->language->Line("SELECT_PAYMENT_TYPE-0001", "PAY"); ?></button>
-
-											</form>
-										</div>
-										<!-- /.payment-container -->
-									</div>
-									<!-- /.method.method-bancontact -->
+        </div>
 
 
-									<div class="method method-sepa hidden">
-										<div class="title hidden">
-											<img src="<?php echo base_url('assets/imgs/extra/sepa.png') ?>">
-										</div>
 
-										<div class="payment-container">
-											<form>
-												SEPA
-											</form>
-										</div>
-										<!-- /.payment-container -->
-									</div>
-									<!-- /.method.method-sepa -->
 
-									<div class="method method-giropay hidden">
-										<div class="title hidden">
-											<img src="<?php echo base_url('assets/imgs/extra/giropay(1).png') ?>">
-										</div>
+    </div>
+</div>
+<div id="iDeal" class="container-fluid iDeal hidden mx-auto">
+    <h1 style="color: #F1921A !important;" class="white text-center yellow">Select Payment</h1>
+    <div class="row mx-auto">
+        <div class="col-md-8 col-sm-12 serviceBox blue mb-4 mx-auto">
+            <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $idealPaymentType; ?>/1" class="pay_method">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/abn_amro.png') ?>"
+                        alt="ABN AMRO">
 
-										<div class="payment-container">
-											<form>
-												<div class="form-group">
-													<label for="giropay_bank" data-trans="" data-trn-key="Bank">Bank</label>
-													<div class="select2-outer">
-														<select class="dropdownn select2-hidden-accessible" id="giropay_bank" name="giropay_bank"
-																data-select2-id="giropay_bank" tabindex="-1" aria-hidden="true">
-															<option data-select2-id="2">10050000 - LBB -
-																Berliner Sparkasse</option>
-															<option>10090000 - Berliner VB Berlin</option>
-															<option>26261693 - Volksbank Solling Hardegsen
-															</option>
-															<option>59291000 - Unsere Volksbank St. Wendel
-															</option>
-															<option>10050000 - LBB - Berliner Sparkasse
-															</option>
-															<option>10090000 - Berliner VB Berlin</option>
-															<option>26261693 - Volksbank Solling Hardegsen
-															</option>
-															<option>59291000 - Unsere Volksbank St. Wendel
-															</option>
-															<option>10050000 - LBB - Berliner Sparkasse
-															</option>
-															<option>10090000 - Berliner VB Berlin</option>
-															<option>26261693 - Volksbank Solling Hardegsen
-															</option>
-															<option>59291000 - Unsere Volksbank St. Wendel
-															</option>
-															<option>10050000 - LBB - Berliner Sparkasse
-															</option>
-															<option>10090000 - Berliner VB Berlin</option>
-															<option>26261693 - Volksbank Solling Hardegsen
-															</option>
-															<option>59291000 - Unsere Volksbank St. Wendel
-															</option>
-															<option>10050000 - LBB - Berliner Sparkasse
-															</option>
-															<option>10090000 - Berliner VB Berlin</option>
-															<option>26261693 - Volksbank Solling Hardegsen
-															</option>
-															<option>59291000 - Unsere Volksbank St. Wendel
-															</option>
-															<option>10050000 - LBB - Berliner Sparkasse
-															</option>
-															<option>10090000 - Berliner VB Berlin</option>
-															<option>26261693 - Volksbank Solling Hardegsen
-															</option>
-															<option>59291000 - Unsere Volksbank St. Wendel
-															</option>
-															<option>10050000 - LBB - Berliner Sparkasse
-															</option>
-															<option>10090000 - Berliner VB Berlin</option>
-															<option>26261693 - Volksbank Solling Hardegsen
-															</option>
-															<option>59291000 - Unsere Volksbank St. Wendel
-															</option>
-														</select>
-													</div>
-												</div>
+                    <h3 class="title">ABN AMRO</h3>
+                </a>
+            </div>
 
-												<button type="submit" class="btn btn-primary" data-trans=""
-														data-trn-key="Betalen"><?php echo $this->language->Line("SELECT_PAYMENT_TYPE-0001", "PAY"); ?></button>
-											</form>
-										</div>
-										<!-- /.payment-container -->
-									</div>
-									<!-- /.method.method-giropay -->
+            <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $idealPaymentType; ?>/8" class="pay_method">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/asn_bank.png') ?>"
+                        alt="ASN Bank">
+                    <h3 class="title">ASN Bank</h3>
+                </a>
+            </div>
 
-								</div>
-								<!-- /.content-container -->
 
-								<div class="footer">
+            <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $idealPaymentType; ?>/5080" class="pay_method">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/bunq.png') ?>" alt="Bunq">
+                    <h3 class="title">Bunq</h3>
+                </a>
+            </div>
 
-									<a href="<?php echo base_url('booking_agenda/pay') ?>" class="btn-cancel">
-										<i class="fa fa-arrow-left"></i>
-										<span data-trans="" data-trn-key="Annuleren">Annuleren</span>
-									</a>
-									<a href="#" class="btn-back hidden">
-										<i class="fa fa-arrow-left"></i>
-										<span data-trans="" data-trn-key="Kies andere betaalmethode">Kies andere
-                        betaalmethode</span>
-									</a>
+            <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $idealPaymentType; ?>/5082" class="pay_method">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/handelsbanken.png') ?>"
+                        alt="Handelsbanken">
+                    <h3 class="title">Handelsbanken</h3>
+                </a>
+            </div>
 
-									<div class="poweredBy" data-trans="" data-trn-key="Betaling veilig verwerkt door pay.nl">Betaling
-										veilig
-										verwerkt door pay.nl</div>
+            <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $idealPaymentType; ?>/4" class="pay_method">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/ing.png') ?>" alt="ING">
+                    <h3 class="title">ING</h3>
+                </a>
+            </div>
 
-									<div class="poweredBy delivery" data-trans="" data-trn-key="Levering gegarandeerd door pay.nl">
-										Levering
-										gegarandeerd door pay.nl</div>
-								</div>
-								<!-- /.footer -->
-							</div>
-							<!-- /.page-container -->
-						</div>
-						<!-- /#area-container -->
-					</div>
-					<!-- /.col-md-12 -->
-				</div>
-				<!-- /.row -->
-			</div>
-			<!-- /.container -->
-		</div>
-	</div>
+            <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $idealPaymentType; ?>/12" class="pay_method">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/knab(1).png') ?>" alt="Knab">
+                    <h3 class="title">Knab</h3>
+                </a>
+            </div>
+
+            <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $idealPaymentType; ?>/5081" class="pay_method">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/moneyou.png') ?>" alt="Moneyou">
+                    <h3 class="title">Moneyou</h3>
+                </a>
+            </div>
+
+            <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $idealPaymentType; ?>/2" class="pay_method">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/rabobank.png') ?>"
+                        alt="Rabobank">
+                    <h3 class="title">Rabobank</h3>
+                </a>
+            </div> 
+
+            <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $idealPaymentType; ?>/9" class="pay_method">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/regiobank.png') ?>"
+                        alt="RegioBank">
+                    <h3 class="title">RegioBank</h3>
+                </a>
+            </div>
+
+            <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $idealPaymentType; ?>/5" class="pay_method">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/sns_bank.png') ?>"
+                        alt="SNS Bank">
+                    <h3 class="title">SNS Bank</h3>
+                </a>
+            </div>
+
+
+            <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $idealPaymentType; ?>/10" class="pay_method">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/triodos_bank.png') ?>"
+                        alt="Triodos Bank">
+                    <h3 class="title">Triodos Bank</h3>
+                </a>
+            </div>
+
+            <div class="half-col mb-4">
+                <a href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $idealPaymentType; ?>/11" class="pay_method">
+                    <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/van_lanschot.png') ?>"
+                        alt="van Lanschot">
+                    <h3 class="title">van Lanschot</h3>
+                </a>
+            </div>
+        </div>
+
+        <div class="w-100 text-center font-weight-bold mb-5 p-3">
+            <h3 style="font-size: 20px;" class="title">
+                <a class="text-primary" id="backPayment" data-paymentFee="<?php echo $idealPaymentFee; ?>" href="#selectPayment" onclick="backToPaymentMethods(this)">Back to payment methods</a>
+            </h3>
+        </div>
+
+    </div>
 </div>
 
+
+<div class="limiter hidden creditCard mt-5">
+    <div class="container-login100">
+        <div style="background: #fff !important;" class="wrap-login100">
+            <div class="w-100 card-wrapper mt-5 items-align-center"></div>
+            <form class="login100-form validate-form" action="#" method="POST">
+                <div class="wrap-input100 validate-input m-b-26">
+                    <span class="label-input100">Card number</span>
+                    <input class="input100" placeholder="Card number" type="tel" name="number">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 validate-input m-b-18" data-validate="Address is required">
+                    <span class="label-input100">Nameholder</span>
+                    <input class="input100" placeholder="Full name" type="text" name="name">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 validate-input m-b-18" data-validate="Phone Number is required">
+                    <span class="label-input100">Expiry Date</span>
+                    <input class="input100" placeholder="MM/YY" type="tel" name="expiry">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 validate-input m-b-18" data-validate="Phone Number is required">
+                    <span class="label-input100">CVC</span>
+                    <input class="input100" placeholder="CVC" type="number" name="cvc">
+                    <span class="focus-input100"></span>
+                </div>
+
+                <!--
+                <div class="flex-sb-m w-full p-b-30">
+                    <div class="contact100-form-checkbox">
+                        <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                        <label class="label-checkbox100" for="ckb1">
+                            
+                        </label>
+                    </div>
+                    <div>
+                        <a href="#" class="txt1">
+                            
+                        </a>
+                    </div>
+                </div>
+                -->
+
+                <div style="width: 100%;" class="w-100 mr-right text-right mt-5">
+                    <button id="pay" class="btn btn-danger btn-lg btn-block mt-2">
+                        PAY
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="w-100 text-center font-weight-bold mb-5 p-3">
+        <h3 style="font-size: 20px;" class="title">
+            <a class="text-primary" id="backPaymentCC" href="#selectPayment">Back to payment method</a>
+        </h3>
+    </div>
+</div>
+
+<script src="<?php echo base_url(); ?>assets/js/card.js"></script>
+<script>
+(function(){
+    if(window.location !== window.parent.location ){
+        $('.pay_method').attr('target', '_blank');
+    }
+    $('.header__checkout').prop('disabled', true);
+	$('#body').show();
+}());
+
+function paymentMethodRedirect(el){
+    var amount = $('.totalBasket').text();
+    var paymentFee = $(el).attr('data-paymentFee');
+    paymentFee = parseFloat(paymentFee);
+
+    var total = parseFloat(amount) + paymentFee;
+    $('.totalBasket').text(total.toFixed(2));
+
+    setTimeout(() => {
+        var url = $(el).attr('href');
+        window.location.href = url;
+    }, 1500);
+    
+}
+
+function backToPaymentMethods(el){
+    var amount = $('.totalBasket').text();
+    var paymentFee = $(el).attr('data-paymentFee');
+    paymentFee = parseFloat(paymentFee);
+
+    var total = parseFloat(amount) - paymentFee;
+    $('.totalBasket').text(total.toFixed(2));
+    
+}
+
+
+$("#iDeal").on("click", function() {
+    $(".iDeal").removeClass("hidden");
+    $(".selectPayment").addClass("hidden");
+});
+$("#backPayment").on("click", function() {
+    $(".iDeal").addClass("hidden");
+    $(".selectPayment").removeClass("hidden");
+});
+
+$("#creditCard").on("click", function() {
+    $(".creditCard").removeClass("hidden");
+    $(".selectPayment").addClass("hidden");
+});
+$("#backPaymentCC").on("click", function() {
+    $(".creditCard").addClass("hidden");
+    $(".selectPayment").removeClass("hidden");
+});
+
+
+</script>

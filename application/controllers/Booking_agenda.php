@@ -464,7 +464,7 @@ class Booking_agenda extends BaseControllerWeb
         
         $data['amount'] = $this->session->userdata('amount');
 
-        $this->loadViews("bookings/select_payment_type", $this->global, $data, 'bookingfooter', "bookingheader");
+        $this->loadViews("bookings/select_payment_type", $this->global, $data, 'footerPayment', "headerPayment");
     }
 
     public function delete_reservation($id = false)

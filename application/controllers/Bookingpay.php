@@ -695,6 +695,8 @@ class Bookingpay extends BaseControllerWeb
 		$this->load->model('bookandpayagenda_model');
 		$this->load->model('bookandpaytimeslots_model');
 
+        $transactionid = ($this->input->get('order_id')) ? $this->input->get('order_id') : $this->input->get('orderId');
+        $orderStatusId = $this->input->get('orderStatusId');
 
 		$namespace = $this->config->item('transactionNamespace');
         $function = $this->config->item('orderPayNlFunction');
@@ -714,7 +716,7 @@ class Bookingpay extends BaseControllerWeb
 		$result1 = $strResult;
 
 //        if ($result1['paymentDetails']['state'] == 100 || $result1['paymentDetails']['state'] == 20) {
-		if ($result1['paymentDetails']['state'] == 100 ) {
+		if ($result1['paymentDetails']['state'] == 100 || $orderStatusId == 100) {
 			foreach ($strResult['saleData']['orderData'] as $key => $product) {
 				if($product['productId'] !== '000000') {
 					$reservationId = $product['productId'];
