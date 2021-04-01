@@ -408,6 +408,7 @@ $config['uploadProductImageFolder']    = FCPATH . 'assets/images/productImages' 
 //make order view
 $config['oldMakeOrderView'] = '1';
 $config['newMakeOrderView'] = '2';
+$config['view2021'] = '3';
 
 //alergies
 $config['allergies'] = [
