@@ -10,71 +10,88 @@
 
 <!-- Add Category Modal -->
 <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalTitle" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-	    <div>
-		    <img class="img-fluid" style="max-width: 120px;" src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogonew.png" alt="">
-		</div>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-	  		<div class="item-editor" id='add-category'>
-				<div class="d-flex justify-content-center" style="width:100%;">
-					<form class="form-inline" id="addCategory" method="post" action="<?php echo $this->baseUrl . 'warehouse/addCategory'; ?>">
-                        <legend>Add category</legend>
-						<input type="text" readonly name="userId" required value="<?php echo $userId ?>" hidden />
-						<input
-							type="number"
-							readonly
-							name="sortNumber"
-							required
-							value="<?php echo (is_null($categories)) ? '1' :  (count($categories) + 1); ?>"
-							hidden
-							/>
-                        <input type="text" readonly name="active" required value="1" hidden />
-						<div class="col-lg-4 col-sm-12 form-group">
-							<label style="background-color:#fff" for="category">Category: </label>
-							<input type="text" class="form-control" id="category" name="category" required />
-						</div>
-						<div class="col-lg-4 col-sm-12 form-group">
-							<label style="background-color:#fff" for="driverNumber">Driver SMS number: </label>
-							<input type="text" class="form-control" id="driverNumber" name="driverNumber" />
-						</div>
-						<div class="col-lg-4 col-sm-12 form-group">
-							<label style="background-color:#fff" for="delayTime">Delay time in minutes: </label>
-							<input type="number" min="0" step="1" class="form-control" id="delayTime" name="delayTime" />
-						</div>
-						<div class="col-lg-4 col-sm-12 form-group">
-							<label style="background-color:#fff" for="sendSms">Send SMS to driver:&nbsp;&nbsp;&nbsp;</label>
-							<label style="background-color:#fff" class="radio-inline" for="sendSmsYes">Yes</label>
-							<input type="radio" id="sendSmsYes" name="sendSms" value="1" >
-							<label style="background-color:#fff" class="radio-inline" for="sendSmsNo">&nbsp;&nbsp;&nbsp;No</label>
-							<input type="radio" id="sendSmsNo" name="sendSms" value="0" checked />
-						</div>
-						<div class="col-lg-4 col-sm-12 form-group">
-							<label style="background-color:#fff" for="driverSmsMessage">SMS message for driver: </label>
-							<input type="text" class="form-control" id="driverSmsMessage" name="driverSmsMessage" />
-						</div>
-						<div class="col-lg-4 col-sm-12 form-group">
-							<label style="background-color:#fff">Private category:&nbsp;&nbsp;&nbsp;</label>
-							<label style="background-color:#fff" class="radio-inline" for="privateYes">Yes</label>
-							<input type="radio" id="privateYes" name="private" value="1" >
-							<label style="background-color:#fff" class="radio-inline" for="privateNo">&nbsp;&nbsp;&nbsp;No</label>
-							<input type="radio" id="privateNo" name="private" value="0" checked />
-						</div>
-					</form>
+  	<div class="modal-dialog modal-lg" role="document">
+    	<div class="modal-content">
+      		<div class="modal-header">
+	    		<div>
+		    		<img class="img-fluid" style="max-width: 120px;" src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogonew.png" alt="">
 				</div>
-			</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" style="width: 100px;" class="grid-button-cancel button theme-editor-header-button" data-dismiss="modal">Cancel</button>
-        <input type="button" style="width: 100px;" class="grid-button button theme-editor-header-button" onclick="submitForm('addCategory')" value="Submit" />
-      </div>
-    </div>
-  </div>
+        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          			<span aria-hidden="true">&times;</span>
+				</button>
+      		</div>
+      		<div class="modal-body">
+	  			<div class="item-editor" id='add-category'>
+					<div class="d-flex justify-content-center" style="width:100%;">
+						<form
+							class="form-inline"
+							id="addCategory"
+							method="post"
+							action="<?php echo $this->baseUrl . 'warehouse/addCategory'; ?>"
+							enctype="multipart/form-data"
+						>
+	                        <legend>Add category</legend>
+							<input type="text" readonly name="userId" required value="<?php echo $userId ?>" hidden />
+							<input
+								type="number"
+								readonly
+								name="sortNumber"
+								required
+								value="<?php echo (is_null($categories)) ? '1' :  (count($categories) + 1); ?>"
+								hidden
+							/>
+        	                <input type="text" readonly name="active" required value="1" hidden />
+							<div class="col-lg-4 col-sm-12 form-group">
+								<label style="background-color:#fff" for="category">Category: </label>
+								<input type="text" class="form-control" id="category" name="category" required />
+							</div>
+							<div class="col-lg-4 col-sm-12 form-group">
+								<label style="background-color:#fff" for="driverNumber">Driver SMS number: </label>
+								<input type="text" class="form-control" id="driverNumber" name="driverNumber" />
+							</div>
+							<div class="col-lg-4 col-sm-12 form-group">
+								<label style="background-color:#fff" for="delayTime">Delay time in minutes: </label>
+								<input type="number" min="0" step="1" class="form-control" id="delayTime" name="delayTime" />
+							</div>
+							<div class="col-lg-4 col-sm-12 form-group">
+								<label style="background-color:#fff" for="sendSms">Send SMS to driver:&nbsp;&nbsp;&nbsp;</label>
+								<label style="background-color:#fff" class="radio-inline" for="sendSmsYes">Yes</label>
+								<input type="radio" id="sendSmsYes" name="sendSms" value="1" >
+								<label style="background-color:#fff" class="radio-inline" for="sendSmsNo">&nbsp;&nbsp;&nbsp;No</label>
+								<input type="radio" id="sendSmsNo" name="sendSms" value="0" checked />
+							</div>
+							<div class="col-lg-4 col-sm-12 form-group">
+								<label style="background-color:#fff" for="driverSmsMessage">SMS message for driver: </label>
+								<input type="text" class="form-control" id="driverSmsMessage" name="driverSmsMessage" />
+							</div>
+							<div class="col-lg-4 col-sm-12 form-group">
+								<label style="background-color:#fff">Private category:&nbsp;&nbsp;&nbsp;</label>
+								<label style="background-color:#fff" class="radio-inline" for="privateYes">Yes</label>
+								<input type="radio" id="privateYes" name="private" value="1" >
+								<label style="background-color:#fff" class="radio-inline" for="privateNo">&nbsp;&nbsp;&nbsp;No</label>
+								<input type="radio" id="privateNo" name="private" value="0" checked />
+							</div>
+							<div class="col-lg-4 col-sm-12 form-group">
+								<label style="background-color:#fff" for="categoryImage">Upload category image: </label>
+								<input type="file" class="form-control" id="categoryImage" name="image" />
+							</div>
+							<div class="col-lg-4 col-sm-12 form-group">
+								<label style="background-color:#fff">Show image:&nbsp;&nbsp;&nbsp;</label>
+								<label style="background-color:#fff" class="radio-inline" for="showImageYes">Yes</label>
+								<input type="radio" id="showImageYes" name="showImage" value="1" >
+								<label style="background-color:#fff" class="radio-inline" for="showImageNo">&nbsp;&nbsp;&nbsp;No</label>
+								<input type="radio" id="showImageNo" name="showImage" value="0" checked />
+							</div>
+						</form>
+					</div>
+				</div>
+      		</div>
+      		<div class="modal-footer">
+        		<button type="button" style="width: 100px;" class="grid-button-cancel button theme-editor-header-button" data-dismiss="modal">Cancel</button>
+        		<input type="button" style="width: 100px;" class="grid-button button theme-editor-header-button" onclick="submitForm('addCategory')" value="Submit" />
+      		</div>
+    	</div>
+  	</div>
 </div>
 <!-- End Add Category Modal -->
 
@@ -151,6 +168,14 @@
 									Category key: <?php echo $category['openKey']; ?>
 								<?php } ?>
 							</p>
+							<?php if ($category['image']) { ?>
+								<figure>
+									<img src='<?php echo $imgFolder . $category['image']; ?>' alt="<?php echo $category['category']; ?>" />
+									<figcaption>
+										Show image: <?php echo ($category['showImage'] === '1') ? 'Yes' : 'No'; ?>
+									</figcaption>
+								</figure>
+							<?php } ?>
 						</div><!-- end item header -->
 						<div class="grid-footer">
 							<div class="iconWrapper">
@@ -190,7 +215,13 @@
 						<div class="modal-body">
 								<div class="item-editor" id="editCategoryCategoryId<?php echo  $category['categoryId']; ?>">
 									<div style="width:100%">
-										<form class="form-inline" id="editCategory<?php echo $category['categoryId']; ?>" method="post" action="<?php echo $this->baseUrl . 'warehouse/editCategory/' . $category['categoryId']; ?>">
+										<form
+											class="form-inline"
+											id="editCategory<?php echo $category['categoryId']; ?>"
+											method="post"
+											action="<?php echo $this->baseUrl . 'warehouse/editCategory/' . $category['categoryId']; ?>"
+											enctype="multipart/form-data"
+										>
 											<input type="text" name="userId" value="<?php echo $userId; ?>" readonly required hidden />
 											<input
 												type="number"
@@ -261,6 +292,29 @@
 													name="private"
 													value="0"
 													<?php if ($category['private'] === '0') echo 'checked'; ?>
+												/>
+											</div>
+											<div class="col-lg-4 col-sm-12 form-group">
+												<label style="background-color:#fff" for="categoryImage<?php echo $category['categoryId']; ?>">Upload category image: </label>
+												<input type="file" class="form-control" id="categoryImage<?php echo $category['categoryId']; ?>" name="image" />
+											</div>
+											<div class="col-lg-4 col-sm-12 form-group">
+												<label style="background-color:#fff">Show image:&nbsp;&nbsp;&nbsp;</label>
+												<label style="background-color:#fff" class="radio-inline" for="showImageYes<?php echo $category['categoryId']; ?>">Yes</label>
+												<input
+													type="radio"
+													id="showImageYes<?php echo $category['categoryId']; ?>"
+													name="showImage"
+													value="1"
+													<?php if ($category['showImage'] === '1') echo 'checked'; ?>
+												/>
+												<label style="background-color:#fff" class="radio-inline" for="showImageNo<?php echo $category['categoryId']; ?>">&nbsp;&nbsp;&nbsp;No</label>
+												<input
+													type="radio"
+													id="showImageNo<?php echo $category['categoryId']; ?>"
+													name="showImage"
+													value="0"
+													<?php if ($category['showImage'] === '0') echo 'checked'; ?>
 												/>
 											</div>
 										</form>
