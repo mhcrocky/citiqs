@@ -423,15 +423,13 @@ class Booking extends BaseControllerWeb
 	}
 
 
-	public function ExchangePay($transactionid=false)
+	public function ExchangePay()
 	{
 		$this->load->model('email_templates_model');
 		$this->load->model('bookandpayspot_model');
 		$this->load->model('bookandpayagenda_model');
 		$this->load->model('bookandpaytimeslots_model');
-		if(!$transactionid){
-			$transactionid = ($this->input->get('order_id')) ? $this->input->get('order_id') : $this->input->get('orderId');
-		}
+		$transactionid = ($this->input->get('order_id')) ? $this->input->get('order_id') : $this->input->get('orderId');
 
 		$payData['format'] = 'array_serialize';
 		$payData['tokenid'] = 'AT-0051-0895';
@@ -677,8 +675,6 @@ class Booking extends BaseControllerWeb
 		if ($statuscode == 100) {
 
 			$data = array();
-			$transactionid = ($this->input->get('order_id')) ? $this->input->get('order_id') : $this->input->get('orderId');
-			$this->ExchangePay($transactionid);
 			if($this->session->userdata('eventShop')){
 				redirect('booking_events/emailReservation');
 			}
