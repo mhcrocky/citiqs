@@ -8,7 +8,7 @@
 </div>
 <script>
 $(document).ready(function() {
-
+    $('ul').attr('style', 'padding-left: 0px !important');
     var current_url = "<?php echo base_url(uri_string()); ?>";
     $('li a').each(function(index, element) {
         if ($(element).attr("href") == current_url) {
@@ -18,6 +18,7 @@ $(document).ready(function() {
         }
 
     });
+
 
 
  
