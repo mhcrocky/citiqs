@@ -19,8 +19,8 @@
             self::setTokens($payData, $namespace, $function);
 
             $strUrl  = 'http://' . $payData['tokenid'] . ':' . $payData['token'] . '@';
-            $strUrl .= $payData['gateway'] . '/' . $payData['version'] . '/';
-            $strUrl .= $payData['namespace'] . '/' . $payData['function'] . '/';
+            $strUrl .= $payData['gateway'] . DIRECTORY_SEPARATOR . $payData['version'] . DIRECTORY_SEPARATOR;
+            $strUrl .= $payData['namespace'] . DIRECTORY_SEPARATOR . $payData['function'] . DIRECTORY_SEPARATOR;
             $strUrl .= $payData['format'];
 
             if ($argumentsArray) {
