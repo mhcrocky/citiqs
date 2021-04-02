@@ -42,6 +42,7 @@
         public $apiIdentifier;
         public $apiKeyId;
         public $invoiceId;
+        public $refundAmount;
 
         private $table = 'tbl_shop_orders';
 
@@ -58,7 +59,7 @@
             ) {
                 $value = intval($value);
             }
-            if ($property === 'amount' || $property === 'serviceFee') {
+            if ($property === 'amount' || $property === 'serviceFee' || $property === 'refundAmount') {
                 $value = floatval($value);
             }
             return;
@@ -117,6 +118,7 @@
             if (isset($data['isPos']) && !($data['isPos'] === '1' || $data['isPos'] === '0')) return false;
             if (isset($data['posPrint']) && !($data['posPrint'] === '1' || $data['posPrint'] === '0')) return false;
             if (isset($data['invoiceId']) && !Validate_data_helper::validateInteger($data['invoiceId'])) return false;
+            if (isset($data['refundAmount']) && !Validate_data_helper::validateFloat($data['refundAmount'])) return false;
 
             return true;
         }
@@ -1523,5 +1525,43 @@
                         ->db
                         ->where_in($this->table . '.id', $orderIds)
                         ->update($this->table, array('invoiceId' => $invoiceId));
+        }
+
+        public function isVenodrOrder(int $vendorId): bool
+        {
+            $check = $this->readImproved([
+                'what' => [$this->table . '.id'],
+                'where' => [
+                    $this->table . '.id' => $this->id,
+                    'tbl_shop_printers.userId' => $vendorId
+                ],
+                'joins' => [
+                    ['tbl_shop_spots', $this->table . '.spotId = tbl_shop_spots.id'],
+                    ['tbl_shop_printers', 'tbl_shop_spots.printerId = tbl_shop_printers.id'],
+                ]
+            ]);
+            return !is_null($check);
+        }
+
+        public function refundOrder(array $argumentsArray): array
+        {
+            $this->load->helper('pay_helper');
+            $response = Pay_helper::refundAmount($argumentsArray);
+
+            if ($response->request->result === '1') {
+                $refundAmount = $argumentsArray['amount'] / 100;
+                $this->setProperty('refundAmount', $refundAmount)->update();
+                $response = [
+                    'status' => '1',
+                    'messages' => [$response->description]
+                ];
+            } else {
+                $response = [
+                    'status' => '0',
+                    'messages' => [$response->request->errorMessage]
+                ];
+            }
+
+            return $response;
         }
     }
