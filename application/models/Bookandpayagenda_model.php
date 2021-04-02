@@ -116,7 +116,7 @@ class Bookandpayagenda_model extends CI_Model
 
 	public function getBookingAgendaById($id)
 	{
-		$this->db->select('tbl_bookandpayagenda.*, tbl_email_templates.template_name');
+		$this->db->select('tbl_bookandpayagenda.*, tbl_email_templates.template_name, tbl_email_templates.id as email_id');
 		$this->db->from('tbl_bookandpayagenda');
 		$this->db->join('tbl_email_templates', 'tbl_email_templates.id = tbl_bookandpayagenda.email_id', 'left');
 		$this->db->where('tbl_bookandpayagenda.id', $id);

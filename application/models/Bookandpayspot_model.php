@@ -5,7 +5,7 @@ class Bookandpayspot_model extends CI_Model
     public function getSpot($id)
     {
         $this->db->select('tbl_bookandpayspot.*, tbl_bookandpayagenda.ReservationDateTime,
-         tbl_bookandpayagenda.Background as background, tbl_bookandpayagenda.Customer, tbl_email_templates.template_name ');
+         tbl_bookandpayagenda.Background as background, tbl_bookandpayagenda.Customer, tbl_email_templates.template_name, tbl_email_templates.id as email_id');
         $this->db->from('tbl_bookandpayspot');
         $this->db->join('tbl_bookandpayagenda', 'tbl_bookandpayagenda.id = tbl_bookandpayspot.agenda_id', 'left');
         $this->db->join('tbl_email_templates', 'tbl_email_templates.id = tbl_bookandpayspot.email_id', 'left');
