@@ -633,6 +633,7 @@ class Bookingpay extends BaseControllerWeb
                             $emailId = $agenda->email_id;
                         }
 
+
                         
 						switch (strtolower($_SERVER['HTTP_HOST'])) {
 							case 'tiqs.com':
@@ -648,11 +649,10 @@ class Bookingpay extends BaseControllerWeb
                         
 						if($emailId) {
                             $emailTemplate = $this->email_templates_model->get_emails_by_id($emailId);
-                            $this->config->load('custom');
+                            
                             $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/'.$emailTemplate->template_file .'.'.$this->config->item('template_extension'));
                             $qrlink = $SERVERFILEPATH . $file_name1;
 							if($mailtemplate) {
-                                $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/'.$emailTemplate->template_file);
 								$mailtemplate = str_replace('[customer]', $customer, $mailtemplate);
 								$mailtemplate = str_replace('[eventdate]', date('d.m.yy', strtotime($eventdate)), $mailtemplate);
 								$mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
