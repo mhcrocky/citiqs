@@ -12,6 +12,8 @@ class Booking_events extends BaseControllerWeb
         $this->load->helper('pay_helper');
         $this->load->model('event_model');
         $this->load->model('bookandpay_model');
+        $this->load->model('sendreservation_model');
+        $this->load->model('email_templates_model');
         $this->load->config('custom');
         $this->load->library('language', array('controller' => $this->router->class));
     } 
@@ -340,10 +342,9 @@ class Booking_events extends BaseControllerWeb
 		$result = json_decode($strResult);
         
 		if ($result->request->result == '1') {
-
-            // sent tbl_bookandpay orderId in array arguments
-            // update row with this is with TransactionId that you get from paynl
-            // it is unique so you can fetch and update book on exchange pay
+            $transactionId = $result->transaction->transactionId;
+            $reservationIds = $this->session->userdata('reservations');
+            $this->bookandpay_model->updateTransactionIdByReservationIds($reservationIds, $transactionId);
 			redirect($result->transaction->paymentURL);
 		} else {
 			$this->session->set_flashdata('error', 'Payment engine error. Please, contact staff');
@@ -355,7 +356,7 @@ class Booking_events extends BaseControllerWeb
 
 	}
 
-    public function exchangePay()
+    public function ExchangePay()
 	{
 
         $get = $this->input->get(null, true);
@@ -365,14 +366,13 @@ class Booking_events extends BaseControllerWeb
         if ($get['action'] === 'new_ppt') {
             // WE HAVE SUCCESS
             // transactionId ID IS UNIQUE SO YOU CAN UPDATE paid STATUS TO 1 tbl_bookandpay
-            // just update row in tbl with transaction id in step before
-            $query = 'UPDATE tbl_bookandpay SET paid = "1" WHERE TransactionID = "' . $this->db->escape($transactionid) . '"';
-            $this->db->queyr($query);
+            // 
+            //$query = 'UPDATE tbl_bookandpay SET paid = "1" WHERE TransactionID = "' . $this->db->escape($transactionid) . '"';
+            //$this->db->queyr($query);
 
+            $this->bookandpay_model->updateBookandpayByTransactionId($transactionid);
             echo('TRUE| '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
-
-            $this->emailReservation();
-
+            $this->emailReservation($transactionid);
         } else {
 			echo('TRUE| NOT FIND '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
         }
@@ -440,23 +440,11 @@ class Booking_events extends BaseControllerWeb
         return $result;
     }
 
-    public function emailReservation()
+    public function emailReservation($transactionId)
 	{
-        $this->load->model('bookandpay_model');
-        $this->load->model('sendreservation_model');
-        $this->load->model('email_templates_model');
-        $email = (null !== $this->input->post('email') && !empty($this->input->post('email'))) ? rawurldecode($this->input->post('email')) : $this->session->userdata('buyerEmail');
-        $reservationIds = (null !== $this->input->post('reservationId') && !empty($this->input->post('reservationId'))) ? $this->input->post('reservationId') : $this->session->userdata('reservationIds');
-        $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
-        $eventdate = '';
-        $i = 0;
+        $reservations = $this->bookandpay_model->getReservationsByTransactionId($transactionId);
         foreach ($reservations as $key => $reservation):
-            $eventdate = $reservation->eventdate;
-            $data['paid'] = '1';
-            $this->bookandpay_model->editbookandpay($data, $reservationIds[$i]);
-            $result = $this->sendreservation_model->getEventReservationData($reservation->reservationId, $email, $eventdate);
-            
-            $TransactionId='empty';
+            $result = $this->sendreservation_model->getEventTicketingData($reservation->reservationId);
             
             foreach ($result as $record) {
                 $customer = $record->customer;
@@ -478,14 +466,14 @@ class Booking_events extends BaseControllerWeb
 				$buyerMobile = $record->mobilephone;
 				$reservationset = $record->reservationset;
 
-				//$fromtime = $record->timefrom;
-				//$totime = $record->timeto;
+				$fromtime = $record->timefrom;
+				$totime = $record->timeto;
 				$paid = $record->paid;
 				$TransactionId = $record->TransactionID;
                 $voucher = $record->voucher;
                 
                 
-                    if ($paid == 1) {
+                    if (true) {
                         
                         $qrtext = $reservationId;
 
@@ -551,7 +539,14 @@ class Booking_events extends BaseControllerWeb
 								$mailtemplate = str_replace('[eventZipcode]', $eventZipcode, $mailtemplate);
 								$mailtemplate = str_replace('[ticketDescription]', $ticketDescription, $mailtemplate);
 								$mailtemplate = str_replace('[ticketPrice]', $ticketPrice, $mailtemplate);
+                                $mailtemplate = str_replace('[price]', $ticketPrice, $mailtemplate);
 								$mailtemplate = str_replace('[ticketQuantity]', $ticketQuantity, $mailtemplate);
+                                $mailtemplate = str_replace('[numberOfPersons]', $ticketQuantity, $mailtemplate);
+                                $mailtemplate = str_replace('[startTime]', $fromtime, $mailtemplate);
+								$mailtemplate = str_replace('[endTime]', $totime, $mailtemplate);
+								$mailtemplate = str_replace('[timeSlot]', $timeSlotId, $mailtemplate);
+								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
+								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
 								$subject = 'Your tiqs reservation(s)';
 								$datachange['mailsend'] = 1;
@@ -565,7 +560,6 @@ class Booking_events extends BaseControllerWeb
                     }
                 }
             }
-            $i++;
             endforeach;
         }
     
@@ -622,7 +616,5 @@ class Booking_events extends BaseControllerWeb
 		$CI->email->message($message);
 		return $CI->email->send();
     }
-
-
 
 }

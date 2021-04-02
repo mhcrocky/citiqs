@@ -5,7 +5,7 @@ class Bookandpaytimeslots_model extends CI_Model
     public function getTimeSlot($id)
     {
         $this->db->select('tbl_bookandpaytimeslots.*, tbl_bookandpaytimeslots.available_items as timeslot_items, spot.price as spot_price, 
-        spot.numberofpersons, spot.agenda_id, spot.descript as spot_descript, tbl_email_templates.template_name');
+        spot.numberofpersons, spot.agenda_id, spot.descript as spot_descript, tbl_email_templates.template_name, tbl_email_templates.id as email_id');
         $this->db->from('tbl_bookandpaytimeslots');
         $this->db->join('tbl_email_templates', 'tbl_email_templates.id = tbl_bookandpaytimeslots.email_id', 'left');
         $this->db->join('tbl_bookandpayspot as spot', 'spot.id = tbl_bookandpaytimeslots.spot_id', 'left');

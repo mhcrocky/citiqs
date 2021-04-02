@@ -228,21 +228,28 @@ class Sendreservation_model extends CI_Model
 		return $result;
 	}
 
-	public function getEventReservationData($reservationId,$email,$eventdate)
+	public function getEventTicketingData($reservationId)
 	{
 		$this->db->select('*,tbl_event_tickets.id as ticketId');
 		$this->db->from('tbl_bookandpay');
 		$this->db->join('tbl_event_tickets', 'tbl_bookandpay.eventId = tbl_event_tickets.id', 'LEFT');
 		$this->db->join('tbl_events', 'tbl_event_tickets.eventId = tbl_events.id', 'LEFT');
 		$this->db->where('reservationId', $reservationId);
-		$this->db->where('email', $email);
-		$this->db->where('reservationId', $reservationId);
-		$this->db->where('eventdate', $eventdate);
 		$query = $this->db->get();
 		$result = $query->result();
 //				$testquery = $this->db->last_query();
 //				var_dump($testquery);
 //				die();
+		return $result;
+	}
+
+	public function getEventReservationData($reservationId)
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_bookandpay');
+		$this->db->where('reservationId', $reservationId);
+		$query = $this->db->get();
+		$result = $query->result();
 		return $result;
 	}
 

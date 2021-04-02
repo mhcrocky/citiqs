@@ -19,8 +19,8 @@
             self::setTokens($payData, $namespace, $function);
 
             $strUrl  = 'http://' . $payData['tokenid'] . ':' . $payData['token'] . '@';
-            $strUrl .= $payData['gateway'] . '/' . $payData['version'] . '/';
-            $strUrl .= $payData['namespace'] . '/' . $payData['function'] . '/';
+            $strUrl .= $payData['gateway'] . DIRECTORY_SEPARATOR . $payData['version'] . DIRECTORY_SEPARATOR;
+            $strUrl .= $payData['namespace'] . DIRECTORY_SEPARATOR . $payData['function'] . DIRECTORY_SEPARATOR;
             $strUrl .= $payData['format'];
 
             if ($argumentsArray) {
@@ -176,9 +176,9 @@
 				$arrArguments['paymentOptionSubId'] = "TH-9268-3020";
 			}
 
-            $arrArguments['finishUrl'] = base_url() . 'booking_events/successBooking';
+            $arrArguments['finishUrl'] = base_url() . 'booking_events/successBooking/';
 
-            $arrArguments['transaction']['orderExchangeUrl'] = base_url() . 'booking_events/exchangePay';
+            $arrArguments['transaction']['orderExchangeUrl'] = base_url() . 'booking_events/ExchangePay/';
 
 
             $arrArguments['statsData']['promotorId'] = $vendorId;
@@ -244,9 +244,9 @@
 				$arrArguments['paymentOptionSubId'] = "TH-9268-3020";
 			}
 
-            $arrArguments['finishUrl'] = base_url() . 'booking/successBooking/';
+            $arrArguments['finishUrl'] = base_url() . 'bookingpay/successBooking/';
 
-            $arrArguments['transaction']['orderExchangeUrl'] = base_url() . 'booking/exchangePay/';
+            $arrArguments['transaction']['orderExchangeUrl'] = base_url() . 'bookingpay/ExchangePay/';
 
 
             $arrArguments['statsData']['promotorId'] = $vendorId;

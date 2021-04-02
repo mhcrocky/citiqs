@@ -117,6 +117,42 @@ function tinyMceInit(textAreaId, templateContent = '') {
                         onclick: function(){editor.insertContent('[buyerMobile]')}
                     },
                     {
+                        text: '[customer]',
+                        onclick: function(){editor.insertContent('[customer]')}
+                    },
+                    {
+                        text: '[reservationId]',
+                        onclick: function(){editor.insertContent('[reservationId]')}
+                    },
+                    {
+                        text: '[spotId]',
+                        onclick: function(){editor.insertContent('[spotId]')}
+                    },
+                    {
+                        text: '[spotLabel]',
+                        onclick: function(){editor.insertContent('[spotLabel]')}
+                    },
+                    {
+                        text: '[spotLabel]',
+                        onclick: function(){editor.insertContent('[spotLabel]')}
+                    },
+                    {
+                        text: '[numberOfPersons]',
+                        onclick: function(){editor.insertContent('[numberOfPersons]')}
+                    },
+                    {
+                        text: '[startTime]',
+                        onclick: function(){editor.insertContent('[startTime]')}
+                    },
+                    {
+                        text: '[endTime]',
+                        onclick: function(){editor.insertContent('[endTime]')}
+                    },
+                    {
+                        text: '[price]',
+                        onclick: function(){editor.insertContent('[price]')}
+                    },
+                    {
                         text: '[eventName]',
                         onclick: function(){editor.insertContent('[eventName]')}
                     },

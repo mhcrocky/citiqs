@@ -213,7 +213,7 @@ $route['booking/successpay/(:any)'] = "booking/successPaymentPay/$1";
 //$route['booking/exchangepay'] = "booking/ExchangePay";
 
 $route['bookingpay'] = "booking/bookingpay";
-$route['bookingpay/exchangePay'] = 'Bookingpay/exchangePay';
+$route['bookingpay/ExchangePay'] = 'Bookingpay/ExchangePay';
 $route['bookingpay/successBooking'] = 'Bookingpay/successBooking';
 $route['bookingpay/onlinepayment/(:num)'] = 'Bookingpay/onlinepayment/$1';
 $route['bookingpay/onlinepayment/(:num)/(:any)'] = 'Bookingpay/onlinepayment/$1/$1';
@@ -544,7 +544,7 @@ $route['events/payment_proceed'] = 'Booking_events/payment_proceed';
 $route['events/selectpayment'] = 'Booking_events/selectpayment';
 $route['booking_events/clear_tickets'] = 'Booking_events/clear_tickets';
 $route['booking_events/successBooking'] = 'Booking_events/successBooking';
-$route['booking_events/exchangePay'] = 'Booking_events/exchangePay';
+$route['booking_events/ExchangePay'] = 'Booking_events/ExchangePay';
 $route['booking/onlinepayment/(:num)'] = 'Booking_events/onlinepayment/$1';
 $route['booking/onlinepayment/(:num)/(:any)'] = 'Booking_events/onlinepayment/$1/$1';
 
