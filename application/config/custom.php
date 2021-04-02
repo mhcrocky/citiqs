@@ -358,6 +358,9 @@ $config['orderPayNlFunction'] = 'start';
 $config['orderPayNlVersion'] = 'v13';
 
 
+$config['getRefundPayNlFunction'] = 'refund';
+$config['getRefundPayNlVersion'] = 'v16';
+
 // alliance namespace
 $config['allianceNamespace'] = 'Alliance';
 

@@ -82,4 +82,21 @@
             }
         }
         
+        public function getOrderTransactionId(): ?string
+        {
+            $transactionId = $this->readImproved([
+                'what' => [
+                    $this->table . '.transactionId'
+                ],
+                'where' => [
+                    $this->table . '.orderId' => $this->orderId
+                ]
+            ]);
+
+            if (is_null($transactionId)) return null;
+
+            $transactionId = reset($transactionId);
+
+            return $transactionId['transactionId'];
+        }
     }

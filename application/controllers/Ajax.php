@@ -39,6 +39,7 @@ class Ajax extends CI_Controller
         $this->load->model('shopposlogin_model');
         $this->load->model('shoptemplates_model');
         $this->load->model('shoppaymentmethods_model');
+        $this->load->model('shoporderpaynl_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -2270,11 +2271,42 @@ class Ajax extends CI_Controller
     {
         if (!$this->input->is_ajax_request()) return;
 
+        $venodrId = intval($_SESSION['userId']);
         $orderId = intval($orderId);
         $post = $this->security->xss_clean($_POST);
 
-        var_dump($orderId);
-        var_dump($post);
+        if (!$this->shoporder_model->setObjectId($orderId)->isVenodrOrder($venodrId)) {
+            $response = [
+                'status' => '0',
+                'messages' => ['Not allowed']
+            ];
+            echo json_encode($response);
+            return;
+        }
+
+        if (floatval($post['amount']) > floatval($this->shoporder_model->getProperty('amount'))) {
+            $response = [
+                'status' => '0',
+                'messages' => ['Refund amount can not be bigger than total order amount']
+            ];
+            echo json_encode($response);
+            return;
+        }
+
+        $post['transactionId'] = $this->shoporderpaynl_model->setProperty('orderId', $orderId)->getOrderTransactionId();
+
+        if (is_null($post['transactionId'])) {
+            $response = [
+                'status' => '0',
+                'messages' => ['No transaction id. Check is order paid online']
+            ];
+            echo json_encode($response);
+            return;
+        }
+
+        $post['amount'] = intval($post['amount'] * 100);
+        $response = $this->shoporder_model->refundOrder($post);
+        echo json_encode($response);
         return;
     }
 }

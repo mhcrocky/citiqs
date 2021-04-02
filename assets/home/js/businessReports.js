@@ -35,12 +35,18 @@ function refundMoney(refundOrderId, totalAmountId, amountId, freeAmountId, descr
 
     let url = globalVariables.ajax + 'refundOrderMoney/' + orderId;
     let post = {
-        'refund' : refundAmount,
+        'amount' : refundAmount,
         'decription' : decription
     }
 
-    sendAjaxPostRequest(post, url, 'sendReportPrintRequest', alertifyAjaxResponse);
+    sendAjaxPostRequest(post, url, 'refundMoney', refundMoneyResponse, [amountEl, freeAmountEl]);
     return;
+}
+
+function refundMoneyResponse(amountEl, freeAmountEl, response) {
+    alertifyAjaxResponse(response);
+    amountEl.value = 0;
+    freeAmountEl.value = 0;
 }
 
 function validateAmount(amountValue, freeAmountValue, totalAmountValue, refundAmount) {

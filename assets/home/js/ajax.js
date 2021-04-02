@@ -337,6 +337,10 @@ var callThis = (function() {
             functionArg.push(this);
             callFunction(...functionArg);
         },
+        refundMoney: function(callFunction, functionArg) {
+            functionArg.push(this);
+            callFunction(...functionArg);
+        },
     };
     return methods;
 })();

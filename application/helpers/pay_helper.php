@@ -48,9 +48,9 @@
  
         public static function payOrder(int $vendorId, array $order, string $serviceId, string $paymentType, string $paymentOptionSubId = '0'): ?object
         {
-//					echo var_dump($paymentType);
-//					echo var_dump($paymentOptionSubId);
-//					die();
+            // echo var_dump($paymentType);
+            // echo var_dump($paymentOptionSubId);
+            // die();
             $CI =& get_instance();
             $CI->load->config('custom');
 
@@ -114,8 +114,8 @@
             $arrArguments['saleData']['orderData'][0]['vatCode'] = 'N';
             $arrArguments['saleData']['orderData'][0]['vatPercentage'] = '0,00';
 
-//            echo var_dump($arrArguments);
-//            die();
+            // echo var_dump($arrArguments);
+            // die();
             return $arrArguments;
         }
 
@@ -191,8 +191,8 @@
    
 
 
-//            echo var_dump($arrArguments);
-//            die();
+            // echo var_dump($arrArguments);
+            // die();
             return $arrArguments;
         }
 
@@ -259,8 +259,8 @@
    
 
 
-//            echo var_dump($arrArguments);
-//            die();
+            // echo var_dump($arrArguments);
+            // die();
             return $arrArguments;
         }
 
@@ -428,5 +428,17 @@
                     break;
             }
         }
-        
+
+        public static function refundAmount(array $argumentsArray): ?object
+        {
+            $CI =& get_instance();
+            $CI->load->config('custom');
+
+            return self::getRequestResult(
+                $argumentsArray,
+                $CI->config->item('transactionNamespace'),
+                $CI->config->item('getRefundPayNlFunction'),
+                $CI->config->item('getRefundPayNlVersion')
+            );
+        }
     }
