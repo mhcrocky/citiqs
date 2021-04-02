@@ -52,6 +52,7 @@ class Agenda_booking extends BaseControllerWeb
             'logo' => $customer->logo,
         ]);
 
+
         $data['agendas'] = $this->bookandpayagendabooking_model->getbookingagenda($customer->id);
         $data['agenda_dates'] = $this->bookandpayagendabooking_model->getbookingagendadate($customer->id);
 
@@ -451,7 +452,7 @@ class Agenda_booking extends BaseControllerWeb
         
         $data['amount'] = $this->session->userdata('amount');
 
-        $this->loadViews("new_bookings/select_payment_type", $this->global, $data, 'bookingfooter', "bookingheader");
+        $this->loadViews("new_bookings/select_payment_type", $this->global, $data,  'footerPayment', "headerPayment");
     }
 
     public function delete_reservation($id = false)

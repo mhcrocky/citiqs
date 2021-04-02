@@ -390,7 +390,20 @@ class Bookingpay extends BaseControllerWeb
         $function = $this->config->item('orderPayNlFunction');
         $version = $this->config->item('orderPayNlVersion');
 
+        foreach ($reservations as $key => $reservation) {
+            $arrArguments['statsData']['extra' . ($key + 1)] = $reservation->reservationId;
+            $arrArguments['saleData']['orderData'][$key]['productId'] = $reservation->reservationId;
+            $arrArguments['saleData']['orderData'][$key]['description'] = $reservation->Spotlabel;
+            $arrArguments['saleData']['orderData'][$key]['productType'] = 'HANDLIUNG';
+            $arrArguments['saleData']['orderData'][$key]['price'] = $reservation->price * 100;
+            $arrArguments['saleData']['orderData'][$key]['quantity'] = 1;
+            $arrArguments['saleData']['orderData'][$key]['vatCode'] = 'H';
+            $arrArguments['saleData']['orderData'][$key]['vatPercentage'] = '0.00';
+
+        }
+
         $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
+
 
 
         
@@ -455,45 +468,42 @@ class Bookingpay extends BaseControllerWeb
         //cardcvc
     }
 
-    /*
-    public function ExchangePay()
+    public function exchangePay()
     {
         $this->load->model('email_templates_model');
         $this->load->model('bookandpayspot_model');
         $this->load->model('bookandpayagenda_model');
         $this->load->model('bookandpaytimeslots_model');
 
-        $transactionid = $this->input->get('order_id');
+        $transactionid = ($this->input->get('order_id')) ? $this->input->get('order_id') : $this->input->get('orderId');
 
-        $payData['format'] = 'array_serialize';
-        $payData['tokenid'] = 'AT-0051-0895';
-        $payData['token'] = '35c1bce89516c74ce7f8475d66c31dd59937d72a';
-        $payData['gateway'] = 'rest-api.pay.nl';
-        $payData['namespace'] = 'Transaction';
-        $payData['function'] = 'info';
-        $payData['version'] = 'v16';
+        $namespace = $this->config->item('transactionNamespace');
+        $function = $this->config->item('orderPayNlFunction');
+        $version = $this->config->item('orderPayNlVersion');
 
-        $strUrl = 'http://' . $payData['tokenid'] . ':' . $payData['token'] . '@' . $payData['gateway'] . '/' . $payData['version'] . '/' . $payData['namespace'] . '/' .
-            $payData['function'] . '/' . $payData['format'] . '?';
-
-        $arrArguments = array();
+        $paymentData = $this->session->userdata('payment_data');
+        $arrArguments = $paymentData['arrArguments'];
         $arrArguments['transactionId'] = $transactionid;
- 
-        $strUrl = $strUrl . http_build_query($arrArguments);
+
+        $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
+        
 
         $strResult = @file_get_contents($strUrl);
+
 
         if (empty($transactionid)) {
             echo('FALSE|' . $transactionid);
             die();
         }
 
-        $strResult = unserialize($strResult);
-        $result1 = $strResult;
+        
+        $result1 = json_decode($strResult);
+        $orderStatusId = $this->input->get('orderStatusId');
 
 //        if ($result1['paymentDetails']['state'] == 100 || $result1['paymentDetails']['state'] == 20) {
-		if ($result1['paymentDetails']['state'] == 100 ) {
-            foreach ($strResult['saleData']['orderData'] as $key => $product) {
+		if ($result1->request->result == 1 ||  $orderStatusId == 100) {
+
+            foreach ($arrArguments['saleData']['orderData'] as $key => $product) {
                 if($product['productId'] !== '000000') {
                     $reservationId = $product['productId'];
 
@@ -509,7 +519,10 @@ class Bookingpay extends BaseControllerWeb
                 }
             }
 
-            $result = $this->bookandpay_model->getReservationId($strResult['saleData']['orderData'][0]['productId']);
+            $result = $this->bookandpay_model->getReservationId($arrArguments['saleData']['orderData'][0]['productId']);
+
+            /*
+
 
             $customerId = $result->customer;
 
@@ -680,60 +693,23 @@ class Bookingpay extends BaseControllerWeb
                 }
 	        }
 
-            echo('TRUE|X' . $TransactionId);
+            */
+
+
+            echo('TRUE|X' . $transactionid);
         } else {
 
             echo('TRUE|O' . $transactionid);  // payment gaat niet door....
         }
-    }
-    */
-
-
-    public function exchangePay()
-	{
-		$this->load->model('bookandpayspot_model');
-		$this->load->model('bookandpayagenda_model');
-		$this->load->model('bookandpaytimeslots_model');
-
-
-		$namespace = $this->config->item('transactionNamespace');
-        $function = $this->config->item('orderPayNlFunction');
-        $version = $this->config->item('orderPayNlVersion');
-
-        $arrArguments = $this->session->userdata('arrArguments');
-        $strUrl = $this->session->userdata('strUrl');
-
-		$strResult = @file_get_contents($strUrl);
-
-		if (empty($transactionid)) {
-			echo('FALSE|' . $transactionid);
-			die();
-		}
-
-		$strResult = unserialize($strResult);
-		$result1 = $strResult;
-
-//        if ($result1['paymentDetails']['state'] == 100 || $result1['paymentDetails']['state'] == 20) {
-		if ($result1['paymentDetails']['state'] == 100 ) {
-			foreach ($strResult['saleData']['orderData'] as $key => $product) {
-				if($product['productId'] !== '000000') {
-					$reservationId = $product['productId'];
-
-					if (empty($reservationId)) {
-						echo('FALSE|' . $reservationId);
-						die();
-					}
-
-					$data['paid'] = '1';
-					$data['TransactionID'] = $transactionid;
-
-					$this->bookandpay_model->editbookandpay($data, $reservationId);
-				}
-			}
-        }
 
         $this->emailReservation();
+        
+
     }
+    
+
+
+    
 
     public function successPaymentPay($reservation_id)
     {
@@ -868,7 +844,19 @@ class Bookingpay extends BaseControllerWeb
 								break;
                         }
 
-                        $emailId = $this->event_model->get_ticket($ticketId)->emailId;
+                        $timeSlot = $this->bookandpaytimeslots_model->getTimeSlot($timeSlotId);
+                        $spot = $this->bookandpayspot_model->getSpot($spotId);
+                        $agenda = $this->bookandpayagenda_model->getBookingAgendaById($spot->agenda_id);
+
+                        $emailId = false;
+
+                        if($timeSlot && $timeSlot->email_id != 0) {
+                            $emailId = $timeSlot->email_id;
+                        } elseif ($spot && $spot->email_id != 0) {
+                            $emailId = $spot->email_id;
+                        } elseif ($agenda && $agenda->email_id != 0) {
+                            $emailId = $agenda->email_id;
+                        }
                         
 						switch (strtolower($_SERVER['HTTP_HOST'])) {
 							case 'tiqs.com':

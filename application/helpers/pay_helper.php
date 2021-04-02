@@ -207,22 +207,13 @@
             
             foreach ($reservations as $key => $reservation) {
                 
-                $totalAmount +=  floatval($reservation->numberofpersons) * floatval($reservation->price);
+                $totalAmount +=  floatval($reservation->price);
 
                 if ($key == 0) {
                     $arrArguments['transaction']['description'] = "tiqs - " . $reservation->eventdate . " - " . $reservation->timeslot;
                     $buyerEmail = $reservation->email;
                 }
 
-
-                $arrArguments['statsData']['extra' . ($key + 1)] = $reservation->reservationId;
-                $arrArguments['saleData']['orderData'][$key]['productId'] = $reservation->reservationId;
-                $arrArguments['saleData']['orderData'][$key]['description'] = $reservation->Spotlabel;
-                $arrArguments['saleData']['orderData'][$key]['productType'] = 'HANDLIUNG';
-                $arrArguments['saleData']['orderData'][$key]['price'] = $reservation->price * 100;
-                $arrArguments['saleData']['orderData'][$key]['quantity'] = 1;
-                $arrArguments['saleData']['orderData'][$key]['vatCode'] = 'H';
-                $arrArguments['saleData']['orderData'][$key]['vatPercentage'] = '0.00';
 
             }
 
@@ -253,9 +244,9 @@
 				$arrArguments['paymentOptionSubId'] = "TH-9268-3020";
 			}
 
-            $arrArguments['finishUrl'] = base_url() . 'bookingpay/successBooking/';
+            $arrArguments['finishUrl'] = base_url() . 'booking/successBooking/';
 
-            $arrArguments['transaction']['orderExchangeUrl'] = base_url() . 'bookingpay/exchangePay';
+            $arrArguments['transaction']['orderExchangeUrl'] = base_url() . 'booking/exchangePay/';
 
 
             $arrArguments['statsData']['promotorId'] = $vendorId;
