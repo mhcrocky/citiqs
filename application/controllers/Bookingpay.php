@@ -20,6 +20,9 @@ class Bookingpay extends BaseControllerWeb
         $this->load->helper('pay_helper');
         $this->load->model('log_model');
         $this->load->model('bookandpay_model');
+        $this->load->model('bookandpaytimeslots_model');
+        $this->load->model('bookandpayspot_model');
+        $this->load->model('bookandpayagenda_model');
         $this->load->model('sendreservation_model');
         $this->load->model('email_templates_model');
         $this->load->config('custom');
@@ -406,14 +409,6 @@ class Bookingpay extends BaseControllerWeb
 
 
 
-        
-
-        $this->session->set_userdata('payment_data', [
-            'strUrl' => $strUrl,
-            'arrArguments' => $arrArguments,
-            'discountAmount' => $arrArguments['amount']
-        ]);
-
 
         $this->processPaymenttype($strUrl);
 
@@ -432,7 +427,13 @@ class Bookingpay extends BaseControllerWeb
 //			))) {
 //				log_message('error', print_r($this->db->error(), true));
 //			}
+
+            
+            $transactionId = $result->transaction->transactionId;
+            $reservationIds = $this->session->userdata('reservations');
+            $this->bookandpay_model->updateTransactionIdByReservationIds($reservationIds, $transactionId);
             redirect($result->transaction->paymentURL);
+
         } else {
             $this->session->set_flashdata('error', 'Payment engine error. Please, contact staff');
             $data = array();
@@ -468,248 +469,30 @@ class Bookingpay extends BaseControllerWeb
         //cardcvc
     }
 
-    public function exchangePay()
-    {
-        $this->load->model('email_templates_model');
-        $this->load->model('bookandpayspot_model');
-        $this->load->model('bookandpayagenda_model');
-        $this->load->model('bookandpaytimeslots_model');
+    public function ExchangePay()
+	{
 
-        $transactionid = ($this->input->get('order_id')) ? $this->input->get('order_id') : $this->input->get('orderId');
+        ////////  
 
-        $namespace = $this->config->item('transactionNamespace');
-        $function = $this->config->item('orderPayNlFunction');
-        $version = $this->config->item('orderPayNlVersion');
+        $get = $this->input->get(null, true);
+        $transactionid = $this->input->get('order_id'); 
+        $action = $this->input->get('action', true);
 
-        $paymentData = $this->session->userdata('payment_data');
-        $arrArguments = $paymentData['arrArguments'];
-        $arrArguments['transactionId'] = $transactionid;
+        if ($get['action'] === 'new_ppt') {
+            // WE HAVE SUCCESS
+            // transactionId ID IS UNIQUE SO YOU CAN UPDATE paid STATUS TO 1 tbl_bookandpay
+            // 
+            //$query = 'UPDATE tbl_bookandpay SET paid = "1" WHERE TransactionID = "' . $this->db->escape($transactionid) . '"';
+            //$this->db->query($query);
 
-        $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
-        
-
-        $strResult = @file_get_contents($strUrl);
-
-
-        if (empty($transactionid)) {
-            echo('FALSE|' . $transactionid);
-            die();
-        }
-
-        
-        $result1 = json_decode($strResult);
-        $orderStatusId = $this->input->get('orderStatusId');
-
-//        if ($result1['paymentDetails']['state'] == 100 || $result1['paymentDetails']['state'] == 20) {
-		if ($result1->request->result == 1 ||  $orderStatusId == 100) {
-
-            foreach ($arrArguments['saleData']['orderData'] as $key => $product) {
-                if($product['productId'] !== '000000') {
-                    $reservationId = $product['productId'];
-
-                    if (empty($reservationId)) {
-                        echo('FALSE|' . $reservationId);
-                        die();
-                    }
-
-                    $data['paid'] = '1';
-                    $data['TransactionID'] = $transactionid;
-
-                    $this->bookandpay_model->editbookandpay($data, $reservationId);
-                }
-            }
-
-            $result = $this->bookandpay_model->getReservationId($arrArguments['saleData']['orderData'][0]['productId']);
-
-            /*
-
-
-            $customerId = $result->customer;
-
-            switch (strtolower($_SERVER['HTTP_HOST'])) {
-                case 'tiqs.com':
-                    $file = '/home/tiqs/domains/tiqs.com/public_html/spot/uploads/qrcodes/'.$customerId;
-                    $webUrl = 'uploads/qrcodes/'.$customerId;
-                    break;
-                case 'tiqs.lc':
-                    $file = '/Users/dmitry/websites/tiqs/booking2020/uploads/qrcodes/'.$customerId;
-                    $webUrl = 'uploads/qrcodes/'.$customerId;
-                    break;
-                case '127.0.0.1':
-                    $file = '/Users/peterroos/www/spot/uploads/qrcodes/'.$customerId;
-                    $webUrl = 'uploads/qrcodes/'.$customerId;
-                    break;
-                default:
-                    break;
-            }
-
-            if(!file_exists($file)) {
-                mkdir($file, 0777, true);
-            }
-//			var_dump($result);
-
-            $email = $result->email;
-            $eventdate = $result->eventdate;
-
-            $result = $this->sendreservation_model->locatereservationbymailsend($email, $eventdate);
-
-
-			$TransactionId='empty';
-
-            foreach ($result as $record) {
-                $customer = $record->customer;
-                $eventid = $record->eventid;
-                $eventdate = $record->eventdate;
-                $reservationId = $record->reservationId;
-                $spotId = $record->SpotId;
-                $price = $record->price;
-                $Spotlabel = $record->Spotlabel;
-                $numberofpersons = $record->numberofpersons;
-                $name = $record->name;
-                $email = $record->email;
-                $mobile = $record->mobilephone;
-                $reservationset = $record->reservationset;
-                $fromtime = $record->timefrom;
-                $totime = $record->timeto;
-                $paid = $record->paid;
-                $timeSlotId = $record->timeslot;
-                $TransactionId = $record->TransactionID;
-                $voucher = $record->voucher;
-
-                if($this->session->userdata('eventShop')){
-                    redirect('/booking_events/emailReservation');
-                }
-                if ($timeSlotId != 0) {
-                    if ($paid == 1) {
-
-						$qrtext = $reservationId;
-
-						switch (strtolower($_SERVER['HTTP_HOST'])) {
-							case 'tiqs.com':
-								$file = '/home/tiqs/domains/tiqs.com/public_html/spot/uploads/thuishaven/qrcodes/';
-								break;
-							case '127.0.0.1':
-								$file = 'C:/wamp64/www/tiqs/booking2020/uploads/qrcodes/';
-								break;
-							default:
-								break;
-						}
-
-						$SERVERFILEPATH = $file;
-						$text = $qrtext;
-						$folder = $SERVERFILEPATH;
-						$file_name1 = $qrtext . ".png";
-						$file_name = $folder . $file_name1;
-
-						QRcode::png($text, $file_name);
-						switch (strtolower($_SERVER['HTTP_HOST'])) {
-							case 'tiqs.com':
-								$SERVERFILEPATH = 'https://tiqs.com/spot/uploads/thuishaven/qrcodes/';
-								break;
-							case '127.0.0.1':
-								$SERVERFILEPATH = 'http://127.0.0.1/spot/uploads/thuishaven/qrcodes/';
-								break;
-							default:
-								break;
-						}
-
-
-//                        $file_name = $file . '/' . $reservationId . ".png";
-//                        $webUrl = site_url($webUrl . '/' . $reservationId . ".png");
-//
-//                        QRcode::png($reservationId, $file_name);
-
-                        $timeSlot = $this->bookandpaytimeslots_model->getTimeSlot($timeSlotId);
-                        $spot = $this->bookandpayspot_model->getSpot($spotId);
-                        $agenda = $this->bookandpayagenda_model->getBookingAgendaById($spot->agenda_id);
-
-                        $emailId = false;
-
-                        if($timeSlot && $timeSlot->email_id != 0) {
-                            $emailId = $timeSlot->email_id;
-                        } elseif ($spot && $spot->email_id != 0) {
-                            $emailId = $spot->email_id;
-                        } elseif ($agenda && $agenda->email_id != 0) {
-                            $emailId = $agenda->email_id;
-                        }
-
-//                        var_dump($emailId);
-						switch (strtolower($_SERVER['HTTP_HOST'])) {
-							case 'tiqs.com':
-								$SERVERFILEPATH = 'https://tiqs.com/spot/uploads/thuishaven/qrcodes/';
-								break;
-							case '127.0.0.1':
-								$SERVERFILEPATH = 'http://127.0.0.1/spot/uploads/thuishaven/qrcodes/';
-								break;
-							default:
-								break;
-						}
-                        if($emailId) {
-//                            $emailTemplate = $this->email_templates_model->get_emails_by_id($emailId->email_id);
-							$emailTemplate = $this->email_templates_model->get_emails_by_id($emailId);
-
-							$qrlink = $SERVERFILEPATH . $file_name1;
-
-                            if($emailTemplate) {
-                                $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/' . $emailTemplate->template_file);
-                                $mailtemplate = str_replace('[customer]', $customer, $mailtemplate);
-                                $mailtemplate = str_replace('[eventdate]', date('d.m.yy', strtotime($eventdate)), $mailtemplate);
-                                $mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
-                                $mailtemplate = str_replace('[SpotId]', $spotId, $mailtemplate);
-                                $mailtemplate = str_replace('[price]', $price, $mailtemplate);
-                                $mailtemplate = str_replace('[spotlabel]', $Spotlabel, $mailtemplate);
-                                $mailtemplate = str_replace('[numberofpersons]', $numberofpersons, $mailtemplate);
-                                $mailtemplate = str_replace('[name]', $name, $mailtemplate);
-                                $mailtemplate = str_replace('[email]', $email, $mailtemplate);
-                                $mailtemplate = str_replace('[mobile]', $mobile, $mailtemplate);
-                                $mailtemplate = str_replace('[fromtime]', $fromtime, $mailtemplate);
-                                $mailtemplate = str_replace('[totime]', $totime, $mailtemplate);
-                                $mailtemplate = str_replace('[timeslot]', $timeSlotId, $mailtemplate);
-                                $mailtemplate = str_replace('[TransactionId]', $TransactionId, $mailtemplate);
-                                $mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
-//                                $mailtemplate = str_replace('[QRlink]', "<img src='$webUrl'>", $mailtemplate);
-//								$mailtemplate = str_replace('[QRlink]', $webUrl, $mailtemplate);
-//                                $subject = 'Your tiqs reservation(s)';
-								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
-								$mailtemplate = str_replace('Image', '', $mailtemplate);
-								$mailtemplate = str_replace('Text', '', $mailtemplate);
-								$subject = 'Your tiqs reservation(s)';
-//                                include(APPPATH . 'libraries/simple_html_dom.php');
-//
-//                                $html = str_get_html($mailtemplate);
-//
-//                                foreach($html->find('img.qr-code-image') as $e) {
-//                                    $e->src = $webUrl;
-//                                }
-
-                                $datachange['mailsend'] = 1;
-								$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
-                                if($this->sendEmail($email, $subject, $mailtemplate)) {
-                                    $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
-                                }
-                            }
-                        }
-                    }
-                }
-	        }
-
-            */
-
-
-            echo('TRUE|X' . $transactionid);
+            $this->bookandpay_model->updateBookandpayByTransactionId($transactionid);
+            echo('TRUE| '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
+            $this->emailReservation($transactionid);
         } else {
-
-            echo('TRUE|O' . $transactionid);  // payment gaat niet door....
+			echo('TRUE| NOT FIND '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
         }
-
-        $this->emailReservation();
-        
 
     }
-    
-
-
-    
 
     public function successPaymentPay($reservation_id)
     {
@@ -773,21 +556,13 @@ class Bookingpay extends BaseControllerWeb
         $this->bookandpay_model->cronDeleteReservations();
     }
 
-    public function emailReservation()
+    public function emailReservation($transactionId)
 	{
         
-        $email = $this->session->userdata('buyerEmail');
-        $reservationIds = $this->session->userdata('reservations');
-        $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
+        $reservations = $this->bookandpay_model->getReservationsByTransactionId($transactionId);
         $eventdate = '';
-        $i = 0;
         foreach ($reservations as $key => $reservation):
-            $eventdate = $reservation->eventdate;
-            $data['paid'] = '1';
-            $this->bookandpay_model->editbookandpay($data, $reservationIds[$i]);
-            $result = $this->sendreservation_model->getEventReservationData($reservation->reservationId, $email, $eventdate);
-            
-            $TransactionId='empty';
+            $result = $this->sendreservation_model->getEventReservationData($reservation->reservationId);
             
             foreach ($result as $record) {
                 $customer = $record->customer;
@@ -809,8 +584,7 @@ class Bookingpay extends BaseControllerWeb
 				$TransactionId = $record->TransactionID;
 				$voucher = $record->voucher;
                 
-                
-                    if ($paid == 1) {
+                    if ($paid = 1) {
                         
                         $qrtext = $reservationId;
 
@@ -845,6 +619,7 @@ class Bookingpay extends BaseControllerWeb
                         }
 
                         $timeSlot = $this->bookandpaytimeslots_model->getTimeSlot($timeSlotId);
+
                         $spot = $this->bookandpayspot_model->getSpot($spotId);
                         $agenda = $this->bookandpayagenda_model->getBookingAgendaById($spot->agenda_id);
 
@@ -857,6 +632,7 @@ class Bookingpay extends BaseControllerWeb
                         } elseif ($agenda && $agenda->email_id != 0) {
                             $emailId = $agenda->email_id;
                         }
+
                         
 						switch (strtolower($_SERVER['HTTP_HOST'])) {
 							case 'tiqs.com':
@@ -905,7 +681,6 @@ class Bookingpay extends BaseControllerWeb
                     }
                 }
             }
-            $i++;
             endforeach;
         }
     

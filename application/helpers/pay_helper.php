@@ -176,9 +176,9 @@
 				$arrArguments['paymentOptionSubId'] = "TH-9268-3020";
 			}
 
-            $arrArguments['finishUrl'] = base_url() . 'booking_events/successBooking';
+            $arrArguments['finishUrl'] = base_url() . 'booking_events/successBooking/';
 
-            $arrArguments['transaction']['orderExchangeUrl'] = base_url() . 'booking_events/exchangePay';
+            $arrArguments['transaction']['orderExchangeUrl'] = base_url() . 'booking_events/ExchangePay/';
 
 
             $arrArguments['statsData']['promotorId'] = $vendorId;
@@ -244,9 +244,9 @@
 				$arrArguments['paymentOptionSubId'] = "TH-9268-3020";
 			}
 
-            $arrArguments['finishUrl'] = base_url() . 'booking/successBooking/';
+            $arrArguments['finishUrl'] = base_url() . 'bookingpay/successBooking/';
 
-            $arrArguments['transaction']['orderExchangeUrl'] = base_url() . 'booking/exchangePay/';
+            $arrArguments['transaction']['orderExchangeUrl'] = base_url() . 'bookingpay/ExchangePay/';
 
 
             $arrArguments['statsData']['promotorId'] = $vendorId;

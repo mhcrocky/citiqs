@@ -182,6 +182,33 @@ class Bookandpay_model extends CI_Model
 		return $result;
 	}
 
+
+	function updateBookandpayByTransactionId($TransactionID)
+	{
+		try {
+			$this->db->where('TransactionID', $TransactionID);
+			$this->db->set('paid', 1);
+			$this->db->update('tbl_bookandpay');
+			return TRUE;
+		}
+
+		catch (Exception $ex)
+		{
+			return FALSE;
+		}
+	}
+
+
+	function updateTransactionIdByReservationIds($reservationIds, $TransactionID)
+	{
+		$this->db->where_in('reservationId', $reservationIds);
+		$this->db->set('TransactionID', $TransactionID);
+		$this->db->update('tbl_bookandpay');
+		return TRUE;
+
+	}
+
+
 	function editbookandpay($labelInfo, $reservationId)
 	{
 		try {
@@ -571,6 +598,19 @@ class Bookandpay_model extends CI_Model
 	{
 		$this->db->from('tbl_bookandpay');
 		$this->db->where_in('reservationId', $reservationIds);
+		$query = $this->db->get();
+
+//				$testquery = $this->db->last_query();
+//				var_dump($testquery);
+//				die();
+        $result = $query->result();
+		return $result;
+	}
+
+	public function getReservationsByTransactionId($TransactionId)
+	{
+		$this->db->from('tbl_bookandpay');
+		$this->db->where('TransactionId', $TransactionId);
 		$query = $this->db->get();
 
 //				$testquery = $this->db->last_query();
