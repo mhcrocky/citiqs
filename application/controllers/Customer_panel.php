@@ -542,11 +542,12 @@ class  Customer_panel extends BaseControllerWeb
 
     public function get_email_template()
     {
-        $ticketId = $this->input->post("id");
+        $id = $this->input->post("id");
         $this->load->model('shoptemplates_model');
-        $this->shoptemplates_model->setObjectId(intval($ticketId))->setObject();
+        $this->shoptemplates_model->setObjectId(intval($id))->setObject();
         $templateContent = file_get_contents($this->shoptemplates_model->getTemplateFile());
-        echo json_encode($templateContent);
+        $template_subject = $this->shoptemplates_model->read(['template_subject'],['id' => $id])[0]['template_subject'];
+        echo json_encode(['templateContent' => $templateContent, 'template_subject' => $template_subject]);
 
     }
 

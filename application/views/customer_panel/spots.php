@@ -16,6 +16,9 @@
                 <label for="customTemplateName">Template Name</label>
                 <input type="text" id="customTemplateName" name="customTemplateName" class="form-control" />
                 <br />
+                <label for="customTemplateSubject">Subject</label>
+                <input type="text" id="customTemplateSubject" name="templateSubject" class="form-control" />
+                <br />
                 <label for="templateType">Template Type</label>
                 <select class="form-control w-100" id="templateType" name="templateType">
                     <option value="" disabled>Select type</option>
@@ -338,10 +341,12 @@
             editEmailTemplate(id, template_name = '') {
                 var template_type = 'reservations';
                 $('#templateType').val(template_type);
-                $('#updateEmailTemplate').attr('onclick','createTicketEmailTemplate("selectTemplateName", "customTemplateName", "templateType", '+id+')');
                 $.post(globalVariables.baseUrl + "customer_panel/get_email_template",{ id: id }, function (data) {
-                    let templateContent = JSON.parse(data);
+                    data = JSON.parse(data);
+                    let templateContent = data.templateContent;
+                    let template_subject = data.template_subject;
                     $('#customTemplateName').val(template_name);
+                    $('#customTemplateSubject').val(template_subject);
                     $('#templateType').val(template_type);
                     $('#updateEmailTemplate').attr('onclick','updateEmailTemplate('+id+')');
                     templateContent = templateContent.replaceAll('[QRlink]', globalVariables.baseUrl+'assets/images/qrcode_preview.png');
@@ -577,7 +582,7 @@
     });
 
 function updateEmailTemplate(id){
-    createEmailTemplate("selectTemplateName", "customTemplateName", "templateType", id);
+    createEmailTemplate("selectTemplateName", "customTemplateName", "customTemplateSubject", "templateType", id);
     setTimeout(() => {
         $('#closeEmailTemplate').click();
         $('#selectTemplateName').val('');
