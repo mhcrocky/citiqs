@@ -231,10 +231,8 @@ class Voucher extends REST_Controller
 				'left',
 			]
 		];
-		$what = ['tbl_vouchersend.id, tbl_vouchersend.numberOfTimes, name, email, send, datecreated, code, description, voucherId'];
-		$where = [
-			 "tbl_shop_voucher.vendorId" => $vendorId
-			];
+		$what = ['tbl_vouchersend.id, numberOfTimes, name, email, send, datecreated, code, description, voucherId'];
+		$where = ["tbl_shop_voucher.vendorId" => $vendorId];
 			
         $results = $this->vouchersend_model->read($what,$where, $join, 'group_by', ['tbl_vouchersend.id']);
 
