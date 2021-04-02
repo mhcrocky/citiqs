@@ -340,6 +340,10 @@ class Booking_events extends BaseControllerWeb
 		$result = json_decode($strResult);
         
 		if ($result->request->result == '1') {
+
+            // sent tbl_bookandpay orderId in array arguments
+            // update row with this is with TransactionId that you get from paynl
+            // it is unique so you can fetch and update book on exchange pay
 			redirect($result->transaction->paymentURL);
 		} else {
 			$this->session->set_flashdata('error', 'Payment engine error. Please, contact staff');
@@ -354,8 +358,6 @@ class Booking_events extends BaseControllerWeb
     public function exchangePay()
 	{
 
-        ////////  
-
         $get = $this->input->get(null, true);
         $transactionid = $this->input->get('order_id'); 
         $action = $this->input->get('action', true);
@@ -363,11 +365,14 @@ class Booking_events extends BaseControllerWeb
         if ($get['action'] === 'new_ppt') {
             // WE HAVE SUCCESS
             // transactionId ID IS UNIQUE SO YOU CAN UPDATE paid STATUS TO 1 tbl_bookandpay
-            // 
+            // just update row in tbl with transaction id in step before
             $query = 'UPDATE tbl_bookandpay SET paid = "1" WHERE TransactionID = "' . $this->db->escape($transactionid) . '"';
             $this->db->queyr($query);
 
             echo('TRUE| '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
+
+            $this->emailReservation();
+
         } else {
 			echo('TRUE| NOT FIND '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
         }
@@ -379,7 +384,6 @@ class Booking_events extends BaseControllerWeb
 		$this->load->model('bookandpayagenda_model');
 		$this->load->model('bookandpaytimeslots_model');
 
-        $transactionid = ($this->input->get('order_id')) ? $this->input->get('order_id') : $this->input->get('orderId');
 
 		$namespace = $this->config->item('transactionNamespace');
         $function = $this->config->item('orderPayNlFunction');
