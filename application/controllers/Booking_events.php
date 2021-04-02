@@ -353,6 +353,27 @@ class Booking_events extends BaseControllerWeb
 
     public function exchangePay()
 	{
+
+        ////////  
+
+        $get = $this->input->get(null, true);
+        $transactionid = $this->input->get('order_id'); 
+        $action = $this->input->get('action', true);
+
+        if ($get['action'] === 'new_ppt') {
+            // WE HAVE SUCCESS
+            // transactionId ID IS UNIQUE SO YOU CAN UPDATE paid STATUS TO 1 tbl_bookandpay
+            // 
+            $query = 'UPDATE tbl_bookandpay SET paid = "1" WHERE TransactionID = "' . $this->db->escape($transactionid) . '"';
+            $this->db->queyr($query);
+
+            echo('TRUE| '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
+        } else {
+			echo('TRUE| NOT FIND '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
+        }
+
+        return;
+        ////////////////////////
 		$this->load->model('email_templates_model');
 		$this->load->model('bookandpayspot_model');
 		$this->load->model('bookandpayagenda_model');
