@@ -208,8 +208,8 @@ class Ajaxdorian extends CI_Controller
             $this->bookandpayagendabooking_model->updateAgenda($agendData, $agenda_id);
         } else {
             $agenda_id = $this->bookandpayagendabooking_model->addAgenda($agendData);
-            if(!empty($this->input->post('agendas')) && $this->input->post('agendas')  == '' && $this->input->post('agendas')  == null){
-                echo 'true';
+            if(!empty($this->input->post('agendas')) && $this->input->post('agendas')  != 'null' && $this->input->post('agendas')  != null){
+                
                 $agendas = $this->input->post('agendas');
                 $this->bookandpayagendabooking_model->copy_from_agenda($agendas,$agenda_id);
             }

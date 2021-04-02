@@ -385,7 +385,7 @@ const templateGlobals = (function() {
             saveAgenda() {
                 let formData = new FormData();
                 formData.append("ReservationDescription", this.agendaModalData.ReservationDescription);
-                formData.append("id", this.agendaModalData.id);
+                //formData.append("id", this.agendaModalData.id);
                 formData.append("ReservationDateTime", this.dateFormat(this.agendaModalData.ReservationDateTime));
                 formData.append("online", this.agendaModalData.online);
                 formData.append("Background", this.agendaModalData.Background);
@@ -419,7 +419,7 @@ const templateGlobals = (function() {
                 formData.append("online", this.agendaModalData.online);
                 formData.append("Background", this.agendaModalData.Background);
                 formData.append("email_id", this.agendaModalData.email_id);
-                formData.append("agendas", this.agendaModalData.id);
+                formData.append("agendas", $('#agendas').val());
 
 
                 axios.post(this.baseURL + 'ajaxdorian/saveAgenda', formData
