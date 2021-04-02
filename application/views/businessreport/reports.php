@@ -83,8 +83,8 @@
                     <div style="flex-wrap: unset;" class="row pl-4 pr-1 pt-4">
                         <div class="col-md-4 pt-2 font-weight-bold">Free Amount:</div>
                         <div style="flex-wrap: unset" class="col-md-8 input-group">
-                        <input type="hidden" id="amount_limit">
-                        <input type="text" style="max-width: 22px;width: 22px;padding-left: 5px;padding-right: 0px;border-right: 0px;" class="form-control ml-auto" value="-€" disabled>
+                            <input type="hidden" id="amount_limit">
+                            <input type="text" style="max-width: 22px;width: 22px;padding-left: 5px;padding-right: 0px;border-right: 0px;" class="form-control ml-auto" value="-€" disabled>
                             <input type="number" max="0" onchange="freeAmountValidate(this)" style="max-width: 53px;width: 53px;padding-left: 0px;padding-right: 5px;border-left: 0px;" class="form-control" id="freeamount" name="freeamount" value="0.00">
                         </div>
                     </div>
@@ -101,7 +101,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-warning btn-refund">Refund</button>
+                    <button
+                        type="button"
+                        class="btn btn-warning btn-refund"
+                        onclick="refundMoney('refundOrderId', 'total_amount', 'amount', 'freeamount', 'description')"
+                    >Refund</button>
                 </div>
             </div>
         </div>

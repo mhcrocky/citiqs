@@ -11,5 +11,56 @@ function sendReportPrintRequest(element) {
         'report': element.dataset.report
     }
  
-    sendAjaxPostRequest(post, url, 'sendReportPrintRequest', alertifyAjaxResponse)
+    sendAjaxPostRequest(post, url, 'sendReportPrintRequest', alertifyAjaxResponse);
+}
+
+function refundMoney(refundOrderId, totalAmountId, amountId, freeAmountId, descriptionId) {
+    let amountEl = document.getElementById(amountId);
+    let freeAmountEl = document.getElementById(freeAmountId);
+    let orderId = document.getElementById(refundOrderId).value;
+    let decription = document.getElementById(descriptionId).value;
+    let totalAmountValue = parseFloat(document.getElementById(totalAmountId).value);
+    let amountValue = getAmountValue(amountEl);
+    let freeAmountValue = parseFloat(freeAmountEl.value);
+    let refundAmount =  Math.abs(amountValue + freeAmountValue);
+
+    if (!validateAmount(amountValue, freeAmountValue, totalAmountValue, refundAmount)) {
+        amountEl.style.border = '1px solid #f00';
+        freeAmountEl.style.border = '1px solid #f00';
+        return;
+    }
+
+    amountEl.style.border = 'initial';
+    freeAmountEl.style.border = 'initial';
+
+    let url = globalVariables.ajax + 'refundOrderMoney/' + orderId;
+    let post = {
+        'refund' : refundAmount,
+        'decription' : decription
+    }
+
+    sendAjaxPostRequest(post, url, 'sendReportPrintRequest', alertifyAjaxResponse);
+    return;
+}
+
+function validateAmount(amountValue, freeAmountValue, totalAmountValue, refundAmount) {
+    if (!amountValue && !freeAmountValue) {
+        let message = 'Select free amount or amount'
+        alertify.error(message);
+        return false;
+    }
+
+    if (refundAmount > totalAmountValue) {
+        let message = 'Refund amount can not be bigger than total order amount'
+        alertify.error(message);
+        return false;
+    }
+
+    return true;
+}
+
+function getAmountValue(amountEl) {
+    let amount = amountEl.value;
+    amount = amount.replace('€', '');
+    return parseFloat(amount);
 }
