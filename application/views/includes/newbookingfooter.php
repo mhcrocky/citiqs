@@ -1,5 +1,5 @@
 <!-- end booking form inputs -->
-<div id="booking-footer" class="booking-form__result w-100">
+<div id="booking-footer" class="booking-form__result w-100 d-none">
     <h4 id="footer-title" class="mb-3">Booking Info </h4>
     <p class="booking-info"><span class="event-text">Event Date</span>: <span id="selected-date">
             <?php $shorturl = $this->session->userdata('shortUrl');
@@ -46,9 +46,9 @@
         $("#timeslot-active").addClass('booking-active');
     } else if (url.includes('pay')) {
         $("#personal-active").addClass('booking-active');
+        $('#booking-footer').removeClass('d-none');
     } else {
         $("#agenda-active").addClass('booking-active');
-        $('#booking-footer').addClass('d-none');
     }
 })();
 
