@@ -770,9 +770,12 @@ function refundModal(order_id, total_amount) {
   $('#amount').val('€0.00');
   $('#order_amount').empty();
   $('#description').val('tiqs - '+order_id);
-  let html = '<input type="hidden" id="total_amount" name="total_amount" value="'+total_amount+'">'+
-  '<table class="refundTable text-center w-100">'+
-  '<tr><th>Quantity</th><th>Name</th><th>Quantity</th><th>Price</th><th>Total</th></tr>';
+  let html = ';'
+  html += '<input type="hidden" id="refundOrderId" name="refundOrderId" value="'+order_id+'" readonly>';
+  html += '<input type="hidden" id="total_amount" name="total_amount" value="'+total_amount+'" readonly>';
+  html += '<table class="refundTable text-center w-100">';
+  html += '<tr><th>Quantity</th><th>Name</th><th>Quantity</th><th>Price</th><th>Total</th></tr>';
+
   $('.productName_'+order_id).each(function(index){
     let productName = $(this).text();
     let productPrice = $(this).data('price');

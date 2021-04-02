@@ -2265,4 +2265,16 @@ class Ajax extends CI_Controller
         echo json_encode($response);
         return;
     }
+
+    public function refundOrderMoney($orderId): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $orderId = intval($orderId);
+        $post = $this->security->xss_clean($_POST);
+
+        var_dump($orderId);
+        var_dump($post);
+        return;
+    }
 }
