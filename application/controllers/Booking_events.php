@@ -342,16 +342,9 @@ class Booking_events extends BaseControllerWeb
 		$result = json_decode($strResult);
         
 		if ($result->request->result == '1') {
-<<<<<<< HEAD
             $transactionId = $result->transaction->transactionId;
             $reservationIds = $this->session->userdata('reservations');
             $this->bookandpay_model->updateTransactionIdByReservationIds($reservationIds, $transactionId);
-=======
-
-            // sent tbl_bookandpay orderId in array arguments
-            // update row with this is with TransactionId that you get from paynl
-            // it is unique so you can fetch and update book on exchange pay
->>>>>>> c0825d3306bf38c15707dab806d3dacb91fba76e
 			redirect($result->transaction->paymentURL);
 		} else {
 			$this->session->set_flashdata('error', 'Payment engine error. Please, contact staff');
@@ -373,25 +366,13 @@ class Booking_events extends BaseControllerWeb
         if ($get['action'] === 'new_ppt') {
             // WE HAVE SUCCESS
             // transactionId ID IS UNIQUE SO YOU CAN UPDATE paid STATUS TO 1 tbl_bookandpay
-<<<<<<< HEAD
             // 
             //$query = 'UPDATE tbl_bookandpay SET paid = "1" WHERE TransactionID = "' . $this->db->escape($transactionid) . '"';
             //$this->db->queyr($query);
-=======
-            // just update row in tbl with transaction id in step before
-            $query = 'UPDATE tbl_bookandpay SET paid = "1" WHERE TransactionID = "' . $this->db->escape($transactionid) . '"';
-            $this->db->queyr($query);
->>>>>>> c0825d3306bf38c15707dab806d3dacb91fba76e
 
             $this->bookandpay_model->updateBookandpayByTransactionId($transactionid);
             echo('TRUE| '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
-<<<<<<< HEAD
             $this->emailReservation($transactionid);
-=======
-
-            $this->emailReservation();
-
->>>>>>> c0825d3306bf38c15707dab806d3dacb91fba76e
         } else {
 			echo('TRUE| NOT FIND '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
         }
@@ -485,8 +466,8 @@ class Booking_events extends BaseControllerWeb
 				$buyerMobile = $record->mobilephone;
 				$reservationset = $record->reservationset;
 
-				//$fromtime = $record->timefrom;
-				//$totime = $record->timeto;
+				$fromtime = $record->timefrom;
+				$totime = $record->timeto;
 				$paid = $record->paid;
 				$TransactionId = $record->TransactionID;
                 $voucher = $record->voucher;
@@ -558,7 +539,14 @@ class Booking_events extends BaseControllerWeb
 								$mailtemplate = str_replace('[eventZipcode]', $eventZipcode, $mailtemplate);
 								$mailtemplate = str_replace('[ticketDescription]', $ticketDescription, $mailtemplate);
 								$mailtemplate = str_replace('[ticketPrice]', $ticketPrice, $mailtemplate);
+                                $mailtemplate = str_replace('[price]', $ticketPrice, $mailtemplate);
 								$mailtemplate = str_replace('[ticketQuantity]', $ticketQuantity, $mailtemplate);
+                                $mailtemplate = str_replace('[numberOfPersons]', $ticketQuantity, $mailtemplate);
+                                $mailtemplate = str_replace('[startTime]', $fromtime, $mailtemplate);
+								$mailtemplate = str_replace('[endTime]', $totime, $mailtemplate);
+								$mailtemplate = str_replace('[timeSlot]', $timeSlotId, $mailtemplate);
+								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
+								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
 								$subject = 'Your tiqs reservation(s)';
 								$datachange['mailsend'] = 1;
