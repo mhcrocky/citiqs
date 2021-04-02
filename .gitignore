@@ -34,7 +34,7 @@ uploads/qrcodes/*
 
 ## vendor logos
 assets/images/vendorLogos
-
+assets/images/categories_images
 ##Sessions
 system/sessions/
 

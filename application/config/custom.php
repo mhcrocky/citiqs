@@ -519,5 +519,5 @@ $config['ambasadorCokkiePrefix'] = 'crmAmbasador';
 
 
 // category images
-$config['categoriesImagesRelPath'] = 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'categories' . DIRECTORY_SEPARATOR;
+$config['categoriesImagesRelPath'] = 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'categories_images' . DIRECTORY_SEPARATOR;
 $config['categoriesImagesFullPath'] = FCPATH . $config['categoriesImagesRelPath'];
