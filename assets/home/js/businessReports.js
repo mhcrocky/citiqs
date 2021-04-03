@@ -22,7 +22,7 @@ function refundMoney(refundOrderId, totalAmountId, amountId, freeAmountId, descr
     let totalAmountValue = parseFloat(document.getElementById(totalAmountId).value);
     let amountValue = getAmountValue(amountEl);
     let freeAmountValue = parseFloat(freeAmountEl.value);
-    let refundAmount =  Math.abs(amountValue + freeAmountValue);
+    let refundAmount =  Math.abs(amountValue) + Math.abs(freeAmountValue);
 
     if (!validateAmount(amountValue, freeAmountValue, totalAmountValue, refundAmount)) {
         amountEl.style.border = '1px solid #f00';
@@ -51,13 +51,13 @@ function refundMoneyResponse(amountEl, freeAmountEl, response) {
 
 function validateAmount(amountValue, freeAmountValue, totalAmountValue, refundAmount) {
     if (!amountValue && !freeAmountValue) {
-        let message = 'Select free amount or amount'
+        let message = 'Select free amount or amount';
         alertify.error(message);
         return false;
     }
 
     if (refundAmount > totalAmountValue) {
-        let message = 'Refund amount can not be bigger than total order amount'
+        let message = 'Refund amount can not be bigger than total order amount!';
         alertify.error(message);
         return false;
     }
@@ -68,5 +68,5 @@ function validateAmount(amountValue, freeAmountValue, totalAmountValue, refundAm
 function getAmountValue(amountEl) {
     let amount = amountEl.value;
     amount = amount.replace('€', '');
-    return parseFloat(amount);
+    return amount ? parseFloat(amount) : 0;
 }

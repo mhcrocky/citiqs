@@ -785,7 +785,7 @@ function refundModal(order_id, total_amount) {
     '<th><input type="number" style="-moz-appearance: auto;" max="0" min="-'+productQuantity+'" oninput="validateQuantity(this,'+productQuantity+')" onkeyup="validateQuantity(this)" onchange="refundAmount(this,'+index+')" class="form-control ml-auto quantity mb-2" value="0"></th>'+
     '<th class="pl-2 pr-2">€<span id="price_'+index+'">'+productPrice+'</span></th>'+
     '<th>'+
-    '<input type="text" class="form-control amount amount_'+index+' mb-2 ml-auto mr-1" value="€0.00" disabled></th></tr>';
+    '<input type="text" class="form-control amount amount_'+index+' mb-2 ml-auto mr-1" value="0" readonly></th></tr>';
    });
    html += '</table>';
    $('#order_amount').text(parseFloat(total_amount).toFixed(2));

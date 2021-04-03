@@ -125,13 +125,13 @@
             return true;
         }
 
-        public function insertAllGroups(array $vendorIds, array $configProductGroups, array $configPaymentMethods): bool
+        private function insertAllGroups(array $vendorIds, array $configProductGroups, array $configPaymentMethods): bool
         {
             // insert all groups
             $insertGroups = [];
 
-            foreach ($vendorIds as $vendorId) {
-                $vendorId = intval($vendorId['vendorId']);
+            foreach ($vendorIds as $vendor) {
+                $vendorId = intval($vendor['vendorId']);
                 $newGroups = $this->getNewProductGroups($vendorId, $configProductGroups);
                 if ($newGroups) {
                     foreach ($newGroups as $group) {
@@ -144,15 +144,17 @@
                                 'percent' => $this->config->item('paymentPrice')[$group][$method]['percent'],
                                 'amount' => $this->config->item('paymentPrice')[$group][$method]['amount']
                             ];
+                            $this->setInsertActive($insert, $method);
                             array_push($insertGroups, $insert);
                         }
                     }
                 }
             }
+
             return $insertGroups ? ($this->multipleCreate($insertGroups) > 0) : true;
         }
 
-        public function insertAllMethods(array $vendorIds, array $configProductGroups, array $configPaymentMethods): bool
+        private function insertAllMethods(array $vendorIds, array $configProductGroups, array $configPaymentMethods): bool
         {
             // insert all payment methods
             $insertMethods = [];
@@ -170,6 +172,7 @@
                                 'percent' => $this->config->item('paymentPrice')[$group][$method]['percent'],
                                 'amount' => $this->config->item('paymentPrice')[$group][$method]['amount']
                             ];
+                            $this->setInsertActive($insert, $method);
                             array_push($insertMethods, $insert);
                         }
                     }
@@ -177,6 +180,11 @@
             }
 
             return $insertMethods ?  ($this->multipleCreate($insertMethods) > 0) : true;
+        }
+
+        private function setInsertActive(array &$insert, string $method): void
+        {
+            $insert['active'] = in_array($method, $this->config->item('cashPaymentTypes')) ? '0' : '1';
         }
 
         public function getVendorGroupPaymentMethods(): ?array
@@ -216,5 +224,32 @@
             ]);
 
             return !is_null($check);
+        }
+
+        /**
+         * insertVendorPaymentMethods
+         *
+         * This method inserts vendor payment methods on account activation.
+         * First deletes vendor data from table (if activation process is repeat from some reason).
+         *
+         * @access public
+         * @return boolean
+         */
+        public function insertVendorPaymentMethods(): bool
+        {
+            $this->deleteVendorPaymentMethods();
+            $insert = [
+                'vendorId' => $this->vendorId
+            ];
+            return $this->insertAll([$insert]);
+        }
+
+        public function deleteVendorPaymentMethods(): bool
+        {
+            $where = [
+                $this->table . '.vendorId' => $this->vendorId
+            ];
+
+            return $this->customDelete($where);
         }
     }
