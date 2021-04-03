@@ -372,6 +372,8 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/agenda_booking_design.css"/>
 <?php  } elseif ($this->view === 'new_bookings/spots_booking') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/css/card-style.css">
+<?php  } elseif ($this->view === 'new_bookings/index') { ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/agendaCalendar.css">
 <?php } elseif ($this->view === 'templates/listTemplates') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 <?php  } elseif ($this->view === 'voucher/index') { ?>
