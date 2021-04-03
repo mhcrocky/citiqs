@@ -52,7 +52,7 @@
         public function updateValidate(array $data): bool
         {
             $this->load->helper('validate_data_helper');
-            $this->load->custom('config');
+            $this->load->config('custom');
 
             if (!count($data)) return false;
             if (isset($data['vendorId']) && !Validate_data_helper::validateInteger($data['vendorId'])) return false;
