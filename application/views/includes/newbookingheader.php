@@ -14,6 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600&amp;display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://use.fontawesome.com/514f9129d7.js"></script>
     <style>
     .day-agenda {
         background-color: #b3ffb3;
@@ -35,9 +36,7 @@
         }
     }
 
-    <?php
-
-    if(isset($customDesign[0]['design'])) {
+    <?php if(isset($customDesign[0]['design'])) {
         $design=unserialize($customDesign[0]['design'])['selectShortUrl'];
 
         $design_ids=$design['id'];
@@ -61,7 +60,7 @@
     </style>
     <script>
     function customDesignLoad() {
-    <?php 
+        <?php 
         if(isset($customDesign[0]['design']) && isset(unserialize($customDesign[0]['design'])['headerTitle'])){
             $headerTitles = unserialize($customDesign[0]['design'])['headerTitle'];
             foreach($headerTitles as $key => $headerTitle){
@@ -90,7 +89,8 @@
         <div id="booking-form__header" class="row">
             <div class="booking-form__header">
                 <div class="elem" id="agenda-active">
-                    <a class="agenda-active header-text event-text" style="text-decoration:none;color:#fff;font-size:14px;"
+                    <a class="agenda-active header-text event-text"
+                        style="text-decoration:none;color:#fff;font-size:14px;"
                         href="<?php echo base_url(); ?>agenda_booking/spots/<?php echo $this->session->userdata('shortUrl'); ?>">Event
                         Date</a>
                 </div>
@@ -104,7 +104,8 @@
                 </div>
                 <div class="elem" id="timeslot-active">
                     <?php if($this->session->userdata('spotId')): ?>
-                    <a class="timeslot-active header-text timeslot-text" style="text-decoration:none;color:#fff;font-size:14px;"
+                    <a class="timeslot-active header-text timeslot-text"
+                        style="text-decoration:none;color:#fff;font-size:14px;"
                         href="<?php echo base_url(); ?>agenda_booking/time_slots/<?php echo $this->session->userdata('spotId'); ?>">Time
                         Slot</a>
                     <?php else: ?>

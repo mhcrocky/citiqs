@@ -27,10 +27,6 @@
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
 </script>
 <script src="<?php echo base_url(); ?>assets/js/toastr.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/datepicker/js/bootstrap-datepicker.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js"
-    integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg=="
-    crossorigin="anonymous"></script>
 
 <!-- datepicker -->
 
@@ -52,80 +48,7 @@
     }
 })();
 
-$(document).ready(function() {
-    var agenda_dates = JSON.parse('<?php echo isset($agenda_dates) ? json_encode($agenda_dates) : '{}'; ?>');
 
-
-    $('.day').each(function() {
-        var date = $(this).attr('data-daydate');
-        if (agenda_dates.includes(date)) {
-            console.log(date);
-            $(this).addClass('day-agenda');
-        }
-    });
-
-
-});
-
-/* disable previous dates */
-var todayDate = dayjs().format();
-
-$('#date-input').datepicker({
-    startDate: todayDate
-});
-
-
-
-$("#date-input").on('changeMonth', function() {
-    setTimeout(() => {
-        console.log($('.day'));
-        var agenda_dates = JSON.parse(
-            '<?php echo isset($agenda_dates) ? json_encode($agenda_dates) : '{}'; ?>');
-        $('.day').each(function() {
-            var date = $(this).attr('data-daydate');
-            if (agenda_dates.includes(date)) {
-                $(this).addClass('day-agenda');
-            }
-        });
-    }, 20);
-
-});
-
-/* get date from calendar on click */
-$('#date-input').on('changeDate', function() {
-    var agenda_dates = JSON.parse('<?php echo isset($agenda_dates) ? json_encode($agenda_dates) : '{}'; ?>');
-    $('.day').each(function() {
-        var date = $(this).attr('data-daydate');
-        if (agenda_dates.includes(date)) {
-            $(this).addClass('day-agenda');
-        }
-    });
-
-    let getDate = $('#date-input').datepicker('getFormattedDate');
-
-    let d = getDate.split('/');
-    let mm = d[0];
-    let dd = d[1];
-    let yy = d[2];
-    let date = yy + '-' + mm + '-' + dd;
-    $.post('<?php echo base_url(); ?>agenda_booking/get_agenda/<?php echo isset($shortUrl) ? $shortUrl : ''; ?>', {
-        date: date
-    }, function(data) {
-        data = JSON.parse(data);
-        if (typeof data[0] === 'undefined') {
-            toastr.options = {
-                "showDuration": "200",
-                "hideDuration": "1000",
-                "timeOut": "1000"
-            }
-            toastr["error"]("Sorry, we don't have agenda for this date!");
-            return;
-        }
-        let agenda_id = data[0]['id'];
-        let dateFormat = date.replace('-', '').replace('-', '');
-        location.href = "<?php echo base_url(); ?>agenda_booking/spots/" + dateFormat + "/" + agenda_id;
-    });
-});
 
 /* get number of persons on click */
 $('#person-input .form-check-label').on('click', function() {
