@@ -74,15 +74,15 @@
 								?>
 								<tr class='translate-row'>
 									<td  width="20%" style="word-wrap:break-word;">
-										<?php strip_tags("$translation->key"); ?>
+										<?php echo strip_tags("$translation->key"); ?>
 									</td>
 									<td  width="20px" style="word-wrap:break-word;">
-										<?php $translation->langID; ?>
+										<?php echo $translation->langID; ?>
 									</td>
 									<td class='translation-edit-field' >
-										<textarea class='edit-translation disabled' rows="4" cols="100" id="<?php $translation->id;?>" type="text" form="translationsForm" ><?php strip_tags("$translation->text"); ?></textarea>
-										<a type="button" data-id="<?php $translation->id;?>" class="btn button-green submit-translate" value="Save" />Save</a>
-										<a type="button" data-id="<?php $translation->id;?>" class="btn button-orange delete-translate" value="Delete" />Delete</a>
+										<textarea class='edit-translation disabled' rows="4" cols="100" id="<?php echo $translation->id;?>" type="text" form="translationsForm" ><?php echo strip_tags("$translation->text"); ?></textarea>
+										<a type="button" data-id="<?php echo $translation->id;?>" class="btn button-green submit-translate" value="Save" />Save</a>
+										<a type="button" data-id="<?php echo $translation->id;?>" class="btn button-orange delete-translate" value="Delete" />Delete</a>
 									</td>
 								</tr>
 							<?php }
