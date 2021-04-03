@@ -53,10 +53,23 @@ class Agenda_booking extends BaseControllerWeb
         ]);
 
 
-        $data['agendas'] = $this->bookandpayagendabooking_model->getbookingagenda($customer->id);
-        $data['agenda_dates'] = $this->bookandpayagendabooking_model->getbookingagendadate($customer->id);
+        
+        $agendas = $this->bookandpayagendabooking_model->getbookingagenda($customer->id);
+        $agendas_calendar = [];
 
+        foreach($agendas as $agenda){
+            $date = explode(' ', $agenda->ReservationDateTime)[0];
+			$dateFormat = str_replace('-', '', $date);
+            $agendas_calendar[] = [
+                'eventName' => $agenda->ReservationDescription,
+                'dateTime' => $agenda->ReservationDateTime,
+                'calendar' => 'Other',
+                'color' => 'green',
+                'spotLink' => base_url() . 'agenda_booking/spots/' . $dateFormat . '/' . $agenda->id
+            ];
+        }
 
+        $data['agendas_calendar'] = $agendas_calendar;
         $logoUrl = 'assets/user_images/no_logo.png';
         if ($customer->logo) {
 			$logoUrl = 'assets/images/vendorLogos/' . $customer->logo;
