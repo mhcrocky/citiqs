@@ -217,7 +217,6 @@
 <?php } elseif ($this->view === 'new_bookings/agenda_booking_design') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jscolor.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/agenda_booking_design.js"></script>
-
 <?php } elseif ($this->view === 'templates/addTemplate') { ?>
 <!--	<script src='--><?php //echo $this->baseUrl; ?><!--assets/home/js/tinymce.min.js?apiKey=pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu'></script>-->
 	 <script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
