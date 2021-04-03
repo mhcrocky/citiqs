@@ -8,6 +8,7 @@ function loadTable(tableId) {
             {
                 "name": "id",
                 "targets": 0,
+                "visible": false,
                 "data": function(row, type, val, meta) {
                     return row.id;
                 }
@@ -27,22 +28,29 @@ function loadTable(tableId) {
                 }
             },
             {
-                "name": "vendorCost",
+                "name": "active",
                 "targets": 3,
                 "data": function(row, type, val, meta) {
-                    return returnCost(tableId, row.id, row.vendorCost, 'vendorCost');
+                    return returnActive(tableId, row.id, row.active);
+                }
+            },
+            {
+                "name": "vendorCost",
+                "targets": 4,
+                "data": function(row, type, val, meta) {
+                    return returnCost(tableId, row.id, row.vendorCost);
                 }
             },
             {
                 "name": "percent",
-                "targets": 4,
+                "targets": 5,
                 "data": function(row, type, val, meta) {
                     return row.percent;
                 }
             },
             {
                 "name": "amount",
-                "targets": 5,
+                "targets": 6,
                 "data": function(row, type, val, meta) {
                     return row.amount;
                 }
@@ -51,7 +59,7 @@ function loadTable(tableId) {
     });
 }
 
-function returnCost(tableId, id, value, type) {
+function returnCost(tableId, id, value) {
     let html = '';
     let newValue = (value === '0') ? '1' : '0';
 
@@ -59,7 +67,6 @@ function returnCost(tableId, id, value, type) {
     html +=     'data-table-id="' + tableId + '" ';
     html +=     'data-row-id="' + id + '" ';
     html +=     'data-value="' + newValue + '" ';
-    html +=     'data-type="' + type + '" ';
     html +=     'onclick="updatePaymentMethodCost(this)" title="Click to change"';
     html += '>';
     html +=     (value === '1') ? 'Yes' : 'No';
@@ -79,20 +86,16 @@ function returnPaymetType(row) {
 
 function updatePaymentMethodCost(element) {
     let data = element.dataset;
-    let post = {};
-    let secondValue = (data['value'] === '1') ? '0' : '1';
-    let secondType = (data['type'] === 'vendorCost') ? 'buyerCost' : 'vendorCost';
-    
-    post[data['type']] = data['value'];
-    post[secondType] = secondValue;
-
+    let post = {
+        'vendorCost' : data['value']
+    }
     let url = globalVariables.ajax + 'updatePaymentMethodCost/' + data['rowId'];
 
-    sendAjaxPostRequest(post, url, 'updatePaymentMethodCost', updatePaymentMethodCostResponse, [data['tableId']]);
+    sendAjaxPostRequest(post, url, 'updatePaymentMethodCost', updatePaymentMethodResponse, [data['tableId']]);
     return;
 }
 
-function updatePaymentMethodCostResponse(tableId, response) {
+function updatePaymentMethodResponse(tableId, response) {
     alertifyAjaxResponse(response);
     if (response['status'] === '1') {
         reloadTable(tableId);
@@ -106,6 +109,33 @@ function loadAllTables(tableIds) {
         loadTable(index);
     }
 
+    return;
+}
+
+function returnActive(tableId, id, value) {
+    let html = '';
+    let newValue = (value === '0') ? '1' : '0';
+
+    html += '<p '
+    html +=     'data-table-id="' + tableId + '" ';
+    html +=     'data-row-id="' + id + '" ';
+    html +=     'data-value="' + newValue + '" ';
+    html +=     'onclick="updatePaymentMethodActive(this)" title="Click to change"';
+    html += '>';
+    html +=     (value === '1') ? 'Yes' : 'No';
+    html += '</p>';
+
+    return html;
+}
+
+function updatePaymentMethodActive(element) {
+    let data = element.dataset;
+    let url = globalVariables.ajax + 'activatePaymentMethod/' + data['rowId'];
+    let post = {
+        'active' : data['value']
+    }
+
+    sendAjaxPostRequestImproved(post, url, updatePaymentMethodResponse, [data['tableId']]);
     return;
 }
 

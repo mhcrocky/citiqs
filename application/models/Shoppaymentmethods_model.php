@@ -186,6 +186,7 @@
                     $this->table . '.id',
                     $this->table . '.productGroup',
                     $this->table . '.paymentMethod',
+                    $this->table . '.active',
                     $this->table . '.vendorCost',
                     $this->table . '.percent',
                     $this->table . '.amount'
@@ -195,5 +196,25 @@
                     $this->table . '.productGroup' => $this->productGroup,
                 ]
             ]);
+        }
+
+        public function updatePaymentMethod(): bool
+        {
+            if (!$this->checkIsVendorRecord()) return false;
+
+            return $this->update();
+        }
+
+        private function checkIsVendorRecord(): bool
+        {
+            $check = $this->readImproved([
+                'what' => [$this->table . '.id'],
+                'where' => [
+                    $this->table . '.id' => $this->id,
+                    $this->table . '.vendorId' => $this->vendorId,
+                ]
+            ]);
+
+            return !is_null($check);
         }
     }

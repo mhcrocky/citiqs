@@ -39,6 +39,7 @@
                         <th>ID</th>
                         <th>Product group</th>
                         <th>Payment method</th>
+                        <th>Active</th>
                         <th>Vendor cost</th>
                         <th>Percent (cost)</th>
                         <th>Amount (cost)</th>

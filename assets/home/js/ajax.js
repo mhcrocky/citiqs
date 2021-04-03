@@ -24,6 +24,7 @@ function sendFormDataAjaxRequest(formData, url, callBack, callFunction = null, f
         }
     });
 }
+
 function sendAjaxPostRequest(post, url, callBack, callFunction = null, functionArg = []) {
     $.ajax({
         url: url,
@@ -35,6 +36,24 @@ function sendAjaxPostRequest(post, url, callBack, callFunction = null, functionA
                 callThis[callBack].apply(data, [callFunction, functionArg]);
             } else {
                 callThis[callBack].apply(data);
+            }
+        },
+        error: function (err) {
+            console.dir(err);
+        }
+    });
+}
+
+function sendAjaxPostRequestImproved(post, url, callFunction = null, functionArg = []) {
+    $.ajax({
+        url: url,
+        data: post,
+        type: 'POST',
+        success: function (response) {
+            let data = JSON.parse(response);
+            if (callFunction) {
+                functionArg.push(data);
+                callFunction(...functionArg);
             }
         },
         error: function (err) {
