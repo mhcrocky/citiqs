@@ -29,6 +29,7 @@
 				<select name="language" id="language">
 					<option value="" selected disabled hidden>Choose here</option>
 					<?php
+					
 					foreach ($results as $result) {
 						if (set_value("language") != null && set_value("language") == $result->language) {
 							$selected = ' selected="selected"';
@@ -36,7 +37,7 @@
 							$selected = "";
 						}
 						?>
-						<option value="<?php $result->language; ?>"<?php $selected; ?>><?php $result->language; ?></option>
+						<option value="<?php echo $result->language; ?>" <?php echo $selected; ?>><?php echo $result->language; ?></option>
 					<?php } ?>
 				</select>
 			</div>
