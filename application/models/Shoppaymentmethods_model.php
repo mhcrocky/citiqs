@@ -14,7 +14,6 @@
         public $productGroup;
         public $paymentMethod;
         public $vendorCost;
-        public $buyerCost;
         public $percent;
         public $amount;
 
@@ -59,67 +58,14 @@
             if (isset($data['vendorId']) && !Validate_data_helper::validateInteger($data['vendorId'])) return false;
             if (isset($data['productGroup']) && !in_array($data['productGroup'], $this->config->item('productGroups'))) return false;
             if (isset($data['paymentMethod']) && !in_array($data['paymentMethod'], $this->config->item('onlinePaymentTypes'))) return false;
+            if (isset($data['vendorCost']) && !($data['vendorCost'] === '0' || $data['vendorCost'] === '1')) return false;
             if (isset($data['percent']) && !Validate_data_helper::validateFloat($data['percent'])) return false;
             if (isset($data['amount']) && !Validate_data_helper::validateFloat($data['amount'])) return false;
 
             return true;
         }
 
-        // COMMENTED METHODS ONLY FOR ONE VENDOR
-        // public function insertProductGroupsAndPaymentMethods(int $vendorId): bool
-        // {
-        //     $this->load->config('custom');
-        //     list($configProductGroups, $configPaymentMethods) = $this->getGroupAndMethods();
 
-        //     if (
-        //         !$this->insertNewGroups($vendorId, $configProductGroups, $configPaymentMethods)
-        //         || !$this->insertNewMethods($vendorId, $configProductGroups, $configPaymentMethods)
-        //     ) return false;
-
-        //     return true;
-        // }
-
-        // public function insertNewGroups(int $vendorId, array $configProductGroups, array $configPaymentMethods): bool
-        // {
-        //     $newGroups = $this->getNewProductGroups($vendorId, $configProductGroups);
-
-        //     if ($newGroups) {
-        //         foreach ($newGroups as $group) {
-        //             foreach ($configPaymentMethods as $method) {
-        //                 $insert = [
-        //                     'vendorId' => $vendorId,
-        //                     'productGroup' => $group,
-        //                     'paymentMethod' => $method
-        //                 ];
-        //                 if (!$this->setObjectFromArray($insert)->create()) return false;
-        //             }
-        //         }
-        //     }
-
-        //     return true;
-        // }
-
-        // public function insertNewMethods(int $vendorId, array $configProductGroups, array $configPaymentMethods): bool
-        // {
-
-        //     foreach ($configProductGroups as $group) {
-        //         $newMethods = $this->getNewPaymentMethods($vendorId, $configPaymentMethods, $group);
-        //         if ($newMethods) {
-        //             foreach ($newMethods as $method) {
-        //                 $insert = [
-        //                     'vendorId' => $vendorId,
-        //                     'productGroup' => $group,
-        //                     'paymentMethod' => $method,
-        //                     'percent' => $this->config->item('paymentPrice')[$group][$method]['percent'],
-        //                     'amount' => $this->config->item('paymentPrice')[$group][$method]['amount']
-        //                 ];
-        //                 if (!$this->setObjectFromArray($insert)->create()) return false;
-        //             }
-        //         }
-        //     }
-
-        //     return true;
-        // }
 
         private function getGroupAndMethods(): array
         {
@@ -241,7 +187,6 @@
                     $this->table . '.productGroup',
                     $this->table . '.paymentMethod',
                     $this->table . '.vendorCost',
-                    $this->table . '.buyerCost',
                     $this->table . '.percent',
                     $this->table . '.amount'
                 ],

@@ -23,10 +23,7 @@ function loadTable(tableId) {
                 "name": "paymentMethod",
                 "targets": 2,
                 "data": function(row, type, val, meta) {
-                    if (row.paymentMethod === 'prePaid' || row.paymentMethod === 'postPaid') {
-                        return 'Cash payment';
-                    }
-                    return row.paymentMethod;
+                    return returnPaymetType(row);
                 }
             },
             {
@@ -37,22 +34,15 @@ function loadTable(tableId) {
                 }
             },
             {
-                "name": "buyerCost",
-                "targets": 4,
-                "data": function(row, type, val, meta) {
-                    return returnCost(tableId, row.id, row.buyerCost, 'buyerCost');
-                }
-            },
-            {
                 "name": "percent",
-                "targets": 5,
+                "targets": 4,
                 "data": function(row, type, val, meta) {
                     return row.percent;
                 }
             },
             {
                 "name": "amount",
-                "targets": 6,
+                "targets": 5,
                 "data": function(row, type, val, meta) {
                     return row.amount;
                 }
@@ -76,6 +66,15 @@ function returnCost(tableId, id, value, type) {
     html += '</p>';
 
     return html;
+}
+
+function returnPaymetType(row) {
+    if (row.paymentMethod === 'prePaid') {
+        return 'Cash payment (pre paid)';
+    } else if (row.paymentMethod === 'postPaid') {
+        return 'Cash payment (post paid)';
+    }
+    return row.paymentMethod;
 }
 
 function updatePaymentMethodCost(element) {
