@@ -2289,7 +2289,8 @@ class Ajax extends CI_Controller
             return;
         }
 
-        if (floatval($post['amount']) > floatval($this->shoporder_model->getProperty('amount'))) {
+        $checkAmount = floatval($this->shoporder_model->getProperty('serviceFee')) + floatval($this->shoporder_model->getProperty('amount'));
+        if (floatval($post['amount']) > $checkAmount) {
             $response = [
                 'status' => '0',
                 'messages' => ['Refund amount can not be bigger than total order amount']
