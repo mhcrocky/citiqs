@@ -25,8 +25,8 @@ class Login extends BaseControllerWeb
 		$this->load->model('shopproduct_model');
 		$this->load->model('shopproductex_model');
 		$this->load->model('shopproductaddons_model');
-
 		$this->load->model('shopspotproduct_model');
+		$this->load->model('shoppaymentmethods_model');
 
 		$this->load->helper('google_helper');
 		$this->load->helper('utility_helper');
@@ -390,6 +390,7 @@ class Login extends BaseControllerWeb
 
 		// insert initail printer
 		$this->shopprinters_model->setProperty('macNumber', $userId)->setProperty('userId', $userId)->insertInitialPrinter();
+
 		// insert initail spot
 		$this->shopspot_model->setProperty('printerId', $this->shopprinters_model->id)->insertInitialSpot();
 
@@ -446,6 +447,9 @@ class Login extends BaseControllerWeb
 
 		// insert vendor working times
 		$this->shopvendortime_model->setProperty('vendorId', $this->user_model->id)->insertVendorTime();
+
+		//insert payment methods
+		$this->shoppaymentmethods_model->setProperty('vendorId', $userId)->insertVendorPaymentMethods();
 
 		// insert user in perfex crm		
 		Perfex_helper::apiCustomer($this->user_model);
@@ -847,7 +851,7 @@ class Login extends BaseControllerWeb
 	public function registerbusinessAction()
 	{
 		$this->form_validation->set_rules('username', 'Full Name', 'trim|required|max_length[128]');
-		//		$this->form_validation->set_rules('usershorturl', 'User short url', 'trim|required|max_length[128]');
+		// $this->form_validation->set_rules('usershorturl', 'User short url', 'trim|required|max_length[128]');
 		$this->form_validation->set_rules('first_name', 'Full Name', 'trim|required|max_length[128]');
 		$this->form_validation->set_rules('second_name', 'Full Name', 'trim|required|max_length[128]');
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|max_length[128]|is_unique[tbl_user.email]');
