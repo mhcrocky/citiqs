@@ -2289,7 +2289,7 @@ class Ajax extends CI_Controller
             return;
         }
 
-        $checkAmount = floatval($this->shoporder_model->getProperty('serviceFee')) + floatval($this->shoporder_model->getProperty('amount'));
+        $checkAmount = floatval($this->shoporder_model->getProperty('serviceFee')) + floatval($this->shoporder_model->getProperty('amount')) + floatval($this->shoporder_model->getProperty('waiterTip'));
         if (floatval($post['amount']) > $checkAmount) {
             $response = [
                 'status' => '0',
