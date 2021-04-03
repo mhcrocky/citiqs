@@ -102,6 +102,9 @@
                                         <span class="span_action" @click="goToTimeSlots(spot)">
                                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
                                         </span>
+                                        <span title="Copy Spot" class="span_action" @click="copySpot(spot)">
+                                            <i class="fa fa-copy" aria-hidden="true"></i>
+                                        </span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -232,6 +235,12 @@
                                 </div>
 
                             </div>
+                            <div class="form-group">
+                            <label for="online">Copy from:</label>
+                            <select style="width: 100%;" id="spots" class="form-control js-spots-basic-multiple" name="SpotsTimeslots[]" multiple="multiple">
+                                <option v-for="spot in spots" :key="spot.id" :value="spot.id">{{ spot.descript }} </option>
+                            </select>
+                        </div>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -353,6 +362,12 @@
                     tinymce.activeEditor.setContent(templateContent);
                 });
             },
+            copySpot(spot) {
+                
+                this.spotModalData = Object.assign({}, spot);
+                $('#background_color').val(this.spotModalData.Background).trigger('change');
+                $('#copy_agenda_modal').modal('show');
+            },
             goToTimeSlots(spot) {
                 location.href = this.baseURL + 'customer_panel/time_slots/' + spot.id
             },
@@ -385,6 +400,7 @@
                 formData.append("agenda_id", this.spotModalData.agenda_id);
                 formData.append("email_id", this.spotModalData.email_id);
                 formData.append("spotLabelId", this.spotModalData.spotLabelId);
+                formData.append("spots", $('#spots').val());
                 if (this.spotModalData.id) {
                     formData.append("id", this.spotModalData.id);
                 }

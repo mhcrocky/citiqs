@@ -212,7 +212,7 @@ class Ajaxdorian extends CI_Controller
                 
                 $agendas = $this->input->post('agendas');
                 $this->bookandpayagendabooking_model->copy_from_agenda($agendas,$agenda_id);
-            }
+            } 
         }
 
         if ($agenda_id) {
@@ -304,6 +304,11 @@ class Ajaxdorian extends CI_Controller
             $this->bookandpayspot_model->updateSpot($spotData, $spot_id);
         } else {
             $spot_id = $this->bookandpayspot_model->addSpot($spotData);
+            if(!empty($this->input->post('spots')) && $this->input->post('spots')  != 'null' && $this->input->post('spots')  != null){
+                
+                $agendas = $this->input->post('agendas');
+                $this->bookandpayagendabooking_model->copy_from_agenda($agendas,$agenda_id);
+            } 
         };
 
         $spot = $this->bookandpayspot_model->getSpot($spot_id);
