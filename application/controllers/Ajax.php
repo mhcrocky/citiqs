@@ -2192,9 +2192,14 @@ class Ajax extends CI_Controller
     {
         if (!$this->input->is_ajax_request()) return;
 
-        $post = Utility_helper::sanitizePost();
+        $vendorCost = $this->input->post('vendorCost', true);
 
-        $update = $this->shoppaymentmethods_model->setObjectId(intval($id))->setObjectFromArray($post)->update();
+        $update = $this
+                    ->shoppaymentmethods_model
+                        ->setObjectId(intval($id))
+                        ->setProperty('vendorId', intval($_SESSION['userId']))
+                        ->setProperty('vendorCost', $vendorCost)
+                        ->updatePaymentMethod();
 
         if ($update) {
             $response = [
@@ -2307,6 +2312,31 @@ class Ajax extends CI_Controller
         $post['amount'] = intval($post['amount'] * 100);
         $response = $this->shoporder_model->refundOrder($post);
         echo json_encode($response);
+        return;
+    }
+
+    public function activatePaymentMethod($id): void
+    {
+        $active = $this->input->post('active', true);
+        $update = $this
+                    ->shoppaymentmethods_model
+                        ->setObjectId(intval($id))
+                        ->setProperty('vendorId', intval($_SESSION['userId']))
+                        ->setProperty('active', $active)
+                        ->updatePaymentMethod();
+
+        if ($update) {
+            $message = ($active === '1') ? 'Method activated' : 'Method deactivated';
+            $status = '1';
+        } else {
+            $message = 'Activation failed';
+            $status = '0';
+        }
+
+        echo json_encode([
+            'status' => $status,
+            'messages' => [$message]
+        ]);
         return;
     }
 }

@@ -236,83 +236,86 @@
 							value="<?php echo $vendor['serviceFeeTax']; ?>"
 							/>
 					</div>
+					<!--
 					<h4>SELECT PAYMENT METHOD(S)</h4>
 					<div class="form-check-inline mb-35">
 						<div class="col-lg-6">
 							<div class="form-group">
 								<h4>BANCONTACT</h4>
 								<label class="radio-inline" for="bancontactYes">Yes</label>
-								<input type="radio" id="bancontactYes" name="vendor[bancontact]" value="1" <?php if ($vendor['bancontact'] === '1') echo 'checked'; ?> />
+								<input type="radio" id="bancontactYes" name="vendor[bancontact]" value="1" <?php #if ($vendor['bancontact'] === '1') echo 'checked'; ?> />
 								<label class="radio-inline" for="bancontactNo">&nbsp;&nbsp;&nbsp;No</label>
-								<input type="radio" id="bancontactNo" name="vendor[bancontact]" value="0" <?php if ($vendor['bancontact'] === '0') echo 'checked'; ?> />
+								<input type="radio" id="bancontactNo" name="vendor[bancontact]" value="0" <?php #if ($vendor['bancontact'] === '0') echo 'checked'; ?> />
 							</div>
 							<div class="form-group">
 								<h4>PAYCONIQ</h4>
 								<label class="radio-inline" for="payconiqYes">Yes</label>
-								<input type="radio" id="payconiqYes" name="vendor[payconiq]" value="1" <?php if ($vendor['payconiq'] === '1') echo 'checked'; ?> />
+								<input type="radio" id="payconiqYes" name="vendor[payconiq]" value="1" <?php #if ($vendor['payconiq'] === '1') echo 'checked'; ?> />
 								<label class="radio-inline" for="bancontactNo">&nbsp;&nbsp;&nbsp;No</label>
-								<input type="radio" id="payconiqNo" name="vendor[payconiq]" value="0" <?php if ($vendor['payconiq'] === '0') echo 'checked'; ?> />
+								<input type="radio" id="payconiqNo" name="vendor[payconiq]" value="0" <?php #if ($vendor['payconiq'] === '0') echo 'checked'; ?> />
 							</div>
 							<div class="form-group mb-35">
 								<h4>IDEAL</h4>
 								<label class="radio-inline" for="idealYes">Yes</label>
-								<input type="radio" id="idealYes" name="vendor[ideal]" value="1" <?php if ($vendor['ideal'] === '1') echo 'checked'; ?> />
+								<input type="radio" id="idealYes" name="vendor[ideal]" value="1" <?php #if ($vendor['ideal'] === '1') echo 'checked'; ?> />
 								<label class="radio-inline" for="idealNo">&nbsp;&nbsp;&nbsp;No</label>
-								<input type="radio" id="idealNo" name="vendor[ideal]" value="0" <?php if ($vendor['ideal'] === '0') echo 'checked'; ?> />
+								<input type="radio" id="idealNo" name="vendor[ideal]" value="0" <?php #if ($vendor['ideal'] === '0') echo 'checked'; ?> />
 							</div>
 							<div class="form-group mb-35">
 								<h4>My Bank</h4>
 								<label class="radio-inline" for="myBankYes">Yes</label>
-								<input type="radio" id="myBankYes" name="vendor[myBank]" value="1" <?php if ($vendor['myBank'] === '1') echo 'checked'; ?> />
+								<input type="radio" id="myBankYes" name="vendor[myBank]" value="1" <?php #if ($vendor['myBank'] === '1') echo 'checked'; ?> />
 								<label class="radio-inline" for="myBankNo">&nbsp;&nbsp;&nbsp;No</label>
-								<input type="radio" id="myBankNo" name="vendor[myBank]" value="0" <?php if ($vendor['myBank'] === '0') echo 'checked'; ?> />
+								<input type="radio" id="myBankNo" name="vendor[myBank]" value="0" <?php #if ($vendor['myBank'] === '0') echo 'checked'; ?> />
 							</div>							
 							<div class="form-group mb-35">
 								<h4>VISA / MASTERCARD</h4>
 								<label class="radio-inline" for="creditCardYes">Yes</label>
-								<input type="radio" id="creditCardYes" name="vendor[creditCard]" value="1" <?php if ($vendor['creditCard'] === '1') echo 'checked'; ?> />
+								<input type="radio" id="creditCardYes" name="vendor[creditCard]" value="1" <?php #if ($vendor['creditCard'] === '1') echo 'checked'; ?> />
 								<label class="radio-inline" for="creditCardNo">&nbsp;&nbsp;&nbsp;No</label>
-								<input type="radio" id="creditCardNo" name="vendor[creditCard]" value="0" <?php if ($vendor['creditCard'] === '0') echo 'checked'; ?> />
+								<input type="radio" id="creditCardNo" name="vendor[creditCard]" value="0" <?php #if ($vendor['creditCard'] === '0') echo 'checked'; ?> />
 							</div>
 						</div>
 						<div class="col-lg-6">
 							<div class="form-group mb-35">
 								<h4>GIRO</h4>
 								<label class="radio-inline" for="giroYes">Yes</label>
-								<input type="radio" id="giroYes" name="vendor[giro]" value="1" <?php if ($vendor['giro'] === '1') echo 'checked'; ?> />
+								<input type="radio" id="giroYes" name="vendor[giro]" value="1" <?php #if ($vendor['giro'] === '1') echo 'checked'; ?> />
 								<label class="radio-inline" for="giroNo">&nbsp;&nbsp;&nbsp;No</label>
-								<input type="radio" id="giroNo" name="vendor[giro]" value="0" <?php if ($vendor['giro'] === '0') echo 'checked'; ?> />
+								<input type="radio" id="giroNo" name="vendor[giro]" value="0" <?php #if ($vendor['giro'] === '0') echo 'checked'; ?> />
 							</div>
 							<div class="form-group mb-35">
 								<h4>PREPAID</h4>
 								<label class="radio-inline" for="prePaidYes">Yes</label>
-								<input type="radio" id="prePaidYes" name="vendor[prePaid]" value="1" <?php if ($vendor['prePaid'] === '1') echo 'checked'; ?> />
+								<input type="radio" id="prePaidYes" name="vendor[prePaid]" value="1" <?php #if ($vendor['prePaid'] === '1') echo 'checked'; ?> />
 								<label class="radio-inline" for="prePaidNo">&nbsp;&nbsp;&nbsp;No</label>
-								<input type="radio" id="prePaidNo" name="vendor[prePaid]" value="0" <?php if ($vendor['prePaid'] === '0') echo 'checked'; ?> />
+								<input type="radio" id="prePaidNo" name="vendor[prePaid]" value="0" <?php #if ($vendor['prePaid'] === '0') echo 'checked'; ?> />
 							</div>
 							<div class="form-group mb-35">
 								<h4>POST PAID</h4>
 								<label class="radio-inline" for="postPaidYes">Yes</label>
-								<input type="radio" id="postPaidYes" name="vendor[postPaid]" value="1" <?php if ($vendor['postPaid'] === '1') echo 'checked'; ?> />
+								<input type="radio" id="postPaidYes" name="vendor[postPaid]" value="1" <?php #if ($vendor['postPaid'] === '1') echo 'checked'; ?> />
 								<label class="radio-inline" for="postPaidNo">&nbsp;&nbsp;&nbsp;No</label>
-								<input type="radio" id="postPaidNo" name="vendor[postPaid]" value="0" <?php if ($vendor['postPaid'] === '0') echo 'checked'; ?> />
+								<input type="radio" id="postPaidNo" name="vendor[postPaid]" value="0" <?php #if ($vendor['postPaid'] === '0') echo 'checked'; ?> />
 							</div>
 							<div class="form-group mb-35">
 								<h4>VOUCHER</h4>
 								<label class="radio-inline" for="vaucherYes">Yes</label>
-								<input type="radio" id="vaucherYes" name="vendor[vaucher]" value="1" <?php if ($vendor['vaucher'] === '1') echo 'checked'; ?> />
+								<input type="radio" id="vaucherYes" name="vendor[vaucher]" value="1" <?php #if ($vendor['vaucher'] === '1') echo 'checked'; ?> />
 								<label class="radio-inline" for="vaucherNo">&nbsp;&nbsp;&nbsp;No</label>
-								<input type="radio" id="vaucherNo" name="vendor[vaucher]" value="0" <?php if ($vendor['vaucher'] === '0') echo 'checked'; ?> />
+								<input type="radio" id="vaucherNo" name="vendor[vaucher]" value="0" <?php #if ($vendor['vaucher'] === '0') echo 'checked'; ?> />
 							</div>
 							<div class="form-group mb-35">
 								<h4>PIN MACHINE</h4>
 								<label class="radio-inline" for="pinMachineYes">Yes</label>
-								<input type="radio" id="pinMachineYes" name="vendor[pinMachine]" value="1" <?php if ($vendor['pinMachine'] === '1') echo 'checked'; ?> />
+								<input type="radio" id="pinMachineYes" name="vendor[pinMachine]" value="1" <?php #if ($vendor['pinMachine'] === '1') echo 'checked'; ?> />
 								<label class="radio-inline" for="pinMachineNo">&nbsp;&nbsp;&nbsp;No</label>
-								<input type="radio" id="pinMachineNo" name="vendor[pinMachine]" value="0" <?php if ($vendor['pinMachine'] === '0') echo 'checked'; ?> />
+								<input type="radio" id="pinMachineNo" name="vendor[pinMachine]" value="0" <?php #if ($vendor['pinMachine'] === '0') echo 'checked'; ?> />
 							</div>
 						</div>
 					</div>
+					-->
+					
 					<br/>
 					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />
