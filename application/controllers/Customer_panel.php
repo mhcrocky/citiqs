@@ -129,6 +129,8 @@ class  Customer_panel extends BaseControllerWeb
         $this->global['page'] = 'timeslots';
 
         $emails = $this->email_templates_model->get_emails_by_user($this->user_model->id);
+        $spot = $this->bookandpayspot_model->getSpot($spotId);
+
         //there should be at least one email template
         if(!$emails) {
             redirect('customer_panel/agenda');
@@ -137,7 +139,7 @@ class  Customer_panel extends BaseControllerWeb
         $data = [
             'user' => $this->user_model,
             'emails' => $emails,
-            'agendaId' => isset($spots[0]) ? $spots[0]->agenda_id : ''
+            'agendaId' => isset($spot) ? $spot->agenda_id : ''
         ];
 
         if($spotId){
