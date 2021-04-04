@@ -357,7 +357,6 @@ const templateGlobals = (function() {
                 });
             },
             copyAgenda(agenda) {
-                
                 this.agendaModalData = Object.assign({}, agenda);
                 this.agendaModalData.ReservationDescription = '';
                 this.agendaModalData.ReservationDateTime = '';
@@ -419,7 +418,7 @@ const templateGlobals = (function() {
                 formData.append("online", this.agendaModalData.online);
                 formData.append("Background", this.agendaModalData.Background);
                 formData.append("email_id", this.agendaModalData.email_id);
-                formData.append("agendas", $('#agendas').val());
+                formData.append("agendas", this.agendaModalData.id);
 
 
                 axios.post(this.baseURL + 'ajaxdorian/saveAgenda', formData

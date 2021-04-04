@@ -306,8 +306,12 @@ class Ajaxdorian extends CI_Controller
             $spot_id = $this->bookandpayspot_model->addSpot($spotData);
             if(!empty($this->input->post('spots')) && $this->input->post('spots')  != 'null' && $this->input->post('spots')  != null){
                 
-                $agendas = $this->input->post('agendas');
-                $this->bookandpayagendabooking_model->copy_from_agenda($agendas,$agenda_id);
+                $oldspotIds = explode(',', $this->input->post('spots'));
+
+                foreach($oldspotIds as $oldspotId){
+                    $this->bookandpayagendabooking_model->copy_timeslots($oldspotId,$spot_id);
+                }
+
             } 
         };
 

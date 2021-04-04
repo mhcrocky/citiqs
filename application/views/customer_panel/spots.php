@@ -250,10 +250,129 @@
                 </div>
             </div>
         </div>
+
+
+
+        <div class="modal fade" id="copy_spot_modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Add spot</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="descript">Agenda</label>
+                                <search-select :options="agendasOptions" v-model="modalAgendaId"
+                                    placeholder="Select agenda"></search-select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="descript">SPOT(Service Point Or Table)</label>
+                                <input type="text" name="descript" v-model="spotModalData.descript" class="form-control"
+                                    id="descript" placeholder="SPOT Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="copysoldoutdescript">Sold out Description</label>
+                                <input type="text" name="soldoutdescript" v-model="spotModalData.soldoutdescript"
+                                    class="form-control" id="copysoldoutdescript" placeholder="Sold out Description">
+                            </div>
+                            <div class="form-group">
+                                <label for="copypricingdescript">Pricing Description</label>
+                                <input type="text" name="pricingdescript" v-model="spotModalData.pricingdescript"
+                                    class="form-control" id="copypricingdescript" placeholder="Pricing Description">
+                            </div>
+                            <div class="form-group">
+                                <label for="copyfeedescript">Fee Description</label>
+                                <input type="text" name="feedescript" v-model="spotModalData.feedescript"
+                                    class="form-control" id="copyfeedescript" placeholder="Fee Description">
+                            </div>
+                            <div class="form-group">
+                                <label for="copyspotLabel">Spot Label</label>
+                                <select @change="selectSpotLabel()" class="form-control" id="copyspotLabelId"
+                                    name="spotLabelId" v-model="spotModalData.spotLabelId">
+                                    <option value="0" data-available="none" selected>None</option>
+                                    <option v-for="spotLabel in spotsLabel" :value="spotLabel.id"
+                                        :data-available="spotLabel.area_count" :key="spotLabel.id">
+                                        {{spotLabel.area_label}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="available_items">Maximum available SPOTS</label>
+                                <input type="text" name="available_items" v-model.lazy="spotModalData.available_items"
+                                    class="form-control" id="available_items" placeholder="Available for booking">
+                            </div>
+                            <div class="form-group">
+                                <label for="sort_order">Ranking Order</label>
+                                <input type="number" name="sort_order" v-model="spotModalData.sort_order"
+                                    class="form-control" id="sort_order" placeholder="Ranking Order">
+                            </div>
+                            <div class="form-group">
+                                <label for="numberofpersons">Number Of Persons</label>
+                                <input type="number" name="numberofpersons" v-model="spotModalData.numberofpersons"
+                                    class="form-control" id="numberofpersons" placeholder="Number of persons">
+                            </div>
+                            <div class="form-group">
+                                <label for="Price">Price</label>
+                                <input type="number" step="0.01" name="Price" v-model="spotModalData.price"
+                                    class="form-control" id="Price" placeholder="Price">
+                            </div>
+                            <div class="form-group">
+                                <label for="descript">Email Template</label>
+                                <search-select :options="emailsOptions" v-model="spotModalData.email_id"
+                                    placeholder="Select Email Template"></search-select>
+                            </div>
+                            <div class="images justify-content-center d-flex flex-wrap">
+                                <div class="form-group row">
+                                    <label for="image" class="col-md-4 col-form-label text-md-left">Upload Image</label>
+                                    <div class="col-md-8">
+
+
+                                        <label class="file">
+                                            <input type="file" class="border-50" name="userfile" id="userfile"
+                                                onchange="imageUpload(this)" aria-label="File browser">
+                                            <input type="hidden" id="imgChanged" aria-label="File browser">
+                                            <span class="file-custom" data-content="Choose image ..."></span>
+                                        </label>
+                                        <div style="padding-left: 0;width: 100%;" class="col-sm-6">
+                                            <img v-if="spotModalData.image" style="width: auto;"
+                                                :src="imgFullPath(spotModalData.image)" id="preview"
+                                                class="img-thumbnail bg-secondary">
+                                            <input type="hidden" id="imgDeleted" value="0">
+                                            <button v-if="spotModalData.image" type="button" onclick="deleteSpotImage()" class="btn btn-danger mt-1">
+                                                Delete Image
+                                            </button>
+
+                                            <img v-else src="<?php echo base_url(); ?>assets/images/img-preview.png"
+                                                id="preview" class="img-thumbnail">
+                                            <button v-if="spotModalData.image == ''" type="button" onclick="deleteSpotImage()" class="btn btn-danger mt-1 d-none">
+                                                Delete Image
+                                            </button>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" @click="saveCopySpot">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
     <script>
+    $(document).ready(function() {
+        $('.js-spots-basic-multiple').select2();
+    });
+
     const templateGlobals = (function() {
         let globals = {
             'templateHtmlId': 'templateHtml',
@@ -363,10 +482,14 @@
                 });
             },
             copySpot(spot) {
-                
+                $('#copysoldoutdescript').closest(".form-group").hide();
+                $('#copypricingdescript').closest(".form-group").hide();
+                $('#copyfeedescript').closest(".form-group").hide();
+                $('#copyspotLabelId').closest(".form-group").hide();
+                $('.modal-title').text('Copy Spot');
                 this.spotModalData = Object.assign({}, spot);
                 $('#background_color').val(this.spotModalData.Background).trigger('change');
-                $('#copy_agenda_modal').modal('show');
+                $('#copy_spot_modal').modal('show');
             },
             goToTimeSlots(spot) {
                 location.href = this.baseURL + 'customer_panel/time_slots/' + spot.id
@@ -420,6 +543,46 @@
                         }
 
                         $('#add_spot_modal').modal('hide')
+
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    });
+            },
+            saveCopySpot() {
+                let formData = new FormData();
+                formData.append("descript", this.spotModalData.descript);
+                formData.append("pricingdescript", this.spotModalData.pricingdescript);
+                formData.append("soldoutdescript", this.spotModalData.soldoutdescript);
+                formData.append("feedescript", this.spotModalData.feedescript);
+                formData.append("available_items", this.spotModalData.available_items);
+                formData.append("sort_order", this.spotModalData.sort_order)
+                formData.append("numberofpersons", this.spotModalData.numberofpersons);
+                formData.append("price", parseFloat(this.spotModalData.price).toFixed(2));
+                formData.append("oldImage", this.spotModalData.image);
+                formData.append("userfile", $("#userfile")[0].files[0]);
+                formData.append("imgDeleted", $('#imgDeleted').val());
+                formData.append("agenda_id", this.spotModalData.agenda_id);
+                formData.append("email_id", this.spotModalData.email_id);
+                formData.append("spotLabelId", this.spotModalData.spotLabelId);
+                formData.append("spots", this.spotModalData.id);
+                
+
+                axios.post(this.baseURL + 'ajaxdorian/saveAgendaSpot', formData).then((response) => {
+                        if (this.method == 'edit') {
+                            let spot = response.data.data;
+                            let index = this.getIndexByID('spots', spot.id);
+                            $('#imgChanged').val('false');
+                            $('.file-custom').attr('content', 'Choose image ...');
+                            $('#preview').attr('src', this.baseURL + 'assets/images/img-preview.png');
+                            Vue.set(this.spots, index, spot);
+                        }
+
+                        if (this.method == 'create') {
+                            this.spots.push(response.data.data);
+                        }
+
+                        $('#copy_spot_modal').modal('hide')
 
                     })
                     .catch(error => {

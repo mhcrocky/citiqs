@@ -115,6 +115,9 @@ li {
                                         <span class="span_action " @click="deleteConfirmTimeSlot(timeslot)">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </span>
+                                        <span title="Copy Timeslot" class="span_action" @click="copyTimeslot(timeslot)">
+                                            <i class="fa fa-copy" aria-hidden="true"></i>
+                                        </span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -315,6 +318,28 @@ li {
                     templateContent = templateContent.replaceAll('[QRlink]', globalVariables.baseUrl+'assets/images/qrcode_preview.png');
                     tinymce.activeEditor.setContent(templateContent);
                 });
+            },
+            copyTimeslot(timeslot) {
+                this.timeSlotModalData = Object.assign({}, timeslot);
+                let formData = new FormData();
+                formData.append("timeslotdescript", this.timeSlotModalData.timeslotdescript);
+                formData.append("available_items", this.timeSlotModalData.available_items);
+                formData.append("fromtime", this.timeSlotModalData.fromtime);
+                formData.append("totime", this.timeSlotModalData.totime);
+                formData.append("multiple_timeslots", this.timeSlotModalData.multiple_timeslots);
+                formData.append("duration", this.timeSlotModalData.duration);
+                formData.append("overflow", this.timeSlotModalData.overflow);
+                formData.append("price", this.timeSlotModalData.price);
+                formData.append("spot_id", this.timeSlotModalData.spot_id);
+                formData.append("email_id", this.timeSlotModalData.email_id);
+                this.method = 'create';
+
+                axios.post(this.baseURL + 'ajaxdorian/saveTimeSLot', formData).then((response) => {
+                        this.timeslots.push(response.data.data);
+                     })
+                    .catch(error => {
+                        console.log(error)
+                    });
             },
             timeConvert(n) {
                 var num = parseInt(n);
