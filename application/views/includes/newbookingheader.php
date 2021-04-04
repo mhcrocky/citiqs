@@ -64,14 +64,14 @@
         if(isset($customDesign[0]['design']) && isset(unserialize($customDesign[0]['design'])['headerTitle'])){
             $headerTitles = unserialize($customDesign[0]['design'])['headerTitle'];
             foreach($headerTitles as $key => $headerTitle){
-                echo "$('.".$key."').text('".$headerTitle."');";
+                echo "$('.".$key."').text('" . $this->language->tline($headerTitle) . "');";
             }
         }
         if(isset($customDesign[0]['design']) && isset(unserialize($customDesign[0]['design'])['chooseTitle'])){
             $chooseTitles = unserialize($customDesign[0]['design'])['chooseTitle'];
             foreach($chooseTitles as $key => $chooseTitle){
                 echo "if(document.getElementById('".$key."') !== null){";
-                echo "document.getElementById('".$key."').textContent = '".$chooseTitle."';";
+                echo "document.getElementById('".$key."').textContent = '". $this->language->tline($chooseTitle)."';";
                 echo "}";
             }
         }

@@ -1,8 +1,8 @@
-<div class="row w-100 mt-5">
+<div class="row w-100 mt-2">
 <a class="ml-auto" href="javascript:;" onclick="displayView('tableView')"><i style="font-size: 26px" class="fa fa-bars text-dark mr-2"></i></a>
 <a href="javascript:;" onclick="displayView('calendarView')"><i style="font-size: 22px" class="fa fa-calendar text-dark mr-2"></i></a>
 </div>
-<div id="tableView" class="row w-100 mt-5 table-responsive agenda d-none">
+<div id="tableView" class="row w-100 mt-3 table-responsive agenda d-none">
     <table style="background: none !important;" class="table table-striped w-100 text-center">
         <tr>
             <th>Reservation Name</th>
@@ -18,7 +18,7 @@
         <?php endforeach; ?>
     </table>
 </div>
-<div id="calendarView" class="row w-100 mt-5 agenda">
+<div id="calendarView" class="row w-100 mt-2 agenda">
     <div id="calendar"></div>
 </div>
 
