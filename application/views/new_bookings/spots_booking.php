@@ -39,12 +39,15 @@
 
                 <div class="w-100 text-center">
                     <div id="card" class="w-100 box"
-                        onclick="window.location.replace('<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot["data"]->id; ?>')">
-                        <?php if(!empty($spot['data']->image) && $spot['data']->image != ''): ?>
-                        <img style="filter: invert(70%);" width="auto" height="50px"
+                    <?php if(!empty($spot['data']->image) || $spot['data']->image != ''): ?>
+                        style="padding: 0px !important;height: 500px;"
+                    <?php endif; ?>
+                        onclick="window.location.replace(`<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot['data']->id; ?>`)">
+                        <?php if(!empty($spot['data']->image) || $spot['data']->image != ''): ?>
+                        <img style="width:100%;height: 250px" class="bd-placeholder-img card-img-top"
                             src="<?php echo $this->baseUrl; ?>assets/home/images/<?php echo $spot['data']->image; ?>">
                         <?php endif; ?>
-                        <div class="box-title">
+                        <div class="box-title mt-2">
                             <h3 id="spot-title"><?php echo $spot['data']->descript; ?></h3>
                         </div>
                         <div class="box-text">
@@ -54,7 +57,7 @@
                             <span class="spot-data"><?php echo $spot['data']->pricingdescript; ?> €
                                 <?php echo number_format($spot['data']->price, 2); ?></span>
                         </div>
-                        <div class="box-btn">
+                        <div class="box-btn pt-4">
                             <a id="choose-time"
                                 href="<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot['data']->id; ?>"
                                 class="button button-orange mb-25"><?= ($this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME")) ? $this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME") : 'Next'; ?></a>
