@@ -195,25 +195,26 @@ $userShortUrl = $this->session->userdata('userShortUrl');
                                             <li data-menuid="0" data-toggle="modal" data-target="#setPayNlServiceId">
                                                 <a href="javascript:void(0)">
                                                     <i class="ti-flag" style="background-color: orangered"></i>
-                                                    <span>FINISH ACCOUNT SETUP</span>
+                                                    <span><?php echo $this->language->tLine('FINISH ACCOUNT SETUP'); ?></span>
                                                 </a>
                                             </li>
                                         </div>
                                     <?php } ?>
 
-									<li data-menuid="1"><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-receipt"></i><span>Dashboard</span></a></li>
+									<li data-menuid="1"><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-dashboard"></i><span><?php echo $this->language->tLine('Dashboard'); ?></span></a></li>
 									
 
 									<li data-menuid="2">
-										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-shopping-cart-full"></i><span>Marketing & Loyalty</span></a>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-shopping-cart-full"></i><span><?php echo $this->language->tLine('Marketing & Loyalty'); ?></span></a>
 										<ul class="collapse">
-											<li data-menuid="2.1"><a href="<?php echo $this->baseUrl; ?>marketing/targeting"><i class="ti-pencil-alt"></i><span>Targeting</span></a></li>
-											<li data-menuid="2.2"><a href="<?php echo $this->baseUrl; ?>marketing/selection"><i class="ti-pencil-alt"></i> <span>Notification Messaging</span></a></li>
+											<li data-menuid="2.6"><a href="<?php echo $this->baseUrl; ?>voucher/index"><i class="ti-gift"></i> <span><?php echo $this->language->tLine('Create Vouchers'); ?></span></a>
+											<li data-menuid="2.7"><a href="<?php echo $this->baseUrl; ?>voucher/send"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Send Vouchers'); ?></span></a>
+											<li data-menuid="2.1"><a href="<?php echo $this->baseUrl; ?>marketing/targeting"><i class="ti-pin-alt"></i><span><?php echo $this->language->tLine('Targeting'); ?></span></a></li>
+											<li data-menuid="2.2"><a href="<?php echo $this->baseUrl; ?>marketing/selection"><i class="ti-comment"></i> <span><?php echo $this->language->tLine('Notification Messaging'); ?></span></a></li>
 <!--											<li data-menuid="2.3"><a href="--><?php //echo $this->baseUrl; ?><!--dashboard"><i class="ti-user"></i> <span>RSVP Pre-register</span></a></li>-->
 <!--											<li data-menuid="2.4"><a href="--><?php //echo $this->baseUrl; ?><!--dashboard"><i class="ti-pencil-alt"></i> <span>E-mail Campaigns</span></a></li>-->
 <!--											<li data-menuid="2.5"><a href="--><?php //echo $this->baseUrl; ?><!--visitors"><i class="ti-user"></i> <span>Visitors</span></a></li>-->
-											<li data-menuid="2.6"><a href="<?php echo $this->baseUrl; ?>voucher/index"><i class="ti-settings"></i> <span>Create Vouchers</span></a>
-											<li data-menuid="2.7"><a href="<?php echo $this->baseUrl; ?>voucher/send"><i class="ti-settings"></i> <span>Send Vouchers</span></a>
+
 <!--												<ul class="collapse">-->
 <!--													<li data-menuid="2.6.1">-->
 <!--														<a href="--><?php //echo $this->baseUrl; ?><!--customer_panel/settings">-->
@@ -231,16 +232,16 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 										</ul>
 									</li>
 									<li data-menuid="3">
-										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-shopping-cart-full"></i><span>Finance</span></a>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-bar-chart"></i><span><?php echo $this->language->tLine('Finance'); ?></span></a>
 										<ul class="collapse">
 
 
-											<li data-menuid="3.1"><a href="<?php echo $this->baseUrl; ?>clearing"><i class="ti-pencil-alt"></i> <span>Pay-out</span></a></li>
-											<li data-menuid="3.2"><a href="<?php echo $this->baseUrl; ?>businessreports"><i class="ti-pencil-alt"></i> <span>Transactions</span></a></li>
-											<li data-menuid="3.3"><a href="<?php echo $this->baseUrl; ?>invoices"><i class="ti-user"></i> <span>Invoices</span></a></li>
-											<li><a href="<?php echo $this->baseUrl; ?>payment_methods"><i class="ti-pencil-alt"></i><span>Payment methods</span></a></li>
+											<li data-menuid="3.1"><a href="<?php echo $this->baseUrl; ?>clearing"><i class="ti-wallet"></i> <span><?php echo $this->language->tLine('Pay-out'); ?></span></a></li>
+											<li data-menuid="3.2"><a href="<?php echo $this->baseUrl; ?>businessreports"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('Transactions'); ?></span></a></li>
+											<li data-menuid="3.3"><a href="<?php echo $this->baseUrl; ?>invoices"><i class="ti-layout"></i> <span><?php echo $this->language->tLine('Invoices'); ?></span></a></li>
+											<li><a href="<?php echo $this->baseUrl; ?>payment_methods"><i class="ti-credit-card"></i><span><?php echo $this->language->tLine('Payment methods'); ?></span></a></li>
 											<?php if (intval($_SESSION['userId']) === $this->tiqsMainId) { ?>
-												<li><a href="<?php echo $this->baseUrl; ?>all_payment_methods"><i class="ti-pencil-alt"></i><span>All payment methods</span></a></li>
+												<li><a href="<?php echo $this->baseUrl; ?>all_payment_methods"><i class="ti-pencil-alt"></i><span><?php echo $this->language->tLine('All payment methods'); ?></span></a></li>
 											<?php } ?>
 
 <!--											<li><a href="--><?php //echo $this->baseUrl; ?><!--dashboard"><i class="ti-pencil-alt"></i> <span>Payment links</span></a></li>-->
@@ -264,69 +265,69 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 									<li>
 
 									<li data-menuid="4">
-										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span>QR Menu & POS</span></a>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-view-grid"></i><span><?php echo $this->language->tLine('QR Menu'); ?> & <?php echo $this->language->tLine('Cash desk'); ?></span></a>
 										<ul class="collapse">
 										
-											<li data-menuid="4.1"><a href="<?php echo $this->baseUrl; ?>orders"><i class="ti-stats-up"></i><span>Orders</span></a></li>
-											<li data-menuid="4.2"><a href="<?php echo $this->baseUrl; ?>pos"><i class="ti-bar-chart"></i><span>POS</span></a></li>
+											<li data-menuid="4.1"><a href="<?php echo $this->baseUrl; ?>orders"><i class="ti-stats-up"></i><span><?php echo $this->language->tLine('Orders'); ?></span></a></li>
+											<li data-menuid="4.2"><a href="<?php echo $this->baseUrl; ?>pos"><i class="ti-bar-chart"></i><span><?php echo $this->language->tLine('Cash desk'); ?></span></a></li>
 
 											<li data-menuid="4.3">
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-bag"></i><span>Products</span></a>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-bag"></i><span><?php echo $this->language->tLine('Products'); ?></span></a>
 												<ul class="collapse">
-													<li data-menuid="4.3.1"><a href="<?php echo $this->baseUrl; ?>product_categories"><i class="ti-layout-accordion-separated"></i> <span>Category</span></a></li>
-													<li data-menuid="4.3.2"><a href="<?php echo $this->baseUrl; ?>product_types"><i class="ti-layers-alt"></i> <span>Product Types</span></a></li>
-													<li data-menuid="4.3.3"><a href="<?php echo $this->baseUrl; ?>products"><i class="ti-bag"></i> <span>Products</span></a></li>
+													<li data-menuid="4.3.1"><a href="<?php echo $this->baseUrl; ?>product_categories"><i class="ti-layout-accordion-separated"></i> <span><?php echo $this->language->tLine('Category'); ?></span></a></li>
+													<li data-menuid="4.3.2"><a href="<?php echo $this->baseUrl; ?>product_types"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('Product Types'); ?></span></a></li>
+													<li data-menuid="4.3.3"><a href="<?php echo $this->baseUrl; ?>products"><i class="ti-bag"></i> <span><?php echo $this->language->tLine('Products'); ?></span></a></li>
 												</ul>
 											</li>
 											<li data-menuid="4.4">
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-video-camera"></i><span>video</span></a>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-video-camera"></i><span><?php echo $this->language->tLine('video'); ?></span></a>
 												<ul class="collapse">
-													<li data-menuid="4.4.1"><a href="<?php echo $this->baseUrl; ?>video"><i class="ti-video-camera"></i> <span>Manage</span></a></li>
+													<li data-menuid="4.4.1"><a href="<?php echo $this->baseUrl; ?>video"><i class="ti-video-camera"></i> <span><?php echo $this->language->tLine('Manage'); ?></span></a></li>
 												</ul>
 											</li>
 
 											<li data-menuid="4.5">
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ink-pen"></i><span>Areas, printers & spots</span></a>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ink-pen"></i><span><?php echo $this->language->tLine('Areas, printers & spots'); ?></span></a>
 												<ul class="collapse">
-                                                    <li><a href="<?php echo $this->baseUrl; ?>areas"><i class="ti-flag-alt"></i><span>Areas</span></a></li>
-													<li data-menuid="4.5.1"><a href="<?php echo $this->baseUrl; ?>printers"><i class="ti-printer"></i><span>Printers</span></a></li>
-													<li data-menuid="4.5.2"><a href="<?php echo $this->baseUrl; ?>spots"><i class="ti-flag-alt"></i><span>Spots</span></a></li>
+                                                    <li><a href="<?php echo $this->baseUrl; ?>areas"><i class="ti-flag-alt"></i><span><?php echo $this->language->tLine('Areas'); ?></span></a></li>
+													<li data-menuid="4.5.1"><a href="<?php echo $this->baseUrl; ?>printers"><i class="ti-printer"></i><span><?php echo $this->language->tLine('Printers'); ?></span></a></li>
+													<li data-menuid="4.5.2"><a href="<?php echo $this->baseUrl; ?>spots"><i class="ti-flag-alt"></i><span><?php echo $this->language->tLine('Spots'); ?></span></a></li>
 												</ul>
 											</li>
 											
 											<li data-menuid="4.6">
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ink-pen"></i><span>Design</span></a>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ink-pen"></i><span><?php echo $this->language->tLine('Design'); ?></span></a>
 												<ul class="collapse">
-													<li data-menuid="4.6.1"><a href="<?php echo $this->baseUrl; ?>emaildesigner"><i class="ti-email"></i> <span>Email</span></a></li>
-													<li data-menuid="4.6.2"><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span>Store</span></a></li>
+													<li data-menuid="4.6.1"><a href="<?php echo $this->baseUrl; ?>emaildesigner"><i class="ti-email"></i> <span><?php echo $this->language->tLine('Email'); ?></span></a></li>
+													<li data-menuid="4.6.2"><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span><?php echo $this->language->tLine('Store'); ?></span></a></li>
 												</ul>
 											</li>
 											<li data-menuid="4.7">
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-bag"></i><span>Reports</span></a>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-bag"></i><span><?php echo $this->language->tLine('Statistics'); ?></span></a>
 												<ul class="collapse">
-													<li data-menuid="4.7.1"><a href="<?php echo $this->baseUrl; ?>warehouse"><i class="ti-layout-accordion-separated"></i> <span>Warehouse</span></a></li>
+													<li data-menuid="4.7.1"><a href="<?php echo $this->baseUrl; ?>warehouse"><i class="ti-layout-accordion-separated"></i> <span><?php echo $this->language->tLine('Reports'); ?></span></a></li>
 <!--													<li data-menuid="4.7.2"><a href="--><?php //echo $this->baseUrl; ?><!--x report"><i class="ti-layers-alt"></i> <span>X report</span></a></li>-->
 <!--													<li data-menuid="4.7.3"><a href="--><?php //echo $this->baseUrl; ?><!--z report"><i class="ti-bag"></i> <span>Y report</span></a></li>-->
 												</ul>
 											</li>
 											<li data-menuid="12.1">
 												<a href="<?php echo $this->baseUrl . 'make_order?vendorid=' . $this->session->userdata('userId'); ?>" target="_blank">
-													<i class="ti-shopping-cart-full"></i> <span>URL Link</span>
+													<i class="ti-shopping-cart-full"></i> <span><?php echo $this->language->tLine('URL link'); ?></span>
 												</a>
 											</li>
 											
 										</ul>
 									</li>
 									<li data-menuid="5">
-                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span>Reservations</span></a>
+                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span><?php echo $this->language->tLine('Reservations'); ?></span></a>
                                         <ul class="collapse">
-                                            <li data-menuid="5.1"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-ticket"></i> <span>Statistics</span></a></li>
-                                            <li data-menuid="5.2"><a href="<?php echo $this->baseUrl;?>customer_panel/agenda"><i class="ti-agenda"></i> <span>Make your reservations</span></a></li>
-                                            <li data-menuid="5.3"><a href="<?php echo $this->baseUrl; ?>customer_panel/reservations_report"><i class="ti-write"></i> <span>Reservations Report</span></a></li>
-                                            <li data-menuid="5.4"><a href="<?php echo $this->baseUrl; ?>customer_panel/report"><i class="ti-clipboard"></i> <span>Report</span></a></li>
-                                            <li data-menuid="5.5"><a href="<?php echo $this->baseUrl; ?>customer_panel/pivot"><i class="ti-bar-chart"></i> <span>Export</span></a></li>
+											<li data-menuid="5.2"><a href="<?php echo $this->baseUrl;?>customer_panel/agenda"><i class="ti-agenda"></i> <span><?php echo $this->language->tLine('Create your reservations'); ?></span></a></li>
+											<li data-menuid="5.1"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-stats-up"></i> <span><?php echo $this->language->tLine('Statistics'); ?></span></a></li>
+                                            <li data-menuid="5.3"><a href="<?php echo $this->baseUrl; ?>customer_panel/reservations_report"><i class="ti-write"></i> <span><?php echo $this->language->tLine('Reservations Report'); ?></span></a></li>
+                                            <li data-menuid="5.4"><a href="<?php echo $this->baseUrl; ?>customer_panel/report"><i class="ti-clipboard"></i> <span><?php echo $this->language->tLine('Report'); ?></span></a></li>
+                                            <li data-menuid="5.5"><a href="<?php echo $this->baseUrl; ?>customer_panel/pivot"><i class="ti-bar-chart"></i> <span><?php echo $this->language->tLine('Export'); ?></span></a></li>
                                             <li data-menuid="5.6">
-                                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Settings</span></a>
+                                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span><?php echo $this->language->tLine('Settings'); ?></span></a>
                                                 <ul class="collapse">
                                                     <li data-menuid="5.6.1">
                                                         <a href="<?php echo $this->baseUrl; ?>customer_panel/settings">
@@ -336,21 +337,31 @@ $userShortUrl = $this->session->userdata('userShortUrl');
                                                     </li>
                                                     <li data-menuid="5.6.2">
                                                         <a href="<?php echo $this->baseUrl. 'agenda_booking/design'; ?>"
-                                                            ><i class="ti-clipboard"></i> <span>Design Agenda reservations</span>
+                                                            ><i class="ti-clipboard"></i> <span><?php echo $this->language->tLine('Design Agenda reservations'); ?></span>
                                                         </a>
                                                     </li>
                                                 </ul>
                                             </li>
-                                        </ul>
+											<li data-menuid="5.6">
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span><?php echo $this->language->tLine('URL Link'); ?></span></a>
+												<ul class="collapse">
+													<li data-menuid="12.3"><a href="<?php echo $this->baseUrl. 'agenda_booking/' . $userShortUrl; ?>" target="_blank"><i class="ti-agenda"></i> <span><?php echo $this->language->tLine('Agenda reservations'); ?></span></a></li>
+
+													<li data-menuid="12.4"><a href="<?php echo $this->baseUrl. 'booking_agenda/' . $userShortUrl; ?>" target="_blank"><i class="ti-clipboard"></i> <span><?php echo $this->language->tLine('Reservation Agenda'); ?></span></a></li>
+
+												</ul>
+											</li>
+
+										</ul>
                                     </li>
 
 									<li data-menuid="6">
-										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ticket"></i><span>e-ticketing</span></a>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ticket"></i><span><?php echo $this->language->tLine('e-ticketing'); ?></span></a>
 										<ul class="collapse">
-											<li data-menuid="6.1"><a href="<?php echo $this->baseUrl;?>events/create"><i class="ti-agenda"></i> <span>Create your event</span></a></li>
-											<li data-menuid="6.2"><a href="<?php echo $this->baseUrl;?>events"><i class="ti-ticket"></i> <span>Your Events</span></a></li>
-                                            <li data-menuid="6.3"><a href="<?php echo $this->baseUrl;?>events/emaildesigner"><i class="ti-email"></i> <span>Email Designer</span></a></li>
-											<li data-menuid="6.4"><a href="<?php echo $this->baseUrl;?>events/viewdesign"><i class="ti-ticket"></i> <span></span>Shop settings</a></li>
+											<li data-menuid="6.1"><a href="<?php echo $this->baseUrl;?>events/create"><i class="ti-agenda"></i> <span><?php echo $this->language->tLine('Create your event'); ?></span></a></li>
+											<li data-menuid="6.2"><a href="<?php echo $this->baseUrl;?>events"><i class="ti-ticket"></i> <span><?php echo $this->language->tLine('Your Events'); ?></span></a></li>
+                                            <li data-menuid="6.3"><a href="<?php echo $this->baseUrl;?>events/emaildesigner"><i class="ti-email"></i> <span><?php echo $this->language->tLine('Email Designer'); ?></span></a></li>
+											<li data-menuid="6.4"><a href="<?php echo $this->baseUrl;?>events/viewdesign"><i class="ti-ticket"></i> <span></span><?php echo $this->language->tLine('Shop settings'); ?></a></li>
 <!--											<li data-menuid="6.5">-->
 <!--												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span>Settings</span></a>-->
 <!--												<ul class="collapse">-->
@@ -450,34 +461,34 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 										</ul>
 									</li>
 									<li data-menuid="7">
-                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-bookmark-alt"></i><span>Floorplan</span></a>
+                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-home"></i><span><?php echo $this->language->tLine('Floorplan'); ?></span></a>
                                         <ul class="collapse">
-                                            <li data-menuid="7.1"><a href="<?php echo $this->baseUrl;?>settingsmenu"><i class="ti-settings"></i> <span>Make your floorplans</span></a></li>
+                                            <li data-menuid="7.1"><a href="<?php echo $this->baseUrl;?>settingsmenu"><i class="ti-settings"></i> <span><?php echo $this->language->tLine('Create your floorplans'); ?></span></a></li>
                                         </ul>
                                     </li>
 									<li data-menuid="8">
-										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i><span>Lost & Found</span></a>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-direction-alt"></i><span><?php echo $this->language->tLine('Lost & Found'); ?></span></a>
 										<ul class="collapse">
 										</ul>
 									</li>
 									<li data-menuid="9">
-										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-user"></i><span>Users</span></a>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-user"></i><span><?php echo $this->language->tLine('Users'); ?></span></a>
 										<ul class="collapse">
-											<li data-menuid="9.1"><a href="<?php echo $this->baseUrl;?>employee"><i class="ti-user"></i> <span>Employee's</span></a></li>
+											<li data-menuid="9.1"><a href="<?php echo $this->baseUrl;?>employee"><i class="ti-user"></i> <span><?php echo $this->language->tLine("Employee's"); ?></span></a></li>
 										</ul>
 									</li>
 									<li data-menuid="10">
-                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-stamp"></i><span>Your Profile</span></a>
+                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-id-badge"></i><span><?php echo $this->language->tLine('Business Profile'); ?></span></a>
                                         <ul class="collapse">
-										    <li data-menuid="10.1"><a href="<?php echo $this->baseUrl; ?>address"><i class="ti-location-pin"></i> <span>Address</span></a></li>
-                                            <li data-menuid="10.2"><a href="<?php echo $this->baseUrl; ?>changepassword"><i class="ti-flickr"></i> <span>Change Password</span></a></li>
-                                            <li data-menuid="10.3"><a href="<?php echo $this->baseUrl; ?>paymentsettings"><i class="ti-receipt"></i> <span>Payment Settings</span></a></li>
-                                            <li data-menuid="10.4"><a href="<?php echo $this->baseUrl; ?>shopsettings"><i class="ti-shopping-cart"></i> <span>Shop Settings</span></a></li>
-                                            <li data-menuid="10.5"><a href="<?php echo $this->baseUrl; ?>logo"><i class="ti-image"></i> <span>Logo</span></a></li>
-                                            <li data-menuid="10.6"><a href="<?php echo $this->baseUrl; ?>termsofuse"><i class="ti-align-justify"></i> <span>Terms of Use</span></a></li>
-                                            <li data-menuid="10.7"><a href="<?php echo $this->baseUrl; ?>openandclose"><i class="ti-time"></i> <span>Open and Close</span></a></li>
-                                            <li data-menuid="10.8"><a href="<?php echo $this->baseUrl; ?>userapi"><i class="ti-location-pin"></i> <span>Api</span></a></li>
-                                            <li><a href="<?php echo $this->baseUrl; ?>paynl_merchant"><i class="ti-location-pin"></i> <span>Paynl</span></a></li>
+										    <li data-menuid="10.1"><a href="<?php echo $this->baseUrl; ?>address"><i class="ti-location-pin"></i> <span><?php echo $this->language->tLine('Address'); ?></span></a></li>
+                                            <li data-menuid="10.2"><a href="<?php echo $this->baseUrl; ?>changepassword"><i class="ti-flickr"></i> <span><?php echo $this->language->tLine('Change Password'); ?></span></a></li>
+                                            <li data-menuid="10.3"><a href="<?php echo $this->baseUrl; ?>paymentsettings"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Payment Settings'); ?></span></a></li>
+                                            <li data-menuid="10.4"><a href="<?php echo $this->baseUrl; ?>shopsettings"><i class="ti-shopping-cart"></i> <span><?php echo $this->language->tLine('Shop Settings'); ?></span></a></li>
+                                            <li data-menuid="10.5"><a href="<?php echo $this->baseUrl; ?>logo"><i class="ti-image"></i> <span><?php echo $this->language->tLine('Logo'); ?></span></a></li>
+                                            <li data-menuid="10.6"><a href="<?php echo $this->baseUrl; ?>termsofuse"><i class="ti-align-justify"></i> <span><?php echo $this->language->tLine('Terms of Use'); ?></span></a></li>
+                                            <li data-menuid="10.7"><a href="<?php echo $this->baseUrl; ?>openandclose"><i class="ti-time"></i> <span><?php echo $this->language->tLine('Open and Close'); ?></span></a></li>
+                                            <li data-menuid="10.8"><a href="<?php echo $this->baseUrl; ?>userapi"><i class="ti-location-pin"></i> <span>API</span></a></li>
+                                            <li><a href="<?php echo $this->baseUrl; ?>paynl_merchant"><i class="ti-location-pin"></i> <span><?php echo $this->language->tLine('KYC Documents'); ?></span></a></li>
                                         </ul>
                                     </li>
 <!--									<li>-->
@@ -503,32 +514,30 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 <!--                                        </ul>-->
 <!--                                    </li>-->
 									<li data-menuid="12">
-										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-share"></i><span>Your links</span></a>
+										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-share"></i><span><?php echo $this->language->tLine('Your links'); ?></span></a>
 										<ul class="collapse">
 											<li data-menuid="12.1">
 												<a href="<?php echo $this->baseUrl . 'make_order?vendorid=' . $this->session->userdata('userId'); ?>" target="_blank">
-													<i class="ti-shopping-cart-full"></i> <span>Store</span>
+													<i class="ti-shopping-cart-full"></i> <span><?php echo $this->language->tLine('Store'); ?></span>
 												</a>
 											</li>
 											<li data-menuid="12.2">
 												<a href="<?php echo $this->baseUrl . 'check424/' . $this->session->userdata('userId'); ?>" target="_blank">
 													<i class="ti-book"></i>
-													<span>Registration</span>
+													<span><?php echo $this->language->tLine('Visitor registration'); ?></span>
 												</a>
 											</li>
-											<li data-menuid="12.3"><a href="<?php echo $this->baseUrl. 'agenda_booking/' . $userShortUrl; ?>" target="_blank"><i class="ti-agenda"></i> <span>Agenda reservations</span></a></li>
-											<li data-menuid="12.4"><a href="<?php echo $this->baseUrl. 'booking_agenda/' . $userShortUrl; ?>" target="_blank"><i class="ti-clipboard"></i> <span>Reservation Agenda</span></a></li>
 										</ul>
                                     </li>
                                     <li data-menuid="13">
-                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i><span>Templates</span></a>
+                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-width-default"></i><span><?php echo $this->language->tLine('Templates'); ?></span></a>
                                         <ul class="collapse">
-                                            <li data-menuid="13.1"><a href="<?php echo $this->baseUrl; ?>list_template"><i class="ti-credit-card"></i> <span>Templates</span></a></li>
-											<li data-menuid="13.1"><a href="<?php echo $this->baseUrl; ?>add_template"><i class="ti-credit-card"></i> <span>Add template</span></a></li>                                            
+                                            <li data-menuid="13.1"><a href="<?php echo $this->baseUrl; ?>list_template"><i class="ti-credit-card"></i> <span><?php echo $this->language->tLine('Templates'); ?></span></a></li>
+											<li data-menuid="13.1"><a href="<?php echo $this->baseUrl; ?>add_template"><i class="ti-credit-card"></i> <span><?php echo $this->language->tLine('Add template'); ?></span></a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="<?php echo $this->baseUrl; ?>logout"><i class="ti-shift-left"></i> <span>Logout</span></a></li>
-									<li><a href="<?php echo $this->baseUrl; ?>legal"><i class="ti-bookmark-alt"></i> <span>Legal</span></a></li>
+                                    <li><a href="<?php echo $this->baseUrl; ?>logout"><i class="ti-shift-left"></i> <span><?php echo $this->language->tLine('Logout'); ?></span></a></li>
+									<li><a href="<?php echo $this->baseUrl; ?>legal"><i class="ti-bookmark-alt"></i> <span><?php echo $this->language->tLine('Legal'); ?></span></a></li>
 								</ul>
                             </nav>
                         </div>

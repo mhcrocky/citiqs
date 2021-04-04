@@ -94,6 +94,7 @@
                 );
         }
 
+
         public function uploadImage(): bool
         {
             $this->load->config('custom');

@@ -14,6 +14,8 @@ class Products extends REST_Controller
 
 		$this->load->model('user_model');
 		$this->load->model('api_model');
+		$this->load->model('shopproductex_model');
+
 		$this->load->helper('utility_helper');
 		$this->load->config('custom');
 		$this->load->library('language', array('controller' => $this->router->class));
@@ -30,6 +32,15 @@ class Products extends REST_Controller
 
         $this->response($result, 200);
     }
+
+	public function getallproducts_post()
+	{
+		$vendorId = $this->security->xss_clean($this->input->post('vendorId'));
+//		echo var_dump($vendorId);
+//		die();
+		$products = $this->shopproductex_model->getAllUserProducts(intval($vendorId));
+		echo json_encode($products);
+	}
 
 	public function index_get()
 	{

@@ -28,9 +28,9 @@ class Businessreport extends BaseControllerWeb
 
 	public function index()
 	{ 
-		$data['title'] = 'Business Reports';
+		$data['title'] =  $this->language->tLine('Business Reports');
 		$vendor_id = $this->vendor_id;
-		$this->global['pageTitle'] = 'TIQS: Business Reports';
+		$this->global['pageTitle'] = $this->language->tLine('TIQS Business Reports');
 		$data['day_total'] = $this->businessreport_model->get_day_totals($vendor_id);
 		$data['last_week_total'] = $this->businessreport_model->get_this_week_totals($vendor_id);
 		$data['compare'] = $this->businessreport_model->get_last_week_compare($vendor_id);
