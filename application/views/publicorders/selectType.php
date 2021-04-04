@@ -100,6 +100,6 @@
 	$('.main-wrapper-nh').attr('style','text-align: center;min-height: 100%;');
 	$('html').height('100%');
 	$('body').height('100%');
-	$('.main-wrapper-nh').height('100%');
+	//$('.main-wrapper-nh').height('100%');
 }())
 </script>
