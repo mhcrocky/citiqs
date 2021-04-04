@@ -95,3 +95,10 @@
 
 </main>
 
+<script>
+(function(){
+	$('html').height('100%');
+	$('body').height('100%');
+	$('.main-wrapper-nh').height('100%');
+}())
+</script>
