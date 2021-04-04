@@ -14,7 +14,8 @@
 
             $this->load->model('user_model');
             $this->load->model('api_model');
-            $this->load->helper('utility_helper');
+			$this->load->model('qr_model');
+			$this->load->helper('utility_helper');
             $this->load->config('custom');
             $this->load->library('language', array('controller' => $this->router->class));
 
@@ -41,9 +42,7 @@
 			if ($this->api_model->userAuthentication($key)) {
 
 				$api = $this->input->post(null, true);
-//				$onesignalid= $this->user_model->checkOneSignalId($api['oneSignalId']);
-//				$onoff=$this->user_model->checkOneSignalId($api['onoff']);
-				$vendorid= $api['vendorId'];
+				$vendorId= $api['vendorId'];
 				$qrcode=$api['QRCode'];
 				$spot=$api['SPOT'];
 				$printer=$api['printer'];
@@ -53,46 +52,49 @@
 					echo json_encode([
 						'status' => '0',
 						'message' => 'SPOT CREATED',
-						'vendorId' => $vendorid,
+						'vendorId' => $vendorId,
 						'QRCode' => $qrcode,
 						'SPOT' => $spot,
 						'printer' => $printer,
-						'servicetype' => $servicetype
+						'servicetype' => $servicetype,
 					]);
 					// Here we look into the db if the spot exist if not we create the spot
+					$result = $this->qr_model->getQRcodeByCode($qrcode);
+//					echo var_dump($result);
+
+					if (empty($result)){
+						echo json_encode([
+							'status' => '0',
+							'message' => 'QRCode not by tiqs.'
+						]);
+					}
+
+//					var_dump($result->vendorId);
+//					var_dump($vendorId);
+
+					if($result->vendorId === '0') {
+						$data['vendorId']=$vendorId;
+						$result = $this->qr_model->updateQRCodes($data,$qrcode);
+					}
+
+					// STEP 1
+					// is the record allready filled with vendorId
+					// is the vendorId the same?
+					// if not DO NOTHING -> ERROR you cannot change the STICKERS OWNER
+
+					// STEP 2
+					// DOES THE SPOT EXIST?
+					// IF SPOT NOT EXITS
+					// MAKE SPOT and USE PRINTER
+
+					// STEP 3
+					// UPDATE tbl_qrcodes
+
+
 					return;
 				}
 
-//				if ($onoffon==1) {
-//					echo json_encode([
-//						'status' => '0',
-//						'message' => 'Messaging on',
-//						'onesignalid' => $onesignalid,
-//						'onoff' => $onoffon,
-//					]);
-//					return;
-//				}
 
-				// find playerid
-				// delete playerid
-
-				//
-
-//				$this->user_model->manageAndSetUserOneSignal($user);
-//
-//				if ($this->user_model->id) {
-//					$message = isset($this->user_model->created) ? 'User created' : 'User updated';
-//					echo json_encode([
-//						'status' => '1',
-//						'message' => $message,
-//						'userId' => $this->user_model->id
-//					]);
-//					return;
-//				}
-//				echo json_encode([
-//					'status' => '0',
-//					'message' => 'Action failed',
-//				]);
 				return;
 			}
 

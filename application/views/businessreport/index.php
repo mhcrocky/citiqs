@@ -460,12 +460,12 @@
             <div style="width: 87px;" class="mt-4 mr-1 text-center">
                 <select style="min-width: 85px;" class=" custom-select custom-select-sm form-control form-control-sm"
                     name="group_by" id="group_by">
-                    <option value="total" selected>Total</option>
-                    <option value="month">Month</option>
-                    <option value="quarter">Quarter</option>
-                    <option value="week">Week</option>
-                    <option value="day">Day</option>
-                    <option value="hour">Hour</option>
+                    <option value="total" selected><?php echo $this->language->tLine('Total'); ?></option>
+                    <option value="month"><?php echo $this->language->tLine('Month'); ?></option>
+                    <option value="quarter"><?php echo $this->language->tLine('Quarter'); ?></option>
+                    <option value="week"><?php echo $this->language->tLine('Week'); ?></option>
+                    <option value="day"><?php echo $this->language->tLine('Day'); ?></option>
+                    <option value="hour"><?php echo $this->language->tLine('Hour'); ?></option>
                 </select>
             </div>
         </div>
@@ -481,8 +481,8 @@
                         class="single-report mb-xs-30">
                         <div class="s-report-inner pr--20 pt--30 mb-3">
                             <div class="s-report-title d-flex justify-content-between">
-                                <h4 class="header-title mb-0">Total</h4>
-                                <p>LOCAL</p>
+								<h4 class="header-title mb-0"><?php echo $this->language->tLine('Total'); ?></option></h4>
+								<p><?php echo $this->language->tLine('LOCAL'); ?></p>
                             </div>
                             <div class="d-flex justify-content-between pb-2">
                                 <h2>€ <span id="local"></span></h2>
@@ -497,8 +497,8 @@
                         class="single-report mb-xs-30">
                         <div class="s-report-inner pr--20 pt--30 mb-3">
                             <div class="s-report-title d-flex justify-content-between">
-                                <h4 class="header-title mb-0">Total</h4>
-                                <p>PICKUP</p>
+                                <h4 class="header-title mb-0"><?php echo $this->language->tLine('Total'); ?></option></h4>
+                                <p><?php echo $this->language->tLine('PICKUP'); ?></p>
                             </div>
                             <div class="d-flex justify-content-between pb-2">
                                 <h2>€ <span id="pickup"></span></h2>
@@ -513,8 +513,9 @@
                         class="single-report mb-xs-30">
                         <div class="s-report-inner pr--20 pt--30 mb-3">
                             <div class="s-report-title d-flex justify-content-between">
-                                <h4 class="header-title mb-0">Total</h4>
-                                <p>DELIVERY</p>
+                                <h4 class="header-title mb-0"><?php echo $this->language->tLine('Total'); ?></h4>
+								<p><?php echo $this->language->tLine('DELIVERY'); ?></p>
+
                             </div>
                             <div class="d-flex justify-content-between pb-2">
                                 <h2>€ <span id="delivery"></span></h2>
@@ -529,8 +530,9 @@
                         class="single-report mb-xs-30">
                         <div class="s-report-inner pr--20 pt--30 mb-3">
                             <div class="s-report-title d-flex justify-content-between">
-                                <h4 class="header-title mb-0">Total</h4>
-                                <p>INVOICES</p>
+                                <h4 class="header-title mb-0"><?php echo $this->language->tLine('Total'); ?></h4>
+								<p><?php echo $this->language->tLine('INVOICES'); ?></p>
+
                             </div>
                             <div class="d-flex justify-content-between pb-2">
                                 <h2>€ <span id="invoice"></span></h2>
@@ -545,8 +547,9 @@
                         class="single-report mb-xs-30">
                         <div class="s-report-inner pr--20 pt--30 mb-3">
                             <div class="s-report-title d-flex justify-content-between">
-                                <h4 class="header-title mb-0">Total</h4>
-                                <p>TICKETS</p>
+                                <h4 class="header-title mb-0"><?php echo $this->language->tLine('Total'); ?></h4>
+								<p><?php echo $this->language->tLine('TICKETS'); ?></p>
+
                             </div>
                             <div class="d-flex justify-content-between pb-2">
                                 <h2>€ <span id="tickets"></span></h2>
