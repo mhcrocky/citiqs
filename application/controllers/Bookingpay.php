@@ -680,7 +680,6 @@ class Bookingpay extends BaseControllerWeb
                                 //'dtend' => '2022-1-16 9:00AM',
                                 
                                 $ics = new ICS(array(
-                                    'location' => '',
                                     'organizer' => 'TIQS:mailto:support@tiqs.com',
                                     'description' => strip_tags($evenDescript),
                                     'dtstart' => strtotime($eventdate .' '. $fromtime)+60*60,
