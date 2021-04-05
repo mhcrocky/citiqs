@@ -550,9 +550,10 @@ class Booking_events extends BaseControllerWeb
 								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
 								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
-								$subject = 'Your tiqs reservation(s)';
+								$subject = ($emailTemplate->template_subject) ? strip_tags($emailTemplate->template_subject) : 'Your tiqs reservation(s)';
 								$datachange['mailsend'] = 1;
 
+                                /*
                                 $ics = new ICS(array(
                                     'location' => $eventAddress . ', ' . $eventCity . ', ' . $eventCountry,
                                     'organizer' => 'TIQS',
@@ -564,7 +565,8 @@ class Booking_events extends BaseControllerWeb
                                 ));
 
                                 $icsContent = $ics->to_string();
-
+                                */
+                                $icsContent = false;
 								$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate, $icsContent );
 								if($this->sendEmail($email, $subject, $mailtemplate, $icsContent)) {
                                     $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
