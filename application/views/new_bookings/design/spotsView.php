@@ -5,7 +5,7 @@
         Card Background color:
             <input 
                 data-jscolor=""
-                class="form-control b-radius jscolor"
+                class="form-control b-radius jscolor w-100"
                 name="selectShortUrl[id][card][background-color]"
                 data-css-selector="id"
                 data-css-selector-value="card"
@@ -24,7 +24,7 @@
         Spot Data color:
             <input 
                 data-jscolor=""
-                class="form-control b-radius jscolor"
+                class="form-control b-radius jscolor w-100"
                 name="selectShortUrl[class][spot-data][color]"
                 data-css-selector="class"
                 data-css-selector-value="spot-data"
@@ -43,7 +43,7 @@
         Spot Title color:
             <input 
                 data-jscolor=""
-                class="form-control b-radius jscolor"
+                class="form-control b-radius jscolor w-100"
                 name="selectShortUrl[id][spot-title][color]"
                 data-css-selector="id"
                 data-css-selector-value="spot-title"
@@ -62,7 +62,7 @@
         Choose Time color:
             <input 
                 data-jscolor=""
-                class="form-control b-radius jscolor"
+                class="form-control b-radius jscolor w-100"
                 name="selectShortUrl[id][choose-time][color]"
                 data-css-selector="id"
                 data-css-selector-value="choose-time"

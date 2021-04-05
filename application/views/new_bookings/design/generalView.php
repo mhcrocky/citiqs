@@ -188,7 +188,7 @@
 	<div class="col-sm-12 input-group">
 		<label style="display:block;">
 			Background color:
-			<input data-jscolor="" class="form-control b-radius jscolor"
+			<input data-jscolor="" class="form-control b-radius jscolor w-100"
 				name="selectShortUrl[class][booking-form][background-color]" data-css-selector="class"
 				data-css-selector-value="booking-form" data-css-property="background-color" onfocus="styleELements(this)"
 				oninput="styleELements(this)"
@@ -269,6 +269,11 @@
 				<?php } ?> />
 		</label>
 	</div>
+
+	<?php 
+	include_once FCPATH . 'application/views/new_bookings/design/shortUrlView.php';
+	include_once FCPATH . 'application/views/new_bookings/design/spotsView.php';
+	?>
 </div>
 
 <script>

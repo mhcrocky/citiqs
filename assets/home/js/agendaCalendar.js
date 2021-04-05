@@ -30,15 +30,15 @@
       var self = this;
       if(!this.header) {
         //Create the header elements
-        this.header = createElement('div', 'header');
-        this.header.className = 'header';
+        this.header = createElement('div', 'header cal-header');
+        this.header.className = 'header cal-header';
     
         this.title = createElement('h1');
     
-        var right = createElement('div', 'right');
+        var right = createElement('div', 'right arrow-header-right');
         right.addEventListener('click', function() { self.nextMonth(); });
     
-        var left = createElement('div', 'left');
+        var left = createElement('div', 'left arrow-header-left');
         left.addEventListener('click', function() { self.prevMonth(); });
     
         //Append the Elements
@@ -120,7 +120,7 @@
     
     Calendar.prototype.getWeek = function(day) {
       if(!this.week || day.day() === 0) {
-        this.week = createElement('div', 'week');
+        this.week = createElement('div', 'week bg-cal');
         this.month.appendChild(this.week);
       }
     }
@@ -169,11 +169,14 @@
     }
     
     Calendar.prototype.getDayClass = function(day) {
-      classes = ['day'];
+      classes = ['day', 'bg-cal'];
       if(day.month() !== this.current.month()) {
         classes.push('other');
+        classes.push('day-other');
       } else if (today.isSame(day, 'day')) {
         classes.push('today');
+      } else {
+        classes.push('day-month');
       }
       return classes.join(' ');
     }
