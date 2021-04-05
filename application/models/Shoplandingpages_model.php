@@ -14,12 +14,13 @@
     {
         public $id;
         public $vendorId;
+        public $productGroup;
         public $landingPage;
         public $value;
         public $landingType;
         public $active;
 
-        private $table = 'tbl_shop_landing_pages';
+        private $table = 'tbl_landing_pages';
 
         protected function setValueType(string $property,  &$value): void
         {
@@ -52,6 +53,7 @@
 
             if (!count($data)) return false;
             if (isset($data['vendorId']) && !Validate_data_helper::validateInteger($data['vendorId'])) return true;
+            if (isset($data['productGroup']) && !in_array($data['productGroup'], $this->config->item('productGroups'))) return false;
             if (isset($data['landingPage']) && !in_array($data['landingPage'], $this->config->item('landingPages'))) return false;
             if (isset($data['value']) && !Validate_data_helper::validateString($data['value'])) return false;
             if (isset($data['landingType']) && !in_array($data['landingType'], $this->config->item('landingTypes'))) return false;
@@ -68,6 +70,7 @@
                     $this->table . '.vendorId' => $this->vendorId,
                     $this->table . '.landingPage' => $this->landingPage,
                     $this->table . '.active' => '1',
+                    $this->table . '.productGroup' => $this->productGroup,
                 ]
             ]);
 
