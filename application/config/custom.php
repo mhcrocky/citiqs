@@ -524,3 +524,35 @@ $config['ambasadorCokkiePrefix'] = 'crmAmbasador';
 // category images
 $config['categoriesImagesRelPath'] = 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'categories_images' . DIRECTORY_SEPARATOR;
 $config['categoriesImagesFullPath'] = FCPATH . $config['categoriesImagesRelPath'];
+
+
+// landing page templates
+$config['successLandingPage'] = 'success';
+$config['pendingLandingPage'] = 'pending';
+$config['authorisedLandingPage'] = 'authorised';
+$config['verifyLandingPage'] = 'verify';
+$config['cancelLandingPage'] = 'cancel';
+$config['deniedLandingPage'] = 'denied';
+$config['pinCanceledLandingPage'] = 'pinCanceled';
+ 
+$config['landingPages'] = [
+    $config['successLandingPage'],
+    $config['pendingLandingPage'],
+    $config['authorisedLandingPage'],
+    $config['verifyLandingPage'],
+    $config['cancelLandingPage'],
+    $config['deniedLandingPage'],
+    $config['pinCanceledLandingPage']
+];
+
+$config['urlLanding'] = 'url';
+$config['templateLanding'] = 'template';
+
+$config['landingTypes'] = [
+    $config['urlLanding'],
+    $config['templateLanding']
+];
+
+$config['landingPageFolder'] = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'landing_pages' . DIRECTORY_SEPARATOR;
+$config['landingTemplateExt'] = 'txt';
+$config['landingPageView'] = 'ladnigPages/template';

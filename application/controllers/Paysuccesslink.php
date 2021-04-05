@@ -20,21 +20,53 @@ class  Paysuccesslink extends BaseControllerWeb
         $this->load->model('shopsession_model');
         $this->load->model('shopvendorfod_model');
         $this->load->model('shopvendor_model');
+        $this->load->model('shoplandingpages_model');
 
         $this->load->helper('url');
         $this->load->helper('utility_helper');
+        $this->load->helper('landingpage_helper');
 
         $this->load->config('custom');
         $this->load->library('language', array('controller' => $this->router->class));
+    }
+
+    private function getLandingPage(array &$data, string $landingPage): void
+    {
+        if (empty($data)) return;
+
+        $vendorId = intval($data['order']['vendorId']);
+        $landingPage = $this
+                    ->shoplandingpages_model
+                    ->setProperty('vendorId', $vendorId)
+                    ->setProperty('landingPage', $landingPage)
+                    ->getLandingPage();
+
+        if (is_null($landingPage)) return;
+
+        if ($landingPage['landingType'] === $this->config->item('urlLanding')) {
+            redirect($landingPage['value']);
+        }
+
+        $data['landingPage'] = Landingpage_helper::getTemplateString($data['order'], $landingPage['value']);
+        return;
+    }
+
+    public function loadViewOrTemplate(array $data, string $defaultTemplate): void
+    {
+        $view = empty($data['landingPage']) ?  $defaultTemplate : $this->config->item('landingPageView');
+
+        $this->loadViews($view, $this->global, $data, 'nofooter', 'noheader');
     }
 
     public function index()
     {
         $data = [];
 
-        $this->getOrderData($data);
         $this->global['pageTitle'] = 'TIQS : SUCCESS';
-        $this->loadViews("paysuccesslink/success", $this->global, $data, 'nofooter', 'noheader');
+
+        $this->getOrderData($data);
+        $this->getLandingPage($data, $this->config->item('successLandingPage'));
+        $this->loadViewOrTemplate($data, 'paysuccesslink/success');
     }
 
     public function pending()
@@ -43,9 +75,13 @@ class  Paysuccesslink extends BaseControllerWeb
             'paynlInfo' => 'Payment has not been finalized and could still be paid'
         ];
 
-        $this->getOrderData($data);
         $this->global['pageTitle'] = 'TIQS : PENDING';
-        $this->loadViews("paysuccesslink/notPaid", $this->global, $data, 'nofooter', 'noheader');
+
+        $this->getOrderData($data);
+        $this->getLandingPage($data, $this->config->item('pendingLandingPage'));
+        $this->loadViewOrTemplate($data, 'paysuccesslink/notPaid');
+
+
     }
 
     public function authorised()
@@ -54,9 +90,11 @@ class  Paysuccesslink extends BaseControllerWeb
             'paynlInfo' => 'Put the payment in the "reservation" status.'
         ];
 
-        $this->getOrderData($data);
         $this->global['pageTitle'] = 'TIQS : AUTHORISED';
-        $this->loadViews("paysuccesslink/notPaid", $this->global, $data, 'nofooter', 'noheader');
+
+        $this->getOrderData($data);
+        $this->getLandingPage($data, $this->config->item('authorisedLandingPage'));
+        $this->loadViewOrTemplate($data, 'paysuccesslink/notPaid');
     }
 
     public function verify()
@@ -65,9 +103,11 @@ class  Paysuccesslink extends BaseControllerWeb
             'paynlInfo' => 'Payment can be completed after manual confirmation from admin'
         ];
 
-        $this->getOrderData($data);
         $this->global['pageTitle'] = 'TIQS : VERIFY';
-        $this->loadViews("paysuccesslink/notPaid", $this->global, $data, 'nofooter', 'noheader');
+
+        $this->getOrderData($data);
+        $this->getLandingPage($data, $this->config->item('verifyLandingPage'));
+        $this->loadViewOrTemplate($data, 'paysuccesslink/notPaid');
     }
 
     public function cancel()
@@ -76,9 +116,11 @@ class  Paysuccesslink extends BaseControllerWeb
             'paynlInfo' => 'Payment was canceled by the user'
         ];
 
-        $this->getOrderData($data);
         $this->global['pageTitle'] = 'TIQS : CANCEL';
-        $this->loadViews("paysuccesslink/notPaid", $this->global, $data, 'nofooter', 'noheader');
+
+        $this->getOrderData($data);
+        $this->getLandingPage($data, $this->config->item('cancelLandingPage'));
+        $this->loadViewOrTemplate($data, 'paysuccesslink/notPaid');
     }
 
     public function denied()
@@ -87,9 +129,11 @@ class  Paysuccesslink extends BaseControllerWeb
             'paynlInfo' => 'Payment is denied'
         ];
 
-        $this->getOrderData($data);
         $this->global['pageTitle'] = 'TIQS : DENIED';
-        $this->loadViews("paysuccesslink/notPaid", $this->global, $data, 'nofooter', 'noheader');
+
+        $this->getOrderData($data);
+        $this->getLandingPage($data, $this->config->item('deniedLandingPage'));
+        $this->loadViewOrTemplate($data, 'paysuccesslink/notPaid');
     }
 
     public function pinCanceled()
@@ -98,9 +142,11 @@ class  Paysuccesslink extends BaseControllerWeb
             'paynlInfo' => 'Pin payment canceled'
         ];
 
+        $this->global['pageTitle'] = 'TIQS :  PIN CANCELED';
+
         $this->getOrderData($data);
-        $this->global['pageTitle'] = 'TIQS : PIN CANCELED';
-        $this->loadViews("paysuccesslink/notPaid", $this->global, $data, 'nofooter', 'noheader');
+        $this->getLandingPage($data, $this->config->item('pinCanceledLandingPage'));
+        $this->loadViewOrTemplate($data, 'paysuccesslink/notPaid');
     }
 
     private function getOrderData(array &$data): void
