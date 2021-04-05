@@ -1,4 +1,14 @@
 <fieldset id="shortUrlView" class="hideFieldsets">
+<legend>Select home view</legend>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+        Default View:
+        <select class="form-control b-radius w-100" name="defaultView">
+            <option value="tableView" <?php if ( isset($design['defaultView']) && $design['defaultView'] == 'tableView'  ) { ?> selected <?php } ?>>Rows</option>
+            <option value="calendarView" <?php if ( (isset($design['defaultView']) && $design['defaultView'] == 'calendarView' ) || !isset($design['defaultView']) ) { ?>selected <?php } ?>>Calendar</option>
+        </select>
+        </label>
+    </div>
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
@@ -28,14 +38,14 @@
             <input 
                 data-jscolor=""
                 class="form-control b-radius jscolor w-100"
-                name="selectShortUrl[class][cal-header][color]"
+                name="selectShortUrl[class][header][color]"
                 data-css-selector="class"
-                data-css-selector-value="cal-header"
+                data-css-selector-value="header"
                 data-css-property="color"
                 onfocus="styleELements(this)"
                 oninput="styleELements(this)"
-                <?php if ( isset($design['selectShortUrl']['class']['cal-header']['color']) ) { ?>
-                value = "<?php echo $design['selectShortUrl']['class']['cal-header']['color']?>"
+                <?php if ( isset($design['selectShortUrl']['class']['header']['color']) ) { ?>
+                value = "<?php echo $design['selectShortUrl']['class']['header']['color']?>"
                 data-value="1"
                 <?php } else { ?>
                 value="#FFFFFF" 
@@ -49,6 +59,7 @@
         Calendar Arrows Header color:
             <input 
                 data-jscolor=""
+                name="selectShortUrl[class][arrow-header][border-color]"
                 class="form-control b-radius jscolor w-100"
                 data-css-selector="class"
                 data-css-selector-value="arrow-header"
@@ -243,7 +254,7 @@
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
-        Calendar Event color:
+        Event font color:
             <input 
                 data-jscolor=""
                 class="form-control b-radius jscolor w-100"
@@ -251,8 +262,8 @@
                 data-css-selector="class"
                 data-css-selector-value="spotLink"
                 data-css-property="color"
-                onfocus="styleELements(this)"
-                oninput="styleELements(this)"
+                onfocus="eventFontColor(this)"
+                oninput="eventFontColor(this)"
                 <?php if ( isset($design['selectShortUrl']['class']['spotLink']['color']) ) { ?>
                 value = "<?php echo $design['selectShortUrl']['class']['spotLink']['color']?>"
                 data-value="1"
@@ -260,8 +271,25 @@
                     value="#FFFFFF"
                 <?php } ?>
             />
+
+            <input 
+                type="hidden"
+                id="empty-event"
+                class="form-control b-radius jscolor w-100"
+                name="selectShortUrl[class][empty][color]"
+                data-css-selector="class"
+                data-css-selector-value="empty"
+                data-css-property="color"
+                <?php if ( isset($design['selectShortUrl']['class']['event.empty']['empty']) ) { ?>
+                value = "<?php echo $design['selectShortUrl']['class']['event.empty']['empty']?>"
+                data-value="1"
+                <?php } else { ?>
+                    value="#FFFFFF"
+                <?php } ?>
+            />
         </label>
     </div>
+    
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
@@ -312,6 +340,15 @@ function calHeaderArrows(el) {
     let left_arrow = document.getElementById('header-arrow-left');
     styleELements(right_arrow);
     styleELements(left_arrow);
+    return ;
+}
+
+function eventFontColor(el) {
+    let color = $(el).val();
+    $('#empty-event').val(color);
+    let empty = document.getElementById('empty-event');
+    styleELements(el);
+    styleELements(empty);
     return ;
 }
 
