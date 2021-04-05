@@ -153,9 +153,15 @@ class ICS {
   }
 
   private function format_timestamp($timestamp) {
-    $dt = new DateTime($timestamp);
-    return $dt->format(self::DT_FORMAT);
+    //$dt = new DateTime($timestamp);
+    $timestamp = intval($timestamp);
+    return $this->getIcalDate($timestamp);
   }
+  
+  private function getIcalDate(int $time, $inclTime = true)
+  {
+      return date('Ymd' . ($inclTime ? '\THis\r' : ''), $time);
+    }
 
   private function escape_string($str) {
     return preg_replace('/([\,;])/','\\\$1', $str);
