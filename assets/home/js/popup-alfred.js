@@ -10,8 +10,6 @@ var styleLoader = function(url) {
     headID.appendChild(link);
 
     link.href = url + 'assets/home/styles/popup-alfred-style.css';
-
-
 };
  
 styleLoader('https://tiqs.com/alfred/');
