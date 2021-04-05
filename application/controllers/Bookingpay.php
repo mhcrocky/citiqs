@@ -665,7 +665,7 @@ class Bookingpay extends BaseControllerWeb
 								$mailtemplate = str_replace('[price]', $price, $mailtemplate);
                                 $mailtemplate = str_replace('[ticketPrice]', $price, $mailtemplate);
 								$mailtemplate = str_replace('[spotLabel]', $Spotlabel, $mailtemplate);
-                                $mailtemplate = str_replace('[ticketQuantity]', $ticketQuantity, $mailtemplate);
+                                $mailtemplate = str_replace('[ticketQuantity]', $numberofpersons, $mailtemplate);
 								$mailtemplate = str_replace('[numberOfPersons]', $numberofpersons, $mailtemplate);
 								$mailtemplate = str_replace('[startTime]', $fromtime, $mailtemplate);
 								$mailtemplate = str_replace('[endTime]', $totime, $mailtemplate);
@@ -673,20 +673,29 @@ class Bookingpay extends BaseControllerWeb
 								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
 								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
-								$subject = ($emailTemplate->template_subject) ? $emailTemplate->template_subject : 'Your tiqs reservation(s)';
+								$subject = ($emailTemplate->template_subject) ? strip_tags($emailTemplate->template_subject) : 'Your tiqs reservation(s)';
 								$datachange['mailsend'] = 1;
 
+                                //'dtstart' => '2021-10-16 9:00AM',
+                                //'dtend' => '2022-1-16 9:00AM',
+                                
                                 $ics = new ICS(array(
-                                    'organizer' => 'TIQS',
+                                    'location' => '',
+                                    'organizer' => 'TIQS:mailto:support@tiqs.com',
                                     'description' => strip_tags($evenDescript),
-                                    'dtstart' => date('Y-m-d', strtotime($eventdate)) . ' ' .$fromtime,
-                                    'dtend' => date('Y-m-d', strtotime($eventdate)) . ' ' .$totime,
+                                    'dtstart' => strtotime($eventdate .' '. $fromtime)+60*60,
+                                    'dtend' => strtotime($eventdate .' '. $totime)+60*60,
                                     'summary' => strip_tags($evenDescript),
                                     'url' => base_url()
                                 ));
 
-                                $icsContent = $ics->to_string();
 
+                               // var_dump(date('Y-m-d H:m:s',strtotime($eventdate .' '. $fromtime)));
+                               // var_dump(date('Y-m-d H:m:s',strtotime($eventdate .'T'. $totime)));
+
+                              
+                                $icsContent = $ics->to_string();
+                                //$icsContent = false;
 								$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate, $icsContent);
 								if($this->sendEmail($email, $subject, $mailtemplate, $icsContent)) {
                                     $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
