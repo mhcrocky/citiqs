@@ -476,4 +476,7 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/dashboard.css">
 <?php } elseif ($this->view === 'businessreport/paymentMethods') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+<?php }  elseif ($this->view === 'ladnigPages/template') { ?>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/landingPages.css" />
 <?php } ?>
+
