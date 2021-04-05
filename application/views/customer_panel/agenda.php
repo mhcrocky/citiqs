@@ -390,6 +390,9 @@ const templateGlobals = (function() {
                 formData.append("Background", this.agendaModalData.Background);
                 formData.append("email_id", this.agendaModalData.email_id);
                 formData.append("agendas", $('#agendas').val());
+                if (this.agendaModalData.id) {
+                    formData.append("id", this.agendaModalData.id);
+                }
 
 
                 axios.post(this.baseURL + 'ajaxdorian/saveAgenda', formData
