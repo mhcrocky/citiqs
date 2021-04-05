@@ -68,12 +68,17 @@
             }
         }
         if(isset($customDesign[0]['design']) && isset(unserialize($customDesign[0]['design'])['chooseTitle'])){
+
             $chooseTitles = unserialize($customDesign[0]['design'])['chooseTitle'];
             foreach($chooseTitles as $key => $chooseTitle){
                 echo "if(document.getElementById('".$key."') !== null){";
                 echo "document.getElementById('".$key."').textContent = '". $this->language->tLine($chooseTitle)."';";
                 echo "}";
             }
+        }
+        if(isset($customDesign[0]['design']) && isset(unserialize($customDesign[0]['design'])['defaultView'])){
+            $view = unserialize($customDesign[0]['design'])['defaultView'];
+            echo "displayView('".$view."');";
         }
     ?>
     }

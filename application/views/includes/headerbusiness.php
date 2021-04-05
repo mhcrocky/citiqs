@@ -189,7 +189,6 @@ $userShortUrl = $this->session->userdata('userShortUrl');
                                     </div>
                                 </div>
                                 <ul class="metismenu" id="menu">
-
                                     <?php if (!$_SESSION['payNlServiceIdSet']) { ?>
                                         <div style="background-color: orangered" >
                                             <li data-menuid="0" data-toggle="modal" data-target="#setPayNlServiceId">
@@ -200,10 +199,10 @@ $userShortUrl = $this->session->userdata('userShortUrl');
                                             </li>
                                         </div>
                                     <?php } ?>
-
-									<li data-menuid="1"><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-dashboard"></i><span><?php echo $this->language->tLine('Dashboard'); ?></span></a></li>
-									
-
+									<?php if ($_SESSION['businessTypeId'] != 26) { ?>
+										<li data-menuid="1"><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-dashboard"></i><span><?php echo $this->language->tLine('Dashboard'); ?></span></a></li>
+									<?php } ?>
+									<?php if ($_SESSION['businessTypeId'] != 26) { ?>
 									<li data-menuid="2">
 										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-shopping-cart-full"></i><span><?php echo $this->language->tLine('Marketing & Loyalty'); ?></span></a>
 										<ul class="collapse">
@@ -231,6 +230,9 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 <!--											</li>-->
 										</ul>
 									</li>
+									<?php } ?>
+									<?php if ($_SESSION['businessTypeId'] != 26) { ?>
+
 									<li data-menuid="3">
 										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-bar-chart"></i><span><?php echo $this->language->tLine('Finance'); ?></span></a>
 										<ul class="collapse">
@@ -263,7 +265,8 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 <!--											</li>-->
 										</ul>
 									<li>
-
+									<?php } ?>
+									<?php if ($_SESSION['businessTypeId'] != 26) { ?>
 									<li data-menuid="4">
 										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-view-grid"></i><span><?php echo $this->language->tLine('QR Menu'); ?> & <?php echo $this->language->tLine('Cash desk'); ?></span></a>
 										<ul class="collapse">
@@ -318,9 +321,17 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 											
 										</ul>
 									</li>
+									<?php } ?>
+									<?php if ($_SESSION['businessTypeId'] != 999) { ?>
 									<li data-menuid="5">
-                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span><?php echo $this->language->tLine('Reservations'); ?></span></a>
-                                        <ul class="collapse">
+										<?php if ($_SESSION['businessTypeId'] == 26) { ?>
+                                        	<a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span><?php echo $this->language->tLine('Bezichtigingen'); ?></span></a>
+										<?php } ?>
+										<?php if ($_SESSION['businessTypeId'] != 26) { ?>
+											<a href="javascript:void(0)" aria-expanded="true"><i class="ti-calendar"></i><span><?php echo $this->language->tLine('Reservations'); ?></span></a>
+										<?php } ?>
+
+										<ul class="collapse">
 											<li data-menuid="5.2"><a href="<?php echo $this->baseUrl;?>customer_panel/agenda"><i class="ti-agenda"></i> <span><?php echo $this->language->tLine('Create your reservations'); ?></span></a></li>
 											<li data-menuid="5.1"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-stats-up"></i> <span><?php echo $this->language->tLine('Statistics'); ?></span></a></li>
                                             <li data-menuid="5.3"><a href="<?php echo $this->baseUrl; ?>customer_panel/reservations_report"><i class="ti-write"></i> <span><?php echo $this->language->tLine('Reservations Report'); ?></span></a></li>
@@ -354,8 +365,9 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 
 										</ul>
                                     </li>
-
-									<li data-menuid="6">
+									<?php } ?>
+									<?php if ($_SESSION['businessTypeId'] != 26) { ?>
+										<li data-menuid="6">
 										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ticket"></i><span><?php echo $this->language->tLine('e-ticketing'); ?></span></a>
 										<ul class="collapse">
 											<li data-menuid="6.1"><a href="<?php echo $this->baseUrl;?>events/create"><i class="ti-agenda"></i> <span><?php echo $this->language->tLine('Create your event'); ?></span></a></li>
@@ -460,6 +472,8 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 											</li>
 										</ul>
 									</li>
+									<?php } ?>
+									<?php if ($_SESSION['businessTypeId'] != 26) { ?>
 									<li data-menuid="7">
                                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-home"></i><span><?php echo $this->language->tLine('Floorplan'); ?></span></a>
                                         <ul class="collapse">
@@ -477,6 +491,8 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 											<li data-menuid="9.1"><a href="<?php echo $this->baseUrl;?>employee"><i class="ti-user"></i> <span><?php echo $this->language->tLine("Employee's"); ?></span></a></li>
 										</ul>
 									</li>
+									<?php } ?>
+									<?php if ($_SESSION['businessTypeId'] != 999) { ?>
 									<li data-menuid="10">
                                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-id-badge"></i><span><?php echo $this->language->tLine('Business Profile'); ?></span></a>
                                         <ul class="collapse">
@@ -529,14 +545,17 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 											</li>
 										</ul>
                                     </li>
-                                    <li data-menuid="13">
+									<?php } ?>
+									<?php if ($_SESSION['businessTypeId'] != 26) { ?>
+									<li data-menuid="13">
                                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-width-default"></i><span><?php echo $this->language->tLine('Templates'); ?></span></a>
                                         <ul class="collapse">
                                             <li data-menuid="13.1"><a href="<?php echo $this->baseUrl; ?>list_template"><i class="ti-credit-card"></i> <span><?php echo $this->language->tLine('Templates'); ?></span></a></li>
 											<li data-menuid="13.1"><a href="<?php echo $this->baseUrl; ?>add_template"><i class="ti-credit-card"></i> <span><?php echo $this->language->tLine('Add template'); ?></span></a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="<?php echo $this->baseUrl; ?>logout"><i class="ti-shift-left"></i> <span><?php echo $this->language->tLine('Logout'); ?></span></a></li>
+									<?php } ?>
+									<li><a href="<?php echo $this->baseUrl; ?>logout"><i class="ti-shift-left"></i> <span><?php echo $this->language->tLine('Logout'); ?></span></a></li>
 									<li><a href="<?php echo $this->baseUrl; ?>legal"><i class="ti-bookmark-alt"></i> <span><?php echo $this->language->tLine('Legal'); ?></span></a></li>
 								</ul>
                             </nav>

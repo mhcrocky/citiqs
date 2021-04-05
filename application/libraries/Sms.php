@@ -18,7 +18,7 @@ class Sms
             $mobilenumber = ltrim($mobilenumber,"0");
             $mobilenumber = ltrim($mobilenumber,"00");
             $spryng->sms->send($mobilenumber, $message, array(
-                    'route' => 'business',
+                    'route' => '2032',
                     'allowlong' => true)
             );
         }

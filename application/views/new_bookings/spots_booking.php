@@ -44,7 +44,7 @@
                     <?php endif; ?>
                         onclick="window.location.replace(`<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot['data']->id; ?>`)">
                         <?php if(!empty($spot['data']->image) || $spot['data']->image != ''): ?>
-                        <img style="width:100%;height: 250px" class="bd-placeholder-img card-img-top"
+                        <img style="width:100%;height: 250px; border-top-left-radius: 10px;border-top-right-radius: 10px;" class="bd-placeholder-img card-img-top"
                             src="<?php echo $this->baseUrl; ?>assets/home/images/<?php echo $spot['data']->image; ?>">
                         <?php endif; ?>
                         <div class="box-title mt-2">

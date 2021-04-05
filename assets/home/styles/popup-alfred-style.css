@@ -133,9 +133,11 @@ html,body {
 	-ms-user-select: none;
 	user-select: none;
 	background-color: transparent;
-	border: 1px solid transparent;
+	border: 0px solid transparent;
+	height: 48px;
+	width:140px;
 	padding: 0.375rem 0.75rem;
-	font-size: 1rem;
+	font-size: 16px;
 	line-height: 1.5;
 	border-radius: 0.25rem;
 	transition: color 0.15s ease-in-out,
@@ -143,17 +145,23 @@ html,body {
 	border-color 0.15s ease-in-out,
 	box-shadow 0.15s ease-in-out;
   }
+
   .btn:hover {
 	color: #212529;
 	text-decoration: none;
   }
 
-.btn-primary {
+  .btn-primary {
 	color: #fff;
 	background-color: #007bff;
 	border-color: #007bff;
 	border-radius: 50px;
+	/*background: url(https://tiqs.com/assets/home/images/tiqsiconlogonew.png) no-repeat;*/
+	/*float: left;*/
+	/*  width: 10px;*/
+	/*  height: 40px;*/
   }
+
   .btn-primary:hover {
 	color: #fff;
 	background-color: #0069d9;
