@@ -629,6 +629,7 @@
         $('#soldoutdescript').closest(".form-group").hide();
         $('#pricingdescript').closest(".form-group").hide();
         $('#feedescript').closest(".form-group").hide();
+        $('#sort_order').closest(".form-group").hide();
         $('#spotLabelId').closest(".form-group").hide();
     }());
 
@@ -637,6 +638,7 @@
         $('#soldoutdescript').closest(".form-group").show();
         $('#pricingdescript').closest(".form-group").show();
         $('#feedescript').closest(".form-group").show();
+        $('#sort_order').closest(".form-group").show();
     });
 
     $(document).on('click', '.spotLabel', function() {
@@ -651,6 +653,7 @@
         $('#pricingdescript').closest(".form-group").hide();
         $('#feedescript').closest(".form-group").hide();
         $('#spotLabelId').closest(".form-group").hide();
+        $('#sort_order').closest(".form-group").hide();
         $('.modal-title').text('Add Spot');
         $('#saveCopySpot').hide();
         $('#saveSpot').show();
