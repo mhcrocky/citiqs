@@ -67,6 +67,7 @@
  */
 
 class ICS {
+  
   const DT_FORMAT = 'Ymd\THis\Z';
 
   protected $properties = array();
@@ -144,6 +145,7 @@ class ICS {
       case 'dtstamp':
       case 'dtstart':
         $val = $this->format_timestamp($val);
+        var_dump($val);
         break;
       default:
         $val = $this->escape_string($val);
@@ -154,6 +156,7 @@ class ICS {
 
   private function format_timestamp($timestamp) {
     $dt = new DateTime($timestamp);
+    $dt->setTimeZone(new DateTimeZone('UTC'));
     return $dt->format(self::DT_FORMAT);
   }
 
