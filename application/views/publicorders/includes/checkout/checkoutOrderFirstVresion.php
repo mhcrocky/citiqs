@@ -161,7 +161,7 @@
                                                 '<?php #echo $productExtendedId; ?>',
                                                 '<?php #echo $serviceFeePercent; ?>',
                                                 '<?php #echo $serviceFeeAmount; ?>',
-                                                '<?php# echo $mainExtendedId; ?>'
+                                                '<?php #echo $mainExtendedId; ?>'
                                             )"
                                         >
                                             <i class="fa fa-plus"></i>

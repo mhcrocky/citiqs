@@ -16,6 +16,7 @@
         public $vendorId;
         public $productGroup;
         public $landingPage;
+        public $name;
         public $value;
         public $landingType;
         public $active;
@@ -41,7 +42,14 @@
 
         public function insertValidate(array $data): bool
         {
-            if (isset($data['vendorId']) && isset($data['landingPage']) && (isset($data['value']) || isset($data['landingType']))) {
+            if (
+                isset($data['vendorId'])
+                && isset($data['productGroup'])
+                && isset($data['landingPage'])
+                && isset($data['name'])
+                && isset($data['value'])
+                && isset($data['landingType'])
+            ) {
                 return $this->updateValidate($data);
             }
             return false;
@@ -55,6 +63,7 @@
             if (isset($data['vendorId']) && !Validate_data_helper::validateInteger($data['vendorId'])) return true;
             if (isset($data['productGroup']) && !in_array($data['productGroup'], $this->config->item('productGroups'))) return false;
             if (isset($data['landingPage']) && !in_array($data['landingPage'], $this->config->item('landingPages'))) return false;
+            if (isset($data['name']) && !Validate_data_helper::validateString($data['name'])) return true;
             if (isset($data['value']) && !Validate_data_helper::validateString($data['value'])) return false;
             if (isset($data['landingType']) && !in_array($data['landingType'], $this->config->item('landingTypes'))) return false;
             if (isset($data['active']) && !($data['active'] === '0' || $data['active'] === '1')) return false;
@@ -75,5 +84,37 @@
             ]);
 
             return is_null($data) ? null : reset($data);
+        }
+
+        public function manageLandingPage(): bool
+        {
+            if (!$this->create()) {
+                echo $this->db->last_query();
+                die();
+                return false;
+            }
+
+            return true;
+        }
+
+        public function checkIsNameFreeToUse(): bool
+        {
+            $where = [
+                $this->table . '.vendorId' => $this->vendorId,
+                $this->table . '.productGroup' => $this->productGroup,
+                $this->table . '.name' => $this->name,
+            ];
+
+            if ($this->id) {
+                $where[$this->table . '.id'] != $this->id;
+            }
+
+            $check = $this->readImproved([
+                'what' => [$this->table . '.name'],
+                'where' => $where
+
+            ]);
+
+            return is_null($check);
         }
     }

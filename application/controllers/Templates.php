@@ -35,6 +35,11 @@
                 'emailTemplates' => $this->config->item('emailTemplates'),
                 'vendorId' => intval($_SESSION['userId']),
                 'tiqsId' => $this->config->item('tiqsId'),
+                'productGroups' => $this->config->item('productGroups'),
+                'landingPages' => $this->config->item('landingPages'),
+                'landingTypes' => $this->config->item('landingTypes'),
+                'urlType' => $this->config->item('urlLanding'),
+                'templateType' => $this->config->item('templateLanding'),
             ];
 
             $this->global['pageTitle'] = 'TIQS : ADD TEMPLATE';

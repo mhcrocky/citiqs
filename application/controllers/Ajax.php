@@ -40,6 +40,7 @@ class Ajax extends CI_Controller
         $this->load->model('shoptemplates_model');
         $this->load->model('shoppaymentmethods_model');
         $this->load->model('shoporderpaynl_model');
+        $this->load->model('shoplandingpages_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -1986,11 +1987,11 @@ class Ajax extends CI_Controller
     {
         if (!$this->input->is_ajax_request()) return;
 
-        $templateName = $this->input->post('templateName');
-        $templateSubject = $this->input->post('templateSubject');
-        $templateType = $this->input->post('templateType');
+        $templateName = $this->input->post('templateName', true);
+        $templateSubject = $this->input->post('templateSubject', true);
+        $templateType = $this->input->post('templateType', true);
         $html = $_POST['templateHtml'];
-        $id = intval($this->input->post('templateId'));
+        $id = intval($this->input->post('templateId', true));
         $userId = intval($_SESSION['userId']); 
 
         if ($this->shoptemplates_model->saveTemplate($templateName, $templateSubject, $html, $templateType, $userId, $id)) {
@@ -2318,6 +2319,8 @@ class Ajax extends CI_Controller
 
     public function activatePaymentMethod($id): void
     {
+        if (!$this->input->is_ajax_request()) return;
+
         $active = $this->input->post('active', true);
         $update = $this
                     ->shoppaymentmethods_model
@@ -2340,4 +2343,83 @@ class Ajax extends CI_Controller
         ]);
         return;
     }
+
+    public function manageLandingPage(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = [
+            'vendorId' => intval($_SESSION['userId']),
+            'productGroup' => $this->input->post('productGroup', true),
+            'landingPage' => $this->input->post('landingPage', true),
+            'landingType' => $this->input->post('landingType', true),
+            'name' => $this->input->post('name', true)
+        ];
+
+        $this->checkLandingPageName($post);
+        $this->checkLandingUrl($post); // this method sets $post['value'] for url type
+        $this->saveLandingPageFile($post); // this method sets $post['value'] for template type
+        $this->saveLandingPage($post);
+
+
+        if (count($this->errorMessages)) {
+            array_push($this->errorMessages, 'Landing page did not create');
+            $response = [
+                'status' => '0',
+                'messages' => $this->errorMessages
+            ];
+        } else {
+            $response = [
+                'status' => '1',
+                'messages' => ['New landing page created']
+            ];
+        }
+
+        echo json_encode($response);
+    }
+
+
+    private function checkLandingPageName(array $post): void
+    {
+        if (!$this->shoplandingpages_model->setObjectFromArray($post)->checkIsNameFreeToUse()) {
+            $message = 'Template with this name for this product group';
+            array_push($this->errorMessages, $message);
+        }
+    }
+
+    private function checkLandingUrl(array &$post): void
+    {
+        if (empty($this->errorMessages) && $post['landingType'] === $this->config->item('urlLanding')) {
+            $post['value'] = $this->input->post('value', true);
+            if (!filter_var($post['value'], FILTER_VALIDATE_URL)) {
+                $message = 'Invalid url';
+                array_push($this->errorMessages, $message);
+            }
+        }
+    }
+
+    private function saveLandingPageFile(array &$post): void
+    {
+        if (empty($this->errorMessages) && $post['landingType'] === $this->config->item('templateLanding')) {
+            $value = $_POST['value']; 
+            $fileName =  base64_encode(implode('_' , $post));
+            $filePath = $this->config->item('landingPageFolder') . $fileName . '.' . $this->config->item('landingTemplateExt');
+            if (file_put_contents($filePath, $value)) {
+                $post['value'] = $fileName;
+            } else {
+                $message = 'Template file is not create';
+                array_push($this->errorMessages, $message);                
+            }
+        }
+    }
+
+    private function saveLandingPage(array $post): void
+    {
+        if (!empty($this->errorMessages)) return;
+        if (!$this->shoplandingpages_model->setProperty('value', $post['value'])->manageLandingPage()) {
+            $message = 'Process failed';
+            array_push($this->errorMessages, $message);
+        }
+    }
+
 }
