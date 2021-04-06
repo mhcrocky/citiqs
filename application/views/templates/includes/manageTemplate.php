@@ -168,7 +168,6 @@
 const templateGlobals = (function() {
     let globals = {
         'templateHtmlId': 'templateHtml',
-        'urlType' : '<?php echo $urlType; ?>',
         'templateType' : '<?php echo $templateType; ?>',
     }
 
@@ -177,6 +176,9 @@ const templateGlobals = (function() {
     <?php } ?>
     <?php if (!empty($templateId)) { ?>
     globals['templateId'] = '<?php echo $templateId; ?>'
+    <?php } ?>
+    <?php if (!empty($urlType)) { ?>
+    globals['urlType'] = `<?php echo $urlType; ?>`
     <?php } ?>
 
     Object.freeze(globals);

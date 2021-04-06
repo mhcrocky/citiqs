@@ -88,13 +88,7 @@
 
         public function manageLandingPage(): bool
         {
-            if (!$this->create()) {
-                echo $this->db->last_query();
-                die();
-                return false;
-            }
-
-            return true;
+            return ($this->id) ? $this->update() : $this->create();
         }
 
         public function checkIsNameFreeToUse(): bool
@@ -116,5 +110,51 @@
             ]);
 
             return is_null($check);
+        }
+
+        public function getVendorLandingPages(): ?array
+        {
+            return $this->readImproved([
+                'what' => [$this->table . '.*'],
+                'where' => [
+                    $this->table . '.vendorId' => $this->vendorId,
+                ]
+            ]);
+        }
+
+        public function deactivateGroupPages(): bool
+        {
+            $where = [
+                $this->table . '.vendorId' => $this->vendorId,
+                $this->table . '.productGroup' => $this->productGroup,
+                $this->table . '.id != ' => $this->id
+            ];
+
+            return $this->setProperty('active', '0')->customUpdate($where);
+        }
+
+        public function isVenodrPage(): bool
+        {
+            $check = $this->readImproved([
+                'what' => [$this->table . '.id'],
+                'where' => [
+                    $this->table . '.vendorId' => $this->vendorId,
+                    $this->table . '.id' => $this->id,
+                ]
+            ]);
+
+            return !is_null($check);
+        }
+
+        public function updateActiveStatus(): bool
+        {
+            $update = $this->update();;
+            
+            // deactivate other templates in product group
+            if ($this->active === '1') {
+                $this->deactivateGroupPages();
+            }
+
+            return $update;
         }
     }
