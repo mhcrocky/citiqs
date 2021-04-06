@@ -145,7 +145,6 @@ class ICS {
       case 'dtstamp':
       case 'dtstart':
         $val = $this->format_timestamp($val);
-        var_dump($val);
         break;
       default:
         $val = $this->escape_string($val);
