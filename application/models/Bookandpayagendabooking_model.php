@@ -160,7 +160,7 @@ class   Bookandpayagendabooking_model extends CI_Model
 		$insertData = [];
 		$spot_ids = [];
 		foreach ($results as $result) {
-			$insertData = [
+			$insertData[] = [
 					"email_id" => $result['email_id'],
 					"spot_id" => $spot_id,
 					"timeslotdescript" => $result['timeslotdescript'],
@@ -170,7 +170,7 @@ class   Bookandpayagendabooking_model extends CI_Model
 					"price" => $result['price']
 				];
 		}
-		return $this->db->insert('tbl_bookandpaytimeslots', $insertData);
+		return $this->db->insert_batch('tbl_bookandpaytimeslots', $insertData);
 	}
 
 	function get_timeslotMax_bydate($eventdate){
