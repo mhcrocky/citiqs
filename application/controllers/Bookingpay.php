@@ -7,6 +7,7 @@ require APPPATH . '/libraries/phpqrcode/qrlib.php';
 require APPPATH . '/libraries/SendyPHP.php';
 require APPPATH . '/libraries/BaseControllerWeb.php';
 require APPPATH . '/libraries/vendor/autoload.php';
+include APPPATH . '/libraries/ical/ICS.php';
 
 class Bookingpay extends BaseControllerWeb
 {
@@ -583,6 +584,7 @@ class Bookingpay extends BaseControllerWeb
 				$timeSlotId = $record->timeslot;
 				$TransactionId = $record->TransactionID;
 				$voucher = $record->voucher;
+                $evenDescript = $record->ReservationDescription;
                 
                     if ($paid = 1) {
                         
@@ -663,7 +665,7 @@ class Bookingpay extends BaseControllerWeb
 								$mailtemplate = str_replace('[price]', $price, $mailtemplate);
                                 $mailtemplate = str_replace('[ticketPrice]', $price, $mailtemplate);
 								$mailtemplate = str_replace('[spotLabel]', $Spotlabel, $mailtemplate);
-                                $mailtemplate = str_replace('[ticketQuantity]', $ticketQuantity, $mailtemplate);
+                                $mailtemplate = str_replace('[ticketQuantity]', $numberofpersons, $mailtemplate);
 								$mailtemplate = str_replace('[numberOfPersons]', $numberofpersons, $mailtemplate);
 								$mailtemplate = str_replace('[startTime]', $fromtime, $mailtemplate);
 								$mailtemplate = str_replace('[endTime]', $totime, $mailtemplate);
@@ -671,10 +673,30 @@ class Bookingpay extends BaseControllerWeb
 								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
 								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
-								$subject = ($emailTemplate->template_subject) ? $emailTemplate->template_subject : 'Your tiqs reservation(s)';
+								$subject = ($emailTemplate->template_subject) ? strip_tags($emailTemplate->template_subject) : 'Your tiqs reservation(s)';
 								$datachange['mailsend'] = 1;
-								$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
-								if($this->sendEmail($email, $subject, $mailtemplate)) {
+
+                                //'dtstart' => '2021-10-16 9:00AM',
+                                //'dtend' => '2022-1-16 9:00AM',
+                                
+                                $ics = new ICS(array(
+                                    'organizer' => 'TIQS:malito:support@tiqs.com',
+                                    'description' => strip_tags($evenDescript),
+                                    'dtstart' => $eventdate .' '. $fromtime,
+                                    'dtend' => $eventdate .' '. $totime,
+                                    'summary' => strip_tags($evenDescript),
+                                    'url' => base_url()
+                                ));
+
+
+                               // var_dump(date('Y-m-d H:m:s',strtotime($eventdate .' '. $fromtime)));
+                               // var_dump(date('Y-m-d H:m:s',strtotime($eventdate .'T'. $totime)));
+
+                              
+                                $icsContent = $ics->to_string();
+                                //$icsContent = false;
+								$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate, $icsContent);
+								if($this->sendEmail($email, $subject, $mailtemplate, $icsContent)) {
                                     $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
                                     
                                 }
@@ -714,7 +736,7 @@ class Bookingpay extends BaseControllerWeb
 	}
 
 
-    public function sendEmail($email, $subject, $message)
+    public function sendEmail($email, $subject, $message, $icsContent=false)
     {
         $configemail = array(
             'protocol' => PROTOCOL,
@@ -738,6 +760,9 @@ class Bookingpay extends BaseControllerWeb
         $CI->email->to($email);
         $CI->email->subject($subject);
         $CI->email->message($message);
+        if($icsContent){
+            $this->email->attach($icsContent, 'attachment', 'reservation.ics', 'text/calendar');
+        }
         return $CI->email->send();
     }
 

@@ -266,7 +266,7 @@ class Agenda_booking extends BaseControllerWeb
             $newBooking = [
                 'customer' => $customer['id'],
                 'eventid' => $eventId,
-                'eventdate' => date("yy-m-d", strtotime($eventDate)),
+                'eventdate' => date("Y-m-d", strtotime($eventDate)),
                 'SpotId' => $spot->id,
                 'Spotlabel' => $spotLabel,
                 'timefrom' => $fromtime,

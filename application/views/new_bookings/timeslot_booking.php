@@ -58,7 +58,11 @@
                 id="test<?php echo $timeSlot['id']; ?>" name="selected_time_slot_id"
                 value="<?php echo $timeSlot['id']; ?>">
             <label class="form-check-label" for="test<?php echo $timeSlot['id']; ?>">
-                <?php echo date("H:i", Agenda_booking::explode_time($timeSlot['fromtime'])).' - '.date("H:i", Agenda_booking::explode_time($timeSlot['totime'])); ?>
+                <?php $dt1 = new DateTime($timeSlot['fromtime']);
+                $fromtime = $dt1->format('H:i');
+                $dt2 = new DateTime($timeSlot['totime']);
+                $totime = $dt2->format('H:i'); ?>
+                <?php echo $fromtime.' - '.$totime; ?>
             </label>
         </div>
         <?php endif; ?>

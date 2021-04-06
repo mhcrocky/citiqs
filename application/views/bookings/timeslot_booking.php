@@ -178,7 +178,11 @@
                         </p>
                         <?php endif; ?>
                         <?php endfor; ?>
-                        <?php else: ?>
+                        <?php else: 
+                        $dt1 = new DateTime($timeSlot['fromtime']);
+                        $fromtime = $dt1->format('H:i');
+                        $dt2 = new DateTime($timeSlot['totime']);
+                        $totime = $dt2->format('H:i'); ?>
 
                         <?php 
                         if($timeSlot['status'] != "soldout"): ?>
@@ -193,13 +197,13 @@
                                 <?php echo $timeSlot['timeslotdescript']; ?>
                             </label>
                         <div>
-                            <?php echo date("H:i", Booking_agenda::explode_time($timeSlot['fromtime'])).' - '.date("H:i", Booking_agenda::explode_time($timeSlot['totime'])); ?>
+                            <?php echo $fromtime .' - '.$totime; ?>
                         </div>
                         </p>
                         <?php else: ?>
                         <p>
                         <div style="font-family: caption-light; font-size: small">
-                            <?php echo date("H:i", Booking_agenda::explode_time($timeSlot['fromtime'])).' - '.date("H:i", Booking_agenda::explode_time($timeSlot['totime'])); ?>
+                            <?php echo $fromtime.' - '.$totime; ?>
                             &nbsp <span style="color: #ff4d4d;font-weight:bold;"> SOLD OUT</span>
                         </div>
                         </p>
