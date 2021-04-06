@@ -573,6 +573,8 @@ $route['add_template'] = 'Templates/addTemplate';
 $route['update_template/(:num)'] = 'Templates/updateTemplate/$1';
 $route['list_template'] = 'Templates/listTemplates';
 
+$route['translate/get_languages'] = 'Translate/get_languages';
+
 $route['voucher'] = 'Voucher/index';
 $route['voucher/create'] = 'Voucher/create';
 $route['voucher/send'] = 'Voucher/send';
