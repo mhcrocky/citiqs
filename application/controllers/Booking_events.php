@@ -511,6 +511,7 @@ class Booking_events extends BaseControllerWeb
 
                         $emailId = $this->event_model->get_ticket($ticketId)->emailId;
                         
+                        
 						switch (strtolower($_SERVER['HTTP_HOST'])) {
 							case 'tiqs.com':
 								$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
@@ -526,9 +527,11 @@ class Booking_events extends BaseControllerWeb
 						if($emailId) {
                             $emailTemplate = $this->email_templates_model->get_emails_by_id($emailId);
                             $this->config->load('custom');
+                            
                             $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/'.$emailTemplate->template_file .'.'.$this->config->item('template_extension'));
                             $qrlink = $SERVERFILEPATH . $file_name1;
 							if($mailtemplate) {
+                                //var_dump(true);
                                 $mailtemplate = str_replace('[buyerName]', $buyerName, $mailtemplate);
 								$mailtemplate = str_replace('[buyerEmail]', $buyerEmail, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerMobile]', $buyerMobile, $mailtemplate);
@@ -546,17 +549,17 @@ class Booking_events extends BaseControllerWeb
                                 $mailtemplate = str_replace('[numberOfPersons]', $ticketQuantity, $mailtemplate);
                                 $mailtemplate = str_replace('[startTime]', $fromtime, $mailtemplate);
 								$mailtemplate = str_replace('[endTime]', $totime, $mailtemplate);
-								$mailtemplate = str_replace('[timeSlot]', $timeSlotId, $mailtemplate);
+								$mailtemplate = str_replace('[timeSlot]', '', $mailtemplate);
 								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
 								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
 								$subject = ($emailTemplate->template_subject) ? strip_tags($emailTemplate->template_subject) : 'Your tiqs reservation(s)';
 								$datachange['mailsend'] = 1;
 
-                                /*
+                                
                                 $ics = new ICS(array(
                                     'location' => $eventAddress . ', ' . $eventCity . ', ' . $eventCountry,
-                                    'organizer' => 'TIQS',
+                                    'organizer' => 'TIQS:malito:support@tiqs.com',
                                     'description' => strip_tags($eventName),
                                     'dtstart' => date('Y-m-d', strtotime($eventDate)) . ' ' .$fromtime,
                                     'dtend' => date('Y-m-d', strtotime($endDate)) . ' ' .$totime,
@@ -565,10 +568,9 @@ class Booking_events extends BaseControllerWeb
                                 ));
 
                                 $icsContent = $ics->to_string();
-                                */
-                                $icsContent = false;
+                                
 								$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate, $icsContent );
-								if($this->sendEmail($email, $subject, $mailtemplate, $icsContent)) {
+								if($this->sendEmail($buyerEmail, $subject, $mailtemplate, $icsContent)) {
                                     $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
                                     
                                 }
