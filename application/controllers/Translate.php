@@ -22,14 +22,14 @@ class Translate extends BaseControllerWeb {
     public function index() {
         $data["results"] = $this->translation_model->getLanguages();
         $this->global['pageTitle'] = 'tiqs : Translation';
-        if ($this->input->post()) {
-            $language = $this->security->xss_clean($this->input->post('language'));
-			$this->session->set_userdata('translanguage', $language);
-            $data["translations"] = $this->translation_model->getTranslationsByLanguage($language);
-            $this->loadViews("translation-table", $this->global, $data, NULL);
-        } else {
-            $this->loadViews("translation-table", $this->global, $data, NULL);
-        }
+        //if ($this->input->post()) {
+            //$language = $this->security->xss_clean($this->input->post('language'));
+			//$this->session->set_userdata('translanguage', $language);
+            //$data["translations"] = $this->translation_model->getTranslationsByLanguage($language);
+            //$this->loadViews("translation-table", $this->global, $data, NULL);
+        //} else {
+        $this->loadViews("translation-table", $this->global, $data, NULL);
+        //}
     }
 
     public function get_languages() {
