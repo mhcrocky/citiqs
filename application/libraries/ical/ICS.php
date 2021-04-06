@@ -67,7 +67,7 @@
  */
 
 class ICS {
-  const DT_FORMAT = 'Ymd\THis\T';
+  const DT_FORMAT = 'Ymd\THis\Z';
 
   protected $properties = array();
   private $available_properties = array(
