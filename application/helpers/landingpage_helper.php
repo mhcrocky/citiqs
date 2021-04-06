@@ -14,7 +14,6 @@
             $config['landingPageFolder'] = FCPATH . 'application' . DIRECTORY_SEPARATOR . 'landing_pages' . DIRECTORY_SEPARATOR;
 
             $templteFile  = $CI->config->item('landingPageFolder') . DIRECTORY_SEPARATOR;
-            $templteFile .= $order['vendorId'] . DIRECTORY_SEPARATOR;
             $templteFile .= $landingPage . '.' . $CI->config->item('landingTemplateExt');
 
             // TIQS TO DO => replace tags with data from order for template, this is for testing

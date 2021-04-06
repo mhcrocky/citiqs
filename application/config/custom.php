@@ -534,7 +534,7 @@ $config['verifyLandingPage'] = 'verify';
 $config['cancelLandingPage'] = 'cancel';
 $config['deniedLandingPage'] = 'denied';
 $config['pinCanceledLandingPage'] = 'pinCanceled';
- 
+
 $config['landingPages'] = [
     $config['successLandingPage'],
     $config['pendingLandingPage'],

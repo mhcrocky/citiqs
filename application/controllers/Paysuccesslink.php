@@ -39,6 +39,7 @@ class  Paysuccesslink extends BaseControllerWeb
                     ->shoplandingpages_model
                     ->setProperty('vendorId', $vendorId)
                     ->setProperty('landingPage', $landingPage)
+                    ->setProperty('productGroup', $this->config->item('storeAndPos'))
                     ->getLandingPage();
 
         if (is_null($landingPage)) return;
