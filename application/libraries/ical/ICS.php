@@ -67,7 +67,7 @@
  */
 
 class ICS {
-  const DT_FORMAT = 'Ymd\THis\Z';
+  const DT_FORMAT = 'Ymd\THis\T';
 
   protected $properties = array();
   private $available_properties = array(
@@ -153,15 +153,9 @@ class ICS {
   }
 
   private function format_timestamp($timestamp) {
-    //$dt = new DateTime($timestamp);
-    $timestamp = intval($timestamp);
-    return $this->getIcalDate($timestamp);
+    $dt = new DateTime($timestamp);
+    return $dt->format(self::DT_FORMAT);
   }
-  
-  private function getIcalDate(int $time, $inclTime = true)
-  {
-      return date('Ymd' . ($inclTime ? '\THis\r' : ''), $time);
-    }
 
   private function escape_string($str) {
     return preg_replace('/([\,;])/','\\\$1', $str);
