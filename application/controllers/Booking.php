@@ -863,7 +863,7 @@ class Booking extends BaseControllerWeb
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
 								$subject = ($emailTemplate->template_subject) ? $emailTemplate->template_subject : 'Your tiqs reservation(s)';
 								$datachange['mailsend'] = 1;
-								$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
+//								$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
 								if($this->sendEmail($email, $subject, $mailtemplate)) {
                                     $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
                                     

@@ -593,7 +593,7 @@ class Voucher extends REST_Controller
 				$subject = str_replace('[voucherAmount]', $voucherAmount,$subject );
 				$subject = str_replace('[voucherPercent]', $voucherPercent, $subject);
 				$mailsend = 1;
-				$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
+//				$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
 				if($this->sendEmail($email, $subject, $mailtemplate)) {
                     $mailsend = 1;
                 }

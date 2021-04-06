@@ -72,6 +72,11 @@ function createEmailTemplateResponse(selectTemplate, customTemplate, response) {
 function tinyMceInit(textAreaId, templateContent = '') {
     let id = '#' + textAreaId;
 
+	// selector: 'textarea',  // change this value according to your HTML
+	// 	plugins: 'fullpage',
+	// 	menubar: 'file',
+	// 	toolbar: 'fullpage'
+
     tinymce.init({
         selector: id,
         relative_urls : false,
@@ -85,12 +90,15 @@ function tinyMceInit(textAreaId, templateContent = '') {
         plugins: [
             'advlist autolink lists link image charmap print preview anchor textcolor',
             'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table contextmenu paste code help wordcount'
+            'insertdatetime media table contextmenu paste code help wordcount',
+			'fullpage'
         ],
+		width: '100%',
+		valid_children : '+body[style]',
         mobile: {
             theme: 'mobile'
         },
-        toolbar: 'insert | undo redo | formatselect | bold italic underline backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | copy | cut | paste | tags | qrcode | help',
+        toolbar: 'insert | undo redo | styleselect | fontselect | fontsizeselect | formatselect | bold italic underline backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | code | copy | cut | paste | tags | qrcode | help | fullpage ',
         content_css: [
             '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
             '//www.tiny.cloud/css/codepen.min.css'
