@@ -32,6 +32,15 @@ class Translate extends BaseControllerWeb {
         }
     }
 
+    public function get_languages() {
+
+        $language = ($this->input->post('language')) ? $this->security->xss_clean($this->input->post('language')) : 'english';
+		$this->session->set_userdata('translanguage', $language);
+        $translations = $this->translation_model->getTranslationsByLanguage($language);
+        echo json_encode($translations);
+
+    }
+ 
     public function editTranslation($recordId) {
         if ($this->input->post()) {
             $correctedTranslation = $this->security->xss_clean($this->input->post('correctedTranslation'));
