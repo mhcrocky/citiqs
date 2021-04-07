@@ -126,23 +126,25 @@ const STYLE_RULER = `
  }
 
  @media print {
-   @page {
-     size: ${FORMAT.width}mm ${FORMAT.height}mm;
-     margin: ${PADDING_RULER}mm !important;
-     counter-increment: page
-   }
-   html.${CLASS_RULER}, html.${CLASS_RULER} body {
-     background: transparent;
-     box-shadow: none
-   }
-   html.${CLASS_RULER} body {
-     padding: 0 !important;
-     width: 100%;
-     font-size: 13px;
-     font-family: Helvetica,Arial,sans-serif !important;
-     font-style: normal;
-     letter-spacing: 0
-   }
+    @page {
+        size: ${FORMAT.width}mm ${FORMAT.height}mm;
+        margin: 0mm !important;
+        counter-increment: page
+      }
+
+      html.${CLASS_RULER}, html.${CLASS_RULER} body {
+        background: transparent;
+        box-shadow: none
+      }
+      html.${CLASS_RULER} body {
+        padding: 0 !important;
+        margin: ${PADDING_RULER}mm !important;
+        width: 100%;
+        font-size: 13px;
+        font-family: Helvetica,Arial,sans-serif !important;
+        font-style: normal;
+        letter-spacing: 0
+      }
    html.${CLASS_RULER} .${RULER_PAGEBREAK_CLASS}{
      margin: 0 !important;
      height: 0 !important
