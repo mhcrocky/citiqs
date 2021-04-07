@@ -16,8 +16,16 @@
             $templteFile  = $CI->config->item('landingPageFolder') . DIRECTORY_SEPARATOR;
             $templteFile .= $landingPage . '.' . $CI->config->item('landingTemplateExt');
 
-            // TIQS TO DO => replace tags with data from order for template, this is for testing
-            return file_exists($templteFile) ? file_get_contents($templteFile) : null;
+            if (!file_exists($templteFile)) return null;
+            $content = file_get_contents($templteFile);
+
+            $content = str_replace(
+                ['[orderId]', '[orderAmount]', '[buyerName]', '[buyerEmail]'],
+                [$order['orderId'], $order['orderAmount'], $order['buyerUserName'], $order['buyerEmail']],
+                $content
+            );
+
+            return $content;
         }
 
     }

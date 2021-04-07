@@ -200,6 +200,14 @@ function tinyMceInit(textAreaId, templateContent = '') {
                         text: '[ticketQuantity]',
                         onclick: function(){editor.insertContent('[ticketQuantity]')}
                     },
+                    {
+                        text: '[orderId]',
+                        onclick: function(){editor.insertContent('[orderId]')}
+                    },
+                    {
+                        text: '[orderAmount]',
+                        onclick: function(){editor.insertContent('[orderAmount]')}
+                    },
                 ],
             });
 
