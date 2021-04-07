@@ -79,6 +79,7 @@ function tinyMceInit(textAreaId, templateContent = '') {
 
     tinymce.init({
         selector: id,
+		resize: 'both',
         relative_urls : false,
         remove_script_host : false,
         convert_urls : false,
@@ -91,15 +92,20 @@ function tinyMceInit(textAreaId, templateContent = '') {
             'advlist autolink lists link image charmap print preview anchor textcolor',
             'searchreplace visualblocks code fullscreen',
             'insertdatetime media table contextmenu paste code help wordcount',
-			'fullpage'
+			'fullpage',
+			'preview',
+			'fullscreen',
+			'pagebreak',
+			'media',
         ],
 		width: '100%',
 		valid_children : '+body[style]',
         mobile: {
             theme: 'mobile'
         },
-        toolbar: 'insert | undo redo | styleselect | fontselect | fontsizeselect | formatselect | bold italic underline backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | code | copy | cut | paste | tags | qrcode | help | fullpage ',
-        content_css: [
+        toolbar: 'insert | undo redo | styleselect | fontselect | fontsizeselect | formatselect | bold italic underline backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | code | copy | cut | paste | pagebreak | media | tags | qrcode | help | fullpage | preview | fullscreen ',
+		pagebreak_split_block: true,
+		content_css: [
             '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
             '//www.tiny.cloud/css/codepen.min.css'
         ],
@@ -206,8 +212,8 @@ function tinyMceInit(textAreaId, templateContent = '') {
             editor.addButton('qrcode', {
                 text: 'QRCode',
                 onclick: function(){
-                    let html = '<div style="width:100%;display: flex;justify-content: center;">'+
-                    '<img class="qr-code-image"  border="0"  align="one_image" style="display:block;max-width:350px;padding:50px;" alt="" src="'+globalVariables.baseUrl+'assets/images/qrcode_preview.png" tabindex="0">'+
+                    let html = '<div style="width:100%;">'+
+                    '<img class="qr-code-image"  border="0"  align="one_image" style="display:block;width:150px;padding:50px;" alt="" src="'+globalVariables.baseUrl+'assets/images/qrcode_preview.png" tabindex="0">'+
                     '</div>';
                     editor.insertContent(html);
                 }

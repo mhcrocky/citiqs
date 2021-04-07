@@ -37,7 +37,6 @@ switch (strtolower($_SERVER['HTTP_HOST']))
         $base  = "https://".$_SERVER['HTTP_HOST'];
         break;
 
-
     case 'loki-lost.com':
         $base  = "https://".$_SERVER['HTTP_HOST'];
         break;
