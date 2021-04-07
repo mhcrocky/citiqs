@@ -168,7 +168,8 @@
         public function checkIsExists(): bool
         {
             $where = [
-                $this->table . '.template_name' => $this->template_name,
+                //$this->table . '.template_name' => $this->template_name,
+                $this->table . '.template_file' => $this->template_file,
                 $this->table . '.user_id' => $this->user_id,
             ];
 

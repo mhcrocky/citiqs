@@ -455,7 +455,7 @@ class Ajaxdorian extends CI_Controller
         $mailtemplate = str_replace('Button', '', $mailtemplate);
         $mailtemplate = str_replace('Social Links', '', $mailtemplate);
         $subject = 'Your test email';
-        $this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
+//        $this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
         if($this->sendEmail($email, $subject, $mailtemplate)) {
             echo 'success';
         }

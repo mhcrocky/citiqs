@@ -15,7 +15,12 @@
 <!--    -->
 <!--    <script src='https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js'></script>-->
 </head>
-
+<style>
+tr td {
+	padding: 15px;
+	padding-left: 0px;
+}
+</style>
 <body>
 
 <!-- end header -->
@@ -42,6 +47,12 @@
 				</select>
 			</div>
 		</form>
+	</div>
+
+	<div class="w-100 p-2">
+	    <table id="translation" style="margin-top: 35px !important;width: 100% !important;" class="table-striped pt-5 w-100">
+
+	</table>
 	</div>
 
 	<?php if (isset($translations)) { ?>
@@ -128,10 +139,11 @@
 </section><!-- end faq section -->
 
 <script>
-
+const baseUrl = '<?php echo base_url(); ?>';
 	$("#language").change(function () {
 		// if (confirm('Are you sure you want to load list of translations for the selected language?')) {
-			$("#translationsForm").submit();
+			//$("#translationsForm").submit();
+			$("#translation").DataTable().ajax.reload();
 		// }
 	});
 	
@@ -195,6 +207,7 @@
 		}
 		console.log('saved translate');
 	});
+
 
 
 </script>
