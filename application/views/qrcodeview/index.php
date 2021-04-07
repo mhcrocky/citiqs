@@ -37,6 +37,17 @@
 
                     <div class="form-group row">
                         <label for="spot" class="col-md-4 col-form-label text-md-left">
+                            QRCode ID
+                        </label>
+                        <div class="col-md-6">
+
+                            <input type="text" id="qr_codeId" class="input-w border-50 form-control"
+                                name="qrcodeId">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="spot" class="col-md-4 col-form-label text-md-left">
                             Spot
                         </label>
                         <div class="col-md-6">

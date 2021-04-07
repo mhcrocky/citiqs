@@ -70,6 +70,7 @@ function save_qrcode(e){
   }
   
   let data = {
+      qrcodeId: $('#qr_codeId').val(),
       spot: $('#spot').val(),
       affiliate: $('#affiliate').val()
   }
@@ -79,12 +80,20 @@ function save_qrcode(e){
   $('#submitQrcode').prop('disabled', true);
 
   $.post(globalVariables.baseUrl + "qrcode/save_qrcode", data, function(data){
-      $('#qrcode').DataTable().ajax.reload();
       $('#submitQrcode').prop('disabled', false);
-      $('#resetForm').click();
-      $('#closeModal').click();
-      $('.form-control').addClass('input-clear');
-      alertify['success']('Saved Successfully!');
+      data = JSON.parse(data);
+      if(data.status == 'success'){
+        $('#qrcode').DataTable().ajax.reload();
+        $('#resetForm').click();
+        $('#closeModal').click();
+        $('.form-control').addClass('input-clear');
+        alertify['success']('Saved Successfully!');
+        return;
+      }
+
+      alertify[data.status](data.message);
+
+      
 
   });
 

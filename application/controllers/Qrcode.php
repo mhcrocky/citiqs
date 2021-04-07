@@ -29,9 +29,12 @@ class Qrcode extends BaseControllerWeb {
 
     public function save_qrcode() {
         $data = $this->input->post(null, true);
+        $qrcodeId = $data['qrcodeId'];
+        unset($data['qrcodeId']);
         $vendorId = $this->session->userdata('userId');
         $data['vendorId'] = $vendorId;
-        return $this->qrcode_model->save_qrcode($data);
+        $response = $this->qrcode_model->save_qrcode($qrcodeId, $data);
+        echo json_encode($response);
 
     }
 
