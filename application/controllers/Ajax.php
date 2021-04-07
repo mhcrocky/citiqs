@@ -2344,9 +2344,16 @@ class Ajax extends CI_Controller
         return;
     }
 
-    public function manageLandingPage(): void
+    public function manageLandingPage($id = null): void
     {
         if (!$this->input->is_ajax_request()) return;
+
+        if ($id) {
+            $this
+                ->shoplandingpages_model
+                ->setObjectId(intval($id))
+                ->setProperty('active', $this->shoplandingpages_model->getProperty('active'));
+        }
 
         $post = [
             'vendorId' => intval($_SESSION['userId']),
@@ -2369,9 +2376,18 @@ class Ajax extends CI_Controller
                 'messages' => $this->errorMessages
             ];
         } else {
+            if ($id) {
+                $message = 'Landing page updated';
+                $update = '1';
+            } else {
+                $message = 'New landing page created';
+                $update = '0';
+            }
+
             $response = [
                 'status' => '1',
-                'messages' => ['New landing page created']
+                'messages' => [$message],
+                'update' => $update
             ];
         }
 
@@ -2382,7 +2398,7 @@ class Ajax extends CI_Controller
     private function checkLandingPageName(array $post): void
     {
         if (!$this->shoplandingpages_model->setObjectFromArray($post)->checkIsNameFreeToUse()) {
-            $message = 'Template with this name for this product group';
+            $message = 'Template with this name already exists for this product group';
             array_push($this->errorMessages, $message);
         }
     }

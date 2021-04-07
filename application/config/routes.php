@@ -571,6 +571,7 @@ $route['out/(:any)/(:num)'] = "Blackbox/actionOut/$1/$2";
 
 $route['add_template'] = 'Templates/addTemplate';
 $route['update_template/(:num)'] = 'Templates/updateTemplate/$1';
+$route['update_template/(:num)/(:any)'] = 'Templates/updateTemplate/$1/$2';
 $route['list_template'] = 'Templates/listTemplates';
 
 $route['voucher'] = 'Voucher/index';
