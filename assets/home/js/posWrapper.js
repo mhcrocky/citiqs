@@ -21,6 +21,10 @@ function posTriggerModalClick(modalButtonId) {
 }
 
 function cancelPosOrder() {
+    if (isPrinted()) {
+        alertify.error('You can not cancel printed order');
+        return;
+    }
     (makeOrderGlobals['orderDataRandomKey']) ? $('#confirmCancel').modal('show') : resetPosOrder();
 }
 
@@ -558,6 +562,14 @@ function posVoucherPayResponse(element, response) {
     // handle select payment method
 
     alertifyAjaxResponse(response);
+}
+
+function isPrinted() {
+    if (makeOrderGlobals.hasOwnProperty('posMakeOrderId')) {
+        let elements = document.querySelectorAll('#' + makeOrderGlobals['posMakeOrderId'] + ' [data-printed="1"]');
+        return elements.length ? true : false;
+    }
+    return false;
 }
 
 toogleSelectSavedOrders();
