@@ -580,6 +580,11 @@ $route['voucher'] = 'Voucher/index';
 $route['voucher/create'] = 'Voucher/create';
 $route['voucher/send'] = 'Voucher/send';
 
+$route['qrcode'] = 'Qrcode/index';
+$route['qrcode/get_qrcodes'] = 'Qrcode/get_qrcodes';
+$route['qrcode/save_qrcode'] = 'Qrcode/save_qrcode';
+$route['qrcode/update_qrcode'] = 'Qrcode/update_qrcode';
+
 // connections api routes
 
 //buyer
