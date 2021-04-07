@@ -41,6 +41,8 @@
                 'landingTypes' => $this->config->item('landingTypes'),
                 'urlType' => $this->config->item('urlLanding'),
                 'templateType' => $this->config->item('templateLanding'),
+                'emailTemplatesEdit' => true,
+                'landingPagesEdit' => true
             ];
 
             $this->global['pageTitle'] = 'TIQS : ADD TEMPLATE';
@@ -48,26 +50,72 @@
             return;
         }
 
-        public function updateTemplate($id): void
+        public function updateTemplate($id, $isLandingPage = ''): void
         {
-            $this->shoptemplates_model->setObjectId(intval($id))->setObject();
-
-            // to check id
-
             $data = [
-                'emailTemplates' => $this->config->item('emailTemplates'),
                 'vendorId' => intval($_SESSION['userId']),
                 'tiqsId' => $this->config->item('tiqsId'),
-                'templateId' => $id,
-				'templateName' => $this->shoptemplates_model->template_name,
-                'templateSubject' => $this->shoptemplates_model->template_subject,
-                'templateType' => $this->shoptemplates_model->template_type,
-				'templateContent' => file_get_contents($this->shoptemplates_model->getTemplateFile())
             ];
+
+            if (empty($isLandingPage)) {
+                $this->setEmailTemplateUpdate($data, intval($id));
+            } else {
+                $this->setLandingPageUpdate($data, intval($id));
+            }
 
             $this->global['pageTitle'] = 'TIQS : UPDATE TEMPLATE';
             $this->loadViews('templates/updateTemplate', $this->global, $data, 'footerbusiness', 'headerbusiness');
             return;
+        }
+
+        private function setEmailTemplateUpdate(array &$data, int $id): void
+        {
+            $this->shoptemplates_model->setObjectId($id)->setObject();
+            // to check id
+            $data['emailTemplates'] = $this->config->item('emailTemplates');
+            $data['templateId'] = $id;
+            $data['templateName'] = $this->shoptemplates_model->template_name;
+            $data['templateSubject'] = $this->shoptemplates_model->template_subject;
+            $data['templateType'] = $this->shoptemplates_model->template_type;
+            $data['templateContent'] = file_get_contents($this->shoptemplates_model->getTemplateFile());
+            $data['emailTemplatesEdit'] = true;
+            $data['landingPagesEdit'] = false;
+
+            return;
+        }
+
+        public function setLandingPageUpdate(array &$data, int $id): void
+        {
+            $this
+                ->shoplandingpages_model
+                ->setObjectId($id)
+                ->setProperty('vendorId', $data['vendorId']);
+            if (!$this->shoplandingpages_model->isVenodrPage()) {
+                redirect('list_template');
+            }
+            $this->shoplandingpages_model->setObject();
+
+            $data['emailTemplatesEdit'] = false;
+            $data['landingPagesEdit'] = true;
+            $data['productGroups'] = $this->config->item('productGroups');
+            $data['landingPages'] = $this->config->item('landingPages');
+            $data['landingTypes'] = $this->config->item('landingTypes');
+            $data['urlType'] = $this->config->item('urlLanding');
+            $data['templateType'] = $this->config->item('templateLanding');
+            $data['landingPage'] = $this->shoplandingpages_model;
+
+            $this->getLandingPageHtml($data);
+
+            return;
+        }
+
+        private function getLandingPageHtml(array &$data): void
+        {
+            $landingPage = $data['landingPage'];
+            if ($landingPage->landingType === $this->config->item('templateLanding')) {
+                $htmlTemplate = $this->config->item('landingPageFolder') . $landingPage->value . '.' . $this->config->item('landingTemplateExt');
+                $data['templateContent'] = file_get_contents($htmlTemplate);
+            }
         }
 
         public function listTemplates(): void
@@ -94,6 +142,7 @@
             $this
                 ->shoplandingpages_model
                 ->setObjectId(intval($id))
+                ->setProperty('landingPage', $this->shoplandingpages_model->getProperty('landingPage'))
                 ->setProperty('vendorId', $vendorId)
                 ->setProperty('active', $newStatus)
                 ->setProperty('productGroup', base64_decode($get['group']));

@@ -88,7 +88,9 @@
 
         public function manageLandingPage(): bool
         {
-            return ($this->id) ? $this->update() : $this->create();
+            // method updateActiveStatus update object and deactivate other ladning pages in product group ...
+            // ... object active status is 1
+            return ($this->id) ? $this->updateActiveStatus() : $this->create();
         }
 
         public function checkIsNameFreeToUse(): bool
@@ -100,7 +102,7 @@
             ];
 
             if ($this->id) {
-                $where[$this->table . '.id'] != $this->id;
+                $where[$this->table . '.id!='] = $this->id;
             }
 
             $check = $this->readImproved([
@@ -122,11 +124,12 @@
             ]);
         }
 
-        public function deactivateGroupPages(): bool
+        public function deactivateGroupLandingPages(): bool
         {
             $where = [
                 $this->table . '.vendorId' => $this->vendorId,
                 $this->table . '.productGroup' => $this->productGroup,
+                $this->table . '.landingPage' => $this->landingPage,
                 $this->table . '.id != ' => $this->id
             ];
 
@@ -148,11 +151,11 @@
 
         public function updateActiveStatus(): bool
         {
-            $update = $this->update();;
-            
+            $update = $this->update();
+
             // deactivate other templates in product group
             if ($this->active === '1') {
-                $this->deactivateGroupPages();
+                $this->deactivateGroupLandingPages();
             }
 
             return $update;

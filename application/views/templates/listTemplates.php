@@ -72,7 +72,7 @@
                                         <?php } ?>
                                     </td>
                                     <td>
-                                        <a href="<?php echo $updateTemplate . $page['id']; ?>">Update</a>
+                                        <a href="<?php echo $updateTemplate . $page['id'] . DIRECTORY_SEPARATOR . '1' ?>">Update</a>
                                     </td>
                                 </tr>
                             <?php } ?>

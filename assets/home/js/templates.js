@@ -206,6 +206,14 @@ function tinyMceInit(textAreaId, templateContent = '') {
                         text: '[ticketQuantity]',
                         onclick: function(){editor.insertContent('[ticketQuantity]')}
                     },
+                    {
+                        text: '[orderId]',
+                        onclick: function(){editor.insertContent('[orderId]')}
+                    },
+                    {
+                        text: '[orderAmount]',
+                        onclick: function(){editor.insertContent('[orderAmount]')}
+                    },
                 ],
             });
 
@@ -224,7 +232,7 @@ function tinyMceInit(textAreaId, templateContent = '') {
 }
 
 function showTemplates() {
-    if (templateGlobals['templateContent']) {
+    if (templateGlobals.hasOwnProperty('templateContent')) {
         tinyMceInit(templateGlobals.templateHtmlId, templateGlobals['templateContent']);
     } else if(templateGlobals.templateHtmlId){
         tinyMceInit(templateGlobals.templateHtmlId);
@@ -233,9 +241,9 @@ function showTemplates() {
 
 function customUpdateEmailTemplate(selectTemplateValueId, customTemplateNameId, customTemplateSubjectId, customTemplateTypeId, templateId = 0){
     createEmailTemplate(selectTemplateValueId, customTemplateNameId, customTemplateSubjectId, customTemplateTypeId, templateId);
-    setTimeout(() => {
-        window.location.reload();
-    }, 1200);
+    // setTimeout(() => {
+    //     window.location.reload();
+    // }, 1200);
 }
 
 function checkiIsLandingPage(element, landingPage, emailElements, landingPageElemenst) {
@@ -253,6 +261,9 @@ function createLandingPage(productGroupId, landingPageId, landingTypeId, ladning
 
     if (post) {
         let url = globalVariables.ajax + 'manageLandingPage';
+        if (templateGlobals.hasOwnProperty('landingPageId')) {
+            url += '/' + templateGlobals['landingPageId'];
+        }
         sendAjaxPostRequestImproved(post, url, createLandingPageResponse, [productGroupId, landingPageId, landingTypeId, ladningPageNameId, ladningPageUrlId]);
     }
 
@@ -332,18 +343,20 @@ function validateAndGetLandingPageData(productGroupId, landingPageId, landingTyp
 
 }
 
-function switchTypeELement(element, templateHtmlClass, ladningPageUrlClass) {
+function switchTypeELement(element, templateHtmlClass, editTemplate, ladningPageUrlClass) {
     if (element.value === templateGlobals.urlType) {
         $('.' + templateHtmlClass).hide();
+        $('.' + editTemplate).hide();
         $('.' + ladningPageUrlClass).show();
     } else {
         $('.' + templateHtmlClass).show();
+        $('.' + editTemplate).show();
         $('.' + ladningPageUrlClass).hide();
     }
 }
 
 function createLandingPageResponse(productGroupId, landingPageId, landingTypeId, ladningPageNameId, ladningPageUrlId, response) {
-    if (response['status'] === '1') {
+    if (response['status'] === '1' && response.update === '0') {
         let i;
         let argumentsLength = arguments.length;
         for (i = 0; i < argumentsLength; i++) {
@@ -352,13 +365,20 @@ function createLandingPageResponse(productGroupId, landingPageId, landingTypeId,
                 document.getElementById(argument).value = '';
             }
         }
-
-        // if (response.update === '0') {
-            tinymce.get(templateGlobals.templateHtmlId).setContent('');
-        // }
+        tinymce.get(templateGlobals.templateHtmlId).setContent('');
     }
     alertifyAjaxResponse(response);
     
     // $('#' + templateGlobals.templateHtmlId).empty();
 }
+
+function hideTemplateEditor() {
+    if (templateGlobals.hasOwnProperty('hideTemplateEditor')) {
+        $('.mce-container').hide();
+        $('.editTemplate').hide();
+    }
+    return;
+}
+
 showTemplates();
+setTimeout(hideTemplateEditor, 1000);

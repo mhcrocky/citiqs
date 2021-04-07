@@ -571,6 +571,7 @@ $route['out/(:any)/(:num)'] = "Blackbox/actionOut/$1/$2";
 
 $route['add_template'] = 'Templates/addTemplate';
 $route['update_template/(:num)'] = 'Templates/updateTemplate/$1';
+$route['update_template/(:num)/(:any)'] = 'Templates/updateTemplate/$1/$2';
 $route['list_template'] = 'Templates/listTemplates';
 
 $route['translate/get_languages'] = 'Translate/get_languages';
@@ -578,6 +579,11 @@ $route['translate/get_languages'] = 'Translate/get_languages';
 $route['voucher'] = 'Voucher/index';
 $route['voucher/create'] = 'Voucher/create';
 $route['voucher/send'] = 'Voucher/send';
+
+$route['qrcode'] = 'Qrcode/index';
+$route['qrcode/get_qrcodes'] = 'Qrcode/get_qrcodes';
+$route['qrcode/save_qrcode'] = 'Qrcode/save_qrcode';
+$route['qrcode/update_qrcode'] = 'Qrcode/update_qrcode';
 
 // connections api routes
 
