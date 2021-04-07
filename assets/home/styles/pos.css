@@ -323,7 +323,7 @@ header, footer {
 }
 
 .pos-checkout-list{
-	height: calc(75vh - 38px);
+	height: calc(65vh - 30px);
 	overflow-y: scroll;
 }
 
