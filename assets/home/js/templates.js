@@ -54,7 +54,7 @@ function createEmailTemplate(selectTemplateValueId, customTemplateNameId, custom
     sendAjaxPostRequest(post, url, 'createEmailTemplate', createEmailTemplateResponse, [selectTemplate, customTemplateSubject, customTemplate]);
 }
 
-function createEmailTemplateResponse(selectTemplate, customTemplate, response) {
+function createEmailTemplateResponse(selectTemplate, customTemplateSubject, customTemplate, response) {
     alertifyAjaxResponse(response);
 
     if (response['status'] === '1') {

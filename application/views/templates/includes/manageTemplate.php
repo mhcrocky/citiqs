@@ -22,6 +22,8 @@
                 <?php } ?>
             </select>
             <br/>
+        <?php } else { ?>
+            <input type="hidden" id="selectTemplateName" value="">
         <?php } ?>
         <label for="templateType">Template Type</label>
         <select class="form-control w-100" id="templateType" name="templateType" onchange="checkiIsLandingPage(this, 'landingPage', 'emailTemplate', 'landingPage')">
