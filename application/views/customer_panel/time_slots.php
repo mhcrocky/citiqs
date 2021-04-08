@@ -89,6 +89,7 @@ li {
                                     <th>Overflow</th>
                                     <th>Email Template</th>
                                     <th>Price</th>
+                                    <th>Reservation Fee</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -107,7 +108,8 @@ li {
                                             {{ timeslot.template_name }}
                                         </a>
                                     </td>
-                                    <td>{{ timeslot.price }}</td>
+                                    <td>{{ timeslot.price }}</td> 
+                                    <td>{{ timeslot.reservationFee }}</td>
                                     <td class="td_action">
                                         <span class="span_action" @click="editTimeSlot(timeslot)">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -216,6 +218,11 @@ li {
                                 <input type="number" step="0.01" name="Price" v-model="timeSlotModalData.price"
                                     class="form-control" id="Price" placeholder="Price">
                             </div>
+                            <div class="form-group">
+                                <label for="reservationFee">Reservation Fee</label>
+                                <input type="number" step="0.01" name="reservationFee" v-model="timeSlotModalData.reservationFee"
+                                    class="form-control" id="reservationFee" placeholder="Reservation Fee">
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -270,8 +277,9 @@ li {
                 duration: null,
                 overflow: null,
                 price: '',
+                reservationFee: '',
                 spot_id: null,
-                email_id: null,
+                email_id: null
             },
             deleteTimeSlotTemp: null
 
@@ -290,6 +298,7 @@ li {
                     duration: null,
                     overflow: null,
                     price: '',
+                    reservationFee: '',
                     spot_id: null,
                     email_id: null,
                     id: null
@@ -330,6 +339,7 @@ li {
                 formData.append("duration", this.timeSlotModalData.duration);
                 formData.append("overflow", this.timeSlotModalData.overflow);
                 formData.append("price", this.timeSlotModalData.price);
+                formData.append("reservationFee", this.timeSlotModalData.reservationFee);
                 formData.append("spot_id", this.timeSlotModalData.spot_id);
                 formData.append("email_id", this.timeSlotModalData.email_id);
                 this.method = 'create';
@@ -374,6 +384,7 @@ li {
                 formData.append("duration", this.timeSlotModalData.duration);
                 formData.append("overflow", this.timeSlotModalData.overflow);
                 formData.append("price", this.timeSlotModalData.price);
+                formData.append("reservationFee", this.timeSlotModalData.reservationFee);
                 formData.append("spot_id", this.timeSlotModalData.spot_id);
                 formData.append("email_id", this.timeSlotModalData.email_id);
                 if (this.timeSlotModalData.id) {
