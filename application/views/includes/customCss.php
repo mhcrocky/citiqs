@@ -475,6 +475,8 @@
 
 <?php } elseif ($this->view === 'templates/updateTemplate') { ?>
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/tiny_a4_format.css">
+<?php } elseif ($this->view === 'voucher/templates/updateTemplate') { ?>
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/tiny_a4_format.css">
 
 <?php  } elseif ($this->view === 'voucher/send') { ?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
