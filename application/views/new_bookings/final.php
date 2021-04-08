@@ -74,7 +74,7 @@
         </div>
 		</div>
 		<div class="w-100 text-right">
-		    <strongutton data-brackets-id="2918" type="submit" class="btn-primary btn mt-3" id="button-submit">BOOK NOW</strongutton>
+		    <button data-brackets-id="2918" type="submit" class="btn-primary btn mt-3" id="button-submit">BOOK NOW</button>
 		</div>
         <div class="w-100 go-back-wrapper">
             <a class="go-back-button" href="javascript:history.back()">Go Back</a>
