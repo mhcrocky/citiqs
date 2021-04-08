@@ -43,6 +43,7 @@
         public $apiKeyId;
         public $invoiceId;
         public $refundAmount;
+        public $receiptEmailed;
 
         private $table = 'tbl_shop_orders';
 
@@ -119,6 +120,7 @@
             if (isset($data['posPrint']) && !($data['posPrint'] === '1' || $data['posPrint'] === '0')) return false;
             if (isset($data['invoiceId']) && !Validate_data_helper::validateInteger($data['invoiceId'])) return false;
             if (isset($data['refundAmount']) && !Validate_data_helper::validateFloat($data['refundAmount'])) return false;
+            if (isset($data['receiptEmailed']) && !($data['receiptEmailed'] === '1' || $data['receiptEmailed'] === '0')) return false;
 
             return true;
         }
@@ -633,6 +635,7 @@
                         tbl_shop_orders.customerReceipt AS customerReceipt,
                         tbl_shop_orders.voucherAmount AS voucherAmount,
                         tbl_shop_orders.serviceTypeId AS serviceTypeId,
+                        tbl_shop_orders.receiptEmailed AS receiptEmailed,
                         tbl_shop_spots.spotName AS spotName,
                         tbl_shop_spots.spotTypeId AS spotTypeId,
                         GROUP_CONCAT(tbl_shop_order_extended.id) AS orderExtendedIds,
@@ -1563,5 +1566,109 @@
             }
 
             return $response;
+        }
+
+        public function getOrderVendorId(): int
+        {
+            $vendorId = $this->readImproved([
+                'what' => ['tbl_shop_printers.userId'],
+                'where' => [
+                    $this->table . '.id' => $this->id
+                ],
+                'joins' => [
+                    ['tbl_shop_spots', $this->table . '.spotId = tbl_shop_spots.id'],
+                    ['tbl_shop_printers', 'tbl_shop_spots.printerId = tbl_shop_printers.id'],
+                ]
+
+            ]);
+
+            $vendorId = reset($vendorId);
+
+            return intval($vendorId['userId']);
+        }
+
+        public function emailReceipt(): void
+        {
+            if (!$this->checkIsAllowedToEmailReceipt()) return;
+
+            $email = $this->getOrderReceiptEmail();
+            $orderImageFullPath = $this->getOrderImagePath(' AND tbl_shop_orders.paid = "1" ');
+            $subject = "tiqs-Order : " . $this->id;
+
+            $this->load->helper('email_helper');
+
+            if ($email && $orderImageFullPath && Email_helper::sendOrderEmail($email, $subject, '', $orderImageFullPath)) {
+                $this->setProperty('receiptEmailed', '1')->update();
+            }
+
+            return;
+        }
+
+        private function getOrderReceiptEmail(): ?string
+        {
+            $this->load->config('custom');
+
+            $data = $this->readImproved([
+                'what' => ['buyer.email AS buyerEmail, vendor.receiptEmail as receiptEmail'],
+                'where' => [
+                    $this->table . '.id' => $this->id,
+                    $this->table . '.paid' => $this->config->item('orderPaid'),
+                    $this->table . '.receiptEmailed' => '0',
+                ],
+                'joins' => [
+                    ['tbl_shop_spots', $this->table . '.spotId = tbl_shop_spots.id'],
+                    ['tbl_shop_printers', 'tbl_shop_spots.printerId = tbl_shop_printers.id'],
+                    [
+                        '(SELECT * FROM tbl_user WHERE roleid = '. $this->config->item('owner') .') vendor',
+                        'vendor.id  = tbl_shop_printers.userId',
+                        'INNER'
+                    ],
+                    [
+                        '(SELECT * FROM tbl_user WHERE roleid = ' . $this->config->item('buyer') . ' OR roleid = ' . $this->config->item('owner') . ') buyer',
+                        'buyer.id  = ' .  $this->table  . '.buyerId',
+                        'INNER'
+                    ],
+                ]
+            ]);
+
+            if (is_null($data)) return null;
+
+            $data = reset($data);
+
+            if (strpos($data['buyerEmail'], 'anonymus_') !== false && strpos($data['buyerEmail'], '@tiqs.com') !== false) {
+                $email = $data['receiptEmail'];
+            } else {
+                $email = $data['buyerEmail'];
+            }
+
+            return $email;
+        }
+
+        private function checkIsAllowedToEmailReceipt(): bool
+        {
+            $vendorId = $this->getOrderVendorId();
+
+            // check does vendor requried send receipt with email
+            $this->load->model('shopvendor_model');
+            if (!$this->shopvendor_model->setProperty('vendorId', $vendorId)->sendEmailWithReceipt()) return false;
+
+            // chekc is vendor bbUser, if it is email will not be send
+            $this->load->model('shopvendorfod_model');
+            if ($this->shopvendorfod_model->isBBVendor($vendorId))  return false;
+
+            return true;
+        }
+
+        private function getOrderImagePath(string $filterString): ?string
+        {
+            $orderImageFullPath = FCPATH .  'receipts' . DIRECTORY_SEPARATOR . $this->id .'-email' . '.png';
+            if (!file_exists($orderImageFullPath)) {
+                $order = $this->fetchOrdersForPrintcopy($filterString);
+                if (is_null($order)) return null;
+                $order = reset($order);
+                $relativePath = Orderprint_helper::saveOrderImage($order);
+                return $relativePath ? FCPATH . $relativePath : null;
+            }
+            return $orderImageFullPath;
         }
     }

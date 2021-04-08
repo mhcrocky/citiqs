@@ -105,7 +105,7 @@ class Alfredpayment extends BaseControllerWeb
                     ]);
 
             $this->shoporder_model->updatePaidStatus($this->shoporderpaynl_model, ['paid' => $this->config->item('orderPaid')]);
-
+            $this->shoporder_model->emailReceipt();
             echo('TRUE| '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
         } else {
 			echo('TRUE| NOT FIND '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
@@ -125,10 +125,10 @@ class Alfredpayment extends BaseControllerWeb
         $redirect = base_url() . 'cancel?status=' . $get['orderStatusId'];
 
         if ($get['orderStatusId'] === $this->config->item('payNlSuccess')) {
-        	// need to do something with the facebook pixel.
-
+            // need to do something with the facebook pixel.
             $this->shoporderpaynl_model->updatePayNl(['successPayment' => date('Y-m-d H:i:s')]);
             $this->shoporder_model->updatePaidStatus($this->shoporderpaynl_model, ['paid' => $this->config->item('orderPaid')]);
+            $this->shoporder_model->emailReceipt();
             if ($vendorId == 1162) {
                 $redirect = 'successth';
             } else {
