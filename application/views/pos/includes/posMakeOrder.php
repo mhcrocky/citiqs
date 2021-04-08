@@ -31,13 +31,14 @@
                 <?php } ?>
             </select>
         </div>
-        <div class="col-sm-3">
-            <a href="<?php echo base_url() . 'orders'; ?>">
-                <button>
-                    <i class="fa fa-hand-o-left" aria-hidden="true"></i>
-                    BACK
-                </button>
-            </a>
+        <div class="col-sm-3" style="padding-right:0px">
+            <button
+                class="btn btn-primary"
+                style="width: 100%; padding: 16% 12% 16% 12%;"
+                data-toggle="modal" data-target="#managerModal"
+            >
+                <i class="fa fa-cogs" aria-hidden="true" style="font-size:24px"></i>
+            </button>
         </div>
     </div>
 
