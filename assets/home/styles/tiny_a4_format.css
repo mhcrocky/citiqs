@@ -1,0 +1,66 @@
+.ML__keyboard.is-visible {
+	z-index: 9999;
+  }
+  .ML__keyboard div .rows > ul > li {
+	background: #fff !important;
+	border-bottom-color: #8d8f92 !important;
+  
+	&.separator {
+	  background: transparent !important;
+	  border: none !important;
+	  pointer-events: none !important;
+	}
+  }
+  
+  .ML__keyboard div .rows > ul > li.action.font-glyph,
+  .ML__keyboard div .rows > ul > li.modifier.font-glyph {
+	&[data-alt-keys="delete"] {
+	  font-size: 34px;
+	  align-items: center;
+	}
+  }
+  
+  .sr-only {
+	position: absolute !important;
+	width: 1px !important;
+	height: 1px !important;
+	overflow: hidden;
+  }
+  
+  .tox {
+	.mathlive-input {
+	  border: 1px solid #207ab7 !important;
+	  border-radius: 4px !important;
+	  min-height: 40px !important;
+	  //height: 40px !important;
+	  box-sizing: border-box !important;
+	  position: static !important;
+  
+	  * {
+		position: relative;
+	  }
+	  .ML__textarea__textarea {
+		width: 1px;
+		height: 1px;
+		position: absolute;
+	  }
+	  .ML__fieldcontainer__field {
+		width: 100%;
+	  }
+	  .ML__virtual-keyboard-toggle {
+		width: 34px;
+		height: 34px;
+	  }
+	}
+	.tox-dialog-wrap {
+	  position: fixed;
+	}
+	.tox-dialog.mathlive {
+	  overflow: visible;
+  
+	  .tox-dialog__body-content {
+		overflow: visible;
+		max-width: 100%;
+	  }
+	}
+  }

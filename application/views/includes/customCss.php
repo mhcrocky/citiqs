@@ -238,6 +238,10 @@
     <link href="<?php echo base_url();?>assets/css/quill.snow.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+<?php } elseif ($this->view === 'events/reports') { ?>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/query-builder.default.css" id="qb-theme"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/dashboard.css">
 <?php  } elseif ($this->view === 'customer_panel/time_slots') { ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.css" integrity="sha512-2e0Kl/wKgOUm/I722SOPMtmphkIjECJFpJrTRRyL8gjJSJIP2VofmEbqyApMaMfFhU727K3voz0e5EgE3Zf2Dg==" crossorigin="anonymous" />
     <style>
@@ -278,6 +282,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/tiny_a4_format.css">
 <?php  } elseif ($this->view === 'events/events') { ?>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
@@ -361,6 +366,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/emaildesigner/css/template.editor.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/emaildesigner/css/responsive-table.css" />
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/tiny_a4_format.css">
     <style>
     body {
         margin-left: 0px;
@@ -378,6 +384,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 <?php  } elseif ($this->view === 'voucher/index') { ?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/tiny_a4_format.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
     <link type="text/css" href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css" rel="stylesheet" />
@@ -463,6 +470,12 @@
     background: #c5c5c5;
 }
 </style>
+<?php } elseif ($this->view === 'templates/addTemplate') { ?>
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/tiny_a4_format.css">
+
+<?php } elseif ($this->view === 'templates/updateTemplate') { ?>
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/tiny_a4_format.css">
+
 <?php  } elseif ($this->view === 'voucher/send') { ?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />

@@ -159,6 +159,7 @@ class Event_model extends CI_Model {
 				'groupId' => $group['id'],
 				'groupname' =>  $group['groupname'],
 				'groupQuantity' => $group['groupQuantity']
+				
 			];
 		}
 		$results = array_merge($tickets,$ticket_groups);
@@ -175,6 +176,19 @@ class Event_model extends CI_Model {
 		if($query->num_rows() > 0 ){
 			$result = $query->first_row();
 			return $result->eventname;
+		}
+		return ;
+	}
+
+	public function get_ticket_type($ticketId)
+	{
+		$this->db->select('ticketType');
+		$this->db->from('tbl_event_tickets');
+		$this->db->where('id', $ticketId);
+		$query = $this->db->get();
+		if($query->num_rows() > 0 ){
+			$result = $query->first_row();
+			return $result->ticketType;
 		}
 		return ;
 	}
@@ -278,11 +292,14 @@ class Event_model extends CI_Model {
 			$set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKLMNPQRSTVWXY';
 			$reservationId = 'T-' . substr(str_shuffle($set), 0, 16);
 			$reservationIds[] = $reservationId;
+			$savedatetime = new DateTime( 'now');
+			$bookdatetime = $savedatetime->format('Y-m-d H:i:s');
 			$data[] = [
 				'reservationId' => $reservationId,
 				'customer' => $customer,
 				'eventId' => $ticket['id'],
 				'eventdate' => date('Y-m-d', strtotime($ticket['startDate'])),
+				'bookdatetime' => $bookdatetime,
 				'timefrom' => $ticket['startTime'],
 				'timeto' => $ticket['endTime'],
 				'price' => $ticket['price'],
@@ -293,6 +310,8 @@ class Event_model extends CI_Model {
 				'gender' => $userInfo['gender'],
 				'mobilephone' => $userInfo['mobileNumber'],
 				'Address' => $userInfo['address'],
+				'ticketDescription' => $ticket['descript'],
+				'ticketType' => $ticket['ticketType']
 
 				//SQL
 				/*
@@ -307,7 +326,7 @@ class Event_model extends CI_Model {
 
 	public function get_ticket_report($vendorId, $eventId, $sql='')
 	{
-		$query = $this->db->query("SELECT reservationId, reservationtime, price,numberofpersons,(price*numberofpersons) as amount, name, age, gender, mobilephone, email, ticketDescription, ticketQuantity
+		$query = $this->db->query("SELECT reservationId, reservationtime, price,numberofpersons,(price*numberofpersons) as amount, name, age, gender, mobilephone, email, tbl_bookandpay.ticketDescription, ticketQuantity
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		WHERE tbl_events.vendorId = ".$vendorId." AND tbl_events.Id = ".$eventId." $sql
@@ -317,7 +336,7 @@ class Event_model extends CI_Model {
 
 	public function get_tickets_report($vendorId, $sql='')
 	{
-		$query = $this->db->query("SELECT reservationId, reservationtime, price,numberofpersons,(price*numberofpersons) as amount, name, age, gender, mobilephone, email, ticketDescription, eventname
+		$query = $this->db->query("SELECT reservationId, reservationtime, price,numberofpersons,(price*numberofpersons) as amount, name, age, gender, mobilephone, email, tbl_bookandpay.ticketDescription, eventname
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		WHERE tbl_events.vendorId = ".$vendorId." $sql

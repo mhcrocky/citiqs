@@ -1,4 +1,3 @@
-<?php $backgroundColors = ['background-blue-light', 'background-blue', 'background-orange-light', 'background-purple-light', 'background-orange']; ?>
 <div class="col-12 step step-2 active" id="person-input">
     <h3 id="title">
         <span id="choose-spot">Choose an available SPOT: </span>
@@ -22,10 +21,9 @@
             $spots = $rows;
 
         }
-        
+        /*
         ?>
-    <?php $count = 0; ?>
-    <?php $backgroundCount = 0; ?>
+
     <?php if($spots_exist): ?>
     <div class="w-100 social-box">
         <div class="w-100 container text-center">
@@ -67,10 +65,6 @@
 
 
 
-                <?php $backgroundCount++; ?>
-                <?php if($backgroundCount == count($backgroundColors)): ?>
-                <?php $backgroundCount = 0; ?>
-                <?php endif; ?>
 
             </div>
             <?php endforeach; ?>
@@ -92,3 +86,31 @@
 <script>
 
 </script>
+*/
+
+
+
+?>
+
+<?php if($spots_exist): ?>
+    <table style="background: none !important;" class="table table-striped w-100 text-center">
+        <tr>
+            <th><?php echo $this->language->tLine('Place'); ?></th>
+            <th><?php echo $this->language->tLine('Status'); ?></th>
+        </tr>
+        <?php foreach($spots as $key=>$spot): ?>
+        
+            <tr>
+                <td>
+                    <a style="text-decoration: none;" class="text-dark" href="<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot['data']->id; ?>">
+                        <?php echo $spot['data']->descript; ?>
+                    <a>
+                </td>
+                <td>
+                
+                    <?php echo ($spot['data']->status == 'soldout') ? 'Sold out' : 'available'; ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+<?php endif; ?>

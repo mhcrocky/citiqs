@@ -247,6 +247,18 @@
 	</div>
 	<div class="form-group col-sm-12">
 		<label style="display:block;">
+			Booking Info background color:
+			<input  data-jscolor="" class="form-control b-radius jscolor" name="selectShortUrl[id][booking-info][background-color]"
+				data-css-selector="id" data-css-selector-value="booking-info" data-css-property="background-color"
+				onfocus="styleELements(this)" oninput="styleELements(this)"
+					style="width:100%"
+				<?php if ( isset($design['selectShortUrl']['id']['booking-info']['background-color']) ) { ?>
+				value="<?php echo $design['selectShortUrl']['id']['booking-info']['background-color']?>" data-value="1"
+				<?php } ?> />
+		</label>
+	</div>
+	<div class="form-group col-sm-12">
+		<label style="display:block;">
 			Booking Info color:
 			<input  data-jscolor="" class="form-control b-radius jscolor" name="selectShortUrl[class][booking-info][color]"
 				data-css-selector="class" data-css-selector-value="booking-info" data-css-property="color"

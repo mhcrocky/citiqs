@@ -105,6 +105,7 @@ class Agenda_booking extends BaseControllerWeb
         $this->session->unset_userdata('timeslot');
 
         $allSpots = $this->bookandpayspot_model->getAllSpots($customer['id']);
+        
         $agenda = $this->bookandpayagendabooking_model->getbookingagenda($customer['id']);
 
         $spots = [];
@@ -119,15 +120,16 @@ class Agenda_booking extends BaseControllerWeb
             }
 
             $spots['spot' . $spot->id] = [
-                'data' => $spot,
-                'status' => 'open'
+                'data' => $spot
             ];
 
             $allTimeSlots = $this->bookandpaytimeslots_model->getTimeSlotsByCustomerAndSpot($customer['id'], $spot->id);
             $isThereAvailableTimeSlots = true;
+            $spotReservations = 0;
 
             foreach ($allTimeSlots as $key => $timeSlot) {
                 $spotsReserved = $this->bookandpay_model->getBookingByTimeSlot($customer['id'], $eventDate, $timeSlot->id);
+                $spotReservations = $spotReservations + $this->bookandpay_model->getBookingCountBySpot($customer['id'], $spot->id, $timeSlot->id, $timeSlot->fromtime);
                 $availableItems += $timeSlot->available_items;
 
                 if($spotsReserved) {
@@ -143,24 +145,18 @@ class Agenda_booking extends BaseControllerWeb
                 $isThereAvailableTimeSlots = false;
             }
 
-            if (!$isThereAvailableTimeSlots) {
-                $spots['spot' . $spot->id]['status'] = 'soldout';
+            if ($spotReservations >= $spot->available_items) {
+                $spots['spot' . $spot->id]['data']->status = 'soldout';
+            } else {
+                $spots['spot' . $spot->id]['data']->status = 'available';
             }
         }
+
 
         $data["eventDate"] = $eventDate;
         $data["eventId"] = $eventId;
         $data["spots"] = $spots;
         $data["bookingfee"] = 0.15;
-        $data['isManager'] = ($this->session->userdata('role') == ROLE_MANAGER) ? true : false;
-        $data['spot_images'] = [
-            'twoontable.png',
-            'sixtable.png',
-            'fourontable.png',
-            'eighttable.png',
-            'sunbed.png',
-            'terracereservation.png'
-        ];
 
         $this->global['pageTitle'] = 'TIQS : BOOKINGS';
         $this->global['customDesign'] = $this->bookandpayagendabooking_model->get_agenda_booking_design($customer['id']);
@@ -293,10 +289,11 @@ class Agenda_booking extends BaseControllerWeb
                 $reservations = [$result->reservationId];
             }
 
-            if(count($reservations) <= 2){
+            if(count($reservations) <= 1){
                 $this->session->set_userdata('reservations', $reservations);
                 $this->session->set_userdata('selectedTimeSlot', $selectedTimeSlot);
             }
+            $this->session->set_userdata('timeslotPrice', $selectedTimeSlot->price);
 
             if($spot->price == 0){
                 redirect('agenda_booking/pay');
