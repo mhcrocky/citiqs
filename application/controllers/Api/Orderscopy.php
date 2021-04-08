@@ -44,10 +44,10 @@ class Orderscopy extends REST_Controller
 			Orderprint_helper::saveOrderImage($order);
 		}
 
-		$this->orderCopyAtcions($order, $orderImageFullPath, $orderImageUrl);
+		$this->orderCopyAtcions($order, $orderImageUrl);
 	}
 
-	private function orderCopyAtcions(array $order, string $orderImageFullPath, string $orderImageUrl): void
+	private function orderCopyAtcions(array $order, string $orderImageUrl): void
 	{
 		if (
 			$order['paymentType'] === $this->config->item('prePaid')
@@ -55,35 +55,16 @@ class Orderscopy extends REST_Controller
 			|| $order['paymentType'] === $this->config->item('voucherPayment')
 		) {
 			if ($order['waiterReceipt'] === '0') {
-				$email = $order['receiptEmail'];
 				header('Content-type: image/png');
 				echo file_get_contents($orderImageUrl);
 			} else {
 				if ($order['customerReceipt'] === '0') {
-					if (strpos($order['buyerEmail'], 'anonymus_') !== false && strpos($order['buyerEmail'], '@tiqs.com') !== false) {
-						$email = $order['receiptEmail'];
-					} else {
-						$email = $order['buyerEmail'];
-					}
 					if ($order['receiptOnlyToWaiter'] !== '1') {
 						header('Content-type: image/png');
 						echo file_get_contents($orderImageUrl);
 					}
 				}
 			}
-		} else {
-			if (strpos($order['buyerEmail'], 'anonymus_') !== false && strpos($order['buyerEmail'], '@tiqs.com') !== false) {
-				$email = $order['receiptEmail'];
-			} else {
-				$email = $order['buyerEmail'];
-			}
-		}
-
-		// SEND EMAIL
-		$sendEmail = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->sendEmailWithReceipt();
-		if (!empty($email) && $sendEmail) {
-			$subject= "tiqs-Order : ". $order['orderId'];
-			Email_helper::sendOrderEmail($email, $subject, '', $orderImageFullPath);
 		}
 	}
 }

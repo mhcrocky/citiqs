@@ -38,6 +38,7 @@ class Alfredinsertorder extends BaseControllerWeb
         $this->load->model('shopvoucher_model');
         $this->load->model('shopsession_model');
         $this->load->model('shopposorder_model');
+        $this->load->model('shopvendorfod_model');
 
         $this->load->config('custom');
 
@@ -282,6 +283,7 @@ class Alfredinsertorder extends BaseControllerWeb
 
         $this->saveOrderImage($orderId); // OPTIMIZE THREAD ... ASYNC 
         $this->sendNotifictaion($post, $orderId, $post['order']['paid']);
+        $this->sendEmailReceipt($post['order']['paid']);
 
         return $orderId;
     }
@@ -323,6 +325,15 @@ class Alfredinsertorder extends BaseControllerWeb
             return 0;
         }
         return $this->shoporder_model->id;
+    }
+
+    private function sendEmailReceipt($paid): void
+    {
+        if ($paid === $this->config->item('orderPaid'))  {
+            $this->shoporder_model->emailReceipt();
+        }
+
+        return;
     }
 
     private function insertOrderExtended($post, int &$orderId): void
