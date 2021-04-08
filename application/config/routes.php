@@ -579,6 +579,7 @@ $route['translate/get_languages'] = 'Translate/get_languages';
 $route['voucher'] = 'Voucher/index';
 $route['voucher/create'] = 'Voucher/create';
 $route['voucher/send'] = 'Voucher/send';
+$route['voucher/update_template/(:num)'] = 'Voucher/updateTemplate/$1';
 
 $route['qrcode'] = 'Qrcode/index';
 $route['qrcode/get_qrcodes'] = 'Qrcode/get_qrcodes';
