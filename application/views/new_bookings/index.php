@@ -5,8 +5,8 @@
 <div id="tableView" class="row w-100 mt-3 table-responsive agenda d-none">
     <table style="background: none !important;" class="table table-striped w-100 text-center">
         <tr>
-            <th>Reservation Name</th>
-            <th>Date</th>
+            <th><?php echo $this->language->tLine('Reservation Name'); ?></th>
+            <th><?php echo $this->language->tLine('Date'); ?></th>
         </tr>
         <?php foreach($agendas_calendar as $agenda): ?>
             <tr>
@@ -24,15 +24,6 @@
 
 <script>
 const agendas_calendar = '<?php echo json_encode($agendas_calendar); ?>';
-
-function displayView(id){
-    $('.agenda').removeClass('d-none');
-    $('.agenda').hide();
-    $('#'+id).fadeIn( "slow", function() {
-        $('#'+id).show();
-    });
-    
-}
 </script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
 <script src="<?php echo $this->baseUrl; ?>assets/home/js/agendaCalendar.js"></script>

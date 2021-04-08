@@ -1,13 +1,13 @@
 <!-- end step 2-->
 <style>
-#time-input .form-check-label {
-    width: 110px;
-}
+
 </style>
 <div class="col-12 step step-3 active" id="time-input">
-    <h3 id="title">
-        <span id="choose-timeslot">Please Choose a Time Slot</span>
-    </h3>
+<table style="background: none !important;" class="table table-striped w-100 text-center">
+        <tr>
+            <th><?php echo $this->language->tLine('Time'); ?></th>
+            <th><?php echo $this->language->tLine('Price'); ?></th>
+        </tr>
     <?php foreach ($timeSlots as $key => $timeSlot): ?>
     <?php 
     if($timeSlot['multiple_timeslots'] == 1):
@@ -32,6 +32,8 @@
             $end_time = $start_time + Agenda_booking::explode_time($timeSlot['duration']);
         }
     ?>
+    <tr>
+    <td>
     <form id="form-<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>"
         action="<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot->id; ?>" method="post"
         enctype="multipart/form-data">
@@ -40,15 +42,20 @@
             <input class="form-check-input" onclick="radioVal(this, '<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>')" type="radio"
                 id="test<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>" name="selected_time_slot_id" data-starttime="<?php echo $start_time; ?>" data-endtime="<?php echo $end_time; ?>"
                 value="<?php echo $timeSlot['id']; ?>">
-            <label class="form-check-label" for="test<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>">
+            <label class="text-dark radioLabel" for="test<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>">
                 <?php echo Agenda_booking::second_to_hhmm($start_time).' - '.Agenda_booking::second_to_hhmm($end_time); ?>
             </label>
         </div>
         <?php endif; ?>
         <input type="hidden" name="save" value="1" />
     </form>
+    </td>
+    <td><?php echo $timeSlot['price']; ?>€</td>
+    </tr>
     <?php endfor; ?>
     <?php else: ?>
+    <tr>
+    <td>
     <form id="form-<?php echo $timeSlot['id']; ?>"
         action="<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot->id; ?>" method="post"
         enctype="multipart/form-data">
@@ -57,19 +64,23 @@
             <input class="form-check-input" onclick="radioVal(this, <?php echo $timeSlot['id']; ?>)" type="radio"
                 id="test<?php echo $timeSlot['id']; ?>" name="selected_time_slot_id"
                 value="<?php echo $timeSlot['id']; ?>">
-            <label class="form-check-label" for="test<?php echo $timeSlot['id']; ?>">
+            <label class="text-dark radioLabel" for="test<?php echo $timeSlot['id']; ?>">
                 <?php $dt1 = new DateTime($timeSlot['fromtime']);
                 $fromtime = $dt1->format('H:i');
                 $dt2 = new DateTime($timeSlot['totime']);
-                $totime = $dt2->format('H:i'); ?>
-                <?php echo $fromtime.' - '.$totime; ?>
+                $totime = $dt2->format('H:i');
+                echo $fromtime.' - '.$totime; ?>
             </label>
         </div>
         <?php endif; ?>
         <input type="hidden" name="save" value="1" />
     </form>
+    </td>
+    <td><?php echo $timeSlot['price']; ?>€</td>
+    </tr>
     <?php endif; ?>
     <?php endforeach; ?>
+    </table>
     <div class="w-100 go-back-wrapper">
         <a class="go-back-button"
             href="javascript:location.replace('<?php echo base_url();?>agenda_booking/spots/<?php echo $this->session->userdata('eventDate'); ?>/<?php echo $this->session->userdata('eventId'); ?>')">Go

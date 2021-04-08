@@ -35,6 +35,22 @@
             max-width: 100% !important;
         }
     }
+    label:hover {
+        color: #212528 !important;
+        cursor: pointer;
+    }
+    #booking-footer {
+        padding: 0px !important;
+    }
+
+    #booking-info {
+        border-radius: 10px;
+    }
+
+    .booking-info > span {
+        font-weight: 50;
+    }
+
 
     <?php if(isset($customDesign[0]['design'])) {
         $design=unserialize($customDesign[0]['design'])['selectShortUrl'];
@@ -50,7 +66,11 @@
         $design_classes=$design['class'];
 
         foreach($design_classes as $key=> $design_class) {
-            echo '.'. $key . '{';
+            if($key == 'booking-info'){
+                echo '.booking-info, .booking-info > span {';
+            } else {
+                echo '.'. $key . '{';
+            }
             echo array_keys($design_class)[0].':';
             echo array_values($design_class)[0].'!important } ';
         }

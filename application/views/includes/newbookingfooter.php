@@ -1,19 +1,4 @@
-<!-- end booking form inputs -->
-<div id="booking-footer" class="booking-form__result w-100 d-none">
-    <h4 id="footer-title" class="mb-3">Booking Info </h4>
-    <p class="booking-info"><span class="event-text">Event Date</span>: <span id="selected-date">
-            <?php $shorturl = $this->session->userdata('shortUrl');
-			 if(base_url("agenda_booking/$shorturl") != current_url()):
-              echo date("d.m.Y", strtotime($this->session->userdata('eventDate')));
-            endif; ?>
-        </span></p>
-    <p class="booking-info"><span class="spot-text">SPOT Description</span>: <span
-            id="spot"><?php echo $this->session->userdata('spotDescript'); ?></span></p>
-    <p class="booking-info"><span>SPOT Price:</span> <span id="price"><?php echo $this->session->userdata('spotPrice'); ?></span></p>
-    <p class="booking-info"><span class="timeslot-text">Time Slot</span>: <span
-            id="selected-time"><?php echo (!is_numeric($this->session->userdata('timeslot'))) ? $this->session->userdata('timeslot') : ''; ?></span></p>
-    <p class="booking-info"><span class="personal-info-text">Personal Info</span>: <span id="personal-info"></span></p>
-</div>
+
 <!-- end booking form results -->
 </div>
 <!-- end booking form -->
@@ -84,6 +69,15 @@ $('.go-back-button').click(function() {
     $(this).parents('.step').removeClass('active');
     $(this).parents('.step').prev().addClass('active')
 })
+
+function displayView(id){
+    $('.agenda').removeClass('d-none');
+    $('.agenda').hide();
+    $('#'+id).fadeIn( "slow", function() {
+        $('#'+id).show();
+    });
+    
+}
 </script>
 
 </body>

@@ -126,9 +126,8 @@ var designGlobals = (function() {
             if (url.includes('spots')) {
                 return this['spotsView']
             }
-            if (url.includes('make_order?vendorid=') && url.includes('&typeid=') && !url.includes(
-                    '&spotid=')) {
-                return this['selectSpotView']
+            if (url.includes('pay')) {
+                return '';//this['payView']
             }
             if (url.includes('make_order?vendorid=') && !url.includes('&typeid=') && url.includes(
                     '&spotid=')) {
