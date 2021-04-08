@@ -159,6 +159,7 @@ class Event_model extends CI_Model {
 				'groupId' => $group['id'],
 				'groupname' =>  $group['groupname'],
 				'groupQuantity' => $group['groupQuantity']
+				
 			];
 		}
 		$results = array_merge($tickets,$ticket_groups);
@@ -175,6 +176,19 @@ class Event_model extends CI_Model {
 		if($query->num_rows() > 0 ){
 			$result = $query->first_row();
 			return $result->eventname;
+		}
+		return ;
+	}
+
+	public function get_ticket_type($ticketId)
+	{
+		$this->db->select('ticketType');
+		$this->db->from('tbl_event_tickets');
+		$this->db->where('id', $ticketId);
+		$query = $this->db->get();
+		if($query->num_rows() > 0 ){
+			$result = $query->first_row();
+			return $result->ticketType;
 		}
 		return ;
 	}
@@ -278,11 +292,14 @@ class Event_model extends CI_Model {
 			$set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKLMNPQRSTVWXY';
 			$reservationId = 'T-' . substr(str_shuffle($set), 0, 16);
 			$reservationIds[] = $reservationId;
+			$savedatetime = new DateTime( 'now');
+			$bookdatetime = $savedatetime->format('Y-m-d H:i:s');
 			$data[] = [
 				'reservationId' => $reservationId,
 				'customer' => $customer,
 				'eventId' => $ticket['id'],
 				'eventdate' => date('Y-m-d', strtotime($ticket['startDate'])),
+				'bookdatetime' => $bookdatetime,
 				'timefrom' => $ticket['startTime'],
 				'timeto' => $ticket['endTime'],
 				'price' => $ticket['price'],
@@ -293,6 +310,8 @@ class Event_model extends CI_Model {
 				'gender' => $userInfo['gender'],
 				'mobilephone' => $userInfo['mobileNumber'],
 				'Address' => $userInfo['address'],
+				'ticketDescription' => $ticket['descript'],
+				'ticketType' => $ticket['ticketType']
 
 				//SQL
 				/*

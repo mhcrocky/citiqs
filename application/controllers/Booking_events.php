@@ -158,6 +158,7 @@ class Booking_events extends BaseControllerWeb
         $amount = (floatval($ticket['price']) + floatval($ticket['ticketFee']))*floatval($ticket['quantity']);
         $ticketId = $ticket['id'];
         $eventName = $this->event_model->get_eventname_by_ticket($ticketId);
+        $ticketType = $this->event_model->get_ticket_type($ticketId);
         unset($tickets[$ticketId]);
         $tickets[$ticketId] = [
             'id' => $ticketId,
@@ -165,6 +166,7 @@ class Booking_events extends BaseControllerWeb
             'descript' => $ticket['descript'],
             'quantity' => $ticket['quantity'],
             'price' => $ticket['price'],
+            'ticketType' => $ticketType,
             'ticketFee' => $ticket['ticketFee'],
             'amount' => $amount,
             'startDate' => $this->session->userdata("startDate"),
