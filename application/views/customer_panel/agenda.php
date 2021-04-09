@@ -74,6 +74,7 @@
                             <th><?php echo $this->language->tLine('Reservation Date'); ?></th>
                             <th><?php echo $this->language->tLine('Background Color'); ?>
                             <th><?php echo $this->language->tLine('Email Template'); ?></th>
+                            <th><?php echo $this->language->tLine('Max Spots'); ?></th>
                             <th><?php echo $this->language->tLine('Online'); ?></th>
                             <th><?php echo $this->language->tLine('Action'); ?></th>
                         </tr>
@@ -91,6 +92,7 @@
                                         {{ agenda.template_name }}
                                     </a>
                                 </td>
+                                <td>{{ agenda.max_spots }} </td>
                                 <td v-if="agenda.online == 1">
 									<?php echo $this->language->tLine('Yes'); ?>
                                 </td>
