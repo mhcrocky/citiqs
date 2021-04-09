@@ -299,10 +299,11 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 											</li>
 											
 											<li data-menuid="4.6">
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ink-pen"></i><span><?php echo $this->language->tLine('Design'); ?></span></a>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ink-pen"></i><span><?php echo $this->language->tLine('Settings'); ?></span></a>
 												<ul class="collapse">
 													<li data-menuid="4.6.1"><a href="<?php echo $this->baseUrl; ?>emaildesigner"><i class="ti-email"></i> <span><?php echo $this->language->tLine('Email'); ?></span></a></li>
-													<li data-menuid="4.6.2"><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span><?php echo $this->language->tLine('Store'); ?></span></a></li>
+													<li data-menuid="4.6.2"><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span><?php echo $this->language->tLine('QR Menu'); ?></span></a></li>
+													<li data-menuid="4.6.3"><a href="<?php echo $this->baseUrl; ?>qrcode"><i class="ti-shopping-cart"></i> <span><?php echo $this->language->tLine('QR Sticker link'); ?></span></a></li>
 												</ul>
 											</li>
 											<li data-menuid="4.7">
@@ -313,11 +314,27 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 <!--													<li data-menuid="4.7.3"><a href="--><?php //echo $this->baseUrl; ?><!--z report"><i class="ti-bag"></i> <span>Y report</span></a></li>-->
 												</ul>
 											</li>
-											<li data-menuid="12.1">
-												<a href="<?php echo $this->baseUrl . 'make_order?vendorid=' . $this->session->userdata('userId'); ?>" target="_blank">
-													<i class="ti-shopping-cart-full"></i> <span><?php echo $this->language->tLine('URL link'); ?></span>
-												</a>
+											<li data-menuid="12">
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-share"></i><span><?php echo $this->language->tLine('Your links'); ?></span></a>
+												<ul class="collapse">
+													<li data-menuid="12.1">
+														<a href="<?php echo $this->baseUrl . 'make_order?vendorid=' . $this->session->userdata('userId'); ?>" target="_blank">
+															<i class="ti-shopping-cart-full"></i> <span><?php echo $this->language->tLine('QR Menu'); ?></span>
+														</a>
+													</li>
+													<li data-menuid="12.2">
+														<a href="<?php echo $this->baseUrl . 'check424/' . $this->session->userdata('userId'); ?>" target="_blank">
+															<i class="ti-book"></i>
+															<span><?php echo $this->language->tLine('Visitor registration'); ?></span>
+														</a>
+													</li>
+												</ul>
 											</li>
+<!--											<li data-menuid="12.1">-->
+<!--												<a href="--><?php //echo $this->baseUrl . 'make_order?vendorid=' . $this->session->userdata('userId'); ?><!--" target="_blank">-->
+<!--													<i class="ti-shopping-cart-full"></i> <span>--><?php //echo $this->language->tLine('URL link'); ?><!--</span>-->
+<!--												</a>-->
+<!--											</li>-->
 											
 										</ul>
 									</li>
@@ -530,22 +547,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 <!--                                            <li data-menuid="11.2"><a href="http://localhost/tiqsbox/index.php/Admin"><i class="ti-package"></i> <span>Tiqsbox</span></a></li>-->
 <!--                                        </ul>-->
 <!--                                    </li>-->
-									<li data-menuid="12">
-										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-share"></i><span><?php echo $this->language->tLine('Your links'); ?></span></a>
-										<ul class="collapse">
-											<li data-menuid="12.1">
-												<a href="<?php echo $this->baseUrl . 'make_order?vendorid=' . $this->session->userdata('userId'); ?>" target="_blank">
-													<i class="ti-shopping-cart-full"></i> <span><?php echo $this->language->tLine('Store'); ?></span>
-												</a>
-											</li>
-											<li data-menuid="12.2">
-												<a href="<?php echo $this->baseUrl . 'check424/' . $this->session->userdata('userId'); ?>" target="_blank">
-													<i class="ti-book"></i>
-													<span><?php echo $this->language->tLine('Visitor registration'); ?></span>
-												</a>
-											</li>
-										</ul>
-                                    </li>
+
 									<?php } ?>
 									<?php if ($_SESSION['businessTypeId'] != 26) { ?>
 									<li data-menuid="13">

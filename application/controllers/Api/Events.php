@@ -44,10 +44,13 @@ class Events extends REST_Controller
 	public function Tickettypes_post()
 	{
 		$eventId = $this->security->xss_clean($this->input->post('eventId'));
+		$ticketType = $this->security->xss_clean($this->input->post('ticketType'));
 		$this->db->select('*');
 		$this->db->from('tbl_event_tickets');
 		$this->db->where('eventId', $eventId);
-
+		if($ticketType != '0') {
+			$this->db->where('ticketType', $ticketType);
+		}
 		$query = $this->db->get();
 		$result = $query->result_array();
 
