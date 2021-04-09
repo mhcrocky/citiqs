@@ -115,9 +115,9 @@
 <?php } elseif ($this->view === 'pos/pos') { ?>
 	<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-url-hash@latest/dist/js/splide-extension-url-hash.min.js"></script>
-	<script src="<?php echo $this->baseUrl ?>assets/home/js/posSplide.js"></script>
 	<script src="<?php echo $this->baseUrl ?>assets/home/js/makeOrderFunctions.js"></script>
 	<script src="<?php echo $this->baseUrl ?>assets/home/js/posWrapper.js"></script>
+	<script src="<?php echo $this->baseUrl ?>assets/home/js/posSplide.js"></script>
 	<?php if(!empty($posCheckoutOrder) || !empty($posBuyerDetails)) { ?>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 		<script src="<?php echo $this->baseUrl; ?>assets/home/js/checkoutOrder.js"></script>
