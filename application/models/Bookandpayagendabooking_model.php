@@ -129,7 +129,14 @@ class   Bookandpayagendabooking_model extends CI_Model
 		$results = $query->result_array();
 		$insertData = [];
 		$spot_ids = [];
+		$max_spots = intval($this->get_max_spots($agenda_id));
+		$spots_count = intval($this->get_spot_count_by_agenda($agenda_id));
 		foreach ($results as $result) {
+			
+			$diff = $max_spots - $spots_count;
+			if($diff == 0){
+				break;
+			}
 			$insertData = [
 					"agenda_id" => $agenda_id,
 					"email_id" => $result['email_id'],
@@ -145,6 +152,7 @@ class   Bookandpayagendabooking_model extends CI_Model
 				];
 			$this->db->insert('tbl_bookandpayspot', $insertData);
 			$this->copy_timeslots($result['id'],$this->db->insert_id());
+			$spots_count++;
 		}
 		
 		
@@ -1134,6 +1142,27 @@ class   Bookandpayagendabooking_model extends CI_Model
 			];
 		}
 		return $ticketing;
+	}
+
+	function get_max_spots($agenda_id){
+
+		$this->db->select('max_spots')
+		->from('tbl_bookandpayagenda')
+		->where('id',$agenda_id);
+		$query = $this->db->get();
+		$result = $query->first_row();
+		return $result->max_spots;
+	}
+
+	function get_spot_count_by_agenda($agenda_id){
+
+		$this->db->select('count(id) as spot_count')
+		->from('tbl_bookandpayspot')
+		->where('agenda_id',$agenda_id)
+		->group_by('agenda_id');
+		$query = $this->db->get();
+		$result = $query->first_row();
+		return $result->spot_count;
 	}
 
 }
