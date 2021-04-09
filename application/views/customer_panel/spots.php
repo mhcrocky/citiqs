@@ -258,6 +258,7 @@
 
     <script>
     $(document).ready(function() {
+        
         $('.js-spots-basic-multiple').select2();
     });
 
@@ -428,11 +429,23 @@
                             Vue.set(this.spots, index, spot);
                         }
 
+                        if(response.data.status == 'error'){
+                            iziToast.error({
+                                title: 'Error',
+                                message: response.data.msg,
+                                position: 'topRight'
+                            });
+
+                            $('#add_spot_modal').modal('hide');
+                            return ;
+                        }
+
                         if (this.method == 'create') {
                             this.spots.push(response.data.data);
                         }
 
-                        $('#add_spot_modal').modal('hide')
+                        $('#add_spot_modal').modal('hide');
+
 
                     })
                     .catch(error => {
@@ -468,6 +481,17 @@
                             Vue.set(this.spots, index, spot);
                         }
 
+                        if(response.data.status == 'error'){
+                            iziToast.error({
+                                title: 'Error',
+                                message: response.data.msg,
+                                position: 'topRight'
+                            });
+
+                            $('#add_spot_modal').modal('hide');
+                            return ;
+                        }
+
                         if (this.method == 'create') {
                             this.spots.push(response.data.data);
                             $('#imgChanged').val('false');
@@ -475,7 +499,9 @@
                             $('#preview').attr('src', this.baseURL + 'assets/images/img-preview.png');
                         }
 
-                        $('#add_spot_modal').modal('hide')
+                        $('#add_spot_modal').modal('hide');
+
+                       
 
                     })
                     .catch(error => {
