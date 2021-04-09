@@ -165,7 +165,7 @@ li {
                             <div class="form-group">
                                 <label for="timeslotdescript">Name</label>
                                 <input type="text" name="timeslotdescript" v-model="timeSlotModalData.timeslotdescript"
-                                    class="form-control" id="descript" placeholder="Name">
+                                    class="form-control" id="descript">
                             </div>
 
                             <div class="form-group">
@@ -216,12 +216,12 @@ li {
                             <div class="form-group">
                                 <label for="Price">Price</label>
                                 <input type="number" step="0.01" name="Price" v-model="timeSlotModalData.price"
-                                    class="form-control" id="Price" placeholder="Price">
+                                    class="form-control" id="Price">
                             </div>
                             <div class="form-group">
                                 <label for="reservationFee">Reservation Fee</label>
                                 <input type="number" step="0.01" name="reservationFee" v-model="timeSlotModalData.reservationFee"
-                                    class="form-control" id="reservationFee" placeholder="Reservation Fee">
+                                    class="form-control" id="reservationFee">
                             </div>
                         </form>
                     </div>
@@ -522,6 +522,9 @@ li {
             spotsOptions: function() {
                 let spotsOptions = [];
                 this.spots.forEach((spot) => {
+                    if(this.spots.length == 1){
+                        this.timeSlotModalData.spot_id = spot.id;
+                    }
                     spotsOptions.push({
                         value: spot.id,
                         text: spot.descript + ' ' + this.dateFormat(spot
