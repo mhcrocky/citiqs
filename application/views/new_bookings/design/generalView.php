@@ -259,10 +259,25 @@
 	</div>
 	<div class="form-group col-sm-12">
 		<label style="display:block;">
+			Booking Info border radius:
+			<input type="text" class="form-control b-radius" name="selectShortUrl[id][booking-info][border-radius]"
+				data-css-selector="id" data-css-selector-value="booking-info" data-css-property="border-radius"
+				onfocus="styleELements(this)" oninput="styleELements(this)"
+					style="width:100%"
+				<?php if ( isset($design['selectShortUrl']['id']['booking-info']['border-radius']) ) { ?>
+				value="<?php echo $design['selectShortUrl']['id']['booking-info']['border-radius']?>" data-value="1"
+				<?php } else { ?> 
+				value="10px"
+				<?php } ?> 
+				/>
+		</label>
+	</div>
+	<div class="form-group col-sm-12">
+		<label style="display:block;">
 			Booking Info color:
 			<input  data-jscolor="" class="form-control b-radius jscolor" name="selectShortUrl[class][booking-info][color]"
 				data-css-selector="class" data-css-selector-value="booking-info" data-css-property="color"
-				onfocus="styleELements(this)" oninput="styleELements(this)"
+				onfocus="styleELements(this)" oninput="bookingInfoStyle(this)"
 					style="width:100%"
 				<?php if ( isset($design['selectShortUrl']['class']['booking-info']['color']) ) { ?>
 				value="<?php echo $design['selectShortUrl']['class']['booking-info']['color']?>" data-value="1"
@@ -320,5 +335,11 @@ function screen(width, height) {
     $("#iframeWidth").val(width);
     $("#iframeHeight").val(height);
     updateIframe();
+}
+
+function bookingInfoStyle(el){
+    var color = $(el).val();
+	styleELements(el);
+    $("#frame_1").contents().find(".booking-info span").attr('style', 'color: '+color+' !important;');
 }
 </script>
