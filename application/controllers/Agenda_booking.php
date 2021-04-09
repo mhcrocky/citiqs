@@ -98,7 +98,7 @@ class Agenda_booking extends BaseControllerWeb
         }
 
         $this->session->set_userdata('eventDate', $eventDate);
-        $this->session->set_userdata('eventId', $eventId);
+        
         $this->session->set_userdata('spot', $eventId);
         $this->session->unset_userdata('spotDescript');
         $this->session->unset_userdata('spotPrice');
@@ -172,12 +172,6 @@ class Agenda_booking extends BaseControllerWeb
             redirect();
         }
 
-        $eventDate = $this->session->userdata('eventDate');
-        $eventId = $this->session->userdata('eventId');
-
-        if (empty($eventDate) || empty($eventId)) {
-            redirect('agenda_booking/' . $customer['usershorturl']);
-        }
 
         $spot = $this->bookandpayspot_model->getSpot($spotId);
         $spotReservations = 0;
@@ -189,12 +183,14 @@ class Agenda_booking extends BaseControllerWeb
         $price = $spot->price;
         $spotLabel = $spot->numberofpersons . ' persoonstafel';
         $numberOfPersons = $spot->numberofpersons;
+        $eventDate = $this->bookandpayspot_model->getAgendaBySpotId($spotId)->ReservationDateTime;
+        $eventId = $this->bookandpayspot_model->getAgendaBySpotId($spotId)->agenda_id;
 
         $resultcount = $this->bookandpay_model->countreservationsinprogress($spot->id, $customer['id'], $eventDate);
         //$allTimeSlots = $this->bookandpaytimeslots_model->getTimeSlotsByCustomerAndSpot($customer['id'], $spot->id);
 
         $allTimeSlots = $this->bookandpaytimeslots_model->getTimeSlotsBySpotId($spotId);
-        $eventDate = $this->bookandpayspot_model->getAgendaBySpotId($spotId)->ReservationDateTime;
+        
         $timeSlots = [];
         //$allSpotReservations = 0;
         //$allAvailableItems = 0;
