@@ -197,6 +197,7 @@
 <?php } elseif ($this->view === 'publicorders/closed') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/closed.css">
 <?php } elseif ($this->view === 'pos/pos') { ?>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/bootstrap3.min.css" />  
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
     

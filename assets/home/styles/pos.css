@@ -180,7 +180,7 @@ header, footer {
 
 .pos_categories__single-item{
 	width: 17%;
-	margin-right: 3.5%;
+	/* margin-right: 3.5%; */
     box-shadow: 0px 0px 6px 4px #00000014;
     border-radius: 4px;
 	display: flex;
@@ -191,7 +191,7 @@ header, footer {
 	min-height: 90px;
 	background-color: white;
 	color: #b5b5b5;
-	margin-top: 30px;
+	/* margin-top: 30px; */
 	border: 3px solid transparent;
 }
 
@@ -323,7 +323,7 @@ header, footer {
 }
 
 .pos-checkout-list{
-	height: calc(75vh - 38px);
+	height: calc(65vh - 30px);
 	overflow-y: scroll;
 }
 

@@ -572,6 +572,11 @@ function isPrinted() {
     return false;
 }
 
+
+function redirectToSpot(location) {
+    redirectToNewLocation(location);
+}
+
 toogleSelectSavedOrders();
 resetTotal();
 countOrdered('countOrdered');

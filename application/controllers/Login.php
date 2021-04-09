@@ -388,10 +388,10 @@ class Login extends BaseControllerWeb
 		// fetch user object
 		$this->user_model->setUniqueValue($userId)->setWhereCondtition()->setUser();
 
-		// insert initail printer
+		// insert initial printer
 		$this->shopprinters_model->setProperty('macNumber', $userId)->setProperty('userId', $userId)->insertInitialPrinter();
 
-		// insert initail spot
+		// insert initial spot
 		$this->shopspot_model->setProperty('printerId', $this->shopprinters_model->id)->insertInitialSpot();
 
 		// insert initail categories
