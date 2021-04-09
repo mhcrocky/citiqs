@@ -73,7 +73,7 @@
 <div class="modal" id="quickModal" role="dialog">
 	<div class="modal-dialog">
 		<!-- Modal content-->
-		<form method="post" action="<?php echo base_url() ?>quicksettings/<?php echo $user->id; ?>">
+		<form method="post" action="<?php echo base_url() ?>quicksettings/<?php echo $vendor['vendorId']; ?>">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>

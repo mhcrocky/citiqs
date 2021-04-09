@@ -56,15 +56,16 @@
 
         public function index(): void
         {
+            $this->redirectToFirstLocalSpot();
 
             $vendorId = intval($_SESSION['userId']);
             $localTypeId = $this->config->item('local');
             $spots = $this->shopspot_model->fetchUserSpotsByType($vendorId, $localTypeId);
-            $spotId = !empty($_GET['spotid']) ? intval($this->input->get('spotid', true)) : ((count($spots) === 1) ? intval($spots[0]['spotId']) : null);
-            $spot = $spotId ? $this->shopspot_model->fetchSpot($vendorId, $spotId) : null;
+            $spotId = intval($this->input->get('spotid', true));
+            $spot = $this->shopspot_model->fetchSpot($vendorId, $spotId);
             $spotName = $spot ? $spot['spotName'] : null;
             $allProducts = ($spot && $this->isLocalSpotOpen($spot)) ? $this->shopproductex_model->getMainProductsOnBuyerSide($vendorId, $spot) : null;
-            $isFodActive = $spotId ? Fod_helper::isFodActive($vendorId, $spotId) : true;
+            $isFodActive = Fod_helper::isFodActive($vendorId, $spotId);
 
             if ($allProducts && $isFodActive) {
 
@@ -100,11 +101,18 @@
             $data['pinMachinePayment'] = $this->config->item('pinMachinePayment');
             $data['voucherPayment'] = $this->config->item('voucherPayment');
 
-            $this->config->item('postPaid');
-
             $this->global['pageTitle'] = 'TIQS : POS';
             $this->loadViews('pos/pos', $this->global, $data, null, 'headerWarehouse');
             return;
+        }
+
+        public function redirectToFirstLocalSpot(): void
+        {
+            if (empty($_GET['spotid'])) {
+                $spotId = $this->shopspot_model->getFirstLocalSpotId(intval($_SESSION['userId']));
+                $redirect = base_url() . 'pos?spotid=' . strval($spotId);
+                redirect($redirect);
+            }
         }
 
         private function isLocalSpotOpen(array $spot): bool

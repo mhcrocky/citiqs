@@ -315,4 +315,33 @@
             $query = 'UPDATE ' . $this->table . ' SET areaId = NULL WHERE areaId = ' . $this->areaId;
             return $this->db->query($query);
         }
+
+        public function getFirstLocalSpotId(int $userId): ?int
+        {
+            $this->load->config('custom');
+            $spotId =  $this->readImproved([
+                'what' => [
+                    $this->table . '.id AS spotId',
+                ],
+                'where' => [
+                    'tbl_shop_printers.userId=' => $userId,
+                    $this->table . '.archived = ' => '0',
+                    $this->table . '.active = ' => '1',
+                    $this->table . '.spotTypeId = ' => $this->config->item('local')
+                ],
+                'joins' => [
+                    ['tbl_shop_printers', $this->table . '.printerId = tbl_shop_printers.id', 'INNER'],
+                    ['tbl_shop_spot_types', $this->table . '.spotTypeId = tbl_shop_spot_types.id', 'INNER']
+                ],
+                'conditions' => [
+                    'order_by' => [$this->table . '.spotName', 'ASC'],
+                    'limit' => ['1']
+                ]
+            ]);
+
+            if (is_null($spotId)) return null;
+
+            $spotId = intval($spotId[0]['spotId']);
+            return $spotId;
+        }
     }
