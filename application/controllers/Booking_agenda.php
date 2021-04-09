@@ -241,6 +241,7 @@ class Booking_agenda extends BaseControllerWeb
                 'timefrom' => $fromtime,
                 'timeto' => $totime,
                 'timeslot' => $selectedTimeSlot->id,
+                'reservationFee' => $selectedTimeSlot->reservationFee,
                 'price' => $selectedTimeSlot->price ? $selectedTimeSlot->price : $price,
                 'numberofpersons' => $numberOfPersons,
                 'reservationset' => '1'
@@ -416,7 +417,7 @@ class Booking_agenda extends BaseControllerWeb
             $this->session->set_userdata('buyerEmail', $buyerInfo['email']);
 
             foreach ($reservations as $key => $reservation) {
-                $amount += floatval($reservation->price);
+                $amount += floatval($reservation->price) + floatval($reservation->reservationFee);
 
                 if ($reservation->SpotId != 3) {
                     $this->bookandpay_model->newvoucher($reservation->reservationId);
@@ -429,7 +430,7 @@ class Booking_agenda extends BaseControllerWeb
                 ], $reservation->reservationId);
             }
 
-            $this->session->set_userdata('amount', $amount);
+            $this->session->set_userdata('amount', number_format($amount, 2, '.', ''));
 
         } else {
             redirect('agenda_booking/pay');
