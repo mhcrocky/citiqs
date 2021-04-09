@@ -1,4 +1,4 @@
-<div style="visibility: hidden;" class="main-content-inner ui-sortable">
+<div class="main-content-inner ui-sortable">
     <!--
     <div class="sales-report-area mt-5 mb-5 row-sort ui-sortable" data-rowposition="1" data-rowsort="1">
         <div id="sortable" style="visibility: hidden;" class="row ui-sortable">
@@ -474,7 +474,7 @@
         <div class="sales-report-area mt-5 mb-5 row-sort ui-sortable" data-rowposition="1" data-rowsort="1">
             <input style="min-width: 230px;max-width: 300px;" id="datetime"
                 class="date w-100 form-control form-control-sm mb-4 ml-auto" type="text" />
-            <div id="sortable" style="visibility: hidden;" class="row ui-sortable">
+            <div id="sortable" class="row ui-sortable">
 
                 <div class="col-md-3 col-custom ui-sortable mb-3" data-position="1" data-sort="1">
                     <div style="border-left: 10px solid #3366cc !important;height:140px;"
