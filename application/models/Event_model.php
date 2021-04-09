@@ -303,6 +303,7 @@ class Event_model extends CI_Model {
 				'timefrom' => $ticket['startTime'],
 				'timeto' => $ticket['endTime'],
 				'price' => $ticket['price'],
+				'ticketFee' => $ticket['ticketFee'],
 				'numberofpersons' => $ticket['quantity'],
 				'name' => $userInfo['name'],
 				'email' => $userInfo['email'],
