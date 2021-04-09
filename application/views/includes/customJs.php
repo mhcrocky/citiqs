@@ -112,7 +112,10 @@
 <?php } elseif ($this->view === 'warehouse/design') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jscolor.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/design.js"></script>
-<?php } elseif ($this->view === 'pos/pos') { ?>	
+<?php } elseif ($this->view === 'pos/pos') { ?>
+	<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-url-hash@latest/dist/js/splide-extension-url-hash.min.js"></script>
+	<script src="<?php echo $this->baseUrl ?>assets/home/js/posSplide.js"></script>
 	<script src="<?php echo $this->baseUrl ?>assets/home/js/makeOrderFunctions.js"></script>
 	<script src="<?php echo $this->baseUrl ?>assets/home/js/posWrapper.js"></script>
 	<?php if(!empty($posCheckoutOrder) || !empty($posBuyerDetails)) { ?>

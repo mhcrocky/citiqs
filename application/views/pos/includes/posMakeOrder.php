@@ -1,4 +1,4 @@
-<div class="col-lg-4" id="posMakeOrderId">
+<div class="col-md-4" id="posMakeOrderId">
     <div style="height:7vh; margin:0px 0px 10px 10px;">
         <div class="col-sm-9 form-inline">
             <label
@@ -135,4 +135,4 @@
     </div>
 </div>
 <!-- onclick="saveAndPrint(this)" -->
-<div class="col-lg-4" id="posResponse" style="display:none; padding-top:40px"></div>
+<div class="col-md-4" id="posResponse" style="display:none; padding-top:40px"></div>
