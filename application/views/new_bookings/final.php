@@ -58,7 +58,10 @@
 			    </td>
 				<td class="booking-info">
 				    <span id="price">
-                        <?php echo $this->session->userdata('timeslotPrice'); ?>€
+                        <?php echo $this->session->userdata('timeslotPrice'); ?>€ 
+						<?php if($reservationFee != 0.00){ ?>
+						(Fee <?php echo $reservationFee; ?>€)
+						<?php } ?>
                     </span>
 				    
 			    </td>

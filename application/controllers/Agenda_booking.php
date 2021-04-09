@@ -294,6 +294,7 @@ class Agenda_booking extends BaseControllerWeb
                 $this->session->set_userdata('selectedTimeSlot', $selectedTimeSlot);
             }
             $this->session->set_userdata('timeslotPrice', $selectedTimeSlot->price);
+            $this->session->set_userdata('reservationFee', $selectedTimeSlot->reservationFee);
 
             if($spot->price == 0){
                 redirect('agenda_booking/pay');
@@ -358,6 +359,7 @@ class Agenda_booking extends BaseControllerWeb
         $this->load->library('form_validation');
         $reservationIds = $this->session->userdata('reservations');
         $customer = $this->session->userdata('customer');
+        $data['reservationFee'] = $this->session->userdata('reservationFee');
 
         if (empty($customer) || !isset($customer['id'])) {
             redirect();
