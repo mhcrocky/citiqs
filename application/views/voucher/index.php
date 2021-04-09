@@ -180,7 +180,7 @@
                         <label for="amount" class="col-md-4 col-form-label text-md-left">Amount</label>
                         <div class="col-md-6">
 
-                            <input type="number" id="amount" class="input-w border-50 form-control" name="amount"
+                            <input type="number" step="0.01" id="amount" class="input-w border-50 form-control" name="amount"
                                 onchange="disabledField(this, 'percent')" required>
 
                         </div>

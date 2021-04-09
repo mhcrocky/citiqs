@@ -423,6 +423,14 @@ tinymce.PluginManager.add("ruler", pluginRuler);
                         text: '[voucherPercent]',
                         onclick: function(){editor.insertContent('[voucherPercent]')}
                     },
+                    {
+                      text: '[voucherID]',
+                      onclick: function(){editor.insertContent('[voucherID]')}
+                    },
+                    {
+                      text: '[currentDate]',
+                      onclick: function(){editor.insertContent('[currentDate]')}
+                    },
 
                 ],
             });
@@ -439,6 +447,13 @@ tinymce.PluginManager.add("ruler", pluginRuler);
         }
     });
 
+}
+
+function customUpdateEmailTemplate(selectTemplateValueId, customTemplateNameId, customTemplateSubjectId, customTemplateTypeId, templateId = 0){
+  createEmailTemplate(selectTemplateValueId, customTemplateNameId, customTemplateSubjectId, customTemplateTypeId, templateId);
+  setTimeout(() => {
+    window.location.reload();
+  }, 1500);
 }
 
 function showTemplates() {

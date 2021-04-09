@@ -209,6 +209,12 @@ class   Bookandpayagendabooking_model extends CI_Model
 		
 	}
 
+	function update_reservation_amount($reservationId, $amount){
+		$this->db->where('reservationId', $reservationId);
+		$this->db->update('tbl_bookandpay',['amount' => $amount]);
+		return true;
+	}
+
 	function get_agenda_booking_design($vendor_id){
 
 		$this->db->select('design')

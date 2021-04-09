@@ -91,11 +91,24 @@ class Voucher extends BaseControllerWeb
 
         $data = [
             'templates' => $this->email_templates_model->get_voucher_email_by_user($vendorId),
-            'updateTemplate' => base_url() . 'update_template' . DIRECTORY_SEPARATOR,
+            'updateTemplate' => base_url() . 'voucher/update_template' . DIRECTORY_SEPARATOR,
         ];
 
         $this->global['pageTitle'] = 'TIQS : LIST TEMPLATE';
-        $this->loadViews('templates/listTemplates', $this->global, $data, 'footerbusiness', 'headerbusiness');
+        $this->loadViews('voucher/templates/listTemplates', $this->global, $data, 'footerbusiness', 'headerbusiness');
+        return;
+    }
+
+	public function updateTemplate($id): void
+    {
+        $data = [
+            'vendorId' => intval($_SESSION['userId']),
+            'tiqsId' => $this->config->item('tiqsId'),
+        ];
+		$this->setEmailTemplateUpdate($data, intval($id));
+
+		$this->global['pageTitle'] = 'TIQS : UPDATE TEMPLATE';
+        $this->loadViews('voucher/templates/updateTemplate', $this->global, $data, 'footerbusiness', 'headerbusiness');
         return;
     }
 
@@ -103,5 +116,22 @@ class Voucher extends BaseControllerWeb
 		$text = $this->input->post('text');
 		echo $this->language->tline($text);
 	}
+
+	private function setEmailTemplateUpdate(array &$data, int $id): void
+    {
+		$this->load->model('shoptemplates_model');
+        $this->shoptemplates_model->setObjectId($id)->setObject();
+        // to check id
+        $data['emailTemplates'] = $this->config->item('emailTemplates');
+        $data['templateId'] = $id;
+        $data['templateName'] = $this->shoptemplates_model->template_name;
+        $data['templateSubject'] = $this->shoptemplates_model->template_subject;
+        $data['templateType'] = $this->shoptemplates_model->template_type;
+        $data['templateContent'] = file_get_contents($this->shoptemplates_model->getTemplateFile());
+        $data['emailTemplatesEdit'] = true;
+        $data['landingPagesEdit'] = false;
+
+        return;
+    }
 
 }

@@ -230,6 +230,9 @@
 <?php } elseif ($this->view === 'templates/updateTemplate') { ?>
 	<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
 	<script src='<?php echo $this->baseUrl; ?>assets/home/js/templates.js'></script>
+<?php } elseif ($this->view === 'voucher/templates/updateTemplate') { ?>
+	<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
+	<script src='<?php echo $this->baseUrl; ?>assets/home/js/voucherTemplates.js'></script>
 <?php } elseif ($this->view === 'voucher/index') { ?>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
@@ -288,5 +291,5 @@
 <?php } elseif ($this->view === 'registerAmbasador') { ?>
 	<script src='<?php echo base_url(); ?>assets/home/js/registerAmbasador.js'></script>
 <?php } elseif ($this->view === 'warehouse/areas') { ?>
-	<script src='<?php echo base_url(); ?>assets/home/js/areas.js'></script>
+	<script src='<?php echo base_url(); ?>assets/home/js/areas.js'></script> 
 <?php } ?>

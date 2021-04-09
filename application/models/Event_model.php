@@ -324,6 +324,12 @@ class Event_model extends CI_Model {
 		 return $reservationIds;
 	}
 
+	function update_reservation_amount($reservationId, $amount){
+		$this->db->where('reservationId', $reservationId);
+		$this->db->update('tbl_bookandpay',['amount' => $amount]);
+		return true;
+	}
+
 	public function get_ticket_report($vendorId, $eventId, $sql='')
 	{
 		$query = $this->db->query("SELECT reservationId, reservationtime, price,numberofpersons,(price*numberofpersons) as amount, name, age, gender, mobilephone, email, tbl_bookandpay.ticketDescription, ticketQuantity

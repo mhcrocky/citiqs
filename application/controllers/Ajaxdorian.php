@@ -357,6 +357,7 @@ class Ajaxdorian extends CI_Controller
             'duration' => $duration,
             'overflow' => $overflow,
             'price' => $this->input->post('price'),
+            'reservationFee' => $this->input->post('reservationFee'),
             'spot_id' => $this->input->post('spot_id'),
             'email_id' => $this->input->post('email_id')
         ];

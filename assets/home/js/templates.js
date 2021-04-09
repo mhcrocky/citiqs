@@ -54,7 +54,7 @@ function createEmailTemplate(selectTemplateValueId, customTemplateNameId, custom
     sendAjaxPostRequest(post, url, 'createEmailTemplate', createEmailTemplateResponse, [selectTemplate, customTemplateSubject, customTemplate]);
 }
 
-function createEmailTemplateResponse(selectTemplate, customTemplate, response) {
+function createEmailTemplateResponse(selectTemplate, customTemplateSubject, customTemplate, response) {
     alertifyAjaxResponse(response);
 
     if (response['status'] === '1') {
@@ -529,9 +529,9 @@ function showTemplates() {
 
 function customUpdateEmailTemplate(selectTemplateValueId, customTemplateNameId, customTemplateSubjectId, customTemplateTypeId, templateId = 0){
     createEmailTemplate(selectTemplateValueId, customTemplateNameId, customTemplateSubjectId, customTemplateTypeId, templateId);
-    // setTimeout(() => {
-    //     window.location.reload();
-    // }, 1200);
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
 }
 
 function checkiIsLandingPage(element, landingPage, emailElements, landingPageElemenst) {
