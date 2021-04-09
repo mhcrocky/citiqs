@@ -199,7 +199,8 @@ class Ajaxdorian extends CI_Controller
             'Background' => $this->input->post('Background'),
             'Customer' => $this->session->userdata('userId'),
             'email_id' => $this->input->post('email_id'),
-            'online' => intval($this->input->post('online'))
+            'online' => intval($this->input->post('online')),
+            'max_spots' => intval($this->input->post('max_spots'))
         ];
 
         $agenda_id = $this->input->post('id');
@@ -299,6 +300,14 @@ class Ajaxdorian extends CI_Controller
         ];
 
         $spot_id = $this->input->post('id');
+        $max_spots = $this->bookandpayagendabooking_model->get_max_spots($spotData['agenda_id']);
+        $spots_count = $this->bookandpayagendabooking_model->get_spot_count_by_agenda($spotData['agenda_id']);
+        if($spots_count >= $max_spots){
+            $msg = 'You have reached the maximum spots number!';
+            $status = 'error';
+            echo json_encode(array('msg' => $msg, 'status' =>$status, 'data' => ''));
+            return ;
+        }
 
         if ($spot_id) {
             $this->bookandpayspot_model->updateSpot($spotData, $spot_id);
