@@ -39,7 +39,7 @@
         enctype="multipart/form-data">
         <?php if($timeSlot['status'] != "soldout"): ?>
         <div class="form-check">
-            <input class="form-check-input" onclick="radioVal(this, '<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>')" type="radio"
+            <input class="form-check-input" data-timeslot="<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>" type="radio"
                 id="test<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>" name="selected_time_slot_id" data-starttime="<?php echo $start_time; ?>" data-endtime="<?php echo $end_time; ?>"
                 value="<?php echo $timeSlot['id']; ?>">
             <label class="text-dark radioLabel" for="test<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>">
@@ -61,7 +61,7 @@
         enctype="multipart/form-data">
         <?php if($timeSlot['status'] != "soldout"): ?>
         <div class="form-check">
-            <input class="form-check-input" onclick="radioVal(this, <?php echo $timeSlot['id']; ?>)" type="radio"
+            <input class="form-check-input" data-timeslot="<?php echo $timeSlot['id']; ?>" type="radio"
                 id="test<?php echo $timeSlot['id']; ?>" name="selected_time_slot_id"
                 value="<?php echo $timeSlot['id']; ?>">
             <label class="text-dark radioLabel" for="test<?php echo $timeSlot['id']; ?>">
@@ -89,6 +89,11 @@
 </div>
 
 <script>
+
+$('.form-check-input').change(function(){
+    let timeslot = $(this).data('timeslot');
+    radioVal(this, timeslot)
+});
 function radioVal(el, timeslot) {
     let startTime = $(el).data('starttime');
     let endTime = $(el).data('endtime');
