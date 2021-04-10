@@ -1165,4 +1165,24 @@ class   Bookandpayagendabooking_model extends CI_Model
 		return $result->spot_count;
 	}
 
+	function get_manual_reservations($vendorId){
+
+		$this->db->select('*')
+		->from('tbl_bookandpay')
+		->where('paid', 2)->where('customer', $vendorId);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	function get_agenda_spot_timeslot($vendorId){
+
+		$this->db->select('tbl_bookandpaytimeslots.id as timeslot_id, agenda_id, spot_id, ReservationDescription as agenda_descript, ReservationDateTime as event_date, descript as spot_descript, fromtime, totime');
+		$this->db->from('tbl_bookandpaytimeslots');
+		$this->db->join('tbl_bookandpayspot', 'tbl_bookandpayspot.id = tbl_bookandpaytimeslots.spot_id', 'left');
+		$this->db->join('tbl_bookandpayagenda', 'tbl_bookandpayagenda.id = tbl_bookandpayspot.agenda_id', 'left');
+		$this->db->where('tbl_bookandpayagenda.Customer', $vendorId);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+	
 }

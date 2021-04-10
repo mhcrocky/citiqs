@@ -612,13 +612,20 @@ class Bookandpay_model extends CI_Model
 		$this->db->from('tbl_bookandpay');
 		$this->db->where('TransactionId', $TransactionId);
 		$query = $this->db->get();
-
-//				$testquery = $this->db->last_query();
-//				var_dump($testquery);
-//				die();
         $result = $query->result();
 		return $result;
 	}
+
+
+	public function getReservationsById($reservationId)
+	{
+		$this->db->from('tbl_bookandpay');
+		$this->db->where('reservationId', $reservationId);
+		$query = $this->db->get();
+        $result = $query->result();
+		return $result;
+	}
+
 
 	function getBookingByTimeSlot($customer, $eventDate, $timeSlot)
     {
