@@ -129,7 +129,12 @@
 
             $preferedView = $this->getPreferedView($data, $spot, $vendor, $orderDataRandomKey);
 
-            $this->loadViews($preferedView, $this->global, $data, null, 'headerWarehousePublic');
+
+            if (ENVIRONMENT === 'development') {
+                $this->loadViews($preferedView, $this->global, $data, 'footer2021', 'header2021');
+            } else {
+                $this->loadViews($preferedView, $this->global, $data, null, 'headerWarehousePublic');
+            }            
             return;
         }
 
@@ -201,18 +206,18 @@
             };
         }
 
-        private function isFodLocked(int $spotPrinterId): void
-        {
-            $isHardLock = $this->shopprinters_model->setObjectId($spotPrinterId)->getProperty('isFodHardLock');
-            if (!intval($isHardLock)) return;
+        // private function isFodLocked(int $spotPrinterId): void
+        // {
+        //     $isHardLock = $this->shopprinters_model->setObjectId($spotPrinterId)->getProperty('isFodHardLock');
+        //     if (!intval($isHardLock)) return;
 
-            $isAactive = $this->fodfdm_model->setProperty('printer_id', $spotPrinterId)->isActive();
-            if ($isAactive) return;
+        //     $isAactive = $this->fodfdm_model->setProperty('printer_id', $spotPrinterId)->isActive();
+        //     if ($isAactive) return;
 
-            $vendorId = $this->shopprinters_model->setObjectId($spotPrinterId)->getProperty('userId');
-            $redirect = base_url() . $this->config->item('fodInActive') . DIRECTORY_SEPARATOR . $vendorId;
-            redirect($redirect);
-        }
+        //     $vendorId = $this->shopprinters_model->setObjectId($spotPrinterId)->getProperty('userId');
+        //     $redirect = base_url() . $this->config->item('fodInActive') . DIRECTORY_SEPARATOR . $vendorId;
+        //     redirect($redirect);
+        // }
 
         private function isFodActive(int $vendorId, int $spotId): void
         {
@@ -255,7 +260,11 @@
                     }
 
                 }
-                $preferedView = 'publicorders/makeOrderNew';
+                if (ENVIRONMENT === 'development') {
+                    $preferedView = 'publicorders/makeOrder2021';
+                } else {
+                    $preferedView = 'publicorders/makeOrderNew';
+                }
             }
 
             return $preferedView;

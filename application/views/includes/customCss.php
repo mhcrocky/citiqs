@@ -499,5 +499,18 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
 <?php }  elseif ($this->view === 'ladnigPages/template') { ?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/landingPages.css" />
+<?php } elseif ($this->view === 'publicorders/makeOrder2021') { ?>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" />
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="<?php #echo base_url() ?>assets/home/slickCss/slick.css" />
+    <link rel="stylesheet" type="text/css" href="<?php #echo base_url() ?>assets/home/slickCss/slick-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php #echo base_url() ?>assets/home/slickCss/shop-with-slider.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php #echo base_url() ?>assets/home/styles/order-popup.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php #echo base_url() ?>assets/home/styles/makeOrderUpdate.css" />
+    <link rel="stylesheet" type="text/css" href="<?php #echo base_url() ?>assets/home/styles/makeOrderItemSlider.css" />
+    <link rel="stylesheet" type="text/css" href="<?php #echo base_url() ?>assets/home/styles/makeOrder2021.css" /> -->
+    
 <?php } ?>
-
