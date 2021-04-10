@@ -129,8 +129,7 @@
 
             $preferedView = $this->getPreferedView($data, $spot, $vendor, $orderDataRandomKey);
 
-
-            if (ENVIRONMENT === 'development') {
+            if ($vendor['preferredView'] === $this->config->item('view2021')) {
                 $this->loadViews($preferedView, $this->global, $data, 'footer2021', 'header2021');
             } else {
                 $this->loadViews($preferedView, $this->global, $data, null, 'headerWarehousePublic');
@@ -239,12 +238,8 @@
                 $data['categoryProducts'] = $this->shopproductex_model->getUserProductsPublic($vendorId);
                 $data['ordered'] =  $ordered;
                 $preferedView = 'publicorders/makeOrder';
-            } elseif ($vendor['preferredView'] === $this->config->item('newMakeOrderView')) {
+            } else {
                 $allProducts = $this->shopproductex_model->getMainProductsOnBuyerSide($vendorId, $spot);
-
-                // echo '<pre>';
-                // print_r($allProducts);
-                // die();
                 if ($allProducts) {
                     $data['mainProducts'] = $allProducts['main'];
                     $data['addons'] = $allProducts['addons'];
@@ -260,10 +255,11 @@
                     }
 
                 }
-                if (ENVIRONMENT === 'development') {
-                    $preferedView = 'publicorders/makeOrder2021';
-                } else {
+
+                if ($vendor['preferredView'] === $this->config->item('newMakeOrderView')) {
                     $preferedView = 'publicorders/makeOrderNew';
+                } elseif ($vendor['preferredView'] === $this->config->item('view2021')) {
+                    $preferedView = 'publicorders/makeOrder2021';
                 }
             }
 

@@ -13,7 +13,16 @@
 				</li>
 			</ul>
 		</div>
-		<a href="#" class="btn btn-primary btn-lg bg-primary px-3 px-md-4 text-center header__checkout" data-toggle="modal" data-target="#checkout-modal"><i class="fa fa-shopping-basket mr-md-3"></i><span class='d-none d-lg-inline'>CHECKOUT</span></a>
+		<a
+			href="#"
+			class="btn btn-primary btn-lg bg-primary px-3 px-md-4 text-center header__checkout"
+			data-toggle="modal"
+			data-target="#checkout-modal"
+			style="z-index:3000; position: fixed; top:5%; right: 5%"
+		>
+			<i class="fa fa-shopping-basket mr-md-3"></i>
+			<span class='d-none d-lg-inline'>CHECKOUT</span>
+		</a>
 	</nav>
 </header>
 <!-- END HEADER -->
