@@ -14,6 +14,7 @@ class Voucher extends REST_Controller
     {
         parent::__construct();
         $this->load->helper('utility_helper');
+		$this->load->helper('email_helper');
         $this->load->helper('validate_data_helper');
         $this->load->model('vouchersend_model');
         $this->load->model('shopvoucher_model');
@@ -192,7 +193,7 @@ class Voucher extends REST_Controller
         $what = ['*'];
 		$where = ["id" => $data['voucherId']];
         $voucher = $this->shopvoucher_model->read($what,$where);
-        $send = $this->emailSend($data['name'], $data['email'], $voucher);
+        $send = $this->emailSend($data['name'], $data['email'], $voucher, true);
         if ($send == 1) {
             if($data['send'] == 0){
                 $updateWhere = ["id" => $data['id']];
@@ -594,7 +595,7 @@ class Voucher extends REST_Controller
 				$subject = str_replace('[voucherPercent]', $voucherPercent, $subject);
 				$mailsend = 1;
 //				$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
-				if($this->sendEmail($email, $subject, $mailtemplate)) {
+				if(Email_helper::sendEmail($email, $subject, $mailtemplate,true)) {
                     $mailsend = 1;
                 }
                             
@@ -609,32 +610,32 @@ class Voucher extends REST_Controller
 
 
 
-    private function sendEmail($email, $subject, $message)
-	{
-		$configemail = array(
-			'protocol' => PROTOCOL,
-			'smtp_host' => SMTP_HOST,
-			'smtp_port' => SMTP_PORT,
-			'smtp_user' => SMTP_USER, // change it to yours
-			'smtp_pass' => SMTP_PASS, // change it to yours
-			'mailtype' => 'html',
-			'charset' => 'iso-8859-1',
-			'smtp_crypto' => 'tls',
-			'wordwrap' => TRUE,
-			'newline' => "\r\n"
-		);
-
-		$config = $configemail;
-		$CI =& get_instance();
-		$CI->load->library('email', $config);
-		$CI->email->set_header('X-SES-CONFIGURATION-SET', 'ConfigSet');
-		$CI->email->set_newline("\r\n");
-		$CI->email->from('support@tiqs.com');
-		$CI->email->to($email);
-		$CI->email->subject($subject);
-		$CI->email->message($message);
-		return $CI->email->send();
-    }
+//    private function sendEmail($email, $subject, $message)
+//	{
+//		$configemail = array(
+//			'protocol' => PROTOCOL,
+//			'smtp_host' => SMTP_HOST,
+//			'smtp_port' => SMTP_PORT,
+//			'smtp_user' => SMTP_USER, // change it to yours
+//			'smtp_pass' => SMTP_PASS, // change it to yours
+//			'mailtype' => 'html',
+//			'charset' => 'iso-8859-1',
+//			'smtp_crypto' => 'tls',
+//			'wordwrap' => TRUE,
+//			'newline' => "\r\n"
+//		);
+//
+//		$config = $configemail;
+//		$CI =& get_instance();
+//		$CI->load->library('email', $config);
+//		$CI->email->set_header('X-SES-CONFIGURATION-SET', 'ConfigSet');
+//		$CI->email->set_newline("\r\n");
+//		$CI->email->from('support@tiqs.com');
+//		$CI->email->to($email);
+//		$CI->email->subject($subject);
+//		$CI->email->message($message);
+//		return $CI->email->send();
+//    }
 
 
 }
