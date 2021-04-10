@@ -14,7 +14,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
         <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/main-style.css">
         <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/font-awesome-4.min.css">
         <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/themify-icons.css">
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" >
         <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/metisMenu.css">
         <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/owl.carousel.min.css">
         <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/slicknav.min.css">
@@ -24,7 +24,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
         <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>tiqscss/clstylesheet.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>tiqscss/cbstylesheet.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>tiqscss/tiqsballoontip.css" />
-        <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/magnific-popup.min.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/magnific-popup.min.css" >
         <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/alertify.min.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/alertify_default.min.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/keyboard.css" />
@@ -145,7 +145,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
         <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/html5shiv.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
         <script src="<?php echo $this->baseUrl; ?>assets/bower_components/bootstrap-colorselector/bootstrap-colorselector.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
         <script src="https://unpkg.com/vuejs-datepicker"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.umd.min.js"></script>
@@ -299,10 +299,11 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 											</li>
 											
 											<li data-menuid="4.6">
-												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ink-pen"></i><span><?php echo $this->language->tLine('Design'); ?></span></a>
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-ink-pen"></i><span><?php echo $this->language->tLine('Settings'); ?></span></a>
 												<ul class="collapse">
 													<li data-menuid="4.6.1"><a href="<?php echo $this->baseUrl; ?>emaildesigner"><i class="ti-email"></i> <span><?php echo $this->language->tLine('Email'); ?></span></a></li>
-													<li data-menuid="4.6.2"><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span><?php echo $this->language->tLine('Store'); ?></span></a></li>
+													<li data-menuid="4.6.2"><a href="<?php echo $this->baseUrl; ?>viewdesign"><i class="ti-shopping-cart"></i> <span><?php echo $this->language->tLine('QR Menu'); ?></span></a></li>
+													<li data-menuid="4.6.3"><a href="<?php echo $this->baseUrl; ?>qrcode"><i class="ti-shopping-cart"></i> <span><?php echo $this->language->tLine('QR Sticker link'); ?></span></a></li>
 												</ul>
 											</li>
 											<li data-menuid="4.7">
@@ -313,11 +314,27 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 <!--													<li data-menuid="4.7.3"><a href="--><?php //echo $this->baseUrl; ?><!--z report"><i class="ti-bag"></i> <span>Y report</span></a></li>-->
 												</ul>
 											</li>
-											<li data-menuid="12.1">
-												<a href="<?php echo $this->baseUrl . 'make_order?vendorid=' . $this->session->userdata('userId'); ?>" target="_blank">
-													<i class="ti-shopping-cart-full"></i> <span><?php echo $this->language->tLine('URL link'); ?></span>
-												</a>
+											<li data-menuid="12">
+												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-share"></i><span><?php echo $this->language->tLine('Your links'); ?></span></a>
+												<ul class="collapse">
+													<li data-menuid="12.1">
+														<a href="<?php echo $this->baseUrl . 'make_order?vendorid=' . $this->session->userdata('userId'); ?>" target="_blank">
+															<i class="ti-shopping-cart-full"></i> <span><?php echo $this->language->tLine('QR Menu'); ?></span>
+														</a>
+													</li>
+													<li data-menuid="12.2">
+														<a href="<?php echo $this->baseUrl . 'check424/' . $this->session->userdata('userId'); ?>" target="_blank">
+															<i class="ti-book"></i>
+															<span><?php echo $this->language->tLine('Visitor registration'); ?></span>
+														</a>
+													</li>
+												</ul>
 											</li>
+<!--											<li data-menuid="12.1">-->
+<!--												<a href="--><?php //echo $this->baseUrl . 'make_order?vendorid=' . $this->session->userdata('userId'); ?><!--" target="_blank">-->
+<!--													<i class="ti-shopping-cart-full"></i> <span>--><?php //echo $this->language->tLine('URL link'); ?><!--</span>-->
+<!--												</a>-->
+<!--											</li>-->
 											
 										</ul>
 									</li>
@@ -530,22 +547,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 <!--                                            <li data-menuid="11.2"><a href="http://localhost/tiqsbox/index.php/Admin"><i class="ti-package"></i> <span>Tiqsbox</span></a></li>-->
 <!--                                        </ul>-->
 <!--                                    </li>-->
-									<li data-menuid="12">
-										<a href="javascript:void(0)" aria-expanded="true"><i class="ti-share"></i><span><?php echo $this->language->tLine('Your links'); ?></span></a>
-										<ul class="collapse">
-											<li data-menuid="12.1">
-												<a href="<?php echo $this->baseUrl . 'make_order?vendorid=' . $this->session->userdata('userId'); ?>" target="_blank">
-													<i class="ti-shopping-cart-full"></i> <span><?php echo $this->language->tLine('Store'); ?></span>
-												</a>
-											</li>
-											<li data-menuid="12.2">
-												<a href="<?php echo $this->baseUrl . 'check424/' . $this->session->userdata('userId'); ?>" target="_blank">
-													<i class="ti-book"></i>
-													<span><?php echo $this->language->tLine('Visitor registration'); ?></span>
-												</a>
-											</li>
-										</ul>
-                                    </li>
+
 									<?php } ?>
 									<?php if ($_SESSION['businessTypeId'] != 26) { ?>
 									<li data-menuid="13">

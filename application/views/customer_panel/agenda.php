@@ -74,6 +74,7 @@
                             <th><?php echo $this->language->tLine('Reservation Date'); ?></th>
                             <th><?php echo $this->language->tLine('Background Color'); ?>
                             <th><?php echo $this->language->tLine('Email Template'); ?></th>
+                            <th><?php echo $this->language->tLine('Max Spots'); ?></th>
                             <th><?php echo $this->language->tLine('Online'); ?></th>
                             <th><?php echo $this->language->tLine('Action'); ?></th>
                         </tr>
@@ -91,6 +92,7 @@
                                         {{ agenda.template_name }}
                                     </a>
                                 </td>
+                                <td>{{ agenda.max_spots }} </td>
                                 <td v-if="agenda.online == 1">
 									<?php echo $this->language->tLine('Yes'); ?>
                                 </td>
@@ -175,6 +177,12 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="max_spots"><?php echo $this->language->tLine('Max Spots'); ?></label>
+                            <input type="text" name="max_spots"
+                                   v-model="agendaModalData.max_spots" class="form-control"
+                                   id="max_spots">
+                        </div>
+                        <div class="form-group">
                             <label for="online">Copy from:</label>
                             <select style="width: 100%;" id="agendas" class="form-control js-spots-basic-multiple" name="SpotsTimeslots[]" multiple="multiple">
                                 <option v-for="agenda in agendas" :key="agenda.id" :value="agenda.id">{{ agenda.ReservationDescription }} - {{ dateFormat(agenda.ReservationDateTime) }}</option>
@@ -245,6 +253,12 @@
                                 <option value="0">Offline</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="max_spots"><?php echo $this->language->tLine('Max Spots'); ?></label>
+                            <input type="text" name="max_spots"
+                                   v-model="agendaModalData.max_spots" class="form-control"
+                                   id="max_spots">
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -276,6 +290,7 @@
 
 <script>
 $(document).ready(function() {
+
     $('.js-spots-basic-multiple').select2();
 });
 
@@ -302,7 +317,8 @@ const templateGlobals = (function() {
                 ReservationDescription: '',
                 ReservationDateTime: '',
                 Background: 'blue-light',
-                email_id: null
+                email_id: null,
+                max_spots: '',
             },
             format: 'dd-MM-yyyy',
             deleteAgendaTemp: null
@@ -389,6 +405,7 @@ const templateGlobals = (function() {
                 formData.append("online", this.agendaModalData.online);
                 formData.append("Background", this.agendaModalData.Background);
                 formData.append("email_id", this.agendaModalData.email_id);
+                formData.append("max_spots", this.agendaModalData.max_spots);
                 formData.append("agendas", $('#agendas').val());
                 if (this.agendaModalData.id) {
                     formData.append("id", this.agendaModalData.id);
@@ -397,12 +414,14 @@ const templateGlobals = (function() {
 
                 axios.post(this.baseURL + 'ajaxdorian/saveAgenda', formData
                 ).then((response) => {
+                    
                     if (this.method == 'edit') {
                         let agenda = response.data.data;
                         let index = this.getIndexByID(agenda.id);
                         Vue.set(this.agendas, index, agenda);
                     }
 
+                    
                     if (this.method == 'create') {
                         this.agendas.push(response.data.data);
                     }
@@ -421,6 +440,7 @@ const templateGlobals = (function() {
                 formData.append("online", this.agendaModalData.online);
                 formData.append("Background", this.agendaModalData.Background);
                 formData.append("email_id", this.agendaModalData.email_id);
+                formData.append("max_spots", this.agendaModalData.max_spots);
                 formData.append("agendas", this.agendaModalData.id);
 
 
@@ -429,6 +449,7 @@ const templateGlobals = (function() {
                     if (this.method == 'create') {
                         this.agendas.push(response.data.data);
                     }
+            
 
                     $('#copy_agenda_modal').modal('hide');
 

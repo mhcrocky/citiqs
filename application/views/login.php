@@ -40,7 +40,7 @@ if($current_url == $employeeUrl || $current_url == $employeeUrl){
 			</div>
 			<div style="text-align:left">
 				<p style="font-family:'caption-bold'; font-size:300%; color:#ffffff;">
-					<?php echo $this->language->Line("LOGIN-LX103400",'BUSINESS LOGIN.');?>
+					<?php echo $this->language->tLine('BUSINESS LOGIN.');?>
 				</p>
 			</div>
 			<div class="width-650">
