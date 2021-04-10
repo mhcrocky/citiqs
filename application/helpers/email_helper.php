@@ -121,7 +121,7 @@
             return self::sendEmail($email, $subject, $message);
         }
         
-        public static function sendEmail(string $email, string $subject, string $message): bool
+        public static function sendEmail(string $email, string $subject, string $message, bool $makePdf = false): bool
         {
             $config = self::getConfig();
             $CI =& get_instance();
@@ -132,7 +132,21 @@
             $CI->email->to($email);
             $CI->email->subject($subject);
             $CI->email->message($message);
-            return $CI->email->send(); 
+
+            if ($makePdf) {
+                $CI->load->helpers('mpdf_helper');
+                $fileName = strval(time() . '_' . rand(10000, 99999));
+                $attachment = Mpdf_helper::createPdfFile($message, $fileName);
+                $CI->email->attach($attachment);
+            }
+
+            $send = $CI->email->send();
+
+            if (!empty($attachment)) {
+                unlink($attachment);
+            }
+
+            return $send;
         }
 
         public static function dhlSednErr(int $paymnetHistoryId, int $dhlCode): void
