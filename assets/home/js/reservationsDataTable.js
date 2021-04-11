@@ -65,10 +65,12 @@ function bookReservation(e){
       mobile: $('#mobile').val(),
       event_date: encodeURI($('#agendas option:selected').val()),
       agenda_id: $('#agendas option:selected').attr('data-agenda'),
-      timeslot: $('#agendas option:selected').attr('data-timeslot'),
-      spot_id: $('#agendas option:selected').attr('data-spot'),
-      fromtime: encodeURI($('#agendas option:selected').attr('data-fromtime')),
-      totime: encodeURI($('#agendas option:selected').attr('data-totime'))
+      timeslot: $('#spots option:selected').val(),
+      spot_id: $('#spots option:selected').val(),
+      fromtime: encodeURI($('#timeslots option:selected').attr('data-fromtime')),
+      totime: encodeURI($('#timeslots option:selected').attr('data-totime')),
+      price: $('#amount').val(),
+      timeslot_price: $('#timeslots option:selected').attr('data-price')
   }
 
 
@@ -82,8 +84,38 @@ function bookReservation(e){
       $('#resetForm').click();
       $('#closeModal').click();
       $('.form-control').addClass('input-clear');
+      var html = '<option value="">Select Option</option>';
+      $('#spots').html(html);
+      $('#timeslots').html(html);
       //alertify[data.status](data.message);
 
   });
 
+}
+
+
+function get_spots() {
+  let agenda_id = $('#agendas option:selected').attr('data-agenda');
+  $.post(globalVariables.baseUrl + "customer_panel/get_spots",{agenda_id: agenda_id},function (data) {
+      let spots = JSON.parse(data);
+      var html = '<option value="">Select option</option>';
+      $.each(spots, function (index, spot) {
+          html += '<option value="' + spot.spot_id + '" >' + spot.spot_descript + '</option>';
+      });
+      $('#spots').html(html);
+
+    });
+}
+
+function get_timeslots() {
+  let spot_id = $('#spots option:selected').val();
+  $.post(globalVariables.baseUrl + "customer_panel/get_timeslots",{spot_id: spot_id},function (data) {
+      let timeslots = JSON.parse(data);
+      var html = '<option value="">Select option</option>';
+      $.each(timeslots, function (index, timeslot) {
+          html += '<option value="' + timeslot.timeslot_id + '" data-fromtime="'+ timeslot.fromtime + '" data-totime="'+ timeslot.totime + '" data-price="'+ timeslot.timeslot_price + '">' + timeslot.fromtime + ' - ' +timeslot.totime+'</option>';
+      });
+      $('#timeslots').html(html);
+
+    });
 }
