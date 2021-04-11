@@ -426,6 +426,7 @@
 </div>
 
 
+
 <!-- Choose Email Modal -->
 <div class="modal fade" id="chooseEmailModal" tabindex="-1" role="dialog" aria-labelledby="chooseEmailModalLabel"
     aria-hidden="true">
@@ -496,6 +497,79 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- Guestlist Modal -->
+<div class="modal fade" id="guestlistModal" tabindex="-1" role="dialog" aria-labelledby="guestlistModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold text-dark" id="addVoucherModalLabel">Add Guest</h5>
+                <button type="button" class="close" id="closeModal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form name="my-form" id="my-form" class="needs-validation" action="#" method="POST"
+                    onsubmit="return addGuest(event)" novalidate>
+
+
+                    <div class="form-group row">
+                        <label for="guestName" class="col-md-4 col-form-label text-md-left">
+                            Name
+                        </label>
+                        <div class="col-md-6">
+
+                            <input type="text" id="guestName" class="input-w border-50 form-control"
+                                name="guestName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="email" class="col-md-4 col-form-label text-md-left">
+                            Email
+                        </label>
+                        <div class="col-md-6">
+
+                            <input type="email" id="guestEmail" class="input-w border-50 form-control"
+                                name="guestEmail" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="guestTickets" class="col-md-4 col-form-label text-md-left">
+                            Tickets
+                        </label>
+                        <div class="col-md-6">
+
+                            <input type="number" id="guestTickets" class="input-w border-50 form-control"
+                                name="guestTickets" required>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="guestTicketId">
+
+                    <input type="reset" id="resetGuestForm" class="d-none" value="Reset">
+                    <input type="submit" class="d-none" id="submitGuestlist" value="Submit">
+
+                </form>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeGuestModal" class="btn btn-secondary"
+                    data-dismiss="modal">Close</button>
+                <button type="button" onclick="addGuestForm()" class="btn btn-primary">Add Guest</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 <main class="my-form">
     <div class="w-100 mt-5 p-3">
