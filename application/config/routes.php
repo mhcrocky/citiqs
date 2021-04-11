@@ -516,7 +516,6 @@ $route['finance/get_clearings'] = 'finance/get_clearings';
 
 
 $route['events/create'] = 'Events/create';
-$route['events/event/(:num)'] = 'Events/event/$1';
 $route['events/save_event'] = 'Events/save_event';
 $route['events/save_ticket'] = 'Events/save_ticket';
 $route['events/save_ticket_options'] = 'Events/save_ticket_options';
@@ -529,10 +528,14 @@ $route['events/emaildesigner/ticketing'] = 'Events/email_designer_edit';
 $route['events/get_ticket_report'] = 'Events/get_ticket_report';
 $route['events/get_tickets_report'] = 'Events/get_tickets_report';
 $route['events/get_email_templates'] = 'Events/get_email_templates';
+$route['events/add_guest'] = 'Events/add_guest';
 $route['events/delete_ticket'] = 'Events/delete_ticket';
 $route['events/delete_group'] = 'Events/delete_group';
+$route['events/event/(:num)'] = 'Events/event/$1';
 $route['events/report/(:num)'] = 'Events/report/$1';
 $route['events/graph/(:num)'] = 'Events/graph/$1';
+$route['events/guestlist/(:num)'] = 'Events/guestlist/$1';
+$route['events/get_guestlist/(:num)'] = 'Events/get_guestlist/$1';
 $route['events/emaildesigner/ticketing/(:num)'] = 'Events/email_designer_edit/$1';
 
 $route['events/shop'] = 'Booking_events/index';
