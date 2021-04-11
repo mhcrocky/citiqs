@@ -69,6 +69,7 @@ function bookReservation(e){
       spot_id: $('#spots option:selected').val(),
       fromtime: encodeURI($('#timeslots option:selected').attr('data-fromtime')),
       totime: encodeURI($('#timeslots option:selected').attr('data-totime')),
+      emailId: $('#email_template option:selected').val(),
       price: $('#amount').val(),
       timeslot_price: $('#timeslots option:selected').attr('data-price')
   }
