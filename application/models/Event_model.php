@@ -24,6 +24,11 @@ class Event_model extends CI_Model {
 		return $this->db->insert('tbl_event_tickets',$data);
 	}
 
+	public function save_guest($data)
+	{
+		return $this->db->insert('tbl_guestlist',$data);
+	}
+
 	public function save_ticket_options($data)
 	{
 		$ticketId = $data['ticketId'];
@@ -387,6 +392,30 @@ class Event_model extends CI_Model {
 			];
 		}
 		return $newData;
+	}
+
+
+	public function get_all_event_tickets($vendor_id,$eventId)
+	{
+		$this->db->select('tbl_event_tickets.id as ticketId, ticketDescription');
+		$this->db->from('tbl_event_tickets');
+		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'left');
+		$this->db->where('vendorId', $vendor_id);
+		$this->db->where('tbl_event_tickets.eventId', $eventId);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	public function get_guestlist($eventId, $vendorId)
+	{
+		$this->db->select('tbl_guestlist.*');
+		$this->db->from('tbl_guestlist');
+		$this->db->join('tbl_event_tickets', 'tbl_event_tickets.id = tbl_guestlist.ticketId', 'left');
+		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'left');
+		$this->db->where('tbl_events.id', $eventId);
+		$this->db->where('tbl_events.vendorId', $vendorId);
+		$query = $this->db->get();
+		return $query->result_array();
 	}
 
 
