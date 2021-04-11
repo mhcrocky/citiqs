@@ -533,7 +533,9 @@ class Booking_events extends BaseControllerWeb
                             $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/'.$emailTemplate->template_file .'.'.$this->config->item('template_extension'));
                             $qrlink = $SERVERFILEPATH . $file_name1;
 							if($mailtemplate) {
-                                //var_dump(true);
+                                $dt = new DateTime('now');
+                                $date = $dt->format('Y.m.d');
+                                $mailtemplate = str_replace('[currentDate]', $name, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerName]', $buyerName, $mailtemplate);
 								$mailtemplate = str_replace('[buyerEmail]', $buyerEmail, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerMobile]', $buyerMobile, $mailtemplate);
