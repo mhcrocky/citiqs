@@ -2,7 +2,7 @@
 <div class="row mt-5 p-4">
     <div class="col-md-4 mb-3">
         <div class="input-group">
-            <input type="button" value="<?php echo $this->language->tline('Send Reservation'); ?>"
+            <input type="button" value="<?php echo $this->language->tline('Book Reservation'); ?>"
                 style="background: #10b981 !important;border-radius:0;height:45px;"
                 class="btn btn-primary form-control mb-3 text-left" data-toggle="modal" data-target="#addVoucherModal">
             <span style="background: #275C5D;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3"
@@ -26,7 +26,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title font-weight-bold text-dark" id="addVoucherModalLabel">Send Voucher</h5>
+                <h5 class="modal-title font-weight-bold text-dark" id="addVoucherModalLabel">Book Reservation</h5>
                 <button type="button" class="close" id="closeModal" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -96,7 +96,7 @@
             <div class="modal-footer">
                 <button type="button" id="closeAddVoucherModal" class="btn btn-secondary"
                     data-dismiss="modal">Close</button>
-                <button type="button" onclick="vouchersendForm()" class="btn btn-primary">Save Reservation</button>
+                <button type="button" onclick="vouchersendForm()" class="btn btn-primary">Book Reservation</button>
             </div>
         </div>
     </div>
