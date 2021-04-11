@@ -1181,8 +1181,40 @@ class   Bookandpayagendabooking_model extends CI_Model
 		$this->db->join('tbl_bookandpayspot', 'tbl_bookandpayspot.id = tbl_bookandpaytimeslots.spot_id', 'left');
 		$this->db->join('tbl_bookandpayagenda', 'tbl_bookandpayagenda.id = tbl_bookandpayspot.agenda_id', 'left');
 		$this->db->where('tbl_bookandpayagenda.Customer', $vendorId);
+		$this->db->group_by('tbl_bookandpayagenda.id');
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+
+	public function getSpotsByCustomer($customer_id, $agendaId)
+    {
+        $this->db->select('tbl_bookandpayspot.id as spot_id, descript as spot_descript');
+        $this->db->from('tbl_bookandpaytimeslots');
+		$this->db->join('tbl_bookandpayspot', 'tbl_bookandpayspot.id = tbl_bookandpaytimeslots.spot_id', 'left');
+		$this->db->join('tbl_bookandpayagenda', 'tbl_bookandpayagenda.id = tbl_bookandpayspot.agenda_id', 'left');
+        $this->db->where('tbl_bookandpayagenda.Customer', $customer_id);
+		$this->db->where('tbl_bookandpayagenda.id', $agendaId);
+        $this->db->group_by('tbl_bookandpayspot.id');
+
+        $query = $this->db->get();
+		
+		return $query->result_array();
+        
+    }
+
+	public function getTimeSlotsByCustomer($customer_id, $spotId) {
+        $this->db->select('tbl_bookandpaytimeslots.id as timeslot_id, tbl_bookandpaytimeslots.price as timeslot_price, fromtime, totime');
+        $this->db->from('tbl_bookandpaytimeslots');
+		$this->db->join('tbl_bookandpayspot', 'tbl_bookandpayspot.id = tbl_bookandpaytimeslots.spot_id', 'left');
+		$this->db->join('tbl_bookandpayagenda', 'tbl_bookandpayagenda.id = tbl_bookandpayspot.agenda_id', 'left');
+        $this->db->where('tbl_bookandpayagenda.Customer', $customer_id);
+		$this->db->where('tbl_bookandpayspot.id', $spotId);
+		$this->db->group_by('tbl_bookandpaytimeslots.id');
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+
+    }
 	
 }
