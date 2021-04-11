@@ -11,6 +11,7 @@ use idcheckio\Configuration;
 require APPPATH . "/reports/Pivot/ReservationsReport.php";
 require APPPATH."/reports/Pivot/PivotReport.php";
 require APPPATH . '/libraries/BaseControllerWeb.php';
+require APPPATH . '/libraries/phpqrcode/qrlib.php';
 
 class  Customer_panel extends BaseControllerWeb
 {
@@ -23,6 +24,7 @@ class  Customer_panel extends BaseControllerWeb
         $this->load->helper('url');
         $this->load->model('user_model');
         $this->load->model('bookandpayagendabooking_model');
+        $this->load->model('bookandpayagenda_model');
         $this->load->model('bookandpayspot_model');
         $this->load->model('sendreservation_model');
         $this->load->model('bookandpay_model');
@@ -585,7 +587,7 @@ class  Customer_panel extends BaseControllerWeb
         echo json_encode($reservations);
     }
 
-    public function save_reservation(){
+    public function book_reservation(){
         $vendorId = $this->session->userdata('userId');
         $data = $this->input->post(null, true);
         $newBooking = [
@@ -731,7 +733,7 @@ class  Customer_panel extends BaseControllerWeb
 
                                 //'dtstart' => '2021-10-16 9:00AM',
                                 //'dtend' => '2022-1-16 9:00AM',
-                                
+                                /*
                                 $ics = new ICS(array(
                                     'organizer' => 'TIQS:malito:support@tiqs.com',
                                     'description' => strip_tags($evenDescript),
@@ -740,14 +742,15 @@ class  Customer_panel extends BaseControllerWeb
                                     'summary' => strip_tags($evenDescript),
                                     'url' => base_url()
                                 ));
+                                */
 
 
                                // var_dump(date('Y-m-d H:m:s',strtotime($eventdate .' '. $fromtime)));
                                // var_dump(date('Y-m-d H:m:s',strtotime($eventdate .'T'. $totime)));
 
                               
-                                $icsContent = $ics->to_string();
-                                //$icsContent = false;
+                                //$icsContent = $ics->to_string();
+                                $icsContent = false;
 								$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate, $icsContent);
 								if($this->sendEmail($email, $subject, $mailtemplate, $icsContent)) {
                                     $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);

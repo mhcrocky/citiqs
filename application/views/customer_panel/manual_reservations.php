@@ -33,9 +33,7 @@
             </div>
             <div class="modal-body">
                 <form name="my-form" id="my-form" class="needs-validation" action="#" method="POST"
-                    onsubmit="return save_vouchersend(event)" novalidate>
-                    <button style="display: none;" id="submitForm" type="submit" class="btn btn-primary">Save
-                        Reservation</button>
+                    onsubmit="return bookReservation(event)" novalidate>
 
 
                     <div class="form-group row">
@@ -87,7 +85,7 @@
                     </div>
 
                     <input type="reset" id="resetForm" class="d-none" value="Reset">
-                    <input type="submit" class="d-none" id="submitVoucherSend" value="Reset">
+                    <input type="submit" class="d-none" id="submitBookReservation" value="Submit">
 
                 </form>
 
@@ -96,7 +94,7 @@
             <div class="modal-footer">
                 <button type="button" id="closeAddVoucherModal" class="btn btn-secondary"
                     data-dismiss="modal">Close</button>
-                <button type="button" onclick="vouchersendForm()" class="btn btn-primary">Book Reservation</button>
+                <button type="button" onclick="bookReservationForm()" class="btn btn-primary">Book Reservation</button>
             </div>
         </div>
     </div>

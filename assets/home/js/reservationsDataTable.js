@@ -49,11 +49,11 @@ $(document).ready(function () {
 });
 
 
-function vouchersendForm(params) {
-  $('#submitVoucherSend').click();
+function bookReservationForm() {
+  $('#submitBookReservation').click();
 }
 
-function save_vouchersend(e){
+function bookReservation(e){
   e.preventDefault();
   $('.form-control').removeClass('input-clear');
   if ($('.form-control:invalid').length > 0) {
@@ -74,32 +74,16 @@ function save_vouchersend(e){
 
   //console.log(data);
 
-  $('#submitVoucherSend').prop('disabled', true);
+  $('#submitBookReservation').prop('disabled', true);
 
-  $.post(globalVariables.baseUrl + "customer_panel/save_reservation", data, function(data){
+  $.post(globalVariables.baseUrl + "customer_panel/book_reservation", data, function(data){
       $('#vouchersend').DataTable().ajax.reload();
-      $('#submitVoucherSend').prop('disabled', false);
+      $('#submitBookReservation').prop('disabled', false);
       $('#resetForm').click();
       $('#closeModal').click();
       $('.form-control').addClass('input-clear');
       //alertify[data.status](data.message);
 
-  });
-
-}
-
-
-function send_vouchersend(id, name, email, voucherId, send=1){
-  let data = {
-      id: id,
-      name: name,
-      email: encodeURI(email),
-      send: send,
-      voucherId: voucherId
-  }
-  $.post(globalVariables.baseUrl + "Api/Voucher/vouchersend_email", data, function(data){
-      $('#vouchersend').DataTable().ajax.reload();
-      alertify[data.status](data.message);
   });
 
 }
