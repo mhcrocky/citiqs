@@ -65,6 +65,32 @@ class Events extends BaseControllerWeb
 
     }
 
+
+    public function guestlist($eventId)
+    {
+       $this->global['pageTitle'] = 'TIQS: GUESTLIST';
+       $data['eventId'] = $eventId;
+       $data['tickets'] = $this->event_model->get_all_event_tickets($this->vendor_id, $eventId);
+       $this->loadViews("events/guestlist", $this->global, $data, 'footerbusiness', 'headerbusiness');
+
+    }
+
+    public function get_guestlist($eventId)
+    {
+       $guestlist = $this->event_model->get_guestlist($eventId, $this->vendor_id);
+       echo json_encode($guestlist);
+
+    }
+
+
+    public function add_guest()
+    {
+       $data = $this->input->post(null, true);
+       $data['guestEmail'] = urldecode($data['guestEmail']);
+       $this->event_model->save_guest($data);
+
+    }
+
     public function edit($eventId)
     {
         $this->global['pageTitle'] = 'TIQS: Edit Event';
