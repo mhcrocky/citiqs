@@ -98,7 +98,7 @@ $(document).ready(function () {
     $("#ticketCurrencyVal").val(event);
   });
 
-  var groupColumn = 2;
+  var groupColumn = 3;
   var table = $("#tickets").DataTable({
     columnDefs: [
       {
@@ -117,7 +117,7 @@ $(document).ready(function () {
     paging:   false,
     rowCallback: function(row, data, index) {
       if(data.ticketId == 0){
-        $(row).html('<td style="height: 1px;width:100%" colspan="10"></td>');
+        $(row).html('<td style="height: 1px;width:100%" colspan="11"></td>');
       }
     },
     columns: [
@@ -134,6 +134,20 @@ $(document).ready(function () {
             "</div>";
           return html;
         },
+      },
+      {
+        title: "Guestlist",
+        data: null,
+        render: function (data, type, row) {
+          return '<a class="text-dark" href="javascript:;" onclick="addGuestModal('+data.ticketId+')" data-toggle="modal" data-target="#guestlistModal"><i class="fa fa-users" aria-hidden="true"></i></a>';
+
+        },
+        createdCell: function (td, cellData, rowData, row, col) {
+          
+            $(td).addClass('text-center');
+ 
+          
+         }
       },
 
       {
@@ -270,6 +284,7 @@ $(document).ready(function () {
             var emails = JSON.parse(globalEmails);
             var template_name = '';
             var template_type = '';
+            var template_subject = '';
             $.each(emails, function (index, email) {
               if(data.emailId == email.id){
                 template_name = email.template_name;
@@ -338,7 +353,7 @@ $(document).ready(function () {
                   '<tr class="dataTable-row group" data-ticketid="groupId'+data.groupId+'" data-groupId="'+data.groupId+'">' +
                     "<td>" +
                     html +
-                    '</td><td colspan="3">' +
+                    '</td><td colspan="4">' +
                     '<input type="text" id="group-name" class="form-control" name="group-name" onchange="updateGroup(this, '+data.ticketGroupId+', \'groupname\')" value="' +
                     groupname +
                     '">' +
@@ -729,6 +744,47 @@ function createTicketEmailTemplateResponse(selectTemplate, customTemplate, respo
   customTemplate.value = '';
   tinymce.get(templateGlobals.templateHtmlId).setContent('');
   return;
+}
+
+function addGuestModal(ticketId) {
+  $('#guestTicketId').val(ticketId);
+}
+
+function addGuestForm() {
+  $('#submitGuestlist').click();
+}
+
+function addGuest(e){
+  e.preventDefault();
+  $('.form-control').removeClass('input-clear');
+  let guestName = $('#guestName').val();
+  let guestEmail = $('#guestEmail').val();
+  let ticketQuantity = $('#guestTickets').val();
+
+  if (guestName == '' || guestEmail == '' || ticketQuantity == '') {
+    return;
+  }
+  let data = {
+      guestName: guestName,
+      guestEmail: guestEmail,
+      ticketQuantity: ticketQuantity,
+      ticketId: $('#guestTicketId').val()
+  }
+
+
+  //console.log(data);
+
+  $('#submitGuestlist').prop('disabled', true);
+
+  $.post(globalVariables.baseUrl + "events/add_guest", data, function(data){
+      $('#submitGuestlist').prop('disabled', false);
+      $('#resetGuestForm').click();
+      $('#closeModal').click();
+      $('.form-control').addClass('input-clear');
+      alertify['success']('Guest is added successfully');
+
+  });
+
 }
 
 
