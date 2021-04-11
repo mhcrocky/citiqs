@@ -487,6 +487,9 @@
 <?php  } elseif ($this->view === 'customer_panel/manual_reservations') { ?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+<?php  } elseif ($this->view === 'events/guestlist') { ?>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 <?php  } elseif ($this->view === 'qrcodeview/index') { ?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
