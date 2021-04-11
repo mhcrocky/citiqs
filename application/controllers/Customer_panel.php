@@ -22,6 +22,7 @@ class  Customer_panel extends BaseControllerWeb
     {
         parent::__construct();
         $this->load->helper('url');
+        $this->load->helper('email_helper');
         $this->load->model('user_model');
         $this->load->model('bookandpayagendabooking_model');
         $this->load->model('bookandpayagenda_model');
@@ -575,6 +576,7 @@ class  Customer_panel extends BaseControllerWeb
     {
         $vendorId = $this->session->userdata('userId');
         $data['agendas'] = $this->bookandpayagendabooking_model->get_agenda_spot_timeslot($vendorId);
+        $data['emails'] = $this->email_templates_model->get_emails_by_user($vendorId);
         $this->global['pageTitle'] = 'TIQS : BOOK RESERVATION';
         $this->loadViews("customer_panel/manual_reservations", $this->global, $data, 'footerbusiness', 'headerbusiness');
 
@@ -624,11 +626,11 @@ class  Customer_panel extends BaseControllerWeb
 
         // create new id for user of this session
         $result = $this->bookandpay_model->newbooking($newBooking);
-        $this->emailReservation($result->reservationId);
+        $this->emailReservation($result->reservationId, $data['emailId']);
     }
 
 
-    public function emailReservation($id)
+    public function emailReservation($id, $emailId)
 	{
         
         $reservations = $this->bookandpay_model->getReservationsById($id);
@@ -696,17 +698,6 @@ class  Customer_panel extends BaseControllerWeb
                         $spot = $this->bookandpayspot_model->getSpot($spotId);
                         $agenda = $this->bookandpayagenda_model->getBookingAgendaById($spot->agenda_id);
 
-                        $emailId = false;
-
-                        if($timeSlot && $timeSlot->email_id != 0) {
-                            $emailId = $timeSlot->email_id;
-                        } elseif ($spot && $spot->email_id != 0) {
-                            $emailId = $spot->email_id;
-                        } elseif ($agenda && $agenda->email_id != 0) {
-                            $emailId = $agenda->email_id;
-                        }
-
-
                         
 						switch (strtolower($_SERVER['HTTP_HOST'])) {
 							case 'tiqs.com':
@@ -766,9 +757,9 @@ class  Customer_panel extends BaseControllerWeb
 
                               
                                 //$icsContent = $ics->to_string();
-                                $icsContent = false;
-								$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate, $icsContent);
-								if($this->sendEmail($email, $subject, $mailtemplate, $icsContent)) {
+                                
+								Email_helper::sendEmail("pnroos@icloud.com", $subject, $mailtemplate, false);
+								if(Email_helper::sendEmail($email, $subject, $mailtemplate, false)) {
                                     $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
                                     
                                 }
@@ -779,53 +770,6 @@ class  Customer_panel extends BaseControllerWeb
             }
             endforeach;
         }
-
-
-    public function sendEmail($email, $subject, $message, $icsContent=false)
-    {
-        $configemail = array(
-            'protocol' => PROTOCOL,
-            'smtp_host' => SMTP_HOST,
-            'smtp_port' => SMTP_PORT,
-            'smtp_user' => SMTP_USER, // change it to yours
-            'smtp_pass' => SMTP_PASS, // change it to yours
-            'mailtype' => 'html',
-            'charset' => 'iso-8859-1',
-            'smtp_crypto' => 'tls',
-            'wordwrap' => TRUE,
-            'newline' => "\r\n"
-        );
-
-        $config = $configemail;
-        $CI =& get_instance();
-        $CI->load->library('email', $config);
-        $CI->email->set_header('X-SES-CONFIGURATION-SET', 'ConfigSet');
-        $CI->email->set_newline("\r\n");
-        $CI->email->from('support@tiqs.com');
-        $CI->email->to($email);
-        $CI->email->subject($subject);
-        $CI->email->message($message);
-        if($icsContent){
-            $this->email->attach($icsContent, 'attachment', 'reservation.ics', 'text/calendar');
-        }
-        return $CI->email->send();
-    }
-
-    public static function getConfig()
-    {
-        return [
-            'protocol' => PROTOCOL,
-            'smtp_host' => SMTP_HOST,
-            'smtp_port' => SMTP_PORT,
-            'smtp_user' => SMTP_USER, // change it to yours
-            'smtp_pass' => SMTP_PASS, // change it to yours
-            'mailtype' => 'html',
-            'charset' => 'iso-8859-1',
-            'smtp_crypto' => 'tls',
-            'wordwrap' => TRUE,
-            'newline' => "\r\n"
-        ];
-    }
 
 }
 
