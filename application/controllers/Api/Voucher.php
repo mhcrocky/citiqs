@@ -579,6 +579,9 @@ class Voucher extends REST_Controller
             $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$data[0]['vendorId'].'/'.$emailTemplate->template_file .'.'.$this->config->item('template_extension'));
             $qrlink = $SERVERFILEPATH . $file_name1;
 			if($mailtemplate) {
+                $dt = new DateTime('now');
+                $date = $dt->format('Y.m.d');
+                $mailtemplate = str_replace('[currentDate]', $name, $mailtemplate);
                 $mailtemplate = str_replace('[Name]', $name, $mailtemplate);
 				$mailtemplate = str_replace('[Email]', $email, $mailtemplate);
 				$mailtemplate = str_replace('[voucherCode]', $voucherCode, $mailtemplate);
