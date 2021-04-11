@@ -105,6 +105,21 @@
                     </div>
 
                     <div class="form-group row">
+                        <label for="email_template" class="col-md-4 col-form-label text-md-left">Email Template
+                        </label>
+                        <div class="col-md-6">
+                            <select id="email_template" name="email_template" class="form-control input-w border-50 field" required>
+                                <option value="">Select option</option>
+                                <?php foreach($emails as $email): ?>
+                                <option value="<?php echo $email['id']; ?>">
+                                <?php echo $email['template_name']; ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label for="spots" class="col-md-4 col-form-label text-md-left">Spots
                         </label>
                         <div class="col-md-6">
