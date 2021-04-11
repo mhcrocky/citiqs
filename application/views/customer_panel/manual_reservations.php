@@ -70,16 +70,56 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="status" class="col-md-4 col-form-label text-md-left">Agenda
+                        <label for="description" class="col-md-4 col-form-label text-md-left">
+                            Description
                         </label>
                         <div class="col-md-6">
-                            <select id="agendas" name="agendas" class="form-control input-w border-50 field">
+                            <textarea id="description" rows="4" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="amount" class="col-md-4 col-form-label text-md-left">
+                            Amount
+                        </label>
+                        <div class="col-md-6">
+
+                            <input type="number" step="0.01" id="amount" class="input-w border-50 form-control"
+                                name="amount">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="agendas" class="col-md-4 col-form-label text-md-left">Agenda
+                        </label>
+                        <div class="col-md-6">
+                            <select id="agendas" onchange="get_spots()" name="agendas" class="form-control input-w border-50 field" required>
                                 <option value="">Select option</option>
                                 <?php foreach($agendas as $agenda): ?>
-                                <option value="<?php echo $agenda['event_date']; ?>" data-agenda="<?php echo $agenda['agenda_id']; ?>" data-spot="<?php echo $agenda['spot_id']; ?>" data-timeslot="<?php echo $agenda['timeslot_id']; ?>" data-fromtime="<?php echo $agenda['fromtime']; ?>" data-totime="<?php echo $agenda['totime']; ?>">
-                                <?php echo $agenda['agenda_descript'] .' / ' . $agenda['spot_descript'] . '/' . $agenda['fromtime'] . '-' . $agenda['totime']; ?>
+                                <option value="<?php echo $agenda['event_date']; ?>" data-agenda="<?php echo $agenda['agenda_id']; ?>">
+                                <?php echo $agenda['agenda_descript']; ?>
                                 </option>
                                 <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="spots" class="col-md-4 col-form-label text-md-left">Spots
+                        </label>
+                        <div class="col-md-6">
+                            <select id="spots" onchange="get_timeslots()" name="spots" class="form-control input-w border-50 field" required>
+                                <option value="">Select option</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="timeslots" class="col-md-4 col-form-label text-md-left">Timeslots
+                        </label>
+                        <div class="col-md-6">
+                            <select id="timeslots" name="timeslots" class="form-control input-w border-50 field" required>
+                                <option value="">Select option</option>
                             </select>
                         </div>
                     </div>

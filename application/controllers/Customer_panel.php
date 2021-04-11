@@ -575,7 +575,7 @@ class  Customer_panel extends BaseControllerWeb
     {
         $vendorId = $this->session->userdata('userId');
         $data['agendas'] = $this->bookandpayagendabooking_model->get_agenda_spot_timeslot($vendorId);
-        $this->global['pageTitle'] = 'TIQS : BOOKING2020';
+        $this->global['pageTitle'] = 'TIQS : BOOK RESERVATION';
         $this->loadViews("customer_panel/manual_reservations", $this->global, $data, 'footerbusiness', 'headerbusiness');
 
     }
@@ -585,6 +585,22 @@ class  Customer_panel extends BaseControllerWeb
         $vendorId = $this->session->userdata('userId');
         $reservations = $this->bookandpayagendabooking_model->get_manual_reservations($vendorId);
         echo json_encode($reservations);
+    }
+
+    public function get_spots()
+    {
+        $vendorId = $this->session->userdata('userId');
+        $agenda_id = $this->input->post('agenda_id');
+        $spots = $this->bookandpayagendabooking_model->getSpotsByCustomer($vendorId, $agenda_id);
+        echo json_encode($spots);
+    }
+
+    public function get_timeslots()
+    {
+        $vendorId = $this->session->userdata('userId');
+        $spot_id = $this->input->post('spot_id');
+        $timeslots = $this->bookandpayagendabooking_model->getTimeSlotsByCustomer($vendorId, $spot_id);
+        echo json_encode($timeslots);
     }
 
     public function book_reservation(){
@@ -601,7 +617,7 @@ class  Customer_panel extends BaseControllerWeb
             'name' => $data['name'],
             'email' => urldecode($data['email']),
             'mobilephone' => $data['mobile'],
-            'price' => 0,
+            'price' => ($data['price'] == '') ? $data['timeslot_price'] : $data['price'] ,
             'paid' => 2,
             'reservationset' => '1'
         ];
