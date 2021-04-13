@@ -536,7 +536,7 @@ class Booking_events extends BaseControllerWeb
 							if($mailtemplate) {
                                 $dt = new DateTime('now');
                                 $date = $dt->format('Y.m.d');
-                                $mailtemplate = str_replace('[currentDate]', $name, $mailtemplate);
+                                $mailtemplate = str_replace('[currentDate]', $buyerName, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerName]', $buyerName, $mailtemplate);
 								$mailtemplate = str_replace('[buyerEmail]', $buyerEmail, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerMobile]', $buyerMobile, $mailtemplate);
