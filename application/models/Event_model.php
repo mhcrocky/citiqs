@@ -29,6 +29,11 @@ class Event_model extends CI_Model {
 		return $this->db->insert('tbl_guestlist',$data);
 	}
 
+	public function save_multiple_guests($data)
+	{
+		return $this->db->insert_batch('tbl_guestlist',$data);
+	}
+
 	public function save_ticket_options($data)
 	{
 		$ticketId = $data['ticketId'];
@@ -410,8 +415,7 @@ class Event_model extends CI_Model {
 	{
 		$this->db->select('tbl_guestlist.*');
 		$this->db->from('tbl_guestlist');
-		$this->db->join('tbl_event_tickets', 'tbl_event_tickets.id = tbl_guestlist.ticketId', 'left');
-		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'left');
+		$this->db->join('tbl_events', 'tbl_events.id = tbl_guestlist.eventId', 'left');
 		$this->db->where('tbl_events.id', $eventId);
 		$this->db->where('tbl_events.vendorId', $vendorId);
 		$query = $this->db->get();

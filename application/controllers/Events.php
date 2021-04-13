@@ -59,7 +59,8 @@ class Events extends BaseControllerWeb
             'eventId' => $eventId,
             'emails' => $this->email_templates_model->get_ticketing_email_by_user($this->vendor_id),
             'vouchers' => $this->shopvoucher_model->read($what,$where,$join, 'group_by', ['tbl_shop_voucher.id']),
-            'groups' => $this->event_model->get_ticket_groups($eventId)
+            'groups' => $this->event_model->get_ticket_groups($eventId),
+            'guests' => $this->event_model->get_guestlist($eventId, $this->vendor_id)
         ];
         $this->loadViews("events/step-two", $this->global, $data, 'footerbusiness', 'headerbusiness');
 
@@ -88,6 +89,28 @@ class Events extends BaseControllerWeb
        $data = $this->input->post(null, true);
        $data['guestEmail'] = urldecode($data['guestEmail']);
        $this->event_model->save_guest($data);
+
+    }
+
+    public function import_guestlist()
+    {
+       $data_post = $this->input->post(null, true);
+       $guestName = $data_post['guestEmail'];
+       $guestEmail = $data_post['guestEmail'];
+       $ticketQuantity = $data_post['ticketQuantity'];
+       $jsonData = json_decode($data_post['jsonData']);
+       $guestlist = [];
+       foreach($jsonData as $data){
+           $guestlist[] = [
+               'guestName' => $data->$guestName,
+               'guestEmail' => $data->$guestEmail,
+               'ticketQuantity' => intval($data->$ticketQuantity),
+               'eventId' => intval($data_post['eventId']),
+               'ticketId' => intval($data_post['ticketId'])
+           ];
+       }
+
+       $this->event_model->save_multiple_guests($guestlist);
 
     }
 
