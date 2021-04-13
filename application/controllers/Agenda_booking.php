@@ -442,6 +442,7 @@ class Agenda_booking extends BaseControllerWeb
         $this->load->helper('money');
 
         $this->global['pageTitle'] = 'Payment Method';
+        $data['activePayments'] = $this->bookandpayagendabooking_model->get_active_payment_methods($this->session->userdata('customer')['id']);
         $data['idealPaymentType'] = $this->config->item('idealPaymentType');
         $data['creditCardPaymentType'] = $this->config->item('creditCardPaymentType');
         $data['bancontactPaymentType'] = $this->config->item('bancontactPaymentType');

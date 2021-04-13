@@ -282,6 +282,7 @@ class Booking_events extends BaseControllerWeb
         $this->global['pageTitle'] = 'TIQS: Select Payment';
         
         $ticketingPayments = $this->event_model->get_payment_methods($this->session->userdata('customer'));
+        $data['activePayments'] = $this->event_model->get_active_payment_methods($this->session->userdata('customer'));
         $data['idealPaymentType'] = $this->config->item('idealPaymentType');
         $data['creditCardPaymentType'] = $this->config->item('creditCardPaymentType');
         $data['bancontactPaymentType'] = $this->config->item('bancontactPaymentType');
