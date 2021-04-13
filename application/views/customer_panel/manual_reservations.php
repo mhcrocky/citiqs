@@ -95,9 +95,12 @@
                         <div class="col-md-6">
                             <select id="agendas" onchange="get_spots()" name="agendas" class="form-control input-w border-50 field" required>
                                 <option value="">Select option</option>
-                                <?php foreach($agendas as $agenda): ?>
+                                <?php foreach($agendas as $agenda):
+                                 $dt = new DateTime($agenda['event_date']);
+                                 $agenda_date = $dt->format('d-m-Y');
+                                    ?>
                                 <option value="<?php echo $agenda['event_date']; ?>" data-agenda="<?php echo $agenda['agenda_id']; ?>">
-                                <?php echo $agenda['agenda_descript']; ?>
+                                <?php echo $agenda_date; ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
