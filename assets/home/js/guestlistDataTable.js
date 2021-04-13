@@ -37,6 +37,17 @@ $(document).ready(function () {
         title: "Ticket ID",
         data: "ticketId",
       },
+      {
+        title: "Reservation ID",
+        data: "reservationId",
+      },
+      {
+        title: 'Resend',
+        data: null,
+        "render": function(data, type, row) {
+          return '<button class="btn btn-primary" onclick="resendReservation(\''+data.reservationId+'\')">Resend</button>';
+        }
+      }
       
       
     ],
@@ -118,4 +129,10 @@ function importExcelFile(){
       alertify['success']('The guest list is imported successfully');
   });
 
+}
+
+function resendReservation(reservationId){
+  $.post(globalVariables.baseUrl + "events/resend_reservation", {reservationId: reservationId}, function(data){
+      alertify['success']('Resent Successfully!');
+  });
 }
