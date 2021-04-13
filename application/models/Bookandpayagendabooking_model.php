@@ -1144,6 +1144,22 @@ class   Bookandpayagendabooking_model extends CI_Model
 		return $ticketing;
 	}
 
+	function get_active_payment_methods($vendor_id){
+
+		$this->db->select('paymentMethod, percent, amount, active')
+		->from('tbl_shop_payment_methods')
+		->where('vendorId',$vendor_id)
+		->where('productGroup','Reservations')
+		->where('active' , 1);
+		$query = $this->db->get();
+		$results = $query->result_array();
+		$ticketing = [];
+		foreach($results as $result){
+			$ticketing[] = $result['paymentMethod'];
+		}
+		return $ticketing;
+	}
+
 	function get_max_spots($agenda_id){
 
 		$this->db->select('max_spots')

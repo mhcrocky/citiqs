@@ -294,6 +294,22 @@ class Event_model extends CI_Model {
 		return $ticketing;
 	}
 
+	function get_active_payment_methods($vendor_id){
+
+		$this->db->select('paymentMethod, percent, amount')
+		->from('tbl_shop_payment_methods')
+		->where('vendorId',$vendor_id)
+		->where('productGroup','E-Ticketing')
+		->where('active' , 1);
+		$query = $this->db->get();
+		$results = $query->result_array();
+		$ticketing = [];
+		foreach($results as $result){
+			$ticketing[] = $result['paymentMethod'];
+		}
+		return $ticketing;
+	}
+
 	function save_event_reservations($userInfo, $tickets = array(), $customer){
 		$data = [];
 		if(!isset($userInfo['email'])){ return ;}
