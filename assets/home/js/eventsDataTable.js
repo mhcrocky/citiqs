@@ -113,29 +113,86 @@ $(document).ready(function() {
     
     $.fn.dataTable.ext.search.push(
         function (settings, data, dataIndex) {
-            let val = $('#selectTime option:selected').val();
-            let current_timestamp = dayjs();
-            console.log(current_timestamp)
-            let end_str_timestamp = data[8] + ' ' + data[10];
-            let end_timestamp = dayjs(end_str_timestamp);
-            let start_str_timestamp = data[7] + ' ' + data[9];
-            let start_timestamp = dayjs(start_str_timestamp);
-
-            if (val == 'past' && current_timestamp >= end_timestamp) { return true;}
-            if(val == 'future' && current_timestamp <= start_timestamp) {return true;}
-            if(val == 'archived' && data[11] == 'Yes') { return true; }
-            if(val == 'all') { return true; }
-            return false;
+            if(settings.nTable.id == 'events'){
+                let val = $('#selectTime option:selected').val();
+                let current_timestamp = dayjs();
+                let end_str_timestamp = data[8] + ' ' + data[10];
+                let end_timestamp = dayjs(end_str_timestamp);
+                let start_str_timestamp = data[7] + ' ' + data[9];
+                let start_timestamp = dayjs(start_str_timestamp);
+                
+                if (val == 'past' && current_timestamp >= end_timestamp) { return true;}
+                if(val == 'future' && current_timestamp <= start_timestamp) {return true;}
+                if(val == 'archived' && data[11] == 'Yes') { return true; }
+                if(val == 'all') { return true; }
+                return false;
+            }
+            return true;
             
     });
 
     $('#selectTime').change(function () {
-        
-            setTimeout(() => {
-                eventTable.draw();
-            }, 2);
+        setTimeout(() => {
+            eventTable.draw();
+        }, 2);
             
-        });
+    });
+
+
+    var guestlistTable = $("#guestlist").DataTable({
+        processing: true,
+        lengthMenu: [
+          [5, 10, 20, 50, 100, 200, 500, -1],
+          [5, 10, 20, 50, 100, 200, 500, "All"],
+        ],
+        pageLength: 5,
+        ajax: {
+          type: "get",
+          url: globalVariables.baseUrl + "events/get_guestlists",
+          dataSrc: "",
+        },
+        columns: [
+          {
+            title: "ID",
+            data: "id",
+          },
+          {
+            title: "Guest Name",
+            data: "guestName",
+          },
+          {
+            title: "Guest Email",
+            data: "guestEmail",
+          },
+          {
+            title: "Ticket Quantity",
+            data: "ticketQuantity",
+          },
+          {
+            title: "Ticket ID",
+            data: "ticketId",
+          },
+          {
+            title: "Reservation ID",
+            data: "reservationId",
+          },
+          {
+              title: 'Resend',
+              data: null,
+              "render": function(data, type, row) {
+                return '<button class="btn btn-primary" onclick="resendReservation(\''+data.reservationId+'\')">Resend</button>';
+            }
+           }
+          
+        ],
+        order: [[1, 'asc']]
+      });
         
 });
 
+
+function resendReservation(reservationId){
+    $.post(globalVariables.baseUrl + "events/resend_reservation", {reservationId: reservationId}, function(data){
+        alertify['success']('Resent Successfully!');
+    });
+}
