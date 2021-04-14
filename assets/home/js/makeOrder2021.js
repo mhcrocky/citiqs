@@ -99,7 +99,25 @@ function getAllItemTemplate(html, productName, productPrice) {
     return template;
 }
 
-// let categoryButton = document.querySelector('[data-id="' + category.id + '"]');
+function runSplider() {
+    let slidersPerPage = getSlidersPerPage();
+    var splideCategories = new Splide(
+        '#splideCategories',
+            {
+                perPage    : slidersPerPage,
+                perMove    : 1,
+                height     : '9rem',
+                focus      : 'center',
+                trimSpace  : false,
+            }
+        ).mount(window.splide.Extensions);
+}
+
+function getSlidersPerPage() {
+    let bodyWidth = document.body.clientWidth;
+    return bodyWidth < 768 ? '1' : '4';
+}
+
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover({
         animation : false,
@@ -107,16 +125,6 @@ $(document).ready(function() {
         container: 'body'
     });
 
-    var splideCategories = new Splide(
-    '#splideCategories',
-        {
-            perPage    : 1,
-            perMove    : 1,
-            height     : '9rem',
-            focus      : 'center',
-            trimSpace  : false,
-            
-        } 
-    ).mount(window.splide.Extensions);
+    runSplider();
 
 });
