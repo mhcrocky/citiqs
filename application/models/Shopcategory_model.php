@@ -192,4 +192,25 @@
 
             return $this->create() ? $this->id : null;
         }
+
+        public function getImages(): ?array
+        {
+            $images = $this->readImproved([
+                'what'  => [$this->table . '.category', $this->table . '.image'],
+                'where' => [
+                    $this->table . '.userId' => $this->userId,
+                    $this->table . '.active' => '1',
+                    $this->table . '.showImage' => '1',
+                    $this->table . '.image !=' => NULL,
+                ]
+            ]);
+
+            if (is_null($images)) return null;
+
+            $this->load->helper('utility_helper');
+
+            $images = Utility_helper::resetArrayByKeyMultiple($images, 'category');
+
+            return $images;
+        }
     }

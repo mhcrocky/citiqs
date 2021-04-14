@@ -104,7 +104,7 @@
             $spotId = intval($spot['spotId']);
             $spotTypeId = intval($spot['spotTypeId']);
             $time = time();
-            $spotPrinterId = intval($spot['spotPrinterId']);
+            // $spotPrinterId = intval($spot['spotPrinterId']);
 
             $this->checkVendorCredentials($vendor, $spotTypeId);
             $this->isLocalSpotOpen($spotTypeId, $spotId);
@@ -125,15 +125,20 @@
                 'orderDataRandomKey' => $orderDataRandomKey,
                 'orderDataGetKey' => $this->config->item('orderDataGetKey'),
                 'baseUrl' => base_url(),
+                'categoriesImages' => $this->shopcategory_model->setProperty('userId', $vendor['vendorId'])->getImages(),
+                'categoriesImagesRelPath' => base_url() . $this->config->item('categoriesImagesRelPath'),
             ];
 
             $preferedView = $this->getPreferedView($data, $spot, $vendor, $orderDataRandomKey);
 
+            // echo '<pre>';
+            // print_r($data['mainProducts']);
+            // die();
             if ($vendor['preferredView'] === $this->config->item('view2021')) {
                 $this->loadViews($preferedView, $this->global, $data, 'footer2021', 'header2021');
             } else {
                 $this->loadViews($preferedView, $this->global, $data, null, 'headerWarehousePublic');
-            }            
+            }
             return;
         }
 
@@ -246,6 +251,7 @@
                     $data['returnCategorySlide'] = isset($_GET['category']) ? $_GET['category'] : null;
                     $data['maxRemarkLength'] = $this->config->item('maxRemarkLength');
                     $data['openCategory'] = $openCategory;
+                    $data['categories'] = array_keys($allProducts['main']);
 
                     if ($ordered) {
                         $ordered = Utility_helper::returnMakeNewOrderElements($ordered, $data['vendor'], $data['mainProducts'], $data['addons'], $data['maxRemarkLength']);
