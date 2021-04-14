@@ -436,10 +436,16 @@ class Alfredinsertorder extends BaseControllerWeb
 
     public function sendNotifictaion(array $post, int $orderId, string $payStatus): void
     {
-        if (intval($post['pos'])) return;
+        if (intval($post['pos']) || $payStatus !== $this->config->item('orderPaid')) return;
+
         $vendor = $this->shopvendor_model->setProperty('vendorId', $post['vendorId'])->getVendorData();
-        if ($payStatus === $this->config->item('orderPaid') && $vendor['oneSignalId']) {
+        if ($vendor['oneSignalId']) {
             $this->notificationvendor->sendVendorMessage($vendor['oneSignalId'], $orderId);
+        }
+
+        $this->user_model->setUniqueValue($post['user']['email'])->setUser('oneSignalId');
+        if ($this->user_model->oneSignalId) {
+            $this->notificationvendor->sendVendorMessage($this->user_model->oneSignalId, $orderId);
         }
     }
 

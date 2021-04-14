@@ -9,16 +9,25 @@
             </a>
         </div>
         <div style="padding-right: 0px;" class="col-md-3 ml-auto mb-3">
-            <select id="selectTime" style="height: 40px !important;" class="form-control custom-select custom-select-sm form-control-sm">
+            <select id="selectTime" style="height: 40px !important;"
+                class="form-control custom-select custom-select-sm form-control-sm">
                 <option value="all">All</option>
                 <option value="past">Past</option>
                 <option value="future" selected>Future</option>
                 <option value="archived">Archived</option>
             </select>
         </div>
-        <table id="events" class="table table-striped table-bordered mt-5" style="width:100%;">
+        <div class="w-100 mt-5 table-responsive">
+            <table id="events" class="table table-striped table-bordered" style="width:100%;">
 
-        </table>
+            </table>
+        </div>
+
+        <div class="w-100 mt-5 table-responsive">
+            <table id="guestlist" class="table table-striped table-bordered text-center" cellspacing="0" width="100%">
+            </table>
+        </div>
+
 
         <div class="w-100 mt-4 mb-3 mx-auto">
             <div class="col-md-12 mb-4">

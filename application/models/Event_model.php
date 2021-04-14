@@ -29,6 +29,11 @@ class Event_model extends CI_Model {
 		return $this->db->insert('tbl_guestlist',$data);
 	}
 
+	public function save_multiple_guests($data)
+	{
+		return $this->db->insert_batch('tbl_guestlist',$data);
+	}
+
 	public function save_ticket_options($data)
 	{
 		$ticketId = $data['ticketId'];
@@ -144,6 +149,19 @@ class Event_model extends CI_Model {
 
 		return $tickets;
 
+	}
+
+
+	public function get_ticket_by_id($vendor_id,$ticketId)
+	{
+		$this->db->select('ticketDescription, StartDate, StartTime, EndTime, ticketType');
+		$this->db->from('tbl_event_tickets');
+		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'left');
+		$this->db->where('vendorId', $vendor_id);
+		$this->db->where('tbl_event_tickets.id', $ticketId);
+		$this->db->group_by('tbl_event_tickets.id');
+		$query = $this->db->get();
+		return $query->first_row();
 	}
 
 	public function get_ticket_with_groups($tickets, $groups, $groupIds)
@@ -289,6 +307,22 @@ class Event_model extends CI_Model {
 		return $ticketing;
 	}
 
+	function get_active_payment_methods($vendor_id){
+
+		$this->db->select('paymentMethod, percent, amount')
+		->from('tbl_shop_payment_methods')
+		->where('vendorId',$vendor_id)
+		->where('productGroup','E-Ticketing')
+		->where('active' , 1);
+		$query = $this->db->get();
+		$results = $query->result_array();
+		$ticketing = [];
+		foreach($results as $result){
+			$ticketing[] = $result['paymentMethod'];
+		}
+		return $ticketing;
+	}
+
 	function save_event_reservations($userInfo, $tickets = array(), $customer){
 		$data = [];
 		if(!isset($userInfo['email'])){ return ;}
@@ -328,6 +362,14 @@ class Event_model extends CI_Model {
 		}
 		$this->db->insert_batch('tbl_bookandpay',$data);
 		 return $reservationIds;
+	}
+
+	function save_guest_reservations($data){
+		$set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKLMNPQRSTVWXY';
+		$reservationId = 'T-' . substr(str_shuffle($set), 0, 16);
+		$data['reservationId'] = $reservationId;
+		$this->db->insert('tbl_bookandpay',$data);
+		return $reservationId;
 	}
 
 	function update_reservation_amount($reservationId, $amount){
@@ -410,9 +452,18 @@ class Event_model extends CI_Model {
 	{
 		$this->db->select('tbl_guestlist.*');
 		$this->db->from('tbl_guestlist');
-		$this->db->join('tbl_event_tickets', 'tbl_event_tickets.id = tbl_guestlist.ticketId', 'left');
-		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'left');
+		$this->db->join('tbl_events', 'tbl_events.id = tbl_guestlist.eventId', 'left');
 		$this->db->where('tbl_events.id', $eventId);
+		$this->db->where('tbl_events.vendorId', $vendorId);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	public function get_guestlists($vendorId)
+	{
+		$this->db->select('tbl_guestlist.*');
+		$this->db->from('tbl_guestlist');
+		$this->db->join('tbl_events', 'tbl_events.id = tbl_guestlist.eventId', 'left');
 		$this->db->where('tbl_events.vendorId', $vendorId);
 		$query = $this->db->get();
 		return $query->result_array();

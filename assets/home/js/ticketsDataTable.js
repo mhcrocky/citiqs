@@ -788,5 +788,29 @@ function addGuest(e){
 }
 
 
+function importExcelFile(){
 
+  let data = {
+      eventId: $('#eventId').val(),
+      guestName: $('#importGuestName option:selected').val(),
+      guestEmail: $('#importGuestEmail option:selected').val(),
+      ticketQuantity: $('#importTickets option:selected').val(),
+      ticketId: $('#guestTicketId').val(),
+      jsonData: $('#jsonData').text(),
+  }
 
+  //console.log(data);
+
+  $.post(globalVariables.baseUrl + "events/import_guestlist", data, function(data){
+      $("#guestlist").DataTable().ajax.reload();
+      $('#resetUpload').click();
+      $('#fileForm').removeClass('d-none');
+      $('#filterFormSection').addClass('d-none');
+      $('#uploadExcel').removeClass('d-none');
+      $('#importExcelFile').addClass('d-none');
+      $('#guestlistModal').modal('toggle');
+      $('#tab01').click();
+      alertify['success']('The guest list is imported successfully');
+  });
+
+}

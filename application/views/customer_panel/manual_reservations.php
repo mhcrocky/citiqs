@@ -79,40 +79,17 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="amount" class="col-md-4 col-form-label text-md-left">
-                            Amount
-                        </label>
-                        <div class="col-md-6">
-
-                            <input type="number" step="0.01" id="amount" class="input-w border-50 form-control"
-                                name="amount">
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
                         <label for="agendas" class="col-md-4 col-form-label text-md-left">Agenda
                         </label>
                         <div class="col-md-6">
                             <select id="agendas" onchange="get_spots()" name="agendas" class="form-control input-w border-50 field" required>
                                 <option value="">Select option</option>
-                                <?php foreach($agendas as $agenda): ?>
+                                <?php foreach($agendas as $agenda):
+                                 $dt = new DateTime($agenda['event_date']);
+                                 $agenda_date = $dt->format('d-m-Y');
+                                    ?>
                                 <option value="<?php echo $agenda['event_date']; ?>" data-agenda="<?php echo $agenda['agenda_id']; ?>">
-                                <?php echo $agenda['agenda_descript']; ?>
-                                </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="email_template" class="col-md-4 col-form-label text-md-left">Email Template
-                        </label>
-                        <div class="col-md-6">
-                            <select id="email_template" name="email_template" class="form-control input-w border-50 field" required>
-                                <option value="">Select option</option>
-                                <?php foreach($emails as $email): ?>
-                                <option value="<?php echo $email['id']; ?>">
-                                <?php echo $email['template_name']; ?>
+                                <?php echo $agenda_date; ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
@@ -136,6 +113,32 @@
                             <select id="timeslots" name="timeslots" class="form-control input-w border-50 field" required>
                                 <option value="">Select option</option>
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="email_template" class="col-md-4 col-form-label text-md-left">Email Template
+                        </label>
+                        <div class="col-md-6">
+                            <select id="email_template" name="email_template" class="form-control input-w border-50 field" required>
+                                <option value="">Select option</option>
+                                <?php foreach($emails as $email): ?>
+                                <option value="<?php echo $email['id']; ?>">
+                                <?php echo $email['template_name']; ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="amount" class="col-md-4 col-form-label text-md-left">
+                            Amount
+                        </label>
+                        <div class="col-md-6">
+
+                            <input type="number" step="0.01" id="amount" class="input-w border-50 form-control"
+                                name="amount">
                         </div>
                     </div>
 

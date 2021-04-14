@@ -9,8 +9,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="editTicketOptions" name="editTicketOptions"
-                    action="#" onsubmit="return saveTicketOptions(event)" method="POST">
+                <form id="editTicketOptions" name="editTicketOptions" action="#"
+                    onsubmit="return saveTicketOptions(event)" method="POST">
                     <ul>
                         <li>
                             <div class="custom-control custom-checkbox">
@@ -88,7 +88,8 @@
                                 class="form-control input-w mt-2">
                                 <option value="0">Select option</option>
                                 <?php foreach($vouchers as $voucher): ?>
-                                <option value="<?php echo $voucher['id']; ?>"><?php echo $voucher['template_name'] .' ('. $voucher['description'] . ')'; ?>
+                                <option value="<?php echo $voucher['id']; ?>">
+                                    <?php echo $voucher['template_name'] .' ('. $voucher['description'] . ')'; ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
@@ -130,7 +131,8 @@
                         </div>
                         <div class="col col-md-3">
                             <div class="input-group date">
-                                <input type="text" class="form-control inp-height timestamp" id="startDate" name="startDate" required>
+                                <input type="text" class="form-control inp-height timestamp" id="startDate"
+                                    name="startDate" required>
                                 <span style="padding-top: 5px;" class="input-group-addon fa-input pl-2 pr-2">
                                     <i style="color: #fff;font-size: 18px;" class="fa fa-calendar"></i></span>
                             </div>
@@ -140,7 +142,8 @@
                         </div>
                         <div class="col col-md-3">
                             <div class="input-group">
-                                <input type="time" class="form-control inp-height timestamp" id="startTime" name="startTime">
+                                <input type="time" class="form-control inp-height timestamp" id="startTime"
+                                    name="startTime">
                                 <span style="padding-top: 5px;" class="input-group-addon fa-input pl-2 pr-2">
                                     <i style="color: #fff;font-size: 20px;" class="fa fa-clock-o"></i></span>
                             </div>
@@ -153,18 +156,20 @@
                         </div>
                         <div class="col col-md-3">
                             <div class="input-group date">
-                                <input type="text" onchange="checkTicketTimestamp()" onfocus="timestampTicketOnFocus()" class="form-control inp-height timestamp" id="endDate" name="endDate" required>
+                                <input type="text" onchange="checkTicketTimestamp()" onfocus="timestampTicketOnFocus()"
+                                    class="form-control inp-height timestamp" id="endDate" name="endDate" required>
                                 <span style="padding-top: 5px;" class="input-group-addon fa-input pl-2 pr-2">
                                     <i style="color: #fff;font-size: 18px;" class="fa fa-calendar"></i></span>
                             </div>
                         </div>
                         <div class="col col-md-3">
                             To Time
-                        </div> 
+                        </div>
                         <div class="col col-md-3">
                             <div class="input-group">
                                 <input type="time" onchange="checkTimestamp()" onfocus="checkTimestamp()"
-                                oninput="checkTimestamp()" onkeyup="checkTimestamp()" class="form-control inp-height timestamp" id="endTime" name="endTime">
+                                    oninput="checkTimestamp()" onkeyup="checkTimestamp()"
+                                    class="form-control inp-height timestamp" id="endTime" name="endTime">
                                 <span style="padding-top: 5px;" class="input-group-addon fa-input pl-2 pr-2">
                                     <i style="color: #fff;font-size: 20px;" class="fa fa-clock-o"></i></span>
                             </div>
@@ -188,7 +193,8 @@
                                     </div>
                                 </li>
                             </ul>
-                            <input type="text" id="soldOutWhenExpired" name="soldOutWhenExpired" class="form-control inp-height">
+                            <input type="text" id="soldOutWhenExpired" name="soldOutWhenExpired"
+                                class="form-control inp-height">
                         </div>
 
 
@@ -235,9 +241,11 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" id="ticketOptionsClose" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="ticketOptionsClose" class="btn btn-secondary"
+                    data-dismiss="modal">Close</button>
                 <button type="submit" id="submitEventForm" class="btn btn-primary">Save changes</button>
-                <button style="display: none;" type="reset" id="resetTicketOptions" class="btn btn-primary">Reset</button>
+                <button style="display: none;" type="reset" id="resetTicketOptions"
+                    class="btn btn-primary">Reset</button>
             </div>
             </form>
         </div>
@@ -258,7 +266,8 @@
             </div>
             <div class="modal-body">
                 <div class="card-body">
-                    <form id="ticketForm" name="ticketForm" action="#" onsubmit="return saveTicket(event)" method="POST">
+                    <form id="ticketForm" name="ticketForm" action="#" onsubmit="return saveTicket(event)"
+                        method="POST">
                         <div class="form-group row">
                             <label for="ticket-name" class="col-md-4 col-form-label text-md-left">Ticket Name</label>
                             <div class="col-md-6">
@@ -326,14 +335,16 @@
                         <div class="form-group row">
                             <label for="quantity" class="col-md-4 col-form-label text-md-left">Ticket quantity</label>
                             <div class="col-md-6">
-                                <input type="number" id="quantity" class="form-control input-w" name="ticketQuantity" required>
+                                <input type="number" id="quantity" class="form-control input-w" name="ticketQuantity"
+                                    required>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="price" class="col-md-4 col-form-label text-md-left">Ticket price</label>
                             <div class="col-md-6">
-                                <input type="number" step="0.01" id="price" class="form-control input-w" name="ticketPrice" required>
+                                <input type="number" step="0.01" id="price" class="form-control input-w"
+                                    name="ticketPrice" required>
                             </div>
                         </div>
 
@@ -363,7 +374,8 @@
                                 <select id="group" class="form-control input-w" required>
                                     <option selected disabled>Select option</option>
                                     <?php foreach($groups as $group): ?>
-                                    <option id="group_<?php echo $group['id']; ?>" value="<?php echo $group['id']; ?>"><?php echo $group['groupname']; ?>
+                                    <option id="group_<?php echo $group['id']; ?>" value="<?php echo $group['id']; ?>">
+                                        <?php echo $group['groupname']; ?>
                                     </option>
                                     <?php endforeach; ?>
                                 </select>
@@ -501,6 +513,7 @@
 
 
 <!-- Guestlist Modal -->
+<!--
 <div class="modal fade" id="guestlistModal" tabindex="-1" role="dialog" aria-labelledby="guestlistModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
@@ -566,6 +579,172 @@
         </div>
     </div>
 </div>
+-->
+
+
+
+<div class="modal fade text-left" id="guestlistModal" tabindex="-1" role="dialog" aria-labelledby="guestlistModalLabel"
+    aria-hidden="true">
+    <div role="document" class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header row d-flex justify-content-left mr-auto mb-0 pb-0 border-0">
+                <div class="tabs active" id="tab01">
+                    <h6 class="font-weight-bold">Add Guest</h6>
+                </div>
+                <div class="tabs" id="tab02">
+                    <h6 class="text-muted">Import</h6>
+                </div>
+                <div class="tabs" id="tab03">
+                    <h6 class="text-muted">Guests List</h6>
+                </div>
+                <button type="button" class="close" id="closeModal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="line"></div>
+            <div class="modal-body p-0">
+
+                <fieldset class="show" id="tab011">
+                    <div class="bg-light">
+                        <h5 class="text-center mb-4 mt-0 pt-4">Add Guest</h5>
+                        <form name="my-form" id="my-form" class="needs-validation" action="#" method="POST"
+                            onsubmit="return addGuest(event)" novalidate>
+                            <div class="form-group pb-2 px-3">
+                                <input type="text" id="guestName" class="form-control" name="guestName"
+                                    placeholder="Name" required>
+                            </div>
+                            <div class="form-group row pb-2 px-3">
+                                <div class="col-6">
+                                    <input type="email" id="guestEmail" class="form-control" name="guestEmail"
+                                        placeholder="Email" required>
+                                </div>
+                                <div class="col-6">
+                                    <input type="number" id="guestTickets" class="form-control" name="guestTickets"
+                                        placeholder="Tickets" required>
+                                </div>
+                            </div>
+
+
+
+                            <input type="hidden" id="guestTicketId">
+                            <input type="hidden" id="eventId" value="<?php echo $eventId; ?>">
+
+                            <input type="reset" id="resetGuestForm" class="d-none" value="Reset">
+                            <input type="submit" class="d-none" id="submitGuestlist" value="Submit">
+
+
+                        </form>
+                    </div>
+
+                </fieldset>
+
+                <fieldset id="tab021">
+
+
+                    <form id="fileForm" action="" method="post" class="mt-5" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-8 mx-auto">
+                                <div class="form-group">
+                                    <label for="file" class="sr-only">File</label>
+                                    <div class="input-group mx-auto">
+                                        <input style="height:40px !important;" type="text" id="filename" name="filename"
+                                            class="form-control" value="" placeholder="No file selected" readonly="">
+                                        <span class="input-group-btn">
+                                            <div style="height:40px;border-top-left-radius: 0 !important;border-bottom-left-radius: 0 !important; padding-top: 8px;"
+                                                class="btn btn-secondary custom-file-uploader">
+                                                <input type="file" id="userfile" name="userfile"
+                                                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                                                    onchange="this.form.filename.value = this.files.length ? this.files[0].name : ''">
+                                                Select a file
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <div class="w-100 mt-2 p-1 text-right">
+                                        <input type="submit" name="submit" id="upload-file"
+                                            class="btn btn-success d-none" value="Upload">
+                                        <input type="reset" id="resetUpload" class="btn btn-success d-none"
+                                            value="Upload">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <div class="w-100 d-none" id="filterFormSection">
+                        <form action="#" method="POST" class="w-100" id="filterForm"
+                            onsubmit="return import_csv(event)">
+                            <div class="w-100 mt-5" id="DrpDwn">
+                                <div class="d-flex col-md-10 align-items-center mb-3 mx-auto">
+                                    <label class="col-md-3 mr-3" for="importGuestName">Guest Name: </label>
+                                    <select id="importGuestName" name="importGuestName"
+                                        class="col-md-9 filterSelection form-control">
+                                        <option value="">Select Option</option>
+                                    </select>
+                                </div>
+                                <div class="d-flex col-md-10 align-items-center mb-3 mx-auto">
+                                    <label class="col-md-3 mr-3" for="importGuestEmail">Guest Email: </label>
+                                    <select id="importGuestEmail" name="importGuestEmail"
+                                        class="col-md-9 filterSelection form-control">
+                                        <option value="">Select Option</option>
+                                    </select>
+                                </div>
+                                <div class="d-flex col-md-10 align-items-center mb-3 mx-auto">
+                                    <label class="col-md-3 mr-3" for="importTickets">Tickets: </label>
+                                    <select id="importTickets" name="importTickets"
+                                        class="col-md-9 filterSelection form-control">
+                                        <option value="">Select Option</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                        </form>
+
+
+                    </div>
+
+                    <pre class="d-none" id="jsonData"></pre>
+
+
+                </fieldset>
+
+                <fieldset style="max-height: 400px; overflow-y: auto;" id="tab031">
+                    <div class="w-100 table-responsive mt-3 p-3">
+                        <table class="table table-hover text-center">
+                            <tr class="bg-white">
+                                <th>Guest Name</th>
+                                <th>Guest Email</th>
+                            </tr>
+                            <?php foreach($guests as $guest): ?>
+                            <tr class="bg-white">
+                                <td><?php echo $guest['guestName']; ?></td>
+                                <td><?php echo $guest['guestEmail']; ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="line"></div>
+            <div class="modal-footer">
+                <fieldset class="show" id="tab012">
+                    <button type="button" id="closeGuestModal" class="btn btn-secondary"
+                        data-dismiss="modal">Close</button>
+                    <button type="button" onclick="addGuestForm()" class="btn btn-primary">Add Guest</button>
+                </fieldset>
+                <fieldset id="tab022">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="uploadExcel" class="btn btn-primary">Upload
+                        File</button>
+                    <button type="submit" onclick="importExcelFile()" id="importExcelFile"
+                        class="btn btn-primary d-none">Import Excel File</button>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -583,9 +762,11 @@
         </div>
 
         <p class="mt-2"><strong style="font-size: 16px;" class="ml-1">Tickets</strong></p>
-        <table id="tickets" class="mt-2 mb-1" style="width:100%">
+        <div class="table-responsive mt-2 mb-1">
+        <table id="tickets" style="width:100%">
 
         </table>
+        </div>
         <div class="table-responsive mt-5">
             <table style="background: none !important;" class="table">
                 <tr style="border-bottom: 3px solid #9333ea">

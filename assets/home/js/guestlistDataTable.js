@@ -37,6 +37,17 @@ $(document).ready(function () {
         title: "Ticket ID",
         data: "ticketId",
       },
+      {
+        title: "Reservation ID",
+        data: "reservationId",
+      },
+      {
+        title: 'Resend',
+        data: null,
+        "render": function(data, type, row) {
+          return '<button class="btn btn-primary" onclick="resendReservation(\''+data.reservationId+'\')">Resend</button>';
+        }
+      }
       
       
     ],
@@ -72,6 +83,7 @@ function addGuest(e){
       guestName: guestName,
       guestEmail: guestEmail,
       ticketQuantity: ticketQuantity,
+      eventId: $('#eventId').val(),
       ticketId: ticketId
   }
 
@@ -84,10 +96,43 @@ function addGuest(e){
     $("#guestlist").DataTable().ajax.reload();
       $('#submitGuestlist').prop('disabled', false);
       $('#resetGuestForm').click();
-      $('#closeModal').click();
+      $('#closeGuestModal').click();
       $('.form-control').addClass('input-clear');
       alertify['success']('Guest is added successfully');
 
   });
 
+}
+
+function importExcelFile(){
+
+  let data = {
+      eventId: $('#eventId').val(),
+      guestName: $('#importGuestName option:selected').val(),
+      guestEmail: $('#importGuestEmail option:selected').val(),
+      ticketQuantity: $('#importTickets option:selected').val(),
+      ticketId: $('#importTicketId option:selected').val(),
+      jsonData: $('#jsonData').text(),
+  }
+
+  //console.log(data);
+
+  $.post(globalVariables.baseUrl + "events/import_guestlist", data, function(data){
+      $("#guestlist").DataTable().ajax.reload();
+      $('#resetUpload').click();
+      $('#fileForm').removeClass('d-none');
+      $('#filterFormSection').addClass('d-none');
+      $('#uploadExcel').removeClass('d-none');
+      $('#importExcelFile').addClass('d-none');
+      $('#guestlistModal').modal('toggle');
+      $('#tab01').click();
+      alertify['success']('The guest list is imported successfully');
+  });
+
+}
+
+function resendReservation(reservationId){
+  $.post(globalVariables.baseUrl + "events/resend_reservation", {reservationId: reservationId}, function(data){
+      alertify['success']('Resent Successfully!');
+  });
 }
