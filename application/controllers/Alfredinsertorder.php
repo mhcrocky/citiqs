@@ -45,6 +45,7 @@ class Alfredinsertorder extends BaseControllerWeb
         $this->load->library('language', array('controller' => $this->router->class));
         $this->load->library('session');
         $this->load->library('notificationvendor');
+		$this->load->library('notificationcustomer');
     }
 
     public function index()
@@ -445,7 +446,7 @@ class Alfredinsertorder extends BaseControllerWeb
 
         $this->user_model->setUniqueValue($post['user']['email'])->setUser('oneSignalId');
         if ($this->user_model->oneSignalId) {
-            $this->notificationvendor->sendVendorMessage($this->user_model->oneSignalId, $orderId);
+            $this->notificationcustomer->sendCustomerMessage($this->user_model->oneSignalId, $orderId);
         }
     }
 
