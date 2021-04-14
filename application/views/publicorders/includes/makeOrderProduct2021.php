@@ -65,7 +65,16 @@
             >
                 -
             </button>
-            <input type="number" value='0' placeholder='0' min="0" max="100000" class='quantity-input' step="1" />
+            <input
+                type="number"
+                value='0'
+                placeholder='0'
+                min="0"
+                max="1000000"
+                class='quantity-input'
+                step="1"
+                data-id="<?php echo $productDetails['productExtendedId']; ?>"
+            />
             <button
                 type="button"
                 class='quantity-button quantity-button--plus'
@@ -119,7 +128,6 @@
                                 readonly
                                 hidden
                             />
-
                             <?php
                                 if ($product['addRemark'] === '1') {
                                     $productRemarkId = 'product_remark_' . $productDetails['productExtendedId'];
@@ -135,6 +143,7 @@
                                                 maxlength="<?php echo $maxRemarkLength; ?>"
                                                 placeholder="Allowed <?php echo $maxRemarkLength; ?> characters"
                                                 name="order[<?php echo $productDetails['productExtendedId']; ?>][remark]"
+                                                oninput="setInputAttribte(this, 'value', this.value)"
                                             />
                                         </div>
                                         <!-- end product remark -->
@@ -142,8 +151,8 @@
                                 }
                             ?>
 
-                            <!-- product addons -->
                             <?php if ($product['addons']) { ?>
+                                <!-- product addons -->
                                 <div>
                                     <?php
                                         // prepare product addons
@@ -192,7 +201,7 @@
                                                                 style="margin: 4px 0px 0px 5px"
                                                                 onchange="dipsalyButtons(this)"
                                                             />
-                                                            <span style="margin-left: 10px">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $showAddon['name']; ?></span>
+                                                            <span style="margin-left: 10px">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $showAddon['name'] . ' (' . $showAddon['price'] . '&euro;)'; ?></span>
                                                         </label>
                                                     </div>
                                                     <div class="menu-list__right-col" style="display:none">
@@ -201,7 +210,7 @@
                                                                 <button
                                                                     type="button"
                                                                     class="quantity-button quantity-button--minus"
-                                                                    onclick="changeValue(this, false)"
+                                                                    onclick="changeSiblingValue(this, false)"
                                                                 >
                                                                     -
                                                                 </button>
@@ -227,7 +236,7 @@
                                                                 <button
                                                                     type="button"
                                                                     class="quantity-button quantity-button--plus"
-                                                                    onclick="changeValue(this, true)"
+                                                                    onclick="changeSiblingValue(this, true)"
                                                                 >
                                                                     +
                                                                 </button>
@@ -253,6 +262,8 @@
                                                                     maxlength="<?php echo $maxRemarkLength; ?>"
                                                                     placeholder="Allowed <?php echo $maxRemarkLength; ?> characters"
                                                                     name="order[<?php echo $productDetails['productExtendedId']; ?>][addons][<?php echo $showAddon['productExtendedId']; ?>][remark]"
+                                                                    value=""
+                                                                    oninput="setInputAttribte(this, 'value', this.value)"
                                                                 />
                                                             </div>
                                                             <!-- end addon remark -->
@@ -280,8 +291,8 @@
                                         </div>
                                     <?php } ?>
                                 </div>
+                                <!-- end product addons -->
                             <?php } ?>
-                            <!-- end product addons -->
                         </div>
 
                         <div class="modal-footer">
@@ -291,8 +302,21 @@
                                 <button type="button" class="quantity-button quantity-button--plus">+</button>
                             </div> -->
                             <div>
-                                <button type="button" class="btn btn-primary">Save</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal('<?php echo $modalId; ?>')">Close</button>
+                                <button
+                                    type="button"
+                                    class="btn btn-primary"
+                                    onclick="addInCheckoutList(
+                                        '<?php echo $modalId; ?>',
+                                        '<?php echo $productDetails['productExtendedId']; ?>',
+                                        '<?php echo $productDetails['name']; ?>',
+                                        '<?php echo $productDetails['price']; ?>'
+                                    )"
+                                >
+                                    Save
+                                </button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal('<?php echo $modalId; ?>')">
+                                    Close
+                                </button>
                             </div>
                         </div>
                     </div>

@@ -28,12 +28,11 @@
 </header>
 <!-- END HEADER -->
 
-<!-- HERO SECTION -->
+<!-- CATEGORIES SECTION -->
 <section class='hero-section position-relative'>
 	<div class="d-none d-md-flex col-6 px-0 hero__background">
 		<img src="<?php echo base_url() . 'assets/images/2021/';  ?>food.jpg" alt="">
 	</div>
-	<!-- end col -->	
 	<div class="container">
 		<!-- <div class="row">
 			<div class="col-12 col-md-6">
@@ -45,9 +44,8 @@
 				</div>
 			</div>
 		</div> -->
-		<!-- end row -->
 		<div class="row">
-			<div class="col-lg-8 col-sm-12">
+			<div class="col-lg-8 col-sm-12 col-xs-12">
 				<div class="splide"  id="splideCategories">
 					<div class="splide__track">
 						<div class="splide__list">
@@ -75,12 +73,11 @@
 				</div>
 			</div>
 		</div>
-		<!-- end row -->
 	</div>
 </section>
-<!-- END HERO SECTION -->
+<!-- END CATEGORIES SECTION -->
 
-<!-- BREAKFAST SECTION -->
+<!-- MAIN SECTION -->
 <section>
 	<div class="container">
 		<div class="row row-menu">
@@ -88,6 +85,7 @@
 				<div class="col-12 col-md-4">
 					<h2 class='color-primary mb-5'><?php echo $category; ?></h2>
 					<?php if ($vendor['showProductsImages'] === '1') { ?>
+						<!-- show images -->
 						<ul class="items-gallery">
 							<?php
 								$count = 1;
@@ -110,27 +108,25 @@
 								}
 							?>
 						</ul>
+						<!-- end show images -->
 					<?php } ?>
 				</div>
-				<!-- end col -->
 				<div class="col-12 col-md-8 pl-md-5">
 					<!-- <h4 class='font-weight-bold mt-4 mt-md-3 mb-2 mb-md-4'>Salad & Snack</h4> -->
 					<div class='menu-list'>
 						<?php
                             foreach ($products as $product) {
                                 $productDetails = reset($product['productDetails']);
-                                include FCPATH . 'application/views/publicorders/includes/makeOrderProduct2021.php';
-                            }	
+								include FCPATH . 'application/views/publicorders/includes/makeOrderProduct2021.php';
+                            }
 						?>
 					</div>
 				</div>
-				<!-- end col -->
 			<?php } ?>
 		</div>
-		<!-- end row -->
 	</div>
 </section>
-<!-- END BREAKFAST SECTION -->
+<!-- END MAIN SECTION -->
 
 <!-- BANNER SECTION -->
 <!-- <section class="banner px-3 px-md-0">
@@ -190,9 +186,9 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<div class="menu-list">
+				<div id="checkout-modal-list" class="menu-list">
 					
-					<div class="menu-list__item">
+					<!-- <div class="menu-list__item">
 						<div class="menu-list__name">
 							<b class="menu-list__title">Name</b>
 
@@ -208,126 +204,7 @@
 							</div>
 							<button type='button' class='btn checkout-modal-edit' data-toggle="modal" data-target="#modal-additional-options" ><i class="fa fa-pencil-square-o mr-2"></i>EDIT</button>
 						</div>
-					</div>
-					<!-- end menu list item -->
-					<div class="menu-list__item">
-						<div class="menu-list__name">
-							<b class="menu-list__title">Name</b>
-							<div>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-							</div>
-						</div>
-						<div class="menu-list__right-col">
-							<div class="menu-list__price">
-								<b class="menu-list__price--regular">6.00$ </b>
-							</div>
-							<div class="quantity-section">
-								<button class="quantity-button quantity-button--minus">-</button>
-								<input type="number" value="0" placeholder="0" class="quantity-input">
-								<button type="button" class="quantity-button quantity-button--plus">+</button>
-							</div>
-							<button type='button' class='btn checkout-modal-edit' data-toggle="modal" data-target="#modal-additional-options" ><i class="fa fa-pencil-square-o mr-2"></i>EDIT</button>
-						</div>
-					</div>
-					<!-- end menu list item -->
-					<div class="menu-list__item">
-						<div class="menu-list__name">
-							<b class="menu-list__title">Name</b>
-							<div>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-							</div>
-						</div>
-						<div class="menu-list__right-col">
-							<div class="menu-list__price">
-								<b class="menu-list__price--regular">6.00$ </b>
-							</div>
-							<div class="quantity-section">
-								<button class="quantity-button quantity-button--minus">-</button>
-								<input type="number" value="0" placeholder="0" class="quantity-input">
-								<button type="button" class="quantity-button quantity-button--plus">+</button>
-							</div>
-							<button type='button' class='btn checkout-modal-edit' data-toggle="modal" data-target="#modal-additional-options" ><i class="fa fa-pencil-square-o mr-2"></i>EDIT</button>
-						</div>
-					</div>
-					<!-- end menu list item -->
-					<div class="menu-list__item">
-						<div class="menu-list__name">
-							<b class="menu-list__title">Name</b>
-							<div>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-							</div>
-						</div>
-						<div class="menu-list__right-col">
-							<div class="menu-list__price">
-								<b class="menu-list__price--regular">6.00$ </b>
-							</div>
-							<div class="quantity-section">
-								<button class="quantity-button quantity-button--minus">-</button>
-								<input type="number" value="0" placeholder="0" class="quantity-input">
-								<button type="button" class="quantity-button quantity-button--plus">+</button>
-							</div>
-							<button type='button' class='btn checkout-modal-edit' data-toggle="modal" data-target="#modal-additional-options" ><i class="fa fa-pencil-square-o mr-2"></i>EDIT</button>
-						</div>
-					</div>
-					<!-- end menu list item -->
-					<div class="menu-list__item">
-						<div class="menu-list__name">
-							<b class="menu-list__title">Name</b>
-							<div>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-							</div>
-						</div>
-						<div class="menu-list__left-col">
-							<div class="menu-list__price">
-								<b class="menu-list__price--regular">6.00$ </b>
-							</div>
-							<div class="quantity-section">
-								<button class="quantity-button quantity-button--minus">-</button>
-								<input type="number" value="0" placeholder="0" class="quantity-input">
-								<button class="quantity-button quantity-button--plus">+</button>
-							</div>
-						</div>
-					</div>
-					<!-- end menu list item -->
+					</div> -->
 				</div>
 			</div>
 			<div class="modal-footer">

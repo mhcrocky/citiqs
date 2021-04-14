@@ -1,6 +1,11 @@
 'use strict';
-function changeValue(element, action) {
+function changeSiblingValue(element, action) {
     let input = $(element).siblings('input')[0];
+    changeInputQuantity(input, action);
+    return;
+}
+
+function changeInputQuantity(input, action) {
     let max = input.max;
     let min = input.min;
     let newValue = parseInt(input.value);
@@ -22,11 +27,11 @@ function clearModal(modalId) {
     for (i = 0; i < inputsLength; i++) {
         let input = inputs[i];
         if (input.type === 'checkbox') {
-            setInputAttribte(input, 'checked', false);
-        } else {
-            let resetValue = (input.type === 'number')  ? '0' : '';
-            setInputAttribte(input, 'value', resetValue);
-            setInputAttribte(input, 'disabled', true);
+            input.checked = false;
+            dipsalyButtons(input);
+            input.removeAttribute('checked');
+        } else if (input.type === 'text')  {
+            setInputAttribte(input, 'value', '');
         }
     }
     return;
@@ -39,18 +44,62 @@ function setInputAttribte(input, attribute, newValue) {
 
 function dipsalyButtons(element) {
     let elementToDisplay = element.parentElement.parentElement.nextElementSibling;
-    let displayStyle = element.checked ? 'initial' : 'none';
+    let displayStyle = element.checked ? 'display:initial' : 'display:none';
     let input = elementToDisplay.getElementsByTagName('input')[0];
 
-    elementToDisplay.style.display = displayStyle;
+    setInputAttribte(elementToDisplay, 'style', displayStyle);
+    setInputAttribte(input, 'value', '1');
     setInputAttribte(input, 'disabled', !element.checked);
+    setInputAttribte(element, 'checked', element.checked);
 }
 
 function mainProductQuantity(element, action) {
-    changeValue(element, action);
-    // to do => show element in checkout modal
+    changeSiblingValue(element, action);
+    // to do 
+    // => show element in checkout modal
+    // => change value for all elements with same data-id
+    // => remove element if value is 0
+    // => reset value to 0 on product list if element is removed
 }
 
+function addInCheckoutList(modalId, dataProductId, productName, productPrice) {
+    let modal = document.getElementById(modalId);
+    let modalBodyHtml = modal.getElementsByClassName('modal-body')[0].innerHTML;
+    let productQuantityInput = document.querySelector('[data-id="' + dataProductId + '"]');
+    showAllInCheckoutModal(modalBodyHtml, productName, productPrice);
+    changeInputQuantity(productQuantityInput, true);
+    clearModal(modalId);
+    $('#' + modalId).modal('hide');
+}
+
+function showAllInCheckoutModal(html, productName, productPrice) {
+    let template = getAllItemTemplate(html, productName, productPrice);
+    console.dir(template);
+    appendInCheckoutModal(template);
+}
+
+function appendInCheckoutModal(html) {
+    $('#checkout-modal-list').append(html);
+}
+
+function getAllItemTemplate(html, productName, productPrice) {
+    let template =  `<div>
+                        <div class='menu-list__item' style="border-bottom: 0px #fff;">
+                            <div class='menu-list__name'>
+                                <b>${productName}</b>
+                            </div>
+                            <div class='menu-list__right-col'>
+                                <div class='menu-list__price'>
+                                    <b class='menu-list__price'>${productPrice}&euro; </b>
+                                </div>
+                            </div>
+                        </div>
+                        ${html}
+                    </div>`;
+    return template;
+}
+
+// let categoryButton = document.querySelector('[data-id="' + category.id + '"]');
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover({
         animation : false,
@@ -61,7 +110,7 @@ $(document).ready(function() {
     var splideCategories = new Splide(
     '#splideCategories',
         {
-            perPage    : 4,
+            perPage    : 1,
             perMove    : 1,
             height     : '9rem',
             focus      : 'center',
@@ -71,29 +120,3 @@ $(document).ready(function() {
     ).mount(window.splide.Extensions);
 
 });
-
-
-
-    // // quantity input
-    // var quantity_section = $('.quantity-section');
-    // var quantity_button_plus = $('.quantity-button--plus');
-    // var quantity_button_minus = $('.quantity-button--minus');
-    // var quantity_input = $('.quantity-input');
-
-    // quantity_button_plus.click(function() {
-    //     console.dir($(this).siblings('.quantity-input'));
-
-    //     let num = $(this).siblings('.quantity-input').val();
-    //     num++;
-    //     $(this).siblings('.quantity-input').val(num)
-    // })
-
-    // quantity_button_minus.click(function(){
-    //     let num = $(this).siblings('.quantity-input').val();
-    //     if(num >= 1){
-    //         num--;
-    //         $(this).siblings('.quantity-input').val(num)
-    //     }
-    // })
-
-
