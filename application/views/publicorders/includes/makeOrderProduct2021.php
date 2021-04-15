@@ -82,7 +82,12 @@
                     data-toggle="modal"
                     data-target="#modal-additional-options_<?php echo $productDetails['productExtendedId']; ?>"
                 <?php } else { ?>
-                    onclick="mainProductQuantity(this, true)"
+                    onclick="mainProductQuantity(
+                                                    this,
+                                                    true,
+                                                    '<?php echo $productDetails['name']; ?>',
+                                                    '<?php echo $productDetails['price']; ?>'
+                                                )"
                 <?php } ?>
             >
                 +
@@ -136,7 +141,6 @@
                                         <div style="width: 100%; margin: 0px 0px 20px 0px">
                                             <label for="<?php echo $productRemarkId; ?>">Add remark:&nbsp;</label>
                                             <input
-                                                id="<?php echo $productRemarkId; ?>"
                                                 class="form form-control"
                                                 type="text"
                                                 value=""

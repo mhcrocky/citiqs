@@ -186,26 +186,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<div id="checkout-modal-list" class="menu-list">
-					
-					<!-- <div class="menu-list__item">
-						<div class="menu-list__name">
-							<b class="menu-list__title">Name</b>
-
-						</div>
-						<div class="menu-list__right-col">
-							<div class="menu-list__price">
-								<b class="menu-list__price--regular">6.00$ </b>
-							</div>
-							<div class="quantity-section">
-								<button class="quantity-button quantity-button--minus">-</button>
-								<input type="number" value="0" placeholder="0" class="quantity-input">
-								<button type="button" class="quantity-button quantity-button--plus">+</button>
-							</div>
-							<button type='button' class='btn checkout-modal-edit' data-toggle="modal" data-target="#modal-additional-options" ><i class="fa fa-pencil-square-o mr-2"></i>EDIT</button>
-						</div>
-					</div> -->
-				</div>
+				<div id="checkout-modal-list" class="menu-list"></div>
 			</div>
 			<div class="modal-footer">
 				<div class="checkout-modal-sum">

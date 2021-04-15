@@ -53,10 +53,12 @@ function dipsalyButtons(element) {
     setInputAttribte(element, 'checked', element.checked);
 }
 
-function mainProductQuantity(element, action) {
+function mainProductQuantity(element, action, productName, productPrice) {
     changeSiblingValue(element, action);
+    let template = getItemTemplate(productName, productPrice);
+    appendInCheckoutModal(template);
     // to do 
-    // => show element in checkout modal
+    // => show element in checkout modal if not in modal
     // => change value for all elements with same data-id
     // => remove element if value is 0
     // => reset value to 0 on product list if element is removed
@@ -74,7 +76,6 @@ function addInCheckoutList(modalId, dataProductId, productName, productPrice) {
 
 function showAllInCheckoutModal(html, productName, productPrice) {
     let template = getAllItemTemplate(html, productName, productPrice);
-    console.dir(template);
     appendInCheckoutModal(template);
 }
 
@@ -83,21 +84,48 @@ function appendInCheckoutModal(html) {
 }
 
 function getAllItemTemplate(html, productName, productPrice) {
-    let template =  `<div>
-                        <div class='menu-list__item' style="border-bottom: 0px #fff;">
-                            <div class='menu-list__name'>
-                                <b>${productName}</b>
-                            </div>
-                            <div class='menu-list__right-col'>
-                                <div class='menu-list__price'>
-                                    <b class='menu-list__price'>${productPrice}&euro; </b>
-                                </div>
-                            </div>
+
+    return  `<div>
+                <div class='menu-list__item' style="border-bottom: 0px #fff;">
+                    <div class='menu-list__name'>
+                        <b>${productName}</b>
+                    </div>
+                    <div class='menu-list__right-col'>
+                        <div class='menu-list__price'>
+                            <b class='menu-list__price'>${productPrice}&euro; </b>
                         </div>
-                        ${html}
-                    </div>`;
-    return template;
+                    </div>
+                </div>
+                ${html}
+            </div>`;
 }
+
+function getItemTemplate(productName, productPrice) {
+
+    return  `<div class="menu-list__item">
+                <div class="menu-list__name">
+                    <b class="menu-list__title">${productName}</b>
+                </div>
+                <div class="menu-list__right-col">
+                    <div class="menu-list__price">
+                        <b class="menu-list__price--regular">${productPrice}&euro; </b>
+                    </div>
+                    <div class="quantity-section">
+                        <button class="quantity-button quantity-button--minus">-</button>
+                        <input
+                            type="number"
+                            value="1"
+                            placeholder="0"
+                            class="quantity-input"
+                            data-price="${productPrice}"
+                        />
+                        <button type="button" class="quantity-button quantity-button--plus">+</button>
+                    </div>
+                </div>
+            </div>`;
+}
+
+//<button type='button'><i class="fa fa-pencil-square-o mr-2"></i>EDIT</button>
 
 function runSplider() {
     let slidersPerPage = getSlidersPerPage();
