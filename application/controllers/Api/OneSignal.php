@@ -34,7 +34,6 @@
 
 		public function data_post(): void
 		{
-//			var_dump($_POST);
 
 			$header = getallheaders();
 			$key = $header['X-Api-Key'];
@@ -42,31 +41,21 @@
             if ($this->api_model->userAuthentication($key)) {
                 $user = $this->input->post(null, true);
 
+				//CHECK ONE SIGNAL ID
+                $result = $this->user_model->checkOneSignalId($user['oneSignalId']);
 
-
-
-                //CHECK ONE SIGNAL ID
-				$rresult = $this->user_model->checkOneSignalId($user['oneSignalId']);
-
-				if ($rresult!=0) {
+				if ($result) {
                     echo json_encode([
                         'status' => '1',
                         'message' => 'User with this one signal id already exist',
-						'userid' => $rresult['id']
+						'userid' => $result['id']
                     ]);
                     return;
                 }
-
-				//	$user['email']=set in POST.
-				// Find user...
-
-
-
                 // INSERT USER
                 $user['roleId'] = $this->config->item('buyer');
                 $user['salesagent'] = $this->config->item('defaultSalesAgentId');
                 $user['usershorturl'] = 'api one signal';
-
                 $this->user_model->manageAndSetUserOneSignal($user);
 
                 if ($this->user_model->id) {
@@ -90,7 +79,7 @@
                 'message' => 'Not allowed'
             ]);
 
-        return;
+        	return;
         }
 
 		public function playerinsert_post(): void
@@ -102,8 +91,8 @@
 			if ($this->api_model->userAuthentication($key)) {
 
 				$api = $this->input->post(null, true);
-//				$onesignalid= $this->user_model->checkOneSignalId($api['oneSignalId']);
-//				$onoff=$this->user_model->checkOneSignalId($api['onoff']);
+				// $onesignalid= $this->user_model->checkOneSignalId($api['oneSignalId']);
+				// $onoff=$this->user_model->checkOneSignalId($api['onoff']);
 				$onesignalid= $api['oneSignalId'];
 				$onoffon=$api['onoff'];
 
