@@ -1,10 +1,16 @@
 
     <div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable">
-        <?php if ($reportPrinters) { ?>
+        <?php if ($reportPrinters || $emailFinanceReporets === '1') { ?>
         <div class="float-right text-center pl-3">
-            <button class="btn btn-primary" data-timepicker-id="reportDateTime" data-report="<?php echo $xReport; ?>"
+            <button
+                class="btn btn-primary"
+                data-timepicker-id="reportDateTime"
+                data-report="<?php echo $xReport; ?>"
                 onclick="sendReportPrintRequest(this)">Print x-report</button>
-            <button class="btn btn-primary" data-timepicker-id="reportDateTime" data-report="<?php echo $zReport; ?>"
+            <button
+                class="btn btn-primary"
+                data-timepicker-id="reportDateTime"
+                data-report="<?php echo $zReport; ?>"
                 onclick="sendReportPrintRequest(this)">Print z-reportes</button>
         </div>
         <?php } ?>

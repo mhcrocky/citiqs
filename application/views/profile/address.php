@@ -99,7 +99,7 @@ p,label{
 						<div>
 							<div>
 								<p style="font-family: caption-light; padding: 10px">
-									<?php echo $this->language->line("RECEIPT-V031","E-MAIL ADDRESS FOR RECEIPT");?>
+									<?php echo $this->language->line("RECEIPT-V03123","E-MAIL ADDRESS FOR RECEIPT AND X-Z REPORTES");?>
 								</p>
 
 								<div class="form-group has-feedback">
