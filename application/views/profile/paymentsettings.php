@@ -236,6 +236,14 @@
 							value="<?php echo $vendor['serviceFeeTax']; ?>"
 							/>
 					</div>
+					<div class="form-group mb-35">
+						<label>EMAIL X AND Z REPORTES</label>
+						<br style="display:initial"/>
+						<label class="radio-inline" for="emailFinanceReporetsYes">Yes</label>
+						<input type="radio" id="emailFinanceReporetsYes" name="vendor[emailFinanceReporets]" value="1" <?php if ($vendor['emailFinanceReporets'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="emailFinanceReporetsNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="emailFinanceReporetsNo" name="vendor[emailFinanceReporets]" value="0" <?php if ($vendor['emailFinanceReporets'] === '0') echo 'checked'; ?> />
+					</div>
 					<!--
 					<h4>SELECT PAYMENT METHOD(S)</h4>
 					<div class="form-check-inline mb-35">
