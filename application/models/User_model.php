@@ -1115,4 +1115,13 @@ class User_model extends CI_Model
 
         return (empty($result)) ? null : $result;
     }
+
+    function updateOneSignalId($userId, $oneSignalId)
+    {
+
+        $this->db->where('id', $userId);
+        $this->db->update('tbl_user', ['oneSignalId' => $oneSignalId]);
+
+        return true;
+    }
 }

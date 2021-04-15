@@ -9,10 +9,12 @@ class Selection extends BaseControllerWeb {
     
     public function __construct(){
         parent::__construct();
-        if (empty($this->session->userdata('userId'))) {
-			redirect('login');
-		}
+        $this->load->model('selection_model');
+        $this->load->model('user_model');
+        $this->isLoggedIn();
+        $this->load->library('language', array('controller' => $this->router->class));
     }
+
     public function index() {
         $this->global['pageTitle'] = 'TIQS BUYERS';
         $this->loadViews("marketing/selection", $this->global, '', 'footerbusiness', 'headerbusiness');
@@ -23,7 +25,7 @@ class Selection extends BaseControllerWeb {
         $buyerMobile = $this->input->get('buyerMobile');
         $buyerOneSignalId = $this->input->get('buyerOneSignalId');
         $message = $this->input->get('message');
-        var_dump($buyerId);
+        //var_dump($buyerId);
 //        die('here we are 2');
         if($buyerOneSignalId == ''){
             $this->load->library('Sms');
@@ -39,16 +41,17 @@ class Selection extends BaseControllerWeb {
     }
 
     public function allbuyers(){
-        $this->load->model('Selection_model');
+        
         $userId = $this->session->userdata('userId');
-        $buyers = $this->Selection_model->get_buyers($userId);
-        /*
-        return $this->output
-					->set_content_type('application/json')
-					->set_status_header(200)
-                    ->set_output(json_encode($buyers));
-        */
+        $buyers = $this->selection_model->get_buyers($userId);
         echo json_encode($buyers);
+    }
+
+    public function update_onesignal() {
+        $buyerId = $this->input->post('buyerId');
+        $buyerOneSignalId = $this->input->post('buyerOneSignalId');
+        $this->user_model->updateOneSignalId($buyerId, $buyerOneSignalId);
+
     }
 
 }
