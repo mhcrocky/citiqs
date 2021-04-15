@@ -375,6 +375,10 @@
         padding-top: 0px;
     }
     </style>
+<?php } elseif ($this->view === 'marketing/selection') { ?>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+    <link type="text/css" href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css" rel="stylesheet" />
+    <style> div.dataTables_wrapper div.dataTables_length select { width: 76px !important; } </style>
 <?php  } elseif ($this->view === 'new_bookings/agenda_booking_design') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/design.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/agenda_booking_design.css"/>

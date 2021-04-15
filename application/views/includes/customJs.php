@@ -219,6 +219,11 @@
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/select-tickets.js"></script>
 	
+<?php } elseif ($this->view === 'marketing/selection') { ?>
+	<script src="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+	<script type="text/javascript" src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
+	<script type="text/javascript" src="<?php echo $this->baseUrl; ?>assets/home/js/selectionDataTable.js"></script>
 <?php } elseif ($this->view === 'new_bookings/agenda_booking_design') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jscolor.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/agenda_booking_design.js"></script>

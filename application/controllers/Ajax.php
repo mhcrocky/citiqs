@@ -41,6 +41,7 @@ class Ajax extends CI_Controller
         $this->load->model('shoppaymentmethods_model');
         $this->load->model('shoporderpaynl_model');
         $this->load->model('shoplandingpages_model');
+        $this->load->model('shopprinters_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -1798,6 +1799,17 @@ class Ajax extends CI_Controller
 
         $post = Utility_helper::sanitizePost();
         $post['userId'] =  intval($_SESSION['userId']);
+
+        $this->printFinanceReporets($post);
+        $this->emailFinanceReportes($post);
+
+        return;
+    }
+
+    private function printFinanceReporets(array $post): void
+    {
+        if (!$this->shopprinters_model->setProperty('userId', $post['userId'])->checkPrinterReportes()) return;
+
         $post['printed'] = '0';
         $insert = $this->shopreportrequest_model->setObjectFromArray($post)->create();
 
@@ -1814,8 +1826,57 @@ class Ajax extends CI_Controller
         }
 
         echo json_encode($response);
+    }
 
-        return;
+    private function emailFinanceReportes(array $post): void
+    {
+        if (!$this->shopvendor_model->setProperty('vendorId', $post['userId'])->getProperty('emailFinanceReporets')) return;
+
+        $this->user_model->setUniqueValue($_SESSION['userId'])->setWhereCondtition()->setUser('receiptEmail');
+
+        if (!$this->user_model->receiptEmail) {
+            $response = [
+                'status' => '0',
+                'messages' => ['No email. Please add responsible person email']
+            ];
+            echo json_encode($response);
+            return;
+        }
+
+        $get = [
+            'vendorid' => $post['userId'],
+            'datetimefrom' => $post['dateTimeFrom'],
+            'datetimeto' =>  $post['dateTimeTo'],
+            'report' => $post['report'],
+            'finance' => '1'
+        ];
+
+        $url = base_url() . 'api/report?' . http_build_query($get);
+        $response = json_decode(file_get_contents($url));
+
+
+        if ($response->status === '1') {
+            $report = $this->config->item('financeReportes') . $get['vendorid'] . '_' . $get['report'] . '.png';
+            if (Email_helper::sendEmail($this->user_model->receiptEmail, $get['report'], '', false, $report)) {
+                $response = [
+                    'status' => '1',
+                    'messages' => ['Email sent']
+                ];
+            } else {
+                $response = [
+                    'status' => '0',
+                    'messages' => ['Email not sent']
+                ];
+            }
+            unlink($report);
+        } else {
+            $response = [
+                'status' => '0',
+                'messages' => ['Process failed. Please try again']
+            ];
+        }
+
+        echo json_encode($response);
     }
 
     public function checkPrintersConnection($printerId): void
