@@ -39,13 +39,23 @@
 
             if ($this->api_model->userAuthentication($key)) {
                 $user = $this->input->post(null, true);
-				$onesignalid= $this->user_model->checkOneSignalId($user['oneSignalId']);
-				$email=$this->user_model->checkOneSignalId($user['email']);
 
-//				var_dump($user['email']);
-//				die();
+				//CHECK ONE SIGNAL ID
+                $result = $this->user_model->checkOneSignalId($user['oneSignalId']);
 
-                $this->user_model->manageAndSetOneSignalId($onesignalid);
+				if ($result) {
+                    echo json_encode([
+                        'status' => '1',
+                        'message' => 'User with this one signal id already exist',
+						'userid' => $result['id']
+                    ]);
+                    return;
+                }
+                // INSERT USER
+                $user['roleId'] = $this->config->item('buyer');
+                $user['salesagent'] = $this->config->item('defaultSalesAgentId');
+                $user['usershorturl'] = 'api one signal';
+                $this->user_model->manageAndSetUserOneSignal($user);
 
                 if ($this->user_model->id) {
                     $message = isset($this->user_model->created) ? 'User created' : 'User updated';
@@ -68,7 +78,6 @@
                 'message' => 'Not allowed'
             ]);
 
-        return;
+        	return;
         }
     }
-
