@@ -32,6 +32,12 @@
         foreach($spots as $key=>$spot):
             $spotId = $spot['data']->id;
             $timeslots = $spot['timeslots'];
+            $checkout_reservations = [];
+            $checkout_reservations_id = [];
+            if($this->session->tempdata('tickets')){
+                $checkout_reservations = $this->session->tempdata('tickets');
+                $checkout_reservations_id = array_values(array_keys($checkout_reservations));
+            }
             
             if(count($timeslots) == 0){ continue;}
 ?>
@@ -76,11 +82,11 @@
                             
                             if($i == 0){
                     
-                                $start_time = booking_agenda::explode_time($timeslot->fromtime);
-                                $end_time = $start_time + booking_agenda::explode_time($timeslot->duration);
+                                $start_time = booking_reservations::explode_time($timeslot->fromtime);
+                                $end_time = $start_time + booking_reservations::explode_time($timeslot->duration);
                             } else {
-                                $start_time = $end_time + booking_agenda::explode_time($timeslot->overflow);
-                                $end_time = $start_time + booking_agenda::explode_time($timeslot->duration);
+                                $start_time = $end_time + booking_reservations::explode_time($timeslot->overflow);
+                                $end_time = $start_time + booking_reservations::explode_time($timeslot->duration);
                             }
 
                               
@@ -92,8 +98,8 @@
                             <div>
                                 <p class="menu-list__ingredients descript_<?php echo $timeslot->id; ?>">
                                 <?php 
-                                    $fromtime = booking_agenda::second_to_hhmm($start_time);
-                                    $totime = booking_agenda::second_to_hhmm($end_time);
+                                    $fromtime = booking_reservations::second_to_hhmm($start_time);
+                                    $totime = booking_reservations::second_to_hhmm($end_time);
                                     echo $fromtime . ' - ' . $totime;
                                 ?>
                                 </p>
@@ -107,12 +113,17 @@
                             <b class="menu-list__type">quantity</b>
                             <div class="quantity-section">
                                 <button type="button" class="quantity-button"
-                                    onclick="removeMultiReservations('<?php echo $timeslot->id; ?>', '<?php echo $agenda_id; ?>', '<?php echo $spotId; ?>', '<?php echo $timeslot->price; ?>', '<?php echo $timeslot->reservationFee; ?>')">-</button>
-                                <input type="number" min="1" onkeyup="absVal(this);" placeholder="0" value="0"
-                                    class="quantity-input ticketQuantityValue_<?php echo  $timeslot->id . '_' . $i; ?>" disabled>
+                                    onclick="removeTicket(`<?php echo  $timeslot->id . '_' . $i; ?>`, '<?php echo $agenda_id; ?>', '<?php echo $spotId; ?>', '<?php echo $timeslot->price; ?>', '<?php echo $timeslot->reservationFee; ?>')">-</button>
+                                <input type="number" min="1" onkeyup="absVal(this);" placeholder="0"
+                                    <?php if(in_array($timeslot->id . '_' . $i,$checkout_reservations_id)){?>
+                                        value="<?php echo $checkout_reservations[$timeslot->id . '_' . $i]['quantity']; ?>"
+                                    <?php } else { ?> value="0" <?php } ?>
+                                    class="quantity-input ticketQuantityValue_<?php echo  $timeslot->id . '_' . $i; ?>"
+                                    data-fromtime="<?php echo $fromtime; ?>" data-totime="<?php echo $totime; ?>" data-numberofpersons="<?php echo $spot['data']->numberofpersons; ?>"
+                                     disabled>
                                 <button type="button" class="quantity-button"
                                     
-                                    onclick="addMultiReservations('<?php echo $timeslot->id; ?>', '<?php echo $timeslot->id.`_`.$i; ?>', '<?php echo $agenda_id; ?>', '<?php echo $spotId; ?>', '<?php echo $timeslot->price; ?>', '<?php echo $timeslot->reservationFee; ?>', '<?php echo $fromtime; ?>', '<?php echo $totime; ?>' )"
+                                onclick="addTicket(`<?php echo  $timeslot->id . '_' . $i; ?>`, '<?php echo $agenda_id; ?>', '<?php echo $spotId; ?>', '<?php echo $timeslot->price; ?>', '<?php echo $timeslot->reservationFee; ?>')"
                                     >+</button>
                             </div>
                             <b class="menu-list__price--discount excluding_fee text-dark mt-2">Excluding fee
@@ -153,8 +164,13 @@
                             <div class="quantity-section">
                                 <button type="button" class="quantity-button"
                                     onclick="removeTicket('<?php echo $timeslot->id; ?>', '<?php echo $agenda_id; ?>', '<?php echo $spotId; ?>', '<?php echo $timeslot->price; ?>', '<?php echo $timeslot->reservationFee; ?>')">-</button>
-                                <input type="number" min="1" onkeyup="absVal(this);" placeholder="0" value="0"
-                                    class="quantity-input ticketQuantityValue_<?php echo $timeslot->id; ?>" disabled>
+                                <input type="number" min="1" onkeyup="absVal(this);" placeholder="0" 
+                                    <?php if(in_array($timeslot->id, $checkout_reservations_id)){?>
+                                        value="<?php echo $checkout_reservations[$timeslot->id]['quantity']; ?>"
+                                    <?php } else { ?> value="0" <?php } ?>
+                                    class="quantity-input ticketQuantityValue_<?php echo $timeslot->id; ?>"
+                                    data-fromtime="<?php echo $timeslot->fromtime; ?>" data-totime="<?php echo $timeslot->totime; ?>" data-numberofpersons="<?php echo $spot['data']->numberofpersons; ?>"
+                                     disabled>
                                 <button type="button" class="quantity-button"
                                     
                                     onclick="addTicket('<?php echo $timeslot->id; ?>', '<?php echo $agenda_id; ?>', '<?php echo $spotId; ?>', '<?php echo $timeslot->price; ?>', '<?php echo $timeslot->reservationFee; ?>')"

@@ -337,7 +337,7 @@
 		display: none !important;
 	}
 </style>
-<?php  } elseif ($this->view === 'bookings/select_payment_type' || $this->view === 'new_bookings/select_payment_type') { ?>
+<?php  } elseif ($this->view === 'bookings/select_payment_type' || $this->view === 'new_bookings/select_payment_type' || $this->view === 'booking_agenda/select_payment_type') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/select-pay.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />

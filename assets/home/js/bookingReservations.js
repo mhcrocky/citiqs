@@ -1,6 +1,6 @@
 (function() {
     if (typeof globalTime === 'undefined' && $('#shop').length == 0) {
-        window.location.href = globalVariables.baseUrl + "booking_agenda/clear_tickets";
+        window.location.href = globalVariables.baseUrl + "booking_reservations/clear_reservations";
     }
     if($('.ticket_item').length > 0){
         $('#payForm').show();
@@ -67,7 +67,7 @@ function getSpotsView(agendaId, date, first = false) {
     let isAjax = true;
     $('div.bg-light').removeClass('bg-light').addClass('bg-white');
     $("#event_" + agendaId).addClass('bg-light').removeClass('bg-white');
-    $.post(globalVariables.baseUrl + "booking_agenda/spots/" + date + "/" + agendaId, {
+    $.post(globalVariables.baseUrl + "booking_reservations/spots/" + date + "/" + agendaId, {
         isAjax: isAjax
     }, function(data) {
         $("#spots").empty();
@@ -96,7 +96,7 @@ function countDownTimer(distance){
         $(".timer").text("Expiration time: " + addZero(minutes) + ":" + addZero(seconds) + "");
         if (minutes == 0 && seconds == 0) {
             setTimeout(() => {
-                window.location.href = globalVariables.baseUrl + "booking_agenda/clear_reservations";
+                window.location.href = globalVariables.baseUrl + "booking_reservations/clear_reservations";
             }, 500);
         }
         if (distance < 0) {
@@ -145,7 +145,7 @@ function deleteTicket(id, price, ticketFee) {
         totalBasket: totalBasket,
         list_items: list_items
     }
-    $.post(globalVariables.baseUrl + "booking_agenda/delete_ticket", data, function(data){
+    $.post(globalVariables.baseUrl + "booking_reservations/delete_reservation", data, function(data){
 		$( ".ticket_"+id ).fadeOut( "slow", function() {
             $( ".ticket_"+id ).remove();
             $(".totalBasket").text(totalBasket.toFixed(2));
@@ -173,6 +173,9 @@ function removeTicket(id, agendaId, spotId, price, reservationFee) {
     $('#payForm').show();
     var quantityValue = $(".ticketQuantityValue_" + id).val();
     var totalBasket = $(".totalBasket").text();
+    var fromtime = $(".ticketQuantityValue_" + id).attr('data-fromtime');
+    var totime = $(".ticketQuantityValue_" + id).attr('data-totime');
+    var numberofpersons = $(".ticketQuantityValue_" + id).attr('data-numberofpersons');
     totalBasket = parseFloat(totalBasket);
     quantityValue = parseInt(quantityValue);
     price = parseFloat(price);
@@ -196,9 +199,13 @@ function removeTicket(id, agendaId, spotId, price, reservationFee) {
         price: price,
         reservationFee: reservationFee.toFixed(2),
         quantity: quantityValue,
-        time: current_time
+        fromtime: encodeURI(fromtime),
+        totime: encodeURI(totime),
+        numberofpersons: numberofpersons,
+        time: current_time,
+        remove: 1
     };
-    $.post(globalVariables.baseUrl + "booking_agenda/add_to_basket", data, function(data){
+    $.post(globalVariables.baseUrl + "booking_reservations/add_to_basket", data, function(data){
         if(data == 'error'){
             iziToast.error({
                 title: '',
@@ -212,6 +219,7 @@ function removeTicket(id, agendaId, spotId, price, reservationFee) {
         //console.log(data);
         var fromtime = data['fromtime'];
         var totime = data['totime'];
+        var numberofpersons = data['numberofpersons'];
         var first_booking = data['first_booking'];
         var eventDate = data['eventDate'];
         let html = '<div class="menu-list__item ticket_item ticket_'+id+'">'+
@@ -227,7 +235,8 @@ function removeTicket(id, agendaId, spotId, price, reservationFee) {
             '</div>'+
             '<div class="quantity-section mx-auto mb-2">'+
                 '<button type="button" class="quantity-button" onclick="removeTicket(\''+id+'\', \''+agendaId+'\', \''+spotId+'\', \''+price+'\', \''+reservationFee+'\')">-</button>'+
-                '<input type="text" value="'+quantityValue+'" placeholder="0" onfocus="clearTotal(this, \''+price+'\', \'totalBasket\')" onblur="ticketQuantity(this,\''+id+'\', \''+price+'\', \'totalBasket\')" onchange="ticketQuantity(this,\''+id+'\', \''+price+'\', \'totalBasket\')" oninput="absVal(this);" disabled="" class="quantity-input ticketQuantityValue_'+id+'">'+
+                '<input type="text" value="'+quantityValue+'" placeholder="0" onfocus="clearTotal(this, \''+price+'\', \'totalBasket\')" onblur="ticketQuantity(this,\''+id+'\', \''+price+'\', \'totalBasket\')" onchange="ticketQuantity(this,\''+id+'\', \''+price+'\', \'totalBasket\')" oninput="absVal(this);"' +
+                +' data-fromtime="'+fromtime+'" data-totime="'+totime+'" data-numberofpersons="'+numberofpersons+'" disabled="" class="quantity-input ticketQuantityValue_'+id+'">'+
                 '<button type="button" class="quantity-button"  onclick="addTicket(\''+id+'\', \''+agendaId+'\', \''+spotId+'\', \''+price+'\', \''+reservationFee+'\')" >+</button>'+
             '</div>'+
             '<b class="menu-list__type mx-auto">'+
@@ -256,7 +265,11 @@ function removeTicket(id, agendaId, spotId, price, reservationFee) {
 function addTicket(id, agendaId, spotId, price, reservationFee, limit=2) {
     $('#payForm').show();
     var quantityValue = $(".ticketQuantityValue_" + id).val();
+    var oldQuantityValue = quantityValue;
     var totalBasket = $(".totalBasket").text();
+    var fromtime = $(".ticketQuantityValue_" + id).attr('data-fromtime');
+    var totime = $(".ticketQuantityValue_" + id).attr('data-totime');
+    var numberofpersons = $(".ticketQuantityValue_" + id).attr('data-numberofpersons');
     totalBasket = parseFloat(totalBasket);
     quantityValue = parseInt(quantityValue);
     price = parseFloat(price);
@@ -281,10 +294,14 @@ function addTicket(id, agendaId, spotId, price, reservationFee, limit=2) {
         price: price,
         reservationFee: reservationFee.toFixed(2),
         quantity: quantityValue,
+        fromtime: encodeURI(fromtime),
+        totime: encodeURI(totime),
+        numberofpersons: numberofpersons,
         time: current_time
     };
-    $.post(globalVariables.baseUrl + "booking_agenda/add_to_basket", data, function(data){
+    $.post(globalVariables.baseUrl + "booking_reservations/add_to_basket", data, function(data){
         if(data == 'error'){
+            $(".ticketQuantityValue_" + id).val(oldQuantityValue);
             iziToast.error({
                 title: '',
                 message: 'You have reached the maximum number of reservations!',
@@ -372,7 +389,7 @@ function addMultiReservations(id, inputId, agendaId, spotId, price, reservationF
         quantity: quantityValue,
         time: current_time
     };
-    $.post(globalVariables.baseUrl + "booking_agenda/add_to_basket", data, function(data){
+    $.post(globalVariables.baseUrl + "booking_reservations/add_to_basket", data, function(data){
         if(data == 'error'){
             iziToast.error({
                 title: '',

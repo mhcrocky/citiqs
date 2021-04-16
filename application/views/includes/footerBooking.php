@@ -43,13 +43,15 @@
                                         onclick="removeTicket(`<?php echo $booking['timeslotId']; ?>`, `<?php echo $booking['eventid']; ?>`, `<?php echo $booking['SpotId']; ?>`, `<?php echo $booking['price']; ?>`, `<?php echo $booking['reservationFee']; ?>`)">-</button>
                                     <input type="text" min="1"
                                         value="<?php echo $booking['quantity']; ?>" 
-                                         placeholder="0" disabled class="quantity-input ticketQuantityValue_<?php echo $booking['timeslotId']; ?>">
+                                         placeholder="0" disabled class="quantity-input ticketQuantityValue_<?php echo $booking['timeslotId']; ?>"
+                                         data-fromtime="<?php echo $booking['timefrom']; ?>" data-totime="<?php echo $booking['timeto']; ?>" data-numberofpersons="<?php echo $booking['numberofpersons']; ?>"
+                                         >
                                     <button type="button" class="quantity-button"
                                         onclick="addTicket(`<?php echo $booking['timeslotId']; ?>`, `<?php echo $booking['eventid']; ?>`, `<?php echo $booking['SpotId']; ?>`, `<?php echo $booking['price']; ?>`, `<?php echo $booking['reservationFee']; ?>`)">+</button>
                                 </div>
                                 <b class="menu-list__type mx-auto">
                                     <button
-                                        onclick="deleteTicket('<?php echo $booking['timeslotId']; ?>','<?php echo $booking['price']; ?>', '<?php echo $booking['reservationFee']; ?>')"
+                                        onclick="deleteTicket(`<?php echo $booking['timeslotId']; ?>`, `<?php echo $booking['price']; ?>`, `<?php echo $booking['reservationFee']; ?>`)"
                                         type="button" class="btn btn-danger bg-light color-secondary">
                                         <i class="fa fa-trash mr-2" aria-hidden="true"></i>
                                         Delete</button>
@@ -67,7 +69,7 @@
                                     
                                 </div>
                                 <form class="login100-form validate-form"
-                                    action="<?php echo base_url(); ?>booking_agendaa/payment_proceed" method="POST">
+                                    action="<?php echo base_url(); ?>booking_reservations/payment_proceed" method="POST">
                                     <div class="wrap-input100 validate-input m-b-26">
                                         <span class="label-input100">Full Name</span>
                                         <input class="input100" type="text" id="fullName" name="name"
