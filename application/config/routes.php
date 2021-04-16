@@ -466,8 +466,7 @@ $route['setting/exact_credit/update'] = 'Accounting/ExactAccountSetting/update_c
 $route['setting/exact/credit_delete/(:num)'] = 'Accounting/ExactAccountSetting/delete_credit/$1';
 
 
-//Old Booking_agenda
-/*
+
 $route['booking_agenda/reserved'] = "Booking_agenda/reserved";
 $route['booking_agenda/payment_proceed'] = "Booking_agenda/payment_proceed";
 $route['booking_agenda/select_payment_type'] = "Booking_agenda/select_payment_type";
@@ -478,7 +477,7 @@ $route['booking_agenda/get_agenda/spots/(:num)/(:num)'] = "Booking_agenda/get_ag
 $route['booking_agenda/getAllAgenda/(:any)'] = "Booking_agenda/getAllAgenda/$1";
 $route['booking_agenda/(:any)'] = "Booking_agenda/index/$1";
 $route['booking/successbooking'] = "Booking/successBooking";
-*/
+
 
 
 $route['agenda_booking/reserved'] = "Agenda_booking/reserved";
@@ -558,15 +557,15 @@ $route['booking/onlinepayment/(:num)/(:any)'] = 'Booking_events/onlinepayment/$1
 
 
 
-$route['booking_agenda/tickets/(:num)'] = 'Booking_agenda/tickets/$1';
-$route['booking_agenda/add_to_basket'] = 'Booking_agenda/add_to_basket';
-$route['booking_agenda/pay'] = 'Booking_agenda/pay';
-$route['booking_agenda/payment_proceed'] = 'Booking_agenda/payment_proceed';
-$route['booking_agenda/select_payment_type'] = 'Booking_agenda/select_payment_type';
-$route['booking_agenda/delete_reservation'] = 'Booking_agenda/delete_reservation';
-$route['booking_agenda/clear_reservations'] = 'Booking_agenda/clear_reservations';
-$route['booking_agenda/spots/(:num)/(:num)'] = "Booking_agenda/spots/$1/$2";
-$route['booking_agenda/(:any)'] = 'Booking_agenda/index/$1';
+$route['booking_reservations/tickets/(:num)'] = 'Booking_reservations/tickets/$1';
+$route['booking_reservations/add_to_basket'] = 'Booking_reservations/add_to_basket';
+$route['booking_reservations/pay'] = 'Booking_reservations/pay';
+$route['booking_reservations/payment_proceed'] = 'Booking_reservations/payment_proceed';
+$route['booking_reservations/select_payment_type'] = 'Booking_reservations/select_payment_type';
+$route['booking_reservations/delete_reservation'] = 'Booking_reservations/delete_reservation';
+$route['booking_reservations/clear_reservations'] = 'Booking_reservations/clear_reservations';
+$route['booking_reservations/spots/(:num)/(:num)'] = "Booking_reservations/spots/$1/$2";
+$route['booking_reservations/(:any)'] = 'Booking_reservations/index/$1';
 
 $route['video/get_videos'] = 'Video/get_videos';
 $route['video/delete_video'] = 'Video/delete_video';
