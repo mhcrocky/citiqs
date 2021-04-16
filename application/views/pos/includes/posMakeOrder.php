@@ -1,5 +1,5 @@
 <div class="col-md-4" id="posMakeOrderId">
-    <div style="height:7vh; margin:0px 0px 10px 10px;">
+    <div style="height:7vh; margin:0px 0px 10px 10px;" class='pos-settings'>
         <div class="col-sm-9 form-inline">
             <label
                 for='selectSaved'
@@ -56,7 +56,7 @@
             <!-- end checout list -->
         </div>
     </div>
-    <div style="height:14vh; margin-left:20px">
+    <div style="height:14vh; margin-left:20px" class='pos-buttons'>
         <div class="col-sm-6" style="padding-left:0px; padding-right:0px;">
             <div class="col-sm-12" style="padding-left:0px; padding-right:7px;">
                 <div class="col-sm-6" style="padding-left:0px; padding-right:0px;">

@@ -4,7 +4,8 @@
         <?php if (!empty($mainProducts)) { ?>
         <?php if ($vendor['logo']) { ?>
         <div id="vendorLogo" style="text-align:center">
-            <img src=<?php echo base_url() . 'assets/images/vendorLogos/' . $vendor['logo']; ?> alt="" width="100%"
+            <img src=<?php echo base_url() . 'assets/images/vendorLogos/' . $vendor['logo']; ?>
+            alt="" width="100%"
                 height="auto" />
         </div>
         <?php }?>
@@ -52,24 +53,26 @@
                         <div class="shop__item-list selectedSpotBackground">
                             <?php foreach ($products as $product) { ?>
                             <?php
-                                                    if ($product['privateCategory'] === '1' && !$openCategory) {
-                                                        // openCategory (if open) is category id
-                                                        // for next update when every category need to have private key
-                                                ?>
+                                if ($product['privateCategory'] === '1' && !$openCategory) {
+                                    // openCategory (if open) is category id
+                                    // for next update when every category need to have private key
+                            ?>
                             <div style="width:100%; margin-bottom: 5px">
                                 <h2 style="text-align:center">PRIVATE CATEGORY</h2>
                                 <div class="col-lg-4 col-lg-offset-4 col-sm-12">
-                                    <input type="text" class="form-control" placeholder="Insert key to unlock"
-                                        oninput="checkCategoryCode(this.value, '<?php echo $product['categoryId']; ?>','<?php echo $count; ?>')" />
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Insert key to unlock"
+                                        oninput="checkCategoryCode(this.value, '<?php echo $product['categoryId']; ?>','<?php echo $count; ?>')"
+                                    />
                                 </div>
                             </div>
                             <?php
-                                                        break;
-                                                    }
-                                                ?>
-                            <?php
-                                                    $productDetails = reset($product['productDetails']);
-                                                ?>
+                                    break;
+                                }
+                            ?>
+                            <?php $productDetails = reset($product['productDetails']); ?>
                             <div class="shop__single-item">
                                 <div class="shop__single-item__info">
                                     <!-- wrapped long description and title -->
@@ -83,17 +86,18 @@
                                         <?php } ?>
                                     </div>
                                     <?php if (trim($productDetails['name']) !== trim($productDetails['shortDescription']) ) { ?>
-                                    <p class='shop__single-item__info--description productDescription'>
-                                        <?php echo $productDetails['shortDescription']; ?></p>
+                                        <p class='shop__single-item__info--description productDescription'>
+                                            <?php echo $productDetails['shortDescription']; ?>
+                                        </p>
                                     <?php } ?>
                                     <?php
-                                                            $baseUrl = base_url();
-                                                            if ($vendor['showAllergies'] === '1')  {
-                                                                $product['allergies'] = unserialize($product['allergies']);
-                                                                if (!empty($product['allergies']['productAllergies'])) {
-                                                                    $productAllergies = $product['allergies']['productAllergies'];
-                                                                    echo '<div class="shop__single-item__alergies">';
-                                                                    foreach ($productAllergies as $allergy) {
+                                            $baseUrl = base_url();
+                                            if ($vendor['showAllergies'] === '1')  {
+                                                $product['allergies'] = unserialize($product['allergies']);
+                                                if (!empty($product['allergies']['productAllergies'])) {
+                                                    $productAllergies = $product['allergies']['productAllergies'];
+                                                    echo '<div class="shop__single-item__alergies">';
+                                                        foreach ($productAllergies as $allergy) {
                                                                         ?>
                                     <img
                                         src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
@@ -110,11 +114,13 @@
                                 </div>
                                 <?php if ($vendor['showProductsImages'] === '1') { ?>
                                 <div class="shop__single-item__image">
-                                    <img <?php if ($product['productImage'] && file_exists($uploadProductImageFolder . $product['productImage'])) { ?>
+                                    <img
+                                        <?php if ($product['productImage'] && file_exists($uploadProductImageFolder . $product['productImage'])) { ?>
                                         src="<?php echo base_url() . 'assets/images/productImages/' . $product['productImage']; ?>"
                                         <?php } else { ?>
                                         src="<?php echo base_url() . 'assets/images/defaultProductsImages/' . $vendor['defaultProductsImage']; ?>"
-                                        <?php } ?> alt="<?php echo $productDetails['name']; ?>" />
+                                        <?php } ?> alt="<?php echo $productDetails['name']; ?>"
+                                    />
                                 </div>
                                 <?php } ?>
                                 <!-- ADDED DIV FOR + PRICE - -->

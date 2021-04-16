@@ -76,10 +76,22 @@
   }
   .metismenu .collapse {
     display: none;
+	  background-color: #efd1ba;
   }
+.metismenu .collapse a,
+.metismenu .collapse li,
+.metismenu li.active a{
+	background-color: #efd1ba;
+	color:#efd1ba;
+}
   .metismenu .collapse.in {
     display: block;
   }
+
+.metismenu .collapse.in a, 
+.metismenu .collapse.in i{
+	color: #354794;
+}
   .metismenu .collapsing {
     position: relative;
     height: 0;

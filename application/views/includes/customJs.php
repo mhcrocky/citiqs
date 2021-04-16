@@ -318,10 +318,12 @@
 <?php } elseif ($this->view === 'warehouse/areas') { ?>
 	<script src='<?php echo base_url(); ?>assets/home/js/areas.js'></script> 
 <?php } elseif ($this->view === 'publicorders/makeOrder2021') { ?>
-	<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-
-	<script src="<?php #echo $this->baseUrl ?>assets/home/slickJs/slick.min.js"></script>
-	<script src="<?php #echo $this->baseUrl ?>assets/home/js/makeOrderFunctions.js"></script>
-	<script src="<?php #echo $this->baseUrl ?>assets/home/js/makeOrderNew.js"></script> -->
+	<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-url-hash@latest/dist/js/splide-extension-url-hash.min.js"></script>
+	<script src="<?php echo $this->baseUrl ?>assets/home/js/makeOrder2021.js"></script>
+	<!--
+		<script src="<?php #echo $this->baseUrl ?>assets/home/slickJs/slick.min.js"></script>
+		<script src="<?php #echo $this->baseUrl ?>assets/home/js/makeOrderFunctions.js"></script>
+		<script src="<?php #echo $this->baseUrl ?>assets/home/js/makeOrderNew.js"></script>
+	-->
 <?php }?>

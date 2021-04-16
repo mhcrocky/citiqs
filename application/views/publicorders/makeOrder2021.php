@@ -1,3 +1,4 @@
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 <!-- HEADER -->
 <header class='header'>
 	<nav class="navbar navbar-expand-lg container">
@@ -27,14 +28,13 @@
 </header>
 <!-- END HEADER -->
 
-<!-- HERO SECTION -->
+<!-- CATEGORIES SECTION -->
 <section class='hero-section position-relative'>
 	<div class="d-none d-md-flex col-6 px-0 hero__background">
 		<img src="<?php echo base_url() . 'assets/images/2021/';  ?>food.jpg" alt="">
 	</div>
-	<!-- end col -->	
 	<div class="container">
-		<div class="row">
+		<!-- <div class="row">
 			<div class="col-12 col-md-6">
 				<h1>Our Menu</h1>
 				<p class='text-muted mt-4 mb-5'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sagittis at est ut facilisis. Suspendisse eu luctus mauris.</p>
@@ -43,489 +43,115 @@
 					<a href="#" class="btn btn-secondary btn-lg bg-secondary px-4 mt-3">Lunch & Dinner</a>
 				</div>
 			</div>
-			<!-- end col -->
-			
+		</div> -->
+		<div class="row">
+			<div class="col-lg-8 col-sm-12 col-xs-12">
+				<div class="splide"  id="splideCategories">
+					<div class="splide__track">
+						<div class="splide__list">
+							<?php
+								$i = 0;
+								foreach ($categories as $category) {
+									$i++
+									?>
+										<div
+											class="splide__slide"
+											data-splide-hash="slide0<?php echo $i; ?>"
+										>
+											<div class="single-item__image">
+												<?php if(isset($categoriesImages[$category])) { ?>
+													<img src="<?php echo $categoriesImagesRelPath . $categoriesImages[$category][0]['image']; ?>" alt="" />
+												<?php } ?>
+												<p class='single-item__promotion'><?php echo $category; ?></p>
+											</div>
+										</div>
+									<?php
+								}
+							?>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<!-- end row -->
-		<div class="row single-item__grid">
-			<div class="col-12 col-sm-6 col-md-3 single-item mb-4 mb-md-0">
-				<a href="" class='single-item'>
-					<div class="single-item__image">
-						<img src="<?php echo base_url() . 'assets/images/2021/';  ?>food.jpg" alt="">
-						<p class='single-item__promotion'>sale</p>
-					</div>
-					<div class="single-item__content">
-						<p class='mb-0'>Asia Fresh Food</p>
-						<div>
-							<span class='single-item__discount'>$15.00</span>
-							<span class='single-item__price'>$14.00</span>
-						</div>
-					</div>
-				</a>
-			</div>
-			<!-- end col -->
-			<div class="col-12 col-sm-6 col-md-3 single-item mb-4 mb-md-0">
-				<a href="" class='single-item'>
-					<div class="single-item__image">
-						<img src="<?php echo base_url() . 'assets/images/2021/';  ?>coca-cola.jpg" alt="">
-						<p class='single-item__promotion'>sale</p>
-					</div>
-					<div class="single-item__content">
-						<p class='mb-0'>Asia Fresh Food</p>
-						<div>
-							<span class='single-item__discount'>$15.00</span>
-							<span class='single-item__price'>$14.00</span>
-						</div>
-					</div>
-				</a>
-			</div>
-			<!-- end col -->
-			<div class="col-12 col-sm-6 col-md-3 single-item mb-4 mb-md-0">
-				<a href="" class='single-item'>
-					<div class="single-item__image">
-						<img src="<?php echo base_url() . 'assets/images/2021/';  ?>food2.jpg" alt="">
-						<p class='single-item__promotion'>sale</p>
-					</div>
-					<div class="single-item__content">
-						<p class='mb-0'>Asia Fresh Food</p>
-						<div>
-							<span class='single-item__discount'>$15.00</span>
-							<span class='single-item__price'>$14.00</span>
-						</div>
-					</div>
-				</a>
-			</div>
-			<!-- end col -->
-			<div class="col-12 col-sm-6 col-md-3 single-item">
-				<a href="" class='single-item'>
-					<div class="single-item__image">
-						<img src="<?php echo base_url() . 'assets/images/2021/';  ?>food1.jpg" alt="">
-						<p class='single-item__promotion'>sale</p>
-					</div>
-					<div class="single-item__content">
-						<p class='mb-0'>Asia Fresh Food</p>
-						<div>
-							<span class='single-item__discount'>$15.00</span>
-							<span class='single-item__price'>$14.00</span>
-						</div>
-					</div>
-				</a>
-			</div>
-			<!-- end col -->
-		</div>
-		<!-- end row -->
 	</div>
 </section>
-<!-- END HERO SECTION -->
+<!-- END CATEGORIES SECTION -->
 
-<!-- BREAKFAST SECTION -->
+<!-- MAIN SECTION -->
 <section>
 	<div class="container">
 		<div class="row row-menu">
-			<div class="col-12 col-md-4">
-				<h2 class='color-primary mb-5'>Dinner</h2>
-				<ul class="items-gallery">
-					<li>
-						<img src="<?php echo base_url() . 'assets/images/2021/';  ?>coca-cola.jpg" alt="">
-					</li>
-					<li>
-						<img src="<?php echo base_url() . 'assets/images/2021/';  ?>food.jpg" alt="">
-					</li>
-					<li>
-						<img src="<?php echo base_url() . 'assets/images/2021/';  ?>food1.jpg" alt="">
-					</li>
-					<li>
-						<img src="<?php echo base_url() . 'assets/images/2021/';  ?>food2.jpg" alt="">
-					</li>
-					<li>
-						<img src="<?php echo base_url() . 'assets/images/2021/';  ?>food.jpg" alt="">
-					</li>
-				</ul>
-			</div>
-			<!-- end col -->
-			<div class="col-12 col-md-8 pl-md-5">
-				<h4 class='font-weight-bold mt-4 mt-md-3 mb-2 mb-md-4'>Salad & Snack</h4>
-				<div class='menu-list'>
-					<div class="menu-list__item">
-						<div class='menu-list__name'>
-							<b class='menu-list__title'>Name</b>
-							<div>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-							</div>
-						</div>
-						<div class='menu-list__right-col'>
-							<div class='menu-list__price'>
-								<b class='menu-list__price--stroke'>6.00$ </b>
-								<b class='menu-list__price--discount'>4.00$</b>
-							</div>
-							<b class='menu-list__type'>vegan</b>
-							<div class="quantity-section">
-								<button class='quantity-button quantity-button--minus'>-</button>
-								<input type="number" value='0' placeholder='0' class='quantity-input'>
-								<button type="button" class='quantity-button quantity-button--plus' data-toggle="modal" data-target="#modal-additional-options">+</button>
-							</div>
-						</div>
-					</div>
-					<!-- end menu list item -->
-					<div class="menu-list__item">
-						<div class='menu-list__name'>
-							<b class='menu-list__title'>Name</b>
-							<div>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-							</div>
-						</div>
-						<div class='menu-list__right-col'>
-							<div class='menu-list__price'>
-								<b class='menu-list__price--regular'>6.00$ </b>
-							</div>
-							<b class='menu-list__type'>vegan</b>
-							<div class="quantity-section">
-								<button class='quantity-button quantity-button--minus'>-</button>
-								<input type="number" value='0' placeholder='0' class='quantity-input'>
-								<button type="button" class='quantity-button quantity-button--plus' data-toggle="modal" data-target="#modal-additional-options">+</button>
-							</div>
-						</div>
-					</div>
-					<!-- end menu list item -->
-					<div class="menu-list__item">
-						<div class='menu-list__name'>
-							<b class='menu-list__title'>Name</b>
-							<div>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-							</div>
-						</div>
-						<div class='menu-list__right-col'>
-							<div class='menu-list__price'>
-								<b class='menu-list__price--stroke'>6.00$ </b>
-								<b class='menu-list__price--discount'>4.00$</b>
-							</div>
-							<b class='menu-list__type'>vegan</b>
-							<div class="quantity-section">
-								<button class='quantity-button quantity-button--minus'>-</button>
-								<input type="number" value='0' placeholder='0' class='quantity-input'>
-								<button type="button" class='quantity-button quantity-button--plus' data-toggle="modal" data-target="#modal-additional-options">+</button>
-							</div>
-						</div>
-					</div>
-					<!-- end menu list item -->
-					<div class="menu-list__item">
-						<div class='menu-list__name'>
-							<b class='menu-list__title'>Name</b>
-							<div>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-							</div>
-						</div>
-						<div class='menu-list__right-col'>
-							<div class='menu-list__price'>
-								<b class='menu-list__price--regular'>6.00$ </b>
-							</div>
-							<b class='menu-list__type'>vegan</b>
-							<div class="quantity-section">
-								<button class='quantity-button quantity-button--minus'>-</button>
-								<input type="number" value='0' placeholder='0' class='quantity-input'>
-								<button type="button" class='quantity-button quantity-button--plus' data-toggle="modal" data-target="#modal-additional-options">+</button>
-							</div>
-						</div>
-					</div>
-					<!-- end menu list item -->
-					<div class="menu-list__item">
-						<div class='menu-list__name'>
-							<b class='menu-list__title'>Name</b>
-							<div>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-							</div>
-						</div>
-						<div class='menu-list__right-col'>
-							<div class='menu-list__price'>
-								<b class='menu-list__price menu-list__price--stroke'>6.00$ </b>
-								<b class='menu-list__price--discount'>4.00$</b>
-							</div>
-							<b class='menu-list__type'>vegan</b>
-							<div class="quantity-section">
-								<button class='quantity-button quantity-button--minus'>-</button>
-								<input type="number" value='0' placeholder='0' class='quantity-input'>
-								<button type="button" class='quantity-button quantity-button--plus' data-toggle="modal" data-target="#modal-additional-options">+</button>
-							</div>
-						</div>
-					</div>
-					<!-- end menu list item -->
-					<div class="menu-list__item">
-						<div class='menu-list__name'>
-							<b class='menu-list__title'>Name</b>
-							<div>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-							</div>
-						</div>
-						<div class='menu-list__right-col'>
-							<div class='menu-list__price'>
-								<b class='menu-list__price--regular'>6.00$ </b>
-							</div>
-							<b class='menu-list__type'>vegan</b>
-							<div class="quantity-section">
-								<button class='quantity-button quantity-button--minus'>-</button>
-								<input type="number" value='0' placeholder='0' class='quantity-input'>
-								<button type="button" class='quantity-button quantity-button--plus' data-toggle="modal" data-target="#modal-additional-options">+</button>
-							</div>
-						</div>
-					</div>
-					<!-- end menu list item -->
+			<?php foreach ($mainProducts as $category => $products) { ?>
+				<div class="col-12 col-md-4">
+					<h2 class='color-primary mb-5'><?php echo $category; ?></h2>
+					<?php if ($vendor['showProductsImages'] === '1') { ?>
+						<!-- show images -->
+						<ul class="items-gallery">
+							<?php
+								$count = 1;
+								foreach ($products as $product) {
+									if ($count > 5) break;
+									$productDetails = reset($product['productDetails']);
+									?>
+									<li>
+										<img
+											<?php if ($product['productImage'] && file_exists($uploadProductImageFolder . $product['productImage'])) { ?>
+												src="<?php echo base_url() . 'assets/images/productImages/' . $product['productImage']; ?>"
+											<?php } else { ?>
+												src="<?php echo base_url() . 'assets/images/defaultProductsImages/' . $vendor['defaultProductsImage']; ?>"
+											<?php } ?>
+												alt="<?php echo $productDetails['name']; ?>"
+										/>
+									</li>
+									<?php
+									$count++;
+								}
+							?>
+						</ul>
+						<!-- end show images -->
+					<?php } ?>
 				</div>
-			</div>
-			<!-- end col -->
-		</div>
-		<!-- end row -->
-		<div class="row row-menu">
-			<div class="col-12 col-md-4">
-				<h2 class='color-primary mb-5'>Dinner</h2>
-				<ul class="items-gallery">
-					<li>
-						<img src="<?php echo base_url() . 'assets/images/2021/';  ?>coca-cola.jpg" alt="">
-					</li>
-					<li>
-						<img src="<?php echo base_url() . 'assets/images/2021/';  ?>food.jpg" alt="">
-					</li>
-					<li>
-						<img src="<?php echo base_url() . 'assets/images/2021/';  ?>food1.jpg" alt="">
-					</li>
-					<li>
-						<img src="<?php echo base_url() . 'assets/images/2021/';  ?>food2.jpg" alt="">
-					</li>
-					<li>
-						<img src="<?php echo base_url() . 'assets/images/2021/';  ?>food.jpg" alt="">
-					</li>
-				</ul>
-			</div>
-			<!-- end col -->
-			<div class="col-12 col-md-8 pl-md-5">
-				<h4 class='font-weight-bold mt-4 mt-md-3 mb-2 mb-md-4'>Salas & Snack</h4>
-				<div class='menu-list'>
-					<div class="menu-list__item">
-						<div class='menu-list__name'>
-							<b class='menu-list__title'>Name</b>
-							<div>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-							</div>
-						</div>
-						<div class='menu-list__right-col'>
-							<div class='menu-list__price'>
-								<b class='menu-list__price--stroke'>6.00$ </b>
-								<b class='menu-list__price--discount'>4.00$</b>
-							</div>
-							
-							<b class='menu-list__type'>vegan</b>
-						</div>
+				<div class="col-12 col-md-8 pl-md-5">
+					<!-- <h4 class='font-weight-bold mt-4 mt-md-3 mb-2 mb-md-4'>Salad & Snack</h4> -->
+					<div class='menu-list'>
+						<?php
+                            foreach ($products as $product) {
+                                $productDetails = reset($product['productDetails']);
+								include FCPATH . 'application/views/publicorders/includes/makeOrderProduct2021.php';
+                            }
+						?>
 					</div>
-					<!-- end menu list item -->
-					<div class="menu-list__item">
-						<div class='menu-list__name'>
-							<b class='menu-list__title'>Name</b>
-							<div>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-							</div>
-						</div>
-						<div class='menu-list__right-col'>
-							<div class='menu-list__price'>
-								<b class='menu-list__price--regular'>6.00$ </b>
-							</div>
-							<b class='menu-list__type'>vegan</b>
-						</div>
-					</div>
-					<!-- end menu list item -->
-					<div class="menu-list__item">
-						<div class='menu-list__name'>
-							<b class='menu-list__title'>Name</b>
-							<div>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-							</div>
-						</div>
-						<div class='menu-list__right-col'>
-							<div class='menu-list__price'>
-								<b class='menu-list__price--stroke'>6.00$ </b>
-								<b class='menu-list__price--discount'>4.00$</b>
-							</div>
-							
-							<b class='menu-list__type'>vegan</b>
-						</div>
-					</div>
-					<!-- end menu list item -->
-					<div class="menu-list__item">
-						<div class='menu-list__name'>
-							<b class='menu-list__title'>Name</b>
-							<div>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-							</div>
-						</div>
-						<div class='menu-list__right-col'>
-							<div class='menu-list__price'>
-								<b class='menu-list__price--regular'>6.00$ </b>
-							</div>
-							<b class='menu-list__type'>vegan</b>
-						</div>
-					</div>
-					<!-- end menu list item -->
-					<div class="menu-list__item">
-						<div class='menu-list__name'>
-							<b class='menu-list__title'>Name</b>
-							<div>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-							</div>
-						</div>
-						<div class='menu-list__right-col'>
-							<div class='menu-list__price'>
-								<b class='menu-list__price menu-list__price--stroke'>6.00$ </b>
-								<b class='menu-list__price--discount'>4.00$</b>
-							</div>
-							
-							<b class='menu-list__type'>vegan</b>
-						</div>
-					</div>
-					<!-- end menu list item -->
-					<div class="menu-list__item">
-						<div class='menu-list__name'>
-							<b class='menu-list__title'>Name</b>
-							<div>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-								<p class='menu-list__ingredients'>Ingrediants 1</p>
-							</div>
-						</div>
-						<div class='menu-list__right-col'>
-							<div class='menu-list__price'>
-								<b class='menu-list__price--regular'>6.00$ </b>
-							</div>
-							<b class='menu-list__type'>vegan</b>
-						</div>
-					</div>
-					<!-- end menu list item -->
 				</div>
-			</div>
-			<!-- end col -->
+			<?php } ?>
 		</div>
-		<!-- end row -->
-
 	</div>
 </section>
-<!-- END BREAKFAST SECTION -->
+<!-- END MAIN SECTION -->
 
 <!-- BANNER SECTION -->
-<section class="banner px-3 px-md-0">
+<!-- <section class="banner px-3 px-md-0">
 	<div class="container">
 		<div class="row align-items-center pl-lg-4">
 			<div class="col-12 col-md-4 mb-2 mb-md-0 py-4 pl-md-5 py-md-5 px-4 px-md-2 px-lg-3">
 				<h2 class='font-weight-bold color-secondary'>Order Now</h2>
 				<p class='font-weight-bold mb-0'>From Your favourite <span class='color-secondary'>delivery service</span></p>
 			</div>
-			<!-- end col -->
+			
 			<div class="col-12 col-md-4 py-4 py-md-0 px-4  px-md-2 px-lg-3 bg-white text-left text-md-center rounded">
-				<img src="<?php echo base_url() . 'assets/images/2021/';  ?>ubar.png" alt="" class='pr-2'>
-				<img src="<?php echo base_url() . 'assets/images/2021/';  ?>ubar.png" alt="" class='pr-2'>
-				<img src="<?php echo base_url() . 'assets/images/2021/';  ?>ubar.png" alt="" class='pr-2'>
+				<img src="<?php #echo base_url() . 'assets/images/2021/';  ?>ubar.png" alt="" class='pr-2'>
+				<img src="<?php #echo base_url() . 'assets/images/2021/';  ?>ubar.png" alt="" class='pr-2'>
+				<img src="<?php #echo base_url() . 'assets/images/2021/';  ?>ubar.png" alt="" class='pr-2'>
 			</div>
-			<!-- end col -->
 			<div class="col-12 col-md-4 banner__image align-self-stretch position-relative px-0">
-				<img src="<?php echo base_url() . 'assets/images/2021/';  ?>food.jpg" alt="" class='w-100 h-100 position-md-absolute'>
+				<img src="<?php #echo base_url() . 'assets/images/2021/';  ?>food.jpg" alt="" class='w-100 h-100 position-md-absolute'>
 			</div>
 		</div>
 	</div>
-</section>
+</section> -->
 <!-- END BANNER SECTION -->
 
 <!-- SECTION ORDER -->
-<section class="order-section">
+<!-- <section class="order-section">
 	<div class="container">
 		<div class="row">
 			<div class="col-12 col-md-3 px-0 d-flex flex-column banner__cta">
@@ -534,7 +160,6 @@
 					<a href="tel:" class='text-white font-weight-bold py-3 d-block'>999-999-999</a>
 				</div>
 			</div>
-			<!-- end col -->
 			<div class="col-12 col-md-9 px-0 pr-0 d-flex flex-column text-left mt-4 mt-md-0">
 				<h6 class='py-3 px-4 px-md-5 font-weight-bold text-muted text-uppercase'>Don't miss out</h6>
 				<div class='order-section__latest py-5 px-4 px-md-5 d-flex align-items-left justify-content-center flex-grow-1 flex-column'>
@@ -542,155 +167,12 @@
 					<p class='latest__exceprtion'><span class='latest__meta'>December 12, 2020</span>Excepteur sint occaecat cupidatat non proident, sunt in culpa ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate.</p>
 				</div>
 			</div>
-			<!-- end col -->
 		</div>
 	</div>
-</section>
+</section> -->
 <!-- END SECTION ORDER -->
 	
-<!-- MODAL ADDITIONAL OPTIONS -->
-<div class="modal fade"id="modal-additional-options" tabindex="-1" role="dialog" aria-labelledby="modal-additional-options" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">{{Product Title}}</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<form action="">
-					<div class='option-group'>
-						<h5 class='w-100 mb-3'>Additional requests</h5>
-						<div class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
-							<label class="custom-control-label" for="customCheck">Check this custom checkbox lorem ipsum text</label>
-						</div>
-						<!-- end form control -->
-						<div class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input" id="customCheck1" name="example1">
-							<label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-						</div>
-						<!-- end form control -->
-						<div class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input" id="customCheck2" name="example1">
-							<label class="custom-control-label" for="customCheck2">Check this custom checkbox</label>
-						</div>
-						<!-- end form control -->
-						<div class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input" id="customCheck3" name="example1">
-							<label class="custom-control-label" for="customCheck3">Check this custom checkbox</label>
-						</div>
-						<!-- end form control -->
-						<div class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input" id="customCheck4" name="example1">
-							<label class="custom-control-label" for="customCheck4">Check this custom checkbox</label>
-						</div>
-						<!-- end form control -->
-						<div class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input" id="customCheck5" name="example1">
-							<label class="custom-control-label" for="customCheck5">Check this custom checkbox</label>
-						</div>
-						<!-- end form control -->
-						<div class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input" id="customCheck6" name="example1">
-							<label class="custom-control-label" for="customCheck6">Check this custom checkbox</label>
-						</div>
-						<!-- end form control -->
-					</div>
-					<!-- end group options-->
-					<div class="option-group">
-						<h5 class='w-100 mb-3'>Additional requests</h5>
-						<div class="custom-control custom-radio">
-							<input type="radio" class="custom-control-input" id="customRadio" name="example1" value="customEx">
-							<label class="custom-control-label" for="customRadio">Custom radio</label>
-						</div>
-						<!-- end form control -->
-						<div class="custom-control custom-radio">
-							<input type="radio" class="custom-control-input" id="customRadio1" name="example1" value="customEx">
-							<label class="custom-control-label" for="customRadio1">Custom radio</label>
-						</div>
-						<!-- end form control -->
-						<div class="custom-control custom-radio">
-							<input type="radio" class="custom-control-input" id="customRadio2" name="example1" value="customEx">
-							<label class="custom-control-label" for="customRadio2">Custom radio</label>
-						</div>
-						<!-- end form control -->
-						<div class="custom-control custom-radio">
-							<input type="radio" class="custom-control-input" id="customRadio3" name="example1" value="customEx">
-							<label class="custom-control-label" for="customRadio3">Custom radio</label>
-						</div>
-						<!-- end form control -->
-						<div class="custom-control custom-radio">
-							<input type="radio" class="custom-control-input" id="customRadio4" name="example1" value="customEx">
-							<label class="custom-control-label" for="customRadio4">Custom radio</label>
-						</div>
-						<!-- end form control -->
-					</div>
-					<!-- end form grup -->
-					<div class="option-group">
-						<h5 class='w-100 mb-2'>Additional requests</h5>
-						<div class="form-group">
-							<label for="customRadio4">Number Input</label>
-							<div class="quantity-section mt-0">
-								<button type="button"  class="quantity-button quantity-button--minus">-</button>
-								<input type="number" value="0" placeholder="0" class="quantity-input">
-								<button type="button" class="quantity-button quantity-button--plus">+</button>
-							</div>
-						</div>
-						<!-- end form group -->
-						<div class="form-group">
-							<label for="customRadio4">Number Input</label>
-							<div class="quantity-section mt-0">
-								<button type="button"  class="quantity-button quantity-button--minus">-</button>
-								<input type="number" value="0" placeholder="0" class="quantity-input">
-								<button type="button" class="quantity-button quantity-button--plus">+</button>
-							</div>
-						</div>
-						<!-- end form group -->
-						<div class="form-group">
-							<label for="customRadio4">Number Input</label>
-							<div class="quantity-section mt-0">
-								<button type="button"  class="quantity-button quantity-button--minus">-</button>
-								<input type="number" value="0" placeholder="0" class="quantity-input">
-								<button type="button" class="quantity-button quantity-button--plus">+</button>
-							</div>
-						</div>
-						<!-- end form group -->
-						<div class="form-group">
-							<label for="customRadio4">Number Input</label>
-							<div class="quantity-section mt-0">
-								<button type="button"  class="quantity-button quantity-button--minus">-</button>
-								<input type="number" value="0" placeholder="0" class="quantity-input">
-								<button type="button" class="quantity-button quantity-button--plus">+</button>
-							</div>
-						</div>
-						<!-- end form group -->
-					</div>
-					<!-- option group -->
-					<div class="option-group">
-						<h5 class='w-100 mb-2'>Additional requests</h5>
-						<div class="form-group w-100">
-							<label for="exampleFormControlTextarea1">Additional Information</label>
-							<textarea class="form-control w-100" id="exampleFormControlTextarea1" rows="3" ></textarea>
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<div class="quantity-section mt-0">
-					<button type="button" class="quantity-button quantity-button--minus">-</button>
-					<input type="number" value="0" placeholder="0" class="quantity-input">
-					<button type="button" class="quantity-button quantity-button--plus">+</button>
-				</div>
-				<div>
-					<button type="button" class="btn btn-primary">Save</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+
 
 <!-- MODAL CHECKOUT -->
 <!-- MODAL ADDITIONAL OPTIONS -->
@@ -704,162 +186,11 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<div class="menu-list">
-					
-					<div class="menu-list__item">
-						<div class="menu-list__name">
-							<b class="menu-list__title">Name</b>
-							<div>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-							</div>
-						</div>
-						<div class="menu-list__right-col">
-							<div class="menu-list__price">
-								<b class="menu-list__price--regular">6.00$ </b>
-							</div>
-							<div class="quantity-section">
-								<button class="quantity-button quantity-button--minus">-</button>
-								<input type="number" value="0" placeholder="0" class="quantity-input">
-								<button type="button" class="quantity-button quantity-button--plus">+</button>
-							</div>
-							<button type='button' class='btn checkout-modal-edit' data-toggle="modal" data-target="#modal-additional-options" ><i class="fa fa-pencil-square-o mr-2"></i>EDIT</button>
-						</div>
-					</div>
-					<!-- end menu list item -->
-					<div class="menu-list__item">
-						<div class="menu-list__name">
-							<b class="menu-list__title">Name</b>
-							<div>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-							</div>
-						</div>
-						<div class="menu-list__right-col">
-							<div class="menu-list__price">
-								<b class="menu-list__price--regular">6.00$ </b>
-							</div>
-							<div class="quantity-section">
-								<button class="quantity-button quantity-button--minus">-</button>
-								<input type="number" value="0" placeholder="0" class="quantity-input">
-								<button type="button" class="quantity-button quantity-button--plus">+</button>
-							</div>
-							<button type='button' class='btn checkout-modal-edit' data-toggle="modal" data-target="#modal-additional-options" ><i class="fa fa-pencil-square-o mr-2"></i>EDIT</button>
-						</div>
-					</div>
-					<!-- end menu list item -->
-					<div class="menu-list__item">
-						<div class="menu-list__name">
-							<b class="menu-list__title">Name</b>
-							<div>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-							</div>
-						</div>
-						<div class="menu-list__right-col">
-							<div class="menu-list__price">
-								<b class="menu-list__price--regular">6.00$ </b>
-							</div>
-							<div class="quantity-section">
-								<button class="quantity-button quantity-button--minus">-</button>
-								<input type="number" value="0" placeholder="0" class="quantity-input">
-								<button type="button" class="quantity-button quantity-button--plus">+</button>
-							</div>
-							<button type='button' class='btn checkout-modal-edit' data-toggle="modal" data-target="#modal-additional-options" ><i class="fa fa-pencil-square-o mr-2"></i>EDIT</button>
-						</div>
-					</div>
-					<!-- end menu list item -->
-					<div class="menu-list__item">
-						<div class="menu-list__name">
-							<b class="menu-list__title">Name</b>
-							<div>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-							</div>
-						</div>
-						<div class="menu-list__right-col">
-							<div class="menu-list__price">
-								<b class="menu-list__price--regular">6.00$ </b>
-							</div>
-							<div class="quantity-section">
-								<button class="quantity-button quantity-button--minus">-</button>
-								<input type="number" value="0" placeholder="0" class="quantity-input">
-								<button type="button" class="quantity-button quantity-button--plus">+</button>
-							</div>
-							<button type='button' class='btn checkout-modal-edit' data-toggle="modal" data-target="#modal-additional-options" ><i class="fa fa-pencil-square-o mr-2"></i>EDIT</button>
-						</div>
-					</div>
-					<!-- end menu list item -->
-					<div class="menu-list__item">
-						<div class="menu-list__name">
-							<b class="menu-list__title">Name</b>
-							<div>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-								<p class="menu-list__ingredients">Ingrediants 1</p>
-							</div>
-						</div>
-						<div class="menu-list__right-col">
-							<div class="menu-list__price">
-								<b class="menu-list__price--regular">6.00$ </b>
-							</div>
-							<div class="quantity-section">
-								<button class="quantity-button quantity-button--minus">-</button>
-								<input type="number" value="0" placeholder="0" class="quantity-input">
-								<button class="quantity-button quantity-button--plus">+</button>
-							</div>
-						</div>
-					</div>
-					<!-- end menu list item -->
-				</div>
+				<div id="checkout-modal-list" class="menu-list"></div>
 			</div>
 			<div class="modal-footer">
 				<div class="checkout-modal-sum">
-					<h4 class='mb-0'>TOTAL:<span class='ml-2 color-secondary font-weight-bold'>55$</span></h4>
+					<h4 class='mb-0'>TOTAL:<span class='ml-2 color-secondary font-weight-bold' id="totalAmount"></span></h4>
 				</div>
 				<div>
 					<button type="button" class="btn btn-primary">Payment</button>
@@ -870,3 +201,16 @@
 	</div>
 </div>
 <!-- Modal -->
+
+<script>
+	const makeOrder2021 = (function(){
+		let globals = {
+			'checkoutProductListId'	: 'checkout-modal-list',
+			'checkoutProductList'	: document.getElementById('checkout-modal-list'),
+			'totalAmount'			: document.getElementById('totalAmount')
+		}
+
+		Object.freeze(globals);
+		return globals;
+	}());
+</script>

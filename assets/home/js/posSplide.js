@@ -11,14 +11,18 @@ function triggerHashValue() {
     return;
 }
 
+var options = {}
+
 var splideCategories = new Splide(
     '#splideCategories',
         {
-            perPage    : 3,
+            perPage    : 6,
             perMove    : 1,
             height     : '9rem',
-            focus      : 'center',
+            focus      : 'left',
             trimSpace  : false,
+			gap		   : 10, 
+			pagination : false,
             breakpoints: {
                 600: {
                     perPage: 2,
@@ -36,7 +40,8 @@ var splideSpots = new Splide(
         '#splideSpots',
         {
             perMove     : 1,
-            perPage     : 5,
+            perPage     : 7,
+			gap         : 10,
             direction   : 'ttb',
             height      : '70vh'
         }

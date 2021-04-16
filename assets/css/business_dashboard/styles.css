@@ -162,10 +162,19 @@
     font-weight: 400;
 }
 
-.metismenu li a i {
-    color: #fff;
+.metismenu ul.collapse a i {
+    color:#efd1ba;
     -webkit-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
+}
+
+.metismenu li ul.collapse.in a i{
+	color:#496083;
+}
+
+.metismenu li ul.collapse.in a:hover i,
+.metismenu li ul.collapse.in a:hover:after{
+	color:#fff;
 }
 
 .metismenu li a:after {
@@ -176,6 +185,17 @@
     top: 12px;
     color: #fff;
     font-size: 20px;
+}
+
+.metismenu ul a:after{
+	color:#efd1ba;
+	-webkit-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+}
+
+.metismenu ul.collapse a:after,
+.metismenu ul.collapse li.active a:after{
+	color:#496083;
 }
 
 .metismenu li.active>a:after {
@@ -194,7 +214,7 @@
 .metismenu li.active>a,
 .metismenu li:hover>a {
     color: #fff;
-	opacity: 0.6
+	opacity: 1;
 }
 
 .metismenu li li a {
@@ -208,7 +228,7 @@
 .metismenu >li:hover>a,
 .metismenu >li.active>a {
     color: #fff;
-    background: #1c42ed;
+    background: #d5612f;
 }
 
 .metismenu li:hover>a,
