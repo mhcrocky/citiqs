@@ -13,7 +13,8 @@
             parent::__construct();
 
             $this->load->model('user_model');
-            $this->load->model('api_model');
+			$this->load->model('notification_model');
+			$this->load->model('api_model');
             $this->load->helper('utility_helper');
             $this->load->config('custom');
             $this->load->library('language', array('controller' => $this->router->class));
@@ -69,7 +70,14 @@
 				// Does user exist? (tbl_user)
 				// Does user app register exist (tbl_user_notification)
 
+//				echo var_dump($user);
+//				return;
+
                 $result = $this->notification_model->checkOneSignalIdUser($user);
+//
+//				echo var_dump($user);
+//				echo var_dump($result);
+//				return;
 
 				if ($result!="") {
 					// INSERT USER

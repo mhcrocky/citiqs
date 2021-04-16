@@ -16,10 +16,10 @@ class Notification_model extends CI_Model
 	{
 		$this->db->select("*");
 		$this->db->from("tbl_user_notification_ids");
-		$this->db->where("email", $user['$emailBuyer']);
-		$this->db->where("vendorId", $user['$vendorId]']);
-		$this->db->where("appId", $user['$appId]']);
-		$this->db->where("playerId", $user['$playerId']);
+		$this->db->where("email", $user['emailBuyer']);
+		$this->db->where("vendorId", $user['vendorId]']);
+		$this->db->where("appId", $user['appId]']);
+		$this->db->where("playerId", $user['playerId']);
 		$query = $this->db->get();
 		if (!empty($query)) {
 			return $query->row();
@@ -31,7 +31,7 @@ class Notification_model extends CI_Model
 	{
 		$this->db->select("email");
 		$this->db->from("tbl_user");
-		$this->db->where("email", $user['$emailBuyer']);
+		$this->db->where("email", $user['emailBuyer']);
 		$query = $this->db->get();
 		if (!empty($query)) {
 			return $query->row();
