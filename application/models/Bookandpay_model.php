@@ -678,11 +678,13 @@ class Bookandpay_model extends CI_Model
 		$data = [];
 		$reservationIds = [];
 		foreach($bookings as $booking){
+			$savedatetime = new DateTime( 'now');
+			$bookdatetime = $savedatetime->format('Y-m-d H:i:s');
+			for($i=0; $i < $booking['quantity']; $i++):
 			$set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKLMNPQRSTVWXY';
 			$reservationId = 'T-' . substr(str_shuffle($set), 0, 16);
 			$reservationIds[] = $reservationId;
-			$savedatetime = new DateTime( 'now');
-			$bookdatetime = $savedatetime->format('Y-m-d H:i:s');
+			
 			$data[] = [
 				'reservationId' => $reservationId,
 				'customer' => $booking['customer'],
@@ -704,6 +706,7 @@ class Bookandpay_model extends CI_Model
 				'reservationset' => '1',
 				'timeslot' => $booking['timeslotId'],
 			];
+			endfor;
 			
 		}
 
