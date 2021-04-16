@@ -42,6 +42,18 @@ class Bookandpaytimeslots_model extends CI_Model
         return $query->result_array();
     }
 
+    public function getTimeSlotsByCustomerSpotId ($customer_id, $spot_id) {
+        $this->db->select('tbl_bookandpaytimeslots.*, tbl_bookandpaytimeslots.id as timeslotId');
+        $this->db->from('tbl_bookandpaytimeslots');
+        $this->db->join('tbl_bookandpayspot', 'tbl_bookandpayspot.id = tbl_bookandpaytimeslots.spot_id', 'left');
+        $this->db->join('tbl_bookandpayagenda', 'tbl_bookandpayagenda.id = tbl_bookandpayspot.agenda_id', 'left');
+        $this->db->where('tbl_bookandpayagenda.Customer', $customer_id);
+        $this->db->where('tbl_bookandpaytimeslots.spot_id', $spot_id);
+        $this->db->order_by("fromtime", "asc");
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     public function getTimeSlotsByCustomer ($customer_id, $spotId = false) {
         $this->db->select('tbl_bookandpaytimeslots.*, tbl_email_templates.template_name');
         $this->db->from('tbl_bookandpaytimeslots');
