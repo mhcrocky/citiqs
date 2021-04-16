@@ -82,11 +82,11 @@
                             
                             if($i == 0){
                     
-                                $start_time = booking_agenda::explode_time($timeslot->fromtime);
-                                $end_time = $start_time + booking_agenda::explode_time($timeslot->duration);
+                                $start_time = booking_reservations::explode_time($timeslot->fromtime);
+                                $end_time = $start_time + booking_reservations::explode_time($timeslot->duration);
                             } else {
-                                $start_time = $end_time + booking_agenda::explode_time($timeslot->overflow);
-                                $end_time = $start_time + booking_agenda::explode_time($timeslot->duration);
+                                $start_time = $end_time + booking_reservations::explode_time($timeslot->overflow);
+                                $end_time = $start_time + booking_reservations::explode_time($timeslot->duration);
                             }
 
                               
@@ -98,8 +98,8 @@
                             <div>
                                 <p class="menu-list__ingredients descript_<?php echo $timeslot->id; ?>">
                                 <?php 
-                                    $fromtime = booking_agenda::second_to_hhmm($start_time);
-                                    $totime = booking_agenda::second_to_hhmm($end_time);
+                                    $fromtime = booking_reservations::second_to_hhmm($start_time);
+                                    $totime = booking_reservations::second_to_hhmm($end_time);
                                     echo $fromtime . ' - ' . $totime;
                                 ?>
                                 </p>

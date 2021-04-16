@@ -99,7 +99,7 @@
     <header class="header">
         <nav class="navbar navbar-expand-lg container">
             <a class="navbar-brand"
-                href="<?php echo $this->baseUrl; ?>booking_agenda/<?php echo $this->session->userdata('shortUrl'); ?>">
+                href="<?php echo $this->baseUrl; ?>booking_reservations/<?php echo $this->session->userdata('shortUrl'); ?>">
                 <img class="menu-icon" src="<?php echo base_url(); ?>assets/home/images/logo1.png" alt="">
             </a>
             <button class="navbar-toggler py-2 px-3 px-md-4 bg-secondary" type="button" data-toggle="collapse"
@@ -110,7 +110,7 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active pt-2 pt-md-0">
                         <a class="nav-link"
-                            href="<?php echo $this->baseUrl; ?>booking_agenda/<?php echo $this->session->userdata('shortUrl'); ?>">Home
+                            href="<?php echo $this->baseUrl; ?>booking_reservations/<?php echo $this->session->userdata('shortUrl'); ?>">Home
                             <span class="sr-only">(current)</span></a>
                     </li>
                 </ul>

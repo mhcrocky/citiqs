@@ -1,6 +1,6 @@
 (function() {
     if (typeof globalTime === 'undefined' && $('#shop').length == 0) {
-        window.location.href = globalVariables.baseUrl + "booking_agenda/clear_reservations";
+        window.location.href = globalVariables.baseUrl + "booking_reservations/clear_reservations";
     }
     if($('.ticket_item').length > 0){
         $('#payForm').show();
@@ -67,7 +67,7 @@ function getSpotsView(agendaId, date, first = false) {
     let isAjax = true;
     $('div.bg-light').removeClass('bg-light').addClass('bg-white');
     $("#event_" + agendaId).addClass('bg-light').removeClass('bg-white');
-    $.post(globalVariables.baseUrl + "booking_agenda/spots/" + date + "/" + agendaId, {
+    $.post(globalVariables.baseUrl + "booking_reservations/spots/" + date + "/" + agendaId, {
         isAjax: isAjax
     }, function(data) {
         $("#spots").empty();
@@ -96,7 +96,7 @@ function countDownTimer(distance){
         $(".timer").text("Expiration time: " + addZero(minutes) + ":" + addZero(seconds) + "");
         if (minutes == 0 && seconds == 0) {
             setTimeout(() => {
-                window.location.href = globalVariables.baseUrl + "booking_agenda/clear_reservations";
+                window.location.href = globalVariables.baseUrl + "booking_reservations/clear_reservations";
             }, 500);
         }
         if (distance < 0) {
@@ -145,7 +145,7 @@ function deleteTicket(id, price, ticketFee) {
         totalBasket: totalBasket,
         list_items: list_items
     }
-    $.post(globalVariables.baseUrl + "booking_agenda/delete_reservation", data, function(data){
+    $.post(globalVariables.baseUrl + "booking_reservations/delete_reservation", data, function(data){
 		$( ".ticket_"+id ).fadeOut( "slow", function() {
             $( ".ticket_"+id ).remove();
             $(".totalBasket").text(totalBasket.toFixed(2));
@@ -205,7 +205,7 @@ function removeTicket(id, agendaId, spotId, price, reservationFee) {
         time: current_time,
         remove: 1
     };
-    $.post(globalVariables.baseUrl + "booking_agenda/add_to_basket", data, function(data){
+    $.post(globalVariables.baseUrl + "booking_reservations/add_to_basket", data, function(data){
         if(data == 'error'){
             iziToast.error({
                 title: '',
@@ -299,7 +299,7 @@ function addTicket(id, agendaId, spotId, price, reservationFee, limit=2) {
         numberofpersons: numberofpersons,
         time: current_time
     };
-    $.post(globalVariables.baseUrl + "booking_agenda/add_to_basket", data, function(data){
+    $.post(globalVariables.baseUrl + "booking_reservations/add_to_basket", data, function(data){
         if(data == 'error'){
             $(".ticketQuantityValue_" + id).val(oldQuantityValue);
             iziToast.error({
@@ -389,7 +389,7 @@ function addMultiReservations(id, inputId, agendaId, spotId, price, reservationF
         quantity: quantityValue,
         time: current_time
     };
-    $.post(globalVariables.baseUrl + "booking_agenda/add_to_basket", data, function(data){
+    $.post(globalVariables.baseUrl + "booking_reservations/add_to_basket", data, function(data){
         if(data == 'error'){
             iziToast.error({
                 title: '',

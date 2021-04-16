@@ -69,7 +69,7 @@
                                     
                                 </div>
                                 <form class="login100-form validate-form"
-                                    action="<?php echo base_url(); ?>booking_agenda/payment_proceed" method="POST">
+                                    action="<?php echo base_url(); ?>booking_reservations/payment_proceed" method="POST">
                                     <div class="wrap-input100 validate-input m-b-26">
                                         <span class="label-input100">Full Name</span>
                                         <input class="input100" type="text" id="fullName" name="name"
