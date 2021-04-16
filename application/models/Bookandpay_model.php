@@ -674,4 +674,42 @@ class Bookandpay_model extends CI_Model
 		return $this->db->delete('tbl_bookandpay', $where);
 	}
 
+	function save_reservations($userInfo, $bookings){
+		$data = [];
+		$reservationIds = [];
+		foreach($bookings as $booking){
+			$set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKLMNPQRSTVWXY';
+			$reservationId = 'T-' . substr(str_shuffle($set), 0, 16);
+			$reservationIds[] = $reservationId;
+			$savedatetime = new DateTime( 'now');
+			$bookdatetime = $savedatetime->format('Y-m-d H:i:s');
+			$data[] = [
+				'reservationId' => $reservationId,
+				'customer' => $booking['customer'],
+				'eventid' => $booking['eventid'],
+				'SpotId' => $booking['SpotId'],
+				'eventdate' => date('Y-m-d', strtotime($booking['eventdate'])),
+				'bookdatetime' => $bookdatetime,
+				'timefrom' => $booking['timefrom'],
+				'timeto' => $booking['timeto'],
+				'price' => $booking['price'],
+				'reservationFee' => $booking['reservationFee'],
+				'numberofpersons' => $booking['numberofpersons'],
+				'name' => $userInfo['name'],
+				'email' => $userInfo['email'],
+				'age' => $userInfo['age'],
+				'gender' => $userInfo['gender'],
+				'mobilephone' => $userInfo['mobileNumber'],
+				'Address' => $userInfo['address'],
+				'reservationset' => '1',
+				'timeslot' => $booking['timeslotId'],
+			];
+			
+		}
+
+		$this->db->insert_batch('tbl_bookandpay',$data);
+
+		return $reservationIds;
+	}
+
 }

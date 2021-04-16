@@ -24,14 +24,20 @@
 			// 	'contents' => $content
 			// );
 
+			// Here is where we need to know the :
+			// vendor id
+			// user id/email
+			// get the aap_id
+			// get the player_id
+			// send the message...
 
 			$fields = array(
-				'app_id' => "8da54730-aa66-4a7f-8989-320413d88d09",
+				'app_id' => "08ad6861-8c6b-47fb-b228-ee4d3697f724",
 				'include_player_ids' => array($oneSignalId),
 				'data' =>array("OrderId" => $orderId),
 				'contents' => array("en" => $message),
-				'android_channel_id' => "9599da1f-f8b9-4013-b6c5-5ddd34cc1b36",
-				'ios_sound' => "sound.wav"
+//				'android_channel_id' => "9599da1f-f8b9-4013-b6c5-5ddd34cc1b36",
+//				'ios_sound' => "sound.wav"
 			);
 
 			// {"app_id":"","include_player_ids":["860d0e99-db07-440e-a644-3f6217d2523a"],"data":{"OrderId":"112969"},"contents":{"en":"New order"},"launchUrl":null}

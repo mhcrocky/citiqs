@@ -637,6 +637,16 @@ class   Bookandpayagendabooking_model extends CI_Model
         return $result;
     }
 
+	public function getAgendaById($id)
+    {
+        $this->db->select('tbl_bookandpayagenda.*');
+        $this->db->from('tbl_bookandpayagenda');
+        $this->db->where('tbl_bookandpayagenda.id', $id);
+        $query = $this->db->get();
+        $result = $query->row();
+        return $result;
+    }
+
 	public function addAgenda($data){
         $this->db->insert('tbl_bookandpayagenda', $data);
         return $this->db->insert_id();
