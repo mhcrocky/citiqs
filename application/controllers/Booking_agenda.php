@@ -3,12 +3,11 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 require APPPATH . '/libraries/phpqrcode/qrlib.php';
 require APPPATH . '/libraries/BaseControllerWeb.php';
+include APPPATH . '/libraries/ical/ICS.php';
 
 class Booking_agenda extends BaseControllerWeb
 {
-    private $data = array();
-
-    public function __construct()
+    function __construct()
     {
         parent::__construct();
         $this->load->helper('url');
@@ -20,14 +19,17 @@ class Booking_agenda extends BaseControllerWeb
         $this->load->model('sendreservation_model');
         $this->load->model('email_templates_model');
         $this->load->library('language', array('controller' => $this->router->class)); 
-    }
+    } 
 
-    public function index($shortUrl=false)
+    public function index($shortUrl = false)
     {
-
         if (!$shortUrl) {
             redirect('https://tiqs.com/places');
         }
+
+        $this->session->unset_userdata('customer');
+
+        $this->session->set_userdata('bookings');
 
         $customer = $this->user_model->getUserInfoByShortUrl($shortUrl);
         
@@ -36,7 +38,22 @@ class Booking_agenda extends BaseControllerWeb
 			redirect('https://tiqs.com/places');
         }
 
-        $this->session->unset_userdata('reservations');
+        $logoUrl = 'assets/home/images/tiqslogowhite.png';
+        if ($customer->logo) {
+			$logoUrl = 'assets/images/vendorLogos/' . $customer->logo;
+        }
+
+        if($this->session->userdata('shortUrl') != $shortUrl){
+            $this->session->unset_userdata('tickets');
+            $this->session->unset_userdata('exp_time');
+            $this->session->unset_userdata('total');
+        }
+
+        $this->session->set_userdata('shortUrl', $shortUrl);
+
+        $data['logoUrl'] = $logoUrl;
+        $this->global['pageTitle'] = 'TIQS: RESERVATIONS & BOOKINGS';
+
         $customer->logo = (property_exists($customer, 'logo')) ? $customer->logo : '';
         $this->session->set_userdata('customer', [
             'id' => $customer->id,
@@ -48,24 +65,22 @@ class Booking_agenda extends BaseControllerWeb
             'logo' => $customer->logo,
         ]);
 
-        $data['agenda'] = $this->bookandpayagendabooking_model->getbookingagenda($customer->id);
-
-        $logoUrl = 'assets/home/images/tiqslogowhite.png';
-        if ($customer->logo) {
-			$logoUrl = 'assets/images/vendorLogos/' . $customer->logo;
-        }
-
-        $data['logoUrl'] = $logoUrl;
-        $data['pageTitle'] = 'TIQS: RESERVATIONS & BOOKINGS';
-        $data['shortUrl'] = $shortUrl;
-        $this->loadViews('bookings/index', $data, '', 'bookingfooter', 'bookingheader');
+        $data['agendas'] = $this->bookandpayagendabooking_model->getbookingagenda($customer->id);
+        $customer = $this->user_model->getUserInfoByShortUrl($shortUrl);
         
 
         
+        $this->loadViews("booking_agenda/shop", $this->global, $data, 'footerBooking', 'headerBooking');
+
     }
 
     public function spots($eventDate = false, $eventId = false)
     {
+        if(!$this->input->post('isAjax')){ 
+            redirect('booking_agenda/shop/'. $this->session->userdata('shortUrl'));
+            return; 
+        }
+
         $customer = $this->session->userdata('customer');
 
         if (empty($customer) || !isset($customer['id'])) {
@@ -76,11 +91,15 @@ class Booking_agenda extends BaseControllerWeb
             redirect('booking_agenda/' . $customer['usershorturl']);
         }
 
+       
+
         $this->session->set_userdata('eventDate', $eventDate);
         $this->session->set_userdata('eventId', $eventId);
         $this->session->set_userdata('spot', $eventId);
 
         $allSpots = $this->bookandpayspot_model->getAllSpots($customer['id']);
+
+        $data['agenda'] = $this->bookandpayagendabooking_model->getAgendaById($eventId);
         $agenda = $this->bookandpayagendabooking_model->getbookingagenda($customer['id']);
 
         $spots = [];
@@ -94,22 +113,36 @@ class Booking_agenda extends BaseControllerWeb
                 $spot->descript = $agenda[0]->ReservationDescription;
             }
 
-            $spots['spot' . $spot->id] = [
-                'data' => $spot,
-                'status' => 'open'
-            ];
+            $allTimeSlots = $this->bookandpaytimeslots_model->getTimeSlotsByCustomerSpotId($customer['id'], $spot->id);
 
-            $allTimeSlots = $this->bookandpaytimeslots_model->getTimeSlotsByCustomerAndSpot($customer['id'], $spot->id);
+            
             $isThereAvailableTimeSlots = true;
-
+            $timeslots = [];
             foreach ($allTimeSlots as $key => $timeSlot) {
                 $spotsReserved = $this->bookandpay_model->getBookingByTimeSlot($customer['id'], $eventDate, $timeSlot->id);
                 $availableItems += $timeSlot->available_items;
+                $totalSpotsReserved = $this->bookandpay_model->getBookingCountByTimeSlot($customer['id'], $timeSlot->id, $spot->id, $timeSlot->fromtime);
+                
+                if($totalSpotsReserved >= $timeSlot->available_items){
+                    continue;
+                } else {
+                    $timeslots[] = $timeSlot;
+                }
+
+
 
                 if($spotsReserved) {
                     $allSpotReservations += count($spotsReserved);
                 }
+
+                
             }
+
+            $spots['spot' . $spot->id] = [
+                'data' => $spot,
+                'status' => 'open',
+                'timeslots' => $timeslots
+            ];
 
             if(!$availableItems) {
                 $availableItems = $spot->available_items;
@@ -127,290 +160,140 @@ class Booking_agenda extends BaseControllerWeb
         $data["eventDate"] = $eventDate;
         $data["eventId"] = $eventId;
         $data["spots"] = $spots;
-        $data["bookingfee"] = 0.15;
-        $data['isManager'] = ($this->session->userdata('role') == ROLE_MANAGER) ? true : false;
-        $data['spot_images'] = [
-            'twoontable.png',
-            'sixtable.png',
-            'fourontable.png',
-            'eighttable.png',
-            'sunbed.png',
-            'terracereservation.png'
+
+        $this->global['pageTitle'] = 'TIQS : BOOKINGS';
+        $result = $this->load->view("booking_agenda/spots", $data,true);
+				if( isset($result) ) {
+					return $this->output
+					->set_content_type('application/json')
+					->set_status_header(200)
+					->set_output(json_encode($result));
+				}
+           
+    }
+
+    public function add_to_basket()
+    {
+        $customer = $this->session->userdata('customer');
+        $first_booking = false;
+        if(!$this->session->userdata('tickets')){
+            $first_booking = true;
+        }
+        $bookings = $this->session->userdata('tickets') ?? [];
+        $quantity = 0;
+        if(count($bookings) > 0){
+            foreach($bookings as $booking){
+                $quantity = $quantity + $booking['quantity'];
+            }
+        }
+        if($quantity == 2){
+            echo 'error';
+            return ;
+        }
+
+        $this->session->unset_userdata('bookings');
+        $booking = $this->input->post(null, true);
+        $current_time = date($booking['time']);
+        $newTime = date("Y-m-d H:i:s",strtotime("$current_time +10 minutes"));
+        $this->session->set_tempdata('exp_time', $newTime, 600);
+        $amount = (floatval($booking['price']) + floatval($booking['reservationFee']))*floatval($booking['quantity']);
+        $timeslotId = $booking['timeslotId'];
+        
+        $agenda = $this->bookandpayagendabooking_model->getAgendaById($booking['agendaId']);
+        unset($bookings[$timeslotId]);
+        $timeslot = $this->bookandpaytimeslots_model->getTimeSlot($timeslotId);
+        $bookings[$timeslotId] = [
+            'customer' => $customer['id'],
+            'eventid' => $booking['agendaId'],
+            'eventdate' => date("Y-m-d", strtotime($agenda->ReservationDateTime)),
+            'SpotId' => $booking['spotId'],
+            'timefrom' => $timeslot->fromtime,
+            'timeto' => $timeslot->totime,
+            'timeslotId' => $timeslotId,
+            'reservationFee' => $booking['reservationFee'],
+            'price' => $booking['price'],
+            'numberofpersons' => $timeslot->numberofpersons,
+            'reservationset' => '1',
+            'quantity' => $booking['quantity']
         ];
 
-        $this->global['pageTitle'] = 'TIQS : BOOKINGS';
-        $this->loadViews("bookings/spots_booking", $this->global, $data, 'bookingfooter', 'bookingheader');    
+        $dt1 = new DateTime($timeslot->fromtime);
+        $fromtime = $dt1->format('H:i');
+        $dt2 = new DateTime($timeslot->totime);
+        $totime = $dt2->format('H:i'); 
+        
+        echo json_encode(['fromtime'=>$fromtime,'totime'=>$totime, 'first_booking' => $first_booking, 'eventDate' => date("d.m.Y", strtotime($agenda->ReservationDateTime)) ]);
+        
+
+        $total = 0;
+        foreach($bookings as $booking){
+            
+            $total = $total + (floatval($booking['price']) + floatval($booking['reservationFee']))*floatval($booking['quantity']);
+        }
+        
+        $this->session->set_tempdata('bookings', $bookings, 600);
+        $this->session->set_tempdata('tickets', $bookings, 600);
+        $total = number_format($total, 2, '.', '');
+        $this->session->set_tempdata('total', $total, 600);  
     }
 
-    public function time_slots($spotId)
+    public function clear_reservations()
     {
-        
-        $customer = $this->session->userdata('customer');
-
-        if (empty($customer) || !isset($customer['id'])) {
-            redirect();
+        $this->session->unset_userdata('bookings');
+        $this->session->unset_tempdata('tickets');
+        $this->session->unset_userdata('exp_time');
+        $this->session->unset_userdata('total');
+        $this->session->unset_tempdata('bookings');
+        $this->session->unset_tempdata('exp_time');
+        $this->session->unset_tempdata('total');
+        if(!$this->session->tempdata('tickets')){
+            $this->session->set_flashdata('expired', 'Session Expired!');
+            redirect('booking_agenda/'. $this->session->userdata('shortUrl'));
         }
-
-        $eventDate = $this->session->userdata('eventDate');
-        $eventId = $this->session->userdata('eventId');
-
-        if (empty($eventDate) || empty($eventId)) {
-            redirect('booking_agenda/' . $customer['usershorturl']);
-        }
- 
-        $spot = $this->bookandpayspot_model->getSpot($spotId);
-        $spotReservations = 0;
-
-        $availableItems = $spot->available_items;
-        $price = $spot->price;
-        $spotLabel = $spot->numberofpersons . ' persoonstafel';
-        $numberOfPersons = $spot->numberofpersons;
-
-        $resultcount = $this->bookandpay_model->countreservationsinprogress($spot->id, $customer['id'], $eventDate);
-        //$allTimeSlots = $this->bookandpaytimeslots_model->getTimeSlotsByCustomerAndSpot($customer['id'], $spot->id);
-
-        $allTimeSlots = $this->bookandpaytimeslots_model->getTimeSlotsBySpotId($spotId);
-        $eventDate = $this->bookandpayspot_model->getAgendaBySpotId($spotId)->ReservationDateTime;
-        $timeSlots = [];
-        //$allSpotReservations = 0;
-        //$allAvailableItems = 0;
-        
-
-        foreach ($allTimeSlots as $timeSlot) {
-            $spotsReserved = $this->bookandpay_model->getBookingCountByTimeSlot($customer['id'], $timeSlot['id'], $spotId, $timeSlot['fromtime']);
-            $spotReservations = $spotReservations + $this->bookandpay_model->getBookingCountBySpot($customer['id'], $spotId, $timeSlot['id'], $timeSlot['fromtime']);
-            if($spotsReserved >= $timeSlot['available_items']){
-                $status = 'soldout';
-            } else {
-                $status = 'open';
-            }
-
-
-            $timeSlot['status'] = $status;
-            
-            $timeSlots[] = $timeSlot; 
-            /*
-
-            $timeSlots['timeSlot' . $timeSlot->id] = [
-                'data' => $timeSlot,
-                'status' => 'open'
-            ];
-
-            if($spotsReserved) {
-                $allSpotReservations += count($spotsReserved);
-            }
-
-            $availableItems = $timeSlot->available_items;
-            $allAvailableItems += $availableItems;
-
-            if ($spotsReserved && count($spotsReserved) >= $availableItems) {
-                unset($timeSlots['timeSlot' . $timeSlot->id]);
-            }
-            */
-        }
-        /*
-        if ($allSpotReservations >= $allAvailableItems) {
-            //redirect('soldout');
-        }
-        */
-        
-
-        if ($spotReservations >= $availableItems) {
-            redirect('soldout');
-        }
-
-
-        if ($this->input->post('save')) {
-            $timeslotId = $this->input->post('selected_time_slot_id');
-            $fromtime = '';
-            $totime = '';
-            $selectedTimeSlot = $this->bookandpaytimeslots_model->getTimeSlot($timeslotId);
-            if($selectedTimeSlot->multiple_timeslots == 1){
-                $fromtime = self::second_to_hhmm($this->input->post('startTime'));
-                $totime = self::second_to_hhmm($this->input->post('endTime'));
-            } else {
-                $fromtime = $selectedTimeSlot->fromtime;
-                $totime = $selectedTimeSlot->totime;
-            }
-            $newBooking = [
-                'customer' => $customer['id'],
-                'eventid' => $eventId,
-                'eventdate' => date("yy-m-d", strtotime($eventDate)),
-                'SpotId' => $spot->id,
-                'Spotlabel' => $spotLabel,
-                'timefrom' => $fromtime,
-                'timeto' => $totime,
-                'timeslot' => $selectedTimeSlot->id,
-                'reservationFee' => $selectedTimeSlot->reservationFee,
-                'price' => $selectedTimeSlot->price ? $selectedTimeSlot->price : $price,
-                'numberofpersons' => $numberOfPersons,
-                'reservationset' => '1'
-            ];
-
-            // create new id for user of this session
-            $result = $this->bookandpay_model->newbooking($newBooking);
-
-            if (empty($result)) {
-                // someting went wrong.
-                redirect('booking_agenda/' . $customer['usershorturl']);
-            }
-
-            $reservations = $this->session->userdata('reservations');
-
-            if (!is_null($reservations)) {
-                array_push($reservations, $result->reservationId);
-            } else {
-                $reservations = [$result->reservationId];
-            }
-
-            if(count($reservations) <= 2){
-                $this->session->set_userdata('reservations', $reservations);
-                $this->session->set_userdata('selectedTimeSlot', $selectedTimeSlot);
-            }
-
-            if($spot->price == 0){
-                redirect('booking_agenda/pay');
-            }
-
-            if(AVAILABLE_TO_BOOK_EXTRA_TIME == true && HOW_MANY_SLOTS_CAN_BE_BOOKED > 1){
-                redirect('booking_agenda/reserved');
-            } else {
-                redirect('booking_agenda/pay');
-            }
-
-            
-        }
-
-        $data['count'] = $resultcount;
-        $data['spot'] = $spot;
-        $data['timeSlots'] = $timeSlots;
-        $data['eventDate'] = $eventDate;
-        
-        $this->global['pageTitle'] = 'TIQS : BOOKINGS';
-        $this->load->config('custom');
-        $this->load->helper('directory');
-        $this->load->model('floorplandetails_model');
-        $this->load->model('floorplanareas_model');
-        $planId = $this->bookandpaytimeslots_model->getPlanId($spotId);
-		if ($planId) {
-			$data['floorplan'] = $this->floorplandetails_model->get_floorplan($planId);
-			$data['areas'] = $this->floorplanareas_model->get_floorplan_areas($planId);
-        }
-
-		//Get all files from dir
-        $floorplan_images = directory_map(FCPATH . $this->config->item('floorPlansImagesPath'), FALSE);
-
-		//Remove '/' from category name, remove index.html
-        foreach ($floorplan_images as $category => $val) {
-            $new_cat_name = str_replace(DIRECTORY_SEPARATOR, '',$category);
-            $floorplan_images[$new_cat_name] = $floorplan_images[$category];
-            unset($floorplan_images[$category]);
-            if (isset($floorplan_images[$new_cat_name]) AND is_array($floorplan_images[$new_cat_name])) {
-                foreach ($floorplan_images[$new_cat_name] as $key => $file) {
-                    if ($file == 'index.html') {
-                        unset($floorplan_images[$new_cat_name][$key]);
-                    }
-
-                }
-            }
-        }
-
-        $data['floorplan_images_path'] = $this->config->item('floorPlansImagesPath');
-        $data['floorplan_images']  = $floorplan_images;
-
-        $this->loadViews("bookings/timeslot_booking", $this->global, $data, 'bookingfooter', 'bookingheader');
     }
 
-    public function reserved()
+    public function delete_ticket()
     {
-        $reservationIds = $this->session->userdata('reservations');
-        $customer = $this->session->userdata('customer');
-        $selectedTimeSlot = $this->session->userdata('selectedTimeSlot');
-
-        if (empty($customer) || !isset($customer['id'])) {
-            redirect();
+        $tickets = $this->session->tempdata('tickets');
+        $ticketId = $this->input->post('id');
+        $time = (int)($this->input->post('current_time')/1000);
+        $time = $time - 2;
+        unset($tickets[$ticketId]);
+        
+        $this->session->unset_userdata('tickets');
+        $this->session->unset_tempdata('tickets');
+        $this->session->unset_tempdata('total');
+        $items = $this->input->post('list_items');
+        $total = $this->input->post('totalBasket');
+        $total = number_format($total, 2, '.', '');
+        $this->session->set_tempdata('total', $total, 600); 
+        $this->session->set_tempdata('tickets', $tickets, $time); 
+        if($items == 0){
+            $this->session->unset_tempdata('exp_time');
         }
-
-        if (!$reservationIds) {
-            redirect('booking_agenda/' . $customer['usershorturl']);
-        }
-
-        $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
-        if (!$reservations) {
-            redirect('booking_agenda/' . $customer['usershorturl']);
-        }
-
-        $logoUrl = 'assets/user_images/no_logo.png';
-        if ($customer['logo']) {
-			$logoUrl = 'assets/images/vendorLogos/' . $customer->logo;
-        }
-
-        $allTimeSlots = $this->bookandpaytimeslots_model->getTimeSlotsByCustomerAndSpot($customer['id'], $selectedTimeSlot->spot_id);
-
-        $data['logoUrl'] = $logoUrl;
-        $data['reservations'] = $reservations;
-        $data['selectedTimeSlot'] = $selectedTimeSlot;
-        $data['allTimeSlots'] = $allTimeSlots;
-
-        $this->global['pageTitle'] = 'TIQS : BOOKINGS';
-
-        $this->loadViews("bookings/next_time_slot", $this->global, $data, 'bookingfooter', 'bookingheader'); // payment screen
+        return ;
     }
 
     public function pay()
     {
-        $this->load->library('form_validation');
-        $reservationIds = $this->session->userdata('reservations');
-        $customer = $this->session->userdata('customer');
-
-        if (empty($customer) || !isset($customer['id'])) {
-            redirect();
+        $this->global['pageTitle'] = 'TIQS: Pay';
+        if(!$this->session->tempdata('tickets')){
+            $this->session->set_flashdata('expired', 'Session Expired!');
+            redirect('booking_agenda/'. $this->session->userdata('shortUrl'));
         }
-
-        if (!$reservationIds) {
-            redirect('booking_agenda/' . $customer['usershorturl']);
-        }
-
-        $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
-        if (!$reservations) {
-            redirect('booking_agenda/' . $customer['usershorturl']);
-        }
-
-        $this->form_validation->set_rules('username', 'Name', 'trim|required|max_length[128]');
-        $this->form_validation->set_rules('mobile', 'Phone Number', 'trim|required|min_length[10]');
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|max_length[128]');
-
-        if ($this->form_validation->run()) {
-            $data['mobilephone'] = strtolower($this->input->post('mobile'));
-            $data['email'] = strtolower($this->input->post('email'));
-            $data['name'] = strtolower($this->input->post('username'));
-
-            $this->session->set_userdata('buyer_info', $data);
-
-            redirect('booking_agenda/payment_proceed');
-        } else {
-            $this->session->set_flashdata('error', validation_errors());
-        }
-
-        $logoUrl = 'assets/user_images/no_logo.png';
-        if ($customer['logo']) {
-        	// needs to change...
-            $logoUrl = 'assets/images/vendorLogos/' . $customer['logo'];
-        }
-
-        $data['reservations'] = $reservations;
-        $data['logoUrl'] = $logoUrl;
-
-        $this->global['pageTitle'] = 'TIQS : BOOKINGS'; 
-        $data['termsofuse'] = $this->bookandpayagendabooking_model->getTermsofuse();
-        $this->loadViews("bookings/final", $this->global, $data, 'bookingfooter', 'bookingheader'); // payment screen
+        $this->loadViews("booking_agenda/pay", $this->global, '', 'footerBooking', 'headerBooking');
     }
 
     public function payment_proceed()
     {
         $amount = 0;
-        $buyerInfo = $this->session->userdata('buyer_info');
-        $reservationIds = $this->session->userdata('reservations');
+        $buyerInfo = $this->input->post(null, true);
+        $bookings = $this->session->tempdata('tickets');
+
+        $reservationIds = $this->bookandpay_model->save_reservations($buyerInfo, $bookings);
+
+        $this->session->set_userdata('reservations', $reservationIds);
+
         
         if ($buyerInfo) {
             $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
@@ -423,24 +306,21 @@ class Booking_agenda extends BaseControllerWeb
                     $this->bookandpay_model->newvoucher($reservation->reservationId);
                 }
 
-                $this->bookandpay_model->editbookandpay([
-                    'mobilephone' => $buyerInfo['mobilephone'],
-                    'email' => $buyerInfo['email'],
-                    'name' => $buyerInfo['name'],
-                ], $reservation->reservationId);
+               
             }
 
             $this->session->set_userdata('amount', number_format($amount, 2, '.', ''));
 
         } else {
-            redirect('agenda_booking/pay');
+            //redirect('agenda_booking/pay');
         }
 
         
-        redirect('/agenda_booking/select_payment_type');
+        redirect('/booking_agenda/select_payment_type');
         
     }
-
+    
+    
     public function select_payment_type()
     {
         $this->load->helper('money');
@@ -466,83 +346,31 @@ class Booking_agenda extends BaseControllerWeb
         
         $data['amount'] = $this->session->userdata('amount');
 
-        $this->loadViews("bookings/select_payment_type", $this->global, $data, 'footerPayment', "headerPayment");
+        $this->loadViews("booking_agenda/select_payment_type", $this->global, $data, 'footerPayment', "headerPayment");
     }
 
-    public function delete_reservation($id = false)
-    {
-        if(!$id) {
-            redirect();
+
+
+
+    
+
+
+    private function check_diff_multi($array1, $array2){
+        $result = array();
+        foreach($array1 as $key => $val) {
+             if(isset($array2[$key])){
+               if(is_array($val) && $array2[$key]){
+                   $result[$key] = $this->check_diff_multi($val, $array2[$key]);
+               }
+           } else {
+               $result[$key] = $val;
+           }
         }
-
-        $reservation = $this->bookandpay_model->getReservationById($id);
-
-        if(!$reservation) {
-            redirect();
-        }
-
-        
-
-        $reservationIds = $this->session->userdata('reservations');
-        //var_dump($reservationIds);
-        
-        foreach ($reservationIds as $key=>$item) {
-            if($item == $reservation->reservationId) {
-                unset($reservationIds[$key]);
-                $this->bookandpay_model->deleteReservation($id);
-            }
-        }
-
-
-        $this->session->set_userdata('reservations', $reservationIds);
-
-        redirect('booking_agenda/reserved');
+    
+        return $result;
     }
 
 
-    public function create_spots()
-    {
-        $this->load->model('Bookandpayspot_model');
-        $data = array(
-            'agenda_id' => $this->input->post('agenda_id'),
-            'email_id' => 0,
-            'numberofpersons' => $this->input->post('numberofpersons'),
-            'sort_order' => $this->input->post('order'),
-            'price' => $this->input->post('price'),
-            'descript' => $this->input->post('description'),
-            'soldoutdescript' => $this->input->post('soldoutdescript'),
-            'pricingdescript' => $this->input->post('pricingdescript'),
-            'feedescript' => $this->input->post('feedescript'),
-            'available_items' => $this->input->post('available_items'),
-            'image' => $this->input->post('image')
-        );
-        $this->Bookandpayspot_model->addSpot($data);
-    }
-
-    public function get_agenda($shortUrl=false)
-    {
-        $customer = $this->user_model->getUserInfoByUrlName($shortUrl);
-        $date = $this->input->post('date');
-        $data['agenda'] = $this->bookandpayagendabooking_model->getBookingAgendaByDate($customer->id, $date);
-        echo json_encode($data['agenda']);
-        
-    }
-
-    public function getAllAgenda($shortUrl=false)
-    {
-        $customer = $this->user_model->getUserInfoByUrlName($shortUrl);
-        $agendas = $this->bookandpayagendabooking_model->getAllCustomerAgenda($customer->id);
-        $allAgenda = [];
-        foreach($agendas as $agenda){
-            $status = $this->bookandpay_model->getBookingCountByAgenda($customer->id,$agenda->id);
-            $agenda->status = $status > 0 ? 1 : 0;
-            $allAgenda[] = $agenda;
-
-        }
-
-        echo json_encode($allAgenda);
-        
-    }
 
     public static function explode_time($time){
         $time = explode(':', $time);
@@ -559,6 +387,5 @@ class Booking_agenda extends BaseControllerWeb
         $time = $hour . ':' . $min; 
         return $time;
     }
-
 
 }
