@@ -186,18 +186,18 @@ class Booking_agenda extends BaseControllerWeb
                 $quantity = $quantity + $booking['quantity'];
             }
         }
-        if($quantity == 2){
+        $booking = $this->input->post(null, true);
+        $timeslotId = $booking['timeslotId'];
+        if(($quantity == 2 && !isset($booking['remove'])) || $quantity > 2){
             echo 'error';
             return ;
         }
 
         $this->session->unset_userdata('bookings');
-        $booking = $this->input->post(null, true);
         $current_time = date($booking['time']);
         $newTime = date("Y-m-d H:i:s",strtotime("$current_time +10 minutes"));
         $this->session->set_tempdata('exp_time', $newTime, 600);
         $amount = (floatval($booking['price']) + floatval($booking['reservationFee']))*floatval($booking['quantity']);
-        $timeslotId = $booking['timeslotId'];
         
         $agenda = $this->bookandpayagendabooking_model->getAgendaById($booking['agendaId']);
         unset($bookings[$timeslotId]);
@@ -207,22 +207,23 @@ class Booking_agenda extends BaseControllerWeb
             'eventid' => $booking['agendaId'],
             'eventdate' => date("Y-m-d", strtotime($agenda->ReservationDateTime)),
             'SpotId' => $booking['spotId'],
-            'timefrom' => $timeslot->fromtime,
-            'timeto' => $timeslot->totime,
+            'timefrom' => urldecode($booking['fromtime']),
+            'timeto' => urldecode($booking['totime']),
             'timeslotId' => $timeslotId,
             'reservationFee' => $booking['reservationFee'],
             'price' => $booking['price'],
-            'numberofpersons' => $timeslot->numberofpersons,
+            'numberofpersons' => $booking['numberofpersons'],
             'reservationset' => '1',
             'quantity' => $booking['quantity']
         ];
 
-        $dt1 = new DateTime($timeslot->fromtime);
+        $dt1 = new DateTime(urldecode($booking['fromtime']));
         $fromtime = $dt1->format('H:i');
-        $dt2 = new DateTime($timeslot->totime);
+        $dt2 = new DateTime(urldecode($booking['totime']));
         $totime = $dt2->format('H:i'); 
         
-        echo json_encode(['fromtime'=>$fromtime,'totime'=>$totime, 'first_booking' => $first_booking, 'eventDate' => date("d.m.Y", strtotime($agenda->ReservationDateTime)) ]);
+        echo json_encode(['fromtime'=>$fromtime,'totime'=>$totime, 'numberofpersons' => $booking['numberofpersons'], 'first_booking' => $first_booking, 'eventDate' => date("d.m.Y", strtotime($agenda->ReservationDateTime)) ]);
+        
         
 
         $total = 0;
@@ -252,7 +253,7 @@ class Booking_agenda extends BaseControllerWeb
         }
     }
 
-    public function delete_ticket()
+    public function delete_reservation()
     {
         $tickets = $this->session->tempdata('tickets');
         $ticketId = $this->input->post('id');
