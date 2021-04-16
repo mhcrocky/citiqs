@@ -121,7 +121,7 @@
             return self::sendEmail($email, $subject, $message);
         }
         
-        public static function sendEmail(string $email, string $subject, string $message, bool $makePdf = false): bool
+        public static function sendEmail(string $email, string $subject, string $message, bool $makePdf = false, string $attachment = ''): bool
         {
             $config = self::getConfig();
             $CI =& get_instance();
@@ -136,14 +136,19 @@
             if ($makePdf) {
                 $CI->load->helpers('mpdf_helper');
                 $fileName = strval(time() . '_' . rand(10000, 99999));
-                $attachment = Mpdf_helper::createPdfFile($message, $fileName);
+                $templateAttachment = Mpdf_helper::createPdfFile($message, $fileName);
+                $CI->email->attach($templateAttachment);
+            }
+
+            if ($attachment) {
                 $CI->email->attach($attachment);
+                //unlink($attachment);
             }
 
             $send = $CI->email->send();
 
-            if (!empty($attachment)) {
-                unlink($attachment);
+            if ($makePdf && !empty($templateAttachment)) {
+                unlink($templateAttachment);
             }
 
             return $send;

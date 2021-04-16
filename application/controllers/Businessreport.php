@@ -18,6 +18,7 @@ class Businessreport extends BaseControllerWeb
 		$this->load->model('businessreport_model');
 		$this->load->model('shopprinters_model');
 		$this->load->model('shoppaymentmethods_model');
+		$this->load->model('shopvendor_model');
 
 		$this->load->library('language', array('controller' => $this->router->class));
 		$this->load->config('custom');
@@ -42,14 +43,15 @@ class Businessreport extends BaseControllerWeb
 	}
 
 	public function reports()
-	{ 
+	{
 		$this->global['pageTitle'] = 'TIQS: Financial Reports';
 		$data = [
 			'service_types' => $this->businessreport_model->get_service_types(),
 			'title' => 'Financial Reports',
 			'xReport' => $this->config->item('x_report'),
 			'zReport' => $this->config->item('z_report'),
-			'reportPrinters' => $this->shopprinters_model->setProperty('userId', intval($_SESSION['userId']))->checkPrinterReportes()
+			'reportPrinters' => $this->shopprinters_model->setProperty('userId', intval($_SESSION['userId']))->checkPrinterReportes(),
+			'emailFinanceReporets' => $this->shopvendor_model->setProperty('vendorId', intval($_SESSION['userId']))->getProperty('emailFinanceReporets')
 		];
 		$this->loadViews("businessreport/reports", $this->global, $data, 'footerbusiness', 'headerbusiness'); // payment screen
 

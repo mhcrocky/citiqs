@@ -821,10 +821,10 @@ class User_model extends CI_Model
         }
     }
 
-    public function insertUser(array $user): bool
+    public function insertUser(array $user, bool $checkCoordinates = true): bool
     {
 
-        if ($user['lat'] === '0' && $user['lng'] === '0') {
+        if ($checkCoordinates && $user['lat'] === '0' && $user['lng'] === '0') {
             return false;
         }
         $this->db->insert('tbl_user', $user);
@@ -881,7 +881,7 @@ class User_model extends CI_Model
 			$user['code'] = Utility_helper::shuffleString(5);
 			$user['createdDtm'] = date('Y-m-d H:i:s');
 			$this->getGeoCoordinates($user);
-			$this->insertUser($user);
+			$this->insertUser($user, false);
 			$this->setUniqueValue($user['email'])->setWhereCondtition()->setUser();
 			// must return non hashed password for activation link
 			$this->password = $password;
@@ -1029,23 +1029,15 @@ class User_model extends CI_Model
         return verifyHashedPassword($userPassword, $password);
     }
 
-    public function checkOneSignalId($oneSignalId)
+    public function checkOneSignalId($oneSignalId): ?array
     {
-//    	var_dump($oneSignalId);
         $this->db->select('id');
         $this->db->from('tbl_user');
         $this->db->where('tbl_user.oneSignalId', $oneSignalId);
-        $result = $this->db->get()->result_array();
-//        var_dump($oneSignalId);
-//		var_dump($result);
 
-		if (empty($result)) {
-			$result = 0;
-			return $result;
-		}
-		else{
-			return reset($result);
-		}
+        $result = $this->db->get()->result_array();
+
+		return (empty($result)) ? null : reset($result);
     }
 
     public function getDistanceBetweenUsers(int $firstId, int $secondId): ?array
