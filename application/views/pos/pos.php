@@ -81,9 +81,23 @@
 													onclick="posTriggerModalClick('modal_buuton_<?php echo 'single-item-details-modal' . $product['productId']; ?>_<?php echo $productDetails['productExtendedId']?>')"													>
 													<?php if ($vendor['showProductsImages'] === '1') { ?>
 														<div class='pos-item__image'>
-															<img src='localhost/alfred/assets/images/2021/food2.jpg'/>
+															<?php if ($product['productImage']) { ?>
+																<img
+																	src="<?php echo $productsImagesFolder . $product['productImage']; ?>"
+																	alt=""
+																/>
+															<?php } else { ?>
+																<img
+																	src="<?php echo $defaultImagesFolder . $vendor['defaultProductsImage']; ?>"
+																	alt=""
+																/>
+															<?php } ?>
 														</div>
 													<?php } ?>
+													<!--
+														http://localhost/upwork/alfred/assets/images/defaultProductsImages/22572_1618581122.png
+														http://localhost/upwork/alfred/assets/images/productImages/22572_1618581122.png
+													-->
 													<div class="pos-item__content">
 														<p class='pos-item__title'>
 															<?php echo $productDetails['name']; ?>

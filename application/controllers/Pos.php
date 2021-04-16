@@ -70,7 +70,8 @@
             if ($allProducts && $isFodActive) {
 
                 $data = [
-                    'uploadProductImageFolder'  => $this->config->item('uploadProductImageFolder'),
+                    'productsImagesFolder'      => (base_url() . $this->config->item('productsImagesRelativePath')),
+                    'defaultImagesFolder'      => (base_url() . $this->config->item('defautProductsImagesRelativePath')),
                     'mainProducts'              => $allProducts['main'],
                     'addons'                    => $allProducts['addons'],
                     'maxRemarkLength'           => $this->config->item('maxRemarkLength'),

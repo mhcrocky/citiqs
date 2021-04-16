@@ -131,12 +131,6 @@ $config['weekDays'] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 $config['timeFrom'] = '00:00:00';
 $config['timeTo'] = '23:59:59';
 
-// LOGO IMAGES FOLDER
-$config['uploadLogoFolder']    = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'vendorLogos' . DIRECTORY_SEPARATOR;
-$config['defaultProductsImages'] = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'defaultProductsImages' . DIRECTORY_SEPARATOR;
-$config['placeImages'] = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'placeImages' . DIRECTORY_SEPARATOR;
-$config['backGroundImages']    = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'backGroundImages' . DIRECTORY_SEPARATOR;
-
 //spot types
 $config['local'] = 1;
 $config['deliveryType'] = 2;
@@ -405,9 +399,6 @@ $config['paynlDocumentStatusDesc'] = [
 // END PAYNL
 
 
-// PRODUCT IMAGES FOLDER
-$config['uploadProductImageFolder']    = FCPATH . 'assets/images/productImages' . DIRECTORY_SEPARATOR;
-
 //make order view
 $config['oldMakeOrderView'] = '1';
 $config['newMakeOrderView'] = '2';
@@ -506,6 +497,19 @@ $config['assetsFolder'] = 'assets' . DIRECTORY_SEPARATOR;
 $config['imagesFolder'] = $config['assetsFolder'] . 'images' . DIRECTORY_SEPARATOR;
 $config['emailImagesFolder'] = $config['imagesFolder'] . 'email_images' . DIRECTORY_SEPARATOR;
 $config['emailTemplatesFolder'] = $config['assetsFolder'] . 'email_templates' . DIRECTORY_SEPARATOR;
+
+
+
+// IMAGES FOLDERS
+$config['uploadLogoFolder']    = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'vendorLogos' . DIRECTORY_SEPARATOR;
+$config['defautProductsImagesRelativePath']   = $config['imagesFolder'] . DIRECTORY_SEPARATOR . 'defaultProductsImages' . DIRECTORY_SEPARATOR;
+$config['defaultProductsImages'] = FCPATH . $config['defautProductsImagesRelativePath'];
+$config['placeImages'] = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'placeImages' . DIRECTORY_SEPARATOR;
+$config['backGroundImages']    = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'backGroundImages' . DIRECTORY_SEPARATOR;
+
+$config['productsImagesRelativePath']   = $config['imagesFolder'] . DIRECTORY_SEPARATOR . 'productImages' . DIRECTORY_SEPARATOR;
+$config['uploadProductImageFolder']     = FCPATH . $config['productsImagesRelativePath'];
+
 
 // initial values
 $config['initialDrinkCategory'] = 'Drinks';
