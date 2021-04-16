@@ -1,5 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 <div class="menu-list__item">
+
+    <!--show image only on mobile, add conatiner -->
     <div class='menu-list__name'>
         <b class='menu-list__title'>
             <?php echo $productDetails['name']; ?>
@@ -226,7 +228,7 @@
                                                                 value="1"
                                                                 placeholder="0"
                                                                 max="<?php echo $showAddon['addonAllowedQuantity']; ?>"
-                                                                min="0"
+                                                                min="1"
                                                                 step="1"
                                                                 data-price="<?php echo $showAddon['price']; ?>"
                                                                 disabled
@@ -300,18 +302,13 @@
                         </div>
 
                         <div class="modal-footer">
-                            <!-- <div class="quantity-section mt-0">
-                                <button type="button" class="quantity-button quantity-button--minus">-</button>
-                                <input type="number" value="0" placeholder="0" class="quantity-input">
-                                <button type="button" class="quantity-button quantity-button--plus">+</button>
-                            </div> -->
                             <div>
                                 <button
                                     type="button"
                                     class="btn btn-primary"
                                     onclick="addInCheckoutList(
                                         '<?php echo $modalId; ?>',
-                                        '<?php echo $productDetails['productExtendedId']; ?>',
+                                        '<?php echo $productDetails['productExtendedId'] . ''; ?>',
                                         '<?php echo $productDetails['name']; ?>',
                                         '<?php echo $productDetails['price']; ?>'
                                     )"

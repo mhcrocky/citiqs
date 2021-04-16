@@ -190,7 +190,7 @@
 			</div>
 			<div class="modal-footer">
 				<div class="checkout-modal-sum">
-					<h4 class='mb-0'>TOTAL:<span class='ml-2 color-secondary font-weight-bold'>55$</span></h4>
+					<h4 class='mb-0'>TOTAL:<span class='ml-2 color-secondary font-weight-bold' id="totalAmount"></span></h4>
 				</div>
 				<div>
 					<button type="button" class="btn btn-primary">Payment</button>
@@ -201,3 +201,16 @@
 	</div>
 </div>
 <!-- Modal -->
+
+<script>
+	const makeOrder2021 = (function(){
+		let globals = {
+			'checkoutProductListId'	: 'checkout-modal-list',
+			'checkoutProductList'	: document.getElementById('checkout-modal-list'),
+			'totalAmount'			: document.getElementById('totalAmount')
+		}
+
+		Object.freeze(globals);
+		return globals;
+	}());
+</script>

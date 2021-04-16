@@ -1,7 +1,36 @@
 'use strict';
+function setInputAttribute(input, attribute, newValue) {
+    if (attribute === 'value') {
+        input[attribute] = newValue;
+        input.setAttribute(attribute, newValue);
+    } else {
+        input[attribute] = newValue;
+    }
+}
+
+function isOrdered(element) {
+    return element.closest('#' + makeOrder2021.checkoutProductListId) ? true : false;
+}
+
+function dipsalyButtons(element) {
+    let elementToDisplay = element.parentElement.parentElement.nextElementSibling;
+    let displayStyle = element.checked ? 'display:initial' : 'display:none';
+    let input = elementToDisplay.getElementsByTagName('input')[0];
+
+    setInputAttribute(elementToDisplay, 'style', displayStyle);
+    setInputAttribute(input, 'value', '1');
+    setInputAttribute(input, 'disabled', !element.checked);
+    setInputAttribute(element, 'checked', element.checked);
+
+    if (isOrdered(input)) {
+        calculateTotal();
+    }
+}
+
 function changeSiblingValue(element, action) {
     let input = $(element).siblings('input')[0];
     changeInputQuantity(input, action);
+
     return;
 }
 
@@ -13,7 +42,11 @@ function changeInputQuantity(input, action) {
     (action) ? newValue++  : newValue--;
 
     if (newValue >= min && newValue <= max) {
-        setInputAttribte(input, 'value', newValue);
+        setInputAttribute(input, 'value', newValue);
+    }
+
+    if (isOrdered(input)) {
+        calculateTotal();
     }
 
     return;
@@ -27,38 +60,25 @@ function clearModal(modalId) {
     for (i = 0; i < inputsLength; i++) {
         let input = inputs[i];
         if (input.type === 'checkbox') {
-            input.checked = false;
+            setInputAttribute(input, 'checked', false);
             dipsalyButtons(input);
-            input.removeAttribute('checked');
         } else if (input.type === 'text')  {
-            setInputAttribte(input, 'value', '');
+            setInputAttribute(input, 'value', '');
         }
     }
     return;
 }
 
-function setInputAttribte(input, attribute, newValue) {
-    input[attribute] = newValue;
-    input.setAttribute(attribute, newValue);
-}
 
-function dipsalyButtons(element) {
-    let elementToDisplay = element.parentElement.parentElement.nextElementSibling;
-    let displayStyle = element.checked ? 'display:initial' : 'display:none';
-    let input = elementToDisplay.getElementsByTagName('input')[0];
 
-    setInputAttribte(elementToDisplay, 'style', displayStyle);
-    setInputAttribte(input, 'value', '1');
-    setInputAttribte(input, 'disabled', !element.checked);
-    setInputAttribte(element, 'checked', element.checked);
-}
 
 function mainProductQuantity(element, action, productName, productPrice) {
     changeSiblingValue(element, action);
-    let template = getItemTemplate(productName, productPrice);
-    appendInCheckoutModal(template);
-    // to do 
-    // => show element in checkout modal if not in modal
+    if (!isOrdered(element)) {
+        let template = getItemTemplate(productName, productPrice);
+        appendInCheckoutModal(template);
+    }
+    // to do
     // => change value for all elements with same data-id
     // => remove element if value is 0
     // => reset value to 0 on product list if element is removed
@@ -80,7 +100,8 @@ function showAllInCheckoutModal(html, productName, productPrice) {
 }
 
 function appendInCheckoutModal(html) {
-    $('#checkout-modal-list').append(html);
+    $(makeOrder2021.checkoutProductList).append(html);
+    calculateTotal();
 }
 
 function getAllItemTemplate(html, productName, productPrice) {
@@ -143,7 +164,28 @@ function runSplider() {
 
 function getSlidersPerPage() {
     let bodyWidth = document.body.clientWidth;
-    return bodyWidth < 768 ? '1' : '4';
+    return bodyWidth < 768 ? '3' : '4';
+}
+
+function calculateTotal() {
+    let products = document.querySelectorAll('#' + makeOrder2021.checkoutProductListId + ' [data-price]');
+    let productsLength = products.length;
+    let i;
+    let total = 0;
+
+
+    for (i = 0; i < productsLength; i ++) {
+        let product = products[i];
+        console.dir(product);
+        console.dir(product.disabled);
+        if (!product.disabled) {
+            let quantity = parseInt(product.value);
+            let price = parseFloat(product.dataset.price);
+            total += quantity * price;
+        }
+    }
+
+    makeOrder2021.totalAmount.innerHTML = total.toFixed(2) + '&nbsp;&euro;'
 }
 
 $(document).ready(function() {
