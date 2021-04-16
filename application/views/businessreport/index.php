@@ -451,7 +451,7 @@
     </div>
 -->
 
-    <div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable mx-auto" data-rowposition="2" data-rowsort="1">
+    <div style="" class="w-100 mt-4 row-sort ui-sortable mx-auto" data-rowposition="2" data-rowsort="1">
         <div style="flex-wrap: unset;" class="row mx-auto text-center">
             <div class="col-md-4 mt-4 ml-auto ml-1">
                 <input style="min-width: 230px;width: 100%;" id="datetimegraph"

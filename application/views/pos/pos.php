@@ -6,9 +6,9 @@
 <?php
 	} elseif (isset($mainProducts)) {
 ?>
-	<main style="margin: 0px 10px">
+	<main class='row m-3'>
 		<div class="col-md-8" style="height: 100vh;">
-			<div class="row">
+			<div class="row mb-4">
 				<div class="col-md-1" style="background-color:#ff7f50"></div>
 				
 				<div class="col-md-11">
@@ -27,7 +27,7 @@
 												data-id="<?php echo $categoryId; ?>"
 												data-splide-hash="slide0<?php echo($i + 1)?>"
 											>
-												<?php echo  $category; ?>
+												<p><?php echo  $category; ?></p>
 											</li>
 										<?php
 										$i++;
@@ -52,7 +52,7 @@
 												onclick="redirectToSpot('pos?spotid=<?php echo $spot['spotId']; ?>')"
 												style="text-align:center; padding:0px 0px 0px 0px; height:10% !important"
 											>
-												<?php echo $spot['spotName']; ?>
+												<p><?php echo $spot['spotName']; ?></p>
 											</li>
 										<?php
 									}
@@ -81,27 +81,22 @@
 													onclick="posTriggerModalClick('modal_buuton_<?php echo 'single-item-details-modal' . $product['productId']; ?>_<?php echo $productDetails['productExtendedId']?>')"													>
 													<?php if ($vendor['showProductsImages'] === '1') { ?>
 														<div class='pos-item__image'>
-															<img
-																<?php if ($product['productImage'] && file_exists($uploadProductImageFolder . $product['productImage'])) { ?>
-																	src="<?php echo base_url() . 'assets/images/productImages/' . $product['productImage']; ?>"
-																<?php } else { ?>
-																	src="<?php echo base_url() . 'assets/images/defaultProductsImages/' . $vendor['defaultProductsImage']; ?>"
-																<?php } ?>
-																alt="<?php echo $productDetails['name']; ?>"
-															/>
+															<img src='localhost/alfred/assets/images/2021/food2.jpg'/>
 														</div>
 													<?php } ?>
-													<p class='pos-item__title'>
-														<?php echo $productDetails['name']; ?>
-													</p>
-													<p class='pos-item__price'><?php echo $productDetails['price']; ?>&nbsp;&euro;</p>
-													<p>
-														<span
+													<div class="pos-item__content">
+														<p class='pos-item__title'>
+															<?php echo $productDetails['name']; ?>
+														</p>
+														<div class="pos-item__footer">
+															<p class='pos-item__price'><?php echo $productDetails['price']; ?>&nbsp;&euro;</p>
+															<span
 															id="orderQuantityValue_<?php echo $product['productId']; ?>"
 															class="countOrdered priceQuantity"
 															style="font-size:14px;border-radius: 100%;text-align: center;background: coral;width: 20px;display: inline-block;"
 														>0</span>
-													</p>
+														</div>
+													</div>
 												</div>
 												<!-- end single pos item-->
 											<?php } ?>
