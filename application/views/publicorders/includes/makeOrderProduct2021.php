@@ -167,6 +167,7 @@
                                         foreach ($productAddons as $productAddonData) {
                                             $addonId = $productAddonData[0][0];
                                             $allowedQuantity = $productAddonData[0][1];
+                                            if (empty($addons[$addonId])) continue;
                                             $addon = $addons[$addonId][0];
                                             $addon['addonAllowedQuantity'] = $allowedQuantity;
                                             if (!isset($collectAddons[$addon['productType']])) {

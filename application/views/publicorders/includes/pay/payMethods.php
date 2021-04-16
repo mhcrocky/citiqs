@@ -2,25 +2,8 @@
     <div id="area-container" class="payOrderBackgroundColor">
         <div class="page-containe payOrderBackgroundColorr">
             <div id="payHeader" class="heading pay-header payOrderBackgroundColor">
-                <!--                                    <div class="amount">--><?php //echo number_format($total, 2, ',', '.'); ?><!-- EUR</div>-->
-                <!--                                    <div class="info">-->
-                <!--                                        <b>bestelling</b>-->
-                <!--                                    </div>-->
             </div>
             <div class="bar bar2 payOrderBackgroundColor">
-                <!--                                    <div class="language">-->
-                <!--                                        <a href="#">-->
-                <!--                                            <span class="selectedLanguage">NL</span>-->
-                <!--                                            <i class="fa fa-angle-down" aria-hidden="true"></i>-->
-                <!--                                        </a>-->
-                <!--                                        <div class="menu hidden">-->
-                <!--                                            <ul>-->
-                <!--                                                <li class="selected">NL</li>-->
-                <!--                                              <li>EN</li>-->
-                <!--                                                <li>FR</li> -->
-                <!--                                            </ul>-->
-                <!--                                        </div>-->
-                <!--                                    </div>-->
             </div>
             <div class="order-details" style="background-color: white; display:none">
                 <table>
@@ -70,44 +53,44 @@
             </div>
             <div class="content-container clearfix" id="paymentMethodsContainer">
                 <div id="paymentContainer" class="payment-container methods">
-                    <?php if ($vendor['ideal'] === '1') { ?>
+                    <?php if (in_array($idealPayment, $paymentMethodsKey)) { ?>
                         <a href="javascript:void(0)" onclick="toogleElements('idealBanks', 'paymentMethodsContainer', 'hidden')" class="paymentMethod method-card" >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/ideal.png" alt="iDEAL">
                             <span class="paymentMethodText">iDEAL</span>
                         </a>
                     <?php } ?>
-                    <?php if ($vendor['creditCard'] === '1') { ?>
+                    <?php if (in_array($creditCardPayment, $paymentMethodsKey)) { ?>
                         <a href="<?php echo base_url(); ?>onlinepayment/<?php echo $creditCardPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/creditcard.png" alt="Creditcard">
                             <span class="paymentMethodText">Creditcard</span>
                         </a>
                     <?php } ?>
-                    <?php if ($vendor['payconiq'] === '1') { ?>
+                    <?php if (in_array($payconiqPayment, $paymentMethodsKey)) { ?>
                         <a href="<?php echo base_url(); ?>onlinepayment/<?php echo $payconiqPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/payconiq.png" alt="Payconiq">
                             <span class="paymentMethodText">Payconiq</span>
                         </a>
                     <?php } ?>
-                    <?php if ($vendor['bancontact'] === '1') { ?>
+                    <?php if (in_array($bancontactPayment, $paymentMethodsKey)) { ?>
                         <a href="<?php echo base_url(); ?>onlinepayment/<?php echo $bancontactPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/bancontact.png" alt="bancontact">
                             <span class="paymentMethodText">Bancontact</span>
                         </a>
                     <?php } ?>
-                    <?php if ($vendor['myBank'] === '1') { ?>
+                    <?php if (in_array($myBankPayment, $paymentMethodsKey)) { ?>
                         <a href="<?php echo base_url(); ?>onlinepayment/<?php echo $myBankPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
                             <img src="https://static.pay.nl/payment_profiles/100x100/1588.png" alt="bancontact">
                             <span class="paymentMethodText">My Bank</span>
                         </a>
                     <?php } ?>
-                    <?php if ($vendor['giro'] === '1') { ?>
+                    <?php if (in_array($giroPayment, $paymentMethodsKey)) { ?>
                         <a href="javascript:void(0)" onclick="toogleElements('giroBanks', 'paymentMethodsContainer', 'hidden')" class="paymentMethod method-card" >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/giropay(1).png" alt="bancontact">
                             <span class="paymentMethodText" data-trans="" data-trn-key="Bancontact">Giropay</span>
                         </a>
                     <?php } ?>
                     <?php if ($localType === intval($spot['spotTypeId'])) { ?>
-                        <?php if ($vendor['prePaid'] === '1') { ?>
+                        <?php if (in_array($prePaid, $paymentMethodsKey)) { ?>
                             <a href="javascript:;" class="paymentMethod method-card" data-toggle="modal" data-target="#prePaid">
                                 <img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Pay at waiter" />
                                 <?php if ($vendor['vendorId'] == THGROUP) { ?>
@@ -117,7 +100,7 @@
                                 <?php } ?>
                             </a>
                         <?php } ?>
-                        <?php if ($vendor['postPaid'] === '1') { ?>
+                        <?php if (in_array($postPaid, $paymentMethodsKey)) { ?>
                             <a href="javascript:;" class="paymentMethod method-card" data-toggle="modal" data-target="#postPaid">
                                 <img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Pay at waiter" />
                                 
@@ -129,13 +112,13 @@
                             </a>
                         <?php } ?>
                     <?php } ?>
-                    <?php if ($vendor['pinMachine'] === '1') { ?>
+                    <?php if (in_array($pinMachinePayment, $paymentMethodsKey)) { ?>
                         <a href="<?php echo base_url(); ?>onlinepayment/<?php echo $pinMachinePaymentType; ?>/<?php echo $pinMachineOptionSubId; ?><?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
                         <img src="<?php echo base_url() . 'assets/home/images/pinmachine.png'; ?>" alt="pin machine">
                             <span class="paymentMethodText">Pin machine</span>
                         </a>
                     <?php } ?>
-                    <?php if ($vendor['vaucher'] === '1') { ?>
+                    <?php if (in_array($voucherPayment, $paymentMethodsKey)) { ?>
                         <a href="javascript:;" data-toggle="modal" data-target="#voucher" class="paymentMethod method-card" >
                             <img src="<?php echo base_url() . 'assets/home/images/voucher.png'; ?>" alt="voucher" >
                             <span class="paymentMethodText">gebruik Voucher</span>
@@ -147,7 +130,7 @@
             </div>
 
             
-            <?php if ($vendor['ideal'] === '1') { ?>
+            <?php if (in_array($idealPayment, $paymentMethodsKey)) { ?>
                 <div class="method method-ideal hidden"  id="idealBanks">
                     <div class="title hidden"><span data-trans="" data-trn-key="Kies een bank"><?php echo $this->language->line("PAYMENT-030",'Choose your bank');?></span>
                     </div>                                        
@@ -212,7 +195,7 @@
                 </div>
             <?php } ?>
 
-            <?php if ($vendor['giro'] === '1') { ?>
+            <?php if (in_array($giroPayment, $paymentMethodsKey)) { ?>
                 <div class="method method-ideal hidden"  id="giroBanks">
                     <div class="title hidden"><span data-trans="" data-trn-key="Kies een bank"><?php echo $this->language->line("PAYMENT-030",'Choose your bank');?></span>
                     </div>
@@ -260,8 +243,8 @@
                 </div>
             <?php } ?>
 
-            <p class="voucher" style="display:none; margin:0px; backgorund-color:#fff; text-align:left; color:#000; font-weight:900; padding:5px">Pay with voucher: <span id="voucherAmount"></span> &euro;</p>
-            <p class="voucher" style="display:none; margin:0px; backgorund-color:#fff; text-align:left; color:#000; font-weight:900; padding:5px">Left amount: <span id="leftAmount"></span> &euro;</p>
+            <p class="voucher" style="display:none; margin:0px; background-color:#fff; text-align:left; color:#000; font-weight:900; padding:5px">Pay with voucher: <span id="voucherAmount"></span> &euro;</p>
+            <p class="voucher" style="display:none; margin:0px; background-color:#fff; text-align:left; color:#000; font-weight:900; padding:5px">Left amount: <span id="leftAmount"></span> &euro;</p>
             <div id="payFooter" class="footer" style="text-align:left">
                 <a id="backLink" href="<?php echo base_url() . $redirect; ?>" class="btn btn-cancel">
                     <i class="fa fa-arrow-left"></i>

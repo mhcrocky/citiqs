@@ -85,9 +85,15 @@
                             data-min-length="1"
                         >
                             <option value="">Select</option>
-                            <?php foreach ($employees as $employee) { ?>
-                                <option value="<?php echo $employee['employeeEmail']; ?>"><?php echo $employee['employeeEmail']; ?></option>
-                            <?php } ?>
+                            <?php
+                                if (!empty($employees)) {
+                                    foreach ($employees as $employee) {
+                                        ?>
+                                        <option value="<?php echo $employee['employeeEmail']; ?>"><?php echo $employee['employeeEmail']; ?></option>
+                                    <?php
+                                    }
+                                }
+                            ?>
                         </select>
                     </div>
                     <div class="form-group">
