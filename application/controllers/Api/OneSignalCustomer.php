@@ -57,43 +57,46 @@
             if ($this->api_model->userAuthentication($key)) {
                 $user = $this->input->post(null, true);
 
+                $email = $user['emailBuyer'];
                 $vendorId = $user['VendorId'];
 				$AppId = $user['AppId'];
-				$PlayerId = $user['PLayerId'];
+				$PlayerId = $user['PlayerId'];
 
 				// CHECK ONE SIGNAL ID
 				// Now we need to check the other table.... playerId this is unique in every way...
 
-                $result = $this->notification_model->checkOneSignalId($user);
+				// We need to check 2 processes.
+				// Does user exist? (tbl_user)
+				// Does user app register exist (tbl_user_notification)
 
-				if ($result) {
-                    echo json_encode([
-                        'status' => '1',
-                        'message' => 'User with this one signal id already exist',
-						'userid' => $result['id']
-                    ]);
-                    return;
-                }
-                // INSERT USER
-                $user['roleId'] = $this->config->item('buyer');
-                $user['salesagent'] = $this->config->item('defaultSalesAgentId');
-                $user['usershorturl'] = 'api one signal';
-                $this->user_model->manageAndSetUserOneSignal($user);
+                $result = $this->notification_model->checkOneSignalIdUser($user);
 
-                if ($this->user_model->id) {
-                    $message = isset($this->user_model->created) ? 'User created' : 'User updated';
-                    echo json_encode([
-                        'status' => '1',
-                        'message' => $message,
-                        'userId' => $this->user_model->id
-                    ]);
-                    return;
-                }
-                echo json_encode([
-                    'status' => '0',
-                    'message' => 'Action failed',
-                ]);
-                return;
+				if ($result!="") {
+					// INSERT USER
+					$user['roleId'] = $this->config->item('buyer');
+					$user['salesagent'] = $this->config->item('defaultSalesAgentId');
+					$user['usershorturl'] = 'api one signal';
+					$this->user_model->manageAndSetUserOneSignal($user);
+
+					if ($this->user_model->id) {
+						// create user in the app table for multiple apps. tbl_user_notification
+						$result = $this->notification_model->checkOneSignalId($user);
+						if ($result==''){
+							$result = $this->notification_model->addOneSignalId($user);
+						}
+					}
+				}
+				else {
+					// check if user tbl_user_notification exist
+					// if not than add
+					// addOneSignalId (function in Notification_model)
+					// Check with !
+					$result = $this->notification_model->checkOneSignalId($user);
+					if ($result==''){
+						$result = $this->notification_model->addOneSignalId($user);
+					}
+				}
+
             }
 
             echo json_encode([
