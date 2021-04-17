@@ -159,7 +159,7 @@ class Voucher extends REST_Controller
         $what = ['*'];
 		$where = ["id" => $data['voucherId']];
         $voucher = $this->shopvoucher_model->read($what,$where);
-        $data['send'] = $this->emailSend($data['name'], $data['email'], $voucher);
+        $data['send'] = $this->emailSend($data['name'], $data['email'], $voucher, $data['voucherId']);
         if ($this->vouchersend_model->setObjectFromArray($data)->create()) {
             if($data['send'] == 1){
                 $voucherused = intval($voucher[0]['voucherused'])+1;
@@ -193,7 +193,7 @@ class Voucher extends REST_Controller
         $what = ['*'];
 		$where = ["id" => $data['voucherId']];
         $voucher = $this->shopvoucher_model->read($what,$where);
-        $send = $this->emailSend($data['name'], $data['email'], $voucher, true);
+        $send = $this->emailSend($data['name'], $data['email'], $voucher, $data['voucherId']);
         if ($send == 1) {
             if($data['send'] == 0){
                 $updateWhere = ["id" => $data['id']];
@@ -523,7 +523,7 @@ class Voucher extends REST_Controller
     }
 
 
-    private function emailSend($name, $email,$data)
+    private function emailSend($name, $email, $data, $voucherId)
 	{
         $mailsend = 0;
         $qrtext = $data[0]['code'];
@@ -589,16 +589,20 @@ class Voucher extends REST_Controller
 				$mailtemplate = str_replace('[voucherAmount]', $voucherAmount, $mailtemplate);
 				$mailtemplate = str_replace('[voucherPercent]', $voucherPercent, $mailtemplate);
 				$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
-				$subject = $emailTemplate->template_subject;
+				$subject = strip_tags($emailTemplate->template_subject);
                 $subject = str_replace('[Name]',$name, $subject);
 				$subject = str_replace('[Email]', $email, $subject);
 				$subject = str_replace('[voucherCode]', $voucherCode,$subject);
 				$subject = str_replace('[voucherDescription]', $voucherDescription, $subject);
 				$subject = str_replace('[voucherAmount]', $voucherAmount,$subject );
 				$subject = str_replace('[voucherPercent]', $voucherPercent, $subject);
+                $mailtemplate .= '<div style="width:100%;text-align:center;margin-top: 30px;">';
+                $download_pdf_link = base_url() . "voucher/pdf/" . $voucherId . "/?name=" . urlencode($name) ."&email=". urlencode($email);
+                $mailtemplate .= '<a href="'.$download_pdf_link.'" id="pdfDownload" style="background-color:#008CBA;border: none;color: white;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;">Download as PDF</a>';
+                $mailtemplate .= '</div>';
 				$mailsend = 1;
 //				$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
-				if(Email_helper::sendEmail($email, $subject, $mailtemplate,true)) {
+				if(Email_helper::sendEmail($email, $subject, $mailtemplate, false)) {
                     $mailsend = 1;
                 }
                             

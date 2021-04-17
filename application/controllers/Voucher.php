@@ -1,6 +1,7 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
+require APPPATH . '/libraries/phpqrcode/qrlib.php';
 require APPPATH . '/libraries/BaseControllerWeb.php';
 
 class Voucher extends BaseControllerWeb
@@ -8,6 +9,8 @@ class Voucher extends BaseControllerWeb
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->helper('pdf_helper');
+		$this->load->config('custom');
 		$this->load->library('language', array('controller' => $this->router->class));
 		$this->isLoggedIn();
 	}
@@ -132,6 +135,88 @@ class Voucher extends BaseControllerWeb
         $data['landingPagesEdit'] = false;
 
         return;
+    }
+
+
+	public function download_email_pdf($voucherId)
+	{
+		$this->load->model('shopvoucher_model');
+        $what = ['*'];
+		$where = ["id" => $voucherId];
+        $data = $this->shopvoucher_model->read($what,$where);
+		$name = urldecode($this->input->get('name'));
+		$email = urldecode($this->input->get('email'));
+        $qrtext = $data[0]['code'];
+        $voucherCode = $data[0]['code'];
+        $voucherDescription = $data[0]['description'];
+        $voucherAmount = $data[0]['amount'];
+        $voucherPercent = $data[0]['percent'];
+        switch (strtolower($_SERVER['HTTP_HOST'])) {
+            case 'tiqs.com':
+				$file = '/home/tiqs/domains/tiqs.com/public_html/alfred/uploads/qrcodes/';
+				break;
+			case '127.0.0.1':
+				$file = 'C:/wamp64/www/alfred/alfred/uploads/qrcodes/';
+				break;
+			default:
+				break;
+		}
+
+		$SERVERFILEPATH = $file;
+		$text = $qrtext;
+		$folder = $SERVERFILEPATH;
+		$file_name1 = $qrtext . ".png";
+		$file_name = $folder . $file_name1;
+        QRcode::png($text, $file_name);
+
+        switch (strtolower($_SERVER['HTTP_HOST'])) {
+			case 'tiqs.com':
+				$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
+				break;
+			case '127.0.0.1':
+				$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
+				break;
+			default:
+				break;
+        }
+                        
+		switch (strtolower($_SERVER['HTTP_HOST'])) {
+			case 'tiqs.com':
+				$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
+				break;
+			case '127.0.0.1':
+				$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
+				break;
+			default:
+				break;
+        }
+
+                        
+		if($data[0]['emailId']) {
+            $this->load->model('email_templates_model');
+            $emailTemplate = $this->email_templates_model->get_emails_by_id($data[0]['emailId']);
+            $this->config->load('custom');
+            $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$data[0]['vendorId'].'/'.$emailTemplate->template_file .'.'.$this->config->item('template_extension'));
+            $qrlink = $SERVERFILEPATH . $file_name1;
+			if($mailtemplate) {
+                $dt = new DateTime('now');
+                $date = $dt->format('Y.m.d');
+                $mailtemplate = str_replace('[currentDate]', $name, $mailtemplate);
+                $mailtemplate = str_replace('[Name]', $name, $mailtemplate);
+				$mailtemplate = str_replace('[Email]', $email, $mailtemplate);
+				$mailtemplate = str_replace('[voucherCode]', $voucherCode, $mailtemplate);
+				$mailtemplate = str_replace('[voucherDescription]', $voucherDescription, $mailtemplate);
+				$mailtemplate = str_replace('[voucherAmount]', $voucherAmount, $mailtemplate);
+				$mailtemplate = str_replace('[voucherPercent]', $voucherPercent, $mailtemplate);
+				$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
+				Pdf_helper::HtmlToPdf($mailtemplate);
+
+
+                            
+            }
+        }
+            
+
     }
 
 }

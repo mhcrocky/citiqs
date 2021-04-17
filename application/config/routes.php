@@ -566,6 +566,7 @@ $route['booking_reservations/select_payment_type'] = 'Booking_reservations/selec
 $route['booking_reservations/delete_reservation'] = 'Booking_reservations/delete_reservation';
 $route['booking_reservations/clear_reservations'] = 'Booking_reservations/clear_reservations';
 $route['booking_reservations/spots/(:num)/(:num)'] = "Booking_reservations/spots/$1/$2";
+$route['booking_reservations/pdf/(:num)/(:any)'] = "Booking_reservations/download_email_pdf/$1/$2";
 $route['booking_reservations/(:any)'] = 'Booking_reservations/index/$1';
 
 $route['video/get_videos'] = 'Video/get_videos';
@@ -600,6 +601,7 @@ $route['voucher'] = 'Voucher/index';
 $route['voucher/create'] = 'Voucher/create';
 $route['voucher/send'] = 'Voucher/send';
 $route['voucher/update_template/(:num)'] = 'Voucher/updateTemplate/$1';
+$route['voucher/pdf/(:num)'] = 'Voucher/download_email_pdf/$1';
 
 $route['qrcode'] = 'Qrcode/index';
 $route['qrcode/get_qrcodes'] = 'Qrcode/get_qrcodes';
