@@ -183,13 +183,16 @@ function removeTicket(id, agendaId, spotId, price, reservationFee) {
     if(quantityValue == 1){
         return;
     }
+    if (quantityValue == 0) {
+        return;
+    }
     quantityValue--;
     var oldTotalBasket = totalBasket;
-    totalBasket = totalBasket - price - reservationFee;
+    totalBasket = parseFloat(totalBasket) - parseFloat(price) - parseFloat(reservationFee);
     
     $(".ticketQuantityValue_" + id).val(quantityValue);
     $("#quantity_" + id).val(quantityValue);
-    $(".totalBasket").text(totalBasket.toFixed(2));
+    $(".totalBasket").text(parseFloat(totalBasket).toFixed(2));
     let current_time = $(".current_time").val();
 
     let data = {
@@ -280,11 +283,11 @@ function addTicket(id, agendaId, spotId, price, reservationFee, limit=2) {
     }
     quantityValue++;
     var oldTotalBasket = totalBasket;
-    totalBasket = totalBasket + price + reservationFee;
+    totalBasket = parseFloat(totalBasket) + parseFloat(price) + parseFloat(reservationFee);
     
     $(".ticketQuantityValue_" + id).val(quantityValue);
     $("#quantity_" + id).val(quantityValue);
-    $(".totalBasket").text(totalBasket.toFixed(2));
+    $(".totalBasket").text(parseFloat(totalBasket).toFixed(2));
     let current_time = $(".current_time").val();
 
     let data = {

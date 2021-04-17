@@ -220,31 +220,36 @@ class Booking_reservations extends BaseControllerWeb
         $dt1 = new DateTime(urldecode($booking['fromtime']));
         $fromtime = $dt1->format('H:i');
         $dt2 = new DateTime(urldecode($booking['totime']));
-        $totime = $dt2->format('H:i'); 
-        
-        echo json_encode(['fromtime'=>$fromtime,'totime'=>$totime, 'numberofpersons' => $booking['numberofpersons'], 'first_booking' => $first_booking, 'eventDate' => date("d.m.Y", strtotime($agenda->ReservationDateTime)) ]);
-        
-        
+        $totime = $dt2->format('H:i');
 
         $total = 0;
         foreach($bookings as $booking){
-            
             $total = $total + (floatval($booking['price']) + floatval($booking['reservationFee']))*floatval($booking['quantity']);
         }
         
         $this->session->set_tempdata('bookings', $bookings, 600);
         $this->session->set_tempdata('tickets', $bookings, 600);
         $total = number_format($total, 2, '.', '');
-        $this->session->set_tempdata('total', $total, 600);  
+        $this->session->set_tempdata('total', $total, 600); 
+        
+        $reservation_data = [
+            'fromtime'=> $fromtime,
+            'totime'=>$totime,
+            'numberofpersons' => $booking['numberofpersons'],
+            'first_booking' => $first_booking,
+            'eventDate' => date("d.m.Y", strtotime($agenda->ReservationDateTime)) 
+        ];
+        echo json_encode($reservation_data);
     }
 
     public function clear_reservations()
     {
         $this->session->unset_userdata('bookings');
-        $this->session->unset_tempdata('tickets');
+        $this->session->unset_userdata('tickets');
         $this->session->unset_userdata('exp_time');
         $this->session->unset_userdata('total');
         $this->session->unset_tempdata('bookings');
+        $this->session->unset_tempdata('tickets');
         $this->session->unset_tempdata('exp_time');
         $this->session->unset_tempdata('total');
         if(!$this->session->tempdata('tickets')){
