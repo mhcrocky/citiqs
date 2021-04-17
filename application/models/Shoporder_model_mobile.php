@@ -53,7 +53,7 @@ class Shoporder_model_mobile extends CI_Model {
 									tbl_shop_orders.pStatus !=  ".$this->db->escape('3')." AND
 									date(tbl_shop_orders.created) >= date('2020/12/28')
 						GROUP BY
-							 tbl_shop_orders.id DESC
+							 tbl_shop_orders.id
 							";
 		$query = $this->db->query($sql);
 		$result= $query->num_rows();
