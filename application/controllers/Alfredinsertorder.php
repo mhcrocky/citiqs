@@ -444,9 +444,10 @@ class Alfredinsertorder extends BaseControllerWeb
             $this->notificationvendor->sendVendorMessage($vendor['oneSignalId'], $orderId);
         }
 
-        $this->user_model->setUniqueValue($post['user']['email'])->setUser('oneSignalId');
+		//  $this->user_model->setUniqueValue($post['user']['email'])->setUser('oneSignalId');
+        //
         if ($this->user_model->oneSignalId) {
-            $this->notificationcustomer->sendCustomerMessage($this->user_model->oneSignalId, $orderId);
+            $this->notificationcustomer->sendCustomerMessage($this->notification_model->oneSignalId, $orderId);
         }
     }
 

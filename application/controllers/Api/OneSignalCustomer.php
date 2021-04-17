@@ -59,9 +59,9 @@
                 $user = $this->input->post(null, true);
 
                 $email = $user['emailBuyer'];
-                $vendorId = $user['VendorId'];
-				$AppId = $user['AppId'];
-				$PlayerId = $user['PlayerId'];
+                $vendorId = $user['vendorId'];
+				$AppId = $user['appId'];
+				$PlayerId = $user['playerId'];
 
 				// CHECK ONE SIGNAL ID
 				// Now we need to check the other table.... playerId this is unique in every way...
@@ -74,23 +74,27 @@
 //				return;
 
                 $result = $this->notification_model->checkOneSignalIdUser($user);
-//
+
 //				echo var_dump($user);
 //				echo var_dump($result);
 //				return;
 
-				if ($result!="") {
+				if (empty($result)) {
 					// INSERT USER
 					$user['roleId'] = $this->config->item('buyer');
 					$user['salesagent'] = $this->config->item('defaultSalesAgentId');
 					$user['usershorturl'] = 'api one signal';
 					$this->user_model->manageAndSetUserOneSignal($user);
-
 					if ($this->user_model->id) {
 						// create user in the app table for multiple apps. tbl_user_notification
-						$result = $this->notification_model->checkOneSignalId($user);
-						if ($result==''){
+//						$result = $this->notification_model->checkOneSignalId($user);
+						if (empty($result)){
 							$result = $this->notification_model->addOneSignalId($user);
+							echo json_encode([
+								'status' => '1',
+								'message' => 'Added'
+							]);
+							return;
 						}
 					}
 				}
@@ -100,12 +104,21 @@
 					// addOneSignalId (function in Notification_model)
 					// Check with !
 					$result = $this->notification_model->checkOneSignalId($user);
-					if ($result==''){
+					if (empty($result)){
 						$result = $this->notification_model->addOneSignalId($user);
+						echo json_encode([
+							'status' => '1',
+							'message' => 'Added'
+						]);
+						return;
 					}
 				}
 
             }
+
+//            var_dump($result);
+//            var_dump($user);
+//            die();
 
             echo json_encode([
                 'status' => '0',
