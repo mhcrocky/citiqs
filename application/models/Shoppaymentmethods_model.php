@@ -16,6 +16,7 @@
         public $vendorCost;
         public $percent;
         public $amount;
+        public $active;
 
         private $table = 'tbl_shop_payment_methods';
 
@@ -61,6 +62,7 @@
             if (isset($data['vendorCost']) && !($data['vendorCost'] === '0' || $data['vendorCost'] === '1')) return false;
             if (isset($data['percent']) && !Validate_data_helper::validateFloat($data['percent'])) return false;
             if (isset($data['amount']) && !Validate_data_helper::validateFloat($data['amount'])) return false;
+            if (isset($data['active']) && !($data['active'] === '0' || $data['active'] === '1')) return false;
 
             return true;
         }
@@ -189,6 +191,15 @@
 
         public function getVendorGroupPaymentMethods(): ?array
         {
+            $where = [
+                $this->table . '.vendorId' => $this->vendorId,
+                $this->table . '.productGroup' => $this->productGroup,
+            ];
+
+            if (!is_null($this->active)) {
+                $where[$this->table . '.active'] = $this->active;
+            }
+
             return $this->readImproved([
                 'what' => [
                     $this->table . '.id',
@@ -199,10 +210,7 @@
                     $this->table . '.percent',
                     $this->table . '.amount'
                 ],
-                'where' => [
-                    $this->table . '.vendorId' => $this->vendorId,
-                    $this->table . '.productGroup' => $this->productGroup,
-                ]
+                'where' => $where
             ]);
         }
 

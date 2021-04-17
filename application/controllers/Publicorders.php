@@ -37,6 +37,7 @@
             $this->load->model('fodfdm_model');
             $this->load->model('shopprinters_model');
             $this->load->model('shopvendortemplate_model');
+            $this->load->model('shoppaymentmethods_model');
 
             $this->load->config('custom');
 
@@ -504,6 +505,14 @@
             // if $orderData['voucherId'] and $orderData['payWithVaucher'] unset on refresh page
             Jwt_helper::unsetVoucherData($orderData, $orderRandomKey);
 
+            $paymentMethods = $this
+                                ->shoppaymentmethods_model
+                                ->setProperty('vendorId', $orderData['vendorId'])
+                                ->setProperty('active', '1')
+                                ->setProperty('productGroup', $this->config->item('storeAndPos'))
+                                ->getVendorGroupPaymentMethods();
+            $paymentMethods = Utility_helper::resetArrayByKeyMultiple($paymentMethods, 'paymentMethod');
+
             $data = [
                 'vendor'                => $vendor,
                 'spot'                  => $spot,
@@ -525,7 +534,24 @@
                 'orderRandomKey'        => $orderRandomKey,
                 'spotId'                => $orderData['spotId'],
                 'pinMachineOptionSubId' => $this->config->item('pinMachineOptionSubId'),
+                'idealPayment'          => $this->config->item('idealPayment'),
+                'creditCardPayment'     => $this->config->item('creditCardPayment'),
+                'bancontactPayment'     => $this->config->item('bancontactPayment'),
+                'giroPayment'           => $this->config->item('giroPayment'),
+                'payconiqPayment'       => $this->config->item('payconiqPayment'),
+                'pinMachinePayment'     => $this->config->item('pinMachinePayment'),
+                'voucherPayment'        => $this->config->item('voucherPayment'),
+                'myBankPayment'         => $this->config->item('myBankPayment'),
+                'prePaid'               => $this->config->item('prePaid'),
+                'postPaid'              => $this->config->item('postPaid'),
+                'paymentMethodsKey'     => array_keys($paymentMethods),
+                # this we will need for cost calculation
+                #'vendorPaymentMethods'  => $paymentMethods,
             ];
+
+            // echo '<pre>';
+            // print_r($data);
+            // die();
 
             $this->global['pageTitle'] = 'TIQS : PAY';
             $this->setGlobalDesign($data['vendor']['design']);
