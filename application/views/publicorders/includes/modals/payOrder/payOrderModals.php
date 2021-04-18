@@ -1,6 +1,6 @@
 <!-- modals -->
 <?php if ($localType === intval($spot['spotTypeId'])) { ?>
-    <?php if ($vendor['prePaid'] === '1') { ?>
+    <?php if (in_array($prePaid, $paymentMethodsKey)) { ?>
         <!-- Modal -->
         <div id="prePaid" class="modal" role="dialog">
             <div class="modal-dialog modal-sm modalPayOrder" style="text-align:center">
@@ -31,7 +31,7 @@
             </div>            
         </div>
     <?php } ?>
-    <?php if ($vendor['postPaid'] === '1') { ?>
+    <?php if (in_array($postPaid, $paymentMethodsKey)) { ?>
         <!-- Modal -->
         <div id="postPaid" class="modal" role="dialog">
             <div class="modal-dialog modal-sm">
@@ -63,7 +63,7 @@
         </div>
     <?php } ?>
 <?php } ?>
-<?php if ($vendor['vaucher'] === '1') { ?>
+<?php if (in_array($voucherPayment, $paymentMethodsKey)) { ?>
     <!-- Modal -->
     <div id="voucher" class="modal" role="dialog">
         <div class="modal-dialog modal-sm">
