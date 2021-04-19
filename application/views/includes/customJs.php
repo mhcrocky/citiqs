@@ -326,4 +326,17 @@
 		<script src="<?php #echo $this->baseUrl ?>assets/home/js/makeOrderFunctions.js"></script>
 		<script src="<?php #echo $this->baseUrl ?>assets/home/js/makeOrderNew.js"></script>
 	-->
+<?php } elseif('events/financial_report'){ ?>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js" integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg==" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+	<script type="text/javascript" src="<?php echo $this->baseUrl; ?>assets/js/jquery.table2excel.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/js/query-builder.standalone.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/ticketingFinancialDataTable.js"></script>
 <?php }?>
