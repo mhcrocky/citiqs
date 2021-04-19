@@ -215,8 +215,6 @@
             $imagetextemail->destroy();
             $imageprintemail->destroy();
 
-            echo $imgRelativePath;
-            die();
             return $imgRelativePath;
         }
 
