@@ -31,8 +31,20 @@ class Booking_events extends BaseControllerWeb
         if (!$shortUrl) {
             redirect('https://tiqs.com/info');
         }
-
+        
+        $eventId = '';
+        $get_by_event_id = false;
+        
         if(!$customer){
+            if(is_numeric($shortUrl)){
+                $eventId = $shortUrl;
+                $shortUrl = $this->event_model->get_usershorturl($eventId);
+                $customer = $this->user_model->getUserInfoByShortUrl($shortUrl);
+                $get_by_event_id = ($customer) ? true : false;
+            }
+        }
+
+        if (!$shortUrl || !$customer) {
             redirect('https://tiqs.com/info');
         }
 
@@ -48,7 +60,14 @@ class Booking_events extends BaseControllerWeb
         if(isset($design[0])){
             $this->global['design'] = unserialize($design[0]['shopDesign']);
         }
-        $data['events'] = $this->event_model->get_events($customer->id);
+
+        if($get_by_event_id){
+            $events = $this->event_model->get_event_by_id($customer->id, $eventId);
+        } else {
+            $events = $this->event_model->get_events($customer->id);
+        }
+
+        $data['events'] = $events;
         $this->loadViews("events/shop", $this->global, $data, 'footerShop', 'headerShop');
 
     }

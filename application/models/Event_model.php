@@ -79,6 +79,20 @@ class Event_model extends CI_Model {
 		return $query->result_array();
 	} 
 
+	public function get_event_by_id($vendor_id, $eventId)
+	{
+		date_default_timezone_set('Europe/Berlin');
+        $date = date('Y-m-d H:m:s');
+		//$time = date('H:m:s');
+		$this->db->select('*');
+		$this->db->from('tbl_events');
+		$this->db->where('vendorId', $vendor_id);
+		$this->db->where('id', $eventId);
+		$this->db->where('concat_ws(" ", StartDate, StartTime)  >=', $date);
+		$query = $this->db->get();
+		return $query->result_array();
+	} 
+
 	public function get_all_events($vendor_id)
 	{
 		
@@ -321,6 +335,20 @@ class Event_model extends CI_Model {
 			$ticketing[] = $result['paymentMethod'];
 		}
 		return $ticketing;
+	}
+
+	public function get_usershorturl($eventId)
+	{
+		$this->db->select('usershorturl');
+		$this->db->from('tbl_events');
+		$this->db->join('tbl_user', 'tbl_user.id = tbl_events.vendorId', 'left');
+		$this->db->where('tbl_events.id', $eventId);
+		$query = $this->db->get();
+		if($query->num_rows() > 0 ){
+			$result = $query->first_row();
+			return $result->usershorturl;
+		}
+		return false;
 	}
 
 	function save_event_reservations($userInfo, $tickets = array(), $customer){
