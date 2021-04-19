@@ -405,6 +405,12 @@ class Events extends BaseControllerWeb
         $this->loadViews('events/reports', $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
 
+    public function financial_report()
+    {
+        $this->global['pageTitle'] = 'TIQS : FINANCIAL REPORT';
+        $this->loadViews('events/financial_report', $this->global, '', 'footerbusiness', 'headerbusiness');
+    }
+
     public function graph($eventId)
     {
         $this->global['pageTitle'] = 'TIQS : EVENT GRAPH';
@@ -426,6 +432,13 @@ class Events extends BaseControllerWeb
     {
         $sql = ($this->input->post('sql') == 'AND%20()') ? "" : rawurldecode($this->input->post('sql'));
         $report = $this->event_model->get_tickets_report($this->vendor_id, $sql);
+        echo json_encode($report);
+    }
+
+    public function get_financial_report()
+    {
+        $sql = ($this->input->post('sql') == 'AND%20()') ? "" : rawurldecode($this->input->post('sql'));
+        $report = $this->event_model->get_financial_report($this->vendor_id, $sql);
         echo json_encode($report);
     }
 
@@ -658,4 +671,4 @@ class Events extends BaseControllerWeb
         }
     
 
-}
+} 
