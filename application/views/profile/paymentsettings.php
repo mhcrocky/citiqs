@@ -225,16 +225,22 @@
 					</div>
 					<div class="form-group mb-35">
 						<label for="serviceFeeTax">SERVICE FEE (VAT PERCENTAGE) </label>
-						<input
-							type="number"
-							min="0"
-							step="1"
-							id="serviceFeeTax"
-							name="vendor[serviceFeeTax]"
+						<select
 							class="form-control"
-							style="border-radius: 50px"
-							value="<?php echo $vendor['serviceFeeTax']; ?>"
-							/>
+							name="vendor[serviceFeeTax]"
+							id="serviceFeeTax"
+							class="form-control"
+						>
+							<option value="">Select</option>
+							<?php foreach ($taxRates as $tax) { ?>
+								<option
+									value="<?php echo $tax; ?>"
+									<?php if ($tax === intval($vendor['serviceFeeTax'])) { echo 'selected'; } ?>
+								>
+									<?php echo $tax; ?>
+								</option>
+							<?php } ?>
+						</select>
 					</div>
 					<div class="form-group mb-35">
 						<label>EMAIL X AND Z REPORTES</label>

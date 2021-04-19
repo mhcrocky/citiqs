@@ -103,7 +103,8 @@ class  Profile extends BaseControllerWeb
 			'active' => $active,
 			'action' => 'profileUpdate',
 			'businessTypes' => $this->businesstype_model->getAll(),
-			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData()
+			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData(),
+			'taxRates' => $this->config->item('countriesTaxes')[$this->user_model->country]['taxRates']
 		];
 
 		$this->loadViews("profile/paymentsettings", $this->global, $data, 'footerbusiness', 'headerbusiness'); // Menu profilepage
@@ -197,7 +198,9 @@ class  Profile extends BaseControllerWeb
 		//
 		if(isset($post['vendor'])){
 			if ($this->shopvendor_model->setObjectFromArray($post['vendor'])->update()) {
-				$_SESSION['activatePos'] = $post['vendor']['activatePos'];
+				if (isset($post['vendor']['activatePos'])) {
+					$_SESSION['activatePos'] = $post['vendor']['activatePos'];
+				}
 				$this->session->set_flashdata('success', 'Data updated');
 			} else {
 				$this->session->set_flashdata('error', 'Update data failed');
