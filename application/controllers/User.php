@@ -1071,7 +1071,7 @@ class User extends BaseControllerWeb {
 
         if ($this->form_validation->run()) {
             $data = $this->input->post(null, true);
-            if ($this->user_model->checkInszNumber($data['inszNumber'], $this->userId)) {
+            if ($data['inszNumber'] && $this->user_model->checkInszNumber($data['inszNumber'], $this->userId)) {
                 $this->session->set_flashdata('error', 'Profile update failed. Register number "' . $data['inszNumber'] . '" is already in use by another user');
                 redirect('address');
                 exit();

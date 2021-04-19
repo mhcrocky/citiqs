@@ -198,7 +198,9 @@ class  Profile extends BaseControllerWeb
 		//
 		if(isset($post['vendor'])){
 			if ($this->shopvendor_model->setObjectFromArray($post['vendor'])->update()) {
-				$_SESSION['activatePos'] = $post['vendor']['activatePos'];
+				if (isset($post['vendor']['activatePos'])) {
+					$_SESSION['activatePos'] = $post['vendor']['activatePos'];
+				}
 				$this->session->set_flashdata('success', 'Data updated');
 			} else {
 				$this->session->set_flashdata('error', 'Update data failed');
