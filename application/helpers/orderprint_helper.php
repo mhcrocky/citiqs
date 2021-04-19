@@ -16,7 +16,7 @@
             $isFod = $CI->shopvendorfod_model->isFodVendor(intval($order['vendorId']));
             $i = 0;
             $startPoint = 220;
-            $productVats = self::getVatsArray();
+            $productVats = self::getVatsArray($order['vendorCountry']);
             $spotTypeId = intval($order['spotTypeId']);
             $productsarray = explode($CI->config->item('contactGroupSeparator'), $order['products']);
             $logoFile = is_null($order['vendorLogo']) ? FCPATH . "/assets/home/images/tiqslogonew.png" : $CI->config->item('uploadLogoFolder') . $order['vendorLogo'];
@@ -41,18 +41,30 @@
             return self::saveImageAndDestroyObjects($imagetextemail, $imageprintemail, $drawemail, $order);
         }
 
-        public static function printVatString(int $vatPercent, bool $isFod): string
+        public static function printVatString(int $vatPercent, bool $isFod, array $productVats): string
         {
-            return $isFod ? self::returnVatGrade($vatPercent) : '';
+            // return $isFod ? self::returnVatGrade($vatPercent) : '';
+            if (!$isFod) return '';
+            return isset($productVats[$vatPercent]) ? $productVats[$vatPercent]['grade'] : 'D';
         }
 
-        public static function returnVatGrade(int $vatpercentage)
-        {
-            $vatPercentArray = self::getVatsArray();
-            return isset($vatPercentArray[$vatpercentage]) ? $vatPercentArray[$vatpercentage]['grade'] : 'D';
-        }
+        // public static function returnVatGrade(int $vatpercentage)
+        // {
+        //     $vatPercentArray = self::getVatsArray();
+        //     return isset($vatPercentArray[$vatpercentage]) ? $vatPercentArray[$vatpercentage]['grade'] : 'D';
+        // }
 
-        public static function createProductLine(&$drawemail, $startPoint, int $i, int $quantity, string $title, string $lineAmount, int $vatpercentage, bool $isFod): void
+        public static function createProductLine(
+            &$drawemail,
+            $startPoint,
+            int $i,
+            int $quantity,
+            string $title,
+            string $lineAmount,
+            int $vatpercentage,
+            bool $isFod,
+            array $productVats
+        ): void
         {
             $drawemail->setFontSize(24);
             $drawemail->setStrokeWidth(1);
@@ -63,7 +75,7 @@
             $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
             $drawemail->annotation(40, $startPoint + ($i * 30), substr($title, 0, 13));
             $drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
-            $drawemail->annotation(560, $startPoint + ($i * 30), "€ ". $lineAmount . ' ' . self::printVatString($vatpercentage, $isFod));
+            $drawemail->annotation(560, $startPoint + ($i * 30), "€ ". $lineAmount . ' ' . self::printVatString($vatpercentage, $isFod, $productVats));
         }
 
         public static function printBoldLine(object &$drawemail, object &$imagetextemail, int &$i, int $startPoint): void
@@ -77,34 +89,27 @@
             $i++;
         }
 
-        public static function getVatsArray(): array
+        public static function getVatsArray(string $country): array
         {
 
             $CI =& get_instance();
             $CI->load->config('custom');
-            
-            return [
-                $CI->config->item('taxA') => [
-                    'grade' => 'A',
+
+            $taxes = $CI->config->item('countriesTaxes')[$country];
+            $taxRates = $taxes['taxRates'];
+            $taxGrades = isset($taxes['taxGrades']) ? $taxes['taxGrades'] : null;
+            $taxRatesLength = count($taxRates);
+            $return = [];
+
+            for ($i = 0; $i < $taxRatesLength; $i++) {
+                $return[$taxRates[$i]] = [
                     'vatAmount' => 0,
                     'baseAmount' => 0,
-                ],
-                $CI->config->item('taxB') => [
-                    'grade' => 'B',
-                    'vatAmount' => 0,
-                    'baseAmount' => 0,
-                ],
-                $CI->config->item('taxC') => [
-                    'grade' => 'C',
-                    'vatAmount' => 0,
-                    'baseAmount' => 0,
-                ],
-                $CI->config->item('taxD') => [
-                    'grade' => 'D',
-                    'vatAmount' => 0,
-                    'baseAmount' => 0,
-                ]
-            ];
+                ];
+                $return[$taxRates[$i]]['grade'] = $taxGrades ? $taxGrades[$i] : '';
+            }
+
+            return $return;
         }
 
         public static function printVendorData(object &$drawemail, int $startPoint, int &$i, array $order): void
@@ -210,7 +215,8 @@
             $imagetextemail->destroy();
             $imageprintemail->destroy();
 
-
+            echo $imgRelativePath;
+            die();
             return $imgRelativePath;
         }
 
@@ -290,12 +296,13 @@
                 self::populateVatArray($productVats, $productTotal, $vatpercentage);
 
                 $productTotal =  number_format($productTotal, 2, '.', ',');
-                self::createProductLine($drawemail, $startPoint, $i, $quantity, $title, $productTotal, $vatpercentage, $isFod);
+                self::createProductLine($drawemail, $startPoint, $i, $quantity, $title, $productTotal, $vatpercentage, $isFod, $productVats);
                 $i++;
             }
             // Service fee line
-            self::createProductLine($drawemail, $startPoint, $i, 1, 'servicefee', $order['serviceFee'], $CI->config->item('taxA'), $isFod);
-            self::populateVatArray($productVats, floatval($order['serviceFee']), $CI->config->item('taxA'));
+            $serviceFeeTax = intval($order['serviceFeeTax']);
+            self::createProductLine($drawemail, $startPoint, $i, 1, 'servicefee', $order['serviceFee'], $serviceFeeTax, $isFod, $productVats);
+            self::populateVatArray($productVats, floatval($order['serviceFee']), $serviceFeeTax);
         }
 
         public static function populateVatArray(array &$productVats, float $productTotal, int $vatpercentage)

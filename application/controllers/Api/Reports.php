@@ -30,12 +30,15 @@ class Reports extends REST_Controller
     {
 		$get = Utility_helper::sanitizeGet();
 		$vendorId = $this->getVendorId($get);
+		$this->user_model->setUniqueValue($vendorId )->setWhereCondtition()->setUser('country');
+
+		$taxRates = $this->config->item('countriesTaxes')[$this->user_model->country]['taxRates'];
 		$from = (isset($get['datetimefrom'])) ? date('Y-m-d H:i:s', strtotime($get['datetimefrom'])) : date('Y-m-d 00:00:00');
 		$to = (isset($get['datetimeto'])) ? date('Y-m-d H:i:s', strtotime($get['datetimeto'])) : date('Y-m-d H:i:s', strtotime('now'));
 		$reportType = $get['report'];
 		$isPosRequest = isset($get['finance']) ? false : true;
 		$orders = $this->getOrders($vendorId, $from, $to, $reportType);
-		$totals = $this->prepareTotals($orders, $reportType);
+		$totals = $this->prepareTotals($orders, $reportType, $taxRates);
 		$logo = $this->user_model->getUserProperty($vendorId, 'logo');
 		$logoFile = (is_null($logo)) ? FCPATH . "/assets/home/images/tiqslogonew.png" : $this->config->item('uploadLogoFolder') . $logo;
 
@@ -85,7 +88,7 @@ class Reports extends REST_Controller
 		return $products;
 	}
 
-	private function prepareTotals(array $orders, string $reportType): array
+	private function prepareTotals(array $orders, string $reportType, array $taxRates): array
 	{
 		$totals = [
 			'orders'			=> count($orders),
@@ -98,13 +101,9 @@ class Reports extends REST_Controller
 			'vatService'		=> 0,
 		];
 
+
 		$details = array_fill_keys(array_keys($totals), 0);
-		$totals['vatGrades'] = [
-			$this->config->item('taxA') => 0,
-			$this->config->item('taxB') => 0,
-			$this->config->item('taxC') => 0,
-			$this->config->item('taxD') => 0,
-		];
+		$totals['vatGrades'] = array_fill_keys(array_values($taxRates), 0);
 		$totals['serviceTypes'] = [
 			strval($this->config->item('local')) => $details,
 			strval($this->config->item('deliveryType')) => $details,

@@ -103,7 +103,8 @@ class  Profile extends BaseControllerWeb
 			'active' => $active,
 			'action' => 'profileUpdate',
 			'businessTypes' => $this->businesstype_model->getAll(),
-			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData()
+			'vendor' =>	$this->shopvendor_model->setProperty('vendorId', $this->userId)->getVendorData(),
+			'taxRates' => $this->config->item('countriesTaxes')[$this->user_model->country]['taxRates']
 		];
 
 		$this->loadViews("profile/paymentsettings", $this->global, $data, 'footerbusiness', 'headerbusiness'); // Menu profilepage

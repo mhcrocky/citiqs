@@ -6,17 +6,17 @@
 
 <!-- ADD Modal -->
 <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalTitle" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addProductModalTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- FILTER AND ADD NEW -->
-        <div class="item-editor addEditForm" id='add-product'>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addProductModalTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- FILTER AND ADD NEW -->
+                <div class="item-editor addEditForm" id='add-product'>
                     <div style="width:100%;">
                         <form
                             id="addProdcut"
@@ -50,20 +50,41 @@
                             </div>
                             <?php if (in_array($localTypeId, $vendorTypes)) { ?>
                                 <div class="col-lg-4 col-sm-12">
-                                    <label for="vatInsert">VAT: </label>
-                                    <input type="number" required value="0" step="0.01" min="0" name="productExtended[vatpercentage]" id="vatInsert" class="form-control" />
+                                <label for="vatInsert">VAT: </label>
+                                    <select class="form-control" name="productExtended[vatpercentage]" id="vatInsert" class="form-control" >
+                                        <option value="">Select</option>
+                                        <?php foreach ($taxRates as $tax) { ?>
+                                            <option value="<?php echo $tax; ?>">
+                                                <?php echo $tax; ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                             <?php } ?>
                             <?php if (in_array($deliveryTypeId, $vendorTypes)) { ?>
                                 <div class="col-lg-4 col-sm-12">
                                     <label for="deliveryVatEdit">Delivery VAT: </label>
-                                    <input type="number" required value="0" step="0.01" min="0" name="productExtended[deliveryVatpercentage]" id="deliveryVatEdit" class="form-control" />
+                                    <select class="form-control" name="productExtended[deliveryVatpercentage]" id="deliveryVatEdit" class="form-control" >
+                                        <option value="">Select</option>
+                                        <?php foreach ($taxRates as $tax) { ?>
+                                            <option value="<?php echo $tax; ?>">
+                                                <?php echo $tax; ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                             <?php } ?>
                             <?php if (in_array($pickupTypeId, $vendorTypes)) { ?>
                                 <div class="col-lg-4 col-sm-12">
                                     <label for="pickupVatEdit">Pickup VAT: </label>
-                                    <input type="number" required value="0" step="0.01" min="0" name="productExtended[pickupVatpercentage]" id="pickupVatEdit" class="form-control" />
+                                    <select class="form-control" name="productExtended[pickupVatpercentage]" id="pickupVatEdit" class="form-control" >
+                                        <option value="">Select</option>
+                                        <?php foreach ($taxRates as $tax) { ?>
+                                            <option value="<?php echo $tax; ?>">
+                                                <?php echo $tax; ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                             <?php } ?>
                             <!-- PRODUCT DATA -->
@@ -683,46 +704,64 @@
                             <?php if (in_array($localTypeId, $vendorTypes)) { ?>
                                 <div class="col-lg-4 col-sm-12">
                                     <label for="vatEdit<?php echo $product['productId'] ?>">Local VAT: </label>
-                                    <input
-                                        type="number"
-                                        required
-                                        value="<?php echo floatval($details['vatpercentage']); ?>"
-                                        step="0.01"
-                                        min="0"
+                                    <select
+                                        class="form-control"
                                         name="productExtended[vatpercentage]"
                                         id="vatEdit<?php echo $product['productId'] ?>"
                                         class="form-control"
-                                    />
+                                    >
+                                        <option value="">Select</option>
+                                        <?php foreach ($taxRates as $tax) { ?>
+                                            <option
+                                                value="<?php echo $tax; ?>"
+                                                <?php if ($tax === intval($details['vatpercentage'])) { echo 'selected'; } ?>
+                                            >
+                                                <?php echo $tax; ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                             <?php } ?>
                             <?php if (in_array($deliveryTypeId, $vendorTypes)) { ?>
                                 <div class="col-lg-4 col-sm-12">
                                     <label for="deliveryVatEdit<?php echo $product['productId'] ?>">Delivery VAT: </label>
-                                    <input
-                                        type="number"
-                                        required
-                                        value="<?php echo floatval($details['deliveryVatpercentage']); ?>"
-                                        step="0.01"
-                                        min="0"
+                                    <select
+                                        class="form-control"
                                         name="productExtended[deliveryVatpercentage]"
                                         id="deliveryVatEdit<?php echo $product['productId'] ?>"
                                         class="form-control"
-                                    />
+                                    >
+                                        <option value="">Select</option>
+                                        <?php foreach ($taxRates as $tax) { ?>
+                                            <option
+                                                value="<?php echo $tax; ?>"
+                                                <?php if ($tax === intval($details['deliveryVatpercentage'])) { echo 'selected'; } ?>
+                                            >
+                                                <?php echo $tax; ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                             <?php } ?>
                             <?php if (in_array($pickupTypeId, $vendorTypes)) { ?>
                                 <div class="col-lg-4 col-sm-12">
                                     <label for="pickupVatEdit<?php echo $product['productId'] ?>">Pickup VAT: </label>
-                                    <input
-                                        type="number"
-                                        required
-                                        value="<?php echo floatval($details['pickupVatpercentage']); ?>"
-                                        step="0.01"
-                                        min="0"
+                                    <select
+                                        class="form-control"
                                         name="productExtended[pickupVatpercentage]"
                                         id="pickupVatEdit<?php echo $product['productId'] ?>"
                                         class="form-control"
-                                    />
+                                    >
+                                        <option value="">Select</option>
+                                        <?php foreach ($taxRates as $tax) { ?>
+                                            <option
+                                                value="<?php echo $tax; ?>"
+                                                <?php if ($tax === intval($details['pickupVatpercentage'])) { echo 'selected'; } ?>
+                                            >
+                                                <?php echo $tax; ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                             <?php } ?>
                             <div class="col-lg-4 col-sm-12">

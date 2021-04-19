@@ -464,6 +464,17 @@ $config['taxB'] = 12;
 $config['taxC'] = 6;
 $config['taxD'] = 0;
 
+$config['countriesTaxes'] = [
+    'NL' => [
+        'taxRates' => [21, 12, 6, 0],
+        'taxGrades' => ['A', 'B', 'C', 'D'],
+    ],
+    'BE' => [
+        'taxRates' => [21, 12, 6, 0],
+        'taxGrades' => ['A', 'B', 'C', 'D'],
+    ],
+];
+
 $config['_temp'] = '_temp';
 
 $config['z_report'] = 'z_report';

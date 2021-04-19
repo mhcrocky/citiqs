@@ -36,6 +36,7 @@
             $this->load->model('shopvendortemplate_model');
             $this->load->model('bookandpayagendabooking_model');
             $this->load->model('shoparea_model');
+            $this->load->model('user_model');
 
             $this->load->library('language', array('controller' => $this->router->class));
             $this->load->library('session');
@@ -216,6 +217,9 @@
                 $pagination = '';
             }
 
+            // for country taxes
+            $this->user_model->setUniqueValue($userId)->setWhereCondtition()->setUser('country');
+
             $data = [
                 'categories' => $this->shopcategory_model->fetch(['userId' => $userId]),
                 'products' => $this->shopproductex_model->getUserProducts($userId, $perPage, $offset, $whereIn),
@@ -232,6 +236,7 @@
                 'localTypeId' => $this->config->item('local'),
                 'deliveryTypeId' => $this->config->item('deliveryType'),
                 'pickupTypeId' => $this->config->item('pickupType'),
+                'taxRates' => $this->config->item('countriesTaxes')[$this->user_model->country]['taxRates']
             ];
 
             $this->loadViews('warehouse/products', $this->global, $data, 'footerbusiness', 'headerbusiness');

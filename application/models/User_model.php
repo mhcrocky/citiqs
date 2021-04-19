@@ -789,10 +789,10 @@ class User_model extends CI_Model
      * @see https://www.php.net/manual/en/function.filter-var.php
      * @see https://www.php.net/manual/en/filter.filters.validate.php
      * @access public
-     * @param string Argument is requrired
+     * @param mixed Argument is requrired
      * @return object Method returns object
      */
-    public function setUniqueValue(string $value): object
+    public function setUniqueValue($value): object
     {
         // check is location id(number), url or string(hash)
         if (filter_var($value, FILTER_VALIDATE_INT)) {
