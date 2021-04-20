@@ -104,8 +104,10 @@ class Alfredpayment extends BaseControllerWeb
                         'exchangePay' => date('Y-m-d H:i:s')
                     ]);
 
-            $this->shoporder_model->updatePaidStatus($this->shoporderpaynl_model, ['paid' => $this->config->item('orderPaid')]);
-            $this->shoporder_model->emailReceipt();
+            if ($this->shoporder_model->updatePaidStatus($this->shoporderpaynl_model, ['paid' => $this->config->item('orderPaid')])) {
+                $this->shoporder_model->emailReceipt();
+                $this->shoporder_model->sendNotifcation();
+            }
             echo('TRUE| '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
         } else {
 			echo('TRUE| NOT FIND '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));

@@ -8,7 +8,7 @@
 	class Notificationcustomer
 	{
 
-		public function sendCustomerMessage(string $oneSignalId, int $orderId)
+		public function sendCustomerMessage(string $appId, string $oneSignalId, int $orderId)
 		{
 			// die('line number 10 notification');
 			$message = 'Your order ' . date('Y-m-d H:i:s') . ' with order id: ' . $orderId . ' is ready.';
@@ -32,7 +32,7 @@
 			// send the message...
 
 			$fields = array(
-				'app_id' => "08ad6861-8c6b-47fb-b228-ee4d3697f724",
+				'app_id' => $appId,
 				'include_player_ids' => array($oneSignalId),
 				'data' =>array("OrderId" => $orderId),
 				'contents' => array("en" => $message),

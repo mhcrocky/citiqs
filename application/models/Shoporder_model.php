@@ -744,7 +744,7 @@
             return $this->db->affected_rows() ? true : false;
         }
 
-        public function updatePaidStatus(object $shopOrderPaynl, array $what): void
+        public function updatePaidStatus(object $shopOrderPaynl, array $what): bool
         {
             $shopOrderPaynl->setAlfredOrderId();            
             $this->setObjectId($shopOrderPaynl->orderId);
@@ -755,14 +755,9 @@
                 $file = FCPATH . 'application/tiqs_logs/messages.txt';
                 $message = 'Record "tbl_shop_orders.id = ' . $this->id . '" status not updated to paid';
                 Utility_helper::logMessage($file, $message);
-            } else {
-                $this->load->library('notificationvendor');
-                $order = $this->fetchOne();
-                $order = reset($order);
-                if ($order['vendorOneSignalId']) {
-                    $this->notificationvendor->sendVendorMessage($order['vendorOneSignalId'], $this->id);
-                }
+                return false;
             }
+            return true;
         }
 
         public function ordersToSendSmsToDriver(): ?array
@@ -1670,5 +1665,24 @@
                 return $relativePath ? FCPATH . $relativePath : null;
             }
             return $orderImageFullPath;
+        }
+
+        public function sendNotifcation(): void
+        {
+            $this->load->model('notification_model');
+
+            $order = $this->fetchOne();
+
+            if (is_null($order)) return;
+
+            $order = reset($order);
+            $vendorId = intval($order['vendorId']);
+            $buyerEmail = $order['buyerEmail'];
+            $vendorOneSignalId = $order['vendorOneSignalId'];
+
+            $this->notification_model->sendNotifictaion($vendorId, $buyerEmail, $this->id, $vendorOneSignalId);
+
+
+            return;
         }
     }

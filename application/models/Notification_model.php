@@ -40,5 +40,31 @@ class Notification_model extends CI_Model
 
 	}
 
+	public function getBuyerData(string $email, int $vendorId)
+	{
+		$this->db->select("*");
+		$this->db->from("tbl_user_notificationIds");
+		$this->db->where("emailBuyer", $email);
+		$this->db->where("vendorId", $vendorId);
+
+		$query = $this->db->get();
+		return $query->row();
+	}
+
+	public function sendNotifictaion(int $vendorId, string $buyerEmail, int $orderId, ?string $oneSignalId = null)
+	{
+		// send notification to buyer
+		$buyer = $this->getBuyerData($buyerEmail, $vendorId);
+		if ($buyer->appId && $buyer->playerId) {
+			$this->load->library('notificationcustomer');
+			$this->notificationcustomer->sendCustomerMessage($buyer->appId, $buyer->playerId, $orderId);
+		}
+
+		// send notification to vendor
+		if ($oneSignalId) {
+			$this->load->library('notificationvendor');
+			$this->notificationvendor->sendVendorMessage($oneSignalId, $orderId);
+		}
+	}
 
 }

@@ -39,13 +39,14 @@ class Alfredinsertorder extends BaseControllerWeb
         $this->load->model('shopsession_model');
         $this->load->model('shopposorder_model');
         $this->load->model('shopvendorfod_model');
+        $this->load->model('notification_model');
 
         $this->load->config('custom');
 
         $this->load->library('language', array('controller' => $this->router->class));
         $this->load->library('session');
-        $this->load->library('notificationvendor');
-		$this->load->library('notificationcustomer');
+        // $this->load->library('notificationvendor');
+		// $this->load->library('notificationcustomer');
     }
 
     public function index()
@@ -437,18 +438,12 @@ class Alfredinsertorder extends BaseControllerWeb
 
     public function sendNotifictaion(array $post, int $orderId, string $payStatus): void
     {
+
         if (intval($post['pos']) || $payStatus !== $this->config->item('orderPaid')) return;
 
-        $vendor = $this->shopvendor_model->setProperty('vendorId', $post['vendorId'])->getVendorData();
-        if ($vendor['oneSignalId']) {
-            $this->notificationvendor->sendVendorMessage($vendor['oneSignalId'], $orderId);
-        }
+        $this->user_model->setUniqueValue($post['vendorId'])->setWhereCondtition()->setUser('oneSignalId');
 
-		//  $this->user_model->setUniqueValue($post['user']['email'])->setUser('oneSignalId');
-        //
-        if ($this->user_model->oneSignalId) {
-            $this->notificationcustomer->sendCustomerMessage($this->notification_model->oneSignalId, $orderId);
-        }
+        $this->notification_model->sendNotifictaion($post['vendorId'], $post['user']['email'], $orderId, $this->user_model->oneSignalId);
     }
 
 }

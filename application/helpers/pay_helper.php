@@ -1,6 +1,8 @@
 <?php
     declare(strict_types=1);
 
+    defined('BASEPATH') OR exit('No direct script access allowed');
+
     class Pay_helper
     {
         public static function getPayNlUrl(string $namespace, string $function, string $version, array $argumentsArray = []): string
