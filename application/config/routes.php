@@ -555,6 +555,7 @@ $route['events/selectpayment'] = 'Booking_events/selectpayment';
 $route['booking_events/clear_tickets'] = 'Booking_events/clear_tickets';
 $route['booking_events/successBooking'] = 'Booking_events/successBooking';
 $route['booking_events/ExchangePay'] = 'Booking_events/ExchangePay';
+$route['booking_events/pdf/(:num)/(:any)'] = "Booking_events/download_email_pdf/$1/$2";
 $route['booking/onlinepayment/(:num)'] = 'Booking_events/onlinepayment/$1';
 $route['booking/onlinepayment/(:num)/(:any)'] = 'Booking_events/onlinepayment/$1/$1';
 

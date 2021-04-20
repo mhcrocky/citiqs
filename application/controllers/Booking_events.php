@@ -605,7 +605,7 @@ class Booking_events extends BaseControllerWeb
                                         'dtstart' => date('Y-m-d', strtotime($eventDate)) . ' ' .$fromtime,
                                         'dtend' => date('Y-m-d', strtotime($endDate)) . ' ' .$totime,
                                         'summary' => strip_tags($eventName),
-                                        'url' => base_url()
+                                        'url' => $download_pdf_link
                                     ));
                                     
                                     $icsContent = $ics->to_string();
@@ -626,7 +626,7 @@ class Booking_events extends BaseControllerWeb
         }
 
 
-    public function download_email_pdf($emailId,$reservationId)
+    public function download_email_pdf($emailId, $reservationId)
 	{
         $reservations = $this->bookandpay_model->getReservationsById($reservationId);
         foreach ($reservations as $key => $reservation):
@@ -663,7 +663,7 @@ class Booking_events extends BaseControllerWeb
 				$TransactionId = $record->TransactionID;
                 $voucher = $record->voucher;
                 
-                    if ($paid == 1) {
+                    if (true) {
                         
                         $qrtext = $reservationId;
 
@@ -697,7 +697,7 @@ class Booking_events extends BaseControllerWeb
 								break;
                         }
 
-                        $emailId = $this->event_model->get_ticket($ticketId)->emailId;
+                        $emailId = $record->emailId;
                         
                         
 						switch (strtolower($_SERVER['HTTP_HOST'])) {

@@ -698,7 +698,7 @@ class Bookingpay extends BaseControllerWeb
                                     'dtstart' => $eventdate .' '. $fromtime,
                                     'dtend' => $eventdate .' '. $totime,
                                     'summary' => strip_tags($evenDescript),
-                                    'url' => base_url()
+                                    'url' => $download_pdf_link
                                 ));
 
 
