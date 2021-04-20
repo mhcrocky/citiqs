@@ -472,6 +472,7 @@ class Booking_events extends BaseControllerWeb
             
             foreach ($result as $record) {
                 $customer = $record->customer;
+                $Spotlabel = $record->Spotlabel;
 				$eventDate = $record->eventdate;
                 $endDate = $record->EndDate;
                 $eventName = $record->eventname;
@@ -576,6 +577,8 @@ class Booking_events extends BaseControllerWeb
                                 $mailtemplate = str_replace('[startTime]', $fromtime, $mailtemplate);
 								$mailtemplate = str_replace('[endTime]', $totime, $mailtemplate);
 								$mailtemplate = str_replace('[timeSlot]', '', $mailtemplate);
+                                $mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
+                                $mailtemplate = str_replace('[spotLabel]', $Spotlabel, $mailtemplate);
 								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
 								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
@@ -626,6 +629,7 @@ class Booking_events extends BaseControllerWeb
             
             foreach ($result as $record) {
                 $customer = $record->customer;
+                $Spotlabel = $record->Spotlabel;
 				$eventDate = $record->eventdate;
                 $endDate = $record->EndDate;
                 $eventName = $record->eventname;
@@ -728,6 +732,8 @@ class Booking_events extends BaseControllerWeb
                                 $mailtemplate = str_replace('[startTime]', $fromtime, $mailtemplate);
 								$mailtemplate = str_replace('[endTime]', $totime, $mailtemplate);
 								$mailtemplate = str_replace('[timeSlot]', '', $mailtemplate);
+                                $mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
+                                $mailtemplate = str_replace('[spotLabel]', $Spotlabel, $mailtemplate);
 								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
 								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
