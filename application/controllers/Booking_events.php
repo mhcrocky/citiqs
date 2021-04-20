@@ -472,6 +472,7 @@ class Booking_events extends BaseControllerWeb
             
             foreach ($result as $record) {
                 $customer = $record->customer;
+                $Spotlabel = $record->Spotlabel;
 				$eventDate = $record->eventdate;
                 $endDate = $record->EndDate;
                 $eventName = $record->eventname;
@@ -496,6 +497,7 @@ class Booking_events extends BaseControllerWeb
 				$paid = $record->paid;
 				$TransactionId = $record->TransactionID;
                 $voucher = $record->voucher;
+                $mailsend = $record->mailsend;
                 
                 
                     if ($paid == 1) {
@@ -532,7 +534,7 @@ class Booking_events extends BaseControllerWeb
 								break;
                         }
 
-                        $emailId = $this->event_model->get_ticket($ticketId)->emailId;
+                        $emailId = $record->emailId;
                         
                         
 						switch (strtolower($_SERVER['HTTP_HOST'])) {
@@ -575,6 +577,8 @@ class Booking_events extends BaseControllerWeb
                                 $mailtemplate = str_replace('[startTime]', $fromtime, $mailtemplate);
 								$mailtemplate = str_replace('[endTime]', $totime, $mailtemplate);
 								$mailtemplate = str_replace('[timeSlot]', '', $mailtemplate);
+                                $mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
+                                $mailtemplate = str_replace('[spotLabel]', $Spotlabel, $mailtemplate);
 								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
 								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
@@ -585,23 +589,28 @@ class Booking_events extends BaseControllerWeb
 								$subject = ($emailTemplate->template_subject) ? strip_tags($emailTemplate->template_subject) : 'Your tiqs reservation(s)';
 								$datachange['mailsend'] = 1;
 
-                                
-                                $ics = new ICS(array(
-                                    'location' => $eventAddress . ', ' . $eventCity . ', ' . $eventCountry,
-                                    'organizer' => 'TIQS:malito:support@tiqs.com',
-                                    'description' => strip_tags($eventName),
-                                    'dtstart' => date('Y-m-d', strtotime($eventDate)) . ' ' .$fromtime,
-                                    'dtend' => date('Y-m-d', strtotime($endDate)) . ' ' .$totime,
-                                    'summary' => strip_tags($eventName),
-                                    'url' => base_url()
-                                ));
 
-                                $icsContent = $ics->to_string();
-                                
-								$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate, $icsContent );
-								if($this->sendEmail($buyerEmail, $subject, $mailtemplate, $icsContent)) {
-                                    $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
+
+                                if($mailsend == 0){
                                     
+                                    $ics = new ICS(array(
+                                        'location' => $eventAddress . ', ' . $eventCity . ', ' . $eventCountry,
+                                        'organizer' => 'TIQS:malito:support@tiqs.com',
+                                        'description' => strip_tags($eventName),
+                                        'dtstart' => date('Y-m-d', strtotime($eventDate)) . ' ' .$fromtime,
+                                        'dtend' => date('Y-m-d', strtotime($endDate)) . ' ' .$totime,
+                                        'summary' => strip_tags($eventName),
+                                        'url' => base_url()
+                                    ));
+                                    
+                                    $icsContent = $ics->to_string();
+                                    
+                                    $this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate, $icsContent );
+								    if($this->sendEmail($buyerEmail, $subject, $mailtemplate, $icsContent)) {
+                                        $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
+                                    
+                                    }
+
                                 }
                             
                         }
@@ -620,6 +629,7 @@ class Booking_events extends BaseControllerWeb
             
             foreach ($result as $record) {
                 $customer = $record->customer;
+                $Spotlabel = $record->Spotlabel;
 				$eventDate = $record->eventdate;
                 $endDate = $record->EndDate;
                 $eventName = $record->eventname;
@@ -644,7 +654,6 @@ class Booking_events extends BaseControllerWeb
 				$paid = $record->paid;
 				$TransactionId = $record->TransactionID;
                 $voucher = $record->voucher;
-                
                 
                     if ($paid == 1) {
                         
@@ -723,6 +732,8 @@ class Booking_events extends BaseControllerWeb
                                 $mailtemplate = str_replace('[startTime]', $fromtime, $mailtemplate);
 								$mailtemplate = str_replace('[endTime]', $totime, $mailtemplate);
 								$mailtemplate = str_replace('[timeSlot]', '', $mailtemplate);
+                                $mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
+                                $mailtemplate = str_replace('[spotLabel]', $Spotlabel, $mailtemplate);
 								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
 								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);

@@ -235,6 +235,7 @@ class Sendreservation_model extends CI_Model
 		$this->db->join('tbl_event_tickets', 'tbl_bookandpay.eventid = tbl_event_tickets.id', 'RIGHT');
 		$this->db->join('tbl_events', 'tbl_event_tickets.eventId = tbl_events.id', 'LEFT');
 		$this->db->where('reservationId', $reservationId);
+		$this->db->group_by('tbl_bookandpay.id'); 
 		$query = $this->db->get();
 		$result = $query->result();
 		return $result;

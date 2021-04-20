@@ -446,6 +446,7 @@ class Events extends BaseControllerWeb
     {
         $this->user_model->setUniqueValue($this->userId)->setWhereCondtition()->setUser();
         $this->global['page'] = 'Email Templates List';
+        $baseUrl = base_url();
 
         $this->global = [
             'user' => $this->user_model,
@@ -454,10 +455,13 @@ class Events extends BaseControllerWeb
 
         $data = [
             'user' => $this->user_model,
-            'emails' => $this->email_templates_model->get_ticketing_email_by_user($this->user_model->id)
+            'baseUrl' => $baseUrl,
+            'updateTemplate' => $baseUrl . 'update_template' . DIRECTORY_SEPARATOR,
+            'templates' => (array) $this->email_templates_model->get_ticketing_email_by_user($this->user_model->id),
+
         ];
 
-        $this->loadViews("events/email_designer_list", $this->global, $data, "footerbusiness", "headerbusiness");
+        $this->loadViews("templates/listTemplates", $this->global, $data, "footerbusiness", "headerbusiness");
     }
 
     public function email_designer_edit($email_id = false)

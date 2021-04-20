@@ -24,7 +24,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($templates as $template) { ?>
+                            <?php 
+                            foreach ($templates as $template) { 
+                                $template = (array) $template;;
+                                ?>
                                 <tr>
                                     <td><?php echo $template['id']; ?></td>
                                     <td><?php echo $template['template_name']; ?></td>
