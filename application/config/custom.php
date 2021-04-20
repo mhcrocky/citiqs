@@ -466,12 +466,20 @@ $config['taxD'] = 0;
 
 $config['countriesTaxes'] = [
     'NL' => [
-        'taxRates' => [21, 12, 6, 0],
+        'taxRates' => [21, 9, 0, 0],
         'taxGrades' => ['A', 'B', 'C', 'D'],
     ],
     'BE' => [
         'taxRates' => [21, 12, 6, 0],
         'taxGrades' => ['A', 'B', 'C', 'D'],
+    ],
+    'ES' => [
+        'taxRates' => [21, 10, 4, 0],
+        'taxGrades' => ['A', 'B', 'C', 'D'],
+    ],
+    'IT' => [
+        'taxRates' => [22, 10, 5, 4, 0],
+        'taxGrades' => ['A', 'B', 'C', 'D', 'E'],
     ],
 ];
 
