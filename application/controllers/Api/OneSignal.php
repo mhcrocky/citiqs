@@ -51,11 +51,8 @@
 						'userid' => $result['id']
                     ]);
                     return;
-                }
-                // INSERT USER
-                $user['roleId'] = $this->config->item('buyer');
-                $user['salesagent'] = $this->config->item('defaultSalesAgentId');
-                $user['usershorturl'] = 'api one signal';
+				}
+
                 $this->user_model->manageAndSetUserOneSignal($user);
 
                 if ($this->user_model->id) {

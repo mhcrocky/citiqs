@@ -876,10 +876,14 @@ class User_model extends CI_Model
 	public function manageAndSetUserOneSignal(array $user): object
 	{
 		if (!$this->isDuplicate($user['email'])) {
+            // INSERT USER
 			$password = Utility_helper::shuffleString(12);
 			$user['password'] = getHashedPassword($password);
 			$user['code'] = Utility_helper::shuffleString(5);
-			$user['createdDtm'] = date('Y-m-d H:i:s');
+            $user['createdDtm'] = date('Y-m-d H:i:s');
+            $user['roleId'] = $this->config->item('buyer');
+            $user['salesagent'] = $this->config->item('defaultSalesAgentId');
+            $user['usershorturl'] = 'api one signal';
 			$this->getGeoCoordinates($user);
 			$this->insertUser($user, false);
 			$this->setUniqueValue($user['email'])->setWhereCondtition()->setUser();
