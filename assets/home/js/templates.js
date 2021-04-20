@@ -435,10 +435,6 @@ function tinyMceInit(textAreaId, templateContent = '') {
                         onclick: function(){editor.insertContent('[spotLabel]')}
                     },
                     {
-                        text: '[spotLabel]',
-                        onclick: function(){editor.insertContent('[spotLabel]')}
-                    },
-                    {
                         text: '[numberOfPersons]',
                         onclick: function(){editor.insertContent('[numberOfPersons]')}
                     },
