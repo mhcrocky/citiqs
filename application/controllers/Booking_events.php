@@ -532,7 +532,7 @@ class Booking_events extends BaseControllerWeb
 								break;
                         }
 
-                        $emailId = $this->event_model->get_ticket($ticketId)->emailId;
+                        $emailId = $record->emailId;
                         
                         
 						switch (strtolower($_SERVER['HTTP_HOST'])) {
