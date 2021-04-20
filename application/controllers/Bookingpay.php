@@ -573,6 +573,8 @@ class Bookingpay extends BaseControllerWeb
 				$reservationId = $record->reservationId;
 				$spotId = $record->SpotId;
 				$price = $record->price;
+                $orderAmount = floatval($record->price) + floatval($record->reservationFee);
+                $orderAmount = number_format($orderAmount, 2, '.', '');
 				$Spotlabel = $record->Spotlabel;
 				$numberofpersons = $record->numberofpersons;
 				$name = $record->name;
@@ -586,6 +588,7 @@ class Bookingpay extends BaseControllerWeb
 				$TransactionId = $record->TransactionID;
 				$voucher = $record->voucher;
                 $evenDescript = $record->ReservationDescription;
+                $orderId = $record->orderId;
                 
                     if ($paid = 1) {
                         
@@ -659,6 +662,8 @@ class Bookingpay extends BaseControllerWeb
                                 $dt = new DateTime('now');
                                 $date = $dt->format('Y.m.d');
                                 $mailtemplate = str_replace('[currentDate]', $name, $mailtemplate);
+                                $mailtemplate = str_replace('[orderAmount]', $orderAmount, $mailtemplate);
+                                $mailtemplate = str_replace('[orderId]', $orderId, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerName]', $name, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerEmail]', $email, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerMobile]', $mobile, $mailtemplate);
@@ -703,7 +708,7 @@ class Bookingpay extends BaseControllerWeb
                               
                                 $icsContent = $ics->to_string();
                                 //$icsContent = false;
-								$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate, $icsContent);
+								//$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate, $icsContent);
 								if($this->sendEmail($email, $subject, $mailtemplate, $icsContent)) {
                                     $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
                                     
@@ -733,6 +738,9 @@ class Bookingpay extends BaseControllerWeb
 				$reservationId = $record->reservationId;
 				$spotId = $record->SpotId;
 				$price = $record->price;
+                $reservationFee = $record->reservationFee;
+                $orderAmount = floatval($record->price) + floatval($record->reservationFee);
+                $orderAmount = number_format($orderAmount, 2, '.', '');
 				$Spotlabel = $record->Spotlabel;
 				$numberofpersons = $record->numberofpersons;
 				$name = $record->name;
@@ -746,6 +754,7 @@ class Bookingpay extends BaseControllerWeb
 				$TransactionId = $record->TransactionID;
 				$voucher = $record->voucher;
                 $evenDescript = $record->ReservationDescription;
+                $orderId = $record->orderId;
                 
                     if ($paid = 1) {
                         
@@ -803,6 +812,8 @@ class Bookingpay extends BaseControllerWeb
                             $qrlink = $SERVERFILEPATH . $file_name1;
 							if($mailtemplate) {
                                 $mailtemplate = str_replace('[currentDate]', $name, $mailtemplate);
+                                $mailtemplate = str_replace('[orderId]', $orderId, $mailtemplate);
+                                $mailtemplate = str_replace('[orderAmount]', $orderAmount, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerName]', $name, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerEmail]', $email, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerMobile]', $mobile, $mailtemplate);

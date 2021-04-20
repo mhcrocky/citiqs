@@ -483,15 +483,18 @@ class Booking_events extends BaseControllerWeb
                 $eventZipcode = $record->eventZipcode;
 				$reservationId = $record->reservationId;
 				$ticketPrice = $record->price;
+                $ticketFee = $record->ticketFee;
                 $ticketId = $record->ticketId;
                 $ticketDescription = $record->ticketDescription;
 				$ticketQuantity = $record->numberofpersons;
+                $orderAmount = intval($ticketQuantity) * (floatval($record->price) + floatval($record->ticketFee));
+                $orderAmount = number_format($orderAmount, 2, '.', '');
                 $eventZipcode = $record->ticketDescription;
                 $buyerName = $record->name;
                 $buyerEmail = $record->email;
 				$buyerMobile = $record->mobilephone;
 				$reservationset = $record->reservationset;
-
+                $orderId = $record->orderId;
 				$fromtime = $record->timefrom;
 				$totime = $record->timeto;
 				$paid = $record->paid;
@@ -559,6 +562,8 @@ class Booking_events extends BaseControllerWeb
                                 $dt = new DateTime('now');
                                 $date = $dt->format('Y.m.d');
                                 $mailtemplate = str_replace('[currentDate]', $buyerName, $mailtemplate);
+                                $mailtemplate = str_replace('[orderId]', $orderId, $mailtemplate);
+                                $mailtemplate = str_replace('[orderAmount]', $orderAmount, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerName]', $buyerName, $mailtemplate);
 								$mailtemplate = str_replace('[buyerEmail]', $buyerEmail, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerMobile]', $buyerMobile, $mailtemplate);
@@ -605,7 +610,7 @@ class Booking_events extends BaseControllerWeb
                                     
                                     $icsContent = $ics->to_string();
                                     
-                                    $this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate, $icsContent );
+                                    //$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate, $icsContent );
 								    if($this->sendEmail($buyerEmail, $subject, $mailtemplate, $icsContent)) {
                                         $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
                                     
@@ -640,15 +645,18 @@ class Booking_events extends BaseControllerWeb
                 $eventZipcode = $record->eventZipcode;
 				$reservationId = $record->reservationId;
 				$ticketPrice = $record->price;
+                $ticketFee = $record->ticketFee;
                 $ticketId = $record->ticketId;
                 $ticketDescription = $record->ticketDescription;
 				$ticketQuantity = $record->numberofpersons;
+                $orderAmount = intval($ticketQuantity) * (floatval($record->price) + floatval($record->ticketFee));
+                $orderAmount = number_format($orderAmount, 2, '.', '');
                 $eventZipcode = $record->ticketDescription;
                 $buyerName = $record->name;
                 $buyerEmail = $record->email;
 				$buyerMobile = $record->mobilephone;
 				$reservationset = $record->reservationset;
-
+                $orderId = $record->orderId;
 				$fromtime = $record->timefrom;
 				$totime = $record->timeto;
 				$paid = $record->paid;
@@ -714,6 +722,8 @@ class Booking_events extends BaseControllerWeb
                                 $dt = new DateTime('now');
                                 $date = $dt->format('Y.m.d');
                                 $mailtemplate = str_replace('[currentDate]', $buyerName, $mailtemplate);
+                                $mailtemplate = str_replace('[orderId]', $orderId, $mailtemplate);
+                                $mailtemplate = str_replace('[orderAmount]', $orderAmount, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerName]', $buyerName, $mailtemplate);
 								$mailtemplate = str_replace('[buyerEmail]', $buyerEmail, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerMobile]', $buyerMobile, $mailtemplate);
