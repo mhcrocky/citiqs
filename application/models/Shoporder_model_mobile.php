@@ -6,55 +6,33 @@ class Shoporder_model_mobile extends CI_Model {
 
 	public function returnOrders($userId) {
 
-		$sql="SELECT tbl_shop_orders.id AS orderId,
+		$sql=	"SELECT
+					tbl_shop_orders.id AS orderId,
 					vendor.id AS VendorId,
        				tbl_shop_orders.pStatus AS pStatus
-					
-						FROM
-						   `tbl_shop_orders` 
-						   INNER JOIN
-							  `tbl_shop_order_extended` 
-							  ON `tbl_shop_orders`.`id` = `tbl_shop_order_extended`.`orderId` 
-						   INNER JOIN
-							  `tbl_shop_products_extended` 
-							  ON `tbl_shop_order_extended`.`productsExtendedId` = `tbl_shop_products_extended`.`id` 
-						   INNER JOIN
-							  `tbl_shop_products` 
-							  ON `tbl_shop_products_extended`.`productId` = `tbl_shop_products`.`id` 
-						   INNER JOIN
-							  `tbl_shop_categories` 
-							  ON `tbl_shop_products`.`categoryId` = `tbl_shop_categories`.`id` 
-						   INNER JOIN
-		(
-			SELECT *
-			FROM
-									tbl_user 
-								 WHERE
-									roleid = 2
-							  )
-							  vendor 
-							  ON `vendor`.`id` = `tbl_shop_categories`.`userId` 
-						   INNER JOIN
-		(
-			SELECT *
-			FROM
-									tbl_user 
-								 WHERE
-									roleid = 6
-									OR roleid = 2
-							  )
-							  buyer 
-							  ON `buyer`.`id` = `tbl_shop_orders`.`buyerId` 
-						   INNER JOIN
-							  `tbl_shop_spots` 
-							  ON `tbl_shop_orders`.`spotId` = `tbl_shop_spots`.`id` 
-						WHERE vendor.id = ".$this->db->escape($userId)." AND
-									tbl_shop_orders.paid = ".$this->db->escape('1')." AND
-									tbl_shop_orders.pStatus !=  ".$this->db->escape('3')." AND
-									date(tbl_shop_orders.created) >= date('2020/12/28')
-						GROUP BY
-							 tbl_shop_orders.id
-							";
+				FROM
+					`tbl_shop_orders` 
+				INNER JOIN
+					`tbl_shop_order_extended` ON `tbl_shop_orders`.`id` = `tbl_shop_order_extended`.`orderId` 
+				INNER JOIN
+					`tbl_shop_products_extended` ON `tbl_shop_order_extended`.`productsExtendedId` = `tbl_shop_products_extended`.`id` 
+				INNER JOIN
+					`tbl_shop_products` ON `tbl_shop_products_extended`.`productId` = `tbl_shop_products`.`id` 
+				INNER JOIN
+					`tbl_shop_categories` ON `tbl_shop_products`.`categoryId` = `tbl_shop_categories`.`id` 
+				INNER JOIN
+					( SELECT * FROM tbl_user  WHERE roleid = 2 ) vendor  ON `vendor`.`id` = `tbl_shop_categories`.`userId` 
+				INNER JOIN
+					( SELECT * FROM tbl_user WHERE roleid = 6 OR roleid = 2 ) buyer  ON `buyer`.`id` = `tbl_shop_orders`.`buyerId` 
+				INNER JOIN
+					`tbl_shop_spots`  ON `tbl_shop_orders`.`spotId` = `tbl_shop_spots`.`id` 
+				WHERE
+					vendor.id = " . $this->db->escape($userId) . "
+					AND tbl_shop_orders.paid = '1'
+					AND tbl_shop_orders.pStatus !=  '3' 
+					AND date(tbl_shop_orders.created) >= date('2020/12/28')
+				GROUP BY
+					tbl_shop_orders.id";
 		$query = $this->db->query($sql);
 		$result= $query->num_rows();
 

@@ -1649,9 +1649,7 @@
 
             // chekc is vendor bbUser, if it is email will not be send
             $this->load->model('shopvendorfod_model');
-            if ($this->shopvendorfod_model->isBBVendor($vendorId))  return false;
-
-            return true;
+            return $this->shopvendorfod_model->isOnlyBBVendor($vendorId);
         }
 
         private function getOrderImagePath(string $filterString): ?string

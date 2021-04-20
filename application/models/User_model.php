@@ -883,7 +883,7 @@ class User_model extends CI_Model
             $user['createdDtm'] = date('Y-m-d H:i:s');
             $user['roleId'] = $this->config->item('buyer');
             $user['salesagent'] = $this->config->item('defaultSalesAgentId');
-            $user['usershorturl'] = 'api one signal';
+            $user['usershorturl'] = '';
 			$this->getGeoCoordinates($user);
 			$this->insertUser($user, false);
 			$this->setUniqueValue($user['email'])->setWhereCondtition()->setUser();
