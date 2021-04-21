@@ -414,8 +414,8 @@
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',
-                    'tbl_user.email AS vendorEmail'
-
+                    'tbl_user.email AS vendorEmail',
+                    'tbl_user.active AS active'
                 ],
                 'where' => $where,
                 'joins' => [
