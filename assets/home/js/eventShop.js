@@ -248,19 +248,20 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
     var quantityValue = $(".ticketQuantityValue_" + id).val();
     var totalBasket = $("."+totalClass).text();
     quantityValue = parseInt(quantityValue);
-    totalBasket = parseFloat(totalBasket);
+    totalBasket = Math.round((parseFloat(totalBasket)* 1e12)) / 1e12;
     price = parseFloat(price);
     ticketfee = parseFloat(ticketfee);
     limit = parseInt(limit);
     quantityValue++;
-    if(limit > quantityValue){
+    if(limit >= quantityValue){
         totalBasket = Math.round((totalBasket + price + ticketfee) * 1e12) / 1e12;
+        $(".ticketQuantityValue_" + id).val(quantityValue);
+        $("#quantity_" + id).val(quantityValue);
+        $("."+totalClass).text(totalBasket.toFixed(2));
     }
     
     
-    $(".ticketQuantityValue_" + id).val(quantityValue);
-    $("#quantity_" + id).val(quantityValue);
-    $("."+totalClass).text(totalBasket.toFixed(2));
+    
     let current_time = $(".current_time").val();
     let descript = $(".descript_"+id).first().html();
     let ticket_available = $("#ticketQuantityValue_" + id).attr('data-available');
