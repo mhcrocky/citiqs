@@ -77,7 +77,7 @@ class Booking_events extends BaseControllerWeb
         if(!$this->input->post('isAjax')){ 
             redirect('events/shop/'. $this->session->userdata('shortUrl'));
             return; 
-        }
+        } 
         $vendor_id = $this->session->userdata('customer');
         $this->session->unset_userdata("event_date");
         $this->global['pageTitle'] = 'TIQS: Step Two';
@@ -99,13 +99,14 @@ class Booking_events extends BaseControllerWeb
             'eventName' => $event->eventname,
             'eventImage' => $event->eventImage
         ];
+
         $result = $this->load->view("events/tickets", $data,true);
-				if( isset($result) ) {
-					return $this->output
-					->set_content_type('application/json')
-					->set_status_header(200)
-					->set_output(json_encode($result));
-				}
+			if( isset($result) ) {
+				return $this->output
+				->set_content_type('application/json')
+				->set_status_header(200)
+				->set_output(json_encode($result));
+			}
         $this->loadViews("events/tickets", $this->global, $data, 'footerShop', 'headerShop');
 
     }
@@ -178,7 +179,15 @@ class Booking_events extends BaseControllerWeb
         $amount = (floatval($ticket['price']) + floatval($ticket['ticketFee']))*floatval($ticket['quantity']);
         $ticketId = $ticket['id'];
         $eventName = $this->event_model->get_eventname_by_ticket($ticketId);
-        $ticketType = $this->event_model->get_ticket_type($ticketId);
+        $ticketInfo = $this->event_model->get_ticket_info($ticketId);
+        $ticketType = $ticketInfo->ticketType;
+
+        $ticket_quantity = intval($ticket['quantity']);
+        $ticket_available = intval($ticketInfo->ticketAvailable);
+        if($ticket_quantity > $ticket_available){
+            echo "error";
+            return ;
+        }
         unset($tickets[$ticketId]);
         $tickets[$ticketId] = [
             'id' => $ticketId,

@@ -188,13 +188,15 @@ function removeTicket(id, price, ticketFee, totalClass) {
     let current_time = $(".current_time").val();
     
     let descript = $(".descript_"+id).html();
+    let ticket_available = $("#ticketQuantityValue_" + id).attr('data-available');
     let data = {
         id: id,
         quantity: quantityValue,
         price: price.toFixed(2),
         ticketFee: ticketFee.toFixed(2),
         descript:  descript,
-        time: current_time
+        time: current_time,
+        ticket_available: ticket_available
 
     }
 
@@ -250,9 +252,6 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
     price = parseFloat(price);
     ticketfee = parseFloat(ticketfee);
     limit = parseInt(limit);
-    if (quantityValue == limit) {
-        return;
-    }
     quantityValue++;
     totalBasket = totalBasket + price + ticketfee;
     
@@ -261,15 +260,28 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
     $("."+totalClass).text(totalBasket.toFixed(2));
     let current_time = $(".current_time").val();
     let descript = $(".descript_"+id).first().html();
+    let ticket_available = $("#ticketQuantityValue_" + id).attr('data-available');
     let data = {
         id: id,
         quantity: quantityValue,
         price: price.toFixed(2),
         ticketFee: ticketfee.toFixed(2),
         descript:  descript,
-        time: current_time
+        time: current_time,
+        ticket_available: ticket_available
     };
     $.post(globalVariables.baseUrl + "booking_events/add_to_basket", data, function(data){
+        
+        if(data == 'error'){
+            $(".ticketQuantityValue_" + id).val(limit);
+            iziToast.error({
+                title: 'SOLD OUT!',
+                message: '',
+                position: 'topRight'
+            });
+            return ;
+        }
+
         data = JSON.parse(data);
         //console.log(data);
         var descript_data = data['descript'];

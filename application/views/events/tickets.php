@@ -54,12 +54,17 @@
                                     <button type="button" class="quantity-button"
                                         onclick="removeTicket('<?php echo $ticketId; ?>','<?php echo $ticket['ticketPrice']; ?>', '<?php echo $ticket['ticketFee']; ?>', 'totalBasket')">-</button>
                                     <input type="number" min="1" 
+                                        data-available="<?php echo $ticket['ticketAvailable']; ?>"
                                         <?php if(in_array($ticketId,$checkout_tickets_id)){?>
                                         value="<?php echo $checkout_tickets[$ticketId]['quantity']; ?>"
-                                        <?php } else { ?> value="0" <?php } ?> onkeyup="absVal(this);" placeholder="0"
+                                        <?php } else { ?> 
+                                        value="0"  
+                                        <?php } ?> 
+                                        onkeyup="absVal(this);" placeholder="0"
+                                        id="ticketQuantityValue_<?php echo $ticketId; ?>"
                                         class="quantity-input ticketQuantityValue_<?php echo $ticketId; ?>" disabled>
                                     <button type="button" class="quantity-button"
-                                        onclick="addTicket('<?php echo $ticketId; ?>', '<?php echo $ticket['ticketQuantity']; ?>', '<?php echo $ticket['ticketPrice']; ?>', '<?php echo $ticket['ticketFee']; ?>','totalBasket')">+</button>
+                                        onclick="addTicket('<?php echo $ticketId; ?>', '<?php echo $ticket['ticketAvailable']; ?>', '<?php echo $ticket['ticketPrice']; ?>', '<?php echo $ticket['ticketFee']; ?>','totalBasket')">+</button>
                                 </div>
                                 <b class="menu-list__price--discount excluding_fee text-dark mt-2">Excluding fee €<?php echo number_format($ticket['ticketFee'], 2, ',', ''); ?> and min pay fee €0,50</b>
                             </div>

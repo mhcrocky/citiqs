@@ -158,6 +158,15 @@ class Event_model extends CI_Model {
 		foreach($results as $result){
 			$ticketFee = isset($result['nonSharedTicketFee']) ? number_format($result['nonSharedTicketFee'], 2, '.', '') : '0.00';
 			$result['ticketFee'] = $ticketFee;
+			$ticketId = $result['ticketId'];
+			$tickets_used = $this->get_tickets_used($eventId);
+			$ticket_used = isset($tickets_used[$ticketId]) ? $tickets_used[$ticketId] : 0;
+			$ticket_available = intval($result['ticketQuantity']) - intval($ticket_used);
+			if($ticket_available == 0){
+				continue;
+			}
+
+			$result['ticketAvailable'] = $ticket_available;
 			$tickets[] = $result;
 		}
 
@@ -217,17 +226,19 @@ class Event_model extends CI_Model {
 		return ;
 	}
 
-	public function get_ticket_type($ticketId)
+	public function get_ticket_info($ticketId)
 	{
-		$this->db->select('ticketType');
+		$this->db->select('*');
 		$this->db->from('tbl_event_tickets');
 		$this->db->where('id', $ticketId);
 		$query = $this->db->get();
-		if($query->num_rows() > 0 ){
-			$result = $query->first_row();
-			return $result->ticketType;
-		}
-		return ;
+		$result = $query->first_row();
+		$ticket = $this->get_ticket_used($ticketId);
+		$ticket_used = isset($ticket->ticket_used) ? $ticket->ticket_used : 0;
+		$ticket_available = intval($result->ticketQuantity) - intval($ticket_used);
+		$result->ticketAvailable = $ticket_available;
+		return $result;
+
 	}
 
 
@@ -505,6 +516,31 @@ class Event_model extends CI_Model {
 		$this->db->where('tbl_events.vendorId', $vendorId);
 		$query = $this->db->get();
 		return $query->result_array();
+	}
+
+	private function get_tickets_used($eventId)
+	{
+		$query = $this->db->query("SELECT tbl_event_tickets.id, COUNT(tbl_bookandpay.eventid) AS ticket_used
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_events.id = ".$eventId."
+		GROUP BY tbl_bookandpay.eventid");
+		$results = $query->result_array();
+		$tickets = [];
+		foreach($results as $result){
+			$ticketId = $result['id'];
+			$tickets[$ticketId] = $result['ticket_used'];
+		}
+		return $tickets;
+	}
+
+	private function get_ticket_used($eventId)
+	{
+		$query = $this->db->query("SELECT tbl_event_tickets.id, COUNT(tbl_bookandpay.eventid) AS ticket_used
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		WHERE tbl_event_tickets.id = ".$eventId."
+		GROUP BY tbl_bookandpay.eventid");
+		return $query->first_row();
 	}
 
 
