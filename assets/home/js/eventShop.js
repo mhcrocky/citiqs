@@ -164,7 +164,7 @@ function clearTotal(el, price, totalClass){
 	totalBasket = parseInt(totalBasket);
 	quantity = parseInt(quantity);
 	price = parseInt(price);
-	totalBasket = totalBasket - quantity*price;
+	totalBasket = Math.round((totalBasket - quantity*price) * 1e12) / 1e12;
 	return $("."+totalClass).text(totalBasket.toFixed(2));
 }
 
@@ -181,7 +181,7 @@ function removeTicket(id, price, ticketFee, totalClass) {
     var priceVal = price;
     
     quantityValue--;
-    totalBasket = totalBasket - price - ticketFee;
+    totalBasket = Math.round((totalBasket - price - ticketFee) * 1e12) / 1e12;
     $(".ticketQuantityValue_" + id).val(quantityValue);
     $("#quantity_" + id).val(quantityValue);
     $("."+totalClass).text(totalBasket.toFixed(2));
@@ -253,7 +253,10 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
     ticketfee = parseFloat(ticketfee);
     limit = parseInt(limit);
     quantityValue++;
-    totalBasket = totalBasket + price + ticketfee;
+    if(limit > quantityValue){
+        totalBasket = Math.round((totalBasket + price + ticketfee) * 1e12) / 1e12;
+    }
+    
     
     $(".ticketQuantityValue_" + id).val(quantityValue);
     $("#quantity_" + id).val(quantityValue);
@@ -339,7 +342,7 @@ function ticketQuantity(el, id, price, ticketfee, totalClass) {
     totalBasket = parseFloat(totalBasket);
     price = parseFloat(price);
     ticketfee = parseFloat(ticketfee);
-    totalBasket = totalBasket + quantityValue*(price + ticketFee);
+    totalBasket = Math.round((totalBasket + quantityValue*(price + ticketFee)) * 1e12) / 1e12;
     $(el).val(quantityValue);
     $("#quantity_" + id).val(quantityValue);
     return $("."+totalClass).text(totalBasket.toFixed(2));
