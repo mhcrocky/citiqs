@@ -707,7 +707,7 @@ class Bookingpay extends BaseControllerWeb
 
                               
                                 $icsContent = $ics->to_string();
-                                //$icsContent = false;
+                                
 								//$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate, $icsContent);
 								if($this->sendEmail($email, $subject, $mailtemplate, $icsContent)) {
                                     $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
@@ -900,7 +900,9 @@ class Bookingpay extends BaseControllerWeb
         if($icsContent){
             $this->email->attach($icsContent, 'attachment', 'reservation.ics', 'text/calendar');
         }
-        return $CI->email->send();
+
+        $CI->email->send();
+        return $CI->email->clear(true);
     }
 
     public static function getConfig()

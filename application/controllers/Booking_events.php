@@ -610,6 +610,7 @@ class Booking_events extends BaseControllerWeb
                                     
                                     $icsContent = $ics->to_string();
                                     
+                                    
                                     //$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate, $icsContent );
 								    if($this->sendEmail($buyerEmail, $subject, $mailtemplate, $icsContent)) {
                                         $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
@@ -810,11 +811,11 @@ class Booking_events extends BaseControllerWeb
 		$CI->email->subject($subject);
 		$CI->email->message($message);
         if($icsContent){
-            $this->email->attach($icsContent, 'attachment', 'reservation.ics', 'text/calendar');
+            $CI->email->attach($icsContent, 'attachment', 'reservation.ics', 'text/calendar');
         }
         
-        
-		return $CI->email->send();
+        $CI->email->send();
+		return $CI->email->clear(true);
     }
 
 }
