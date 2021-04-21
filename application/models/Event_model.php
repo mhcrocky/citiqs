@@ -336,9 +336,13 @@ class Event_model extends CI_Model {
 
 		$this->db->select('paymentMethod, percent, amount')
 		->from('tbl_shop_payment_methods')
-		->where('vendorId',$vendor_id)
-		->where('productGroup','E-Ticketing')
-		->where('active' , 1);
+		->where(
+			[
+				'vendorId' => $vendor_id,
+				'productGroup' => 'E-Ticketing',
+				'active' => '1'
+			]
+		);
 		$query = $this->db->get();
 		$results = $query->result_array();
 		$ticketing = [];
