@@ -166,8 +166,12 @@ class Vendors extends REST_Controller
             $parsedJson = file_get_contents("php://input");
             $parsedJson = json_decode($parsedJson, true);
             $parsedJson = reset($parsedJson);
+            $vendorId = intval($vendorId);
 
             if ($this->user_model->setUniqueValue($vendorId)->setWhereCondtition()->updateUserImproved($parsedJson)) {
+
+                $this->activateNewAccount($parsedJson, $vendorId);
+
                 $response = [
                     'status' => '1',
                     'message' => 'User updated'
@@ -182,4 +186,26 @@ class Vendors extends REST_Controller
             $this->set_response($response, 200);
         }
 
+        private function activateNewAccount(array $parsedJson, int $vendorId): void
+        {
+            // actvate new user account
+            if (
+                isset($parsedJson['active'])
+                && $parsedJson['active'] === '1'
+                && !$this->shopvendor_model->setProperty('vendorId', $vendorId)->isVendorExists()
+            ) {
+                $activateUrl = base_url() . 'login' . DIRECTORY_SEPARATOR . 'insertShopAndPerfexUser' . DIRECTORY_SEPARATOR . '417';
+                file_get_contents($activateUrl);
+            }
+        }
+
+        public function users_get(): void
+        {
+            if (!$this->authentication()) return;
+
+            $users = $this->user_model->getVendors();
+            $this->set_response($users, 200);
+
+            return;
+        }
     }

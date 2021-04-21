@@ -530,4 +530,14 @@
             return reset($result);
         }
 
+        public function isVendorExists(): bool
+        {
+            $result = $this->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    $this->table. '.vendorId' => $this->vendorId
+                ]
+            ]);
+            return !is_null($result);
+        }
     }
