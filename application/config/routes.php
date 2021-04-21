@@ -337,6 +337,8 @@ $route['pin_canceled']  = 'paysuccesslink/pinCanceled';
 
 $route['vendors'] = 'Api/Vendors/data';
 $route['vendor_orders'] = 'Api/Vendors/orders';
+$route['vendor/(:num)'] = 'Api/Vendors/vendor/$1';
+
 
 $route['order/lines'] = 'Orderlines/index';
 $route['visma/export/(:num)'] = 'Api/Visma/export_single_invoice/$1';

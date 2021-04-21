@@ -1120,4 +1120,12 @@ class User_model extends CI_Model
 
         return true;
     }
+
+    public function updateUserImproved(array $data, array $where = null): bool
+    {
+        $filter = (!$where && isset($this->where)) ? $this->where : $where;
+        $this->db->where($filter);
+        $this->db->update('tbl_user', $data);
+        return $this->db->affected_rows() ? true : false;
+    }
 }

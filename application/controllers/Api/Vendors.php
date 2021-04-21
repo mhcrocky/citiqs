@@ -14,7 +14,9 @@ class Vendors extends REST_Controller
             parent::__construct();
             $this->load->model('shopvendor_model');
             $this->load->model('shoporder_model');
+            $this->load->model('user_model');
             $this->load->model('api_model');
+
             $this->load->helper('utility_helper');
             $this->load->helper('validate_data_helper');
 
@@ -155,6 +157,29 @@ class Vendors extends REST_Controller
             }
 
             return true;
+        }
+
+        public function vendor_put($vendorId): void
+        {
+            if (!$this->authentication()) return;
+
+            $parsedJson = file_get_contents("php://input");
+            $parsedJson = json_decode($parsedJson, true);
+            $parsedJson = reset($parsedJson);
+
+            if ($this->user_model->setUniqueValue($vendorId)->setWhereCondtition()->updateUserImproved($parsedJson)) {
+                $response = [
+                    'status' => '1',
+                    'message' => 'User updated'
+                ];
+            } else {
+                $response = [
+                    'status' => '0',
+                    'message' => 'User did not update'
+                ];
+            }
+
+            $this->set_response($response, 200);
         }
 
     }
