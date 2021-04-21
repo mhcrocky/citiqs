@@ -148,21 +148,25 @@ function getItemTemplate(productName, productPrice) {
 
 //<button type='button'><i class="fa fa-pencil-square-o mr-2"></i>EDIT</button>
 
-function runSplider() {
+/*function runSplider() {
     let slidersPerPage = getSlidersPerPage();
     var splideCategories = new Splide(
         '#splideCategories',
             {
                 perPage    : slidersPerPage,
                 perMove    : 1,
-                height     : '9rem',
+                height     : '12vw',
                 focus      : 'center',
                 trimSpace  : false,
+				type       : 'loop',
+				pagination : false,
+				gap         : 15,
+				speed      : 400
             }
         ).mount(window.splide.Extensions);
-}
+}*/
 
-function getSlidersPerPage() {
+/*function getSlidersPerPage() {
     let bodyWidth = document.body.clientWidth;
     return bodyWidth < 768 ? '3' : '4';
 }
@@ -187,6 +191,8 @@ function calculateTotal() {
 
     makeOrder2021.totalAmount.innerHTML = total.toFixed(2) + '&nbsp;&euro;'
 }
+    return bodyWidth < 768 ? '1' : '6';
+}*/
 
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover({
@@ -195,6 +201,84 @@ $(document).ready(function() {
         container: 'body'
     });
 
-    runSplider();
+    /*runSplider();*/
 
 });
+
+// Modal Inputs change values 
+var modalButtonPlus = $('.single-product__button--plus');
+var modalButtonMinus = $('.single-product__button--minus');
+
+modalButtonPlus.click(function(){
+	
+})
+
+// add active class to modals input 
+
+var modalButton = $('.single-product__button');
+
+modalButton.click(function(){
+	var modalInputvalue = $(this).siblings('input[type=number]').val();
+	if( modalInputvalue == 0){
+		$(this).parents('.form-group').removeClass('active');
+	}else{
+		$(this).parents('.form-group').addClass('active');
+	}
+})
+
+
+// new slider 
+
+// Create and mount the thumbnails slider.
+var secondarySlider = new Splide( '#secondary-category-slider', {
+	rewind      : false,
+	isNavigation: true,
+	focus       : 'center',
+	pagination  : false,
+	cover       : false,
+	/*fixedWidth  : '15vw',
+	height      : '15vw',*/
+    perPage    : 4,
+	perMove    : 4,
+	breakpoints : {
+		'540': {
+			perPage    : 3,
+	        perMove    : 3,
+		},
+		'768': {
+			perPage    : 4,
+	        perMove    : 4,
+		}
+	}
+} ).mount();
+
+// Create the main slider.
+var primarySlider = new Splide( '#primary-category-slider', {
+	type       : 'fade',
+	heightRatio: 0.5,
+	pagination : false,
+	arrows     : false,
+	cover      : true,
+} );
+
+// Set the thumbnails slider as a sync target and then call mount.
+primarySlider.sync( secondarySlider ).mount();
+
+// open checkout 
+
+$('.checkout').on('scroll touchmove mousewheel', function(e){
+  e.preventDefault();
+  e.stopPropagation();
+  return false;
+})
+
+var openCheckout = $('#open-checkout');
+var closeCheckout = $('.checkout-hide');
+
+openCheckout.click(function(){
+	$('.checkout').addClass('active');
+})
+
+closeCheckout.click(function(){
+	$('.checkout').removeClass('active');
+})

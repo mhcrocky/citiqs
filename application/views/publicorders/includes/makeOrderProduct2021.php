@@ -1,85 +1,68 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
-<div class="menu-list__item">
-
-    <!--show image only on mobile, add conatiner -->
-    <div class='menu-list__name'>
-        <b class='menu-list__title'>
-            <?php echo $productDetails['name']; ?>
-            <?php if ($productDetails['longDescription'] && $productDetails['longDescription'] !== 'NA') { ?>
-            <i style="width: 15px" class="fa fa-info-circle infoCircle" aria-hidden="true"
-                data-toggle="popover" data-trigger="hover" data-placement="bottom"
-                data-content="<?php echo $productDetails['longDescription']; ?>"></i>
-            <?php } ?>
-        </b>
-        <?php if (trim($productDetails['name']) !== trim($productDetails['shortDescription'])) { ?>
-            <p class='menu-list__ingredients'>
+<div class="col-12 col-md-6">
+   	<div class="single-product">
+   		<div class="single-product__image">
+   		    <!-- add url to single product image -->
+   			<img src="" alt="">
+   		</div>
+   		<!-- end single product image -->
+   		<div class="single-product-details">
+   			<h3 class='single-product__title'>
+   				<?php echo $productDetails['name']; ?>
+   			</h3>
+   			<p class='single-product__ingredients'>
+   				 <?php if (trim($productDetails['name']) !== trim($productDetails['shortDescription'])) { ?>
                 <?php echo $productDetails['shortDescription']; ?>
-            </p>
-        <?php } ?>
-
-        <?php
-            $baseUrl = base_url();
-            if ($vendor['showAllergies'] === '1') {
-                $productAllergies = unserialize($product['allergies']);
-                if (!empty($productAllergies['productAllergies'])) {
-                    ?>
-                        <!-- product allergies -->
-                        <div>
-                            <?php
-                                $productAllergies = $productAllergies['productAllergies'];
-                                foreach ($productAllergies as $allergy) {
-                                    ?>
-                                        <img
-                                            src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
-                                            class="ingredients"
-                                            alt="<?php echo $allergy; ?>"
-                                            style="display:inline; margin:5px 2px"
-                                            width="20"
-                                            height="20"
-                                        />
-                                    <?php
-                                } ?>
-                        </div>
-                        <!-- product allergies -->
-                    <?php
-                }
-            }
-        ?>
-    </div>
-
-    <!-- product price and button -->
-    <div class='menu-list__right-col'>
-        <div class='menu-list__price'>
-            <b class='menu-list__price'><?php echo $productDetails['price']; ?>&euro; </b>
-            <!--
-                <b class='menu-list__price--stroke'>6.00$ </b>
-                <b class='menu-list__price--discount'>4.00$</b>
-            -->
-        </div>
-        <!-- <b class='menu-list__type'>vegan</b> -->
-        <div class="quantity-section">
-            <button
-                class='quantity-button quantity-button--minus'
-                <?php if ($product['addRemark'] === '1' || !empty($product['addons'])) { ?>
-                <?php } else { ?>
-                    onclick="mainProductQuantity(this, false)"
-                <?php } ?>
-            >
-                -
-            </button>
-            <input
-                type="number"
-                value='0'
-                placeholder='0'
-                min="0"
-                max="1000000"
-                class='quantity-input'
-                step="1"
-                data-id="<?php echo $productDetails['productExtendedId']; ?>"
-            />
-            <button
+        		<?php } ?>
+   			
+				<?php if ($productDetails['longDescription'] && $productDetails['longDescription'] !== 'NA') { ?>
+				<i style="width: 15px" class="fa fa-info-circle infoCircle" aria-hidden="true"
+					data-toggle="popover" data-trigger="hover" data-placement="bottom"
+					data-content="<?php echo $productDetails['longDescription']; ?>"></i>
+				<?php } ?>
+				
+  			</p>
+  			<div class="single-product-alergies">
+  				<?php
+					$baseUrl = base_url();
+					if ($vendor['showAllergies'] === '1') {
+						$productAllergies = unserialize($product['allergies']);
+						if (!empty($productAllergies['productAllergies'])) {
+							?>
+								<!-- product allergies -->
+								<div>
+									<?php
+										$productAllergies = $productAllergies['productAllergies'];
+										foreach ($productAllergies as $allergy) {
+											?>
+												<img
+													src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
+													class="ingredients"
+													alt="<?php echo $allergy; ?>"
+													style="display:inline; margin:5px 2px"
+													width="20"
+													height="20"
+												/>
+											<?php
+										} ?>
+								</div>
+								<!-- product allergies -->
+							<?php
+						}
+					}
+				?>
+  			</div>
+  			<!-- end alergies -->
+   		</div>
+   		<!-- end single product details -->
+   		<div class="single-product__footer">
+   			<span class='single-product__price'><?php echo $productDetails['price']; ?>&euro; </span>
+   			<div class="single-product__buttons">
+   				<button href="" class="btn single-product__button single-product__button--minus">-</button>
+   				<input name="" class="form-control" type="number" value="1" placeholder="0" data-price="0.53" disabled="" readonly="">
+   				<button
                 type="button"
-                class='quantity-button quantity-button--plus'
+                class='btn single-product__button single-product__button--plus'
                 <?php if ($product['addRemark'] === '1' || !empty($product['addons'])) { ?>
                     data-toggle="modal"
                     data-target="#modal-additional-options_<?php echo $productDetails['productExtendedId']; ?>"
@@ -91,13 +74,18 @@
                                                     '<?php echo $productDetails['price']; ?>'
                                                 )"
                 <?php } ?>
-            >
+            	>
                 +
             </button>
-        </div>
-    </div>
-    <!-- end product price and button -->
+   			</div>
+   		</div>
+   		<!-- end single product footer -->
+   		
+   	</div>
+   	<!-- end single product -->
+    
 </div>
+<!-- end COL single product -->
 
 <?php
     if ($product['addRemark'] === '1' || $product['onlyOne'] !== '1') {
@@ -105,7 +93,7 @@
         ?>
             <!-- MODAL ADDITIONAL OPTIONS -->
             <div
-                class="modal fade"
+                class="modal fade modal-additional"
                 id="<?php echo $modalId; ?>"
                 tabindex="-1"
                 role="dialog"
@@ -114,19 +102,27 @@
             >
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5
-                                class="modal-title"
+                        <div class="modal-header d-flex flex-column">
+                            <h3
+                                class="single-product__title"
                                 id="modal-additional-options_label_<?php echo $productDetails['productExtendedId']; ?>"
                             >
                                 <?php echo $productDetails['name']; ?>
-                            </h5>
+                            </h3>
+                            <p class='single-product__ingredients mb-2'>
+								<?php if (trim($productDetails['name']) !== trim($productDetails['shortDescription'])) { ?>
+								<?php echo $productDetails['shortDescription']; ?>
+								<?php } ?>
+                            </p>
+                            <p class='single-product__price mt-2 mb-0'><?php echo $productDetails['price']; ?>&euro;</p>
+                            
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="clearModal('<?php echo $modalId; ?>')">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
 
                         <div class="modal-body">
+                        	<div class="modal-form">
                             <input
                                 type="number"
                                 value="1"
@@ -135,27 +131,6 @@
                                 readonly
                                 hidden
                             />
-                            <?php
-                                if ($product['addRemark'] === '1') {
-                                    $productRemarkId = 'product_remark_' . $productDetails['productExtendedId'];
-                                    ?>
-                                        <!-- product remark -->
-                                        <div style="width: 100%; margin: 0px 0px 20px 0px">
-                                            <label for="<?php echo $productRemarkId; ?>">Add remark:&nbsp;</label>
-                                            <input
-                                                class="form form-control"
-                                                type="text"
-                                                value=""
-                                                maxlength="<?php echo $maxRemarkLength; ?>"
-                                                placeholder="Allowed <?php echo $maxRemarkLength; ?> characters"
-                                                name="order[<?php echo $productDetails['productExtendedId']; ?>][remark]"
-                                                oninput="setInputAttribte(this, 'value', this.value)"
-                                            />
-                                        </div>
-                                        <!-- end product remark -->
-                                    <?php
-                                }
-                            ?>
 
                             <?php if ($product['addons']) { ?>
                                 <!-- product addons -->
@@ -179,9 +154,11 @@
 
                                     <!-- show product addons -->
                                     <?php foreach ($collectAddons as $type => $typeAddons) { ?>
-                                        <div class="menu-list" style="margin:30px 0px 0px 0px">
-                                            <div class="menu-list__name">
+                                        <div class='modal-form'>
+                                           	<div>
+                                            <div class="modal-form__title">
                                                 <h6><?php echo $type; ?></h6>
+                                               <!-- <p class="mb-0">Choose one size <span>(*Required)</span></p>-->
                                             </div>
                                             <?php foreach ($typeAddons as $showAddon) { ?>
                                                 <?php
@@ -197,20 +174,46 @@
 
                                                 <!-- addon name and buttons -->
                                                 <div
-                                                    class="menu-list__item"
-                                                    style="margin:0px 0px 0px 0px; <?php if ($showAddon['addRemark'] === '1' || !empty($addonAllergies)) {echo 'border-bottom:0px #fff;';}?>"
-                                                >
-                                                    <div class="menu-list__name">
-                                                        <label class="form-check-label" style="word-wrap: break-word;">
-                                                            <input
-                                                                type="checkbox"
-                                                                class="form-check-input"
-                                                                style="margin: 4px 0px 0px 5px"
-                                                                onchange="dipsalyButtons(this)"
-                                                            />
-                                                            <span style="margin-left: 10px">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $showAddon['name'] . ' (' . $showAddon['price'] . '&euro;)'; ?></span>
-                                                        </label>
-                                                    </div>
+                                                    class="form-group">
+                                                   <label><?php echo $showAddon['name'] . ' <span>(+' . $showAddon['price'] . '&euro;)<span>'; ?></label>
+                                                   <div class="d-flex align-items-center justify-content-center">
+                                                   	<?php if ($showAddon['addonAllowedQuantity'] !== '1') { ?>
+															<button
+																type="button"
+																class="btn single-product__button single-product__button--minus"
+																onclick="changeSiblingValue(this, false)"
+															>
+																-
+															</button>
+														<?php } ?>
+														<input
+															name="order[<?php echo $productDetails['productExtendedId']; ?>][addons][<?php echo $showAddon['productExtendedId']; ?>][quantity]"
+															class="form-control"
+															type="number"
+															value="0"
+															placeholder="0"
+															max="<?php echo $showAddon['addonAllowedQuantity']; ?>"
+															min="0"
+															step="1"
+															data-price="<?php echo $showAddon['price']; ?>"
+															disabled
+															<?php if ($showAddon['addonAllowedQuantity'] !== '1') { ?>
+																readonly
+															<?php } else { ?>
+																hidden
+															<?php } ?>
+														/>
+														<?php if ($showAddon['addonAllowedQuantity'] !== '1') { ?>
+															<button
+																type="button"
+																class="btn single-product__button single-product__button--plus"
+																onclick="changeSiblingValue(this, true)"
+															>
+																+
+															</button>
+														<?php } ?>
+                                                   </div>
+                                                   <!-- end quantity input -->
                                                     <div class="menu-list__right-col" style="display:none">
                                                         <div class="quantity-section mt-0">
                                                             <?php if ($showAddon['addonAllowedQuantity'] !== '1') { ?>
@@ -252,16 +255,19 @@
                                                     </div>
                                                 </div>
                                                 <!-- end addon name and buttons -->
-
+												
                                                 <?php
                                                     if ($showAddon['addRemark'] === '1') {
                                                         $showAddonRemarkId = 'addon_remark_' . $showAddon['productExtendedId']; ?>
                                                             <!-- addon remark -->
                                                             <div
-                                                                class="menu-list__item"
+                                                                class=""
                                                                 <?php if (isset($addonAllergies)) {echo 'style="border-bottom: 0px #fff;"';} ?>
                                                             >
-                                                                <label for="<?php echo $showAddonRemarkId; ?>">Add remark:&nbsp;</label>
+                                                               	
+                                                                <div class='modal-form__title' for="<?php echo $showAddonRemarkId; ?>">
+                                                                	<h6>Add remark:</h6>
+                                                                </div>
                                                                 <input
                                                                     id="<?php echo $showAddonRemarkId; ?>"
                                                                     class="form form-control"
@@ -300,24 +306,27 @@
                                 </div>
                                 <!-- end product addons -->
                             <?php } ?>
+                            </div>
+                            </div>
                         </div>
 
                         <div class="modal-footer">
                             <div>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal('<?php echo $modalId; ?>')">
+                                    Close
+                                </button>
                                 <button
                                     type="button"
-                                    class="btn btn-primary"
+                                    class="btn btn-primary add-to-cart"
                                     onclick="addInCheckoutList(
                                         '<?php echo $modalId; ?>',
                                         '<?php echo $productDetails['productExtendedId'] . ''; ?>',
                                         '<?php echo $productDetails['name']; ?>',
                                         '<?php echo $productDetails['price']; ?>'
                                     )"
+                                    data-disimiss="modal"
                                 >
-                                    Save
-                                </button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearModal('<?php echo $modalId; ?>')">
-                                    Close
+                                    Add to Cart
                                 </button>
                             </div>
                         </div>
