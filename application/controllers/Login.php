@@ -382,9 +382,17 @@ class Login extends BaseControllerWeb
 		}
 	}
 
-	private function insertShopAndPerfexUser($userId): void
+	public function insertShopAndPerfexUser($userId): void
 	{
+
 		$userId = intval($userId);
+
+		// first check is user with this id already exist in tbl_shop_venodros
+		// no need for any action if exists
+		if ($this->shopvendor_model->setProperty('vendorId', $userId)->isVendorExists()) return;
+
+		// we have a new user
+
 		// fetch user object
 		$this->user_model->setUniqueValue($userId)->setWhereCondtition()->setUser();
 
@@ -458,7 +466,12 @@ class Login extends BaseControllerWeb
 
 	function activate($userId, $code)
 	{
-		$logincred=$this->login_model->activateaccount($userId, $code);
+		if ($this->shopvendor_model->setProperty('vendorId', $userId)->isVendorExists()) {
+			setFlashData('success', 'Your account is already registered in application');
+			redirect('/login');
+		};
+
+		$logincred = $this->login_model->activateaccount($userId, $code);
 		$is_correct = $this->login_model->checkactivateaccount($userId, $code);
 
 		if ($is_correct == 1) {

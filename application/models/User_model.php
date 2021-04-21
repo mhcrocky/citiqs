@@ -1128,4 +1128,20 @@ class User_model extends CI_Model
         $this->db->update('tbl_user', $data);
         return $this->db->affected_rows() ? true : false;
     }
+
+    public function getVendors(): ?array
+    {
+        $this->load->config('custom');
+
+        $this->db->select( '
+            tbl_user.id AS vendorId,
+            tbl_user.business_name AS vendorName,
+            tbl_user.email AS vendorEmail,
+            tbl_user.active AS active
+        ');
+
+        $this->db->where('tbl_user.roleId', $this->config->item('owner'));
+        $result = $this->db->get('tbl_user')->result_array();
+        return $result;
+    }
 }
