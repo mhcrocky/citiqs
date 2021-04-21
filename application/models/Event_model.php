@@ -336,9 +336,13 @@ class Event_model extends CI_Model {
 
 		$this->db->select('paymentMethod, percent, amount')
 		->from('tbl_shop_payment_methods')
-		->where('vendorId',$vendor_id)
-		->where('productGroup','E-Ticketing')
-		->where('active' , 1);
+		->where(
+			[
+				'vendorId' => $vendor_id,
+				'productGroup' => 'E-Ticketing',
+				'active' => '1'
+			]
+		);
 		$query = $this->db->get();
 		$results = $query->result_array();
 		$ticketing = [];
@@ -523,7 +527,7 @@ class Event_model extends CI_Model {
 		$query = $this->db->query("SELECT tbl_event_tickets.id, COUNT(tbl_bookandpay.eventid) AS ticket_used
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		WHERE tbl_events.id = ".$eventId."
+		WHERE tbl_events.id = ".$eventId." AND paid = 1
 		GROUP BY tbl_bookandpay.eventid");
 		$results = $query->result_array();
 		$tickets = [];
@@ -538,7 +542,7 @@ class Event_model extends CI_Model {
 	{
 		$query = $this->db->query("SELECT tbl_event_tickets.id, COUNT(tbl_bookandpay.eventid) AS ticket_used
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
-		WHERE tbl_event_tickets.id = ".$eventId."
+		WHERE tbl_event_tickets.id = ".$eventId." AND paid = 1
 		GROUP BY tbl_bookandpay.eventid");
 		return $query->first_row();
 	}

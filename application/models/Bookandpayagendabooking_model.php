@@ -1160,7 +1160,7 @@ class   Bookandpayagendabooking_model extends CI_Model
 		->from('tbl_shop_payment_methods')
 		->where('vendorId',$vendor_id)
 		->where('productGroup','Reservations')
-		->where('active' , 1);
+		->where('active' , '1');
 		$query = $this->db->get();
 		$results = $query->result_array();
 		$ticketing = [];

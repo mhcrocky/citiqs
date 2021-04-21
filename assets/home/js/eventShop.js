@@ -130,9 +130,9 @@ function deleteTicket(id, price, ticketFee) {
     let quantityValue = $(".ticketQuantityValue_" + id).val();
     let totalBasket = $(".totalBasket").text();
     quantityValue = parseInt(quantityValue);
-    totalBasket = parseFloat(totalBasket);
-    price = parseFloat(price);
-    ticketFee = parseFloat(ticketFee);
+    totalBasket = parseFloatNum(totalBasket);
+    price = parseFloatNum(price);
+    ticketFee = parseFloatNum(ticketFee);
     totalBasket = totalBasket - quantityValue*(price + ticketFee);
     $(".ticketQuantityValue_" + id).val(0);
     let current_time = $('#exp_time').val();
@@ -160,7 +160,8 @@ function deleteTicket(id, price, ticketFee) {
 
 function clearTotal(el, price, totalClass){
 	var quantity = $(el).val();
-	var totalBasket = $("."+totalClass).text();
+	var totalBasket = $("."+totalClass).html();
+    
 	totalBasket = parseInt(totalBasket);
 	quantity = parseInt(quantity);
 	price = parseInt(price);
@@ -173,11 +174,11 @@ function removeTicket(id, price, ticketFee, totalClass) {
     if(quantityValue < 2){
         return;
     }
-    var totalBasket = $("."+totalClass).text();
+    var totalBasket = $("."+totalClass).html();
     quantityValue = parseInt(quantityValue);
-    totalBasket = parseFloat(totalBasket);
-    price = parseFloat(price);
-    ticketFee = parseFloat(ticketFee);
+    totalBasket = parseFloatNum(totalBasket);
+    price = parseFloatNum(price);
+    ticketFee = parseFloatNum(ticketFee);
     var priceVal = price;
     
     quantityValue--;
@@ -246,21 +247,33 @@ function removeTicket(id, price, ticketFee, totalClass) {
 function addTicket(id, limit, price, ticketfee, totalClass) {
     $('#payForm').show();
     var quantityValue = $(".ticketQuantityValue_" + id).val();
-    var totalBasket = $("."+totalClass).text();
+    var totalBasket = $("."+totalClass).html();
     quantityValue = parseInt(quantityValue);
-    totalBasket = parseFloat(totalBasket);
-    price = parseFloat(price);
-    ticketfee = parseFloat(ticketfee);
+    totalBasket = Math.round((parseFloatNum(totalBasket)* 1e12)) / 1e12;
+    price = parseFloatNum(price);
+    ticketfee = parseFloatNum(ticketfee);
     limit = parseInt(limit);
     quantityValue++;
-    if(limit > quantityValue){
-        totalBasket = Math.round((totalBasket + price + ticketfee) * 1e12) / 1e12;
+
+    if(limit < quantityValue){
+        $(".ticketQuantityValue_" + id).val(limit);
+            iziToast.error({
+                title: 'SOLD OUT!',
+                message: '',
+                position: 'topRight'
+            });
+            return ;
+        
     }
-    
+   
+    totalBasket = Math.round((totalBasket + price + ticketfee) * 1e12) / 1e12;
     
     $(".ticketQuantityValue_" + id).val(quantityValue);
     $("#quantity_" + id).val(quantityValue);
     $("."+totalClass).text(totalBasket.toFixed(2));
+    
+    
+    
     let current_time = $(".current_time").val();
     let descript = $(".descript_"+id).first().html();
     let ticket_available = $("#ticketQuantityValue_" + id).attr('data-available');
@@ -286,7 +299,6 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
         }
 
         data = JSON.parse(data);
-        //console.log(data);
         var descript_data = data['descript'];
         var price_data = data['price'];
         var ticketFee_data = data['ticketFee'];
@@ -337,13 +349,23 @@ function ticketQuantity(el, id, price, ticketfee, totalClass) {
     if(quantityValue == 0 || quantityValue == '0'){
         $(el).val(1);
     }
-    var totalBasket = $("."+totalClass).text();
+    var totalBasket = $("."+totalClass).html();
     quantityValue = parseInt(quantityValue);
-    totalBasket = parseFloat(totalBasket);
-    price = parseFloat(price);
-    ticketfee = parseFloat(ticketfee);
+    totalBasket = parseFloatNum(totalBasket);
+    price = parseFloatNum(price);
+    ticketfee = parseFloatNum(ticketfee);
     totalBasket = Math.round((totalBasket + quantityValue*(price + ticketFee)) * 1e12) / 1e12;
     $(el).val(quantityValue);
     $("#quantity_" + id).val(quantityValue);
     return $("."+totalClass).text(totalBasket.toFixed(2));
+}
+
+
+function parseFloatNum(num){
+    if(!$.isNumeric( num )){
+        return 0;
+    }
+
+    return parseFloat(num);
+    
 }
