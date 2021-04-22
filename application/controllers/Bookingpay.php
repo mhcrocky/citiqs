@@ -19,7 +19,6 @@ class Bookingpay extends BaseControllerWeb
         $this->load->helper('utility_helper');
         $this->load->helper('email_helper');
         $this->load->helper('pay_helper');
-        $this->load->helper('pdf_helper');
         $this->load->model('log_model');
         $this->load->model('bookandpay_model');
         $this->load->model('bookandpaytimeslots_model');
@@ -777,8 +776,6 @@ class Bookingpay extends BaseControllerWeb
 						$file_name1 = $qrtext . ".png";
 						$file_name = $folder . $file_name1;
 
-						QRcode::png($text, $file_name);
-
 						switch (strtolower($_SERVER['HTTP_HOST'])) {
 							case 'tiqs.com':
 								$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
@@ -832,7 +829,9 @@ class Bookingpay extends BaseControllerWeb
 								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
 								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
-								Pdf_helper::HtmlToPdf($mailtemplate);
+								//Pdf_helper::HtmlToPdf($mailtemplate);
+                                $data['mailtemplate'] = $mailtemplate;
+                                $this->load->view('generate_pdf', $data);
 								
                             
                         }
