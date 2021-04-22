@@ -12,6 +12,7 @@ class Booking_events extends BaseControllerWeb
         parent::__construct();
         $this->load->helper('pay_helper');
         $this->load->helper('pdf_helper');
+        $this->load->helper('utility_helper');
         $this->load->model('event_model');
         $this->load->model('bookandpay_model');
         $this->load->model('sendreservation_model');
@@ -644,9 +645,10 @@ class Booking_events extends BaseControllerWeb
                                     
                                     $icsContent = $ics->to_string();
                                     
-                                    
                                     //$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate, $icsContent );
 								    if($this->sendEmail($buyerEmail, $subject, $mailtemplate, $icsContent)) {
+                                        $file = FCPATH . 'application/tiqs_logs/messages.txt';
+                                        Utility_helper::logMessage($file, $mailtemplate);
                                         $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
                                     
                                     }
