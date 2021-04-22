@@ -663,6 +663,8 @@ class Events extends BaseControllerWeb
                                 
 								//Email_helper::sendEmail("pnroos@icloud.com", $subject, $mailtemplate, false );
 								if(Email_helper::sendEmail($buyerEmail, $subject, $mailtemplate, false)) {
+                                    $file = FCPATH . 'application/tiqs_logs/messages.txt';
+			                        Utility_helper::logMessage($file, $buyerEmail);
                                     $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
                                     
                                 }
