@@ -232,7 +232,8 @@ class Event_model extends CI_Model {
 	{
 		$this->db->select('*');
 		$this->db->from('tbl_event_tickets');
-		$this->db->where('id', $ticketId);
+		$this->db->join('tbl_ticket_options', 'tbl_ticket_options.ticketId = tbl_event_tickets.id', 'left');
+		$this->db->where('tbl_event_tickets.id', $ticketId);
 		$query = $this->db->get();
 		$result = $query->first_row();
 		$ticket = $this->get_ticket_used($ticketId);
