@@ -861,3 +861,35 @@ fieldset[disabled] .form-control{
 .pos-item p{
 	color: var(--pos-button-text);
 }
+
+@media (max-width: 1150px){
+	.pos-item {
+    	width: calc(20% - 10px);
+	}
+}
+
+@media (max-width: 992px){
+	.pos-item {
+    	width: calc(25% - 10px);
+	}
+	
+	.pos-sidebar,
+	.pos-buttons{
+		margin-left: 0 !important;
+	}
+	
+	.pos-buttons a.btn, 
+	a.pos-checkout__button {
+    	padding: 26px 5px !important;
+	}
+	
+	.pos-checkout .modal-footer__quantity{
+		justify-content: flex-start;
+	}
+}
+
+@media (max-width: 810px){
+	.pos-item{
+		width: calc(33.33% - 10px);
+	}
+}

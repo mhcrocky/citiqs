@@ -24,6 +24,10 @@ var splideCategories = new Splide(
 			gap		   : 10, 
 			pagination : false,
             breakpoints: {
+				1000: {
+                    perPage: 3,
+                    height : '6rem',
+                },
                 600: {
                     perPage: 2,
                     height : '6rem',

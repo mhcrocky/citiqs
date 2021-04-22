@@ -1,4 +1,4 @@
-<div class="col-md-4" id="posMakeOrderId">
+<div class="col-md-4 px-0" id="posMakeOrderId">
     <div style="height:7vh; margin:0px 0px 10px 10px;" class='pos-settings'>
         <div class="col-sm-9 form-inline">
             <label
