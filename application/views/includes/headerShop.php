@@ -26,6 +26,12 @@
         background-color: #fff;
         color: #000;
     }
+    <?php if(isset($vendorCost) && $vendorCost == 1): ?>
+    .excluding_fee_text, .paymentFee {
+        display: none;
+    }
+    <?php endif; ?>
+
     <?php
     $eventDescript = '';
     $eventTitle = '';
