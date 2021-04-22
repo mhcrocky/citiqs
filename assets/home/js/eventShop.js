@@ -171,7 +171,10 @@ function clearTotal(el, price, totalClass){
 
 function removeTicket(id, price, ticketFee, totalClass) {
     var quantityValue = $(".ticketQuantityValue_" + id).val();
+    if(quantityValue < 1){ return; }
     if(quantityValue < 2){
+        $(".ticketQuantityValue_" + id).val(0);
+        deleteTicket(id, price, ticketFee);
         return;
     }
     var totalBasket = $("."+totalClass).html();
