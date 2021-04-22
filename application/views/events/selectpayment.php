@@ -43,12 +43,12 @@ $pinMachinePaymentFee = number_format($pinMachine, 2, '.', '');
         <?php endif; ?>
         
 
-            <div class="half-col  mb-4">
-                <img class="img-w-150" src="<?php echo base_url() . 'assets/images/waiter.png'; ?>"
-                    alt="Pay at waiter" />
-                <p style="paymentFee bg-primary"><?php echo '€0.00' ?></p>
-                <h3 class="title"><a id="payAtWaiter" class="text-primary" href="#">Pay at waiter</a></h3>
-            </div>
+<!--            <div class="half-col  mb-4">-->
+<!--                <img class="img-w-150" src="--><?php //echo base_url() . 'assets/images/waiter.png'; ?><!--"-->
+<!--                    alt="Pay at waiter" />-->
+<!--                <p style="paymentFee bg-primary">--><?php //echo '€0.00' ?><!--</p>-->
+<!--                <h3 class="title"><a id="payAtWaiter" class="text-primary" href="#">Pay at waiter</a></h3>-->
+<!--            </div>-->
 
 
         <?php if(in_array('voucher', $activePayments)): ?>
@@ -86,14 +86,15 @@ $pinMachinePaymentFee = number_format($pinMachine, 2, '.', '');
             </div>
         <?php endif; ?>
 
-        <?php if(in_array('pin machine', $activePayments)): ?>
-            <div class="half-col  mb-4">
-                <img class="img-w-150" style="max-width: 100px;"  src="<?php echo base_url(); ?>assets/home/images/pinmachine.png"
-                    alt="Pin machine" />
-                <p style="paymentFee bg-primary"><?php echo '€'.$pinMachinePaymentFee; ?></p>
-                <h3 class="title"><a id="pinmachine" data-paymentFee="<?php echo $pinMachinePaymentFee ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $pinMachinePaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Pin machine</a></h3>
-            </div>
-        <?php endif; ?>
+<!--        --><?php //if(in_array('pin machine', $activePayments)): ?>
+<!--            <div class="half-col  mb-4">-->
+<!--                <img class="img-w-150" style="max-width: 100px;"  src="--><?php //echo base_url(); ?><!--assets/home/images/pinmachine.png"-->
+<!--                    alt="Pin machine" />-->
+<!--                <p style="paymentFee bg-primary">--><?php //echo '€'.$pinMachinePaymentFee; ?><!--</p>-->
+<!--                <h3 class="title"><a id="pinmachine" data-paymentFee="--><?php //echo $pinMachinePaymentFee ?><!--" class="text-primary pay_method" href="--><?php //echo base_url(); ?><!--booking/onlinepayment/--><?php //echo $pinMachinePaymentType; ?><!--" onclick="paymentMethodRedirect(this);return false;">Pin machine</a></h3>-->
+<!--            </div>-->
+<!--        --><?php //endif; ?>
+
             <div class="half-col  mb-4">
                 
             </div>
