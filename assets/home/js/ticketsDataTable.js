@@ -139,12 +139,12 @@ $(document).ready(function () {
         title: "Guestlist",
         data: null,
         render: function (data, type, row) {
-          return '<a class="text-dark" href="javascript:;" onclick="addGuestModal('+data.ticketId+')" data-toggle="modal" data-target="#guestlistModal"><i class="fa fa-users" aria-hidden="true"></i></a>';
+          return '<a style="padding-top: 10px;" class="text-dark" href="javascript:;" onclick="addGuestModal('+data.ticketId+')" data-toggle="modal" data-target="#guestlistModal"><i class="gg-user-list"></i></a>';
 
         },
         createdCell: function (td, cellData, rowData, row, col) {
           
-            $(td).addClass('text-center');
+            $(td).css({'display': 'flex', 'justify-content': 'center', 'align-items': 'center'});
  
           
          }
@@ -155,7 +155,7 @@ $(document).ready(function () {
         data: null,
         render: function (data, type, row) {
           return (
-            '<input type="text" id="event-name" class="form-control" onchange="updateTicket('+data.ticketId+', this, \'ticketDescription\')" name="event-name" value="' +
+            '<input style="min-width: 120px;" type="text" id="event-name" class="form-control" onchange="updateTicket('+data.ticketId+', this, \'ticketDescription\')" name="event-name" value="' +
             data.ticketDescription +
             '">'
           );
@@ -173,7 +173,7 @@ $(document).ready(function () {
         data: null,
         render: function (data, type, row) {
           return (
-            '<input type="text" id="price" class="form-control" onchange="updateTicket('+data.ticketId+', this, \'ticketPrice\')" name="price" value="' +
+            '<input style="width: 80px;" type="text" id="price" class="form-control" onchange="updateTicket('+data.ticketId+', this, \'ticketPrice\')" name="price" value="' +
             data.ticketPrice +
             '">'
           );

@@ -1,10 +1,10 @@
 <div class="col-md-12 payOrderBackgroundColor">
     <div id="area-container" class="payOrderBackgroundColor">
         <div class="page-containe payOrderBackgroundColorr">
-            <div id="payHeader" class="heading pay-header payOrderBackgroundColor">
-            </div>
-            <div class="bar bar2 payOrderBackgroundColor">
-            </div>
+<!--            <div id="payHeader" class="heading pay-header payOrderBackgroundColor">-->
+<!--            </div>-->
+<!--            <div class="bar bar2 payOrderBackgroundColor" style="background-color: white; display:none">-->
+<!--            </div>-->
             <div class="order-details" style="background-color: white; display:none">
                 <table>
                     <thead>
@@ -44,7 +44,7 @@
             <div  id="choosePaymentMethod" class="bar" style="width:100 vw; height:100">
                 <div class="bar-title">
                     <span data-trans="" data-trn-key="Kies een betaalmethode">
-                            <?php echo $this->language->line("PAYMENT-050",'Kies een betaalmethode');?>
+                            <?php echo $this->language->tline('Kies een betaalmethode');?>
                     </span>
                 </div>
                 <span class="bar-title-original hidden">

@@ -46,11 +46,25 @@
                                 </div>
                             </div>
                             <div class="menu-list__right-col menu-list_right-col ml-auto ">
+                                <?php if($ticket['soldOut']): ?>
+                                    <div class="menu-list__price">
+                                    <b class="menu-list__price--discount">&nbsp</b>
+                                </div>
+                                <b class="menu-list__type text-danger">SOLD OUT</b>
+
+                                <div class="quantity-section">
+                                    &nbsp
+                                </div>
+
+                                
+                                <?php else: ?>
                                 <div class="menu-list__price">
                                     <b class="menu-list__price--discount"><?php echo $ticket['ticketPrice']; ?>€ (<?php echo $ticket['ticketFee']; ?>€)</b>
                                 </div>
                                 <b class="menu-list__type">quantity</b>
+
                                 <div class="quantity-section">
+                                    
                                     <button type="button" class="quantity-button"
                                         onclick="removeTicket('<?php echo $ticketId; ?>','<?php echo $ticket['ticketPrice']; ?>', '<?php echo $ticket['ticketFee']; ?>', 'totalBasket')">-</button>
                                     <input type="number" min="1" 
@@ -66,7 +80,9 @@
                                     <button type="button" class="quantity-button"
                                         onclick="addTicket('<?php echo $ticketId; ?>', '<?php echo $ticket['ticketAvailable']; ?>', '<?php echo $ticket['ticketPrice']; ?>', '<?php echo $ticket['ticketFee']; ?>','totalBasket')">+</button>
                                 </div>
+
                                 <b class="menu-list__price--discount excluding_fee text-dark mt-2">Excluding fee €<?php echo number_format($ticket['ticketFee'], 2, ',', ''); ?> and min pay fee €0,50</b>
+                                <?php endif; ?>
                             </div>
                             
                                 

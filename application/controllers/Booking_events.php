@@ -180,12 +180,28 @@ class Booking_events extends BaseControllerWeb
         $ticketId = $ticket['id'];
         $eventName = $this->event_model->get_eventname_by_ticket($ticketId);
         $ticketInfo = $this->event_model->get_ticket_info($ticketId);
+        if(is_numeric($ticketInfo->maxBooking) && $ticket['quantity'] > $ticketInfo->maxBooking){
+            $response = [
+                'status' => 'error',
+                'message' => 'You have reached the maximum bookings for this ticket!',
+                'quantity' => $ticketInfo->maxBooking,
+                'amount' => (floatval($ticket['price']) + floatval($ticket['ticketFee']))*(floatval($ticket['quantity']) - 1)
+            ];
+            echo json_encode($response);
+            return ;
+        }
         $ticketType = $ticketInfo->ticketType;
 
         $ticket_quantity = intval($ticket['quantity']);
         $ticket_available = intval($ticketInfo->ticketAvailable);
         if($ticket_quantity > $ticket_available){
-            echo "error";
+            $response = [
+                'status' => 'error',
+                'message' => 'SOLD OUT!',
+                'quantity' => $ticket_available,
+                'amount' => (floatval($ticket['price']) + floatval($ticket['ticketFee']))*(floatval($ticket['quantity']) - 1)
+            ];
+            echo json_encode($response);
             return ;
         }
         unset($tickets[$ticketId]);
@@ -204,7 +220,6 @@ class Booking_events extends BaseControllerWeb
             'endTime' => $this->session->userdata("endTime")
         ];
         
-        echo json_encode(['descript'=>$ticket['descript'],'price' => $ticket['price'], 'ticketFee' => $ticket['ticketFee'], 'first_ticket' => $first_ticket, 'eventName' => $eventName ]);
         
         if($ticket['quantity'] != 0){
             $this->session->unset_userdata('tickets');
@@ -217,7 +232,16 @@ class Booking_events extends BaseControllerWeb
             $total = $total + $ticket['amount'];
         }
         $total = number_format($total, 2, '.', '');
-        $this->session->set_tempdata('total', $total, 600);  
+        $this->session->set_tempdata('total', $total, 600); 
+        $response = [
+            'status' => 'success',
+            'descript' => $ticket['descript'],
+            'price' => $ticket['price'], 
+            'ticketFee' => $ticket['ticketFee'],
+            'first_ticket' => $first_ticket,
+            'eventName' => $eventName
+        ];
+        echo json_encode($response);
     }
 
     public function clear_tickets()
