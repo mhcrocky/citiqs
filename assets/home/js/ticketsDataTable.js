@@ -47,6 +47,17 @@ $(document).ready(function () {
     return $(this).prop("checked", false);
   });
 
+  $("#soldoutVisibility").change(function () {
+    if (this.checked) {
+      $("#soldoutVisible").val(0);
+      $("#soldoutMessage").prop("disabled", true);
+      return $(this).prop("checked", true);
+    }
+    $("#soldoutVisible").val(1);
+    $("#soldoutMessage").prop("disabled", false);
+    return $(this).prop("checked", false);
+  });
+
   //Add Ticket
   $("#visible").change(function () {
     if (this.checked) {
@@ -471,6 +482,13 @@ function getTicketOptions(ticketId) {
           let checked = (value == 1) ? true : false;
           $("#soldout").prop("checked", checked);
         }
+
+        if (index == "soldoutVisible") {
+          let checked = (value == 0) ? true : false;
+          $("#soldoutMessage").prop("disabled", checked);
+          $("#soldoutVisibility").prop("checked", checked);
+        }
+
         if (index == "guestTicket") {
           let checked = (value == 1) ? true : false;
           $("#guestTicketCheck").prop("checked", checked);
