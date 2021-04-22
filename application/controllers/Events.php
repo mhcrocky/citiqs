@@ -23,6 +23,9 @@ class Events extends BaseControllerWeb
         $this->load->helper('email_helper');
         $this->load->library('language', array('controller' => $this->router->class));
         
+
+        $this->load->helper('utility_helper');
+
 		$this->isLoggedIn();
 		$this->vendor_id = $this->session->userdata("userId");
     } 
