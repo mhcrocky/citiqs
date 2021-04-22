@@ -68,6 +68,7 @@ class Booking_events extends BaseControllerWeb
         }
 
         $data['events'] = $events;
+        $this->global['vendorCost'] = $this->event_model->get_vendor_cost($customer->id);
         $this->loadViews("events/shop", $this->global, $data, 'footerShop', 'headerShop');
 
     }
