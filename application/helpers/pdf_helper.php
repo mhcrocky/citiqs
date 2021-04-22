@@ -18,15 +18,14 @@
             $pdf->SetTitle('Reservation');
             
             // set header and footer fonts
-            $pdf->setHeaderFont(Array('Arial', '', PDF_FONT_SIZE_MAIN));
-            $pdf->setFooterFont(Array('Arial', '', PDF_FONT_SIZE_DATA));
+            $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+            $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
             
             // set default monospaced font
             $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
             
             // set margins
             $pdf->SetMargins(PDF_MARGIN_LEFT, 0, PDF_MARGIN_RIGHT);
-
             // old values
             // $pdf->SetHeaderMargin(10);
             // $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
