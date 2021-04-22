@@ -26,8 +26,13 @@
             
             // set margins
             $pdf->SetMargins(PDF_MARGIN_LEFT, 10, PDF_MARGIN_RIGHT);
-            $pdf->SetHeaderMargin(10);
-            $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+            // old values
+            // $pdf->SetHeaderMargin(10);
+            // $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+
+            // test values
+            $pdf->SetHeaderMargin(0);
+            $pdf->SetFooterMargin(0);
             
             // set auto page breaks
             
