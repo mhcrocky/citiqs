@@ -194,7 +194,7 @@ class Vendors extends REST_Controller
                 && $parsedJson['active'] === '1'
                 && !$this->shopvendor_model->setProperty('vendorId', $vendorId)->isVendorExists()
             ) {
-                $activateUrl = base_url() . 'login' . DIRECTORY_SEPARATOR . 'insertShopAndPerfexUser' . DIRECTORY_SEPARATOR . '417';
+                $activateUrl = base_url() . 'login' . DIRECTORY_SEPARATOR . 'insertShopAndPerfexUser' . DIRECTORY_SEPARATOR . $vendorId;
                 file_get_contents($activateUrl);
             }
         }

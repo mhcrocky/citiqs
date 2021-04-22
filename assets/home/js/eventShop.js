@@ -290,18 +290,20 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
         ticket_available: ticket_available
     };
     $.post(globalVariables.baseUrl + "booking_events/add_to_basket", data, function(data){
-        
-        if(data == 'error'){
-            $(".ticketQuantityValue_" + id).val(limit);
-            iziToast.error({
-                title: 'SOLD OUT!',
-                message: '',
+        data = JSON.parse(data);
+        if(data['status'] == 'error'){
+            $(".ticketQuantityValue_" + id).val(data['quantity']);
+            $("."+totalClass).text(data['amount'].toFixed(2));
+            iziToast.warning({
+                title: '',
+                message: data['message'],
                 position: 'topRight'
             });
+
             return ;
         }
 
-        data = JSON.parse(data);
+        
         var descript_data = data['descript'];
         var price_data = data['price'];
         var ticketFee_data = data['ticketFee'];
