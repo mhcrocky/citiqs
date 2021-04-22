@@ -187,7 +187,7 @@
 
                     </div>
 
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col col-md-3">
                             Sold out when expired
                         </div>
@@ -203,6 +203,30 @@
                                 </li>
                             </ul>
                             <input type="text" id="soldOutWhenExpired" name="soldOutWhenExpired"
+                                class="form-control inp-height">
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col col-md-3">
+                            Make invisible when sold out
+                        </div>
+                        <div style="display: flex;" class="col col-md-9">
+                            <ul>
+                                <li>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" id="soldoutVisibility" type="checkbox">
+                                        <label class="custom-control-label font-weight-bold text-dark" for="soldoutVisibility">
+
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <input type="text" id="soldoutMessage" name="soldoutMessage"
                                 class="form-control inp-height">
                         </div>
 
@@ -244,6 +268,7 @@
                     <input type="hidden" id="ticketSwap" name="ticketSwap" value="1">
                     <input type="hidden" id="partialAccess" name="partialAccess" value="1">
                     <input type="hidden" id="soldoutExpired" name="soldoutExpired" value="0">
+                    <input type="hidden" id="soldoutVisible" name="soldoutVisible" value="1">
                     <input type="hidden" id="ticketId" name="ticketId">
 
 

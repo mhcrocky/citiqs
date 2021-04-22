@@ -50,13 +50,13 @@
                                     <div class="menu-list__price">
                                     <b class="menu-list__price--discount">&nbsp</b>
                                 </div>
-                                <b class="menu-list__type text-danger">SOLD OUT</b>
+                                <b class="menu-list__type text-danger">&nbsp</b>
 
-                                <div class="quantity-section">
+                                <div class="quantity-section text-danger">
                                     &nbsp
                                 </div>
 
-                                
+                                <b class="menu-list__price--discount excluding_fee text-danger"><?php echo ($ticket['soldoutMessage'] == '') ? 'SOLD OUT' : $ticket['soldoutMessage']; ?></b>
                                 <?php else: ?>
                                 <div class="menu-list__price">
                                     <b class="menu-list__price--discount"><?php echo $ticket['ticketPrice']; ?>€ (<?php echo $ticket['ticketFee']; ?>€)</b>
