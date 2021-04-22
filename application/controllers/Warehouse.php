@@ -160,7 +160,7 @@
         private function setCategoryImage(array &$data): void
         {
             if (!empty($_FILES['image']['name'])) {
-                $data['image'] = time() . '_' . base64_encode($data['category']) . '.' . Uploadfile_helper::getFileExtension($_FILES['image']['name']);
+                $data['image'] = time() . '_' . $_SESSION['userId'] . '_' . rand(1, 99999) . '.' . Uploadfile_helper::getFileExtension($_FILES['image']['name']);
                 $_FILES['image']['name'] = $data['image'];
             } else {
                 unset($data['image']);
