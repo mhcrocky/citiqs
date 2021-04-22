@@ -45,7 +45,7 @@ class Alfredinsertorder extends BaseControllerWeb
 
         $this->load->library('language', array('controller' => $this->router->class));
         $this->load->library('session');
-        // $this->load->library('notificationvendor');
+        $this->load->library('notificationvendor');
 		// $this->load->library('notificationcustomer');
     }
 
