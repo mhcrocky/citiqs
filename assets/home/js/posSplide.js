@@ -43,7 +43,8 @@ var splideSpots = new Splide(
             perPage     : 7,
 			gap         : 10,
             direction   : 'ttb',
-            height      : '70vh'
+            height      : '81vh',
+			pagination  : false,
         }
     ).mount(window.splide.Extensions);
 
