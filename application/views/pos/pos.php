@@ -6,10 +6,10 @@
 <?php
 	} elseif (isset($mainProducts)) {
 ?>
-	<main class='row m-3'>
-		<div class="col-md-8" style="height: 100vh;">
+	<main class='row p-3 m-0 pos-black' id='main-pos-wrapper'>
+		<div class="col-md-8" style="height: calc(100vh - 20px);">
 			<div class="row mb-4">
-				<div class="col-md-2 col-xl-2" style="background-color:#ff7f50"></div>
+				<div class="col-md-2 col-xl-1" style="background-color:#ff7f50"></div>
 				
 				<div class="col-md-10 col-xl-11">
 					<div class="splide"  id="splideCategories">
@@ -40,7 +40,7 @@
 			</div>
 			<!-- end categories -->
 			<div class="row">
-				<div class="col-md-2 col-xl-1" style="padding-left:0px; padding-right:0px;">
+				<div class="col-md-2 col-xl-1 splideSpots-wrapper" style="padding-left:0px; padding-right:0px;">
 					<div class="splide" id="splideSpots">
 						<div class="splide__track">
 							<ul class="splide__list">

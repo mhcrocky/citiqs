@@ -24,6 +24,10 @@ var splideCategories = new Splide(
 			gap		   : 10, 
 			pagination : false,
             breakpoints: {
+				1200: {
+                    perPage: 4,
+                    height : '6rem',
+                },
 				1000: {
                     perPage: 3,
                     height : '6rem',
@@ -47,8 +51,10 @@ var splideSpots = new Splide(
             perPage     : 7,
 			gap         : 10,
             direction   : 'ttb',
-            height      : '81vh',
 			pagination  : false,
+			height: '100',
+			autoHeight  : true,
+			
         }
     ).mount(window.splide.Extensions);
 
