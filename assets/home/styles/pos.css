@@ -330,12 +330,10 @@ header, footer {
 /* pos sidebar */
 
 .pos-sidebar{
-	height: 70vh !important;
+	height: calc(100vh - 323px) !important;
 	margin-left: 20px;
 	margin-bottom: 15px;
 }
-
-
 
 .pos-checkout{
 	background-color: white;
@@ -376,7 +374,7 @@ header, footer {
 }
 
 .pos-checkout-list{
-	height: calc(68vh - 30px);
+	height: calc(100vh - 400px);
 	overflow-y: scroll;
 }
 
@@ -458,6 +456,11 @@ header, footer {
 	background-color: #eaeaea;
 }
 
+#main-pos-wrapper{
+	height: 100vh;
+	overflow: hidden;
+}
+
 .pos-checkout__button{
     background-color: green;
 	border: 2px solid green;
@@ -468,6 +471,8 @@ header, footer {
 	padding: 11.3% 11% !important;
     display: inline-block;
 	margin-top: 30px;
+	margin-right: 0 !important;
+	max-width: calc(100% - 5px) !important;
 }
 
 .pos-checkout .imgAlergies {
@@ -886,10 +891,22 @@ fieldset[disabled] .form-control{
 	.pos-checkout .modal-footer__quantity{
 		justify-content: flex-start;
 	}
+	
+	.pos-sidebar {
+    	height: calc(100vh - 306px) !important;
+	}
 }
 
 @media (max-width: 810px){
 	.pos-item{
 		width: calc(33.33% - 10px);
 	}
+}
+
+.splideSpots-wrapper #splideSpots-track{
+	height: 100%;
+}
+
+.splideSpots-wrapper{
+	height: calc(100vh - 129px) !important;
 }
