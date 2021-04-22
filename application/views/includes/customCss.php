@@ -285,12 +285,16 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/file-uploader.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/tiny_a4_format.css">
+    <link href='https://css.gg/user-list.css' rel='stylesheet'>
 <?php  } elseif ($this->view === 'events/events') { ?>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/query-builder.default.css" id="qb-theme"/>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/dashboard.css">
+    <link href='https://css.gg/arrow-right-r.css' rel='stylesheet'>
+	<link href='https://css.gg/user-list.css' rel='stylesheet'>
+	<link href='https://css.gg/pen.css' rel='stylesheet'>
     <style>
     .dataTables_wrapper .dataTables_paginate .paginate_button {
         padding: 0px !important;

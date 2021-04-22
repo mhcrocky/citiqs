@@ -95,6 +95,15 @@
                             </select>
                         </div>
                     </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-3 text-dark">Max Booking</div>
+                        <div class="col-md-3">
+                            <input type="number" id="maxBooking" name="maxBooking"
+                                class="form-control inp-height" min="1" value="1">
+                        </div>
+                    </div>
+
                     <hr class="w-100 mt-3 mb-3">
                     <h3 class="font-weight-bold text-dark">Ticket sales</h3>
                     <div class="row">
