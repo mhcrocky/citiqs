@@ -1377,7 +1377,7 @@
                 $where[$this->table . '.createdOrder>='] = $from;
             }
             if ($to) {
-                $where[$this->table . '.createdOrder<'] = $to;
+                $where[$this->table . '.createdOrder<='] = $to;
             }
 
             if ($sum) {
@@ -1505,7 +1505,7 @@
                 $this->table . '.invoiceId' => null,
                 $this->table . '.createdOrder !=' => null,
                 $this->table . '.createdOrder>=' => $from,
-                $this->table . '.createdOrder<' => $to,
+                $this->table . '.createdOrder<=' => $to,
                 'tbl_shop_printers.userId' => $vendorId,
                 'tbl_shop_payment_methods.productGroup' => $this->config->item('storeAndPos'),
                 'tbl_shop_payment_methods.vendorId' => $vendorId,

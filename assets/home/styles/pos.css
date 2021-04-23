@@ -142,11 +142,11 @@ header, footer {
 	padding: 5px;
 	text-align: left;
 	position: relative;
-	border: 1px solid #dfdfdf;
 	display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    align-items: stretch;
+	justify-content: space-between;
+	flex-direction: column;
+	align-items: stretch;
+    border: 1px solid #808080a1;
 }
 
 .pos-item__image{
@@ -330,8 +330,7 @@ header, footer {
 /* pos sidebar */
 
 .pos-sidebar{
-	height: calc(100vh - 323px) !important;
-	margin-left: 20px;
+	height: calc(100vh - 327px) !important;
 	margin-bottom: 15px;
 }
 
@@ -351,6 +350,15 @@ header, footer {
 	font-weight: 600;
 	padding: 15px 10px;
 	margin: 0;
+}
+
+.pos-black .pos-sidebar h3{
+	color: white;
+	background-color: #2d2d2d;
+}
+
+.pos-black .form-control{
+	border-radius: 0 !important; 
 }
 
 .pos-checkout-row{
@@ -374,7 +382,7 @@ header, footer {
 }
 
 .pos-checkout-list{
-	height: calc(100vh - 400px);
+	height: calc(100vh - 388px);
 	overflow-y: scroll;
 }
 
@@ -466,13 +474,10 @@ header, footer {
 	border: 2px solid green;
     color: white;
     text-align: center;
-    margin-left: 20px;
     width: calc(100% - 20px);
 	padding: 11.3% 11% !important;
     display: inline-block;
-	margin-top: 30px;
 	margin-right: 0 !important;
-	max-width: calc(100% - 5px) !important;
 }
 
 .pos-checkout .imgAlergies {
@@ -481,18 +486,60 @@ header, footer {
 
 .pos-checkout input[type=checkbox]{
 	margin-top: 1px !important;
+	appearance: none;
+	width: 40px;
+    height: 40px;
+	min-width: 40px;
+    min-height: 40px;
+    position: relative;
+	outline: none !important;
+	border: none !important;
+	box-shadow: none !important;
+	margin-right: 10px;
+}
+
+.pos-checkout input[type=checkbox]::after{
+    content: "";
+    position: absolute;
+    color: white;
+    background-color: white;
+    border-radius: 0;
+    box-shadow: inset 0 0 0 2px coral;
+    font-size: 0rem;
+    font-weight: bolder;
+	line-height: 40px;
+    text-align: center;
+    transition: background-color 150ms 0ms ease, color 150ms 250ms ease, font-size 150ms 250ms ease;
+    display: block;
+    width: 40px;
+    height: 40px;
+    bottom: 0;
+    left: 0;
+}
+
+.pos-checkout input[type=checkbox]:checked::after{
+	content: "\02714";
+    color: white;
+    background-color: coral;
+    font-size: 3.1rem;
 }
 
 .pos-checkout .modal__additional__checkbox label{
 	padding-bottom: 5px;
-    margin-top: 9px;
+    margin-top: 11px;
 }
 
 .pos-checkout .alert-dismissable .close, 
 .pos-checkout .alert-dismissible .close{
 	right: 0px;
-    color: black !important;
+    color: white !important;
+	font-size: 30px;
+	font-weight: 300 !important;
     opacity: 1;
+	background-color: #d9534f;
+    top: 0;
+    padding: 5px 25px;
+    right: 0px;
 }
 
 .pos-checkout .modal__content{
@@ -706,7 +753,7 @@ fieldset[disabled] .form-control{
 }
 
 .pos-checkout .productName{
-	padding: 5px 10px;
+	padding: 10px 10px;
 	background-color: #d5d5d5;
 }
 
@@ -733,6 +780,10 @@ fieldset[disabled] .form-control{
 
 .pos-checkout .modal-footer__quantity{
 	margin-right: 0 !important;
+	width: 40% !important;
+	max-width: 40% !important;
+	flex: 0 0 40%;
+	justify-content: flex-end;
 }
 
 .labelsMain{
@@ -741,15 +792,18 @@ fieldset[disabled] .form-control{
 
 .pos-checkout .modal__additional__checkbox{
 	padding-left: 0 !important;
+	width: 60% !important;
+	max-width: 60% !important;
+	flex: 0 0 60% !important;
 }
 
 .pos-checkout .modal-footer__buttons{
 	border-radius: 0 !important;
-	width: 30px;
-    height: 30px;
-    min-width: 30px;
-    min-height: 30px;
-    min-height: 30px;
+	width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    min-height: 40px;
 	display: flex;
 	align-items: center;
     justify-content: center;
@@ -825,7 +879,7 @@ fieldset[disabled] .form-control{
     background-color: #2d2d2d;
 }
 
-.pos-black .pos-sidebar h3{
+.pos-black . h3{
 	color: white;
 }
 
@@ -843,19 +897,29 @@ fieldset[disabled] .form-control{
 
 .pos-black .modal__additional__checkbox label{
 	color: white !important;
+	display: flex;
+    align-items: center;
 }
 
 .pos-black .splide__slide p{
 	color: white !important;
 }
 
-.pos-checkout .form-control{
+.pos-checkout{
 	border-radius: 0 !important;
+	height: 40px !Important
+}
+
+.pos-checkout .form-control[disabled], 
+.pos-checkout .form-control[readonly], 
+.pos-checkout fieldset[disabled] .form-control{
+	height: 40px !important;
 }
 
 
+
 :root{
-	--pos-button-bg: transparent;
+	--pos-button-bg: #2d2d2d;
 	--pos-button-text: #424449;
 }
 
@@ -893,7 +957,11 @@ fieldset[disabled] .form-control{
 	}
 	
 	.pos-sidebar {
-    	height: calc(100vh - 306px) !important;
+    	height: calc(100vh - 312px) !important;
+	}
+	
+	.pos-checkout-list {
+    	height: calc(100vh - 373px);
 	}
 }
 

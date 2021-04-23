@@ -58,8 +58,8 @@ class Vendors extends REST_Controller
 
             $get = Utility_helper::sanitizeGet();
             $vendorId = intval($get['vendor']);
-            $from = empty($get['from']) ? '' : $get['from'];
-            $to = empty($get['to']) ? '' : $get['to'];
+            $from = empty($get['from']) ? '' : str_replace('T', ' ', $get['from']);
+            $to = empty($get['to']) ? '' : str_replace('T', ' ', $get['to']);
 
             $orders = $this->shoporder_model->fetchUnpaidVendorOrders($vendorId, true, $from, $to);
 
