@@ -557,15 +557,18 @@ class Event_model extends CI_Model {
 
 	public function get_vendor_cost($vendorId)
 	{
-		$this->db->select('vendorCost');
+		$this->db->select('paymentMethod, vendorCost');
 		$this->db->from('tbl_shop_payment_methods');
 		$this->db->where('vendorId', $vendorId);
+		$this->db->where('productGroup', 'E-Ticketing');
 		$query = $this->db->get();
-		if($query->num_rows() > 0 ){
-			$result = $query->first_row();
-			return $result->vendorCost;
+		$results = $query->result_array();
+		$vendorCosts = [];
+		foreach($results as $result){
+			$paymentMethod = $result['paymentMethod'];
+			$vendorCosts[$paymentMethod] = $result['vendorCost'];
 		}
-		return 0;
+		return $vendorCosts;
 	}
 
 
