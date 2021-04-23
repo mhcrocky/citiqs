@@ -31,10 +31,10 @@
                 <?php } ?>
             </select>
         </div>
-        <div class="col-sm-3" style="padding-right:0px">
+        <div class="col-sm-3" style="padding-right:0px; height: 100%;">
             <button
                 class="btn btn-primary"
-                style="width: 100%; padding: 16% 12% 16% 12%;"
+                style="height: 100%; width: 100%; padding: 16% 12% 16% 12%;"
                 data-toggle="modal" data-target="#managerModal"
             >
                 <i class="fa fa-cogs" aria-hidden="true" style="font-size:24px"></i>
@@ -56,49 +56,49 @@
             <!-- end checout list -->
         </div>
     </div>
-    <div style="height:14vh; margin-left:20px" class='pos-buttons'>
-        <div class="col-sm-6" style="padding-left:0px; padding-right:0px;">
-            <div class="col-sm-12" style="padding-left:0px; padding-right:7px;">
-                <div class="col-sm-6" style="padding-left:0px; padding-right:0px;">
+    <div style="margin: 0 -8px 0 -10px !important" class='pos-buttons d-flex row mx-0'>
+        <div class="col-7 col-lg-6" style="padding-left:0px; padding-right:0px;">
+            <div class="col-sm-12 px-0" >
+                <div class="col-sm-6 px-3 pb-3">
                     <a
                         href="javascript:void(0)"
                         onclick="cancelPosOrder()"
                         class="btn btn-danger"
-                        style="width: 100%; margin:5px 5px 5px 0px; padding: 24% 24% 24% 20%;"
+                        style="width: 100%;"
                     >
                         Cancel
                     </a>
                 </div>
-                <div class="col-sm-6" style="padding-left:0px; padding-right:0px;">
+                <div class="col-sm-6 px-3 pb-3" >
                     <a
                         href="javascript:void(0)"
                         id="saveHoldOrder"
                         data-toggle="modal"
                         data-target="#holdOrder"
                         class="btn btn-success"
-                        style="width: 100%; margin:5px 0px 5px 5px; padding: 24% 24%;"
+                        style="width: 100%;"
                     >
                         Save
                     </a>
                 </div>
             </div>
-            <div class="col-sm-12" style="padding-left:0px; padding-right:7px;">
-                <div class="col-sm-6" style="padding-left:0px; padding-right:0px;">
+            <div class="col-sm-12 px-0">
+                <div class="col-sm-6 px-3 pt-3">
                     <a
                         href="javascript:void(0)"
                         onclick="resetPosOrder()"
                         class="btn btn-primary"
-                        style="width: 100%; margin:5px 5px 5px 0px; padding: 24% 24%; background-color:#ff7f50;"
+                        style="width: 100%; background-color:#ff7f50;"
                     >
                         New
                     </a>
                 </div>
-                <div class="col-sm-6" style="padding-left:0px; padding-right:0px;">
+                <div class="col-sm-6 px-3 pr-0 pt-3" >
                     <a
                         href="javascript:void(0)"
                         onclick="lockPos()"
                         class="btn btn-primary"
-                        style="width: 100%; margin:5px 0px 5px 5px; padding: 24% 24%"
+                        style="width: 100%;"
                     >
                         Logout
                     </a>
@@ -108,13 +108,13 @@
 
 
 
-        <div class="col-sm-6" style="padding-left:0px; padding-right:0px;">
+        <div class="col-5 col-lg-6 px-3">
             <a
                 href="javascript:void(0)"
-                class='pos-checkout__button'
+                class='pos-checkout__button mb-3'
                 data-toggle="modal"
                 data-target="#selectPaymentMethod"
-                style="width: 100%; margin:5px 5px 5px 5px; padding: 11% 11%"
+                style="width: 100%;"
             >
                 Pay (<span class="totalPrice">0</span>&nbsp;&euro;)
             </a>
@@ -123,11 +123,11 @@
             <a
                 id="posPrintButton"
                 href="javascript:void(0)"
-                class='pos-checkout__button'
+                class='pos-checkout__button mt-3'
                 onclick="posPayOrder(this)"
                 data-locked="0"
                 data-paid="0"
-                style="width: 100%; margin:5px 5px 5px 5px; padding: 11% 11%"
+                style="width: 100%;"
             >
                 Print
             </a>
