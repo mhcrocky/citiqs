@@ -26,7 +26,7 @@
 		.drawDOM('#HTMLtoPDF', {
 			paperSize: "A4",
 			margin: {top: "1cm", bottom: "1cm", right: "1cm", left: "1cm"},
-			scale: 0.8,
+			scale: 0.6,
 			height: 500
 		})
 		.then(function(group){
