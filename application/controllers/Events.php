@@ -23,6 +23,9 @@ class Events extends BaseControllerWeb
         $this->load->helper('email_helper');
         $this->load->library('language', array('controller' => $this->router->class));
         
+
+        $this->load->helper('utility_helper');
+
 		$this->isLoggedIn();
 		$this->vendor_id = $this->session->userdata("userId");
     } 
@@ -663,6 +666,8 @@ class Events extends BaseControllerWeb
                                 
 								//Email_helper::sendEmail("pnroos@icloud.com", $subject, $mailtemplate, false );
 								if(Email_helper::sendEmail($buyerEmail, $subject, $mailtemplate, false)) {
+                                    $file = FCPATH . 'application/tiqs_logs/messages.txt';
+			                        Utility_helper::logMessage($file, $mailtemplate);
                                     $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
                                     
                                 }

@@ -9,7 +9,6 @@ class Voucher extends BaseControllerWeb
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->helper('pdf_helper');
 		$this->load->config('custom');
 		$this->load->library('language', array('controller' => $this->router->class));
 		$this->isLoggedIn();
@@ -167,7 +166,6 @@ class Voucher extends BaseControllerWeb
 		$folder = $SERVERFILEPATH;
 		$file_name1 = $qrtext . ".png";
 		$file_name = $folder . $file_name1;
-        QRcode::png($text, $file_name);
 
         switch (strtolower($_SERVER['HTTP_HOST'])) {
 			case 'tiqs.com':
@@ -209,7 +207,9 @@ class Voucher extends BaseControllerWeb
 				$mailtemplate = str_replace('[voucherAmount]', $voucherAmount, $mailtemplate);
 				$mailtemplate = str_replace('[voucherPercent]', $voucherPercent, $mailtemplate);
 				$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
-				Pdf_helper::HtmlToPdf($mailtemplate);
+				
+				$data['mailtemplate'] = $mailtemplate;
+                $this->load->view('generate_pdf', $data);
 
 
                             

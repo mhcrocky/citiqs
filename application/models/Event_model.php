@@ -171,7 +171,7 @@ class Event_model extends CI_Model {
 			if($ticket_available == 0){
 				$sold_out = true;
 			}
-			
+
 			$result['soldOut'] = $sold_out;
 			$result['ticketAvailable'] = $ticket_available;
 			$tickets[] = $result;
@@ -553,6 +553,19 @@ class Event_model extends CI_Model {
 		WHERE tbl_event_tickets.id = ".$eventId." AND paid = 1
 		GROUP BY tbl_bookandpay.eventid");
 		return $query->first_row();
+	}
+
+	public function get_vendor_cost($vendorId)
+	{
+		$this->db->select('vendorCost');
+		$this->db->from('tbl_shop_payment_methods');
+		$this->db->where('vendorId', $vendorId);
+		$query = $this->db->get();
+		if($query->num_rows() > 0 ){
+			$result = $query->first_row();
+			return $result->vendorCost;
+		}
+		return 0;
 	}
 
 

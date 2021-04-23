@@ -310,6 +310,10 @@
         text-align: center !important; 
     }
 
+    .btn-success, .btn-primary, .btn-danger{
+        border-radius: 0px !important;
+    }
+
     </style>
     <?php  } elseif ($this->view === 'video/index') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
