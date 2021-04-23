@@ -12,13 +12,13 @@ class Pdf extends TCPDF
     public function Header() {
         $this->SetTextColor(209,183,49);
         $this->Ln(5);        
-        $this->Cell(278, 15, '', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this->Cell(0, 15, '', 0, false, 'C', 0, '', 0, false, 'M', 'M');
     }
   
     public function Footer() {
         $this->SetY(-15);
         $this->SetFont('helvetica', 'I', 10);
-        $this->Cell(278, 15, '', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this->Cell(0, 15, '', 0, false, 'C', 0, '', 0, false, 'M', 'M');
   
     }
 }

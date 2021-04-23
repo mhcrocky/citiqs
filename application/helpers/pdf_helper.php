@@ -43,8 +43,9 @@
             // add a page
             $pdf->AddPage();
             
-             
-            $pdf->writeHTML($html, true, false, true, false, '');
+
+            $pdf->writeHTML($html, false, false, true, false, '');
+//			$pdf->writeHTML($html);
             
             // reset pointer to the last page
             $pdf->lastPage();

@@ -35,9 +35,8 @@ class Finance extends BaseControllerWeb
                 "header" => "authtoken:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoidGlxc3dlYiIsIm5hbWUiOiJ0aXFzd2ViIiwicGFzc3dvcmQiOm51bGwsIkFQSV9USU1FIjoxNTgyNTQ2NTc1fQ.q7ssJqcwsXhuNVDyspGYh_KV7_JsbwS8vq2TT9R-MGk"
                 ]
             ]);
-            $data = file_get_contents("http://tiqs.com/backoffice/admin/api/invoice/data/".$this->vendor_id, false, $context );
+            $data = file_get_contents("https://tiqs.com/backoffice/admin/api/invoice/data/".$this->vendor_id, false, $context );
             echo $data;
-		
 	}
 
 	public function clearing()
