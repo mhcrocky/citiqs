@@ -1244,5 +1244,21 @@ class   Bookandpayagendabooking_model extends CI_Model
         return $query->result_array();
 
     }
+
+	public function get_vendor_cost($vendorId)
+	{
+		$this->db->select('paymentMethod, vendorCost');
+		$this->db->from('tbl_shop_payment_methods');
+		$this->db->where('vendorId', $vendorId);
+		$this->db->where('productGroup', 'Reservations');
+		$query = $this->db->get();
+		$results = $query->result_array();
+		$vendorCosts = [];
+		foreach($results as $result){
+			$paymentMethod = $result['paymentMethod'];
+			$vendorCosts[$paymentMethod] = $result['vendorCost'];
+		}
+		return $vendorCosts;
+	}
 	
 }

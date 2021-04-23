@@ -1,12 +1,12 @@
 <?php 
-$idealPaymentFee = number_format($idealPayment, 2, '.', '');
-$bancontactPaymentFee = number_format($bancontactPayment, 2, '.', '');
-$creditCardPaymentFee = number_format($creditCardPayment, 2, '.', '');
-$voucherPaymentFee = number_format($voucher, 2, '.', '');
-$myBankPaymentFee = number_format($myBank, 2, '.', '');
-$payconiqPaymentFee = number_format($payconiqPayment, 2, '.', '');
-$giroPaymentFee = number_format($giroPayment, 2, '.', '');
-$pinMachinePaymentFee = number_format($pinMachine, 2, '.', '');
+$idealPaymentFee = $idealPayment;
+$bancontactPaymentFee = $bancontactPayment;
+$creditCardPaymentFee = $creditCardPayment;
+$voucherPaymentFee = $voucher;
+$myBankPaymentFee = $myBank;
+$payconiqPaymentFee = $payconiqPayment;
+$giroPaymentFee = $giroPayment;
+$pinMachinePaymentFee = $pinMachine;
 ?>
 <div id="selectPayment" class="container-fluid selectPayment pr-5 pl-5 mx-auto mb-5">
     <h1 style="color: #F1921A !important; font-size: 24px;" class="white text-center yellow">Select Payment</h1>
@@ -16,7 +16,7 @@ $pinMachinePaymentFee = number_format($pinMachine, 2, '.', '');
         <?php if(in_array('ideal payment', $activePayments)): ?>
             <div class="half-col  mb-4">
                 <img class="img-w-150" src="<?php echo base_url(); ?>assets/home/imgs/extra/ideal.png" alt="iDEAL">
-                <p style="paymentFee bg-primary"><?php echo '€'.$idealPaymentFee; ?></p>
+                <p style="paymentFee bg-primary"><?php echo $idealPaymentFee; ?></p>
                 <h3 class="title">
                 <a id="iDeal" data-paymentFee="<?php echo $idealPaymentFee; ?>" class="text-primary" href="#iDeal" onclick="paymentMethodRedirect(this)">iDEAL</a></h3>
             </div>
@@ -26,7 +26,7 @@ $pinMachinePaymentFee = number_format($pinMachine, 2, '.', '');
             <div class="half-col mb-4">
                 <img class="img-w-150" src="<?php echo base_url(); ?>assets/home/imgs/extra/bancontact.png"
                     alt="bancontact">
-                <p style="paymentFee bg-primary"><?php echo '€'.$bancontactPaymentFee; ?></p>
+                <p style="paymentFee bg-primary"><?php echo $bancontactPaymentFee; ?></p>
                 <h3 class="title"><a id="bancontact" class="text-primary pay_method" data-paymentFee="<?php echo $bancontactPaymentFee; ?>"
                         href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $bancontactPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Bancontact</a></h3>
             </div>
@@ -36,7 +36,7 @@ $pinMachinePaymentFee = number_format($pinMachine, 2, '.', '');
             <div class="half-col mb-4">
                 <img class="img-w-150" src="<?php echo base_url(); ?>assets/home/imgs/extra/creditcard.png"
                     alt="Creditcard">
-                <p style="paymentFee bg-primary"><?php echo '€'.$creditCardPaymentFee; ?></p>
+                <p style="paymentFee bg-primary"><?php echo $creditCardPaymentFee; ?></p>
                 <h3 class="title">
                 <a data-paymentFee="<?php echo $creditCardPaymentFee; ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $creditCardPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Credit Card</a></h3>
             </div>
@@ -46,7 +46,7 @@ $pinMachinePaymentFee = number_format($pinMachine, 2, '.', '');
             <div class="half-col  mb-4">
                 <img class="img-w-150" src="<?php echo base_url() . 'assets/images/waiter.png'; ?>"
                     alt="Pay at waiter" />
-                <p style="paymentFee bg-primary"><?php echo '€0.00' ?></p>
+                <p style="paymentFee bg-primary">&nbsp</p>
                 <h3 class="title"><a id="payAtWaiter" class="text-primary" href="#">Pay at waiter</a></h3>
             </div>
 
@@ -54,7 +54,7 @@ $pinMachinePaymentFee = number_format($pinMachine, 2, '.', '');
         <?php if(in_array('voucher', $activePayments)): ?>
             <div class="half-col  mb-4">
                 <img class="img-w-89" src="<?php echo base_url() . 'assets/home/images/voucher.png'; ?>" alt="voucher">
-                <p style="paymentFee bg-primary"><?php echo '€'.$voucherPaymentFee; ?></p>
+                <p style="paymentFee bg-primary"><?php echo $voucherPaymentFee; ?></p>
                 <h3 class="title"><a id="voucher" data-paymentFee="<?php echo $voucherPaymentFee; ?>" class="text-primary" href="#">gebruik Voucher</a></h3>
             </div>
         <?php endif; ?>
@@ -63,7 +63,7 @@ $pinMachinePaymentFee = number_format($pinMachine, 2, '.', '');
             <div class="half-col  mb-4">
                 <img class="img-w-150" style="max-width: 110px;" src="https://static.pay.nl/payment_profiles/100x100/1588.png"
                     alt="My Bank" />
-                <p style="paymentFee bg-primary"><?php echo '€'.$myBankPaymentFee; ?></p>
+                <p style="paymentFee bg-primary"><?php echo $myBankPaymentFee; ?></p>
                 <h3 class="title"><a id="mybank" data-paymentFee="<?php echo $myBankPaymentFee ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $myBankPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">My Bank</a></h3>
             </div>
         <?php endif; ?>
@@ -72,7 +72,7 @@ $pinMachinePaymentFee = number_format($pinMachine, 2, '.', '');
             <div class="half-col  mb-4">
                 <img class="img-w-89" style="max-width: 85px;" src="https://tiqs.com/alfred/assets/home/imgs/extra/payconiq.png"
                     alt="Payconiq" />
-                <p style="paymentFee bg-primary"><?php echo '€'.$payconiqPaymentFee; ?></p>
+                <p style="paymentFee bg-primary"><?php echo $payconiqPaymentFee; ?></p>
                 <h3 class="title"><a id="payconiq" data-paymentFee="<?php echo $payconiqPaymentFee ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $payconiqPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Payconiq</a></h3>
             </div>
         <?php endif; ?>
@@ -81,7 +81,7 @@ $pinMachinePaymentFee = number_format($pinMachine, 2, '.', '');
             <div class="half-col  mb-4">
                 <img class="img-w-150" style="max-width: 100px;" src="<?php echo base_url(); ?>assets/home/imgs/extra/giropay(1).png"
                     alt="Giropay" />
-                <p style="paymentFee bg-primary"><?php echo '€'.$giroPaymentFee; ?></p>
+                <p style="paymentFee bg-primary"><?php echo $giroPaymentFee; ?></p>
                 <h3 class="title"><a id="giropay" data-paymentFee="<?php echo $giroPaymentFee; ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $giroPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Giropay</a></h3>
             </div>
         <?php endif; ?>
@@ -90,7 +90,7 @@ $pinMachinePaymentFee = number_format($pinMachine, 2, '.', '');
             <div class="half-col  mb-4">
                 <img class="img-w-150" style="max-width: 100px;"  src="<?php echo base_url(); ?>assets/home/images/pinmachine.png"
                     alt="Pin machine" />
-                <p style="paymentFee bg-primary"><?php echo '€'.$pinMachinePaymentFee; ?></p>
+                <p style="paymentFee bg-primary"><?php echo $pinMachinePaymentFee; ?></p>
                 <h3 class="title"><a id="pinmachine" data-paymentFee="<?php echo $pinMachinePaymentFee ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $pinMachinePaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Pin machine</a></h3>
             </div>
         <?php endif; ?>
@@ -288,6 +288,8 @@ $pinMachinePaymentFee = number_format($pinMachine, 2, '.', '');
 function paymentMethodRedirect(el){
     var amount = $('.totalBasket').text();
     var paymentFee = $(el).attr('data-paymentFee');
+    paymentFee = paymentFee.replace( /^\D+/g, '');
+    paymentFee = $.isNumeric(paymentFee) ? paymentFee : 0;
     paymentFee = parseFloat(paymentFee);
 
     var total = parseFloat(amount) + paymentFee;

@@ -292,7 +292,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/query-builder.default.css" id="qb-theme"/>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/dashboard.css">
-    <link href='https://css.gg/arrow-right-r.css' rel='stylesheet'>
 	<link href='https://css.gg/user-list.css' rel='stylesheet'>
 	<link href='https://css.gg/pen.css' rel='stylesheet'>
     <style>
@@ -312,6 +311,17 @@
 
     .btn-success, .btn-primary, .btn-danger{
         border-radius: 0px !important;
+    }
+
+    .ticket-icon {
+        filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=0.5);
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+        display: inline-block;
+        font-size: 20px;
     }
 
     </style>

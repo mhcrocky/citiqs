@@ -97,7 +97,7 @@ $(document).ready(function() {
                     
                     let html = '<div style="display: inline-flex; width: 120px;justify-content: center;"><a style="margin-top: 5px;color: #3c4859" class="mr-1" href="'+globalVariables.baseUrl+'events/edit/'+data.id+'"><i class="gg-pen"></i></a>';
                     html += '<a class="ml-3" style="font-size: 19px;color: #3c4859" href="'+globalVariables.baseUrl+'events/guestlist/'+data.id+'"><i class="gg-user-list"></i></a>'
-                    html += '<a class="ml-3" style="color: #3c4859" href="'+globalVariables.baseUrl+'events/event/'+data.id+'"><i class="gg-arrow-right-r"></i></a></div>';
+                    html += '<a class="ml-3" style="color: #3c4859" href="'+globalVariables.baseUrl+'events/event/'+data.id+'"><i class="ti-ticket ticket-icon"></i></a></div>';
                     return html;
                 }
 
