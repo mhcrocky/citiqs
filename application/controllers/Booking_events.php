@@ -69,7 +69,6 @@ class Booking_events extends BaseControllerWeb
         }
 
         $data['events'] = $events;
-        $this->global['vendorCost'] = $this->event_model->get_vendor_cost($customer->id);
         $this->loadViews("events/shop", $this->global, $data, 'footerShop', 'headerShop');
 
     }
@@ -335,9 +334,9 @@ class Booking_events extends BaseControllerWeb
     public function selectpayment()
     {
         $this->global['pageTitle'] = 'TIQS: Select Payment';
-        
-        $ticketingPayments = $this->event_model->get_payment_methods($this->session->userdata('customer'));
-        $data['activePayments'] = $this->event_model->get_active_payment_methods($this->session->userdata('customer'));
+        $customer = $this->session->userdata('customer');
+        $ticketingPayments = $this->event_model->get_payment_methods($customer);
+        $data['activePayments'] = $this->event_model->get_active_payment_methods($customer);
         $data['idealPaymentType'] = $this->config->item('idealPaymentType');
         $data['creditCardPaymentType'] = $this->config->item('creditCardPaymentType');
         $data['bancontactPaymentType'] = $this->config->item('bancontactPaymentType');
@@ -356,12 +355,21 @@ class Booking_events extends BaseControllerWeb
 
         $amount = $amount/100;
 
+        $vendorCost = $this->event_model->get_vendor_cost($customer);
         foreach($ticketingPayments as $key => $ticketingPayment){
             $paymentMethod = ucwords($key);
             $paymentMethod = str_replace(' ', '', $paymentMethod);
             $paymentMethod = lcfirst($paymentMethod);
-            $data[$paymentMethod] = $amount*$ticketingPayment['percent'] + $ticketingPayment['amount'];
+            $total_amount = $amount*$ticketingPayment['percent'] + $ticketingPayment['amount'];
+            if((isset($vendorCost[$key]) && $vendorCost[$key] == 1) || $total_amount  == 0){
+                $data[$paymentMethod] = '&nbsp';
+            } else {
+                $data[$paymentMethod] = '€'. number_format($total_amount, 2, '.', '');
+            }
+            
         }
+
+        $data['vendorCost'] = $this->event_model->get_vendor_cost($customer);
 
         $this->loadViews("events/selectpayment", $this->global, $data, 'footerShop', 'headerShop');
     }
@@ -437,50 +445,6 @@ class Booking_events extends BaseControllerWeb
         }
 
         return;
-        ////////////////////////
-		$this->load->model('email_templates_model');
-		$this->load->model('bookandpayspot_model');
-		$this->load->model('bookandpayagenda_model');
-		$this->load->model('bookandpaytimeslots_model');
-
-
-		$namespace = $this->config->item('transactionNamespace');
-        $function = $this->config->item('orderPayNlFunction');
-        $version = $this->config->item('orderPayNlVersion');
-
-        $arrArguments = $this->session->userdata('arrArguments');
-        $strUrl = $this->session->userdata('strUrl');
-
-		$strResult = @file_get_contents($strUrl);
-
-		if (empty($transactionid)) {
-			echo('FALSE|' . $transactionid);
-			die();
-		}
-
-		$strResult = unserialize($strResult);
-		$result1 = $strResult;
-
-//        if ($result1['paymentDetails']['state'] == 100 || $result1['paymentDetails']['state'] == 20) {
-		if ($result1['paymentDetails']['state'] == 100 ) {
-			foreach ($strResult['saleData']['orderData'] as $key => $product) {
-				if($product['productId'] !== '000000') {
-					$reservationId = $product['productId'];
-
-					if (empty($reservationId)) {
-						echo('FALSE|' . $reservationId);
-						die();
-					}
-
-					$data['paid'] = '1';
-					$data['TransactionID'] = $transactionid;
-
-					$this->bookandpay_model->editbookandpay($data, $reservationId);
-				}
-			}
-        }
-
-        $this->emailReservation();
     }
 
 
@@ -778,7 +742,7 @@ class Booking_events extends BaseControllerWeb
 								$mailtemplate = str_replace('[endTime]', $totime, $mailtemplate);
 								$mailtemplate = str_replace('[timeSlot]', '', $mailtemplate);
                                 $mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
-                                $mailtemplate = str_replace('[spotLabel]', $Spotlabel, $mailtemplate);
+                                $mailtemplate = str_replace('[spotLabel]', $Spotlabel, $mailtemplate); 
 								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
 								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
