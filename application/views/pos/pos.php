@@ -9,7 +9,11 @@
 	<main class='row p-3 m-0 pos-black' id='main-pos-wrapper'>
 		<div class="col-md-8" style="height: calc(100vh - 20px);">
 			<div class="row mb-4">
-				<div class="col-md-2 col-xl-1" style="background-color:#ff7f50"></div>
+				<div class="col-md-2 col-xl-1 p-3" style="background-color:#ff7f50">
+					<a href="" class='btn w-100 h-100 d-flex align-items-center justify-content-center'>
+						<img src="/assets/home/images/twoontable.png" alt="" class='w-100'>
+					</a>
+				</div>
 				
 				<div class="col-md-10 col-xl-11">
 					<div class="splide"  id="splideCategories">
