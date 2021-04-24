@@ -287,7 +287,7 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/tiny_a4_format.css">
     <link href='https://css.gg/user-list.css' rel='stylesheet'>
     <style>
-    .btn, .btn-success, .btn-primary, .btn-danger{
+    .btn, .paginate_button, .btn-success, .btn-primary, .btn-danger{
         border-radius: 0px !important;
     }
     </style>
@@ -314,7 +314,7 @@
         text-align: center !important; 
     }
 
-    .btn-success, .btn-primary, .btn-danger{
+    .btn, .btn-success, .btn-primary, .btn-danger, .paginate_button{
         border-radius: 0px !important;
     }
 
