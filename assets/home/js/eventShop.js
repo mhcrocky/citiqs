@@ -170,7 +170,7 @@ function clearTotal(el, price, totalClass){
 	var totalBasket = $("."+totalClass).html();
     
 	totalBasket = parseInt(totalBasket);
-	quantity = parseInt(quantity);
+	quantity = Math.abs(parseInt(quantity));
 	price = parseInt(price);
 	totalBasket = Math.round((totalBasket - quantity*price) * 1e12) / 1e12;
 	return $("."+totalClass).text(totalBasket.toFixed(2));
@@ -185,7 +185,7 @@ function removeTicket(id, price, ticketFee, totalClass) {
         return;
     }
     var totalBasket = $("."+totalClass).html();
-    quantityValue = parseInt(quantityValue);
+    quantityValue = Math.abs(parseInt(quantityValue));
     totalBasket = parseFloatNum(totalBasket);
     price = parseFloatNum(price);
     ticketFee = parseFloatNum(ticketFee);
@@ -193,8 +193,8 @@ function removeTicket(id, price, ticketFee, totalClass) {
     
     quantityValue--;
     totalBasket = Math.round((totalBasket - price - ticketFee) * 1e12) / 1e12;
-    $(".ticketQuantityValue_" + id).val(quantityValue);
-    $("#quantity_" + id).val(quantityValue);
+    $(".ticketQuantityValue_" + id).val(Math.abs(quantityValue));
+    $("#quantity_" + id).val(Math.abs(quantityValue));
     $("."+totalClass).text(totalBasket.toFixed(2));
     let current_time = $(".current_time").val();
 
@@ -252,7 +252,7 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
     $('#payForm').show();
     var quantityValue = $(".ticketQuantityValue_" + id).val();
     var totalBasket = $("."+totalClass).html();
-    quantityValue = parseInt(quantityValue);
+    quantityValue = Math.abs(parseInt(quantityValue));
     totalBasket = Math.round((parseFloatNum(totalBasket)* 1e12)) / 1e12;
     price = parseFloatNum(price);
     ticketfee = parseFloatNum(ticketfee);
@@ -272,8 +272,8 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
    
     totalBasket = Math.round((totalBasket + price + ticketfee) * 1e12) / 1e12;
     
-    $(".ticketQuantityValue_" + id).val(quantityValue);
-    $("#quantity_" + id).val(quantityValue);
+    $(".ticketQuantityValue_" + id).val(Math.abs(quantityValue));
+    $("#quantity_" + id).val(Math.abs(quantityValue));
     $("."+totalClass).text(totalBasket.toFixed(2));
     
     let current_time = $(".current_time").val();
