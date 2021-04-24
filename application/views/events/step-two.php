@@ -226,8 +226,7 @@
                                     </div>
                                 </li>
                             </ul>
-                            <input type="text" id="soldoutMessage" name="soldoutMessage"
-                                class="form-control inp-height">
+                           
                         </div>
 
 
