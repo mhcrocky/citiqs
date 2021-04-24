@@ -622,7 +622,8 @@ $route['api/connection/buyer/(:any)']['put'] = 'Api/connection/Buyerapi/buyer/$1
 // orders
 $route['api/connection/order']['post']  = 'Api/connection/Ordersapi/order';
 
-
+//Finanza
+$route['api/finanza/orders/(:any)'] = 'Api/finanza/orders/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
