@@ -115,8 +115,7 @@ $(document).on("click", ".browse", function() {
   });
   $('#file').change(function(e) {
     var fileName = e.target.files[0].name;
-   
-  
+
     var reader = new FileReader();
     reader.onload = function(e) {
       // get loaded data and render thumbnail.
@@ -128,8 +127,7 @@ $(document).on("click", ".browse", function() {
 
   $('#background-file').change(function(e) {
     var fileName = e.target.files[0].name;
-   
-  
+
     var reader = new FileReader();
     reader.onload = function(e) {
       // get loaded data and render thumbnail.

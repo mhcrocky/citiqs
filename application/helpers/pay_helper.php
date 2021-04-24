@@ -144,7 +144,7 @@
                 $arrArguments['statsData']['extra' . ($key + 1)] = $reservation->reservationId;
                 $arrArguments['saleData']['orderData'][$key]['productId'] = $reservation->reservationId;
                 $arrArguments['saleData']['orderData'][$key]['description'] = $reservation->Spotlabel;
-                $arrArguments['saleData']['orderData'][$key]['productType'] = 'HANDLIUNG';
+                $arrArguments['saleData']['orderData'][$key]['productType'] = 'HANDLING';
                 $arrArguments['saleData']['orderData'][$key]['price'] = $reservation->price * 100;
                 $arrArguments['saleData']['orderData'][$key]['quantity'] = 1;
                 $arrArguments['saleData']['orderData'][$key]['vatCode'] = 'H';

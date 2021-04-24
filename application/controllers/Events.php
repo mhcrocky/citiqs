@@ -218,6 +218,9 @@ class Events extends BaseControllerWeb
             $data['backgroundImage'] = $file_name;
         }
 
+//		var_dump($data);
+//		die();
+
         $eventId = $this->event_model->save_event($data);
         redirect('events/event/'.$eventId);
 
@@ -276,6 +279,7 @@ class Events extends BaseControllerWeb
             unset($data['backgroundImgChanged']);
             unset($data['backgroundImgName']);
         }
+
 
 
         $this->event_model->update_event($eventId, $data);
