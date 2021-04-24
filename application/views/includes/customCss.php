@@ -286,6 +286,11 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/file-uploader.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/tiny_a4_format.css">
     <link href='https://css.gg/user-list.css' rel='stylesheet'>
+    <style>
+    .btn, .btn-success, .btn-primary, .btn-danger{
+        border-radius: 0px !important;
+    }
+    </style>
 <?php  } elseif ($this->view === 'events/events') { ?>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
