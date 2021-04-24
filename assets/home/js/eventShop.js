@@ -197,17 +197,11 @@ function removeTicket(id, price, ticketFee, totalClass) {
     $("#quantity_" + id).val(quantityValue);
     $("."+totalClass).text(totalBasket.toFixed(2));
     let current_time = $(".current_time").val();
-    
-    let descript = $(".descript_"+id).html();
-    let ticket_available = $("#ticketQuantityValue_" + id).attr('data-available');
+
     let data = {
         id: id,
         quantity: quantityValue,
-        price: price.toFixed(2),
-        ticketFee: ticketFee.toFixed(2),
-        descript:  descript,
-        time: current_time,
-        ticket_available: ticket_available
+        time: current_time
 
     }
 
@@ -282,19 +276,11 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
     $("#quantity_" + id).val(quantityValue);
     $("."+totalClass).text(totalBasket.toFixed(2));
     
-    
-    
     let current_time = $(".current_time").val();
-    let descript = $(".descript_"+id).first().html();
-    let ticket_available = $("#ticketQuantityValue_" + id).attr('data-available');
     let data = {
         id: id,
         quantity: quantityValue,
-        price: price.toFixed(2),
-        ticketFee: ticketfee.toFixed(2),
-        descript:  descript,
         time: current_time,
-        ticket_available: ticket_available
     };
     $.post(globalVariables.baseUrl + "booking_events/add_to_basket", data, function(data){
         data = JSON.parse(data);

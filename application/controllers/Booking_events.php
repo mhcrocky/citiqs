@@ -80,17 +80,12 @@ class Booking_events extends BaseControllerWeb
             return; 
         } 
         $vendor_id = $this->session->userdata('customer');
-        $this->session->unset_userdata("event_date");
+        //$this->session->unset_userdata("event_date");
         $event = $this->event_model->get_event($vendor_id,$eventId);
-        $event_start =  date_create($event->StartDate . " " . $event->StartTime);
-        $event_end = date_create($event->EndDate . " " . $event->EndTime);
-        $event_date = date_format($event_start, "d M Y H:i") . " - ". date_format($event_end, "d M Y H:i");
-        $this->session->set_userdata("event_date",$event_date);
-        $this->session->set_userdata("startDate",$event->StartDate);
-        $this->session->set_userdata("startTime",$event->StartTime);
-        $this->session->set_userdata("endDate",$event->EndDate);
-        $this->session->set_userdata("endTime",$event->EndTime);
-        $this->session->set_userdata("eventImage",$event->eventImage);
+        //$event_start =  date_create($event->StartDate . " " . $event->StartTime);
+        //$event_end = date_create($event->EndDate . " " . $event->EndTime);
+        //$event_date = date_format($event_start, "d M Y H:i") . " - ". date_format($event_end, "d M Y H:i");
+        //$this->session->set_userdata("event_date",$event_date);
         $data = [
             'tickets' => $this->event_model->get_event_tickets($vendor_id,$eventId),
             'eventId' => $eventId,
@@ -99,12 +94,13 @@ class Booking_events extends BaseControllerWeb
         ];
 
         $result = $this->load->view("events/tickets", $data,true);
-			if( isset($result) ) {
-				return $this->output
+		if( isset($result) ) {
+			return $this->output
 				->set_content_type('application/json')
 				->set_status_header(200)
 				->set_output(json_encode($result));
-			}
+		}
+        
         $this->loadViews("events/tickets", $this->global, $data, 'footerShop', 'headerShop');
 
     }
@@ -118,19 +114,22 @@ class Booking_events extends BaseControllerWeb
         }
         $tickets = $this->session->userdata('tickets') ?? [];
         $ticket = $this->input->post(null, true);
+        $ticketId = $ticket['id'];
+        $ticketInfo = $this->event_model->get_ticket_info($ticketId);
+        $eventInfo = $this->event_model->get_event_by_ticket($ticketId);
         $current_time = date($ticket['time']);
         $newTime = date("Y-m-d H:i:s",strtotime("$current_time +10 minutes"));
         $this->session->set_tempdata('exp_time', $newTime, 600);
-        $amount = (floatval($ticket['price']) + floatval($ticket['ticketFee']))*floatval($ticket['quantity']);
-        $ticketId = $ticket['id'];
-        $eventName = $this->event_model->get_eventname_by_ticket($ticketId);
-        $ticketInfo = $this->event_model->get_ticket_info($ticketId);
+        $amount = (floatval($ticketInfo->ticketPrice) + floatval($ticketInfo->ticketFee))*floatval($ticket['quantity']);
+        
+        
+        
         if(is_numeric($ticketInfo->maxBooking) && $ticket['quantity'] > $ticketInfo->maxBooking){
             $response = [
                 'status' => 'error',
                 'message' => 'You have reached the maximum bookings for this ticket!',
                 'quantity' => $ticketInfo->maxBooking,
-                'amount' => (floatval($ticket['price']) + floatval($ticket['ticketFee']))*(floatval($ticket['quantity']) - 1)
+                'amount' => (floatval($ticketInfo->ticketPrice) + floatval($ticketInfo->ticketFee))*(floatval($ticket['quantity']) - 1)
             ];
             echo json_encode($response);
             return ;
@@ -144,7 +143,7 @@ class Booking_events extends BaseControllerWeb
                 'status' => 'error',
                 'message' => 'SOLD OUT!',
                 'quantity' => $ticket_available,
-                'amount' => (floatval($ticket['price']) + floatval($ticket['ticketFee']))*(floatval($ticket['quantity']) - 1)
+                'amount' => (floatval($ticketInfo->ticketPrice) + floatval($ticketInfo->ticketFee))*(floatval($ticket['quantity']) - 1)
             ];
             echo json_encode($response);
             return ;
@@ -152,17 +151,17 @@ class Booking_events extends BaseControllerWeb
         unset($tickets[$ticketId]);
         $tickets[$ticketId] = [
             'id' => $ticketId,
-            'eventName' => $eventName,
-            'descript' => $ticket['descript'],
+            'eventName' => $eventInfo->eventname,
+            'descript' => $ticketInfo->ticketDescription,
             'quantity' => $ticket['quantity'],
-            'price' => $ticket['price'],
+            'price' => $ticketInfo->ticketPrice,
             'ticketType' => $ticketType,
-            'ticketFee' => $ticket['ticketFee'],
+            'ticketFee' => $ticketInfo->ticketFee,
             'amount' => $amount,
-            'startDate' => $this->session->userdata("startDate"),
-            'startTime' => $this->session->userdata("startTime"),
-            'endDate' => $this->session->userdata("endDate"),
-            'endTime' => $this->session->userdata("endTime")
+            'startDate' => $eventInfo->StartDate,
+            'startTime' => $eventInfo->StartTime,
+            'endDate' => $eventInfo->EndDate,
+            'endTime' => $eventInfo->EndTime
         ];
         
         
@@ -181,10 +180,10 @@ class Booking_events extends BaseControllerWeb
         $response = [
             'status' => 'success',
             'descript' => $ticket['descript'],
-            'price' => $ticket['price'], 
-            'ticketFee' => $ticket['ticketFee'],
+            'price' => $ticketInfo->ticketPrice, 
+            'ticketFee' => $ticketInfo->ticketFee,
             'first_ticket' => $first_ticket,
-            'eventName' => $eventName
+            'eventName' => $eventInfo->eventname
         ];
         echo json_encode($response);
     }

@@ -227,18 +227,14 @@ class Event_model extends CI_Model {
 		return $results;
 	}
 
-	public function get_eventname_by_ticket($ticketId)
+	public function get_event_by_ticket($ticketId)
 	{
-		$this->db->select('eventname');
+		$this->db->select('eventname, StartTime, EndTime, StartDate, EndDate');
 		$this->db->from('tbl_event_tickets');
 		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'left');
 		$this->db->where('tbl_event_tickets.id', $ticketId);
 		$query = $this->db->get();
-		if($query->num_rows() > 0 ){
-			$result = $query->first_row();
-			return $result->eventname;
-		}
-		return ;
+		return $query->first_row();
 	}
 
 	public function get_ticket_info($ticketId)
@@ -253,6 +249,7 @@ class Event_model extends CI_Model {
 		$ticket_used = isset($ticket->ticket_used) ? $ticket->ticket_used : 0;
 		$ticket_available = intval($result->ticketQuantity) - intval($ticket_used);
 		$result->ticketAvailable = $ticket_available;
+		$result->ticketFee = $result->nonSharedTicketFee;
 		return $result;
 
 	}
