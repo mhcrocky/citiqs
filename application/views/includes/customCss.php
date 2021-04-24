@@ -338,8 +338,11 @@
         margin-left: 6px !important;
     }
 
-    .gg-pen {
-        top: 40%;
+    .fa-pencil {
+        top: 20%;
+        font-size: 19px;
+        margin-left: 8px !important;
+        position: relative;
     }
 
     .event-icons {
