@@ -543,7 +543,7 @@ class Event_model extends CI_Model {
 	private function get_tickets_used($eventId)
 	{
 		$this->db->trans_start();
-		$query = $this->db->query("SELECT tbl_event_tickets.id, COUNT(tbl_event_tickets.id) AS ticket_used
+		$query = $this->db->query("SELECT tbl_event_tickets.id, SUM(numberofpersons) AS ticket_used
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		WHERE tbl_events.id = ".$eventId." AND paid = 1
