@@ -245,7 +245,6 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 													<li data-menuid="6.5"><a href="<?php echo $this->baseUrl; ?>events/financial_report"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('E-Tickets'); ?></span></a></li>
 												</ul>
 											</li>
-											<li data-menuid="3.2"><a href="<?php echo $this->baseUrl; ?>businessreports"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('Transactions'); ?></span></a></li>
 											<li data-menuid="3.3"><a href="<?php echo $this->baseUrl; ?>invoices"><i class="ti-layout"></i> <span><?php echo $this->language->tLine('Invoices'); ?></span></a></li>
 											<li><a href="<?php echo $this->baseUrl; ?>payment_methods"><i class="ti-credit-card"></i><span><?php echo $this->language->tLine('Payment methods'); ?></span></a></li>
 											<?php if (intval($_SESSION['userId']) === $this->tiqsMainId) { ?>
