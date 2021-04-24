@@ -151,6 +151,7 @@ class Event_model extends CI_Model {
 		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'left');
 		$this->db->join('tbl_ticket_groups', 'tbl_ticket_groups.id = tbl_event_tickets.ticketGroupId', 'left');
 		$this->db->join('tbl_ticket_options', 'tbl_ticket_options.ticketId = tbl_event_tickets.id', 'left');
+		$this->db->where('ticketVisible', 1);
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('tbl_event_tickets.eventId', $eventId);
 		$this->db->group_by('tbl_event_tickets.id');
@@ -542,11 +543,11 @@ class Event_model extends CI_Model {
 	private function get_tickets_used($eventId)
 	{
 		$this->db->trans_start();
-		$query = $this->db->query("SELECT tbl_event_tickets.id, COUNT(tbl_bookandpay.eventid) AS ticket_used
+		$query = $this->db->query("SELECT tbl_event_tickets.id, COUNT(tbl_event_tickets.id) AS ticket_used
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		WHERE tbl_events.id = ".$eventId." AND paid = 1
-		GROUP BY tbl_bookandpay.eventid");
+		GROUP BY tbl_event_tickets.id");
 		$this->db->trans_complete();
 		$results = $query->result_array();
 		$tickets = [];
