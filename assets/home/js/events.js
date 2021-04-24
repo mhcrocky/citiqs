@@ -113,7 +113,7 @@ $(document).on("click", ".browse", function() {
     var file = $(this).parents().find(".file");
     file.trigger("click");
   });
-  $('input[type="file"]').change(function(e) {
+  $('#file').change(function(e) {
     var fileName = e.target.files[0].name;
    
   
@@ -126,9 +126,30 @@ $(document).on("click", ".browse", function() {
     reader.readAsDataURL(this.files[0]);
   });
 
+  $('#background-file').change(function(e) {
+    var fileName = e.target.files[0].name;
+   
+  
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      // get loaded data and render thumbnail.
+      document.getElementById("background-preview").src = e.target.result;
+    };
+    // read the image file as a data URL.
+    reader.readAsDataURL(this.files[0]);
+  });
+
 function imageUpload(el) {
     $('.img-thumbnail').attr('style','');
-    $('.file-custom').hover(function() {
+    $('#imageUpload').hover(function() {
+        $(this).attr('data-content', el.files[0].name);
+    });
+
+}
+
+function imageBackgroundUpload(el) {
+    $('.img-thumbnail').attr('style','');
+    $('#img-background').hover(function() {
         $(this).attr('data-content', el.files[0].name);
     });
 
@@ -136,11 +157,21 @@ function imageUpload(el) {
 
 function editImageUpload(el) {
 
-    $('.file-custom').hover(function() {
+    $('#imageUpload').hover(function() {
         $(this).attr('data-content', el.files[0].name);
     });
 
     $("#imgChanged").val('true');
+
+}
+
+function editBackgroundUpload(el) {
+
+    $('#img-background').hover(function() {
+        $(this).attr('data-content', el.files[0].name);
+    });
+
+    $("#backgroundImgChanged").val('true');
 
 }
 
@@ -154,6 +185,8 @@ function checkTimestamp(){
         $('#event-date2').addClass('invalid-timestamp');
         $('#event-time2').addClass('invalid-timestamp');
         $('#timestamp-error').append('<p class="text-danger" style="color: #df2626">Second timestamp should be greater than first timestamp!</p>');
+    } else {
+        timestampOnFocus();
     }
     return ;
 }

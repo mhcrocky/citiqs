@@ -46,7 +46,7 @@
                                     <label class="file">
                                         <input type="file" name="userfile" id="file" onchange="editImageUpload(this)"
                                             aria-label="File browser example">
-                                        <span class="file-custom" data-content="Choose image ..."></span>
+                                        <span id="imageUpload" class="file-custom" data-content="Choose image ..."></span>
                                     </label>
                                     <div style="padding-left: 0;" class="col-sm-6">
                                         <?php if($event->eventImage == ''): ?>
@@ -61,6 +61,34 @@
                                     <input type="hidden" id="imgChanged" value="false" name="imgChanged">
                                     <input type="hidden" id="imgName" value="<?php echo $event->eventImage; ?>"
                                         name="imgName">
+
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="image" class="col-md-4 col-form-label text-md-left">Upload Background Image</label>
+                                <div class="col-md-8">
+
+
+                                    <label class="file">
+                                        <input type="file" class="border-50" name="backgroundfile" id="background-file"
+                                            onchange="editBackgroundUpload(this)" aria-label="File browser">
+                                        <span class="file-custom" id="img-background" data-content="Choose image ..."></span>
+                                    </label>
+                                    <div style="padding-left: 0;" class="col-sm-6">
+                                        <?php if($event->backgroundImage == ''): ?>
+                                        <img src="<?php echo base_url(); ?>assets/images/img-preview.png" id="background-preview"
+                                            class="img-thumbnail">
+                                        <?php else: ?>
+                                            <img src="<?php echo base_url(); ?>assets/images/events/<?php echo $event->backgroundImage; ?>" id="background-preview"
+                                            class="img-thumbnail">
+                                        <?php endif; ?>
+                                    </div>
+
+                                    <input type="hidden" id="backgroundImgChanged" value="false" name="backgroundImgChanged">
+                                    <input type="hidden" id="backgroundImgName" value="<?php echo $event->backgroundImage; ?>"
+                                        name="backgroundImgName">
 
 
                                 </div>

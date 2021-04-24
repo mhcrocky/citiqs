@@ -196,6 +196,7 @@ class Events extends BaseControllerWeb
         $config['max_size']      = '102400'; // 102400 100mb
         $config['encrypt_name'] = TRUE;
         $data['eventimage'] = '';
+        $data['backgroundImage'] = '';
         $data = $this->input->post(null, true);
         $data['vendorId'] = $this->vendor_id;
         $this->load->library('upload', $config);
@@ -206,8 +207,17 @@ class Events extends BaseControllerWeb
             $upload_data = $this->upload->data();
 			$file_name = $upload_data['file_name'];
             $data['eventimage'] = $file_name;
-            
         }
+
+        if (!$this->upload->do_upload('backgroundfile')) {
+            $errors   = $this->upload->display_errors('', '');
+            //var_dump($errors);
+        } else {
+            $upload_data = $this->upload->data();
+			$file_name = $upload_data['file_name'];
+            $data['backgroundImage'] = $file_name;
+        }
+
         $eventId = $this->event_model->save_event($data);
         redirect('events/event/'.$eventId);
 
@@ -215,15 +225,26 @@ class Events extends BaseControllerWeb
 
     public function update_event($eventId)
     {
+        $data = $this->input->post(null, true);
+        $data['vendorId'] = $this->vendor_id;
+        $data['eventimage'] = '';
+        $data['backgroundImage'] = '';
         $imgChanged = $this->input->post("imgChanged");
+        $backgroundImgChanged = $this->input->post("backgroundImgChanged");
         if($imgChanged == 'false') {
-            $data = $this->input->post(null, true);
-            $data['vendorId'] = $this->vendor_id;
+            $data['eventimage'] = $data['imgName'];
             unset($data['imgChanged']);
             unset($data['imgName']);
-            $this->event_model->update_event($eventId, $data);
-            redirect('events/event/'.$eventId);
+            
         }
+
+        if($backgroundImgChanged == 'false') {
+            $data['backgroundImage'] = $data['backgroundImgName'];
+            unset($data['backgroundImgChanged']);
+            unset($data['backgroundImgName']);
+            
+        }
+        
         $config['upload_path']   = FCPATH . 'assets/images/events';
         $config['allowed_types'] = 'jpg|png|jpeg|webp|bmp';
         $config['max_size']      = '102400'; // 102400 100mb
@@ -232,19 +253,32 @@ class Events extends BaseControllerWeb
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload('userfile')) {
             $errors   = $this->upload->display_errors('', '');
-            var_dump($errors);
-            redirect('events/create');
         } else {
             $upload_data = $this->upload->data();
-            $data = $this->input->post(null, true);
-            $data['vendorId'] = $this->vendor_id;
 			$file_name = $upload_data['file_name'];
             $data['eventimage'] = $file_name;
-            unlink(FCPATH . 'assets/images/events/'.$data['imgName']);
+            if($data['imgName'] != ''){
+                unlink(FCPATH . 'assets/images/events/'.$data['imgName']);
+            }
             unset($data['imgChanged']);
             unset($data['imgName']);
-            $this->event_model->update_event($eventId, $data);
         }
+
+        if (!$this->upload->do_upload('backgroundfile')) {
+            $errors   = $this->upload->display_errors('', '');
+        } else {
+            $upload_data = $this->upload->data();
+			$file_name = $upload_data['file_name'];
+            $data['backgroundImage'] = $file_name;
+            if($data['backgroundImgName'] != ''){
+                unlink(FCPATH . 'assets/images/events/'.$data['backgroundImgName']);
+            }
+            unset($data['backgroundImgChanged']);
+            unset($data['backgroundImgName']);
+        }
+
+
+        $this->event_model->update_event($eventId, $data);
         redirect('events/event/'.$eventId);
 
     }

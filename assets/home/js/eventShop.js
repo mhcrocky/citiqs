@@ -66,11 +66,18 @@ function getTicketsView(eventId, first = false) {
     let isAjax = true;
     $('div.bg-light').removeClass('bg-light').addClass('bg-white');
     $("#event_" + eventId).addClass('bg-light').removeClass('bg-white');
+    let img_src = $('#background_img_' + eventId).val();
     $.post(globalVariables.baseUrl + "events/tickets/" + eventId, {
         isAjax: isAjax
     }, function(data) {
         $("#my-form").remove();
         $("#main-content").after(data);
+        if(img_src == ''){
+            $("#background-image").attr("src", globalVariables.baseUrl + "assets/images/events/default_background.webp");
+        } else {
+            $("#background-image").attr("src", globalVariables.baseUrl + "assets/images/events/" + img_src);
+        }
+        
         $("#tickets").fadeIn("slow", function() {
             if (first) {
                 return;
