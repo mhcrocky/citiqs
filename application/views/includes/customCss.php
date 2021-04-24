@@ -327,6 +327,27 @@
         transform: rotate(45deg);
         display: inline-block;
         font-size: 20px;
+        top: 23%;
+        position: relative;
+        margin-left: 6px !important;
+    }
+
+    .gg-user-list {
+        top: 25%;
+        position: relative;
+        margin-left: 6px !important;
+    }
+
+    .gg-pen {
+        top: 40%;
+    }
+
+    .event-icons {
+        color: #3c4859;
+        border: 1px solid;
+        width: 35px;
+        height: 35px;
+        border-radius: 7px;
     }
 
     </style>
