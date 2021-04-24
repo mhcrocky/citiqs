@@ -2,7 +2,7 @@
 <main
     id="orderCheckoutView"
     class="container checkoutOrderBody"
-    style="text-align:left; margin-bottom:0; width:100vw;"
+    style="text-align:left; margin-bottom:0; width:100vw; min-height: 100%;"
 >
     <form id="goOrder" method="post" class="designBackgroundImage" onsubmit="return submitForm()">
         <input type="text" name="orderRandomKey" value="<?php echo $orderRandomKey; ?>" required readonly hidden />
