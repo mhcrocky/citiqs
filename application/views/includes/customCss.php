@@ -363,6 +363,10 @@
             padding: 43px 10px 100px 100px !important;
         }
     }
+    .modal-content {
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+    }
     </style>
 <?php  } elseif ($this->view === 'events/selectpayment') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/select-pay.css" />
