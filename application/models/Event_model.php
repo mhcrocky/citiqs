@@ -171,11 +171,11 @@ class Event_model extends CI_Model {
 			$ticket_available = intval($result['ticketQuantity']) - intval($ticket_used);
 			$sold_out = false;
 
-			if(isset($result['soldoutVisible']) && $result['soldoutVisible'] == 0 && $ticket_available == 0){
+			if(isset($result['soldoutVisible']) && $result['soldoutVisible'] == 0 && $ticket_available <= 0){
 				continue;
 			}
 
-			if($ticket_available == 0){
+			if($ticket_available <= 0){
 				$sold_out = true;
 			}
 
