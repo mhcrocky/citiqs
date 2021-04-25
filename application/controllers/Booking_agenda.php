@@ -457,11 +457,17 @@ class Booking_agenda extends BaseControllerWeb
         $amount = $this->session->userdata('amount');
 
         $reservationsPayments = $this->bookandpayagendabooking_model->get_payment_methods($this->session->userdata('customer')['id']);
+        $vendorCost = $this->bookandpayagendabooking_model->get_vendor_cost($this->session->userdata('customer')['id']);
         foreach($reservationsPayments as $key => $reservationsPayment){
             $paymentMethod = ucwords($key);
             $paymentMethod = str_replace(' ', '', $paymentMethod);
             $paymentMethod = lcfirst($paymentMethod);
-            $data[$paymentMethod] = floatval($amount/100)*$reservationsPayment['percent'] + $reservationsPayment['amount'];
+            $total_amount = floatval($amount)*floatval($reservationsPayment['percent']) + floatval($reservationsPayment['amount']);
+            if((isset($vendorCost[$key]) && $vendorCost[$key] == 1) || $total_amount  == 0){
+                $data[$paymentMethod] = '&nbsp';
+            } else {
+                $data[$paymentMethod] = '€'. number_format($total_amount, 2, '.', '');
+            }
         }
         
         $data['amount'] = $this->session->userdata('amount');

@@ -550,7 +550,6 @@ $route['events/emaildesigner/ticketing/(:num)'] = 'Events/email_designer_edit/$1
 $route['events/shop'] = 'Booking_events/index';
 $route['events/shop/(:any)'] = 'Booking_events/index/$1';
 $route['events/tickets/(:num)'] = 'Booking_events/tickets/$1';
-$route['events/your_tickets'] = 'Booking_events/your_tickets';
 $route['events/pay'] = 'Booking_events/pay';
 $route['events/payment_proceed'] = 'Booking_events/payment_proceed';
 $route['events/selectpayment'] = 'Booking_events/selectpayment';
@@ -559,7 +558,7 @@ $route['booking_events/successBooking'] = 'Booking_events/successBooking';
 $route['booking_events/ExchangePay'] = 'Booking_events/ExchangePay';
 $route['booking_events/pdf/(:num)/(:any)'] = "Booking_events/download_email_pdf/$1/$2";
 $route['booking/onlinepayment/(:num)'] = 'Booking_events/onlinepayment/$1';
-$route['booking/onlinepayment/(:num)/(:any)'] = 'Booking_events/onlinepayment/$1/$1';
+$route['booking/onlinepayment/(:num)/(:any)'] = 'Booking_events/onlinepayment/$1/$2';
 
 
 
@@ -623,7 +622,8 @@ $route['api/connection/buyer/(:any)']['put'] = 'Api/connection/Buyerapi/buyer/$1
 // orders
 $route['api/connection/order']['post']  = 'Api/connection/Ordersapi/order';
 
-
+//Finanza
+$route['api/finanza/orders/(:any)'] = 'Api/finanza/orders/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

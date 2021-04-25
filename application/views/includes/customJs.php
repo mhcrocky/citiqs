@@ -192,7 +192,7 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/eventsReportDataTable.js"></script>
 	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 	<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
-<script src="https://mpryvkin.github.io/jquery-datatables-row-reordering/1.2.2/jquery.dataTables.rowReordering.js"></script>
+	<script src="https://mpryvkin.github.io/jquery-datatables-row-reordering/1.2.2/jquery.dataTables.rowReordering.js"></script>
 <?php } elseif ($this->view === 'finance/clearing') { ?>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -205,7 +205,20 @@
 	<script type="text/javascript" src="<?php echo $this->baseUrl; ?>assets/js/jquery.table2excel.js"></script>
 	<script type="text/javascript"  src="<?php echo $this->baseUrl; ?>assets/js/query-builder.standalone.js"></script>
 	<script type="text/javascript" src="<?php echo $this->baseUrl; ?>assets/home/js/clearingDataTable.js"></script>
+<?php } elseif ($this->view === 'finance/reports') { ?>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+	<script type="text/javascript" src="<?php echo $this->baseUrl; ?>assets/js/jquery.table2excel.js"></script>
+	<script type="text/javascript"  src="<?php echo $this->baseUrl; ?>assets/js/query-builder.standalone.js"></script>
+	<script type="text/javascript" src="<?php echo $this->baseUrl; ?>assets/home/js/financeDataTable.js"></script>
 <?php } elseif ($this->view === 'profile/api') { ?>
+
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/api.js"></script>
 <?php } elseif ($this->view === 'events/design') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jscolor.js"></script>

@@ -21,7 +21,7 @@
 		
 	}());
 
-	function ExportPdf(params) {
+	function ExportPdf() {
 		kendo.drawing
 		.drawDOM('#HTMLtoPDF', {
 			paperSize: "A4",
@@ -37,5 +37,3 @@
 
 </body>
 </html>
-
-

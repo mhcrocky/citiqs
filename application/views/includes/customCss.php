@@ -286,13 +286,17 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/file-uploader.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/tiny_a4_format.css">
     <link href='https://css.gg/user-list.css' rel='stylesheet'>
+    <style>
+    .btn, .paginate_button, .btn-success, .btn-primary, .btn-danger{
+        border-radius: 0px !important;
+    }
+    </style>
 <?php  } elseif ($this->view === 'events/events') { ?>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/query-builder.default.css" id="qb-theme"/>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/dashboard.css">
-    <link href='https://css.gg/arrow-right-r.css' rel='stylesheet'>
 	<link href='https://css.gg/user-list.css' rel='stylesheet'>
 	<link href='https://css.gg/pen.css' rel='stylesheet'>
     <style>
@@ -310,8 +314,43 @@
         text-align: center !important; 
     }
 
-    .btn-success, .btn-primary, .btn-danger{
+    .btn, .btn-success, .btn-primary, .btn-danger, .paginate_button{
         border-radius: 0px !important;
+    }
+
+    .ticket-icon {
+        filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=0.5);
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+        display: inline-block;
+        font-size: 20px;
+        top: 23%;
+        position: relative;
+        margin-left: 6px !important;
+    }
+
+    .gg-user-list {
+        top: 25%;
+        position: relative;
+        margin-left: 6px !important;
+    }
+
+    .fa-pencil {
+        top: 20%;
+        font-size: 19px;
+        margin-left: 8px !important;
+        position: relative;
+    }
+
+    .event-icons {
+        color: #3c4859;
+        border: 1px solid;
+        width: 35px;
+        height: 35px;
+        border-radius: 7px;
     }
 
     </style>
@@ -327,6 +366,19 @@
             padding: 43px 10px 100px 100px !important;
         }
     }
+
+    @media only screen and (max-width: 500px) {
+        .modal-content {
+            min-height: 100% !important;
+            height: 100% !important
+        }
+
+        .modal-footer {
+            position: fixed !important;
+            bottom: 0 !important;
+        }
+    }
+    
     </style>
 <?php  } elseif ($this->view === 'events/selectpayment') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/select-pay.css" />

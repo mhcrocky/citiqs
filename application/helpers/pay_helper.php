@@ -127,6 +127,7 @@
             $CI->load->config('custom');
             $CI->load->model('event_model');
             $paymentsCost = $CI->event_model->get_payment_methods($vendorId);
+            $vendorCost = $CI->event_model->get_vendor_cost($vendorId);
             $buyerEmail = '';
             $totalAmount = 0;
             
@@ -143,7 +144,7 @@
                 $arrArguments['statsData']['extra' . ($key + 1)] = $reservation->reservationId;
                 $arrArguments['saleData']['orderData'][$key]['productId'] = $reservation->reservationId;
                 $arrArguments['saleData']['orderData'][$key]['description'] = $reservation->Spotlabel;
-                $arrArguments['saleData']['orderData'][$key]['productType'] = 'HANDLIUNG';
+                $arrArguments['saleData']['orderData'][$key]['productType'] = 'HANDLING';
                 $arrArguments['saleData']['orderData'][$key]['price'] = $reservation->price * 100;
                 $arrArguments['saleData']['orderData'][$key]['quantity'] = 1;
                 $arrArguments['saleData']['orderData'][$key]['vatCode'] = 'H';
@@ -154,8 +155,11 @@
             $payment = self::getPaymentMethod($paymentType);
             $amountCost = $paymentsCost[$payment]['amount'];
             $percentCost = $paymentsCost[$payment]['percent'];
-
-            $reservationsAmount = $totalAmount + ($percentCost*$totalAmount/100) + $amountCost;
+            $reservationsAmount = $totalAmount;
+            if(isset($vendorCost[$payment]) && $vendorCost[$payment] == 0){
+                $reservationsAmount = $totalAmount + ($percentCost*$totalAmount/100) + $amountCost;
+            }
+            
             
             $amount = $reservationsAmount * 100;
             $arrArguments = [];
@@ -204,6 +208,7 @@
             $CI->load->config('custom');
             $CI->load->model('bookandpayagendabooking_model');
             $paymentsCost = $CI->bookandpayagendabooking_model->get_payment_methods($vendorId);
+            $vendorCost = $CI->bookandpayagendabooking_model->get_vendor_cost($vendorId);
             $buyerEmail = '';
             $totalAmount = 0;
             
@@ -223,7 +228,10 @@
             $amountCost = $paymentsCost[$payment]['amount'];
             $percentCost = $paymentsCost[$payment]['percent'];
 
-            $reservationsAmount = $totalAmount + ($percentCost*$totalAmount/100) + $amountCost;
+            $reservationsAmount = $totalAmount;
+            if(isset($vendorCost[$payment]) && $vendorCost[$payment] == 0){
+                $reservationsAmount = $totalAmount + ($percentCost*$totalAmount/100) + $amountCost;
+            }
             
             $amount = $reservationsAmount * 100;
             $arrArguments = [];

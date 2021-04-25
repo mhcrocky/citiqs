@@ -66,11 +66,18 @@ function getTicketsView(eventId, first = false) {
     let isAjax = true;
     $('div.bg-light').removeClass('bg-light').addClass('bg-white');
     $("#event_" + eventId).addClass('bg-light').removeClass('bg-white');
+    let img_src = $('#background_img_' + eventId).val();
     $.post(globalVariables.baseUrl + "events/tickets/" + eventId, {
         isAjax: isAjax
     }, function(data) {
         $("#my-form").remove();
         $("#main-content").after(data);
+        if(img_src == ''){
+            $("#background-image").attr("src", globalVariables.baseUrl + "assets/images/events/default_background.webp");
+        } else {
+            $("#background-image").attr("src", globalVariables.baseUrl + "assets/images/events/" + img_src);
+        }
+        
         $("#tickets").fadeIn("slow", function() {
             if (first) {
                 return;
@@ -163,7 +170,7 @@ function clearTotal(el, price, totalClass){
 	var totalBasket = $("."+totalClass).html();
     
 	totalBasket = parseInt(totalBasket);
-	quantity = parseInt(quantity);
+	quantity = Math.abs(parseInt(quantity));
 	price = parseInt(price);
 	totalBasket = Math.round((totalBasket - quantity*price) * 1e12) / 1e12;
 	return $("."+totalClass).text(totalBasket.toFixed(2));
@@ -178,7 +185,7 @@ function removeTicket(id, price, ticketFee, totalClass) {
         return;
     }
     var totalBasket = $("."+totalClass).html();
-    quantityValue = parseInt(quantityValue);
+    quantityValue = Math.abs(parseInt(quantityValue));
     totalBasket = parseFloatNum(totalBasket);
     price = parseFloatNum(price);
     ticketFee = parseFloatNum(ticketFee);
@@ -186,21 +193,15 @@ function removeTicket(id, price, ticketFee, totalClass) {
     
     quantityValue--;
     totalBasket = Math.round((totalBasket - price - ticketFee) * 1e12) / 1e12;
-    $(".ticketQuantityValue_" + id).val(quantityValue);
-    $("#quantity_" + id).val(quantityValue);
+    $(".ticketQuantityValue_" + id).val(Math.abs(quantityValue));
+    $("#quantity_" + id).val(Math.abs(quantityValue));
     $("."+totalClass).text(totalBasket.toFixed(2));
     let current_time = $(".current_time").val();
-    
-    let descript = $(".descript_"+id).html();
-    let ticket_available = $("#ticketQuantityValue_" + id).attr('data-available');
+
     let data = {
         id: id,
         quantity: quantityValue,
-        price: price.toFixed(2),
-        ticketFee: ticketFee.toFixed(2),
-        descript:  descript,
-        time: current_time,
-        ticket_available: ticket_available
+        time: current_time
 
     }
 
@@ -251,7 +252,7 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
     $('#payForm').show();
     var quantityValue = $(".ticketQuantityValue_" + id).val();
     var totalBasket = $("."+totalClass).html();
-    quantityValue = parseInt(quantityValue);
+    quantityValue = Math.abs(parseInt(quantityValue));
     totalBasket = Math.round((parseFloatNum(totalBasket)* 1e12)) / 1e12;
     price = parseFloatNum(price);
     ticketfee = parseFloatNum(ticketfee);
@@ -271,23 +272,15 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
    
     totalBasket = Math.round((totalBasket + price + ticketfee) * 1e12) / 1e12;
     
-    $(".ticketQuantityValue_" + id).val(quantityValue);
-    $("#quantity_" + id).val(quantityValue);
+    $(".ticketQuantityValue_" + id).val(Math.abs(quantityValue));
+    $("#quantity_" + id).val(Math.abs(quantityValue));
     $("."+totalClass).text(totalBasket.toFixed(2));
     
-    
-    
     let current_time = $(".current_time").val();
-    let descript = $(".descript_"+id).first().html();
-    let ticket_available = $("#ticketQuantityValue_" + id).attr('data-available');
     let data = {
         id: id,
         quantity: quantityValue,
-        price: price.toFixed(2),
-        ticketFee: ticketfee.toFixed(2),
-        descript:  descript,
         time: current_time,
-        ticket_available: ticket_available
     };
     $.post(globalVariables.baseUrl + "booking_events/add_to_basket", data, function(data){
         data = JSON.parse(data);

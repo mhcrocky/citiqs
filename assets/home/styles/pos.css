@@ -354,6 +354,11 @@ header, footer {
 
 .pos-black .pos-sidebar h3{
 	color: white;
+	background-color: #2d2d2d;
+}
+
+.pos-black .form-control{
+	border-radius: 0 !important; 
 }
 
 .pos-checkout-row{
@@ -481,18 +486,60 @@ header, footer {
 
 .pos-checkout input[type=checkbox]{
 	margin-top: 1px !important;
+	appearance: none;
+	width: 40px;
+    height: 40px;
+	min-width: 40px;
+    min-height: 40px;
+    position: relative;
+	outline: none !important;
+	border: none !important;
+	box-shadow: none !important;
+	margin-right: 10px;
+}
+
+.pos-checkout input[type=checkbox]::after{
+    content: "";
+    position: absolute;
+    color: white;
+    background-color: white;
+    border-radius: 0;
+    box-shadow: inset 0 0 0 2px coral;
+    font-size: 0rem;
+    font-weight: bolder;
+	line-height: 40px;
+    text-align: center;
+    transition: background-color 150ms 0ms ease, color 150ms 250ms ease, font-size 150ms 250ms ease;
+    display: block;
+    width: 40px;
+    height: 40px;
+    bottom: 0;
+    left: 0;
+}
+
+.pos-checkout input[type=checkbox]:checked::after{
+	content: "\02714";
+    color: white;
+    background-color: coral;
+    font-size: 3.1rem;
 }
 
 .pos-checkout .modal__additional__checkbox label{
 	padding-bottom: 5px;
-    margin-top: 9px;
+    margin-top: 11px;
 }
 
 .pos-checkout .alert-dismissable .close, 
 .pos-checkout .alert-dismissible .close{
 	right: 0px;
-    color: black !important;
+    color: white !important;
+	font-size: 30px;
+	font-weight: 300 !important;
     opacity: 1;
+	background-color: #d9534f;
+    top: 0;
+    padding: 5px 25px;
+    right: 0px;
 }
 
 .pos-checkout .modal__content{
@@ -706,7 +753,7 @@ fieldset[disabled] .form-control{
 }
 
 .pos-checkout .productName{
-	padding: 5px 10px;
+	padding: 10px 10px;
 	background-color: #d5d5d5;
 }
 
@@ -733,6 +780,10 @@ fieldset[disabled] .form-control{
 
 .pos-checkout .modal-footer__quantity{
 	margin-right: 0 !important;
+	width: 40% !important;
+	max-width: 40% !important;
+	flex: 0 0 40%;
+	justify-content: flex-end;
 }
 
 .labelsMain{
@@ -741,15 +792,18 @@ fieldset[disabled] .form-control{
 
 .pos-checkout .modal__additional__checkbox{
 	padding-left: 0 !important;
+	width: 60% !important;
+	max-width: 60% !important;
+	flex: 0 0 60% !important;
 }
 
 .pos-checkout .modal-footer__buttons{
 	border-radius: 0 !important;
-	width: 30px;
-    height: 30px;
-    min-width: 30px;
-    min-height: 30px;
-    min-height: 30px;
+	width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    min-height: 40px;
 	display: flex;
 	align-items: center;
     justify-content: center;
@@ -843,15 +897,25 @@ fieldset[disabled] .form-control{
 
 .pos-black .modal__additional__checkbox label{
 	color: white !important;
+	display: flex;
+    align-items: center;
 }
 
 .pos-black .splide__slide p{
 	color: white !important;
 }
 
-.pos-checkout .form-control{
+.pos-checkout{
 	border-radius: 0 !important;
+	height: 40px !Important
 }
+
+.pos-checkout .form-control[disabled], 
+.pos-checkout .form-control[readonly], 
+.pos-checkout fieldset[disabled] .form-control{
+	height: 40px !important;
+}
+
 
 
 :root{

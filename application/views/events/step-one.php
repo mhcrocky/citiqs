@@ -38,14 +38,14 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="image" class="col-md-4 col-form-label text-md-left">Upload Image</label>
+                                <label for="image" class="col-md-4 col-form-label text-md-left">Upload Event Image</label>
                                 <div class="col-md-8">
 
 
                                     <label class="file">
                                         <input type="file" class="border-50" name="userfile" id="file"
                                             onchange="imageUpload(this)" aria-label="File browser">
-                                        <span class="file-custom" data-content="Choose image ..."></span>
+                                        <span id="imageUpload" class="file-custom" data-content="Choose image ..."></span>
                                     </label>
                                     <div style="padding-left: 0;" class="col-sm-6">
                                         <img src="<?php echo base_url(); ?>assets/images/img-preview.png" id="preview"
@@ -55,6 +55,26 @@
 
                                 </div>
                             </div>
+
+                            <div class="form-group row">
+                                <label for="image" class="col-md-4 col-form-label text-md-left">Upload Background Image</label>
+                                <div class="col-md-8">
+
+
+                                    <label class="file">
+                                        <input type="file" class="border-50" name="backgroundfile" id="background-file"
+                                            onchange="imageBackgroundUpload(this)" aria-label="File browser">
+                                        <span class="file-custom" id="img-background" data-content="Choose image ..."></span>
+                                    </label>
+                                    <div style="padding-left: 0;" class="col-sm-6">
+                                        <img src="<?php echo base_url(); ?>assets/images/img-preview.png" id="background-preview"
+                                            class="img-thumbnail">
+                                    </div>
+
+
+                                </div>
+                            </div>
+
 
                             <hr class="w-100 mt-5 mb-5">
 
@@ -254,4 +274,4 @@
             </div>
         </div>
     </div>
-</div>
+</main>

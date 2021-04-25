@@ -71,11 +71,13 @@ class Event_model extends CI_Model {
 		date_default_timezone_set('Europe/Berlin');
         $date = date('Y-m-d H:m:s');
 		//$time = date('H:m:s');
+		$this->db->trans_start();
 		$this->db->select('*');
 		$this->db->from('tbl_events');
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('concat_ws(" ", StartDate, StartTime)  >=', $date);
 		$query = $this->db->get();
+		$this->db->trans_complete();
 		return $query->result_array();
 	} 
 
@@ -84,12 +86,14 @@ class Event_model extends CI_Model {
 		date_default_timezone_set('Europe/Berlin');
         $date = date('Y-m-d H:m:s');
 		//$time = date('H:m:s');
+		$this->db->trans_start();
 		$this->db->select('*');
 		$this->db->from('tbl_events');
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('id', $eventId);
 		$this->db->where('concat_ws(" ", StartDate, StartTime)  >=', $date);
 		$query = $this->db->get();
+		$this->db->trans_complete();
 		return $query->result_array();
 	} 
 
@@ -141,15 +145,18 @@ class Event_model extends CI_Model {
 
 	public function get_event_tickets($vendor_id,$eventId)
 	{
+		$this->db->trans_start();
 		$this->db->select('*,tbl_event_tickets.id as ticketId, tbl_ticket_groups.id as groupId');
 		$this->db->from('tbl_event_tickets');
 		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'left');
 		$this->db->join('tbl_ticket_groups', 'tbl_ticket_groups.id = tbl_event_tickets.ticketGroupId', 'left');
 		$this->db->join('tbl_ticket_options', 'tbl_ticket_options.ticketId = tbl_event_tickets.id', 'left');
+		$this->db->where('ticketVisible', 1);
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('tbl_event_tickets.eventId', $eventId);
 		$this->db->group_by('tbl_event_tickets.id');
 		$query = $this->db->get();
+		$this->db->trans_complete();
 		$results = $query->result_array();
 		if(count($results) == 0){
 			return $results;
@@ -164,11 +171,11 @@ class Event_model extends CI_Model {
 			$ticket_available = intval($result['ticketQuantity']) - intval($ticket_used);
 			$sold_out = false;
 
-			if(isset($result['soldoutVisible']) && $result['soldoutVisible'] == 0 && $ticket_available == 0){
+			if(isset($result['soldoutVisible']) && $result['soldoutVisible'] == 0 && $ticket_available <= 0){
 				continue;
 			}
 
-			if($ticket_available == 0){
+			if($ticket_available <= 0){
 				$sold_out = true;
 			}
 
@@ -184,6 +191,7 @@ class Event_model extends CI_Model {
 
 	public function get_ticket_by_id($vendor_id,$ticketId)
 	{
+		$this->db->trans_start();
 		$this->db->select('ticketDescription, StartDate, StartTime, EndTime, ticketType');
 		$this->db->from('tbl_event_tickets');
 		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'left');
@@ -191,6 +199,7 @@ class Event_model extends CI_Model {
 		$this->db->where('tbl_event_tickets.id', $ticketId);
 		$this->db->group_by('tbl_event_tickets.id');
 		$query = $this->db->get();
+		$this->db->trans_complete();
 		return $query->first_row();
 	}
 
@@ -219,18 +228,14 @@ class Event_model extends CI_Model {
 		return $results;
 	}
 
-	public function get_eventname_by_ticket($ticketId)
+	public function get_event_by_ticket($ticketId)
 	{
-		$this->db->select('eventname');
+		$this->db->select('eventname, StartTime, EndTime, StartDate, EndDate');
 		$this->db->from('tbl_event_tickets');
 		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'left');
 		$this->db->where('tbl_event_tickets.id', $ticketId);
 		$query = $this->db->get();
-		if($query->num_rows() > 0 ){
-			$result = $query->first_row();
-			return $result->eventname;
-		}
-		return ;
+		return $query->first_row();
 	}
 
 	public function get_ticket_info($ticketId)
@@ -245,6 +250,7 @@ class Event_model extends CI_Model {
 		$ticket_used = isset($ticket->ticket_used) ? $ticket->ticket_used : 0;
 		$ticket_available = intval($result->ticketQuantity) - intval($ticket_used);
 		$result->ticketAvailable = $ticket_available;
+		$result->ticketFee = $result->nonSharedTicketFee;
 		return $result;
 
 	}
@@ -411,8 +417,10 @@ class Event_model extends CI_Model {
 				*/
 			];
 		}
+		$this->db->trans_start();
 		$this->db->insert_batch('tbl_bookandpay',$data);
-		 return $reservationIds;
+		$this->db->trans_complete();
+		return $reservationIds;
 	}
 
 	function save_guest_reservations($data){
@@ -500,12 +508,14 @@ class Event_model extends CI_Model {
 
 	public function get_all_event_tickets($vendor_id,$eventId)
 	{
+		$this->db->trans_start();
 		$this->db->select('tbl_event_tickets.id as ticketId, ticketDescription');
 		$this->db->from('tbl_event_tickets');
 		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'left');
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('tbl_event_tickets.eventId', $eventId);
 		$query = $this->db->get();
+		$this->db->trans_complete();
 		return $query->result_array();
 	}
 
@@ -532,11 +542,13 @@ class Event_model extends CI_Model {
 
 	private function get_tickets_used($eventId)
 	{
-		$query = $this->db->query("SELECT tbl_event_tickets.id, COUNT(tbl_bookandpay.eventid) AS ticket_used
+		$this->db->trans_start();
+		$query = $this->db->query("SELECT tbl_event_tickets.id, SUM(numberofpersons) AS ticket_used
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		WHERE tbl_events.id = ".$eventId." AND paid = 1
-		GROUP BY tbl_bookandpay.eventid");
+		GROUP BY tbl_event_tickets.id");
+		$this->db->trans_complete();
 		$results = $query->result_array();
 		$tickets = [];
 		foreach($results as $result){
@@ -548,24 +560,31 @@ class Event_model extends CI_Model {
 
 	private function get_ticket_used($eventId)
 	{
+		$this->db->trans_start();
 		$query = $this->db->query("SELECT tbl_event_tickets.id, COUNT(tbl_bookandpay.eventid) AS ticket_used
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		WHERE tbl_event_tickets.id = ".$eventId." AND paid = 1
 		GROUP BY tbl_bookandpay.eventid");
+		$this->db->trans_complete();
 		return $query->first_row();
 	}
 
 	public function get_vendor_cost($vendorId)
 	{
-		$this->db->select('vendorCost');
+		$this->db->trans_start();
+		$this->db->select('paymentMethod, vendorCost');
 		$this->db->from('tbl_shop_payment_methods');
 		$this->db->where('vendorId', $vendorId);
+		$this->db->where('productGroup', 'E-Ticketing');
 		$query = $this->db->get();
-		if($query->num_rows() > 0 ){
-			$result = $query->first_row();
-			return $result->vendorCost;
+		$this->db->trans_complete();
+		$results = $query->result_array();
+		$vendorCosts = [];
+		foreach($results as $result){
+			$paymentMethod = $result['paymentMethod'];
+			$vendorCosts[$paymentMethod] = $result['vendorCost'];
 		}
-		return 0;
+		return $vendorCosts;
 	}
 
 

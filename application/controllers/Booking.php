@@ -39,7 +39,7 @@ class Booking extends BaseControllerWeb
 		$result = $this->bookandpay_model->getReservationId($_SESSION['ReservationId']);
 		if (empty($result)) {
 			var_dump();
-			redirect('thuishaven');
+			redirect('');
 		}
 		// time set in db
 		$result = $this->bookandpay_model->editbookandpay($data, $_SESSION['ReservationId']);
@@ -865,6 +865,8 @@ class Booking extends BaseControllerWeb
 								$datachange['mailsend'] = 1;
 //								$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate);
 								if($this->sendEmail($email, $subject, $mailtemplate)) {
+									$file = FCPATH . 'application/tiqs_logs/messages.txt';
+									Utility_helper::logMessage($file, $mailtemplate);
                                     $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
                                     
                                 }
