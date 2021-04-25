@@ -130,6 +130,7 @@
             $vendorCost = $CI->event_model->get_vendor_cost($vendorId);
             $buyerEmail = '';
             $totalAmount = 0;
+            $arrArguments = [];
             
             foreach ($reservations as $key => $reservation) {
                 
@@ -162,7 +163,6 @@
             
             
             $amount = $reservationsAmount * 100;
-            $arrArguments = [];
 
             $arrArguments['serviceId'] = $serviceId;
             $arrArguments['amount'] = strval($amount);
@@ -211,6 +211,7 @@
             $vendorCost = $CI->bookandpayagendabooking_model->get_vendor_cost($vendorId);
             $buyerEmail = '';
             $totalAmount = 0;
+            $arrArguments = [];
             
             foreach ($reservations as $key => $reservation) {
                 
@@ -234,7 +235,6 @@
             }
             
             $amount = $reservationsAmount * 100;
-            $arrArguments = [];
 
             $arrArguments['serviceId'] = $serviceId;
             $arrArguments['amount'] = strval($amount);
