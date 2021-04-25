@@ -399,7 +399,7 @@ class Event_model extends CI_Model {
 				'timefrom' => $ticket['startTime'],
 				'timeto' => $ticket['endTime'],
 				'price' => $ticket['price'],
-				'ticketFee' => $ticket['ticketFee'],
+				'ticketFee' => ($ticket['ticketFee'] != null) ? $ticket['ticketFee'] : 0,
 				'numberofpersons' => $ticket['quantity'],
 				'name' => $userInfo['name'],
 				'email' => $userInfo['email'],
@@ -408,7 +408,7 @@ class Event_model extends CI_Model {
 				'mobilephone' => $userInfo['mobileNumber'],
 				'Address' => $userInfo['address'],
 				'ticketDescription' => $ticket['descript'],
-				'ticketType' => $ticket['ticketType']
+				'ticketType' => ($ticket['ticketType'] != null) ? $ticket['ticketType'] : 0
 
 				//SQL
 				/*
@@ -417,9 +417,7 @@ class Event_model extends CI_Model {
 				*/
 			];
 		}
-		$this->db->trans_start();
 		$this->db->insert_batch('tbl_bookandpay',$data);
-		$this->db->trans_complete();
 		return $reservationIds;
 	}
 

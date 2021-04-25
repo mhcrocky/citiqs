@@ -325,7 +325,7 @@ class Booking_events extends BaseControllerWeb
         $SlCode = $this->bookandpay_model->getUserSlCode($vendorId);
         $reservationIds = $this->session->userdata('reservationIds');
         $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
-        
+
         $arrArguments = Pay_helper::getTicketingArgumentsArray($vendorId, $reservations, strval($SlCode), $paymentType, $paymentOptionSubId);
         $namespace = $this->config->item('transactionNamespace');
         $function = $this->config->item('orderPayNlFunction');
@@ -344,8 +344,8 @@ class Booking_events extends BaseControllerWeb
         }
 
         $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
-
         $this->processPaymenttype($strUrl);
+       
 
     }
 

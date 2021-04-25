@@ -21,8 +21,8 @@
             self::setTokens($payData, $namespace, $function);
 
             $strUrl  = 'http://' . $payData['tokenid'] . ':' . $payData['token'] . '@';
-            $strUrl .= $payData['gateway'] . DIRECTORY_SEPARATOR . $payData['version'] . DIRECTORY_SEPARATOR;
-            $strUrl .= $payData['namespace'] . DIRECTORY_SEPARATOR . $payData['function'] . DIRECTORY_SEPARATOR;
+            $strUrl .= $payData['gateway'] . "/" . $payData['version'] . "/";
+            $strUrl .= $payData['namespace'] . "/" . $payData['function'] . "/";
             $strUrl .= $payData['format'];
 
             if ($argumentsArray) {
@@ -150,7 +150,6 @@
             if(isset($vendorCost[$payment]) && $vendorCost[$payment] == 0){
                 $reservationsAmount = $totalAmount + ($percentCost*$totalAmount/100) + $amountCost;
             }
-            
             
             $amount = $reservationsAmount * 100;
 
