@@ -123,7 +123,7 @@
 
 
     <div class="modal fade" id="add_agenda_modal">
-        <div class="modal-dialog">
+        <div class="modal-dialog" >
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -135,7 +135,7 @@
                             <label for="ReservationDescription"><?php echo $this->language->tLine('Reservation Name'); ?></label>
                             <input type="text" name="reservationDescription"
                                    v-model="agendaModalData.ReservationDescription" class="form-control"
-                                   id="ReservationDescription" placeholder="<?php echo $this->language->tLine('Reservation Name'); ?>">
+							id="ReservationDescription" >
                         </div>
                         <div class="form-group">
                             <label for="ReservationDate"><?php echo $this->language->tLine('Reservation Date'); ?></label>
@@ -143,7 +143,7 @@
                                     :format="format"
                                     :disabled-dates="disabledDates"
                                     v-model="agendaModalData.ReservationDateTime"
-                                    placeholder="<?php echo $this->language->tLine('Reservation Date'); ?>"
+                                    placeholder=""
                                     input-class="form-control">
                             </datepicker>
                         </div>
@@ -177,7 +177,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="max_spots"><?php echo $this->language->tLine('Max Spots'); ?></label>
+                            <label for="max_spots"><?php echo $this->language->tLine('Maximaal aantal locaties'); ?></label>
                             <input type="text" name="max_spots"
                                    v-model="agendaModalData.max_spots" class="form-control"
                                    id="max_spots">
