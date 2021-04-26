@@ -117,9 +117,14 @@
                 </ul>
             </div>
             <a href="#" class="btn btn-primary btn-lg bg-primary px-3 px-md-4 text-center header__checkout"
-                data-toggle="modal" data-target="#checkout-modal"><i class="fa fa-shopping-basket mr-md-3"></i><span
-                    class='d-none d-lg-inline'>CHECKOUT</span> &nbsp €<b
-                    class="totalBasket"><?php echo $this->session->userdata('total'); ?></b></a>
+                data-toggle="modal" data-target="#checkout-modal">
+                <i class="fa fa-shopping-basket mr-md-3"></i>
+                <span class='d-none d-lg-inline'>CHECKOUT</span> &nbsp €<b
+                    class="totalBasket"><?php echo $this->session->userdata('total'); ?></b>
+            </a>
+            <input type="hidden" id="totalBasketAmount" value="<?php echo ($this->session->userdata('total')) ? $this->session->userdata('total') : 0; ?>">
+
+
 
         </nav>
     </header>

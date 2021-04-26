@@ -167,12 +167,13 @@ function deleteTicket(id, price, ticketFee) {
 
 function clearTotal(el, price, totalClass){
 	var quantity = $(el).val();
-	var totalBasket = $("."+totalClass).html();
+	var totalBasket = $("#totalBasketAmount").val();
     
 	totalBasket = parseInt(totalBasket);
 	quantity = Math.abs(parseInt(quantity));
 	price = parseInt(price);
 	totalBasket = Math.round((totalBasket - quantity*price) * 1e12) / 1e12;
+    $("#totalBasketAmount").val(totalBasket.toFixed(2));
 	return $("."+totalClass).text(totalBasket.toFixed(2));
 }
 
@@ -184,7 +185,7 @@ function removeTicket(id, price, ticketFee, totalClass) {
         deleteTicket(id, price, ticketFee);
         return;
     }
-    var totalBasket = $("."+totalClass).html();
+    var totalBasket = $("#totalBasketAmount").val();
     quantityValue = Math.abs(parseInt(quantityValue));
     totalBasket = parseFloatNum(totalBasket);
     price = parseFloatNum(price);
@@ -195,6 +196,7 @@ function removeTicket(id, price, ticketFee, totalClass) {
     totalBasket = Math.round((totalBasket - price - ticketFee) * 1e12) / 1e12;
     $(".ticketQuantityValue_" + id).val(Math.abs(quantityValue));
     $("#quantity_" + id).val(Math.abs(quantityValue));
+    $("#totalBasketAmount").val(totalBasket.toFixed(2));
     $("."+totalClass).text(totalBasket.toFixed(2));
     let current_time = $(".current_time").val();
 
@@ -251,7 +253,7 @@ function removeTicket(id, price, ticketFee, totalClass) {
 function addTicket(id, limit, price, ticketfee, totalClass) {
     $('#payForm').show();
     var quantityValue = $(".ticketQuantityValue_" + id).val();
-    var totalBasket = $("."+totalClass).html();
+    var totalBasket = $("#totalBasketAmount").val();
     quantityValue = Math.abs(parseInt(quantityValue));
     totalBasket = Math.round((parseFloatNum(totalBasket)* 1e12)) / 1e12;
     price = parseFloatNum(price);
@@ -274,6 +276,7 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
     
     $(".ticketQuantityValue_" + id).val(Math.abs(quantityValue));
     $("#quantity_" + id).val(Math.abs(quantityValue));
+    $("#totalBasketAmount").val(totalBasket.toFixed(2));
     $("."+totalClass).text(totalBasket.toFixed(2));
     
     let current_time = $(".current_time").val();
@@ -347,7 +350,7 @@ function ticketQuantity(el, id, price, ticketfee, totalClass) {
     if(quantityValue == 0 || quantityValue == '0'){
         $(el).val(1);
     }
-    var totalBasket = $("."+totalClass).html();
+    var totalBasket = $("#totalBasketAmount").val();
     quantityValue = parseInt(quantityValue);
     totalBasket = parseFloatNum(totalBasket);
     price = parseFloatNum(price);
@@ -355,6 +358,7 @@ function ticketQuantity(el, id, price, ticketfee, totalClass) {
     totalBasket = Math.round((totalBasket + quantityValue*(price + ticketFee)) * 1e12) / 1e12;
     $(el).val(quantityValue);
     $("#quantity_" + id).val(quantityValue);
+    $("#totalBasketAmount").val(totalBasket.toFixed(2));
     return $("."+totalClass).text(totalBasket.toFixed(2));
 }
 
