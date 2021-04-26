@@ -135,7 +135,7 @@ function absVal(el) {
 
 function deleteTicket(id, price, ticketFee) {
     let quantityValue = $(".ticketQuantityValue_" + id).val();
-    let totalBasket = $(".totalBasket").text();
+    var totalBasket = $("#totalBasketAmount").val();
     quantityValue = parseInt(quantityValue);
     totalBasket = parseFloatNum(totalBasket);
     price = parseFloatNum(price);
@@ -156,6 +156,7 @@ function deleteTicket(id, price, ticketFee) {
             $( ".ticket_"+id ).remove();
             $(".totalBasket").text(totalBasket.toFixed(2));
             $('#totalBasket').text(totalBasket.toFixed(2));
+            $("#totalBasketAmount").val(totalBasket.toFixed(2));
             if($('.ticket_item').length < 1) {
                 $('#payForm').hide();
                 $('.timer').empty();
@@ -181,8 +182,8 @@ function removeTicket(id, price, ticketFee, totalClass) {
     var quantityValue = $(".ticketQuantityValue_" + id).val();
     if(quantityValue < 1){ return; }
     if(quantityValue < 2){
-        $(".ticketQuantityValue_" + id).val(0);
         deleteTicket(id, price, ticketFee);
+        $(".ticketQuantityValue_" + id).val(0);
         return;
     }
     var totalBasket = $("#totalBasketAmount").val();
