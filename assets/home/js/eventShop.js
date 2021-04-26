@@ -46,6 +46,12 @@ $(document).ready(function(){
         removeTicket(id, price, ticketFee, 'totalBasket');
       });
 
+      $(document).on('keyup', '.input100-error', function() {
+        $(this).closest("div").removeClass('input100-error');
+      });
+
+      
+
 });
 
 $("#next").on('click', function(e) {
@@ -58,8 +64,37 @@ $("#next").on('click', function(e) {
 });
 
 function payFormSubmit() {
+    validatePayForm();
+    let email = $("#email").val();
+    let repeatEmail = $("#repeatEmail").val();
+    if(validateEmail(email) && validateEmail(repeatEmail) && (email != repeatEmail)){
+        $("#email").addClass('input100-error');
+        $("#repeatEmail").addClass('input100-error');
+        return ;
+    }
     $('#pay').click();
     return ;
+}
+
+function validatePayForm() {
+    $('input:required').each(function(index){
+
+        if($(this).val() == ''){
+            $(this).closest("div").addClass('input100-error');
+        } else {
+            $(this).closest("div").removeClass('input100-error');
+            if($(this).attr('name') == 'email'){
+                let email = $(this).val();
+                validateEmail(email) ? '' : $(this).closest("div").addClass('input100-error');
+            }
+        }
+        
+    })
+}
+
+function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
 }
 
 function getTicketsView(eventId, first = false) {
