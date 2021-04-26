@@ -251,7 +251,7 @@ class Booking_events extends BaseControllerWeb
         $this->session->set_userdata('eventShop', 'true');
         $this->session->set_userdata('buyerEmail', $buyerInfo['email']);
         $customer = $this->session->userdata('customer');
-        if(!$this->session->userdata('reservationIds')){
+        if (!$this->session->userdata('reservationIds')) {
             $reservationIds = $this->event_model->save_event_reservations($buyerInfo, $tickets, $customer);
             $this->session->set_userdata('reservationIds', $reservationIds);
         }
@@ -363,12 +363,14 @@ class Booking_events extends BaseControllerWeb
 	{
 		# Get API result
 		$strResult = @file_get_contents($strUrl);
-		$result = json_decode($strResult);
+        $result = json_decode($strResult);
         
+
 		if ($result->request->result == '1') {
             $transactionId = $result->transaction->transactionId;
-            $reservationIds = $this->session->userdata('reservations');
+            $reservationIds = $this->session->userdata('reservationIds');
             $this->bookandpay_model->updateTransactionIdByReservationIds($reservationIds, $transactionId);
+
 			redirect($result->transaction->paymentURL);
 		} else {
 			$this->session->set_flashdata('error', 'Payment engine error. Please, contact staff');
@@ -581,7 +583,7 @@ class Booking_events extends BaseControllerWeb
                 }
             }
             endforeach;
-        }
+    }
 
 
     public function download_email_pdf($emailId, $reservationId)
@@ -711,33 +713,61 @@ class Booking_events extends BaseControllerWeb
                     }
                 }
             }
-            endforeach;
-        }
+        endforeach;
+    }
     
-        public function successBooking()
-        {
-            $statuscode = intval($this->input->get('orderStatusId'));
-            if ($statuscode == 100) {
-                $data = array();
-                $this->global['pageTitle'] = 'TIQS : THANKS';
-                $this->session->sess_destroy();
-                $this->loadViews("bookingsuccess", $this->global, $data, 'nofooter', "noheader");
-            } elseif ($statuscode <0) {
-                $data = array();
-                $this->global['pageTitle'] = 'TIQS : THANKS';
-                $this->session->sess_destroy();
-                $this->loadViews("thuishavenerror", $this->global, $data, 'nofooter', "noheader");
-            } elseif ($statuscode >= 0) {
-                $data = array();
-			    $this->global['pageTitle'] = 'TIQS : THANKS';
-			    $this->session->sess_destroy();
-			    $this->loadViews("thuishavenerror", $this->global, $data, 'nofooter', "noheader");
-            } else {
-			    $data = array();
-			    $this->global['pageTitle'] = 'TIQS : THANKS';
-			    $this->session->sess_destroy();
-			    $this->loadViews("thuishavenerror", $this->global, $data, 'nofooter', "noheader");
-            }
+    public function successBooking()
+    {
+        // $get = Utility_helper::sanitizeGet();
+        // var_dump($get);
+
+
+        // die();
+
+
+        // if ($get['orderStatusId'] === $this->config->item('payNlSuccess')) {
+        //     // need to do something with the facebook pixel.
+        //     $redirect = base_url() . 'ticketing_success?';
+        // } elseif ($get['orderStatusId'] === $this->config->item('payNlPending')) {
+        //     $redirect = base_url() . 'ticketing_pending?';
+        // } elseif ($get['orderStatusId'] === $this->config->item('payNlAuthorised')) {
+        //     $redirect = base_url() . 'ticketing_authorised?';
+        // } elseif ($get['orderStatusId'] === $this->config->item('payNlVerify')) {
+        //     $redirect = base_url() . 'ticketing_verify?';
+        // } elseif ($get['orderStatusId'] === $this->config->item('payNlCancel')) {
+        //     $redirect = base_url() . 'ticketing_cancel?';
+        // } elseif ($get['orderStatusId'] === $this->config->item('payNlDenied')) {
+        //     $redirect = base_url() . 'ticketing_denied?';
+        // } elseif ($get['orderStatusId'] === $this->config->item('payNlPinCanceled')) {
+        //     $redirect = base_url() . 'ticketing_pin_canceled?';
+        // }
+
+
+        // redirect($redirect);
+
+
+        $statuscode = intval($this->input->get('orderStatusId'));
+        if ($statuscode == 100) {
+            $data = array();
+            $this->global['pageTitle'] = 'TIQS : THANKS';
+            $this->session->sess_destroy();
+            $this->loadViews("bookingsuccess", $this->global, $data, 'nofooter', "noheader");
+        } elseif ($statuscode <0) {
+            $data = array();
+            $this->global['pageTitle'] = 'TIQS : THANKS';
+            $this->session->sess_destroy();
+            $this->loadViews("thuishavenerror", $this->global, $data, 'nofooter', "noheader");
+        } elseif ($statuscode >= 0) {
+            $data = array();
+            $this->global['pageTitle'] = 'TIQS : THANKS';
+            $this->session->sess_destroy();
+            $this->loadViews("thuishavenerror", $this->global, $data, 'nofooter', "noheader");
+        } else {
+            $data = array();
+            $this->global['pageTitle'] = 'TIQS : THANKS';
+            $this->session->sess_destroy();
+            $this->loadViews("thuishavenerror", $this->global, $data, 'nofooter', "noheader");
+        }
 
 	}
 

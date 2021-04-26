@@ -201,7 +201,7 @@ class Bookandpay_model extends CI_Model
 
 	function updateTransactionIdByReservationIds($reservationIds, $TransactionID)
 	{
-		$this->db->where_in('reservationId', $reservationIds);
+		$this->db->where_in('id', $reservationIds);
 		$this->db->set('TransactionID', $TransactionID);
 		$this->db->update('tbl_bookandpay');
 		return TRUE;

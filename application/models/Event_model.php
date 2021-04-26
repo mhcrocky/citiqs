@@ -388,30 +388,34 @@ class Event_model extends CI_Model {
 
 		foreach($tickets as $ticket) {
 
-			$insert = [
-				'customer' => $customer,
-				'eventId' => $ticket['id'],
-				'eventdate' => date('Y-m-d', strtotime($ticket['startDate'])),
-				'bookdatetime' => date('Y-m-d H:i:s'),
-				'timefrom' => $ticket['startTime'],
-				'timeto' => $ticket['endTime'],
-				'price' => $ticket['price'],
-				'ticketFee' => ($ticket['ticketFee'] != null) ? $ticket['ticketFee'] : 0,
-				'numberofpersons' => $ticket['quantity'],
-				'name' => $userInfo['name'],
-				'email' => $userInfo['email'],
-				'age' => $userInfo['age'],
-				'gender' => $userInfo['gender'],
-				'mobilephone' => $userInfo['mobileNumber'],
-				'Address' => $userInfo['address'],
-				'zipcode' => $userInfo['zipcode'],
-				'city' => $userInfo['city'],
-				'country' => $userInfo['country'],
-				'ticketDescription' => $ticket['descript'],
-				'ticketType' => ($ticket['ticketType'] != null) ? $ticket['ticketType'] : 0,
-				'paid' => '0'
-			];
-			$reservationIds[] = $this->insertTicket($insert);
+			$quantityId = intval($ticket['quantity']);
+
+			for ($i = 0; $i < $quantityId; $i++) {
+				$insert = [
+					'customer' => $customer,
+					'eventId' => $ticket['id'],
+					'eventdate' => date('Y-m-d', strtotime($ticket['startDate'])),
+					'bookdatetime' => date('Y-m-d H:i:s'),
+					'timefrom' => $ticket['startTime'],
+					'timeto' => $ticket['endTime'],
+					'price' => $ticket['price'],
+					'ticketFee' => ($ticket['ticketFee'] != null) ? $ticket['ticketFee'] : 0,
+					'numberofpersons' => '1',
+					'name' => $userInfo['name'],
+					'email' => $userInfo['email'],
+					'age' => $userInfo['age'],
+					'gender' => $userInfo['gender'],
+					'mobilephone' => $userInfo['mobileNumber'],
+					'Address' => $userInfo['address'],
+					'zipcode' => $userInfo['zipcode'],
+					'city' => $userInfo['city'],
+					'country' => $userInfo['country'],
+					'ticketDescription' => $ticket['descript'],
+					'ticketType' => ($ticket['ticketType'] != null) ? $ticket['ticketType'] : 0,
+					'paid' => '0'
+				];
+				$reservationIds[] = $this->insertTicket($insert);
+			}
 		}
 
 		return $reservationIds;
@@ -427,7 +431,7 @@ class Event_model extends CI_Model {
 			$this->insertTicket($ticket, true);
 		}
 
-		return $ticket['reservationId'];
+		return $this->db->insert_id();
 	}
 
 	function save_guest_reservations($data){
