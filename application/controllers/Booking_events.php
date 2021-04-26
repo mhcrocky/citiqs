@@ -30,15 +30,15 @@ class Booking_events extends BaseControllerWeb
         $this->session->unset_userdata('customer');
         $this->global['pageTitle'] = 'TIQS: Shop';
         $this->session->unset_userdata('reservationIds');
-        $customer = $this->user_model->getUserInfoByShortUrl($shortUrl);
-        
+
         if (!$shortUrl) {
             redirect('https://tiqs.com/info');
         }
-        
+
+        $customer = $this->user_model->getUserInfoByShortUrl($shortUrl);
         $eventId = '';
         $get_by_event_id = false;
-        
+
         if(!$customer){
             if(is_numeric($shortUrl)){
                 $eventId = $shortUrl;
@@ -241,14 +241,15 @@ class Booking_events extends BaseControllerWeb
     {
         $buyerInfo = $this->input->post(null, true);
         $tickets = $this->session->userdata('tickets');
+
         $this->session->set_userdata('eventShop', 'true');
         $this->session->set_userdata('buyerEmail', $buyerInfo['email']);
         $customer = $this->session->userdata('customer');
         if(!$this->session->userdata('reservationIds')){
             $reservationIds = $this->event_model->save_event_reservations($buyerInfo, $tickets, $customer);
             $this->session->set_userdata('reservationIds', $reservationIds);
-            
         }
+
         $reservationIds = $this->session->userdata('reservationIds');
         $arrArguments = array();
         if ($buyerInfo) {

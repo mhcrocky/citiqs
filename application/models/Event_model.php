@@ -380,22 +380,19 @@ class Event_model extends CI_Model {
 		return false;
 	}
 
-	function save_event_reservations($userInfo, $tickets = array(), $customer){
-		$data = [];
-		if(!isset($userInfo['email'])){ return ;}
+	function save_event_reservations($userInfo, $tickets = array(), $customer)
+	{
+		if(!isset($userInfo['email'])){ return; }
+
 		$reservationIds = [];
-		foreach($tickets as $ticket){
-			$set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKLMNPQRSTVWXY';
-			$reservationId = 'T-' . substr(str_shuffle($set), 0, 16);
-			$reservationIds[] = $reservationId;
-			$savedatetime = new DateTime( 'now');
-			$bookdatetime = $savedatetime->format('Y-m-d H:i:s');
-			$data[] = [
-				'reservationId' => $reservationId,
+
+		foreach($tickets as $ticket) {
+
+			$insert = [
 				'customer' => $customer,
 				'eventId' => $ticket['id'],
 				'eventdate' => date('Y-m-d', strtotime($ticket['startDate'])),
-				'bookdatetime' => $bookdatetime,
+				'bookdatetime' => date('Y-m-d H:i:s'),
 				'timefrom' => $ticket['startTime'],
 				'timeto' => $ticket['endTime'],
 				'price' => $ticket['price'],
@@ -408,17 +405,26 @@ class Event_model extends CI_Model {
 				'mobilephone' => $userInfo['mobileNumber'],
 				'Address' => $userInfo['address'],
 				'ticketDescription' => $ticket['descript'],
-				'ticketType' => ($ticket['ticketType'] != null) ? $ticket['ticketType'] : 0
-
-				//SQL
-				/*
-				ALTER TABLE `tbl_bookandpay` ADD `gender` VARCHAR(255) NULL AFTER `email`, ADD `age` DATE NULL AFTER `gender`; 
-				
-				*/
+				'ticketType' => ($ticket['ticketType'] != null) ? $ticket['ticketType'] : 0,
+				'paid' => '0'
 			];
+			$reservationIds[] = $this->insertTicket($insert);
 		}
-		$this->db->insert_batch('tbl_bookandpay',$data);
+
 		return $reservationIds;
+	}
+
+	private function insertTicket(array $ticket): string
+	{
+
+		$set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKLMNPQRSTVWXY';
+		$ticket['reservationId'] = 'T-' . substr(str_shuffle($set), 0, 16);
+
+		if (!$this->db->insert('tbl_bookandpay', $ticket)) {
+			$this->insertTicket($ticket, true);
+		}
+
+		return $ticket['reservationId'];
 	}
 
 	function save_guest_reservations($data){
