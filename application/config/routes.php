@@ -322,16 +322,28 @@ $route['paymentengine/(:num)/(:any)/(:num)'] = 'Alfredpayment/paymentEngine/$1/$
 $route['successPayment'] = 'Alfredpayment/successPayment';
 $route['exchangePay'] = 'Alfredpayment/ExchangePay';
 
-$route['success'] = 'Paysuccesslink';
-$route['successth'] = 'Paysuccesslinkth';
+
 $route['success_reservation'] = 'Reservations/success';
 
+
+// shop
+$route['success'] = 'Paysuccesslink';
+$route['successth'] = 'Paysuccesslinkth';
 $route['pending']       = 'paysuccesslink/pending';
 $route['authorised']    = 'paysuccesslink/authorised';
 $route['verify']        = 'paysuccesslink/verify';
 $route['cancel']        = 'paysuccesslink/cancel';
 $route['denied']        = 'paysuccesslink/denied';
 $route['pin_canceled']  = 'paysuccesslink/pinCanceled';
+
+// eticketin
+$route['ticketing_success']       = 'paylinkticketing/index';
+$route['ticketing_pending']       = 'paylinkticketing/pending';
+$route['ticketing_authorised']    = 'paylinkticketing/authorised';
+$route['ticketing_verify']        = 'paylinkticketing/verify';
+$route['ticketing_cancel']        = 'paylinkticketing/cancel';
+$route['ticketing_denied']        = 'paylinkticketing/denied';
+$route['ticketing_pin_canceled']  = 'paylinkticketing/pinCanceled';
 
 
 
