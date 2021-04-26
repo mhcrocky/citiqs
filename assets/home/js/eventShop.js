@@ -46,7 +46,7 @@ $(document).ready(function(){
         removeTicket(id, price, ticketFee, 'totalBasket');
       });
 
-      $(document).on('keyup', '.input100-error', function() {
+      $(document).on('input', '.input100-error', function() {
         $(this).closest("div").removeClass('input100-error');
       });
 
@@ -54,8 +54,14 @@ $(document).ready(function(){
         let email = $("#email").val();
         let repeatEmail = $("#repeatEmail").val();
         if(validateEmail(email) && validateEmail(repeatEmail) && (email != repeatEmail)){
+            $("#email").closest("div").addClass('input100-error');
+            $("#repeatEmail").closest("div").addClass('input100-error');
             $('#emailMatchError').removeClass('d-none');
+            let input = document.getElementById('email');
+            input.select();
         } else {
+            $("#email").closest("div").removeClass('input100-error');
+            $("#repeatEmail").closest("div").removeClass('input100-error');
             $('#emailMatchError').addClass('d-none');
         }
       });
@@ -78,12 +84,12 @@ function payFormSubmit() {
     let email = $("#email").val();
     let repeatEmail = $("#repeatEmail").val();
     if(validateEmail(email) && validateEmail(repeatEmail) && (email != repeatEmail)){
-        $("#email").addClass('input100-error');
-        $("#repeatEmail").addClass('input100-error');
+        $("#email").closest("div").addClass('input100-error');
+        $("#repeatEmail").closest("div").addClass('input100-error');
         $('#emailMatchError').removeClass('d-none');
+        let input = document.getElementById('email');
+        input.select();
         return ;
-    } else {
-        $('#emailMatchError').addClass('d-none');
     }
     
     $('#pay').click();
