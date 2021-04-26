@@ -12,6 +12,8 @@
         public $id;
         public $vendorId;
         public $paynlServiceId;
+        public $TpayNlServiceId;
+        public $RpayNlServiceId;
         public $merchantId;
         public $accountId;
         public $termsAndConditions;
@@ -139,6 +141,8 @@
             if (isset($data['serviceFeePercent']) && !Validate_data_helper::validateString($data['serviceFeePercent'])) return false;
             if (isset($data['serviceFeeAmount']) && !Validate_data_helper::validateFloat($data['serviceFeeAmount'])) return false;
             if (isset($data['paynlServiceId']) && !Validate_data_helper::validateString($data['paynlServiceId'])) return false;
+            if (isset($data['TpayNlServiceId']) && !Validate_data_helper::validateString($data['TpayNlServiceId'])) return false;
+            if (isset($data['RpayNlServiceId']) && !Validate_data_helper::validateString($data['RpayNlServiceId'])) return false;
             if (isset($data['merchantId']) && !Validate_data_helper::validateString($data['merchantId'])) return false;
             if (isset($data['accountId']) && !Validate_data_helper::validateString($data['accountId'])) return false;
             if (isset($data['bancontact']) && !($data['bancontact'] === '1' || $data['bancontact'] === '0')) return false;
@@ -222,6 +226,8 @@
                     $this->table . '.serviceFeePercent',
                     $this->table . '.serviceFeeAmount',
                     $this->table . '.payNlServiceId',
+                    $this->table . '.TpayNlServiceId',
+                    $this->table . '.RpayNlServiceId',
                     $this->table . '.termsAndConditions',
                     $this->table . '.requireMobile',
 					$this->table . '.bancontact',

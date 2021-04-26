@@ -1135,7 +1135,8 @@ class User_model extends CI_Model
 
         $this->db->select( '
             tbl_user.id AS vendorId,
-            tbl_user.business_name AS vendorName,
+            tbl_user.masterId AS masterId,
+            tbl_user.username AS vendorName,
             tbl_user.email AS vendorEmail,
             tbl_user.active AS active
         ');
