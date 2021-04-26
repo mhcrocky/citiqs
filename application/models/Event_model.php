@@ -407,12 +407,15 @@ class Event_model extends CI_Model {
 				'gender' => $userInfo['gender'],
 				'mobilephone' => $userInfo['mobileNumber'],
 				'Address' => $userInfo['address'],
+				'zipcode' => $userInfo['zipcode'],
+				'city' => $userInfo['city'],
+				'country' => $userInfo['country'],
 				'ticketDescription' => $ticket['descript'],
 				'ticketType' => ($ticket['ticketType'] != null) ? $ticket['ticketType'] : 0
 
 				//SQL
 				/*
-				ALTER TABLE `tbl_bookandpay` ADD `gender` VARCHAR(255) NULL AFTER `email`, ADD `age` DATE NULL AFTER `gender`; 
+				ALTER TABLE `tbl_bookandpay` ADD `zipcode` VARCHAR(255) NOT NULL AFTER `city`, ADD `country` VARCHAR(255) NOT NULL AFTER `zipcode`;  
 				
 				*/
 			];
