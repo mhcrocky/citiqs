@@ -11,10 +11,13 @@ class Booking_events extends BaseControllerWeb
     {
         parent::__construct();
         $this->load->helper('pay_helper');
-        
         $this->load->helper('utility_helper');
+
         $this->load->model('event_model');
         $this->load->model('bookandpay_model');
+        $this->load->model('user_model');
+        $this->load->model('shopvendor_model');
+
         $this->load->model('sendreservation_model');
         $this->load->model('email_templates_model');
         $this->load->config('custom');
@@ -23,7 +26,7 @@ class Booking_events extends BaseControllerWeb
 
     public function index($shortUrl = false)
     {
-        $this->load->model('user_model');
+
         $this->session->unset_userdata('customer');
         $this->global['pageTitle'] = 'TIQS: Shop';
         $this->session->unset_userdata('reservationIds');
@@ -45,7 +48,7 @@ class Booking_events extends BaseControllerWeb
             }
         }
 
-        if (!$shortUrl || !$customer) {
+        if (!$shortUrl || !$customer || !$this->shopvendor_model->setProperty('vendorId', intval($customer->id))->getProperty('TpayNlServiceId')) {
             redirect('https://tiqs.com/info');
         }
 
