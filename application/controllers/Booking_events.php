@@ -240,6 +240,12 @@ class Booking_events extends BaseControllerWeb
     public function payment_proceed()
     {
         $buyerInfo = $this->input->post(null, true);
+
+        if(!$this->session->tempdata('tickets')){
+            $this->session->set_flashdata('expired', 'Session Expired!');
+            redirect('events/shop/'. $this->session->userdata('shortUrl'));
+        }
+        
         $tickets = $this->session->userdata('tickets');
 
         $this->session->set_userdata('eventShop', 'true');

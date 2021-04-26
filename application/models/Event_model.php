@@ -404,6 +404,9 @@ class Event_model extends CI_Model {
 				'gender' => $userInfo['gender'],
 				'mobilephone' => $userInfo['mobileNumber'],
 				'Address' => $userInfo['address'],
+				'zipcode' => $userInfo['zipcode'],
+				'city' => $userInfo['city'],
+				'country' => $userInfo['country'],
 				'ticketDescription' => $ticket['descript'],
 				'ticketType' => ($ticket['ticketType'] != null) ? $ticket['ticketType'] : 0,
 				'paid' => '0'

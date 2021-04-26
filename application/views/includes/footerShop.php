@@ -81,11 +81,43 @@
                                             placeholder="Email Address" required>
                                         <span class="focus-input100"></span>
                                     </div>
+                                    <div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
+                                        <span class="label-input100">Repeat Email</span>
+                                        <input class="input100" type="email" id="repeatEmail" name="repeatEmail"
+                                            placeholder="Email Address" required>
+                                        <span class="focus-input100"></span>
+                                    </div>
+                                    <div id="emailMatchError" class="m-b-26 d-none">
+                                        <span class="label-input100">&amp;nbsp</span>
+                                        <p class="input100 pt-3 pb-2 text-danger">Email and repeat email doesn't match!</p>
+                                        <span class="focus-input100"></span>
+                                    </div>
                                     <div class="wrap-input100 validate-input m-b-18 wideField"
                                         data-validate="Address is required">
                                         <span class="label-input100">Address</span>
                                         <input class="field input100" type="text" id="autocomplete"
-                                            onFocus="geolocate()" name="address" placeholder="Address" required>
+                                             name="address" placeholder="Address" required>
+                                        <span class="focus-input100"></span>
+                                    </div>
+                                    <div class="wrap-input100 validate-input m-b-18 wideField"
+                                        data-validate="Zip Code is required">
+                                        <span class="label-input100">Zip Code</span>
+                                        <input class="field input100" type="text" id="zipcode"
+                                             name="zipcode" placeholder="Zip Code" required>
+                                        <span class="focus-input100"></span>
+                                    </div>
+                                    <div class="wrap-input100 validate-input m-b-18 wideField"
+                                        data-validate="City is required">
+                                        <span class="label-input100">City</span>
+                                        <input class="field input100" type="text" id="city"
+                                             name="city" placeholder="City" required>
+                                        <span class="focus-input100"></span>
+                                    </div>
+                                    <div class="wrap-input100 validate-input m-b-18 wideField"
+                                        data-validate="Country is required">
+                                        <span class="label-input100">Country</span>
+                                        <input class="field input100" type="text" id="country"
+                                             name="country" placeholder="Country" required>
                                         <span class="focus-input100"></span>
                                     </div>
                                     <div class="wrap-input100 validate-input m-b-18">
@@ -111,7 +143,7 @@
                                         <span class="focus-input100"></span>
                                     </div>
 
-                                        <button style="display: none;" id="pay" class="btn btn-danger btn-lg btn-block mt-2">
+                                        <button type="submit" style="display: none;" id="pay" class="btn btn-danger btn-lg btn-block mt-2">
                                             PAY
                                         </button>
  
