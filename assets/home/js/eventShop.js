@@ -50,6 +50,16 @@ $(document).ready(function(){
         $(this).closest("div").removeClass('input100-error');
       });
 
+      $(document).on('change', '#repeatEmail', function() {
+        let email = $("#email").val();
+        let repeatEmail = $("#repeatEmail").val();
+        if(validateEmail(email) && validateEmail(repeatEmail) && (email != repeatEmail)){
+            $('#emailMatchError').removeClass('d-none');
+        } else {
+            $('#emailMatchError').addClass('d-none');
+        }
+      });
+
       
 
 });
@@ -70,8 +80,12 @@ function payFormSubmit() {
     if(validateEmail(email) && validateEmail(repeatEmail) && (email != repeatEmail)){
         $("#email").addClass('input100-error');
         $("#repeatEmail").addClass('input100-error');
+        $('#emailMatchError').removeClass('d-none');
         return ;
+    } else {
+        $('#emailMatchError').addClass('d-none');
     }
+    
     $('#pay').click();
     return ;
 }

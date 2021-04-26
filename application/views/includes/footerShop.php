@@ -87,6 +87,11 @@
                                             placeholder="Email Address" required>
                                         <span class="focus-input100"></span>
                                     </div>
+                                    <div id="emailMatchError" class="m-b-26 d-none">
+                                        <span class="label-input100">&amp;nbsp</span>
+                                        <p class="input100 pt-3 pb-2 text-danger">Email and repeat email doesn't match!</p>
+                                        <span class="focus-input100"></span>
+                                    </div>
                                     <div class="wrap-input100 validate-input m-b-18 wideField"
                                         data-validate="Address is required">
                                         <span class="label-input100">Address</span>
