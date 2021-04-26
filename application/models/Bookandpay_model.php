@@ -647,13 +647,13 @@ class Bookandpay_model extends CI_Model
 
 	public function getUserSlCode($id)
 	{
-		$this->db->select('payNlServiceId');
+		$this->db->select('TpayNlServiceId');
 		$this->db->from('tbl_shop_vendors');
 		$this->db->where('vendorId', $id);
 		$query = $this->db->get();
 
         $result = $query->row();
-		return $result->payNlServiceId;
+		return $result->TpayNlServiceId;
 	}
 	
 	public function getReservationById($id)

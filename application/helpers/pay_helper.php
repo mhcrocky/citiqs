@@ -21,8 +21,8 @@
             self::setTokens($payData, $namespace, $function);
 
             $strUrl  = 'http://' . $payData['tokenid'] . ':' . $payData['token'] . '@';
-            $strUrl .= $payData['gateway'] . DIRECTORY_SEPARATOR . $payData['version'] . DIRECTORY_SEPARATOR;
-            $strUrl .= $payData['namespace'] . DIRECTORY_SEPARATOR . $payData['function'] . DIRECTORY_SEPARATOR;
+            $strUrl .= $payData['gateway'] . "/" . $payData['version'] . "/";
+            $strUrl .= $payData['namespace'] . "/" . $payData['function'] . "/";
             $strUrl .= $payData['format'];
 
             if ($argumentsArray) {
@@ -130,6 +130,7 @@
             $vendorCost = $CI->event_model->get_vendor_cost($vendorId);
             $buyerEmail = '';
             $totalAmount = 0;
+            $arrArguments = [];
             
             foreach ($reservations as $key => $reservation) {
                 
@@ -139,16 +140,6 @@
                     $arrArguments['transaction']['description'] = "tiqs - " . $reservation->eventdate . " - " . $reservation->timeslot;
                     $buyerEmail = $reservation->email;
                 }
-
-
-                $arrArguments['statsData']['extra' . ($key + 1)] = $reservation->reservationId;
-                $arrArguments['saleData']['orderData'][$key]['productId'] = $reservation->reservationId;
-                $arrArguments['saleData']['orderData'][$key]['description'] = $reservation->Spotlabel;
-                $arrArguments['saleData']['orderData'][$key]['productType'] = 'HANDLING';
-                $arrArguments['saleData']['orderData'][$key]['price'] = $reservation->price * 100;
-                $arrArguments['saleData']['orderData'][$key]['quantity'] = 1;
-                $arrArguments['saleData']['orderData'][$key]['vatCode'] = 'H';
-                $arrArguments['saleData']['orderData'][$key]['vatPercentage'] = '0.00';
 
             }
 
@@ -160,9 +151,7 @@
                 $reservationsAmount = $totalAmount + ($percentCost*$totalAmount/100) + $amountCost;
             }
             
-            
             $amount = $reservationsAmount * 100;
-            $arrArguments = [];
 
             $arrArguments['serviceId'] = $serviceId;
             $arrArguments['amount'] = strval($amount);
@@ -211,6 +200,7 @@
             $vendorCost = $CI->bookandpayagendabooking_model->get_vendor_cost($vendorId);
             $buyerEmail = '';
             $totalAmount = 0;
+            $arrArguments = [];
             
             foreach ($reservations as $key => $reservation) {
                 
@@ -234,7 +224,6 @@
             }
             
             $amount = $reservationsAmount * 100;
-            $arrArguments = [];
 
             $arrArguments['serviceId'] = $serviceId;
             $arrArguments['amount'] = strval($amount);

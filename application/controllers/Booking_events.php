@@ -325,23 +325,27 @@ class Booking_events extends BaseControllerWeb
         $SlCode = $this->bookandpay_model->getUserSlCode($vendorId);
         $reservationIds = $this->session->userdata('reservationIds');
         $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
-        $arrArguments = Pay_helper::getTicketingArgumentsArray($vendorId, $reservations, strval($SlCode), $paymentType, $paymentOptionSubId);
 
+        $arrArguments = Pay_helper::getTicketingArgumentsArray($vendorId, $reservations, strval($SlCode), $paymentType, $paymentOptionSubId);
         $namespace = $this->config->item('transactionNamespace');
         $function = $this->config->item('orderPayNlFunction');
         $version = $this->config->item('orderPayNlVersion');
+        
+        foreach ($reservations as $key => $reservation) {
+            $arrArguments['statsData']['extra' . ($key + 1)] = $reservation->reservationId;
+            $arrArguments['saleData']['orderData'][$key]['productId'] = $reservation->reservationId;
+            $arrArguments['saleData']['orderData'][$key]['description'] = $reservation->Spotlabel;
+            $arrArguments['saleData']['orderData'][$key]['productType'] = 'HANDLIUNG';
+            $arrArguments['saleData']['orderData'][$key]['price'] = $reservation->price * 100;
+            $arrArguments['saleData']['orderData'][$key]['quantity'] = 1;
+            $arrArguments['saleData']['orderData'][$key]['vatCode'] = 'H';
+            $arrArguments['saleData']['orderData'][$key]['vatPercentage'] = '0.00';
+
+        }
 
         $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
-        
-
-        $this->session->set_userdata('payment_data', [
-            'strUrl' => $strUrl,
-            'arrArguments' => $arrArguments,
-            'discountAmount' => $arrArguments['amount']
-        ]);
-
-
         $this->processPaymenttype($strUrl);
+       
 
     }
 

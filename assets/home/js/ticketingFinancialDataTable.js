@@ -206,6 +206,31 @@ $(document).ready( function () {
     {
       title: 'Reservation Time',
       data: 'reservationtime'
+    },
+    {
+      title: "",
+      data: null,
+      render: function (data, type, row) {
+        let amount = parseFloat(data.price) + parseFloat(data.ticketFee);
+        let total_amount = parseFloat(amount) * parseFloat(data.numberofpersons);
+        let html =
+          '<input type="hidden" id="' +
+          data.reservationId +
+          '" data-ticketdescription="' +
+          data.ticketDescription +
+          '" data-amount="' +
+          total_amount +
+          '" data-ticketquantity="' +
+          data.numberofpersons +
+          '" data-price="' +
+          data.price +
+          '">' +
+          '<a href="#" onclick="refundModal(\'' +
+          data.reservationId +
+          '\')" class="btn btn-warning btn-refund" data-toggle="modal" data-target="#refundModal">Refund</a>';
+        return html;
+      },
+      
     }
     ],
   });

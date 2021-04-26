@@ -148,27 +148,27 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="descript">SPOT(Service Point Or Table)</label>
+                                <label for="descript"><?php echo $this->language->tLine('Locatie omschrijving'); ?></label>
                                 <input type="text" name="descript" v-model="spotModalData.descript" class="form-control"
-                                    id="descript" placeholder="SPOT Name">
+                                    id="descript" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="soldoutdescript">Sold out Description</label>
+                                <label for="soldoutdescript"><?php echo $this->language->tLine('Sold out Description'); ?></label>
                                 <input type="text" name="soldoutdescript" v-model="spotModalData.soldoutdescript"
                                     class="form-control" id="soldoutdescript" placeholder="Sold out Description">
                             </div>
                             <div class="form-group">
-                                <label for="pricingdescript">Pricing Description</label>
+                                <label for="pricingdescript"><?php echo $this->language->tLine('Pricing Description'); ?></label>
                                 <input type="text" name="pricingdescript" v-model="spotModalData.pricingdescript"
                                     class="form-control" id="pricingdescript" placeholder="Pricing Description">
                             </div>
                             <div class="form-group">
-                                <label for="feedescript">Fee Description</label>
+                                <label for="feedescript"><?php echo $this->language->tLine('Fee Description'); ?></label>
                                 <input type="text" name="feedescript" v-model="spotModalData.feedescript"
                                     class="form-control" id="feedescript" placeholder="Fee Description">
                             </div>
                             <div class="form-group">
-                                <label for="spotLabel">Spot Label</label>
+                                <label for="spotLabel"><?php echo $this->language->tLine('Spot Label'); ?></label>
                                 <select @change="selectSpotLabel()" class="form-control" id="spotLabelId"
                                     name="spotLabelId" v-model="spotModalData.spotLabelId">
                                     <option value="0" data-available="none" selected>None</option>
@@ -178,33 +178,33 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="available_items">Maximum available SPOTS</label>
+                                <label for="available_items"><?php echo $this->language->tLine('Maximum available SPOTS'); ?></label>
                                 <input type="text" name="available_items" v-model.lazy="spotModalData.available_items"
                                     class="form-control" id="available_items" placeholder="Available for booking">
                             </div>
                             <div class="form-group">
-                                <label for="sort_order">Ranking Order</label>
+                                <label for="sort_order"><?php echo $this->language->tLine('Ranking Order'); ?></label>
                                 <input type="number" name="sort_order" v-model="spotModalData.sort_order"
                                     class="form-control" id="sort_order" placeholder="Ranking Order">
                             </div>
                             <div class="form-group">
-                                <label for="numberofpersons">Number Of Persons</label>
+                                <label for="numberofpersons"><?php echo $this->language->tLine('Number Of Persons'); ?></label>
                                 <input type="number" name="numberofpersons" v-model="spotModalData.numberofpersons"
                                     class="form-control" id="numberofpersons" placeholder="Number of persons">
                             </div>
                             <div class="form-group">
-                                <label for="Price">Price</label>
+                                <label for="Price"><?php echo $this->language->tLine('Price'); ?></label>
                                 <input type="number" step="0.01" name="Price" v-model="spotModalData.price"
                                     class="form-control" id="Price" placeholder="Price">
                             </div>
                             <div class="form-group">
-                                <label for="descript">Email Template</label>
+                                <label for="descript"><?php echo $this->language->tLine('Email Template'); ?></label>
                                 <search-select :options="emailsOptions" v-model="spotModalData.email_id"
                                     placeholder="Select Email Template"></search-select>
                             </div>
                             <div class="images justify-content-center d-flex flex-wrap">
                                 <div class="form-group row">
-                                    <label for="image" class="col-md-4 col-form-label text-md-left">Upload Image</label>
+                                    <label for="image" class="col-md-4 col-form-label text-md-left"><?php echo $this->language->tLine('Upload Image'); ?></label>
                                     <div class="col-md-8">
 
 
@@ -244,9 +244,9 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" id="saveSpot" class="btn btn-primary" @click="saveSpot">Save</button>
-                        <button type="button" id="saveCopySpot" class="btn btn-primary d-none" @click="saveCopySpot">Save</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->language->tLine('Close'); ?></button>
+                        <button type="button" id="saveSpot" class="btn btn-primary" @click="saveSpot"><?php echo $this->language->tLine('Save'); ?></button>
+                        <button type="button" id="saveCopySpot" class="btn btn-primary d-none" @click="saveCopySpot"><?php echo $this->language->tLine('Save'); ?></button>
                     </div>
                 </div>
             </div>
