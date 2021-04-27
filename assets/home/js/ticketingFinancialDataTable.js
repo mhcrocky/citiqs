@@ -126,6 +126,8 @@ $(document).ready( function () {
     dom: 'Blfrtip',
     buttons: [  {
         extend: 'excelHtml5',
+        text: 'Export as Excel',
+        className: 'btn btn-success mb-3 mt-5',
         autoFilter: true,
         footer: true,
         sheetName: 'Exported data'
