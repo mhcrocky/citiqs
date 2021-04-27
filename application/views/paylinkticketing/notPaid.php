@@ -34,10 +34,11 @@
 			border:   1px solid transparent !important;
 			box-shadow: none !Important;
 		}
-		.panel p{
-			margin: 18px 0;
-			font-family: 'caption-light', sans-serif;
-		}
+
+		/*.panel p{*/
+		/*	margin: 18px 0;*/
+		/*	font-family: 'caption-light', sans-serif;*/
+		/*}*/
 
 		.svg-overflow svg{
 			overflow: visible;
@@ -109,70 +110,78 @@
 <script src='https://www.google.com/recaptcha/api.js' async defer ></script>
 
 <div class="main-wrapper">
-	<div class="col-half background-yellow height-100">
+	<div class="col-half background-orange-light height-100">
 		<div class="flex-column align-start">
 			<div class="timeline-heading">
-				<h2 style="font-weight:bold; font-family: caption-bold">OEPS, ER IS IETS MISGEGAAN</h2>
+				<h2 style="font-weight:bold; font-family: caption-bold">OEPS SOMETHING WENT WRONG</h2>
 			</div>
-<!--			<div class="" align="center" >-->
-<!--				<img border="0" src="--><?php //echo base_url(); ?><!--assets/home/images/donation.png" alt="tiqs" width="275" height="auto" />-->
-<!--			</div>-->
+			<div class="timeline-heading">
+				<h2 style="font-weight:bold; font-family: caption-bold">YOUR PAYMENT DID NOT PROCEED</h2>
+			</div>
+
+			<!--			<div class="" align="center" >-->
+			<!--				<img border="0" src="--><?php //echo base_url(); ?><!--assets/home/images/donation.png" alt="tiqs" width="275" height="auto" />-->
+			<!--			</div>-->
+			<div class="mt-50" align="center" >
+				<img border="0" src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="275" height="auto" />
+			</div>
 		</div>
 	</div><!-- end col half -->
+
 
 	<div class="col-half background-blue timeline-content">
 		<div class="timeline-block background-orange">
 			<div class="timeline-text">
+				<!--				<div class="mt-50" align="center" >-->
+				<!--					<img border="0" src="--><?php //echo base_url(); ?><!--assets/home/images/staysafewhite.png" alt="tiqs" width="75" height="auto" />-->
+				<!--				</div>-->
 				<div class="timeline-heading">
-					<h2 style="font-weight:bold; font-family: caption-bold">EVEN NIET BESCHIKBAAR</h2>
+					<h2 style="font-weight:bold; font-family: caption-bold">NOTHING IS BROKEN BUT WE DID NOT GET A PAYMENT CONFIRMED </h2>
 				</div>
-				<p class="text-content-light" style="font-size: larger">SOMETHING WENT WRONG.</p>
 			</div>
-		</div><!-- end timeline block -->
+		</div>
 
 		<div class="timeline-block background-orange-light">
 			<div class="timeline-text">
-				<div class='timeline-heading'>
-					<h2 style="font-weight:bold; font-family: caption-bold">TRY AGAIN....</h2>
-				</div>
-				<p class="text-content-light" style="font-size: larger"><?php echo $paynlInfo; ?> </p>
-				<div class="flex-column align-space">
-					<div align="center">
-						<a href="<?php echo base_url(); ?>events/shop/<?php echo $usershorturl; ?>" target="_self" class="button button-orange">AGAIN</a>
-					</div>
-				</div>
+
 			</div>
 		</div><!-- end timeline block -->
 
 		<div class="timeline-block background-blue">
 			<div class="timeline-text">
-<!--				<div class="timeline-heading">-->
-<!--					<h2 style="font-weight:bold; font-family: caption-bold">TELL A FRIEND</h2>-->
-<!--				</div>-->
-<!--				<div class="" align="center">-->
-<!---->
-<!--					<a style="margin-right: 10px" href="whatsapp://send?text=Check for 24Hours to avoid queuing, check-in check-out... https://check424.com" data-action="share/whatsapp/share" onClick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on whatsapp">-->
-<!--						<i class="fa fa-whatsapp" style="font-size:48px;color:white"></i>-->
-<!--					</a>-->
-<!---->
-<!---->
-<!--					<a style="margin-right: 10px" href="https://www.facebook.com/sharer/sharer.php?u=https://check424.com&t=Very handy for restaurants, bars, Visitors Check for 24Hours to avoid queuing, check-in check-out... https://check424.com" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Facebook">-->
-<!--						<i class="fa fa-facebook" style="font-size:48px;color:white"></i>-->
-<!--					</a>-->
-<!---->
-<!--					<a style="margin-right: 10px" href="https://twitter.com/share?url=https://check424.com&text=Very handy for restaurants, bars, Visitors Check for 24Hours to avoid queuing, check-in check-out..." onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Twitter">-->
-<!--						<i class="fa fa-twitter" style="font-size:48px;color:white"></i>-->
-<!--					</a>-->
-<!---->
-<!--					<a style="margin-right: 10px" href="mailto:?subject=Very handy for restaurants, bars, Visitors Check for 24Hours to avoid queuing, check-in check-out.&body=This is handy! please check this out, and tell your friends and bars, cafe's and restaurants. https://check424.com" onClick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Mail">-->
-<!--						<i class="fa fa-envelope" style="font-size:48px;color:white"></i>-->
-<!--					</a>-->
-<!---->
-<!--				</div>-->
+				<!--				<div class="timeline-heading">-->
+				<!--					<h2 style="font-weight:bold; font-family: caption-bold">TELL A FRIEND</h2>-->
+				<!--				</div>-->
+				<!--				<div class="" align="center">-->
+				<!---->
+				<!--					<a style="margin-right: 10px" href="whatsapp://send?text=Check for 24Hours to avoid queuing, check-in check-out... https://check424.com" data-action="share/whatsapp/share" onClick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on whatsapp">-->
+				<!--						<i class="fa fa-whatsapp" style="font-size:48px;color:white"></i>-->
+				<!--					</a>-->
+				<!---->
+				<!---->
+				<!--					<a style="margin-right: 10px" href="https://www.facebook.com/sharer/sharer.php?u=https://check424.com&t=Very handy for restaurants, bars, Visitors Check for 24Hours to avoid queuing, check-in check-out... https://check424.com" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Facebook">-->
+				<!--						<i class="fa fa-facebook" style="font-size:48px;color:white"></i>-->
+				<!--					</a>-->
+				<!---->
+				<!--					<a style="margin-right: 10px" href="https://twitter.com/share?url=https://check424.com&text=Very handy for restaurants, bars, Visitors Check for 24Hours to avoid queuing, check-in check-out..." onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Twitter">-->
+				<!--						<i class="fa fa-twitter" style="font-size:48px;color:white"></i>-->
+				<!--					</a>-->
+				<!---->
+				<!--					<a style="margin-right: 10px" href="mailto:?subject=Very handy for restaurants, bars, Visitors Check for 24Hours to avoid queuing, check-in check-out.&body=This is handy! please check this out, and tell your friends and bars, cafe's and restaurants. https://check424.com" onClick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Mail">-->
+				<!--						<i class="fa fa-envelope" style="font-size:48px;color:white"></i>-->
+				<!--					</a>-->
+				<!---->
+				<!--				</div>-->
 			</div>
 		</div><!-- end timeline block -->
 	</div>
-	<!-- time-line -->
+	<!--	<div class="col-half background-green height-100">-->
+	<!--		<div class="flex-column align-start">-->
+	<!--			<div class="mt-50" align="center" >-->
+	<!--				<img border="0" src="--><?php //echo base_url(); ?><!--assets/home/images/tiqslogowhite.png" alt="tiqs" width="275" height="auto" />-->
+	<!--			</div>-->
+	<!--		</div>-->
+	<!--	</div>  -->
 	<!-- end col half -->
 </div>
 <!-- end main wrapper -->
@@ -180,79 +189,6 @@
 <script src="<?php echo base_url(); ?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 </body>
-
-<script type="text/javascript">
-	// modal script
-	// Get the modal
-	var modal = document.getElementById("myModal");
-
-	// Get the button that opens the modal
-	var btn = document.getElementById("modal-button");
-
-	// Get the <span> element that closes the modal
-	var span = document.getElementsByClassName("close")[0];
-
-	// When the user clicks on the button, open the modal
-	btn.onclick = function() {
-		modal.style.display = "block";
-	}
-
-	// When the user clicks on <span> (x), close the modal
-	span.onclick = function() {
-		modal.style.display = "none";
-	}
-
-	// When the user clicks anywhere outside of the modal, close it
-	window.onclick = function(event) {
-		if (event.target == modal) {
-			modal.style.display = "none";
-		}
-	}
-
-</script>
-
-<script>
-
-	var acc = document.getElementsByClassName("accordion");
-	var i;
-
-	for (i = 0; i < acc.length; i++) {
-		acc[i].addEventListener("click", function() {
-			this.classList.toggle("active");
-			var panel = this.nextElementSibling;
-			if (panel.style.maxHeight) {
-				panel.style.maxHeight = null;
-				panel.style.border = 'none';
-			} else {
-				panel.style.maxHeight = panel.scrollHeight + "px";
-				/* panel.style.border = '1px solid #ffffff4a';
-				   panel.style.borderTop = 'none';
-				   panel.borderTopLeftRadius = 0 + 'px';
-				   panel.borderTopRightRadius = 0 + 'px';*/
-			}
-		});
-	}
-
-</script>
-
-<script>
-
-	$('#show-timeline-video-2').click(function(){
-		console.log('da');
-		$('#timeline-video-2').toggleClass('show');
-	})
-
-	$('#show-timeline-video-3').click(function(){
-		console.log('da');
-		$('#timeline-video-3').toggleClass('show');
-	})
-
-	$('#show-timeline-video-4').click(function(){
-		console.log('da');
-		$('#timeline-video-4').toggleClass('show');
-	})
-
-</script>
 
 </html>
 <?php
