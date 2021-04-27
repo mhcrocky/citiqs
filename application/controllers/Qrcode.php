@@ -17,9 +17,13 @@ class Qrcode extends BaseControllerWeb {
     }
 
     public function index() {
-        $this->load->model('bookandpayspot_model');
+        $this->load->model('shopspot_model');
         $this->global['pageTitle'] = 'TIQS QRCode';
-        $data['spots'] = $this->bookandpayspot_model->getAllSpots($this->vendorId);
+        $data['spots'] = $this->shopspot_model->fetchUserSpotsImporved([
+            'tbl_shop_printers.userId=' => $this->vendorId,
+            'tbl_shop_spots.archived=' => '0',
+            'tbl_shop_spots.isApi=' => '0'
+        ]);
         $this->loadViews("qrcodeview/index", $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
 

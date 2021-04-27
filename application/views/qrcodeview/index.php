@@ -53,8 +53,8 @@
                             <select id="spot" name="spot" class="form-control input-w border-50 field">
                                 <option value="">Select option</option>
                                 <?php foreach($spots as $spot): ?>
-                                <option id="option_<?php echo $spot->id; ?>" value="<?php echo $spot->id; ?>" >
-                                <?php echo $spot->descript; ?>
+                                <option value="<?php echo $spot['spotId']; ?>" >
+                                <?php echo $spot['spotName']; ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
@@ -114,8 +114,8 @@
                             <select id="editspot" name="spot" class="form-control input-w border-50 field">
                                 <option value="">Select option</option>
                                 <?php foreach($spots as $spot): ?>
-                                <option id="option_<?php echo $spot->id; ?>" value="<?php echo $spot->id; ?>" >
-                                <?php echo $spot->descript; ?>
+                                <option value="<?php echo $spot['spotId']; ?>" >
+                                <?php echo $spot['spotName']; ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
