@@ -259,7 +259,7 @@ class Booking_events extends BaseControllerWeb
         $reservationIds = $this->session->userdata('reservationIds');
         $arrArguments = array();
         if ($buyerInfo) {
-            $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
+            $reservations = $this->bookandpay_model->getBookingsByIds($reservationIds);
             $reservationsQuantity = [];
             foreach ($reservations as $key => $reservation) {
                 $reservationsQuantity[$reservation->reservationId] = $reservation->numberofpersons;
@@ -334,7 +334,7 @@ class Booking_events extends BaseControllerWeb
         $vendorId = $this->session->userdata('customer');
         $SlCode = $this->bookandpay_model->getUserSlCode($vendorId);
         $reservationIds = $this->session->userdata('reservationIds');
-        $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
+        $reservations = $this->bookandpay_model->getBookingsByIds($reservationIds);
 
         $arrArguments = Pay_helper::getTicketingArgumentsArray($vendorId, $reservations, strval($SlCode), $paymentType, $paymentOptionSubId);
         $namespace = $this->config->item('transactionNamespace');
