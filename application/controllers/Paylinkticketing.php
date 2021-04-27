@@ -16,6 +16,7 @@ class  Paylinkticketing extends BaseControllerWeb
         $this->load->model('bookandpay_model');
         $this->load->model('shopvendor_model');
         $this->load->model('shoplandingpages_model');
+        $this->load->model('user_model');
 
         $this->load->helper('url');
         $this->load->helper('utility_helper');
@@ -62,7 +63,7 @@ class  Paylinkticketing extends BaseControllerWeb
 
         $this->getReservationsData($data);
         $this->getLandingPage($data, $this->config->item('successLandingPage'));
-        $this->loadViewOrTemplate($data, 'bookingsuccess');
+        $this->loadViewOrTemplate($data, 'paylinkticketing/success');
     }
 
     public function pending()
@@ -75,7 +76,7 @@ class  Paylinkticketing extends BaseControllerWeb
 
         $this->getReservationsData($data);
         $this->getLandingPage($data, $this->config->item('pendingLandingPage'));
-        $this->loadViewOrTemplate($data, 'thuishavenerror');
+        $this->loadViewOrTemplate($data, 'paylinkticketing/notPaid');
 
 
     }
@@ -90,7 +91,7 @@ class  Paylinkticketing extends BaseControllerWeb
 
         $this->getReservationsData($data);
         $this->getLandingPage($data, $this->config->item('authorisedLandingPage'));
-        $this->loadViewOrTemplate($data, 'thuishavenerror');
+        $this->loadViewOrTemplate($data, 'paylinkticketing/notPaid');
     }
 
     public function verify()
@@ -103,7 +104,7 @@ class  Paylinkticketing extends BaseControllerWeb
 
         $this->getReservationsData($data);
         $this->getLandingPage($data, $this->config->item('verifyLandingPage'));
-        $this->loadViewOrTemplate($data, 'thuishavenerror');
+        $this->loadViewOrTemplate($data, 'paylinkticketing/notPaid');
     }
 
     public function cancel()
@@ -116,7 +117,7 @@ class  Paylinkticketing extends BaseControllerWeb
 
         $this->getReservationsData($data);
         $this->getLandingPage($data, $this->config->item('cancelLandingPage'));
-        $this->loadViewOrTemplate($data, 'thuishavenerror');
+        $this->loadViewOrTemplate($data, 'paylinkticketing/notPaid');
     }
 
     public function denied()
@@ -129,7 +130,7 @@ class  Paylinkticketing extends BaseControllerWeb
 
         $this->getReservationsData($data);
         $this->getLandingPage($data, $this->config->item('deniedLandingPage'));
-        $this->loadViewOrTemplate($data, 'thuishavenerror');
+        $this->loadViewOrTemplate($data, 'paylinkticketing/notPaid');
     }
 
     public function pinCanceled()
@@ -142,13 +143,13 @@ class  Paylinkticketing extends BaseControllerWeb
 
         $this->getReservationsData($data);
         $this->getLandingPage($data, $this->config->item('pinCanceledLandingPage'));
-        $this->loadViewOrTemplate($data, 'thuishavenerror');
+        $this->loadViewOrTemplate($data, 'paylinkticketing/notPaid');
     }
 
     private function getReservationsData(array &$data): void
     {
         $get = Utility_helper::sanitizeGet();
-        $transactionId = ( isset($get['orderid']) ) ? intval($get['orderid']) : null;;
+        $transactionId = ( isset($get['orderid']) ) ? intval($get['orderid']) : null;
         
         
         $data['backSuccess'] = 'places';
@@ -156,6 +157,8 @@ class  Paylinkticketing extends BaseControllerWeb
 
         if ($transactionId) {
             $reservations = $this->bookandpay_model->getReservationsByTransactionId($transactionId);
+            $vendorId = intval($reservations[0]->customer);
+            $data['usershorturl'] = $this->user_model->getUserShortUrlById($vendorId);
             $data['reservations'] = $reservations;
 
             $this->setGlobalVendor(intval($data['reservations'][0]->customer));
