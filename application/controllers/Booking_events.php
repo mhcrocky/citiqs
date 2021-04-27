@@ -722,7 +722,6 @@ class Booking_events extends BaseControllerWeb
 
         $get = Utility_helper::sanitizeGet();
 
-
         if ($get['orderStatusId'] === $this->config->item('payNlSuccess')) {
             // need to do something with the facebook pixel.
             $redirect = base_url() . 'ticketing_success?orderid=' . $get['orderId'];
