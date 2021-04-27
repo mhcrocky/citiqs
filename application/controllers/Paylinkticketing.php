@@ -13,10 +13,7 @@ class  Paylinkticketing extends BaseControllerWeb
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('shoporder_model');
-        $this->load->model('shopposorder_model');
-        $this->load->model('shopsession_model');
-        $this->load->model('shopvendorfod_model');
+        $this->load->model('bookandpay_model');
         $this->load->model('shopvendor_model');
         $this->load->model('shoplandingpages_model');
 
@@ -32,7 +29,7 @@ class  Paylinkticketing extends BaseControllerWeb
     {
         if (empty($data)) return;
 
-        $vendorId = intval($data['order']['vendorId']);
+        $vendorId = intval($data['reservations'][0]->customer);
         $landingPage = $this
                     ->shoplandingpages_model
                     ->setProperty('vendorId', $vendorId)
@@ -46,7 +43,7 @@ class  Paylinkticketing extends BaseControllerWeb
             redirect($landingPage['value']);
         }
 
-        $data['landingPage'] = Landingpage_helper::getTemplateString($data['order'], $landingPage['value']); // change tempaltin
+        $data['landingPage'] = Landingpage_helper::getTicketingTemplateString($data['reservations'], $landingPage['value']); // change tempaltin
         return;
     }
 
@@ -63,9 +60,9 @@ class  Paylinkticketing extends BaseControllerWeb
 
         $this->global['pageTitle'] = 'TIQS : SUCCESS';
 
-        $this->getOrderData($data);
+        $this->getReservationsData($data);
         $this->getLandingPage($data, $this->config->item('successLandingPage'));
-        $this->loadViewOrTemplate($data, 'paysuccesslink/success');
+        $this->loadViewOrTemplate($data, 'bookingsuccess');
     }
 
     public function pending()
@@ -76,9 +73,9 @@ class  Paylinkticketing extends BaseControllerWeb
 
         $this->global['pageTitle'] = 'TIQS : PENDING';
 
-        $this->getOrderData($data);
+        $this->getReservationsData($data);
         $this->getLandingPage($data, $this->config->item('pendingLandingPage'));
-        $this->loadViewOrTemplate($data, 'paysuccesslink/notPaid');
+        $this->loadViewOrTemplate($data, 'thuishavenerror');
 
 
     }
@@ -91,9 +88,9 @@ class  Paylinkticketing extends BaseControllerWeb
 
         $this->global['pageTitle'] = 'TIQS : AUTHORISED';
 
-        $this->getOrderData($data);
+        $this->getReservationsData($data);
         $this->getLandingPage($data, $this->config->item('authorisedLandingPage'));
-        $this->loadViewOrTemplate($data, 'paysuccesslink/notPaid');
+        $this->loadViewOrTemplate($data, 'thuishavenerror');
     }
 
     public function verify()
@@ -104,9 +101,9 @@ class  Paylinkticketing extends BaseControllerWeb
 
         $this->global['pageTitle'] = 'TIQS : VERIFY';
 
-        $this->getOrderData($data);
+        $this->getReservationsData($data);
         $this->getLandingPage($data, $this->config->item('verifyLandingPage'));
-        $this->loadViewOrTemplate($data, 'paysuccesslink/notPaid');
+        $this->loadViewOrTemplate($data, 'thuishavenerror');
     }
 
     public function cancel()
@@ -117,9 +114,9 @@ class  Paylinkticketing extends BaseControllerWeb
 
         $this->global['pageTitle'] = 'TIQS : CANCEL';
 
-        $this->getOrderData($data);
+        $this->getReservationsData($data);
         $this->getLandingPage($data, $this->config->item('cancelLandingPage'));
-        $this->loadViewOrTemplate($data, 'paysuccesslink/notPaid');
+        $this->loadViewOrTemplate($data, 'thuishavenerror');
     }
 
     public function denied()
@@ -130,9 +127,9 @@ class  Paylinkticketing extends BaseControllerWeb
 
         $this->global['pageTitle'] = 'TIQS : DENIED';
 
-        $this->getOrderData($data);
+        $this->getReservationsData($data);
         $this->getLandingPage($data, $this->config->item('deniedLandingPage'));
-        $this->loadViewOrTemplate($data, 'paysuccesslink/notPaid');
+        $this->loadViewOrTemplate($data, 'thuishavenerror');
     }
 
     public function pinCanceled()
@@ -143,26 +140,26 @@ class  Paylinkticketing extends BaseControllerWeb
 
         $this->global['pageTitle'] = 'TIQS :  PIN CANCELED';
 
-        $this->getOrderData($data);
+        $this->getReservationsData($data);
         $this->getLandingPage($data, $this->config->item('pinCanceledLandingPage'));
-        $this->loadViewOrTemplate($data, 'paysuccesslink/notPaid');
+        $this->loadViewOrTemplate($data, 'thuishavenerror');
     }
 
-    private function getOrderData(array &$data): void
+    private function getReservationsData(array &$data): void
     {
         $get = Utility_helper::sanitizeGet();
-        $orderId = ( isset($get['orderid']) && is_numeric($get['orderid']) ) ? intval($get['orderid']) : null;
-        $orderRandomKey = !empty($get[$this->config->item('orderDataGetKey')]) ? $get[$this->config->item('orderDataGetKey')] : null;
+        $transactionId = ( isset($get['orderid']) ) ? intval($get['orderid']) : null;;
+        
         
         $data['backSuccess'] = 'places';
-        $data['backFailed'] = 'places';;
+        $data['backFailed'] = 'places';
 
-        if ($orderId) {
-            $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
-            $data['order'] = reset($order);
+        if ($transactionId) {
+            $reservations = $this->bookandpay_model->getReservationsByTransactionId($transactionId);
+            $data['reservations'] = $reservations;
 
-            $this->setGlobalVendor(intval($data['order']['vendorId']));
-            $this->setBackAndFailedUrl($data);
+            $this->setGlobalVendor(intval($data['reservations'][0]->customer));
+            //$this->setBackAndFailedUrl($data);
         }
         
         // if ($orderRandomKey && isset($order) && $order['orderRandomKey'] !== $get[$this->config->item('orderDataGetKey')]) {
@@ -187,6 +184,7 @@ class  Paylinkticketing extends BaseControllerWeb
                                     ]);
     }
 
+    /*
     private function setBackAndFailedUrl(array &$data): void
     {
         if ($data['order']['isPos'] === '1') {
@@ -200,4 +198,5 @@ class  Paylinkticketing extends BaseControllerWeb
             $data['backFailed'] .= '&' . $this->config->item('orderDataGetKey') . '=' . $data['order']['orderRandomKey'];
         }
     }
+    */
 }
