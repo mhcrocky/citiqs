@@ -720,34 +720,30 @@ class Booking_events extends BaseControllerWeb
     {
         // uncomment for landing pages if you like and think it is ok
 
-        // $get = Utility_helper::sanitizeGet();
-        // // var_dump($get);
+        $get = Utility_helper::sanitizeGet();
 
 
-        // // die();
+        if ($get['orderStatusId'] === $this->config->item('payNlSuccess')) {
+            // need to do something with the facebook pixel.
+            $redirect = base_url() . 'ticketing_success?orderid=' . $get['orderId'];
+        } elseif ($get['orderStatusId'] === $this->config->item('payNlPending')) {
+            $redirect = base_url() . 'ticketing_pending?orderid=' . $get['orderId'];
+        } elseif ($get['orderStatusId'] === $this->config->item('payNlAuthorised')) {
+            $redirect = base_url() . 'ticketing_authorised?orderid=' . $get['orderId'];
+        } elseif ($get['orderStatusId'] === $this->config->item('payNlVerify')) {
+            $redirect = base_url() . 'ticketing_verify?orderid=' . $get['orderId'];
+        } elseif ($get['orderStatusId'] === $this->config->item('payNlCancel')) {
+            $redirect = base_url() . 'ticketing_cancel?orderid=' . $get['orderId'];
+        } elseif ($get['orderStatusId'] === $this->config->item('payNlDenied')) {
+            $redirect = base_url() . 'ticketing_denied?orderid=' . $get['orderId'];
+        } elseif ($get['orderStatusId'] === $this->config->item('payNlPinCanceled')) {
+            $redirect = base_url() . 'ticketing_pin_canceled?orderid=' . $get['orderId'];
+        }
 
+        $this->session->sess_destroy();
+        redirect($redirect);
 
-        // if ($get['orderStatusId'] === $this->config->item('payNlSuccess')) {
-        //     // need to do something with the facebook pixel.
-        //     $redirect = base_url() . 'ticketing_success?';
-        // } elseif ($get['orderStatusId'] === $this->config->item('payNlPending')) {
-        //     $redirect = base_url() . 'ticketing_pending?';
-        // } elseif ($get['orderStatusId'] === $this->config->item('payNlAuthorised')) {
-        //     $redirect = base_url() . 'ticketing_authorised?';
-        // } elseif ($get['orderStatusId'] === $this->config->item('payNlVerify')) {
-        //     $redirect = base_url() . 'ticketing_verify?';
-        // } elseif ($get['orderStatusId'] === $this->config->item('payNlCancel')) {
-        //     $redirect = base_url() . 'ticketing_cancel?';
-        // } elseif ($get['orderStatusId'] === $this->config->item('payNlDenied')) {
-        //     $redirect = base_url() . 'ticketing_denied?';
-        // } elseif ($get['orderStatusId'] === $this->config->item('payNlPinCanceled')) {
-        //     $redirect = base_url() . 'ticketing_pin_canceled?';
-        // }
-
-
-        // redirect($redirect);
-
-
+        /*
         $statuscode = intval($this->input->get('orderStatusId'));
         if ($statuscode == 100) {
             $data = array();
@@ -770,6 +766,7 @@ class Booking_events extends BaseControllerWeb
             $this->session->sess_destroy();
             $this->loadViews("thuishavenerror", $this->global, $data, 'nofooter', "noheader");
         }
+        */
 
 	}
 
