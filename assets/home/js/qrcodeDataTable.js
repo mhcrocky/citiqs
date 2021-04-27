@@ -71,7 +71,7 @@ function save_qrcode(e){
   
   let data = {
       qrcodeId: $('#qr_codeId').val(),
-      spot: $('#spot').val(),
+      spot: $('#spot option:selected').val(),
       affiliate: $('#affiliate').val()
   }
 
@@ -108,7 +108,7 @@ function editSpot(id){
 function update_qrcode() {
   let data = {
     qrcodeId: $('#qrcodeId').val(),
-    spot: $('#editspot').val(),
+    spot: $('#editspot option:selected').val(),
   }
   
   $.post(globalVariables.baseUrl + "qrcode/update_qrcode", data, function(data){
