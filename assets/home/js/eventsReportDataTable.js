@@ -171,6 +171,7 @@ $(document).ready(function () {
         title: "Date",
         data: "reservationtime",
       },
+      /*
       {
         title: "",
         data: null,
@@ -193,6 +194,7 @@ $(document).ready(function () {
           return html;
         },
       },
+      */
       {
         title: "",
         data: null,
