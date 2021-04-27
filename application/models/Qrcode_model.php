@@ -8,8 +8,9 @@ class Qrcode_model extends CI_Model
 
     public function get_qrcodes($vendorId) {
 
-        $this->db->select('*');
+        $this->db->select('tbl_qrcodes.*, spotName');
         $this->db->from('tbl_qrcodes');
+        $this->db->join('tbl_shop_spots', 'tbl_shop_spots.id = tbl_qrcodes.spot','left');
         $this->db->where('vendorId', $vendorId);
         $query = $this->db->get();
         return $query->result_array();
