@@ -4,8 +4,11 @@ function toogleElements(showId, hideId, className) {
     document.getElementById(hideId).classList.toggle(className)
 }
 
-function redirect(url) {
-    window.location.href = url;
+function payRedirect(element, url) {
+    if (element.dataset.clicked === '0') {
+        element.dataset.clicked = '1';
+        window.location.href = url;
+    }
 }
 
 function voucherPay(codeId) {    
