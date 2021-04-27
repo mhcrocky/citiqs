@@ -607,6 +607,19 @@ class Bookandpay_model extends CI_Model
 		return $result;
 	}
 
+	public function getBookingsByIds($ids)
+	{
+		$this->db->from('tbl_bookandpay');
+		$this->db->where_in('id', $ids);
+		$query = $this->db->get();
+
+//				$testquery = $this->db->last_query();
+//				var_dump($testquery);
+//				die();
+        $result = $query->result();
+		return $result;
+	}
+
 	public function getReservationsByTransactionId($TransactionId)
 	{
 		$this->db->from('tbl_bookandpay');
