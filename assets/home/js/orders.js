@@ -97,7 +97,7 @@ function sendSmsButton(data) {
     button += '<button class="btn btn-primary" ';
     button +=    'data-order-id="' + data[0] + '" ';
     button +=    'data-mobile="' + data[10] + '" ';
-    button +=    'data-message="Jouw bestelling \'' + data[0] + '\' is klaar." ';
+    button +=    'data-message="Uw bestelling \'' + data[0] + '\' is klaar en mag afgehaald worden." ';
     button +=    'onclick="sendSms(this)"';
     button += '>SMS ';
     button +=   '<span ';
