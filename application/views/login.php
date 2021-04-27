@@ -43,7 +43,7 @@ if($current_url == $employeeUrl || $current_url == $employeeUrl){
 					<?php echo $this->language->tLine('BUSINESS LOGIN.');?>
 				</p>
 			</div>
-			<div class="width-650">
+			<div  style="text-align:center">
 				<form action="<?php echo $loginUrl; ?>" method="post">
 					<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
 						<?php echo $this->language->Line("registerbusiness-3500",'Use your e-mail to login');?>
@@ -109,7 +109,7 @@ if($current_url == $employeeUrl || $current_url == $employeeUrl){
 				</p>
 			</div>
 
-			<div class="width-650">
+			<div >
 				<div style="margin-top:-10%" align="right">
 					<img src="<?php echo $this->baseUrl; ?>assets/home/images/girl.png" alt="tiqs" width="50%"/>
 					<form action="<?php echo $employeeUrl; ?>" method="post">
