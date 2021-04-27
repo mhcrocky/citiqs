@@ -186,14 +186,13 @@
 			</div>
 		</div><!-- end timeline block -->
 	</div>
-	<div class="col-half background-green height-100">
-		<div class="flex-column align-start">
-			<div class="mt-50" align="center" >
-				<img border="0" src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="275" height="auto" />
-			</div>
-		</div>
-	</div><!-- end col half -->
-	<!-- time-line -->
+<!--	<div class="col-half background-green height-100">-->
+<!--		<div class="flex-column align-start">-->
+<!--			<div class="mt-50" align="center" >-->
+<!--				<img border="0" src="--><?php //echo base_url(); ?><!--assets/home/images/tiqslogowhite.png" alt="tiqs" width="275" height="auto" />-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</div>  -->
 	<!-- end col half -->
 </div>
 <!-- end main wrapper -->
