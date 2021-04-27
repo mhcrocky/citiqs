@@ -26,7 +26,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title font-weight-bold text-dark" id="addQRCodeModalLabel">Add QRCode</h5>
+                <h5 class="modal-title font-weight-bold text-dark" id="addQRCodeModalLabel"><?php echo $this->language->tline('Add QRCode'); ?></h5>
                 <button type="button" class="close" id="closeModal" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -47,13 +47,17 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="spot" class="col-md-4 col-form-label text-md-left">
-                            Spot
+                        <label for="spot" class="col-md-4 col-form-label text-md-left">Spot
                         </label>
                         <div class="col-md-6">
-
-                            <input type="text" id="spot" class="input-w border-50 form-control"
-                                name="spot">
+                            <select id="spot" name="spot" class="form-control input-w border-50 field">
+                                <option value="">Select option</option>
+                                <?php foreach($spots as $spot): ?>
+                                <option id="option_<?php echo $spot->id; ?>" value="<?php echo $spot->id; ?>" >
+                                <?php echo $spot->descript; ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                     </div>
 
@@ -103,14 +107,18 @@
                 <form name="my-form" id="my-form" class="needs-validation" action="#" method="POST">
 
                     <div class="form-group row">
-                        <label for="spot" class="col-md-4 col-form-label text-md-left">
-                            Spot
+                        <label for="editspot" class="col-md-4 col-form-label text-md-left">Spot
                         </label>
                         <div class="col-md-6">
                             <input type="hidden" id="qrcodeId" name="id">
-
-                            <input type="text" id="editspot" class="input-w border-50 form-control"
-                                name="spot">
+                            <select id="editspot" name="spot" class="form-control input-w border-50 field">
+                                <option value="">Select option</option>
+                                <?php foreach($spots as $spot): ?>
+                                <option id="option_<?php echo $spot->id; ?>" value="<?php echo $spot->id; ?>" >
+                                <?php echo $spot->descript; ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                     </div>
 
