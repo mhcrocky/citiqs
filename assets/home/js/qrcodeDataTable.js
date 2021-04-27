@@ -30,6 +30,10 @@ $(document).ready(function () {
         data: "spot",
       },
       {
+        title: "Spot Name",
+        data: "spotName",
+      },
+      {
         title: "Affiliate",
         data: "affiliate",
       },
