@@ -132,7 +132,7 @@ class Booking_events extends BaseControllerWeb
                 'status' => 'error',
                 'message' => 'You have reached the maximum bookings for this ticket!',
                 'quantity' => $ticketInfo->maxBooking,
-                'amount' => (floatval($ticketInfo->ticketPrice) + floatval($ticketInfo->ticketFee))*(floatval($ticket['quantity']) - 1)
+                'amount' => floatval($ticket['amount']) - (floatval($ticketInfo->ticketPrice) + floatval($ticketInfo->ticketFee))
             ];
             echo json_encode($response);
             return ;
@@ -146,7 +146,7 @@ class Booking_events extends BaseControllerWeb
                 'status' => 'error',
                 'message' => 'SOLD OUT!',
                 'quantity' => $ticket_available,
-                'amount' => (floatval($ticketInfo->ticketPrice) + floatval($ticketInfo->ticketFee))*(floatval($ticket['quantity']) - 1)
+                'amount' => floatval($ticket['amount']) - (floatval($ticketInfo->ticketPrice) + floatval($ticketInfo->ticketFee))
             ];
             echo json_encode($response);
             return ;
