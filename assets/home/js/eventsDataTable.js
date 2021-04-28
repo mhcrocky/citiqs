@@ -181,14 +181,14 @@ $(document).ready(function() {
             data: "ticketId",
           },
           {
-            title: "Reservation ID",
-            data: "reservationId",
+            title: "Transaction ID",
+            data: "transactionId",
           },
           {
               title: 'Resend',
               data: null,
               "render": function(data, type, row) {
-                return '<button class="btn btn-primary" onclick="resendReservation(\''+data.reservationId+'\')">Resend</button>';
+                return '<button class="btn btn-primary" onclick="resendReservation(\''+data.transactionId+'\')">Resend</button>';
             }
            }
           
@@ -199,8 +199,8 @@ $(document).ready(function() {
 });
 
 
-function resendReservation(reservationId){
-    $.post(globalVariables.baseUrl + "events/resend_reservation", {reservationId: reservationId}, function(data){
+function resendReservation(transactionId){
+    $.post(globalVariables.baseUrl + "events/resend_reservation", {transactionId: transactionId}, function(data){
         alertify['success']('Resent Successfully!');
     });
 }
