@@ -102,6 +102,8 @@ class Events extends BaseControllerWeb
        $dt = new DateTime( 'now');
        $bookdatetime = $dt->format('Y-m-d H:i:s');
        $ticket = $this->event_model->get_ticket_by_id($this->vendor_id, $data['ticketId']);
+       $ticketQuantity = intval($data['ticketQuantity']);
+       $transactionId = $this->generateTransactionId();
        $booking = [
 			'customer' => $this->vendor_id,
 			'eventId' => $data['ticketId'],
@@ -111,17 +113,19 @@ class Events extends BaseControllerWeb
 			'timeto' => $ticket->EndTime,
 			'price' => 0,
             'paid' => 3,
-			'numberofpersons' => $data['ticketQuantity'],
+			'numberofpersons' => 1,
 			'name' => $data['guestName'],
 			'email' => $data['guestEmail'],
 			'ticketDescription' => $ticket->ticketDescription,
-			'ticketType' => $ticket->ticketType
+			'ticketType' => $ticket->ticketType,
+            'guestlist' => 1,
+            'TransactionID' => $transactionId
         ];
         
-        $reservationId = $this->event_model->save_guest_reservations($booking);
-        $data['reservationId'] = $reservationId;
+        $this->event_model->save_guest_reservations($booking, $ticketQuantity);
+        $data['transactionId'] = $transactionId;
         $this->event_model->save_guest($data);
-        $this->emailReservation([$reservationId]);
+        $this->emailReservation($transactionId);
 
     }
 
@@ -152,11 +156,13 @@ class Events extends BaseControllerWeb
 			'name' => $data->$guestName,
 			'email' => $data->$guestEmail,
 			'ticketDescription' => $ticket->ticketDescription,
-			'ticketType' => $ticket->ticketType
+			'ticketType' => $ticket->ticketType,
+            'guestlist' => 1,
+            'TransactionID' => $transactionId
         ];
 
-        $reservationId = $this->event_model->save_guest_reservations($booking);
-        $reservationIds[] = $reservationId;
+        $this->event_model->save_guest_reservations($booking);
+        $transactionId = $this->generateTransactionId();
            
            $guestlist[] = [
                'guestName' => $data->$guestName,
@@ -164,18 +170,18 @@ class Events extends BaseControllerWeb
                'ticketQuantity' => intval($data->$ticketQuantity),
                'eventId' => intval($data_post['eventId']),
                'ticketId' => intval($data_post['ticketId']),
-               'reservationId' => $reservationId
+               'transactionId' => $transactionId
            ];
        }
        $this->event_model->save_multiple_guests($guestlist);
-       $this->emailReservation($reservationIds);
+       $this->emailReservation($transactionId);
 
     }
 
     public function resend_reservation()
     {
-        $reservationId = $this->input->post('reservationId');
-        $this->emailReservation([$reservationId]);
+        $transactionId = $this->input->post('transactionId');
+        $this->emailReservation($transactionId);
     }
 
     public function edit($eventId)
@@ -583,11 +589,12 @@ class Events extends BaseControllerWeb
 	}
 
 
-    private function emailReservation($reservationIds)
+    private function emailReservation($transactionId)
 	{
         $this->load->model('bookandpay_model');
         $this->load->model('sendreservation_model');
-        $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
+        
+        $reservations = $this->bookandpay_model->getReservationsByTransactionId($transactionId);
         foreach ($reservations as $key => $reservation):
             $result = $this->sendreservation_model->getEventTicketingData($reservation->reservationId);
             
@@ -729,6 +736,14 @@ class Events extends BaseControllerWeb
             }
             endforeach;
         }
+
+    public function generateTransactionId(){
+        $set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKLMNPQRSTVWXY';
+        $transactionId = '14';
+        $transactionId .= intval(microtime(true));
+        $transactionId .= strtoupper(substr(str_shuffle($set), 0, 10));
+        return $transactionId;
+    }
     
 
 } 
