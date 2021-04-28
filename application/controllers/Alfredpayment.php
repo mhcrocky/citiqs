@@ -126,6 +126,8 @@ class Alfredpayment extends BaseControllerWeb
         $vendorId = intval($order['vendorId']);
         $redirect = base_url() . 'cancel?status=' . $get['orderStatusId'];
 
+        $this->logPaynlGetResponse($get);
+
         if ($get['orderStatusId'] === $this->config->item('payNlSuccess')) {
             // need to do something with the facebook pixel.
             $this->shoporderpaynl_model->updatePayNl(['successPayment' => date('Y-m-d H:i:s')]);
@@ -152,5 +154,13 @@ class Alfredpayment extends BaseControllerWeb
 
         redirect($redirect);
         exit();
+    }
+
+    private function logPaynlGetResponse(array $get):void
+    {
+        $file = FCPATH . 'application/tiqs_logs/payment_logs_shop.txt';
+        $message = http_build_query($get);
+        Utility_helper::logMessage($file, $message);
+        return;
     }
 }
