@@ -102,6 +102,8 @@ class Events extends BaseControllerWeb
        $dt = new DateTime( 'now');
        $bookdatetime = $dt->format('Y-m-d H:i:s');
        $ticket = $this->event_model->get_ticket_by_id($this->vendor_id, $data['ticketId']);
+       $ticketQuantity = intval($data['ticketQuantity']);
+       $transactionId = $this->generateTransactionId();
        $booking = [
 			'customer' => $this->vendor_id,
 			'eventId' => $data['ticketId'],
@@ -111,17 +113,19 @@ class Events extends BaseControllerWeb
 			'timeto' => $ticket->EndTime,
 			'price' => 0,
             'paid' => 3,
-			'numberofpersons' => $data['ticketQuantity'],
+			'numberofpersons' => 1,
 			'name' => $data['guestName'],
 			'email' => $data['guestEmail'],
 			'ticketDescription' => $ticket->ticketDescription,
-			'ticketType' => $ticket->ticketType
+			'ticketType' => $ticket->ticketType,
+            'guestlist' => 1,
+            'TransactionID' => $transactionId
         ];
         
-        $reservationId = $this->event_model->save_guest_reservations($booking);
-        $data['reservationId'] = $reservationId;
+        $this->event_model->save_guest_reservations($booking, $ticketQuantity);
+        $data['transactionId'] = $transactionId;
         $this->event_model->save_guest($data);
-        $this->emailReservation([$reservationId]);
+        $this->emailReservation($transactionId);
 
     }
 
@@ -152,11 +156,13 @@ class Events extends BaseControllerWeb
 			'name' => $data->$guestName,
 			'email' => $data->$guestEmail,
 			'ticketDescription' => $ticket->ticketDescription,
-			'ticketType' => $ticket->ticketType
+			'ticketType' => $ticket->ticketType,
+            'guestlist' => 1,
+            'TransactionID' => $transactionId
         ];
 
-        $reservationId = $this->event_model->save_guest_reservations($booking);
-        $reservationIds[] = $reservationId;
+        $this->event_model->save_guest_reservations($booking);
+        $transactionId = $this->generateTransactionId();
            
            $guestlist[] = [
                'guestName' => $data->$guestName,
@@ -164,18 +170,18 @@ class Events extends BaseControllerWeb
                'ticketQuantity' => intval($data->$ticketQuantity),
                'eventId' => intval($data_post['eventId']),
                'ticketId' => intval($data_post['ticketId']),
-               'reservationId' => $reservationId
+               'transactionId' => $transactionId
            ];
        }
        $this->event_model->save_multiple_guests($guestlist);
-       $this->emailReservation($reservationIds);
+       $this->emailReservation($transactionId);
 
     }
 
     public function resend_reservation()
     {
-        $reservationId = $this->input->post('reservationId');
-        $this->emailReservation([$reservationId]);
+        $transactionId = $this->input->post('transactionId');
+        $this->emailReservation($transactionId);
     }
 
     public function edit($eventId)
@@ -583,16 +589,18 @@ class Events extends BaseControllerWeb
 	}
 
 
-    private function emailReservation($reservationIds)
+    private function emailReservation($transactionId)
 	{
         $this->load->model('bookandpay_model');
         $this->load->model('sendreservation_model');
-        $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
+        
+        $reservations = $this->bookandpay_model->getReservationsByTransactionId($transactionId);
         foreach ($reservations as $key => $reservation):
             $result = $this->sendreservation_model->getEventTicketingData($reservation->reservationId);
             
             foreach ($result as $record) {
                 $customer = $record->customer;
+                $Spotlabel = $record->Spotlabel;
 				$eventDate = $record->eventdate;
                 $endDate = $record->EndDate;
                 $eventName = $record->eventname;
@@ -603,20 +611,24 @@ class Events extends BaseControllerWeb
                 $eventZipcode = $record->eventZipcode;
 				$reservationId = $record->reservationId;
 				$ticketPrice = $record->price;
+                $ticketFee = $record->ticketFee;
                 $ticketId = $record->ticketId;
                 $ticketDescription = $record->ticketDescription;
 				$ticketQuantity = $record->numberofpersons;
+                $orderAmount = intval($ticketQuantity) * (floatval($record->price) + floatval($record->ticketFee));
+                $orderAmount = number_format($orderAmount, 2, '.', '');
                 $eventZipcode = $record->ticketDescription;
                 $buyerName = $record->name;
                 $buyerEmail = $record->email;
 				$buyerMobile = $record->mobilephone;
 				$reservationset = $record->reservationset;
-
+                $orderId = $record->orderId;
 				$fromtime = $record->timefrom;
 				$totime = $record->timeto;
 				$paid = $record->paid;
 				$TransactionId = $record->TransactionID;
                 $voucher = $record->voucher;
+                $mailsend = $record->mailsend;
                 
                 
                     if (true) {
@@ -678,6 +690,8 @@ class Events extends BaseControllerWeb
                                 $dt = new DateTime('now');
                                 $date = $dt->format('Y.m.d');
                                 $mailtemplate = str_replace('[currentDate]', $buyerName, $mailtemplate);
+                                $mailtemplate = str_replace('[orderId]', $orderId, $mailtemplate);
+                                $mailtemplate = str_replace('[orderAmount]', $orderAmount, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerName]', $buyerName, $mailtemplate);
 								$mailtemplate = str_replace('[buyerEmail]', $buyerEmail, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerMobile]', $buyerMobile, $mailtemplate);
@@ -696,9 +710,15 @@ class Events extends BaseControllerWeb
                                 $mailtemplate = str_replace('[startTime]', $fromtime, $mailtemplate);
 								$mailtemplate = str_replace('[endTime]', $totime, $mailtemplate);
 								$mailtemplate = str_replace('[timeSlot]', '', $mailtemplate);
+                                $mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
+                                $mailtemplate = str_replace('[spotLabel]', $Spotlabel, $mailtemplate);
 								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
 								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
+                                $mailtemplate .= '<div style="width:100%;text-align:center;margin-top: 30px;">';
+                                $download_pdf_link = base_url() . "booking_events/pdf/" . $emailId . "/" . $reservationId;
+                                $mailtemplate .= '<a href="'.$download_pdf_link.'" id="pdfDownload" style="background-color:#008CBA;border: none;color: white;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;">Download as PDF</a>';
+                                $mailtemplate .= '</div>';
 								$subject = ($emailTemplate->template_subject) ? strip_tags($emailTemplate->template_subject) : 'Your tiqs reservation(s)';
 								$datachange['mailsend'] = 1;
                                 
@@ -716,6 +736,14 @@ class Events extends BaseControllerWeb
             }
             endforeach;
         }
+
+    public function generateTransactionId(){
+        $set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKLMNPQRSTVWXY';
+        $transactionId = '14';
+        $transactionId .= intval(microtime(true));
+        $transactionId .= strtoupper(substr(str_shuffle($set), 0, 10));
+        return $transactionId;
+    }
     
 
 } 

@@ -452,12 +452,12 @@ class Event_model extends CI_Model {
 		return $this->db->insert_id();
 	}
 
-	function save_guest_reservations($data){
-		$set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKLMNPQRSTVWXY';
-		$reservationId = 'T-' . substr(str_shuffle($set), 0, 16);
-		$data['reservationId'] = $reservationId;
-		$this->db->insert('tbl_bookandpay',$data);
-		return $reservationId;
+	function save_guest_reservations($data, $ticketQuantity){
+		$reservationIds = [];
+		for($i = 0; $i < $ticketQuantity; $i++){
+			$reservationIds[] = $this->insertTicket($data);
+		}
+		return $reservationIds;
 	}
 
 	function update_reservation_amount($reservationId, $amount){

@@ -76,7 +76,7 @@ class  Paylinkticketing extends BaseControllerWeb
 
         $this->getReservationsData($data);
         $this->getLandingPage($data, $this->config->item('pendingLandingPage'));
-        $this->loadViewOrTemplate($data, 'paylinkticketing/notPaid');
+        $this->loadViewOrTemplate($data, 'paylinkticketing/pending');
 
 
     }

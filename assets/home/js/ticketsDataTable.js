@@ -786,6 +786,7 @@ function addGuest(e){
       guestName: guestName,
       guestEmail: guestEmail,
       ticketQuantity: ticketQuantity,
+      eventId:  $('#eventId').val(),
       ticketId: $('#guestTicketId').val()
   }
 
