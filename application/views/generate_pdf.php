@@ -2,8 +2,7 @@
 <html>
 <head>
 
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i" rel="stylesheet">
+
 <style>
 #HTMLtoPDF {
     font-size: 13px;
@@ -11,7 +10,16 @@
     font-style: normal;
     letter-spacing: 0;
     color: #000000;
-} 
+}
+
+p {
+    font-size: 13px;
+    font-family: Helvetica,Arial,sans-serif !important;
+    font-style: normal;
+    letter-spacing: 0;
+    color: #000000;
+}
+
 </style>
 </head>
 
@@ -36,7 +44,7 @@
 		.drawDOM('#HTMLtoPDF', {
 			paperSize: "A4",
 			margin: {top: "1cm", bottom: "1cm", right: "1cm", left: "1cm"},
-			scale: 0.70,
+			scale: 0.61,
 			height: 500
 		})
 		.then(function(group){
