@@ -152,7 +152,7 @@ $(document).ready( function () {
     footerCallback: function( tfoot, data, start, end, display ) {
       var api = this.api(), data;
            
-      let amountTotalData = api.column( 7,{ search: 'applied' } ).cache('search');
+      let amountTotalData = api.column( 8,{ search: 'applied' } ).cache('search');
       let amountTotal = amountTotalData.length ? 
          amountTotalData.reduce( function (a, b) {
              return parseFloat(a) + parseFloat(b);
@@ -171,6 +171,10 @@ $(document).ready( function () {
     {
       title: 'Reservation ID',
       data: 'reservationId'
+    },
+    {
+      title: 'Event Name',
+      data: 'eventname'
     },
     {
       title: 'Buyer Name',
@@ -258,7 +262,7 @@ $(document).ready( function () {
         var date = full_timestamp.split(" - ");
         var min = moment(date[0]);
         var max = moment(date[1]);
-        var startDate = moment(data[9]);
+        var startDate = moment(data[10]);
         if (min == '' && max == '') { min = todayDate; }
         if (min == '' && startDate <= max) { return true;}
         if(max == '' && startDate >= min) {return true;}
