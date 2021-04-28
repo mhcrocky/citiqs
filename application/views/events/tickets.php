@@ -69,6 +69,7 @@
                                         onclick="removeTicket('<?php echo $ticketId; ?>','<?php echo $ticket['ticketPrice']; ?>', '<?php echo $ticket['ticketFee']; ?>', 'totalBasket')">-</button>
                                     <input type="number" min="1" 
                                         data-available="<?php echo $ticket['ticketAvailable']; ?>"
+                                        data-maxbooking="<?php echo $ticket['maxBooking']; ?>"
                                         <?php if(in_array($ticketId,$checkout_tickets_id)){?>
                                         value="<?php echo $checkout_tickets[$ticketId]['quantity']; ?>"
                                         <?php } else { ?> 
