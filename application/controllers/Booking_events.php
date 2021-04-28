@@ -12,6 +12,7 @@ class Booking_events extends BaseControllerWeb
         parent::__construct();
         $this->load->helper('pay_helper');
         $this->load->helper('utility_helper');
+        $this->load->helper('queue_helper');
 
         $this->load->model('event_model');
         $this->load->model('bookandpay_model');
@@ -329,6 +330,9 @@ class Booking_events extends BaseControllerWeb
 
     public function onlinepayment($paymentType, $paymentOptionSubId = '0')
     {
+        // release queue
+        Queue_helper::releaseQueue();
+
         $paymentType = strval($this->uri->segment('3'));
         $paymentOptionSubId = ($this->uri->segment('4')) ? strval($this->uri->segment('4')) : '0';
         $vendorId = $this->session->userdata('customer');
