@@ -199,8 +199,11 @@
 
         public static function logMessage(string $file, string $message): int
         {
-            $message = date('Y-m-d H:i:s') . ' => ' . $message . PHP_EOL;
-            return file_put_contents($file, $message, FILE_APPEND);
+            if (ENVIRONMENT !== 'development') {
+                $message = date('Y-m-d H:i:s') . ' => ' . $message . PHP_EOL;
+                return file_put_contents($file, $message, FILE_APPEND);
+            }
+            return 0;
         }
 
         public static function getPaginationLinks(int $count, int $perPage, $url) {

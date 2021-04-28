@@ -133,12 +133,8 @@ class Alfredpayment extends BaseControllerWeb
             $this->shoporderpaynl_model->updatePayNl(['successPayment' => date('Y-m-d H:i:s')]);
             $this->shoporder_model->updatePaidStatus($this->shoporderpaynl_model, ['paid' => $this->config->item('orderPaid')]);
             $this->shoporder_model->emailReceipt();
-            if ($vendorId == 1162) {
-                $redirect = 'successth';
-            } else {
-                $redirect = base_url() . 'success?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
-            }
-        } elseif ($get['orderStatusId'] === $this->config->item('payNlPending')) {
+            $redirect = base_url() . 'success?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
+        } elseif (in_array($get['orderStatusId'], $this->config->item('payNlPending'))) {
             $redirect = base_url() . 'pending?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
         } elseif ($get['orderStatusId'] === $this->config->item('payNlAuthorised')) {
             $redirect = base_url() . 'authorised?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
@@ -148,8 +144,8 @@ class Alfredpayment extends BaseControllerWeb
             $redirect = base_url() . 'cancel?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
         } elseif ($get['orderStatusId'] === $this->config->item('payNlDenied')) {
             $redirect = base_url() . 'denied?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
-        } elseif ($get['orderStatusId'] === $this->config->item('payNlPinCanceled')) {
-            $redirect = base_url() . 'pin_canceled?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
+        } else {
+            $redirect = base_url() . 'cancel?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
         }
 
         redirect($redirect);
