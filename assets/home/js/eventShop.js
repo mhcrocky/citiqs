@@ -310,6 +310,8 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
     $('#payForm').show();
     var quantityValue = $(".ticketQuantityValue_" + id).val();
     var totalBasket = $("#totalBasketAmount").val();
+    var maxBooking = $(".ticketQuantityValue_" + id).attr('data-maxbooking');
+    maxBooking = $.isNumeric(maxBooking) ? parseInt(maxBooking) : '';
     quantityValue = Math.abs(parseInt(quantityValue));
     totalBasket = Math.round((parseFloatNum(totalBasket)* 1e12)) / 1e12;
     price = parseFloatNum(price);
@@ -327,6 +329,29 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
             return ;
         
     }
+
+    if(limit < quantityValue){
+        $(".ticketQuantityValue_" + id).val(limit);
+            iziToast.error({
+                title: 'SOLD OUT!',
+                message: '',
+                position: 'topRight'
+            });
+            return ;
+        
+    }
+
+    if($.isNumeric(maxBooking) && maxBooking < quantityValue){
+        $(".ticketQuantityValue_" + id).val(maxBooking);
+            iziToast.warning({
+                title: '',
+                message: 'You have reached the maximum bookings for this ticket!',
+                position: 'topRight'
+            });
+            return ;
+        
+    }
+    
    
     totalBasket = Math.round((totalBasket + price + ticketfee) * 1e12) / 1e12;
     
@@ -340,12 +365,14 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
         id: id,
         quantity: quantityValue,
         time: current_time,
+        amount: totalBasket.toFixed(2)
     };
     $.post(globalVariables.baseUrl + "booking_events/add_to_basket", data, function(data){
         data = JSON.parse(data);
         if(data['status'] == 'error'){
             $(".ticketQuantityValue_" + id).val(data['quantity']);
             $("."+totalClass).text(data['amount'].toFixed(2));
+            $("#totalBasketAmount").val(data['amount'].toFixed(2));
             iziToast.warning({
                 title: '',
                 message: data['message'],
