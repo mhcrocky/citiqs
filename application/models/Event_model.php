@@ -68,9 +68,9 @@ class Event_model extends CI_Model {
 
 	public function get_events($vendor_id)
 	{
-		date_default_timezone_set('Europe/Berlin');
-        $date = date('Y-m-d H:m:s');
-		//$time = date('H:m:s');
+		date_default_timezone_set('Europe/Dublin');
+        $date = date('Y-m-d H:i:s');
+		//$time = date('H:i:s');
 		$this->db->trans_start();
 		$this->db->select('*');
 		$this->db->from('tbl_events');
@@ -83,9 +83,9 @@ class Event_model extends CI_Model {
 
 	public function get_event_by_id($vendor_id, $eventId)
 	{
-		date_default_timezone_set('Europe/Berlin');
-        $date = date('Y-m-d H:m:s');
-		//$time = date('H:m:s');
+		date_default_timezone_set('Europe/Dublin');
+        $date = date('Y-m-d H:i:s');
+		//$time = date('H:i:s');
 		$this->db->trans_start();
 		$this->db->select('*');
 		$this->db->from('tbl_events');
@@ -145,8 +145,11 @@ class Event_model extends CI_Model {
 
 	public function get_event_tickets($vendor_id,$eventId)
 	{
+		$dt = new DateTime('now', new DateTimeZone('Europe/Dublin'));
+        $date = $dt->format('Y-m-d H:i:s');
+
 		$this->db->trans_start();
-		$this->db->select('*,tbl_event_tickets.id as ticketId, tbl_ticket_groups.id as groupId');
+		$this->db->select('*,tbl_event_tickets.id as ticketId, tbl_ticket_groups.id as groupId, concat_ws(" ", tbl_ticket_options.startDate, tbl_ticket_options.startTime) as startTimestamp, concat_ws(" ", tbl_ticket_options.endDate, tbl_ticket_options.endTime) as endTimestamp');
 		$this->db->from('tbl_event_tickets');
 		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'left');
 		$this->db->join('tbl_ticket_groups', 'tbl_ticket_groups.id = tbl_event_tickets.ticketGroupId', 'left');
@@ -173,6 +176,21 @@ class Event_model extends CI_Model {
 
 			if(isset($result['soldoutVisible']) && $result['soldoutVisible'] == 0 && $ticket_available <= 0){
 				continue;
+			}
+
+			if($result['ticketExpired'] == 'manually'){
+				$startDt = new DateTime($result['startTimestamp'], new DateTimeZone('Europe/Amsterdam'));
+				$startTimestamp = $startDt->format('Y-m-d H:i:s');
+				$endDt = new DateTime($result['endTimestamp'], new DateTimeZone('Europe/Amsterdam'));
+				$endTimestamp = $endDt->format('Y-m-d H:i:s');
+				if($date < $startTimestamp){
+					continue;
+				}
+
+				if($date > $endTimestamp){
+					$sold_out = true;
+				}
+
 			}
 
 			if($ticket_available <= 0){
