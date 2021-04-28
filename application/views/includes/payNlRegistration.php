@@ -25,6 +25,20 @@
                                 data-error-message="Chamber of Commerce number of the company is requried"
                             />
                         </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cocNumberName">Chamber of Commerce name</label>
+                            <input
+                                class="form-control"
+                                type="text"
+                                id="cocNumberName"
+                                name="merchant[name]"
+                                class="form-control"
+                                data-form-check='1'
+                                data-min-length="1"
+                                data-error-message="Chambet of commerce name is requried"
+                            />
+                        </div>
                         <div class="form-group">
                             <label for="vatNumber">VAT number</label>
                             <input

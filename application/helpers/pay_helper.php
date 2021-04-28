@@ -292,7 +292,6 @@
             $addressPieces = explode(' ', $user->address);
     
             // populate merchant array
-            $argumentsArray['merchant']['name'] = $user->username;
             $argumentsArray['merchant']['vat'] = $user->vat_number;
             $argumentsArray['merchant']['street'] = $user->address;
             $argumentsArray['merchant']['houseNumber'] = $addressPieces[count($addressPieces) -1];
