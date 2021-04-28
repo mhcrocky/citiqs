@@ -112,16 +112,6 @@
                         <div class="col-md-6 mb-4">
 
 
-
-                            <!-- Default unchecked -->
-                            <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" id="manually" value="manually"
-                                    name="ticketExpired" checked="">
-                                <label class="custom-control-label text-dark" for="manually">On date and time</label>
-                            </div>
-
-                            <div class="my-2"></div>
-
                             <!-- Default checked -->
                             <div class="custom-control custom-radio">
                                 <input type="radio" class="custom-control-input" id="automatically"
@@ -130,6 +120,19 @@
                                     Automatically when ticket is almost sold out
                                 </label>
                             </div>
+
+                            <div class="my-2"></div>
+
+                            <!-- Default unchecked -->
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="manually" value="manually"
+                                    name="ticketExpired" checked="">
+                                <label class="custom-control-label text-dark" for="manually">On date and time</label>
+                            </div>
+
+                            
+
+                            
                             </section>
                         </div>
                     </div>
@@ -211,7 +214,7 @@
 
 
 
-                    <div class="row">
+                    <div class="row d-none">
                         <div class="col col-md-3">
                             Make invisible when sold out
                         </div>

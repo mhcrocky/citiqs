@@ -406,7 +406,6 @@ class Booking_events extends BaseControllerWeb
         return;
     }
 
-
     private function check_diff_multi($array1, $array2){
         $result = array();
         foreach($array1 as $key => $val) {
