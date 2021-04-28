@@ -28,4 +28,29 @@
             return $content;
         }
 
+        public static function getTicketingTemplateString(array $reservations, string $landingPage): ?string
+        {
+            $CI =& get_instance();
+            $CI->load->config('custom');
+
+            $config['landingPageFolder'] = FCPATH . 'application' . DIRECTORY_SEPARATOR . 'landing_pages' . DIRECTORY_SEPARATOR;
+
+            $templteFile  = $CI->config->item('landingPageFolder') . DIRECTORY_SEPARATOR;
+            $templteFile .= $landingPage . '.' . $CI->config->item('landingTemplateExt');
+
+            if (!file_exists($templteFile)) return null;
+            $content = file_get_contents($templteFile);
+
+            foreach($reservations as $reservation){
+                $content = str_replace(
+                    ['[transactionId]', '[price]', '[buyerName]', '[buyerEmail]'],
+                    [$reservation->TransactionID, $reservation->price, $reservation->name, $reservation->email],
+                    $content
+                );
+            }
+            
+
+            return $content;
+        }
+
     }

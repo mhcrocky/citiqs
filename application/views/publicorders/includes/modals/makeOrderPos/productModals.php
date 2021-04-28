@@ -308,7 +308,7 @@
                                 data-product-price="<?php echo $productDetails['price']; ?>"
                                 onclick="cloneProductAndAddons(this)"
                                 id="modal_buuton_<?php echo 'single-item-details-modal' . $product['productId']; ?>_<?php echo $productDetails['productExtendedId']?>"
-                                >Add <?php echo $productDetails['name']; ?> to list</button>
+                                >Add to list</button>
                         </div>
                     </div>
                 </div>
