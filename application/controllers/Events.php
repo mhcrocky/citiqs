@@ -593,6 +593,7 @@ class Events extends BaseControllerWeb
             
             foreach ($result as $record) {
                 $customer = $record->customer;
+                $Spotlabel = $record->Spotlabel;
 				$eventDate = $record->eventdate;
                 $endDate = $record->EndDate;
                 $eventName = $record->eventname;
@@ -603,20 +604,24 @@ class Events extends BaseControllerWeb
                 $eventZipcode = $record->eventZipcode;
 				$reservationId = $record->reservationId;
 				$ticketPrice = $record->price;
+                $ticketFee = $record->ticketFee;
                 $ticketId = $record->ticketId;
                 $ticketDescription = $record->ticketDescription;
 				$ticketQuantity = $record->numberofpersons;
+                $orderAmount = intval($ticketQuantity) * (floatval($record->price) + floatval($record->ticketFee));
+                $orderAmount = number_format($orderAmount, 2, '.', '');
                 $eventZipcode = $record->ticketDescription;
                 $buyerName = $record->name;
                 $buyerEmail = $record->email;
 				$buyerMobile = $record->mobilephone;
 				$reservationset = $record->reservationset;
-
+                $orderId = $record->orderId;
 				$fromtime = $record->timefrom;
 				$totime = $record->timeto;
 				$paid = $record->paid;
 				$TransactionId = $record->TransactionID;
                 $voucher = $record->voucher;
+                $mailsend = $record->mailsend;
                 
                 
                     if (true) {
@@ -678,6 +683,8 @@ class Events extends BaseControllerWeb
                                 $dt = new DateTime('now');
                                 $date = $dt->format('Y.m.d');
                                 $mailtemplate = str_replace('[currentDate]', $buyerName, $mailtemplate);
+                                $mailtemplate = str_replace('[orderId]', $orderId, $mailtemplate);
+                                $mailtemplate = str_replace('[orderAmount]', $orderAmount, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerName]', $buyerName, $mailtemplate);
 								$mailtemplate = str_replace('[buyerEmail]', $buyerEmail, $mailtemplate);
                                 $mailtemplate = str_replace('[buyerMobile]', $buyerMobile, $mailtemplate);
@@ -696,9 +703,15 @@ class Events extends BaseControllerWeb
                                 $mailtemplate = str_replace('[startTime]', $fromtime, $mailtemplate);
 								$mailtemplate = str_replace('[endTime]', $totime, $mailtemplate);
 								$mailtemplate = str_replace('[timeSlot]', '', $mailtemplate);
+                                $mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
+                                $mailtemplate = str_replace('[spotLabel]', $Spotlabel, $mailtemplate);
 								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
 								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
+                                $mailtemplate .= '<div style="width:100%;text-align:center;margin-top: 30px;">';
+                                $download_pdf_link = base_url() . "booking_events/pdf/" . $emailId . "/" . $reservationId;
+                                $mailtemplate .= '<a href="'.$download_pdf_link.'" id="pdfDownload" style="background-color:#008CBA;border: none;color: white;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;">Download as PDF</a>';
+                                $mailtemplate .= '</div>';
 								$subject = ($emailTemplate->template_subject) ? strip_tags($emailTemplate->template_subject) : 'Your tiqs reservation(s)';
 								$datachange['mailsend'] = 1;
                                 
