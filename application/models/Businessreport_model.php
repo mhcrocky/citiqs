@@ -305,13 +305,17 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 
 	public function booking_report($vendor_id, $min_date, $max_date)
 	{
-		$query = $this->db->query("SELECT DATE(reservationtime) AS created, sum(numberofpersons) AS AMOUNT
+		$query = $this->db->query("SELECT DATE(reservationtime) AS created, sum(numberofpersons) AS tickets
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_bookandpay.customer = ".$vendor_id."
 		 AND reservationtime >= $min_date AND reservationtime <= $max_date GROUP BY created");
 		$results = $query->result_array();
-		return count($results);
+		$tickets = 0;
+		foreach($results as $result){
+			$tickets += intval($result['tickets']);
+		}
+		return $tickets;
 	}
 
 	public function booking_report_of_week($vendor_id, $min_date, $max_date)
@@ -527,6 +531,7 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 			"invoice" => 0,
 			"booking" => $booking
 		];
+		var_dump($booking);
 		return $newData;
 	}
 
