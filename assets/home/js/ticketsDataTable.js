@@ -150,12 +150,12 @@ $(document).ready(function () {
         title: "Guestlist",
         data: null,
         render: function (data, type, row) {
-          return '<a style="padding-top: 10px;" class="text-dark" href="javascript:;" onclick="addGuestModal('+data.ticketId+')" data-toggle="modal" data-target="#guestlistModal"><i class="gg-user-list"></i></a>';
+          return '<a style="padding-top: 10px;display: inline-flex;" class="text-dark" href="javascript:;" onclick="addGuestModal('+data.ticketId+')" data-toggle="modal" data-target="#guestlistModal"><span class="font-weight-bold mr-2">'+data.guestlistCount+'</span><i class="gg-user-list ml-2"></i></a>';
 
         },
         createdCell: function (td, cellData, rowData, row, col) {
           
-            $(td).css({'display': 'flex', 'justify-content': 'center', 'align-items': 'center'});
+            $(td).css({'display': 'flex', 'justify-content': 'center', 'align-items': 'center', 'width': '100px'});
  
           
          }
@@ -800,6 +800,7 @@ function addGuest(e){
       $('#resetGuestForm').click();
       $('#closeModal').click();
       $('.form-control').addClass('input-clear');
+      $("#tickets").DataTable().ajax.reload();
       alertify['success']('Guest is added successfully');
 
   });
@@ -829,6 +830,7 @@ function importExcelFile(){
       $('#importExcelFile').addClass('d-none');
       $('#guestlistModal').modal('toggle');
       $('#tab01').click();
+      $("#tickets").DataTable().ajax.reload();
       alertify['success']('The guest list is imported successfully');
   });
 
