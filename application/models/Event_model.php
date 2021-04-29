@@ -210,9 +210,10 @@ class Event_model extends CI_Model {
 	public function get_ticket_by_id($vendor_id,$ticketId)
 	{
 		$this->db->trans_start();
-		$this->db->select('ticketDescription, StartDate, StartTime, EndTime, ticketType');
+		$this->db->select('ticketPrice, nonSharedTicketFee as ticketFee, ticketDescription, tbl_events.StartDate, tbl_events.StartTime, tbl_events.EndTime, ticketType');
 		$this->db->from('tbl_event_tickets');
 		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'left');
+		$this->db->join('tbl_ticket_options', 'tbl_ticket_options.ticketId = tbl_event_tickets.id', 'right');
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('tbl_event_tickets.id', $ticketId);
 		$this->db->group_by('tbl_event_tickets.id');
