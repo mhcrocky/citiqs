@@ -114,13 +114,13 @@
                 $('#delivery').text(data.delivery.toFixed(2));
                 $('#pickup').text(data.pickup.toFixed(2));
                 $('#invoice').text(data.invoice.toFixed(2));
-                $('#tickets').text(data.booking.toFixed(2));
+                $('#tickets').text(parseInt(data.booking));
               } else {
                 $('#local').text('0.00');
                 $('#delivery').text('0.00');
                 $('#pickup').text('0.00');
                 $('#invoice').text('0.00');
-                $('#tickets').text('0.00');
+                $('#tickets').text('0');
               }
               
             }
@@ -192,13 +192,13 @@
             $('#delivery').text(data.delivery.toFixed(2));
             $('#pickup').text(data.pickup.toFixed(2));
             $('#invoice').text(data.invoice.toFixed(2));
-            $('#tickets').text(data.booking.toFixed(2));
+            $('#tickets').text(parseInt(data.booking));
           } else {
             $('#local').text('0.00');
             $('#delivery').text('0.00');
             $('#pickup').text('0.00');
             $('#invoice').text('0.00');
-            $('#tickets').text('0.00');
+            $('#tickets').text('0');
           }
           
         }
