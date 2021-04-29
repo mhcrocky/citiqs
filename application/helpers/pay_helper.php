@@ -176,8 +176,6 @@
             $arrArguments['transaction']['orderExchangeUrl'] = base_url() . 'booking_events/ExchangePay/';
 
 
-            $arrArguments['statsData']['promotorId'] = $vendorId;
-
             $arrArguments['enduser']['emailAddress'] = $buyerEmail;
             $arrArguments['enduser']['language'] = 'NL';
 
