@@ -80,7 +80,7 @@ class  Paysuccesslink extends BaseControllerWeb
 
         $this->getOrderData($data);
         $this->getLandingPage($data, $this->config->item('pendingLandingPage'));
-        $this->loadViewOrTemplate($data, 'paysuccesslink/notPaid');
+        $this->loadViewOrTemplate($data, 'paysuccesslink/pending');
 
 
     }

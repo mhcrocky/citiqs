@@ -69,7 +69,7 @@ class  Paylinkticketing extends BaseControllerWeb
     public function pending()
     {
         $data = [
-            'paynlInfo' => 'Payment has not been finalized and could still be paid'
+            'paynlInfo' => 'Payment has not been finalized and could still be processed'
         ];
 
         $this->global['pageTitle'] = 'TIQS : PENDING';
