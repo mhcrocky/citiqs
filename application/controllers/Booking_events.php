@@ -340,7 +340,10 @@ class Booking_events extends BaseControllerWeb
         $reservationIds = $this->session->userdata('reservationIds');
         $reservations = $this->bookandpay_model->getBookingsByIds($reservationIds);
 
-        
+        $arrArguments = Pay_helper::getTicketingArgumentsArray($vendorId, $reservations, strval($SlCode), $paymentType, $paymentOptionSubId);
+        $namespace = $this->config->item('transactionNamespace');
+        $function = $this->config->item('orderPayNlFunction');
+        $version = $this->config->item('orderPayNlVersion');
         $arrArguments['statsData']['promotorId'] = $vendorId;
         foreach ($reservations as $key => $reservation) {
             $arrArguments['statsData']['extra' . ($key + 1)] = $reservation->reservationId;
@@ -353,12 +356,6 @@ class Booking_events extends BaseControllerWeb
             $arrArguments['saleData']['orderData'][$key]['vatPercentage'] = '0.00';
 
         }
-
-        $arrArguments = Pay_helper::getTicketingArgumentsArray($vendorId, $reservations, strval($SlCode), $paymentType, $paymentOptionSubId);
-        
-        $namespace = $this->config->item('transactionNamespace');
-        $function = $this->config->item('orderPayNlFunction');
-        $version = $this->config->item('orderPayNlVersion');
 
         $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
 

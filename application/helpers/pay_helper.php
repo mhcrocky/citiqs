@@ -130,7 +130,7 @@
             $vendorCost = $CI->event_model->get_vendor_cost($vendorId);
             $buyerEmail = '';
             $totalAmount = 0;
-
+            $arrArguments = [];
             
             foreach ($reservations as $key => $reservation) {
                 
@@ -174,7 +174,6 @@
             $arrArguments['finishUrl'] = base_url() . 'booking_events/successBooking/';
 
             $arrArguments['transaction']['orderExchangeUrl'] = base_url() . 'booking_events/ExchangePay/';
-
 
             $arrArguments['enduser']['emailAddress'] = $buyerEmail;
             $arrArguments['enduser']['language'] = 'NL';
