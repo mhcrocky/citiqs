@@ -108,7 +108,7 @@ class BBOrders extends REST_Controller
 				'Quantity'          =>  1,
 				'QuantityUnit'      =>  'P',
 				'SellingPrice'      =>  $serviceFee,
-				'VatRateId'         =>  Orderprint_helper::returnVatGrade($serviceFeeTax),
+//				'VatRateId'         =>  Orderprint_helper::returnVatGrade($serviceFeeTax),
 			);
 		}
 
@@ -167,7 +167,7 @@ class BBOrders extends REST_Controller
 				'Quantity'          =>  $quantity,
 				'QuantityUnit'      =>  'P',
 				'SellingPrice'      =>  $price,
-				'VatRateId'         =>  Orderprint_helper::returnVatGrade($vatpercentage), //"B",
+	//				'VatRateId'         =>  Orderprint_helper::returnVatGrade($vatpercentage), //"B",
 				'DiscountLines'     => [
 					// array(
 					// "DiscountId"        =>  "DISC002",

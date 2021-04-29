@@ -37,6 +37,7 @@
 
         public function release_queue_get($buyers = '1'): void
         {
+        	return;
             // redirect 100 buyers from queue to alfred
             $buyers = intval($buyers);
             var_dump(Queue_helper::releaseQueue($buyers));
