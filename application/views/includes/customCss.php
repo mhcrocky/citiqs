@@ -382,6 +382,14 @@
             margin-bottom: 50px;
         }
     }
+
+    .header__checkout {
+        position: fixed;
+        right: 0px;
+        z-index: 9999;
+        border-top-right-radius: 0px !important;
+        border-bottom-right-radius: 0px !important;
+    }
     
     </style>
 <?php  } elseif ($this->view === 'events/selectpayment') { ?>
