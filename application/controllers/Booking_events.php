@@ -344,7 +344,7 @@ class Booking_events extends BaseControllerWeb
         $namespace = $this->config->item('transactionNamespace');
         $function = $this->config->item('orderPayNlFunction');
         $version = $this->config->item('orderPayNlVersion');
-        
+        $arrArguments['statsData']['promotorId'] = $vendorId;
         foreach ($reservations as $key => $reservation) {
             $arrArguments['statsData']['extra' . ($key + 1)] = $reservation->reservationId;
             $arrArguments['saleData']['orderData'][$key]['productId'] = $reservation->reservationId;
@@ -358,6 +358,7 @@ class Booking_events extends BaseControllerWeb
         }
 
         $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
+
         $this->processPaymenttype($strUrl);
        
 
