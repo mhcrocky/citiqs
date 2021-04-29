@@ -23,11 +23,6 @@
             </table>
         </div>
 
-        <div class="w-100 mt-5 table-responsive">
-            <table id="guestlist" class="table table-striped table-bordered text-center" cellspacing="0" width="100%">
-            </table>
-        </div>
-
 
         <div class="w-100 mt-4 mb-3 mx-auto">
             <div class="col-md-12 mb-4">
