@@ -341,11 +341,6 @@ class Events extends BaseControllerWeb
 
     }
 
-    public function test(){
-        $data = $this->event_model->get_event_tickets("43533", "10");
-        var_dump($data);
-    }
-
     public function get_email_template()
     {
         $ticketId = $this->input->post("id");
@@ -745,7 +740,7 @@ class Events extends BaseControllerWeb
             endforeach;
         }
 
-    public function generateTransactionId(){
+    private function generateTransactionId(){
         $set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKLMNPQRSTVWXY';
         $transactionId = '14';
         $transactionId .= intval(microtime(true));

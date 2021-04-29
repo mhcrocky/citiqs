@@ -44,7 +44,7 @@
                     </ul>
 
                     <hr class="w-100 mt-3 mb-3">
-                    <div class="row">
+                    <div style="flex-wrap: nowrap" class="row">
                         <div class="col-md-3 text-dark">
                             <h3 class="font-weight-bold text-dark">Ticketfee per ticket</h3>
                         </div>
@@ -79,13 +79,13 @@
                     </div>
                 </div>
                 -->
-                    <div class="row">
+                    <div class="row mb-2">
                         <div class="col-md-3 text-dark">
-                            <h3 style="font-size: 14px;" class="text-dark">Voucher</h3>
+                         Voucher
                         </div>
                         <div class="col-md-3">
                             <select id="voucherId" name="voucherId" style="height: 35px !important;padding-top: 6px;"
-                                class="form-control input-w mt-2">
+                                class="form-control input-w">
                                 <option value="0">Select option</option>
                                 <?php foreach($vouchers as $voucher): ?>
                                 <option value="<?php echo $voucher['id']; ?>">
@@ -97,23 +97,6 @@
                     </div>
 
 
-                    <div class="row">
-                        <div class="col-md-3 text-dark">
-                            <h3 style="font-size: 14px;" class="text-dark">Ticket Type</h3>
-                        </div>
-                        <div class="col-md-3">
-                            <select id="previousFaseId" name="previousFaseId" style="height: 35px !important;padding-top: 6px;"
-                                class="form-control input-w mt-2">
-                                <option value="0">Select option</option>
-                                <?php foreach($tickets as $ticket): ?>
-                                <option value="<?php echo $ticket['ticketId']; ?>">
-                                    <?php echo $ticket['ticketDescription']; ?>
-                                </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                    </div>
-
                     <div class="row mb-2">
                         <div class="col-md-3 text-dark">Max Booking</div>
                         <div class="col-md-3">
@@ -124,7 +107,7 @@
 
                     <hr class="w-100 mt-3 mb-3">
                     <h3 class="font-weight-bold text-dark">Ticket sales</h3>
-                    <div class="row">
+                    <div style="flex-wrap: nowrap" class="row">
 
                         <!--Grid column-->
                         <div class="col-md-6 mb-4">
@@ -138,9 +121,25 @@
                                     Automatically when ticket is almost sold out
                                 </label>
                             </div>
+                            
 
-                            <div class="my-2"></div>
-
+                            
+                        </div>
+                        <div class="col-md-3">
+                            <select id="previousFaseId" name="previousFaseId" style="height: 35px !important; padding: 0px !important" class="form-control input-w">
+                                <option value="0">Select option</option>
+                                <?php foreach($tickets as $ticket): ?>
+                                <option value="<?php echo $ticket['ticketId']; ?>">
+                                    <?php echo $ticket['ticketDescription']; ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="my-2"></div>
+                    <div class="row">
+                         
+                        <div class="col-md-6 mb-4">
                             <!-- Default unchecked -->
                             <div class="custom-control custom-radio">
                                 <input type="radio" class="custom-control-input" id="manually" value="manually"
@@ -156,10 +155,10 @@
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col col-md-3">
+                        <div class="col-md-3 mt-1">
                             From Date
                         </div>
-                        <div class="col col-md-3">
+                        <div class="col-md-3 mt-1">
                             <div class="input-group date">
                                 <input type="text" class="form-control inp-height timestamp" id="startDate"
                                     name="startDate" required>
@@ -167,10 +166,10 @@
                                     <i style="color: #fff;font-size: 18px;" class="fa fa-calendar"></i></span>
                             </div>
                         </div>
-                        <div class="col col-md-3">
+                        <div class="col-md-3 mt-1">
                             From Time
                         </div>
-                        <div class="col col-md-3">
+                        <div class="col-md-3 mt-1">
                             <div class="input-group">
                                 <input type="time" class="form-control inp-height timestamp" id="startTime"
                                     name="startTime">
@@ -181,10 +180,10 @@
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col col-md-3">
+                        <div class="col-md-3 mt-1">
                             To Date
                         </div>
-                        <div class="col col-md-3">
+                        <div class="col-md-3 mt-1">
                             <div class="input-group date">
                                 <input type="text" onchange="checkTicketTimestamp()" onfocus="timestampTicketOnFocus()"
                                     class="form-control inp-height timestamp" id="endDate" name="endDate" required>
@@ -192,10 +191,10 @@
                                     <i style="color: #fff;font-size: 18px;" class="fa fa-calendar"></i></span>
                             </div>
                         </div>
-                        <div class="col col-md-3">
+                        <div class="col-md-3 mt-1">
                             To Time
                         </div>
-                        <div class="col col-md-3">
+                        <div class="col col-md-3 mt-1">
                             <div class="input-group">
                                 <input type="time" onchange="checkTimestamp()" onfocus="checkTimestamp()"
                                     oninput="checkTimestamp()" onkeyup="checkTimestamp()"
