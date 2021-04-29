@@ -65,7 +65,8 @@ class Events extends BaseControllerWeb
             'emails' => $this->email_templates_model->get_ticketing_email_by_user($this->vendor_id),
             'vouchers' => $this->shopvoucher_model->read($what,$where,$join, 'group_by', ['tbl_shop_voucher.id']),
             'groups' => $this->event_model->get_ticket_groups($eventId),
-            'guests' => $this->event_model->get_guestlist($eventId, $this->vendor_id)
+            'guests' => $this->event_model->get_guestlist($eventId, $this->vendor_id),
+            'tickets' => $this->event_model->get_tickets($this->vendor_id, $eventId)
         ];
         $this->loadViews("events/step-two", $this->global, $data, 'footerbusiness', 'headerbusiness');
 
@@ -338,6 +339,11 @@ class Events extends BaseControllerWeb
         $data  = $this->event_model->get_tickets($this->vendor_id,$eventId);
         echo json_encode($data);
 
+    }
+
+    public function test(){
+        $data = $this->event_model->get_event_tickets("43533", "10");
+        var_dump($data);
     }
 
     public function get_email_template()
