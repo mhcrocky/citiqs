@@ -4,7 +4,7 @@
     defined('BASEPATH') OR exit('No direct script access allowed');
 
     require APPPATH . 'libraries/REST_Controller.php';
-
+    
     class Cronjobs extends REST_Controller
     {
 
@@ -15,6 +15,7 @@
             
             $this->load->helper('utility_helper');
             $this->load->helper('validate_data_helper');
+            $this->load->helper('queue_helper');
 
             $this->load->config('custom');
             $this->load->library('language', array('controller' => $this->router->class));
@@ -32,6 +33,13 @@
             ];
 
             $this->shopprinterrequest_model->customDelete($where);
+        }
+
+        public function release_queue_get($buyers = '1'): void
+        {
+            // redirect 100 buyers from queue to alfred
+            $buyers = intval($buyers);
+            var_dump(Queue_helper::releaseQueue($buyers));
         }
 
         
