@@ -108,7 +108,7 @@
                 aria-label="Toggle navigation"></button>
 
             <div class="collapse navbar-collapse pl-md-4" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav mr-auto d-none">
                     <li class="nav-item active pt-2 pt-md-0">
                         <a class="nav-link"
                             href="<?php echo $this->baseUrl; ?>events/shop/<?php echo $this->session->userdata('shortUrl'); ?>">Home
