@@ -514,7 +514,7 @@ class Event_model extends CI_Model {
 		$query = $this->db->query("SELECT DATE(reservationtime) AS day_date,  eventdate, reservationtime, sum(numberofpersons) AS tickets 
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		WHERE tbl_events.vendorId = ".$vendorId." AND tbl_events.Id = ".$eventId." $sql AND paid=1  GROUP BY day_date 
+		WHERE tbl_events.vendorId = ".$vendorId." AND tbl_bookandpay.ticketDescription <> '' AND paid='1' AND tbl_events.Id = ".$eventId." $sql  GROUP BY day_date 
 		ORDER BY day_date ASC");
 		return $query->result_array();
 	}
