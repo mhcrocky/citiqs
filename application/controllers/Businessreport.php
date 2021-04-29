@@ -227,8 +227,7 @@ class Businessreport extends BaseControllerWeb
 									"booking" => array(
 										"label" => "Tickets",
 										"type" => "number",
-										"prefix" => '€',
-									    "decimals" => 2
+										
 									)
 								),
 								"class"=>array(
@@ -306,8 +305,7 @@ class Businessreport extends BaseControllerWeb
 								"booking" => array(
 									"label" => "Tickets",
 									"type" => "number",
-									"prefix" => '€',
-									"decimals" => 2
+									
 								)
 							),
 							"class"=>array(
