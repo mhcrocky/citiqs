@@ -110,7 +110,7 @@
                                         data-validate="City is required">
                                         <span class="label-input100">City</span>
                                         <input class="field input100" type="text" id="city"
-                                             name="city" placeholder="City">
+                                             name="city" placeholder="City" required>
                                         <span class="focus-input100"></span>
                                     </div>
                                     <div class="wrap-input100 validate-input m-b-18 wideField d-none"
@@ -129,13 +129,12 @@
                                         </select>
                                         <span class="focus-input100"></span>
                                     </div>
-                                    <div class="wrap-input100 validate-input m-b-18">
+                                    <div class="wrap-input100 validate-input m-b-18 d-none">
                                         <span class="label-input100">Age</span>
-                                        <input class="input100" type="date" id="age" name="age" placeholder="Age"
-                                            required>
+                                        <input class="input100" type="text" id="age" name="age" placeholder="Age">
                                         <span class="focus-input100"></span>
                                     </div>
-                                    <div id="mobileNumber" class="wrap-input100 validate-input m-b-18"
+                                    <div id="mobileNumber" class="wrap-input100 validate-input m-b-18 d-none"
                                         data-validate="Phone Number is required">
                                         <span class="label-input100">Phone Number</span>
                                         <input class="input100" type="tel" name="mobileNumber"
