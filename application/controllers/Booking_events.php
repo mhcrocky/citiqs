@@ -331,7 +331,7 @@ class Booking_events extends BaseControllerWeb
     public function onlinepayment($paymentType, $paymentOptionSubId = '0')
     {
         // release queue
-        //Queue_helper::releaseQueue();
+        Queue_helper::releaseQueue();
 
         $paymentType = strval($this->uri->segment('3'));
         $paymentOptionSubId = ($this->uri->segment('4')) ? strval($this->uri->segment('4')) : '0';

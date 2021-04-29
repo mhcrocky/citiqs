@@ -6,7 +6,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 Class Queue_helper
 {
 
-    public static function releaseQueue(int $buyers = 1): object
+    public static function releaseQueue(int $buyers = 1)
     {
         $CI =& get_instance();
         $CI->load->helper('curl_helper');
