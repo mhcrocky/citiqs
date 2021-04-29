@@ -9,6 +9,10 @@ $(document).ready(function () {
   $('#editModal').on('hidden.bs.modal', function () {
     $('#resetTicketOptions').click();
   });
+
+  $('#guestlistModal').on('hidden.bs.modal', function () {
+    $('#tab01').click();
+  });
   //Options
   templateGlobals.templateHtmlId = 'templateHtml';
   $("#guestTicketCheck").change(function () {
@@ -413,11 +417,62 @@ $(document).ready(function () {
         tickets[index] = ticket;
 
       });
-      console.log(tickets);
+
       $.post(globalVariables.baseUrl + "events/update_ticket_group", {tickets: JSON.stringify(tickets)}, function (data) {
         $("#tickets").DataTable().ajax.reload();
       });
     }
+  });
+
+
+
+  var guestlistTable = $("#guestlist").DataTable({
+    processing: true,
+    lengthMenu: [
+      [5, 10, 20, 50, 100, 200, 500, -1],
+      [5, 10, 20, 50, 100, 200, 500, "All"],
+    ],
+    pageLength: 5,
+    ajax: {
+      type: "get",
+      url: globalVariables.baseUrl + "events/get_guestlists",
+      dataSrc: "",
+    },
+    columns: [
+      {
+        title: "ID",
+        data: "id",
+      },
+      {
+        title: "Guest Name",
+        data: "guestName",
+      },
+      {
+        title: "Guest Email",
+        data: "guestEmail",
+      },
+      {
+        title: "Ticket Quantity",
+        data: "ticketQuantity",
+      },
+      {
+        title: "Ticket ID",
+        data: "ticketId",
+      },
+      {
+        title: "Transaction ID",
+        data: "transactionId",
+      },
+      {
+          title: 'Resend',
+          data: null,
+          "render": function(data, type, row) {
+            return '<button class="btn btn-primary" onclick="resendReservation(\''+data.transactionId+'\')">Resend</button>';
+        }
+       }
+      
+    ],
+    order: [[1, 'asc']]
   });
 
   /*Order by the grouping
@@ -766,6 +821,10 @@ function createTicketEmailTemplateResponse(selectTemplate, customTemplate, respo
 
 function addGuestModal(ticketId) {
   $('#guestTicketId').val(ticketId);
+  $("#guestlist").DataTable()
+        .columns( 4 )
+        .search( '^'+ticketId+'$', true, false )
+        .draw();
 }
 
 function addGuestForm() {
@@ -801,6 +860,7 @@ function addGuest(e){
       $('#closeModal').click();
       $('.form-control').addClass('input-clear');
       $("#tickets").DataTable().ajax.reload();
+      $("#guestlist").DataTable().ajax.reload();
       alertify['success']('Guest is added successfully');
 
   });
@@ -834,4 +894,10 @@ function importExcelFile(){
       alertify['success']('The guest list is imported successfully');
   });
 
+}
+
+function resendReservation(transactionId){
+  $.post(globalVariables.baseUrl + "events/resend_reservation", {transactionId: transactionId}, function(data){
+      alertify['success']('Resent Successfully!');
+  });
 }

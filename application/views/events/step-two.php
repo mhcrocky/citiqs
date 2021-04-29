@@ -96,6 +96,24 @@
                         </div>
                     </div>
 
+
+                    <div class="row">
+                        <div class="col-md-3 text-dark">
+                            <h3 style="font-size: 14px;" class="text-dark">Ticket Type</h3>
+                        </div>
+                        <div class="col-md-3">
+                            <select id="previousFaseId" name="previousFaseId" style="height: 35px !important;padding-top: 6px;"
+                                class="form-control input-w mt-2">
+                                <option value="0">Select option</option>
+                                <?php foreach($tickets as $ticket): ?>
+                                <option value="<?php echo $ticket['ticketId']; ?>">
+                                    <?php echo $ticket['ticketDescription']; ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="row mb-2">
                         <div class="col-md-3 text-dark">Max Booking</div>
                         <div class="col-md-3">
@@ -747,18 +765,8 @@
                 </fieldset>
 
                 <fieldset style="max-height: 400px; overflow-y: auto;" id="tab031">
-                    <div class="w-100 table-responsive mt-3 p-3">
-                        <table class="table table-hover text-center">
-                            <tr class="bg-white">
-                                <th>Guest Name</th>
-                                <th>Guest Email</th>
-                            </tr>
-                            <?php foreach($guests as $guest): ?>
-                            <tr class="bg-white">
-                                <td><?php echo $guest['guestName']; ?></td>
-                                <td><?php echo $guest['guestEmail']; ?></td>
-                            </tr>
-                            <?php endforeach; ?>
+                    <div class="w-100 mt-3 p-3 mt-5 table-responsive">
+                        <table id="guestlist" class="table table-striped table-bordered text-center" cellspacing="0" width="100%">
                         </table>
                     </div>
                 </fieldset>
