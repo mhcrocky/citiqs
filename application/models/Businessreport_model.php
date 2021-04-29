@@ -305,50 +305,57 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 
 	public function booking_report($vendor_id, $min_date, $max_date)
 	{
-		$query = $this->db->query("SELECT DATE(reservationtime) AS created, sum(ticketPrice*numberofpersons) AS AMOUNT FROM tbl_bookandpay 
-		INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventId = tbl_event_tickets.id 
-		WHERE customer = '$vendor_id' AND reservationtime >= $min_date AND reservationtime <= $max_date GROUP BY created");
+		$query = $this->db->query("SELECT DATE(reservationtime) AS created, sum(numberofpersons) AS AMOUNT
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_bookandpay.customer = ".$vendor_id."
+		 AND reservationtime >= $min_date AND reservationtime <= $max_date GROUP BY created");
 		$results = $query->result_array();
 		return count($results);
 	}
 
 	public function booking_report_of_week($vendor_id, $min_date, $max_date)
 	{
-		$query = $this->db->query("SELECT DATE_FORMAT(reservationtime ,'%a') AS day_of_week, sum(ticketPrice*numberofpersons) AS AMOUNT FROM tbl_bookandpay 
-		INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventId = tbl_event_tickets.id 
-		WHERE customer = '$vendor_id' AND paid=1 AND reservationtime >= $min_date AND reservationtime <= $max_date GROUP BY day_of_week ORDER BY day_of_week");
+		$query = $this->db->query("SELECT DATE_FORMAT(reservationtime ,'%a') AS day_of_week, sum(numberofpersons) AS AMOUNT 
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_bookandpay.customer = ".$vendor_id." AND reservationtime >= $min_date AND reservationtime <= $max_date GROUP BY day_of_week ORDER BY day_of_week");
 		return $query->result_array();
 	}
 
 	public function booking_report_of_month($vendor_id, $min_date, $max_date)
 	{
-		$query = $this->db->query("SELECT DATE_FORMAT(reservationtime ,'%M') AS month, sum(ticketPrice*numberofpersons) AS AMOUNT FROM tbl_bookandpay 
-		INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventId = tbl_event_tickets.id
-		WHERE customer = '$vendor_id' AND paid=1 AND reservationtime >= $min_date AND reservationtime <= $max_date GROUP BY month ORDER BY month");
+		$query = $this->db->query("SELECT DATE_FORMAT(reservationtime ,'%M') AS month, sum(numberofpersons) AS AMOUNT
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_bookandpay.customer = ".$vendor_id." AND reservationtime >= $min_date AND reservationtime <= $max_date GROUP BY month ORDER BY month");
 		return $query->result_array();
 	}
 
 	public function booking_report_of_quarter($vendor_id, $min_date, $max_date)
 	{
-		$query = $this->db->query("SELECT year(reservationtime) AS year,quarter(reservationtime) AS quarter, sum(ticketPrice*numberofpersons) AS AMOUNT FROM tbl_bookandpay 
-		INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventId = tbl_event_tickets.id
-		WHERE customer = '$vendor_id' AND paid=1 AND reservationtime >= $min_date AND reservationtime <= $max_date GROUP BY year ORDER BY year");
+		$query = $this->db->query("SELECT year(reservationtime) AS year,quarter(reservationtime) AS quarter, sum(numberofpersons) AS AMOUNT 
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_bookandpay.customer = ".$vendor_id." AND reservationtime >= $min_date AND reservationtime <= $max_date GROUP BY year ORDER BY year");
 		return $query->result_array();
 	}
 
 	public function booking_report_of_day($vendor_id, $min_date, $max_date)
 	{
-		$query = $this->db->query("SELECT DATE(reservationtime) AS day_date, sum(ticketPrice*numberofpersons) AS AMOUNT FROM tbl_bookandpay 
-		INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventId = tbl_event_tickets.id
-		WHERE customer = '$vendor_id' AND paid=1 AND reservationtime >= $min_date AND reservationtime <= $max_date GROUP BY day_date ORDER BY day_date");
+		$query = $this->db->query("SELECT DATE(reservationtime) AS day_date, sum(numberofpersons) AS AMOUNT 
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_bookandpay.customer = ".$vendor_id." AND reservationtime >= $min_date AND reservationtime <= $max_date GROUP BY day_date ORDER BY day_date");
 		return $query->result_array();
 	}
 
 	public function booking_report_of_hour($vendor_id, $min_date, $max_date)
 	{
-        $query = $this->db->query("SELECT DATE_FORMAT(reservationtime ,'%H:00') AS hour, sum(ticketPrice*numberofpersons) AS AMOUNT FROM tbl_bookandpay
-		INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventId = tbl_event_tickets.id
-		WHERE customer = '$vendor_id' AND paid=1 AND reservationtime >= $min_date AND reservationtime <= $max_date GROUP BY hour ORDER BY hour");
+        $query = $this->db->query("SELECT DATE_FORMAT(reservationtime ,'%H:00') AS hour, sum(numberofpersons) AS AMOUNT
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_bookandpay.customer = ".$vendor_id." AND reservationtime >= $min_date AND reservationtime <= $max_date GROUP BY hour ORDER BY hour");
 		return $query->result_array();
 	}
 
