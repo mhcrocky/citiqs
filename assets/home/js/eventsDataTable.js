@@ -146,61 +146,7 @@ $(document).ready(function() {
             
     });
 
-
-    var guestlistTable = $("#guestlist").DataTable({
-        processing: true,
-        lengthMenu: [
-          [5, 10, 20, 50, 100, 200, 500, -1],
-          [5, 10, 20, 50, 100, 200, 500, "All"],
-        ],
-        pageLength: 5,
-        ajax: {
-          type: "get",
-          url: globalVariables.baseUrl + "events/get_guestlists",
-          dataSrc: "",
-        },
-        columns: [
-          {
-            title: "ID",
-            data: "id",
-          },
-          {
-            title: "Guest Name",
-            data: "guestName",
-          },
-          {
-            title: "Guest Email",
-            data: "guestEmail",
-          },
-          {
-            title: "Ticket Quantity",
-            data: "ticketQuantity",
-          },
-          {
-            title: "Ticket ID",
-            data: "ticketId",
-          },
-          {
-            title: "Transaction ID",
-            data: "transactionId",
-          },
-          {
-              title: 'Resend',
-              data: null,
-              "render": function(data, type, row) {
-                return '<button class="btn btn-primary" onclick="resendReservation(\''+data.transactionId+'\')">Resend</button>';
-            }
-           }
-          
-        ],
-        order: [[1, 'asc']]
-      });
         
 });
 
 
-function resendReservation(transactionId){
-    $.post(globalVariables.baseUrl + "events/resend_reservation", {transactionId: transactionId}, function(data){
-        alertify['success']('Resent Successfully!');
-    });
-}
