@@ -367,15 +367,19 @@
         }
     }
 
-    @media only screen and (max-width: 500px) {
+    @media only screen and (max-width: 550px) {
         .modal-content {
             min-height: 100% !important;
             height: 100% !important
-        }
+        } 
 
         .modal-footer {
             position: fixed !important;
             bottom: 0 !important;
+        }
+
+        #mobileNumber {
+            margin-bottom: 50px;
         }
     }
     
