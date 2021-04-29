@@ -166,6 +166,8 @@ class Event_model extends CI_Model {
 			return $results;
 		}
 		$tickets = [];
+		$nextFaseTickets = $this->verify_soldout_fase($eventId, $results);
+
 		foreach($results as $result){
 			$ticketFee = isset($result['nonSharedTicketFee']) ? number_format($result['nonSharedTicketFee'], 2, '.', '') : '0.00';
 			$result['ticketFee'] = $ticketFee;
@@ -174,10 +176,6 @@ class Event_model extends CI_Model {
 			$ticket_used = isset($tickets_used[$ticketId]) ? $tickets_used[$ticketId] : 0;
 			$ticket_available = intval($result['ticketQuantity']) - intval($ticket_used);
 			$sold_out = false;
-
-			if(isset($result['soldoutVisible']) && $result['soldoutVisible'] == 0 && $ticket_available <= 0){
-				continue;
-			}
 
 			if($result['ticketExpired'] == 'manually'){
 				$startDt = new DateTime($result['startTimestamp'], new DateTimeZone('Europe/Amsterdam'));
@@ -197,6 +195,18 @@ class Event_model extends CI_Model {
 			if($ticket_available <= 0){
 				$sold_out = true;
 			}
+
+			if(isset($result['soldoutVisible']) && $result['soldoutVisible'] == 0 && $ticket_available <= 0){
+				continue;
+			}
+
+			$previousFaseId = $result['previousFaseId'];
+
+			if($previousFaseId != null && isset($nextFaseTickets[$previousFaseId]) && $nextFaseTickets[$previousFaseId]['soldout'] == false){
+				continue;
+			}
+
+			
 
 			$result['soldOut'] = $sold_out;
 			$result['ticketAvailable'] = $ticket_available;
@@ -626,6 +636,44 @@ class Event_model extends CI_Model {
 			$vendorCosts[$paymentMethod] = $result['vendorCost'];
 		}
 		return $vendorCosts;
+	}
+
+	private function verify_soldout_fase($eventId, $results){
+		$dt = new DateTime('now', new DateTimeZone('Europe/Dublin'));
+        $date = $dt->format('Y-m-d H:i:s');
+		$tickets = [];
+		foreach($results as $result){
+			$ticketId = $result['ticketId'];
+			$tickets_used = $this->get_tickets_used($eventId);
+			$ticket_used = isset($tickets_used[$ticketId]) ? $tickets_used[$ticketId] : 0;
+			$ticket_available = intval($result['ticketQuantity']) - intval($ticket_used);
+			$tickets[$ticketId]['soldout'] = false;
+
+			if($result['ticketExpired'] == 'manually'){
+				$startDt = new DateTime($result['startTimestamp'], new DateTimeZone('Europe/Amsterdam'));
+				$startTimestamp = $startDt->format('Y-m-d H:i:s');
+				$endDt = new DateTime($result['endTimestamp'], new DateTimeZone('Europe/Amsterdam'));
+				$endTimestamp = $endDt->format('Y-m-d H:i:s');
+				if($date < $startTimestamp){
+					continue;
+				}
+
+				if($date > $endTimestamp){
+					$tickets[$ticketId]['soldout'] = true;
+				}
+
+			}
+
+			if($ticket_available <= 0){
+				$tickets[$ticketId]['soldout'] = true;
+			}
+
+			
+			
+		}
+
+		return $tickets;
+
 	}
 
 
