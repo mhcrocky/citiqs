@@ -106,7 +106,7 @@
                                              name="zipcode" placeholder="Zip Code">
                                         <span class="focus-input100"></span>
                                     </div>
-                                    <div class="wrap-input100 validate-input m-b-18 wideField d-none"
+                                    <div class="wrap-input100 validate-input m-b-18 wideField"
                                         data-validate="City is required">
                                         <span class="label-input100">City</span>
                                         <input class="field input100" type="text" id="city"
