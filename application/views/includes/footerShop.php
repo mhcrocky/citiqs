@@ -92,32 +92,32 @@
                                         <p class="input100 pt-3 pb-2 text-danger">Email and repeat email doesn't match!</p>
                                         <span class="focus-input100"></span>
                                     </div>
-                                    <div class="wrap-input100 validate-input m-b-18 wideField"
+                                    <div class="wrap-input100 validate-input m-b-18 wideField d-none"
                                         data-validate="Address is required">
                                         <span class="label-input100">Address</span>
                                         <input class="field input100" type="text" id="autocomplete"
-                                             name="address" placeholder="Address" required>
+                                             name="address" placeholder="Address">
                                         <span class="focus-input100"></span>
                                     </div>
-                                    <div class="wrap-input100 validate-input m-b-18 wideField"
+                                    <div class="wrap-input100 validate-input m-b-18 wideField d-none"
                                         data-validate="Zip Code is required">
                                         <span class="label-input100">Zip Code</span>
                                         <input class="field input100" type="text" id="zipcode"
-                                             name="zipcode" placeholder="Zip Code" required>
+                                             name="zipcode" placeholder="Zip Code">
                                         <span class="focus-input100"></span>
                                     </div>
-                                    <div class="wrap-input100 validate-input m-b-18 wideField"
+                                    <div class="wrap-input100 validate-input m-b-18 wideField d-none"
                                         data-validate="City is required">
                                         <span class="label-input100">City</span>
                                         <input class="field input100" type="text" id="city"
-                                             name="city" placeholder="City" required>
+                                             name="city" placeholder="City">
                                         <span class="focus-input100"></span>
                                     </div>
-                                    <div class="wrap-input100 validate-input m-b-18 wideField"
+                                    <div class="wrap-input100 validate-input m-b-18 wideField d-none"
                                         data-validate="Country is required">
                                         <span class="label-input100">Country</span>
                                         <input class="field input100" type="text" id="country"
-                                             name="country" placeholder="Country" required>
+                                             name="country" placeholder="Country">
                                         <span class="focus-input100"></span>
                                     </div>
                                     <div class="wrap-input100 validate-input m-b-18">
