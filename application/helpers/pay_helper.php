@@ -130,7 +130,7 @@
             $vendorCost = $CI->event_model->get_vendor_cost($vendorId);
             $buyerEmail = '';
             $totalAmount = 0;
-            $arrArguments = [];
+
             
             foreach ($reservations as $key => $reservation) {
                 
