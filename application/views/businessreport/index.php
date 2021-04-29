@@ -552,7 +552,7 @@
 
                             </div>
                             <div class="d-flex justify-content-between pb-2">
-                                <h2>€ <span id="tickets"></span></h2>
+                                <h2><span id="tickets"></span></h2>
                                 <span></span>
                             </div>
                         </div>
