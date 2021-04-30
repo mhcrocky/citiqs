@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row row-menu">
                 <div class="col-12 col-md-4">
-                    <h2 class="color-primary mb-5"><?php echo $eventName; ?></h2>
+                    <h2 id="selected_event_text" class="color-primary mb-5"><?php echo $eventName; ?></h2>
                     <ul class="items-gallery">
                         <li>
                             <img 
