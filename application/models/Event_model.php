@@ -68,7 +68,7 @@ class Event_model extends CI_Model {
 
 	public function get_events($vendor_id)
 	{
-		date_default_timezone_set('Europe/Dublin');
+		date_default_timezone_set('Europe/Amsterdam');
         $date = date('Y-m-d H:i:s');
 		//$time = date('H:i:s');
 		$this->db->trans_start();
@@ -83,7 +83,7 @@ class Event_model extends CI_Model {
 
 	public function get_event_by_id($vendor_id, $eventId)
 	{
-		date_default_timezone_set('Europe/Dublin');
+		date_default_timezone_set('Europe/Amsterdam');
         $date = date('Y-m-d H:i:s');
 		//$time = date('H:i:s');
 		$this->db->trans_start();
@@ -146,7 +146,7 @@ class Event_model extends CI_Model {
 
 	public function get_event_tickets($vendor_id,$eventId)
 	{
-		$dt = new DateTime('now', new DateTimeZone('Europe/Dublin'));
+		$dt = new DateTime('now', new DateTimeZone('Europe/Amsterdam'));
         $date = $dt->format('Y-m-d H:i:s');
 
 		$this->db->trans_start();
@@ -178,9 +178,9 @@ class Event_model extends CI_Model {
 			$sold_out = false;
 
 			if($result['ticketExpired'] == 'manually'){
-				$startDt = new DateTime($result['startTimestamp'], new DateTimeZone('Europe/Dublin'));
+				$startDt = new DateTime($result['startTimestamp'], new DateTimeZone('Europe/Amsterdam'));
 				$startTimestamp = $startDt->format('Y-m-d H:i:s');
-				$endDt = new DateTime($result['endTimestamp'], new DateTimeZone('Europe/Dublin'));
+				$endDt = new DateTime($result['endTimestamp'], new DateTimeZone('Europe/Amsterdam'));
 				$endTimestamp = $endDt->format('Y-m-d H:i:s');
 				if($date < $startTimestamp){
 					continue;
@@ -639,7 +639,7 @@ class Event_model extends CI_Model {
 	}
 
 	private function verify_soldout_fase($eventId, $results){
-		$dt = new DateTime('now', new DateTimeZone('Europe/Dublin'));
+		$dt = new DateTime('now', new DateTimeZone('Europe/Amsterdam'));
         $date = $dt->format('Y-m-d H:i:s');
 		$tickets = [];
 		foreach($results as $result){
@@ -650,9 +650,9 @@ class Event_model extends CI_Model {
 			$tickets[$ticketId]['soldout'] = false;
 
 			if($result['ticketExpired'] == 'manually'){
-				$startDt = new DateTime($result['startTimestamp'], new DateTimeZone('Europe/Dublin'));
+				$startDt = new DateTime($result['startTimestamp'], new DateTimeZone('Europe/Amsterdam'));
 				$startTimestamp = $startDt->format('Y-m-d H:i:s');
-				$endDt = new DateTime($result['endTimestamp'], new DateTimeZone('Europe/Dublin'));
+				$endDt = new DateTime($result['endTimestamp'], new DateTimeZone('Europe/Amsterdam'));
 				$endTimestamp = $endDt->format('Y-m-d H:i:s');
 				if($date < $startTimestamp){
 					continue;
