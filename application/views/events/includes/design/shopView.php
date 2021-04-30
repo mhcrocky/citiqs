@@ -160,6 +160,18 @@ if ( isset($design['shop']['eventDescript']) ) {
         </label>
     </div>
 
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Selected event text color:
+            <input data-jscolor="" class="form-control" name="shop[id][selected_event_text][color]"
+                data-css-selector="id" data-css-selector-value="selected_event_text" data-css-property="color"
+                onfocus="styleELements(this)" oninput="styleELements(this)" style="border-radius: 50px"
+                <?php if ( isset($design['shop']['id']['selected_event_text']['color']) ) { ?>
+                value="<?php echo $design['shop']['id']['selected_event_text']['color']?>" data-value="1"
+                <?php } else { ?> value="#7855c4" <?php } ?> />
+        </label>
+    </div>
+
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
