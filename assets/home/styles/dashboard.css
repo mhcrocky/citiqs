@@ -149,3 +149,37 @@ input:disabled{
 		max-width: 20% !important;
 	}
   }
+
+  .dash-card {
+    border-right: 2px solid;
+    margin-left: .5rem;
+    margin-right: .5rem;
+    margin-bottom: 1rem;
+    background-color: #fff;
+    height: 110px;
+}
+
+.pt-25 {
+    padding-top: 25px !important;
+}
+
+.icon-c {
+    width: 50px;
+    text-align: center;
+}
+
+.f-12 {
+    font-size: 12px;
+}
+
+.f-16 {
+    font-size: 16px;
+}
+
+@media only screen and (min-width: 800px) {
+    .dash-card {
+        -ms-flex: 0 0 31.333333% !important;
+        flex: 0 0 31.333333% !important;
+        max-width: 31.333333% !important;
+    }
+}
