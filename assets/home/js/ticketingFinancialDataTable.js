@@ -158,7 +158,7 @@ $(document).ready( function () {
              return parseFloat(a) + parseFloat(b);
            }) : 0;
 
-      $(tfoot).find('th').eq(6).html(round_up(amountTotal));
+      $(tfoot).find('th').eq(7).html(round_up(amountTotal));
     },
     rowId: function(a) {
       return 'row_id_' + a.order_id;
