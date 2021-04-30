@@ -184,7 +184,7 @@ class Event_model extends CI_Model {
 				$endTimestamp = $endDt->format('Y-m-d H:i:s');
 				if($date < $startTimestamp){
 					$sold_out = true;
-					$result['soldOutWhenExpired'] = "<b style='color:#7855c4 !important;'>not for sale yet! The sales will start at ". $endDt->format('d M y - H:i').'</b>';
+					$result['soldOutWhenExpired'] = "<b style='color:#7855c4 !important;'>not for sale yet! The sales will start at ". $startDt->format('d M y - H:i').'</b>';
 					//continue;
 				}
 
