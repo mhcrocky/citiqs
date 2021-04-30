@@ -481,8 +481,9 @@
                         class="single-report mb-xs-30">
                         <div class="s-report-inner pr--20 pt--30 mb-3">
                             <div class="s-report-title d-flex justify-content-between">
-								<h4 class="header-title mb-0"><?php echo $this->language->tLine('Total'); ?></option></h4>
-								<p><?php echo $this->language->tLine('LOCAL'); ?></p>
+                                <h4 class="header-title mb-0"><?php echo $this->language->tLine('Total'); ?></option>
+                                </h4>
+                                <p><?php echo $this->language->tLine('LOCAL'); ?></p>
                             </div>
                             <div class="d-flex justify-content-between pb-2">
                                 <h2>€ <span id="local"></span></h2>
@@ -497,7 +498,8 @@
                         class="single-report mb-xs-30">
                         <div class="s-report-inner pr--20 pt--30 mb-3">
                             <div class="s-report-title d-flex justify-content-between">
-                                <h4 class="header-title mb-0"><?php echo $this->language->tLine('Total'); ?></option></h4>
+                                <h4 class="header-title mb-0"><?php echo $this->language->tLine('Total'); ?></option>
+                                </h4>
                                 <p><?php echo $this->language->tLine('PICKUP'); ?></p>
                             </div>
                             <div class="d-flex justify-content-between pb-2">
@@ -514,7 +516,7 @@
                         <div class="s-report-inner pr--20 pt--30 mb-3">
                             <div class="s-report-title d-flex justify-content-between">
                                 <h4 class="header-title mb-0"><?php echo $this->language->tLine('Total'); ?></h4>
-								<p><?php echo $this->language->tLine('DELIVERY'); ?></p>
+                                <p><?php echo $this->language->tLine('DELIVERY'); ?></p>
 
                             </div>
                             <div class="d-flex justify-content-between pb-2">
@@ -531,7 +533,7 @@
                         <div class="s-report-inner pr--20 pt--30 mb-3">
                             <div class="s-report-title d-flex justify-content-between">
                                 <h4 class="header-title mb-0"><?php echo $this->language->tLine('Total'); ?></h4>
-								<p><?php echo $this->language->tLine('INVOICES'); ?></p>
+                                <p><?php echo $this->language->tLine('INVOICES'); ?></p>
 
                             </div>
                             <div class="d-flex justify-content-between pb-2">
@@ -548,7 +550,7 @@
                         <div class="s-report-inner pr--20 pt--30 mb-3">
                             <div class="s-report-title d-flex justify-content-between">
                                 <h4 class="header-title mb-0"><?php echo $this->language->tLine('Total'); ?></h4>
-								<p><?php echo $this->language->tLine('TICKETS'); ?></p>
+                                <p><?php echo $this->language->tLine('TICKETS'); ?></p>
 
                             </div>
                             <div class="d-flex justify-content-between pb-2">
@@ -559,6 +561,107 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+</div>
+
+
+<div class="d-flex row w-100 mt-4 mx-auto justify-content-center">
+    <div class="col-md-4 dash-card">
+        <div class="d-table">
+            <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
+                <span class="icon-c"><i class="fa fa-users" aria-hidden="true"></i>
+                </span>
+                Total tickets sold
+            </div>
+            <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
+                73.23%
+            </div>
+        </div>
+
+        <div class="d-table">
+            <div class="w-100 f-12 pr-2 pt-25 d-table-cell">
+                For upcoming events
+            </div>
+            <div class="f-12 pr-2 pt-25 d-table-cell text-right">
+                14.53%
+            </div>
+        </div>
+
+        <div class="d-table">
+            <div class="w-100 f-12 pr-2 d-table-cell">
+                For past events
+            </div>
+            <div class="f-12 pr-2 d-table-cell text-right">
+                12.81%
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-4 dash-card">
+        <div class="d-table">
+            <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
+                <span class="icon-c"><i class="fa fa-users" aria-hidden="true"></i>
+                </span>
+                Total tickets sold
+            </div>
+            <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
+                73.23%
+            </div>
+        </div>
+
+        <div class="d-table">
+            <div class="w-100 f-12 pr-2 pt-25 d-table-cell">
+                For upcoming events
+            </div>
+            <div class="f-12 pr-2 pt-25 d-table-cell text-right">
+                14.53%
+            </div>
+        </div>
+
+        <div class="d-table">
+            <div class="w-100 f-12 pr-2 d-table-cell">
+                For past events
+            </div>
+            <div class="f-12 pr-2 d-table-cell text-right">
+                12.81%
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-4 dash-card">
+        <div class="d-table">
+            <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
+                <span class="icon-c"><i class="fa fa-users" aria-hidden="true"></i>
+                </span>
+                Total tickets sold
+            </div>
+            <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
+                73.23%
+            </div>
+        </div>
+
+        <div class="d-table">
+            <div class="w-100 f-12 pr-2 pt-25 d-table-cell">
+                For upcoming events
+            </div>
+            <div class="f-12 pr-2 pt-25 d-table-cell text-right">
+                14.53%
+            </div>
+        </div>
+
+        <div class="d-table">
+            <div class="w-100 f-12 pr-2 d-table-cell">
+                For past events
+            </div>
+            <div class="f-12 pr-2 d-table-cell text-right">
+                12.81%
             </div>
         </div>
 
