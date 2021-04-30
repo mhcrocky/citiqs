@@ -531,7 +531,6 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 			"invoice" => 0,
 			"booking" => $booking
 		];
-		var_dump($booking);
 		return $newData;
 	}
 
