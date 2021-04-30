@@ -7,7 +7,6 @@ $(document).ready( function () {
         label: 'Reservation Id',
         type: 'string',
         class: 'reservationId',
-        // optgroup: 'core',
         default_value: '',
         size: 30,
         unique: true
@@ -17,17 +16,24 @@ $(document).ready( function () {
         label: 'Price',
         type: 'integer',
         class: 'price',
-        // optgroup: 'core',
         default_value: '',
         size: 30,
         unique: true
+      },
+      {
+        id: "tbl_events.eventname",
+        label: "Event Name",
+        type: "string",
+        class: "eventname",
+        default_value: "",
+        size: 30,
+        unique: true,
       },
       {
         id: 'tbl_bookandpay.ticketFee',
         label: 'Ticket Fee',
         type: 'integer',
         class: 'ticketFee',
-        // optgroup: 'core',
         default_value: '',
         size: 30,
         unique: true
@@ -37,7 +43,6 @@ $(document).ready( function () {
         label: 'Quantity',
         type: 'integer',
         class: 'numberofpersons',
-        // optgroup: 'core',
         default_value: '',
         size: 30,
         unique: true
@@ -47,7 +52,6 @@ $(document).ready( function () {
         label: 'Buyer Name',
         type: 'string',
         class: 'name',
-        // optgroup: 'core',
         default_value: '',
         size: 30,
         unique: true
@@ -57,7 +61,6 @@ $(document).ready( function () {
         label: 'Buyer Email',
         type: 'string',
         class: 'email',
-        // optgroup: 'core',
         default_value: '',
         size: 30,
         unique: true
@@ -67,7 +70,6 @@ $(document).ready( function () {
         label: 'Ticket Description',
         type: 'string',
         class: 'ticketDescription',
-        // optgroup: 'core',
         default_value: '',
         size: 30,
         unique: true
