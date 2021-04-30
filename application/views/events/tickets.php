@@ -32,15 +32,11 @@
                          foreach ($tickets as $ticket): 
                               $ticketId = $ticket['ticketId'];
                          ?>
-                        <input type="hidden" id="quantity_<?php echo $ticketId; ?>" name="quantity[]" value="0">
-                        <input type="hidden" name="id[]" value="<?php echo $ticketId; ?>">
-                        <input type="hidden" name="descript[]" value="<?php echo $ticket['ticketDescription']; ?>">
-                        <input type="hidden" name="price[]" value="<?php echo $ticket['ticketPrice']; ?>">
                         <div class="menu-list__item">
                             <div class="menu-list__name">
                                 <b class="menu-list__title">Description</b>
                                 <div>
-                                    <p class="menu-list__ingredients descript_<?php echo $ticketId; ?>">
+                                    <p class="menu-list__ingredients">
                                         <?php echo $ticket['ticketDescription']; ?>
                                     </p>
                                 </div>
