@@ -3,7 +3,6 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 include(APPPATH . '/libraries/koolreport/core/autoload.php');
 
-require APPPATH . '/libraries/phpqrcode/qrlib.php';
 require APPPATH . '/libraries/BaseControllerWeb.php';
 
 use \koolreport\drilldown\DrillDown;
@@ -21,6 +20,7 @@ class Events extends BaseControllerWeb
         $this->load->model('event_model');
         $this->load->helper('country_helper');
         $this->load->helper('email_helper');
+        $this->load->helper('ticketingemail_helper');
         $this->load->library('language', array('controller' => $this->router->class));
         
 
@@ -591,154 +591,24 @@ class Events extends BaseControllerWeb
 
 	}
 
-
-    private function emailReservation($transactionId)
+    public function resendTicket()
 	{
         $this->load->model('bookandpay_model');
-        $this->load->model('sendreservation_model');
-        
+        $reservationId = $this->input->post('reservationId');
+        $reservations = $this->bookandpay_model->getReservationsByIds([$reservationId]);
+        Ticketingemail_helper::sendEmailReservation($reservations, false, true);
+        return ;
+
+    }
+
+    public function emailReservation($transactionId)
+	{
+        $this->load->model('bookandpay_model');
         $reservations = $this->bookandpay_model->getReservationsByTransactionId($transactionId);
-        foreach ($reservations as $key => $reservation):
-            $result = $this->sendreservation_model->getEventTicketingData($reservation->reservationId);
-            
-            foreach ($result as $record) {
-                $customer = $record->customer;
-                $Spotlabel = $record->Spotlabel;
-				$eventDate = $record->eventdate;
-                $endDate = $record->EndDate;
-                $eventName = $record->eventname;
-                $eventVenue = $record->eventVenue;
-                $eventAddress = $record->eventAddress;
-                $eventCity = $record->eventCity;
-                $eventCountry = $record->eventCountry;
-                $eventZipcode = $record->eventZipcode;
-				$reservationId = $record->reservationId;
-				$ticketPrice = $record->price;
-                $ticketFee = $record->ticketFee;
-                $ticketId = $record->ticketId;
-                $ticketDescription = $record->ticketDescription;
-				$ticketQuantity = $record->numberofpersons;
-                $orderAmount = intval($ticketQuantity) * (floatval($record->price) + floatval($record->ticketFee));
-                $orderAmount = number_format($orderAmount, 2, '.', '');
-                $eventZipcode = $record->ticketDescription;
-                $buyerName = $record->name;
-                $buyerEmail = $record->email;
-				$buyerMobile = $record->mobilephone;
-				$reservationset = $record->reservationset;
-                $orderId = $record->orderId;
-				$fromtime = $record->timefrom;
-				$totime = $record->timeto;
-				$paid = $record->paid;
-				$TransactionId = $record->TransactionID;
-                $voucher = $record->voucher;
-                $mailsend = $record->mailsend;
-                
-                
-                    if (true) {
-                        
-                        $qrtext = $reservationId;
+        Ticketingemail_helper::sendEmailReservation($reservations);
+        return ;
 
-						switch (strtolower($_SERVER['HTTP_HOST'])) {
-							case 'tiqs.com':
-								$file = '/home/tiqs/domains/tiqs.com/public_html/alfred/uploads/qrcodes/';
-								break;
-							case '127.0.0.1':
-								$file = 'C:/wamp64/www/alfred/alfred/uploads/qrcodes/';
-								break;
-							default:
-								break;
-						}
-
-						$SERVERFILEPATH = $file;
-						$text = $qrtext;
-						$folder = $SERVERFILEPATH;
-						$file_name1 = $qrtext . ".png";
-						$file_name = $folder . $file_name1;
-
-						QRcode::png($text, $file_name);
-
-						switch (strtolower($_SERVER['HTTP_HOST'])) {
-							case 'tiqs.com':
-								$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
-								break;
-							case '127.0.0.1':
-								$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
-								break;
-							default:
-								break;
-                        }
-
-                        $emailId = $this->event_model->get_ticket($ticketId)->emailId;
-                        
-                        
-						switch (strtolower($_SERVER['HTTP_HOST'])) {
-							case 'tiqs.com':
-								$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
-								break;
-							case '127.0.0.1':
-								$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
-								break;
-							default:
-								break;
-                        }
-
-                        
-						if($emailId) {
-                            $emailTemplate = $this->email_templates_model->get_emails_by_id($emailId);
-                            $this->config->load('custom');
-                            
-                            $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/'.$emailTemplate->template_file .'.'.$this->config->item('template_extension'));
-                            $qrlink = $SERVERFILEPATH . $file_name1;
-							if($mailtemplate) {
-                                $dt = new DateTime('now');
-                                $date = $dt->format('Y.m.d');
-                                $mailtemplate = str_replace('[currentDate]', $buyerName, $mailtemplate);
-                                $mailtemplate = str_replace('[orderId]', $orderId, $mailtemplate);
-                                $mailtemplate = str_replace('[orderAmount]', $orderAmount, $mailtemplate);
-                                $mailtemplate = str_replace('[buyerName]', $buyerName, $mailtemplate);
-								$mailtemplate = str_replace('[buyerEmail]', $buyerEmail, $mailtemplate);
-                                $mailtemplate = str_replace('[buyerMobile]', $buyerMobile, $mailtemplate);
-                                $mailtemplate = str_replace('[eventName]', $eventName, $mailtemplate);
-								$mailtemplate = str_replace('[eventDate]', date('d.m.Y', strtotime($eventDate)), $mailtemplate);
-								$mailtemplate = str_replace('[eventVenue]', $eventVenue, $mailtemplate);
-								$mailtemplate = str_replace('[eventAddress]', $eventAddress, $mailtemplate);
-                                $mailtemplate = str_replace('[eventCity]', $eventCity, $mailtemplate);
-								$mailtemplate = str_replace('[eventCountry]', $eventCountry, $mailtemplate);
-								$mailtemplate = str_replace('[eventZipcode]', $eventZipcode, $mailtemplate);
-								$mailtemplate = str_replace('[ticketDescription]', $ticketDescription, $mailtemplate);
-								$mailtemplate = str_replace('[ticketPrice]', $ticketPrice, $mailtemplate);
-                                $mailtemplate = str_replace('[price]', $ticketPrice, $mailtemplate);
-								$mailtemplate = str_replace('[ticketQuantity]', $ticketQuantity, $mailtemplate);
-                                $mailtemplate = str_replace('[numberOfPersons]', $ticketQuantity, $mailtemplate);
-                                $mailtemplate = str_replace('[startTime]', $fromtime, $mailtemplate);
-								$mailtemplate = str_replace('[endTime]', $totime, $mailtemplate);
-								$mailtemplate = str_replace('[timeSlot]', '', $mailtemplate);
-                                $mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
-                                $mailtemplate = str_replace('[spotLabel]', $Spotlabel, $mailtemplate);
-								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
-								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
-								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
-                                $mailtemplate .= '<div style="width:100%;text-align:center;margin-top: 30px;">';
-                                $download_pdf_link = base_url() . "booking_events/pdf/" . $emailId . "/" . $reservationId;
-                                $mailtemplate .= '<a href="'.$download_pdf_link.'" id="pdfDownload" style="background-color:#008CBA;border: none;color: white;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;">Download as PDF</a>';
-                                $mailtemplate .= '</div>';
-								$subject = ($emailTemplate->template_subject) ? strip_tags($emailTemplate->template_subject) : 'Your tiqs reservation(s)';
-								$datachange['mailsend'] = 1;
-                                
-								//Email_helper::sendEmail("pnroos@icloud.com", $subject, $mailtemplate, false );
-								if(Email_helper::sendEmail($buyerEmail, $subject, $mailtemplate, false)) {
-                                    $file = FCPATH . 'application/tiqs_logs/messages.txt';
-			                        Utility_helper::logMessage($file, $mailtemplate);
-                                    $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
-                                    
-                                }
-                            
-                        }
-                    }
-                }
-            }
-            endforeach;
-        }
+    }
 
     private function generateTransactionId(){
         $set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKLMNPQRSTVWXY';
