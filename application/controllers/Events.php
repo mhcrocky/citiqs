@@ -591,7 +591,7 @@ class Events extends BaseControllerWeb
 
 	}
 
-    public function resendTicket()
+    public function resend_ticket()
 	{
         $this->load->model('bookandpay_model');
         $reservationId = $this->input->post('reservationId');

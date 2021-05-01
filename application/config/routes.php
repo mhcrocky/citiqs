@@ -552,6 +552,7 @@ $route['events/add_guest'] = 'Events/add_guest';
 $route['events/delete_ticket'] = 'Events/delete_ticket';
 $route['events/delete_group'] = 'Events/delete_group';
 $route['events/import_guestlist'] = 'Events/import_guestlist';
+$route['events/resend_ticket'] = 'Events/resend_ticket';
 $route['events/event/(:num)'] = 'Events/event/$1';
 $route['events/report/(:num)'] = 'Events/report/$1';
 $route['events/graph/(:num)'] = 'Events/graph/$1';
