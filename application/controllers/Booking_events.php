@@ -3,7 +3,6 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 //require APPPATH . '/libraries/phpqrcode/qrlib.php';
 require APPPATH . '/libraries/BaseControllerWeb.php';
-include APPPATH . '/libraries/ical/ICS.php';
 
 class Booking_events extends BaseControllerWeb
 {
@@ -429,19 +428,8 @@ class Booking_events extends BaseControllerWeb
 
     public function emailReservation($transactionId)
 	{
-        $ics = new ICS(array(
-            'location' => $eventAddress . ', ' . $eventCity . ', ' . $eventCountry,
-            'organizer' => 'TIQS:malito:support@tiqs.com',
-            'description' => strip_tags($eventName),
-            'dtstart' => date('Y-m-d', strtotime($eventDate)) . ' ' .$fromtime,
-            'dtend' => date('Y-m-d', strtotime($endDate)) . ' ' .$totime,
-            'summary' => strip_tags($eventName),
-            'url' => $download_pdf_link
-        ));
-        
-        $icsContent = $ics->to_string();
         $reservations = $this->bookandpay_model->getReservationsByTransactionId($transactionId);
-        Ticketingemail_helper::sendEmailReservation($reservations, $icsContent);
+        Ticketingemail_helper::sendEmailReservation($reservations, true);
 
     }
     
