@@ -1,5 +1,6 @@
 <?php
     declare(strict_types=1);
+    include APPPATH . '/libraries/ical/ICS.php';
     require APPPATH . '/libraries/phpqrcode/qrlib.php';
 
     defined('BASEPATH') OR exit('No direct script access allowed');
@@ -142,10 +143,26 @@
 								$subject = ($emailTemplate->template_subject) ? strip_tags($emailTemplate->template_subject) : 'Your tiqs reservation(s)';
 								$datachange['mailsend'] = 1;
 
+                                $icsContent = false;
+
+                                if($icsFile){
+                                    $ics = new ICS(array(
+                                        'location' => $eventAddress . ', ' . $eventCity . ', ' . $eventCountry,
+                                        'organizer' => 'TIQS:malito:support@tiqs.com',
+                                        'description' => strip_tags($eventName),
+                                        'dtstart' => date('Y-m-d', strtotime($eventDate)) . ' ' .$fromtime,
+                                        'dtend' => date('Y-m-d', strtotime($endDate)) . ' ' .$totime,
+                                        'summary' => strip_tags($eventName),
+                                        'url' => $download_pdf_link
+                                    ));
+                                    
+                                    $icsContent = $ics->to_string();
+                                }
+
                                 if($mailsend == 0 || $resend == true){
 
                                     //$CI->sendEmail("pnroos@icloud.com", $subject, $mailtemplate, $icsContent );
-								    if(self::sendEmail($buyerEmail, $subject, $mailtemplate, $icsFile)) {
+								    if(self::sendEmail($buyerEmail, $subject, $mailtemplate, $icsContent)) {
                                         $file = FCPATH . 'application/tiqs_logs/messages.txt';
                                         
                                         Utility_helper::logMessage($file, $mailtemplate);
