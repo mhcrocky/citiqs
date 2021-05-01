@@ -417,7 +417,7 @@ function resendTicket(reservationId, email) {
     email: encodeURI(email),
   };
   $.post(
-    globalVariables.baseUrl + "booking_events/emailReservation",
+    globalVariables.baseUrl + "events/resendTicket",
     data,
     function (data) {
       alertify.success("Ticket is resend successfully!");
