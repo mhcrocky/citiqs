@@ -1,6 +1,5 @@
 <?php
     declare(strict_types=1);
-    include APPPATH . '/libraries/ical/ICS.php';
     require APPPATH . '/libraries/phpqrcode/qrlib.php';
 
     defined('BASEPATH') OR exit('No direct script access allowed');
