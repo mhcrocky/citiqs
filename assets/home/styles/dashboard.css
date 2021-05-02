@@ -151,12 +151,11 @@ input:disabled{
   }
 
   .dash-card {
-    border-right: 2px solid;
     margin-left: .5rem;
     margin-right: .5rem;
     margin-bottom: 1rem;
     background-color: #fff;
-    height: 110px;
+    min-height: 110px;
 }
 
 .pt-25 {
@@ -164,8 +163,21 @@ input:disabled{
 }
 
 .icon-c {
-    width: 50px;
     text-align: center;
+	font-size: 17px;
+	margin-right: .5rem;
+}
+
+.b-purple {
+	border-right: 2px solid rgb(143, 5, 143);
+}
+
+.b-red {
+	border-right: 2px solid rgba(206, 6, 6, 0.89);
+}
+
+.b-green {
+	border-right: 2px solid rgb(4, 194, 4);
 }
 
 .f-12 {
