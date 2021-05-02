@@ -569,37 +569,36 @@
 
 
 
-</div>
 
-<?php 
-$sold_tickets = 0;
-$total_amount = 0;
-foreach($event_orders as $event_order){
-    $sold_tickets += intval($event_order['booking_number']);
-    $total_amount += floatval($event_order['amount']);
-} ?>
 
-<div class="d-flex row w-100 mt-4 mx-auto p-2">
+<?php foreach($event_orders as $key => $event_order): 
+    $sold_tickets =  $event_order['booking_number']; 
+    $total_amount = $event_order['amount'];
+    unset($event_order['booking_number']);
+    unset($event_order['amount']);
+    ?>
+
+<div class="d-flex row w-100 mt-4 mx-auto p-2 row-sort ui-sortable" data-rowposition="3" data-rowsort="1">
     <div class="col-md-4 dash-card b-purple">
         <div class="d-table">
             <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
                 <span class="icon-c">
                     <i class="fa fa-ticket" aria-hidden="true"></i>
                 </span>
-                Total tickets sold
+                <?php echo $key; ?>: Total tickets sold
             </div>
             <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
             <?php echo $sold_tickets; ?>
             </div>
         </div>
-        <div class="w-100 pt-25 mb-2">
-        <?php foreach($event_orders as $event_order): ?>
+        <div class="w-100 pt-25 mb-2 ticket-card">
+        <?php foreach($event_order as $ticket): ?>
         <div class="d-table">
             <div class="w-100 f-12 pr-2 d-table-cell">
-            <?php echo $event_order['eventname']; ?>
+            <?php echo $ticket['ticketDescription']; ?>
             </div>
             <div class="f-12 pr-2 d-table-cell text-right">
-                <?php echo $event_order['booking_number']; ?>
+                <?php echo $ticket['booking_number']; ?>
             </div>
         </div>
         <?php endforeach; ?>
@@ -610,7 +609,7 @@ foreach($event_orders as $event_order){
     <div class="col-md-4 dash-card b-red">
         <div class="d-table">
             <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
-                <span style="display: ruby;" class="icon-c">
+                <span style="display: inline-flex;flex-wrap: unset;" class="icon-c">
                     <i class="gg-euro"></i>
                 </span>
                 Total amount
@@ -620,14 +619,14 @@ foreach($event_orders as $event_order){
             </div>
         </div>
 
-        <div class="w-100 pt-25 mb-2">
-        <?php foreach($event_orders as $event_order): ?>
+        <div class="w-100 pt-25 mb-2 ticket-card">
+        <?php foreach($event_order as $ticket): ?>
         <div class="d-table">
             <div class="w-100 f-12 pr-2 d-table-cell">
-                <?php echo $event_order['eventname']; ?>
+                <?php echo $ticket['ticketDescription']; ?>
             </div>
             <div class="f-12 pr-2 d-table-cell text-right">
-            €<?php echo number_format($event_order['amount'], 2); ?>
+            €<?php echo number_format($ticket['amount'], 2); ?>
             </div>
         </div>
         <?php endforeach; ?>
@@ -636,11 +635,13 @@ foreach($event_orders as $event_order){
 
     </div>
 <?php 
+
 $total_male = 0;
 $total_female = 0;
-foreach($events_gender as $event_gender){
-    $total_male += count($event_gender['male']);
-    $total_female += count($event_gender['female']);
+$tickets = $tickets_gender[$key];
+foreach($tickets as $ticket){
+    $total_male += count($ticket['male']);
+    $total_female += count($ticket['female']);
 } 
 
 ?>
@@ -658,13 +659,13 @@ foreach($events_gender as $event_gender){
         </div>
 
         <div class="w-100 pt-25 mb-2">
-        <?php foreach($events_gender as $key => $event_gender): ?>
+        <?php foreach($tickets as $ticket): ?>
         <div class="d-table">
             <div class="w-100 f-12 pr-2 d-table-cell">
-                <?php echo $key; ?>
+                <?php echo $ticket['ticketDescription']; ?>
             </div>
             <div class="f-12 pr-2 d-table-cell text-right">
-            <?php echo count($event_gender['male']) ?>
+            <?php echo count($ticket['male']) ?>
             </div>
         </div>
         <?php endforeach; ?>
@@ -682,22 +683,29 @@ foreach($events_gender as $event_gender){
                 Female
             </div>
             <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
-                <?php echo number_format($total_female/$sold_tickets, 2); ?>%
+                <?php echo number_format($total_female/$sold_tickets * 100, 2); ?>%
             </div>
         </div>
 
         <div class="w-100 pt-25 mb-2">
-        <?php foreach($events_gender as $key => $event_gender): ?>
+        <?php foreach($tickets as $ticket): ?>
         <div class="d-table">
             <div class="w-100 f-12 pr-2 d-table-cell">
-                <?php echo $key; ?>
+                <?php echo $ticket['ticketDescription']; ?>
             </div>
             <div class="f-12 pr-2 d-table-cell text-right">
-            <?php echo count($event_gender['female']); ?>
+            <?php echo count($ticket['female']); ?>
             </div>
         </div>
         <?php endforeach; ?>
         </div>
 
     </div>
+
+
+
+</div>
+<?php endforeach; ?>
+
+
 </div>
