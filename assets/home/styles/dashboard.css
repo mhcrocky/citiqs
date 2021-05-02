@@ -156,10 +156,12 @@ input:disabled{
     margin-bottom: 1rem;
     background-color: #fff;
     min-height: 110px;
+	display: inline-grid;
 }
 
 .pt-25 {
     padding-top: 25px !important;
+	align-self: flex-end;
 }
 
 .icon-c {
@@ -190,8 +192,8 @@ input:disabled{
 
 @media only screen and (min-width: 800px) {
     .dash-card {
-        -ms-flex: 0 0 31.333333% !important;
-        flex: 0 0 31.333333% !important;
-        max-width: 31.333333% !important;
+        -ms-flex: 0 0 23% !important;
+        flex: 0 0 23% !important;
+        max-width: 23% !important;
     }
 }
