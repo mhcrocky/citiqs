@@ -500,6 +500,41 @@ class Event_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	public function get_events_stats($vendorId, $sql='')
+	{
+		$query = $this->db->query("SELECT eventname, COUNT(tbl_events.id) as booking_number, SUM(tbl_bookandpay.price+tbl_bookandpay.ticketFee) as amount
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_events.vendorId = ".$vendorId." $sql
+		GROUP BY tbl_events.id");
+		return $query->result_array();
+	}
+
+	public function get_events_gender($vendorId)
+	{
+		$query = $this->db->query("SELECT eventname, gender
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_events.vendorId = ".$vendorId." ");
+		$results = $query->result_array();
+		$tickets = [];
+		foreach($results as $result){
+			$eventname = $result['eventname'];
+			if($result['gender'] == 'male'){
+				$tickets[$eventname]['male'][] = $result['gender'];
+				$tickets[$eventname]['female'] = [];
+			} else if($result['gender'] == 'female'){
+				$tickets[$eventname]['female'][] = $result['gender'];
+				$tickets[$eventname]['male'] = [];
+			} else {
+				$tickets[$eventname]['male'] = [];
+				$tickets[$eventname]['female'] = [];
+			}
+			
+		}
+		return $tickets;
+	}
+
 	public function get_financial_report($vendorId, $sql='')
 	{
 		$query = $this->db->query("SELECT tbl_bookandpay.id as bookandpay_id, reservationId, reservationtime, price, numberofpersons, ticketFee, name, age, gender, mobilephone, email, tbl_bookandpay.ticketDescription, eventname
