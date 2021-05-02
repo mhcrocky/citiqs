@@ -16,6 +16,7 @@ class Businessreport extends BaseControllerWeb
 	{
 		parent::__construct();
 		$this->load->model('businessreport_model');
+		$this->load->model('event_model');
 		$this->load->model('shopprinters_model');
 		$this->load->model('shoppaymentmethods_model');
 		$this->load->model('shopvendor_model');
@@ -38,6 +39,8 @@ class Businessreport extends BaseControllerWeb
 		$data['day_orders'] = $this->businessreport_model->get_day_orders($vendor_id);
 		$data['week_orders'] = $this->businessreport_model->get_this_week_orders($vendor_id);
 		$data['last_week_orders'] = $this->businessreport_model->get_last_week_orders($vendor_id);
+		$data['event_orders'] = $this->event_model->get_events_stats($vendor_id);
+		$data['events_gender'] = $this->event_model->get_events_gender($vendor_id);
 		$this->loadViews("businessreport/index", $this->global, $data, 'footerbusiness', 'headerbusiness'); // payment screen
 
 	}
