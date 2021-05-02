@@ -571,98 +571,132 @@
 
 </div>
 
+<?php 
+$sold_tickets = 0;
+$total_amount = 0;
+foreach($event_orders as $event_order){
+    $sold_tickets += intval($event_order['booking_number']);
+    $total_amount += floatval($event_order['amount']);
+} ?>
 
-<div class="d-flex row w-100 mt-4 mx-auto justify-content-center">
-    <div class="col-md-4 dash-card">
+<div class="d-flex row w-100 mt-4 mx-auto p-2">
+    <div class="col-md-4 dash-card b-purple">
         <div class="d-table">
             <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
-                <span class="icon-c"><i class="fa fa-users" aria-hidden="true"></i>
+                <span class="icon-c">
+                    <i class="fa fa-ticket" aria-hidden="true"></i>
                 </span>
                 Total tickets sold
             </div>
             <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
-                73.23%
+            <?php echo $sold_tickets; ?>
             </div>
         </div>
-
-        <div class="d-table">
-            <div class="w-100 f-12 pr-2 pt-25 d-table-cell">
-                For upcoming events
-            </div>
-            <div class="f-12 pr-2 pt-25 d-table-cell text-right">
-                14.53%
-            </div>
-        </div>
-
+        <div class="w-100 pt-25 mb-2">
+        <?php foreach($event_orders as $event_order): ?>
         <div class="d-table">
             <div class="w-100 f-12 pr-2 d-table-cell">
-                For past events
+            <?php echo $event_order['eventname']; ?>
             </div>
             <div class="f-12 pr-2 d-table-cell text-right">
-                12.81%
+                <?php echo $event_order['booking_number']; ?>
             </div>
+        </div>
+        <?php endforeach; ?>
+
         </div>
 
     </div>
-    <div class="col-md-4 dash-card">
+    <div class="col-md-4 dash-card b-red">
         <div class="d-table">
             <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
-                <span class="icon-c"><i class="fa fa-users" aria-hidden="true"></i>
+                <span style="display: ruby;" class="icon-c">
+                    <i class="gg-euro"></i>
                 </span>
-                Total tickets sold
+                Total amount
             </div>
             <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
-                73.23%
+            €<?php echo number_format($total_amount, 2); ?>
             </div>
         </div>
 
-        <div class="d-table">
-            <div class="w-100 f-12 pr-2 pt-25 d-table-cell">
-                For upcoming events
-            </div>
-            <div class="f-12 pr-2 pt-25 d-table-cell text-right">
-                14.53%
-            </div>
-        </div>
-
+        <div class="w-100 pt-25 mb-2">
+        <?php foreach($event_orders as $event_order): ?>
         <div class="d-table">
             <div class="w-100 f-12 pr-2 d-table-cell">
-                For past events
+                <?php echo $event_order['eventname']; ?>
             </div>
             <div class="f-12 pr-2 d-table-cell text-right">
-                12.81%
+            €<?php echo number_format($event_order['amount'], 2); ?>
             </div>
+        </div>
+        <?php endforeach; ?>
+        </div>
+
+
+    </div>
+<?php 
+$total_male = 0;
+$total_female = 0;
+foreach($events_gender as $event_gender){
+    $total_male += count($event_gender['male']);
+    $total_female += count($event_gender['female']);
+} 
+
+?>
+    <div class="col-md-4 dash-card b-green">
+        <div class="d-table">
+            <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
+                <span class="icon-c">
+                <i class="fa fa-male" aria-hidden="true"></i>
+                </span>
+                Male
+            </div>
+            <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
+                <?php echo number_format(($total_male/$sold_tickets) * 100, 2); ?>%
+            </div>
+        </div>
+
+        <div class="w-100 pt-25 mb-2">
+        <?php foreach($events_gender as $key => $event_gender): ?>
+        <div class="d-table">
+            <div class="w-100 f-12 pr-2 d-table-cell">
+                <?php echo $key; ?>
+            </div>
+            <div class="f-12 pr-2 d-table-cell text-right">
+            <?php echo count($event_gender['male']) ?>
+            </div>
+        </div>
+        <?php endforeach; ?>
         </div>
 
     </div>
-    <div class="col-md-4 dash-card">
+
+
+    <div class="col-md-4 dash-card b-green">
         <div class="d-table">
             <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
-                <span class="icon-c"><i class="fa fa-users" aria-hidden="true"></i>
+                <span class="icon-c font-weight-bold">
+                <i class="fa fa-female" aria-hidden="true"></i>
                 </span>
-                Total tickets sold
+                Female
             </div>
             <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
-                73.23%
+                <?php echo number_format($total_female/$sold_tickets, 2); ?>%
             </div>
         </div>
 
-        <div class="d-table">
-            <div class="w-100 f-12 pr-2 pt-25 d-table-cell">
-                For upcoming events
-            </div>
-            <div class="f-12 pr-2 pt-25 d-table-cell text-right">
-                14.53%
-            </div>
-        </div>
-
+        <div class="w-100 pt-25 mb-2">
+        <?php foreach($events_gender as $key => $event_gender): ?>
         <div class="d-table">
             <div class="w-100 f-12 pr-2 d-table-cell">
-                For past events
+                <?php echo $key; ?>
             </div>
             <div class="f-12 pr-2 d-table-cell text-right">
-                12.81%
+            <?php echo count($event_gender['female']); ?>
             </div>
+        </div>
+        <?php endforeach; ?>
         </div>
 
     </div>
