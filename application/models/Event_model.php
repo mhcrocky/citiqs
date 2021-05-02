@@ -502,17 +502,32 @@ class Event_model extends CI_Model {
 
 	public function get_events_stats($vendorId, $sql='')
 	{
-		$query = $this->db->query("SELECT eventname, COUNT(tbl_events.id) as booking_number, SUM(tbl_bookandpay.price+tbl_bookandpay.ticketFee) as amount
+		$query = $this->db->query("SELECT tbl_event_tickets.id, eventname, tbl_bookandpay.ticketDescription, COUNT(tbl_events.id) as booking_number, SUM(tbl_bookandpay.price+tbl_bookandpay.ticketFee) as amount
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_events.vendorId = ".$vendorId." $sql
-		GROUP BY tbl_events.id");
-		return $query->result_array();
+		GROUP BY tbl_events.id, tbl_event_tickets.id");
+		$results = $query->result_array();
+		
+		$tickets = [];
+		foreach($results as $result){
+			$eventname = $result['eventname'];
+			if(isset($tickets[$eventname])){
+				$tickets[$eventname]['booking_number'] = $tickets[$eventname]['booking_number'] + intval($result['booking_number']);
+				$tickets[$eventname]['amount'] = $tickets[$eventname]['amount'] + floatval($result['amount']);
+			} else {
+				$tickets[$eventname]['booking_number'] = intval($result['booking_number']);
+				$tickets[$eventname]['amount'] = floatval($result['amount']);
+			}
+			$tickets[$eventname][] = $result;
+		}
+
+		return $tickets;
 	}
 
-	public function get_events_gender($vendorId)
+	public function get_tickets_gender($vendorId)
 	{
-		$query = $this->db->query("SELECT eventname, gender
+		$query = $this->db->query("SELECT tbl_event_tickets.id, tbl_bookandpay.ticketDescription, eventname, gender
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_events.vendorId = ".$vendorId." ");
@@ -520,15 +535,17 @@ class Event_model extends CI_Model {
 		$tickets = [];
 		foreach($results as $result){
 			$eventname = $result['eventname'];
+			$ticketId = $result['id'];
+			$tickets[$eventname][$ticketId]['ticketDescription'] = $result['ticketDescription'];
 			if($result['gender'] == 'male'){
-				$tickets[$eventname]['male'][] = $result['gender'];
-				$tickets[$eventname]['female'] = [];
+				$tickets[$eventname][$ticketId]['male'][] = $result['gender'];
+				$tickets[$eventname][$ticketId]['female'] = [];
 			} else if($result['gender'] == 'female'){
-				$tickets[$eventname]['female'][] = $result['gender'];
-				$tickets[$eventname]['male'] = [];
+				$tickets[$eventname][$ticketId]['female'][] = $result['gender'];
+				$tickets[$eventname][$ticketId]['male'] = [];
 			} else {
-				$tickets[$eventname]['male'] = [];
-				$tickets[$eventname]['female'] = [];
+				$tickets[$eventname][$ticketId]['male'] = [];
+				$tickets[$eventname][$ticketId]['female'] = [];
 			}
 			
 		}
