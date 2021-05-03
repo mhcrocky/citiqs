@@ -353,6 +353,10 @@
         border-radius: 7px;
     }
 
+    .modal-body {
+        overflow: hidden !important;
+    }
+
     </style>
     <?php  } elseif ($this->view === 'video/index') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
