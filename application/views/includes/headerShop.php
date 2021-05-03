@@ -34,8 +34,9 @@
         $shopdesign=$design['shop'];
         $eventTitle = isset($design['shop']['eventTitle']) ? $design['shop']['eventTitle'] : '';
         $eventDescript = isset($design['shop']['eventDescript']) ? $design['shop']['eventDescript'] : '';
-        echo "body{background-image: url('".$this->baseUrl . "assets/images/backGroundImages/". $bgImage."') !important;
+        /* echo "body{background-image: url('".$this->baseUrl . "assets/images/backGroundImages/". $bgImage."') !important;
             background-size: cover;}";
+        */
         
         $design_ids=$shopdesign['id'];
         foreach($design_ids as $key=> $design_id) {
