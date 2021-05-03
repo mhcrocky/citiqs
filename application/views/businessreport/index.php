@@ -578,8 +578,8 @@
     unset($event_order['amount']);
     ?>
 
-<div class="d-flex row w-100 mt-4 mx-auto p-2 row-sort ui-sortable" data-rowposition="3" data-rowsort="1">
-    <div class="col-md-4 dash-card b-purple">
+<div class="d-flex row w-100 mt-4 mx-auto row-sort ui-sortable" data-rowposition="3" data-rowsort="1">
+    <div class="col-md-4 dash-card first b-purple">
         <div class="d-table">
             <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
                 <span class="icon-c">
@@ -674,7 +674,7 @@ foreach($tickets as $ticket){
     </div>
 
 
-    <div class="col-md-4 dash-card b-green">
+    <div class="col-md-4 dash-card last b-green">
         <div class="d-table">
             <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
                 <span class="icon-c font-weight-bold">
