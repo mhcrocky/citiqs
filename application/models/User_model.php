@@ -1145,4 +1145,21 @@ class User_model extends CI_Model
         $result = $this->db->get('tbl_user')->result_array();
         return $result;
     }
+
+	public function getVendorsQR(): ?array
+	{
+		$this->load->config('custom');
+
+		$this->db->select( '
+            tbl_app_routes.slug AS slug,
+            tbl_app_routes.controller AS controller,
+            tbl_app_routes.vendorId AS vendorId,
+            tbl_app_routes.typeId AS typeId,
+            tbl_app_routes.spotId AS spotId
+        ');
+
+		$this->db->where('tbl_app_routes.vendorid <>', 0);
+		$result = $this->db->get('tbl_app_routes')->result_array();
+		return $result;
+	}
 }
