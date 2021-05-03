@@ -758,5 +758,26 @@ class Event_model extends CI_Model {
 		return is_string($value);
 	}
 
+	public function get_shopsettings($vendorId)
+	{
+		$this->db->select('showAddress, showCountry, showZipcode, showMobileNumber');
+		$this->db->where('vendorId', $vendorId);
+		$query = $this->db->get('tbl_event_shop');
+		return $query->first_row();
+		
+	}
+
+	public function save_shopsettings($vendorId, $data)
+	{
+		$this->db->where('vendorId', $vendorId);
+		if($this->db->get('tbl_event_shop')->num_rows() == 0){
+			$data['vendorId'] = $vendorId;
+			return $this->db->insert('tbl_event_shop',$data);
+		}
+		$this->db->where('vendorId', $vendorId);
+		return $this->db->update('tbl_event_shop',$data);
+		
+	}
+
 
 }

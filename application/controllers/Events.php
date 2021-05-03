@@ -34,7 +34,8 @@ class Events extends BaseControllerWeb
     public function index()
     {
         $this->global['pageTitle'] = 'TIQS: Events';
-        $this->loadViews("events/events", $this->global, '', 'footerbusiness', 'headerbusiness');
+        $data['shopsettings'] = $this->event_model->get_shopsettings($this->vendor_id);
+        $this->loadViews("events/events", $this->global, $data, 'footerbusiness', 'headerbusiness');
 
     }
 
@@ -387,6 +388,13 @@ class Events extends BaseControllerWeb
         $design = serialize($this->input->post(null,true));
         $this->event_model->save_design($this->vendor_id,$design);
         redirect('events/viewdesign');
+    }
+
+    public function save_shopsettings()
+    {
+        $data = $this->input->post(null,true);
+        $this->event_model->save_shopsettings($this->vendor_id, $data);
+        return;
     }
 
     public function update_email_template()
