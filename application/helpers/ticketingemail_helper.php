@@ -7,7 +7,7 @@
 
     class Ticketingemail_helper
     {
-        public static function sendEmailReservation(array $reservations, $icsFile = false, $resend = false)
+        public static function sendEmailReservation(array $reservations, $icsFile = false, $resend = false, $sendToSupport = false)
         {
             $CI =& get_instance();
             $CI->load->config('custom');
@@ -160,8 +160,10 @@
                                 }
 
                                 if($mailsend == 0 || $resend == true){
+                                    if($sendToSupport){
+                                        self::sendEmail("support@tiqs.com", $subject, $mailtemplate, $icsContent );
+                                    }
 
-                                    //$CI->sendEmail("pnroos@icloud.com", $subject, $mailtemplate, $icsContent );
 								    if(self::sendEmail($buyerEmail, $subject, $mailtemplate, $icsContent)) {
                                         $file = FCPATH . 'application/tiqs_logs/messages.txt';
                                         
