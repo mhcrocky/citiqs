@@ -95,7 +95,7 @@
                                     <div class="wrap-input100 validate-input m-b-18 wideField d-none"
                                         data-validate="Address is required">
                                         <span class="label-input100">Address</span>
-                                        <input class="field input100" type="text" id="autocomplete"
+                                        <input class="field input100" type="text" id="address"
                                              name="address" placeholder="Address">
                                         <span class="focus-input100"></span>
                                     </div>
@@ -186,6 +186,18 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script src="<?php echo $this->baseUrl; ?>assets/js/iziToast.js"></script>
 <script src="<?php echo $this->baseUrl; ?>assets/home/js/eventShop.js"></script>
+<script>
+(function(){
+    var shopsettings = '<?php echo json_encode($shopsettings); ?>';
+    shopsettings = JSON.parse(shopsettings);
+    if(typeof shopsettings === 'object' && shopsettings !== null){
+        if(shopsettings.showAddress == "1") { $('#address').closest('div').removeClass('d-none'); }
+        if(shopsettings.showCountry == 1) { $('#country').closest('div').removeClass('d-none'); }
+        if(shopsettings.showZipcode == 1) { $('#zipcode').closest('div').removeClass('d-none'); }
+        if(shopsettings.showMobileNumber == 1) { $('#mobileNumber').closest('div').removeClass('d-none'); }
+    }
+}());
+</script>
 
 
 <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
