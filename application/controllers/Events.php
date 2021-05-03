@@ -595,8 +595,9 @@ class Events extends BaseControllerWeb
 	{
         $this->load->model('bookandpay_model');
         $reservationId = $this->input->post('reservationId');
+        $sendToSupport = ($this->input->post('sendTo') == 1) ? true : false;
         $reservations = $this->bookandpay_model->getReservationsByIds([$reservationId]);
-        Ticketingemail_helper::sendEmailReservation($reservations, false, true);
+        Ticketingemail_helper::sendEmailReservation($reservations, false, true, $sendToSupport);
         return ;
 
     }
