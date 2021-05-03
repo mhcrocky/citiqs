@@ -154,7 +154,7 @@ class  Paysuccesslink extends BaseControllerWeb
     {
         $get = Utility_helper::sanitizeGet();
         $orderId = ( isset($get['orderid']) && is_numeric($get['orderid']) ) ? intval($get['orderid']) : null;
-        $orderRandomKey = !empty($get[$this->config->item('orderDataGetKey')]) ? $get[$this->config->item('orderDataGetKey')] : null;
+        // $orderRandomKey = !empty($get[$this->config->item('orderDataGetKey')]) ? $get[$this->config->item('orderDataGetKey')] : null;
         
         $data['backSuccess'] = 'places';
         $data['backFailed'] = 'places';;
@@ -191,15 +191,17 @@ class  Paysuccesslink extends BaseControllerWeb
 
     private function setBackAndFailedUrl(array &$data): void
     {
+        $baseUrl = base_url();
         if ($data['order']['isPos'] === '1') {
-            $data['backSuccess'] = base_url() . 'pos?spotid=' . $data['order']['spotId'];
-            $data['backFailed'] = base_url() . 'pos?spotid=' . $data['order']['spotId'];
+            $data['backSuccess'] = $baseUrl . 'pos?spotid=' . $data['order']['spotId'];
+            $data['backFailed'] = $baseUrl . 'pos?spotid=' . $data['order']['spotId'];
         } else {
-            $data['backSuccess'] = base_url() . 'make_order?vendorid=' . $data['order']['vendorId'] . '&spotid=' . $data['order']['spotId']; 
-            $data['backFailed']  = base_url() . 'make_order';
+            $data['backSuccess'] = $baseUrl . 'make_order?vendorid=' . $data['order']['vendorId'] . '&spotid=' . $data['order']['spotId'];
+            $data['backFailed']  = $baseUrl . 'make_order';
             $data['backFailed'] .= '?vendorid=' . $data['order']['vendorId'];
             $data['backFailed'] .= '&spotid=' . $data['order']['spotId'];
             $data['backFailed'] .= '&' . $this->config->item('orderDataGetKey') . '=' . $data['order']['orderRandomKey'];
+            $data['changePamyentMethod'] = $baseUrl . 'pay_order?' . $this->config->item('orderDataGetKey') . '=' . $data['order']['orderRandomKey'];
         }
     }
 }

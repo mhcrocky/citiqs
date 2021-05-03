@@ -28,6 +28,13 @@
             >
                 Try again<i class="fa fa-arrow-right"></i>
             </a>
+            <a
+                href="<?php echo $changePamyentMethod; ?>"
+                style="background-color: #948b6f"
+                class="button"
+            >
+                Change payment method<i class="fa fa-arrow-right"></i>
+            </a>
         <?php } else { ?>
             <a href="<?php echo $backFailed; ?>" style="background-color: #948b6f" class="button">
                 Back<i class="fa fa-arrow-right"></i>
