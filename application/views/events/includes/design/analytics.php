@@ -1,7 +1,6 @@
-<form
+<form 
     method="post"
-    onsubmit="return saveAnalytics(this)"
-    id="<?php echo $id; ?>"
+    action="<?php echo base_url(); ?>/events/save_shopsettings"
     style="margin-top:20px"
 >
     <div class="form-group col-sm-12">
@@ -13,7 +12,7 @@
 				style="border-radius: 50px"
                 class="form-control"
                 name="googleAnalyticsCode"
-                value="<?php echo is_null($analytics['googleAnalyticsCode']) ? '' : $analytics['googleAnalyticsCode']; ?>"
+                value="<?php echo isset($analytics->googleAnalyticsCode) ? $analytics->googleAnalyticsCode : ''; ?>"
             />
         </label>
     </div>
@@ -26,7 +25,7 @@
 				style="border-radius: 50px"
                 class="form-control"
                 name="googleAdwordsConversionId"
-                value="<?php echo is_null($analytics['googleAdwordsConversionId']) ? '' : $analytics['googleAdwordsConversionId']; ?>"
+                value="<?php echo isset($analytics->googleAdwordsConversionId) ? $analytics->googleAdwordsConversionId : ''; ?>"
             />
         </label>
     </div>
@@ -38,7 +37,7 @@
 				style="border-radius: 50px"
                 class="form-control"
                 name="googleAdwordsConversionLabel"
-                value="<?php echo is_null($analytics['googleAdwordsConversionLabel']) ? '' : $analytics['googleAdwordsConversionLabel']; ?>"
+                value="<?php echo isset($analytics->googleAdwordsConversionLabel) ? $analytics->googleAdwordsConversionLabel : ''; ?>"
             />
         </label>
     </div>
@@ -50,7 +49,7 @@
 				style="border-radius: 50px"
                 class="form-control"
                 name="googleTagManagerCode"
-                value="<?php echo is_null($analytics['googleTagManagerCode']) ? '' : $analytics['googleTagManagerCode']; ?>"
+                value="<?php echo isset($analytics->googleTagManagerCode) ? $analytics->googleTagManagerCode : ''; ?>"
             />
         </label>
     </div>
@@ -62,7 +61,7 @@
 				style="border-radius: 50px"
                 class="form-control"
                 name="facebookPixelId"
-                value="<?php echo is_null($analytics['facebookPixelId']) ? '' : $analytics['facebookPixelId']; ?>"
+                value="<?php echo isset($analytics->facebookPixelId) ? $analytics->facebookPixelId : ''; ?>"
             />
         </label>
     </div>
