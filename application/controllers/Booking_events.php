@@ -62,15 +62,18 @@ class Booking_events extends BaseControllerWeb
         $this->session->set_userdata('customer', $customer->id);
         $this->session->set_userdata('shortUrl', $shortUrl);
         $data['shopsettings'] = $this->event_model->get_shopsettings($customer->id);
-        $design = $this->event_model->get_design($customer->id);
-        if(isset($design[0])){
-            $this->global['design'] = unserialize($design[0]['shopDesign']);
-        }
+        $design = $this->event_model->get_vendor_design($customer->id);
 
         if($get_by_event_id){
             $events = $this->event_model->get_event_by_id($customer->id, $eventId);
+            $design = $this->event_model->get_event_design($customer->id, $eventId);
         } else {
             $events = $this->event_model->get_events($customer->id);
+        }
+
+        
+        if(isset($design)){
+            $this->global['design'] = unserialize($design);
         }
 
         $data['events'] = $events;
