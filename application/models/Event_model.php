@@ -297,10 +297,26 @@ class Event_model extends CI_Model {
 		return $query->result_array();
 	}
 
-	function save_design($vendor_id,$design){
+	function save_event_design($vendor_id, $eventId, $design){
 		$this->db->set('shopDesign', $design);
 		$this->db->where('vendorId', $vendor_id);
+		$this->db->where('id', $eventId);
 		return $this->db->update('tbl_events');
+	}
+
+	function save_vendor_design($vendorId, $design){
+
+		$this->db->where('vendorId', $vendorId);
+		if($this->db->get('tbl_event_shop')->num_rows() == 0){
+			$data = [
+				'vendorId' => $vendorId,
+				'shopDesign' => $design
+			];
+			return $this->db->insert('tbl_event_shop',$data);
+		}
+		$this->db->set('shopDesign', $design);
+		$this->db->where('vendorId', $vendorId);
+		return $this->db->update('tbl_event_shop');
 	}
 
 	function update_email_template($id, $emailId){
@@ -357,7 +373,41 @@ class Event_model extends CI_Model {
 		->from('tbl_events')
 		->where('vendorId',$vendor_id);
 		$query = $this->db->get();
-		return $query->result_array();
+		if($query->num_rows() > 0){
+			$result = $query->first_row();
+			return $result->shopDesign;
+		}
+
+		return false;
+	}
+
+	function get_event_design($vendor_id, $eventId){
+
+		$this->db->select('shopDesign')
+		->from('tbl_events')
+		->where('vendorId',$vendor_id)
+		->where('id',$eventId);
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			$result = $query->first_row();
+			return $result->shopDesign;
+		}
+
+		return false;
+	}
+
+	function get_vendor_design($vendor_id){
+
+		$this->db->select('shopDesign')
+		->from('tbl_event_shop')
+		->where('vendorId',$vendor_id);
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			$result = $query->first_row();
+			return $result->shopDesign;
+		}
+
+		return false;
 	}
 
 	function get_payment_methods($vendor_id){
