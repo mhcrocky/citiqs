@@ -186,6 +186,10 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script src="<?php echo $this->baseUrl; ?>assets/js/iziToast.js"></script>
 <script src="<?php echo $this->baseUrl; ?>assets/home/js/eventShop.js"></script>
+<?php
+    // we need this check because footer is used on pay page where $shopsettings is not set
+    if (!empty($shopsettings)) {
+?>
 <script>
 (function(){
     var shopsettings = '<?php echo json_encode($shopsettings); ?>';
@@ -198,7 +202,9 @@
     }
 }());
 </script>
-
+<?php
+    }
+?>
 
 <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
 <?php //include_once FCPATH . 'application/views/includes/customJs.php'; ?>
