@@ -209,13 +209,13 @@ class Vendors extends REST_Controller
             return;
         }
 
-	public function usersQR_get(): void
-	{
-		if (!$this->authentication()) return;
+        public function usersQR_get(): void
+        {
+            if (!$this->authentication()) return;
 
-		$users = $this->user_model->getVendorsQR();
-		$this->set_response($users, 200);
+            $users = $this->user_model->getVendorsQR();
+            $this->set_response($users, 200);
 
-		return;
-	}
+            return;
+        }
     }
