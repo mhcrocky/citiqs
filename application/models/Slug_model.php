@@ -40,8 +40,8 @@
         {
             if (
                 isset($data['slug'])
-                && isset($data['controller'])
-                && isset($data['redirect'])
+                && isset($data['vendorId'])
+                // && isset($data['redirect'])
             ) {
                 return $this->updateValidate($data);
             }
