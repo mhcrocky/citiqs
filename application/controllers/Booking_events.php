@@ -288,6 +288,10 @@ class Booking_events extends BaseControllerWeb
 
     public function selectpayment()
     {
+        if (empty($_SESSION['reservationIds'])) {
+            redirect(base_url());
+        }
+
         $this->global['pageTitle'] = 'TIQS: Select Payment';
         $customer = $this->session->userdata('customer');
         $ticketingPayments = $this->event_model->get_payment_methods($customer);
@@ -303,7 +307,7 @@ class Booking_events extends BaseControllerWeb
         $reservationIds = $this->session->userdata('reservationIds');
         $ticketsFee = $this->session->userdata('ticketsFee');
         $reservationsQuantity = $this->session->userdata('reservationsQuantity');
-        
+
         foreach($reservationIds as $reservationId){
             $amount += floatval($amount);
         }
@@ -311,17 +315,16 @@ class Booking_events extends BaseControllerWeb
         $amount = $amount/100;
 
         $vendorCost = $this->event_model->get_vendor_cost($customer);
-        foreach($ticketingPayments as $key => $ticketingPayment){
+        foreach ($ticketingPayments as $key => $ticketingPayment) {
             $paymentMethod = ucwords($key);
             $paymentMethod = str_replace(' ', '', $paymentMethod);
             $paymentMethod = lcfirst($paymentMethod);
-            $total_amount = $amount*$ticketingPayment['percent'] + $ticketingPayment['amount'];
-            if((isset($vendorCost[$key]) && $vendorCost[$key] == 1) || $total_amount  == 0){
+            $total_amount = $amount * $ticketingPayment['percent'] + $ticketingPayment['amount'];
+            if((isset($vendorCost[$key]) && $vendorCost[$key] == 1) || $total_amount  == 0) {
                 $data[$paymentMethod] = '&nbsp';
             } else {
                 $data[$paymentMethod] = '€'. number_format($total_amount, 2, '.', '');
             }
-            
         }
 
         $data['vendorCost'] = $this->event_model->get_vendor_cost($customer);
