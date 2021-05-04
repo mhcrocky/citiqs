@@ -165,10 +165,15 @@ function saveShopSettings() {
         showCountry: $('#showCountry option:selected').val(),
         showZipcode: $('#showZipcode option:selected').val(),
         showMobileNumber: $('#showMobileNumber option:selected').val(),
+        googleAnalyticsCode: $('#googleAnalyticsCode').val(),
+        googleAdwordsConversionId: $('#googleAdwordsConversionId').val(),
+        googleAdwordsConversionLabel: $('#googleAdwordsConversionLabel').val(),
+        googleTagManagerCode: $('#googleTagManagerCode').val(),
         facebookPixelId: $('#facebookPixelId').val()
     }
 
     $.post(globalVariables.baseUrl + 'events/save_shopsettings', data, function(data){
         alertify.success("Settings are saved successfully!");
+        $('#closeShopSettingsModal').click();
     });
 }
