@@ -360,19 +360,25 @@ class Events extends BaseControllerWeb
         echo json_encode($emails);
     }
  
-    public function viewdesign(): void
+    public function viewdesign($eventId = false): void
     {
         $this->load->model('bookandpayagendabooking_model');
         $this->load->model('shopvendor_model');
-        $design = $this->event_model->get_design($this->vendor_id);
+        $design = $this->event_model->get_vendor_design($this->vendor_id);
+        if($eventId){
+            $design = $this->event_model->get_event_design($this->vendor_id, $eventId);
+        }
+
+        
         $this->load->model('user_model');
         $userShortUrl = $this->user_model->getUserShortUrlById($this->vendor_id);
         $id = intval($this->shopvendor_model->setProperty('vendorId', $this->vendor_id)->getProperty('id'));
         $data = [ 
             'id' => $id,
             'vendorId' => $this->vendor_id,
-            'iframeSrc' => base_url() . 'events/shop/' . $userShortUrl,
-            'design' => unserialize($design[0]['shopDesign']),
+            'eventId' => ($eventId == false) ? '' : $eventId,
+            'iframeSrc' => ($eventId == false) ? base_url() . 'events/shop/' . $userShortUrl : base_url() . 'events/shop/' . $eventId,
+            'design' => unserialize($design),
             'devices' => $this->bookandpayagendabooking_model->get_devices(),
             'userShortUrl' => $userShortUrl,
             'analytics' => $this->shopvendor_model->setObjectId($id)->getVendorAnalytics()
@@ -383,10 +389,15 @@ class Events extends BaseControllerWeb
         return;
     }
 
-    public function save_design()
+    public function save_design($eventId = false)
     {
         $design = serialize($this->input->post(null,true));
-        $this->event_model->save_design($this->vendor_id,$design);
+        if($eventId){
+            $this->event_model->save_event_design($this->vendor_id, $eventId, $design);
+            redirect('events/viewdesign/'.$eventId);
+            return ;
+        }
+        $this->event_model->save_vendor_design($this->vendor_id, $design);
         redirect('events/viewdesign');
     }
 
