@@ -110,6 +110,15 @@ $(document).ready(function() {
                     return '<a href="'+globalVariables.baseUrl+'events/shop/'+data.id+'" style="background: #10b981;" class="btn btn-primary">Go To Shop</a>'
                 }
 
+            },
+            {
+
+                title: 'Shop Design',
+                data: null,
+                "render": function(data, type, row) {
+                    return '<a href="'+globalVariables.baseUrl+'events/viewdesign/'+data.id+'" style="background: #10a9b9;" class="btn btn-primary">Go To Design</a>'
+                }
+
             }
         ],
        
