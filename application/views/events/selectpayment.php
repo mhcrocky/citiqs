@@ -27,8 +27,17 @@ $pinMachinePaymentFee = $pinMachine;
                 <img class="img-w-150" src="<?php echo base_url(); ?>assets/home/imgs/extra/bancontact.png"
                     alt="bancontact">
                 <p style="paymentFee bg-primary"><?php echo $bancontactPaymentFee; ?></p>
-                <h3 class="title"><a id="bancontact" class="text-primary pay_method" data-paymentFee="<?php echo $bancontactPaymentFee; ?>"
-                        href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $bancontactPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Bancontact</a></h3>
+                <h3 class="title">
+                    <a
+                        id="bancontact"
+                        class="text-primary pay_method"
+                        data-paymentFee="<?php echo $bancontactPaymentFee; ?>"
+                        href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $bancontactPaymentType; ?>"
+                        onclick="paymentMethodRedirect(this);return false;"
+                    >
+                        Bancontact
+                    </a>
+                </h3>
             </div>
         <?php endif; ?>
 

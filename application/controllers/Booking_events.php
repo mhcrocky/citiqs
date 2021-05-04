@@ -363,32 +363,31 @@ class Booking_events extends BaseControllerWeb
 
         $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
 
-        $this->processPaymenttype($strUrl);
-       
-
+        $reservationIds = $this->session->userdata('reservationIds');
+        // destroy session in this place
+        // because user maybe will not be redirected to $result->transaction->paymentURL
+        // This prevent that user update existing ids with new transaction id
+        #$this->session->sess_destroy();
+        session_destroy();
+        $this->processPaymenttype($strUrl, $reservationIds);
     }
 
-    private function processPaymenttype($strUrl)
+    private function processPaymenttype(string $strUrl, array $reservationIds)
 	{
 		# Get API result
 		$strResult = @file_get_contents($strUrl);
         $result = json_decode($strResult);
-        
 
-		if ($result->request->result == '1') {
+        if ($result->request->result == '1') {
             $transactionId = $result->transaction->transactionId;
-            $reservationIds = $this->session->userdata('reservationIds');
             $this->bookandpay_model->updateTransactionIdByReservationIds($reservationIds, $transactionId);
-
 			redirect($result->transaction->paymentURL);
 		} else {
 			$this->session->set_flashdata('error', 'Payment engine error. Please, contact staff');
 			$data = array();
 			$this->global['pageTitle'] = 'TIQS : PAYMENT ERROR';
 			$this->loadViews("thuishavenerror", $this->global, $data, NULL, "noheader");
-
 		}
-
 	}
 
     public function ExchangePay()
@@ -591,7 +590,6 @@ class Booking_events extends BaseControllerWeb
             $redirect = base_url() . 'ticketing_pin_canceled?orderid=' . $get['orderId'];
         }
 
-        $this->session->sess_destroy();
         redirect($redirect);
 
         /*
