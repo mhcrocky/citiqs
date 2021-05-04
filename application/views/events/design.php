@@ -14,9 +14,9 @@
                 href="#analytics">Analytics</a>
         </li>
     </ul>
-
+ 
     <div class="tab-content" style="border-radius: 50px; margin-left: -10px">
-        <form action="<?php echo base_url(); ?>events/save_design" method="POST">
+        <form action="<?php echo base_url(); ?>events/save_design/<?php echo $eventId; ?>" method="POST">
             <div id="design" class="container tab-pane active" style="background: none;">
                 <?php include_once FCPATH . 'application/views/events/includes/design/designMain.php'; ?>
             </div>
@@ -61,4 +61,3 @@ var designGlobals = (function() {
 
 
 </script>
-
