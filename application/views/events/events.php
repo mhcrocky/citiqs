@@ -117,7 +117,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                    <label for="status" class="col-md-4 col-form-label text-md-left">
+                    <label for="showAddress" class="col-md-4 col-form-label text-md-left">
                     Address
                     </label>
                     <div class="col-md-6">
@@ -128,7 +128,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="status" class="col-md-4 col-form-label text-md-left">
+                    <label for="showZipcode" class="col-md-4 col-form-label text-md-left">
                     Zip Code
                     </label>
                     <div class="col-md-6">
@@ -139,7 +139,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="status" class="col-md-4 col-form-label text-md-left">
+                    <label for="showCountry" class="col-md-4 col-form-label text-md-left">
                     Country
                     </label>
                     <div class="col-md-6">
@@ -150,7 +150,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="status" class="col-md-4 col-form-label text-md-left">
+                    <label for="showMobileNumber" class="col-md-4 col-form-label text-md-left">
                     Mobile Number
                     </label>
                     <div class="col-md-6">
@@ -158,6 +158,14 @@
                             <option value="1">Show</option>
                             <option value="0" selected>Hide</option>
                         </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label style="padding-top: 11px" for="facebookPixelId" class="col-md-4 col-form-label text-md-left">
+                    Facebook Pixel Id
+                    </label>
+                    <div class="col-md-6">
+                        <input type="text" id="facebookPixelId" name="facebookPixelId" class="form-control">
                     </div>
                 </div>
             </div>
@@ -179,6 +187,7 @@
         $('#showCountry').val(shopsettings.showCountry);
         $('#showZipcode').val(shopsettings.showZipcode);
         $('#showMobileNumber').val(shopsettings.showMobileNumber);
+        $('#facebookPixelId').val(shopsettings.facebookPixelId);
     }
 }())
 </script>
