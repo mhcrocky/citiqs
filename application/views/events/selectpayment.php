@@ -15,17 +15,24 @@ $pinMachinePaymentFee = $pinMachine;
         <div class="col-md-8 col-sm-12 serviceBox blue mx-auto">
         <?php if(in_array('ideal payment', $activePayments)): ?>
             <div class="half-col  mb-4">
+            <a  data-paymentFee="<?php echo $idealPaymentFee; ?>" class="iDealPay"href="#iDeal" onclick="paymentMethodRedirect(this)">
                 <img class="img-w-150" src="<?php echo base_url(); ?>assets/home/imgs/extra/ideal.png" alt="iDEAL">
+            </a>
                 <p style="paymentFee bg-primary"><?php echo $idealPaymentFee; ?></p>
                 <h3 class="title">
-                <a id="iDeal" data-paymentFee="<?php echo $idealPaymentFee; ?>" class="text-primary" href="#iDeal" onclick="paymentMethodRedirect(this)">iDEAL</a></h3>
+                <a data-paymentFee="<?php echo $idealPaymentFee; ?>" class="text-primary iDealPay" href="#iDeal" onclick="paymentMethodRedirect(this)">iDEAL</a></h3>
             </div>
         <?php endif; ?>
         
         <?php if(in_array('bancontact payment', $activePayments)): ?>
             <div class="half-col mb-4">
+            <a class="text-primary pay_method"
+               href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $bancontactPaymentType; ?>"
+               onclick="paymentMethodRedirect(this);return false;"
+            >
                 <img class="img-w-150" src="<?php echo base_url(); ?>assets/home/imgs/extra/bancontact.png"
                     alt="bancontact">
+            </a>
                 <p style="paymentFee bg-primary"><?php echo $bancontactPaymentFee; ?></p>
                 <h3 class="title">
                     <a
@@ -43,11 +50,18 @@ $pinMachinePaymentFee = $pinMachine;
 
         <?php if(in_array('credit card payment', $activePayments)): ?>
             <div class="half-col mb-4">
+            <a data-paymentFee="<?php echo $creditCardPaymentFee; ?>" 
+               class="text-primary pay_method"
+               href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $creditCardPaymentType; ?>"
+               onclick="paymentMethodRedirect(this);return false;"
+            >
                 <img class="img-w-150" src="<?php echo base_url(); ?>assets/home/imgs/extra/creditcard.png"
                     alt="Creditcard">
+            </a>
                 <p style="paymentFee bg-primary"><?php echo $creditCardPaymentFee; ?></p>
                 <h3 class="title">
-                <a data-paymentFee="<?php echo $creditCardPaymentFee; ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $creditCardPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Credit Card</a></h3>
+                    <a data-paymentFee="<?php echo $creditCardPaymentFee; ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $creditCardPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Credit Card</a>
+                </h3>
             </div>
         <?php endif; ?>
         
@@ -70,28 +84,51 @@ $pinMachinePaymentFee = $pinMachine;
 
         <?php if(in_array('my bank', $activePayments)): ?>
             <div class="half-col  mb-4">
+            <a data-paymentFee="<?php echo $myBankPaymentFee ?>" 
+               class="text-primary pay_method" 
+               href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $myBankPaymentType; ?>" 
+               onclick="paymentMethodRedirect(this);return false;"
+            >
                 <img class="img-w-150" style="max-width: 110px;" src="https://static.pay.nl/payment_profiles/100x100/1588.png"
                     alt="My Bank" />
+            </a>
                 <p style="paymentFee bg-primary"><?php echo $myBankPaymentFee; ?></p>
-                <h3 class="title"><a id="mybank" data-paymentFee="<?php echo $myBankPaymentFee ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $myBankPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">My Bank</a></h3>
+                <h3 class="title">
+                    <a id="mybank" data-paymentFee="<?php echo $myBankPaymentFee ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $myBankPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">My Bank</a>
+                </h3>
             </div>
         <?php endif; ?>
 
         <?php if(in_array('payconiq payment', $activePayments)): ?>
             <div class="half-col  mb-4">
+            <a data-paymentFee="<?php echo $payconiqPaymentFee ?>"
+               class="text-primary pay_method"
+               href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $payconiqPaymentType; ?>"
+               onclick="paymentMethodRedirect(this);return false;"
+            >
                 <img class="img-w-89" style="max-width: 85px;" src="https://tiqs.com/alfred/assets/home/imgs/extra/payconiq.png"
                     alt="Payconiq" />
+            </a>
                 <p style="paymentFee bg-primary"><?php echo $payconiqPaymentFee; ?></p>
-                <h3 class="title"><a id="payconiq" data-paymentFee="<?php echo $payconiqPaymentFee ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $payconiqPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Payconiq</a></h3>
+                <h3 class="title">
+                    <a id="payconiq" data-paymentFee="<?php echo $payconiqPaymentFee ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $payconiqPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Payconiq</a>
+                </h3>
             </div>
         <?php endif; ?>
 
         <?php if(in_array('giro payment', $activePayments)): ?>
             <div class="half-col  mb-4">
+            <a data-paymentFee="<?php echo $giroPaymentFee; ?>"
+               class="text-primary pay_method"
+               href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $giroPaymentType; ?>" 
+               onclick="paymentMethodRedirect(this);return false;">
                 <img class="img-w-150" style="max-width: 100px;" src="<?php echo base_url(); ?>assets/home/imgs/extra/giropay(1).png"
                     alt="Giropay" />
+            </a>
                 <p style="paymentFee bg-primary"><?php echo $giroPaymentFee; ?></p>
-                <h3 class="title"><a id="giropay" data-paymentFee="<?php echo $giroPaymentFee; ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $giroPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Giropay</a></h3>
+                <h3 class="title">
+                    <a id="giropay" data-paymentFee="<?php echo $giroPaymentFee; ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $giroPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Giropay</a>
+                </h3>
             </div>
         <?php endif; ?>
 
@@ -320,7 +357,7 @@ function backToPaymentMethods(el){
     
 }
 
-$("#iDeal").on("click", function() {
+$(".iDealPay").on("click", function() {
     $(".iDeal").removeClass("hidden");
     $(".selectPayment").addClass("hidden");
 });
