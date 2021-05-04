@@ -115,7 +115,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div style="overflow: auto !important;" class="modal-body">
                 <div class="form-group row">
                     <label for="showAddress" class="col-md-4 col-form-label text-md-left">
                     Address
@@ -161,7 +161,39 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label style="padding-top: 11px" for="facebookPixelId" class="col-md-4 col-form-label text-md-left">
+                    <label style="margin-bottom: auto;margin-top: auto;" for="googleAnalyticsCode" class="col-md-4 col-form-label text-md-left">
+                    Google Analytics Code
+                    </label>
+                    <div class="col-md-6">
+                        <input type="text" id="googleAnalyticsCode" name="googleAnalyticsCode" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label style="margin-bottom: auto;margin-top: auto;" for="googleAdwordsConversionId" class="col-md-4 col-form-label text-md-left">
+                    Google Adwords Conversion Id
+                    </label>
+                    <div class="col-md-6">
+                        <input type="text" id="googleAdwordsConversionId" name="googleAdwordsConversionId" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label style="margin-bottom: auto;margin-top: auto;" for="googleAdwordsConversionLabel" class="col-md-4 col-form-label text-md-left">
+                    Google Adwords Conversion Label
+                    </label>
+                    <div class="col-md-6">
+                        <input type="text" id="googleAdwordsConversionLabel" name="googleAdwordsConversionLabel" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label style="margin-bottom: auto;margin-top: auto;" for="googleTagManagerCode" class="col-md-4 col-form-label text-md-left">
+                    Google Tag Manager Code
+                    </label>
+                    <div class="col-md-6">
+                        <input type="text" id="googleTagManagerCode" name="googleTagManagerCode" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label style="margin-bottom: auto;margin-top: auto;" for="facebookPixelId" class="col-md-4 col-form-label text-md-left">
                     Facebook Pixel Id
                     </label>
                     <div class="col-md-6">
@@ -187,6 +219,10 @@
         $('#showCountry').val(shopsettings.showCountry);
         $('#showZipcode').val(shopsettings.showZipcode);
         $('#showMobileNumber').val(shopsettings.showMobileNumber);
+        $('#googleAnalyticsCode').val(shopsettings.googleAnalyticsCode);
+        $('#googleAdwordsConversionId').val(shopsettings.googleAdwordsConversionId);
+        $('#googleAdwordsConversionLabel').val(shopsettings.googleAdwordsConversionLabel);
+        $('#googleTagManagerCode').val(shopsettings.googleTagManagerCode);
         $('#facebookPixelId').val(shopsettings.facebookPixelId);
     }
 }())

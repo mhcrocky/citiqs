@@ -381,7 +381,7 @@ class Events extends BaseControllerWeb
             'design' => unserialize($design),
             'devices' => $this->bookandpayagendabooking_model->get_devices(),
             'userShortUrl' => $userShortUrl,
-            'analytics' => $this->shopvendor_model->setObjectId($id)->getVendorAnalytics()
+            'analytics' => $this->event_model->get_shopsettings($this->vendor_id)
         ];
 
         $this->global['pageTitle'] = 'TIQS : DESIGN';
@@ -405,6 +405,7 @@ class Events extends BaseControllerWeb
     {
         $data = $this->input->post(null,true);
         $this->event_model->save_shopsettings($this->vendor_id, $data);
+        redirect('events/viewdesign');
         return;
     }
 
