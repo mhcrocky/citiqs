@@ -50,12 +50,12 @@
         private function checkDataFromGet(): void
         {
             if (
-                (isset($_GET['spotid']) && !ctype_digit($_GET['spotid']))
-                || (isset($_GET['vendorid']) && !ctype_digit($_GET['vendorid']))
+                (empty($_GET['vendorid']) && !ctype_digit($_GET['vendorid']))
+                || (isset($_GET['spotid']) && !ctype_digit($_GET['spotid']))
                 || (isset($_GET['category']) && !ctype_digit($_GET['category']))
                 || (isset($_GET['typeid']) && !ctype_digit($_GET['typeid']))
             ) {
-                redirect(base_url());
+                redirect(base_url(). '/places');
                 exit;
             }
             return;
