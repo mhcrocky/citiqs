@@ -164,7 +164,8 @@ function saveShopSettings() {
         showAddress: $('#showAddress option:selected').val(),
         showCountry: $('#showCountry option:selected').val(),
         showZipcode: $('#showZipcode option:selected').val(),
-        showMobileNumber: $('#showMobileNumber option:selected').val()
+        showMobileNumber: $('#showMobileNumber option:selected').val(),
+        facebookPixelId: $('#facebookPixelId').val()
     }
 
     $.post(globalVariables.baseUrl + 'events/save_shopsettings', data, function(data){
