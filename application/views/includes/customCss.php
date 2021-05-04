@@ -267,7 +267,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/query-builder.default.css" id="qb-theme"/>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/dashboard.css">
-    <link href='https://css.gg/euro.css' rel='stylesheet'>
     <style>
         td.details-control {
 		  background: url("<?php echo base_url('assets/images/datatables/details_open.png') ?>") no-repeat center center;
@@ -352,6 +351,10 @@
         width: 35px;
         height: 35px;
         border-radius: 7px;
+    }
+
+    .modal-body {
+        overflow: hidden !important;
     }
 
     </style>

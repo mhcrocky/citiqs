@@ -425,7 +425,7 @@ class Event_model extends CI_Model {
 			for ($i = 0; $i < $quantityId; $i++) {
 				$insert = [
 					'customer' => $customer,
-					'eventId' => $ticket['id'],
+					'eventid' => $ticket['id'],
 					'eventdate' => date('Y-m-d', strtotime($ticket['startDate'])),
 					'bookdatetime' => date('Y-m-d H:i:s'),
 					'timefrom' => $ticket['startTime'],
@@ -446,6 +446,10 @@ class Event_model extends CI_Model {
 					'ticketType' => ($ticket['ticketType'] != null) ? $ticket['ticketType'] : 0,
 					'paid' => '0'
 				];
+
+				if(!$this->validateInsertArray($insert)){
+					continue;
+				}
 				$reservationIds[] = $this->insertTicket($insert);
 			}
 		}
@@ -728,6 +732,51 @@ class Event_model extends CI_Model {
 
 		return $tickets;
 
+	}
+
+	private function validateInsertArray($insert){
+		if(!$this->validateInteger($insert['customer'])) { return false; }
+		if(!$this->validateInteger($insert['eventid'])) { return false; }
+		if(!$this->validateFloat($insert['price'])) { return false; }
+		if(!$this->validateFloat($insert['ticketFee'])) { return false; }
+		if(!$this->validateString($insert['name'])) { return false; }
+		if(!$this->validateString($insert['email'])) { return false; }
+		if(!$this->validateString($insert['city'])) { return false; }
+		if(!$this->validateString($insert['ticketDescription'])) { return false; }
+		return true;
+	}
+
+	private function validateFloat($value){
+		return is_numeric($value);
+	}
+
+	private function validateInteger($value){
+		return (ctype_digit(strval($value)));
+	}
+
+	private function validateString($value){
+		return is_string($value);
+	}
+
+	public function get_shopsettings($vendorId)
+	{
+		$this->db->select('showAddress, showCountry, showZipcode, showMobileNumber');
+		$this->db->where('vendorId', $vendorId);
+		$query = $this->db->get('tbl_event_shop');
+		return $query->first_row();
+		
+	}
+
+	public function save_shopsettings($vendorId, $data)
+	{
+		$this->db->where('vendorId', $vendorId);
+		if($this->db->get('tbl_event_shop')->num_rows() == 0){
+			$data['vendorId'] = $vendorId;
+			return $this->db->insert('tbl_event_shop',$data);
+		}
+		$this->db->where('vendorId', $vendorId);
+		return $this->db->update('tbl_event_shop',$data);
+		
 	}
 
 

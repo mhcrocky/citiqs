@@ -34,7 +34,8 @@ class Events extends BaseControllerWeb
     public function index()
     {
         $this->global['pageTitle'] = 'TIQS: Events';
-        $this->loadViews("events/events", $this->global, '', 'footerbusiness', 'headerbusiness');
+        $data['shopsettings'] = $this->event_model->get_shopsettings($this->vendor_id);
+        $this->loadViews("events/events", $this->global, $data, 'footerbusiness', 'headerbusiness');
 
     }
 
@@ -389,6 +390,13 @@ class Events extends BaseControllerWeb
         redirect('events/viewdesign');
     }
 
+    public function save_shopsettings()
+    {
+        $data = $this->input->post(null,true);
+        $this->event_model->save_shopsettings($this->vendor_id, $data);
+        return;
+    }
+
     public function update_email_template()
     {
         $id = $this->input->post('id');
@@ -595,8 +603,9 @@ class Events extends BaseControllerWeb
 	{
         $this->load->model('bookandpay_model');
         $reservationId = $this->input->post('reservationId');
+        $sendToSupport = ($this->input->post('sendTo') == 1) ? true : false;
         $reservations = $this->bookandpay_model->getReservationsByIds([$reservationId]);
-        Ticketingemail_helper::sendEmailReservation($reservations, false, true);
+        Ticketingemail_helper::sendEmailReservation($reservations, false, true, $sendToSupport);
         return ;
 
     }

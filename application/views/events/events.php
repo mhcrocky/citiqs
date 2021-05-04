@@ -1,12 +1,16 @@
 <main class="my-form">
     <div class="w-100 mt-5 p-3">
-        <div class="input-group col-md-2">
+        <div class="input-group col-md-4">
             <a href="<?php echo base_url(); ?>events/create">
-                <input type="button" value="Add Event" style="background: #009933 !important;border-radius:0"
+                <input type="button" value="Add Event" style="background: #009933 !important;border-radius:0;height:45px;"
                     class="btn btn-success form-control mb-3 text-left">
-                <a style="background: #004d1a;padding-top: 8px;" class="input-group-addon pl-2 pr-2 mb-3">
+                <a style="background: #004d1a;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3 mr-2">
                     <i style="color: #fff;font-size: 18px;" class="fa fa-plus"></i></a>
             </a>
+            <input type="button" value="Set shop settings" style="background: #10b981 !important;border-radius:0;height:45px;"
+                class="btn btn-primary form-control mb-3 text-left ml-2" data-toggle="modal" data-target="#addShopSettings">
+                <a style="background: #0a6648;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3" data-toggle="modal" data-target="#addShopSettings">
+                    <i style="color: #fff;font-size: 18px;" class="fa fa-cog"></i></a>
         </div>
         <div style="padding-right: 0px;" class="col-md-3 ml-auto mb-3">
             <select id="selectTime" style="height: 40px !important;"
@@ -51,7 +55,7 @@
 </main>
 
 
-<!-- Modal -->
+<!-- Refund Modal -->
 <div class="modal fade" id="refundModal" tabindex="-1" role="dialog" aria-labelledby="refundModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -96,3 +100,85 @@
         </div>
     </div>
 </div>
+
+
+<!-- Shop Settings Modal -->
+<div class="modal fade" id="addShopSettings" tabindex="-1" role="dialog" aria-labelledby="addaddShopSettings"
+    aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold text-dark" id="addaddShopSettingsLabel">
+                Shop Settings
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label for="status" class="col-md-4 col-form-label text-md-left">
+                    Address
+                    </label>
+                    <div class="col-md-6">
+                        <select id="showAddress" name="showAddress" class="form-control custom-select custom-select-sm form-control-sm">
+                            <option value="1">Show</option>
+                            <option value="0" selected>Hide</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="status" class="col-md-4 col-form-label text-md-left">
+                    Zip Code
+                    </label>
+                    <div class="col-md-6">
+                        <select id="showZipcode" name="showZipcode" class="form-control custom-select custom-select-sm form-control-sm">
+                            <option value="1">Show</option>
+                            <option value="0" selected>Hide</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="status" class="col-md-4 col-form-label text-md-left">
+                    Country
+                    </label>
+                    <div class="col-md-6">
+                        <select id="showCountry" name="showCountry" class="form-control custom-select custom-select-sm form-control-sm">
+                            <option value="1">Show</option>
+                            <option value="0" selected>Hide</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="status" class="col-md-4 col-form-label text-md-left">
+                    Mobile Number
+                    </label>
+                    <div class="col-md-6">
+                        <select id="showMobileNumber" name="showMobileNumber" class="form-control custom-select custom-select-sm form-control-sm">
+                            <option value="1">Show</option>
+                            <option value="0" selected>Hide</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeShopSettingsModal" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" onclick="saveShopSettings()" class="btn btn-primary">Save changes</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+(function(){
+    var shopsettings = '<?php echo json_encode($shopsettings); ?>';
+    shopsettings = JSON.parse(shopsettings);
+    if(typeof shopsettings === 'object' && shopsettings !== null){
+        $('#showAddress').val(shopsettings.showAddress);
+        $('#showCountry').val(shopsettings.showCountry);
+        $('#showZipcode').val(shopsettings.showZipcode);
+        $('#showMobileNumber').val(shopsettings.showMobileNumber);
+    }
+}())
+</script>

@@ -150,6 +150,32 @@ input:disabled{
 	}
   }
 
+  .gg-euro {
+	position: relative;
+	display: block;
+	transform: scale(var(--ggs,1));
+	width: 14px;
+	height: 14px;
+	border: 2px solid;
+	box-sizing: border-box;
+	border-radius: 100px;
+	border-right-color: transparent
+   }
+   
+   .gg-euro::after {
+	content: "";
+	display: block;
+	box-sizing: border-box;
+	position: absolute;
+	width: 9px;
+	height: 5px;
+	border-top: 2px solid;
+	border-bottom: 2px solid;
+	transform: skewX(-20deg);
+	left: -4px;
+	top: 3px
+   }
+
   .dash-card {
     margin-left: .5rem;
     margin-right: .5rem;
@@ -192,8 +218,16 @@ input:disabled{
 
 @media only screen and (min-width: 800px) {
     .dash-card {
-        -ms-flex: 0 0 23% !important;
-        flex: 0 0 23% !important;
-        max-width: 23% !important;
-    } 
+        -ms-flex: 0 0 23.84% !important;
+        flex: 0 0 23.84% !important;
+        max-width: 23.84% !important;
+    }
+
+	.first {
+		margin-left: 0px !important;
+	}
+
+	.last {
+		margin-right: 0px !important;
+	}
 }
