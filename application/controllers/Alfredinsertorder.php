@@ -22,6 +22,7 @@ class Alfredinsertorder extends BaseControllerWeb
         $this->load->helper('orderprint_helper');
         $this->load->helper('fod_helper');
         $this->load->helper('receiptprint_helper');
+        $this->load->helper('pay_helper');
 
         $this->load->model('user_subscription_model');
         $this->load->model('shopcategory_model');
@@ -65,7 +66,7 @@ class Alfredinsertorder extends BaseControllerWeb
         Jwt_helper::checkJwtArray($orderData, ['vendorId', 'spotId', 'user', 'orderExtended', 'order']);
         $this->isFodActive($orderData['vendorId'], $orderData['spotId']);
 
-        $payType = $this->getPayType($payNlPaymentTypeId);
+        $payType = Pay_helper::returnPaymentMethod($payNlPaymentTypeId);
 
         if (!$payType) redirect(base_url());
 
@@ -249,28 +250,6 @@ class Alfredinsertorder extends BaseControllerWeb
         }
         redirect($redirect);
         exit();
-    }
-
-    private function getPayType(string $payNlPaymentTypeId): ?string
-    {
-        $payType = null;
-        if ($payNlPaymentTypeId === $this->config->item('idealPaymentType')) {
-            $payType = $this->config->item('idealPayment');
-        } elseif ($payNlPaymentTypeId === $this->config->item('creditCardPaymentType')) {
-            $payType = $this->config->item('creditCardPayment');
-        } elseif ($payNlPaymentTypeId === $this->config->item('bancontactPaymentType')) {
-            $payType = $this->config->item('bancontactPayment');
-        } elseif ($payNlPaymentTypeId === $this->config->item('giroPaymentType')) {
-            $payType = $this->config->item('giroPayment');
-        } elseif ($payNlPaymentTypeId === $this->config->item('payconiqPaymentType')) {
-            $payType = $this->config->item('payconiqPayment');
-        } elseif ($payNlPaymentTypeId === $this->config->item('pinMachinePaymentType')) {
-            $payType = $this->config->item('pinMachinePayment');
-        } elseif ($payNlPaymentTypeId === $this->config->item('myBankPaymentType')) {
-            $payType = $this->config->item('myBankPayment');
-        }
-
-        return $payType;
     }
 
     private function insertOrderProcess(array $post, string $orderRandomKey): int

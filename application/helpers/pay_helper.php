@@ -398,30 +398,36 @@
             $CI->load->config('custom');
             switch($paymentType){
                 case $CI->config->item('idealPaymentType'):
-                    return 'ideal payment';
+                    return $CI->config->item('idealPayment');
                     break;
                 case $CI->config->item('creditCardPaymentType'):
-                    return 'credit card payment';
+                    return $CI->config->item('creditCardPayment');
                     break;
                 case $CI->config->item('bancontactPaymentType'):
-                    return 'bancontact payment';
+                    return $CI->config->item('bancontactPayment');
                     break;
                 case $CI->config->item('giroPaymentType'):
-                    return 'giro payment';
+                    return $CI->config->item('giroPayment');
                     break;
                 case $CI->config->item('payconiqPaymentType'):
-                    return 'payconiq payment';
+                    return $CI->config->item('payconiqPayment');
                     break;
                 case $CI->config->item('pinMachinePaymentType'):
-                    return 'pin machine';
+                    return $CI->config->item('pinMachinePayment');
                     break;
                 case $CI->config->item('myBankPaymentType'):
-                    return 'my bank';
+                    return $CI->config->item('myBankPayment');
                     break;
                 default:
                     return '';
                     break;
             }
+        }
+
+        public static function returnPaymentMethod(string $paymentTypeId): ?string
+        {
+            $paymentType = self::getPaymentMethod($paymentTypeId);
+            return $paymentType ? $paymentType : null;
         }
 
         public static function refundAmount(array $argumentsArray): ?object
