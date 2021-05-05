@@ -867,10 +867,10 @@ class Login extends BaseControllerWeb
 		// $this->form_validation->set_rules('usershorturl', 'User short url', 'trim|required|max_length[128]');
 		$this->form_validation->set_rules('first_name', 'Full Name', 'trim|required|max_length[128]');
 		$this->form_validation->set_rules('second_name', 'Full Name', 'trim|required|max_length[128]');
-		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|max_length[128]|is_unique[tbl_user.email]');
+		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|max_length[128]');
 		$this->form_validation->set_rules('password', 'Password', 'required|max_length[20]');
 		$this->form_validation->set_rules('cpassword', 'Confirm Password', 'trim|required|matches[password]|max_length[20]');
-		$this->form_validation->set_rules('roleId','Role','trim|required|numeric');
+		$this->form_validation->set_rules('roleid','Role','trim|required|numeric');
 		$this->form_validation->set_rules('mobile', 'Mobile Number', 'required|min_length[6]');
 		$this->form_validation->set_rules('business_type_id', 'Business type id', 'required|numeric');
 		$this->form_validation->set_rules('address', 'Address', 'trim|required|max_length[128]');
@@ -881,8 +881,9 @@ class Login extends BaseControllerWeb
 		$hotel = Utility_helper::sanitizePost();
 		$this->user_model->setUniqueValue($hotel['email'])->setWhereCondtition()->setUser();
 
-		// when user already exists...
-		if ($this->user_model->id) {
+		// vendor exists if inserted in tbl_user with roleid must be 2
+		// in tbl_user we can have user with given email but with roleid 6 (buyer)
+		if ($this->user_model->id && $this->user_model->roleid === $this->config->item('owner')) {
 			if ($this->user_model->active !== '0') {
 				$this->session->set_flashdata('error', $this->language->Line("registerbusiness-F1001OPA","We already know you, please reset password (forgot password) or use other e-mail address to (register)"));
 			} else {
@@ -898,35 +899,34 @@ class Login extends BaseControllerWeb
 			exit();
 		}
 
-		// hier weg schrihven dan hebben nwe die al.
-
-
 		// $this->form_validation->set_rules('vat_number', 'Vat number', 'required|max_length[20]');
 		if ($this->form_validation->run()) {
 			unset($hotel['cpassword']);
-			$this->user_model->insertAndSetHotel($hotel)->sendActivationLink();
-		}
-
-		if (!isset($this->user_model->id)) {
-			unset($hotel['password']);
-			unset($hotel['cpassword']);
-			foreach($hotel as $key => $value) {
-				set_cookie($key, $value, (60 * 60));
+			// now we check one more time is this new vendor, or we need to update existing user to a vendor
+			if ($this->user_model->id) {
+				$this->user_model->updateAndSetHotel($hotel)->sendActivationLink();
+			} else {
+				$this->user_model->insertAndSetHotel($hotel)->sendActivationLink();
 			}
-			$this->session->set_flashdata('error', '20101 Process failed! Data given not valid');
-			$failedRedirect = $_SERVER['HTTP_REFERER'] ? $_SERVER['HTTP_REFERER'] : 'registerbusiness';
-			redirect($failedRedirect);
 		}
 
-		$hotel['userId'] = $this->user_model->id;
-		$hotel['objectTypeId'] = $hotel['business_type_id'];
-		$hotel['objectName'] = $hotel['username'];
-		$hotel['zipCode'] = $hotel['zipcode'];
+		// we have a success if $this->user_model->roleid === $this->config->item('owner')
+		if ($this->user_model->id && $this->user_model->roleid === $this->config->item('owner')) {
+			$this->session->set_flashdata('success', $this->language->Line("registerbusiness-F1002A","Account created Successfully. In your given email we have send your activation link/code and credentials"));
+			$redirect = base_url() . 'login';
+			redirect($redirect);
+		}
 
-		$this->session->set_flashdata('success', $this->language->Line("registerbusiness-F1002A","Account created Successfully. In your given email we have send your activation link/code and credentials"));
+		// if failed
+		unset($hotel['password']);
+		unset($hotel['cpassword']);
+		foreach($hotel as $key => $value) {
+			set_cookie($key, $value, (60 * 60));
+		}
 
-		$redirect = base_url() . 'login';
-		redirect($redirect);
+		$this->session->set_flashdata('error', '20101 Process failed! Data given not valid');
+		$failedRedirect = $_SERVER['HTTP_REFERER'] ? $_SERVER['HTTP_REFERER'] : 'registerbusiness';
+		redirect($failedRedirect);
 	}
 
 	private function accountSettings(object $result): void
