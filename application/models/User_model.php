@@ -930,9 +930,24 @@ class User_model extends CI_Model
         $hotel['password'] = getHashedPassword($password);
         $hotel['code'] = Utility_helper::shuffleString(5);
         $hotel['createdDtm'] = date('Y-m-d H:i:s');
+        $hotel['roleid'] = $this->config->item('owner');
         $this->getGeoCoordinates($hotel);
         $this->insertUser($hotel);
         $this->setUniqueValue($hotel['email'])->setWhereCondtition()->setUser();
+        $this->password = $password;
+        return $this;
+    }
+
+    public function updateAndSetHotel(array $hotel): object
+    {
+        $this->load->config('custom');
+        $password = $hotel['password'];
+        $hotel['password'] = getHashedPassword($password);
+        $hotel['code'] = Utility_helper::shuffleString(5);
+        $hotel['createdDtm'] = date('Y-m-d H:i:s');
+        $hotel['roleid'] = $this->config->item('owner');
+        $this->getGeoCoordinates($hotel);
+        $this->setUniqueValue($hotel['email'])->setWhereCondtition()->updateUser($hotel)->setUser();
         $this->password = $password;
         return $this;
     }

@@ -12,7 +12,7 @@
 					onsubmit="return registerNewBusiness('registerBusinessForm', 'password', 'repeatPassword')"
 				>
 					<input type="text" name="IsDropOffPoint" value ='<?php echo $isDropOffPoint; ?>' readonly hidden required />
-					<input type="text" name="roleId" value ='<?php echo $roleId; ?>' readonly hidden required />
+					<input type="text" name="roleid" value ='<?php echo $roleId; ?>' readonly hidden required />
 					<input type="text" name="istype" value ='<?php echo $istype; ?>' readonly hidden required />
 					<input type="text" name="createdBy" value ='<?php echo $createdBy; ?>' readonly hidden required />
 					<?php if (!empty($ambasadorId)) { ?>
