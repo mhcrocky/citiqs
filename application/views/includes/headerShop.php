@@ -9,6 +9,11 @@
     <link rel="shortcut icon" href="<?php echo $this->baseUrl; ?>assets/home/images/tiqsiconlogonew.png" />
     <title><?php echo $pageTitle ? $pageTitle : 'TIQS | SHOP'; ?></title>
 
+    <!-- Analytics -->
+    <?php if(isset($vendor) && count($vendor) > 0): ?>
+    <?php include_once FCPATH . 'application/views/includes/analytics.php'; ?>
+    <?php endif; ?>
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/bootstrap/bootstrap.min.css">
 

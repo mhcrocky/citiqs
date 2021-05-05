@@ -62,6 +62,7 @@ class Booking_events extends BaseControllerWeb
         $this->session->set_userdata('customer', $customer->id);
         $this->session->set_userdata('shortUrl', $shortUrl);
         $data['shopsettings'] = $this->event_model->get_shopsettings($customer->id);
+        $this->global['vendor'] = (array)$data['shopsettings'];
         $design = $this->event_model->get_vendor_design($customer->id);
 
         if($get_by_event_id){
@@ -331,6 +332,7 @@ class Booking_events extends BaseControllerWeb
         }
 
         $data['vendorCost'] = $this->event_model->get_vendor_cost($customer);
+        $this->global['vendor'] = (array) $this->event_model->get_shopsettings($customer);
 
         $this->loadViews("events/selectpayment", $this->global, $data, 'footerShop', 'headerShop');
     }
