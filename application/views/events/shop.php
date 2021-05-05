@@ -35,13 +35,18 @@
         <!-- end row -->
         <?php if (!empty($events)): ?> 
 
-        <div id="events" style="box-shadow: 0 0 70px 30px #00000014 !important;background: #00000014;padding: 0px 0px;"
+        <div id="events" style="box-shadow: 0 0 70px 30px #00000014;background: #00000014;padding: 0px 0px;"
             class="row single-item__grid">
             <?php foreach ($events as $key => $event): 
+                  $event_start =  date_create($event['StartDate'] . " " . $event['StartTime']);
+                  $eventDate = date_format($event_start, "d M - H:i");
                   if($key == array_key_first($events)):
             ?>
+            
             <input type="hidden" id="first_element" value="<?php echo $event['id']; ?>">
             <?php endif; ?>
+            <h5 class="text-dark mb-4 mt-5 h-div"><?php echo ucwords($event['eventVenue']) .' ' . $eventDate; ?></h5>
+            
             <input type="hidden" id="background_img_<?php echo $event['id']; ?>" value="<?php echo $event['backgroundImage']; ?>">
             <div id="event_<?php echo $event['id']; ?>"
                 class="col-12 col-sm-6 col-md-3 single-item mb-4 mb-md-0 bg-white p-4">
