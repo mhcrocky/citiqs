@@ -35,22 +35,26 @@
     $eventDescript = '';
     $eventTitle = '';
      if(isset($design)) {
-        $bgImage=$design['bgImage'];
-        $shopdesign=$design['shop'];
+        $shopdesign = isset($design['shop']) ? $design['shop'] : [];
         $eventTitle = isset($design['shop']['eventTitle']) ? $design['shop']['eventTitle'] : '';
         $eventDescript = isset($design['shop']['eventDescript']) ? $design['shop']['eventDescript'] : '';
         /* echo "body{background-image: url('".$this->baseUrl . "assets/images/backGroundImages/". $bgImage."') !important;
             background-size: cover;}";
         */
         
-        $design_ids=$shopdesign['id'];
-        foreach($design_ids as $key=> $design_id) {
-            echo '#'. $key . '{';
+        $design_ids = isset($shopdesign['id']) ? $shopdesign['id'] : [];
+        if(count($design_ids) > 0){
+           foreach($design_ids as $key=> $design_id) {
+                echo '#'. $key . '{';
                 echo array_keys($design_id)[0].':';
                 echo array_values($design_id)[0].'!important } ';
             }
+
+        }
             
-            $design_classes=$shopdesign['class'];
+        $design_classes = isset($shopdesign['class']) ? $shopdesign['class'] : [];
+
+        if(count($design_classes) > 0){
             
             foreach($design_classes as $key=> $design_class) {
                 $key = str_replace('---', '.', $key);
@@ -60,6 +64,7 @@
                 }
                 
             }
+        }
 
     ?>
     </style>
