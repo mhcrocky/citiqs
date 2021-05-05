@@ -107,7 +107,7 @@ $(document).ready(function() {
                 title: 'Shop',
                 data: null,
                 "render": function(data, type, row) {
-                    return '<a href="'+globalVariables.baseUrl+'events/shop/'+data.id+'" style="background: #10b981;" class="btn btn-primary">Go To Shop</a>'
+                    return '<a href="'+globalVariables.baseUrl+'events/shop/'+data.id+'" style="background: #10b981;" class="btn btn-primary" target="_blank">Go To Shop</a>'
                 }
 
             },
