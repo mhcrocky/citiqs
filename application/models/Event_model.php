@@ -184,7 +184,7 @@ class Event_model extends CI_Model {
 				$endTimestamp = $endDt->format('Y-m-d H:i:s');
 				if($date < $startTimestamp){
 					$sold_out = true;
-					$result['soldOutWhenExpired'] = "<b style='color:#7855c4 !important;'>Sales starting at ". $startDt->format('d M y - H:i').'</b>';
+					$result['soldOutWhenExpired'] = "<b style='color:#7855c4 !important;'>Sales starting at ". $startDt->format('d M Y - H:i').'</b>';
 					//continue;
 				}
 
@@ -829,5 +829,11 @@ class Event_model extends CI_Model {
 		
 	}
 
+	public function updatePaymentMethod(array $reservtaionIds, string $paymentMethod): bool
+	{
+		$this->db->set('paymentMethod', $paymentMethod);
+		$this->db->where_in('id', $reservtaionIds);
+		return $this->db->update('tbl_bookandpay');
+	}
 
 }
