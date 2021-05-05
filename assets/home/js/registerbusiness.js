@@ -58,7 +58,7 @@ function checkIfsUserExists(element) {
         let post = {
             'email' : email
         }
-        let url = globalVariables.ajax + 'checkIfsUserExists';
+        let url = globalVariables.ajax + 'checkIfVendorExists';
         sendAjaxPostRequest(post, url, 'checkIfsUserExists', alertUserExists);
     }
 }

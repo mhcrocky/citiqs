@@ -1716,6 +1716,15 @@ class Ajax extends CI_Controller
         return;
     }
 
+    public function checkIfVendorExists(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+        $email = $this->input->post('email', true);
+        $this->user_model->setUniqueValue($email)->setWhereCondtition()->setUser('roleid');
+        echo (!empty($this->user_model->roleid) && $this->user_model->roleid === $this->config->item('owner')) ? 1 : 0;
+        return;
+    }
+
     public function uploadViewBgImage(): void
     {
         if (!$this->input->is_ajax_request()) return;
