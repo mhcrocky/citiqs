@@ -67,13 +67,13 @@ class Booking_events extends BaseControllerWeb
 
         if($get_by_event_id){
             $events = $this->event_model->get_event_by_id($customer->id, $eventId);
-            $design = $this->event_model->get_event_design($customer->id, $eventId);
+            $design = ($this->event_model->get_event_design($customer->id, $eventId)) ? $this->event_model->get_event_design($customer->id, $eventId) : $design;
         } else {
             $events = $this->event_model->get_events($customer->id);
         }
 
         
-        if(isset($design)){
+        if(isset($design) && $design){
             $this->global['design'] = unserialize($design);
         }
 
@@ -91,15 +91,19 @@ class Booking_events extends BaseControllerWeb
         $vendor_id = $this->session->userdata('customer');
         //$this->session->unset_userdata("event_date");
         $event = $this->event_model->get_event($vendor_id,$eventId);
-        //$event_start =  date_create($event->StartDate . " " . $event->StartTime);
+        $event_start =  date_create($event->StartDate . " " . $event->StartTime);
         //$event_end = date_create($event->EndDate . " " . $event->EndTime);
         //$event_date = date_format($event_start, "d M Y H:i") . " - ". date_format($event_end, "d M Y H:i");
         //$this->session->set_userdata("event_date",$event_date);
+
+        $eventVenue = ucwords($event->eventVenue);
+        $eventDate = date_format($event_start, "d M - H:i");
         $data = [
             'tickets' => $this->event_model->get_event_tickets($vendor_id,$eventId),
             'eventId' => $eventId,
             'eventName' => $event->eventname,
-            'eventImage' => $event->eventImage
+            'eventImage' => $event->eventImage,
+            'eventDescription' => $eventVenue . ' ' . $eventDate
         ];
 
         $result = $this->load->view("events/tickets", $data,true);
