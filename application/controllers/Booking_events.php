@@ -343,6 +343,8 @@ class Booking_events extends BaseControllerWeb
             redirect(base_url());
         }
 
+        // update payment method
+        $this->event_model->updatePaymentMethod($_SESSION['reservationIds'], Pay_helper::returnPaymentMethod($paymentType));
         // release queue
         Queue_helper::releaseQueue();
 

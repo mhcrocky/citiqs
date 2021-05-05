@@ -10,17 +10,6 @@
 				    <input type="hidden" name="paymentsettings" value="1" />
 					<input type="number" name="vendorId" value="<?php echo $user->id ?>" readonly required hidden />
 					<div class="form-group mb-35">
-						<label for="payNlServiceId">PAY SERVICE ID</label>
-						<input
-							type="text"
-							id="payNlServiceId"
-							name="vendor[payNlServiceId]"
-							class="form-control"
-							style="border-radius: 50px"
-							value="<?php echo $vendor['payNlServiceId']; ?>"
-						/>
-					</div>
-					<div class="form-group mb-35">
 						<label for="serviceFeePercent">LOCAL SERVICE FEE PERCENTAGE</label>
 						<input
 							type="number"
