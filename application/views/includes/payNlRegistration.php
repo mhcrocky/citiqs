@@ -25,7 +25,6 @@
                                 data-error-message="Chamber of Commerce number of the company is requried"
                             />
                         </div>
-                        </div>
                         <div class="form-group">
                             <label for="cocNumberName">Chamber of Commerce name</label>
                             <input
