@@ -7,22 +7,31 @@
 </footer>
 </div>
 <script>
-$(document).ready(function() {
+(function() {
     $('ul').attr('style', 'padding-left: 0px !important');
     var current_url = "<?php echo base_url(uri_string()); ?>";
+    var events_url = "<?php echo base_url(); ?>events";
+    
     $('li a').each(function(index, element) {
         if ($(element).attr("href") == current_url) {
             $(element).addClass("dash-active");
             $(element).closest("ul").addClass("dash-active").addClass("in");
             $('.dash-active.in').parent("li").closest("ul").addClass("dash-active").addClass("in");
+            return ;
         }
 
     });
 
+    if($('.dash-active').length == 0){
+        if(current_url.includes(events_url)){
+            $("a[href='"+events_url+"']").addClass("dash-active");
+            $("a[href='"+events_url+"']").closest("ul").addClass("dash-active").addClass("in");
+            $('.dash-active.in').parent("li").closest("ul").addClass("dash-active").addClass("in");
+            return ;
+        }
+    }
 
-
- 
-});
+}());
 
 </script>
 <!-- bootstrap 4 js -->
