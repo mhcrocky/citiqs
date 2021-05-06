@@ -43,16 +43,16 @@
             else
             {
                 self::drawEmailSettings43533($imagetextemail, $drawemail, $pixel, count($productsarray));
-
-                
 				Print_helper::printImageLogo($imageprintemail, $logoFile);
-				self::printOrderHeader43533($CI, $imagetextemail, $drawemail, $order, $spotTypeId);
-//				self::printProductLines($CI, $drawemail, $productsarray, $spotTypeId, $i, $startPoint, $productVats, $order, $isFod);
-				self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
-//				self::printVatAndTotal($drawemail, $startPoint, $i, $productVats, $order);
-				self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
-//				self::printVendorData($drawemail, $startPoint, $i, $order);
-				self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
+//				self::printOrderHeader43533($CI, $imagetextemail, $drawemail, $order, $spotTypeId);
+//				self::printProductLines43533($CI, $drawemail, $productsarray, $spotTypeId, $i, $startPoint, $productVats, $order, $isFod);
+//				self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
+//				self::printVatAndTotal43533($drawemail, $startPoint, $i, $productVats, $order);
+//				self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
+//				self::printVendorData43533($drawemail, $startPoint, $i, $order);
+				self::printBoldLine43533($drawemail, $imagetextemail, $i, $startPoint);
+
+
 			}
 
             return self::saveImageAndDestroyObjects($imagetextemail, $imageprintemail, $drawemail, $order);
@@ -106,6 +106,20 @@
             $i++;
         }
 
+		public static function printBoldLine43533(object &$drawemail, object &$imagetextemail, int &$i, int $startPoint): void
+		{
+			$i++;
+			$drawemail->setStrokeColor('black');
+			$drawemail->setStrokeWidth(4);
+			$drawemail->line(0, $startPoint + ($i * 30), 576, $startPoint + ($i * 30));
+//			$imagetextemail->annotateImage($drawemail, 0, 185, 0, "ANT");
+//			$drawemail->annotation(40, $startPoint + ($i * 30), "test line");
+//			$imagetextemail->annotateImage($drawemail, 0, $startPoint + ($i * 30), 0, "ANT");
+			$drawemail->setStrokeWidth(1);
+			$imagetextemail->drawImage($drawemail);
+			$i++;
+		}
+
         public static function getVatsArray(string $country): array
         {
 
@@ -151,6 +165,29 @@
 
             $i++;    
         }
+
+		public static function printVendorData43533(object &$drawemail, int $startPoint, int &$i, array $order): void
+		{
+
+			$drawemail->annotation(570, $startPoint + ($i * 30), $order['vendorName']);
+
+			$i++;
+			$drawemail->annotation(570, $startPoint + ($i * 30), $order['vendorAddress']);
+
+			$i++;
+			$drawemail->annotation(570, $startPoint + ($i * 30), $order['vendorZipcode']);
+
+			$i++;
+			$drawemail->annotation(570, $startPoint + ($i * 30), $order['vendorCity']);
+
+			$i++;
+			$drawemail->annotation(570, $startPoint + ($i * 30), $order['vendorCountry']);
+
+			$i++;
+			$drawemail->annotation(570, $startPoint + ($i * 30), "VAT #:". $order['vendorVAT']);
+
+			$i++;
+		}
 
         public static function printOrderHeader (object &$CI, object &$imagetextemail, object &$drawemail, array $order, int $spotTypeId): void
         {
@@ -207,35 +244,35 @@
                 $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
             }
 
-            // $drawemail->annotation(0, 70, "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);
-            // $drawemail->annotation(0, 105, "SPOT: ". $order['spotName'] );
+             $drawemail->annotation(0, 70, "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);
+             $drawemail->annotation(0, 105, "SPOT: ". $order['spotName'] );
 
 
-            // if ($spotTypeId === $CI->config->item('local')) {
-            //     $drawemail->annotation(0, 135, "DATE: " . $order['orderCreated']);
-            // } elseif ($spotTypeId === $CI->config->item('deliveryType')) {
-            //     $drawemail->annotation(0, 135, "DELIVERY AT: " . $order['orderCreated']);
-            // } elseif ($spotTypeId === $CI->config->item('pickupType')) {
-            //     $drawemail->annotation(0, 135, "PICKUP AT: " . $order['orderCreated']);
-            // }
+             if ($spotTypeId === $CI->config->item('local')) {
+                 $drawemail->annotation(0, 135, "DATE: " . $order['orderCreated']);
+             } elseif ($spotTypeId === $CI->config->item('deliveryType')) {
+                 $drawemail->annotation(0, 135, "DELIVERY AT: " . $order['orderCreated']);
+             } elseif ($spotTypeId === $CI->config->item('pickupType')) {
+                 $drawemail->annotation(0, 135, "PICKUP AT: " . $order['orderCreated']);
+             }
 
 
-            // //-------- header regel --------
+             //-------- header regel --------
 
-            // $drawemail->setFontSize(22);
-            // $drawemail->setStrokeWidth(2);
-            // $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+             $drawemail->setFontSize(22);
+             $drawemail->setStrokeWidth(2);
+             $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
 
-            // $imagetextemail->annotateImage($drawemail, 0, 185, 0, "ANT");
-            // $imagetextemail->annotateImage($drawemail, 50, 185, 0, "OMSCHRIJVING");
-            // $imagetextemail->annotateImage($drawemail, 300, 185, 0, "");
-            // $imagetextemail->annotateImage($drawemail, 458, 185, 0, "");
-            // $imagetextemail->annotateImage($drawemail, 485, 185, 0, "TOTAAL");
+             $imagetextemail->annotateImage($drawemail, 0, 185, 0, "ANT");
+             $imagetextemail->annotateImage($drawemail, 50, 185, 0, "OMSCHRIJVING");
+             $imagetextemail->annotateImage($drawemail, 300, 185, 0, "");
+             $imagetextemail->annotateImage($drawemail, 458, 185, 0, "");
+             $imagetextemail->annotateImage($drawemail, 485, 185, 0, "TOTAAL");
 
-            // $drawemail->setStrokeColor('black');
-            // $drawemail->setStrokeWidth(5);
-            // $drawemail->line(0, 190, 576, 190);
-            // $drawemail->setStrokeWidth(1);
+             $drawemail->setStrokeColor('black');
+             $drawemail->setStrokeWidth(5);
+             $drawemail->line(0, 190, 576, 190);
+             $drawemail->setStrokeWidth(1);
         }
 
         public static function printImageLogo(object &$imageprintemail, string $logoFile): void
@@ -307,8 +344,10 @@
 
         public static function drawEmailSettings43533(object &$imagetextemail, object &$drawemail, object $pixel, int $countProductArray): void
         {
-            $rowheight = ($countProductArray * 30) + 850;
-            $imagetextemail->newImage(600, $rowheight, $pixel);
+//            $rowheight = ($countProductArray * 30) + 850;
+//			$rowheight = 550;
+//            $imagetextemail->newImage(570, $rowheight, $pixel);
+			$imagetextemail->newImage(576, 2000, $pixel);
 
             /* Black text */
             $drawemail->setFillColor('black');
@@ -316,6 +355,7 @@
             switch (strtolower($_SERVER['HTTP_HOST'])) {
                 case 'tiqs.com':
                     $drawemail->setFont('Helvetica');
+//					$drawemail->setFont('Arial');
                     break;
                 case 'loki-vm':
                 case '10.0.0.48':
@@ -331,6 +371,64 @@
             $drawemail->setFontSize(28);
             $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
         }
+
+		public static function printProductLines43533(
+			object &$CI,
+			object &$drawemail,
+			array $productsarray,
+			int $spotTypeId,
+			int &$i,
+			int $startPoint,
+			array &$productVats,
+			array $order,
+			bool $isFod
+		): void
+		{
+			$i++;
+			foreach ($productsarray as $product) {
+
+				$product = explode($CI->config->item('concatSeparator'), $product);
+				// 0 => name
+				// 1 => local unit price
+				// 2 => ordered quantity
+				// 3 => category
+				// 4 => category id
+				// 5 => shortDescription
+				// 6 => longDescription
+				// 7 => local vatpercentage
+				// 8 => deliveryPrice
+				// 9 => deliveryVatpercentage
+				// 10 => pickupPrice
+				// 11 => pickupVatpercentage
+
+				$title = substr($product[0], 0, 20);
+				$quantity = intval($product[2]);
+				$plu =  $product[3];
+
+				// SET PRICE AND VATPERCENTAGE
+				if ($spotTypeId === $CI->config->item('local')) {
+					$price = floatval($product[1]);
+					$vatpercentage = intval($product[7]);
+				} elseif ($spotTypeId === $CI->config->item('deliveryType')) {
+					$price = floatval($product[8]);
+					$vatpercentage = intval($product[9]);
+				} elseif ($spotTypeId === $CI->config->item('pickupType')) {
+					$price = floatval($product[10]);
+					$vatpercentage = intval($product[11]);
+				}
+
+				$productTotal =  $quantity * $price;
+				self::populateVatArray($productVats, $productTotal, $vatpercentage);
+
+				$productTotal =  number_format($productTotal, 2, '.', ',');
+				self::createProductLine($drawemail, $startPoint, $i, $quantity, $title, $productTotal, $vatpercentage, $isFod, $productVats);
+				$i++;
+			}
+			// Service fee line
+			$serviceFeeTax = intval($order['serviceFeeTax']);
+			self::createProductLine($drawemail, $startPoint, $i, 1, 'servicefee', $order['serviceFee'], $serviceFeeTax, $isFod, $productVats);
+			self::populateVatArray($productVats, floatval($order['serviceFee']), $serviceFeeTax);
+		}
 
         public static function printProductLines(
             object &$CI,
@@ -457,7 +555,68 @@
             self::printVoucherAmount($drawemail, $startPoint, $i, $order, $overAllTotal);
         }
 
-        public static function printVoucherAmount(object &$drawemail, int $startPoint, int &$i, array $order, float $overAllTotal): void
+		public static function printVatAndTotal43533(object &$drawemail, int $startPoint, int &$i, array $productVats, array $order): void
+		{
+			$i++;
+			$drawemail->setFontSize(24);
+			$drawemail->setStrokeWidth(1);
+
+			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+			$drawemail->annotation(0, $startPoint + ($i * 30), '');
+			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+			$drawemail->annotation(150, $startPoint + ($i * 30), ' Basis (MvH) ');
+			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+			$drawemail->annotation(360, $startPoint + ($i * 30), ' BTW ');
+			$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+			$drawemail->annotation(560, $startPoint + ($i * 30), ' Totaal ');
+
+			$baseAmountTotal = 0;
+			$vatTotal = 0;
+			$overAllTotal = 0;
+
+			foreach ($productVats as $percent => $data) {
+				$i++;
+
+				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+				$drawemail->annotation(0, $startPoint + ($i * 30), $data['grade'] . ' ' . $percent . ' %');
+
+				$baseAmount = round($data['baseAmount'], 2);
+				$baseAmountTotal += $baseAmount;
+				$baseAmountString = $baseAmount ? number_format($baseAmount, 2, '.', ',') : '';
+
+				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+				$drawemail->annotation(150, $startPoint + ($i * 30),  $baseAmountString);
+
+				$vatAmount = round($data['vatAmount'], 2);
+				$vatTotal += $vatAmount;
+				$vatAmountString = $vatAmount ? number_format($vatAmount, 2, '.', ',') : '';
+
+				$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+				$drawemail->annotation(360, $startPoint + ($i * 30),  strval($vatAmountString) );
+
+				$totalAmount = $baseAmount + $vatAmount;
+				$overAllTotal += $totalAmount;
+				$totalString = $totalAmount ? number_format($totalAmount, 2, '.', ',') : '';
+
+				$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+				$drawemail->annotation(560, $startPoint + ($i * 30),  $totalString);
+			}
+			$i++;
+
+			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+			$drawemail->annotation(0, $startPoint + ($i * 30), 'Totaal');
+			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+			$drawemail->annotation(150, $startPoint + ($i * 30), number_format($baseAmountTotal, 2, '.', ','));
+			$drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+			$drawemail->annotation(360, $startPoint + ($i * 30), number_format($vatTotal, 2, '.', ','));
+			$drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
+			$drawemail->annotation(560, $startPoint + ($i * 30), number_format($overAllTotal, 2, '.', ','));
+
+			self::printVoucherAmount($drawemail, $startPoint, $i, $order, $overAllTotal);
+		}
+
+
+		public static function printVoucherAmount(object &$drawemail, int $startPoint, int &$i, array $order, float $overAllTotal): void
         {
             $voucherAmount = floatval($order['voucherAmount']);
 
@@ -476,7 +635,7 @@
 
             $i++;
             $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-            $drawemail->annotation(0, $startPoint + ($i * 30), 'Totall with voucher');
+            $drawemail->annotation(0, $startPoint + ($i * 30), 'Total with voucher');
             $drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
             $drawemail->annotation(560, $startPoint + ($i * 30), number_format($totalWithVoucher, 2, '.', ','));
         }
