@@ -21,7 +21,7 @@ $(document).ready(function () {
         default_value: "",
         size: 70,
         unique: true,
-      },
+      }, 
       {
         id: "tbl_bookandpay.mobilephone",
         label: "Mobile Phone",
@@ -199,7 +199,7 @@ $(document).ready(function () {
         data: null,
         render: function (data, type, row) {
           return (
-            '<a href="javascript:;" onclick="resendTicket(\'' +
+            '<a href="javascript:;" onclick="confirmResendTicket(\'' +
             data.reservationId +
             "', '" +
             data.email +
@@ -337,13 +337,37 @@ function freeAmountValidate(el) {
   }
 }
 
-function resendTicket(reservationId, email) {
+function confirmResendTicket(reservationId, email){
+  bootbox.confirm({
+    message: "Do you  to send the mail to support@tiqs.com as well?",
+    buttons: {
+        confirm: {
+            label: 'Yes',
+            className: 'btn-success'
+        },
+        cancel: {
+            label: 'No',
+            className: 'btn-danger'
+        }
+    },
+    callback: function (result) {
+      if(result == true){
+        resendTicket(reservationId, email, 1);
+      } else {
+        resendTicket(reservationId, email);
+      }
+    }
+});
+}
+
+function resendTicket(reservationId, email, sendTo = 0) {
   let data = {
     reservationId: reservationId,
     email: encodeURI(email),
+    sendTo: sendTo
   };
   $.post(
-    globalVariables.baseUrl + "booking_events/emailReservation",
+    globalVariables.baseUrl + "events/resend_ticket",
     data,
     function (data) {
       alertify.success("Ticket is resend successfully!");

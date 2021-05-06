@@ -315,6 +315,7 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
 	<script type="text/javascript"  src="<?php echo $this->baseUrl; ?>assets/js/query-builder.standalone.js"></script>
+	<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/ticketsReportDataTable.js"></script>
 <?php } elseif ($this->view === 'events/email_designer') { ?>
 	<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>

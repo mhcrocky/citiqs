@@ -1,6 +1,6 @@
 
     $(function() {
-      var time = moment().startOf("day");
+      var time = moment().startOf("day").subtract(6, 'days');
         $('#datetimegraph').daterangepicker({
           timePicker: true,
           timePicker24Hour: true,
@@ -9,7 +9,7 @@
             format: 'YYYY-MM-DD HH:mm:ss'
           },
           ranges: {
-           'Today': [time, moment()],
+           'Today': [moment().startOf("day"), moment()],
            'Yesterday': [moment().startOf("day").subtract(1, 'days'), moment().subtract(1, 'days')],
            'Last 7 Days': [moment().startOf("day").subtract(6, 'days'), moment()],
            'Last 30 Days': [moment().startOf("day").subtract(29, 'days'), moment()],
