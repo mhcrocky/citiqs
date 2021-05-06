@@ -344,4 +344,24 @@
             $spotId = intval($spotId[0]['spotId']);
             return $spotId;
         }
+
+        public function hasTypeActiveSpots($where): bool
+        {
+            $result = $this->readImproved([
+                'what' => [
+                    'tbl_shop_spot_types.id AS typeId',
+                    'tbl_shop_spot_types.type AS type',
+                ],
+                'where' => $where,
+                'joins' => [
+                    ['tbl_shop_printers', 'tbl_shop_printers.id = ' . $this->table . '.printerId' , 'INNER'],
+                    ['tbl_shop_spot_types', 'tbl_shop_spot_types.id = ' . $this->table . '.spotTypeId' , 'INNER']
+                ],
+                'conditions' => [
+                    'group_by' =>  ['tbl_shop_spot_types.id']
+                ]
+            ]);
+
+            return !is_null($result);
+        }
     }

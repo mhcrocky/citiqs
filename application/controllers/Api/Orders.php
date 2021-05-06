@@ -7,6 +7,7 @@
 
     class Orders extends REST_Controller
     {
+        private $trackPrinterFile = FCPATH . 'application/tiqs_logs/track_printer.txt';
 
         function __construct()
         {
@@ -25,6 +26,7 @@
             $this->load->helper('email_helper');
             $this->load->helper('curl_helper');
             $this->load->helper('receiptprint_helper');
+            $this->load->helper('orderprint_helper');
 
             $this->load->config('custom');
             $this->load->library('language', array('controller' => $this->router->class));
@@ -33,25 +35,35 @@
 		public function index_delete()
 		{
 			return;
-		}
+        }
+        
+
+        private function trackPrinter(string $mac, string $message): void
+        {
+            if ($mac === '00:11:62:1E:A4:F2') {
+                Utility_helper::logMessage($this->trackPrinterFile, $message);
+            }
+        }
 
         public function data_get()
         {
             $mac = $this->getMacNumber();
-
+            $this->trackPrinter($mac, 'PRINTER SAYS HELLO');
             $this->printFinanceReport($mac);
 
             $order = $this->getOrder($mac);
+            $this->trackPrinter($mac, 'PRINTER HAS AN ORDER TO PRINT');
             $vendorId = intval($order['vendorId']);
             $bbUser = $this->shopvendorfod_model->isBBVendor($vendorId);
             $orderExtendedIds = explode(',', $order['orderExtendedIds']);
 
-            $this->handlePrePostPaid($order, $bbUser);
+            $this->handlePrePostPaid($order, $bbUser, $mac);
 
             $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '2');
 
             $this->shopprinterrequest_model->setObjectFromArray(['orderId' => $order['orderId']])->update();
 
+            $this->trackPrinter($mac, 'PRINTER PRINTING RECEIPT FOR BAR OR KITCHEN ...');
             Receiptprint_helper::printPrinterReceipt($order);
 
             $this->shopprinterrequest_model->setObjectFromArray(['printerEcho' => date('Y-m-d H:i:s')])->update();
@@ -60,31 +72,79 @@
 
             if ($order['paidStatus'] === '1') {
                 $this->shoporder_model->updatePrintedStatus();
+                $this->trackPrinter($mac, 'UPDATING PRINT STATUS');
             }
 
+            $this->trackPrinter($mac, 'PRINTER SAYS GOODBAY FOR THIS ORDER');
             $this->callOrderCopy($order, $bbUser);
         }
 
-        private function handlePrePostPaid(array $order, bool $bbUser): void
+        private function handlePrePostPaid(array $order, bool $bbUser, string $mac = ''): void
         {
-            #if ($order['orderIsPos'] === '1') return;
 
-            if (!$bbUser && (
+            // first to check is file to print exists
+
+            $image = FCPATH .'receipts' . DIRECTORY_SEPARATOR . $order['orderId'].'-email' . '.png';
+
+            if (file_exists($image)) {
+                $this->trackPrinter($mac, 'IMAGE FILE EXISTS ');
+            } else {
+                $this->trackPrinter($mac, 'IMAGE DOES NOT EXISTS');
+            }
+
+            #if ($order['orderIsPos'] === '1') return;
+            $this->trackPrinter($mac, 'PRINTER ASK FOR RECEIPTS FOR WAITER AND CUSTOMER');
+
+            if ($bbUser) {
+                $this->trackPrinter($mac, 'THIS IS A BB USER');
+                return;
+            }
+
+            $this->trackPrinter($mac, 'IT IS NOT A BB USER');
+            if (
                 $order['paymentType'] === $this->config->item('prePaid')
-                || $order['paymentType'] === $this->config->item('postPaid'))
+                || $order['paymentType'] === $this->config->item('postPaid')
                 || $order['paymentType'] === $this->config->item('pinMachinePayment')
                 // if voucher payment and pos orders
                 || ( $order['paymentType'] === $this->config->item('voucherPayment') && $order['orderIsPos'] === '1' )
             ) {
+                $this->trackPrinter($mac, 'RECEIPTS CONDITIONS TRUE');
                 if ($order['waiterReceipt'] === '0') {
+
+                    $this->trackPrinter($mac, 'PRINTER TRY TO PRINT WAITER RECEIPT');
                     // one reeipt for waiter
-                    header('Content-type: image/png');
-                    echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
+                   
+                    // $content = file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
+                    $content = file_get_contents($image);
+
+                    if (empty($content)) {
+                        $this->trackPrinter($mac, 'WE DOES NOT HAVE A CONTENT');
+                        header('Content-type: image/png');
+                        echo '?????????????';
+                    } else {
+
+                        $orderId = intval($order['orderId']);
+                        $orderForImage = $this->shoporder_model->setObjectId($orderId)->fetchOrdersForPrintcopy();
+                        $orderForImage = reset($orderForImage);
+                        Orderprint_helper::saveOrderImage($orderForImage);
+
+                        // // header('Content-type: image/png');
+                        // Receiptprint_helper::printPrinterReceipt($order);
+                        // // echo '--------';
+                        // // echo $content;
+                        // $this->trackPrinter($mac, 'WE HAVE A CONTENT !!!!!!!!!!');
+                    }
+
+                    // } else {
+                    //     echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
+                    // }
+                    
                     $this->shoporder_model->setObjectId(intval($order['orderId']))->setProperty('waiterReceipt', '1')->update();
                     exit;
                 }
 
                 if ($order['customerReceipt'] === '0') {
+                    $this->trackPrinter($mac, 'PRINTER TRY TO PRINT CUSTOMER RECEIPT');
                     header('Content-type: image/png');
                     echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
                     $this->shoporder_model->setObjectId(intval($order['orderId']))->setProperty('customerReceipt', '1')->update();

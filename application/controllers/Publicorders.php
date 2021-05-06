@@ -55,7 +55,7 @@
                 || (isset($_GET['category']) && !ctype_digit($_GET['category']))
                 || (isset($_GET['typeid']) && !ctype_digit($_GET['typeid']))
             ) {
-                redirect(base_url(). '/places');
+                redirect(base_url(). 'places');
                 exit;
             }
             return;
@@ -77,10 +77,9 @@
                 $orderDataRandomKey = empty($get[$this->config->item('orderDataGetKey')]) ? '' : $get[$this->config->item('orderDataGetKey')];
                 $this->checkSpot($spotId, $vendor, $orderDataRandomKey);
             } elseif ($vendor) {
-                $typeId = empty($get['typeid']) ? 0 : intval($get['typeid']);
-                $this->loadVendorView($typeId, $vendor);
+                empty($get['typeid']) ? $this->loadVendorView($vendor) : $this->loadVendorView($vendor, intval($get['typeid']));
             } else {
-                redirect(base_url());
+                redirect(base_url(). 'places');
             }
 
             return;
@@ -143,26 +142,23 @@
             return;
         }
 
-        private function loadVendorView(int $typeId, array $vendor): void
+        private function loadVendorView(array $vendor, int $typeId = 0): void
         {
-            $types = Utility_helper::resetArrayByKeyMultiple($vendor['typeData'], 'active');
-
-            if (empty($types[1])) {
-                $data = [
-                    'vendor' => $vendor,
-                    'spots' => []
-                ];
-                $this->loadViews('publicorders/selectType', $this->global, $data, null, 'headerWarehousePublic');
-            } if ($typeId) {
+            if ($typeId) {
                 $this->checkVendorCredentials($vendor, $typeId);
                 $this->loadSelectSpotView($vendor, $typeId);
-            } elseif (count($types[1]) === 1) {
-                $redirect = base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&typeid=' . $types[1]['0']['typeId'];
+                return;
+            }
+
+            $activeTypes = $this->filterShopTypes($vendor['typeData'], $vendor['vendorId']);
+            if (count($activeTypes) === 1) {
+                $typeId = reset($activeTypes)['typeId'];
+                $redirect = base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&typeid=' . $typeId;
                 redirect($redirect);
             } else {
                 $data = [
                     'vendor' => $vendor,
-                    'activeTypes' => $types[1],
+                    'activeTypes' => $activeTypes,
                 ];
 
                 $this->global['pageTitle'] = 'TIQS : SELECT TYPE';
@@ -170,6 +166,23 @@
             }
 
             return;
+        }
+
+        private function filterShopTypes(array $types, int $vendorId)
+        {
+            $where = [
+                'tbl_shop_printers.userId' => $vendorId,
+                'tbl_shop_spots.active' => '1',
+                'tbl_shop_spots.archived' => '0',
+                'tbl_shop_spots.isApi' => '0'
+            ];
+
+            return array_filter($types, function($type) use($where) {
+                $where['tbl_shop_spots.spotTypeId'] = $type['typeId'];                
+                if ($this->shopspot_model->hasTypeActiveSpots($where)) {
+                    return ($type);
+                };
+            });
         }
 
         private function loadSelectSpotView(array $vendor, int $typeId): void
