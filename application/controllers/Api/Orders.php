@@ -7,6 +7,7 @@
 
     class Orders extends REST_Controller
     {
+        private $trackPrinterFile = FCPATH . 'application/tiqs_logs/track_printer.txt';
 
         function __construct()
         {
@@ -33,25 +34,35 @@
 		public function index_delete()
 		{
 			return;
-		}
+        }
+        
+
+        private function trackPrinter(string $mac, string $message): void
+        {
+            if ($mac === '00:11:62:1E:A4:F2') {
+                Utility_helper::logMessage($this->trackPrinterFile, $message);
+            }
+        }
 
         public function data_get()
         {
             $mac = $this->getMacNumber();
-
+            $this->trackPrinter($mac, 'PRINTER SAYS HELLO');
             $this->printFinanceReport($mac);
 
             $order = $this->getOrder($mac);
+            $this->trackPrinter($mac, 'PRINTER HAS AN ORDER TO PRINT');
             $vendorId = intval($order['vendorId']);
             $bbUser = $this->shopvendorfod_model->isBBVendor($vendorId);
             $orderExtendedIds = explode(',', $order['orderExtendedIds']);
 
-            $this->handlePrePostPaid($order, $bbUser);
+            $this->handlePrePostPaid($order, $bbUser, $mac);
 
             $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '2');
 
             $this->shopprinterrequest_model->setObjectFromArray(['orderId' => $order['orderId']])->update();
 
+            $this->trackPrinter($mac, 'PRINTER PRINTING RECEIPT FOR BAR OR KITCHEN ...');
             Receiptprint_helper::printPrinterReceipt($order);
 
             $this->shopprinterrequest_model->setObjectFromArray(['printerEcho' => date('Y-m-d H:i:s')])->update();
@@ -60,14 +71,17 @@
 
             if ($order['paidStatus'] === '1') {
                 $this->shoporder_model->updatePrintedStatus();
+                $this->trackPrinter($mac, 'UPDATING PRINT STATUS');
             }
 
+            $this->trackPrinter($mac, 'PRINTER SAYS GOODBAY FOR THIS ORDER');
             $this->callOrderCopy($order, $bbUser);
         }
 
-        private function handlePrePostPaid(array $order, bool $bbUser): void
+        private function handlePrePostPaid(array $order, bool $bbUser, string $mac = ''): void
         {
             #if ($order['orderIsPos'] === '1') return;
+            $this->trackPrinter($mac, 'PRINTER ASK FOR RECEIPTS FOR WAITER AND CUSTOMER');
 
             if (!$bbUser && (
                 $order['paymentType'] === $this->config->item('prePaid')
@@ -76,7 +90,9 @@
                 // if voucher payment and pos orders
                 || ( $order['paymentType'] === $this->config->item('voucherPayment') && $order['orderIsPos'] === '1' )
             ) {
+                $this->trackPrinter($mac, 'RECEIPTS CONDITIONS TRUE');
                 if ($order['waiterReceipt'] === '0') {
+                    $this->trackPrinter($mac, 'PRINTER TRY TO PRINT WAITER RECEIPT');
                     // one reeipt for waiter
                     header('Content-type: image/png');
                     echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
@@ -85,6 +101,7 @@
                 }
 
                 if ($order['customerReceipt'] === '0') {
+                    $this->trackPrinter($mac, 'PRINTER TRY TO PRINT CUSTOMER RECEIPT');
                     header('Content-type: image/png');
                     echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
                     $this->shoporder_model->setObjectId(intval($order['orderId']))->setProperty('customerReceipt', '1')->update();
