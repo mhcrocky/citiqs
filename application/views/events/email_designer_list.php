@@ -16,7 +16,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($emails as $email) { ?>
+                        <?php if(count($emails) > 0): ?>
+                        <?php foreach ($emails as $email): ?>
                             <tr>
                                 <th scope="row"><?php echo $email->id; ?></th>
                                 <td><?php echo str_replace('ticketing_', '', $email->template_name); ?></td>
@@ -30,7 +31,8 @@
                                     </a>
                                 </td>
                             </tr>
-                        <?php } ?>
+                        <?php endforeach; ?>
+                        <?php endif; ?>
                         </tbody>
                     </table>
                 </div>

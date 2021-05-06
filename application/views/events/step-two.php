@@ -87,11 +87,13 @@
                             <select id="voucherId" name="voucherId" style="height: 35px !important;padding-top: 6px;"
                                 class="form-control input-w">
                                 <option value="0">Select option</option>
+                                <?php if(count($vouchers) > 0): ?>
                                 <?php foreach($vouchers as $voucher): ?>
                                 <option value="<?php echo $voucher['id']; ?>">
                                     <?php echo $voucher['template_name'] .' ('. $voucher['description'] . ')'; ?>
                                 </option>
                                 <?php endforeach; ?>
+                                <?php endif; ?>
                             </select>
                         </div>
                     </div>
@@ -128,11 +130,13 @@
                         <div class="col-md-3">
                             <select id="previousFaseId" name="previousFaseId" style="height: 35px !important; padding: 0px !important" class="form-control input-w">
                                 <option value="0">Select option</option>
+                                <?php if(count($tickets) > 0): ?>
                                 <?php foreach($tickets as $ticket): ?>
                                 <option value="<?php echo $ticket['ticketId']; ?>">
                                     <?php echo $ticket['ticketDescription']; ?>
                                 </option>
                                 <?php endforeach; ?>
+                                <?php endif; ?>
                             </select>
                         </div>
                     </div>
@@ -337,11 +341,13 @@
                             <div class="col-md-6">
                                 <select id="ticketEmailTemplate" class="form-control input-w">
                                     <option selected disabled>Select option</option>
+                                    <?php if(count($emails) > 0): ?>
                                     <?php foreach($emails as $email): ?>
                                     <option value="<?php echo $email->id; ?>">
                                         <?php echo str_replace('ticketing_', '', $email->template_name); ?>
                                     </option>
                                     <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </select>
                                 <input type="hidden" id="ticketEmailTemplateId" name="emailId">
                             </div>
@@ -426,11 +432,13 @@
                             <div class="col-md-6">
                                 <select id="group" class="form-control input-w" required>
                                     <option selected disabled>Select option</option>
+                                    <?php if(count($groups) > 0): ?>
                                     <?php foreach($groups as $group): ?>
                                     <option id="group_<?php echo $group['id']; ?>" value="<?php echo $group['id']; ?>">
                                         <?php echo $group['groupname']; ?>
                                     </option>
                                     <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </select>
                                 <input type="hidden" id="ticketGroup" name="ticketGroupId">
                             </div>

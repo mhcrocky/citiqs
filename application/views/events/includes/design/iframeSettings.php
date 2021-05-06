@@ -39,9 +39,11 @@
                 onchange="changeIframe('iframeWidth', 'iframeHeight', 'iframeId', 'selectedSpotId', 'categorySortNumberId', 'categoryConatinerId')"
             >
                 <option value="">Select category</option>
+                <?php if(count($categories) > 0) { ?>
                 <?php foreach ($categories as $category) { ?>
                     <option value="&category=<?php echo $category['sortNumber']; ?>"><?php echo $category['category']; ?></option>
-                    <?php } ?>
+                <?php } ?>
+                <?php } ?>
             </select>
         </label>
     </div>    
