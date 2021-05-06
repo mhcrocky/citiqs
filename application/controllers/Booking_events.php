@@ -32,6 +32,10 @@ class Booking_events extends BaseControllerWeb
         $this->global['pageTitle'] = 'TIQS: Shop';
         $this->session->unset_userdata('reservationIds');
 
+        if(!$this->session->userdata('eTicketing')){
+            session_unset();
+        }
+
         if (!$shortUrl) {
             redirect('https://tiqs.com/info');
         }
@@ -58,7 +62,7 @@ class Booking_events extends BaseControllerWeb
             $this->session->unset_userdata('exp_time');
             $this->session->unset_userdata('total');
         }
-
+        $this->session->set_userdata('eTicketing', true);
         $this->session->set_userdata('customer', $customer->id);
         $this->session->set_userdata('shortUrl', $shortUrl);
         $data['shopsettings'] = $this->event_model->get_shopsettings($customer->id);
@@ -249,6 +253,10 @@ class Booking_events extends BaseControllerWeb
 
     public function payment_proceed()
     {
+        if(!$this->session->userdata('eTicketing')){
+            redirect(base_url().'/booking_events/'.$this->session->userdata('shortUrl'));
+        }
+
         $buyerInfo = $this->input->post(null, true);
 
         if(!$this->session->tempdata('tickets')){

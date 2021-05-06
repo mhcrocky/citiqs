@@ -29,7 +29,11 @@ class Booking_reservations extends BaseControllerWeb
 
         $this->session->unset_userdata('customer');
 
-        $this->session->set_userdata('bookings');
+        if($this->session->userdata('eTicketing')){
+            session_unset();
+        }
+
+        $this->session->set_userdata('bookings', true);
 
         $customer = $this->user_model->getUserInfoByShortUrl($shortUrl);
         
@@ -292,6 +296,10 @@ class Booking_reservations extends BaseControllerWeb
 
     public function payment_proceed()
     {
+        if($this->session->userdata('eTicketing')){
+            redirect(base_url().'/booking_reservations/'.$this->session->userdata('shortUrl'));
+        }
+
         $amount = 0;
         $buyerInfo = $this->input->post(null, true);
         $bookings = $this->session->tempdata('tickets');
@@ -329,6 +337,10 @@ class Booking_reservations extends BaseControllerWeb
     
     public function select_payment_type()
     {
+        if (empty($_SESSION['reservationIds'])) {
+            redirect(base_url());
+        }
+
         $this->load->helper('money');
 
         $this->global['pageTitle'] = 'Payment Method';
