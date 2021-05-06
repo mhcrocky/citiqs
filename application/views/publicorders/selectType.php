@@ -8,10 +8,10 @@
 				} else {
 					$logoFile = base_url(). "assets/images/vendorLogos/". $vendor['logo'];
 				}
-//				echo var_dump($logoFile);
-//				echo var_dump($vendor['logo']);
+				// echo var_dump($logoFile);
+				// echo var_dump($vendor['logo']);
 			} ?>
-<!--			<img src="--><?php //echo base_url(); ?><!--assets/home/images/tiqslogowhite.png" alt="tiqs" width="250" height="auto" />-->
+			<!-- <img src="<?php //echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="250" height="auto" /> -->
 			<img src="<?php echo $logoFile; ?>" alt="tiqs" width="250" height="auto" />
 
 		</div><!-- /.login-logo -->
@@ -39,7 +39,7 @@
 							} ?>
 
 							<div style="margin-top: 20px">
-<!--								<img src="--><?php //echo base_url(); ?><!--assets/home/images/tiqslogowhite.png" alt="tiqs" width="100px" height="" />-->
+								<!-- <img src="--><?php //echo base_url(); ?><!--assets/home/images/tiqslogowhite.png" alt="tiqs" width="100px" height="" /> -->
 								<img src="<?php echo $logoFile; ?>" alt="tiqs" width="150" height="auto" />
 							</div>
 
@@ -79,19 +79,19 @@
 		</div>
 	</div>
 
-<!--	<div class="col-half background-blue height-100">-->
-<!--		<div class="align-start">-->
-<!--			</div>-->
-<!--				<div style="text-align:center;">-->
-<!--					<img src="--><?php //echo base_url(); ?><!--assets/home/images/alfredmenu.png" alt="tiqs" width="auto" height="110" />-->
-<!--				</div>-->
-<!--				<h1 style="text-align:center">QR-MENU</h1>-->
-<!--				<div style="text-align:center; margin-top: 30px">-->
-<!--					<p style="font-size: larger; margin-top: 50px; margin-left: 0px">--><?php //$this->language->line("HOMESTART-SPOT-X001111ABC",'BUILD BY TIQS');?><!--</p>-->
-<!--				</div>-->
-<!--			</div>-->
-<!--		</div>-->
-<!--	</div>-->
+	<!--	<div class="col-half background-blue height-100">-->
+	<!--		<div class="align-start">-->
+	<!--			</div>-->
+	<!--				<div style="text-align:center;">-->
+	<!--					<img src="--><?php //echo base_url(); ?><!--assets/home/images/alfredmenu.png" alt="tiqs" width="auto" height="110" />-->
+	<!--				</div>-->
+	<!--				<h1 style="text-align:center">QR-MENU</h1>-->
+	<!--				<div style="text-align:center; margin-top: 30px">-->
+	<!--					<p style="font-size: larger; margin-top: 50px; margin-left: 0px">--><?php //$this->language->line("HOMESTART-SPOT-X001111ABC",'BUILD BY TIQS');?><!--</p>-->
+	<!--				</div>-->
+	<!--			</div>-->
+	<!--		</div>-->
+	<!--	</div>-->
 
 </main>
 
