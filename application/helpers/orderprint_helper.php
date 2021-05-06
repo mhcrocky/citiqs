@@ -28,11 +28,12 @@
 
             self::drawEmailSettings($imagetextemail, $drawemail, $pixel, count($productsarray));
 
-            Print_helper::printImageLogo($imageprintemail, $logoFile);
-
-            self::printOrderHeader($CI, $imagetextemail, $drawemail, $order, $spotTypeId);
+//            Print_helper::printImageLogo($imageprintemail, $logoFile);
+//            self::printOrderHeader($CI, $imagetextemail, $drawemail, $order, $spotTypeId);
 
             if ($order['vendorId'] !== '43533') {
+				Print_helper::printImageLogo($imageprintemail, $logoFile);
+            	self::printOrderHeader($CI, $imagetextemail, $drawemail, $order, $spotTypeId);
                 self::printProductLines($CI, $drawemail, $productsarray, $spotTypeId, $i, $startPoint, $productVats, $order, $isFod);
                 self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
                 self::printVatAndTotal($drawemail, $startPoint, $i, $productVats, $order);
@@ -40,6 +41,16 @@
                 self::printVendorData($drawemail, $startPoint, $i, $order);
                 self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
             }
+            else{
+				Print_helper::printImageLogo($imageprintemail, $logoFile);
+//				self::printOrderHeader($CI, $imagetextemail, $drawemail, $order, $spotTypeId);
+//				self::printProductLines($CI, $drawemail, $productsarray, $spotTypeId, $i, $startPoint, $productVats, $order, $isFod);
+				self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
+//				self::printVatAndTotal($drawemail, $startPoint, $i, $productVats, $order);
+				self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
+//				self::printVendorData($drawemail, $startPoint, $i, $order);
+				self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
+			}
 
             return self::saveImageAndDestroyObjects($imagetextemail, $imageprintemail, $drawemail, $order);
         }
