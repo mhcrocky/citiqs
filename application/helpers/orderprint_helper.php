@@ -43,7 +43,7 @@
             }
             else{
 				Print_helper::printImageLogo($imageprintemail, $logoFile);
-//				self::printOrderHeader($CI, $imagetextemail, $drawemail, $order, $spotTypeId);
+				self::printOrderHeader43533($CI, $imagetextemail, $drawemail, $order, $spotTypeId);
 //				self::printProductLines($CI, $drawemail, $productsarray, $spotTypeId, $i, $startPoint, $productVats, $order, $isFod);
 				self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
 //				self::printVatAndTotal($drawemail, $startPoint, $i, $productVats, $order);
@@ -190,6 +190,49 @@
             $drawemail->setStrokeWidth(5);
             $drawemail->line(0, 190, 576, 190);
             $drawemail->setStrokeWidth(1);
+        }
+
+        public static function printOrderHeader43533 (object &$CI, object &$imagetextemail, object &$drawemail, array $order, int $spotTypeId): void
+        {
+            if ($order['paymentType'] === $CI->config->item('prePaid') || $order['paymentType'] === $CI->config->item('postPaid')) {
+                $drawemail->setStrokeWidth(4);
+                $drawemail->setFontSize(28);
+                $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+                $drawemail->annotation(0, 30, 'SERVICE BY WAITER');
+                $drawemail->setStrokeWidth(2);
+                $drawemail->setFontSize(28);
+                $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+            }
+
+            // $drawemail->annotation(0, 70, "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);
+            // $drawemail->annotation(0, 105, "SPOT: ". $order['spotName'] );
+
+
+            // if ($spotTypeId === $CI->config->item('local')) {
+            //     $drawemail->annotation(0, 135, "DATE: " . $order['orderCreated']);
+            // } elseif ($spotTypeId === $CI->config->item('deliveryType')) {
+            //     $drawemail->annotation(0, 135, "DELIVERY AT: " . $order['orderCreated']);
+            // } elseif ($spotTypeId === $CI->config->item('pickupType')) {
+            //     $drawemail->annotation(0, 135, "PICKUP AT: " . $order['orderCreated']);
+            // }
+
+
+            // //-------- header regel --------
+
+            // $drawemail->setFontSize(22);
+            // $drawemail->setStrokeWidth(2);
+            // $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+
+            // $imagetextemail->annotateImage($drawemail, 0, 185, 0, "ANT");
+            // $imagetextemail->annotateImage($drawemail, 50, 185, 0, "OMSCHRIJVING");
+            // $imagetextemail->annotateImage($drawemail, 300, 185, 0, "");
+            // $imagetextemail->annotateImage($drawemail, 458, 185, 0, "");
+            // $imagetextemail->annotateImage($drawemail, 485, 185, 0, "TOTAAL");
+
+            // $drawemail->setStrokeColor('black');
+            // $drawemail->setStrokeWidth(5);
+            // $drawemail->line(0, 190, 576, 190);
+            // $drawemail->setStrokeWidth(1);
         }
 
         public static function printImageLogo(object &$imageprintemail, string $logoFile): void
