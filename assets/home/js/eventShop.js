@@ -6,8 +6,14 @@
         $('#payForm').show();
     }
 
+    if(document.getElementsByClassName('single-item__image').length == 1){
+        var x = window.matchMedia("(max-width: 770px)");
+        hideEventElement(x);
+    }
+
 }());
 
+window.onresize = onResizeEventElement;
 
 $(document).ready(function(){
     $('body').show();
@@ -453,4 +459,23 @@ function parseFloatNum(num){
 
     return parseFloat(num);
     
+}
+
+function onResizeEventElement(x){
+    if(document.getElementsByClassName('single-item__image').length == 1){
+        var x = window.matchMedia("(max-width: 770px)");
+        hideEventElement(x);   
+    }
+
+    return ;
+}
+
+function hideEventElement(x){
+    if(x.matches){
+        document.querySelector('.single-item__grid').style.display = "none";
+    } else {
+        document.querySelector('.single-item__grid').style.display = "block";
+    }
+
+    return ;
 }
