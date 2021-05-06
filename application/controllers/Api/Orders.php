@@ -109,19 +109,21 @@
             ) {
                 $this->trackPrinter($mac, 'RECEIPTS CONDITIONS TRUE');
                 if ($order['waiterReceipt'] === '0') {
+
                     $this->trackPrinter($mac, 'PRINTER TRY TO PRINT WAITER RECEIPT');
                     // one reeipt for waiter
-                    header('Content-type: image/png');
-
-                    
-                    $content = file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
+                   
+                    // $content = file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
+                    $content = file_get_contents($image);
 
                     if (empty($content)) {
-                        $this->trackPrinter($mac, 'WE HAVE A CONTENT');
-                    } else {
                         $this->trackPrinter($mac, 'WE DOES NOT HAVE A CONTENT');
+                    } else {
+                        header('Content-type: image/png');
+                        echo $content;
+                        $this->trackPrinter($mac, 'WE HAVE A CONTENT');
                     }
-                    echo $content;
+
                     // } else {
                     //     echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
                     // }
