@@ -26,17 +26,34 @@
             $drawemail = new ImagickDraw();
             $imagetextemail = new Imagick();
 
-            self::drawEmailSettings($imagetextemail, $drawemail, $pixel, count($productsarray));
+//            Print_helper::printImageLogo($imageprintemail, $logoFile);
+//            self::printOrderHeader($CI, $imagetextemail, $drawemail, $order, $spotTypeId);
 
-            Print_helper::printImageLogo($imageprintemail, $logoFile);
+            if ($order['vendorId'] !== '43533') {
+                self::drawEmailSettings($imagetextemail, $drawemail, $pixel, count($productsarray));
+				Print_helper::printImageLogo($imageprintemail, $logoFile);
+            	self::printOrderHeader($CI, $imagetextemail, $drawemail, $order, $spotTypeId);
+                self::printProductLines($CI, $drawemail, $productsarray, $spotTypeId, $i, $startPoint, $productVats, $order, $isFod);
+                self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
+                self::printVatAndTotal($drawemail, $startPoint, $i, $productVats, $order);
+                self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
+                self::printVendorData($drawemail, $startPoint, $i, $order);
+                self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
+            }
+            else
+            {
+                self::drawEmailSettings43533($imagetextemail, $drawemail, $pixel, count($productsarray));
 
-            self::printOrderHeader($CI, $imagetextemail, $drawemail, $order, $spotTypeId);
-            self::printProductLines($CI, $drawemail, $productsarray, $spotTypeId, $i, $startPoint, $productVats, $order, $isFod);
-            self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
-            self::printVatAndTotal($drawemail, $startPoint, $i, $productVats, $order);
-            self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
-            self::printVendorData($drawemail, $startPoint, $i, $order);
-			self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
+                
+				Print_helper::printImageLogo($imageprintemail, $logoFile);
+				self::printOrderHeader43533($CI, $imagetextemail, $drawemail, $order, $spotTypeId);
+//				self::printProductLines($CI, $drawemail, $productsarray, $spotTypeId, $i, $startPoint, $productVats, $order, $isFod);
+				self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
+//				self::printVatAndTotal($drawemail, $startPoint, $i, $productVats, $order);
+				self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
+//				self::printVendorData($drawemail, $startPoint, $i, $order);
+				self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
+			}
 
             return self::saveImageAndDestroyObjects($imagetextemail, $imageprintemail, $drawemail, $order);
         }
@@ -178,6 +195,49 @@
             $drawemail->setStrokeWidth(1);
         }
 
+        public static function printOrderHeader43533 (object &$CI, object &$imagetextemail, object &$drawemail, array $order, int $spotTypeId): void
+        {
+            if ($order['paymentType'] === $CI->config->item('prePaid') || $order['paymentType'] === $CI->config->item('postPaid')) {
+                $drawemail->setStrokeWidth(4);
+                $drawemail->setFontSize(28);
+                $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+                $drawemail->annotation(0, 30, 'SERVICE BY WAITER');
+                $drawemail->setStrokeWidth(2);
+                $drawemail->setFontSize(28);
+                $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+            }
+
+            // $drawemail->annotation(0, 70, "ORDER: " . $order['orderId'] . " NAAM: " . $order['buyerUserName']);
+            // $drawemail->annotation(0, 105, "SPOT: ". $order['spotName'] );
+
+
+            // if ($spotTypeId === $CI->config->item('local')) {
+            //     $drawemail->annotation(0, 135, "DATE: " . $order['orderCreated']);
+            // } elseif ($spotTypeId === $CI->config->item('deliveryType')) {
+            //     $drawemail->annotation(0, 135, "DELIVERY AT: " . $order['orderCreated']);
+            // } elseif ($spotTypeId === $CI->config->item('pickupType')) {
+            //     $drawemail->annotation(0, 135, "PICKUP AT: " . $order['orderCreated']);
+            // }
+
+
+            // //-------- header regel --------
+
+            // $drawemail->setFontSize(22);
+            // $drawemail->setStrokeWidth(2);
+            // $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+
+            // $imagetextemail->annotateImage($drawemail, 0, 185, 0, "ANT");
+            // $imagetextemail->annotateImage($drawemail, 50, 185, 0, "OMSCHRIJVING");
+            // $imagetextemail->annotateImage($drawemail, 300, 185, 0, "");
+            // $imagetextemail->annotateImage($drawemail, 458, 185, 0, "");
+            // $imagetextemail->annotateImage($drawemail, 485, 185, 0, "TOTAAL");
+
+            // $drawemail->setStrokeColor('black');
+            // $drawemail->setStrokeWidth(5);
+            // $drawemail->line(0, 190, 576, 190);
+            // $drawemail->setStrokeWidth(1);
+        }
+
         public static function printImageLogo(object &$imageprintemail, string $logoFile): void
         {
             $imagelogo = new Imagick($logoFile);
@@ -212,11 +272,6 @@
 
             file_put_contents($imgFullPath, $resultpngemail);
 
-
-            Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/track_printer.txt', 'WE ARE IN ORDERPRINT_HELPER TO PRINT ORDER');
-            header('Content-type: image/png');
-            echo $resultpngemail;
-
             $imagetextemail->destroy();
             $imageprintemail->destroy();
 
@@ -224,6 +279,33 @@
         }
 
         public static function drawEmailSettings(object &$imagetextemail, object &$drawemail, object $pixel, int $countProductArray): void
+        {
+            $rowheight = ($countProductArray * 30) + 850;
+            $imagetextemail->newImage(600, $rowheight, $pixel);
+
+            /* Black text */
+            $drawemail->setFillColor('black');
+
+            switch (strtolower($_SERVER['HTTP_HOST'])) {
+                case 'tiqs.com':
+                    $drawemail->setFont('Helvetica');
+                    break;
+                case 'loki-vm':
+                case '10.0.0.48':
+                    $drawemail->setFont('Helvetica');
+                    break;
+                default:
+                    if (ENVIRONMENT === 'development') break;
+                    $drawemail->setFont('Arial');
+                    break;
+            }
+
+            $drawemail->setStrokeWidth(2);
+            $drawemail->setFontSize(28);
+            $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+        }
+
+        public static function drawEmailSettings43533(object &$imagetextemail, object &$drawemail, object $pixel, int $countProductArray): void
         {
             $rowheight = ($countProductArray * 30) + 850;
             $imagetextemail->newImage(600, $rowheight, $pixel);
