@@ -115,7 +115,7 @@
                     // one reeipt for waiter
                    
                     // $content = file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
-                    $content = file_get_contents($image);
+                    // $content = file_get_contents($image);
 
                     if (empty($content)) {
                         $this->trackPrinter($mac, 'WE DOES NOT HAVE A CONTENT');
