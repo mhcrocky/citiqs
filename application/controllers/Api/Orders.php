@@ -118,6 +118,8 @@
 
                     if (empty($content)) {
                         $this->trackPrinter($mac, 'WE DOES NOT HAVE A CONTENT');
+                        header('Content-type: image/png');
+                        echo '?????????????';
                     } else {
                         header('Content-type: image/png');
                         echo $content;
