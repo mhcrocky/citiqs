@@ -113,18 +113,18 @@
                     // one reeipt for waiter
                     header('Content-type: image/png');
 
-                    if ($mac === '00:11:62:1E:A4:F2') {
-                        $content = file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
+                    
+                    $content = file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
 
-                        if (empty($content)) {
-                            $this->trackPrinter($mac, 'WE HAVE A CONTENT');
-                        } else {
-                            $this->trackPrinter($mac, 'WE DOES NOT HAVE A CONTENT');
-                        }
-                        echo $content;
+                    if (empty($content)) {
+                        $this->trackPrinter($mac, 'WE HAVE A CONTENT');
                     } else {
-                        echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
+                        $this->trackPrinter($mac, 'WE DOES NOT HAVE A CONTENT');
                     }
+                    echo $content;
+                    // } else {
+                    //     echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
+                    // }
                     
                     $this->shoporder_model->setObjectId(intval($order['orderId']))->setProperty('waiterReceipt', '1')->update();
                     exit;

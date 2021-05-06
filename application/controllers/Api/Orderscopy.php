@@ -30,6 +30,8 @@ class Orderscopy extends REST_Controller
 
 	public function data_get($orderId)
 	{
+
+		Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/track_printer.txt', ' WE ARE IN ORDER COPY');
 		$paidConditions = 'AND  tbl_shop_orders.paid = "1"';
 		$order = $this->shoporder_model->setObjectId(intval($orderId))->fetchOrdersForPrintcopy($paidConditions);
 
@@ -49,14 +51,24 @@ class Orderscopy extends REST_Controller
 
 	private function orderCopyAtcions(array $order, string $orderImageUrl): void
 	{
+		Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/track_printer.txt', ' WE ARE CALLING ORDER COPY ACTION');
 		if (
 			$order['paymentType'] === $this->config->item('prePaid')
 			|| $order['paymentType'] === $this->config->item('postPaid')
 			|| $order['paymentType'] === $this->config->item('voucherPayment')
 		) {
+			Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/track_printer.txt', 'ORDER COPY ACTION CONDITIONS ARE TRUE');
 			if ($order['waiterReceipt'] === '0') {
-				header('Content-type: image/png');
-				echo file_get_contents($orderImageUrl);
+				Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/track_printer.txt', 'PRINTING WAITER RECEIPT');
+				$content = file_get_contents($orderImageUrl);
+				if ($content) {
+					Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/track_printer.txt', 'WE HAVE SOMETHING TO ECHO ');
+					header('Content-type: image/png');
+					echo $content;
+				} else {
+					Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/track_printer.txt', 'NOTHING TO ECHO ');
+				}
+				
 			} else {
 				if ($order['customerReceipt'] === '0') {
 					if ($order['receiptOnlyToWaiter'] !== '1') {
