@@ -31,6 +31,29 @@
         color: #000;
     }
 
+    .h-div {
+        display: none;
+    }
+
+    @media only screen and (max-width: 750px) {
+        .single-item.bg-light {
+            box-shadow: 0 0 12px 2px #00000014 !important;
+        }
+
+        .single-item__grid {
+            box-shadow: none !important;
+            background: #fff !important;
+            padding: 20px 10px !important;
+        }
+
+        .h-div {
+            display: block;
+        }
+    }
+
+
+
+
     <?php
     $eventDescript = '';
     $eventTitle = '';
