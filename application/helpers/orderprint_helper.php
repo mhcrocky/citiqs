@@ -26,12 +26,11 @@
             $drawemail = new ImagickDraw();
             $imagetextemail = new Imagick();
 
-            self::drawEmailSettings($imagetextemail, $drawemail, $pixel, count($productsarray));
-
 //            Print_helper::printImageLogo($imageprintemail, $logoFile);
 //            self::printOrderHeader($CI, $imagetextemail, $drawemail, $order, $spotTypeId);
 
             if ($order['vendorId'] !== '43533') {
+                self::drawEmailSettings($imagetextemail, $drawemail, $pixel, count($productsarray));
 				Print_helper::printImageLogo($imageprintemail, $logoFile);
             	self::printOrderHeader($CI, $imagetextemail, $drawemail, $order, $spotTypeId);
                 self::printProductLines($CI, $drawemail, $productsarray, $spotTypeId, $i, $startPoint, $productVats, $order, $isFod);
@@ -41,7 +40,11 @@
                 self::printVendorData($drawemail, $startPoint, $i, $order);
                 self::printBoldLine($drawemail, $imagetextemail, $i, $startPoint);
             }
-            else{
+            else
+            {
+                self::drawEmailSettings43533($imagetextemail, $drawemail, $pixel, count($productsarray));
+
+                
 				Print_helper::printImageLogo($imageprintemail, $logoFile);
 				self::printOrderHeader43533($CI, $imagetextemail, $drawemail, $order, $spotTypeId);
 //				self::printProductLines($CI, $drawemail, $productsarray, $spotTypeId, $i, $startPoint, $productVats, $order, $isFod);
@@ -276,6 +279,33 @@
         }
 
         public static function drawEmailSettings(object &$imagetextemail, object &$drawemail, object $pixel, int $countProductArray): void
+        {
+            $rowheight = ($countProductArray * 30) + 850;
+            $imagetextemail->newImage(600, $rowheight, $pixel);
+
+            /* Black text */
+            $drawemail->setFillColor('black');
+
+            switch (strtolower($_SERVER['HTTP_HOST'])) {
+                case 'tiqs.com':
+                    $drawemail->setFont('Helvetica');
+                    break;
+                case 'loki-vm':
+                case '10.0.0.48':
+                    $drawemail->setFont('Helvetica');
+                    break;
+                default:
+                    if (ENVIRONMENT === 'development') break;
+                    $drawemail->setFont('Arial');
+                    break;
+            }
+
+            $drawemail->setStrokeWidth(2);
+            $drawemail->setFontSize(28);
+            $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
+        }
+
+        public static function drawEmailSettings43533(object &$imagetextemail, object &$drawemail, object $pixel, int $countProductArray): void
         {
             $rowheight = ($countProductArray * 30) + 850;
             $imagetextemail->newImage(600, $rowheight, $pixel);
