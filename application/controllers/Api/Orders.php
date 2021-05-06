@@ -26,6 +26,7 @@
             $this->load->helper('email_helper');
             $this->load->helper('curl_helper');
             $this->load->helper('receiptprint_helper');
+            $this->load->helper('orderprint_helper');
 
             $this->load->config('custom');
             $this->load->library('language', array('controller' => $this->router->class));
@@ -121,10 +122,17 @@
                         header('Content-type: image/png');
                         echo '?????????????';
                     } else {
-                        header('Content-type: image/png');
-                        echo '--------';
-                        echo $content;
-                        $this->trackPrinter($mac, 'WE HAVE A CONTENT');
+
+                        $orderId = intval($order['orderId']);
+                        $orderForImage = $this->shoporder_model->setObjectId($orderId)->fetchOrdersForPrintcopy();
+                        $orderForImage = reset($orderForImage);
+                        Orderprint_helper::saveOrderImage($orderForImage);
+
+                        // // header('Content-type: image/png');
+                        // Receiptprint_helper::printPrinterReceipt($order);
+                        // // echo '--------';
+                        // // echo $content;
+                        // $this->trackPrinter($mac, 'WE HAVE A CONTENT !!!!!!!!!!');
                     }
 
                     // } else {

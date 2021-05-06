@@ -262,7 +262,9 @@ class Alfredinsertorder extends BaseControllerWeb
 
         (intval($post['pos'])) ? $this->handlePosOrder($post, $orderId) : $this->insertOrderExtended($post, $orderId);
 
-        $this->saveOrderImage($orderId); // OPTIMIZE THREAD ... ASYNC 
+        if ($post['vendorId'] !== 43533) {
+            $this->saveOrderImage($orderId); // OPTIMIZE THREAD ... ASYNC 
+        }
         $this->sendNotifictaion($post, $orderId, $post['order']['paid']);
         $this->sendEmailReceipt($post['order']['paid']);
 

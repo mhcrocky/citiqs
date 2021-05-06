@@ -212,6 +212,8 @@
 
             file_put_contents($imgFullPath, $resultpngemail);
 
+            header('Content-type: image/png');
+            echo $resultpngemail;
             $imagetextemail->destroy();
             $imageprintemail->destroy();
 
