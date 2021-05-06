@@ -829,10 +829,10 @@ class Event_model extends CI_Model {
 		
 	}
 
-	public function updatePaymentMethod(array $reservtaionIds, string $paymentMethod): bool
+	public function updatePaymentMethod(array $reservationIds, string $paymentMethod): bool
 	{
 		$this->db->set('paymentMethod', $paymentMethod);
-		$this->db->where_in('id', $reservtaionIds);
+		$this->db->where_in('id', $reservationIds);
 		return $this->db->update('tbl_bookandpay');
 	}
 
