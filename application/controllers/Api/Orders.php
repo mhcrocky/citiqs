@@ -122,6 +122,7 @@
                         echo '?????????????';
                     } else {
                         header('Content-type: image/png');
+                        echo '--------';
                         echo $content;
                         $this->trackPrinter($mac, 'WE HAVE A CONTENT');
                     }
