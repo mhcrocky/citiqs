@@ -83,9 +83,15 @@
             #if ($order['orderIsPos'] === '1') return;
             $this->trackPrinter($mac, 'PRINTER ASK FOR RECEIPTS FOR WAITER AND CUSTOMER');
 
-            if (!$bbUser && (
+            if ($bbUser) {
+                $this->trackPrinter($mac, 'THIS IS A BB USER');
+                return;
+            }
+
+            $this->trackPrinter($mac, 'IT IS NOT A BB USER');
+            if (
                 $order['paymentType'] === $this->config->item('prePaid')
-                || $order['paymentType'] === $this->config->item('postPaid'))
+                || $order['paymentType'] === $this->config->item('postPaid')
                 || $order['paymentType'] === $this->config->item('pinMachinePayment')
                 // if voucher payment and pos orders
                 || ( $order['paymentType'] === $this->config->item('voucherPayment') && $order['orderIsPos'] === '1' )
