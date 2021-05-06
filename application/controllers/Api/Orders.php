@@ -112,28 +112,30 @@
                 if ($order['waiterReceipt'] === '0') {
 
                     $this->trackPrinter($mac, 'PRINTER TRY TO PRINT WAITER RECEIPT');
+                    header('Content-type: image/png');
+                    echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
                     // one reeipt for waiter
                    
                     // $content = file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
                     // $content = file_get_contents($image);
 
-                    if (empty($content)) {
-                        $this->trackPrinter($mac, 'WE DOES NOT HAVE A CONTENT');
-                        header('Content-type: image/png');
-                        echo '?????????????';
-                    } else {
+                    // if (empty($content)) {
+                    //     $this->trackPrinter($mac, 'WE DOES NOT HAVE A CONTENT');
+                    //     header('Content-type: image/png');
+                    //     echo '?????????????';
+                    // } else {
 
-                        $orderId = intval($order['orderId']);
-                        $orderForImage = $this->shoporder_model->setObjectId($orderId)->fetchOrdersForPrintcopy();
-                        $orderForImage = reset($orderForImage);
-                        Orderprint_helper::saveOrderImage($orderForImage);
+                    //     $orderId = intval($order['orderId']);
+                    //     $orderForImage = $this->shoporder_model->setObjectId($orderId)->fetchOrdersForPrintcopy();
+                    //     $orderForImage = reset($orderForImage);
+                    //     Orderprint_helper::saveOrderImage($orderForImage);
 
-                        // // header('Content-type: image/png');
-                        // Receiptprint_helper::printPrinterReceipt($order);
-                        // // echo '--------';
-                        // // echo $content;
-                        // $this->trackPrinter($mac, 'WE HAVE A CONTENT !!!!!!!!!!');
-                    }
+                    //     // // header('Content-type: image/png');
+                    //     // Receiptprint_helper::printPrinterReceipt($order);
+                    //     // // echo '--------';
+                    //     // // echo $content;
+                    //     // $this->trackPrinter($mac, 'WE HAVE A CONTENT !!!!!!!!!!');
+                    // }
 
                     // } else {
                     //     echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
