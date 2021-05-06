@@ -100,7 +100,7 @@
                         $receiptMain->setStrokeWidth(1);
                         $receiptMain->setTextAlignment(\Imagick::ALIGN_LEFT);
                         $receiptMain->annotation(20, $hd + ($i * 30), $quantity);
-
+                        $i++;
                         $receiptMain->setTextAlignment(\Imagick::ALIGN_LEFT);
                         $receiptMain->annotation(60, $hd + ($i * 30), $titleorder);
 
@@ -114,7 +114,7 @@
                         $receiptMain->setStrokeWidth(3);
                         $receiptMain->setTextAlignment(\Imagick::ALIGN_LEFT);
                         $receiptMain->annotation(0, $hd + ($i * 30), $quantity);
-
+                        $i++;
                         $receiptMain->setTextAlignment(\Imagick::ALIGN_LEFT);
                         $receiptMain->annotation(40, $hd + ($i * 30), $titleorder);
 
