@@ -80,6 +80,17 @@
 
         private function handlePrePostPaid(array $order, bool $bbUser, string $mac = ''): void
         {
+
+            // first to check is file to print exists
+
+            $image = FCPATH .'receipts' . DIRECTORY_SEPARATOR . $order['orderId'].'-email' . '.png';
+
+            if (file_exists($image)) {
+                $this->trackPrinter($mac, 'IMAGE FILE EXISTS ');
+            } else {
+                $this->trackPrinter($mac, 'IMAGE DOES NOT EXISTS');
+            }
+
             #if ($order['orderIsPos'] === '1') return;
             $this->trackPrinter($mac, 'PRINTER ASK FOR RECEIPTS FOR WAITER AND CUSTOMER');
 
@@ -101,7 +112,20 @@
                     $this->trackPrinter($mac, 'PRINTER TRY TO PRINT WAITER RECEIPT');
                     // one reeipt for waiter
                     header('Content-type: image/png');
-                    echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
+
+                    if ($mac === '00:11:62:1E:A4:F2') {
+                        $content = file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
+
+                        if (empty($content)) {
+                            $this->trackPrinter($mac, 'WE HAVE A CONTENT');
+                        } else {
+                            $this->trackPrinter($mac, 'WE DOES NOT HAVE A CONTENT');
+                        }
+                        echo $content;
+                    } else {
+                        echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
+                    }
+                    
                     $this->shoporder_model->setObjectId(intval($order['orderId']))->setProperty('waiterReceipt', '1')->update();
                     exit;
                 }
