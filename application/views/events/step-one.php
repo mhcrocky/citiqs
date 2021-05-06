@@ -194,9 +194,11 @@
                                 <div class="col-md-6">
                                     <select id="country" class="form-control input-w border-50 field" required>
                                         <option value="">Select option</option>
+                                        <?php if(count($countries) > 0): ?>
                                         <?php foreach($countries as $country): ?>
                                         <option value="<?php echo $country; ?>"><?php echo $country; ?></option>
                                         <?php endforeach; ?>
+                                        <?php endif; ?>
                                     </select>
                                     <input type="hidden" id="eventCountry" name="eventCountry">
                                 </div>

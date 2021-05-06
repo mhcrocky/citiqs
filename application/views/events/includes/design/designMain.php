@@ -51,10 +51,12 @@
             </div>
             <div class="col-md-6">
                 <select style="border-radius: 50px" id="device" class="form-control">
+                <?php if(count($devices) > 0): ?>
                     <?php foreach($devices as $device): ?>
                     <option value="<?php echo $device['width']."x".$device['height']; ?>">
                         <?php echo $device['device']; ?></option>
                     <?php endforeach; ?>
+                <?php endif; ?>
                 </select>
                 <div id="views">
                     <button style="border-radius: 50px" onclick="return false" value="3">View 1 - Front</button>

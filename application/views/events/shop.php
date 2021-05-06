@@ -58,7 +58,7 @@
                         style="object-fit: ;min-height: auto;"
                         src="<?php echo base_url(); ?>assets/home/images/logo1.png"
                         <?php else: ?>
-                        src="<?php echo base_url(); ?>assets/images/events/<?php echo $event['eventImage']; ?>"
+                        src="https://tiqs.com/alfred/assets/images/events/<?php echo $event['eventImage']; ?>"
                         <?php endif; ?>
                         alt="<?php echo $event['eventname']; ?>">
                         <p class='single-item__promotion'>Order Now</p>

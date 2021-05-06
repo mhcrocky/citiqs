@@ -212,15 +212,17 @@
                                 <div class="col-md-6 font-weight-bold">
                                     <select id="country" class="field form-control border-50 input-w font-weight-bold" required>
                                         <option class="text-weight-bold" value="">Select option</option>
+                                        <?php if(count($countries) > 0): ?>
                                         <?php foreach($countries as $country): ?>
                                         <?php if($event->eventCountry == $country): ?>
-                                        <option class="font-weight-bold" value="<?php echo $country; ?>" selected>
+                                        <option class="font-weight-bold" value="<?php echo $country; ?>" selected="selected">
                                             <?php echo $country; ?>
                                         </option>
                                         <?php else: ?>
                                         <option value="<?php echo $country; ?>"><?php echo $country; ?></option>
                                         <?php endif; ?>
                                         <?php endforeach; ?>
+                                        <?php endif; ?>
                                     </select>
                                     <input type="hidden" id="eventCountry" name="eventCountry">
                                 </div>

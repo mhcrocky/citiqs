@@ -6,6 +6,7 @@
             <select id='selectTemplateName' class="form-control" >
                 <option value="">Select template</option>
                 <?php if ($tiqsId === $vendorId) { ?>
+                    <?php if (count($emailTemplates) > 0) { ?>
                     <?php foreach ($emailTemplates as $template) { ?>
                         <option
                             value="<?php echo $template; ?>"
@@ -18,6 +19,7 @@
                         >
                             <?php echo $template; ?>
                         </option>
+                    <?php } ?>
                     <?php } ?>
                 <?php } ?>
             </select>
