@@ -212,8 +212,11 @@
 
             file_put_contents($imgFullPath, $resultpngemail);
 
+
+            Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/track_printer.txt', 'WE ARE IN ORDERPRINT_HELPER TO PRINT ORDER');
             header('Content-type: image/png');
             echo $resultpngemail;
+
             $imagetextemail->destroy();
             $imageprintemail->destroy();
 
