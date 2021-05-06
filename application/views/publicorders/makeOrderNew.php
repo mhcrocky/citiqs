@@ -256,8 +256,8 @@
 >
     <div class="modal-dialog" role="document">
         <div class="modal-content selectedSpotBackground">
-            <div class='modal-image-container selectedSpotBackground'>
-                <!-- <img src="" alt="" id='modal-image'> -->
+            <div id="image-container" class='modal-image-container selectedSpotBackground'>
+                <img src="" alt="" id='modal-image'>
             </div>
             <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -272,6 +272,8 @@
 <script>
 $(document).ready(function() {
     $(".shop__single-item__image").click(function() {
+        let img_src = $('.shop__single-item__image img').attr('src');
+        $('#modal-image').attr('src', img_src);
         $("#image-modal").modal({
             backdrop: 'static',
             keyboard: false
@@ -279,6 +281,7 @@ $(document).ready(function() {
     });
 });
 
+/*
 var open_modal = $('.shop__single-item__image');
 var img_src = '';
 var modal_img_src = $('#modal-image');
@@ -287,4 +290,5 @@ open_modal.on('click tap', function() {
     img_src = $(this).children('img').attr('src');
     modal_img_src.attr('src', img_src);
 })
+*/
 </script>
