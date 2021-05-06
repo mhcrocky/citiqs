@@ -240,9 +240,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
 <?php } elseif ($this->view === 'events/reports') { ?>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/query-builder.default.css" id="qb-theme"/>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/dashboard.css">
+    <style>
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        padding: 0px !important;
+    }
+    input[type="search"]{
+        width: auto !important;
+    }
+    tr td {
+        text-align: left !important;
+        vertical-align: middle !important;
+    }
+    .dataTables_empty {
+        text-align: center !important; 
+    }
+
+    .btn, .btn-success, .btn-primary, .btn-danger, .paginate_button{
+        border-radius: 0px !important;
+    }
+    .form-control {
+        height: 30px !important;
+    }
+    label {
+        display: inline-flex;
+        align-items: center;
+    }
+    .modal-body {
+        overflow: hidden !important;
+    }
+
+    </style>
 <?php  } elseif ($this->view === 'customer_panel/time_slots') { ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.css" integrity="sha512-2e0Kl/wKgOUm/I722SOPMtmphkIjECJFpJrTRRyL8gjJSJIP2VofmEbqyApMaMfFhU727K3voz0e5EgE3Zf2Dg==" crossorigin="anonymous" />
     <style>
