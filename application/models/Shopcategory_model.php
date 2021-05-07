@@ -67,7 +67,8 @@
             if (isset($data['openKey']) && !Validate_data_helper::validateString($data['openKey'])) return false;
             if (isset($data['isApi']) && !($data['isApi'] === '1' || $data['isApi'] === '0')) return false;
             if (isset($data['showImage']) && !($data['showImage'] === '1' || $data['showImage'] === '0')) return false;
-
+            if (isset($data['openTime']) && !Validate_data_helper::validateDate($data['openTime'])) return false;
+            if (isset($data['closedTime']) && !Validate_data_helper::validateDate($data['closedTime'])) return false;
             return true;
         }
 
