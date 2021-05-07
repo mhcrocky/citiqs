@@ -34,7 +34,7 @@
                             </div>
                             <div class="menu-list__left-col ml-auto">
                                 <div class="menu-list__price mx-auto">
-                                    <b class="menu-list__price--discount mx-auto"><?php echo $ticket['price']; ?>€ (<?php echo $ticket['ticketFee']; ?>€)</b>
+                                    <b class="menu-list__price--discount mx-auto ticket_price"><?php echo $ticket['price']; ?>€ (<?php echo $ticket['ticketFee']; ?>€)</b>
                                 </div>
                                 <div class="quantity-section mx-auto mb-2">
                                     <button type="button" class="quantity-button"

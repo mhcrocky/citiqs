@@ -59,7 +59,7 @@
                                 <b class="menu-list__price--discount excluding_fee excluding_fee_text text-danger"><?php echo ($ticket['soldOutWhenExpired'] == '') ? 'SOLD OUT' : $ticket['soldOutWhenExpired']; ?></b>
                                 <?php else: ?>
                                 <div class="menu-list__price">
-                                    <b class="menu-list__price--discount"><?php echo $ticket['ticketPrice']; ?>€ (<?php echo $ticket['ticketFee']; ?>€)</b>
+                                    <b class="menu-list__price--discount ticket_price"><?php echo $ticket['ticketPrice']; ?>€ (<?php echo $ticket['ticketFee']; ?>€)</b>
                                 </div>
                                 <b class="menu-list__type">quantity</b>
 
