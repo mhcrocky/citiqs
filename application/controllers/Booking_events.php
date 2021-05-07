@@ -27,7 +27,6 @@ class Booking_events extends BaseControllerWeb
 
     public function index($shortUrl = false)
     {
-
         $this->session->unset_userdata('customer');
         $this->global['pageTitle'] = 'TIQS: Shop';
         $this->session->unset_userdata('reservationIds');
@@ -107,7 +106,9 @@ class Booking_events extends BaseControllerWeb
             'eventId' => $eventId,
             'eventName' => $event->eventname,
             'eventImage' => $event->eventImage,
-            'eventDescription' => $eventVenue . ' ' . $eventDate
+            'eventDescription' => $eventVenue . ' ' . $eventDate,
+            'vendor_cost_paid' =>  $this->event_model->check_vendor_cost_paid($vendor_id)
+            
         ];
 
         $result = $this->load->view("events/tickets", $data,true);
