@@ -494,14 +494,14 @@ class Events extends BaseControllerWeb
     {
         $eventId = $this->input->post('eventId');
         $sql = ($this->input->post('sql') == 'AND%20()') ? "" : rawurldecode($this->input->post('sql'));
-        $report = $this->event_model->get_ticket_report($this->vendor_id, $eventId, $sql);
+        $report = $this->event_model->get_event_report($this->vendor_id, $eventId, $sql);
         echo json_encode($report);
     }
 
     public function get_tickets_report()
     {
         $sql = ($this->input->post('sql') == 'AND%20()') ? "" : rawurldecode($this->input->post('sql'));
-        $report = $this->event_model->get_tickets_report($this->vendor_id, $sql);
+        $report = $this->event_model->get_events_report($this->vendor_id, $sql);
         echo json_encode($report);
     }
 
