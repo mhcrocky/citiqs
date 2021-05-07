@@ -13,6 +13,16 @@ $(document).ready(function () {
         unique: true,
       },
       {
+        id: "tbl_bookandpay.TransactionID",
+        label: "Transaction Id",
+        type: "string",
+        class: "TransationID",
+        // optgroup: 'core',
+        default_value: "",
+        size: 40,
+        unique: true,
+      },
+      {
         id: "tbl_bookandpay.email",
         label: "Email",
         type: "string",
@@ -120,6 +130,10 @@ $(document).ready(function () {
       {
         title: "Reservation Id",
         data: "reservationId",
+      },
+      {
+        title: "Transaction Id",
+        data: "TransactionID",
       },
       {
         title: "Buyer Name",

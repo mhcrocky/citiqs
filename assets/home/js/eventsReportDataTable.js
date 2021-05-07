@@ -12,6 +12,15 @@ $(document).ready(function () {
         unique: true,
       },
       {
+        id: "tbl_bookandpay.TransactionID",
+        label: "Transation Id",
+        type: "string",
+        class: "TransactionID",
+        default_value: "",
+        size: 40,
+        unique: true,
+      },
+      {
         id: "tbl_bookandpay.email",
         label: "Email",
         type: "string",
@@ -127,6 +136,10 @@ $(document).ready(function () {
         data: "reservationId",
       },
       {
+        title: "Transaction Id",
+        data: "TransactionID",
+      },
+      {
         title: "Buyer Name",
         data: "name",
       },
@@ -235,7 +248,7 @@ $(document).ready(function () {
           var date = full_timestamp.split(" - ");
           var min = moment(date[0]);
           var max = moment(date[1]);
-          var startDate = moment(data[11]); // data['Position of date's column -1']
+          var startDate = moment(data[12]); // data['Position of date's column -1']
    
           if (min == '' && max == '') { min = todayDate; }
           if (min == '' && startDate <= max) { return true;}
