@@ -272,7 +272,7 @@
 <script>
 $(document).ready(function() {
     $(".shop__single-item__image").click(function() {
-        let img_src = $('.shop__single-item__image img').attr('src');
+        let img_src = $(this).children('img').attr('src');
         $('#modal-image').attr('src', img_src);
         $("#image-modal").modal({
             backdrop: 'static',

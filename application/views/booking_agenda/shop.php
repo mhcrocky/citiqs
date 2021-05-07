@@ -10,8 +10,14 @@
 <input type="hidden" id="shop" value="shop">
 <section id="main-content" class='hero-section position-relative'>
     <div class="d-none d-md-flex col-6 px-0 hero__background">
-        <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80"
+    <?php if(isset($agendas[0]) && $agendas[0]->backgroundImage != ''): ?>
+        <img id="background-image" src="<?php echo base_url(); ?>assets/home/images/<?php echo $agendas[0]->backgroundImage ; ?>"
             alt="">
+    <?php else: ?>
+        <img id="background-image" src="<?php echo base_url(); ?>assets/images/events/default_background.webp"
+            alt="">
+    <?php endif; ?>
+
     </div>
 
     <!-- end col -->
@@ -42,6 +48,7 @@
             ?>
             <input type="hidden" id="first_element" value="<?php echo $agenda->id; ?>" data-date="<?php echo date('Ymd', strtotime($agenda->ReservationDateTime)); ?>">
             <?php endif; ?>
+            <input type="hidden" id="background_img_<?php echo $agenda->id; ?>" value="<?php echo $agenda->backgroundImage; ?>">
             <div id="event_<?php echo $agenda->id; ?>"
                 class="col-12 col-sm-6 col-md-3 single-item mb-4 mb-md-0 bg-white p-4">
                 <a href="#spots" onclick="getSpotsView('<?php echo $agenda->id; ?>', <?php echo date('Ymd', strtotime($agenda->ReservationDateTime)); ?>)"

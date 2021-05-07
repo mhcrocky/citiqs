@@ -193,6 +193,64 @@ class Ajaxdorian extends CI_Controller
 
     public function saveAgenda () {
         //if (!$this->input->is_ajax_request()) return;
+
+        $agendaImgDeleted = $this->input->post("imgDeleted");
+        $imgName = '';
+        if($agendaImgDeleted == 1){
+            unlink(FCPATH . 'assets/home/images/'. $this->input->post('oldImage'));
+        } else {
+            $imgName = $this->input->post('oldImage');
+        }
+
+        $config['upload_path']   = FCPATH . 'assets/home/images/';
+        $config['allowed_types'] = 'jpg|png|jpeg|webp|bmp';
+        $config['max_size']      = '102400'; // 102400 100mb
+        $config['encrypt_name'] = TRUE;
+
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('agendaImage')) {
+            $errors   = $this->upload->display_errors('', '');
+            //var_dump($errors);
+        } else {
+            $upload_data = $this->upload->data();;
+			$imgName = $upload_data['file_name'];
+            if(!empty($this->input->post('oldImage'))){
+                unlink(FCPATH . 'assets/home/images/'. $this->input->post('oldImage'));
+            }
+            
+
+        }
+
+
+        $backgroundImgDeleted = $this->input->post("backgroundImgDeleted");
+        $backgroundImgName = '';
+        if($backgroundImgDeleted == 1){
+            unlink(FCPATH . 'assets/home/images/'. $this->input->post('backgroundOldImage'));
+        } else {
+            $backgroundImgName = $this->input->post('backgroundOldImage');
+        }
+
+        $config['upload_path']   = FCPATH . 'assets/home/images/';
+        $config['allowed_types'] = 'jpg|png|jpeg|webp|bmp';
+        $config['max_size']      = '102400'; // 102400 100mb
+        $config['encrypt_name'] = TRUE;
+
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('backgroundImage')) {
+            $errors   = $this->upload->display_errors('', '');
+            //var_dump($errors);
+        } else {
+            $upload_data = $this->upload->data();;
+			$backgroundImgName = $upload_data['file_name'];
+            if(!empty($this->input->post('backgroundOldImage'))){
+                unlink(FCPATH . 'assets/home/images/'. $this->input->post('backgroundOldImage'));
+            }
+            
+
+        }
+
+
+
         $agendData = [
             'ReservationDescription' => $this->input->post('ReservationDescription'),
             'ReservationDateTime' => date("Y-m-d H:i:s", strtotime($this->input->post('ReservationDateTime'))),
@@ -200,6 +258,8 @@ class Ajaxdorian extends CI_Controller
             'Customer' => $this->session->userdata('userId'),
             'email_id' => $this->input->post('email_id'),
             'online' => intval($this->input->post('online')),
+            'agendaImage' => $imgName,
+            'backgroundImage' => $backgroundImgName,
             'max_spots' => intval($this->input->post('max_spots'))
         ];
 

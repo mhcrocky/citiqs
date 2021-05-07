@@ -88,6 +88,18 @@ if ( isset($design['shop']['eventDescript']) ) {
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
+            Checkout button on hover background color:
+            <input data-jscolor="" class="form-control colorInput" name="shop[header__checkout][hover]"
+             style="border-radius: 50px" onfocus="checkoutHoverStyle(this)"
+                oninput="checkoutHoverStyle(this)"
+                <?php if ( isset($design['shop']['header__checkout']['hover']) ) { ?>
+                value="<?php echo $design['shop']['header__checkout']['hover']?>" data-value="1"
+                <?php } else{ ?> value="#7855c4" <?php } ?> />
+        </label>
+    </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
             Quantity buttons background color:
             <input data-jscolor="" class="form-control" name="shop[class][quantity-button][background-color]"
                 data-css-selector="class" data-css-selector-value="quantity-button" data-css-property="background-color"
@@ -168,6 +180,18 @@ if ( isset($design['shop']['eventDescript']) ) {
                 onfocus="styleELements(this)" oninput="styleELements(this)" style="border-radius: 50px"
                 <?php if ( isset($design['shop']['id']['selected_event_text']['color']) ) { ?>
                 value="<?php echo $design['shop']['id']['selected_event_text']['color']?>" data-value="1"
+                <?php } else { ?> value="#7855c4" <?php } ?> />
+        </label>
+    </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Ticket price text color:
+            <input data-jscolor="" class="form-control" name="shop[class][ticket_price][color]"
+                data-css-selector="class" data-css-selector-value="ticket_price" data-css-property="color"
+                onfocus="styleELements(this)" oninput="styleELements(this)" style="border-radius: 50px"
+                <?php if ( isset($design['shop']['class']['ticket_price']['color']) ) { ?>
+                value="<?php echo $design['shop']['class']['ticket_price']['color']?>" data-value="1"
                 <?php } else { ?> value="#7855c4" <?php } ?> />
         </label>
     </div>
@@ -262,6 +286,11 @@ $('#eventTitle').on('input', function() {
     let eventTitle = $(this).val();
     $("#iframe").contents().find("#event-title").text(eventTitle);
 });
+
+function checkoutHoverStyle(el){
+    var color = $(el).val();
+    $("#iframe").contents().find("head").append('<style> .header__checkout:hover { background: '+color+' !important;}</style>');
+}
 </script>
 
 <?php if ( isset($design['shop']['class']['menu-icon']['filter']) ) { ?>
