@@ -73,7 +73,7 @@
 						$file_name1 = $qrtext . ".png";
 						$file_name = $folder . $file_name1;
 
-						QRcode::png($text, $file_name);
+						QRcode::png($text, $file_name, QR_ECLEVEL_H, 10);
 
 						switch (strtolower($_SERVER['HTTP_HOST'])) {
 							case 'tiqs.com':
