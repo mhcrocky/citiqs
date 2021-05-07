@@ -67,11 +67,17 @@ function getSpotsView(agendaId, date, first = false) {
     let isAjax = true;
     $('div.bg-light').removeClass('bg-light').addClass('bg-white');
     $("#event_" + agendaId).addClass('bg-light').removeClass('bg-white');
+    let img_src = $('#background_img_' + eventId).val();
     $.post(globalVariables.baseUrl + "booking_reservations/spots/" + date + "/" + agendaId, {
         isAjax: isAjax
     }, function(data) {
         $("#spots").empty();
         $("#main-content").after(data);
+        if(img_src == ''){
+            $("#background-image").attr("src", globalVariables.baseUrl + "assets/images/events/default_background.webp");
+        } else {
+            $("#background-image").attr("src", globalVariables.baseUrl + "assets/home/images/" + img_src);
+        }
         $("#spots").fadeIn("slow", function() {
             if (first) {
                 return;
