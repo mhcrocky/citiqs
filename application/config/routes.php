@@ -212,7 +212,7 @@ $route['paynl/(:num)'] = "pay/paynl/$1";
 $route['booking/successpay/(:any)'] = "booking/successPaymentPay/$1";
 //$route['booking/exchangepay'] = "booking/ExchangePay";
 
-$route['bookingpay'] = "booking/bookingpay";
+$route['bookingpay'] = 'booking/bookingpay';
 $route['bookingpay/ExchangePay'] = 'Bookingpay/ExchangePay';
 $route['bookingpay/successBooking'] = 'Bookingpay/successBooking';
 $route['bookingpay/onlinepayment/(:num)'] = 'Bookingpay/onlinepayment/$1';
