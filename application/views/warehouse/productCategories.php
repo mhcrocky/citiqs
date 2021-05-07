@@ -84,11 +84,11 @@
 							</div>
 							<div class="col-lg-4 col-sm-12 form-group">
 								<label style="background-color:#fff" for="openTime">Open: </label>
-								<input type="time" class="form-control" id="openTime" name="openTime" step="60" />
+								<input type="text" class="form-control timepicker" id="openTime" name="openTime" step="60" />
 							</div>
 							<div class="col-lg-4 col-sm-12 form-group">
 								<label style="background-color:#fff" for="closedTime">Closed: </label>
-								<input type="time" class="form-control" id="closedTime" name="closedTime" step="60" />
+								<input type="text" class="form-control timepicker" id="closedTime" name="closedTime" step="60" />
 							</div>
 						</form>
 					</div>
@@ -330,25 +330,23 @@
 												/>
 											</div>
 											<div class="col-lg-4 col-sm-12 form-group">
-												<label style="background-color:#fff" for="openTimes<?php echo $category['categoryId']; ?>">Open: </label>
+												<label style="background-color:#fff" for="openTime<?php echo $category['categoryId']; ?>">Open: </label>
 												<input
-													type="time"
-													class="form-control"
-													id="openTimes<?php echo $category['categoryId']; ?>"
+													type="text"
+													class="form-control timepicker"
+													id="openTime<?php echo $category['categoryId']; ?>"
 													name="openTime"
 													value="<?php echo $category['openTime']; ?>"
-													step="60"
 												/>
 											</div>
 											<div class="col-lg-4 col-sm-12 form-group">
 												<label style="background-color:#fff" for="closedTimes<?php echo $category['categoryId']; ?>">Closed: </label>
 												<input
-													type="time"
-													class="form-control"
+													type="text"
+													class="form-control timepicker"
 													id="closedTimes<?php echo $category['categoryId']; ?>"
 													name="closedTime"
 													value="<?php echo $category['closedTime']; ?>"
-													step="60"
 												/>
 											</div>
 										</form>
