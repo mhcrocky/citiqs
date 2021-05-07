@@ -60,6 +60,7 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/slidertogo.js"></script>
 <?php } elseif ($this->view === 'warehouse/productCategories') { ?>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/productCategories.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js"></script>    
 <?php } elseif ($this->view === 'warehouse/products') { ?>	

@@ -385,4 +385,9 @@ class  Profile extends BaseControllerWeb
 		$this->loadViews("profile/paynlMerchant", $this->global, $data, 'footerbusiness', 'headerbusiness');
 	}
 
+	public function resetTimes(): void
+	{
+		$this->global['pageTitle'] = 'TIQS: RESET TIMES';
+		$this->loadViews('profile/resetTimes', $this->global, null, 'footerbusiness', 'headerbusiness');
+	}
 }

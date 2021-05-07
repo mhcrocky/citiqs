@@ -81,4 +81,52 @@
             }
             return true;
         }
+
+        public function resetProductTimes(string $timeFrom = '', string $timeTo = '', int $venodrId): bool
+        {
+            if (!$timeFrom && !$timeFrom) return false;
+            if ($timeFrom && $timeFrom && strtotime($timeFrom) > strtotime($timeTo)) return false;
+
+            $timeFrom = $this->db->escape($timeFrom);
+            $timeTo = $this->db->escape($timeTo);
+            $venodrId = $this->db->escape($venodrId);
+
+            if ($timeFrom && $timeTo) {
+                $update = 'timeFrom = ' . $timeFrom . ', timeTo = ' . $timeTo;
+            } else {
+                if ($timeFrom) {
+                    $update = 'timeFrom = ' . $timeFrom;
+                } else {
+                    $update = 'timeTo = ' . $timeTo;
+                }
+            }
+
+
+            $query =
+                    'UPDATE
+                        tbl_shop_product_times
+                    SET
+                        ' . $update . '
+                    WHERE
+                        tbl_shop_product_times.id IN
+                            (
+                                SELECT
+                                    productTimesIds.id
+                                FROM
+                                (
+                                    SELECT
+                                        tbl_shop_product_times.id
+                                    FROM
+                                        tbl_shop_product_times
+                                    INNER JOIN
+                                        tbl_shop_products ON tbl_shop_products.id = tbl_shop_product_times.productId
+                                    INNER JOIN
+                                        tbl_shop_categories ON tbl_shop_products.categoryId = tbl_shop_categories.id
+                                    WHERE tbl_shop_categories.userId = ' . $venodrId . '
+                                ) productTimesIds
+                        );';
+
+            $this->db->query($query);
+            return ($this->db->affected_rows() > 0) ? true : false;
+        }
     }

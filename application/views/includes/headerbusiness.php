@@ -493,7 +493,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 <!--														</a>-->
 <!--													</li>-->
 <!--												</ul>-->
-											</li>
+											<!-- </li> -->
 										</ul>
 									</li>
 									<?php } ?>
@@ -530,6 +530,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
                                             <li data-menuid="10.7"><a href="<?php echo $this->baseUrl; ?>openandclose"><i class="ti-time"></i> <span><?php echo $this->language->tLine('Open and Close'); ?></span></a></li>
                                             <li data-menuid="10.8"><a href="<?php echo $this->baseUrl; ?>userapi"><i class="ti-location-pin"></i> <span>API</span></a></li>
                                             <li><a href="<?php echo $this->baseUrl; ?>paynl_merchant"><i class="ti-location-pin"></i> <span><?php echo $this->language->tLine('KYC Documents'); ?></span></a></li>
+                                            <li data-menuid="10.9"><a href="<?php echo $this->baseUrl; ?>reset_times"><i class="ti-time"></i> <span><?php echo $this->language->tLine('Reset times'); ?></span></a></li>
                                         </ul>
                                     </li>
 <!--									<li>-->

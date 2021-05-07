@@ -82,6 +82,14 @@
 								<label style="background-color:#fff" class="radio-inline" for="showImageNo">&nbsp;&nbsp;&nbsp;No</label>
 								<input type="radio" id="showImageNo" name="showImage" value="0" checked />
 							</div>
+							<div class="col-lg-4 col-sm-12 form-group">
+								<label style="background-color:#fff" for="openTime">Open: </label>
+								<input type="text" class="form-control timepicker" id="openTime" name="openTime" />
+							</div>
+							<div class="col-lg-4 col-sm-12 form-group">
+								<label style="background-color:#fff" for="closedTime">Closed: </label>
+								<input type="text" class="form-control timepicker" id="closedTime" name="closedTime"  />
+							</div>
 						</form>
 					</div>
 				</div>
@@ -176,6 +184,10 @@
 									</figcaption>
 								</figure>
 							<?php } ?>
+
+							<p class="item-category" style="white-space: initial;">
+								Open from: "<?php echo $category['openTime']; ?>" to "<?php echo $category['closedTime']; ?>"
+							</p>
 						</div><!-- end item header -->
 						<div class="grid-footer">
 							<div class="iconWrapper">
@@ -315,6 +327,26 @@
 													name="showImage"
 													value="0"
 													<?php if ($category['showImage'] === '0') echo 'checked'; ?>
+												/>
+											</div>
+											<div class="col-lg-4 col-sm-12 form-group">
+												<label style="background-color:#fff" for="openTime<?php echo $category['categoryId']; ?>">Open: </label>
+												<input
+													type="text"
+													class="form-control timepicker"
+													id="openTime<?php echo $category['categoryId']; ?>"
+													name="openTime"
+													value="<?php echo $category['openTime']; ?>"
+												/>
+											</div>
+											<div class="col-lg-4 col-sm-12 form-group">
+												<label style="background-color:#fff" for="closedTimes<?php echo $category['categoryId']; ?>">Closed: </label>
+												<input
+													type="text"
+													class="form-control timepicker"
+													id="closedTimes<?php echo $category['categoryId']; ?>"
+													name="closedTime"
+													value="<?php echo $category['closedTime']; ?>"
 												/>
 											</div>
 										</form>
