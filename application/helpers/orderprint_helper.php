@@ -5,7 +5,7 @@
 
     Class Orderprint_helper
     {
-        public static $checkVenodrs = ['43533', '417'];
+        public static $checkVenodrs = ['43533', '417', '22762','6485', '28269', '45966', '45960'];
 
         public static function saveOrderImage(array $order): string
         {

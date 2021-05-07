@@ -355,6 +355,7 @@ tinymce.PluginManager.add("ruler", pluginRuler);
           "wordcount",
           "print",
           "ruler",
+			"table"
         ],
         ruler: true,
         toolbar:
