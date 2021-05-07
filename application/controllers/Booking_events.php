@@ -373,6 +373,19 @@ class Booking_events extends BaseControllerWeb
         $function = $this->config->item('orderPayNlFunction');
         $version = $this->config->item('orderPayNlVersion');
 
+        $arrArguments['statsData']['info'] = $vendorId;
+        foreach ($reservations as $key => $reservation) {
+            $arrArguments['statsData']['extra' . ($key + 1)] = $reservation->reservationId;
+            $arrArguments['saleData']['orderData'][$key]['productId'] = $reservation->reservationId;
+            $arrArguments['saleData']['orderData'][$key]['description'] = $reservation->ticketDescription;
+            $arrArguments['saleData']['orderData'][$key]['productType'] = 'HANDLIUNG';
+            $arrArguments['saleData']['orderData'][$key]['price'] = $reservation->price * 100;
+            $arrArguments['saleData']['orderData'][$key]['quantity'] = 1;
+            $arrArguments['saleData']['orderData'][$key]['vatCode'] = 'H';
+            $arrArguments['saleData']['orderData'][$key]['vatPercentage'] = '0.00';
+
+        }
+
         $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
 
         $reservationIds = $this->session->userdata('reservationIds');

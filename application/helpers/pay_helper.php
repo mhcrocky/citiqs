@@ -133,6 +133,19 @@
             $arrArguments = [];
             
             $transactionDescription = [];
+
+            foreach ($reservations as $key => $reservation) {
+                
+                $totalAmount +=  floatval($reservation->numberofpersons) * (floatval($reservation->price) + floatval($reservation->ticketFee));
+                $transactionDescription[] = $reservation->eventid . " - " . $reservation->ticketDescription;
+
+                if ($key == 0) {
+                    $buyerEmail = $reservation->email;
+                }
+
+
+
+            }
             
 
             $payment = self::getPaymentMethod($paymentType);
@@ -144,8 +157,6 @@
             }
             
             $amount = $reservationsAmount * 100;
-
-            $arrArguments['statsData']['info'] = $vendorId;
             $arrArguments['serviceId'] = $serviceId;
             $arrArguments['amount'] = strval($amount);
             $arrArguments['ipAddress'] = $_SERVER['REMOTE_ADDR'];
@@ -173,25 +184,7 @@
             $arrArguments['saleData']['invoiceDate'] = date('d-m-Y');
             $arrArguments['saleData']['deliveryDate'] = date('d-m-Y');
 
-            foreach ($reservations as $key => $reservation) {
-                
-                $totalAmount +=  floatval($reservation->numberofpersons) * (floatval($reservation->price) + floatval($reservation->ticketFee));
-                $transactionDescription[] = $reservation->eventid . " - " . $reservation->ticketDescription;
-
-                if ($key == 0) {
-                    $buyerEmail = $reservation->email;
-                }
-
-                $arrArguments['statsData']['extra' . ($key + 1)] = $reservation->reservationId;
-                $arrArguments['saleData']['orderData'][$key]['productId'] = $reservation->reservationId;
-                $arrArguments['saleData']['orderData'][$key]['description'] = $reservation->ticketDescription;
-                $arrArguments['saleData']['orderData'][$key]['productType'] = 'HANDLIUNG';
-                $arrArguments['saleData']['orderData'][$key]['price'] = $reservation->price * 100;
-                $arrArguments['saleData']['orderData'][$key]['quantity'] = 1;
-                $arrArguments['saleData']['orderData'][$key]['vatCode'] = 'H';
-                $arrArguments['saleData']['orderData'][$key]['vatPercentage'] = '0.00';
-
-            }
+            
 
             $arrArguments['enduser']['emailAddress'] = $buyerEmail;
             $arrArguments['transaction']['description'] = implode(' | ', $transactionDescription);
