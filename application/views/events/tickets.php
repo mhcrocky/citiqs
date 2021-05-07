@@ -81,7 +81,7 @@
                                     <button type="button" class="quantity-button"
                                         onclick="addTicket('<?php echo $ticketId; ?>', '<?php echo $ticket['ticketAvailable']; ?>', '<?php echo $ticket['ticketPrice']; ?>', '<?php echo $ticket['ticketFee']; ?>','totalBasket')">+</button>
                                 </div>
-                                <?php if($vendor_cost_paid): ?>
+                                <?php if(!$vendor_cost_paid): ?>
                                 <b class="menu-list__price--discount excluding_fee text-dark mt-2">Excluding fee €<?php echo number_format($ticket['ticketFee'], 2, ',', ''); ?> and min pay fee €0,50</b>
                                 <?php else: ?>
                                 <b class="menu-list__price--discount excluding_fee text-dark mt-2">Excluding fee €<?php echo number_format($ticket['ticketFee'], 2, ',', ''); ?> </b>

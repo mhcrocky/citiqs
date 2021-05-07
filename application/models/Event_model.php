@@ -841,7 +841,7 @@ class Event_model extends CI_Model {
 		$this->db->trans_start();
 		$this->db->select('COUNT(id) as unpaid_count');
 		$this->db->from('tbl_shop_payment_methods');
-		$this->db->where('vendorId', $vendorId);
+		$this->db->where('vendorId', strval($vendorId));
 		$this->db->where('vendorCost', '0');
 		$this->db->where('productGroup', 'E-Ticketing');
 		$query = $this->db->get();
