@@ -49,3 +49,10 @@ function displayOpenKey(className, response) {
     alertify.success('Key created');
     return;
 }
+
+$(document).ready(function(){
+    $('input.timepicker').timepicker({
+        'timeFormat' : 'HH:mm',
+        'interval' : '5'
+    });
+});
