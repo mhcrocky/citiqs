@@ -55,7 +55,7 @@
                         agenda
                     </button>
                     <a :href="baseURL+ 'customer_panel/list_templates'" class="btn btn-success"><?php echo $this->language->tLine('Email Designer'); ?></a>
-                <?php else: ?>
+                <?php else: ?> 
                     <div style="margin: 10px 0">
 						<?php echo $this->language->tLine('You need to create an email template to be able create agenda'); ?> <a
                                 :href="baseURL+ 'add_template'"><b><?php echo $this->language->tLine('Click Here'); ?></b></a>
@@ -182,6 +182,84 @@
                                    v-model="agendaModalData.max_spots" class="form-control"
                                    id="max_spots">
                         </div>
+
+
+                        <div class="form-group">
+                            <label for="max_spots"><?php echo $this->language->tLine('Max Spots'); ?></label>
+                            <input type="text" name="max_spots"
+                                   v-model="agendaModalData.max_spots" class="form-control"
+                                   id="max_spots">
+                        </div>
+                        <div class="images justify-content-center d-flex flex-wrap">
+                            <div class="form-group row">
+                                <label for="image" class="col-md-4 col-form-label text-md-left"><?php echo $this->language->tLine('Upload Image'); ?></label>
+                                <div class="col-md-8">
+
+
+                                        <label class="file">
+                                            <input type="file" class="border-50" name="agendaImage" id="agendaImage"
+                                                onchange="agendaImageUpload(this)" aria-label="File browser">
+                                            <input type="hidden" class="imgChanged" aria-label="File browser">
+                                            <span class="file-custom" data-content="Choose image ..."></span>
+                                        </label>
+                                        <div style="padding-left: 0;width: 100%;" class="col-sm-6">
+                                            <img v-if="agendaModalData.agendaImage" style="width: auto;"
+                                                :src="imgFullPath(agendaModalData.agendaImage)"
+                                                class="img-thumbnail bg-secondary agendaImagePreview">
+                                            <input type="hidden" class="imgDeleted" value="0">
+                                            <button v-if="agendaModalData.agendaImage" type="button" onclick="deleteAgendaImage()" class="btn btn-danger mt-1">
+                                                Delete Image
+                                            </button>
+
+                                            <img v-else src="<?php echo base_url(); ?>assets/images/img-preview.png"
+                                                class="img-thumbnail agendaImagePreview">
+                                            <button v-if="agendaModalData.agendaImage == ''" type="button" onclick="deleteAgendaImage()" class="btn btn-danger mt-1 d-none">
+                                                Delete Image
+                                            </button>
+                                        </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="images justify-content-center d-flex flex-wrap">
+                            <div class="form-group row">
+                                <label for="image" class="col-md-4 col-form-label text-md-left"><?php echo $this->language->tLine('Upload Image'); ?></label>
+                                <div class="col-md-8">
+
+
+                                        <label class="file">
+                                            <input type="file" class="border-50" name="backgroundImage" id="backgroundImage"
+                                                onchange="backgroundImageUpload(this)" aria-label="File browser">
+                                            <input type="hidden" class="backgroundImgChanged" aria-label="File browser">
+                                            <span class="background-file-custom" data-content="Choose image ..."></span>
+                                        </label>
+                                        <div style="padding-left: 0;width: 100%;" class="col-sm-6">
+                                            <img v-if="agendaModalData.backgroundImage" style="width: auto;"
+                                                :src="imgFullPath(agendaModalData.backgroundImage)"
+                                                class="img-thumbnail bg-secondary backgroundImagePreview">
+                                            <input type="hidden" class="backgroundImgDeleted" value="0">
+                                            <button v-if="agendaModalData.backgroundImage" type="button" onclick="deleteBackgroundImage()" class="btn btn-danger mt-1">
+                                                Delete Image
+                                            </button>
+
+                                            <img v-else src="<?php echo base_url(); ?>assets/images/img-preview.png"
+                                                class="img-thumbnail backgroundImagePreview">
+                                            <button v-if="agendaModalData.backgroundImage == ''" type="button" onclick="deleteBackgroundImage()" class="btn btn-danger mt-1 d-none">
+                                                Delete Image
+                                            </button>
+                                        </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
                         <div class="form-group">
                             <label for="online">Copy from:</label>
                             <select style="width: 100%;" id="agendas" class="form-control js-spots-basic-multiple" name="SpotsTimeslots[]" multiple="multiple">
@@ -259,6 +337,73 @@
                                    v-model="agendaModalData.max_spots" class="form-control"
                                    id="max_spots">
                         </div>
+                        <div class="images justify-content-center d-flex flex-wrap">
+                            <div class="form-group row">
+                                <label for="image" class="col-md-4 col-form-label text-md-left"><?php echo $this->language->tLine('Upload Image'); ?></label>
+                                <div class="col-md-8">
+
+
+                                        <label class="file">
+                                            <input type="file" class="border-50" name="agendaImage" id="agendaImage-2"
+                                                onchange="agendaImageUpload(this)" aria-label="File browser">
+                                            <input type="hidden" class="imgChanged" aria-label="File browser">
+                                            <span class="file-custom" data-content="Choose image ..."></span>
+                                        </label>
+                                        <div style="padding-left: 0;width: 100%;" class="col-sm-6">
+                                            <img v-if="agendaModalData.agendaImage" style="width: auto;"
+                                                :src="imgFullPath(agendaModalData.agendaImage)"
+                                                class="img-thumbnail bg-secondary agendaImagePreview">
+                                            <input type="hidden" class="imgDeleted" value="0">
+                                            <button v-if="agendaModalData.agendaImage" type="button" onclick="deleteAgendaImage()" class="btn btn-danger mt-1">
+                                                Delete Image
+                                            </button>
+
+                                            <img v-else src="<?php echo base_url(); ?>assets/images/img-preview.png"
+                                                 class="img-thumbnail agendaImagePreview">
+                                            <button v-if="agendaModalData.agendaImage == ''" type="button" onclick="deleteAgendaImage()" class="btn btn-danger mt-1 d-none">
+                                                Delete Image
+                                            </button>
+                                        </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="images justify-content-center d-flex flex-wrap">
+                            <div class="form-group row">
+                                <label for="image" class="col-md-4 col-form-label text-md-left"><?php echo $this->language->tLine('Upload Image'); ?></label>
+                                <div class="col-md-8">
+
+
+                                        <label class="file">
+                                            <input type="file" class="border-50" name="backgroundImage" id="backgroundImage-2"
+                                                onchange="backgroundImageUpload(this)" aria-label="File browser">
+                                            <input type="hidden" class="backgroundImgChanged" aria-label="File browser">
+                                            <span class="background-file-custom" data-content="Choose image ..."></span>
+                                        </label>
+                                        <div style="padding-left: 0;width: 100%;" class="col-sm-6">
+                                            <img v-if="agendaModalData.backgroundImage" style="width: auto;"
+                                                :src="imgFullPath(agendaModalData.backgroundImage)"
+                                                class="img-thumbnail bg-secondary backgroundImagePreview">
+                                            <input type="hidden" class="backgroundImgDeleted" value="0">
+                                            <button v-if="agendaModalData.backgroundImage" type="button" onclick="deleteBackgroundImage()" class="btn btn-danger mt-1">
+                                                Delete Image
+                                            </button>
+
+                                            <img v-else src="<?php echo base_url(); ?>assets/images/img-preview.png"
+                                                 class="img-thumbnail backgroundImagePreview">
+                                            <button v-if="agendaModalData.backgroundImage == ''" type="button" onclick="deleteBackgroundImage()" class="btn btn-danger mt-1 d-none">
+                                                Delete Image
+                                            </button>
+                                        </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -318,6 +463,8 @@ const templateGlobals = (function() {
                 ReservationDateTime: '',
                 Background: 'blue-light',
                 email_id: null,
+                agendaImage: '',
+                backgroundImage: '',
                 max_spots: '',
             },
             format: 'dd-MM-yyyy',
@@ -329,6 +476,9 @@ const templateGlobals = (function() {
             'search-select': VueSearchSelect.ModelSelect
         },
         methods: {
+            imgFullPath(src) {
+                return this.baseURL + 'assets/home/images/' + src;
+            },
             dateFormat(date) {
                 if (!date) {
                     return '';
@@ -405,6 +555,12 @@ const templateGlobals = (function() {
                 formData.append("online", this.agendaModalData.online);
                 formData.append("Background", this.agendaModalData.Background);
                 formData.append("email_id", this.agendaModalData.email_id);
+                formData.append("agendaImage", $("#agendaImage")[0].files[0]);
+                formData.append("backgroundImage", $("#backgroundImage")[0].files[0]);
+                formData.append("oldImage", this.agendaModalData.agendaImage);
+                formData.append("backgroundOldImage", this.agendaModalData.backgroundImage);
+                formData.append("imgDeleted", $('.imgDeleted').val());
+                formData.append("backgroundImgDeleted", $('.backgroundImgDeleted').val());
                 formData.append("max_spots", this.agendaModalData.max_spots);
                 formData.append("agendas", $('#agendas').val());
                 if (this.agendaModalData.id) {
@@ -440,6 +596,8 @@ const templateGlobals = (function() {
                 formData.append("online", this.agendaModalData.online);
                 formData.append("Background", this.agendaModalData.Background);
                 formData.append("email_id", this.agendaModalData.email_id);
+                formData.append("agendaImage", $("#agendaImage-2")[0].files[0]);
+                formData.append("backgroundImage", $("#backgroundImage-2")[0].files[0]);
                 formData.append("max_spots", this.agendaModalData.max_spots);
                 formData.append("agendas", this.agendaModalData.id);
 
@@ -529,6 +687,75 @@ function updateEmailTemplate(id){
         $('#customTemplateSubject').val('');
         $('#customTemplateName').val('');
     }, 500);
+}
+
+
+$(document).on("click", ".browse", function() {
+        var file = $(this).parents().find(".file");
+        file.trigger("click");
+    });
+    $('input[name="agendaImage"]').change(function(e) {
+        var fileName = e.target.files[0].name;
+
+
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            // get loaded data and render thumbnail.
+            
+            $(".agendaImagePreview").attr('src', e.target.result);
+        };
+        // read the image file as a data URL.
+        reader.readAsDataURL(this.files[0]);
+    });
+
+    $('input[name="backgroundImage"]').change(function(e) {
+        var fileName = e.target.files[0].name;
+
+
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            // get loaded data and render thumbnail.
+            $(".backgroundImagePreview").attr('src', e.target.result);
+        };
+        // read the image file as a data URL.
+        reader.readAsDataURL(this.files[0]);
+    });
+
+function agendaImageUpload(el) {
+
+    $('.file-custom').hover(function() {
+        $(this).attr('data-content', el.files[0].name);
+    });
+
+    $('.imgDeleted').val(0);
+
+}
+
+function backgroundImageUpload(el) {
+
+$('.background-file-custom').hover(function() {
+    $(this).attr('data-content', el.files[0].name);
+});
+
+$('.backgroundImgDeleted').val(0);
+
+}
+
+
+function deleteAgendaImage() {
+if (window.confirm("Are you sure?")) {
+    $('.agendaImagePreview').attr('src', '<?php echo base_url(); ?>assets/images/img-preview.png');
+    $('.imgDeleted').val(1);
+}
+
+}
+
+function deleteBackgroundImage() {
+if (window.confirm("Are you sure?")) {
+    $('.backgroundImagePreview').attr('src', '<?php echo base_url(); ?>assets/images/img-preview.png');
+    $('.backgroundImgDeleted').val(1);
+}
+
 }
 </script>
 

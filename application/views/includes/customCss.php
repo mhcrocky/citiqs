@@ -88,7 +88,7 @@
         position: unset
     }
 </style>
-<?php } elseif ($this->view === 'customer_panel/spots') { ?>
+<?php } elseif ($this->view === 'customer_panel/spots' || $this->view === 'customer_panel/agenda') { ?>
 <style>
 .file {
     position: relative;
@@ -102,6 +102,59 @@
     margin: 0;
     filter: alpha(opacity=0);
     opacity: 0;
+}
+
+.background-file-custom {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 5;
+    height: 2.5rem;
+    padding: .5rem 1rem;
+    line-height: 1.5;
+    color: #555;
+    background-color: #fff;
+    border: .075rem solid #ddd;
+    border-radius: .25rem;
+    box-shadow: inset 0 .2rem .4rem rgba(0, 0, 0, .05);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border-radius: 50px;
+}
+
+.background-file-customafter {
+    content: "Choose file...";
+}
+
+.background-file-custom:before {
+    position: absolute;
+    top: -.075rem;
+    right: -.075rem;
+    bottom: -.075rem;
+    z-index: 6;
+    display: block;
+    content: "Browse";
+    height: 2.5rem;
+    padding: .5rem 1rem;
+    line-height: 1.5;
+    color: #555;
+    background-color: #eee;
+    border: .075rem solid #ddd;
+    border-radius: 0 .25rem .25rem 0;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+/* Focus */
+.file input:focus~.background-file-custom {
+    box-shadow: 0 0 0 .075rem #fff, 0 0 0 .2rem #0074d9;
+}
+
+.background-file-custom:after {
+    content: attr(data-content);
 }
 
 .file-custom {
