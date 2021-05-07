@@ -24,7 +24,8 @@
         public $isApi;
         public $image;
         public $showImage;
-
+        public $openTime;
+        public $closedTime;
         private $table = 'tbl_shop_categories';
 
         protected function setValueType(string $property,  &$value): void
@@ -89,6 +90,8 @@
                     $this->table . '.openKey',
                     $this->table . '.image',
                     $this->table . '.showImage',
+                    $this->table . '.openTime',
+                    $this->table . '.closedTime',
                 ],
                 $where,
                 [],

@@ -514,6 +514,8 @@
                     'tbl_shop_product_times.day=' => $day,
                     'tbl_shop_product_times.timeFrom<=' => $hours,
                     'tbl_shop_product_times.timeTo>' => $hours,
+                    'tbl_shop_categories.openTime<=' => $hours,
+                    'tbl_shop_categories.closedTime>' => $hours,
                 ],
                 'joins' =>  [
                     ['tbl_shop_products', $this->table.'.productId = tbl_shop_products.id', 'LEFT'],
