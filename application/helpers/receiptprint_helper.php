@@ -23,7 +23,7 @@
 
             self::imageTextAndDrawSettings($imagetext, $draw, $countProducts);
 
-            Print_helper::printImageLogo($imageprint, $logoFile);
+//            Print_helper::printImageLogo($imageprint, $logoFile);
 
             $h = 1;
             
@@ -47,9 +47,12 @@
             $imageprint->addImage($imagetext);
             $imageprint->resetIterator();
             $resultpngprinter = $imageprint->appendImages(true);
-            $resultpngprinter->setImageFormat('png');
 
+            $resultpngprinter->setImageFormat('png');
             $receipt = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '_' . $order['printerId'] .'.png';
+//
+//			$resultpngprinter->setImageFormat('jpg');
+//			$receipt = FCPATH . 'receipts' . DIRECTORY_SEPARATOR . $order['orderId'] . '_' . $order['printerId'] .'.jpg';
 
 			if (file_put_contents($receipt, $resultpngprinter) && ENVIRONMENT !== 'development') {
 				$logFile = FCPATH . 'application/tiqs_logs/write-error.txt';
