@@ -356,7 +356,7 @@ class Booking_events extends BaseControllerWeb
 
     public function onlinepayment($paymentType, $paymentOptionSubId = '0')
     {
-        if (empty($_SESSION['reservationIds']) || empty($_SESSION['customer'])) {
+        if($_SESSION['customer'] === NULL) {
             redirect(base_url());
         }
 
