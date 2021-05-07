@@ -8,6 +8,7 @@ class Booking_events extends BaseControllerWeb
 {
     function __construct()
     {
+        
         parent::__construct();
         $this->load->helper('pay_helper');
         $this->load->helper('utility_helper');
@@ -27,11 +28,12 @@ class Booking_events extends BaseControllerWeb
 
     public function index($shortUrl = false)
     {
-        $this->session->unset_userdata('customer');
+        
         $this->global['pageTitle'] = 'TIQS: Shop';
-        $this->session->unset_userdata('reservationIds');
+        unset($_SESSION['customer']);
+        unset($_SESSION['reservationIds']);
 
-        if(!$this->session->userdata('eTicketing')){
+        if(!$_SESSION['eTicketing']){
             session_unset();
         }
 
@@ -61,8 +63,10 @@ class Booking_events extends BaseControllerWeb
             $this->session->unset_userdata('exp_time');
             $this->session->unset_userdata('total');
         }
-        $this->session->set_userdata('eTicketing', true);
-        $this->session->set_userdata('customer', $customer->id);
+
+        
+        $_SESSION['eTicketing'] = true;
+        $_SESSION['customer'] = $customer->id;
         $this->session->set_userdata('shortUrl', $shortUrl);
         $data['shopsettings'] = $this->event_model->get_shopsettings($customer->id);
         $this->global['vendor'] = (array)$data['shopsettings'];
@@ -91,7 +95,7 @@ class Booking_events extends BaseControllerWeb
             redirect('events/shop/'. $this->session->userdata('shortUrl'));
             return; 
         } 
-        $vendor_id = $this->session->userdata('customer');
+        $vendor_id = $_SESSION['customer'];
         //$this->session->unset_userdata("event_date");
         $event = $this->event_model->get_event($vendor_id,$eventId);
         $event_start =  date_create($event->StartDate . " " . $event->StartTime);
@@ -125,7 +129,7 @@ class Booking_events extends BaseControllerWeb
 
     public function add_to_basket()
     {
-        $vendor_id = $this->session->userdata('customer');
+        $vendor_id = $_SESSION['customer'];
         $first_ticket = false;
         if(!$this->session->userdata('tickets')){
             $first_ticket = true;
@@ -182,7 +186,7 @@ class Booking_events extends BaseControllerWeb
             'endTime' => $eventInfo->EndTime
         ];
         
-        
+         
         if($ticket['quantity'] != 0){
             $this->session->unset_userdata('tickets');
             $this->session->unset_tempdata('tickets');
@@ -254,7 +258,7 @@ class Booking_events extends BaseControllerWeb
 
     public function payment_proceed()
     {
-        if(!$this->session->userdata('eTicketing')){
+        if(!$_SESSION['eTicketing']){
             redirect(base_url().'/booking_events/'.$this->session->userdata('shortUrl'));
         }
 
@@ -269,13 +273,13 @@ class Booking_events extends BaseControllerWeb
 
         $this->session->set_userdata('eventShop', 'true');
         $this->session->set_userdata('buyerEmail', $buyerInfo['email']);
-        $customer = $this->session->userdata('customer');
-        if (!$this->session->userdata('reservationIds')) {
+        $customer = $_SESSION['customer'];
+        if (!$_SESSION['reservationIds']) {
             $reservationIds = $this->event_model->save_event_reservations($buyerInfo, $tickets, $customer);
-            $this->session->set_userdata('reservationIds', $reservationIds);
+            $_SESSION['reservationIds'] = $reservationIds;
         }
 
-        $reservationIds = $this->session->userdata('reservationIds');
+        $reservationIds = $_SESSION['reservationIds'];
         $arrArguments = array();
         if ($buyerInfo) {
             $reservations = $this->bookandpay_model->getBookingsByIds($reservationIds);
@@ -310,7 +314,7 @@ class Booking_events extends BaseControllerWeb
         }
 
         $this->global['pageTitle'] = 'TIQS: Select Payment';
-        $customer = $this->session->userdata('customer');
+        $customer = $_SESSION['customer'];
         $ticketingPayments = $this->event_model->get_payment_methods($customer);
         $data['activePayments'] = $this->event_model->get_active_payment_methods($customer);
         $data['idealPaymentType'] = $this->config->item('idealPaymentType');
@@ -321,7 +325,7 @@ class Booking_events extends BaseControllerWeb
         $data['pinMachinePaymentType'] = $this->config->item('pinMachinePaymentType');
         $data['myBankPaymentType'] = $this->config->item('myBankPaymentType');
         $amount = floatval($this->session->tempdata('total'));
-        $reservationIds = $this->session->userdata('reservationIds');
+        $reservationIds = $_SESSION['reservationIds'];
         $ticketsFee = $this->session->userdata('ticketsFee');
         $reservationsQuantity = $this->session->userdata('reservationsQuantity');
 
@@ -363,9 +367,9 @@ class Booking_events extends BaseControllerWeb
 
         $paymentType = strval($paymentType);
         $paymentOptionSubId = ($paymentOptionSubId) ? strval($paymentOptionSubId) : '0';
-        $vendorId = $this->session->userdata('customer');
+        $vendorId = $_SESSION['customer'];
         $SlCode = $this->bookandpay_model->getUserSlCode($vendorId);
-        $reservationIds = $this->session->userdata('reservationIds');
+        $reservationIds = $_SESSION['reservationIds'];
         $reservations = $this->bookandpay_model->getBookingsByIds($reservationIds);
 
         $arrArguments = Pay_helper::getTicketingArgumentsArray($vendorId, $reservations, strval($SlCode), $paymentType, $paymentOptionSubId);
@@ -388,7 +392,7 @@ class Booking_events extends BaseControllerWeb
 
         $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
 
-        $reservationIds = $this->session->userdata('reservationIds');
+        $reservationIds = $_SESSION['reservationIds'];
         // destroy session in this place
         // because user maybe will not be redirected to $result->transaction->paymentURL
         // This prevent that user update existing ids with new transaction id
