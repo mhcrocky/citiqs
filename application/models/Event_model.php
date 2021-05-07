@@ -836,4 +836,22 @@ class Event_model extends CI_Model {
 		return $this->db->update('tbl_bookandpay');
 	}
 
+	public function check_vendor_cost_paid($vendorId)
+	{
+		$this->db->trans_start();
+		$this->db->select('COUNT(id) as unpaid_count');
+		$this->db->from('tbl_shop_payment_methods');
+		$this->db->where('vendorId', $vendorId);
+		$this->db->where('vendorCost', '0');
+		$this->db->where('productGroup', 'E-Ticketing');
+		$query = $this->db->get();
+		$this->db->trans_complete();
+		$result = $query->first_row();
+		if($result->unpaid_count > 0){
+			return false;
+		}
+
+		return true;
+	}
+
 }
