@@ -84,11 +84,11 @@
 							</div>
 							<div class="col-lg-4 col-sm-12 form-group">
 								<label style="background-color:#fff" for="openTime">Open: </label>
-								<input type="text" class="form-control timepicker" id="openTime" name="openTime" step="60" />
+								<input type="text" class="form-control timepicker" id="openTime" name="openTime" />
 							</div>
 							<div class="col-lg-4 col-sm-12 form-group">
 								<label style="background-color:#fff" for="closedTime">Closed: </label>
-								<input type="text" class="form-control timepicker" id="closedTime" name="closedTime" step="60" />
+								<input type="text" class="form-control timepicker" id="closedTime" name="closedTime"  />
 							</div>
 						</form>
 					</div>

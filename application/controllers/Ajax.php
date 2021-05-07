@@ -42,6 +42,7 @@ class Ajax extends CI_Controller
         $this->load->model('shoporderpaynl_model');
         $this->load->model('shoplandingpages_model');
         $this->load->model('shopprinters_model');
+        $this->load->model('shopproducttime_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -2508,4 +2509,42 @@ class Ajax extends CI_Controller
         }
     }
 
+    public function resetProductTimes(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = $this->security->xss_clean($_POST);
+        $timeFrom = $post['timeFrom'] ? $post['timeFrom'] : '';
+        $timeTo = $post['timeTo'] ? $post['timeTo'] : '';
+        $venodrId = intval($_SESSION['userId']);
+
+        if (!Validate_data_helper::validateDate($timeFrom) && !Validate_data_helper::validateDate($timeTo)) {
+            $response = [
+                'status' => '0',
+                'messages' => ['Invalid data sent']
+            ];
+        } if ($timeFrom && $timeTo && strtotime($timeFrom) > strtotime($timeTo)) {
+            $response = [
+                'status' => '0',
+                'messages' => ['Time "from" cannot be after time "to"']
+            ];
+        } else {
+            $update = $this->shopproducttime_model->resetProductTimes($timeFrom, $timeTo, $venodrId);
+            if ($update) {
+                $response = [
+                    'status' => '1',
+                    'messages' => ['Success']
+                ];
+            } else {
+                $response = [
+                    'status' => '0',
+                    'messages' => ['Update failed']
+                ];
+            }
+        }
+
+        echo json_encode($response);
+        return;
+
+    }
 }

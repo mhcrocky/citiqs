@@ -607,7 +607,7 @@ $route['termsofuse'] = "profile/termsofuse";
 $route['openandclose'] = "profile/openandclose";
 $route['userapi'] = "profile/userApi";
 $route['paynl_merchant'] = 'profile/paynlMerchant';
-
+$route['reset_times'] = 'profile/resetTimes';
 
 $route['inandout/(:any)/(:num)'] = "Blackbox/index/$1/$2";
 $route['in/(:any)/(:num)'] = "Blackbox/actionIn/$1/$2";
