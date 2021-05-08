@@ -1,12 +1,12 @@
 <?php 
-$idealPaymentFee = $idealPayment;
-$bancontactPaymentFee = $bancontactPayment;
-$creditCardPaymentFee = $creditCardPayment;
-$voucherPaymentFee = $voucher;
-$myBankPaymentFee = $myBank;
-$payconiqPaymentFee = $payconiqPayment;
-$giroPaymentFee = $giroPayment;
-$pinMachinePaymentFee = $pinMachine;
+$idealPaymentFee = isset($idealPayment) ? $idealPayment : '';
+$bancontactPaymentFee = isset($bancontactPayment) ? $bancontactPayment : '';
+$creditCardPaymentFee = isset($creditCardPayment) ? $creditCardPayment : '';
+$voucherPaymentFee = isset($voucher) ? $voucher : '';
+$myBankPaymentFee = isset($myBank) ? $myBank : '';
+$payconiqPaymentFee = isset($payconiqPayment) ? $payconiqPayment : '';
+$giroPaymentFee = isset($giroPayment) ? $giroPayment : '';
+$pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
 ?>
 <div id="selectPayment" class="container-fluid selectPayment pr-5 pl-5 mx-auto mb-5">
     <h1 style="color: #F1921A !important; font-size: 24px;" class="white text-center yellow">Select Payment</h1>
