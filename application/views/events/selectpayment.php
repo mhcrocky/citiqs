@@ -155,7 +155,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
 
 <?php if(in_array('ideal payment', $activePayments)): ?>
 <div id="iDeal" class="container-fluid iDeal hidden mx-auto">
-    <h1 style="color: #F1921A !important;" class="white text-center yellow">Select Payment</h1>
+    <h1 style="color: #F1921A !important; font-size: 24px;" class="white text-center yellow">Select Payment</h1>
     <div class="row mx-auto">
         <div class="col-md-8 col-sm-12 serviceBox blue mb-4 mx-auto">
         
@@ -350,10 +350,11 @@ function paymentMethodRedirect(el){
 function backToPaymentMethods(el){
     var amount = $('.totalBasket').text();
     var paymentFee = $(el).attr('data-paymentFee');
-    paymentFee = parseFloat(paymentFee);
-
-    var total = parseFloat(amount) - paymentFee;
-    $('.totalBasket').text(total.toFixed(2));
+    if($.numeric(paymentFee)){
+        paymentFee = parseFloat(paymentFee);
+        var total = parseFloat(amount) - paymentFee;
+        $('.totalBasket').text(total.toFixed(2));
+    }
     
 }
 
