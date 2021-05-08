@@ -33,7 +33,7 @@ class Booking_events extends BaseControllerWeb
         unset($_SESSION['customer']);
         unset($_SESSION['reservationIds']);
 
-        if(!$_SESSION['eTicketing']){
+        if(!empty($_SESSION['eTicketing'])){
             session_unset();
         }
 
@@ -259,7 +259,7 @@ class Booking_events extends BaseControllerWeb
     public function payment_proceed()
     {
         if(!$_SESSION['eTicketing']){
-            redirect(base_url().'/booking_events/'.$this->session->userdata('shortUrl'));
+            redirect(base_url().'/events/shop/'.$this->session->userdata('shortUrl'));
         }
 
         $buyerInfo = $this->input->post(null, true);
@@ -397,7 +397,7 @@ class Booking_events extends BaseControllerWeb
         // because user maybe will not be redirected to $result->transaction->paymentURL
         // This prevent that user update existing ids with new transaction id
         #$this->session->sess_destroy();
-        session_destroy();
+        //session_destroy();
         $this->processPaymenttype($strUrl, $reservationIds);
     }
 
@@ -439,6 +439,8 @@ class Booking_events extends BaseControllerWeb
         } else {
 			echo('TRUE| NOT FIND '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
         }
+
+        session_unset();
 
         return;
     }
@@ -599,7 +601,7 @@ class Booking_events extends BaseControllerWeb
     public function successBooking()
     {
         // uncomment for landing pages if you like and think it is ok
-
+        session_unset();
         $get = Utility_helper::sanitizeGet();
 
         if ($get['orderStatusId'] === $this->config->item('payNlSuccess')) {
