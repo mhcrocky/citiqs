@@ -130,6 +130,11 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/editUser.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/profile.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/found.js"></script>
+<?php } elseif ($this->view === 'profile/resetTimes') { ?>
+<!--	<script src="--><?php //echo $this->baseUrl; ?><!--assets/home/js/editUser.js"></script>-->
+<!--	<script src="--><?php //echo $this->baseUrl; ?><!--assets/home/js/profile.js"></script>-->
+<!--	<script src="--><?php //echo $this->baseUrl; ?><!--assets/home/js/found.js"></script>-->
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/resetTimes.js"></script>
 <?php } elseif ($this->view === 'events/step-one' || $this->view === 'events/edit_event') { ?>
     <script src="<?php echo $this->baseUrl; ?>assets/js/quill.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/js/main.jbox.min.js"></script>
