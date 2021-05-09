@@ -164,11 +164,12 @@ function countDownTimer(distance){
         $(".timer").text("Expiration time: " + addZero(minutes) + ":" + addZero(seconds) + "");
         if (minutes == 0 && seconds == 0) {
             setTimeout(() => {
-                window.location.href = globalVariables.baseUrl + "booking_events/clear_tickets?order=" + globalKey.orderRandomKey;;
+                window.location.href = globalVariables.baseUrl + "booking_events/clear_tickets?order=" + globalKey.orderRandomKey;
             }, 500);
         }
         if (distance < 0) {
             clearInterval(x);
+            window.location.href = globalVariables.baseUrl + "booking_events/clear_tickets?order=" + globalKey.orderRandomKey;
             $(".timer").text("EXPIRED");
         }
     } else {
@@ -482,4 +483,38 @@ function hideEventElement(x){
     }
 
     return ;
+}
+
+function paymentMethodRedirect(el){
+    var amount = $('.totalBasket').text();
+    var paymentFee = $(el).attr('data-paymentFee');
+    paymentFee = paymentFee.replace( /^\D+/g, '');
+    paymentFee = $.isNumeric(paymentFee) ? paymentFee : 0;
+    paymentFee = parseFloat(paymentFee);
+
+    var total = parseFloat(amount) + paymentFee;
+    $('.totalBasket').text(total.toFixed(2));
+
+    setTimeout(() => {
+        var url = $(el).attr('href');
+        window.location.href = url +'?order=' + globalKey.orderRandomKey;
+    }, 1500);
+    
+}
+
+function paymentMethodUrl(el){
+    var url = $(el).attr('href');
+    window.location.href = url +'?order=' + globalKey.orderRandomKey;
+}
+
+
+function backToPaymentMethods(el){
+    var amount = $('.totalBasket').text();
+    var paymentFee = $(el).attr('data-paymentFee');
+    if($.numeric(paymentFee)){
+        paymentFee = parseFloat(paymentFee);
+        var total = parseFloat(amount) - paymentFee;
+        $('.totalBasket').text(total.toFixed(2));
+    }
+    
 }

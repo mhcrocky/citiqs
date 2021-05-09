@@ -160,7 +160,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
         <div class="col-md-8 col-sm-12 serviceBox blue mb-4 mx-auto">
         
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/1" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/1" onclick="paymentMethodUrl(this);return false;" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/abn_amro.png') ?>"
                         alt="ABN AMRO">
 
@@ -169,7 +169,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/8" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/8" onclick="paymentMethodUrl(this);return false;" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/asn_bank.png') ?>"
                         alt="ASN Bank">
                     <h3 class="title">ASN Bank</h3>
@@ -178,14 +178,14 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
 
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5080" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5080" onclick="paymentMethodUrl(this);return false;" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/bunq.png') ?>" alt="Bunq">
                     <h3 class="title">Bunq</h3>
                 </a>
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5082" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5082" onclick="paymentMethodUrl(this);return false;" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/handelsbanken.png') ?>"
                         alt="Handelsbanken">
                     <h3 class="title">Handelsbanken</h3>
@@ -193,28 +193,28 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/4" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/4" onclick="paymentMethodUrl(this);return false;" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/ing.png') ?>" alt="ING">
                     <h3 class="title">ING</h3>
                 </a>
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/12" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/12" onclick="paymentMethodUrl(this);return false;" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/knab(1).png') ?>" alt="Knab">
                     <h3 class="title">Knab</h3>
                 </a>
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5081" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5081" onclick="paymentMethodUrl(this);return false;" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/moneyou.png') ?>" alt="Moneyou">
                     <h3 class="title">Moneyou</h3>
                 </a>
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/2" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/2" onclick="paymentMethodUrl(this);return false;" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/rabobank.png') ?>"
                         alt="Rabobank">
                     <h3 class="title">Rabobank</h3>
@@ -222,7 +222,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/9" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/9" onclick="paymentMethodUrl(this);return false;" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/regiobank.png') ?>"
                         alt="RegioBank">
                     <h3 class="title">RegioBank</h3>
@@ -230,7 +230,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5" onclick="paymentMethodUrl(this);return false;" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/sns_bank.png') ?>"
                         alt="SNS Bank">
                     <h3 class="title">SNS Bank</h3>
@@ -239,7 +239,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
 
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/10" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/10" onclick="paymentMethodUrl(this);return false;" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/triodos_bank.png') ?>"
                         alt="Triodos Bank">
                     <h3 class="title">Triodos Bank</h3>
@@ -247,7 +247,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/11" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/11" onclick="paymentMethodUrl(this);return false;" class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/van_lanschot.png') ?>"
                         alt="van Lanschot">
                     <h3 class="title">van Lanschot</h3>
@@ -329,34 +329,6 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
     }
     $('.header__checkout').prop('disabled', true);
 }());
-
-function paymentMethodRedirect(el){
-    var amount = $('.totalBasket').text();
-    var paymentFee = $(el).attr('data-paymentFee');
-    paymentFee = paymentFee.replace( /^\D+/g, '');
-    paymentFee = $.isNumeric(paymentFee) ? paymentFee : 0;
-    paymentFee = parseFloat(paymentFee);
-
-    var total = parseFloat(amount) + paymentFee;
-    $('.totalBasket').text(total.toFixed(2));
-
-    setTimeout(() => {
-        var url = $(el).attr('href');
-        window.location.href = url;
-    }, 1500);
-    
-}
-
-function backToPaymentMethods(el){
-    var amount = $('.totalBasket').text();
-    var paymentFee = $(el).attr('data-paymentFee');
-    if($.numeric(paymentFee)){
-        paymentFee = parseFloat(paymentFee);
-        var total = parseFloat(amount) - paymentFee;
-        $('.totalBasket').text(total.toFixed(2));
-    }
-    
-}
 
 $(".iDealPay").on("click", function() {
     $(".iDeal").removeClass("hidden");

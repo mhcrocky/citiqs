@@ -114,12 +114,12 @@
 
     <?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
     <?php include_once FCPATH . 'application/views/includes/jsGlobalVariables.php'; ?>
-    <?php if($this->session->tempdata('exp_time')): ?>
+    <?php if(isset($expTime) && $expTime): ?>
     <script>
     'use strict';
     var globalTime = (function() {
         let globals = {
-            time: '<?php echo $this->session->tempdata('exp_time'); ?>',
+            time: '<?php echo $expTime; ?>',
         }
         Object.freeze(globals);
         return globals;
@@ -136,14 +136,6 @@
         Object.freeze(globals);
         return globals;
     }());
-    /*
-    var date = dayjs(parseInt('<?php echo $currentTime; ?>')* 1000);
-    var hours = date.hour();
-    var minutes = "0" + date.minute();
-    var seconds = "0" + date.second();
-    var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
-    console.log(formattedTime);
-    */
     
     </script>
 
@@ -155,7 +147,7 @@
     <header class="header">
         <nav class="navbar navbar-expand-lg container">
             <a class="navbar-brand"
-                href="<?php echo $this->baseUrl; ?>events/shop/<?php echo $this->session->userdata('shortUrl'); ?>">
+                href="<?php echo current_url(); ?>">
                 <img class="menu-icon" src="<?php echo base_url(); ?>assets/home/images/logo1.png" alt="">
             </a>
             <button class="navbar-toggler py-2 px-3 px-md-4 bg-secondary" type="button" data-toggle="collapse"
@@ -166,7 +158,7 @@
                 <ul class="navbar-nav mr-auto d-none">
                     <li class="nav-item active pt-2 pt-md-0">
                         <a class="nav-link"
-                            href="<?php echo $this->baseUrl; ?>events/shop/<?php echo $this->session->userdata('shortUrl'); ?>">Home
+                            href="<?php echo current_url(); ?>">Home
                             <span class="sr-only">(current)</span></a>
                     </li>
                 </ul>
@@ -175,9 +167,9 @@
                 data-toggle="modal" data-target="#checkout-modal">
                 <i class="fa fa-shopping-basket mr-md-3"></i>
                 <span class='d-none d-lg-inline'>CHECKOUT</span> &nbsp €<b
-                    class="totalBasket"><?php echo $this->session->userdata('total'); ?></b>
+                    class="totalBasket"><?php echo (isset($totalAmount) &&  $totalAmount) ? $totalAmount : ''; ?></b>
             </a>
-            <input type="hidden" id="totalBasketAmount" value="<?php echo ($this->session->userdata('total')) ? $this->session->userdata('total') : 0; ?>">
+            <input type="hidden" id="totalBasketAmount" value="<?php echo (isset($totalAmount) &&  $totalAmount) ? $totalAmount : 0; ?>">
 
 
 

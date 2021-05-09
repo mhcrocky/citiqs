@@ -16,8 +16,8 @@
                 <?php $total = 0; ?>
                 <div class="menu-list">
                     <div id="checkout-list" class="w-100">
-                        <?php if($this->session->userdata('tickets')): 
-                    $tickets = $this->session->userdata('tickets');
+                        <?php if(count($tickets) > 0): 
+
                     foreach($tickets as $ticket): 
                         $total = $total + floatval($ticket['amount']); ?>
                         <input type="hidden" id="quantity_<?php echo $ticket['id']; ?>" name="quantity[]" value="0">
@@ -141,6 +141,7 @@
                                             placeholder="Phone Number (Optional)">
                                         <span class="focus-input100"></span>
                                     </div>
+                                    <input type="hidden" name="orderRandomKey" value="<?php echo isset($orderRandomKey) ? $orderRandomKey : ''; ?>">
 
                                         <button type="submit" style="display: none;" id="pay" class="btn btn-danger btn-lg btn-block mt-2">
                                             PAY

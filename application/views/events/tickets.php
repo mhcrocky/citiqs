@@ -26,12 +26,7 @@
                     <?php if (!empty($tickets)) : ?>
                     <div class="menu-list">
                         <?php 
-                        $checkout_tickets = [];
-                        $checkout_tickets_id = [];
-                        if($this->session->tempdata('tickets')){
-                            $checkout_tickets = $this->session->tempdata('tickets');
-                            $checkout_tickets_id = array_values(array_keys($checkout_tickets));
-                        }
+                        $checkout_tickets_id = array_values(array_keys($checkout_tickets));
                          foreach ($tickets as $ticket): 
                               $ticketId = $ticket['ticketId'];
                          ?>

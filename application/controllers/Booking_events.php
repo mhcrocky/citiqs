@@ -14,11 +14,13 @@ class Booking_events extends BaseControllerWeb
         $this->load->helper('utility_helper');
         $this->load->helper('queue_helper');
         $this->load->helper('ticketingemail_helper');
+        $this->load->helper('jwt_helper');
 
         $this->load->model('event_model');
         $this->load->model('bookandpay_model');
         $this->load->model('user_model');
         $this->load->model('shopvendor_model');
+        $this->load->model('shopsession_model');
 
         $this->load->model('sendreservation_model');
         $this->load->model('email_templates_model');
@@ -30,17 +32,15 @@ class Booking_events extends BaseControllerWeb
     {
         
         $this->global['pageTitle'] = 'TIQS: Shop';
-        unset($_SESSION['customer']);
-        unset($_SESSION['reservationIds']);
+        
+        $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : false;
 
-        if(!empty($_SESSION['eTicketing'])){
-            session_unset();
+        $orderData = [];
+
+        if($orderRandomKey){
+            $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
         }
-
-        if (!$shortUrl) {
-            redirect('https://tiqs.com/info');
-        }
-
+        
         $customer = $this->user_model->getUserInfoByShortUrl($shortUrl);
         $eventId = '';
         $get_by_event_id = false;
@@ -54,20 +54,27 @@ class Booking_events extends BaseControllerWeb
             }
         }
 
+
+        $sessionData['vendorId'] = $customer->id;
+        $sessionData['shortUrl'] = $shortUrl;
+        $sessionData['spotId'] = 0;
+        $sessionData['tickets'] = [];
+        $sessionData['expTime'] = false;
+        $sessionData['totalAmount'] = false;
+        
+
+        if(count($orderData) < 1){
+            $orderData = $this->shopsession_model->insertSessionData($sessionData);
+            redirect(base_url() . 'events/shop/'.$shortUrl.'?order='.$orderData->randomKey);
+        }
+       
+        
+
         if (!$shortUrl || !$customer || !$this->shopvendor_model->setProperty('vendorId', intval($customer->id))->getProperty('TpayNlServiceId')) {
+            
             redirect('https://tiqs.com/info');
         }
 
-        if($this->session->userdata('shortUrl') != $shortUrl){
-            $this->session->unset_userdata('tickets');
-            $this->session->unset_userdata('exp_time');
-            $this->session->unset_userdata('total');
-        }
-
-        
-        $_SESSION['eTicketing'] = true;
-        $_SESSION['customer'] = $customer->id;
-        $this->session->set_userdata('shortUrl', $shortUrl);
         $data['shopsettings'] = $this->event_model->get_shopsettings($customer->id);
         $this->global['vendor'] = (array)$data['shopsettings'];
         $design = $this->event_model->get_vendor_design($customer->id);
@@ -84,7 +91,12 @@ class Booking_events extends BaseControllerWeb
             $this->global['design'] = unserialize($design);
         }
 
+
         $data['events'] = $events;
+        $this->global['orderRandomKey'] = $orderRandomKey;
+        $this->global['tickets'] = $orderData['tickets'];
+        $this->global['expTime'] = $orderData['expTime'];
+        $this->global['totalAmount'] = $orderData['totalAmount'];
         $this->loadViews("events/shop", $this->global, $data, 'footerShop', 'headerShop');
 
     }
@@ -92,21 +104,32 @@ class Booking_events extends BaseControllerWeb
     public function tickets($eventId)
     {
         if(!$this->input->post('isAjax')){ 
-            redirect('events/shop/'. $this->session->userdata('shortUrl'));
+            redirect(base_url());
             return; 
         } 
-        $vendor_id = $_SESSION['customer'];
-        //$this->session->unset_userdata("event_date");
+
+        $orderRandomKey = $this->input->post('order') ? $this->input->post('order') : false;
+
+        $orderData = [];
+
+        if($orderRandomKey){
+            $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        } else {
+            return ;
+        }
+
+        
+
+        $vendor_id = $orderData['vendorId'];
         $event = $this->event_model->get_event($vendor_id,$eventId);
         $event_start =  date_create($event->StartDate . " " . $event->StartTime);
-        //$event_end = date_create($event->EndDate . " " . $event->EndTime);
-        //$event_date = date_format($event_start, "d M Y H:i") . " - ". date_format($event_end, "d M Y H:i");
-        //$this->session->set_userdata("event_date",$event_date);
+
 
         $eventVenue = ucwords($event->eventVenue);
         $eventDate = date_format($event_start, "d M - H:i");
         $data = [
             'tickets' => $this->event_model->get_event_tickets($vendor_id,$eventId),
+            'checkout_tickets' => $orderData['tickets'],
             'eventId' => $eventId,
             'eventName' => $event->eventname,
             'eventImage' => $event->eventImage,
@@ -129,19 +152,40 @@ class Booking_events extends BaseControllerWeb
 
     public function add_to_basket()
     {
-        $vendor_id = $_SESSION['customer'];
-        $first_ticket = false;
-        if(!$this->session->userdata('tickets')){
-            $first_ticket = true;
+        $orderRandomKey = $this->input->post('order') ? $this->input->post('order') : false;
+
+        $orderData = [];
+
+        if($orderRandomKey){
+            $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
         }
-        $tickets = $this->session->userdata('tickets') ?? [];
+
+        if(count($orderData) < 1){
+            $response = [
+                'status' => 'error',
+                'message' => 'Something went wrong!',
+                'quantity' => 1,
+                'amount' => 0
+            ];
+
+            echo json_encode($response);
+            return ;
+        }
+
+        $vendor_id = $orderData['vendorId'];
+        $first_ticket = false;
+        $tickets = $orderData['tickets'] ?? [];
         $ticket = $this->input->post(null, true);
+
+        if(count($orderData['tickets']) < 1){
+            $first_ticket = true;
+            $current_time = date($ticket['time']);
+            $orderData['expTime'] = date("Y-m-d H:i:s",strtotime("$current_time +10 minutes"));
+        }
+        
         $ticketId = $ticket['id'];
         $ticketInfo = $this->event_model->get_ticket_info($ticketId);
         $eventInfo = $this->event_model->get_event_by_ticket($ticketId);
-        $current_time = date($ticket['time']);
-        $newTime = date("Y-m-d H:i:s",strtotime("$current_time +10 minutes"));
-        $this->session->set_tempdata('exp_time', $newTime, 600);
         $amount = (floatval($ticketInfo->ticketPrice) + floatval($ticketInfo->ticketFee))*floatval($ticket['quantity']);
         
         
@@ -188,17 +232,24 @@ class Booking_events extends BaseControllerWeb
         
          
         if($ticket['quantity'] != 0){
-            $this->session->unset_userdata('tickets');
-            $this->session->unset_tempdata('tickets');
-            $this->session->set_tempdata('tickets', $tickets, 600);
+            $orderData['tickets'] = $tickets;
         }
 
+        $orderData['tickets']  = $tickets;
         $total = 0;
         foreach($tickets as $ticket){
             $total = $total + $ticket['amount'];
         }
         $total = number_format($total, 2, '.', '');
-        $this->session->set_tempdata('total', $total, 600); 
+        $orderData['totalAmount'] = $total;
+
+        $this
+                ->shopsession_model
+                ->setIdFromRandomKey($orderRandomKey)
+                ->setProperty('orderData', Jwt_helper::encode($orderData))
+                ->update();
+
+        
         $response = [
             'status' => 'success',
             'descript' => $ticket['descript'],
@@ -212,74 +263,101 @@ class Booking_events extends BaseControllerWeb
 
     public function clear_tickets()
     {
-        $this->session->unset_userdata('tickets');
-        $this->session->unset_userdata('exp_time');
-        $this->session->unset_userdata('total');
-        $this->session->unset_tempdata('tickets');
-        $this->session->unset_tempdata('exp_time');
-        $this->session->unset_tempdata('total');
-        if(!$this->session->tempdata('tickets')){
-            $this->session->set_flashdata('expired', 'Session Expired!');
-            redirect('events/shop/'. $this->session->userdata('shortUrl'));
+        $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : false;
+        
+        if(!$orderRandomKey){
+            redirect(base_url());
+            
         }
+
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+
+        if(count($orderData) < 1){
+            redirect(base_url());
+        }
+
+        $shortUrl = $orderData['shortUrl'];
+
+        $what = ['id'];
+		$where = ["randomKey" => $orderRandomKey];
+			
+        $result = $this->shopsession_model->read($what,$where);
+        $result = reset($result);
+        $ids = [$result['id']];
+
+        if($this->shopsession_model->multipleDelete($ids, $where)){
+            $this->session->set_flashdata('expired', 'Session Expired!');
+            redirect('events/shop/'. $shortUrl);
+        }
+        
+        
+        
     }
 
     public function delete_ticket()
     {
-        $tickets = $this->session->tempdata('tickets');
+        $orderRandomKey = $this->input->post('order') ? $this->input->post('order') : false;
+
+        if(!$orderRandomKey){
+            return ;
+            
+        }
+
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+
+        if(count($orderData) < 1){
+            return ;
+        }
+
+        $tickets = $orderData['tickets'];
         $ticketId = $this->input->post('id');
-        $time = (int)($this->input->post('current_time')/1000);
-        $time = $time - 2;
+    
         unset($tickets[$ticketId]);
-        
-        $this->session->unset_userdata('tickets');
-        $this->session->unset_tempdata('tickets');
-        $this->session->unset_tempdata('total');
+
         $items = $this->input->post('list_items');
         $total = $this->input->post('totalBasket');
         $total = number_format($total, 2, '.', '');
-        $this->session->set_tempdata('total', $total, 600); 
-        $this->session->set_tempdata('tickets', $tickets, $time); 
-        if($items == 0){
-            $this->session->unset_tempdata('exp_time');
-        }
-        return ;
-    }
+        $orderData['totalAmount'] = $total; 
+        $orderData['tickets'] = $tickets;
 
-    public function pay()
-    {
-        $this->global['pageTitle'] = 'TIQS: Pay';
-        if(!$this->session->tempdata('tickets')){
-            $this->session->set_flashdata('expired', 'Session Expired!');
-            redirect('events/shop/'. $this->session->userdata('shortUrl'));
+        if($items == 0){
+            $orderData['expTime'] = false;
         }
-        $this->loadViews("events/pay", $this->global, '', 'footerShop', 'headerShop');
+        
+
+        $this
+                ->shopsession_model
+                ->setIdFromRandomKey($orderRandomKey)
+                ->setProperty('orderData', Jwt_helper::encode($orderData))
+                ->update();
+        return ;
     }
 
     public function payment_proceed()
     {
-        if(!$_SESSION['eTicketing']){
-            redirect(base_url().'/events/shop/'.$this->session->userdata('shortUrl'));
+        $buyerInfo = $this->input->post(null, true);
+        $orderRandomKey = $this->input->post('orderRandomKey') ? $this->input->post('orderRandomKey') : false;
+
+        if(!$orderRandomKey){
+            redirect(base_url());
+            
         }
 
-        $buyerInfo = $this->input->post(null, true);
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
 
-        if(!$this->session->tempdata('tickets')){
-            $this->session->set_flashdata('expired', 'Session Expired!');
-            redirect('events/shop/'. $this->session->userdata('shortUrl'));
+        if(count($orderData) < 1){
+            redirect(base_url());
         }
         
-        $tickets = $this->session->userdata('tickets');
+        $tickets = $orderData['tickets'];
+        $customer = $orderData['vendorId'];
 
-        $this->session->set_userdata('eventShop', 'true');
-        $this->session->set_userdata('buyerEmail', $buyerInfo['email']);
-        $customer = $_SESSION['customer'];
-        if (!$_SESSION['reservationIds']) {
+        if (!isset($orderData['reservationIds'])) {
             $reservationIds = $this->event_model->save_event_reservations($buyerInfo, $tickets, $customer);
-            $_SESSION['reservationIds'] = $reservationIds;
+            $orderData['reservationIds'] = $reservationIds;
         }
 
-        $reservationIds = $_SESSION['reservationIds'];
+        $reservationIds = $orderData['reservationIds'];
         $arrArguments = array();
         if ($buyerInfo) {
             $reservations = $this->bookandpay_model->getBookingsByIds($reservationIds);
@@ -295,26 +373,41 @@ class Booking_events extends BaseControllerWeb
                     'email' => $buyerInfo['email'],
                 ], $reservation->reservationId);
             }
-            $this->session->unset_userdata('reservationsQuantity');
-            $this->session->set_userdata('reservationsQuantity', $reservationsQuantity);
+
         } else {
-            redirect('agenda_booking/pay');
+            redirect(base_url());
         }
 
+        $this
+                ->shopsession_model
+                ->setIdFromRandomKey($orderRandomKey)
+                ->setProperty('orderData', Jwt_helper::encode($orderData))
+                ->update();
 
-        redirect('/events/selectpayment');
+
+        redirect('/events/selectpayment?order=' . $orderRandomKey);
         
         
     }
 
     public function selectpayment()
     {
-        if (empty($_SESSION['reservationIds'])) {
+        
+        $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : false;
+
+        if(!$orderRandomKey){
+            redirect(base_url());
+            
+        }
+
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+
+        if(count($orderData) < 1){
             redirect(base_url());
         }
 
         $this->global['pageTitle'] = 'TIQS: Select Payment';
-        $customer = $_SESSION['customer'];
+        $customer = $orderData['vendorId'];
         $ticketingPayments = $this->event_model->get_payment_methods($customer);
         $data['activePayments'] = $this->event_model->get_active_payment_methods($customer);
         $data['idealPaymentType'] = $this->config->item('idealPaymentType');
@@ -324,10 +417,8 @@ class Booking_events extends BaseControllerWeb
         $data['payconiqPaymentType'] = $this->config->item('payconiqPaymentType');
         $data['pinMachinePaymentType'] = $this->config->item('pinMachinePaymentType');
         $data['myBankPaymentType'] = $this->config->item('myBankPaymentType');
-        $amount = floatval($this->session->tempdata('total'));
-        $reservationIds = $_SESSION['reservationIds'];
-        $ticketsFee = $this->session->userdata('ticketsFee');
-        $reservationsQuantity = $this->session->userdata('reservationsQuantity');
+        $amount = floatval($orderData['totalAmount']);
+        $reservationIds = $orderData['reservationIds'];
 
         foreach($reservationIds as $reservationId){
             $amount += floatval($amount);
@@ -350,26 +441,37 @@ class Booking_events extends BaseControllerWeb
 
         $data['vendorCost'] = $this->event_model->get_vendor_cost($customer);
         $this->global['vendor'] = (array) $this->event_model->get_shopsettings($customer);
-
+        $this->global['expTime'] = $orderData['expTime'];
+        $this->global['totalAmount'] = $orderData['totalAmount'];
+        $this->global['orderRandomKey'] = $orderRandomKey;
         $this->loadViews("events/selectpayment", $this->global, $data, 'footerShop', 'headerShop');
     }
 
     public function onlinepayment($paymentType, $paymentOptionSubId = '0')
     {
-        if($_SESSION['customer'] === NULL) {
+        $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : false;
+
+        if(!$orderRandomKey){
+            redirect(base_url());
+            
+        }
+
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+
+        if(count($orderData) < 1){
             redirect(base_url());
         }
 
         // update payment method
-        $this->event_model->updatePaymentMethod($_SESSION['reservationIds'], Pay_helper::returnPaymentMethod($paymentType));
+        $this->event_model->updatePaymentMethod($orderData['reservationIds'], Pay_helper::returnPaymentMethod($paymentType));
         // release queue
         Queue_helper::releaseQueue();
 
         $paymentType = strval($paymentType);
         $paymentOptionSubId = ($paymentOptionSubId) ? strval($paymentOptionSubId) : '0';
-        $vendorId = $_SESSION['customer'];
+        $vendorId = $orderData['vendorId'];
         $SlCode = $this->bookandpay_model->getUserSlCode($vendorId);
-        $reservationIds = $_SESSION['reservationIds'];
+        $reservationIds = $orderData['reservationIds'];
         $reservations = $this->bookandpay_model->getBookingsByIds($reservationIds);
 
         $arrArguments = Pay_helper::getTicketingArgumentsArray($vendorId, $reservations, strval($SlCode), $paymentType, $paymentOptionSubId);
@@ -392,12 +494,22 @@ class Booking_events extends BaseControllerWeb
 
         $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
 
-        $reservationIds = $_SESSION['reservationIds'];
         // destroy session in this place
         // because user maybe will not be redirected to $result->transaction->paymentURL
         // This prevent that user update existing ids with new transaction id
         #$this->session->sess_destroy();
         //session_destroy();
+
+        $what = ['id'];
+		$where = ["randomKey" => $orderRandomKey];
+			
+        $result = $this->shopsession_model->read($what,$where);
+        $result = reset($result);
+        $ids = [$result['id']];
+
+        //Delete data from session table
+        $this->shopsession_model->multipleDelete($ids, $where);
+
         $this->processPaymenttype($strUrl, $reservationIds);
     }
 
