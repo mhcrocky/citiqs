@@ -44,7 +44,7 @@ $(document).ready(function () {
         title: 'Resend',
         data: null,
         "render": function(data, type, row) {
-          return '<button class="btn btn-primary" onclick="resendReservation(\''+data.transactionId+'\')">Resend</button>';
+          return '<button class="btn btn-primary" onclick="confirmResendTicket(\''+data.transactionId+'\')">Resend</button>';
         }
       }
       
@@ -130,8 +130,39 @@ function importExcelFile(){
 
 }
 
-function resendReservation(transactionId){
-  $.post(globalVariables.baseUrl + "events/resend_reservation", {transactionId: transactionId}, function(data){
-      alertify['success']('Resent Successfully!');
-  });
+function confirmResendTicket(transactionId){
+  bootbox.confirm({
+    message: "Do you  to send the mail to support@tiqs.com as well?",
+    buttons: {
+        confirm: {
+            label: 'Yes',
+            className: 'btn-success'
+        },
+        cancel: {
+            label: 'No',
+            className: 'btn-danger'
+        }
+    },
+    callback: function (result) {
+      if(result == true){
+        resendTicket(transactionId, 1);
+      } else {
+        resendTicket(transactionId);
+      }
+    }
+});
+}
+
+function resendTicket(transactionId, sendTo = 0) {
+  let data = {
+    transactionId: transactionId,
+    sendTo: sendTo
+  };
+  $.post(
+    globalVariables.baseUrl + "events/resend_reservation",
+    data,
+    function (data) {
+      alertify.success("Ticket is resend successfully!");
+    }
+  );
 }

@@ -52,7 +52,7 @@
                     $voucher = $record->voucher;
                     $mailsend = $record->mailsend;
                     
-                    if ($paid == 1) {
+                    if ($paid == 1 || $paid == 3) {
                         
                         $qrtext = $reservationId;
 

@@ -110,6 +110,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
     </script>
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
 
     <?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
     <?php include_once FCPATH . 'application/views/includes/jsGlobalVariables.php'; ?>
@@ -123,8 +124,25 @@
         Object.freeze(globals);
         return globals;
     }());
+
     </script>
     <?php endif; ?>
+    <script>
+    var globalKey = (function() {
+        let globals = {
+            orderRandomKey: '<?php echo isset($orderRandomKey) ? $orderRandomKey : ''; ?>',
+        }
+        Object.freeze(globals);
+        return globals;
+    }());
+    var date = dayjs(parseInt('<?php echo $currentTime; ?>')* 1000);
+    var hours = date.hour();
+    var minutes = "0" + date.minute();
+    var seconds = "0" + date.second();
+    var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+    console.log(formattedTime);
+    
+    </script>
 
 </head>
 

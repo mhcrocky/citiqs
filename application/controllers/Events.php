@@ -18,6 +18,8 @@ class Events extends BaseControllerWeb
         $this->load->model('user_model');
         $this->load->model('email_templates_model');
         $this->load->model('event_model');
+        $this->load->model('bookandpay_model');
+        
         $this->load->helper('country_helper');
         $this->load->helper('email_helper');
         $this->load->helper('ticketingemail_helper');
@@ -185,7 +187,10 @@ class Events extends BaseControllerWeb
     public function resend_reservation()
     {
         $transactionId = $this->input->post('transactionId');
-        $this->emailReservation($transactionId);
+        $sendToSupport = ($this->input->post('sendTo') == 1) ? true : false;
+        $reservations = $this->bookandpay_model->getReservationsByTransactionId($transactionId);
+        Ticketingemail_helper::sendEmailReservation($reservations, false, true, $sendToSupport);
+        return ;
     }
 
     public function edit($eventId)
@@ -613,7 +618,6 @@ class Events extends BaseControllerWeb
 
     public function resend_ticket()
 	{
-        $this->load->model('bookandpay_model');
         $reservationId = $this->input->post('reservationId');
         $sendToSupport = ($this->input->post('sendTo') == 1) ? true : false;
         $reservations = $this->bookandpay_model->getReservationsByIds([$reservationId]);
@@ -624,9 +628,8 @@ class Events extends BaseControllerWeb
 
     public function emailReservation($transactionId)
 	{
-        $this->load->model('bookandpay_model');
         $reservations = $this->bookandpay_model->getReservationsByTransactionId($transactionId);
-        Ticketingemail_helper::sendEmailReservation($reservations);
+        Ticketingemail_helper::sendEmailReservation($reservations, true);
         return ;
 
     }

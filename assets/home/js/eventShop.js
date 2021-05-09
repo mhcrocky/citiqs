@@ -1,6 +1,6 @@
 (function() {
     if (typeof globalTime === 'undefined' && $('#shop').length == 0) {
-        window.location.href = globalVariables.baseUrl + "booking_events/clear_tickets";
+        window.location.href = globalVariables.baseUrl + "booking_events/clear_tickets?order=" + globalKey.orderRandomKey;
     }
     if($('.ticket_item').length > 0){
         $('#payForm').show();
@@ -129,7 +129,8 @@ function getTicketsView(eventId, first = false) {
     $("#event_" + eventId).addClass('bg-light').removeClass('bg-white');
     let img_src = $('#background_img_' + eventId).val();
     $.post(globalVariables.baseUrl + "events/tickets/" + eventId, {
-        isAjax: isAjax
+        isAjax: isAjax,
+        order: globalKey.orderRandomKey
     }, function(data) {
         $("#my-form").remove();
         $("#main-content").after(data);
@@ -163,7 +164,7 @@ function countDownTimer(distance){
         $(".timer").text("Expiration time: " + addZero(minutes) + ":" + addZero(seconds) + "");
         if (minutes == 0 && seconds == 0) {
             setTimeout(() => {
-                window.location.href = globalVariables.baseUrl + "booking_events/clear_tickets";
+                window.location.href = globalVariables.baseUrl + "booking_events/clear_tickets?order=" + globalKey.orderRandomKey;;
             }, 500);
         }
         if (distance < 0) {
@@ -210,7 +211,8 @@ function deleteTicket(id, price, ticketFee) {
         id: id,
         current_time: current_time,
         totalBasket: totalBasket,
-        list_items: list_items
+        list_items: list_items,
+        order: globalKey.orderRandomKey 
     }
     $.post(globalVariables.baseUrl + "booking_events/delete_ticket", data, function(data){
 		$( ".ticket_"+id ).fadeOut( "slow", function() {
@@ -265,6 +267,7 @@ function removeTicket(id, price, ticketFee, totalClass) {
     let data = {
         id: id,
         quantity: quantityValue,
+        order: globalKey.orderRandomKey,
         time: current_time
 
     }
@@ -371,7 +374,8 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
         id: id,
         quantity: quantityValue,
         time: current_time,
-        amount: totalBasket.toFixed(2)
+        amount: totalBasket.toFixed(2),
+        order: globalKey.orderRandomKey
     };
     $.post(globalVariables.baseUrl + "booking_events/add_to_basket", data, function(data){
         data = JSON.parse(data);
