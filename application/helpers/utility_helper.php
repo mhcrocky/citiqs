@@ -320,7 +320,6 @@
                         $checkoutList .=            ' -';
                         $checkoutList .=            '</span>';
                     }
-
                     $checkoutList .=                '<input
                                                         type="number"
                                                         min="0"
@@ -339,18 +338,15 @@
                                                         readonly
                                                         onchange="reloadPageIfMinus(this)"
                                                         oninput="reloadPageIfMinus(this)"
-                                                    ';
-                    
-                    if (!empty($product['categorySlide'])) {
-                        $checkoutList .=                'data-category-slide="' . $product['categorySlide'] . '" ';
-                    }
-                                                        
-
-                    if (!$onlyOne) {                                    
-                        $checkoutList .=                'class="form-control checkProduct inputFieldsMakeOrder" style="display:inline-block"';
-                    } else {
-                        $checkoutList .=                'hidden';
-                    }
+                                                        ';
+                                                        if (!empty($product['categorySlide'])) {
+                                                            $checkoutList .= 'data-category-slide="' . $product['categorySlide'] . '" ';
+                                                        }
+                                                        if (!$onlyOne) {
+                                                            $checkoutList .= 'class="form-control checkProduct inputFieldsMakeOrder" style="display:inline-block"';
+                                                        } else {
+                                                            $checkoutList .= 'hidden';
+                                                        }
                     $checkoutList .=                '/>';
 
                     if (!$onlyOne) {
@@ -362,8 +358,9 @@
                                                     >';
                         $checkoutList .=            ' +';
                         $checkoutList .=            '</span>';
-                    }
                         $checkoutList .=        '</div>';
+                    }
+                    $checkoutList .=        '</div>';
 
                     
                     
