@@ -315,8 +315,8 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-bag"></i><span><?php echo $this->language->tLine('Statistics'); ?></span></a>
 												<ul class="collapse">
 													<li data-menuid="4.7.1"><a href="<?php echo $this->baseUrl; ?>warehouse"><i class="ti-layout-accordion-separated"></i> <span><?php echo $this->language->tLine('Reports'); ?></span></a></li>
-<!--													<li data-menuid="4.7.2"><a href="--><?php //echo $this->baseUrl; ?><!--x report"><i class="ti-layers-alt"></i> <span>X report</span></a></li>-->
-<!--													<li data-menuid="4.7.3"><a href="--><?php //echo $this->baseUrl; ?><!--z report"><i class="ti-bag"></i> <span>Y report</span></a></li>-->
+													<li data-menuid="4.7.2"><a href="<?php echo $this->baseUrl; ?>dayreport"><i class="ti-layers-alt"></i> <span>Day-report</span></a></li>
+													<li data-menuid="4.7.3"><a href="<?php echo $this->baseUrl; ?>vatreport"><i class="ti-bag"></i> <span>Numbers</span></a></li>
 												</ul>
 											</li>
 											<li data-menuid="12">

@@ -1646,8 +1646,11 @@
             // check does vendor requried send receipt with email
             $this->load->model('shopvendor_model');
             if (!$this->shopvendor_model->setProperty('vendorId', $vendorId)->sendEmailWithReceipt()) return false;
+			return true;
 
             // chekc is vendor bbUser, if it is email will not be send
+			// this is a very bad check
+			// it checks if the vendor is in the table tbl_
             $this->load->model('shopvendorfod_model');
             return $this->shopvendorfod_model->isOnlyBBVendor($vendorId);
         }
