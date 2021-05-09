@@ -990,7 +990,7 @@
 			$data = [
 				'vendorId' => $_SESSION['userId']
 			];
-			$this->loadViews('warehouse/dayreport', $this->global, $data, null, 'headerWarehouse');
+			$this->loadViews('warehouse/dayreport', $this->global, $data, 'footerbusiness', 'headerbusiness');
         }
 
 		public function Vatreport(): void
@@ -999,7 +999,7 @@
 			$data = [
 				'vendorId' => $_SESSION['userId']
 			];
-			$this->loadViews('warehouse/vatreport', $this->global, $data, null, 'headerWarehouse');
+			$this->loadViews('warehouse/vatreport', $this->global, $data, 'footerbusiness', 'headerbusiness');
         }
 
         // Design
