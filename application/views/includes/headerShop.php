@@ -128,6 +128,7 @@
     </script>
     <?php endif; ?>
     <script>
+    'use strict';
     var globalKey = (function() {
         let globals = {
             orderRandomKey: '<?php echo isset($orderRandomKey) ? $orderRandomKey : ''; ?>',
@@ -135,12 +136,14 @@
         Object.freeze(globals);
         return globals;
     }());
+    /*
     var date = dayjs(parseInt('<?php echo $currentTime; ?>')* 1000);
     var hours = date.hour();
     var minutes = "0" + date.minute();
     var seconds = "0" + date.second();
     var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
     console.log(formattedTime);
+    */
     
     </script>
 

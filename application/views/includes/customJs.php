@@ -179,6 +179,7 @@
 	<script type="text/javascript" src="//cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
 	<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
+	<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/import_guestlist.js"></script>
 	<script src='<?php echo $this->baseUrl; ?>assets/home/js/templates.js'></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/ticketsDataTable.js"></script>
@@ -294,6 +295,7 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
+	<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/import_guestlist.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/guestlistDataTable.js"></script>
 <?php } elseif ($this->view === 'qrcodeview/index') { ?>
