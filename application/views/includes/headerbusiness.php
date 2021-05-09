@@ -316,7 +316,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 												<ul class="collapse">
 													<li data-menuid="4.7.1"><a href="<?php echo $this->baseUrl; ?>warehouse"><i class="ti-layout-accordion-separated"></i> <span><?php echo $this->language->tLine('Reports'); ?></span></a></li>
 													<li data-menuid="4.7.2"><a href="<?php echo $this->baseUrl; ?>dayreport"><i class="ti-layers-alt"></i> <span>Day-report</span></a></li>
-													<li data-menuid="4.7.3"><a href="<?php echo $this->baseUrl; ?>vatreport"><i class="ti-bag"></i> <span>Numbers</span></a></li>
+													<li data-menuid="4.7.3"><a href="<?php echo $this->baseUrl; ?>vatreport"><i class="ti-bag"></i> <span>Select-report</span></a></li>
 												</ul>
 											</li>
 											<li data-menuid="12">
@@ -558,11 +558,18 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 
 									<?php } ?>
 									<?php if ($_SESSION['businessTypeId'] != 26) { ?>
-									<li data-menuid="13">
+										<li data-menuid="9">
+											<a href="javascript:void(0)" aria-expanded="true"><i class="ti-mobile"></i><span><?php echo $this->language->tLine('APP'); ?></span></a>
+											<ul class="collapse">
+												<li data-menuid="14.1"><a href="<?php echo $this->baseUrl;?>"><i class="ti-mobile"></i> <span><?php echo $this->language->tLine("Settings"); ?></span></a></li>
+											</ul>
+										</li>
+
+										<li data-menuid="13">
                                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-width-default"></i><span><?php echo $this->language->tLine('Templates'); ?></span></a>
                                         <ul class="collapse">
-                                            <li data-menuid="13.1"><a href="<?php echo $this->baseUrl; ?>list_template"><i class="ti-credit-card"></i> <span><?php echo $this->language->tLine('Templates'); ?></span></a></li>
-											<li data-menuid="13.1"><a href="<?php echo $this->baseUrl; ?>add_template"><i class="ti-credit-card"></i> <span><?php echo $this->language->tLine('Add template'); ?></span></a></li>
+                                            <li data-menuid="13.1"><a href="<?php echo $this->baseUrl; ?>list_template"><i class="ti-layout-width-full"></i> <span><?php echo $this->language->tLine('Templates'); ?></span></a></li>
+											<li data-menuid="13.1"><a href="<?php echo $this->baseUrl; ?>add_template"><i class="ti-layout-width-default-alt"></i> <span><?php echo $this->language->tLine('Add template'); ?></span></a></li>
                                         </ul>
                                     </li>
 									<?php } ?>
