@@ -195,6 +195,8 @@
                 //unlink($attachment);
             }
             return $CI->email->send();
+
+
         }
 
         public static function activateAmbasador(array $ambasador): bool

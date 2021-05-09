@@ -466,7 +466,7 @@
 
 	<div class="checkout-message__content">
 		<h3>Your&nbsp;Order is</h3>
-		<p class='order-status order-status--true'>pending</p>
+		<p class='order-status order-status--true'>Payment in process</p>
 		<?php if (isset($order)) { ?>
 			<div class='checkout-message__details'>
 				<h3>spot: table<span class='checkout-message__spot'></span>&nbsp;<?php echo $order['spotName']; ?></h3>
