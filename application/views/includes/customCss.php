@@ -61,6 +61,21 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/slick.css">    
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/slick-theme.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
+<?php } elseif ($this->view === 'warehouse/vatreport' || $this->view === 'warehouse/dayreport') { ?>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/bower_components/font-awesome/css/font-awesome.min.css" />
+<style>
+tr, td, th {
+    color: #555 !important;
+}
+table.dataTable thead .sorting::after {
+    opacity: 0 !important;
+}
+
+table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::after {
+    opacity: 0 !important;
+}
+</style>
 <?php } elseif ($this->view === 'warehouse/orders') { ?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/sliderstyle.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
