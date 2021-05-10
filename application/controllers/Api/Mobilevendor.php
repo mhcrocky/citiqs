@@ -316,4 +316,56 @@ class Mobilevendor extends REST_Controller
 //		$this->set_response($message, 200); // CREATED (201) being the HTTP response code
 	}
 
+	public function appsettings_post()
+	{
+		// $email = $_POST["email"];
+		$email = $this->security->xss_clean($this->input->post('email'));
+		// $password = $_POST["password"];
+		$password = $this->security->xss_clean($this->input->post('password'));
+
+		$this->db->select('id as userId, password');
+		$this->db->from('tbl_user');
+		$this->db->where('email', $email);
+		$this->db->where('isDeleted', 0);
+		$this->db->where('IsDropOffPoint', 1);
+		$query = $this->db->get();
+		$user = $query->row();
+
+//		echo var_dump($user);
+		if(!empty($user))
+		{
+			if (verifyHashedPassword($password, $user->password)) {
+//				echo var_dump($user);
+
+				$this->db->select('*');
+				$this->db->from('tbl_app_settings');
+				$this->db->where('vendorId', $user->userId);
+				$query = $this->db->get();
+				$appsettings = $query->row();
+
+//				echo var_dump($appsettings);
+
+				if (!empty($appsettings)) {
+
+//					echo var_dump($appsettings);
+
+					$message = [
+						'merchandise' => $appsettings->merchandise,
+						'ticketshop' => $appsettings->ticketshop
+					];
+					return $this->set_response($message, 200); // CREATED (201) being the HTTP response code
+
+				}
+			}
+
+		}
+
+		$message = [
+			'merchandise' => "" ,
+			'ticketshop' => ""
+		];
+
+		return $this->set_response($message, 200); // CREATED (201) being the HTTP response code
+	}
+
 }
