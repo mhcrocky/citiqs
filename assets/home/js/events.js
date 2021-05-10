@@ -98,7 +98,7 @@ $('.age').each(function() {
 });
 $(function() {
 $('.input-date').datepicker({
-    format: 'yyyy-mm-dd',
+    format: 'dd-mm-yyyy',
     calendarWeeks: true,
     todayHighlight: true,
     autoclose: true
@@ -170,9 +170,10 @@ function editBackgroundUpload(el) {
 }
 
 function checkTimestamp(){
-
-    let startTime = $('#event-date1').val() +' '+ $('#event-time1').val();
-    let endTime = $('#event-date2').val() +' '+ $('#event-time2').val();
+    let startDate = $('#event-date1').val().split('-');
+    let endDate = $('#event-date2').val().split('-');
+    let startTime = startDate[2] + '-' + startDate[1] + '-' + startDate[0] +' '+ $('#event-time1').val();
+    let endTime = endDate[2] + '-' + endDate[1] + '-' + endDate[0] + ' '+ $('#event-time2').val();
     if(dayjs(endTime) < dayjs(startTime)){
         $('#submitEventForm').prop('disabled', true);
         $('.timestamp-error').show();

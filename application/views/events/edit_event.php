@@ -210,7 +210,7 @@
                                 <label for="country" class="col-md-4 col-form-label text-md-left">Country
                                 </label>
                                 <div class="col-md-6 font-weight-bold">
-                                    <select id="country" class="field form-control border-50 input-w font-weight-bold" required>
+                                    <select id="country" name="eventCountry" class="field form-control border-50 input-w font-weight-bold" required>
                                         <option class="text-weight-bold" value="">Select option</option>
                                         <?php if(count($countries) > 0): ?>
                                         <?php foreach($countries as $country): ?>
@@ -224,7 +224,6 @@
                                         <?php endforeach; ?>
                                         <?php endif; ?>
                                     </select>
-                                    <input type="hidden" id="eventCountry" name="eventCountry">
                                 </div>
                             </div>
 
@@ -234,7 +233,7 @@
                                 <div class="col-md-6">
                                     <div class="input-group date">
                                         <input type="text" class="form-control inp-group-radius-left input-w input-date" id="event-date1"
-                                            name="StartDate" value="<?php echo $event->StartDate; ?>" required>
+                                            name="StartDate" value="<?php echo date('d-m-Y', strtotime($event->StartDate)); ?>" required>
                                         <input type="time" class="form-control input-w" id="event-time1"
                                             name="StartTime" value="<?php echo $event->StartTime; ?>" required>
                                         <span class="input-group-addon fa-input pl-2 pr-2">
@@ -259,7 +258,7 @@
                                 <div class="col-md-6">
                                     <div class="input-group date">
                                         <input type="text" class="form-control inp-group-radius-left input-w input-date" id="event-date2"
-                                            name="EndDate" value="<?php echo $event->EndDate; ?>" onchange="checkTimestamp()" onfocus="timestampOnFocus()" required>
+                                            name="EndDate" value="<?php echo date('d-m-Y', strtotime($event->EndDate)); ?>" onchange="checkTimestamp()" onfocus="timestampOnFocus()" required>
                                         <input type="time" class="form-control input-w" id="event-time2" name="EndTime"
                                             value="<?php echo $event->EndTime; ?>" onchange="checkTimestamp()" onfocus="timestampOnFocus()" required>
                                         <span class="input-group-addon fa-input pl-2 pr-2">
@@ -303,3 +302,14 @@
         </div>
     </div>
 </main>
+
+<?php if(isset($event->eventCountry)): ?>
+<script>
+(function() {
+    let country = '<?php echo  $event->eventCountry; ?>';
+    $('#country').val(country);
+}());
+
+</script>
+
+<?php endif; ?>

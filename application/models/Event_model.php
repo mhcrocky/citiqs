@@ -9,12 +9,16 @@ class Event_model extends CI_Model {
 
 	public function save_event($data)
 	{
+		$data['StartDate'] = date('Y-m-d', strtotime($data['StartDate']));
+		$data['EndDate'] = date('Y-m-d', strtotime($data['EndDate']));
 		$this->db->insert('tbl_events',$data);
 		return $this->db->insert_id();
 	}
 
 	public function update_event($eventId, $data)
 	{
+		$data['StartDate'] = date('Y-m-d', strtotime($data['StartDate']));
+		$data['EndDate'] = date('Y-m-d', strtotime($data['EndDate']));
 		$this->db->where("id", $eventId);
 		return $this->db->update('tbl_events',$data);
 	}
