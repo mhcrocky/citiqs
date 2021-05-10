@@ -126,13 +126,13 @@ class Alfredpayment extends BaseControllerWeb
         $vendorId = intval($order['vendorId']);
         $redirect = base_url() . 'cancel?status=' . $get['orderStatusId'];
 
-        $this->logPaynlGetResponse($get);
+        // $this->logPaynlGetResponse($get);
 
         if ($get['orderStatusId'] === $this->config->item('payNlSuccess')) {
             // need to do something with the facebook pixel.
-            $this->shoporderpaynl_model->updatePayNl(['successPayment' => date('Y-m-d H:i:s')]);
-            $this->shoporder_model->updatePaidStatus($this->shoporderpaynl_model, ['paid' => $this->config->item('orderPaid')]);
-            $this->shoporder_model->emailReceipt();
+            // $this->shoporderpaynl_model->updatePayNl(['successPayment' => date('Y-m-d H:i:s')]);
+            // $this->shoporder_model->updatePaidStatus($this->shoporderpaynl_model, ['paid' => $this->config->item('orderPaid')]);
+            // $this->shoporder_model->emailReceipt();
             $redirect = base_url() . 'success?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
         } elseif (in_array($get['orderStatusId'], $this->config->item('payNlPending'))) {
             $redirect = base_url() . 'pending?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];

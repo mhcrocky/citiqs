@@ -243,11 +243,7 @@ class Alfredinsertorder extends BaseControllerWeb
             $this->failedRedirect($vendorId, $spotId, $orderRandomKey);
         }
 
-        if ($vendorId === 1162 || $vendorId === 5655) {
-            $redirect = base_url() . 'successth';
-        } else {
-            $redirect = base_url() . 'success?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey . '&orderid=' . $orderId;
-        }
+        $redirect = base_url() . 'success?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey . '&orderid=' . $orderId;
         redirect($redirect);
         exit();
     }
