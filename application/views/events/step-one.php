@@ -192,7 +192,7 @@
                                 <label for="country" class="col-md-4 col-form-label text-md-left">Country
                                 </label>
                                 <div class="col-md-6">
-                                    <select id="country" class="form-control input-w border-50 field" required>
+                                    <select id="country" name="eventCountry" class="form-control input-w border-50 field" required>
                                         <option value="">Select option</option>
                                         <?php if(count($countries) > 0): ?>
                                         <?php foreach($countries as $country): ?>
@@ -200,7 +200,7 @@
                                         <?php endforeach; ?>
                                         <?php endif; ?>
                                     </select>
-                                    <input type="hidden" id="eventCountry" name="eventCountry">
+                                    
                                 </div>
                             </div>
 

@@ -1,8 +1,4 @@
 $(document).ready(function() {
-    $("#country").on("change", function(){
-        var country = $("#country option:selected").val();
-        $("#eventCountry").val(country);
-    });
     var toolbarOptions = [
         ['bold', 'italic', 'underline'], // toggled buttons
         ['blockquote', 'code-block'],
