@@ -244,9 +244,6 @@ class Alfredinsertorder extends BaseControllerWeb
         }
 
         $redirect = base_url() . 'success?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey . '&orderid=' . $orderId;
-
-        echo $redirect;
-        die();
         redirect($redirect);
         exit();
     }
@@ -263,7 +260,7 @@ class Alfredinsertorder extends BaseControllerWeb
 
 
 
-        if ($post['vendorId'] == 417) {
+        if ($post['vendorId'] == 43533) {
             $timeStart = time();
             echo 'time start</br>';            
             var_dump($timeStart);
