@@ -39,6 +39,18 @@ $userShortUrl = $this->session->userdata('userShortUrl');
         <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/css/business_dashboard/responsive.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.css"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.css"/>
+
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/introjs-rtl.css"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/introjs-rtl.min.css"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/introjs-rtl.min.css.map"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/introjs.css"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/introjs.min.css"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/introjs.min.css.map"/>
+
+
+
+
         <?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
         <?php include_once FCPATH . 'application/views/includes/jsGlobalVariables.php'; ?>
         <?php
@@ -154,6 +166,8 @@ $userShortUrl = $this->session->userdata('userShortUrl');
         <script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js" ></script>
         <script src="<?php echo $this->baseUrl; ?>assets/home/js/objectFloorPlans.js" ></script>
 		<script src="<?php echo $this->baseUrl; ?>assets/home/js/languageModal.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/intro.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.4.0/intro.js"></script>
         <?php
             if (isset($js) AND is_array($js)) { // ???????????  MOVE TO FOOTER IF USER CUSTOM SCRIPTS ???????????????
                 foreach ($js as $jsLink) { 
@@ -519,7 +533,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 									<?php } ?>
 									<?php if ($_SESSION['businessTypeId'] != 999) { ?>
 									<li data-menuid="10">
-                                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-id-badge"></i><span><?php echo $this->language->tLine('Business Profile'); ?></span></a>
+                                        <a href="javascript:void(0)" data-intro='Profile up to date?' aria-expanded="true"><i class="ti-id-badge"></i><span><?php echo $this->language->tLine('Business Profile'); ?> </span></a>
                                         <ul class="collapse">
 										    <li data-menuid="10.1"><a href="<?php echo $this->baseUrl; ?>address"><i class="ti-location-pin"></i> <span><?php echo $this->language->tLine('Address'); ?></span></a></li>
                                             <li data-menuid="10.2"><a href="<?php echo $this->baseUrl; ?>changepassword"><i class="ti-flickr"></i> <span><?php echo $this->language->tLine('Change Password'); ?></span></a></li>
@@ -682,11 +696,15 @@ $userShortUrl = $this->session->userdata('userShortUrl');
                         </div>
                     </div>
                 </div>
-    
-    
-    
+
+
+
+
+
     
 <script>
+
+
     $("#dhl-button").click(function() {
         $('html,body').animate(
             {scrollTop: $("#dhl-section").offset().top},

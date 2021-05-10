@@ -293,10 +293,6 @@ class Alfredinsertorder extends BaseControllerWeb
             $this->sendNotifictaion($post, $orderId, $post['order']['paid']);
             $this->sendEmailReceipt($post['order']['paid']);
         }
-        
-
-        
-
         return $orderId;
     }
 
