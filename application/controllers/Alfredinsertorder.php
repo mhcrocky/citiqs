@@ -263,7 +263,7 @@ class Alfredinsertorder extends BaseControllerWeb
 
 
 
-        if ($post['vendorId'] == 43533) {
+        if ($post['vendorId'] == 417) {
             $timeStart = time();
             echo 'time start</br>';            
             var_dump($timeStart);
@@ -272,23 +272,23 @@ class Alfredinsertorder extends BaseControllerWeb
             $orderForImage = reset($orderForImage);
             Orderprint_helper::saveOrderImage($orderForImage);
             $imageTime = time();
-            echo 'image created in ' . $imageTime - $timeStart . ' sec</br>';            
+            echo 'image created';            
             var_dump($imageTime);
 
             Receiptprint_helper::printAllReceipts($orderId);
 
             $receiptTime = time();
-            echo 'receipt created in ' . $receiptTime - $imageTime . ' sec</br>';    
+            echo 'receipt created';    
             var_dump($receiptTime);
 
             $this->sendNotifictaion($post, $orderId, $post['order']['paid']);
             $notificationTime = time();
-            echo 'notification send created in ' . $notificationTime - $receiptTime . ' sec</br>';    
+            echo 'notification send';    
             var_dump($notificationTime);
 
             $this->sendEmailReceipt($post['order']['paid']);
             $emailTime = time();
-            echo 'email send created in ' . $emailTime - $notificationTime . ' sec</br>';    
+            echo 'email send created';    
             var_dump($emailTime);
             die('time end');
         } else {
