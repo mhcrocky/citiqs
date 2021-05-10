@@ -83,7 +83,7 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 <?php } elseif ($this->view === 'warehouse/warehouse') { ?>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/jquery.datetimepicker.min.css">
-<?php } elseif ($this->view === 'warehouse/products') { ?>
+<?php } elseif ($this->view === 'warehouse/products' || $this->view === 'productsonoff/index') { ?>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/jquery.datetimepicker.min.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/warehouseProducts.css">
