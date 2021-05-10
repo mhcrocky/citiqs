@@ -186,6 +186,18 @@ if ( isset($design['shop']['eventDescript']) ) {
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
+            Selected event font size:
+            <input type="text" class="form-control" name="shop[id][selected_event_text][font-size]"
+                data-css-selector="id" data-css-selector-value="selected_event_text" data-css-property="font-size"
+                onfocus="styleELements(this)" oninput="styleELements(this)" style="border-radius: 50px"
+                <?php if ( isset($design['shop']['id']['selected_event_text']['font-size']) ) { ?>
+                value="<?php echo $design['shop']['id']['selected_event_text']['font-size']?>" data-value="1"
+                <?php } else { ?> value="18px" <?php } ?> />
+        </label>
+    </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
             Ticket price text color:
             <input data-jscolor="" class="form-control" name="shop[class][ticket_price][color]"
                 data-css-selector="class" data-css-selector-value="ticket_price" data-css-property="color"
