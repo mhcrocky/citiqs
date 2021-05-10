@@ -310,8 +310,8 @@
     
             // populate account array
             $argumentsArray['accounts']['authorizedToSign'] = '1';
-            $argumentsArray['accounts']['ubo'] = '1';
-            $argumentsArray['accounts']['uboPercentage'] = '100';
+            $argumentsArray['accounts']['ubo'] = '0';
+            $argumentsArray['accounts']['uboPercentage'] = '0';
             $argumentsArray['accounts']['useCompanyAuth'] = '1';
             $argumentsArray['accounts']['hasAccess'] = '1';
             $argumentsArray['accounts']['language'] = $CI->config->item('englishLngPayNlId');
