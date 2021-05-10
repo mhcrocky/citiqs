@@ -633,6 +633,8 @@ $route['qrcode/get_qrcodes'] = 'Qrcode/get_qrcodes';
 $route['qrcode/save_qrcode'] = 'Qrcode/save_qrcode';
 $route['qrcode/update_qrcode'] = 'Qrcode/update_qrcode';
 
+$route['productsonoff'] = 'Productsonoff/index';
+
 // connections api routes
 
 //buyer
