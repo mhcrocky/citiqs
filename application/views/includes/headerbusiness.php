@@ -292,7 +292,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 										
 											<li data-menuid="4.1"><a href="<?php echo $this->baseUrl; ?>orders"><i class="ti-stats-up"></i><span><?php echo $this->language->tLine('Orders'); ?></span></a></li>
 											<li data-menuid="4.2"><a href="<?php echo $this->baseUrl; ?>pos"><i class="ti-bar-chart"></i><span><?php echo $this->language->tLine('Cash desk'); ?></span></a></li>
-
+											<li data-menuid="4.2.1"><a href="<?php echo $this->baseUrl; ?>productsonoff'"><i class="ti-bag"></i> <span><?php echo $this->language->tLine('ON/OFF'); ?></span></a></li>
 											<li data-menuid="4.3">
 												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-bag"></i><span><?php echo $this->language->tLine('Products'); ?></span></a>
 												<ul class="collapse">
@@ -533,7 +533,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 									<?php } ?>
 									<?php if ($_SESSION['businessTypeId'] != 999) { ?>
 									<li data-menuid="10">
-                                        <a href="javascript:void(0)" data-intro='Profile up to date?' aria-expanded="true"><i class="ti-id-badge"></i><span><?php echo $this->language->tLine('Business Profile'); ?> </span></a>
+                                        <a href="javascript:void(0)"  aria-expanded="true"><i class="ti-id-badge"></i><span><?php echo $this->language->tLine('Business Profile'); ?> </span></a>
                                         <ul class="collapse">
 										    <li data-menuid="10.1"><a href="<?php echo $this->baseUrl; ?>address"><i class="ti-location-pin"></i> <span><?php echo $this->language->tLine('Address'); ?></span></a></li>
                                             <li data-menuid="10.2"><a href="<?php echo $this->baseUrl; ?>changepassword"><i class="ti-flickr"></i> <span><?php echo $this->language->tLine('Change Password'); ?></span></a></li>

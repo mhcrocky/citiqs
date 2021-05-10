@@ -6,6 +6,7 @@
     </div>
 </footer>
 </div>
+<script> introJs().start() </script>
 <script>
 (function() {
     $('ul').attr('style', 'padding-left: 0px !important');
