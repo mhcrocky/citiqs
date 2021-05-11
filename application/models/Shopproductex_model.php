@@ -107,20 +107,59 @@
         public function getAllUserProducts(int $userId): ?array
         {
 
-            $this->db->select("tbl_shop_products.id,tbl_shop_products_extended.name,category,orderNo");
-            $this->db->from('tbl_shop_products');
-            $this->db->join($this->table, $this->table.'.productId = tbl_shop_products.id', 'left');
-            $this->db->join('tbl_shop_categories', 'tbl_shop_products.categoryId = tbl_shop_categories.id', 'left');
-            $this->db->join('tbl_shop_product_printers', 'tbl_shop_products.id = tbl_shop_product_printers.productId', 'left');
-            $this->db->where('userId', $userId);
-            $this->db->group_by($this->table. '.productId');
-            $this->db->order_by('orderNo');
-            $query = $this->db->get();
-            $results = $query->result_array();
+            // $this->db->select("tbl_shop_products.id,tbl_shop_products_extended.name,category,orderNo");
+            // $this->db->from('tbl_shop_products');
+            // $this->db->join($this->table, $this->table.'.productId = tbl_shop_products.id', 'left');
+            // $this->db->join('tbl_shop_categories', 'tbl_shop_products.categoryId = tbl_shop_categories.id', 'left');
+            // $this->db->join('tbl_shop_product_printers', 'tbl_shop_products.id = tbl_shop_product_printers.productId', 'left');
+            // $this->db->where('userId', $userId);
+            // $this->db->group_by($this->table. '.productId');
+            // $this->db->order_by('orderNo');
+            // $query = $this->db->get();
+            // $results = $query->result_array();
+            // $products = [];
+            // foreach($results as $key => $result){
+            //     $result['position'] = $key + 1;
+            //     $products[] = $result;
+            // }
+            // return $products;
+
+            $query =
+                'SELECT '
+                        . $this->table . '.id, '
+                        . $this->table . '.name, '
+                        . $this->table . '.productId,
+                        tbl_shop_categories.category category, 
+                        tbl_shop_products.orderNo
+                    FROM '
+                        . $this->table . ' 
+                    INNER JOIN
+                        tbl_shop_products ON tbl_shop_products.id = ' . $this->table . '.productId
+                    INNER JOIN
+                        tbl_shop_categories ON tbl_shop_categories.id = tbl_shop_products.categoryId
+                    LEFT JOIN
+                        tbl_shop_products_types ON tbl_shop_products_types.id = ' . $this->table . '.productTypeId
+                    WHERE
+                        tbl_shop_categories.userId = ' . $userId .'
+                        AND tbl_shop_categories.archived = "0"
+                        AND tbl_shop_products.archived = "0"
+                        AND tbl_shop_products_types.vendorId = ' . $userId .'
+                        AND tbl_shop_products_types.isMain = "1"
+                    ORDER BY ' . $this->table . '.id DESC;';
+
+            $result = $this->db->query($query);
+            $result = $result->result_array();
+            $ids = [];
             $products = [];
-            foreach($results as $key => $result){
-                $result['position'] = $key + 1;
-                $products[] = $result;
+            $position = 0;
+            foreach ($result as $data) {
+                if (!in_array($data['productId'], $ids)) {
+                    $position++;
+                    $data['position'] = $position;
+                    array_push($products, $data);
+                }
+                array_push($ids, $data['productId']);
+   
             }
             return $products;
           
@@ -346,11 +385,14 @@
             return $count ? true : false;
         }
 
-        public function checkProductNameNew(int $userId, string $name): bool
+        public function checkProductNameNew(int $userId, string $name, int $id = 0): bool
         {
             $names = $this->getProductsNames($userId);
-            foreach ($names as $data) {
-                if ($data['name'] === $name) return true;
+            foreach ($names as $data) {                
+                if (
+                    ($id && intval($data['productId']) !== $id && $data['name'] === $name)
+                    || (!$id && $data['name'] === $name)
+                ) return true;   
             }
             return false;
         }

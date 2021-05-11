@@ -50,6 +50,7 @@
           url: '<?php echo base_url("getproducts"); ?>',
           dataSrc: '',
         },
+        // order: [[ 1, "desc" ]],
         rowReorder: {
           selector: 'tr',
           dataSrc: 'position'
@@ -104,11 +105,11 @@
               orderNo: this.data().position
             }
             i++;
-            //$.post('<?php echo base_url("updateproductorderno") ?>',data)
+            //$.post('<?php #echo base_url("updateproductorderno") ?>',data)
           });
           if (products.length > 0) {
           console.log(products);
-          $.post('<?php echo base_url("updateproductorderno") ?>',{products:products});
+          // $.post('<?php #echo base_url("updateproductorderno") ?>',{products:products});
         }
         });
 

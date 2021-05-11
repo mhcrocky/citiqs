@@ -402,7 +402,7 @@
             }
 
             // CHECK PRODUCT NAME
-            if ($this->shopproductex_model->checkProductNameNew($userId, $data['productExtended']['name'])) {
+            if ($this->shopproductex_model->checkProductNameNew($userId, $data['productExtended']['name'], intval($data['productExtended']['productId']))) {
                 $this->session->set_flashdata('error', 'Product with this name already exists! Update failed');
                 $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
                 redirect($redirect);
