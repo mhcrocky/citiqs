@@ -61,16 +61,16 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <label for="affiliate" class="col-md-4 col-form-label text-md-left">
-                            Affiliate
-                        </label>
-                        <div class="col-md-6">
-
-                            <input type="text" id="affiliate" class="input-w border-50 form-control"
-                                name="affiliate">
-                        </div>
-                    </div>
+<!--                    <div class="form-group row">-->
+<!--                        <label for="affiliate" class="col-md-4 col-form-label text-md-left">-->
+<!--                            Affiliate-->
+<!--                        </label>-->
+<!--                        <div class="col-md-6">-->
+<!---->
+<!--                            <input type="text" id="affiliate" class="input-w border-50 form-control"-->
+<!--                                name="affiliate">-->
+<!--                        </div>-->
+<!--                    </div>-->
 
 
 

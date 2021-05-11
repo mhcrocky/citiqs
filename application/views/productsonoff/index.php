@@ -108,8 +108,7 @@
                                             echo $product['categoryActive'] === '1' ? ' (<span>ACTIVE</span>)' : ' (<span>"BLOCKED</span>)'
                                         ?>
                                     </p>
-                                    <p class="item-description" style="white-space: initial;">VAT: <?php echo floatval($details['vatpercentage']); ?></p>
-                                    <p class="item-description" style="white-space: initial;">From: 
+                                    <p class="item-description" style="white-space: initial;">From:
                                         <?php echo ($product['dateTimeFrom']) ? $product['dateTimeFrom'] : 'All time'; ?>
                                     </p>
                                     <p class="item-description" style="white-space: initial;">To: 
