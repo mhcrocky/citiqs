@@ -151,15 +151,11 @@
             $result = $result->result_array();
             $ids = [];
             $products = [];
-            $position = 0;
             foreach ($result as $data) {
                 if (!in_array($data['productId'], $ids)) {
-                    $position++;
-                    $data['position'] = $position;
                     array_push($products, $data);
                 }
                 array_push($ids, $data['productId']);
-   
             }
             return $products;
           
@@ -642,7 +638,7 @@
                 ],
                 'conditions' => [
                     'GROUP_BY' => [$this->table. '.productId'],
-                    'ORDER_BY' => ['tbl_shop_categories.sortNumber ASC, tbl_shop_products.orderNo DESC'],
+                    'ORDER_BY' => ['tbl_shop_categories.sortNumber ASC, tbl_shop_products.orderNo ASC'],
                 ]
             ];
 
