@@ -261,6 +261,10 @@
 <?php } elseif ($this->view === 'voucher/templates/updateTemplate') { ?>
 	<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
 	<script src='<?php echo $this->baseUrl; ?>assets/home/js/voucherTemplates.js'></script>
+<?php } elseif ($this->view === 'appsettings/index') { ?>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+	<script src='<?php echo $this->baseUrl; ?>assets/home/js/appSettingsDataTable.js'></script>
 <?php } elseif ($this->view === 'voucher/index') { ?>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>

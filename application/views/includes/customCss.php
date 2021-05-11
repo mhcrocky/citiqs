@@ -569,6 +569,9 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/agendaCalendar.css">
 <?php } elseif ($this->view === 'templates/listTemplates') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+<?php  } elseif ($this->view === 'appsettings/index') { ?>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 <?php  } elseif ($this->view === 'voucher/index') { ?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/tiny_a4_format.css">
