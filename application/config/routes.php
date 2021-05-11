@@ -635,6 +635,12 @@ $route['qrcode/update_qrcode'] = 'Qrcode/update_qrcode';
 
 $route['productsonoff'] = 'Productsonoff/index';
 
+$route['appsettings'] = 'Appsettings/index';
+$route['appsettings/get_appsettings'] = 'Appsettings/get_appsettings';
+$route['appsettings/save_appsettings'] = 'Appsettings/save_appsettings';
+$route['appsettings/update_appsettings'] = 'Appsettings/update_appsettings';
+$route['appsettings/delete_appsettings'] = 'Appsettings/delete_appsettings';
+
 // connections api routes
 
 //buyer
