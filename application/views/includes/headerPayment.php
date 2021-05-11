@@ -25,7 +25,8 @@
         color: #000;
     }
     </style>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
@@ -44,7 +45,7 @@
     <header class="header">
         <nav class="navbar navbar-expand-lg container">
             <a class="navbar-brand"
-                href="<?php echo $this->baseUrl; ?>events/shop/<?php echo $this->session->userdata('shortUrl'); ?>">
+                href="#">
                 <img class="menu-icon" src="<?php echo base_url(); ?>assets/home/images/logo1.png" alt="">
             </a>
             <button class="navbar-toggler py-2 px-3 px-md-4 bg-secondary" type="button" data-toggle="collapse"
@@ -55,7 +56,7 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active pt-2 pt-md-0">
                         <a class="nav-link"
-                            href="<?php echo $this->baseUrl; ?>events/shop/<?php echo $this->session->userdata('shortUrl'); ?>">Home
+                            href="#">Home
                             <span class="sr-only">(current)</span></a>
                     </li>
                 </ul>
@@ -63,7 +64,7 @@
             <a href="#" class="btn btn-primary btn-lg bg-primary px-3 px-md-4 text-center header__checkout"
                 data-toggle="modal" data-target="#checkout-modal"><i class="fa fa-shopping-basket mr-md-3"></i><span
                     class='d-none d-lg-inline'>CHECKOUT</span> &nbsp €<b
-                    class="totalBasket"><?php echo $this->session->userdata('amount'); ?></b></a>
+                    class="totalBasket"><?php echo $amount; ?></b></a>
 
         </nav>
     </header>

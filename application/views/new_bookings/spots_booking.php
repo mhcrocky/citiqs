@@ -102,7 +102,7 @@
         
             <tr>
                 <td>
-                    <a style="text-decoration: none;" class="text-dark" href="<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot['data']->id; ?>">
+                    <a style="text-decoration: none;" class="text-dark" href="<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot['data']->id; ?>?order=<?php echo $orderRandomKey; ?>">
                         <?php echo $spot['data']->descript; ?>
                     <a>
                 </td>

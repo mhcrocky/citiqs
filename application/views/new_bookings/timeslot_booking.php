@@ -35,7 +35,7 @@
     <tr>
     <td>
     <form id="form-<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>"
-        action="<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot->id; ?>" method="post"
+        action="<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot->id; ?>?order=<?php echo $orderRandomKey; ?>" method="post"
         enctype="multipart/form-data">
         <?php if($timeSlot['status'] != "soldout"): ?>
         <div class="form-check">
@@ -57,7 +57,7 @@
     <tr>
     <td>
     <form id="form-<?php echo $timeSlot['id']; ?>"
-        action="<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot->id; ?>" method="post"
+        action="<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot->id; ?>?order=<?php echo $orderRandomKey; ?>" method="post"
         enctype="multipart/form-data">
         <?php if($timeSlot['status'] != "soldout"): ?>
         <div class="form-check">
@@ -83,7 +83,7 @@
     </table>
     <div class="w-100 go-back-wrapper">
         <a class="go-back-button"
-            href="javascript:location.replace('<?php echo base_url();?>agenda_booking/spots/<?php echo $this->session->userdata('eventDate'); ?>/<?php echo $this->session->userdata('eventId'); ?>')">Go
+            href="javascript:location.replace('<?php echo base_url();?>agenda_booking/spots/<?php echo $eventDate; ?>/<?php echo $eventId; ?>?order=<?php echo $orderRandomKey; ?>')">Go
             Back</a>
     </div>
 </div>

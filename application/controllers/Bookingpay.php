@@ -18,7 +18,9 @@ class Bookingpay extends BaseControllerWeb
         $this->load->helper('cookie');
         $this->load->helper('utility_helper');
         $this->load->helper('email_helper');
+        $this->load->helper('jwt_helper');
         $this->load->helper('pay_helper');
+        
         $this->load->model('log_model');
         $this->load->model('bookandpay_model');
         $this->load->model('bookandpaytimeslots_model');
@@ -26,6 +28,8 @@ class Bookingpay extends BaseControllerWeb
         $this->load->model('bookandpayagenda_model');
         $this->load->model('sendreservation_model');
         $this->load->model('email_templates_model');
+        $this->load->model('shopvendor_model');
+        $this->load->model('shopsession_model');
         $this->load->config('custom');
         $this->load->library('language', array('controller' => $this->router->class));
         $this->load->library('form_validation');
@@ -382,11 +386,23 @@ class Bookingpay extends BaseControllerWeb
 
     public function onlinepayment($paymentType, $paymentOptionSubId = '0')
     {
+        $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : false;
+        $orderData = [];
+        if($orderRandomKey){
+            $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+            if(count($orderData) < 1){
+                redirect(base_url());
+            }
+            
+        }
+
+        
+
         $paymentType = strval($this->uri->segment('3'));
         $paymentOptionSubId = ($this->uri->segment('4')) ? strval($this->uri->segment('4')) : '0';
-        $vendorId = $this->session->userdata('customer')['id'];
+        $vendorId = isset($orderData['customer']) ? $orderData['customer']['id'] : $this->session->userdata('customer')['id'];
         $SlCode = $this->bookandpay_model->getUserSlCode($vendorId);
-        $reservationIds = $this->session->userdata('reservations');
+        $reservationIds = isset($orderData['reservations']) ? $orderData['reservations'] : $this->session->userdata('reservations');
         $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
         
         $arrArguments = Pay_helper::getReservationsArgumentsArray($vendorId, $reservations, strval($SlCode), $paymentType, $paymentOptionSubId);
