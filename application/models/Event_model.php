@@ -206,7 +206,7 @@ class Event_model extends CI_Model {
 				continue;
 			}
 
-			$previousFaseId = $result['previousFaseId'];
+			$previousFaseId = ($result['ticketExpired'] == 'manually') ? null : $result['previousFaseId'];
 
 			if($previousFaseId != null && isset($nextFaseTickets[$previousFaseId]) && $nextFaseTickets[$previousFaseId]['soldout'] == false){
 				continue;

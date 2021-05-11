@@ -128,7 +128,7 @@
                             
                         </div>
                         <div class="col-md-3">
-                            <select id="previousFaseId" name="previousFaseId" style="height: 35px !important; padding: 0px !important" class="form-control input-w">
+                            <select id="previousFaseId" name="previousFaseId" style="height: 35px !important; padding: 0px !important;padding-left: 8px !important;" class="form-control input-w">
                                 <option value="0">Select option</option>
                                 <?php if(count($tickets) > 0): ?>
                                 <?php foreach($tickets as $ticket): ?>
@@ -175,7 +175,7 @@
                         </div>
                         <div class="col-md-3 mt-1">
                             <div class="input-group">
-                                <input type="time" class="form-control inp-height timestamp" id="startTime"
+                                <input style="padding-top: 5px !important;" type="time" class="form-control inp-height timestamp" id="startTime"
                                     name="startTime">
                                 <span style="padding-top: 5px;" class="input-group-addon fa-input pl-2 pr-2">
                                     <i style="color: #fff;font-size: 20px;" class="fa fa-clock-o"></i></span>
@@ -200,7 +200,7 @@
                         </div>
                         <div class="col col-md-3 mt-1">
                             <div class="input-group">
-                                <input type="time" onchange="checkTimestamp()" onfocus="checkTimestamp()"
+                                <input style="padding-top: 5px !important;" type="time" onchange="checkTimestamp()" onfocus="checkTimestamp()"
                                     oninput="checkTimestamp()" onkeyup="checkTimestamp()"
                                     class="form-control inp-height timestamp" id="endTime" name="endTime">
                                 <span style="padding-top: 5px;" class="input-group-addon fa-input pl-2 pr-2">
