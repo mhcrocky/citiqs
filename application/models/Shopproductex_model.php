@@ -346,6 +346,15 @@
             return $count ? true : false;
         }
 
+        public function checkProductNameNew(int $userId, string $name): bool
+        {
+            $names = $this->getProductsNames($userId);
+            foreach ($names as $data) {
+                if ($data['name'] === $name) return true;
+            }
+            return false;
+        }
+
         private function prepareProductTimes(string $productTimes, string $separator, string $concatSeparator): array
         {
             $productTimes =  explode($separator, $productTimes);
