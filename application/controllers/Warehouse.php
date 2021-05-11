@@ -286,12 +286,7 @@
             $userId = intval($_SESSION['userId']);
 
             //CHECK PRODUCT NAME
-            $where = [
-                'tbl_shop_categories.userId' => $userId,
-                'tbl_shop_products_extended.name=' => $data['productExtended']['name']
-            ];
-
-            if ($this->shopproductex_model->checkProductName($where)) {
+            if ($this->shopproductex_model->checkProductNameNew($userId, $data['productExtended']['name'])) {
                 $this->session->set_flashdata('error', 'Product with this name already exists! Insert failed');
                 $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
                 redirect($redirect);
@@ -407,13 +402,7 @@
             }
 
             // CHECK PRODUCT NAME
-            $where = [
-                'tbl_shop_categories.userId' => $userId,
-                'tbl_shop_products_extended.productId !=' => $productId,
-                'tbl_shop_products_extended.name=' => $data['productExtended']['name']
-            ];
-
-            if ($this->shopproductex_model->checkProductName($where)) {
+            if ($this->shopproductex_model->checkProductNameNew($userId, $data['productExtended']['name'])) {
                 $this->session->set_flashdata('error', 'Product with this name already exists! Update failed');
                 $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
                 redirect($redirect);

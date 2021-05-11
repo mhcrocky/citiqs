@@ -53,6 +53,12 @@
             </div>
             <div class="content-container clearfix" id="paymentMethodsContainer">
                 <div id="paymentContainer" class="payment-container methods">
+					<?php if (in_array($payconiqPayment, $paymentMethodsKey)) { ?>
+						<a href="<?php echo base_url(); ?>onlinepayment/<?php echo $payconiqPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
+							<img src="https://tiqs.com/alfred/assets/home/imgs/extra/payconiq.png" alt="Payconiq">
+							<span class="paymentMethodText">Payconiq</span>
+						</a>
+					<?php } ?>
                     <?php if (in_array($idealPayment, $paymentMethodsKey)) { ?>
                         <a href="javascript:void(0)" onclick="toogleElements('idealBanks', 'paymentMethodsContainer', 'hidden')" class="paymentMethod method-card" >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/ideal.png" alt="iDEAL">
@@ -65,12 +71,7 @@
                             <span class="paymentMethodText">Creditcard</span>
                         </a>
                     <?php } ?>
-                    <?php if (in_array($payconiqPayment, $paymentMethodsKey)) { ?>
-                        <a href="<?php echo base_url(); ?>onlinepayment/<?php echo $payconiqPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
-                            <img src="https://tiqs.com/alfred/assets/home/imgs/extra/payconiq.png" alt="Payconiq">
-                            <span class="paymentMethodText">Payconiq</span>
-                        </a>
-                    <?php } ?>
+
                     <?php if (in_array($bancontactPayment, $paymentMethodsKey)) { ?>
                         <a href="<?php echo base_url(); ?>onlinepayment/<?php echo $bancontactPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/bancontact.png" alt="bancontact">
@@ -96,18 +97,17 @@
                                 <?php if ($vendor['vendorId'] == THGROUP) { ?>
                                     <span class="paymentMethodText">Collect at the bar</span>
                                 <?php } else { ?>
-                                    <span class="paymentMethodText">Pay at waiter</span>
+                                    <span class="paymentMethodText"><?php echo $this->language->tline('Pay at waiter');?></span>
                                 <?php } ?>
                             </a>
                         <?php } ?>
                         <?php if (in_array($postPaid, $paymentMethodsKey)) { ?>
                             <a href="javascript:;" class="paymentMethod method-card" data-toggle="modal" data-target="#postPaid">
                                 <img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Pay at waiter" />
-                                
                                 <?php if ($vendor['vendorId'] == THGROUP) { ?>
                                     <span class="paymentMethodText">Collect at the bar</span>
                                 <?php } else { ?>
-                                    <span class="paymentMethodText">Pay at waiter</span>
+                                    <span class="paymentMethodText"><?php echo $this->language->tline('Pay at waiter');?></span>
                                 <?php } ?>
                             </a>
                         <?php } ?>
@@ -121,7 +121,7 @@
                     <?php if (in_array($voucherPayment, $paymentMethodsKey)) { ?>
                         <a href="javascript:;" data-toggle="modal" data-target="#voucher" class="paymentMethod method-card" >
                             <img src="<?php echo base_url() . 'assets/home/images/voucher.png'; ?>" alt="voucher" >
-                            <span class="paymentMethodText">gebruik Voucher</span>
+                            <span class="paymentMethodText"><?php echo $this->language->tline('Use Voucher');?></span>
                         </a>
                     <?php } ?>
                     <div class="clearfix"></div>
