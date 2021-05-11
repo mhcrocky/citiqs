@@ -604,7 +604,6 @@ class Booking_events extends BaseControllerWeb
 				$ticketQuantity = $record->numberofpersons;
                 $orderAmount = intval($ticketQuantity) * (floatval($record->price) + floatval($record->ticketFee));
                 $orderAmount = number_format($orderAmount, 2, '.', '');
-                $eventZipcode = $record->ticketDescription;
                 $buyerName = $record->name;
                 $buyerEmail = $record->email;
 				$buyerMobile = $record->mobilephone;

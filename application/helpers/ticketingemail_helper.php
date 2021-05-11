@@ -39,7 +39,6 @@
 				    $ticketQuantity = $record->numberofpersons;
                     $orderAmount = intval($ticketQuantity) * (floatval($record->price) + floatval($record->ticketFee));
                     $orderAmount = number_format($orderAmount, 2, '.', '');
-                    $eventZipcode = $record->ticketDescription;
                     $buyerName = $record->name;
                     $buyerEmail = $record->email;
 				    $buyerMobile = $record->mobilephone;
@@ -99,7 +98,7 @@
 							default:
 								break;
                         }
-
+ 
                         
 						if($emailId) {
                             $emailTemplate = $CI->email_templates_model->get_emails_by_id($emailId);
