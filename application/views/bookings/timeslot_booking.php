@@ -126,7 +126,7 @@
                 </div>
                 <div class="login-box" align="center">
                     <form id="checkItem"
-                        action="<?php echo $this->baseUrl; ?>booking_agenda/time_slots/<?php echo $spot->id; ?>"
+                        action="<?php echo $this->baseUrl; ?>booking_agenda/time_slots/<?php echo $spot->id; ?>?order=<?php echo $orderRandomKey; ?>"
                         method="post" enctype="multipart/form-data">
                         <input type="hidden" id="startTime" name="startTime">
                         <input type="hidden" id="endTime" name="endTime">

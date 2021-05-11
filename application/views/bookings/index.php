@@ -47,7 +47,7 @@
                                     <img src="<?php echo $this->baseUrl; ?>assets/home/images/<?php echo $dayOfWeek?>.png" alt="tiqs" width="150" height="auto" />
                                 </p>
                                 
-                                <a href="<?php echo $this->baseUrl; ?>booking_agenda/spots/<?php echo date("Ymd", strtotime($day->ReservationDateTime)).'/'.$day->id ?>" target="_self" class="button button-<?php echo $day->Background?> mb-25" style="font-family: caption-light;font-size: small;margin-left:20px;">
+                                <a href="<?php echo $this->baseUrl; ?>booking_agenda/spots/<?php echo date("Ymd", strtotime($day->ReservationDateTime)).'/'.$day->id . '?order=' . $orderRandomKey;  ?>" target="_self" class="button button-<?php echo $day->Background?> mb-25" style="font-family: caption-light;font-size: small;margin-left:20px;">
                                     <?= $this->language->Line("BOOKING-001A","BOEK");?>
                                 </a>
                         </div>

@@ -89,7 +89,7 @@ p.p-title {
                             </div>
                             <div class="form-group has-feedback mt-35">
                                 <div style="text-align: center; ">
-                                    <a href="<?php echo $this->baseUrl; ?>booking_agenda/time_slots/<?php echo $spot['data']->id; ?>" class="button button-orange mb-25"><?= ($this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME")) ? $this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME") : 'Next'; ?> </a>
+                                    <a href="<?php echo $this->baseUrl; ?>booking_agenda/time_slots/<?php echo $spot['data']->id; ?>?order=<?php echo $orderRandomKey; ?>" class="button button-orange mb-25"><?= ($this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME")) ? $this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME") : 'Next'; ?> </a>
                                 </div>
                             </div>
                         <?php else: ?>
@@ -156,7 +156,7 @@ p.p-title {
                             <?php endif; ?>
                             <div class="form-group has-feedback mt-35">
                                 <div style="text-align: center; ">
-                                    <a href="<?php echo $this->baseUrl; ?>booking_agenda/time_slots/<?php echo $spot['data']->id; ?>" class="button button-orange mb-25"><?= ($this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME")) ? $this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME") : 'Next'; ?> </a>
+                                    <a href="<?php echo $this->baseUrl; ?>booking_agenda/time_slots/<?php echo $spot['data']->id; ?>?order=<?php echo $orderRandomKey; ?>" class="button button-orange mb-25"><?= ($this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME")) ? $this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME") : 'Next'; ?> </a>
                                 </div>
                             </div>
                         <?php else: ?>
@@ -186,6 +186,7 @@ p.p-title {
 </div>
 </body>
 <script>
+/*
 $(document).ready(function(){
 
     $(".img-check").click(function(){
@@ -220,7 +221,8 @@ $(document).ready(function(){
             available_items: available_booking,
             image: image
         }
-        $.post('<?= base_url(); ?>Agenda_booking/create_spots', spotData);
+        $.post('//echo base_url(); ?>Agenda_booking/create_spots', spotData);
     });
 })
+*/
 </script>

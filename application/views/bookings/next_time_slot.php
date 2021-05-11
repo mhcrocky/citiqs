@@ -19,7 +19,7 @@
                                         </p>
                                     </div>
                                     <div style="width: 20%;">
-                                        <a style="margin-left: 10px;" href="<?php echo $this->baseUrl; ?>booking_agenda/delete_reservation/<?php echo $reservation->id; ?>" class="delete-time-slot">
+                                        <a style="margin-left: 10px;" href="<?php echo $this->baseUrl; ?>booking_agenda/delete_reservation/<?php echo $reservation->id; ?>?order=<?php echo $orderRandomKey; ?>" class="delete-time-slot">
 										    <?php echo ($this->language->Line("NEXT_TIME_SLOT-0006", "Cancel")) ? $this->language->Line("NEXT_TIME_SLOT-0006", "Cancel") : "Cancel"; ?>
 										</a>
                                     </div>
@@ -36,7 +36,7 @@
 								</h2>
 							</div>
 
-							<a href="<?php echo $this->baseUrl; ?>booking_agenda/pay" type="button" class="button button-orange">
+							<a href="<?php echo $this->baseUrl; ?>booking_agenda/pay?order=<?php echo $orderRandomKey; ?>" type="button" class="button button-orange">
 							    <?php echo ($this->language->Line("NEXT_TIME_SLOT-0003", "PAY")) ? $this->language->Line("NEXT_TIME_SLOT-0003", "PAY") : "PAY"; ?>
 							</a>
 
@@ -51,7 +51,7 @@
                                 <img src="<?php echo $this->baseUrl . $logoUrl; ?>" alt="tiqs" width="250" height="auto" />
                             </div>
                             <div class="mb-35">
-                                <a href="<?php echo $this->baseUrl; ?>booking_agenda/time_slots/<?php echo $reservation->SpotId; ?>" type="button" class="button button-orange">
+                                <a href="<?php echo $this->baseUrl; ?>booking_agenda/time_slots/<?php echo $reservation->SpotId; ?>?order=<?php echo $orderRandomKey; ?>" type="button" class="button button-orange">
 								    <?php echo ($this->language->Line("NEXT_TIME_SLOT-0005", "EXTRA TIME")) ? $this->language->Line("NEXT_TIME_SLOT-0005", "EXTRA TIME") : "EXTRA TIME"; ?>
 								</a>
                             </div>
@@ -60,7 +60,7 @@
 							<img src="<?php echo $this->baseUrl; ?>assets/home/images/paymentcheckout.png" alt="tiqs" width="150" height="auto" />
 						</div>
 						<?php else: ?>
-							<a href="<?php echo $this->baseUrl; ?>booking_agenda/pay" type="button" class="button button-orange">
+							<a href="<?php echo $this->baseUrl; ?>booking_agenda/pay?order=<?php echo $orderRandomKey; ?>" type="button" class="button button-orange">
 							    <?php echo ($this->language->Line("NEXT_TIME_SLOT-0003", "NEXT")) ? $this->language->Line("NEXT_TIME_SLOT-0003", "NEXT") : "NEXT"; ?>
 							</a>
 						<?php endif; ?>

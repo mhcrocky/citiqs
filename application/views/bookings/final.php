@@ -3,7 +3,7 @@
     <div style="text-align: left">
             <a href="javascript:history.back()"><i class="fa fa-arrow-circle-left" style="font-size:48px; color:white"></i></a>
         </div>
-        <form id="checkItem" action="<?php echo $this->baseUrl; ?>booking_agenda/pay" method="post"
+        <form id="checkItem" action="<?php echo $this->baseUrl; ?>booking_agenda/pay?order=<?php echo $orderRandomKey; ?>" method="post"
               >
             <div class="login-box background-orange-light">
                 <?php foreach ($reservations as $key => $reservation): ?>
