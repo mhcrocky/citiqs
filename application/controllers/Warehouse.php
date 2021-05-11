@@ -195,6 +195,7 @@
          */
         public function products(): void
         {
+            $active = isset($_GET['active']) ? $this->input->get('active', true) : '';
             $this->global['pageTitle'] = 'TIQS : PRODUCTS';
 
             $userId = intval($_SESSION['userId']);
@@ -222,7 +223,7 @@
 
             $data = [
                 'categories' => $this->shopcategory_model->fetch(['userId' => $userId]),
-                'products' => $this->shopproductex_model->getUserProducts($userId, $perPage, $offset, $whereIn),
+                'products' => $this->shopproductex_model->getUserProducts($userId, $perPage, $offset, $whereIn, $active),
                 'printers' => $this->shopprinters_model->read(['*'], ['userId' => $userId, 'archived' => '0']),
                 'userSpots' => $this->shopspot_model->fetchUserSpots($userId),
                 'productTypes' => $this->shopprodutctype_model->fetchProductTypes($userId),
