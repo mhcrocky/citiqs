@@ -489,7 +489,7 @@ function paymentMethodRedirect(el){
     var amount = $('.totalBasket').text();
     var paymentFee = $(el).attr('data-paymentFee');
     paymentFee = paymentFee.replace( /^\D+/g, '');
-    paymentFee = $.isNumeric(paymentFee) ? paymentFee : 0;
+    paymentFee = isNumber(paymentFee) ? paymentFee : 0;
     paymentFee = parseFloat(paymentFee);
 
     var total = parseFloat(amount) + paymentFee;
@@ -511,10 +511,12 @@ function paymentMethodUrl(el){
 function backToPaymentMethods(el){
     var amount = $('.totalBasket').text();
     var paymentFee = $(el).attr('data-paymentFee');
-    if($.numeric(paymentFee)){
+    if(isNumber(paymentFee)){
         paymentFee = parseFloat(paymentFee);
         var total = parseFloat(amount) - paymentFee;
         $('.totalBasket').text(total.toFixed(2));
     }
     
 }
+
+function isNumber(n) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n); } 
