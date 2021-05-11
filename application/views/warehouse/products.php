@@ -264,6 +264,38 @@
                     </div>
                     <?php if ($products) { ?>
                         <div class="col-lg-6 col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="filterCategories">Filter products:</label>
+                                <label class="radio-inline">
+                                    <input
+                                        type="radio"
+                                        value="products"
+                                        <?php if (!isset($_GET['active'])) echo 'checked'; ?>
+                                        onclick="redirectToNewLocation(this.value)"
+                                        />
+                                    All products
+                                </label>
+                                <label class="radio-inline">
+                                    <input
+                                        type="radio"
+                                        name="locationHref"
+                                        value="products?active=1"
+                                        <?php if (isset($_GET['active']) && $_GET['active'] === '1') echo 'checked'; ?>
+                                        onclick="redirectToNewLocation(this.value)"
+                                        />
+                                        Active products
+                                </label>
+                                <label class="radio-inline">
+                                    <input
+                                        type="radio"
+                                        name="locationHref"
+                                        value="products?active=0"
+                                        <?php if (isset($_GET['active']) && $_GET['active'] === '0') echo 'checked'; ?>
+                                        onclick="redirectToNewLocation(this.value)"
+                                        />
+                                        Archived products
+                                </label>
+                            </div>
                             <form method="post" action="<?php echo base_url() ?>products" >
                                 <div class="form-group col-lg-6">
                                     <label for="filterProducts">Filter by product name:</label>

@@ -85,14 +85,20 @@
             return true;
         }
 
-        public function getUserProducts(int $userId, int $limit, int $offset, $whereIn = []): ?array
+        public function getUserProducts(int $userId, int $limit, int $offset, $whereIn = [], string $active = ''): ?array
         {
+            $where = [
+                'tbl_shop_categories.userId=' => $userId,
+                'tbl_shop_categories.archived' => '0',
+                'tbl_shop_products.archived' => '0',
+            ];
+
+            if ($active === '1' || $active === '0') {
+                $where['tbl_shop_products.active'] = $active;
+            }
+
             $filter = [
-                'where' => [
-                    'tbl_shop_categories.userId=' => $userId,
-                    'tbl_shop_categories.archived' => '0',
-                    'tbl_shop_products.archived' => '0',
-                ],
+                'where' => $where,
                 'whereIn' => $whereIn,
                 'conditions' => [
                     'GROUP_BY' => [$this->table. '.productId'],
@@ -151,15 +157,11 @@
             $result = $result->result_array();
             $ids = [];
             $products = [];
-            $position = 0;
             foreach ($result as $data) {
                 if (!in_array($data['productId'], $ids)) {
-                    $position++;
-                    $data['position'] = $position;
                     array_push($products, $data);
                 }
                 array_push($ids, $data['productId']);
-   
             }
             return $products;
           
@@ -642,7 +644,7 @@
                 ],
                 'conditions' => [
                     'GROUP_BY' => [$this->table. '.productId'],
-                    'ORDER_BY' => ['tbl_shop_categories.sortNumber ASC, tbl_shop_products.orderNo DESC'],
+                    'ORDER_BY' => ['tbl_shop_categories.sortNumber ASC, tbl_shop_products.orderNo ASC'],
                 ]
             ];
 

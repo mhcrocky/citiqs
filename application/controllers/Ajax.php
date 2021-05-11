@@ -43,6 +43,7 @@ class Ajax extends CI_Controller
         $this->load->model('shoplandingpages_model');
         $this->load->model('shopprinters_model');
         $this->load->model('shopproducttime_model');
+        $this->load->model('shopproduct_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -2546,5 +2547,31 @@ class Ajax extends CI_Controller
         echo json_encode($response);
         return;
 
+    }
+
+    function sortProducts():void
+    {
+        if (!$this->input->is_ajax_request() || empty($_SESSION['userId'])) return;
+
+        $products = $this->security->xss_clean($_POST['products']);
+        $i = 0;
+        foreach ($products as $productId) {
+            $i++;
+            if (!$this->shopproduct_model->setObjectId(intval($productId))->setproperty('orderNo', $i)->update()){
+                $response = [
+                    'status' => '0',
+                    'messages' => ['Sorting failed']
+                ];
+                echo json_encode($response);
+                return;
+            }
+        }
+
+        $response = [
+            'status' => '1',
+            'messages' => ['Product sorted']
+        ];
+        echo json_encode($response);
+        return;
     }
 }

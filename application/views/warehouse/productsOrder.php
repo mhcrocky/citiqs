@@ -32,102 +32,15 @@
 
 <script type="text/javascript">
 
-
-  $(document).ready( function () {
-    $("select option:nth-child(1)").attr("selected", true);
-      var table = $('#products').DataTable({
-        processing: true,
-        colReorder: true,
-        rowReorder: true,
-        fixedHeader: true,
-        deferRender: true,
-        scroller: true,
-        ordering: true,
-        lengthMenu: [[200, 500, -1], [200, 500, 'All']],
-        pageLength: 200,
-        ajax: {
-          type: 'get',
-          url: '<?php echo base_url("getproducts"); ?>',
-          dataSrc: '',
-        },
-        // order: [[ 1, "desc" ]],
-        rowReorder: {
-          selector: 'tr',
-          dataSrc: 'position'
-        },
-        columnDefs: [
-            {orderable: false, targets: 0, visible: false }
-        ],
-        columns:[
-        {
-          title: 'Order',
-					data: 'position',
-        },
-        {
-          title: 'ID',
-          data: 'id'
-        },
-        {
-          title: 'Name',
-          data: 'name'
-        },
-        {
-          title: 'Category',
-          data: 'category'
-        }
-        ],
-      });
-
-      var category = $('#category').val();
-        table
-        .columns( 3 )
-        .search( category )
-        .draw();
-
-      $('#category').change(function() {
-        var category = this.value;
-        table
-        .columns( 3 )
-        .search( category )
-        .draw();
-      });
-      
-      table.on( 'row-reordered', function ( e, diff, edit ) {
-        var products = [];
-        var i = 1;
-        table.one( 'draw', function () {
-          console.log( 'Redraw occurred at: '+new Date().getTime() );
-          table.rows({search:'applied'}).every(function (rowIdx, tableLoop, rowLoop) {
-            console.log(rowIdx, this.data());
-            products.push([this.data().id,i]);
-            var data = {
-              productId: this.data().id,
-              orderNo: this.data().position
-            }
-            i++;
-            //$.post('<?php #echo base_url("updateproductorderno") ?>',data)
-          });
-          if (products.length > 0) {
-          console.log(products);
-          // $.post('<?php #echo base_url("updateproductorderno") ?>',{products:products});
-        }
-        });
-
-        
-        
-} );
-
-});
-
-    function round_up(val){
-      val = parseFloat(val);
-      return val.toFixed(2);
-	}
-
-function total_number(number){
-  if(number==0){
-   return '€ '+number;
+  function round_up(val){
+    val = parseFloat(val);
+    return val.toFixed(2);
   }
-  return '€ '+number.toFixed(2);
-}
+
+  function total_number(number){
+    if(number==0){
+      return '€ '+number;
+    }
+    return '€ '+number.toFixed(2);
+  }
 </script>

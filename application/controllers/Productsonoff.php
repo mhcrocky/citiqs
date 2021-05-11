@@ -42,7 +42,7 @@
         public function index(): void
         {
             $this->global['pageTitle'] = 'TIQS : PRODUCTS';
-
+            $active = isset($_GET['active']) ? $this->input->get('active', true) : '';
             $userId = intval($_SESSION['userId']);
             $productNames = $this->shopproductex_model->getProductsNames($userId);
             if ($productNames) {
@@ -68,7 +68,7 @@
 
             $data = [
                 'categories' => $this->shopcategory_model->fetch(['userId' => $userId]),
-                'products' => $this->shopproductex_model->getUserProducts($userId, $perPage, $offset, $whereIn),
+                'products' => $this->shopproductex_model->getUserProducts($userId, $perPage, $offset, $whereIn, $active),
                 'printers' => $this->shopprinters_model->read(['*'], ['userId' => $userId, 'archived' => '0']),
                 'userSpots' => $this->shopspot_model->fetchUserSpots($userId),
                 'productTypes' => $this->shopprodutctype_model->fetchProductTypes($userId),

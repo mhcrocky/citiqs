@@ -368,4 +368,6 @@
 	<script type="text/javascript" src="<?php echo $this->baseUrl; ?>assets/js/jquery.table2excel.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/js/query-builder.standalone.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/ticketingFinancialDataTable.js"></script>
+<?php } elseif ($this->view === 'warehouse/productsOrder') { ?>
+	<script src='<?php echo base_url(); ?>assets/home/js/sortProducts.js'></script>
 <?php } ?>
