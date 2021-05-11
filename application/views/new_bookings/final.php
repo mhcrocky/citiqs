@@ -1,5 +1,6 @@
+
 <div class="col-12 step step-4 active">
-    <form id="checkItem" class="w-100" action="<?php echo $this->baseUrl; ?>agenda_booking/pay" method="post">
+    <form id="checkItem" class="w-100" action="<?php echo $this->baseUrl; ?>agenda_booking/pay?order=<?php echo $orderRandomKey; ?>" method="post">
         <div class="form-group w-100">
             <label class="form-check-label" for="11"><strong>Name</strong></label>
             <input class="form-control" type="text" id="username" name="username" placeholder="Your Name" required>
@@ -16,9 +17,9 @@
         <div id="booking-footer" class="booking-form__result w-100">
             <h4 id="footer-title" class="mb-3">Booking info </h4>
 			<div id="booking-info" class="w-100 row bg-white p-2 pt-4">
-			<table class="w-100">
+			<table class="w-100 text-left">
 
-            <tr style="width:50%">
+            <tr class="text-left" style="width:50%">
 			    <th class="booking-info">
 			        <strong class="event-text">Date</strong>
 			    </th>
@@ -26,23 +27,18 @@
 				    <strong class="spot-text">Place</strong>
 			    </th>
 			</tr>
-			<tr style="width:50%">
-			    <td class="booking-info">
+			<tr class="text-left" style="width:50%">
+			    <td class="booking-info text-left">
 				    <span id="selected-date">
-                        <?php 
-						    $shorturl = $this->session->userdata('shortUrl');
-						    if(base_url("agenda_booking/$shorturl") != current_url()):
-							    echo date("d-m-Y", strtotime($this->session->userdata('eventDate')));
-						    endif;
-					    ?>
+                        <?php echo date("d-m-Y", strtotime($eventDate)); ?>
                     </span>
 			    </td>
-				<td class="booking-info">
-				    <span id="spot"><?php echo $this->session->userdata('spotDescript'); ?></span>
+				<td class="booking-info text-left">
+				    <span id="spot"><?php echo $spotDescript; ?></span>
 			    </td>
 			</tr>
 
-			<tr style="width:50%;">
+			<tr class="text-left" style="width:50%;">
 			    <th class="booking-info pt-4">
 			        <strong class="timeslot-text">Time</strong>
 			    </th>
@@ -50,15 +46,15 @@
 				    <strong>Price</strong>
 			    </th>
 			</tr>
-			<tr style="width:50%">
-			    <td class="booking-info">
+			<tr class="text-left" style="width:50%">
+			    <td class="booking-info text-left">
 					<span id="selected-time">
-					    <?php echo (!is_numeric($this->session->userdata('timeslot'))) ? $this->session->userdata('timeslot') : ''; ?>
+					    <?php echo $timeslot; ?>
 					</span>
 			    </td>
-				<td class="booking-info">
+				<td class="booking-info text-left">
 				    <span id="price">
-                        <?php echo $this->session->userdata('timeslotPrice'); ?>€ 
+                        <?php echo $timeslotPrice; ?>€ 
 						<?php if($reservationFee != 0.00){ ?>
 						(Fee <?php echo $reservationFee; ?>€)
 						<?php } ?>
