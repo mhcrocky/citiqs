@@ -387,22 +387,24 @@ class Bookingpay extends BaseControllerWeb
     public function onlinepayment($paymentType, $paymentOptionSubId = '0')
     {
         $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : false;
-        $orderData = [];
-        if($orderRandomKey){
-            $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
-            if(count($orderData) < 1){
-                redirect(base_url());
-            }
-            
+        
+        if(!$orderRandomKey){
+            redirect(base_url());
+        }
+
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+
+        if(count($orderData) < 1){
+            redirect(base_url());
         }
 
         
 
         $paymentType = strval($this->uri->segment('3'));
         $paymentOptionSubId = ($this->uri->segment('4')) ? strval($this->uri->segment('4')) : '0';
-        $vendorId = isset($orderData['customer']) ? $orderData['customer']['id'] : $this->session->userdata('customer')['id'];
+        $vendorId = $orderData['customer']['id'];
         $SlCode = $this->bookandpay_model->getUserSlCode($vendorId);
-        $reservationIds = isset($orderData['reservations']) ? $orderData['reservations'] : $this->session->userdata('reservations');
+        $reservationIds = $orderData['reservations'];
         $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
         
         $arrArguments = Pay_helper::getReservationsArgumentsArray($vendorId, $reservations, strval($SlCode), $paymentType, $paymentOptionSubId);
@@ -425,13 +427,22 @@ class Bookingpay extends BaseControllerWeb
         $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
 
 
+        $what = ['id'];
+		$where = ["randomKey" => $orderRandomKey];
+			
+        $result = $this->shopsession_model->read($what,$where);
+        $result = reset($result);
+        $ids = [$result['id']];
+
+        //Delete data from session table
+        $this->shopsession_model->multipleDelete($ids, $where);
 
 
-        $this->processPaymenttype($strUrl);
+        $this->processPaymenttype($strUrl, $reservationIds);
 
     }
 
-    private function processPaymenttype($strUrl)
+    private function processPaymenttype($strUrl, $reservationIds)
     {
         # Get API result
         $strResult = @file_get_contents($strUrl);
@@ -447,7 +458,6 @@ class Bookingpay extends BaseControllerWeb
 
             
             $transactionId = $result->transaction->transactionId;
-            $reservationIds = $this->session->userdata('reservations');
             $this->bookandpay_model->updateTransactionIdByReservationIds($reservationIds, $transactionId);
             redirect($result->transaction->paymentURL);
 
@@ -855,10 +865,7 @@ class Bookingpay extends BaseControllerWeb
                 }
             }
             endforeach;
-        }
-
-
-        
+        }   
     
         public function successBooking()
         {
