@@ -61,6 +61,7 @@ class Booking_events extends BaseControllerWeb
         $sessionData['tickets'] = [];
         $sessionData['expTime'] = false;
         $sessionData['totalAmount'] = false;
+        $sessionData['tag'] = $this->input->get('tag') ? $this->input->get('tag') : '';
         
 
         if(count($orderData) < 1){

@@ -498,8 +498,10 @@ class Event_model extends CI_Model {
 					'country' => $userInfo['country'],
 					'ticketDescription' => $ticket['descript'],
 					'ticketType' => ($ticket['ticketType'] != null) ? $ticket['ticketType'] : 0,
-					'paid' => '0'
+					'paid' => '0',
+					'tag' => $ticket['tag']
 				];
+				
 
 				if(!$this->validateInsertArray($insert)){
 					continue;
