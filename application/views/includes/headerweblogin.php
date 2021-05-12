@@ -37,7 +37,7 @@
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js'></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.10.0.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url(); ?>assets/dist/js/tooltipster.bundle.min.js"></script>
-	<script src="<?php echo $this->baseUrl; ?>assets/cdn/js/jhtml5shiv.min.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/cdn/js/html5shiv.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js" integrity="sha256-P93G0oq6PBPWTP1IR8Mz/0jHHUpaWL0aBJTKauisG7Q=" crossorigin="anonymous"></script>
