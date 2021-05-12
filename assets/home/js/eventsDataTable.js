@@ -107,7 +107,16 @@ $(document).ready(function() {
                 title: 'Shop',
                 data: null,
                 "render": function(data, type, row) {
-                    return '<a href="'+globalVariables.baseUrl+'events/shop/'+data.id+'" style="background: #10b981;" class="btn btn-primary" target="_blank">Go To Shop</a>'
+                    return '<a id="shop_url_'+data.id+'" href="'+globalVariables.baseUrl+'events/shop/'+data.id+'" style="background: #10b981;" class="btn btn-primary" target="_blank">Go To Shop</a>';
+                }
+
+            },
+            {
+
+                title: 'Url',
+                data: null,
+                "render": function(data, type, row) {
+                    return '<a href="javascript:;" onclick="openShopUrlModal('+data.id+')" style="background: #10b981;" class="btn btn-primary" target="_blank" data-toggle="modal" data-target="#copyUrlToClipboard">Copy Shop Url</a>';
                 }
 
             },
@@ -158,6 +167,29 @@ $(document).ready(function() {
         
 });
 
+function openShopUrlModal(id) {
+    let url = $('#shop_url_'+id).attr('href');
+    $('#shopUrlText').text(url);
+    $('#shopUrl').val(url);
+    $('#copyShopUrlModal').modal('show');
+}
+
+function textToClipboard () {
+    var copyText = $("#shopUrl").val();
+
+    var textarea = document.createElement('textarea');
+    textarea.textContent = copyText;
+    document.body.appendChild(textarea);
+    var selection = document.getSelection();
+    var range = document.createRange();
+    range.selectNode(textarea);
+    selection.removeAllRanges();
+    selection.addRange(range);
+    console.log('copy success', document.execCommand('copy'));
+    selection.removeAllRanges();
+    document.body.removeChild(textarea);
+  
+}
 
 function saveShopSettings() {
     let data = {
