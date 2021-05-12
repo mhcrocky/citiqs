@@ -16,7 +16,7 @@
                 <?php $total = 0; ?>
                 <div class="menu-list">
                     <div id="checkout-list" class="w-100">
-                        <?php if(count($tickets) > 0): 
+                        <?php if(isset($tickets) && count($tickets) > 0): 
 
                     foreach($tickets as $ticket): 
                         $total = $total + floatval($ticket['amount']); ?>
