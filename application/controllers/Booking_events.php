@@ -53,19 +53,21 @@ class Booking_events extends BaseControllerWeb
             }
         }
         
+        $tag = $this->input->get('tag') ? $this->input->get('tag') : '0';
         $sessionData['vendorId'] = $customer->id;
         $sessionData['shortUrl'] = $shortUrl;
         $sessionData['spotId'] = 0;
         $sessionData['tickets'] = [];
         $sessionData['expTime'] = false;
         $sessionData['totalAmount'] = false;
-        $sessionData['tag'] = $this->input->get('tag') ? $this->input->get('tag') : '0';
+        $sessionData['tag'] = $tag;
         
 
         if(count($orderData) < 1){
             $orderData = $this->shopsession_model->insertSessionData($sessionData);
-            $url = base_url(uri_string());
-            $redirectUrl = $_SERVER['QUERY_STRING'] ? $url . "?" . $_SERVER['QUERY_STRING'] . "&order=" . $orderData->randomKey : $url . "?order=" . $orderData->randomKey ;
+            $userShortUrl = ($tag != '0') ? base_url() . 'events/shop/' . $shortUrl . '?tag=' . $tag . '&order=' . $orderData->randomKey : base_url() . 'events/shop/' . $shortUrl . '?order=' . $orderData->randomKey;
+            $eventUrl = ($tag != '0') ? base_url() . 'events/shop/' . $eventId . '?tag=' . $tag . '&order=' . $orderData->randomKey : base_url() . 'events/shop/' . $eventId . '?order=' . $orderData->randomKey;
+            $redirectUrl = ($get_by_event_id) ? $eventUrl : $userShortUrl;
             redirect($redirectUrl);
         }
        
