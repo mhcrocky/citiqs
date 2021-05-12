@@ -46,37 +46,38 @@
         public function data_get()
         {
             $mac = $this->getMacNumber();
+
             $this->printFinanceReport($mac);
 
             $order = $this->getOrder($mac);
             $vendorId = intval($order['vendorId']);
             $bbUser = $this->shopvendorfod_model->isBBVendor($vendorId);
             $orderExtendedIds = explode(',', $order['orderExtendedIds']);
-
-            $this->handlePrePostPaid($order, $bbUser, $mac);
-
-            $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '2');
+            $printOnlyReceipt = $this->shopvendor_model->setProperty('vendorId', $vendorId)->getProperty('printOnlyReceipt') === '1' ? true : false;
 
             $this->shopprinterrequest_model->setObjectFromArray(['orderId' => $order['orderId']])->update();
 
-            Receiptprint_helper::printPrinterReceipt($order);
+            if ($printOnlyReceipt && $order['paidStatus'] ===  $this->config->item('orderPaid')) {
+                header('Content-type: image/png');
+                echo file_get_contents(base_url() . 'Api/Orderscopy/receipt/' . $order['orderId']);
+            } else {
+                $this->handlePrePostPaid($order, $bbUser);
+                $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '2');
+                Receiptprint_helper::printPrinterReceipt($order);
+            }
 
             $this->shopprinterrequest_model->setObjectFromArray(['printerEcho' => date('Y-m-d H:i:s')])->update();
-
             $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '1');
 
             if ($order['paidStatus'] === '1') {
                 $this->shoporder_model->updatePrintedStatus();
             }
 
-            $this->callOrderCopy($order, $bbUser);
+            // $this->callOrderCopy($order, $bbUser);
         }
 
-        private function handlePrePostPaid(array $order, bool $bbUser, string $mac = ''): void
+        private function isCashpayment(array $order): bool
         {
-            if ($bbUser) {   
-                return;
-            }
             if (
                 $order['paymentType'] === $this->config->item('prePaid')
                 || $order['paymentType'] === $this->config->item('postPaid')
@@ -84,10 +85,19 @@
                 // if voucher payment and pos orders
                 || ( $order['paymentType'] === $this->config->item('voucherPayment') && $order['orderIsPos'] === '1' )
             ) {
+                return true;
+            }
+            return false;
+        }
+
+        private function handlePrePostPaid(array $order, bool $bbUser): void
+        {
+            if ($bbUser) {   
+                return;
+            }
+            if ($this->isCashpayment($order)) {
 
                 if ($order['waiterReceipt'] === '0') {
-
-                    $this->trackPrinter($mac, 'PRINTER ' . $mac .' TRY TO PRINT WAITER RECEIPT');
                     header('Content-type: image/png');
                     echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
                     $this->shoporder_model->setObjectId(intval($order['orderId']))->setProperty('waiterReceipt', '1')->update();
@@ -101,7 +111,7 @@
                     exit;
                 }
 
-                if ($order['paidStatus'] === '0' && $order['orderIsPos'] === '0') exit;
+                if ($order['paidStatus'] === $this->config->item('orderNotPaid') && $order['orderIsPos'] === '0') exit;
             }
         }
 
@@ -109,7 +119,6 @@
         private function getMacNumber(): string
         {
             $mac = $this->input->get('mac', true);
-
             if (!$mac) exit;
 
             if (
