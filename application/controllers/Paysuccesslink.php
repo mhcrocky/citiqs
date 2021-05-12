@@ -163,7 +163,7 @@ class  Paysuccesslink extends BaseControllerWeb
             $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
             $data['order'] = reset($order);
 
-            $this->setGlobalVendor(intval($data['order']['vendorId']));
+            $this->setGlobalVendor(intval($data['order']['vendorId']), $data);
             $this->setBackAndFailedUrl($data);
         }
         
@@ -176,7 +176,7 @@ class  Paysuccesslink extends BaseControllerWeb
         return;
     }
 
-    private function setGlobalVendor(int $vendorId): void
+    private function setGlobalVendor(int $vendorId, array &$data): void
     {
         $this->global['vendor'] = $this->shopvendor_model
                                     ->setProperty('vendorId', $vendorId)
@@ -187,6 +187,7 @@ class  Paysuccesslink extends BaseControllerWeb
                                         'googleTagManagerCode',
                                         'facebookPixelId'
                                     ]);
+        $data['analytics'] = $this->global['vendor'];
     }
 
     private function setBackAndFailedUrl(array &$data): void
