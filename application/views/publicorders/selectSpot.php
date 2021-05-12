@@ -1,3 +1,4 @@
+
 <main class="main-wrapper-nh" style="text-align:center;">
 	<div id="selectSpotContainer" class="col-half background-apricot-blue height designBackgroundImage">
 		<div class="width-650" style="padding-top:0px"></div>
@@ -10,6 +11,16 @@
 		</div><!-- /.login-logo -->
 		<?php } ?>
 		<h1 id="selectSpotH1" style="text-align:center; text-transform: uppercase; margin: 0px 7px; border-bottom: 4px solid;"><?php echo $vendor['vendorName'] ?></h1>
+		<div class="d-flex align-items-center">
+
+		<div class="input-group">
+		    <input style="height: 45px" oninput="searchTable()" type="text" id="search" class="form-control" aria-label="Search" placeholder="Search">
+			<span onclick="searchTable()" style="background: #fff !important;height: 45px;cursor: pointer" class="input-group-addon"><i class="fa fa-search"></i></span>
+		</div>
+
+
+	
+		</div>
 		<div class="selectWrapper mb-35" style="padding-top:10px">
 			<?php if (!empty($spots)) { ?>
 				<div id="selectSpots" style="margin-top:10px">
@@ -146,4 +157,26 @@
     $('body').height('100%');
     $('.main-wrapper-nh').height('100%');
 }());
+
+
+function searchTable() {
+	let value = $('#search').val();
+	if(value == ''){
+		$(':radio').closest('label').show();
+		return ;
+	}
+
+	var radioButtons = $(':radio');
+	radioButtons.each(function(index) {
+		let str = $(this).val();
+		str = str.toLowerCase();
+		if(str.includes(value)){
+			$(this).closest('label').show();
+		} else {
+			$(this).closest('label').hide();
+			console.log('true');
+		}
+
+	});
+}
 </script>
