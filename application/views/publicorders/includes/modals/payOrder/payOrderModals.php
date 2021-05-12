@@ -40,8 +40,15 @@
                 <div class="modal-content modalPayOrder">
                     <div class="modal-body modalPayOrder" style="text-align:center">
 						<div>
-							<h2><?php echo $this->language->tLine("Confirm with checkmark.");?></h2>
+							<h1 style="font-size: large"><?php echo $this->language->tLine("CONFIRM");?></h1>
 						</div>
+						<button
+								class="btn btn-danger btn-lg modalPayOrderButton"
+								style="border-radius:50%; margin-left:5%; font-size:24px"
+								data-dismiss="modal"
+						>
+							<i class="fa fa-times modalPayOrderButton" aria-hidden="true"></i>
+						</button>
                         <button
                             class="btn btn-success btn-lg modalPayOrderButton"
                             style="border-radius:50%; margin-right:5%; font-size:24px"
@@ -54,13 +61,6 @@
                             onclick="payRedirect(this, '<?php echo $cashRedirect; ?>')"
                             >
                             <i class="fa fa-check modalPayOrderButton" aria-hidden="true"></i>
-                        </button>
-                        <button
-                            class="btn btn-danger btn-lg modalPayOrderButton"
-                            style="border-radius:50%; margin-left:5%; font-size:24px"
-                            data-dismiss="modal"
-                            >
-                            <i class="fa fa-times modalPayOrderButton" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>

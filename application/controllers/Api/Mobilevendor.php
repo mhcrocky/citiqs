@@ -14,7 +14,7 @@ class Mobilevendor extends REST_Controller
     function __construct()
     {
         parent::__construct();
-		$this->load->model('mobilevendor_model');
+//		$this->load->model('mobilevendor_model');
         $this->load->library('language', array('controller' => $this->router->class));
     }
 

@@ -10,6 +10,7 @@ html {
 }
 .middle h1 {
 	font-family: "Dax", sans-serif;
+	/*margin-top: 10px;*/
 	color: #fff;
 }
 .middle input[type="radio"] {
@@ -27,8 +28,8 @@ html {
 	opacity: 1;
 }
 .middle .box {
-	width: 200px;
-	height: 200px;
+	width: 100px;
+	height: 150px;
 	background-color: #b7ae93;
 	transition: all 250ms ease;
 	will-change: transition;
@@ -40,7 +41,7 @@ html {
 	font-weight: 900;
 }
 .middle .box:active {
-	transform: translateY(10px);
+	/*transform: translateY(10px);*/
 }
 .middle .box span {
 	position: absolute;
@@ -58,7 +59,7 @@ html {
 	display: block;
 	transform: translateY(80px);
 	opacity: 1;
-	transition: all 300ms ease-in-out;
+	/*transition: all 300ms ease-in-out;*/
 	font-weight: normal;
 	color: white;
 }

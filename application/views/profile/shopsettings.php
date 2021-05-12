@@ -156,7 +156,7 @@
 							&nbsp; time.
 						</label>
 					</div>
-					<h4>RECEIPT ONLY TO A WAITER</h4>
+					<h4>RECEIPT ONLY FOR THE CUSTOMER</h4>
 					<div class="form-group mb-35">
 						<label class="radio-inline" for="receiptOnlyToWaiterYes">Yes</label>
 						<input type="radio" id="receiptOnlyToWaiterYes" name="vendor[receiptOnlyToWaiter]" value="1" <?php if ($vendor['receiptOnlyToWaiter'] === '1') echo 'checked'; ?> />
@@ -172,7 +172,7 @@
 					</div>
 					<h4>SET MAX DELIVERY DISTANCE</h4>
 					<div class="form-group mb-35">
-						<label for="deliveryAirDistance">Add kilometars&nbsp;
+						<label for="deliveryAirDistance">Add kilometers&nbsp;
 						<input
 							type="number"
 							id="deliveryAirDistance"
