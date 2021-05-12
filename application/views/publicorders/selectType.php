@@ -30,26 +30,25 @@
 					<label>
 						<input type="radio" name="radio" value="<?php echo 'make_order?vendorid=' . $vendor['vendorId'] . '&typeid=' . $type['typeId'] ?>" onchange="redirectTo(this.value)" class="form-control" <?php if($type['typeId']==='0') echo "checked" ?> />
 						<div class="front-end box selectTypeLabels">
-							<?php {
-								if (is_null($vendor['logo'])) {
-									$logoFile = base_url() . "assets/home/images/tiqslogowhite.png";
-								} else {
-									$logoFile = base_url(). "assets/images/vendorLogos/". $vendor['logo'];
-								}
-							} ?>
+							<!--							--><?php //{
+							//								if (is_null($vendor['logo'])) {
+							//									$logoFile = base_url() . "assets/home/images/tiqslogowhite.png";
+							//								} else {
+							//									$logoFile = base_url(). "assets/images/vendorLogos/". $vendor['logo'];
+							//								}
+							//							} ?>
 
-							<div style="margin-top: 20px">
-								<!-- <img src="--><?php //echo base_url(); ?><!--assets/home/images/tiqslogowhite.png" alt="tiqs" width="100px" height="" /> -->
-								<img src="<?php echo $logoFile; ?>" alt="tiqs" width="150" height="auto" />
-							</div>
+<!--							<div style="margin-top: 20px" align="center">-->
+<!--								<img src="--><?php //echo $logoFile; ?><!--" alt="tiqs" width="100" height="auto" align="center"/>-->
+<!--							</div>-->
 
-							<div style="margin-top: -10px">
+							<div style="margin-top: 10px">
 								<div style="margin-top: -60px">
 									<span class="selectTypeLabelsColor typeLabel"><?php echo $type['type']; ?></span>
 								</div>
 							</div>
 
-							<div style="margin-top:80px">
+							<div style="margin-top:100px">
 								<i class="<?php if($type['typeId']==='1') echo "fa fa-coffee selectTypeLabelsColor" ?>" style="font-size:48px;color:ghostwhite"></i>
 								<i class="<?php if($type['typeId']==='2') echo "fa fa-bicycle selectTypeLabelsColor" ?>" style="font-size:48px;color:ghostwhite"></i>
 								<?php if($type['typeId']==='3') { ?>
@@ -57,7 +56,7 @@
 								<?php } ?>
 							</div>
 
-							<div style="margin-top: -70px">
+							<div style="margin-top: -80px">
 								<div style="margin-top: 10px">
 									<span style="font-size: xx-small" class="selectTypeLabelsColor">click here</span>
 								</div>

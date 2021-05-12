@@ -244,7 +244,7 @@ $config['paymentPrice'] = [
     $config['reservations'] => [
         $config['idealPayment'] => [
                 'percent' => 0,
-                'amount' => 0.25,
+                'amount' => 0.50,
             ],
         $config['creditCardPayment'] => [
                 'percent' => 2,
@@ -252,27 +252,27 @@ $config['paymentPrice'] = [
             ],
         $config['bancontactPayment'] => [
                 'percent' => 0,
-                'amount' => 0.25,
+                'amount' => 0.50,
             ],
         $config['giroPayment'] => [
-                'percent' => 0,
-                'amount' => 0.25,
+                'percent' => 2,
+                'amount' => 0.35,
             ],
         $config['payconiqPayment'] => [
                 'percent' => 0,
-                'amount' => 0.25,
+                'amount' => 0.50,
             ],
         $config['pinMachinePayment'] => [
                 'percent' => 0,
-                'amount' => 0.25,
+                'amount' => 0.50,
             ],
         $config['voucherPayment'] => [
                 'percent' => 0,
                 'amount' => 0,
             ],
         $config['myBankPayment'] => [
-                'percent' => 1,
-                'amount' => 0.25,
+                'percent' => 2,
+                'amount' => 0.30,
             ],
         $config['prePaid'] => [
                 'percent' => 1,
@@ -286,23 +286,23 @@ $config['paymentPrice'] = [
     $config['eTicketing'] => [
         $config['idealPayment'] => [
             'percent' => 0,
-            'amount' => 0.25,
+            'amount' => 0.50,
         ],
         $config['creditCardPayment'] => [
                 'percent' => 2,
-                'amount' => 0.35,
+                'amount' => 0.30,
             ],
         $config['bancontactPayment'] => [
                 'percent' => 0,
-                'amount' => 0.25,
+                'amount' => 0.50,
             ],
         $config['giroPayment'] => [
-                'percent' => 0,
-                'amount' => 0.25,
+                'percent' => 2,
+                'amount' => 0.30,
             ],
         $config['payconiqPayment'] => [
                 'percent' => 0,
-                'amount' => 0.25,
+                'amount' => 0.50,
             ],
         $config['pinMachinePayment'] => [
                 'percent' => 0,
@@ -313,8 +313,8 @@ $config['paymentPrice'] = [
                 'amount' => 0,
             ],
         $config['myBankPayment'] => [
-                'percent' => 1,
-                'amount' => 0.25,
+                'percent' => 2,
+                'amount' => 0.30,
             ],
         $config['prePaid'] => [
                 'percent' => 1,

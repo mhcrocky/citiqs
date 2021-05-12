@@ -1,8 +1,8 @@
 <?php 
 if ( isset($design['shop']['eventDescript']) ) {
     $textareaContent = $design['shop']['eventDescript'];
-    } else { 
-        $textareaContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sagittis at est ut facilisis. Suspendisse eu luctus mauris.";
+    } else {
+        $textareaContent = "";
  } ?>
 <fieldset id="shopView" class="hideFieldsets">
     <legend>Logo Color</legend>
