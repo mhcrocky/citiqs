@@ -256,6 +256,7 @@ $route['send'] = "send/index/";
 $route['warehouse']             = "warehouse/index";
 $route['product_categories']    = "warehouse/productCategories";
 $route['products']              = "warehouse/products";
+$route['products/(:any)']       = "warehouse/products/$1";
 $route['orders']                = "warehouse/orders";
 $route['spots']                 = "warehouse/spots";
 $route['printers']              = "warehouse/printers";
@@ -634,6 +635,7 @@ $route['qrcode/save_qrcode'] = 'Qrcode/save_qrcode';
 $route['qrcode/update_qrcode'] = 'Qrcode/update_qrcode';
 
 $route['productsonoff'] = 'Productsonoff/index';
+$route['productsonoff/(:any)'] = 'Productsonoff/index/$1';
 
 $route['appsettings'] = 'Appsettings/index';
 $route['appsettings/get_appsettings'] = 'Appsettings/get_appsettings';
