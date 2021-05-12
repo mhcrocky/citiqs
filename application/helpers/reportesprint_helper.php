@@ -23,7 +23,7 @@
             $reportTypeHeader = ($reportType === $CI->config->item('z_report')) ? 'Z' : 'X';
 
             // image elements
-            Print_helper::printImageLogo($imageprint, $logoFile);
+            // Print_helper::printImageLogo($imageprint, $logoFile);
             self::imageTextAndDrawSettings($imagetext, $draw, $countLines);
             self::printReportHeader($imagetext, $draw, $data, $startPoint, $reportTypeHeader, $from, $to);
             self::printReportTotals($imagetext, $draw, $data, $startPoint);
