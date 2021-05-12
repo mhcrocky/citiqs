@@ -38,6 +38,7 @@
         public $minBusyTime;
         public $maxBusyTime;
         public $receiptOnlyToWaiter;
+        public $printOnlyReceipt;
         public $deliveryAirDistance;
         public $cutTime;
         public $skipDate;
@@ -176,6 +177,7 @@
             if (isset($data['minBusyTime']) && !Validate_data_helper::validateInteger($data['minBusyTime'])) return false;
             if (isset($data['maxBusyTime']) && !Validate_data_helper::validateInteger($data['maxBusyTime'])) return false;
             if (isset($data['receiptOnlyToWaiter']) && !($data['receiptOnlyToWaiter'] === '1' || $data['receiptOnlyToWaiter'] === '0')) return false;
+            if (isset($data['printOnlyReceipt']) && !($data['printOnlyReceipt'] === '1' || $data['printOnlyReceipt'] === '0')) return false;
             if (isset($data['deliveryAirDistance']) && !Validate_data_helper::validateInteger($data['deliveryAirDistance'])) return false;
             if (isset($data['skipDate']) && !($data['skipDate'] === '1' || $data['skipDate'] === '0')) return false;
             if (isset($data['activatePos']) && !($data['activatePos'] === '1' || $data['activatePos'] === '0')) return false;
@@ -261,6 +263,7 @@
                     $this->table . '.minBusyTime',
                     $this->table . '.maxBusyTime',
                     $this->table . '.receiptOnlyToWaiter',
+                    $this->table . '.printOnlyReceipt',
                     $this->table . '.deliveryAirDistance',
                     $this->table . '.cutTime',
                     $this->table . '.skipDate',

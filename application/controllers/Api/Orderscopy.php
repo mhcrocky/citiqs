@@ -31,7 +31,7 @@ class Orderscopy extends REST_Controller
 	public function data_get($orderId)
 	{
 
-		Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/track_printer.txt', ' WE ARE IN ORDER COPY');
+		#Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/track_printer.txt', ' WE ARE IN ORDER COPY');
 		$paidConditions = 'AND  tbl_shop_orders.paid = "1"';
 		$order = $this->shoporder_model->setObjectId(intval($orderId))->fetchOrdersForPrintcopy($paidConditions);
 
@@ -51,22 +51,22 @@ class Orderscopy extends REST_Controller
 
 	private function orderCopyAtcions(array $order, string $orderImageUrl): void
 	{
-		Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/track_printer.txt', ' WE ARE CALLING ORDER COPY ACTION');
+		#Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/track_printer.txt', ' WE ARE CALLING ORDER COPY ACTION');
 		if (
 			$order['paymentType'] === $this->config->item('prePaid')
 			|| $order['paymentType'] === $this->config->item('postPaid')
 			|| $order['paymentType'] === $this->config->item('voucherPayment')
 		) {
-			Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/track_printer.txt', 'ORDER COPY ACTION CONDITIONS ARE TRUE');
+			#Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/track_printer.txt', 'ORDER COPY ACTION CONDITIONS ARE TRUE');
 			if ($order['waiterReceipt'] === '0') {
-				Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/track_printer.txt', 'PRINTING WAITER RECEIPT');
+				#Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/track_printer.txt', 'PRINTING WAITER RECEIPT');
 				$content = file_get_contents($orderImageUrl);
 				if ($content) {
-					Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/track_printer.txt', 'WE HAVE SOMETHING TO ECHO ');
+					#Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/track_printer.txt', 'WE HAVE SOMETHING TO ECHO ');
 					header('Content-type: image/png');
 					echo $content;
 				} else {
-					Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/track_printer.txt', 'NOTHING TO ECHO ');
+					#Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/track_printer.txt', 'NOTHING TO ECHO ');
 				}
 				
 			} else {
@@ -79,4 +79,24 @@ class Orderscopy extends REST_Controller
 			}
 		}
 	}
+
+	public function receipt_get($orderId): void
+	{
+		$orderImageRelativePath = 'receipts' . DIRECTORY_SEPARATOR . $orderId . '-email' . '.png';
+		$orderImageFullPath = FCPATH . $orderImageRelativePath;
+
+		if (!file_exists($orderImageFullPath)) {
+			$paidConditions = 'AND  tbl_shop_orders.paid = "1"';
+			$order = $this->shoporder_model->setObjectId(intval($orderId))->fetchOrdersForPrintcopy($paidConditions);
+			if (!$order) return;
+			$order = reset($order);
+			Orderprint_helper::saveOrderImage($order);
+		}
+
+		$orderImageUrl = base_url() . $orderImageRelativePath;
+		header('Content-type: image/png');
+		echo file_get_contents($orderImageUrl);
+		return;
+	}
+
 }

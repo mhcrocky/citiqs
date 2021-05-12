@@ -262,40 +262,40 @@
                     <div class="col-lg-4 col-md-4 col-sm-12 grid-header-heading">
                         <h2>Products</h2>
                     </div>
-                    <?php if ($products) { ?>
-                        <div class="col-lg-6 col-md-6 col-12">
-                            <div class="form-group">
-                                <label for="filterCategories">Filter products:</label>
-                                <label class="radio-inline">
-                                    <input
-                                        type="radio"
-                                        value="products"
-                                        <?php if (!isset($_GET['active'])) echo 'checked'; ?>
-                                        onclick="redirectToNewLocation(this.value)"
-                                        />
-                                    All products
-                                </label>
-                                <label class="radio-inline">
-                                    <input
-                                        type="radio"
-                                        name="locationHref"
-                                        value="products?active=1"
-                                        <?php if (isset($_GET['active']) && $_GET['active'] === '1') echo 'checked'; ?>
-                                        onclick="redirectToNewLocation(this.value)"
-                                        />
-                                        Active products
-                                </label>
-                                <label class="radio-inline">
-                                    <input
-                                        type="radio"
-                                        name="locationHref"
-                                        value="products?active=0"
-                                        <?php if (isset($_GET['active']) && $_GET['active'] === '0') echo 'checked'; ?>
-                                        onclick="redirectToNewLocation(this.value)"
-                                        />
-                                        Archived products
-                                </label>
-                            </div>
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="form-group">
+                            <label for="filterCategories">Filter products:</label>
+                            <label class="radio-inline">
+                                <input
+                                    type="radio"
+                                    value="products/all"
+                                    <?php if ($active === 'all' || $active === '') echo 'checked'; ?>
+                                    onclick="redirectToNewLocation(this.value)"
+                                    />
+                                All products
+                            </label>
+                            <label class="radio-inline">
+                                <input
+                                    type="radio"
+                                    name="locationHref"
+                                    value="products/active"
+                                    <?php if ($active === 'active') echo 'checked'; ?>
+                                    onclick="redirectToNewLocation(this.value)"
+                                    />
+                                    Active products
+                            </label>
+                            <label class="radio-inline">
+                                <input
+                                    type="radio"
+                                    name="locationHref"
+                                    value="products/archived"
+                                    <?php if ($active === 'archived') echo 'checked'; ?>
+                                    onclick="redirectToNewLocation(this.value)"
+                                    />
+                                    Archived products
+                            </label>
+                        </div>
+                        <?php if ($products) { ?>
                             <form method="post" action="<?php echo base_url() ?>products" >
                                 <div class="form-group col-lg-6">
                                     <label for="filterProducts">Filter by product name:</label>
@@ -313,9 +313,8 @@
                                     <a class="btn btn-secondary" href="<?php echo base_url(); ?>products">Show all</a>
                                 </div>
                             </form>
-                            
-                        </div>
-                    <?php } ?>
+                        <?php } ?>                            
+                    </div>
                     <div class="col-lg-4 col-md-4 col-sm-12 search-container">
                         <button type="button" class="btn button-security my-2 my-sm-0 button grid-button" data-toggle="modal" data-target="#addProductModal">Add product</button>
                     </div>

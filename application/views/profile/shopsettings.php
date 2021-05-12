@@ -163,6 +163,13 @@
 						<label class="radio-inline" for="receiptOnlyToWaiterNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="receiptOnlyToWaiterNo" name="vendor[receiptOnlyToWaiter]" value="0" <?php if ($vendor['receiptOnlyToWaiter'] === '0') echo 'checked'; ?> />
 					</div>
+					<h4>PRINT ONLY RECEIPT (WITHOUT ORDER)</h4>
+					<div class="form-group mb-35">
+						<label class="radio-inline" for="printOnlyReceipttYes">Yes</label>
+						<input type="radio" id="printOnlyReceipttYes" name="vendor[printOnlyReceipt]" value="1" <?php if ($vendor['printOnlyReceipt'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="printOnlyReceiptNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="printOnlyReceiptNo" name="vendor[printOnlyReceipt]" value="0" <?php if ($vendor['printOnlyReceipt'] === '0') echo 'checked'; ?> />
+					</div>
 					<h4>SET MAX DELIVERY DISTANCE</h4>
 					<div class="form-group mb-35">
 						<label for="deliveryAirDistance">Add kilometars&nbsp;

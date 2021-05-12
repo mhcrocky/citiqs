@@ -292,13 +292,13 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 										
 											<li data-menuid="4.1"><a href="<?php echo $this->baseUrl; ?>orders"><i class="ti-stats-up"></i><span><?php echo $this->language->tLine('Orders'); ?></span></a></li>
 											<li data-menuid="4.2"><a href="<?php echo $this->baseUrl; ?>pos"><i class="ti-bar-chart"></i><span><?php echo $this->language->tLine('Cash desk'); ?></span></a></li>
-											<li data-menuid="4.3"><a href="<?php echo $this->baseUrl; ?>productsonoff?active=1"><i class="ti-power-off"></i> <span><?php echo $this->language->tLine('ON/OFF'); ?></span></a></li>
+											<li data-menuid="4.3"><a href="<?php echo $this->baseUrl; ?>productsonoff/active"><i class="ti-power-off"></i> <span><?php echo $this->language->tLine('ON/OFF'); ?></span></a></li>
 											<li data-menuid="4.4">
 												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-bag"></i><span><?php echo $this->language->tLine('Products'); ?></span></a>
 												<ul class="collapse">
 													<li data-menuid="4.4.1"><a href="<?php echo $this->baseUrl; ?>product_categories"><i class="ti-layout-accordion-separated"></i> <span><?php echo $this->language->tLine('Category'); ?></span></a></li>
 													<li data-menuid="4.4.2"><a href="<?php echo $this->baseUrl; ?>product_types"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('Product Types'); ?></span></a></li>
-													<li data-menuid="4.4.3"><a href="<?php echo $this->baseUrl; ?>products?active=1"><i class="ti-bag"></i> <span><?php echo $this->language->tLine('Products'); ?></span></a></li>
+													<li data-menuid="4.4.3"><a href="<?php echo $this->baseUrl; ?>products/active"><i class="ti-bag"></i> <span><?php echo $this->language->tLine('Products'); ?></span></a></li>
 												</ul>
 											</li>
 											<li data-menuid="4.5">

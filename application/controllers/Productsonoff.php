@@ -39,19 +39,26 @@
          *
          * @return void
          */
-        public function index(): void
+        public function index($active = ''): void
         {
-            $this->global['pageTitle'] = 'TIQS : PRODUCTS';
-            $active = isset($_GET['active']) ? $this->input->get('active', true) : '';
+            if ($active === 'active') {
+                $activeFilter = '1';
+            } elseif ($active === 'archived') {
+                $activeFilter = '0';
+            } else {
+                $activeFilter = '';
+            }
+
             $userId = intval($_SESSION['userId']);
-            $productNames = $this->shopproductex_model->getProductsNames($userId);
+            $productNames = $this->shopproductex_model->getProductsNames($userId, $activeFilter);
             if ($productNames) {
                 Utility_helper::array_sort_by_column($productNames, 'name');
             }
             $offset = intval($this->input->get('offset', true));
             $perPage = 21;
             $whereIn = [];
-            $pagination = Utility_helper::getPaginationLinks(count($productNames), $perPage, 'productsonoff');
+            $url = 'productsonoff' . DIRECTORY_SEPARATOR . $active;
+            $pagination = Utility_helper::getPaginationLinks(count($productNames), $perPage, $url);
 
             // filter productes ny name(s)
             if (!empty($_POST)) {
@@ -68,7 +75,7 @@
 
             $data = [
                 'categories' => $this->shopcategory_model->fetch(['userId' => $userId]),
-                'products' => $this->shopproductex_model->getUserProducts($userId, $perPage, $offset, $whereIn, $active),
+                'products' => $this->shopproductex_model->getUserProducts($userId, $perPage, $offset, $whereIn, $activeFilter),
                 'printers' => $this->shopprinters_model->read(['*'], ['userId' => $userId, 'archived' => '0']),
                 'userSpots' => $this->shopspot_model->fetchUserSpots($userId),
                 'productTypes' => $this->shopprodutctype_model->fetchProductTypes($userId),
@@ -82,9 +89,11 @@
                 'localTypeId' => $this->config->item('local'),
                 'deliveryTypeId' => $this->config->item('deliveryType'),
                 'pickupTypeId' => $this->config->item('pickupType'),
-                'taxRates' => $this->config->item('countriesTaxes')[$this->user_model->country]['taxRates']
+                'taxRates' => $this->config->item('countriesTaxes')[$this->user_model->country]['taxRates'],
+                'active' => $active
             ];
 
+            $this->global['pageTitle'] = 'TIQS : PRODUCTS';
             $this->loadViews('productsonoff/index', $this->global, $data, 'footerbusiness', 'headerbusiness');
             return;
         }

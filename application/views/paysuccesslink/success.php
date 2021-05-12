@@ -1,3 +1,4 @@
+
 <style>
 	@import url("https://fonts.googleapis.com/css?family=Fredoka+One");
 
@@ -474,11 +475,11 @@
                 <?php
                     $amount = floatval($order['orderAmount']) + floatval($order['serviceFee']);
                 ?>
-
-				<script>
-					fbq('track', 'Purchase', {currency: "EUR", value: "<?php echo number_format($amount, 2, '.', ''); ?>"});
-				</script>
-
+				<?php if ($analytics['facebookPixelId']) { ?>
+					<script>
+						fbq('track', 'Purchase', {currency: "EUR", value: "<?php echo number_format($amount, 2, '.', ''); ?>"});
+					</script>
+				<?php } ?>
                 <h3>amount: <span class='checkout-message__amount'><?php echo number_format($amount, 2, '.', ''); ?></span></h3>
                 <?php if (floatval($order['waiterTip'])) { ?>
                     <h3>tip: <span class='checkout-message__amount'><?php echo number_format($order['waiterTip'], 2, '.', ''); ?></span></h3>

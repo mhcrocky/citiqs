@@ -474,8 +474,9 @@
                             ->getProductSpots($onlyActiveProductSpot);
         }
 
-        public function getProductsNames(int $userId): array
+        public function getProductsNames(int $userId, string $active = ''): array
         {
+            $active = ($active === '1' || $active === '0') ? 'AND tbl_shop_products.active="' . $active . '"' : '';
             $query = 
 
                 'SELECT '
@@ -492,6 +493,7 @@
                     tbl_shop_categories.userId = ' . $userId .'
                     AND tbl_shop_categories.archived = "0"
                     AND tbl_shop_products.archived = "0"
+                    ' . $active. '
                 ORDER BY ' . $this->table . '.id DESC;';
             $result = $this->db->query($query);
             $result = $result->result_array();
