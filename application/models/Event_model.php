@@ -466,7 +466,7 @@ class Event_model extends CI_Model {
 		return false;
 	}
 
-	function save_event_reservations($userInfo, $tickets = array(), $customer)
+	function save_event_reservations($userInfo, $tickets = array(), $customer, $tag)
 	{
 		if(!isset($userInfo['email'])){ return; }
 
@@ -499,12 +499,9 @@ class Event_model extends CI_Model {
 					'ticketDescription' => $ticket['descript'],
 					'ticketType' => ($ticket['ticketType'] != null) ? $ticket['ticketType'] : 0,
 					'paid' => '0',
+					'tag' => $tag
 					
 				];
-
-				if($ticket['tag']){
-					$insert['tag'] = $ticket['tag'];
-				}
 				
 
 				if(!$this->validateInsertArray($insert)){

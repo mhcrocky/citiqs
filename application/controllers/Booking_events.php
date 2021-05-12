@@ -53,15 +53,13 @@ class Booking_events extends BaseControllerWeb
             }
         }
         
-        $tag = $this->input->get('tag') ? $this->input->get('tag') : false;
-        
         $sessionData['vendorId'] = $customer->id;
         $sessionData['shortUrl'] = $shortUrl;
         $sessionData['spotId'] = 0;
         $sessionData['tickets'] = [];
         $sessionData['expTime'] = false;
         $sessionData['totalAmount'] = false;
-        $sessionData['tag'] = $tag;
+        $sessionData['tag'] = $this->input->get('tag') ? $this->input->get('tag') : '0';
         
 
         if(count($orderData) < 1){
@@ -354,9 +352,10 @@ class Booking_events extends BaseControllerWeb
         
         $tickets = $orderData['tickets'];
         $customer = $orderData['vendorId'];
+        $tag = $orderData['tag'];
 
         if (!isset($orderData['reservationIds'])) {
-            $reservationIds = $this->event_model->save_event_reservations($buyerInfo, $tickets, $customer);
+            $reservationIds = $this->event_model->save_event_reservations($buyerInfo, $tickets, $customer, $tag);
             $orderData['reservationIds'] = $reservationIds;
         }
 
