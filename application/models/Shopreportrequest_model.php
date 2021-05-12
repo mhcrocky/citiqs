@@ -73,6 +73,7 @@
                 ],
                 'where' => [
                     'tbl_shop_printers.macNumber' => $printerMac,
+                    'tbl_shop_printers.printReports' => '1',
                     $this->table . '.printed =' => '0',
                 ],
                 'joins' => [
