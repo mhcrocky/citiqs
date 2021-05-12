@@ -65,7 +65,8 @@ class Booking_events extends BaseControllerWeb
 
         if(count($orderData) < 1){
             $orderData = $this->shopsession_model->insertSessionData($sessionData);
-            redirect(base_url() . 'events/shop/'.$shortUrl.'?order='.$orderData->randomKey);
+            $redirectUrl = ($get_by_event_id) ? base_url() . 'events/shop/'.$eventId.'?order='.$orderData->randomKey : base_url() . 'events/shop/'.$shortUrl.'?order='.$orderData->randomKey;
+            redirect($redirectUrl);
         }
        
         
