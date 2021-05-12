@@ -30,7 +30,6 @@ class Booking_events extends BaseControllerWeb
 
     public function index($shortUrl = false)
     {
-        
         $this->global['pageTitle'] = 'TIQS: Shop';
         
         $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : false;
@@ -53,20 +52,22 @@ class Booking_events extends BaseControllerWeb
                 $get_by_event_id = ($customer) ? true : false;
             }
         }
-
-
+        
+        $tag = $this->input->get('tag') ? $this->input->get('tag') : false;
+        
         $sessionData['vendorId'] = $customer->id;
         $sessionData['shortUrl'] = $shortUrl;
         $sessionData['spotId'] = 0;
         $sessionData['tickets'] = [];
         $sessionData['expTime'] = false;
         $sessionData['totalAmount'] = false;
-        $sessionData['tag'] = $this->input->get('tag') ? $this->input->get('tag') : '';
+        $sessionData['tag'] = $tag;
         
 
         if(count($orderData) < 1){
             $orderData = $this->shopsession_model->insertSessionData($sessionData);
-            $redirectUrl = ($get_by_event_id) ? base_url() . 'events/shop/'.$eventId.'?order='.$orderData->randomKey : base_url() . 'events/shop/'.$shortUrl.'?order='.$orderData->randomKey;
+            $url = base_url(uri_string());
+            $redirectUrl = $_SERVER['QUERY_STRING'] ? $url . "?" . $_SERVER['QUERY_STRING'] . "&order=" . $orderData->randomKey : $url . "?order=" . $orderData->randomKey ;
             redirect($redirectUrl);
         }
        
