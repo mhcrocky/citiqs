@@ -200,8 +200,8 @@
                         </div>
                         <div class="col col-md-3 mt-1">
                             <div class="input-group">
-                                <input style="padding-top: 5px !important;" type="time" onchange="checkTimestamp()" onfocus="checkTimestamp()"
-                                    oninput="checkTimestamp()" onkeyup="checkTimestamp()"
+                                <input style="padding-top: 5px !important;" type="time" onchange="checkTicketTimestamp()" onfocus="checkTicketTimestamp()"
+                                    oninput="checkTicketTimestamp()" onkeyup="checkTicketTimestamp()"
                                     class="form-control inp-height timestamp" id="endTime" name="endTime">
                                 <span style="padding-top: 5px;" class="input-group-addon fa-input pl-2 pr-2">
                                     <i style="color: #fff;font-size: 20px;" class="fa fa-clock-o"></i></span>
@@ -834,7 +834,7 @@
                     <td><?php echo $event->EndTime; ?></td>
                     <td>
                         <a href="<?php echo base_url(); ?>events/shop/<?php echo $this->session->userdata('userShortUrl'); ?>"
-                            class="btn btn-primary" style="background: #10b981;">Go to Shop</a>
+                            class="btn btn-primary" style="background: #10b981;" target="_blank">Go to Shop</a>
                     </td>
                 </tr>
             </table>
