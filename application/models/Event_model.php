@@ -41,6 +41,8 @@ class Event_model extends CI_Model {
 	public function save_ticket_options($data)
 	{
 		$ticketId = $data['ticketId'];
+		$data['startDate'] = date('Y-m-d', strtotime($data['startDate']));
+		$data['endDate'] = date('Y-m-d', strtotime($data['endDate']));
 		$this->db->where('ticketId ', $ticketId);
 		if($this->db->get('tbl_ticket_options')->num_rows() == 0){
 			return $this->db->insert('tbl_ticket_options',$data);
