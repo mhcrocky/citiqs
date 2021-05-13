@@ -458,7 +458,7 @@
                                 <div class="modal" id="timeModal<?php echo $product['productId']; ?>" role="dialog">
                                     <div class="modal-dialog">
                                         <!-- Modal content-->
-                                        <form method="post" action="warehouse/addProductTimes/<?php echo $product['productId']; ?>">
+                                        <form method="post" action="<?php echo $this->baseUrl . 'warehouse/addProductTimes/' . $product['productId']; ?>">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -603,7 +603,7 @@
                                     
                                         <div class="modal-dialog">
                                             <!-- Modal content-->
-                                            <form method="post" action="warehouse/addProductAddons/<?php echo $product['productId']; ?>">
+                                            <form method="post" action="<?php echo $this->baseUrl . 'warehouse/addProductAddons/' . $product['productId']; ?>">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -650,7 +650,7 @@
                                     <div class="modal" id="allergies<?php echo $product['productId']; ?>" role="dialog">
                                         <div class="modal-dialog">
 
-                                            <form method="post" action="warehouse/addProductAllergies/<?php echo  $details['productExtendedId']; ?>">
+                                            <form method="post" action="<?php echo $this->baseUrl . 'warehouse/addProductAllergies/' . $details['productExtendedId']; ?>">
                                                 <div class="modal-content">
                                                 <?php
                                                 $product['allergies'] = unserialize($product['allergies']);

@@ -507,12 +507,12 @@
          *
          * @return void
          */
-        public function addProductTimes(): void
+        public function addProductTimes($id): void
         {
             $data = $this->input->post(null, true);
             $days = $data['productTime'];
 
-            $this->shopproducttime_model->productId = intval($this->uri->segment(3));
+            $this->shopproducttime_model->productId = intval($id);
             $this->shopproducttime_model->deleteProductTimes();
 
             foreach ($days as $day => $value) {
