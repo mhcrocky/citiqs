@@ -106,6 +106,10 @@ $(document).ready(function () {
 
   $("#manually").on("change", function () {
     $('.timestamp').prop("disabled", false);
+    let today = dayjs().format('DD-MM-YYYY');
+    $('#startDate').val(today);
+    let input = document.getElementById('endDate');
+    input.select();
   });
 
   $("#ticketCurrency").on("change", function () {
@@ -490,19 +494,21 @@ $(document).ready(function () {
 $(function () {
   var startPicker = new Pikaday({
     field: document.getElementById('startDate'),
-    format: 'YYYY-MM-DD'
+    format: 'DD-MM-YYYY'
   });
   var endPicker = new Pikaday({
     field: document.getElementById('endDate'),
-    format: 'YYYY-MM-DD'
+    format: 'DD-MM-YYYY'
   });
 });
 
 function checkTicketTimestamp(){
 
-  let startTime = $('#startDate').val() +' '+ $('#startTime').val();
-  let endTime = $('#endDate').val() +' '+ $('#endTime').val();
-  if(dayjs(endTime) < dayjs(startTime)){
+    let startDate = $('#startDate').val().split('-');
+    let endDate = $('#endDate').val().split('-');
+    let startTime = startDate[2] + '-' + startDate[1] + '-' + startDate[0] +' '+ $('#startTime').val();
+    let endTime = endDate[2] + '-' + endDate[1] + '-' + endDate[0] + ' '+ $('#endTime').val();
+    if(dayjs(endTime) < dayjs(startTime)){
       $('#submitEventForm').prop('disabled', true);
       $('.timestamp-error').show();
       $('#endDate').removeClass('clear-border-color').addClass('invalid-timestamp');
