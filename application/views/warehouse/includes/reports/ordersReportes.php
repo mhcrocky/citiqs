@@ -1,17 +1,16 @@
-<!--<div style="margin:10px 0px 0px 30px; font-size:16px">-->
-<!--    <div class="row">-->
-<!--        <p class="col-sm-2">Total orders:</p>-->
-<!--        <p class="col-sm-2" id="totalOrders" style="text-align:right;"></p>-->
-<!--    </div>-->
-<!--    <div class="row">-->
-<!--        <p class="col-sm-2">Unpaid:</p>-->
-<!--        <p class="col-sm-2" id="unpaidOrders" style="border-bottom: solid 2px #000; color:#ff3333; text-align:right;"></p>-->
-<!--    </div>-->
-<!--    <div class="row">-->
-<!--        <p class="col-sm-2">Income:</p>-->
-<!--        <p class="col-sm-2" id="paidOrders" style="text-align:right;"></p>-->
-<!--    </div>-->
-<!--</div>-->
+<div style="margin:10px 0px 0px 30px; font-size:16px">
+    <!-- <div class="row">
+        <p class="col-sm-2">Total orders:</p>
+        <p class="col-sm-2" id="totalOrders" style="text-align:right;"></p>
+    </div>
+    <div class="row">
+        <p class="col-sm-2">Unpaid:</p>
+        <p class="col-sm-2" id="unpaidOrders" style="border-bottom: solid 2px #000; color:#ff3333; text-align:right;"></p>
+    </div> -->
+    <div class="row">
+        <p class="col-sm-3">Income: <span id="paidOrders" style="font-weight: 900;"></span></p>
+    </div>
+</div>
 <div class="table-responsive col-sm-12 pb-2" style="margin-top:20px">
     <div class="w-100 mb-3">
         <div class="col-md-3 ml-auto" style="padding-right: 0px !important;">
@@ -55,8 +54,11 @@
                     <td style="text-align:center">
                         <?php echo $order['orderPaidStatus'] === '1' ? 'Paid' : 'Not paid'; ?>
                     </td>
-                    <td style="text-align:center; color:<?php echo $order['orderPaidStatus'] === '1' ? '#009933' : '#ff3333'; ?>">
-                        <?php echo  (floatval($order['orderAmount']) + floatval($order['serviceFee'])); ?>
+                    <td style="text-align:center;">
+                        <?php 
+                            $amount = floatval($order['orderAmount']) + floatval($order['serviceFee']);
+                            echo '&euro;&nbsp;' . number_format($amount, 2, ',', '.');
+                        ?>
                     </td>
                     <td style="text-align:center">
                         <a
@@ -91,7 +93,7 @@
     </table>
 </div>
 <script>
-    document.getElementById('totalOrders').innerHTML = '<?php echo number_format($totalOrders, 2, ',', '.'); ?>';
-    document.getElementById('unpaidOrders').innerHTML = '<?php echo number_format($unpaidOrders, 2, ',', '.');?>';
-    document.getElementById('paidOrders').innerHTML = '<?php echo number_format((floatval($totalOrders) - floatval($unpaidOrders)), 2, ',', '.');?>';
+    // document.getElementById('totalOrders').innerHTML = '<?php #echo number_format($totalOrders, 2, ',', '.'); ?>';
+    // document.getElementById('unpaidOrders').innerHTML = '<?php #echo number_format($unpaidOrders, 2, ',', '.');?>';
+    document.getElementById('paidOrders').innerHTML = '<?php echo '&euro;&nbsp;' . number_format((floatval($totalOrders) - floatval($unpaidOrders)), 2, ',', '.');?>';
 </script>
