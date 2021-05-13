@@ -1425,9 +1425,11 @@
                                 . $this->table . '.id,'
                                 . $this->table . '.amount
                             FROM '
-                                . $this->table .
-                            ' WHERE '
-                                . $this->table . '.serviceTypeId = ' . $this->config->item('local') .
+                                . $this->table . '
+                            INNER JOIN
+                                tbl_shop_spots ON tbl_shop_spots.id = ' . $this->table . '.spotId
+                            WHERE
+                                tbl_shop_spots.spotTypeId = ' . $this->config->item('local') .
                         ') localOrders',
                         'localOrders.id = ' . $this->table . '.id',
                         'LEFT'
@@ -1437,10 +1439,12 @@
                             SELECT '
                                 . $this->table . '.id,'
                                 . $this->table . '.amount
-                            FROM '
-                                . $this->table .
-                            ' WHERE '
-                                . $this->table . '.serviceTypeId = ' . $this->config->item('deliveryType') .
+                                FROM '
+                                    . $this->table . '
+                                INNER JOIN
+                                    tbl_shop_spots ON tbl_shop_spots.id = ' . $this->table . '.spotId
+                                WHERE
+                                    tbl_shop_spots.spotTypeId = ' . $this->config->item('deliveryType') .
                         ') deliveryOrders',
                         'deliveryOrders.id = ' . $this->table . '.id',
                         'LEFT'
@@ -1451,9 +1455,11 @@
                                 . $this->table . '.id,'
                                 . $this->table . '.amount
                             FROM '
-                                . $this->table .
-                            ' WHERE '
-                                . $this->table . '.serviceTypeId = ' . $this->config->item('pickupType') .
+                                . $this->table . '
+                            INNER JOIN
+                                tbl_shop_spots ON tbl_shop_spots.id = ' . $this->table . '.spotId
+                            WHERE
+                                tbl_shop_spots.spotTypeId = ' . $this->config->item('pickupType') .
                         ') pickupOrders',
                         'pickupOrders.id = ' . $this->table . '.id',
                         'LEFT'
@@ -1479,6 +1485,7 @@
                     'tbl_shop_payment_methods.percent paymentMethodPercent',
                     'tbl_shop_payment_methods.amount paymentMethodAmount',
                     'tbl_shop_payment_methods.productGroup productGroup',
+                    'tbl_shop_spots.spotTypeId'
                 ];
             }
 
