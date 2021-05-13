@@ -486,6 +486,91 @@ class Events extends BaseControllerWeb
         $this->loadViews('events/financial_report', $this->global, '', 'footerbusiness', 'headerbusiness');
     }
 
+    public function tags(){
+		$this->global['pageTitle'] = 'TIQS: Event Tags';
+		
+		$this->loadViews("events/tags", $this->global, '', 'footerbusiness', 'headerbusiness'); 
+	}
+
+    public function get_event_tags(){
+		$where = ['vendorId' => $this->vendor_id];
+		$data = $this->event_model->get_event_tags($where);
+		echo json_encode($data);
+	}
+
+	public function save_event_tags(){
+		$data = $this->input->post(null, true);
+		$data['vendorId'] = $this->vendor_id;
+		if($this->event_model->save_event_tags($data)){
+			$response = [
+				'status' => 'success',
+				'message' => 'Created successfully!'
+			];
+			echo json_encode($response);
+			return ;
+		}
+
+		$response = [
+			'status' => 'error',
+			'message' => 'Something went wrong!'
+		];
+		echo json_encode($response);
+		return ;
+		
+	}
+
+	public function update_event_tags(){
+		$where = [
+			'id' => $this->input->post('id'),
+			'vendorId' => $this->vendor_id
+		];
+
+		$data = [
+			'tag' => $this->input->post('tag'),
+			'userId' => $this->input->post('userId')
+		];
+
+		if($this->event_model->update_event_tags($data, $where)){
+			$response = [
+				'status' => 'success',
+				'message' => 'Updated successfully!'
+			];
+			echo json_encode($response);
+			return ;
+		}
+
+		$response = [
+			'status' => 'error',
+			'message' => 'Something went wrong!'
+		];
+		echo json_encode($response);
+		return ;
+	}
+
+	public function delete_event_tags(){
+		$where = [
+			'id' => $this->input->post('id'),
+			'vendorId' => $this->vendor_id
+		];
+		
+		if($this->event_model->delete_event_tags($where)){
+			$response = [
+				'status' => 'success',
+				'message' => 'Deleted successfully!'
+			];
+			echo json_encode($response);
+			return ;
+		}
+
+		$response = [
+			'status' => 'error',
+			'message' => 'Something went wrong!'
+		];
+		echo json_encode($response);
+		return ;
+	}
+
+
     public function graph($eventId)
     {
         $this->global['pageTitle'] = 'TIQS : EVENT GRAPH';

@@ -861,4 +861,30 @@ class Event_model extends CI_Model {
 		return true;
 	}
 
+	public function save_event_tags($data)
+	{
+		$this->db->insert('tbl_event_shop_tags',$data);
+		return $this->db->insert_id() ? true : false;
+	}
+
+	public function update_event_tags($data, $where)
+	{
+		$this->db->update('tbl_event_shop_tags',$data, $where);
+		return ($this->db->affected_rows() > 0) ? true : false;
+	}
+
+	public function get_event_tags($where)
+	{
+		$this->db->where($where);
+		$query = $this->db->get('tbl_event_shop_tags');
+		return $query->result_array();
+	}
+
+	public function delete_event_tags($where)
+	{
+		$this->db->delete('tbl_event_shop_tags', $where);
+		return ($this->db->affected_rows() > 0) ? true : false;
+	}
+
+
 }

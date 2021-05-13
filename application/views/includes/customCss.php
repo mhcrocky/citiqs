@@ -572,6 +572,9 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 <?php  } elseif ($this->view === 'appsettings/index') { ?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+<?php  } elseif ($this->view === 'events/tags') { ?>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 <?php  } elseif ($this->view === 'voucher/index') { ?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/tiny_a4_format.css">
