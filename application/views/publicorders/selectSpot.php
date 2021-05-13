@@ -11,20 +11,21 @@
 		</div><!-- /.login-logo -->
 		<?php } ?>
 		<h1 id="selectSpotH1" style="text-align:center; text-transform: uppercase; margin: 0px 7px; border-bottom: 4px solid;"><?php echo $vendor['vendorName'] ?></h1>
-		<div class="d-flex align-items-center">
+		<div class="d-flex align-items-center" style="padding: 5px 10px">
+			<p style="text-align:left; text-transform: uppercase;">Insert your table or area number</p>
+			<div class="input-group">
 
-		<div class="input-group">
-		    <input style="height: 45px" oninput="searchTable()" type="text" id="search" class="form-control" aria-label="Search" placeholder="Search">
-			<span onclick="searchTable()" style="background: #fff !important;height: 45px;cursor: pointer" class="input-group-addon"><i class="fa fa-search"></i></span>
-		</div>
-
-
-	
+				<input style="height: 45px" oninput="searchTable()" type="text" id="search" class="form-control" aria-label="Search" placeholder="Search">
+				<span onclick="searchTable()" style="background: #fff !important;height: 45px;cursor: pointer" class="input-group-addon"><i class="fa fa-search"></i></span>
+			</div>
+			<div>
+				<h1 style="text-align:left; text-transform: uppercase; ">OR</h1>
+			</div>
 		</div>
 		<div class="selectWrapper mb-35" style="padding-top:10px">
 			<?php if (!empty($spots)) { ?>
-				<div id="selectSpots" style="margin-top:10px">
-					<label id="labelColor" for="spot" style="text-align:center; text-transform: uppercase;">Service Point Or Table:</label>
+				<div id="selectSpots" style="margin-top:10px" align="left">
+					<label id="labelColor" for="spot" style="text-align:left; text-transform: uppercase;">Select your table or area number</label>
 					<!-- <select class="selectBox selectSpot" id="spot" onchange="redirectTo(this.value)" class="form-control" style="color :black">
 						<option value="">Select spot</option>
 						<?php
@@ -54,7 +55,7 @@
 						?>
 					</select> -->
 
-					<div class="custom__select">
+					<div class="custom__select" align="center">
 						<form action="">
 							<ul class='select__list bordersColor' id="productList">
 								<?php
