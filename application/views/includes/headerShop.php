@@ -148,7 +148,7 @@
         <nav class="navbar navbar-expand-lg container">
             <a class="navbar-brand"
                 href="<?php echo current_url(); ?>">
-                <img class="menu-icon" src="<?php echo base_url(); ?>assets/home/images/logo1.png" alt="">
+                <img class="menu-icon" src="<?php echo base_url() . '' . $logoUrl; ?>" alt="">
             </a>
             <button class="navbar-toggler py-2 px-3 px-md-4 bg-secondary" type="button" data-toggle="collapse"
                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
