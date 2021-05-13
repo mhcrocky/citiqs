@@ -18,7 +18,7 @@
 					<?php foreach ($workingTime as $day => $times) { ?>
 						<h3 class="closedContainerFontColor"><?php echo $day ?><h3>
 						<?php foreach ($times as $time) { ?>
-							<p class="closedContainerFontColor">From: <?php echo $time['timeFrom']; ?> To:  <?php echo $time['timeTo']; ?></p>
+							<p class="closedContainerFontColor">From: <?php echo substr($time['timeFrom'],0,5); ?> To:  <?php echo substr($time['timeTo'],0,5); ?></p>
 						<?php } ?>
 					<?php } ?>
 				<?php } ?>
