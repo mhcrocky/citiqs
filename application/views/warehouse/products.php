@@ -995,17 +995,19 @@
                                 }
                             ?>
 
-                            <div class="col-lg-4 col-sm-12">
-                                <label for="orderNo<?php echo $product['productId'] ?>">Order number: </label>
-                                <input
-                                    type="text"
-                                    id="orderNo<?php echo $product['productId'] ?>"
-                                    name="product[orderNo]"
-                                    class="form-control"
-                                    value="<?php echo intval($product['orderNo']); ?>"
-                                    required
-                                    />
-                            </div>
+                            <!--
+                                <div class="col-lg-4 col-sm-12">
+                                    <label for="orderNo<?php #echo $product['productId'] ?>">Order number: </label>
+                                    <input
+                                        type="text"
+                                        id="orderNo<?php #echo $product['productId'] ?>"
+                                        name="product[orderNo]"
+                                        class="form-control"
+                                        value="<?php #echo intval($product['orderNo']); ?>"
+                                        required
+                                        />
+                                </div>
+                            -->
                             <legend>Upload product image</legend>
                             <div class="form-group has-feedback">
                                 <input type="file" name="productImage" id="uploadProductImage" class="form-control" accept="image/png" />
