@@ -161,6 +161,17 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label for="showAge" class="col-md-4 col-form-label text-md-left">
+                    Age
+                    </label>
+                    <div class="col-md-6">
+                        <select id="showAge" name="showAger" class="form-control custom-select custom-select-sm form-control-sm">
+                            <option value="1">Show</option>
+                            <option value="0" selected>Hide</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label style="margin-bottom: auto;margin-top: auto;" for="googleAnalyticsCode" class="col-md-4 col-form-label text-md-left">
                     Google Analytics Code
                     </label>
@@ -294,6 +305,7 @@
         $('#showCountry').val(shopsettings.showCountry);
         $('#showZipcode').val(shopsettings.showZipcode);
         $('#showMobileNumber').val(shopsettings.showMobileNumber);
+        $('#showAge').val(shopsettings.showAge);
         $('#googleAnalyticsCode').val(shopsettings.googleAnalyticsCode);
         $('#googleAdwordsConversionId').val(shopsettings.googleAdwordsConversionId);
         $('#googleAdwordsConversionLabel').val(shopsettings.googleAdwordsConversionLabel);
