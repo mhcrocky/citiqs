@@ -27,11 +27,30 @@
         <a href="<?php echo base_url(); ?>events/event/<?php echo $eventId; ?>" class="btn btn-primary mr-2"
             style="background: #10b981;">Go to Tickets</a>
     </div>
-    <div class="w-100 mt-3 mb-4">
-        <div id="graphs">
-            <?php echo $graphs; ?>
+    <div class="w-100 mt-5 mb-1 d-table text-right mr-4">
+        <select style="width: 120px" id="select_graph" onchange="selectGraph()" class="form-control custom-select custom-select-sm form-control-sm">
+            <option value="days">Days</option>
+            <option value="tickets">Ticket Type</option>
+        </select>
+    </div>
+
+    <div id="main-graph" class="w-100 mt-3 mb-4 graphs">
+        <div class="w-100">
+            <?php echo $days_graph; ?>
         </div>
 
+    </div>
+
+    <div style="display: none" id="tickets" class="w-100 mt-3 mb-4 graphs">
+        <div class="w-100">
+            <?php echo $tickets_graph; ?>
+        </div>
+
+    </div>
+    <div style="display: none" id="days" class="w-100 mt-3 mb-4 graphs">
+        <div class="w-100" >
+            <?php echo $days_graph; ?>
+        </div>
     </div>
 </div>
 
@@ -40,4 +59,10 @@
     $('.drilldown-body .breadcrumb').remove();
     $('.panel-heading .pull-right').remove();
 }());
+
+function selectGraph() {
+    let val = $('#select_graph option:selected').val();
+    let html = $('#'+val).html();
+    $('#main-graph').html(html);
+}
 </script>
