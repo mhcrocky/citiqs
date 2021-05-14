@@ -1933,18 +1933,20 @@ class Ajax extends CI_Controller
         if (!$this->input->is_ajax_request()) return;
 
         $post = Utility_helper::sanitizePost();
-
-        $employeeId = $this
+        $employee = $this
                     ->employee_model
-                    ->setProperty('ownerId', $post['ownerId'])
-                    ->setProperty('password', $post['password'])
-                    ->setProperty('email', $post['email'])
-                    ->loginEmployee();
+                    ->setProperty('ownerId', $_SESSION['userId'])
+                    ->setProperty('posPin', $post['posPin'])
+                    ->employeePosLogin();
 
-        if ($employeeId) {
-            $this->shopposlogin_model->login($employeeId);
+        if ($employee) {
+            $this->shopposlogin_model->login(intval($employee['id']));
             $_SESSION['unlockPos'] = $this->shopposlogin_model->id;
-            $response['status'] = ($_SESSION['unlockPos']) ? '1' : '0';
+            $response = [
+                'status' => '1',
+                'posManager' => $employee['manager']
+            ];
+
         } else {
             $response['status'] = '0';
         }

@@ -15,7 +15,6 @@
                 <div class="item-editor">
                     <div class="edit-single-user-container">
                         <form method="post" action="<?php echo $this->baseUrl . 'addNewEmployeeSetup'; ?>">
-                            <input type="text" name="ownerId" value="<?php echo $ownerId ?>" hidden required readonly />
                             <div>
                                 <label for="username">Name</label>
                                 <input type="text" class="form-control" id="username" name="username" required />
@@ -27,6 +26,22 @@
                             <div>
                                 <label for="password">Password</label>
                                 <input type="text" class="form-control" id="password" name="password" required />
+                            </div>
+                            <div>
+                                <label for="posPin">POS pin</label>
+                                <input type="text" class="form-control" id="posPin" name="posPin" />
+                            </div>
+                            <div class="form-group">
+                                <label>Manager</label>
+                                <label class="radio-inline" for="managerYes">
+                                    <input type="radio" class="form-control" id="managerYes"  name="manager" value="1" />
+                                    &nbsp;&nbsp;Yes
+                                </label>
+                                <br/>
+                                <label class="radio-inline" for="managerNo">
+                                    <input type="radio" class="form-control" id="managerNo"  name="manager" value="0" checked />
+                                    &nbsp;&nbsp;No
+                                </label>
                             </div>
                             <div>
                                 <label for="expiration_time_value">Expiration time value</label>
@@ -118,8 +133,14 @@
                     <p class="item-category">Email: <?php echo $employee->email; ?></p>
                     <p class="item-category">INSZ number: <?php echo $employee->INSZnumber; ?></p>
                     <p class="item-category">Unique Number: <?php echo $employee->uniquenumber; ?></p>
-                    <p class="item-category">Valid to: <?php echo date('Y-m-d H:i:s', $employee->expiration_time); ?>
+                    <p class="item-category">
+                        Valid to: <?php echo date('Y-m-d H:i:s', $employee->expiration_time); ?>
                     </p>
+                    <?php
+                        if (!empty($employee->posPin)) {
+                            echo ($employee->manager === '1') ? 'POS manager' : 'POS user';
+                        }
+                    ?>
                     <!-- <p class="item-category"><? #echo date('Y-m-d H:i:s', $employee->validitytime); ?></p>
 							<p class="item-category"><? #echo date('Y-m-d H:i:s', $employee->expiration_time); ?></p>
 							<p class="item-category"><? #echo $employee->expiration_time_value; ?></p>
@@ -173,7 +194,7 @@
                                 <!-- ITEM EDITOR -->
                                 <div class="item-editor" id="editEmployeeId<?php echo $employee->id; ?>">
                                     <div class="edit-single-user-container">
-                                        <form class="form-inline" id="editEmployee<?php echo $employee->id; ?>"
+                                        <form id="editEmployee<?php echo $employee->id; ?>"
                                             method="post"
                                             action="<?php echo $this->baseUrl . 'index.php/employeeEdit/' . $employee->id; ?>">
                                             <div>
@@ -193,6 +214,41 @@
                                                 <input type="text" class="form-control"
                                                     id="password<?php echo $employee->id; ?>" name="password" required
                                                     value="<?php echo $employee->password; ?>" />
+                                            </div>
+                                            <div>
+                                                <label for="posPin<?php echo $employee->id; ?>">POS pin</label>
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="posPin<?php echo $employee->id; ?>"
+                                                    name="posPin"
+                                                    value="<?php echo ($employee->posPin) ? $employee->posPin : '';?>"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label>Manager</label>
+                                                <br/>
+                                                <label class="radio-inline" for="managerYes<?php echo $employee->id; ?>">
+                                                    &nbsp;&nbsp;Yes
+                                                    <input
+                                                        type="radio"
+                                                        id="managerYes<?php echo $employee->id; ?>"
+                                                        name="manager"
+                                                        value="1"
+                                                        <?php echo ($employee->manager === '1') ? 'checked' : ''; ?>
+                                                    />
+                                                </label>
+                                                <br/>
+                                                <label class="radio-inline" for="managerNo<?php echo $employee->id; ?>">
+                                                    &nbsp;&nbsp;No
+                                                    <input
+                                                        type="radio"
+                                                        id="managerNo<?php echo $employee->id; ?>"
+                                                        name="manager"
+                                                        value="0"
+                                                        <?php echo ($employee->manager === '0') ? 'checked' : ''; ?>
+                                                    />
+                                                </label>
                                             </div>
                                             <div>
                                                 <label for="validitytime<?php echo $employee->id; ?>">Validity

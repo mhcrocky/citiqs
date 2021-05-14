@@ -312,10 +312,6 @@ var callThis = (function() {
         updateApiName: function(callFunction) {
             callFunction(this);
         },
-        posLogin: function(callFunction, functionArg) {
-            functionArg.push(this);
-            callFunction(...functionArg);
-        },
         lockPos: function(callFunction) {
             callFunction(this);
         },
