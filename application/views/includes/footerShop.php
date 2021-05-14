@@ -92,13 +92,13 @@
                                     </div>
                                     <div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
                                         <span class="label-input100">Email</span>
-                                        <input class="input100" type="email" id="email" name="email"
+                                        <input class="input100 emails" type="email" id="email" name="email"
                                             placeholder="Email Address" required>
                                         <span class="focus-input100"></span>
                                     </div>
                                     <div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
                                         <span class="label-input100">Repeat Email</span>
-                                        <input class="input100" type="email" id="repeatEmail" name="repeatEmail"
+                                        <input class="input100 emails" type="email" id="repeatEmail" name="repeatEmail"
                                             placeholder="Email Address" required>
                                         <span class="focus-input100"></span>
                                     </div>
@@ -157,7 +157,17 @@
                                         <span class="focus-input100"></span>
                                     </div>
                                     <input type="hidden" name="orderRandomKey" value="<?php echo isset($orderRandomKey) ? $orderRandomKey : ''; ?>">
-
+                                    <?php if(isset($shopsettings->termsofuseFile) && $shopsettings->termsofuseFile != ''): ?>
+                                    <div class="form-group mt-4">
+                                        <div style="font-size: 14px" class="pretty p-icon p-smooth">
+                                            <input type="checkbox" name="termsofuse" id="termsofuse" required/>
+                                           <div class="state success-check">
+                                                <i class="icon fa fa-check"></i>
+                                                <label> I agree to these <a href="<?php echo base_url(); ?>events/shop/termsofuse?order=<?php echo isset($orderRandomKey) ? $orderRandomKey : ''; ?>" target="_blank">Terms and Conditions</a>.</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php endif; ?>
                                         <button type="submit" style="display: none;" id="pay" class="btn btn-danger btn-lg btn-block mt-2">
                                             PAY
                                         </button>
