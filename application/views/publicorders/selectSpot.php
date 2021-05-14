@@ -11,21 +11,22 @@
 		</div><!-- /.login-logo -->
 		<?php } ?>
 		<h1 id="selectSpotH1" style="text-align:center; text-transform: uppercase; margin: 0px 7px; border-bottom: 4px solid;"><?php echo $vendor['vendorName'] ?></h1>
-		<div class="d-flex align-items-center" style="padding: 5px 10px">
-			<p style="text-align:left; text-transform: uppercase;">Insert your table or area number</p>
-			<div class="input-group">
+		<div class="d-flex align-items-center" style="padding: 10px 15px">
+			<p style="font-family: Arial; text-align:left; margin-top: 10px; margin-bottom: 5px ">Insert your table or area number</p>
+			<div class="input-group" style="margin-bottom: -5px; margin-left: -3px  ">
 
 				<input style="height: 45px" oninput="searchTable()" type="text" id="search" class="form-control" aria-label="Search" placeholder="Search">
 				<span onclick="searchTable()" style="background: #fff !important;height: 45px;cursor: pointer" class="input-group-addon"><i class="fa fa-search"></i></span>
 			</div>
-			<div>
-				<h1 style="text-align:left; text-transform: uppercase; ">OR</h1>
+			<div style="margin-top: 10px; margin-top: 30px; margin-bottom: -10px">
+				<h4 style="font-family: Arial; font-size: 16px;text-align:left; text-transform: uppercase; ">OR</h4>
 			</div>
 		</div>
-		<div class="selectWrapper mb-35" style="padding-top:10px">
+		<p style="font-family: Arial; text-align:left; padding: 0px 15px; margin-top: 10px; margin-bottom: -15px ">Select your table or area number</p>
+		<div class="selectWrapper mb-35" style="padding-top:10px; font-family: Arial;">
 			<?php if (!empty($spots)) { ?>
 				<div id="selectSpots" style="margin-top:10px" align="left">
-					<label id="labelColor" for="spot" style="text-align:left; text-transform: uppercase;">Select your table or area number</label>
+<!--					<label id="labelColor" for="spot" style="font-family: Arial;text-align:left; ">Select your table or area number</label>-->
 					<!-- <select class="selectBox selectSpot" id="spot" onchange="redirectTo(this.value)" class="form-control" style="color :black">
 						<option value="">Select spot</option>
 						<?php
