@@ -203,20 +203,32 @@ function textToClipboard (copyText) {
 }
 
 function saveShopSettings() {
-    let data = {
-        showAddress: $('#showAddress option:selected').val(),
-        showCountry: $('#showCountry option:selected').val(),
-        showZipcode: $('#showZipcode option:selected').val(),
-        showMobileNumber: $('#showMobileNumber option:selected').val(),
-        googleAnalyticsCode: $('#googleAnalyticsCode').val(),
-        googleAdwordsConversionId: $('#googleAdwordsConversionId').val(),
-        googleAdwordsConversionLabel: $('#googleAdwordsConversionLabel').val(),
-        googleTagManagerCode: $('#googleTagManagerCode').val(),
-        facebookPixelId: $('#facebookPixelId').val()
-    }
 
-    $.post(globalVariables.baseUrl + 'events/save_shopsettings', data, function(data){
-        alertify.success("Settings are saved successfully!");
-        $('#closeShopSettingsModal').click();
-    });
+    var formData = new FormData($("#shopsettings")[0]);
+        formData.append('userfile', $("#userfile")[0].files[0]);
+        formData.append('showAddress', $('#showAddress option:selected').val());
+        formData.append('showCountry', $('#showCountry option:selected').val());
+        formData.append('showZipcode', $('#showZipcode option:selected').val());
+        formData.append('showMobileNumber', $('#showMobileNumber option:selected').val());
+        formData.append('googleAnalyticsCode', $('#googleAnalyticsCode').val());
+        formData.append('googleAdwordsConversionId', $('#googleAdwordsConversionId').val());
+        formData.append('googleAdwordsConversionLabel', $('#googleAdwordsConversionLabel').val());
+        formData.append('googleTagManagerCode', $('#googleTagManagerCode').val());
+        formData.append('facebookPixelId', $('#facebookPixelId').val());
+
+        $.ajax({
+            url: globalVariables.baseUrl + "events/save_shopsettings",
+            data:formData,
+            type:'POST',
+            contentType: false,
+            processData: false,
+            success: function(data){
+                alertify.success("Settings are saved successfully!");
+                $('#closeShopSettingsModal').click();
+            },
+            error: function(data){
+                let error = data.responseJSON;
+                alertify['error']("Something went wrong");
+            }
+        });
 }
