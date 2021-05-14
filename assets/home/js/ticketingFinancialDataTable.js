@@ -74,6 +74,15 @@ $(document).ready( function () {
         size: 30,
         unique: true
       },
+      {
+        id: "tbl_bookandpay.tag",
+        label: "Tag ID",
+        type: "integer",
+        class: "tag",
+        default_value: "",
+        size: 30,
+        unique: true,
+      },
     ]
   };
   
