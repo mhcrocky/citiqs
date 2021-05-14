@@ -37,6 +37,8 @@ class Events extends BaseControllerWeb
     {
         $this->global['pageTitle'] = 'TIQS: Events';
         $data['shopsettings'] = $this->event_model->get_shopsettings($this->vendor_id);
+        $where = ['vendorId' => $this->vendor_id];
+        $data['tags'] = $this->event_model->get_event_tags($where);
         $this->loadViews("events/events", $this->global, $data, 'footerbusiness', 'headerbusiness');
 
     }
