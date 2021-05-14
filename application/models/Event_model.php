@@ -636,7 +636,29 @@ class Event_model extends CI_Model {
 		return $query->result_array();
 	}
 
-	function get_days_report($vendor_id, $eventId, $sql=''){
+	public function get_booking_report_of_tickets($vendorId, $eventId, $sql='')
+	{
+		$query = $this->db->query("SELECT tbl_event_tickets.ticketDescription AS days, COUNT(tbl_event_tickets.id) AS tickets
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_events.vendorId = ".$vendorId." AND tbl_bookandpay.ticketDescription <> '' AND paid='1' AND tbl_events.Id = ".$eventId." $sql  GROUP BY tbl_event_tickets.id 
+		ORDER BY tbl_bookandpay.reservationtime ASC");
+		return $query->result_array();
+	}
+
+	function get_tickets_report($vendor_id, $eventId, $days = true, $sql=''){
+		if(!$days){
+		    $results = $this->get_booking_report_of_tickets($vendor_id, $eventId, $sql);
+			foreach($results as $key => $result){
+				$newData[] = [
+					"days" => $result['days'],
+					"tickets" => intval($result['tickets']),
+				];
+			}
+			return $newData;
+
+		}
+
 		$results = $this->get_booking_report_of_days($vendor_id, $eventId, $sql);
 		$tickets = [];
 		$newData = [];
