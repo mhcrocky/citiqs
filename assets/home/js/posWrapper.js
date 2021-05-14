@@ -426,25 +426,41 @@ function showLoginModal() {
     }
 }
 
-function posLogin(form) {
-    if (!validateFormData(form)) return false;
-
+function posLogin() {
     let url = globalVariables.ajax + 'posLogin';
+    let pin = posGlobals['pinCodeELement'].value;
+    if (!pin) {
+        alertify.error('PIN is required');
+        return;
+    }
 
-    sendFormAjaxRequest(form, url, 'posLogin', posLoginResponse, [form])
+    let post = {
+        'posPin' : pin
+    }
 
-    return false;
+    sendAjaxPostRequestImproved(post, url, posLoginResponse)
+
+    return;
 }
 
-function posLoginResponse(form, response) {
+function posLoginResponse(response) {
     if (response['status'] === '0') {
+        alertify.error('Invalid PIN');
         return;
     } else {
-        form.reset();
+        posGlobals['pinCodeELement'].value = '';
+        posGlobals['pinCodeELement'].setAttribute('value', '');
         posGlobals['unlock'] = true;
+        posGlobals['posManager'] = (response['posManager'] === '1') ? true : false;
+        toggleManagerButton();
         $('#posLoginModal').modal('hide');
         posGlobals['checkActivityId'] = checkActivity();
     }
+}
+
+function toggleManagerButton() {
+    let displayValue = posGlobals['posManager'] ? 'initial' : 'none';
+    posGlobals['managerButton'].style.display = displayValue;
 }
 
 function lockPos() {
@@ -455,8 +471,10 @@ function lockPos() {
 function lockPosRespone(response) {
     if (response['status'] === '1') {
         posGlobals['unlock'] = false;
+        posGlobals['posManager'] = false;
         showLoginModal();
         clearActivtiyInterval();
+        toggleManagerButton()
     } else {
         alertify.error('Pos not locked!');
     }

@@ -136,9 +136,11 @@
                     <p class="item-category">
                         Valid to: <?php echo date('Y-m-d H:i:s', $employee->expiration_time); ?>
                     </p>
-                    <?php if (!empty($employee->posPin)) { ?>
-                        POS user
-                    <?php } ?>
+                    <?php
+                        if (!empty($employee->posPin)) {
+                            echo ($employee->manager === '1') ? 'POS manager' : 'POS user';
+                        }
+                    ?>
                     <!-- <p class="item-category"><? #echo date('Y-m-d H:i:s', $employee->validitytime); ?></p>
 							<p class="item-category"><? #echo date('Y-m-d H:i:s', $employee->expiration_time); ?></p>
 							<p class="item-category"><? #echo $employee->expiration_time_value; ?></p>

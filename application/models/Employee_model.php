@@ -422,4 +422,17 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
         return is_null($this->readImproved($filter));
 
     }
+
+    public function employeePosLogin(): ?array
+    {
+        $employee = $this->readImproved([
+            'what' => [$this->table . '.id', $this->table . '.manager'],
+            'where' => [
+                $this->table . '.ownerId' => $this->ownerId,
+                $this->table . '.posPin' => $this->posPin,
+            ]
+        ]);
+
+        return is_null($employee) ? null : reset($employee);
+    }
 }

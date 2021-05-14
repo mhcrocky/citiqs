@@ -159,7 +159,9 @@
 				'postPaid' : '<?php echo $postPaid; ?>',
 				'pinMachinePayment' : '<?php echo $pinMachinePayment; ?>',
 				'voucherPayment' : '<?php echo $voucherPayment; ?>',
-				'pinCodeELement' : document.getElementById('pinCode')
+				'pinCodeELement' : document.getElementById('pinCode'),
+				'posManager' : false,
+				'managerButton' : document.getElementById('managerButton')
 			}
 
 			<?php if  ($lock) { ?>

@@ -138,7 +138,7 @@
                                 <span>0</span>
                             </p>
                         </td>
-                        <td>
+                        <td onclick="posLogin()">
                             <p>
                                 <span>Enter</span>
                             </p>
