@@ -8,6 +8,8 @@ require APPPATH . '/libraries/BaseControllerWeb.php';
 use \koolreport\drilldown\DrillDown;
 use \koolreport\widgets\google\ColumnChart;
 use \koolreport\clients\Bootstrap4;
+use \koolreport\bootstrap3\Theme;
+
 
 class Events extends BaseControllerWeb
 {
@@ -580,7 +582,8 @@ class Events extends BaseControllerWeb
         $this->global['pageTitle'] = 'TIQS : EVENT GRAPH';
         $data['eventId'] = $eventId;
         $data['event'] = $this->event_model->get_event($this->vendor_id,$eventId);
-        $data['graphs'] = $this->get_graphs($this->vendor_id, $eventId);
+        $data['days_graph'] = $this->get_graphs($this->vendor_id, $eventId);
+        $data['tickets_graph'] = $this->get_graphs($this->vendor_id, $eventId, false);
         $this->loadViews('events/graph', $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
 
@@ -657,31 +660,35 @@ class Events extends BaseControllerWeb
         $this->loadViews("events/email_designer", $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
 
-    public function get_graphs($vendorId, $eventId, $sql=''){
+    public function get_graphs($vendorId, $eventId, $days=true, $sql=''){
         $GLOBALS['vendorId'] = $vendorId;
         $GLOBALS['eventId'] = $eventId;
+        $GLOBALS['days'] = $days;
         $GLOBALS['sql'] = $sql;
         $this->load->model('event_model');
+        $i = ($days) ? 1 : 0;
 		$graphs = DrillDown::create(array(
-            "name" => "saleDrillDown",
+            "name" => "saleDrillDown".$i,
             "title" => " ",
             "levels" => array(
                 array(
-                    "title" => "Business Report",
+                    "title" => "",
                     "content" => function ($params, $scope) {
                         global $vendorId;
                         global $eventId;
+                        global $days;
                         global $sql;
+                        $i = ($days) ? 1 : 0;
                         ColumnChart::create(array(
-                            "dataSource" => $this->event_model->get_days_report($vendorId, $eventId, $sql), 
+                            "dataSource" => $this->event_model->get_tickets_report($vendorId, $eventId, $days, $sql), 
                             "columns" => array(
                                 "days" => array(
-                                    "type" => "integer",
-                                    "label" => "Days",
+                                    "type" => "string",
+                                    "label" => "Days".$i,
 								),
 								"tickets" => array(
 									"label" => "Tickets",
-									"id" => "Tickets",
+									"id" => "Tickets".$i,
                                 ),
 							),
 							"class"=>array(
@@ -691,7 +698,7 @@ class Events extends BaseControllerWeb
 							"colorScheme"=>array(
 								"#3366cc",
 								"#dc3912"
-							)
+                            ),
                         ));
                     }
                 ),
