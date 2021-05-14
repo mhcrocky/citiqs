@@ -120,7 +120,9 @@
                 </button>
             </div>
             <div style="overflow: auto !important;" class="modal-body">
+            <form id="shopsettings" method="post" enctype="multipart/form-data" action="#">
                 <div class="form-group row">
+               
                     <label for="showAddress" class="col-md-4 col-form-label text-md-left">
                         Address
                     </label>
@@ -227,6 +229,21 @@
                         <input type="text" id="facebookPixelId" name="facebookPixelId" class="form-control">
                     </div>
                 </div>
+
+                <div class="form-group row">
+                    <label style="margin-bottom: auto;margin-top: auto;" for="facebookPixelId"
+                        class="col-md-4 col-form-label text-md-left">
+                        Upload Terms of Use(PDF File)
+                    </label>
+                    <div class="col-md-6">
+                        <input type="file" id="userfile" name="userfile" class="custom-file-container__custom-file__custom-file-input" accept="pdf">
+                    </div>
+                </div>
+
+                </form>
+                
+                
+
             </div>
             <div class="modal-footer">
                 <button type="button" id="closeShopSettingsModal" class="btn btn-secondary"
