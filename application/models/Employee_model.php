@@ -402,4 +402,24 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
         // TO DO => check is email unique for this vendor and pin pos number (if is set);
         return $this->setObjectFromArray($employee)->update();
     }
+
+    public function checkIsPropertyFree(string $property, string $value): bool
+    {
+        $where = [
+            $this->table . '.' . $property => $value,
+            $this->table . '.ownerId' => $this->ownerId
+        ];
+
+        if ($this->id) {
+            $where[$this->table . '.id != '] = $this->id;
+        }
+
+        $filter = [
+            'what' => [$this->table . '.id'],
+            'where' => $where
+        ];
+
+        return is_null($this->readImproved($filter));
+
+    }
 }

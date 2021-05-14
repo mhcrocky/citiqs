@@ -47,6 +47,31 @@ class Employee extends BaseControllerWeb {
         echo $output;
     }
 
+    private function checkEmployeeData(array $employee, int $id = 0): bool
+    {
+        $this->employee_model->setProperty('ownerId', intval($_SESSION['userId']));
+        if ($id) {
+            $this->employee_model->setObjectId($id);
+        }
+
+        if (!$this->employee_model->checkIsPropertyFree('email', $employee['email'])) {
+            $this->session->set_flashdata('error', 'Employee with this email already exists');
+            return false;
+        }
+
+        if (!$this->employee_model->checkIsPropertyFree('INSZnumber', $employee['INSZnumber'])) {
+            $this->session->set_flashdata('error', 'Employee with this INSZ number already exists');
+            return false;
+        }
+
+        if (!$this->employee_model->checkIsPropertyFree('posPin', $employee['posPin'])) {
+            $this->session->set_flashdata('error', 'Employee with this POS pin already exists');
+            return false;
+        }
+
+        return true;
+    }
+
     public function addNewEmployeeSetup()
     {
         $employee = $this->security->xss_clean($_POST);
@@ -55,13 +80,19 @@ class Employee extends BaseControllerWeb {
         $employee['uniquenumber'] = time() . '_' . rand(0,99999);
         $employee['ownerId'] = $_SESSION['userId'];
 
+        $redirect = base_url() . 'employee';
+
+        if (!$this->checkEmployeeData($employee)) {
+            redirect($redirect);
+        }
+
         if ($this->employee_model->addNewEmployeeImproved($employee)) {
             $this->session->set_flashdata('success', 'New employee created successfully');
         } else {
             $this->session->set_flashdata('error', 'New employee creation failed');
         }
 
-        redirect(base_url() . "employee");
+        redirect($redirect);
     }
 
     public function validexpirytype($date) {
@@ -80,7 +111,11 @@ class Employee extends BaseControllerWeb {
         $employee['expiration_time'] = $this->getExpiryTime($employee['expiration_time_value'], $employee['expiration_time_type']);
         $employee['ownerId'] = $_SESSION['ownerId'];
 
-        $this->employee_model->setObjectId(intval($employeeId));
+        $redirect = base_url() . 'employee';
+
+        if (!$this->checkEmployeeData($employee, intval($employeeId))) {
+            redirect($redirect);
+        }
 
         if ($this->employee_model->updateEmployeeImproved($employee)) {
             $this->session->set_flashdata('success', 'Employee successfully updated');
@@ -88,7 +123,7 @@ class Employee extends BaseControllerWeb {
             $this->session->set_flashdata('error', 'Employee update failed');
         }
 
-        redirect(base_url() . "employee");
+        redirect($redirect);
     }
 
     public function emailnottaken($employeeId) {
@@ -167,5 +202,6 @@ class Employee extends BaseControllerWeb {
         }
         return $expiry;
     }
+
 
 }
