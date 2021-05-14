@@ -33,8 +33,9 @@
         </div>
         <div class="col-sm-3" style="padding-right:0px; height: 100%;">
             <button
+                id="managerButton"
                 class="btn btn-primary"
-                style="height: 100%; width: 100%; padding: 16% 12% 16% 12%;"
+                style="display: none; height: 100%; width: 100%; padding: 16% 12% 16% 12%;"
                 data-toggle="modal" data-target="#managerModal"
             >
                 <i class="fa fa-cogs" aria-hidden="true" style="font-size:24px"></i>

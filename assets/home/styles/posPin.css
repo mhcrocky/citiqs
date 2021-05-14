@@ -1,0 +1,36 @@
+#posPinCode {
+	width: 250px;
+	margin:5px 0px 5px 15px;
+	/* border-collapse: collapse; */
+}
+
+#posPinCode th {
+	height: 80px;
+}
+
+#posPinCode td {
+
+	width: 80px;
+	height: 80px;
+}
+
+#posPinCode td p {
+	height: 80px;
+	padding: 33px 0;
+	text-align: center;
+}
+
+#posPinCode td p:hover {
+	border: 1px solid #e25f2a;
+	border-radius: 100%;
+}
+
+#posPinCode td p:active {
+	background-color: #e25f2a;
+}
+
+#posPinCode th input {
+	font-size: 50px;
+	width: 70%;
+	margin-left: 15%;
+}
