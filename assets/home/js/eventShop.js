@@ -56,7 +56,7 @@ $(document).ready(function(){
         $(this).closest("div").removeClass('input100-error');
       });
 
-      $(document).on('change', '#repeatEmail', function() {
+      $(document).on('change', '.emails', function() {
         let email = $("#email").val();
         let repeatEmail = $("#repeatEmail").val();
         if(validateEmail(email) && validateEmail(repeatEmail) && (email != repeatEmail)){
@@ -107,7 +107,14 @@ function validatePayForm() {
 
         if($(this).val() == ''){
             $(this).closest("div").addClass('input100-error');
+
+            
         } else {
+
+            if($(this).is(':checkbox')){
+                $('input:checkbox').closest("div").removeClass('input100-error');
+                $('.success-check').addClass('terms-error');
+            }
             $(this).closest("div").removeClass('input100-error');
             if($(this).attr('name') == 'email'){
                 let email = $(this).val();
