@@ -169,13 +169,24 @@ $(document).ready(function() {
 
 function openShopUrlModal(id) {
     let url = $('#shop_url_'+id).attr('href');
-    $('#shopUrlText').text(url);
+    $('.shopUrlText').text(url);
     $('#shopUrl').val(url);
     $('#copyShopUrlModal').modal('show');
 }
 
-function textToClipboard () {
-    var copyText = $("#shopUrl").val();
+function copyShopUrl(){
+    let copyText = $('#shopUrl').val();
+    textToClipboard(copyText);
+}
+
+function copyShopUrlWithTag(){
+    let tag = $('#tagUrl option:selected').val();
+    let copyText = $('#shopUrl').val();
+    copyText += '?tag=' + tag;
+    textToClipboard(copyText);
+}
+
+function textToClipboard (copyText) {
 
     var textarea = document.createElement('textarea');
     textarea.textContent = copyText;

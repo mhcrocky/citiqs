@@ -37,6 +37,8 @@ class Events extends BaseControllerWeb
     {
         $this->global['pageTitle'] = 'TIQS: Events';
         $data['shopsettings'] = $this->event_model->get_shopsettings($this->vendor_id);
+        $where = ['vendorId' => $this->vendor_id];
+        $data['tags'] = $this->event_model->get_event_tags($where);
         $this->loadViews("events/events", $this->global, $data, 'footerbusiness', 'headerbusiness');
 
     }
@@ -335,6 +337,8 @@ class Events extends BaseControllerWeb
     public function get_ticket_options($ticketId)
     {
         $data = $this->event_model->get_ticket_options($ticketId);
+        $data['startDate'] = date('d-m-Y', strtotime($data['startDate']));
+		$data['endDate'] = date('d-m-Y', strtotime($data['endDate']));
         echo json_encode($data);
 
     }

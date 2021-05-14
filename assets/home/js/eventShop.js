@@ -199,6 +199,7 @@ function absVal(el) {
 function deleteTicket(id, price, ticketFee) {
     let quantityValue = $(".ticketQuantityValue_" + id).val();
     var totalBasket = $("#totalBasketAmount").val();
+    let totalTicketFee = $("#ticketFee").val();
     quantityValue = parseInt(quantityValue);
     totalBasket = parseFloatNum(totalBasket);
     price = parseFloatNum(price);
@@ -207,6 +208,7 @@ function deleteTicket(id, price, ticketFee) {
     $(".ticketQuantityValue_" + id).val(0);
     let current_time = $('#exp_time').val();
     let list_items = ($('.ticket_item').length > 1) ? 1 :0;
+    totalTicketFee = parseFloatNum(totalTicketFee) - quantityValue*(ticketFee);
 
     let data = {
         id: id,
@@ -221,9 +223,12 @@ function deleteTicket(id, price, ticketFee) {
             $(".totalBasket").text(totalBasket.toFixed(2));
             $('#totalBasket').text(totalBasket.toFixed(2));
             $("#totalBasketAmount").val(totalBasket.toFixed(2));
+            $("#ticketFee").val(totalTicketFee.toFixed(2));
+            $("#ticketFeeAmount").text(totalTicketFee.toFixed(2) + '€');
             if($('.ticket_item').length < 1) {
                 $('#payForm').hide();
                 $('.timer').empty();
+                $('#ticketFeeRow').hide();
             }
         });
 	})
@@ -251,6 +256,7 @@ function removeTicket(id, price, ticketFee, totalClass) {
         return;
     }
     var totalBasket = $("#totalBasketAmount").val();
+    var totalTicketFee = $("#ticketFee").val();
     quantityValue = Math.abs(parseInt(quantityValue));
     totalBasket = parseFloatNum(totalBasket);
     price = parseFloatNum(price);
@@ -259,10 +265,13 @@ function removeTicket(id, price, ticketFee, totalClass) {
     
     quantityValue--;
     totalBasket = Math.round((totalBasket - price - ticketFee) * 1e12) / 1e12;
+    totalTicketFee = parseFloatNum(totalTicketFee) - parseFloatNum(ticketFee);
     $(".ticketQuantityValue_" + id).val(Math.abs(quantityValue));
     $("#quantity_" + id).val(Math.abs(quantityValue));
     $("#totalBasketAmount").val(totalBasket.toFixed(2));
     $("."+totalClass).text(totalBasket.toFixed(2));
+    $("#ticketFee").val(totalTicketFee.toFixed(2));
+    $("#ticketFeeAmount").text(totalTicketFee.toFixed(2) + '€');
     let current_time = $(".current_time").val();
 
     let data = {
@@ -289,7 +298,7 @@ function removeTicket(id, price, ticketFee, totalClass) {
         '</div>'+
         '<div class="menu-list__left-col ml-auto">'+
             '<div class="menu-list__price mx-auto">'+
-                '<b class="menu-list__price--discount mx-auto">'+price.toFixed(2)+'€ ('+ticketFee.toFixed(2)+'€)</b>'+
+                '<b class="menu-list__price--discount mx-auto ticket_price">'+price.toFixed(2)+'€</b>'+
             '</div>'+
             '<div class="quantity-section mx-auto mb-2">'+
                 '<button type="button" class="quantity-button quantity-down" data-embellishmentid="'+id+'">-</button>'+
@@ -320,6 +329,7 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
     $('#payForm').show();
     var quantityValue = $(".ticketQuantityValue_" + id).val();
     var totalBasket = $("#totalBasketAmount").val();
+    var totalTicketFee = $("#ticketFee").val();
     var maxBooking = $(".ticketQuantityValue_" + id).attr('data-maxbooking');
     maxBooking = $.isNumeric(maxBooking) ? parseInt(maxBooking) : '';
     quantityValue = Math.abs(parseInt(quantityValue));
@@ -364,11 +374,16 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
     
    
     totalBasket = Math.round((totalBasket + price + ticketfee) * 1e12) / 1e12;
+    totalTicketFee = parseFloatNum(totalTicketFee) + parseFloatNum(ticketfee);
     
     $(".ticketQuantityValue_" + id).val(Math.abs(quantityValue));
     $("#quantity_" + id).val(Math.abs(quantityValue));
     $("#totalBasketAmount").val(totalBasket.toFixed(2));
+    $("#ticketFee").val(totalTicketFee.toFixed(2));
+    $("#ticketFeeAmount").text(totalTicketFee.toFixed(2) + '€');
     $("."+totalClass).text(totalBasket.toFixed(2));
+
+    $('#ticketFeeRow').show();
     
     let current_time = $(".current_time").val();
     let data = {
@@ -408,7 +423,7 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
         '</div>'+
         '<div class="menu-list__left-col ml-auto">'+
             '<div class="menu-list__price mx-auto">'+
-                '<b class="menu-list__price--discount mx-auto">'+price.toFixed(2)+'€  ('+ticketfee.toFixed(2)+'€)</b>'+
+                '<b class="menu-list__price--discount mx-auto ticket_price">'+price.toFixed(2)+'€</b>'+
             '</div>'+
             '<div class="quantity-section mx-auto mb-2">'+
                 '<button type="button" class="quantity-button quantity-down" data-embellishmentid="'+id+'">-</button>'+

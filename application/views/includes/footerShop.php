@@ -16,10 +16,14 @@
                 <?php $total = 0; ?>
                 <div class="menu-list">
                     <div id="checkout-list" class="w-100">
-                        <?php if(isset($tickets) && count($tickets) > 0): 
+                        <?php 
+                        $ticketFee = 0;
+                        if(isset($tickets) && count($tickets) > 0): 
 
                     foreach($tickets as $ticket): 
-                        $total = $total + floatval($ticket['amount']); ?>
+                        $total = $total + floatval($ticket['amount']); 
+                        $ticketFee = $ticketFee + floatval($ticket['ticketFee']);
+                        ?>
                         <input type="hidden" id="quantity_<?php echo $ticket['id']; ?>" name="quantity[]" value="0">
                         <input type="hidden" name="id[]" value="<?php echo $ticket['id']; ?>">
                         <input type="hidden" name="descript[]" value="<?php echo $ticket['descript']; ?>">
@@ -34,7 +38,7 @@
                             </div>
                             <div class="menu-list__left-col ml-auto">
                                 <div class="menu-list__price mx-auto">
-                                    <b class="menu-list__price--discount mx-auto ticket_price"><?php echo $ticket['price']; ?>€ (<?php echo $ticket['ticketFee']; ?>€)</b>
+                                    <b class="menu-list__price--discount mx-auto ticket_price"><?php echo $ticket['price']; ?>€</b>
                                 </div>
                                 <div class="quantity-section mx-auto mb-2">
                                     <button type="button" class="quantity-button"
@@ -60,6 +64,17 @@
                         <?php endforeach; ?>
                         <!-- end menu list item -->
                         <?php endif; ?>
+                    </div>
+                    <div id="ticketFeeRow" <?php if(isset($ticketFee) && $ticketFee == 0) {?>style="display: none;"<?php } ?> class="menu-list__item">
+                        <div class="menu-list__name mr-auto">
+                            <div>
+                                <p class="menu-list__ingredients font-weight-bold">TICKETFEE</p>
+                            </div>
+                        </div>
+                        <div class="menu-list__price ml-auto">
+                            <b id="ticketFeeAmount" class="menu-list__price--discount mx-auto ticket_price"><?php echo isset($ticketFee) ?  number_format($ticketFee, 2, '.', '') .'€' : '0.00€'; ?></b>
+                            <input type="hidden" id="ticketFee" value="<?php echo isset($ticketFee) ? $ticketFee : 0; ?>">
+                        </div>
                     </div>
                     <div id="payForm" style="display: none;"  class="limiter">
                         <div style="background: #fff !important;" class="container-login100">
@@ -200,6 +215,7 @@
         if(shopsettings.showCountry == 1) { $('#country').closest('div').removeClass('d-none'); }
         if(shopsettings.showZipcode == 1) { $('#zipcode').closest('div').removeClass('d-none'); }
         if(shopsettings.showMobileNumber == 1) { $('#mobileNumber').closest('div').removeClass('d-none'); }
+        if(shopsettings.showAge == 1) { $('#age').closest('div').removeClass('d-none'); }
     }
 }());
 </script>

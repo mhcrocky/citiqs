@@ -52,6 +52,11 @@ class Booking_events extends BaseControllerWeb
                 $get_by_event_id = ($customer) ? true : false;
             }
         }
+
+        $logoUrl = 'assets/home/images/logo1.png';
+        if ($customer->logo) {
+			$logoUrl = 'assets/images/vendorLogos/' . $customer->logo;
+        }
         
         $tag = $this->input->get('tag') ? $this->input->get('tag') : '0';
         $sessionData['vendorId'] = $customer->id;
@@ -61,6 +66,8 @@ class Booking_events extends BaseControllerWeb
         $sessionData['expTime'] = false;
         $sessionData['totalAmount'] = false;
         $sessionData['tag'] = $tag;
+        $sessionData['ticketFee'] = 0;
+        $sessionData['logoUrl'] = $logoUrl;
         
 
         if(count($orderData) < 1){
@@ -100,6 +107,7 @@ class Booking_events extends BaseControllerWeb
         $this->global['tickets'] = $orderData['tickets'];
         $this->global['expTime'] = $orderData['expTime'];
         $this->global['totalAmount'] = $orderData['totalAmount'];
+        $this->global['logoUrl'] = $orderData['logoUrl'];
         $this->loadViews("events/shop", $this->global, $data, 'footerShop', 'headerShop');
 
     }
@@ -240,11 +248,14 @@ class Booking_events extends BaseControllerWeb
 
         $orderData['tickets']  = $tickets;
         $total = 0;
+        $ticketFee = 0;
         foreach($tickets as $ticket){
             $total = $total + $ticket['amount'];
+            $ticketFee = $ticketFee + floatval($ticket['ticketFee']);
         }
         $total = number_format($total, 2, '.', '');
         $orderData['totalAmount'] = $total;
+        $orderData['ticketFee'] = $ticketFee;
 
         $this
                 ->shopsession_model
@@ -448,6 +459,7 @@ class Booking_events extends BaseControllerWeb
         $this->global['expTime'] = $orderData['expTime'];
         $this->global['totalAmount'] = $orderData['totalAmount'];
         $this->global['orderRandomKey'] = $orderRandomKey;
+        $this->global['logoUrl'] = $orderData['logoUrl'];
         $this->loadViews("events/selectpayment", $this->global, $data, 'footerShop', 'headerShop');
     }
 

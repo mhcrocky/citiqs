@@ -2,15 +2,19 @@
     <div class="w-100 mt-5 p-3">
         <div class="input-group col-md-4">
             <a href="<?php echo base_url(); ?>events/create">
-                <input type="button" value="Add Event" style="background: #009933 !important;border-radius:0;height:45px;"
+                <input type="button" value="Add Event"
+                    style="background: #009933 !important;border-radius:0;height:45px;"
                     class="btn btn-success form-control mb-3 text-left">
                 <a style="background: #004d1a;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3 mr-2">
                     <i style="color: #fff;font-size: 18px;" class="fa fa-plus"></i></a>
             </a>
-            <input type="button" value="Set shop settings" style="background: #10b981 !important;border-radius:0;height:45px;"
-                class="btn btn-primary form-control mb-3 text-left ml-2" data-toggle="modal" data-target="#addShopSettings">
-                <a style="background: #0a6648;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3" data-toggle="modal" data-target="#addShopSettings">
-                    <i style="color: #fff;font-size: 18px;" class="fa fa-cog"></i></a>
+            <input type="button" value="Set shop settings"
+                style="background: #10b981 !important;border-radius:0;height:45px;"
+                class="btn btn-primary form-control mb-3 text-left ml-2" data-toggle="modal"
+                data-target="#addShopSettings">
+            <a style="background: #0a6648;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3"
+                data-toggle="modal" data-target="#addShopSettings">
+                <i style="color: #fff;font-size: 18px;" class="fa fa-cog"></i></a>
         </div>
         <div style="padding-right: 0px;" class="col-md-3 ml-auto mb-3">
             <select id="selectTime" style="height: 40px !important;"
@@ -109,7 +113,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title font-weight-bold text-dark" id="addaddShopSettingsLabel">
-                Shop Settings
+                    Shop Settings
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -118,10 +122,11 @@
             <div style="overflow: auto !important;" class="modal-body">
                 <div class="form-group row">
                     <label for="showAddress" class="col-md-4 col-form-label text-md-left">
-                    Address
+                        Address
                     </label>
                     <div class="col-md-6">
-                        <select id="showAddress" name="showAddress" class="form-control custom-select custom-select-sm form-control-sm">
+                        <select id="showAddress" name="showAddress"
+                            class="form-control custom-select custom-select-sm form-control-sm">
                             <option value="1">Show</option>
                             <option value="0" selected>Hide</option>
                         </select>
@@ -129,10 +134,11 @@
                 </div>
                 <div class="form-group row">
                     <label for="showZipcode" class="col-md-4 col-form-label text-md-left">
-                    Zip Code
+                        Zip Code
                     </label>
                     <div class="col-md-6">
-                        <select id="showZipcode" name="showZipcode" class="form-control custom-select custom-select-sm form-control-sm">
+                        <select id="showZipcode" name="showZipcode"
+                            class="form-control custom-select custom-select-sm form-control-sm">
                             <option value="1">Show</option>
                             <option value="0" selected>Hide</option>
                         </select>
@@ -140,10 +146,11 @@
                 </div>
                 <div class="form-group row">
                     <label for="showCountry" class="col-md-4 col-form-label text-md-left">
-                    Country
+                        Country
                     </label>
                     <div class="col-md-6">
-                        <select id="showCountry" name="showCountry" class="form-control custom-select custom-select-sm form-control-sm">
+                        <select id="showCountry" name="showCountry"
+                            class="form-control custom-select custom-select-sm form-control-sm">
                             <option value="1">Show</option>
                             <option value="0" selected>Hide</option>
                         </select>
@@ -151,50 +158,70 @@
                 </div>
                 <div class="form-group row">
                     <label for="showMobileNumber" class="col-md-4 col-form-label text-md-left">
-                    Mobile Number
+                        Mobile Number
                     </label>
                     <div class="col-md-6">
-                        <select id="showMobileNumber" name="showMobileNumber" class="form-control custom-select custom-select-sm form-control-sm">
+                        <select id="showMobileNumber" name="showMobileNumber"
+                            class="form-control custom-select custom-select-sm form-control-sm">
                             <option value="1">Show</option>
                             <option value="0" selected>Hide</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label style="margin-bottom: auto;margin-top: auto;" for="googleAnalyticsCode" class="col-md-4 col-form-label text-md-left">
-                    Google Analytics Code
+                    <label for="showAge" class="col-md-4 col-form-label text-md-left">
+                        Age
+                    </label>
+                    <div class="col-md-6">
+                        <select id="showAge" name="showAge"
+                            class="form-control custom-select custom-select-sm form-control-sm">
+                            <option value="1">Show</option>
+                            <option value="0" selected>Hide</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label style="margin-bottom: auto;margin-top: auto;" for="googleAnalyticsCode"
+                        class="col-md-4 col-form-label text-md-left">
+                        Google Analytics Code
                     </label>
                     <div class="col-md-6">
                         <input type="text" id="googleAnalyticsCode" name="googleAnalyticsCode" class="form-control">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label style="margin-bottom: auto;margin-top: auto;" for="googleAdwordsConversionId" class="col-md-4 col-form-label text-md-left">
-                    Google Adwords Conversion Id
+                    <label style="margin-bottom: auto;margin-top: auto;" for="googleAdwordsConversionId"
+                        class="col-md-4 col-form-label text-md-left">
+                        Google Adwords Conversion Id
                     </label>
                     <div class="col-md-6">
-                        <input type="text" id="googleAdwordsConversionId" name="googleAdwordsConversionId" class="form-control">
+                        <input type="text" id="googleAdwordsConversionId" name="googleAdwordsConversionId"
+                            class="form-control">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label style="margin-bottom: auto;margin-top: auto;" for="googleAdwordsConversionLabel" class="col-md-4 col-form-label text-md-left">
-                    Google Adwords Conversion Label
+                    <label style="margin-bottom: auto;margin-top: auto;" for="googleAdwordsConversionLabel"
+                        class="col-md-4 col-form-label text-md-left">
+                        Google Adwords Conversion Label
                     </label>
                     <div class="col-md-6">
-                        <input type="text" id="googleAdwordsConversionLabel" name="googleAdwordsConversionLabel" class="form-control">
+                        <input type="text" id="googleAdwordsConversionLabel" name="googleAdwordsConversionLabel"
+                            class="form-control">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label style="margin-bottom: auto;margin-top: auto;" for="googleTagManagerCode" class="col-md-4 col-form-label text-md-left">
-                    Google Tag Manager Code
+                    <label style="margin-bottom: auto;margin-top: auto;" for="googleTagManagerCode"
+                        class="col-md-4 col-form-label text-md-left">
+                        Google Tag Manager Code
                     </label>
                     <div class="col-md-6">
                         <input type="text" id="googleTagManagerCode" name="googleTagManagerCode" class="form-control">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label style="margin-bottom: auto;margin-top: auto;" for="facebookPixelId" class="col-md-4 col-form-label text-md-left">
-                    Facebook Pixel Id
+                    <label style="margin-bottom: auto;margin-top: auto;" for="facebookPixelId"
+                        class="col-md-4 col-form-label text-md-left">
+                        Facebook Pixel Id
                     </label>
                     <div class="col-md-6">
                         <input type="text" id="facebookPixelId" name="facebookPixelId" class="form-control">
@@ -202,7 +229,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" id="closeShopSettingsModal" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="closeShopSettingsModal" class="btn btn-secondary"
+                    data-dismiss="modal">Close</button>
                 <button type="button" onclick="saveShopSettings()" class="btn btn-primary">Save changes</button>
             </div>
             </form>
@@ -260,24 +288,42 @@
 <!-- Copy Shop Url Modal -->
 <div class="modal fade" id="copyShopUrlModal" tabindex="-1" role="dialog" aria-labelledby="copyShopUrlModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                
+
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div style="overflow: auto !important;" class="modal-body">
                 <div style="flex-wrap: unset;-ms-flex-wrap: unset;" class="d-flex row text-center align-items-center">
-                <div id="shopUrlText" class="col-md-9 text-center"><?php echo base_url(); ?></div>
-                <input type="text" class="d-none" id="shopUrl">
-                <div id="shopUrlText" class="col-md-3 text-left">
-                <button class="btn btn-clear text-primary" onclick="textToClipboard()">Copy URL</button>
+                    <div class="col-md-9 text-center shopUrlText"><?php echo base_url(); ?></div>
+                    <input type="text" class="d-none" id="shopUrl">
+                    <div id="shopUrlText" class="col-md-3 text-left">
+                        <button class="btn btn-clear text-primary" onclick="copyShopUrl()">Copy URL</button>
+                    </div>
                 </div>
-                
-               
+
+                <?php if(count($tags) > 0): ?>
+                <div style="flex-wrap: unset;-ms-flex-wrap: unset;" class="row text-center align-items-center mt-3">
+
+                    <div class="col-md-9 text-center"><span class="shopUrlText"><?php echo base_url(); ?></span>?tag=
+                        <select style="width: auto; padding-right: 25px;" id="tagUrl" name="tag"
+                            class="form-control custom-select custom-select-sm form-control-sm">
+                            <?php foreach($tags as $tag): ?>
+                            <option value="<?php echo $tag['id']; ?>"><?php echo $tag['tag']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <input type="text" class="d-none" id="shopUrl">
+                    <div id="shopUrlText" class="col-md-3 text-left">
+                        <button class="btn btn-clear text-primary" onclick="copyShopUrlWithTag()">Copy URL</button>
+
+                    </div>
+
                 </div>
+                <?php endif; ?>
             </div>
 
         </div>
@@ -285,15 +331,16 @@
 </div>
 
 <script>
-(function(){
+(function() {
     document.querySelector('.query-main').style.borderRadius = "0px";
     var shopsettings = '<?php echo json_encode($shopsettings); ?>';
     shopsettings = JSON.parse(shopsettings);
-    if(typeof shopsettings === 'object' && shopsettings !== null){
+    if (typeof shopsettings === 'object' && shopsettings !== null) {
         $('#showAddress').val(shopsettings.showAddress);
         $('#showCountry').val(shopsettings.showCountry);
         $('#showZipcode').val(shopsettings.showZipcode);
         $('#showMobileNumber').val(shopsettings.showMobileNumber);
+        $('#showAge').val(shopsettings.showAge);
         $('#googleAnalyticsCode').val(shopsettings.googleAnalyticsCode);
         $('#googleAdwordsConversionId').val(shopsettings.googleAdwordsConversionId);
         $('#googleAdwordsConversionLabel').val(shopsettings.googleAdwordsConversionLabel);
