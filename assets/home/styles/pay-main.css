@@ -398,7 +398,46 @@ select.input100 {
     border: 0px solid;
   }
 
+
+  @media only screen and (min-width: 500px) {
+    .login100-form {
+        padding: 43px 10px 100px 100px !important;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .modal-content {
+        min-height: 100% !important;
+        height: 100% !important
+    } 
+
+    .modal-footer {
+        position: fixed !important;
+        bottom: 0 !important;
+    }
+
+    #mobileNumber {
+        margin-bottom: 50px;
+    }
+}
+
+.header__checkout {
+    position: fixed;
+    right: 0px;
+    z-index: 9999;
+    border-top-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+}
+
   
   .input100-error {
-    border-bottom: 1px solid #f40404 !important;
+    border-bottom: 1px solid #d9534f !important;
   }
+
+  .terms-error label::before {
+    border: 1px solid #d9534f !important;
+}
+.pretty input:checked~.state.success-check label:before,.pretty.p-toggle .state.success-check label:before{border-color:#5cb85c}
+.pretty input:checked~.state.success-check label:after,.pretty.p-toggle .state.success-check label:after{background-color:transparent}
+.pretty input:checked~.state.success-check .icon,.pretty input:checked~.state.success-check .svg,.pretty input:checked~.state.success-check svg,.pretty.p-toggle .state.success-check .icon,.pretty.p-toggle .state.success-check .svg,.pretty.p-toggle .state.success-check svg{color:#5cb85c;stroke:#5cb85c; border-color:#5cb85c!important;}
+.pretty.p-default:not(.p-fill) input:checked~.state.success-check label:after{background-color:#5cb85c!important; }
