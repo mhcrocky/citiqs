@@ -575,6 +575,7 @@ $route['events/get_guestlist/(:num)'] = 'Events/get_guestlist/$1';
 $route['events/emaildesigner/ticketing/(:num)'] = 'Events/email_designer_edit/$1';
 
 $route['events/shop'] = 'Booking_events/index';
+$route['events/shop/termsofuse'] = 'Booking_events/termsofuse';
 $route['events/shop/(:any)'] = 'Booking_events/index/$1';
 $route['events/tickets/(:num)'] = 'Booking_events/tickets/$1';
 $route['events/pay'] = 'Booking_events/pay';
