@@ -64,9 +64,8 @@ function saveTag(el){
     tag: $('#tag').val(),
     userId: $('#userId').val(),
   }
-  if(data.tag == '' || data.userId == ''){
+  if(data.tag == ''){
     if(data.tag == '') { $('#tag').attr('style', '1px solid red'); }
-    if(data.userId == '') { $('#userId').attr('style', '1px solid red'); }
     return ;
   }
 
@@ -89,9 +88,8 @@ function updateTag(el){
     tag: $('#editTag').val(),
     userId: $('#editUserId').val(),
   }
-  if(data.tag == '' || data.userId == ''){
+  if(data.tag == ''){
     if(data.tag == '') { $('#editTag').attr('style', '1px solid red'); }
-    if(data.userId == '') { $('#editUserId').attr('style', '1px solid red'); }
     return ;
   }
 
