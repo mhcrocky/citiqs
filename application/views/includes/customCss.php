@@ -502,6 +502,7 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     top: 2px;
     box-shadow: 0 4px 0,0 8px 0
   }
+  
 
     </style>
     <?php  } elseif ($this->view === 'video/index') { ?>
@@ -510,38 +511,7 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 <?php  } elseif ($this->view === 'events/shop' || $this->view === 'events/tickets' || $this->view === 'booking_agenda/shop') { ?>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
-    <style> 
-    @media only screen and (min-width: 500px) {
-        .login100-form {
-            padding: 43px 10px 100px 100px !important;
-        }
-    }
-
-    @media only screen and (max-width: 550px) {
-        .modal-content {
-            min-height: 100% !important;
-            height: 100% !important
-        } 
-
-        .modal-footer {
-            position: fixed !important;
-            bottom: 0 !important;
-        }
-
-        #mobileNumber {
-            margin-bottom: 50px;
-        }
-    }
-
-    .header__checkout {
-        position: fixed;
-        right: 0px;
-        z-index: 9999;
-        border-top-right-radius: 0px !important;
-        border-bottom-right-radius: 0px !important;
-    }
-    
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
 <?php  } elseif ($this->view === 'events/selectpayment') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/select-pay.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
