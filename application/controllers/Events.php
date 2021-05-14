@@ -415,6 +415,38 @@ class Events extends BaseControllerWeb
     public function save_shopsettings()
     {
         $data = $this->input->post(null,true);
+        if(isset($data['userfile'])) { unset($data['userfile']); }
+        $uploaddir = FCPATH . "uploads/termsofuse";
+
+        if (!is_dir($uploaddir)) {
+			mkdir($uploaddir, 0777, TRUE);
+		}
+
+        $config['upload_path']   = $uploaddir;
+        $config['allowed_types'] = 'pdf';
+        $config['max_size']      = '102400'; // 102400 100mb
+        $config['encrypt_name'] = TRUE;
+
+		$this->load->library('upload', $config);
+
+        $pdfFile = '';
+
+        $shopsettings = $this->event_model->get_shopsettings($this->vendor_id);
+
+        
+
+        if (!$this->upload->do_upload('userfile')) {
+            $errors   = $this->upload->display_errors('', '');
+            //var_dump($errors);
+        } else {
+            $upload_data = $this->upload->data();
+			$pdfFile = $upload_data['file_name'];
+            if(isset($shopsettings->termsofuseFile) && $shopsettings->termsofuseFile != ''){
+                unlink($uploaddir .'/' . $shopsettings->termsofuseFile);
+            }
+        }
+        $data['termsofuseFile'] = $pdfFile;
+        
         $this->event_model->save_shopsettings($this->vendor_id, $data);
         redirect('events/viewdesign');
         return;
@@ -683,7 +715,7 @@ class Events extends BaseControllerWeb
                             "dataSource" => $this->event_model->get_tickets_report($vendorId, $eventId, $days, $sql), 
                             "columns" => array(
                                 "days" => array(
-                                    "type" => "string",
+                                    "type" => "integer",
                                     "label" => "Days".$i,
 								),
 								"tickets" => array(
