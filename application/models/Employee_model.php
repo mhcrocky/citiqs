@@ -12,15 +12,17 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
     public $id;
     public $username;
     public $email;
+    public $manager;
     public $password;
+    public $posPin;
     public $uniquenumber;
+    public $INSZnumber;
     public $ownerId;
     public $validitytime;
     public $expiration_time;
     public $expiration_time_value;
     public $expiration_time_type;
     public $next;
-    public $INSZnumber;
 
 
     private $table = 'tbl_employee';
@@ -30,7 +32,7 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
         $this->load->helper('validate_data_helper');
         if (!Validate_data_helper::validateNumber($value)) return;
 
-        if ($property === 'id' || $property === 'ownerId') {
+        if ($property === 'id' || $property === 'ownerId' || $property === 'next') {
             $value = intval($value);
         }
 
@@ -44,13 +46,41 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
 
     public function insertValidate(array $data): bool
     {
-        // TO DO SET CONDITIONS
-        return $this->updateValidate($data);
+        if (
+            isset($data['username'])
+            && isset($data['email'])
+            && isset($data['password'])
+            && isset($data['uniquenumber'])
+            && isset($data['INSZnumber'])
+            && isset($data['ownerId'])
+            && isset($data['validitytime'])
+            && isset($data['expiration_time'])
+            && isset($data['expiration_time_value'])
+            && isset($data['expiration_time_type'])
+        ) {
+            return $this->updateValidate($data);
+        }
+        return false;
     }
 
     public function updateValidate(array $data): bool
     {
-        // TO DO SET CONDITIONS
+        if (!count($data)) return false;
+
+        if (isset($data['username']) && !Validate_data_helper::validateString($data['username'])) return false;
+        if (isset($data['email']) && !Validate_data_helper::validateEmail($data['email'])) return false;
+        if (isset($data['manager']) && !($data['manager'] === '1' || $data['manager'] === '0')) return false;
+        if (isset($data['password']) && !Validate_data_helper::validateString($data['password'])) return false;
+        if (isset($data['posPin']) && !Validate_data_helper::validateString($data['posPin'])) return false;
+        if (isset($data['uniquenumber']) && !Validate_data_helper::validateString($data['uniquenumber'])) return false;
+        if (isset($data['INSZnumber']) && !Validate_data_helper::validateString($data['INSZnumber'])) return false;
+        if (isset($data['ownerId']) && !Validate_data_helper::validateInteger($data['ownerId'])) return false;
+        if (isset($data['validitytime']) && !Validate_data_helper::validateString($data['validitytime'])) return false;
+        if (isset($data['expiration_time']) && !Validate_data_helper::validateString($data['expiration_time'])) return false;
+        if (isset($data['expiration_time_value']) && !Validate_data_helper::validateString($data['expiration_time_value'])) return false;
+        if (isset($data['expiration_time_type']) && !Validate_data_helper::validateString($data['expiration_time_type'])) return false;
+        if (isset($data['next']) && !Validate_data_helper::validateInteger($data['next'])) return false;
+
         return true;
     }
 
@@ -321,10 +351,10 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
 
     public function loginEmployee(): ?int
     {
-//    	var_dump($this->password);
-//		var_dump($this->email);
-//
-//		die();
+        // var_dump($this->password);
+        // var_dump($this->email);
+
+        // die();
         $id = $this->readImproved([
             'what' => [$this->table . '.id'],
             'where' => [
@@ -358,5 +388,18 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
                 'ORDER_BY' => [$this->table . '.email', 'ASC']
             ]
         ]);
+    }
+
+    public function addNewEmployeeImproved(array $employee): bool
+    {
+        // TO DO => check is email unique for this vendor and pin pos number (if is set);
+        return $this->setObjectFromArray($employee)->create();
+    }
+
+
+    public function updateEmployeeImproved(array $employee): bool
+    {
+        // TO DO => check is email unique for this vendor and pin pos number (if is set);
+        return $this->setObjectFromArray($employee)->update();
     }
 }

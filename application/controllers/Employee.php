@@ -49,24 +49,18 @@ class Employee extends BaseControllerWeb {
 
     public function addNewEmployeeSetup()
     {
+        $employee = $this->security->xss_clean($_POST);
+        $employee['validitytime'] =  time() + 3600 * 8; //Code valid for 8 hours.
+        $employee["expiration_time"] = $this->getExpiryTime($employee['expiration_time_value'], $employee['expiration_time_type']);
+        $employee['uniquenumber'] = time() . '_' . rand(0,99999);
+        $employee['ownerId'] = $_SESSION['userId'];
 
-        $this->form_validation->set_rules('username', 'Username', 'trim|required');
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-		$this->form_validation->set_rules('password', 'Password', 'trim|required');
-        $this->form_validation->set_rules('expiration_time_value', 'Expiration time value', 'trim|required|numeric');
-        $this->form_validation->set_rules('expiration_time_type', 'Unique number', 'trim|required');
-        if ($this->form_validation->run()) {
-            $employee = $this->input->post(null, true);
-            $employee['validitytime'] =  time() + 3600 * 8; //Code valid for 8 hours.
-            $employee["expiration_time"] = $this->getExpiryTime($employee['expiration_time_value'], $employee['expiration_time_type']);
-            $employee['uniquenumber'] = time() . '_' . rand(0,99999);
-            $result = $this->employee_model->addNewEmployee($employee);
-            if ($result > 0) {
-                $this->session->set_flashdata('success', 'New employee created successfully');
-            } else {
-                $this->session->set_flashdata('error', 'New employee creation failed');
-            }
+        if ($this->employee_model->addNewEmployeeImproved($employee)) {
+            $this->session->set_flashdata('success', 'New employee created successfully');
+        } else {
+            $this->session->set_flashdata('error', 'New employee creation failed');
         }
+
         redirect(base_url() . "employee");
     }
 
@@ -81,22 +75,19 @@ class Employee extends BaseControllerWeb {
 
     public function employeeEdit($employeeId)
     {
-        $this->form_validation->set_rules('username', 'Username', 'trim|required');
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-		$this->form_validation->set_rules('password', 'Password', 'trim|required');
-        $this->form_validation->set_rules('expiration_time_value', 'Username', 'trim|required|numeric');
-        $this->form_validation->set_rules('expiration_time_type', 'Unique number', 'trim|required');
-        if ($this->form_validation->run() !== FALSE) {
-            $data = $this->input->post(null, TRUE);
-            $data['uniquenumber'] = time() . '_' . rand(0,99999);
-            $data['expiration_time'] = $this->getExpiryTime($data['expiration_time_value'], $data['expiration_time_type']);
-            $result = $this->employee_model->updateEmployee($data, $employeeId);
-            if ($result >= 0) {
-                $this->session->set_flashdata('success', 'Employee successfully updated');
-            } else {
-                $this->session->set_flashdata('error', 'Employee already existing');
-            }
+        $employee = $this->security->xss_clean($_POST);
+        $employee['uniquenumber'] = time() . '_' . rand(0,99999);
+        $employee['expiration_time'] = $this->getExpiryTime($employee['expiration_time_value'], $employee['expiration_time_type']);
+        $employee['ownerId'] = $_SESSION['ownerId'];
+
+        $this->employee_model->setObjectId(intval($employeeId));
+
+        if ($this->employee_model->updateEmployeeImproved($employee)) {
+            $this->session->set_flashdata('success', 'Employee successfully updated');
+        } else {
+            $this->session->set_flashdata('error', 'Employee update failed');
         }
+
         redirect(base_url() . "employee");
     }
 
