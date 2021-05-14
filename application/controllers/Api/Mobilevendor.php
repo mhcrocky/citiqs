@@ -26,6 +26,23 @@ class Mobilevendor extends REST_Controller
      *
      */
 
+
+	public function appsettings_post()
+	{
+		// $email = $_POST["email"];
+		$email = $this->security->xss_clean($this->input->post('email'));
+		// $password = $_POST["password"];
+		$password = $this->security->xss_clean($this->input->post('password'));
+
+		$message = [
+
+			"merchandise" => "https://tiqs.com/info",
+    		"ticketshop" => "https://tiqs.com/events/shop/37"
+		];
+
+		$this->set_response($message, 200); // CREATED (201) being the HTTP response code
+	}
+
     public function checklogin_post()
     {
         // $email = $_POST["email"];

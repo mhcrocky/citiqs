@@ -229,6 +229,18 @@
             return !is_null($active);
         }
 
+        public function checkIsPrintReports(): bool
+        {
+            $printReports = $this->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    $this->table . '.printReports' => '1',
+                    $this->table . '.macNumber' => $this->macNumber,
+                ]
+            ]);
+
+            return !is_null($printReports);
+        }
 
         public function insertInitialPrinter(): bool
         {
