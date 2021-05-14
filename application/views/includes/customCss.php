@@ -288,6 +288,7 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_style.min.css" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_customTwo.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/pos.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/posPin.css" />
 <style>
     /* fix problem with prePaid and posPaid modal */
     .modal-backdrop {

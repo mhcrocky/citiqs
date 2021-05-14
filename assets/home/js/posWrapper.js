@@ -421,7 +421,6 @@ function countOrderedToZero(countOrdered) {
 }
 
 function showLoginModal() {
-    return true;
     if (!posGlobals['unlock']) {
         $('#posLoginModal').modal('show');
     }

@@ -159,6 +159,7 @@
 				'postPaid' : '<?php echo $postPaid; ?>',
 				'pinMachinePayment' : '<?php echo $pinMachinePayment; ?>',
 				'voucherPayment' : '<?php echo $voucherPayment; ?>',
+				'pinCodeELement' : document.getElementById('pinCode')
 			}
 
 			<?php if  ($lock) { ?>

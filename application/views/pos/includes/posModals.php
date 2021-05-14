@@ -66,56 +66,86 @@
 
 <div class="modal" id="posLoginModal" tabindex="-1" role="dialog" aria-labelledby="posLoginModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form method="post" onsubmit="return posLogin(this)">
-                <input type="number" name="ownerId" value="<?php echo $vendor['vendorId']; ?>" readonly hidden />
-                <div class="modal-header">
-                    <h5 class="modal-title" id="posLoginModalLabel">POS Login</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <select
-                            class="form-control"
-                            name="email"id="employeeEmail"
-                            data-form-check="1"
-                            data-error-message="Email is required"
-                            data-min-length="1"
-                        >
-                            <option value="">Select</option>
-                            <?php
-                                if (!empty($employees)) {
-                                    foreach ($employees as $employee) {
-                                        ?>
-                                        <option value="<?php echo $employee['employeeEmail']; ?>"><?php echo $employee['employeeEmail']; ?></option>
-                                    <?php
-                                    }
-                                }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input
-                            type="password"
-                            name="password"
-                            id="employeePassword"
-                            class="posKeyboard form-control ui-widget-content ui-corner-all ui-autocomplete-input ui-keyboard-preview"
-                            role="textbox"
-                            tabindex='-1'
-                            autocomplete="off"
-                            data-form-check="1"
-                            data-error-message="Password is required"
-                            data-min-length="1"
-                        />
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a href="<?php echo base_url() ?>orders" class="btn btn-primary">Back</a>
-                    <input id="submitPosLogin" type="submit" class="btn btn-primary" value="Login" />
-                </div>
-            </form>
+        <div class="modal-content"  style="width:280px; text-align:center">
+            <table class="" id="posPinCode">
+                <thead>
+                    <tr>
+                        <th colspan="3">
+                            <input type="password" class="form-control" id="pinCode" readonly />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td onclick="fetchValue(1, this)">
+                            <p>
+                                <span>1</span>
+                            </p>
+                        </td>
+                        <td onclick="fetchValue(2, this)">
+                            <p>
+                                <span>2</span>
+                            </p>
+                        </td>
+                        <td onclick="fetchValue(3, this)">
+                            <p>
+                                <span>3</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td onclick="fetchValue(4)">
+                            <p>
+                                <span>4</span>
+                            </p>
+                        </td>
+                        <td onclick="fetchValue(5)">
+                            <p>
+                                <span>5</span>
+                            </p>
+                        </td>
+                        <td onclick="fetchValue(6)">
+                            <p>
+                                <span>6</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td onclick="fetchValue(7)">
+                            <p>
+                                <span>7</span>
+                            </p>
+                        </td>
+                        <td onclick="fetchValue(8)">
+                            <p>
+                                <span>8</span>
+                            </p>
+                        </td>
+                        <td onclick="fetchValue(9)">
+                            <p>
+                                <span>9</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td onclick="clearCode()">
+                            <p>
+                                <span>Clear</span>
+                            </p>
+                        </td>
+                        <td onclick="fetchValue(0)">
+                            <p>
+                                <span>0</span>
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                <span>Enter</span>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
