@@ -594,6 +594,36 @@ class Booking_events extends BaseControllerWeb
         Ticketingemail_helper::sendEmailReservation($reservations, true);
 
     }
+
+    public function termsofuse()
+	{
+        $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : false;
+
+        if(!$orderRandomKey){
+            redirect(base_url());
+            
+        }
+
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+
+        if(count($orderData) < 1){
+            redirect(base_url());
+        }
+
+        $customer = $orderData['vendorId'];
+        $shopsettings = $this->event_model->get_shopsettings($customer);
+        $pdfFile = '';
+        $filename = '';
+        if(isset($shopsettings->termsofuseFile) && $shopsettings->termsofuseFile != ''){
+            $pdfFile = base_url() ."uploads/termsofuse/".$shopsettings->termsofuseFile;
+            $filename = $shopsettings->termsofuseFile;
+        }
+
+        echo "<title>Terms Of Use</title>";
+        echo "<style>body{margin: 0px;}</style>";
+        echo '<iframe src="'.$pdfFile.'" width="100%"  style="height:100%" scrolling="no" frameborder="0"></iframe>';
+    }
+    
     
     public function download_email_pdf($emailId, $reservationId)
 	{
