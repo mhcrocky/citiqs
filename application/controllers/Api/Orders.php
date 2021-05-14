@@ -36,12 +36,6 @@
 		{
 			return;
         }
-        
-
-        private function trackPrinter(string $mac, string $message): void
-        {
-            Utility_helper::logMessage($this->trackPrinterFile, $message);
-        }
 
         public function data_get()
         {
@@ -53,16 +47,20 @@
             $vendorId = intval($order['vendorId']);
             $bbUser = $this->shopvendorfod_model->isBBVendor($vendorId);
             $orderExtendedIds = explode(',', $order['orderExtendedIds']);
+            $printReportesAndReceipts = $this->shopprinters_model->checkIsPrintReports();
             $printOnlyReceipt = $this->shopvendor_model->setProperty('vendorId', $vendorId)->getProperty('printOnlyReceipt') === '1' ? true : false;
 
             $this->shopprinterrequest_model->setObjectFromArray(['orderId' => $order['orderId']])->update();
 
-            if ($printOnlyReceipt && $order['paidStatus'] ===  $this->config->item('orderPaid')) {
+            // do printing job
+            if ($printOnlyReceipt && $order['paidStatus'] ===  $this->config->item('orderPaid') && $printReportesAndReceipts) {
                 header('Content-type: image/png');
                 echo file_get_contents(base_url() . 'Api/Orderscopy/receipt/' . $order['orderId']);
             } else {
-                $this->handlePrePostPaid($order, $bbUser);
-                $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '2');
+                if ($printReportesAndReceipts) {
+                    $this->handlePrePostPaid($order, $bbUser);
+                    $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '2');
+                }
                 Receiptprint_helper::printPrinterReceipt($order);
             }
 
