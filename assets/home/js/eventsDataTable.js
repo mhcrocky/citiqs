@@ -116,7 +116,7 @@ $(document).ready(function() {
                 title: 'Url',
                 data: null,
                 "render": function(data, type, row) {
-                    return '<a href="javascript:;" onclick="openShopUrlModal('+data.id+')" style="background: #10b981;" class="btn btn-primary" target="_blank" data-toggle="modal" data-target="#copyUrlToClipboard">Copy Shop Url</a>';
+                    return '<a href="javascript:;" onclick="openShopUrlModal('+data.id+')" class="d-flex ml-2" target="_blank" data-toggle="modal" data-target="#copyUrlToClipboard"><i class="gg-copy"></i></a>';
                 }
 
             },
