@@ -9,6 +9,7 @@
 
     Class Shopprinters_model extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
     {
+
         public $id;
         public $userId;
         public $printer;
