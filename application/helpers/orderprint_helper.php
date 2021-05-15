@@ -104,7 +104,7 @@
             $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
             $drawemail->annotation(0, $startPoint + ($i * 30), $quantity . ' x ');
             $drawemail->setTextAlignment(\Imagick::ALIGN_LEFT);
-            $drawemail->annotation(40, $startPoint + ($i * 30), substr($title, 0, 13));
+            $drawemail->annotation(40, $startPoint + ($i * 30), substr($title, 0, 19));
             $drawemail->setTextAlignment(\Imagick::ALIGN_RIGHT);
             $drawemail->annotation(560, $startPoint + ($i * 30), "€ ". $lineAmount . ' ' . self::printVatString($vatpercentage, $isFod, $productVats));
         }
