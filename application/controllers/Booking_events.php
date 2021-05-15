@@ -517,15 +517,15 @@ class Booking_events extends BaseControllerWeb
         #$this->session->sess_destroy();
         //session_destroy();
 
-        $what = ['id'];
-		$where = ["randomKey" => $orderRandomKey];
+        //$what = ['id'];
+		//$where = ["randomKey" => $orderRandomKey];
 
-        $result = $this->shopsession_model->read($what,$where);
-        $result = reset($result);
-        $ids = [$result['id']];
+        //$result = $this->shopsession_model->read($what,$where);
+        //$result = reset($result);
+        //$ids = [$result['id']];
 
         //Delete data from session table
-        $this->shopsession_model->multipleDelete($ids, $where);
+        //$this->shopsession_model->multipleDelete($ids, $where);
 
         $this->processPaymenttype($strUrl, $reservationIds);
     }
