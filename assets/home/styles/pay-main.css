@@ -414,9 +414,10 @@ select.input100 {
     .modal-footer {
         position: fixed !important;
         bottom: 0 !important;
+        z-index: 9999;
     }
 
-    #mobileNumber {
+    .login100-form {
         margin-bottom: 50px;
     }
 }
