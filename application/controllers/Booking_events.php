@@ -277,13 +277,8 @@ class Booking_events extends BaseControllerWeb
 
     public function clear_tickets()
     {
-        $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : false;
+        $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : '';
         
-        if(!$orderRandomKey){
-            redirect(base_url());
-            
-        }
-
         $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
 
         if(count($orderData) < 1){
@@ -301,7 +296,7 @@ class Booking_events extends BaseControllerWeb
 
         if($this->shopsession_model->multipleDelete($ids, $where)){
             $this->session->set_flashdata('expired', 'Session Expired!');
-            redirect('events/shop/'. $shortUrl);
+            redirect(base_url() . 'events/shop/'. $shortUrl);
         }
         
         
@@ -568,7 +563,6 @@ class Booking_events extends BaseControllerWeb
 			echo('TRUE| NOT FIND '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
         }
 
-        session_unset();
 
         return;
     }
