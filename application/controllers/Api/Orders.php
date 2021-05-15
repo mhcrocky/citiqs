@@ -47,17 +47,17 @@
             $vendorId = intval($order['vendorId']);
             $bbUser = $this->shopvendorfod_model->isBBVendor($vendorId);
             $orderExtendedIds = explode(',', $order['orderExtendedIds']);
-            $printReportesAndReceipts = $this->shopprinters_model->checkIsPrintReports();
+            $printReceipts = $this->shopprinters_model->checkIsPrintReceipts();
             $printOnlyReceipt = $this->shopvendor_model->setProperty('vendorId', $vendorId)->getProperty('printOnlyReceipt') === '1' ? true : false;
 
             $this->shopprinterrequest_model->setObjectFromArray(['orderId' => $order['orderId']])->update();
 
             // do printing job
-            if ($printOnlyReceipt && $order['paidStatus'] ===  $this->config->item('orderPaid') && $printReportesAndReceipts) {
+            if ($printOnlyReceipt && $order['paidStatus'] ===  $this->config->item('orderPaid') && $printReceipts) {
                 header('Content-type: image/png');
                 echo file_get_contents(base_url() . 'Api/Orderscopy/receipt/' . $order['orderId']);
             } else {
-                if ($printReportesAndReceipts) {
+                if ($printReceipts) {
                     $this->handlePrePostPaid($order, $bbUser);
                     $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '2');
                 }

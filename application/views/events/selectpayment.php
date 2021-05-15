@@ -27,7 +27,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
         <?php if(in_array('bancontact payment', $activePayments)): ?>
             <div class="half-col mb-4">
             <a class="text-primary pay_method"
-               href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $bancontactPaymentType; ?>"
+               href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $bancontactPaymentType; ?>?order=<?php echo $orderRandomKey; ?>"
                onclick="paymentMethodRedirect(this);return false;"
             >
                 <img class="img-w-150" src="<?php echo base_url(); ?>assets/home/imgs/extra/bancontact.png"
@@ -39,7 +39,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
                         id="bancontact"
                         class="text-primary pay_method"
                         data-paymentFee="<?php echo $bancontactPaymentFee; ?>"
-                        href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $bancontactPaymentType; ?>"
+                        href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $bancontactPaymentType; ?>?order=<?php echo $orderRandomKey; ?>"
                         onclick="paymentMethodRedirect(this);return false;"
                     >
                         Bancontact
@@ -52,7 +52,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
             <div class="half-col mb-4">
             <a data-paymentFee="<?php echo $creditCardPaymentFee; ?>" 
                class="text-primary pay_method"
-               href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $creditCardPaymentType; ?>"
+               href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $creditCardPaymentType; ?>?order=<?php echo $orderRandomKey; ?>"
                onclick="paymentMethodRedirect(this);return false;"
             >
                 <img class="img-w-150" src="<?php echo base_url(); ?>assets/home/imgs/extra/creditcard.png"
@@ -60,7 +60,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
             </a>
                 <p style="paymentFee bg-primary"><?php echo $creditCardPaymentFee; ?></p>
                 <h3 class="title">
-                    <a data-paymentFee="<?php echo $creditCardPaymentFee; ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $creditCardPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Credit Card</a>
+                    <a data-paymentFee="<?php echo $creditCardPaymentFee; ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $creditCardPaymentType; ?>?order=<?php echo $orderRandomKey; ?>" onclick="paymentMethodRedirect(this);return false;">Credit Card</a>
                 </h3>
             </div>
         <?php endif; ?>
@@ -86,7 +86,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
             <div class="half-col  mb-4">
             <a data-paymentFee="<?php echo $myBankPaymentFee ?>" 
                class="text-primary pay_method" 
-               href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $myBankPaymentType; ?>" 
+               href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $myBankPaymentType; ?>?order=<?php echo $orderRandomKey; ?>" 
                onclick="paymentMethodRedirect(this);return false;"
             >
                 <img class="img-w-150" style="max-width: 110px;" src="https://static.pay.nl/payment_profiles/100x100/1588.png"
@@ -94,7 +94,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
             </a>
                 <p style="paymentFee bg-primary"><?php echo $myBankPaymentFee; ?></p>
                 <h3 class="title">
-                    <a id="mybank" data-paymentFee="<?php echo $myBankPaymentFee ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $myBankPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">My Bank</a>
+                    <a id="mybank" data-paymentFee="<?php echo $myBankPaymentFee ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $myBankPaymentType; ?>?order=<?php echo $orderRandomKey; ?>" onclick="paymentMethodRedirect(this);return false;">My Bank</a>
                 </h3>
             </div>
         <?php endif; ?>
@@ -103,7 +103,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
             <div class="half-col  mb-4">
             <a data-paymentFee="<?php echo $payconiqPaymentFee ?>"
                class="text-primary pay_method"
-               href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $payconiqPaymentType; ?>"
+               href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $payconiqPaymentType; ?>?order=<?php echo $orderRandomKey; ?>"
                onclick="paymentMethodRedirect(this);return false;"
             >
                 <img class="img-w-89" style="max-width: 85px;" src="https://tiqs.com/alfred/assets/home/imgs/extra/payconiq.png"
@@ -111,7 +111,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
             </a>
                 <p style="paymentFee bg-primary"><?php echo $payconiqPaymentFee; ?></p>
                 <h3 class="title">
-                    <a id="payconiq" data-paymentFee="<?php echo $payconiqPaymentFee ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $payconiqPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Payconiq</a>
+                    <a id="payconiq" data-paymentFee="<?php echo $payconiqPaymentFee ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $payconiqPaymentType; ?>?order=<?php echo $orderRandomKey; ?>" onclick="paymentMethodRedirect(this);return false;">Payconiq</a>
                 </h3>
             </div>
         <?php endif; ?>
@@ -120,14 +120,14 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
             <div class="half-col  mb-4">
             <a data-paymentFee="<?php echo $giroPaymentFee; ?>"
                class="text-primary pay_method"
-               href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $giroPaymentType; ?>" 
+               href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $giroPaymentType; ?>?order=<?php echo $orderRandomKey; ?>" 
                onclick="paymentMethodRedirect(this);return false;">
                 <img class="img-w-150" style="max-width: 100px;" src="<?php echo base_url(); ?>assets/home/imgs/extra/giropay(1).png"
                     alt="Giropay" />
             </a>
                 <p style="paymentFee bg-primary"><?php echo $giroPaymentFee; ?></p>
                 <h3 class="title">
-                    <a id="giropay" data-paymentFee="<?php echo $giroPaymentFee; ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $giroPaymentType; ?>" onclick="paymentMethodRedirect(this);return false;">Giropay</a>
+                    <a id="giropay" data-paymentFee="<?php echo $giroPaymentFee; ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $giroPaymentType; ?>?order=<?php echo $orderRandomKey; ?>" onclick="paymentMethodRedirect(this);return false;">Giropay</a>
                 </h3>
             </div>
         <?php endif; ?>
@@ -137,7 +137,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
 <!--                <img class="img-w-150" style="max-width: 100px;"  src="--><?php //echo base_url(); ?><!--assets/home/images/pinmachine.png"-->
 <!--                    alt="Pin machine" />-->
 <!--                <p style="paymentFee bg-primary">--><?php //echo $pinMachinePaymentFee; ?><!--</p>-->
-<!--                <h3 class="title"><a id="pinmachine" data-paymentFee="--><?php //echo $pinMachinePaymentFee ?><!--" class="text-primary pay_method" href="--><?php //echo base_url(); ?><!--booking/onlinepayment/--><?php //echo $pinMachinePaymentType; ?><!--" onclick="paymentMethodRedirect(this);return false;">Pin machine</a></h3>-->
+<!--                <h3 class="title"><a id="pinmachine" data-paymentFee="--><?php //echo $pinMachinePaymentFee ?><!--" class="text-primary pay_method" href="--><?php //echo base_url(); ?><!--booking/onlinepayment/--><?php //echo $pinMachinePaymentType; ?>?order=<?php echo $orderRandomKey; ?><!--" onclick="paymentMethodRedirect(this);return false;">Pin machine</a></h3>-->
 <!--            </div>-->
 <!--        --><?php //endif; ?>
 
@@ -160,7 +160,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
         <div class="col-md-8 col-sm-12 serviceBox blue mb-4 mx-auto">
         
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/1" onclick="paymentMethodUrl(this);return false;" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/1?order=<?php echo $orderRandomKey; ?>"  class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/abn_amro.png') ?>"
                         alt="ABN AMRO">
 
@@ -169,7 +169,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/8" onclick="paymentMethodUrl(this);return false;" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/8?order=<?php echo $orderRandomKey; ?>"  class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/asn_bank.png') ?>"
                         alt="ASN Bank">
                     <h3 class="title">ASN Bank</h3>
@@ -178,14 +178,14 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
 
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5080" onclick="paymentMethodUrl(this);return false;" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5080?order=<?php echo $orderRandomKey; ?>"  class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/bunq.png') ?>" alt="Bunq">
                     <h3 class="title">Bunq</h3>
                 </a>
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5082" onclick="paymentMethodUrl(this);return false;" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5082?order=<?php echo $orderRandomKey; ?>"  class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/handelsbanken.png') ?>"
                         alt="Handelsbanken">
                     <h3 class="title">Handelsbanken</h3>
@@ -193,28 +193,28 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/4" onclick="paymentMethodUrl(this);return false;" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/4?order=<?php echo $orderRandomKey; ?>"  class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/ing.png') ?>" alt="ING">
                     <h3 class="title">ING</h3>
                 </a>
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/12" onclick="paymentMethodUrl(this);return false;" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/12?order=<?php echo $orderRandomKey; ?>"  class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/knab(1).png') ?>" alt="Knab">
                     <h3 class="title">Knab</h3>
                 </a>
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5081" onclick="paymentMethodUrl(this);return false;" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5081?order=<?php echo $orderRandomKey; ?>"  class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/moneyou.png') ?>" alt="Moneyou">
                     <h3 class="title">Moneyou</h3>
                 </a>
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/2" onclick="paymentMethodUrl(this);return false;" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/2?order=<?php echo $orderRandomKey; ?>"  class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/rabobank.png') ?>"
                         alt="Rabobank">
                     <h3 class="title">Rabobank</h3>
@@ -222,7 +222,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/9" onclick="paymentMethodUrl(this);return false;" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/9?order=<?php echo $orderRandomKey; ?>"  class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/regiobank.png') ?>"
                         alt="RegioBank">
                     <h3 class="title">RegioBank</h3>
@@ -230,7 +230,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5" onclick="paymentMethodUrl(this);return false;" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/5?order=<?php echo $orderRandomKey; ?>"  class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/sns_bank.png') ?>"
                         alt="SNS Bank">
                     <h3 class="title">SNS Bank</h3>
@@ -239,7 +239,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
 
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/10" onclick="paymentMethodUrl(this);return false;" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/10?order=<?php echo $orderRandomKey; ?>"  class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/triodos_bank.png') ?>"
                         alt="Triodos Bank">
                     <h3 class="title">Triodos Bank</h3>
@@ -247,7 +247,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
             </div>
 
             <div class="half-col mb-4">
-                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/11" onclick="paymentMethodUrl(this);return false;" class="pay_method">
+                <a href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $idealPaymentType; ?>/11?order=<?php echo $orderRandomKey; ?>"  class="pay_method">
                     <img class="img-w-150" src="<?php echo base_url('assets/imgs/extra/van_lanschot.png') ?>"
                         alt="van Lanschot">
                     <h3 class="title">van Lanschot</h3>

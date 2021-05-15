@@ -1810,14 +1810,16 @@ class Ajax extends CI_Controller
 
         $post = Utility_helper::sanitizePost();
         $post['userId'] =  intval($_SESSION['userId']);
+        $response = [];
 
-        $this->printFinanceReporets($post);
-        $this->emailFinanceReportes($post);
+        $this->printFinanceReporets($post, $response);
+        $this->emailFinanceReportes($post, $response);
 
+        echo json_encode($response);
         return;
     }
 
-    private function printFinanceReporets(array $post): void
+    private function printFinanceReporets(array $post, array &$response): void
     {
         if (!$this->shopprinters_model->setProperty('userId', $post['userId'])->checkPrinterReportes()) return;
 
@@ -1825,69 +1827,73 @@ class Ajax extends CI_Controller
         $insert = $this->shopreportrequest_model->setObjectFromArray($post)->create();
 
         if ($insert) {
-            $response = [
+            $response['printer'] = [
                 'status' => '1',
-                'messages' => ['Success']
+                'messages' => ['Request for printing report sent']
             ];
         } else {
-            $response = [
+            $response['printer'] = [
                 'status' => '0',
                 'messages' => ['Action failed. Please try again']
             ];
         }
 
-        echo json_encode($response);
+        return;
     }
 
-    private function emailFinanceReportes(array $post): void
+    private function emailFinanceReportes(array $post, array &$response): void
     {
         if (!$this->shopvendor_model->setProperty('vendorId', $post['userId'])->getProperty('emailFinanceReporets')) return;
 
         $this->user_model->setUniqueValue($_SESSION['userId'])->setWhereCondtition()->setUser('receiptEmail');
 
         if (!$this->user_model->receiptEmail) {
-            $response = [
+            $response['email'] = [
                 'status' => '0',
                 'messages' => ['No email. Please add responsible person email']
             ];
-            echo json_encode($response);
             return;
         }
 
-        $get = [
-            'vendorid' => $post['userId'],
-            'datetimefrom' => $post['dateTimeFrom'],
-            'datetimeto' =>  $post['dateTimeTo'],
-            'report' => $post['report'],
-            'finance' => '1'
-        ];
+        $url  = base_url() . 'api/report?';
+        $url .= 'vendorid=' . $_SESSION['userId'];
+        $url .= '&datetimefrom=' . str_replace(' ', 'T', $post['dateTimeFrom']);
+        $url .= '&datetimeto=' . str_replace(' ', 'T', $post['dateTimeTo']);
+        $url .= '&report=' . $post['report'];
+        $url .= '&finance=1';
 
-        $url = base_url() . 'api/report?' . http_build_query($get);
-        $response = json_decode(file_get_contents($url));
+        $reportResponse = json_decode(file_get_contents($url));
 
+        if(is_null($reportResponse)) {
+            $response['email'] = [
+                'status' => '0',
+                'messages' => ['Email not sent. Check period']
+            ];
+            return;
+        }
 
-        if ($response->status === '1') {
-            $report = $this->config->item('financeReportes') . $get['vendorid'] . '_' . $get['report'] . '.png';
-            if (Email_helper::sendEmail($this->user_model->receiptEmail, $get['report'], '', false, $report)) {
-                $response = [
+        if ($reportResponse->status === '1') {
+            $report = $this->config->item('financeReportes') . $_SESSION['userId'] . '_' . $post['report'] . '.png';
+            if (Email_helper::sendEmail($this->user_model->receiptEmail, $post['report'], '', false, $report)) {
+                $response['email'] = [
                     'status' => '1',
                     'messages' => ['Email sent']
                 ];
             } else {
-                $response = [
+                $response['email'] = [
                     'status' => '0',
                     'messages' => ['Email not sent']
                 ];
             }
             unlink($report);
         } else {
-            $response = [
+            $response['email'] = [
                 'status' => '0',
-                'messages' => ['Process failed. Please try again']
+                'messages' => ['Email not sent. Please try again']
             ];
         }
 
-        echo json_encode($response);
+        return;
     }
 
     public function checkPrintersConnection($printerId): void
@@ -1898,6 +1904,7 @@ class Ajax extends CI_Controller
                         ->shopprinterrequest_model
                             ->setProperty('printerId', intval($printerId))
                             ->setProperty('conected', date('Y-m-d H:i:s', strtotime('-5 minutes')))
+                            ->setProperty('smsSent', '0')
                             ->checkIsPrinterConnected();
 
         $status = $connected ? '1' : '0';

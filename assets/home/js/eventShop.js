@@ -519,7 +519,7 @@ function paymentMethodRedirect(el){
 
     setTimeout(() => {
         var url = $(el).attr('href');
-        window.location.href = url +'?order=' + globalKey.orderRandomKey;
+        window.location.href = url;
     }, 1500);
     
 }
