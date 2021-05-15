@@ -137,7 +137,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
 <!--                <img class="img-w-150" style="max-width: 100px;"  src="--><?php //echo base_url(); ?><!--assets/home/images/pinmachine.png"-->
 <!--                    alt="Pin machine" />-->
 <!--                <p style="paymentFee bg-primary">--><?php //echo $pinMachinePaymentFee; ?><!--</p>-->
-<!--                <h3 class="title"><a id="pinmachine" data-paymentFee="--><?php //echo $pinMachinePaymentFee ?><!--" class="text-primary pay_method" href="--><?php //echo base_url(); ?><!--booking/onlinepayment/--><?php //echo $pinMachinePaymentType; ?>?order=<?php echo $orderRandomKey; ?><!--" >Pin machine</a></h3>-->
+<!--                <h3 class="title"><a id="pinmachine" data-paymentFee="--><?php //echo $pinMachinePaymentFee ?><!--" class="text-primary pay_method" href="--><?php //echo base_url(); ?><!--booking/onlinepayment/--><?php //echo $pinMachinePaymentType; ?><!--" >Pin machine</a></h3>-->
 <!--            </div>-->
 <!--        --><?php //endif; ?>
 
