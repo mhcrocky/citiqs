@@ -615,7 +615,7 @@ class Events extends BaseControllerWeb
         $data['eventId'] = $eventId;
         $data['event'] = $this->event_model->get_event($this->vendor_id,$eventId);
         $data['days_graph'] = $this->get_graphs($this->vendor_id, $eventId);
-        $data['tickets_graph'] = $this->get_graphs($this->vendor_id, $eventId, false);
+        $data['tickets_graph'] = $this->get_tickets_graphs($this->vendor_id, $eventId, false);
         $this->loadViews('events/graph', $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
 
@@ -692,15 +692,13 @@ class Events extends BaseControllerWeb
         $this->loadViews("events/email_designer", $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
 
-    public function get_graphs($vendorId, $eventId, $days=true, $sql=''){
+    public function get_graphs($vendorId, $eventId, $sql=''){
         $GLOBALS['vendorId'] = $vendorId;
         $GLOBALS['eventId'] = $eventId;
-        $GLOBALS['days'] = $days;
         $GLOBALS['sql'] = $sql;
         $this->load->model('event_model');
-        $i = ($days) ? 1 : 0;
 		$graphs = DrillDown::create(array(
-            "name" => "saleDrillDown".$i,
+            "name" => "saleDrillDown",
             "title" => " ",
             "levels" => array(
                 array(
@@ -708,19 +706,17 @@ class Events extends BaseControllerWeb
                     "content" => function ($params, $scope) {
                         global $vendorId;
                         global $eventId;
-                        global $days;
                         global $sql;
-                        $i = ($days) ? 1 : 0;
                         ColumnChart::create(array(
-                            "dataSource" => $this->event_model->get_tickets_report($vendorId, $eventId, $days, $sql), 
+                            "dataSource" => $this->event_model->get_tickets_report($vendorId, $eventId, true), 
                             "columns" => array(
                                 "days" => array(
                                     "type" => "integer",
-                                    "label" => "Days".$i,
+                                    "label" => "Days",
 								),
 								"tickets" => array(
 									"label" => "Tickets",
-									"id" => "Tickets".$i,
+									"id" => "Tickets",
                                 ),
 							),
 							"class"=>array(
@@ -731,6 +727,63 @@ class Events extends BaseControllerWeb
 								"#3366cc",
 								"#dc3912"
                             ),
+                        ));
+                    }
+                ),
+
+ 
+
+            ),
+           
+		), true);
+		return $graphs;
+
+	}
+
+    public function get_tickets_graphs($vendorId, $eventId, $sql=''){
+        $GLOBALS['vendorId'] = $vendorId;
+        $GLOBALS['eventId'] = $eventId;
+        $GLOBALS['sql'] = $sql;
+        $this->load->model('event_model');
+		$graphs = DrillDown::create(array(
+            "name" => "saleDrillDown",
+            "title" => " ",
+            "levels" => array(
+                array(
+                    "title" => "",
+                    "content" => function ($params, $scope) {
+                        global $vendorId;
+                        global $eventId;
+                        global $sql;
+                        $ticketTypes =$this->event_model->get_tickets_report_types($vendorId, $eventId);
+                        $columnArr = array(
+                            "days" => array(
+                                "type" => "integer",
+                                "label" => "Days",
+                            )
+                            );
+
+                        foreach($ticketTypes as $ticketType){
+                            $columnArr[$ticketType] = [
+                                "label" => $ticketType,
+								"id" => $ticketType,
+                            ];
+                        }
+
+                        ColumnChart::create(array(
+                            "dataSource" => $this->event_model->get_tickets_report($vendorId, $eventId, false), 
+                            "columns" => $columnArr,
+							"class"=>array(
+								"button"=>"bg-warning"
+							),
+                            
+							"colorScheme"=>array(
+								"#3366cc",
+								"#dc3912"
+                            ),
+                            "options"=>array(
+                                "isStacked"=>true
+                            )
                         ));
                     }
                 ),
