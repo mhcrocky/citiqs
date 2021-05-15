@@ -1854,21 +1854,18 @@ class Ajax extends CI_Controller
             return;
         }
 
-        $get = [
-            'vendorid' => $post['userId'],
-            'datetimefrom' => $post['dateTimeFrom'],
-            'datetimeto' =>  $post['dateTimeTo'],
-            'report' => $post['report'],
-            'finance' => '1'
-        ];
+        $url  = base_url() . 'api/report?';
+        $url .= 'vendorid=' . $_SESSION['userId'];
+        $url .= '&datetimefrom=' . str_replace(' ', 'T', $post['dateTimeFrom']);
+        $url .= '&datetimeto=' . str_replace(' ', 'T', $post['dateTimeTo']);
+        $url .= '&report=' . $post['report'];
+        $url .= '&finance=1';
 
-        $url = base_url() . 'api/report?' . http_build_query($get);
         $response = json_decode(file_get_contents($url));
 
-
         if ($response->status === '1') {
-            $report = $this->config->item('financeReportes') . $get['vendorid'] . '_' . $get['report'] . '.png';
-            if (Email_helper::sendEmail($this->user_model->receiptEmail, $get['report'], '', false, $report)) {
+            $report = $this->config->item('financeReportes') . $_SESSION['userId'] . '_' . $post['report'] . '.png';
+            if (Email_helper::sendEmail($this->user_model->receiptEmail, $post['report'], '', false, $report)) {
                 $response = [
                     'status' => '1',
                     'messages' => ['Email sent']
