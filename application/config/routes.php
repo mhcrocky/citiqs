@@ -662,5 +662,8 @@ $route['api/connection/order']['post']  = 'Api/connection/Ordersapi/order';
 //Finanza
 $route['api/finanza/orders/(:any)'] = 'Api/finanza/orders/$1';
 
+// send printer sms alert
+$route['printer_sms_alert'] = 'Api/Cronjobs/smsAlert';
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

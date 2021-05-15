@@ -1898,6 +1898,7 @@ class Ajax extends CI_Controller
                         ->shopprinterrequest_model
                             ->setProperty('printerId', intval($printerId))
                             ->setProperty('conected', date('Y-m-d H:i:s', strtotime('-5 minutes')))
+                            ->setProperty('smsSent', '0')
                             ->checkIsPrinterConnected();
 
         $status = $connected ? '1' : '0';
