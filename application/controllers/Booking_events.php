@@ -460,16 +460,21 @@ class Booking_events extends BaseControllerWeb
 
     public function onlinepayment($paymentType, $paymentOptionSubId = '0')
     {
+		Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', 'order randomkey');
         $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : false;
 
         if(!$orderRandomKey){
+			Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', 'order randomkey redirect');
             redirect(base_url());
-            
         }
 
+
         $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+		Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', 'order data');
+
 
         if(count($orderData) < 1){
+			Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', 'order order redirect');
             redirect(base_url());
         }
 
@@ -505,6 +510,7 @@ class Booking_events extends BaseControllerWeb
 
         $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
 
+		Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', $strUrl);
         // destroy session in this place
         // because user maybe will not be redirected to $result->transaction->paymentURL
         // This prevent that user update existing ids with new transaction id
@@ -513,7 +519,7 @@ class Booking_events extends BaseControllerWeb
 
         $what = ['id'];
 		$where = ["randomKey" => $orderRandomKey];
-			
+
         $result = $this->shopsession_model->read($what,$where);
         $result = reset($result);
         $ids = [$result['id']];
@@ -526,15 +532,20 @@ class Booking_events extends BaseControllerWeb
 
     private function processPaymenttype(string $strUrl, array $reservationIds)
 	{
+		Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', 'function processingPaymenttype');
+
 		# Get API result
 		$strResult = @file_get_contents($strUrl);
         $result = json_decode($strResult);
 
         if ($result->request->result == '1') {
+			Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', 'updating transactionid');
             $transactionId = $result->transaction->transactionId;
             $this->bookandpay_model->updateTransactionIdByReservationIds($reservationIds, $transactionId);
+			Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', $result->transaction->paymentURL );
 			redirect($result->transaction->paymentURL);
 		} else {
+			Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', 'payment error');
 			$this->session->set_flashdata('error', 'Payment engine error. Please, contact staff');
 			$data = array();
 			$this->global['pageTitle'] = 'TIQS : PAYMENT ERROR';
