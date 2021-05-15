@@ -20,6 +20,7 @@
         public $isFod;
         public $isFodHardLock;
         public $printReports;
+        public $printReceipts;
         public $isApi;
         public $contactPhone;
 
@@ -67,8 +68,9 @@
             if (isset($data['isFod']) && !($data['isFod'] === '1' || $data['isFod'] === '0')) return false;
             if (isset($data['isFodHardLock']) && !($data['isFodHardLock'] === '1' || $data['isFodHardLock'] === '0')) return false;
             if (isset($data['printReports']) && !($data['printReports'] === '1' || $data['printReports'] === '0')) return false;
+            if (isset($data['printReceipts']) && !($data['printReceipts'] === '1' || $data['printReceipts'] === '0')) return false;
             if (isset($data['isApi']) && !($data['isApi'] === '1' || $data['isApi'] === '0')) return false;
-            if (isset($data['contactPhone']) && !Validate_data_helper::validateString($data['contactPhone'])) return false;
+            // if (isset($data['contactPhone']) && !Validate_data_helper::validateString($data['contactPhone'])) return false;
 
             return true;
         }
@@ -237,6 +239,19 @@
                 'what' => ['id'],
                 'where' => [
                     $this->table . '.printReports' => '1',
+                    $this->table . '.macNumber' => $this->macNumber,
+                ]
+            ]);
+
+            return !is_null($printReports);
+        }
+
+        public function checkIsPrintReceipts(): bool
+        {
+            $printReports = $this->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    $this->table . '.printReceipts' => '1',
                     $this->table . '.macNumber' => $this->macNumber,
                 ]
             ]);
