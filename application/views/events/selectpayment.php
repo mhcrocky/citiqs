@@ -15,12 +15,12 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
         <div class="col-md-8 col-sm-12 serviceBox blue mx-auto">
         <?php if(in_array('ideal payment', $activePayments)): ?>
             <div class="half-col  mb-4">
-            <a  data-paymentFee="<?php echo $idealPaymentFee; ?>" class="iDealPay"href="#iDeal" onclick="paymentMethodRedirect(this)">
+            <a  data-paymentFee="<?php echo $idealPaymentFee; ?>" class="iDealPay" href="javascript:;" onclick="paymentMethodRedirect(this)">
                 <img class="img-w-150" src="<?php echo base_url(); ?>assets/home/imgs/extra/ideal.png" alt="iDEAL">
             </a>
                 <p style="paymentFee bg-primary"><?php echo $idealPaymentFee; ?></p>
                 <h3 class="title">
-                <a data-paymentFee="<?php echo $idealPaymentFee; ?>" class="text-primary iDealPay" href="#iDeal" onclick="paymentMethodRedirect(this)">iDEAL</a></h3>
+                <a data-paymentFee="<?php echo $idealPaymentFee; ?>" class="text-primary iDealPay" href="javascript:;" onclick="paymentMethodRedirect(this)">iDEAL</a></h3>
             </div>
         <?php endif; ?>
         
@@ -239,7 +239,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
 
         <div class="w-100 text-center font-weight-bold mb-5 p-3">
             <h3 style="font-size: 20px;" class="title">
-                <a class="text-primary" id="backPayment" data-paymentFee="<?php echo $idealPaymentFee; ?>" href="#selectPayment" onclick="backToPaymentMethods(this)">Back to payment methods</a>
+                <a class="text-primary" id="backPayment" data-paymentFee="<?php echo $idealPaymentFee; ?>" href="javascript:;" onclick="backToPaymentMethods(this)">Back to payment methods</a>
             </h3>
         </div>
 
@@ -299,7 +299,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
     </div>
     <div class="w-100 text-center font-weight-bold mb-5 p-3">
         <h3 style="font-size: 20px;" class="title">
-            <a class="text-primary" id="backPaymentCC" href="#selectPayment">Back to payment method</a>
+            <a class="text-primary" id="backPaymentCC" href="javascript:;">Back to payment method</a>
         </h3>
     </div>
 </div>
