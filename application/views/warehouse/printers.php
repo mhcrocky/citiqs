@@ -25,6 +25,10 @@
 							<label for="macNumber">MAC number: </label>
 							<input type="text" class="form-control" id="macNumber" name="macNumber" required />
 						</div>
+						<div>
+							<label for="contactPhone">Mobile phone for alerts (country code + number):</label>
+							<input type="text" class="form-control" id="contactPhone" name="contactPhone" required />
+						</div>
 						<!-- <div>
 							<label for="numberOfCopies">Number of copies: </label>
 							<input type="integer" min="1" value="1" step="1" class="form-control" id="numberOfCopies" name="numberOfCopies" required />
@@ -107,6 +111,9 @@
 							<p class="item-category" style="white-space: initial;">Status:
 								<?php echo $printer['active'] === '1' ? '<span>ACTIVE</span>' : '<span>BLOCKED</span>'; ?>
 							</p>
+							<?php if ($printer['contactPhone']) { ?>
+								<p class="item-description" style="white-space: initial;">Alert phone number: <?php echo $printer['contactPhone']; ?></p>
+							<?php } ?>
 							<!-- <p class="item-description" style="white-space: initial;">Number of copies: <?php #echo $printer['numberOfCopies']; ?></p> -->
 							<?php if ($printer['isFod'] === '1') { ?>
 							<p class="item-description" style="white-space: initial;">FOD PRINTER</p>
@@ -178,6 +185,10 @@
                                     <div>
 										<label for="printerMac<?php echo $printer['macNumber']; ?>">MAC number:</label>
 										<input type="text" class="form-control" id="printerMac<?php echo $printer['macNumber']; ?>" name="macNumber" required value="<?php echo $printer['macNumber']; ?>" />
+									</div>
+									<div>
+										<label for="contactPhone<?php echo $printer['contactPhone']; ?>">Mobile phone for alerts (country code + number):</label>
+										<input type="text" class="form-control" id="contactPhone<?php echo $printer['macNumber']; ?>" name="contactPhone" required value="<?php echo $printer['contactPhone']; ?>" />
 									</div>
 									<!-- <div>
 										<label for="numberOfCopies<?php #echo $printer['numberOfCopies']; ?>">Number of copies:</label>
