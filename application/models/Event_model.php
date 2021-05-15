@@ -638,7 +638,7 @@ class Event_model extends CI_Model {
 
 	public function get_booking_report_of_tickets($vendorId, $eventId, $sql='')
 	{
-		$query = $this->db->query("SELECT tbl_event_tickets.ticketDescription AS days, COUNT(tbl_event_tickets.id) AS tickets
+		$query = $this->db->query("SELECT DATE(reservationtime) AS day_date, tbl_event_tickets.ticketDescription, COUNT(tbl_event_tickets.id) AS tickets
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		WHERE tbl_events.vendorId = ".$vendorId." AND tbl_bookandpay.ticketDescription <> '' AND paid='1' AND tbl_events.Id = ".$eventId." $sql  GROUP BY tbl_event_tickets.id 
@@ -649,12 +649,7 @@ class Event_model extends CI_Model {
 	function get_tickets_report($vendor_id, $eventId, $days = true, $sql=''){
 		if(!$days){
 		    $results = $this->get_booking_report_of_tickets($vendor_id, $eventId, $sql);
-			foreach($results as $key => $result){
-				$newData[] = [
-					"days" => $result['days'],
-					"tickets" => intval($result['tickets']),
-				];
-			}
+			$newData = $this->_tickets_report($results);
 			return $newData;
 
 		}
@@ -685,6 +680,44 @@ class Event_model extends CI_Model {
 		}
 		return $newData;
 	}
+
+	private function _tickets_report($results){
+		$ticketTypes = [];
+		$ticketsData = [];
+		foreach($results as $key => $result){
+			$ticketsData[$result['day_date']][$result['ticketDescription']] = intval($result['tickets']);
+
+			$ticketTypes[] = $result['ticketDescription'];
+		}
+
+		$length = count($ticketTypes);
+		$j = 0;
+		$newData = [];
+		foreach($ticketsData as $key => $data){
+			$newData[$j]["days"] = $key;
+			for($i=0;$i<$length; $i++){
+				$ticketType = $ticketTypes[$i];
+				$newData[$j][$ticketType] = isset($data[$ticketType]) ? intval($data[$ticketType]) : 0;
+				
+			}
+			$j++;
+		}
+
+		return $newData;
+	}
+
+	function get_tickets_report_types($vendor_id, $eventId){
+		$results = $this->get_booking_report_of_tickets($vendor_id, $eventId);
+		$ticketTypes = [];
+		foreach($results as $key => $result){
+
+			$ticketTypes[] = $result['ticketDescription'];
+		}
+
+		return $ticketTypes;
+	}
+
+
 
 
 	public function get_all_event_tickets($vendor_id,$eventId)
