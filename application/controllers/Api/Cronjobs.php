@@ -43,5 +43,8 @@
             var_dump(Queue_helper::releaseQueue($buyers));
         }
 
-        
+        public function smsAlert_get(): void
+        {
+            $this->shopprinterrequest_model->sendSmsAlert();
+        }
     }

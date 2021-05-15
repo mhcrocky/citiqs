@@ -616,23 +616,23 @@ $userShortUrl = $this->session->userdata('userShortUrl');
                                     <span></span>
                                     <span></span>
                                 </div>
-                                <div id="user-title" class="pull-left">
+                                <div class="pull-left user-title">
                                     <p style="font-weight: 100; font-size: 100%;padding-top:10px;color: #000;">
                                         <?php echo $this->session->userdata('userId');?> <?php echo $this->session->userdata('name');?>
 										<a href="https://tiqs.com/alfred/loggedin">
-											<image src="<?php echo $this->baseUrl; ?>assets/home/images/manualicon.png" style="width:28px; margin-left: 30px" >
+											<img src="<?php echo $this->baseUrl; ?>assets/home/images/manualicon.png" style="width:28px; margin-left: 30px" alt="" />
 										</a>
 
 									</p>
 
                                 </div>
 
-								<div id="user-title" class="pull-left">
+								<div class="pull-left user-title">
 									<p style="font-weight: 100; font-size: 100%;padding-top:10px;color: #000;">
 <!--										--><?php //echo $this->session->userdata('userId');?><!-- --><?php //echo $this->session->userdata('name');?>
 											<a style="color: #E25F2A; margin-left: 20px" href="#" data-toggle="modal" data-target="#myModal" id='modal-button'> <img width="30px" height="30px" src="<?php echo $this->baseUrl; ?>assets/home/images/world.png" title="LANGUAGE"/></a>
 <!--										<a href="https://tiqs.com/alfred/loggedin">-->
-<!--											<image src="--><?php //echo $this->baseUrl; ?><!--assets/home/images/manualicon.png" style="width:28px; margin-left: 30px" >-->
+<!--											<img src="--><?php //echo $this->baseUrl; ?><!--assets/home/images/manualicon.png" style="width:28px; margin-left: 30px" >-->
 <!--										</a>-->
 									</p>
 								</div>
@@ -744,7 +744,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
     var myInterval = setInterval(function () {
         let header = $(".header-area").width();
         let collapse = 45;
-        let title = $("#user-title").width();
+        let title = $(".user-title").width();
         let search_box = header - (collapse+title);
         if(search_box < 240){
             $("#search-box").css('width',search_box);
@@ -755,7 +755,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
     $( window ).resize(function() {
         let header = $(".header-area").width();
         let collapse = 45;
-        let title = $("#user-title").width();
+        let title = $(".user-title").width();
         let search_box = header - (collapse+title);
         if(search_box < 240){
             $("#search-box").css('width',search_box);
