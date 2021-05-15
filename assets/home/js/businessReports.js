@@ -11,7 +11,16 @@ function sendReportPrintRequest(element) {
         'report': element.dataset.report
     }
  
-    sendAjaxPostRequest(post, url, 'sendReportPrintRequest', alertifyAjaxResponse);
+    sendAjaxPostRequest(post, url, 'sendReportPrintRequest', alertifyReportsResponse);
+}
+
+function alertifyReportsResponse(response) {
+    if (response.hasOwnProperty('printer')) {
+        alertifyAjaxResponse(response['printer']);
+    }
+    if (response.hasOwnProperty('email')) {
+        alertifyAjaxResponse(response['email']);
+    }
 }
 
 function refundMoney(refundOrderId, totalAmountId, amountId, freeAmountId, descriptionId) {
