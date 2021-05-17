@@ -10,10 +10,5 @@
 </style>
 
 <main>
-    <input type="text" id="order" name="order" autofocus oninput="alertInput(this.value)" />
+    <input type="text" id="order" name="order" autofocus />
 </main>
-<script>
-    function alertInput(orderId) {
-        alert(orderId);
-    }
-</script>

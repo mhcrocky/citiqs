@@ -5,7 +5,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 require APPPATH . '/libraries/BaseControllerWeb.php';
 
-class Scaner extends BaseControllerWeb
+class Scanner extends BaseControllerWeb
 {
     public function __construct()
     {
@@ -48,6 +48,6 @@ class Scaner extends BaseControllerWeb
     {
         $this->global['pageTitle'] = 'TIQS : ORDERING';
 
-        $this->loadViews('scaner/scaner', $this->global, null, null, null);
+        $this->loadViews('scanner/scanner', $this->global, null, null, null);
     }
 }
