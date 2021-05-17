@@ -317,7 +317,7 @@ input.input100 {
 }
 @media (max-width: 480px) {
   .login100-form {
-    padding: 43px 15px 57px;
+    padding: 0px 0px 1px;
   }
   .label-input100 {
     text-align: left;
