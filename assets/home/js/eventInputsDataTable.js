@@ -87,9 +87,9 @@ function saveInput(el){
 
   $.post(globalVariables.baseUrl + 'events/save_event_inputs', data, function(data) {
     $(el).prop('disabled', false);
-    $('#userId').val('');
-    $('#tag').val('');
-    $("#tags").DataTable().ajax.reload();
+    $('#fieldLabel').val('');
+    $('#requiredField option:selected').val(0);
+    $("#inputs").DataTable().ajax.reload();
     $('#closeTagModal').click();
     let response = JSON.parse(data);
     alertify[response.status](response.message);
@@ -113,7 +113,7 @@ function updateInput(el){
 
   $.post(globalVariables.baseUrl + 'events/update_event_inputs', data, function(data) {
     $(el).prop('disabled', false);
-    $('#inputs').DataTable().ajax.reload();
+    $("#inputs").DataTable().ajax.reload();
     $('#closeEditEventTagModal').click();
     let response = JSON.parse(data);
     alertify[response.status](response.message);
@@ -126,7 +126,7 @@ function deleteInput(id){
   }
 
   $.post(globalVariables.baseUrl + 'events/delete_event_inputs', {id: id}, function(data) {
-    $('#inputs').DataTable().ajax.reload();
+    $("#inputs").DataTable().ajax.reload();
     let response = JSON.parse(data);
     alertify[response.status](response.message);
   });
