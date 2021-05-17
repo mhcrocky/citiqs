@@ -609,6 +609,96 @@ class Events extends BaseControllerWeb
 	}
 
 
+    public function inputs($eventId){
+		$this->global['pageTitle'] = 'TIQS: Event Inputs';
+		$data['eventId'] = $eventId;
+		$this->loadViews("events/inputs", $this->global, $data, 'footerbusiness', 'headerbusiness'); 
+	}
+
+    public function get_event_inputs(){
+        $eventId = $this->input->post('eventId');
+		$where = [
+            'vendorId' => $this->vendor_id,
+            'eventId' => $eventId
+        ];
+		$data = $this->event_model->get_event_inputs($where);
+		echo json_encode($data);
+	}
+
+	public function save_event_inputs(){
+		$data = $this->input->post(null, true);
+		$data['vendorId'] = $this->vendor_id;
+		if($this->event_model->save_event_inputs($data)){
+			$response = [
+				'status' => 'success',
+				'message' => 'Created successfully!'
+			];
+			echo json_encode($response);
+			return ;
+		}
+
+		$response = [
+			'status' => 'error',
+			'message' => 'Something went wrong!'
+		];
+		echo json_encode($response);
+		return ;
+		
+	}
+
+	public function update_event_inputs(){
+		$where = [
+			'id' => $this->input->post('id'),
+			'vendorId' => $this->vendor_id
+		];
+
+		$data = [
+			'fieldLabel' => $this->input->post('fieldLabel'),
+			'fieldType' => $this->input->post('fieldType'),
+            'requiredField' => $this->input->post('requiredField')
+		];
+
+		if($this->event_model->update_event_inputs($data, $where)){
+			$response = [
+				'status' => 'success',
+				'message' => 'Updated successfully!'
+			];
+			echo json_encode($response);
+			return ;
+		}
+
+		$response = [
+			'status' => 'error',
+			'message' => 'Something went wrong!'
+		];
+		echo json_encode($response);
+		return ;
+	}
+
+	public function delete_event_inputs(){
+		$where = [
+			'id' => $this->input->post('id'),
+			'vendorId' => $this->vendor_id
+		];
+		
+		if($this->event_model->delete_event_inputs($where)){
+			$response = [
+				'status' => 'success',
+				'message' => 'Deleted successfully!'
+			];
+			echo json_encode($response);
+			return ;
+		}
+
+		$response = [
+			'status' => 'error',
+			'message' => 'Something went wrong!'
+		];
+		echo json_encode($response);
+		return ;
+	}
+
+
     public function graph($eventId)
     {
         $this->global['pageTitle'] = 'TIQS : EVENT GRAPH';

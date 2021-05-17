@@ -926,7 +926,8 @@ class Event_model extends CI_Model {
 
 	public function update_event_tags($data, $where)
 	{
-		$this->db->update('tbl_event_shop_tags',$data, $where);
+		$this->db->where($where);
+		$this->db->update('tbl_event_shop_tags', $data);
 		return ($this->db->affected_rows() > 0) ? true : false;
 	}
 
@@ -940,6 +941,32 @@ class Event_model extends CI_Model {
 	public function delete_event_tags($where)
 	{
 		$this->db->delete('tbl_event_shop_tags', $where);
+		return ($this->db->affected_rows() > 0) ? true : false;
+	}
+
+	public function save_event_inputs($data)
+	{
+		$this->db->insert('tbl_event_inputs',$data);
+		return $this->db->insert_id() ? true : false;
+	}
+
+	public function update_event_inputs($data, $where)
+	{
+		$this->db->where($where);
+		$this->db->update('tbl_event_inputs', $data);
+		return ($this->db->affected_rows() > 0) ? true : false;
+	}
+
+	public function get_event_inputs($where)
+	{
+		$this->db->where($where);
+		$query = $this->db->get('tbl_event_inputs');
+		return $query->result_array();
+	}
+
+	public function delete_event_inputs($where)
+	{
+		$this->db->delete('tbl_event_inputs', $where);
 		return ($this->db->affected_rows() > 0) ? true : false;
 	}
 
