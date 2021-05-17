@@ -54,14 +54,14 @@ class Vendors extends REST_Controller
 
         public function orders_get(): void
         {
-            if (!$this->authentication()) return;
+            // if (!$this->authentication()) return;
 
             $get = Utility_helper::sanitizeGet();
             $vendorId = intval($get['vendor']);
             $from = empty($get['from']) ? '' : str_replace('T', ' ', $get['from']);
             $to = empty($get['to']) ? '' : str_replace('T', ' ', $get['to']);
 
-            $orders = $this->shoporder_model->fetchUnpaidVendorOrders($vendorId, true, $from, $to);
+            $orders = $this->shoporder_model->fetchUnpaidVendorOrders($vendorId, false, $from, $to);
 
             if ($orders) {
                 $response = [
