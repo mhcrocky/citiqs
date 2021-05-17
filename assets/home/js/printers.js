@@ -6,22 +6,16 @@ function checkPrintersConnection() {
     let i;
     let url = globalVariables.ajax + 'checkPrintersConnection/';
 
-    
     for (i = 0; i < printersLength; i++) {
         let printer = prinetrs[i];
-        let printerId = printer.dataset.printerId
-        let urlFinal = url + printerId;
-        
-        $.get(urlFinal, function(data, status){
-              let response = JSON.parse(data);
-              console.dir(response);
-            if (response.status === '1') {
-                printer.style.visibility = 'hidden'; 
-            } else {
-                printer.style.visibility = 'visible'; 
-            }
-        });
-        
+        if (printer.dataset.active === '1') {
+            let printerId = printer.dataset.printerId
+            let urlFinal = url + printerId;
+            $.get(urlFinal, function(data, status){
+                let response = JSON.parse(data);
+                printer.style.visibility = (response.status === '1') ? 'hidden' : 'visible';
+            });
+        }
     }
 }
 

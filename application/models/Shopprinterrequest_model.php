@@ -146,7 +146,7 @@
 
         private function sentSms(array $printer): void
         {
-            $message = 'Printer "' . $printer['printer'] . '" is not connected';
+            $message = 'Printer "' . $printer['printer'] . '" with id "' . $printer['printerId'] . '" is not connected';
             if (Curl_helper::sendSmsNew($printer['contactPhone'], $message)) {
                 $insert = [
                     'printerId' => $printer['printerId'],

@@ -148,6 +148,7 @@
 							<p
 								style="color:#ff3333; font-weight:900; font-size:16px; visibility:hidden"
 								data-printer-id="<?php echo $printer['id']; ?>"
+								data-active="<?php echo $printer['active']; ?>"
 								class="printerErrMessage"
 							>NOT CONNECTED</p>
 						</div><!-- end item header -->
