@@ -193,6 +193,10 @@ $(document).ready(function () {
         data: "numberofpersons",
       },
       {
+        title: "Tag ID",
+        data: "tag",
+      },
+      {
         title: "Date",
         data: "reservationtime",
       },
@@ -257,7 +261,7 @@ $(document).ready(function () {
           var date = full_timestamp.split(" - ");
           var min = moment(date[0]);
           var max = moment(date[1]);
-          var startDate = moment(data[12]); // data['Position of date's column -1']
+          var startDate = moment(data[13]); // data['Position of date's column -1']
    
           if (min == '' && max == '') { min = todayDate; }
           if (min == '' && startDate <= max) { return true;}

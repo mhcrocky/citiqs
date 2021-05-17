@@ -221,6 +221,10 @@ $(document).ready( function () {
       data: 'ticketDescription'
     },
     {
+      title: 'Tag ID',
+      data: 'tag'
+    },
+    {
       title: 'Reservation Time',
       data: 'reservationtime'
     },
@@ -273,7 +277,7 @@ $(document).ready( function () {
         var date = full_timestamp.split(" - ");
         var min = moment(date[0]);
         var max = moment(date[1]);
-        var startDate = moment(data[10]);
+        var startDate = moment(data[11]);
         if (min == '' && max == '') { min = todayDate; }
         if (min == '' && startDate <= max) { return true;}
         if(max == '' && startDate >= min) {return true;}
